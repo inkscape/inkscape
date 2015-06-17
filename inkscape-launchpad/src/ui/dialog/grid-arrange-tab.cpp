@@ -48,7 +48,7 @@
  *    0  *elem1 == *elem2
  *    >0  *elem1 goes after *elem2
  */
-static int sp_compare_x_position(SPItem *first, SPItem *second)
+static bool sp_compare_x_position(SPItem *first, SPItem *second)
 {
     using Geom::X;
     using Geom::Y;
@@ -58,7 +58,7 @@ static int sp_compare_x_position(SPItem *first, SPItem *second)
 
     if ( !a || !b ) {
         // FIXME?
-        return 0;
+        return false;
     }
 
     double const a_height = a->dimensions()[Y];
@@ -76,39 +76,40 @@ static int sp_compare_x_position(SPItem *first, SPItem *second)
     }
 
     if (!a_in_b_vert) {
-        return -1;
+        return true;
     }
     if (a_in_b_vert && a->min()[X] > b->min()[X]) {
-        return 1;
+        return false;
     }
     if (a_in_b_vert && a->min()[X] < b->min()[X]) {
-        return -1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
 /*
  *    Sort items by their y co-ordinates.
  */
-static int sp_compare_y_position(SPItem *first, SPItem *second)
+static bool sp_compare_y_position(SPItem *first, SPItem *second)
 {
     Geom::OptRect a = first->documentVisualBounds();
     Geom::OptRect b = second->documentVisualBounds();
 
     if ( !a || !b ) {
         // FIXME?
-        return 0;
+        return false;
     }
 
     if (a->min()[Geom::Y] > b->min()[Geom::Y]) {
-        return 1;
+        return false;
     }
     if (a->min()[Geom::Y] < b->min()[Geom::Y]) {
-        return -1;
+        return true;
     }
 
-    return 0;
+    return false;
 }
+
 
 namespace Inkscape {
 namespace UI {
@@ -168,10 +169,9 @@ void GridArrangeTab::arrange()
     desktop->getDocument()->ensureUpToDate();
 
     Inkscape::Selection *selection = desktop->getSelection();
-    const GSList *items = selection ? selection->itemList() : 0;
-    cnt=0;
-    for (; items != NULL; items = items->next) {
-        SPItem *item = SP_ITEM(items->data);
+    const std::vector<SPItem*> items = selection ? selection->itemList() : std::vector<SPItem*>();
+    for(std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();i++){
+        SPItem *item = *i;
         Geom::OptRect b = item->documentVisualBounds();
         if (!b) {
             continue;
@@ -198,20 +198,18 @@ void GridArrangeTab::arrange()
     // require the sorting done before we can calculate row heights etc.
 
     g_return_if_fail(selection);
-    const GSList *items2 = selection->itemList();
-    GSList *rev = g_slist_copy(const_cast<GSList *>(items2));
-    GSList *sorted = NULL;
-    rev = g_slist_sort(rev, (GCompareFunc) sp_compare_y_position);
-    sorted = g_slist_sort(rev, (GCompareFunc) sp_compare_x_position);
+    std::vector<SPItem*> sorted(selection->itemList());
+    sort(sorted.begin(),sorted.end(),sp_compare_y_position);
+    sort(sorted.begin(),sorted.end(),sp_compare_x_position);
 
 
     // Calculate individual Row and Column sizes if necessary
 
 
         cnt=0;
-        const GSList *sizes = sorted;
-        for (; sizes != NULL; sizes = sizes->next) {
-            SPItem *item = SP_ITEM(sizes->data);
+        const std::vector<SPItem*> sizes(sorted);
+        for (std::vector<SPItem*>::const_iterator i = sizes.begin();i!=sizes.end();i++) {
+            SPItem *item = *i;
             Geom::OptRect b = item->documentVisualBounds();
             if (b) {
                 width = b->dimensions()[Geom::X];
@@ -308,12 +306,14 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
     }
 
     cnt=0;
-  for (row_cnt=0; ((sorted != NULL) && (row_cnt<NoOfRows)); row_cnt++) {
+    std::vector<SPItem*>::iterator it = sorted.begin();
+    for (row_cnt=0; ((it != sorted.end()) && (row_cnt<NoOfRows)); row_cnt++) {
 
              GSList *current_row = NULL;
-             for (col_cnt = 0; ((sorted != NULL) && (col_cnt<NoOfCols)); col_cnt++) {
-                 current_row = g_slist_append (current_row, sorted->data);
-                 sorted = sorted->next;
+             col_cnt = 0;
+             for(;it!=sorted.end()&&col<NoOfCols;it++) {
+                 current_row = g_slist_append (current_row, *it);
+                 col_cnt++;
              }
 
              for (; current_row != NULL; current_row = current_row->next) {
@@ -374,8 +374,8 @@ void GridArrangeTab::on_row_spinbutton_changed()
     Inkscape::Selection *selection = desktop ? desktop->selection : 0;
     g_return_if_fail( selection );
 
-    GSList const *items = selection->itemList();
-    int selcount = g_slist_length((GSList *)items);
+    std::vector<SPItem*> const items = selection->itemList();
+    int selcount = items.size();
 
     double PerCol = ceil(selcount / NoOfColsSpinner.get_value());
     NoOfRowsSpinner.set_value(PerCol);
@@ -400,8 +400,7 @@ void GridArrangeTab::on_col_spinbutton_changed()
     Inkscape::Selection *selection = desktop ? desktop->selection : 0;
     g_return_if_fail(selection);
 
-    GSList const *items = selection->itemList();
-    int selcount = g_slist_length((GSList *)items);
+    int selcount = selection->itemList().size();
 
     double PerRow = ceil(selcount / NoOfRowsSpinner.get_value());
     NoOfColsSpinner.set_value(PerRow);
@@ -538,10 +537,10 @@ void GridArrangeTab::updateSelection()
     updating = true;
     SPDesktop *desktop = Parent->getDesktop();
     Inkscape::Selection *selection = desktop ? desktop->selection : 0;
-    GSList const *items = selection ? selection->itemList() : 0;
+    std::vector<SPItem*> const items = selection ? selection->itemList() : std::vector<SPItem*>();
 
-    if (items) {
-        int selcount = g_slist_length((GSList *)items);
+    if (!items.empty()) {
+        int selcount = items.size();
 
         if (NoOfColsSpinner.get_value() > 1 && NoOfRowsSpinner.get_value() > 1){
             // Update the number of rows assuming number of columns wanted remains same.
@@ -609,8 +608,7 @@ GridArrangeTab::GridArrangeTab(ArrangeDialog *parent)
     g_return_if_fail( selection );
     int selcount = 1;
     if (!selection->isEmpty()) {
-        GSList const *items = selection->itemList();
-        selcount = g_slist_length((GSList *)items);
+        selcount = selection->itemList().size();
     }
 
 

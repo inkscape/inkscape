@@ -95,11 +95,11 @@ these WMF enumerations is by referencing the following table:
 
 /*
 File:      uemf.h
-Version:   0.0.27
-Date:      28-MAR-2014
+Version:   0.0.32
+Date:      28-APR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UEMF_
@@ -166,6 +166,14 @@ extern "C" {
 #define U_EMR_COMMENT_SPOOLFONTDEF    0x544F4E46      //!< For U_EMRCOMMENT record that is U_EMR_COMMENT_SPOOL, comment holds font definition informtion.
 /** Solaris 8 has problems with round/roundf, just use this everywhere  */
 #define U_ROUND(A)  ( (A) > 0 ? floor((A)+0.5) : ( (A) < 0 ? -floor(-(A)+0.5) : (A) ) )
+
+#define MAKE_MIN_PTR(A,B) ( A < B ? A : B)
+/* This is tricky.  The next one can be called with a size which is either an int or an unsigned int.
+   The former can be negative, which is obviously wrong, but testing for that means that the size cannot
+   be more than INT_MAX/2.  Accept that limitation since no reasonable EMF record or file should ever be that large.
+   B must be an INT or size_t.  
+   If a uint16_t is used gcc complains about the first test.  Force B to be at least as big as int (at run time)  */
+#define IS_MEM_UNSAFE(A,B,C) ( (sizeof(B) < sizeof(int) || (int)(B)) < 0 ? 1 : ((int8_t *)(A) > (int8_t *)(C) ? 1 : ((int8_t *)(C) - (int8_t *)(A) >= (int)(B) ? 0 : 1 ))) //!< Return 1 when a region of memory starting at A of B bytes extends beyond pointer C
 
 /** @} */
 
@@ -1799,7 +1807,7 @@ typedef struct {                            //!< In MS documentation this is Log
   *PU_PATTERN;                              //!< EMF manual 2.2.12
 
 /**
-  \brief For U_LOGFONT_PANOSE elfLogFont field
+  \brief For U_LOGFONT elfLogFont field
 
   EMF manual 2.2.13, Microsoft name: LogFont Object
 */
@@ -2075,6 +2083,9 @@ typedef struct {
 // ***********************************************************************************
 // The following have U_EMR_# records.  They are ordered by their record index, not by EMF manual position.
 
+// records which are documented but not implemented
+#define U_SIZE_EMRNOTIMPLEMENTED 2048
+
 /* Index  1 */
 /** 
   \brief The first U_ENHMETARECORD record in the metafile.
@@ -2117,6 +2128,8 @@ typedef struct {
     U_SIZEL             szlMicrometers;     //!< Size of the display device in micrometer
 } U_EMRHEADER,
   *PU_EMRHEADER;                            //!< EMF manual 2.2.9
+#define U_SIZE_EMRHEADER sizeof(U_EMRHEADER) // modern EMF files, for _really_ old ones the _MIN size applies
+#define U_SIZE_EMRHEADER_MIN (U_SIZE_EMRHEADER - sizeof(U_CBPXLFMT) - sizeof(U_OFFPXLFMT) - sizeof(uint32_t) - sizeof(U_SIZEL))
 
 /* Index  2,3,4,5,6  */
 /** EMF manual 2.3.5.16
@@ -2137,6 +2150,11 @@ typedef struct {
  *PU_EMRPOLYBEZIERTO,                       //!< EMF manual 2.3.5.18
  *PU_EMRPOLYLINETO;                         //!< EMF manual 2.3.5.26
 
+#define U_SIZE_EMRPOLYBEZIER   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_NUM_POINTL) )
+#define U_SIZE_EMRPOLYGON      U_SIZE_EMRPOLYBEZIER
+#define U_SIZE_EMRPOLYLINE     U_SIZE_EMRPOLYBEZIER
+#define U_SIZE_EMRPOLYBEZIERTO U_SIZE_EMRPOLYBEZIER
+#define U_SIZE_EMRPOLYLINETO   U_SIZE_EMRPOLYBEZIER
 /* Index  7,8 */
 /** EMF manual 2.3.5.30
 
@@ -2153,6 +2171,8 @@ typedef struct {
   U_EMRPOLYPOLYGON,                         //!< EMF manual 2.3.5.28 
   *PU_EMRPOLYPOLYLINE,                      //!< EMF manual 2.3.5.30 
   *PU_EMRPOLYPOLYGON;                       //!< EMF manual 2.3.5.28 
+#define U_SIZE_EMRPOLYPOLYLINE   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_NUM_POLYCOUNTS)  + sizeof(U_POLYCOUNTS))
+#define U_SIZE_EMRPOLYPOLYGON     U_SIZE_EMRPOLYPOLYLINE
 
 /* Index  9,11 (numbers interleave with next one) */
 /** EMF manual 2.3.11.30
@@ -2164,6 +2184,8 @@ typedef struct {
   U_EMRSETVIEWPORTEXTEX,                    //!< EMF manual manual 2.3.11.28
   *PU_EMRSETWINDOWEXTEX,                    //!< EMF manual manual 2.3.11.30
   *PU_EMRSETVIEWPORTEXTEX;                  //!< EMF manual manual 2.3.11.28
+#define U_SIZE_EMRSETWINDOWEXTEX    (sizeof(U_EMRSETWINDOWEXTEX  ))
+#define U_SIZE_EMRSETVIEWPORTEXTEX  (sizeof(U_EMRSETVIEWPORTEXTEX))
 
 /* Index  10,12,13 */
 /** EMF manual 2.3.11.31
@@ -2177,7 +2199,9 @@ typedef struct {
   *PU_EMRSETWINDOWORGEX,                    //!< EMF manual 2.3.11.31
   *PU_EMRSETVIEWPORTORGEX,                  //!< EMF manual 2.3.11.29
   *PU_EMRSETBRUSHORGEX;                     //!< EMF manual 2.3.11.12
-
+#define U_SIZE_EMRSETWINDOWORGEX     (sizeof(U_EMRSETWINDOWORGEX  ))
+#define U_SIZE_EMRSETVIEWPORTORGEX   (sizeof(U_EMRSETVIEWPORTORGEX))
+#define U_SIZE_EMRSETBRUSHORGEX      (sizeof(U_EMRSETBRUSHORGEX   ))
 
 /* Index  14 */
 /** EMF manual 3.2.4.1  
@@ -2197,6 +2221,7 @@ typedef struct {
     U_OFFPLENTRIES      offPalEntries;      //!< Offset in bytes to array of palette entries
 } U_EMREOF, 
   *PU_EMREOF;                               //!< EMF manual 3.2.4.1
+#define U_SIZE_EMREOF    (sizeof(U_EMREOF))
 
 /* Index  15 */
 /** EMF manual 2.3.5.36  
@@ -2207,6 +2232,7 @@ typedef struct {
     U_COLORREF          crColor;            //!< Pixel color
 } U_EMRSETPIXELV, 
  *PU_EMRSETPIXELV;                          //!< EMF manual 2.3.5.36
+#define U_SIZE_EMRSETPIXELV    (sizeof(U_EMRSETPIXELV))
 
 /* Index  16 */
 /** EMF manual 2.3.11.20
@@ -2216,6 +2242,7 @@ typedef struct {
     uint32_t            dwFlags;            //!< must be 1
 } U_EMRSETMAPPERFLAGS,
   *PU_EMRSETMAPPERFLAGS;                    //!< EMF manual 2.3.11.20
+#define U_SIZE_EMRSETMAPPERFLAGS    (sizeof(U_EMRSETMAPPERFLAGS))
 
 /* Index  17,18,19,20,21,22,67,98,115 
 */
@@ -2243,6 +2270,16 @@ typedef struct {
   *PU_EMRSETICMMODE,                        //!< EMF manual 2.3.11.14 ICMMode Enumeration
   *PU_EMRSETLAYOUT;                         //!< EMF manual 2.3.11.17 Mirroring Enumeration
 
+#define U_SIZE_EMRSETMAPMODE        (sizeof(U_EMRSETMAPMODE       ))
+#define U_SIZE_EMRSETBKMODE         (sizeof(U_EMRSETBKMODE        ))
+#define U_SIZE_EMRSETPOLYFILLMODE   (sizeof(U_EMRSETPOLYFILLMODE  ))
+#define U_SIZE_EMRSETROP2           (sizeof(U_EMRSETROP2          ))
+#define U_SIZE_EMRSETSTRETCHBLTMODE (sizeof(U_EMRSETSTRETCHBLTMODE))
+#define U_SIZE_EMRSETTEXTALIGN      (sizeof(U_EMRSETTEXTALIGN     ))
+#define U_SIZE_EMRSELECTCLIPPATH    (sizeof(U_EMRSELECTCLIPPATH   ))
+#define U_SIZE_EMRSETICMMODE        (sizeof(U_EMRSETICMMODE       ))
+#define U_SIZE_EMRSETLAYOUT         (sizeof(U_EMRSETLAYOUT        ))
+
 /* Index  23 */
 /** EMF manual 2.3.11.13         
 */
@@ -2251,6 +2288,7 @@ typedef struct {
     U_COLORADJUSTMENT   ColorAdjustment;    //!< Color Adjustment
 } U_EMRSETCOLORADJUSTMENT, 
   *PU_EMRSETCOLORADJUSTMENT;                //!< EMF manual 2.3.11.13
+#define U_SIZE_EMRSETCOLORADJUSTMENT  (sizeof(U_EMRSETCOLORADJUSTMENT))
 
 /* Index  24, 25 */
 /** EMF manual 2.3.11.26         
@@ -2262,6 +2300,8 @@ typedef struct {
   U_EMRSETBKCOLOR,                          //!< EMF manual 2.3.11.10
   *PU_EMRSETTEXTCOLOR,                      //!< EMF manual 2.3.11.26
   *PU_EMRSETBKCOLOR;                        //!< EMF manual 2.3.11.10
+#define U_SIZE_EMRSETTEXTCOLOR  (sizeof(U_EMRSETTEXTCOLOR))
+#define U_SIZE_EMRSETBKCOLOR    (sizeof(U_EMRSETBKCOLOR  ))
 
 /* Index  26 */
 /** EMF manual 2.3.2.4           
@@ -2271,6 +2311,7 @@ typedef struct {
     U_POINTL            ptlOffset;          //!< Clipping region 
 } U_EMROFFSETCLIPRGN, 
   *PU_EMROFFSETCLIPRGN;                     //!< EMF manual 2.3.2.4
+#define U_SIZE_EMROFFSETCLIPRGN  (sizeof(U_EMROFFSETCLIPRGN))
 
 /* Index  27, 54 */
 /** 
@@ -2284,6 +2325,8 @@ typedef struct {
   U_EMRLINETO,                              //!< EMF manual 2.3.5.13
   *PU_EMRMOVETOEX,                          //!< EMF manual 2.3.11.4 
   *PU_EMRLINETO;                            //!< EMF manual 2.3.5.13 
+#define U_SIZE_EMRMOVETOEX  (sizeof(U_EMRMOVETOEX))
+#define U_SIZE_EMRLINETO    (sizeof(U_EMRLINETO  ))
 
 /* Index  28,33,52,59,60,61,65,66,68 */
 /** EMF manual 2.3.2
@@ -2309,6 +2352,15 @@ typedef struct {
   *PU_EMRFLATTENPATH,                       //!< EMF manual 2.3.10
   *PU_EMRWIDENPATH,                         //!< EMF manual 2.3.10
   *PU_EMRABORTPATH;                         //!< EMF manual 2.3.10
+#define U_SIZE_EMRSETMETARGN      (sizeof(U_EMRSETMETARGN    ))
+#define U_SIZE_EMRSAVEDC          (sizeof(U_EMRSAVEDC        ))
+#define U_SIZE_EMRREALIZEPALETTE  (sizeof(U_EMRREALIZEPALETTE))
+#define U_SIZE_EMRBEGINPATH       (sizeof(U_EMRBEGINPATH     ))
+#define U_SIZE_EMRENDPATH         (sizeof(U_EMRENDPATH       ))
+#define U_SIZE_EMRCLOSEFIGURE     (sizeof(U_EMRCLOSEFIGURE   ))
+#define U_SIZE_EMRFLATTENPATH     (sizeof(U_EMRFLATTENPATH   ))
+#define U_SIZE_EMRWIDENPATH       (sizeof(U_EMRWIDENPATH     ))
+#define U_SIZE_EMRABORTPATH       (sizeof(U_EMRABORTPATH     ))
 
 /* Index  29,30  */
 /** EMF manual 2.3.2.1           
@@ -2320,6 +2372,8 @@ typedef struct {
   U_EMRINTERSECTCLIPRECT,                   //!< EMF manual 2.3.2.3
   *PU_EMREXCLUDECLIPRECT,                   //!< EMF manual 2.3.2.1
   *PU_EMRINTERSECTCLIPRECT;                 //!< EMF manual 2.3.2.3
+#define U_SIZE_EMREXCLUDECLIPRECT        (sizeof(U_EMREXCLUDECLIPRECT   ))
+#define U_SIZE_EMRINTERSECTCLIPRECT      (sizeof(U_EMRINTERSECTCLIPRECT ))
 
 /* Index  31,32 */
 /** EMF manual 2.3.11.7          
@@ -2334,6 +2388,8 @@ typedef struct {
   U_EMRSCALEWINDOWEXTEX,                    //!< EMF manual 2.3.11.8
   *PU_EMRSCALEVIEWPORTEXTEX,                //!< EMF manual 2.3.11.7
   *PU_EMRSCALEWINDOWEXTEX;                  //!< EMF manual 2.3.11.8 
+#define U_SIZE_EMRSCALEVIEWPORTEXTEX      (sizeof(U_EMRSCALEVIEWPORTEXTEX))
+#define U_SIZE_EMRSCALEWINDOWEXTEX        (sizeof(U_EMRSCALEWINDOWEXTEX  ))
 
 /* Index  33  (see 28) */
 
@@ -2345,6 +2401,7 @@ typedef struct {
     int32_t             iRelative;          //!< DC to restore. -1 is preceding
 } U_EMRRESTOREDC, 
   *PU_EMRRESTOREDC;                         //!< EMF manual 2.3.11.6
+#define U_SIZE_EMRRESTOREDC      (sizeof(U_EMRRESTOREDC))
 
 /* Index  35 */
 /** EMF manual 2.3.12.2          
@@ -2354,6 +2411,7 @@ typedef struct {
     U_XFORM             xform;              //!< Transform
 } U_EMRSETWORLDTRANSFORM, 
   *PU_EMRSETWORLDTRANSFORM;                 //!< EMF manual 2.3.12.2
+#define U_SIZE_EMRSETWORLDTRANSFORM      (sizeof(U_EMRSETWORLDTRANSFORM))
 
 /* Index  36 */
 /** EMF manual 2.3.12.1          
@@ -2364,6 +2422,7 @@ typedef struct {
     uint32_t            iMode;              //!< ModifyWorldTransformMode Enumeration
 } U_EMRMODIFYWORLDTRANSFORM,
   *PU_EMRMODIFYWORLDTRANSFORM;              //!< EMF manual 2.3.12.1
+#define U_SIZE_EMRMODIFYWORLDTRANSFORM      (sizeof(U_EMRMODIFYWORLDTRANSFORM))
 
 /* Index  37,40 */
 /** EMF manual 2.3.8.3           
@@ -2375,6 +2434,8 @@ typedef struct {
   U_EMRSELECTOBJECT,                        //!< EMF manual 2.3.8.5
   *PU_EMRDELETEOBJECT,                      //!< EMF manual 2.3.8.3
   *PU_EMRSELECTOBJECT;                      //!< EMF manual 2.3.8.5
+#define U_SIZE_EMRDELETEOBJECT      (sizeof(U_EMRDELETEOBJECT))
+#define U_SIZE_EMRSELECTOBJECT      (sizeof(U_EMRSELECTOBJECT))
 
 /* Index  38 */
 /** EMF manual 2.3.7.7           
@@ -2385,6 +2446,7 @@ typedef struct {
     U_LOGPEN            lopn;               //!< Pen properties
 } U_EMRCREATEPEN, 
   *PU_EMRCREATEPEN;                         //!< EMF manual 2.3.7.7
+#define U_SIZE_EMRCREATEPEN      (sizeof(U_EMRCREATEPEN))
 
 /* Index  39  */
 /** EMF manual 2.3.7.1           
@@ -2395,6 +2457,7 @@ typedef struct {
     U_LOGBRUSH          lb;                 //!< Brush properties
 } U_EMRCREATEBRUSHINDIRECT, 
   *PU_EMRCREATEBRUSHINDIRECT;               //!< EMF manual 2.3.7.1           
+#define U_SIZE_EMRCREATEBRUSHINDIRECT      (sizeof(U_EMRCREATEBRUSHINDIRECT))
 
 /* Index  40 see 37 */
 
@@ -2409,6 +2472,7 @@ typedef struct {
     U_FLOAT             eSweepAngle;        //!< Sweep angle in degrees
 } U_EMRANGLEARC, 
   *PU_EMRANGLEARC;                          //!< EMF manual 2.3.5.1           
+#define U_SIZE_EMRANGLEARC      (sizeof(U_EMRANGLEARC))
 
 /* Index  42,43  */
 /** EMF manual 2.3.5.5           
@@ -2420,6 +2484,8 @@ typedef struct {
   U_EMRRECTANGLE,                           //!< EMF manual 2.3.5.5           
   *PU_EMRELLIPSE,                           //!< EMF manual 2.3.5.5 
   *PU_EMRRECTANGLE;                         //!< EMF manual 2.3.5.34
+#define U_SIZE_EMRELLIPSE        (sizeof(U_EMRELLIPSE  ))
+#define U_SIZE_EMRRECTANGLE      (sizeof(U_EMRRECTANGLE))
 
 /* Index  44  */
 /** EMF manual 2.3.5.35          
@@ -2430,6 +2496,7 @@ typedef struct {
     U_SIZEL             szlCorner;          //!< W & H in logical units of ellipse used to round corner
 } U_EMRROUNDRECT, 
   *PU_EMRROUNDRECT;                         //!< EMF manual 2.3.5.35          
+#define U_SIZE_EMRROUNDRECT        (sizeof(U_EMRROUNDRECT))
 
 /* Index  45, 46 ,47, 55 */
 /** EMF manual 2.3.5.2           
@@ -2447,6 +2514,10 @@ typedef struct {
   *PU_EMRCHORD,                             //!< EMF manual 2.3.5.4 
   *PU_EMRPIE,                               //!< EMF manual 2.3.5.15
   *PU_EMRARCTO;                             //!< EMF manual 2.3.5.3 
+#define U_SIZE_EMRARC          (sizeof(U_EMRARC  ))
+#define U_SIZE_EMRCHORD        (sizeof(U_EMRCHORD))
+#define U_SIZE_EMRPIE          (sizeof(U_EMRPIE  ))
+#define U_SIZE_EMRARCTO        (sizeof(U_EMRARCTO))
 
 /* Index  48  */
 /** EMF manual 2.3.8.6           
@@ -2456,6 +2527,7 @@ typedef struct {
     uint32_t            ihPal;              //!< Index of a Palette object in the EMF object table
 } U_EMRSELECTPALETTE, 
   *PU_EMRSELECTPALETTE;                     //!< EMF manual 2.3.8.6           
+#define U_SIZE_EMRSELECTPALETTE        (sizeof(U_EMRSELECTPALETTE))
 
 /* Index  49  */
 /** EMF manual 2.3.7.6           
@@ -2466,6 +2538,7 @@ typedef struct {
     U_LOGPALETTE        lgpl;               //!< Palette properties
 } U_EMRCREATEPALETTE,
   *PU_EMRCREATEPALETTE;                     //!< EMF manual 2.3.7.6           
+#define U_SIZE_EMRCREATEPALETTE        (sizeof(U_EMRCREATEPALETTE))
 
 /* Index  50 */
 /** EMF manual 2.3.8.8           
@@ -2478,6 +2551,7 @@ typedef struct {
     U_LOGPLTNTRY        aPalEntries[1];     //!< Values to set with
 } U_EMRSETPALETTEENTRIES,
   *PU_EMRSETPALETTEENTRIES;                 //!< EMF manual 2.3.8.8           
+#define U_SIZE_EMRSETPALETTEENTRIES        (sizeof(U_EMR) + 2*sizeof(uint32_t) + sizeof(U_NUM_LOGPLTNTRY))
 
 /* Index  51 */
 /** EMF manual 2.3.8.4           
@@ -2488,6 +2562,7 @@ typedef struct {
     uint32_t            cEntries;           //!< Number to expand or truncate the Palette entry list to.
 } U_EMRRESIZEPALETTE,
   *PU_EMRRESIZEPALETTE;                     //!< EMF manual 2.3.8.4           
+#define U_SIZE_EMRRESIZEPALETTE        (sizeof(U_EMRRESIZEPALETTE))
 
 /* Index  52  (see 28) */
 
@@ -2501,22 +2576,26 @@ typedef struct {
     uint32_t            iMode;              //!< FloodFill Enumeration
 } U_EMREXTFLOODFILL,
   *PU_EMREXTFLOODFILL;                      //!< EMF manual 2.3.5.6       
+#define U_SIZE_EMREXTFLOODFILL        (sizeof(U_EMREXTFLOODFILL))
 
 /* Index  54  (see 27) */
 
 /* Index  55 (see 45) */
 
 /* Index  56  */
-/** EMF manual 2.3.5.20          
+/** EMF manual 2.3.5.20   
+
+  followed by       
+    uint8_t             abTypes[1];         //!< Array of Point Enumeration 
 */
 typedef struct {
     U_EMR               emr;                //!< U_EMR
     U_RECTL             rclBounds;          //!< Bounding rectangle in device units
     U_NUM_POINTL        cptl;               //!< Number of U_POINTL objects
     U_POINTL            aptl[1];            //!< Array of U_POINTL objects
-    uint8_t             abTypes[1];         //!< Array of Point Enumeration 
 } U_EMRPOLYDRAW, 
   *PU_EMRPOLYDRAW;                          //!< EMF manual 2.3.5.20          
+#define U_SIZE_EMRPOLYDRAW        (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_NUM_POINTL))
 
 /* Index  57  */
 /** EMF manual 2.3.11.9          
@@ -2526,6 +2605,7 @@ typedef struct {
     uint32_t            iArcDirection;      //!< ArcDirection Enumeration
 } U_EMRSETARCDIRECTION,
   *PU_EMRSETARCDIRECTION;                   //!< EMF manual 2.3.11.9
+#define U_SIZE_EMRSETARCDIRECTION        (sizeof(U_EMRSETARCDIRECTION))
 
 /* Index  58 */
 /** EMF manual 2.3.11.21         
@@ -2538,6 +2618,7 @@ typedef struct {
     uint32_t            eMiterLimit;        //!< Miter limit (max value of mitered length / line width) 
 } U_EMRSETMITERLIMIT,
   *PU_EMRSETMITERLIMIT;                     //!< EMF manual 2.3.11.21         
+#define U_SIZE_EMRSETMITERLIMIT        (sizeof(U_EMRSETMITERLIMIT))
 
 /* Index  59,60,61  (see 28) */
 
@@ -2553,6 +2634,9 @@ typedef struct {
   *PU_EMRFILLPATH,                          //!< EMF manual 2.3.5.9 
   *PU_EMRSTROKEANDFILLPATH,                 //!< EMF manual 2.3.5.38
   *PU_EMRSTROKEPATH;                        //!< EMF manual 2.3.5.39
+#define U_SIZE_EMRFILLPATH                 (sizeof(U_EMRFILLPATH         ))
+#define U_SIZE_EMRSTROKEANDFILLPATH        (sizeof(U_EMRSTROKEANDFILLPATH))
+#define U_SIZE_EMRSTROKEPATH               (sizeof(U_EMRSTROKEPATH       ))
 
 /* Index  65,66  (see 28) */
 /* Index  67  (see 17) */
@@ -2569,6 +2653,7 @@ typedef struct {
     uint8_t             Data[1];            //!< Comment (any binary data, interpretation is program specific)
 } U_EMRCOMMENT,
   *PU_EMRCOMMENT;                           //!< EMF manual 2.3.3.1, AKA GDICOMMENT
+#define U_SIZE_EMRCOMMENT (sizeof(U_EMR) + sizeof(U_CBDATA))
 
 /* variant comment types */
 /** EMF manual 2.3.3.2 
@@ -2580,6 +2665,7 @@ typedef struct {
     uint8_t             Data[1];            //!< EMF Plus record
 } U_EMRCOMMENT_EMFPLUS,
   *PU_EMRCOMMENT_EMFPLUS;                   //!< EMF manual 2.3.3.2, EMF Plus comment
+#define U_SIZE_EMRCOMMENT_EMFPLUS (sizeof(U_EMR) + sizeof(U_CBDATA) + sizeof(uint32_t))
 
 /** EMF manual 2.3.3.3 
 */
@@ -2591,6 +2677,7 @@ typedef struct {
     uint8_t             Data[1];            //!< EMF Spool records
 } U_EMRCOMMENT_SPOOL,
   *PU_EMRCOMMENT_SPOOL;                     //!< EMF manual 2.3.3.3, EMF Spool comment
+#define U_SIZE_EMRCOMMENT_SPOOL (sizeof(U_EMR) + sizeof(U_CBDATA) + 2*sizeof(uint32_t))
 
 /** EMF manual 2.3.3.4 
 */
@@ -2602,9 +2689,11 @@ typedef struct {
     uint8_t             Data[1];            //!< Public comment data
 } U_EMRCOMMENT_PUBLIC,
   *PU_EMRCOMMENT_PUBLIC;                    //!< EMF manual 2.3.3.4, EMF Public comment
+#define U_SIZE_EMRCOMMENT_PUBLIC (sizeof(U_EMR) + sizeof(U_CBDATA) + 2*sizeof(uint32_t))
 
 /* Index  71  */
-/** EMF manual 2.3.5.10          
+/** EMF manual 2.3.5.10  
+   followed by a variable number of U_RECTLs        
 */
 typedef struct {
     U_EMR               emr;                //!< U_EMR
@@ -2614,6 +2703,7 @@ typedef struct {
     U_RGNDATA           RgnData[1];         //!< Variable size U_RGNDATA structure
 } U_EMRFILLRGN,
   *PU_EMRFILLRGN;                           //!< EMF manual 2.3.5.10          
+#define U_SIZE_EMRFILLRGN (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_CBRGNDATA) + sizeof(uint32_t))
 
 /* Index  72 */
 /** EMF manual 2.3.5.11          
@@ -2627,6 +2717,7 @@ typedef struct {
     U_RGNDATA           RgnData[1];         //!< Variable size U_RGNDATA structure
 } U_EMRFRAMERGN,
   *PU_EMRFRAMERGN;                          //!< EMF manual 2.3.5.11          
+#define U_SIZE_EMRFRAMERGN (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_CBRGNDATA) + sizeof(uint32_t) + sizeof(U_SIZEL))
 
 /* Index  73,74 */
 /** EMF manual 2.3.11.3          
@@ -2640,6 +2731,8 @@ typedef struct {
   U_EMRPAINTRGN,                            //!< EMF manual 2.3.5.14
   *PU_EMRINVERTRGN,                         //!< EMF manual 2.3.11.3
   *PU_EMRPAINTRGN;                          //!< EMF manual 2.3.5.14
+#define U_SIZE_EMRINVERTRGN (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_CBRGNDATA))
+#define U_SIZE_EMRPAINTRGN  U_SIZE_EMRINVERTRGN
 
 /* Index  75 */
 /** EMF manual 2.3.2.2           
@@ -2651,6 +2744,7 @@ typedef struct {
     U_RGNDATA           RgnData[1];         //!< Variable size U_RGNDATA structure          
 } U_EMREXTSELECTCLIPRGN,
   *PU_EMREXTSELECTCLIPRGN;                  //!< EMF manual 2.3.2.2
+#define U_SIZE_EMREXTSELECTCLIPRGN (sizeof(U_EMR) + sizeof(U_CBRGNDATA) + sizeof(uint32_t))
 
 /* Index  76 */
 /** EMF manual 2.3.1.2           
@@ -2672,6 +2766,7 @@ typedef struct {
                                             //!< Record may include optional bitmapbuffer
 } U_EMRBITBLT,
   *PU_EMRBITBLT;                            //!< EMF manual 2.3.1.2
+#define U_SIZE_EMRBITBLT (sizeof(U_EMRBITBLT))
 
 /* Index  77 */
 /** EMF manual 2.3.1.6           
@@ -2694,6 +2789,7 @@ typedef struct {
                                             //!< Record may include optional bitmapbuffer
 } U_EMRSTRETCHBLT,
   *PU_EMRSTRETCHBLT;                        //!< EMF manual 2.3.1.6
+#define U_SIZE_EMRSTRETCHBLT (sizeof(U_EMRSTRETCHBLT))
 
 /* Index  78  */
 /** EMF manual 2.3.1.3           
@@ -2721,6 +2817,7 @@ typedef struct {
                                             //!< Record may include optional Source and mask bitmapbuffers
 } U_EMRMASKBLT,
   *PU_EMRMASKBLT;                           //!< EMF manual 2.3.1.3
+#define U_SIZE_EMRMASKBLT (sizeof(U_EMRMASKBLT))
 
 /* Index  79 */
 /** EMF manual 2.3.1.4           
@@ -2747,6 +2844,7 @@ typedef struct {
                                             //!< Record may include optional Source and mask bitmapbuffers
 } U_EMRPLGBLT,
   *PU_EMRPLGBLT;                            //!< EMF manual 2.3.1.4
+#define U_SIZE_EMRPLGBLT (sizeof(U_EMRPLGBLT))
 
 /* Index  80 */
 /** EMF manual 2.3.1.5           
@@ -2767,6 +2865,7 @@ typedef struct {
                                             //!< Record may includes optional bitmapbuffer
 } U_EMRSETDIBITSTODEVICE,
   *PU_EMRSETDIBITSTODEVICE;                 //!< EMF manual 2.3.1.5
+#define U_SIZE_EMRSETDIBITSTODEVICE (sizeof(U_EMRSETDIBITSTODEVICE))
 
 /* Index  81 */
 /** EMF manual 2.3.1.7           
@@ -2787,6 +2886,7 @@ typedef struct {
                                             //!< Record may includes optional bitmapbuffer
 } U_EMRSTRETCHDIBITS,
   *PU_EMRSTRETCHDIBITS;                     //!< EMF manual 2.3.1.7
+#define U_SIZE_EMRSTRETCHDIBITS (sizeof(U_EMRSTRETCHDIBITS))
 
 /* Index  82 */
 /** EMF manual 2.3.7.8           
@@ -2797,6 +2897,8 @@ typedef struct {
     U_LOGFONT_PANOSE    elfw;               //!< Font parameters, either U_LOGFONT or U_LOGFONT_PANOSE, the latter is bigger so use that type here
 } U_EMREXTCREATEFONTINDIRECTW,
   *PU_EMREXTCREATEFONTINDIRECTW;            //!< EMF manual 2.3.7.8
+#define U_SIZE_EMREXTCREATEFONTINDIRECTW_LOGFONT_PANOSE  (sizeof(U_EMR) + 4 + sizeof(U_LOGFONT_PANOSE))
+#define U_SIZE_EMREXTCREATEFONTINDIRECTW_LOGFONT (sizeof(U_EMR) + 4 + sizeof(U_LOGFONT))
 
 /* Index  83,84  */
 /** EMF manual 2.3.5.7           
@@ -2820,6 +2922,8 @@ typedef struct {
   U_EMREXTTEXTOUTW,                         //!< EMF manual 2.3.5.8
  *PU_EMREXTTEXTOUTA,                        //!< EMF manual 2.3.5.7
  *PU_EMREXTTEXTOUTW;                        //!< EMF manual 2.3.5.8
+#define U_SIZE_EMREXTTEXTOUTA (sizeof(U_EMREXTTEXTOUTA))
+#define U_SIZE_EMREXTTEXTOUTW (sizeof(U_EMREXTTEXTOUTW))
 
 /* Index  85,86,87,88,89 */
 /** EMF manual 2.3.5.17          
@@ -2839,9 +2943,16 @@ typedef struct {
   *PU_EMRPOLYLINE16,                        //!< EMF manual 2.3.5.25
   *PU_EMRPOLYBEZIERTO16,                    //!< EMF manual 2.3.5.19
   *PU_EMRPOLYLINETO16;                      //!< EMF manual 2.3.5.27
-                                                 
+#define U_SIZE_EMRPOLYBEZIER16   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_NUM_POINT16))
+#define U_SIZE_EMRPOLYGON16       U_SIZE_EMRPOLYBEZIER16
+#define U_SIZE_EMRPOLYLINE16      U_SIZE_EMRPOLYBEZIER16                               
+#define U_SIZE_EMRPOLYBEZIERTO16  U_SIZE_EMRPOLYBEZIER16
+#define U_SIZE_EMRPOLYLINETO16    U_SIZE_EMRPOLYBEZIER16
 /* Index  90,91 */
-/** EMF manual 2.3.5.31          
+/** EMF manual 2.3.5.31  
+
+   followed by        
+    U_POINT16           apts[1];          //!< array of point16
 */
 typedef struct {
     U_EMR               emr;                //!< U_EMR
@@ -2849,24 +2960,28 @@ typedef struct {
     U_NUM_POLYCOUNTS    nPolys;             //!< Number of elements in aPolyCounts
     U_NUM_POINT16       cpts;               //!< Total number of points (over all poly)
     U_POLYCOUNTS        aPolyCounts[1];     //!< Number of points in each poly (sequential)
-//  This will appear somewhere but is not really part of the core structure.
-//    U_POINT16           apts[1];          //!< array of point16
 } U_EMRPOLYPOLYLINE16,
   U_EMRPOLYPOLYGON16,                       //!< EMF manual 2.3.5.29
   *PU_EMRPOLYPOLYLINE16,                    //!< EMF manual 2.3.5.31
   *PU_EMRPOLYPOLYGON16;                     //!< EMF manual 2.3.5.29
+#define U_SIZE_EMRPOLYPOLYLINE16   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_NUM_POLYCOUNTS) + sizeof(U_NUM_POINT16))
+#define U_SIZE_EMRPOLYPOLYGON16  U_SIZE_EMRPOLYPOLYLINE16
 
 /* Index  92 */
-/** EMF manual 2.3.5.21          
+/** EMF manual 2.3.5.21  
+
+ followed by
+    uint8_t             abTypes[1];         //!< Array of Point Enumeration
+         
 */
 typedef struct {
     U_EMR               emr;                //!< U_EMR
     U_RECTL             rclBounds;          //!< Bounding rectangle in device units
     U_NUM_POINT16       cpts;               //!< Total number of points (over all poly)
     U_POINT16           apts[1];            //!< array of points
-    uint8_t             abTypes[1];         //!< Array of Point Enumeration
 } U_EMRPOLYDRAW16,
   *PU_EMRPOLYDRAW16;                        //!< EMF manual 2.3.5.21
+#define U_SIZE_EMRPOLYDRAW16   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_NUM_POINT16))
 
 /* Index  93  */
 /** EMF manual 2.3.7.5           
@@ -2882,6 +2997,7 @@ typedef struct {
                                             //!< Record may include optional DIB bitmapbuffer
 } U_EMRCREATEMONOBRUSH,
   *PU_EMRCREATEMONOBRUSH;                   //!< EMF manual 2.3.7.5
+#define U_SIZE_EMRCREATEMONOBRUSH   (sizeof(U_EMRCREATEMONOBRUSH))
 
 /* Index  94  */
 /** EMF manual 2.3.7.4           
@@ -2897,6 +3013,7 @@ typedef struct {
                                             //!< Record may include optional DIB bitmapbuffer
 } U_EMRCREATEDIBPATTERNBRUSHPT,
   *PU_EMRCREATEDIBPATTERNBRUSHPT;           //!< EMF manual 2.3.7.4
+#define U_SIZE_EMRCREATEDIBPATTERNBRUSHPT   (sizeof(U_EMRCREATEDIBPATTERNBRUSHPT))
 
 /* Index  95 */
 /** EMF manual 2.3.7.9           
@@ -2912,6 +3029,7 @@ typedef struct {
                                             //!< Record may include optional DIB bitmap
 } U_EMREXTCREATEPEN,
   *PU_EMREXTCREATEPEN;                      //!< EMF manual 2.3.7.9
+#define U_SIZE_EMREXTCREATEPEN   (sizeof(U_EMREXTCREATEPEN))
 
 /* Index  96.97  */
 /** EMF manual 2.3.5.32          
@@ -2928,6 +3046,8 @@ typedef struct {
   U_EMRPOLYTEXTOUTW,                        //!< EMF manual 2.3.5.33
   *PU_EMRPOLYTEXTOUTA,                      //!< EMF manual 2.3.5.32
   *PU_EMRPOLYTEXTOUTW;                      //!< EMF manual 2.3.5.33
+#define U_SIZE_EMRPOLYTEXTOUTA   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(uint32_t) + 2*sizeof(U_FLOAT) + sizeof(U_NUM_EMRTEXT))
+#define U_SIZE_EMRPOLYTEXTOUTW    U_SIZE_EMRPOLYTEXTOUTA
 
 /* Index  98  (see 17) */
 
@@ -2940,6 +3060,7 @@ typedef struct {
     U_LOGCOLORSPACEA    lcs;                //!< ColorSpace parameters
 } U_EMRCREATECOLORSPACE,
   *PU_EMRCREATECOLORSPACE;                  //!< EMF manual 2.3.7.2           
+#define U_SIZE_EMRCREATECOLORSPACE   (sizeof(U_EMRCREATECOLORSPACE))
 
 /* Index  100,101 */
 /** EMF manual 2.3.8.2           
@@ -2951,6 +3072,8 @@ typedef struct {
   U_EMRSETCOLORSPACE,                       //!< EMF manual 2.3.8.7
   *PU_EMRDELETECOLORSPACE,                  //!< EMF manual 2.3.8.2
   *PU_EMRSETCOLORSPACE;                     //!< EMF manual 2.3.8.7
+#define U_SIZE_EMRDELETECOLORSPACE   (sizeof(U_EMRDELETECOLORSPACE))
+#define U_SIZE_EMRSETCOLORSPACE      (sizeof(U_EMRSETCOLORSPACE   ))
 
 /* Index  102 */
 /** EMF manual 2.3.9.2           
@@ -2961,6 +3084,7 @@ typedef struct {
     U_DATA              Data[1];            //!< OpenGL data
 } U_EMRGLSRECORD,
   *PU_EMRGLSRECORD;                         //!< EMF manual 2.3.9.2           
+#define U_SIZE_EMRGLSRECORD   (sizeof(U_EMRGLSRECORD))
 
 /* Index  103 */
 /** EMF manual 2.3.9.1           
@@ -2972,6 +3096,7 @@ typedef struct {
     U_DATA              Data[1];            //!< OpenGL data
 } U_EMRGLSBOUNDEDRECORD,
   *PU_EMRGLSBOUNDEDRECORD;                  //!<  EMF manual 2.3.9.1
+#define U_SIZE_EMRGLSBOUNDEDRECORD   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_CBDATA))
 
 /* Index  104 */
 /** EMF manual 2.3.11.5          
@@ -2981,6 +3106,7 @@ typedef struct {
     U_PIXELFORMATDESCRIPTOR pfd;            //!< PixelFormatDescriptor
 } U_EMRPIXELFORMAT,
   *PU_EMRPIXELFORMAT;                       //!< EMF manual 2.3.11.5
+#define U_SIZE_EMRPIXELFORMAT   (sizeof(U_EMRPIXELFORMAT))
 
 /* Index  105 */
 /** EMF manual 2.3.6.1           
@@ -2991,6 +3117,7 @@ typedef struct {
     U_DATA              Data[1];            //!< Data to send
 } U_EMRDRAWESCAPE,
   *PU_EMRDRAWESCAPE;                        //!< EMF manual 2.3.6.1
+#define U_SIZE_EMRDRAWESCAPE   (sizeof(U_EMR) + sizeof(U_CBDATA))
 
 /* Index  106 */
 /** EMF manual 2.3.6.2           
@@ -3001,6 +3128,7 @@ typedef struct {
     U_DATA              Data[1];            //!< Data to send
 } U_EMREXTESCAPE,
   *PU_EMREXTESCAPE;                         //!< EMF manual 2.3.6.2
+#define U_SIZE_EMREXTESCAPE   (sizeof(U_EMR) + sizeof(U_CBDATA))
 
 /* Index  107 (not implemented ) */
 
@@ -3020,22 +3148,26 @@ typedef struct {
 //!<    uint32_t            TextString;          text to output (fuOptions & ETO_SMALL_CHARS ? 8 bit : 16 bit)
 } U_EMRSMALLTEXTOUT,
   *PU_EMRSMALLTEXTOUT;                      //!< EMF manual 2.3.5.37
+#define U_SIZE_EMRSMALLTEXTOUT   (sizeof(U_EMRSMALLTEXTOUT))
 
 /* Index  109 (not implemented )
 EMF manual 2.3.11.2          
 */
 
 /* Index  110 */
-/** EMF manual 2.3.6.3           
+/** EMF manual 2.3.6.3     
+
+    followed by      
+    uint8_t             Data[1];            //!< Data for printer driver
 */
 typedef struct {
     U_EMR               emr;                //!< U_EMR       
     U_CBDATA            cbDriver;           //!< Number of bytes in driver name (note, BYTES, not CHARACTERS)
     U_CBDATA            cbData;             //!< Number of bytes in data
     uint16_t            Driver[1];          //!< Driver name in uint16_t characters, null terminated
-    uint8_t             Data[1];            //!< Data for printer driver
 } U_EMRNAMEDESCAPE,
   *PU_EMRNAMEDESCAPE;                       //!< EMF manual 2.3.6.3
+#define U_SIZE_EMRNAMEDESCAPE   (sizeof(U_EMRNAMEDESCAPE))
 
 /* Index  111-113 (not implemented ) 
   EMF manual 2.3.8.1           
@@ -3064,6 +3196,7 @@ typedef struct {
                                             //!< Record may include optional DIB bitmap
 } U_EMRALPHABLEND,
   *PU_EMRALPHABLEND;                        //!< EMF manual 2.3.1.1
+#define U_SIZE_EMRALPHABLEND   (sizeof(U_EMRALPHABLEND))
 
 /* Index  115  (see 17) */
 
@@ -3088,11 +3221,16 @@ typedef struct {
                                             //!< Record may includes optional bitmapbuffer
 } U_EMRTRANSPARENTBLT,
   *PU_EMRTRANSPARENTBLT;                    //!< EMF manual 2.3.1.8
+#define U_SIZE_EMRTRANSPARENTBLT   (sizeof(U_EMRTRANSPARENTBLT))
 
 /* Index  117 (not a defined U_EMR record type ) */
 
 /* Index  118 */
-/** EMF manual 2.3.5.12          
+/** EMF manual 2.3.5.12   
+
+    followed by       
+    U_TRIVERTEX         TriVert[1];          Array of TriVertex objects
+    uint32_t            GradObj[1];          Array of gradient objects (each has 2 or 3 indices into TriVert array) 
 */
 typedef struct {
     U_EMR               emr;                //!< U_EMR
@@ -3100,11 +3238,9 @@ typedef struct {
     U_NUM_TRIVERTEX     nTriVert;           //!< Number of TriVertex objects
     U_NUM_GRADOBJ       nGradObj;           //!< Number of gradient triangle/rectangle objects
     uint32_t            ulMode;             //!< Gradientfill Enumeration (determines Triangle/Rectangle)
-//parts that are required but which are not included in the core structure
-//    U_TRIVERTEX         TriVert[1];          Array of TriVertex objects
-//    uint32_t            GradObj[1];          Array of gradient objects (each has 2 or 3 indices into TriVert array) 
 } U_EMRGRADIENTFILL,
   *PU_EMRGRADIENTFILL;                      //!< EMF manual 2.3.5.12
+#define U_SIZE_EMRGRADIENTFILL   (sizeof(U_EMRGRADIENTFILL))
 
 /* Index  119,120 (not implemented )
 EMF manual 2.3.11.18         
@@ -3123,6 +3259,7 @@ typedef struct {
     uint8_t             Data[1];            //!< Data of size cbName+cbData: Name in UTF16 then color profile data 
 } U_EMRCOLORMATCHTOTARGETW,
   *PU_EMRCOLORMATCHTOTARGETW;               //!< EMF manual 2.3.11.1 
+#define U_SIZE_EMRCOLORMATCHTOTARGETW   (sizeof(U_EMR) + 2*sizeof(uint32_t) + sizeof(U_CBNAME) + sizeof(U_CBDATA))
 
 /* Index  122 */
 /** EMF manual 2.3.7.3           
@@ -3136,6 +3273,10 @@ typedef struct {
     uint8_t             Data[1];            //!< (Optional, dwFlags & 1) color profile data 
 } U_EMRCREATECOLORSPACEW,
   *PU_EMRCREATECOLORSPACEW;                 //!< EMF manual 2.3.7.3
+#define U_SIZE_EMRCREATECOLORSPACEW   (sizeof(U_EMR) + 2*sizeof(uint32_t) + sizeof(U_LOGCOLORSPACEW) + sizeof(U_CBDATA))
+
+// records which are not documented, so we have no idea what to do with them
+#define U_SIZE_EMRUNDEFINED 2048
 
 // ************************************************************************************************
 // Utility function structures
@@ -3207,7 +3348,7 @@ int       get_real_color_count(const char *Bmih);
 int       get_real_color_icount(int Colors, int BitCount, int Width, int Height);
 int       RGBA_to_DIB(char **px, uint32_t *cbPx, PU_RGBQUAD *ct, int *numCt, 
                const char *rgba_px, int w, int h, int stride, uint32_t colortype, int use_ct, int invert);
-int       get_DIB_params( void *pEmr, uint32_t offBitsSrc, uint32_t offBmiSrc, 
+int       get_DIB_params( const char *record, uint32_t offBitsSrc, uint32_t offBmiSrc, 
                const char **px, const U_RGBQUAD **ct, uint32_t *numCt, 
                uint32_t *width, uint32_t *height, uint32_t *colortype, uint32_t *invert );
 int       DIB_to_RGBA(const char *px, const U_RGBQUAD *ct, int numCt,
@@ -3237,6 +3378,7 @@ int   emf_htable_free(EMFHANDLES **eht);
 #define   htable_free    emf_htable_free
 
 U_RECTL          rectl_set(U_POINTL ul, U_POINTL lr);
+void             rectli_set(PU_RECTL array, int index, U_POINTL ul, U_POINTL lr);
 U_SIZEL          sizel_set(int32_t  x,  int32_t  y);
 U_POINTL         point32_set(int32_t  x,  int32_t  y);
 #define point_set point32_set
@@ -3462,6 +3604,7 @@ char *U_EMRSMALLTEXTOUT_set(const U_POINTL Dest, const U_NUM_STR cChars, const u
 // U_EMRCOLORCORRECTPALETTE_set      111  Not implemented
 // U_EMRSETICMPROFILEA_set           112  Not implemented         
 // U_EMRSETICMPROFILEW_set           113  Not implemented         
+
 
 char *U_EMRALPHABLEND_set(const U_RECTL rclBounds, const U_POINTL Dest, const U_POINTL cDest, 
                     const U_POINTL Src, const U_POINTL cSrc, const U_XFORM xformSrc,

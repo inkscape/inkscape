@@ -21,11 +21,11 @@
 
 /*
 File:      upmf.c
-Version:   0.0.6
-Date:      26-MAR-2014
+Version:   0.0.11
+Date:      28-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -1459,11 +1459,18 @@ int U_PMF_PTRSAV_COND(const char **Dst, const char *Src, int Doit){
    else {           *Dst = NULL; }
    return(1);
 }
+/*
+
+   =====================================================================================
+   start of U_PMF_*_get() functions 
+
+*/
 
 /**
     \brief Get the 16 bit unsigned Flags field from a header.
     \param  contents   Record from which to extract data, will be incremented by header size.
     \return Flags field
+
     In many records the only value needed from the header is Flags.  Rather than mapping
     the entire Header and returning it, in these instances this function may be called to
     just get this one value.
@@ -1513,6 +1520,19 @@ int U_PMF_CMN_HDR_get(const char **contents, U_PMF_CMN_HDR *Header){
       *contents += sizeof(U_PMF_CMN_HDR);
    }
    return(1);
+}
+
+/**
+    \brief return the size in bytes of the EMF+ record
+    \param  contents   Record from which to extract data, will not be modified.
+    \returns size, or 0 if contents is Null
+*/
+int U_PMF_RECORD_SIZE_get(const char *contents){
+   if(!contents){ return(0); }
+   int Size;
+   const char *from = contents + 4;
+   U_PMF_SERIAL_get(&from, &Size, 4, 1, U_LE);
+   return(Size);
 }
 
 /**
@@ -3057,7 +3077,7 @@ U_PSEUDO_OBJ *U_PMF_POINTR_set(uint32_t Elements, const U_PMF_POINTF *Coords){
    poi = U_PMF_4NUM_set(Elements);
    po = U_PO_append(po, poi->Data, poi->Used);      
    U_PO_free(&poi);
-   if(po)goto end;
+   if(!po)goto end;
 
    for(Xf = Yf = 0.0 ;Elements; Elements--, Coords++){
       Xf = U_ROUND(Coords->X) - Xf;
@@ -5362,6 +5382,17 @@ U_PSEUDO_OBJ *U_PMR_TRANSLATEWORLDTRANSFORM_set(int xmtype, U_FLOAT Dx, U_FLOAT 
    return(po);
 }
 
+/*
+
+   end of U_PMF_*_set() functions 
+   =====================================================================================
+   start of U_PMF_*_get() functions 
+
+      These functions all take a blimit value so that they can check if the data description in the fields
+      they process extend beyond the end of the record.
+
+*/
+
 
 //! \cond
 /* core _get functions, not accessed outside of this routine */
@@ -5387,11 +5418,15 @@ int U_PMF_CORE1_get(const char *contents, void *v1, void *v2, void *v3, void *v4
     \param  Version    EmfPlusGraphicsVersion object
     \param  Type       BrushType Enumeration
     \param  Data       one of the 5 types of Brush data
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.1.1, Microsoft name: EmfPlusBrush Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_BRUSH_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data){
-    if(!contents || !Version || !Type || !Data){ return(0); }
+int U_PMF_BRUSH_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data, const char *blimit){
+    if(!contents || !Version || !Type || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents,sizeof(U_PMF_BRUSH), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Version, 4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Type,    4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
@@ -5405,11 +5440,15 @@ int U_PMF_BRUSH_get(const char *contents, uint32_t *Version, uint32_t *Type, con
     \param  Version    EmfPlusGraphicsVersion object
     \param  Type       CustomLineCapData Enumeration
     \param  Data       one of the 2 types of Linecap data
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.1.2, Microsoft name: EmfPlusCustomLineCap Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_CUSTOMLINECAP_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data){
-    if(!contents || !Version || !Type || !Data){ return(0); }
+int U_PMF_CUSTOMLINECAP_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data, const char *blimit){
+    if(!contents || !Version || !Type || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_CUSTOMLINECAP), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Version, 4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Type,    4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
@@ -5428,10 +5467,13 @@ int U_PMF_CUSTOMLINECAP_get(const char *contents, uint32_t *Version, uint32_t *T
     \param  Data       Unicode (UTF-16LE) name of font family
 
     EMF+ manual 2.2.1.3, Microsoft name: EmfPlusFont Object
+
+    Caller must check Data for possible memory access violations.
 */
 int U_PMF_FONT_get(const char *contents, uint32_t *Version, U_FLOAT *EmSize, uint32_t *SizeUnit,
-      int32_t *FSFlags, uint32_t *Length, const char **Data){
-    if(!contents || !Version || !EmSize || !SizeUnit || !FSFlags || !Length || !Data){ return(0); }
+      int32_t *FSFlags, uint32_t *Length, const char **Data, const char *blimit){
+    if(!contents || !Version || !EmSize || !SizeUnit || !FSFlags || !Length || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_FONT), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Version,  4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, EmSize,   4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, SizeUnit, 4, 1, U_LE);
@@ -5452,9 +5494,12 @@ int U_PMF_FONT_get(const char *contents, uint32_t *Version, U_FLOAT *EmSize, uin
     \param  Data       one of the 2 types of image data
 
     EMF+ manual 2.2.1.4, Microsoft name: EmfPlusImage Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_IMAGE_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data){
-    if(!contents || !Version || !Type){ return(0); }
+int U_PMF_IMAGE_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **Data, const char *blimit){
+    if(!contents || !Version || !Type || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IMAGE), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Version, 4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Type,    4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
@@ -5472,8 +5517,10 @@ int U_PMF_IMAGE_get(const char *contents, uint32_t *Version, uint32_t *Type, con
 
     EMF+ manual 2.2.1.5, Microsoft name: EmfPlusImageAttributes Object
 */
-int U_PMF_IMAGEATTRIBUTES_get(const char *contents, uint32_t *Version, uint32_t *WrapMode, uint32_t *ClampColor, uint32_t *ObjectClamp){
-    if(!contents || !Version || !WrapMode || !ClampColor || !ObjectClamp){ return(0); }
+int U_PMF_IMAGEATTRIBUTES_get(const char *contents, uint32_t *Version, uint32_t *WrapMode, uint32_t *ClampColor,
+      uint32_t *ObjectClamp, const char *blimit){
+    if(!contents || !Version || !WrapMode || !ClampColor || !ObjectClamp || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IMAGEATTRIBUTES), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Version,    4, 1, U_LE);
     contents += 4; /* Skip Reserved 1*/
     U_PMF_SERIAL_get(&contents, WrapMode,   4, 1, U_LE);
@@ -5494,21 +5541,31 @@ int U_PMF_IMAGEATTRIBUTES_get(const char *contents, uint32_t *Version, uint32_t 
     \param  Types      array of U_PMF_PATHPOINTTYPERLE and/or U_PMF_PATHPOINTTYPE
 
     EMF+ manual 2.2.1.6, Microsoft name: EmfPlusPath Object
+
+    Caller must check Types for possible memory access violations if type can be U_PMF_PATHPOINTTYPERLE.
 */
-int U_PMF_PATH_get(const char *contents, uint32_t *Version, uint32_t *Count, uint16_t *Flags, const char **Points, const char **Types){
-    if(!contents || !Version || !Count || !Flags || !Points || !Types){ return(0); }
+int U_PMF_PATH_get(const char *contents, uint32_t *Version, uint32_t *Count, uint16_t *Flags, 
+      const char **Points, const char **Types, const char *blimit){
+    if(!contents || !Version || !Count || !Flags || !Points || !Types || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_PATH), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Version,    4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Count,      4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Flags,      2, 1, U_LE);
     contents+=2; /* reserved */
-    U_PMF_PTRSAV_SHIFT(Points, &contents, 0);
+    uint32_t sizeP, sizeT;
     if(*Flags      & U_PPF_P){ 
-       int killme  = U_PMF_LEN_REL715(contents,*Count); //DEBUG
-       printf("DEBUG U_PMF_PATH_get count:%d LENREL715:%d\n",*Count,killme);fflush(stdout);
-       contents += killme; 
+       sizeP  = U_PMF_LEN_REL715(contents,*Count); //DEBUG
+       printf("DEBUG U_PMF_PATH_get count:%d LENREL715:%d\n",*Count,sizeP);fflush(stdout);
     }
-    else if(*Flags & U_PPF_C){ contents += *Count * sizeof(U_PMF_POINT);      }
-    else {                     contents += *Count * sizeof(U_PMF_POINTF);     }
+    else if(*Flags & U_PPF_C){ sizeP = *Count * sizeof(U_PMF_POINT);   }
+    else {                     sizeP = *Count * sizeof(U_PMF_POINTF);  }
+    if(IS_MEM_UNSAFE(contents, sizeP, blimit))return(0);
+    U_PMF_PTRSAV_SHIFT(Points, &contents, 0);
+    contents += sizeP;
+    /* this limit is correct if there are only U_PMF_PATHPOINTTYPE PointTypes, it is a lower bound if
+       there can also be U_PMF_PATHPOINTTYPERLE */
+    sizeT = *Count * sizeof(U_PMF_PATHPOINTTYPE);
+    if(IS_MEM_UNSAFE(contents, sizeT, blimit))return(0);
     U_PMF_PTRSAV_SHIFT(Types, &contents, 0);
     return(1);
 }
@@ -5523,9 +5580,12 @@ int U_PMF_PATH_get(const char *contents, uint32_t *Version, uint32_t *Count, uin
     \param  Brush      Brush Description 
 
     EMF+ manual 2.2.1.7, Microsoft name: EmfPlusPen Object
+
+    Caller must check Brush and PenData for possible memory access violations.
 */
-int U_PMF_PEN_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **PenData, const char **Brush){
-    if(!contents || !Type || !PenData || !Brush){ return(0); }
+int U_PMF_PEN_get(const char *contents, uint32_t *Version, uint32_t *Type, const char **PenData, const char **Brush, const char *blimit){
+    if(!contents || !Type || !PenData || !Brush || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_PEN), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Version, 4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Type,    4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(PenData, &contents, 0);
@@ -5543,8 +5603,9 @@ int U_PMF_PEN_get(const char *contents, uint32_t *Version, uint32_t *Type, const
 
     EMF+ manual 2.2.1.8, Microsoft name: EmfPlusRegion Object
 */
-int U_PMF_REGION_get(const char *contents, uint32_t *Version, uint32_t *Count, const char **Nodes){
-    if(!contents || !Version || !Count || !Nodes){ return(0); }
+int U_PMF_REGION_get(const char *contents, uint32_t *Version, uint32_t *Count, const char **Nodes, const char *blimit){
+    if(!contents || !Version || !Count || !Nodes || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_REGION), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Version, 4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Count,   4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Nodes, &contents, 0);
@@ -5560,8 +5621,9 @@ int U_PMF_REGION_get(const char *contents, uint32_t *Version, uint32_t *Count, c
 
     EMF+ manual 2.2.1.9, Microsoft name: EmfPlusStringFormat Object
 */
-int U_PMF_STRINGFORMAT_get(const char *contents, U_PMF_STRINGFORMAT *Sfs, const char **Data){
-    if(!contents || !Sfs || !Data){ return(0); }
+int U_PMF_STRINGFORMAT_get(const char *contents, U_PMF_STRINGFORMAT *Sfs, const char **Data, const char *blimit){
+    if(!contents || !Sfs || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_STRINGFORMAT), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Sfs, 4, 15, U_LE);
     *Data = contents;
     return(1);
@@ -5578,8 +5640,9 @@ int U_PMF_STRINGFORMAT_get(const char *contents, U_PMF_STRINGFORMAT *Sfs, const 
 
     EMF+ manual 2.2.2.1, Microsoft name: EmfPlusARGB Object
 */
-int U_PMF_ARGB_get(const char *contents, uint8_t *Blue, uint8_t *Green, uint8_t *Red, uint8_t *Alpha){
-    if(!contents || !Blue || !Green || !Red || !Alpha){ return(0); }
+int U_PMF_ARGB_get(const char *contents, uint8_t *Blue, uint8_t *Green, uint8_t *Red, uint8_t *Alpha, const char *blimit){
+    if(!contents || !Blue || !Green || !Red || !Alpha || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_ARGB), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Blue,  1, 1, U_XE);
     U_PMF_SERIAL_get(&contents, Green, 1, 1, U_XE);
     U_PMF_SERIAL_get(&contents, Red,   1, 1, U_XE);
@@ -5595,11 +5658,14 @@ int U_PMF_ARGB_get(const char *contents, uint8_t *Blue, uint8_t *Green, uint8_t 
     \param  Data       pointer to variable part
 
     EMF+ manual 2.2.2.2, Microsoft name: EmfPlusBitmap Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_BITMAP_get(const char *contents, U_PMF_BITMAP *Bs, const char **Data){
-    if(!contents || !Bs || !Data){ return(0); }
-    U_PMF_SERIAL_get(&contents, Bs, 4, 5, U_LE);
-    U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
+int U_PMF_BITMAP_get(const char *contents, U_PMF_BITMAP *Bs, const char **Data, const char *blimit){
+    if(!contents || !Bs || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_BITMAP), blimit))return(0);
+    U_PMF_SERIAL_get(&contents, Bs, 4, 5, U_LE); // width, height, stride, pixelformat, type
+    U_PMF_PTRSAV_SHIFT(Data, &contents, 0); // bitmapdata
     return(1);
 }
 
@@ -5612,11 +5678,16 @@ int U_PMF_BITMAP_get(const char *contents, U_PMF_BITMAP *Bs, const char **Data){
     \param  Data       An array of bytes, meaning depends on fields in U_PMF_BITMAP object and the PixelFormat enumeration.
 
     EMF+ manual 2.2.2.3, Microsoft name: EmfPlusBitmapData Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_BITMAPDATA_get(const char *contents, U_PMF_PALETTE *Ps, const char **Colors, const char **Data){
-    if(!contents || !Ps || !Colors || !Data ){ return(0); }
+int U_PMF_BITMAPDATA_get(const char *contents, U_PMF_PALETTE *Ps, const char **Colors, const char **Data, const char *blimit){
+    if(!contents || !Ps || !Colors || !Data  || !blimit){ return(0); }
+    /* this structure is entirely optional */
+    if(IS_MEM_UNSAFE(contents, 4*2, blimit))return(0);
     U_PMF_SERIAL_get(&contents, Ps, 4, 2, U_LE);
     U_PMF_PTRSAV_SHIFT(Colors, &contents, Ps->Elements * sizeof(U_PMF_ARGB));
+    /* difficult to know how big the actual bitmap will be, just return the pointer to it untested */
     U_PMF_PTRSAV_SHIFT(Data,  &contents, 0);
     return(1);
 }
@@ -5627,13 +5698,15 @@ int U_PMF_BITMAPDATA_get(const char *contents, U_PMF_PALETTE *Ps, const char **C
     \param  contents   Record from which to extract data
     \param  Elements   Number of members in Positions and Colors
     \param  Positions  Caller must free.  Pointer to memory holding positions along gradient line.  
-    \param  Colors     Caller must NOT free memory ,Pointer to memory holding colors at positions on gradient line.  
+    \param  Colors     Caller must NOT free memory, Pointer to memory holding colors at positions on gradient line.  
 
     EMF+ manual 2.2.2.4, Microsoft name: EmfPlusBlendColors Object
 */
-int U_PMF_BLENDCOLORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Positions, const char **Colors){
-    if(!contents || !Positions || !Colors){ return(0); }
+int U_PMF_BLENDCOLORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Positions, const char **Colors, const char *blimit){
+    if(!contents || !Positions || !Colors || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_BLENDCOLORS), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
+    if(IS_MEM_UNSAFE(contents, *Elements * 4, blimit))return(0);
     if(!U_PMF_SERIAL_array_copy_get(&contents, (void **)Positions, 4, *Elements, U_LE,1)){ return(0); }
     U_PMF_PTRSAV_SHIFT(Colors,  &contents, 0);
     return(1);
@@ -5649,9 +5722,11 @@ int U_PMF_BLENDCOLORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Po
 
     EMF+ manual 2.2.2.5, Microsoft name: EmfPlusBlendFactors Object
 */
-int U_PMF_BLENDFACTORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Positions, U_FLOAT **Factors){
-    if(!contents || !Elements || !Positions || !Factors){ return(0); }
+int U_PMF_BLENDFACTORS_get(const char *contents, uint32_t *Elements, U_FLOAT **Positions, U_FLOAT **Factors, const char *blimit){
+    if(!contents || !Elements || !Positions || !Factors || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_BLENDFACTORS), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
+    if(IS_MEM_UNSAFE(contents, *Elements * 4 * 2, blimit))return(0);
     if(!U_PMF_SERIAL_array_copy_get(&contents, (void **)Positions,  4, *Elements, U_LE, 1)){ return(0); }
     if(!U_PMF_SERIAL_array_copy_get(&contents, (void **)Factors,    4, *Elements, U_LE, 1)){
        free(*Positions);
@@ -5668,9 +5743,12 @@ int U_PMF_BLENDFACTORS_get(const char *contents, uint32_t *Elements, U_FLOAT **P
     \param  Data       boundary of the brush
 
     EMF+ manual 2.2.2.6, Microsoft name: EmfPlusBoundaryPathData Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_BOUNDARYPATHDATA_get(const char *contents, int32_t *Size, const char **Data){
-    if(!contents || !Size || !Data){ return(0); }
+int U_PMF_BOUNDARYPATHDATA_get(const char *contents, int32_t *Size, const char **Data, const char *blimit){
+    if(!contents || !Size || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_BOUNDARYPATHDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Size, 4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data,  &contents, 0);
     return(1);
@@ -5680,14 +5758,16 @@ int U_PMF_BOUNDARYPATHDATA_get(const char *contents, int32_t *Size, const char *
     \brief Get data from a U_PMF_BOUNDARYPOINTDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to extract data
-    \param  Elements   Members in POints
+    \param  Elements   Members in Points
     \param  Points     Caller must free.  Pointer to memory holding points along gradient line. Boundary of the brush.
 
     EMF+ manual 2.2.2.7, Microsoft name: EmfPlusBoundaryPointData Object
 */
-int U_PMF_BOUNDARYPOINTDATA_get(const char *contents, int32_t *Elements, U_PMF_POINTF **Points){
-    if(!contents || !Elements || !Points){ return(0); }
+int U_PMF_BOUNDARYPOINTDATA_get(const char *contents, int32_t *Elements, U_PMF_POINTF **Points, const char *blimit){
+    if(!contents || !Elements || !Points || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_BOUNDARYPOINTDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
+    if(IS_MEM_UNSAFE(contents, *Elements * 2, blimit))return(0);
     if(!U_PMF_SERIAL_array_copy_get(&contents, (void **)Points, 4, *Elements * 2, U_LE, 1)){ return(0); }
     return(1);
 }
@@ -5701,8 +5781,9 @@ int U_PMF_BOUNDARYPOINTDATA_get(const char *contents, int32_t *Elements, U_PMF_P
 
     EMF+ manual 2.2.2.8, Microsoft name: EmfPlusCharacterRange Object
 */
-int U_PMF_CHARACTERRANGE_get(const char *contents, int32_t *First, int32_t *Length){
-    if(!contents || !First || !Length){ return(0); }
+int U_PMF_CHARACTERRANGE_get(const char *contents, int32_t *First, int32_t *Length, const char *blimit){
+    if(!contents || !First || !Length || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_CHARACTERRANGE), blimit))return(0);
     U_PMF_SERIAL_get(&contents, First,  4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Length, 4, 1, U_LE);
     return(1);
@@ -5717,9 +5798,11 @@ int U_PMF_CHARACTERRANGE_get(const char *contents, int32_t *First, int32_t *Leng
 
     EMF+ manual 2.2.2.9, Microsoft name: EmfPlusCompoundLineData Object
 */
-int U_PMF_COMPOUNDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **Widths){
-    if(!contents || !Elements || !Widths){ return(0); }
+int U_PMF_COMPOUNDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **Widths, const char *blimit){
+    if(!contents || !Elements || !Widths || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_COMPOUNDLINEDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
+    if(IS_MEM_UNSAFE(contents, *Elements * sizeof(U_FLOAT), blimit))return(0);
     *Widths = (U_FLOAT *)malloc(*Elements * sizeof(U_FLOAT));
     if(!*Widths){ return(0); }
     U_PMF_SERIAL_get(&contents, *Widths, 4, *Elements, U_LE);
@@ -5736,9 +5819,12 @@ int U_PMF_COMPOUNDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT 
     
 
     This function does not do anything useful, but it is included so that all objects have a corresponding _get().
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_COMPRESSEDIMAGE_get(const char *contents, const char **Data){
-    if(!contents || !Data){ return(0); }
+int U_PMF_COMPRESSEDIMAGE_get(const char *contents, const char **Data, const char *blimit){
+    if(!contents || !Data || !blimit){ return(0); }
+    if(contents >= blimit)return(0);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
     return(1);
 }
@@ -5751,9 +5837,12 @@ int U_PMF_COMPRESSEDIMAGE_get(const char *contents, const char **Data){
     \param  Data       Description of linecap
 
     EMF+ manual 2.2.2.11, Microsoft name: EmfPlusCustomEndCapData Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_CUSTOMENDCAPDATA_get(const char *contents, int32_t *Size, const char **Data){
-    if(!contents || !Size || !Data){ return(0); }
+int U_PMF_CUSTOMENDCAPDATA_get(const char *contents, int32_t *Size, const char **Data, const char *blimit){
+    if(!contents || !Size || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_CUSTOMENDCAPDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Size, 4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
     return(1);
@@ -5767,8 +5856,9 @@ int U_PMF_CUSTOMENDCAPDATA_get(const char *contents, int32_t *Size, const char *
 
     EMF+ manual 2.2.2.12, Microsoft name: EmfPlusCustomLineCapArrowData Object
 */
-int U_PMF_CUSTOMLINECAPARROWDATA_get(const char *contents, U_PMF_CUSTOMLINECAPARROWDATA *Ccad){
-    if(!contents || !Ccad){ return(0); }
+int U_PMF_CUSTOMLINECAPARROWDATA_get(const char *contents, U_PMF_CUSTOMLINECAPARROWDATA *Ccad, const char *blimit){
+    if(!contents || !Ccad || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_CUSTOMLINECAPARROWDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Ccad, 4, 13, U_LE);
     return(1);
 }
@@ -5781,9 +5871,12 @@ int U_PMF_CUSTOMLINECAPARROWDATA_get(const char *contents, U_PMF_CUSTOMLINECAPAR
     \param  Data       variable part of U_PMF_CUSTOMLINECAPDATA
 
     EMF+ manual 2.2.2.13, Microsoft name: EmfPlusCustomLineCapData Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_CUSTOMLINECAPDATA_get(const char *contents, U_PMF_CUSTOMLINECAPDATA *Clcd, const char **Data){
-    if(!contents || !Clcd){ return(0); }
+int U_PMF_CUSTOMLINECAPDATA_get(const char *contents, U_PMF_CUSTOMLINECAPDATA *Clcd, const char **Data, const char *blimit){
+    if(!contents || !Clcd || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_CUSTOMLINECAPDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Clcd, 4, 12, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
     return(1);
@@ -5798,14 +5891,19 @@ int U_PMF_CUSTOMLINECAPDATA_get(const char *contents, U_PMF_CUSTOMLINECAPDATA *C
     \param  LineData   Path to stroke (optional)
 
     EMF+ manual 2.2.2.14, Microsoft name: EmfPlusCustomLineCapOptionalData Object
+
+    Caller must check LineData for possible memory access violations.
 */
-int U_PMF_CUSTOMLINECAPOPTIONALDATA_get(const char *contents, uint32_t Flags, const char **FillData, const char **LineData){
+int U_PMF_CUSTOMLINECAPOPTIONALDATA_get(const char *contents, uint32_t Flags, const char **FillData, const char **LineData, const char *blimit){
     uint32_t length;
     int status = 1;
-    if(!contents){ return(0); }
+    if(!contents || !*FillData || !*LineData || !blimit){ return(0); }
+    /* this structure is entirely optional */
     if(Flags & U_CLCD_FillPath){
        if(!FillData){ return(0); }
+       if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
        U_PMF_SERIAL_get(&contents, &length, 4, 1, U_LE);
+       if(IS_MEM_UNSAFE(contents, length, blimit))return(0);
        contents -= 4;  /* undo the unneeded shift from preceding */
        U_PMF_PTRSAV_SHIFT(FillData, &contents, 4 + length);
        status += 2; 
@@ -5814,6 +5912,10 @@ int U_PMF_CUSTOMLINECAPOPTIONALDATA_get(const char *contents, uint32_t Flags, co
 
     if(Flags & U_CLCD_LinePath){
        if(!LineData){ return(0); }
+       if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+       U_PMF_SERIAL_get(&contents, &length, 4, 1, U_LE);
+       if(IS_MEM_UNSAFE(contents, length, blimit))return(0);
+       contents -= 4;  /* undo the unneeded shift from preceding */
        U_PMF_PTRSAV_SHIFT(LineData, &contents, 0);
        status += 4;
     }
@@ -5829,9 +5931,12 @@ int U_PMF_CUSTOMLINECAPOPTIONALDATA_get(const char *contents, uint32_t Flags, co
     \param  Data       Description of linecap
 
     EMF+ manual 2.2.2.15, Microsoft name: EmfPlusCustomStartCapData Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_CUSTOMSTARTCAPDATA_get(const char *contents, int32_t *Size, const char **Data){
-    if(!contents || !Size || !Data){ return(0); }
+int U_PMF_CUSTOMSTARTCAPDATA_get(const char *contents, int32_t *Size, const char **Data, const char *blimit){
+    if(!contents || !Size || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_CUSTOMSTARTCAPDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Size, 4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
     return(1);
@@ -5846,9 +5951,11 @@ int U_PMF_CUSTOMSTARTCAPDATA_get(const char *contents, int32_t *Size, const char
 
     EMF+ manual 2.2.2.16, Microsoft name: EmfPlusDashedLineData Object
 */
-int U_PMF_DASHEDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **Lengths){
-    if(!contents || !Elements || !Lengths){ return(0); }
+int U_PMF_DASHEDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **Lengths, const char *blimit){
+    if(!contents || !Elements || !Lengths || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_DASHEDLINEDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
+    if(IS_MEM_UNSAFE(contents, *Elements * sizeof(U_FLOAT), blimit))return(0);
     *Lengths = (U_FLOAT *)malloc(*Elements * sizeof(U_FLOAT));
     if(!*Lengths){ return(0); }
     U_PMF_SERIAL_get(&contents, *Lengths, 4, *Elements, U_LE);
@@ -5863,9 +5970,12 @@ int U_PMF_DASHEDLINEDATA_get(const char *contents, int32_t *Elements, U_FLOAT **
     \param  Data       Path specification
 
     EMF+ manual 2.2.2.17, Microsoft name: EmfPlusFillPath Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_FILLPATHOBJ_get(const char *contents, int32_t *Size, const char **Data){
-    if(!contents || !Size || !Data){ return(0); }
+int U_PMF_FILLPATHOBJ_get(const char *contents, int32_t *Size, const char **Data, const char *blimit){
+    if(!contents || !Size || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_FILLPATHO), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Size, 4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
     return(1);
@@ -5881,8 +5991,9 @@ int U_PMF_FILLPATHOBJ_get(const char *contents, int32_t *Size, const char **Data
 
     EMF+ manual 2.2.2.18, Microsoft name: EmfPlusFocusScaleData Object
 */
-int U_PMF_FOCUSSCALEDATA_get(const char *contents, uint32_t *Count, U_FLOAT *ScaleX, U_FLOAT *ScaleY){
-    if(!contents || !Count || !ScaleX || !ScaleY){ return(0); }
+int U_PMF_FOCUSSCALEDATA_get(const char *contents, uint32_t *Count, U_FLOAT *ScaleX, U_FLOAT *ScaleY, const char *blimit){
+    if(!contents || !Count || !ScaleX || !ScaleY || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_FOCUSSCALEDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Count,  4, 1, U_LE);
     if(*Count != 2){ return(0); }
     U_PMF_SERIAL_get(&contents, ScaleX, 4, 1, U_LE);
@@ -5899,9 +6010,10 @@ int U_PMF_FOCUSSCALEDATA_get(const char *contents, uint32_t *Count, U_FLOAT *Sca
 
     EMF+ manual 2.2.2.19, Microsoft name: EmfPlusGraphicsVersion Object
 */
-int U_PMF_GRAPHICSVERSION_get(const char *contents, int *Signature, int *GrfVersion){
-    if(!contents || !Signature || !GrfVersion){ return(0); }
+int U_PMF_GRAPHICSVERSION_get(const char *contents, int *Signature, int *GrfVersion, const char *blimit){
     uint32_t tmp;
+    if(!contents || !Signature || !GrfVersion || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_GRAPHICSVERSION), blimit))return(0);
     memcpy(&tmp, contents, 4);
     *Signature  = tmp >> 12;
     *GrfVersion = tmp & U_GFVR_MASKLO;
@@ -5918,8 +6030,9 @@ int U_PMF_GRAPHICSVERSION_get(const char *contents, int *Signature, int *GrfVers
 
     EMF+ manual 2.2.2.20, Microsoft name: EmfPlusHatchBrushData Object
 */
-int U_PMF_HATCHBRUSHDATA_get(const char *contents, uint32_t *Style, U_PMF_ARGB *Foreground, U_PMF_ARGB *Background){
-    if(!contents || !Style || !Foreground || !Background){ return(0); }
+int U_PMF_HATCHBRUSHDATA_get(const char *contents, uint32_t *Style, U_PMF_ARGB *Foreground, U_PMF_ARGB *Background, const char *blimit){
+    if(!contents || !Style || !Foreground || !Background || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_HATCHBRUSHDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Style,      4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Foreground, 4, 1, U_XE);
     U_PMF_SERIAL_get(&contents, Background, 4, 1, U_XE);
@@ -5931,12 +6044,14 @@ int U_PMF_HATCHBRUSHDATA_get(const char *contents, uint32_t *Style, U_PMF_ARGB *
     \return 1 on success, 0 on error
     \param  contents   Record from which to extract data
     \param  Value      7 bit signed integer (stored in an integer)
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.21, Microsoft name: EmfPlusInteger7 Object
 */
-int U_PMF_INTEGER7_get(const char **contents, U_FLOAT *Value){
-    if(!contents || !*contents || !Value){ return(0); }
+int U_PMF_INTEGER7_get(const char **contents, U_FLOAT *Value, const char *blimit){
     uint8_t tmp;
+    if(!contents || !*contents || !Value || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(*contents, 1, blimit))return(0); /* past end of buffer */
     if(**contents & U_TEST_INT7)return(0);  /* this bit must be 0 in this object type */
     U_PMF_SERIAL_get(contents, &tmp, 1, 1, U_XE);
     if(tmp & U_SIGN_INT7){
@@ -5954,12 +6069,14 @@ int U_PMF_INTEGER7_get(const char **contents, U_FLOAT *Value){
     \return 1 on success, 0 on error
     \param  contents   Record from which to extract data
     \param  Value      15 bit signed integer (stored in an integer)
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.22, Microsoft name: EmfPlusInteger15 Object
 */
-int U_PMF_INTEGER15_get(const char **contents, U_FLOAT *Value){
-    if(!contents || !*contents || !Value){ return(0); }
+int U_PMF_INTEGER15_get(const char **contents, U_FLOAT *Value, const char *blimit){
+    if(!contents || !*contents || !Value || !blimit){ return(0); }
     uint16_t tmp;
+    if(IS_MEM_UNSAFE(*contents, 2, blimit))return(0); /* past end of buffer */
     if(!(**contents & U_TEST_INT7))return(0);  /* this bit must be 1 in this object type */
     U_PMF_SERIAL_get(contents, &tmp, 2, 1, U_BE);
     tmp &= U_MASK_INT15;   /* drop the 7/15 flag from the most significant bit */
@@ -6000,11 +6117,15 @@ int U_PMF_LANGUAGEIDENTIFIER_get(U_PMF_LANGUAGEIDENTIFIER LId, int *SubLId, int 
     \param  contents   Record from which to extract data
     \param  Lgbd       U_PMF_LINEARGRADIENTBRUSHDATA structure, with no variable part
     \param  Data       variable part of U_PMF_LINEARGRADIENTBRUSHDATA
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.24, Microsoft name: EmfPlusLinearGradientBrushData Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_LINEARGRADIENTBRUSHDATA_get(const char *contents, U_PMF_LINEARGRADIENTBRUSHDATA *Lgbd, const char **Data){
-    if(!contents || !Lgbd || !Data){ return(0); }
+int U_PMF_LINEARGRADIENTBRUSHDATA_get(const char *contents, U_PMF_LINEARGRADIENTBRUSHDATA *Lgbd, const char **Data, const char *blimit){
+    if(!contents || !Lgbd || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_LINEARGRADIENTBRUSHDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Lgbd,		      4, 6, U_LE); /* Flags, WrapMode, RectF*/
     U_PMF_SERIAL_get(&contents, &(Lgbd->StartColor),  4, 4, U_XE); /* StartColor, EndColor, Reserved1 & 2 */
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
@@ -6020,27 +6141,42 @@ int U_PMF_LINEARGRADIENTBRUSHDATA_get(const char *contents, U_PMF_LINEARGRADIENT
     \param  Bc         U_PMF_BLENDCOLORS object or NULL
     \param  BfH        U_PMF_BLENDFACTORS (H) object or NULL
     \param  BfV        U_PMF_BLENDFACTORS (V) object or NULL (WARNING, GDI+ defines this field but does not render it.  DO NOT USE.)
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.25, Microsoft name: EmfPlusLinearGradientBrushOptionalData Object
+
 */
 int U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Flags, U_PMF_TRANSFORMMATRIX *Tm, 
-      const char **Bc, const char **BfH, const char **BfV){
+      const char **Bc, const char **BfH, const char **BfV, const char *blimit){
     uint32_t Elements;
-    if(!contents || !Tm|| !Bc || !BfH || !BfV){ return(0); }
+    if(!contents || !Tm|| !Bc || !BfH || !BfV || !blimit){ return(0); }
+    /* all of the fields are optional! */
     *Bc = *BfH = *BfV = NULL;
-    if(Flags & U_BD_Transform)U_PMF_SERIAL_get(&contents, Tm, 4, 6, U_LE);
+    if(Flags & U_BD_Transform){
+       if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_ROTMATRIX), blimit))return(0);
+       U_PMF_SERIAL_get(&contents, Tm, 4, 6, U_LE);
+    }
     if(Flags & U_BD_PresetColors){
+       if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+       U_PMF_SERIAL_get(&contents, &Elements, 4, 1, U_LE);  /* starts with a 4 byte count*/
+       if(IS_MEM_UNSAFE(contents, Elements * ( sizeof(U_FLOAT) + sizeof(U_PMF_ARGB)), blimit))return(0);
+       contents-=4; /* back up to the front of the count, as it is part of the data field */
        U_PMF_PTRSAV_SHIFT(Bc, &contents, 0);
     }
     else if(Flags & U_BD_BlendFactorsH){
        U_PMF_SERIAL_get(&contents, &Elements, 4, 1, U_LE);  /* starts with a 4 byte count*/
+       if(IS_MEM_UNSAFE(contents, Elements * 2 * sizeof(U_FLOAT), blimit))return(0);
        contents-=4; /* back up to the front of the count, as it is part of the data field */
-       U_PMF_PTRSAV_SHIFT(BfH, &contents, 4 + 8*Elements); /* 4 byte count + 2 * 4bytes * Elements */
+       U_PMF_PTRSAV_SHIFT(BfH, &contents, 4 + (Elements * 2 * sizeof(U_FLOAT))); /* 4 byte count + 2 * 4bytes * Elements */
        if(Flags & U_BD_BlendFactorsV){
+          if(IS_MEM_UNSAFE(contents, Elements * 2 * sizeof(U_FLOAT), blimit))return(0);
           U_PMF_PTRSAV_SHIFT(BfV, &contents, 0);
        }
     }
     else if(Flags & U_BD_BlendFactorsV){
+       U_PMF_SERIAL_get(&contents, &Elements, 4, 1, U_LE);  /* starts with a 4 byte count*/
+       if(IS_MEM_UNSAFE(contents, Elements * 2 * sizeof(U_FLOAT), blimit))return(0);
+       contents-=4; /* back up to the front of the count, as it is part of the data field */
        U_PMF_PTRSAV_SHIFT(BfV, &contents, 0);
     }
     return(1);
@@ -6052,11 +6188,15 @@ int U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Fla
     \param  contents   Record from which to extract data
     \param  Size       Bytes in Data
     \param  Data       Outline path
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.26, Microsoft name: EmfPlusLinePath Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_LINEPATH_get(const char *contents, int32_t *Size, const char **Data){
-    if(!contents || !Size  || !Data){ return(0); }
+int U_PMF_LINEPATH_get(const char *contents, int32_t *Size, const char **Data, const char *blimit){
+    if(!contents || !Size  || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_LINEPATH), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Size, 4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
     return(1);
@@ -6069,11 +6209,15 @@ int U_PMF_LINEPATH_get(const char *contents, int32_t *Size, const char **Data){
     \param  Type       
     \param  Size       Bytes in Data
     \param  Data       Various types of data, like an EMF metafile, WMF metafile, another EMF+ metafile
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.27, Microsoft name: EmfPlusMetafile Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_METAFILE_get(const char *contents, uint32_t *Type, uint32_t *Size, const char **Data){
-    if(!contents || !Type  || !Size  || !Data){ return(0); }
+int U_PMF_METAFILE_get(const char *contents, uint32_t *Type, uint32_t *Size, const char **Data, const char *blimit){
+    if(!contents || !Type  || !Size  || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_METAFILE), blimit))return(0);
     U_PMF_SERIAL_get(&contents, &Type, 4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, &Size, 4, 1, U_LE);
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
@@ -6087,13 +6231,16 @@ int U_PMF_METAFILE_get(const char *contents, uint32_t *Type, uint32_t *Size, con
     \param  Flags      PaletteStyle flags
     \param  Elements   Members in the array
     \param  Colors     Palette data (array of colors)
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.28, Microsoft name: EmfPlusPalette Object
 */
-int U_PMF_PALETTE_get(const char *contents, uint32_t *Flags, uint32_t *Elements, const char **Colors){
-    if(!contents || !Flags  || !Elements  || !Colors){ return(0); }
+int U_PMF_PALETTE_get(const char *contents, uint32_t *Flags, uint32_t *Elements, const char **Colors, const char *blimit){
+    if(!contents || !Flags  || !Elements  || !Colors || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_PALETTE), blimit))return(0);
     U_PMF_SERIAL_get(&contents, &Flags,    4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, &Elements, 4, 1, U_LE);
+    if(IS_MEM_UNSAFE(contents, *Elements*sizeof(U_RGBQUAD), blimit))return(0);
     U_PMF_PTRSAV_SHIFT(Colors, &contents, 0);
     return(1);
     
@@ -6107,21 +6254,32 @@ int U_PMF_PALETTE_get(const char *contents, uint32_t *Flags, uint32_t *Elements,
     \param  Gradient     variable part of U_PMF_LINEARGRADIENTBRUSHDATA, Color Gradient with Elements members
     \param  Boundary     variable part of U_PMF_LINEARGRADIENTBRUSHDATA, U_PMF_BOUNDARYPATHDATA object if BrushDataPath bit set in Flag, else U_PMF_BOUNDARYPOINTDATA object
     \param  Data         variable part of U_PMF_LINEARGRADIENTBRUSHDATA, exact composition depends on Flags
+    \param  blimit       one byte past the end of data
 
     EMF+ manual 2.2.2.29, Microsoft name: EmfPlusPathGradientBrushData Object
+
+    Caller must check Data for possible memory access violations.
+
 */
-int U_PMF_PATHGRADIENTBRUSHDATA_get(const char *contents, U_PMF_PATHGRADIENTBRUSHDATA *Pgbd, const char **Gradient, const char **Boundary, const char **Data){
-    if(!contents || !Pgbd || !Gradient || !Boundary || !Data){ return(0); }
+int U_PMF_PATHGRADIENTBRUSHDATA_get(const char *contents, U_PMF_PATHGRADIENTBRUSHDATA *Pgbd, const char **Gradient, 
+      const char **Boundary, const char **Data, const char *blimit){
+    if(!contents || !Pgbd || !Gradient || !Boundary || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_PATHGRADIENTBRUSHDATA), blimit))return(0);
     uint32_t Size;
     U_PMF_SERIAL_get(&contents,  Pgbd,  	       4, 2, U_LE); /* Flags and WrapMode*/
     U_PMF_SERIAL_get(&contents,  &(Pgbd->CenterColor), 4, 1, U_XE);
     U_PMF_SERIAL_get(&contents,  &(Pgbd->Center),      4, 3, U_LE); /* Center and Elements */
+    if(IS_MEM_UNSAFE(contents, Pgbd->Elements * sizeof(U_PMF_ARGB), blimit))return(0);
     U_PMF_PTRSAV_SHIFT(Gradient, &contents, Pgbd->Elements * sizeof(U_PMF_ARGB));
     U_PMF_PTRSAV_SHIFT(Boundary, &contents, 0);
     U_PMF_SERIAL_get(&contents,  &Size,                4, 1, U_LE); /* The first 4 bytes of the Boundary are always a size */
     if(Pgbd->Flags & U_BD_Path){ contents += Size;                   } // U_PMF_BOUNDARYPATHDATA
     else {                       contents += Size*2*sizeof(U_FLOAT); } // U_PMF_BOUNDARYPOINTDATA
-    U_PMF_PTRSAV_SHIFT(Data,     &contents, 0);
+    if(Pgbd->Flags & (U_BD_Transform |U_BD_PresetColors | U_BD_BlendFactorsH| U_BD_FocusScales)){ // optional data present
+      if(contents >= blimit)return(0); // the size is variable but this must still hold
+      U_PMF_PTRSAV_SHIFT(Data,     &contents, 0);
+    }
+    else { *Data = NULL; } // no optional data present
     return(1);
 }
 
@@ -6133,15 +6291,34 @@ int U_PMF_PATHGRADIENTBRUSHDATA_get(const char *contents, U_PMF_PATHGRADIENTBRUS
     \param  Matrix     Transformation matrix
     \param  Pattern    Blend Pattern
     \param  Data       Focus scales for the brush
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.30, Microsoft name: EmfPlusPathGradientBrushOptionalData Object
 */
-int U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Flags, U_PMF_TRANSFORMMATRIX *Matrix, const char **Pattern, const char **Data){
-    if(!contents || !Flags || !Matrix || !Pattern || !Data){ return(0); }
-    U_PMF_SERIAL_get(&contents, &Flags, 4, 1, U_LE);
-    U_PMF_SERIAL_get(&contents, Matrix, 4, 6, U_LE);
-    U_PMF_PTRSAV_COND(Data, contents, (Flags & (U_BD_PresetColors | U_BD_BlendFactorsH)));
-    U_PMF_PTRSAV_COND(Data, contents, (Flags & U_BD_FocusScales));
+int U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Flags, U_PMF_TRANSFORMMATRIX *Matrix, 
+      const char **Pattern, const char **Data, const char *blimit){
+    int varsize;
+    if(!contents || !Flags || !Matrix || !Pattern || !Data || !blimit){ return(0); }
+    /* this structure is entirely optional */
+    if(Flags & U_BD_Transform){
+       if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_TRANSFORMMATRIX), blimit))return(0);
+       U_PMF_SERIAL_get(&contents, Matrix, 4, 6, U_LE);
+    }
+    if(Flags &  (U_BD_PresetColors | U_BD_BlendFactorsH)){
+       if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+       uint32_t Elements; 
+       U_PMF_SERIAL_get(&contents, &Elements, 4, 1, U_LE);
+       contents -= 4;
+       varsize=(Elements * 4 * (Flags & U_BD_BlendFactorsH ? 2 :1));
+       if(IS_MEM_UNSAFE(contents, varsize, blimit))return(0);
+       U_PMF_PTRSAV_SHIFT(Pattern, &contents, varsize);
+    }
+    else { *Pattern=NULL; }
+    if(Flags & U_BD_FocusScales){
+       if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_FOCUSSCALEDATA), blimit))return(0);
+       U_PMF_PTRSAV_SHIFT(Data, &contents, sizeof(U_PMF_FOCUSSCALEDATA));
+    }
+    else { *Data=NULL; }
     return(1);
 }
 
@@ -6151,14 +6328,16 @@ int U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_get(const char *contents, uint32_t Flags
     \param  contents   Record from which to extract data
     \param  Flags      PathPointType flags
     \param  Type       PathPointType enumeration
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.31, Microsoft name: EmfPlusPathPointType Object
 
     Note:  order of 4bit fields appears to be shown in the LE column, not as
     documented in the BE column.
 */
-int U_PMF_PATHPOINTTYPE_get(const char *contents, int *Flags, int *Type){
-    if(!contents || !Flags || !Type){ return(0); }
+int U_PMF_PATHPOINTTYPE_get(const char *contents, int *Flags, int *Type, const char *blimit){
+    if(!contents || !Flags || !Type || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, 1, blimit))return(0);
     uint8_t tmp;
     memcpy(&tmp, contents, 1);
     *Flags =(tmp & U_PTP_MASK) >> U_PTP_SHIFT;
@@ -6172,13 +6351,15 @@ int U_PMF_PATHPOINTTYPE_get(const char *contents, int *Flags, int *Type){
     \param  contents   Record from which to extract data
     \param  Bezier     Set: Bezier curve, Clear: straight line
     \param  RL         Run Length
-    \param  Ppt       PathPointType enumeration
+    \param  Ppt        PathPointType enumeration
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.32, Microsoft name: EmfPlusPathPointTypeRLE Object
 */
-int U_PMF_PATHPOINTTYPERLE_get(const char *contents, int *Bezier, int *RL, int *Ppt){
-    if(!contents || !Bezier || !RL || !Ppt){ return(0); }
+int U_PMF_PATHPOINTTYPERLE_get(const char *contents, int *Bezier, int *RL, int *Ppt, const char *blimit){
+    if(!contents || !Bezier || !RL || !Ppt || !blimit){ return(0); }
     uint16_t tmp;
+    if(IS_MEM_UNSAFE(contents, 2, blimit))return(0);
     U_PMF_SERIAL_get(&contents, &tmp, 2, 1, U_LE);
     *Bezier = tmp & U_PPF_BZ;
     *RL     = (tmp >> U_FF_SHFT_RL) & U_FF_MASK_RL;
@@ -6194,14 +6375,17 @@ int U_PMF_PATHPOINTTYPERLE_get(const char *contents, int *Bezier, int *RL, int *
     \param  Unit       UnitType enumeration
     \param  Width      Width in units set by Unit
     \param  Data       Optional pen data, exact composition depends on Flags
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.33, Microsoft name: EmfPlusPenData Object
 */
-int U_PMF_PENDATA_get(const char *contents, uint32_t *Flags, uint32_t *Unit, U_FLOAT *Width, const char **Data){
-    if(!contents || !Flags || !Unit || !Width || !Data){ return(0); }
+int U_PMF_PENDATA_get(const char *contents, uint32_t *Flags, uint32_t *Unit, U_FLOAT *Width, const char **Data, const char *blimit){
+    if(!contents || !Flags || !Unit || !Width || !Data || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, 3*4, blimit))return(0);
     U_PMF_SERIAL_get(&contents, Flags, 4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Unit,  4, 1, U_LE);
     U_PMF_SERIAL_get(&contents, Width, 4, 1, U_LE);
+    if(contents >= blimit)return(0); // variable data will extend farther, but this much at least must be true
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
     return(1);
 }
@@ -6224,6 +6408,7 @@ int U_PMF_PENDATA_get(const char *contents, uint32_t *Flags, uint32_t *Unit, U_F
     \param  CmpndLineData  Compount Line (parallel lines drawn instead of one)
     \param  CSCapData      Custom start cap  
     \param  CECapData      Custom end cap
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.34, Microsoft name: EmfPlusPenOptionalData Object
 
@@ -6245,26 +6430,56 @@ int U_PMF_PENOPTIONALDATA_get(
     int32_t                   *Alignment,
     const char               **CmpndLineData,
     const char               **CSCapData,
-    const char               **CECapData){
+    const char               **CECapData,
+    const char                *blimit){
     if(!contents  ||
        !Flags     || !Matrix     || !StartCap  || !EndCap        ||
        !Join      || !MiterLimit || !Style     || !DLCap         ||
        !DLOffset  || !DLData     || !Alignment || !CmpndLineData || 
-       !CSCapData || !CECapData){ return(0); }
+       !CSCapData || !CECapData  || !blimit){ return(0); }
 
-    if(Flags & U_PD_Transform){       U_PMF_SERIAL_get(&contents, Matrix,         4, 6, U_LE); }
-    if(Flags & U_PD_StartCap){        U_PMF_SERIAL_get(&contents, StartCap,       4, 1, U_LE); }
-    if(Flags & U_PD_EndCap){          U_PMF_SERIAL_get(&contents, EndCap,         4, 1, U_LE); }
-    if(Flags & U_PD_Join){            U_PMF_SERIAL_get(&contents, Join,           4, 1, U_LE); }
-    if(Flags & U_PD_MiterLimit){      U_PMF_SERIAL_get(&contents, MiterLimit,     4, 1, U_LE); }
-    if(Flags & U_PD_LineStyle){       U_PMF_SERIAL_get(&contents, Style,          4, 1, U_LE); }
-    if(Flags & U_PD_DLCap){           U_PMF_SERIAL_get(&contents, DLCap,          4, 1, U_LE); }
-    if(Flags & U_PD_DLOffset){        U_PMF_SERIAL_get(&contents, DLOffset,       4, 1, U_LE); }
-    if(Flags & U_PD_DLData){          U_PMF_PTRSAV_SHIFT(   DLData,         &contents, U_PMF_LEN_FLOATDATA(contents)); }
-    if(Flags & U_PD_NonCenter){       U_PMF_SERIAL_get(&contents, Alignment,      4, 1, U_LE); }
-    if(Flags & U_PD_CLData){          U_PMF_PTRSAV_SHIFT(   CmpndLineData,  &contents, U_PMF_LEN_FLOATDATA(contents)); }
-    if(Flags & U_PD_CustomStartCap){  U_PMF_PTRSAV_SHIFT(   CSCapData,      &contents, U_PMF_LEN_BYTEDATA(contents));  }
-    if(Flags & U_PD_CustomEndCap){    U_PMF_PTRSAV_SHIFT(   CECapData,      &contents, U_PMF_LEN_BYTEDATA(contents));  }
+    if(Flags & U_PD_Transform){       if(IS_MEM_UNSAFE(contents, 4*6, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, Matrix,         4, 6, U_LE); 
+    }
+    if(Flags & U_PD_StartCap){        if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, StartCap,       4, 1, U_LE); 
+    }
+    if(Flags & U_PD_EndCap){          if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, EndCap,         4, 1, U_LE); 
+    }
+    if(Flags & U_PD_Join){            if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, Join,           4, 1, U_LE); 
+    }
+    if(Flags & U_PD_MiterLimit){      if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, MiterLimit,     4, 1, U_LE); 
+    }
+    if(Flags & U_PD_LineStyle){       if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, Style,          4, 1, U_LE); 
+    }
+    if(Flags & U_PD_DLCap){           if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, DLCap,          4, 1, U_LE); 
+    }
+    if(Flags & U_PD_DLOffset){        if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, DLOffset,       4, 1, U_LE); 
+    }
+    if(Flags & U_PD_DLData){          if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      if(IS_MEM_UNSAFE(contents, U_PMF_LEN_FLOATDATA(contents), blimit))return(0);
+                                      U_PMF_PTRSAV_SHIFT(   DLData,         &contents, U_PMF_LEN_FLOATDATA(contents)); 
+    }
+    if(Flags & U_PD_NonCenter){       if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      U_PMF_SERIAL_get(&contents, Alignment,      4, 1, U_LE); }
+    if(Flags & U_PD_CLData){          if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      if(IS_MEM_UNSAFE(contents, U_PMF_LEN_FLOATDATA(contents), blimit))return(0);
+                                      U_PMF_PTRSAV_SHIFT(   CmpndLineData,  &contents, U_PMF_LEN_FLOATDATA(contents)); 
+    }
+    if(Flags & U_PD_CustomStartCap){  if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      if(IS_MEM_UNSAFE(contents, U_PMF_LEN_BYTEDATA(contents), blimit))return(0);
+                                      U_PMF_PTRSAV_SHIFT(   CSCapData,      &contents, U_PMF_LEN_BYTEDATA(contents));  
+    }
+    if(Flags & U_PD_CustomEndCap){    if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
+                                      if(IS_MEM_UNSAFE(contents, U_PMF_LEN_BYTEDATA(contents), blimit))return(0);
+                                      U_PMF_PTRSAV_SHIFT(   CECapData,      &contents, U_PMF_LEN_BYTEDATA(contents));  
+    }
     return(1);
 }
 
@@ -6274,12 +6489,14 @@ int U_PMF_PENOPTIONALDATA_get(
     \param  contents   Record from which to extract data.  On return position is offset by sizeof(U_PMF_POINT).
     \param  X          X coordinate
     \param  Y          Y coordinate
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.35, Microsoft name: EmfPlusPoint Object
 */
-int U_PMF_POINT_get(const char **contents, U_FLOAT *X, U_FLOAT *Y){
-    if(!contents || !X || !Y){ return(0); }
+int U_PMF_POINT_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, const char *blimit){
+    if(!contents || !X || !Y || !blimit){ return(0); }
     int16_t tmp;
+    if(IS_MEM_UNSAFE(*contents, 2*2, blimit))return(0);
     U_PMF_SERIAL_get(contents, &tmp, 2, 1, U_LE); *X = tmp;
     U_PMF_SERIAL_get(contents, &tmp, 2, 1, U_LE); *Y = tmp;
     return(1);
@@ -6291,11 +6508,13 @@ int U_PMF_POINT_get(const char **contents, U_FLOAT *X, U_FLOAT *Y){
     \param  contents   Record from which to extract data.  On return position is offset by sizeof(U_PMF_POINTF).
     \param  X          X coordinate
     \param  Y          Y coordinate
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.36, Microsoft name: EmfPlusPointF Object
 */
-int U_PMF_POINTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y){
-    if(!contents || !X || !Y){ return(0); }
+int U_PMF_POINTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, const char *blimit){
+    if(!contents || !X || !Y || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(*contents, 4*2, blimit))return(0);
     U_PMF_SERIAL_get(contents, X, 4, 1, U_LE);
     U_PMF_SERIAL_get(contents, Y, 4, 1, U_LE);
     return(1);
@@ -6307,19 +6526,20 @@ int U_PMF_POINTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y){
     \param  contents   Record from which to extract data.  On return position is offset by returned size. 
     \param  X          X coordinate
     \param  Y          Y coordinate
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.37, Microsoft name: EmfPlusPointR Object
 */
-int U_PMF_POINTR_get(const char **contents, U_FLOAT *X, U_FLOAT *Y){
-    if(!contents || !*contents | !X || !Y){ return(0); }
+int U_PMF_POINTR_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, const char *blimit){
+    if(!contents || !*contents | !X || !Y || !blimit){ return(0); }
     int size=0;
 
-    if(     U_PMF_INTEGER7_get( contents, X)){ size +=1; } 
-    else if(U_PMF_INTEGER15_get(contents, X)){ size +=2; }
+    if(     U_PMF_INTEGER7_get( contents, X, blimit)){ size +=1; } 
+    else if(U_PMF_INTEGER15_get(contents, X, blimit)){ size +=2; }
     else {  return(0); }
 
-    if(     U_PMF_INTEGER7_get( contents, Y)){ size +=1; } 
-    else if(U_PMF_INTEGER15_get(contents, Y)){ size +=2; }
+    if(     U_PMF_INTEGER7_get( contents, Y, blimit)){ size +=1; } 
+    else if(U_PMF_INTEGER15_get(contents, Y, blimit)){ size +=2; }
     else {  return(0); }
 
     return(size);
@@ -6332,31 +6552,40 @@ int U_PMF_POINTR_get(const char **contents, U_FLOAT *X, U_FLOAT *Y){
     \param  Flags      Record flags (bits U_PPF_C and U_PPF_P are referenced)
     \param  Elements   Number of points to retrieve.
     \param  Points     Caller must free.  Array of U_PMF_POINTF coordinates.
+    \param  blimit     one byte past the end of data
+    
+    This function should never be called directly by end user code.
 */
-int U_PMF_VARPOINTS_get(const char **contents, uint16_t Flags, int Elements, U_PMF_POINTF **Points){
+int U_PMF_VARPOINTS_get(const char *contents, uint16_t Flags, int Elements, U_PMF_POINTF **Points, const char *blimit){
    int status = 0;
-   if(!contents || !*contents || !Points || !Elements){ return(status); }
+   if(!contents  || !Points || !Elements || !blimit){ return(status); }
    U_PMF_POINTF *pts = (U_PMF_POINTF *)malloc(Elements * sizeof(U_PMF_POINTF));
    if(!pts){ return(status); }
    *Points = pts;
    U_FLOAT XF, YF;
    U_FLOAT XFS, YFS;
    
-   for(XFS = YFS = 0.0; Elements; Elements--, pts++){
-      if(Flags & U_PPF_P){ 
-         if(!U_PMF_POINTR_get(contents, &XF, &YF))break; /* this should never happen */
+   if(Flags & U_PPF_P){ 
+      for(XFS = YFS = 0.0; Elements; Elements--, pts++){
+         if(!U_PMF_POINTR_get(&contents, &XF, &YF, blimit))return(0); /* this should never happen */
          XFS      += XF; /* position relative to previous point, first point is always 0,0 */
          YFS      += YF;
          pts->X    = XFS;
          pts->Y    = YFS; 
       }
-      else if(Flags & U_PPF_C){
-         if(!U_PMF_POINT_get(contents, &XF, &XF))break; /* this should never happen */
+   }
+   else if(Flags & U_PPF_C){
+      for(XF = YF = 0.0; Elements; Elements--, pts++){
+         if(!U_PMF_POINT_get(&contents, &XF, &XF, blimit))break; /* this should never happen */
          pts->X    = XF;
          pts->Y    = YF; 
       }
-      else {
-         (void) U_PMF_POINTF_get(contents, &(pts->X), &(pts->Y)); 
+   }
+   else {
+      for(XF = YF = 0.0; Elements; Elements--, pts++){
+         (void) U_PMF_POINTF_get(&contents, &XF, &YF, blimit); 
+         pts->X    = XF;
+         pts->Y    = YF; 
       }
    }
    if(Elements){ /* some error in the preceding */
@@ -6377,11 +6606,13 @@ int U_PMF_VARPOINTS_get(const char **contents, uint16_t Flags, int Elements, U_P
     \param  Y          UL Y value
     \param  Width      Width
     \param  Height     Height
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.38, Microsoft name: EmfPlusRect Object
 */
-int U_PMF_RECT_get(const char **contents, int16_t *X, int16_t *Y, int16_t *Width, int16_t *Height){
+int U_PMF_RECT_get(const char **contents, int16_t *X, int16_t *Y, int16_t *Width, int16_t *Height, const char *blimit){
     if(!contents || !X || !Y|| !Width || !Height){ return(0); }
+    if(IS_MEM_UNSAFE(*contents, 2*4, blimit))return(0);
     U_PMF_SERIAL_get(contents, X,      2, 1, U_LE);
     U_PMF_SERIAL_get(contents, Y,      2, 1, U_LE);
     U_PMF_SERIAL_get(contents, Width,  2, 1, U_LE);
@@ -6397,11 +6628,13 @@ int U_PMF_RECT_get(const char **contents, int16_t *X, int16_t *Y, int16_t *Width
     \param  Y          UL Y value
     \param  Width      Width
     \param  Height     Height
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.39, Microsoft name: EmfPlusRectF Object
 */
-int U_PMF_RECTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, U_FLOAT *Width, U_FLOAT *Height){
+int U_PMF_RECTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, U_FLOAT *Width, U_FLOAT *Height, const char *blimit){
     if(!contents || !X || !Y|| !Width || !Height){ return(0); }
+    if(IS_MEM_UNSAFE(*contents, 4*4, blimit))return(0);
     U_PMF_SERIAL_get(contents, X,      4, 1, U_LE);
     U_PMF_SERIAL_get(contents, Y,      4, 1, U_LE);
     U_PMF_SERIAL_get(contents, Width,  4, 1, U_LE);
@@ -6416,13 +6649,14 @@ int U_PMF_RECTF_get(const char **contents, U_FLOAT *X, U_FLOAT *Y, U_FLOAT *Widt
     \param  Flags      Record flags (bit U_PPF_C is referenced)
     \param  Elements   Number of rects to retrieve.
     \param  Rects      Caller must free.  Array of U_PMF_RECTF coordinates.
+    \param  blimit     one byte past the end of data
 
     Rects in record may be either U_PMF_RECT or U_PMF_RECTF, but this function always
     returns U_PMF_RECTF
 */
-int U_PMF_VARRECTS_get(const char **contents, uint16_t Flags, int Elements, U_PMF_RECTF **Rects){
+int U_PMF_VARRECTS_get(const char **contents, uint16_t Flags, int Elements, U_PMF_RECTF **Rects, const char *blimit){
    int16_t X16, Y16, Width, Height;
-   if(!contents || !*contents || !Rects){ return(0); }
+   if(!contents || !*contents || !Rects || !blimit){ return(0); }
    U_PMF_RECTF *rts = (U_PMF_RECTF *)malloc(Elements * sizeof(U_PMF_RECTF));
    if(!rts){
       *Rects = NULL;
@@ -6430,16 +6664,28 @@ int U_PMF_VARRECTS_get(const char **contents, uint16_t Flags, int Elements, U_PM
    }
    
    *Rects = rts;
+   if(Flags & U_PPF_C){
+      if(IS_MEM_UNSAFE(*contents, Elements*sizeof(U_PMF_RECT), blimit)){
+         free(rts);
+         return(0);
+      }
+   }
+   else {
+      if(IS_MEM_UNSAFE(*contents, Elements*sizeof(U_PMF_RECT), blimit)){
+         free(rts);
+         return(0);
+      }
+   }
    for(; Elements; Elements--, rts++){
       if(Flags & U_PPF_C){
-         (void) U_PMF_RECT_get(contents, &X16, &Y16, &Width, &Height);  
+         (void) U_PMF_RECT_get(contents, &X16, &Y16, &Width, &Height, blimit);  
          rts->X      = X16;
          rts->Y      = Y16;
          rts->Width  = Width;
          rts->Height = Height;
       }
       else {
-         (void) U_PMF_RECTF_get(contents, &(rts->X), &(rts->Y), &(rts->Width), &(rts->Height)); 
+         (void) U_PMF_RECTF_get(contents, &(rts->X), &(rts->Y), &(rts->Width), &(rts->Height), blimit); 
       }
    }
    return(1);
@@ -6451,13 +6697,18 @@ int U_PMF_VARRECTS_get(const char **contents, uint16_t Flags, int Elements, U_PM
     \param  contents   Record from which to extract data
     \param  Type       RegionNodeDataType
     \param  Data       Depending on Type: U_PMF_REGIONNODEPATH, U_PMF_RECTF, or U_PMF_REGIONNODECHILDNODES
-
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.40, Microsoft name: EmfPlusRegionNode Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_REGIONNODE_get(const char *contents, uint32_t *Type, const char **Data){
-    if(!contents || !Type|| !Data){ return(0); }
+int U_PMF_REGIONNODE_get(const char *contents, uint32_t *Type, const char **Data, const char *blimit){
+    if(!contents || !Type || !Data || !blimit){ return(0); }
+    /* Important!  This only checks the constant part, the caller must check that returned data doesn't exceed blimit */
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_REGIONNODE), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Type, 4, 1, U_LE);
+    if(contents >= blimit)return(0); // returned Data is variable size, this much at least must be true
     U_PMF_PTRSAV_COND(Data, contents, !(*Type == U_RNDT_Empty || *Type == U_RNDT_Infinite ));
     return(1);
 }
@@ -6481,12 +6732,16 @@ int U_PMF_REGIONNODE_get(const char *contents, uint32_t *Type, const char **Data
     \param  contents   Record from which to extract data
     \param  Size       Bytes in Data
     \param  Data       Boundary of region node
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.42, Microsoft name: EmfPlusRegionNodePath Object
 */
-int U_PMF_REGIONNODEPATH_get(const char *contents, int32_t *Size, const char **Data){
-    if(!contents || !Size || !Data){ return(0); }
+int U_PMF_REGIONNODEPATH_get(const char *contents, int32_t *Size, const char **Data, const char *blimit){
+    if(!contents || !Size || !Data || !blimit){ return(0); }
+    /* Important!  This only checks the constant part, the caller must check that returned data doesn't exceed blimit */
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_REGIONNODEPATH), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Size, 4, 1, U_LE);
+    if(contents >= blimit)return(0); // returned Data is variable size, this much at least must be true
     U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
     return(1);
 }
@@ -6496,11 +6751,13 @@ int U_PMF_REGIONNODEPATH_get(const char *contents, int32_t *Size, const char **D
     \return 1 on success, 0 on error
     \param  contents   Record from which to extract data
     \param  Color      Color of brush
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.43, Microsoft name: EmfPlusSolidBrushData Object
 */
-int U_PMF_SOLIDBRUSHDATA_get(const char *contents, U_PMF_ARGB *Color){
-    if(!contents || !Color){ return(0); }
+int U_PMF_SOLIDBRUSHDATA_get(const char *contents, U_PMF_ARGB *Color, const char *blimit){
+    if(!contents || !Color || !blimit){ return(0); }
+    if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_SOLIDBRUSHDATA), blimit))return(0);
     U_PMF_SERIAL_get(&contents, Color, 4, 1, U_XE);
     return(1);
 }
@@ -6513,12 +6770,14 @@ int U_PMF_SOLIDBRUSHDATA_get(const char *contents, U_PMF_ARGB *Color){
     \param  RangeCount    Entries in CharRange array
     \param  TabStops      Array of tabstop locations
     \param  CharRange     Array of character ranges in the text
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.44, Microsoft name: EmfPlusStringFormatData Object
 */
 int U_PMF_STRINGFORMATDATA_get(const char *contents, uint32_t TabStopCount, uint32_t RangeCount, 
-      const U_FLOAT **TabStops, const U_PMF_CHARACTERRANGE **CharRange){
-   if(!contents || !TabStops|| !CharRange){ return(0); }
+      const U_FLOAT **TabStops, const U_PMF_CHARACTERRANGE **CharRange, const char *blimit){
+   if(!contents || !TabStops|| !CharRange || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, (TabStopCount + 2*RangeCount)*4, blimit))return(0);
    *TabStops = NULL;
    if(TabStopCount > 0){ U_PMF_SERIAL_get(&contents, TabStops,  4, TabStopCount, U_LE); }
    *CharRange = NULL;
@@ -6533,13 +6792,19 @@ int U_PMF_STRINGFORMATDATA_get(const char *contents, uint32_t TabStopCount, uint
     \param  Flags      BrushData flags
     \param  WrapMode   WrapMode enumeration
     \param  Data       Optional texture data
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.45, Microsoft name: EmfPlusTextureBrushData Object
+
+    Caller must check Data for possible memory access violations.
 */
-int U_PMF_TEXTUREBRUSHDATA_get(const char *contents, uint32_t *Flags, int32_t *WrapMode, const char **Data){
-   if(!contents || !Flags || !WrapMode || !Data){ return(0); }
+int U_PMF_TEXTUREBRUSHDATA_get(const char *contents, uint32_t *Flags, int32_t *WrapMode, const char **Data, const char *blimit){
+   if(!contents || !Flags || !WrapMode || !Data || !blimit){ return(0); }
+   /* Important!  This only checks the constant part, the caller must check that returned data doesn't exceed blimit */
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_TEXTUREBRUSHDATA), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Flags,    4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, WrapMode, 4, 1, U_LE);
+   if(contents >= blimit)return(0); // returned Data is variable size, this much at least must be true
    U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
    return(1);
 }
@@ -6549,16 +6814,25 @@ int U_PMF_TEXTUREBRUSHDATA_get(const char *contents, uint32_t *Flags, int32_t *W
     \return 1 on success, 0 on error
     \param  contents   Record from which to extract data
     \param  HasImage   True if this object has an Image
-    \param  Matrix     Transformation matrix, present if Flag BrushDataTransform is set.
+    \param  Matrix     Transformation matrix, NULL if Flag BrushDataTransform is not set.
     \param  Image      Image that contains the texture.
-    
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.46, Microsoft name: EmfPlusTextureBrushOptionalData Object
+
+    Caller must check Image for possible memory access violations.
 */
-int U_PMF_TEXTUREBRUSHOPTIONALDATA_get(const char *contents, int HasImage, U_PMF_TRANSFORMMATRIX *Matrix, const char **Image){
-   if(!contents || !Matrix || !Image){ return(0); }
-   U_PMF_SERIAL_get(&contents, Matrix,   4, 6, U_LE);
-   U_PMF_PTRSAV_COND(Image, contents, HasImage);
+int U_PMF_TEXTUREBRUSHOPTIONALDATA_get(const char *contents, int HasImage, U_PMF_TRANSFORMMATRIX *Matrix, 
+      const char **Image, const char *blimit){
+   if(!contents || !Image || !blimit){ return(0); }
+   if(Matrix){
+      if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_TRANSFORMMATRIX), blimit))return(0);
+      U_PMF_SERIAL_get(&contents, Matrix,   4, 6, U_LE);
+   }
+   if(HasImage){
+      if(contents >= blimit)return(0); // returned Data is variable size, this much at least must be true
+      U_PMF_PTRSAV_COND(Image, contents, HasImage);
+   }
    return(1);
 }
 
@@ -6567,11 +6841,13 @@ int U_PMF_TEXTUREBRUSHOPTIONALDATA_get(const char *contents, int HasImage, U_PMF
     \return 1 on success, 0 on error
     \param  contents   Record from which to extract data
     \param  Matrix     Transformation matrix, present if Flag BrushDataTransform is set.
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.47, Microsoft name: EmfPlusTransformMatrix Object
 */
-int U_PMF_TRANSFORMMATRIX_get(const char *contents, U_PMF_TRANSFORMMATRIX *Matrix){
-   if(!contents || !Matrix){ return(0); }
+int U_PMF_TRANSFORMMATRIX_get(const char *contents, U_PMF_TRANSFORMMATRIX *Matrix, const char *blimit){
+   if(!contents || !Matrix || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_TRANSFORMMATRIX), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Matrix, 4, 6, U_LE);
    return(1);
 }
@@ -6582,11 +6858,13 @@ int U_PMF_TRANSFORMMATRIX_get(const char *contents, U_PMF_TRANSFORMMATRIX *Matri
     \param  contents   Record from which to extract data
     \param  Radius     Blur radius in pixels
     \param  ExpandEdge 1: expand bitmap by Radius; 0: bitmap size unchanged
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.1, Microsoft name: BlurEffect Object
 */
-int U_PMF_IE_BLUR_get(const char *contents, U_FLOAT *Radius, uint32_t *ExpandEdge){
-   if(!contents || !Radius || !ExpandEdge){ return(0); }
+int U_PMF_IE_BLUR_get(const char *contents, U_FLOAT *Radius, uint32_t *ExpandEdge, const char *blimit){
+   if(!contents || !Radius || !ExpandEdge || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_BLUR), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Radius,     4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, ExpandEdge, 4, 1, U_LE);
    return(1);
@@ -6598,11 +6876,13 @@ int U_PMF_IE_BLUR_get(const char *contents, U_FLOAT *Radius, uint32_t *ExpandEdg
     \param  contents    Record from which to extract data
     \param  Brightness  -255 to 255, 0 is unchanged, positive increases, negative decreases
     \param  Contrast    -100 to 100, 0 is unchanged, positive increases, negative decreases
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.2, Microsoft name: BrightnessContrastEffect Object
 */
-int U_PMF_IE_BRIGHTNESSCONTRAST_get(const char *contents, int32_t *Brightness, int32_t *Contrast){
-   if(!contents || !Brightness || !Contrast){ return(0); }
+int U_PMF_IE_BRIGHTNESSCONTRAST_get(const char *contents, int32_t *Brightness, int32_t *Contrast, const char *blimit){
+   if(!contents || !Brightness || !Contrast || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_BRIGHTNESSCONTRAST), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Brightness, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Contrast,   4, 1, U_LE);
    return(1);
@@ -6615,11 +6895,13 @@ int U_PMF_IE_BRIGHTNESSCONTRAST_get(const char *contents, int32_t *Brightness, i
     \param  CyanRed      -100 to 100, 0 is unchanged, positive increases Red   & decreases Cyan,    negative is opposite
     \param  MagentaGreen -100 to 100, 0 is unchanged, positive increases Green & decreases Magenta, negative is opposite
     \param  YellowBlue   -100 to 100, 0 is unchanged, positive increases Blue  & decreases Yellow,  negative is opposite
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.3, Microsoft name: ColorBalanceEffect Object
 */
-int U_PMF_IE_COLORBALANCE_get(const char *contents, int32_t *CyanRed, int32_t *MagentaGreen, int32_t *YellowBlue){
-   if(!contents || !CyanRed || !MagentaGreen || !YellowBlue){ return(0); }
+int U_PMF_IE_COLORBALANCE_get(const char *contents, int32_t *CyanRed, int32_t *MagentaGreen, int32_t *YellowBlue, const char *blimit){
+   if(!contents || !CyanRed || !MagentaGreen || !YellowBlue || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_COLORBALANCE), blimit))return(0);
    U_PMF_SERIAL_get(&contents, CyanRed,      4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, MagentaGreen, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, YellowBlue,   4, 1, U_LE);
@@ -6634,11 +6916,13 @@ int U_PMF_IE_COLORBALANCE_get(const char *contents, int32_t *CyanRed, int32_t *M
     \param  Adjust       CurveAdjustment enumeration
     \param  Channel      CurveChannel enumeration
     \param  Intensity    adjustment to apply.  "Adjust" determines what field this is and range values.
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.4, Microsoft name: ColorCurveEffect Object
 */
-int U_PMF_IE_COLORCURVE_get(const char *contents, uint32_t *Adjust, uint32_t *Channel, int32_t *Intensity){
-   if(!contents || !Adjust || !Channel || !Intensity){ return(0); }
+int U_PMF_IE_COLORCURVE_get(const char *contents, uint32_t *Adjust, uint32_t *Channel, int32_t *Intensity, const char *blimit){
+   if(!contents || !Adjust || !Channel || !Intensity || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_COLORCURVE), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Adjust,    4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Channel,   4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Intensity, 4, 1, U_LE);
@@ -6653,12 +6937,14 @@ int U_PMF_IE_COLORCURVE_get(const char *contents, uint32_t *Adjust, uint32_t *Ch
     \param  GLUT       Green color lookup table
     \param  RLUT       Red   color lookup table
     \param  ALUT       Alpha color lookup table
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.5, Microsoft name: ColorLookupTableEffect Object
 */
 int U_PMF_IE_COLORLOOKUPTABLE_get(const char *contents, 
-      const uint8_t **BLUT, const uint8_t **GLUT, const uint8_t **RLUT, const uint8_t **ALUT){
-   if(!contents || !BLUT || !GLUT || !RLUT || !ALUT){ return(0); }
+      const uint8_t **BLUT, const uint8_t **GLUT, const uint8_t **RLUT, const uint8_t **ALUT, const char *blimit){
+   if(!contents || !BLUT || !GLUT || !RLUT || !ALUT || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_COLORLOOKUPTABLE) + 4 * 256, blimit))return(0);
    U_PMF_PTRSAV_SHIFT((const char **)BLUT, &contents, 256);
    U_PMF_PTRSAV_SHIFT((const char **)GLUT, &contents, 256);
    U_PMF_PTRSAV_SHIFT((const char **)RLUT, &contents, 256);
@@ -6671,11 +6957,14 @@ int U_PMF_IE_COLORLOOKUPTABLE_get(const char *contents,
     \return 1 on success, 0 on error
     \param  contents   Record from which to extract data
     \param  Matrix     5 x 5 color transformation matrix, First 4 rows are [{4 multiplier values},0.0] for R,G,B,A, last Row is [{4 color translation valuess}, 1.0]
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.6, Microsoft name: ColorMatrixEffect Object
 */
-int U_PMF_IE_COLORMATRIX_get(const char *contents, U_PMF_IE_COLORMATRIX *Matrix){
-   if(!contents || !Matrix){ return(0); }
+int U_PMF_IE_COLORMATRIX_get(const char *contents, U_PMF_IE_COLORMATRIX *Matrix, const char *blimit){
+   if(!contents || !Matrix || !blimit){ return(0); }
+   /* Important!  This only checks the constant part, the caller must check that returned data doesn't exceed blimit */
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_COLORMATRIX), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Matrix, 4, 5*5, U_LE);
    return(1);
 }
@@ -6687,11 +6976,13 @@ int U_PMF_IE_COLORMATRIX_get(const char *contents, U_PMF_IE_COLORMATRIX *Matrix)
     \param  Hue          -180 to 180, 0 is unchanged
     \param  Saturation   -100 to 100, 0 is unchanged
     \param  Lightness    -100 to 100, 0 is unchanged
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.7, Microsoft name: HueSaturationLightnessEffect Object
 */
-int U_PMF_IE_HUESATURATIONLIGHTNESS_get(const char *contents, int32_t *Hue, int32_t *Saturation, int32_t *Lightness){
-   if(!contents || !Hue || !Saturation || !Lightness){ return(0); }
+int U_PMF_IE_HUESATURATIONLIGHTNESS_get(const char *contents, int32_t *Hue, int32_t *Saturation, int32_t *Lightness, const char *blimit){
+   if(!contents || !Hue || !Saturation || !Lightness || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_HUESATURATIONLIGHTNESS), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Hue,        4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Saturation, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Lightness,  4, 1, U_LE);
@@ -6705,11 +6996,13 @@ int U_PMF_IE_HUESATURATIONLIGHTNESS_get(const char *contents, int32_t *Hue, int3
     \param  Highlight    0 to 100, 100 is unchanged
     \param  Midtone      -100 to 100, 0 is unchanged
     \param  Shadow       0 to 100, 0 is unchanged
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.8, Microsoft name: LevelsEffect Object
 */
-int U_PMF_IE_LEVELS_get(const char *contents, int32_t *Highlight, int32_t *Midtone, int32_t *Shadow){
-   if(!contents || !Highlight || !Midtone || !Shadow){ return(0); }
+int U_PMF_IE_LEVELS_get(const char *contents, int32_t *Highlight, int32_t *Midtone, int32_t *Shadow, const char *blimit){
+   if(!contents || !Highlight || !Midtone || !Shadow || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_LEVELS), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Highlight, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Midtone,   4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Shadow,    4, 1, U_LE);
@@ -6722,12 +7015,15 @@ int U_PMF_IE_LEVELS_get(const char *contents, int32_t *Highlight, int32_t *Midto
     \param  contents   Record from which to extract data
     \param  Elements   Number of members in Rects
     \param  Rects      Caller must free.  Pointer to memory holding an array of U_RECTL.
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.9, Microsoft name: RedEyeCorrectionEffect Object
 */
-int U_PMF_IE_REDEYECORRECTION_get(const char *contents, int32_t *Elements, U_RECTL **Rects){
-   if(!contents || !Elements || !Rects){ return(0); }
+int U_PMF_IE_REDEYECORRECTION_get(const char *contents, int32_t *Elements, U_RECTL **Rects, const char *blimit){
+   if(!contents || !Elements || !Rects || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_REDEYECORRECTION), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
+   if(IS_MEM_UNSAFE(contents, *Elements * 4, blimit))return(0);
    *Rects = (U_RECTL *) malloc(*Elements * sizeof(U_RECTL));
    if(!*Rects){ return(0); }
    U_PMF_SERIAL_get(&contents, *Rects, 4, *Elements * 4, U_LE);
@@ -6740,11 +7036,13 @@ int U_PMF_IE_REDEYECORRECTION_get(const char *contents, int32_t *Elements, U_REC
     \param  contents   Record from which to extract data
     \param  Radius     Sharpening radius in pixels
     \param  Sharpen    0 to 100, 0 is unchanged
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.10, Microsoft name: SharpenEffect Object
 */
-int U_PMF_IE_SHARPEN_get(const char *contents, U_FLOAT *Radius, int32_t *Sharpen){
-   if(!contents || !Radius || !Sharpen){ return(0); }
+int U_PMF_IE_SHARPEN_get(const char *contents, U_FLOAT *Radius, int32_t *Sharpen, const char *blimit){
+   if(!contents || !Radius || !Sharpen || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_SHARPEN), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Radius,  4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Sharpen, 4, 1, U_LE);
    return(1);
@@ -6756,13 +7054,48 @@ int U_PMF_IE_SHARPEN_get(const char *contents, U_FLOAT *Radius, int32_t *Sharpen
     \param  contents    Record from which to extract data
     \param  Hue         -180 to 180, [positive==clockwise] rotation in degrees starting from blue
     \param  Amount      -100 [add black] to 100[add white], 0 is unchanged.  Change in hue on specified axis
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.3.11, Microsoft name: TintEffect Object
 */
-int U_PMF_IE_TINT_get(const char *contents, int32_t *Hue, int32_t *Amount){
-   if(!contents || !Hue || !Amount){ return(0); }
+int U_PMF_IE_TINT_get(const char *contents, int32_t *Hue, int32_t *Amount, const char *blimit){
+   if(!contents || !Hue || !Amount || !blimit){ return(0); }
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_IE_TINT), blimit))return(0);
    U_PMF_SERIAL_get(&contents, Hue,    4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Amount, 4, 1, U_LE);
+   return(1);
+}
+
+/*
+
+   end of U_PMF_*_get() functions 
+   =====================================================================================
+   start of U_PMR_*_get() functions 
+
+      These functions all assume that the size field in the common EMF+ header has already
+      been checked, so that the extent the record claims exists in the data read in for the file.
+      Consequently none of them takes a blimit parameter.  They generate a new one from the
+      header size field and contents if needed.
+
+*/
+
+int U_PMR_common_stack_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *StackID){
+   if(!contents || !StackID){ return(0); }
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_RESTORE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   U_PMF_SERIAL_get(&contents, StackID, 4, 1, U_LE);
+   return(1);
+}
+
+/* for records that have a type but no associated flag bits or data */
+int U_PMR_common_header_get(const char *contents, U_PMF_CMN_HDR *Header){
+   /* memory access safe, only uses the common header */
+   if(!contents){ return(0); }
+   U_PMF_CMN_HDR_get(&contents, Header);
    return(1);
 }
 
@@ -6779,7 +7112,12 @@ int U_PMF_IE_TINT_get(const char *contents, int32_t *Hue, int32_t *Amount){
 int U_PMR_OFFSETCLIP_get(const char *contents, U_PMF_CMN_HDR *Header,
       U_FLOAT *dX, U_FLOAT *dY){
    if(!contents){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_OFFSETCLIP))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
    U_PMF_SERIAL_get(&contents, dX, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, dY, 4, 1, U_LE);
    return(1);
@@ -6812,10 +7150,14 @@ int U_PMR_RESETCLIP_get(const char *contents, U_PMF_CMN_HDR *Header){
 int U_PMR_SETCLIPPATH_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *PathID, int *CMenum){
    if(!contents || !PathID || !CMenum){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *CMenum  = (Flags >> U_FF_SHFT_CM4) & U_FF_MASK_CM4;
-   *PathID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETCLIPPATH))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *CMenum  = (lclHeader.Flags >> U_FF_SHFT_CM4) & U_FF_MASK_CM4;
+   *PathID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    return(1);
 }
 
@@ -6833,9 +7175,13 @@ int U_PMR_SETCLIPRECT_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *CMenum,
       U_PMF_RECTF *Rect){
    if(!contents || !CMenum || !Rect ){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *CMenum  = (Flags >> U_FF_SHFT_CM4) & U_FF_MASK_CM4;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETCLIPRECT))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *CMenum  = (lclHeader.Flags >> U_FF_SHFT_CM4) & U_FF_MASK_CM4;
    U_PMF_SERIAL_get(&contents, Rect, 4, 4, U_LE);
    return(1);
 }
@@ -6853,10 +7199,14 @@ int U_PMR_SETCLIPRECT_get(const char *contents, U_PMF_CMN_HDR *Header,
 int U_PMR_SETCLIPREGION_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *PathID, int *CMenum){
    if(!contents || !PathID || !CMenum){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *CMenum  = (Flags >> U_FF_SHFT_CM4) & U_FF_MASK_CM4;
-   *PathID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETCLIPREGION))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *CMenum  = (lclHeader.Flags >> U_FF_SHFT_CM4) & U_FF_MASK_CM4;
+   *PathID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    return(1);
 }
 
@@ -6868,11 +7218,18 @@ int U_PMR_SETCLIPREGION_get(const char *contents, U_PMF_CMN_HDR *Header,
     \param  Data        Private data, may be anything
 
     EMF+ manual 2.3.2.1, Microsoft name: EmfPlusComment Record, Index 0x03
+    
+    Caller must check Data for possible memory access violations.
 */
 int U_PMR_COMMENT_get(const char *contents, U_PMF_CMN_HDR *Header,
       const char **Data){
    if(!contents || !Data){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_COMMENT))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
    U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
    return(1);
 }
@@ -6922,9 +7279,13 @@ int U_PMR_HEADER_get(const char *contents, U_PMF_CMN_HDR *Header,
       U_PMF_GRAPHICSVERSION *Version, int *IsDual, int *IsVideo, uint32_t *LogicalDpiX, uint32_t *LogicalDpiY){
    if(!contents || !Version || !IsDual || !IsVideo || !LogicalDpiX || !LogicalDpiY){ return(0); }
    uint32_t tmp;
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *IsDual = (Flags & U_PPF_DM ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_HEADER))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *IsDual = (lclHeader.Flags & U_PPF_DM ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, Version,     4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, &tmp,        4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, LogicalDpiX, 4, 1, U_LE);
@@ -6945,7 +7306,12 @@ int U_PMR_HEADER_get(const char *contents, U_PMF_CMN_HDR *Header,
 int U_PMR_CLEAR_get(const char *contents, U_PMF_CMN_HDR *Header,
       U_PMF_ARGB *Color){
    if(!contents || !Color){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_CLEAR))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
    U_PMF_SERIAL_get(&contents, Color, 4, 1, U_LE);
    return(1);
 }
@@ -6968,15 +7334,25 @@ int U_PMR_DRAWARC_get(const char *contents, U_PMF_CMN_HDR *Header,
       U_FLOAT *Start, U_FLOAT *Sweep,
       U_PMF_RECTF *Rect){
    if(!contents || !PenID || !ctype || !Start || !Sweep || !Rect){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype = (Flags & U_PPF_C ? 1 : 0 );
-   *PenID = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWARC))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *ctype = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *PenID = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, Start, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Sweep, 4, 1, U_LE);
-   U_PMF_SERIAL_get(&contents, Rect,  4, 4, U_LE);
+   U_PMF_RECTF *Rects = NULL;
+   if(!U_PMF_VARRECTS_get(&contents, lclHeader.Flags, 1, &Rects, blimit))return(0);
+   memcpy(Rect,Rects,sizeof(U_PMF_RECTF));
+   free(Rects);
    return(1);
 }
+
 
 /**
     \brief Get data from a U_PMR_DRAWBEZIERS record
@@ -6996,14 +7372,20 @@ int U_PMR_DRAWBEZIERS_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *Elements, 
       U_PMF_POINTF **Points){
    if(!contents || !PenID || !ctype || !RelAbs || !Elements || !Points){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *RelAbs = (Flags & U_PPF_P ? 1 : 0 );
-   *PenID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWBEZIERS))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *RelAbs = (lclHeader.Flags & U_PPF_P ? 1 : 0 );
+   *PenID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
-   U_PMF_VARPOINTS_get(&contents, Flags, *Elements, Points);
-   return(1);
+   int status = U_PMF_VARPOINTS_get(contents, lclHeader.Flags, *Elements, Points, blimit );
+   return(status);
 }
 
 /**
@@ -7025,14 +7407,20 @@ int U_PMR_DRAWCLOSEDCURVE_get(const char *contents, U_PMF_CMN_HDR *Header,
       U_FLOAT *Tension, uint32_t *Elements,
       U_PMF_POINTF **Points){
    if(!contents || !PenID || !ctype || !RelAbs || !Tension || !Elements || !Points){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *RelAbs = (Flags & U_PPF_P ? 1 : 0 );
-   *PenID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWCLOSEDCURVE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *RelAbs = (lclHeader.Flags & U_PPF_P ? 1 : 0 );
+   *PenID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, Tension,  4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
-   U_PMF_VARPOINTS_get(&contents, Flags, *Elements, Points);
+   U_PMF_VARPOINTS_get(contents, lclHeader.Flags, *Elements, Points, blimit);
    return(1);
 }
 
@@ -7056,15 +7444,21 @@ int U_PMR_DRAWCURVE_get(const char *contents, U_PMF_CMN_HDR *Header,
       U_FLOAT *Tension, uint32_t *Offset, uint32_t *NSegs, uint32_t *Elements,
       U_PMF_POINTF **Points){
    if(!contents || !PenID || !ctype || !Tension || !Offset || !NSegs || !Elements || !Points){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *PenID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWCURVE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *PenID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, Tension,  4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Offset,   4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, NSegs,    4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
-   U_PMF_VARPOINTS_get(&contents, Flags, *Elements, Points);
+   U_PMF_VARPOINTS_get(contents, lclHeader.Flags, *Elements, Points, blimit);
    return(1);
 }
 
@@ -7092,15 +7486,22 @@ int U_PMR_DRAWDRIVERSTRING_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint16_t **Glyphs, U_PMF_POINTF **Points, U_PMF_TRANSFORMMATRIX **Matrix){
    if(!contents || !FontID || !btype || !Tension || !BrushID || 
       !DSOFlags || !HasMatrix || !Elements || !Glyphs || !Points || !Matrix){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype  = (Flags & U_PPF_B ? 1 : 0 );
-   *FontID = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWDRIVERSTRING))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *FontID = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, Tension,   4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, BrushID,   4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    U_PMF_SERIAL_get(&contents, DSOFlags,  4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, HasMatrix, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Elements,  4, 1, U_LE);
+   if(IS_MEM_UNSAFE(contents, *Elements*2 + *Elements*2*4 + 24, blimit))return(0);
    if(!U_PMF_SERIAL_array_copy_get(&contents, (void **)Glyphs, 2, *Elements,    U_LE, (*DSOFlags & U_DSO_CmapLookup))){      return(0); }
    if(!U_PMF_SERIAL_array_copy_get(&contents, (void **)Points, 4, *Elements *2, U_LE, (*DSOFlags & U_DSO_RealizedAdvance))){ return(0); }
    if(!U_PMF_SERIAL_array_copy_get(&contents, (void **)Matrix, 4, 6,            U_LE, (*HasMatrix))){                        return(0); }
@@ -7122,10 +7523,14 @@ int U_PMR_DRAWELLIPSE_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *PenID, int *ctype, 
       U_PMF_RECTF *Rect){
    if(!contents || !PenID || !ctype || !Rect){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *PenID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWELLIPSE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *PenID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, Rect,  4, 4, U_LE);
    return(1);
 }
@@ -7149,10 +7554,14 @@ int U_PMR_DRAWIMAGE_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *ImgAttrID, int32_t *SrcUnit, U_PMF_RECTF *SrcRect,
       U_PMF_RECTF *DstRect){
    if(!contents || !ImgID || !ctype || !ImgAttrID || !SrcUnit || !SrcRect || !DstRect){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *ImgID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWIMAGE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *ImgID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, ImgAttrID, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, SrcUnit,   4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, SrcRect,   4, 4, U_LE);
@@ -7182,17 +7591,23 @@ int U_PMR_DRAWIMAGEPOINTS_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *ImgAttrID, int32_t *SrcUnit, U_PMF_RECTF *SrcRect, uint32_t *Elements, 
       U_PMF_POINTF **Points){
    if(!contents || !ImgID || !ctype || !etype || !RelAbs || !ImgAttrID || !SrcUnit || !Elements || !Points){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *etype  = (Flags & U_PPF_E ? 1 : 0 );
-   *RelAbs = (Flags & U_PPF_P ? 1 : 0 );
-   *ImgID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWIMAGEPOINTS))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *etype  = (lclHeader.Flags & U_PPF_E ? 1 : 0 );
+   *RelAbs = (lclHeader.Flags & U_PPF_P ? 1 : 0 );
+   *ImgID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, ImgAttrID, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, SrcUnit,   4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, SrcRect,   4, 4, U_LE);
    U_PMF_SERIAL_get(&contents, Elements,  4, 1, U_LE);
-   U_PMF_VARPOINTS_get(&contents, Flags, *Elements, Points);
+   U_PMF_VARPOINTS_get(contents, lclHeader.Flags, *Elements, Points, blimit);
    return(1);
 }
 
@@ -7215,14 +7630,20 @@ int U_PMR_DRAWLINES_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *Elements,
       U_PMF_POINTF **Points){
    if(!contents || !PenID || !ctype || !dtype || !RelAbs || !Elements || !Points){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *dtype  = (Flags & U_PPF_D ? 1 : 0 );
-   *RelAbs = (Flags & U_PPF_P ? 1 : 0 );
-   *PenID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWLINES))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *dtype  = (lclHeader.Flags & U_PPF_D ? 1 : 0 );
+   *RelAbs = (lclHeader.Flags & U_PPF_P ? 1 : 0 );
+   *PenID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
-   U_PMF_VARPOINTS_get(&contents, Flags, *Elements, Points);
+   U_PMF_VARPOINTS_get(contents, lclHeader.Flags, *Elements, Points, blimit);
    return(1);
 }
 
@@ -7239,9 +7660,13 @@ int U_PMR_DRAWLINES_get(const char *contents, U_PMF_CMN_HDR *Header,
 int U_PMR_DRAWPATH_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *PathID, uint32_t *PenID){
    if(!contents || !PathID || !PenID){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *PathID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWPATH))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *PathID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, PenID, 4, 1, U_LE);
    return(1);
 }
@@ -7264,13 +7689,22 @@ int U_PMR_DRAWPIE_get(const char *contents, U_PMF_CMN_HDR *Header,
       U_FLOAT *Start, U_FLOAT *Sweep,
       U_PMF_RECTF *Rect){
    if(!contents || !PenID || !ctype || !Start || !Sweep || !Rect){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype = (Flags & U_PPF_C ? 1 : 0 );
-   *PenID = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWPIE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *ctype = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *PenID = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, Start, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Sweep, 4, 1, U_LE);
-   U_PMF_SERIAL_get(&contents, Rect,  4, 4, U_LE);
+   U_PMF_RECTF *Rects = NULL;
+   if(!U_PMF_VARRECTS_get(&contents, lclHeader.Flags, 1, &Rects, blimit))return(0);
+   memcpy(Rect,Rects,sizeof(U_PMF_RECTF));
+   free(Rects);
    return(1);
 }
 
@@ -7294,12 +7728,18 @@ int U_PMR_DRAWRECTS_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *Elements,
       U_PMF_RECTF **Rects){
    if(!contents || !PenID || !Elements || !Rects){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *PenID = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWPIE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *PenID =  (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
-   U_PMF_VARRECTS_get(&contents, Flags, *Elements, Rects);
+   U_PMF_VARRECTS_get(&contents, lclHeader.Flags, *Elements, Rects, blimit);
    return(1);
 }
 
@@ -7323,14 +7763,21 @@ int U_PMR_DRAWSTRING_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *BrushID, uint32_t *FormatID, uint32_t *Elements, U_PMF_RECTF *Rect,
       uint16_t **String){
    if(!contents || !FontID || !btype || !BrushID || !FormatID || !Elements || !String){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype  = (Flags & U_PPF_B ? 1 : 0 );
-   *FontID = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWPIE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *FontID = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, BrushID,  4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    U_PMF_SERIAL_get(&contents, FormatID, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Rect,     4, 4, U_LE);
+   if(IS_MEM_UNSAFE(contents, *Elements * 2, blimit))return(0);
    if(!U_PMF_SERIAL_array_copy_get(&contents, (void **)String, 2, *Elements, U_XE, 1)){ return(0); }
    return(1);
 }
@@ -7356,16 +7803,22 @@ int U_PMR_FILLCLOSEDCURVE_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *BrushID, U_FLOAT *Tension, uint32_t *Elements,
       U_PMF_POINTF **Points){
    if(!contents || !btype || !ctype || !ftype || !RelAbs || !BrushID || !Tension || !Elements || !Points){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype  = (Flags & U_PPF_B ? 1 : 0 );
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *ftype  = (Flags & U_PPF_F ? 1 : 0 );
-   *RelAbs = (Flags & U_PPF_P ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWLINES))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *ftype  = (lclHeader.Flags & U_PPF_F ? 1 : 0 );
+   *RelAbs = (lclHeader.Flags & U_PPF_P ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, BrushID,  4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    U_PMF_SERIAL_get(&contents, Tension,  4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
-   U_PMF_VARPOINTS_get(&contents, Flags, *Elements, Points);
+   U_PMF_VARPOINTS_get(contents, lclHeader.Flags, *Elements, Points, blimit);
    return(1);
 }
 
@@ -7386,10 +7839,14 @@ int U_PMR_FILLELLIPSE_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *BrushID,
       U_PMF_RECTF *Rect){
    if(!contents || !btype || !ctype || !BrushID || !Rect){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype  = (Flags & U_PPF_B ? 1 : 0 );
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_FILLELLIPSE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, BrushID, 4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    U_PMF_SERIAL_get(&contents, Rect,    4, 4, U_LE);
    return(1);
@@ -7412,10 +7869,14 @@ int U_PMR_FILLPATH_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *PathID, int *btype,
       uint32_t *BrushID){
    if(!contents || !PathID || !btype || !BrushID){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype  = (Flags & U_PPF_B ? 1 : 0 );
-   *PathID = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_FILLPATH))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *PathID = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, BrushID, 4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    return(1);
 }
@@ -7439,14 +7900,23 @@ int U_PMR_FILLPIE_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *BrushID, U_FLOAT *Start, U_FLOAT *Sweep,
       U_PMF_RECTF *Rect){
    if(!contents || !btype || !ctype || !BrushID || !Start || !Sweep || !Rect){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype  = (Flags & U_PPF_B ? 1 : 0 );
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_FILLPIE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, BrushID, 4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    U_PMF_SERIAL_get(&contents, Start,   4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Sweep,   4, 1, U_LE);
-   U_PMF_SERIAL_get(&contents, Rect,    4, 4, U_LE);
+   U_PMF_RECTF *Rects = NULL;
+   if(!U_PMF_VARRECTS_get(&contents, lclHeader.Flags, 1, &Rects, blimit))return(0);
+   memcpy(Rect,Rects,sizeof(U_PMF_RECTF));
+   free(Rects);
    return(1);
 }
 
@@ -7469,14 +7939,20 @@ int U_PMR_FILLPOLYGON_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *BrushID, uint32_t *Elements,
       U_PMF_POINTF **Points){
    if(!contents || !btype || !ctype || !RelAbs || !BrushID || !Elements || !Points){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype   = (Flags & U_PPF_B ? 1 : 0 );
-   *ctype   = (Flags & U_PPF_C ? 1 : 0 );
-   *RelAbs  = (Flags & U_PPF_R ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_DRAWLINES))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *btype   = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *ctype   = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *RelAbs  = (lclHeader.Flags & U_PPF_R ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, BrushID,  4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
-   U_PMF_VARPOINTS_get(&contents, Flags, *Elements, Points);
+   U_PMF_VARPOINTS_get(contents, lclHeader.Flags, *Elements, Points, blimit);
    return(1);
 }
 
@@ -7505,13 +7981,19 @@ int U_PMR_FILLRECTS_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *BrushID, uint32_t *Elements,
       U_PMF_RECTF **Rects){
    if(!contents || !btype || !ctype || !BrushID || !Elements || !Rects){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype  = (Flags & U_PPF_B ? 1 : 0 );
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_FILLRECTS))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, BrushID,  4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    U_PMF_SERIAL_get(&contents, Elements, 4, 1, U_LE);
-   U_PMF_VARRECTS_get(&contents, Flags, *Elements, Rects);
+   U_PMF_VARRECTS_get(&contents, lclHeader.Flags, *Elements, Rects, blimit);
    /* correct btype, if necessary, for invalid EMF+ input */
    if((*BrushID > 63) & !*btype)*btype=1;
    return(1);
@@ -7534,11 +8016,15 @@ int U_PMR_FILLREGION_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *RgnID, int *btype, int *ctype,
       uint32_t *BrushID){
    if(!contents || !RgnID || !btype || !ctype || !BrushID){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *btype  = (Flags & U_PPF_B ? 1 : 0 );
-   *ctype  = (Flags & U_PPF_C ? 1 : 0 );
-   *RgnID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_FILLREGION))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
+   *ctype  = (lclHeader.Flags & U_PPF_C ? 1 : 0 );
+   *RgnID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
    U_PMF_SERIAL_get(&contents, BrushID, 4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    return(1);
 }
@@ -7556,6 +8042,8 @@ int U_PMR_FILLREGION_get(const char *contents, U_PMF_CMN_HDR *Header,
 
     EMF+ manual 2.3.5.1, Microsoft name: EmfPlusObject Record, Index 0x13
     
+    Caller must check Data for possible memory access violations.
+
     OTHER NOTES:
     All objects are to be stored in the same table and retrieved by index.
     Documentation indicates that this table contains only 64 slots, although the index
@@ -7585,11 +8073,15 @@ int U_PMR_OBJECT_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *ObjID, int *otype, int *ntype, uint32_t *TSize,
       const char **Data){
    if(!contents || !ObjID || !otype || !ntype || !Data){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ntype  = (Flags & U_PPF_N ? 1 : 0 );
-   *ObjID  = (Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   *otype  = (Flags >> U_FF_SHFT_OT) & U_FF_MASK_OT;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_OBJECT))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *ntype  = (lclHeader.Flags & U_PPF_N ? 1 : 0 );
+   *ObjID  = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
+   *otype  = (lclHeader.Flags >> U_FF_SHFT_OT) & U_FF_MASK_OT;
    if(*ntype){  U_PMF_SERIAL_get(&contents, TSize, 4, 1,  U_LE); }
    else {       *TSize = 0; }
    U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
@@ -7606,12 +8098,19 @@ int U_PMR_OBJECT_get(const char *contents, U_PMF_CMN_HDR *Header,
     \param  Data        "Serialized image effects parameter block".  One of the ImageEffects objects.
 
     EMF+ manual 2.3.5.2, Microsoft name: EmfPlusSerializableObject Record, Index 0x38
+
+    Caller must check Data for possible memory access violations.
 */
 int U_PMR_SERIALIZABLEOBJECT_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint8_t *GUID, uint32_t *Size,
       const char **Data){
    if(!contents || !GUID || !Size || !Data){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SERIALIZABLEOBJECT))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
    U_PMF_SERIAL_get(&contents, GUID, 1, 16, U_XE);
    U_PMF_SERIAL_get(&contents, Size, 4, 1,  U_LE);
    U_PMF_PTRSAV_SHIFT(Data, &contents, 0);
@@ -7631,10 +8130,14 @@ int U_PMR_SERIALIZABLEOBJECT_get(const char *contents, U_PMF_CMN_HDR *Header,
 int U_PMR_SETANTIALIASMODE_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *SMenum, int *aatype){
    if(!contents || !SMenum || !aatype){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *aatype = (Flags & U_PPF_AA ? 1 : 0 );
-   *SMenum = (Flags >> U_FF_SHFT_AA) & U_FF_MASK_AA;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETANTIALIASMODE))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *aatype = (lclHeader.Flags & U_PPF_AA ? 1 : 0 );
+   *SMenum = (lclHeader.Flags >> U_FF_SHFT_AA) & U_FF_MASK_AA;
    return(1);
 }
 
@@ -7649,6 +8152,7 @@ int U_PMR_SETANTIALIASMODE_get(const char *contents, U_PMF_CMN_HDR *Header,
 */
 int U_PMR_SETCOMPOSITINGMODE_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *CMenum){
+   /* memory access safe, only uses the common header */
    if(!contents || !CMenum){ return(0); }
    uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
    *CMenum  = (Flags >> U_FF_SHFT_CM) & U_FF_MASK_CM;
@@ -7667,6 +8171,7 @@ int U_PMR_SETCOMPOSITINGMODE_get(const char *contents, U_PMF_CMN_HDR *Header,
 */
 int U_PMR_SETCOMPOSITINGQUALITY_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *CQenum){
+   /* memory access safe, only uses the common header */
    if(!contents || !CQenum){ return(0); }
    uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
    *CQenum  = (Flags >> U_FF_SHFT_CQ) & U_FF_MASK_CQ;
@@ -7685,6 +8190,7 @@ int U_PMR_SETCOMPOSITINGQUALITY_get(const char *contents, U_PMF_CMN_HDR *Header,
 */
 int U_PMR_SETINTERPOLATIONMODE_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *IMenum){
+   /* memory access safe, only uses the common header */
    if(!contents || !IMenum){ return(0); }
    uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
    *IMenum  = (Flags >> U_FF_SHFT_IM) & U_FF_MASK_IM;
@@ -7703,6 +8209,7 @@ int U_PMR_SETINTERPOLATIONMODE_get(const char *contents, U_PMF_CMN_HDR *Header,
 */
 int U_PMR_SETPIXELOFFSETMODE_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *POMenum){
+   /* memory access safe, only uses the common header */
    if(!contents || !POMenum){ return(0); }
    uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
    *POMenum  = (Flags >> U_FF_SHFT_PxOffM) & U_FF_MASK_PxOffM;
@@ -7723,7 +8230,12 @@ int U_PMR_SETPIXELOFFSETMODE_get(const char *contents, U_PMF_CMN_HDR *Header,
 int U_PMR_SETRENDERINGORIGIN_get(const char *contents, U_PMF_CMN_HDR *Header,
       int32_t *X, int32_t *Y){
    if(!contents || !X || !Y){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   if(!U_PMF_CMN_HDR_get(&contents, &lclHeader))return(0);
+   if(lclHeader.Size < sizeof(U_PMF_SETRENDERINGORIGIN))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
    U_PMF_SERIAL_get(&contents, X, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Y, 4, 1, U_LE);
    return(1);
@@ -7740,6 +8252,7 @@ int U_PMR_SETRENDERINGORIGIN_get(const char *contents, U_PMF_CMN_HDR *Header,
 */
 int U_PMR_SETTEXTCONTRAST_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *TGC){
+   /* memory access safe, only uses the common header */
    if(!contents || !TGC){ return(0); }
    uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
    *TGC  = (Flags >> U_FF_SHFT_TGC) & U_FF_MASK_TGC;
@@ -7758,6 +8271,7 @@ int U_PMR_SETTEXTCONTRAST_get(const char *contents, U_PMF_CMN_HDR *Header,
 */
 int U_PMR_SETTEXTRENDERINGHINT_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *TRHenum){
+   /* memory access safe, only uses the common header */
    if(!contents || !TRHenum){ return(0); }
    uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
    *TRHenum  = (Flags >> U_FF_SHFT_TRH) & U_FF_MASK_TRH;
@@ -7781,9 +8295,13 @@ int U_PMR_BEGINCONTAINER_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *UTenum,
       U_PMF_RECTF *DstRect, U_PMF_RECTF *SrcRect, uint32_t *StackID){
    if(!contents || !UTenum || !DstRect || !SrcRect || !StackID){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *UTenum  = (Flags >> U_FF_SHFT_UT) & U_FF_MASK_UT;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETCLIPREGION))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *UTenum  = (lclHeader.Flags >> U_FF_SHFT_UT) & U_FF_MASK_UT;
    U_PMF_SERIAL_get(&contents, DstRect, 4, 4, U_LE);
    U_PMF_SERIAL_get(&contents, SrcRect, 4, 4, U_LE);
    U_PMF_SERIAL_get(&contents, StackID, 4, 1, U_LE);
@@ -7800,10 +8318,7 @@ int U_PMR_BEGINCONTAINER_get(const char *contents, U_PMF_CMN_HDR *Header,
     EMF+ manual 2.3.7.2, Microsoft name: EmfPlusBeginContainerNoParams Record, Index 0x28
 */
 int U_PMR_BEGINCONTAINERNOPARAMS_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *StackID){
-   if(!contents || !StackID){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   U_PMF_SERIAL_get(&contents, StackID, 4, 1, U_LE);
-   return(1);
+   return(U_PMR_common_stack_get(contents, Header, StackID));
 }
 
 /**
@@ -7815,12 +8330,8 @@ int U_PMR_BEGINCONTAINERNOPARAMS_get(const char *contents, U_PMF_CMN_HDR *Header
 
     EMF+ manual 2.3.7.3, Microsoft name: EmfPlusEndContainer Record, Index 0x29
 */
-int U_PMR_ENDCONTAINER_get(const char *contents, U_PMF_CMN_HDR *Header,
-      uint32_t *StackID){
-   if(!contents || !StackID){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   U_PMF_SERIAL_get(&contents, StackID, 4, 1, U_LE);
-   return(1);
+int U_PMR_ENDCONTAINER_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *StackID){
+   return(U_PMR_common_stack_get(contents, Header, StackID));
 }
 
 /**
@@ -7833,10 +8344,7 @@ int U_PMR_ENDCONTAINER_get(const char *contents, U_PMF_CMN_HDR *Header,
     EMF+ manual 2.3.7.4, Microsoft name: EmfPlusRestore Record, Index 0x26
 */
 int U_PMR_RESTORE_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *StackID){
-   if(!contents || !StackID){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   U_PMF_SERIAL_get(&contents, StackID, 4, 1, U_LE);
-   return(1);
+    return(U_PMR_common_stack_get(contents, Header, StackID));
 }
 
 /**
@@ -7849,10 +8357,7 @@ int U_PMR_RESTORE_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *Sta
     EMF+ manual 2.3.7.5, Microsoft name: EmfPlusSave Record, Index 0x25
 */
 int U_PMR_SAVE_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *StackID){
-   if(!contents || !StackID){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   U_PMF_SERIAL_get(&contents, StackID, 4, 1, U_LE);
-   return(1);
+   return(U_PMR_common_stack_get(contents, Header, StackID));
 }
 
 /**
@@ -7870,11 +8375,17 @@ int U_PMR_SETTSCLIP_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *ctype, uint32_t *Elements,
       U_PMF_RECTF **Rects){
    if(!contents || !ctype || !Elements || !Rects){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *ctype     = (Flags & U_PPF_K ? 1 : 0 );
-   *Elements  = (Flags >> U_FF_SHFT_TSC) & U_FF_MASK_TSC;
-   U_PMF_CMN_HDR_get(&contents, Header);
-   U_PMF_VARRECTS_get(&contents, Flags, *Elements, Rects);
+
+   const char *blimit = contents;
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETTSCLIP))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+   blimit += lclHeader.Size;
+
+   *ctype     = (lclHeader.Flags & U_PPF_K ? 1 : 0 );
+   *Elements  = (lclHeader.Flags >> U_FF_SHFT_TSC) & U_FF_MASK_TSC;
+   U_PMF_VARRECTS_get(&contents, lclHeader.Flags, *Elements, Rects, blimit);
    return(1);
 }
 
@@ -7898,6 +8409,8 @@ int U_PMR_SETTSCLIP_get(const char *contents, U_PMF_CMN_HDR *Header,
     \param  Data                 Palette (optional)
 
     EMF+ manual 2.3.8.2, Microsoft name: EmfPlusSetTSGraphics Record, Index 0x39 
+
+    Caller must check Data for possible memory access violations.
 */
 int U_PMR_SETTSGRAPHICS_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *vgatype, int *pptype,
@@ -7909,10 +8422,14 @@ int U_PMR_SETTSGRAPHICS_get(const char *contents, U_PMF_CMN_HDR *Header,
       !AntiAliasMode || !TextRenderHint || !CompositingMode || !CompositingQuality ||
       !RenderOriginX || !RenderOriginY ||  !TextContrast ||    !FilterType ||
       !PixelOffset ||   !WorldToDevice || !Data){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *vgatype     = (Flags & U_PPF_VGA ? 1 : 0 );
-   *pptype      = (Flags & U_PPF_PP  ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETTSGRAPHICS))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *vgatype     = (lclHeader.Flags & U_PPF_VGA ? 1 : 0 );
+   *pptype      = (lclHeader.Flags & U_PPF_PP  ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, AntiAliasMode,      1, 1, U_XE);
    U_PMF_SERIAL_get(&contents, TextRenderHint,     1, 1, U_XE);
    U_PMF_SERIAL_get(&contents, CompositingMode,    1, 1, U_XE);
@@ -7940,9 +8457,13 @@ int U_PMR_MULTIPLYWORLDTRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Header
       int *xmtype,
       U_PMF_TRANSFORMMATRIX *Matrix){
    if(!contents || !xmtype || !Matrix){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *xmtype     = (Flags & U_PPF_XM ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_MULTIPLYWORLDTRANSFORM))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *xmtype     = (lclHeader.Flags & U_PPF_XM ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, Matrix, 4, 6, U_LE);
    return(1);
 }
@@ -7956,9 +8477,7 @@ int U_PMR_MULTIPLYWORLDTRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Header
     EMF+ manual 2.3.9.2, Microsoft name: EmfPlusResetWorldTransform Record, Index 0x2B
 */
 int U_PMR_RESETWORLDTRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Header){
-   if(!contents){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   return(1);
+   return( U_PMR_common_header_get(contents,Header));
 }
 
 /**
@@ -7975,9 +8494,13 @@ int U_PMR_ROTATEWORLDTRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *xmtype,
       U_FLOAT *Angle){
    if(!contents || !xmtype || !Angle){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *xmtype     = (Flags & U_PPF_XM ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_ROTATEWORLDTRANSFORM))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *xmtype     = (lclHeader.Flags & U_PPF_XM ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, Angle, 4, 1, U_LE);
    return(1);
 }
@@ -7997,9 +8520,13 @@ int U_PMR_SCALEWORLDTRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *xmtype,
       U_FLOAT *Sx, U_FLOAT *Sy){
    if(!contents || !xmtype || !Sx || !Sy){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *xmtype     = (Flags & U_PPF_XM ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SCALEWORLDTRANSFORM))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *xmtype     = (lclHeader.Flags & U_PPF_XM ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, Sx, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Sy, 4, 1, U_LE);
    return(1);
@@ -8019,9 +8546,13 @@ int U_PMR_SETPAGETRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Header,
       int *PUenum,
       U_FLOAT *Scale){
    if(!contents || !PUenum || !Scale){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *PUenum  = (Flags >> U_FF_SHFT_PU) & U_FF_MASK_PU;
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETPAGETRANSFORM))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *PUenum  = (lclHeader.Flags >> U_FF_SHFT_PU) & U_FF_MASK_PU;
    U_PMF_SERIAL_get(&contents, Scale, 4, 1, U_LE);
    return(1);
 }
@@ -8038,7 +8569,12 @@ int U_PMR_SETPAGETRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Header,
 int U_PMR_SETWORLDTRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Header,
       U_PMF_TRANSFORMMATRIX *Matrix){
    if(!contents || !Matrix){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_SETWORLDTRANSFORM))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
    U_PMF_SERIAL_get(&contents, Matrix, 4, 6, U_LE);
    return(1);
 }
@@ -8058,9 +8594,13 @@ int U_PMR_TRANSLATEWORLDTRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Heade
       int *xmtype,
       U_FLOAT *Dx, U_FLOAT *Dy){
    if(!contents || !xmtype || !Dx || !Dy){ return(0); }
-   uint16_t Flags = U_PMF_HEADERFLAGS_get(contents);
-   *xmtype     = (Flags & U_PPF_XM ? 1 : 0 );
-   U_PMF_CMN_HDR_get(&contents, Header);
+
+   U_PMF_CMN_HDR lclHeader;
+   U_PMF_CMN_HDR_get(&contents, &lclHeader);
+   if(lclHeader.Size < sizeof(U_PMF_TRANSLATEWORLDTRANSFORM))return(0);
+   if(Header){ memcpy(Header,&lclHeader,sizeof(U_PMF_CMN_HDR)); }
+
+   *xmtype     = (lclHeader.Flags & U_PPF_XM ? 1 : 0 );
    U_PMF_SERIAL_get(&contents, Dx, 4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, Dy, 4, 1, U_LE);
    return(1);
@@ -8079,9 +8619,7 @@ int U_PMR_TRANSLATEWORLDTRANSFORM_get(const char *contents, U_PMF_CMN_HDR *Heade
      the path by using the current pen, and fills its interior by using the current brush."
 */
 int U_PMR_STROKEFILLPATH_get(const char *contents, U_PMF_CMN_HDR *Header){
-   if(!contents){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   return(1);
+   return( U_PMR_common_header_get(contents,Header));
 }
 
 /**
@@ -8093,9 +8631,7 @@ int U_PMR_STROKEFILLPATH_get(const char *contents, U_PMF_CMN_HDR *Header){
     EMF+ manual mentioned in 2.1.1.1, reserved, not otherwise documented, Microsoft name: EmfPlusMultiFormatStart Record, Index 0x05 
 */
 int U_PMR_MULTIFORMATSTART_get(const char *contents, U_PMF_CMN_HDR *Header){
-   if(!contents){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   return(1);
+   return( U_PMR_common_header_get(contents,Header));
 }
 
 /**
@@ -8107,9 +8643,7 @@ int U_PMR_MULTIFORMATSTART_get(const char *contents, U_PMF_CMN_HDR *Header){
     EMF+ manual mentioned in 2.1.1.1, reserved, not otherwise documented, Microsoft name: EmfPlusMultiFormatSection Record, Index 0x06 
 */
 int U_PMR_MULTIFORMATSECTION_get(const char *contents, U_PMF_CMN_HDR *Header){
-   if(!contents){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   return(1);
+   return( U_PMR_common_header_get(contents,Header));
 }
 
 /**
@@ -8121,9 +8655,7 @@ int U_PMR_MULTIFORMATSECTION_get(const char *contents, U_PMF_CMN_HDR *Header){
     EMF+ manual mentioned in 2.1.1.1, reserved, not otherwise documented, Microsoft name: EmfPlusMultiFormatEnd Record, Index 0x06
 */
 int U_PMR_MULTIFORMATEND_get(const char *contents, U_PMF_CMN_HDR *Header){
-   if(!contents){ return(0); }
-   U_PMF_CMN_HDR_get(&contents, Header);
-   return(1);
+   return( U_PMR_common_header_get(contents,Header));
 }
 
 

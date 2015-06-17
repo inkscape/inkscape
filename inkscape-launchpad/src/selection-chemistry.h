@@ -52,7 +52,7 @@ namespace LivePathEffect {
 } // namespace Inkscape
 
 void sp_selection_delete(SPDesktop *desktop);
-void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone = false);
+void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone = false, bool duplicateLayer = false);
 void sp_edit_clear_all(Inkscape::Selection *selection);
 
 void sp_edit_select_all(SPDesktop *desktop);
@@ -143,8 +143,9 @@ enum SPSelectStrokeStyleType {
 
 void sp_select_same_fill_stroke_style(SPDesktop *desktop, gboolean fill, gboolean strok, gboolean style);
 void sp_select_same_object_type(SPDesktop *desktop);
-GSList *sp_get_same_style(SPItem *sel, GSList *src, SPSelectStrokeStyleType type=SP_STYLE_ALL);
-GSList *sp_get_same_object_type(SPItem *sel, GSList *src);
+
+std::vector<SPItem*> sp_get_same_style(SPItem *sel, std::vector<SPItem*> &src, SPSelectStrokeStyleType type=SP_STYLE_ALL);
+std::vector<SPItem*> sp_get_same_object_type(SPItem *sel, std::vector<SPItem*> &src);
 
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item);
 
@@ -171,9 +172,9 @@ void unlock_all_in_all_layers(SPDesktop *dt);
 void unhide_all(SPDesktop *dt);
 void unhide_all_in_all_layers(SPDesktop *dt);
 
-GSList *get_all_items(GSList *list, SPObject *from, SPDesktop *desktop, bool onlyvisible, bool onlysensitive, bool ingroups, GSList const *exclude);
+std::vector<SPItem*> &get_all_items(std::vector<SPItem*> &list, SPObject *from, SPDesktop *desktop, bool onlyvisible, bool onlysensitive, bool ingroups, std::vector<SPItem*> const &exclude);
 
-GSList *sp_degroup_list (GSList *items);
+std::vector<SPItem*> sp_degroup_list (std::vector<SPItem*> &items);
 
 /* selection cycling */
 typedef enum

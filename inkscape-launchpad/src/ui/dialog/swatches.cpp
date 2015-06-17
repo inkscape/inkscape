@@ -123,10 +123,10 @@ static void editGradientImpl( SPDesktop* desktop, SPGradient* gr )
         bool shown = false;
         if ( desktop && desktop->doc() ) {
             Inkscape::Selection *selection = desktop->getSelection();
-            GSList const *items = selection->itemList();
-            if (items) {
+            std::vector<SPItem*> const items = selection->itemList();
+            if (!items.empty()) {
                 SPStyle query( desktop->doc() );
-                int result = objects_query_fillstroke(const_cast<GSList *>(items), &query, true);
+                int result = objects_query_fillstroke((items), &query, true);
                 if ( (result == QUERY_STYLE_MULTIPLE_SAME) || (result == QUERY_STYLE_SINGLE) ) {
                     // could be pertinent
                     if (query.fill.isPaintserver()) {

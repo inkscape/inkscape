@@ -1570,8 +1570,9 @@ void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTa
 {
     Inkscape::Selection *selection = desktop->getSelection();
 
-    for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-        sp_item_gradient_invert_vector_color(SP_ITEM(i->data), fill_or_stroke);
+    const std::vector<SPItem*> list=selection->itemList();
+    for (std::vector<SPItem*>::const_iterator i = list.begin(); i != list.end(); i++) {
+        sp_item_gradient_invert_vector_color(*i, fill_or_stroke);
     }
 
     // we did an undoable action
@@ -1594,9 +1595,10 @@ void sp_gradient_reverse_selected_gradients(SPDesktop *desktop)
     if (drag && drag->selected) {
         drag->selected_reverse_vector();
     } else { // If no drag or no dragger selected, act on selection (both fill and stroke gradients)
-        for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-            sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_FILL);
-            sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_STROKE);
+        const std::vector<SPItem*> list=selection->itemList();
+        for (std::vector<SPItem*>::const_iterator i = list.begin(); i != list.end(); i++) {
+            sp_item_gradient_reverse_vector(*i, Inkscape::FOR_FILL);
+            sp_item_gradient_reverse_vector(*i, Inkscape::FOR_STROKE);
         }
     }
 

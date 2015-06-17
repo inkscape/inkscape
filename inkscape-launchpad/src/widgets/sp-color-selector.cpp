@@ -6,6 +6,11 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
+#include <glibmm/threads.h>
+#endif
+
 #include <math.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
@@ -289,7 +294,7 @@ void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboole
                    (_held ? "CHANGED" : "DRAGGED" ),
                    color.toRGBA32( alpha ), (color.icc?color.icc->colorProfile.c_str():"<null>"), FOO_NAME(_csel));
 #endif
-        g_signal_emit(G_OBJECT(_csel), csel_signals[_held ? CHANGED : DRAGGED], 0);
+        g_signal_emit(G_OBJECT(_csel), csel_signals[_held ? DRAGGED : CHANGED], 0);
     }
 }
 

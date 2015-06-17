@@ -510,6 +510,77 @@ private:
 };
 
 
+/// SPIEnum w/ bits, allows values with multiple key words.
+class SPIEnumBits : public SPIEnum
+{
+
+public:
+    SPIEnumBits() :
+        SPIEnum( "anonymous_enumbits", NULL )
+    {}
+
+    SPIEnumBits( Glib::ustring const &name, SPStyleEnum const *enums, unsigned value = 0, bool inherits = true ) :
+        SPIEnum( name, enums, value, inherit )
+    {}
+
+    virtual ~SPIEnumBits()
+    {}
+
+    virtual void read( gchar const *str );
+    virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
+                                       SPIBase const *const base = NULL ) const;
+
+};
+
+
+/// SPIEnum w/ extra bits. The 'font-variants-ligatures' property is a complete mess that needs
+/// special handling. For OpenType fonts the values 'common-ligatures', 'contextual',
+/// 'no-discretionary-ligatures', and 'no-historical-ligatures' are not useful but we still must be
+/// able to parse them.
+class SPILigatures : public SPIEnum
+{
+
+public:
+    SPILigatures() :
+        SPIEnum( "anonymous_enumligatures", NULL )
+    {}
+
+    SPILigatures( Glib::ustring const &name, SPStyleEnum const *enums) :
+        SPIEnum( name, enums, SP_CSS_FONT_VARIANT_NORMAL )
+    {}
+
+    virtual ~SPILigatures()
+    {}
+
+    virtual void read( gchar const *str );
+    virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
+                                       SPIBase const *const base = NULL ) const;
+};
+
+
+/// SPIEnum w/ extra bits. The 'font-variants-numeric' property is a complete mess that needs
+/// special handling. Multiple key words can be specified, some exclusive of others.
+class SPINumeric : public SPIEnum
+{
+
+public:
+    SPINumeric() :
+        SPIEnum( "anonymous_enumnumeric", NULL )
+    {}
+
+    SPINumeric( Glib::ustring const &name, SPStyleEnum const *enums) :
+        SPIEnum( name, enums, SP_CSS_FONT_VARIANT_NUMERIC_NORMAL )
+    {}
+
+    virtual ~SPINumeric()
+    {}
+
+    virtual void read( gchar const *str );
+    virtual const Glib::ustring write( guint const flags = SP_STYLE_FLAG_IFSET,
+                                       SPIBase const *const base = NULL ) const;
+};
+
+
 /// String type internal to SPStyle.
 // Used for 'marker', ..., 'font', 'font-family', 'inkscape-font-specification'
 class SPIString : public SPIBase

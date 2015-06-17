@@ -69,6 +69,7 @@ TextEdit::TextEdit()
       font_label(_("_Font"), true),
       layout_frame(),
       text_label(_("_Text"), true),
+      vari_label(_("_Variants"), true),
       setasdefault_button(_("Set as _default")),
       close_button(Gtk::Stock::CLOSE),
       apply_button(Gtk::Stock::APPLY),
@@ -195,7 +196,8 @@ TextEdit::TextEdit()
 
     notebook.append_page(font_vbox, font_label);
     notebook.append_page(text_vbox, text_label);
-
+    notebook.append_page(vari_vbox, vari_label);
+    
     /* Buttons */
     setasdefault_button.set_use_underline(true);
     apply_button.set_can_default();
@@ -216,6 +218,7 @@ TextEdit::TextEdit()
     setasdefault_button.signal_clicked().connect(sigc::mem_fun(*this, &TextEdit::onSetDefault));
     apply_button.signal_clicked().connect(sigc::mem_fun(*this, &TextEdit::onApply));
     close_button.signal_clicked().connect(sigc::bind(_signal_response.make_slot(), GTK_RESPONSE_CLOSE));
+    fontVariantChangedConn = vari_vbox.connectChanged(sigc::bind(sigc::ptr_fun(&onFontVariantChange),  this));
 
     desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &TextEdit::setTargetDesktop) );
     deskTrack.connect(GTK_WIDGET(gobj()));
@@ -230,6 +233,7 @@ TextEdit::~TextEdit()
     selectChangedConn.disconnect();
     desktopChangeConn.disconnect();
     deskTrack.disconnect();
+    fontVariantChangedConn.disconnect();
 }
 
 void TextEdit::styleButton(Gtk::RadioButton *button, gchar const *tooltip, gchar const *icon_name, Gtk::RadioButton *group_button )
@@ -384,6 +388,11 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
         gtk_entry_set_text ((GtkEntry *) gtk_bin_get_child ((GtkBin *) spacing_combo), sstr);
         g_free(sstr);
 
+        // Update font variant widget
+        //int result_variants =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTVARIANTS);
+        vari_vbox.update( &query );
+
     }
     blocked = false;
 }
@@ -418,12 +427,11 @@ SPItem *TextEdit::getSelectedTextItem (void)
     if (!SP_ACTIVE_DESKTOP)
         return NULL;
 
-    for (const GSList *item = SP_ACTIVE_DESKTOP->getSelection()->itemList();
-         item != NULL;
-         item = item->next)
+    std::vector<SPItem*> tmp=SP_ACTIVE_DESKTOP->getSelection()->itemList();
+	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++)
     {
-        if (SP_IS_TEXT(item->data) || SP_IS_FLOWTEXT(item->data))
-            return SP_ITEM (item->data);
+        if (SP_IS_TEXT(*i) || SP_IS_FLOWTEXT(*i))
+            return *i;
     }
 
     return NULL;
@@ -437,11 +445,10 @@ unsigned TextEdit::getSelectedTextCount (void)
 
     unsigned int items = 0;
 
-    for (const GSList *item = SP_ACTIVE_DESKTOP->getSelection()->itemList();
-         item != NULL;
-         item = item->next)
+    std::vector<SPItem*> tmp=SP_ACTIVE_DESKTOP->getSelection()->itemList();
+	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++)
     {
-        if (SP_IS_TEXT(item->data) || SP_IS_FLOWTEXT(item->data))
+        if (SP_IS_TEXT(*i) || SP_IS_FLOWTEXT(*i))
             ++items;
     }
 
@@ -512,11 +519,14 @@ SPCSSAttr *TextEdit::fillTextStyle ()
             sp_repr_css_set_property (css, "writing-mode", "tb");
         }
 
-        // Note that CSS 1.1 does not support line-height; we set it for consistency, but also set
+        // Note that SVG 1.1 does not support line-height; we set it for consistency, but also set
         // sodipodi:linespacing for backwards compatibility; in 1.2 we use line-height for flowtext
 
         const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) spacing_combo);
         sp_repr_css_set_property (css, "line-height", sstr);
+
+        // Font variants
+        vari_vbox.fill_css( css );
 
         return css;
 }
@@ -542,20 +552,20 @@ void TextEdit::onApply()
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     unsigned items = 0;
-    const GSList *item_list = desktop->getSelection()->itemList();
+    const std::vector<SPItem*> item_list = desktop->getSelection()->itemList();
     SPCSSAttr *css = fillTextStyle ();
     sp_desktop_set_style(desktop, css, true);
 
-    for (; item_list != NULL; item_list = item_list->next) {
+	for(std::vector<SPItem*>::const_iterator i=item_list.begin();i!=item_list.end();i++){
         // apply style to the reprs of all text objects in the selection
-        if (SP_IS_TEXT (item_list->data)) {
+        if (SP_IS_TEXT (*i)) {
 
             // backwards compatibility:
-            reinterpret_cast<SPObject*>(item_list->data)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
+            (*i)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
 
             ++items;
         }
-        else if (SP_IS_FLOWTEXT (item_list->data))
+        else if (SP_IS_FLOWTEXT (*i))
             // no need to set sodipodi:linespacing, because Inkscape never supported it on flowtext
             ++items;
     }
@@ -646,6 +656,19 @@ void TextEdit::onFontChange(SPFontSelector * /*fontsel*/, gchar* fontspec, TextE
     }
     self->setasdefault_button.set_sensitive ( true );
 
+}
+
+void TextEdit::onFontVariantChange(TextEdit *self)
+{
+    if( self->blocked )
+        return;
+
+    SPItem *text = self->getSelectedTextItem ();
+
+    if (text) {
+        self->apply_button.set_sensitive ( true );
+    }
+    self->setasdefault_button.set_sensitive ( true );
 }
 
 void TextEdit::onStartOffsetChange(GtkTextBuffer * /*text_buffer*/, TextEdit *self)

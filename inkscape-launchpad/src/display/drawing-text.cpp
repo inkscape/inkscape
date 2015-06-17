@@ -91,9 +91,24 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
     if (_transform) {
         scale_bigbox /= _transform->descrim();
     }
+    
 
-    Geom::Rect bigbox(Geom::Point(-_width*scale_bigbox*0.1, _asc*scale_bigbox*1.1),Geom::Point(_width*scale_bigbox, -_dsc*scale_bigbox*1.1));
-    Geom::Rect b = bigbox * ctx.ctm;
+    /* Because there can be text decorations the bounding box must correspond in Y to a little above the glyph's ascend
+    and a little below its descend.  This leaves room for overline and underline.  The left and right sides
+    come from the glyph's bounding box.  Note that the initial direction of ascender is positive down in Y, and 
+    this flips after the transform is applied.  So change the sign on descender. 1.1 provides a little extra space 
+    above and below the max/min y positions of the letters to place the text decorations.*/
+
+    Geom::Rect b;
+    if(_drawable){
+       Geom::OptRect tiltb = bounds_exact(*_font->PathVector(_glyph));
+       Geom::Rect bigbox(Geom::Point(tiltb->left(),-_dsc*scale_bigbox*1.1),Geom::Point(tiltb->right(),_asc*scale_bigbox*1.1));
+       b = bigbox * ctx.ctm;
+    }
+    else { // Fallback, spaces mostly
+       Geom::Rect bigbox(Geom::Point(0.0, -_dsc*scale_bigbox*1.1),Geom::Point(_width*scale_bigbox, _asc*scale_bigbox*1.1));
+       b = bigbox * ctx.ctm;
+    }
 
     /*
       The pick box matches the characters as best as it can, leaving no extra space above or below
@@ -108,11 +123,11 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
     if(_drawable){
         pb  = bounds_exact_transformed(*_font->PathVector(_glyph), ctx.ctm);
     }
-    if(!pb){ // Fallback
+    if(!pb){ // Fallback, spaces mostly
         Geom::Rect pbigbox(Geom::Point(0.0, _asc*scale_bigbox*0.66),Geom::Point(_width*scale_bigbox, 0.0));
         pb = pbigbox * ctx.ctm;
     }
-
+    
 #if 0
     /* FIXME  if this is commented out then not even an approximation of pick on decorations */
     /* adjust the pick box up or down to include the decorations.  
@@ -214,7 +229,7 @@ DrawingText::addComponent(font_instance *font, int glyph, Geom::Affine const &tr
     ng->setGlyph(font, glyph, trans);
     if(font->PathVector(glyph)){ ng->_drawable = true;  }
     else {                       ng->_drawable = false; }
-    ng->_width  = width;   // only used when _drawable = false
+    ng->_width  = width;   // used especially when _drawable = false, otherwise, it is the advance of the font
     ng->_asc    = ascent;  // of font, not of this one character
     ng->_dsc    = descent; // of font, not of this one character
     ng->_pl     = phase_length; // used for phase of dots, dashes, and wavy
@@ -367,7 +382,7 @@ void DrawingText::decorateStyle(DrawingContext &dc, double vextent, double xphas
 /* returns scaled line thickness */
 void DrawingText::decorateItem(DrawingContext &dc, double phase_length, bool under)
 {
-    if (_nrstyle.font_size < 1.0e-32)return;  // would cause a divide by zero and nothing would be visible anyway
+    if ( _nrstyle.font_size <= 1.0e-32 )return;  // might cause a divide by zero or overflow and nothing would be visible anyway
     double tsp_width_adj                = _nrstyle.tspan_width                     / _nrstyle.font_size;
     double tsp_asc_adj                  = _nrstyle.ascender                        / _nrstyle.font_size;
     double tsp_size_adj                 = (_nrstyle.ascender + _nrstyle.descender) / _nrstyle.font_size;
@@ -381,6 +396,7 @@ void DrawingText::decorateItem(DrawingContext &dc, double phase_length, bool und
     Geom::Point p2;
     // All lines must be the same thickness, in combinations, line_through trumps underline
     double thickness = final_underline_thickness;
+    if ( thickness <= 1.0e-32 )return;  // might cause a divide by zero or overflow and nothing would be visible anyway
     dc.setTolerance(0.5); // Is this really necessary... could effect dots.
 
     if( under ) {

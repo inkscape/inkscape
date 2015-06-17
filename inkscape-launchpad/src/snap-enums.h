@@ -66,7 +66,7 @@ enum SnapTargetType {
     SNAPTARGET_NODE_SMOOTH,
     SNAPTARGET_NODE_CUSP,
     SNAPTARGET_LINE_MIDPOINT,
-    SNAPTARGET_PATH,
+    SNAPTARGET_PATH,    // If path targets are added here, then also add them to the list in findBestSnap()
     SNAPTARGET_PATH_PERPENDICULAR,
     SNAPTARGET_PATH_TANGENTIAL,
     SNAPTARGET_PATH_INTERSECTION,

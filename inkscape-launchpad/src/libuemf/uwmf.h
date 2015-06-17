@@ -36,11 +36,11 @@
 
 /*
 File:      uwmf.h
-Version:   0.0.10
-Date:      24-MAR-2014
+Version:   0.0.12
+Date:      28-APR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UWMF_
@@ -728,6 +728,7 @@ enum U_WMR_TYPES{
 #define U_SIZE_WMRCREATEFONTINDIRECT                 26         /**< X   28 */
 #define U_SIZE_WMRCREATEBRUSHINDIRECT                14         /**< X   16 */
 #define U_SIZE_WMRCREATEREGION                       26         /**< X   28 */
+#define U_SIZE_WMRCREATEREGION_CORE                  24         /**< X   28 Like U_SIZE_WMRCREATEREGION minus the variable part */
 /** @} */
 
 
@@ -2406,8 +2407,8 @@ int          wmr_arc_points(U_RECT16 rclBox, U_POINT16 ArcStart, U_POINT16 ArcEn
 void         U_BITMAPINFOHEADER_get(const char *Bmih, uint32_t *Size, int32_t *Width, int32_t *Height, 
                 uint32_t *Planes, uint32_t *BitCount, uint32_t *Compression, uint32_t *SizeImage, 
                 int32_t *XPelsPerMeter, int32_t *YPelsPerMeter, uint32_t *ClrUsed, uint32_t *ClrImportant);
-void         U_BITMAPCOREHEADER_get(const char *BmiCh, int32_t *Size, int32_t *Width, int32_t *Height, int32_t *BitCount);
-int          wget_DIB_params(const char *dib, const char **px, const U_RGBQUAD **ct, int32_t *numCt, 
+void         U_BITMAPCOREHEADER_get(const char *BmiCh, uint32_t *Size, int32_t *Width, int32_t *Height, int32_t *BitCount);
+int          wget_DIB_params(const char *dib, const char **px, const U_RGBQUAD **ct, uint32_t *numCt, 
                 int32_t *width, int32_t *height, int32_t *colortype, int32_t *invert);
 int          U_WMREOF_get(const char *contents);
 int          U_WMRSETBKCOLOR_get(const char *contents, U_COLORREF *Color);

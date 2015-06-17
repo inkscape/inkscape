@@ -148,10 +148,10 @@ protected:
     /**
      * Function to filter a list of items based on the item type by calling each item_XXX_match function
      */
-    GSList *    filter_fields (GSList *l, bool exact, bool casematch);
+    std::vector<SPItem*>    filter_fields (std::vector<SPItem*> &l, bool exact, bool casematch);
     bool        item_type_match (SPItem *item);
-    GSList *    filter_types (GSList *l);
-    GSList *    filter_list (GSList *l, bool exact, bool casematch);
+    std::vector<SPItem*>    filter_types (std::vector<SPItem*> &l);
+    std::vector<SPItem*> &    filter_list (std::vector<SPItem*> &l, bool exact, bool casematch);
 
     /**
      * Find a string within a string and returns true if found with options for exact and casematching
@@ -172,12 +172,12 @@ protected:
      * recursive function to return a list of all the items in the SPObject tree
      *
      */
-    GSList *    all_items (SPObject *r, GSList *l, bool hidden, bool locked);
+    std::vector<SPItem*> &    all_items (SPObject *r, std::vector<SPItem*> &l, bool hidden, bool locked);
     /**
      * to return a list of all the selected items
      *
      */
-    GSList *    all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked);
+    std::vector<SPItem*> &    all_selection_items (Inkscape::Selection *s, std::vector<SPItem*> &l, SPObject *ancestor, bool hidden, bool locked);
 
     /**
      * Shrink the dialog size when the expander widget is closed

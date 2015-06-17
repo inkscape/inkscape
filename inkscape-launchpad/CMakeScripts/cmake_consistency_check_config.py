@@ -6,9 +6,12 @@ IGNORE = (
     "/dom/work/",
     "/extension/dbus/",
     "/src/extension/dxf2svg/",
+    "/test/",
 
     # files
     "buildtool.cpp",
+    "src/inkscape-x64.rc",
+    "src/inkview-x64.rc",
     "packaging/macosx/ScriptExec/main.c",
     "share/ui/keybindings.rc",
     "src/2geom/conic_section_clipper_impl.cpp",

@@ -53,6 +53,7 @@ public:
 
     void insertNodesAtExtrema(ExtremumType extremum);
     void insertNodes();
+    void insertNode(Geom::Point pt);
     void alertLPE();
     void duplicateNodes();
     void joinNodes();

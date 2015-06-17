@@ -297,19 +297,18 @@ static void moveToPoint(int anchor, SPItem *item, Geom::Point p)
 void PolarArrangeTab::arrange()
 {
 	Inkscape::Selection *selection = parent->getDesktop()->getSelection();
-	const GSList *items, *tmp;
-	tmp = items = selection->itemList();
+	const std::vector<SPItem*> tmp(selection->itemList());
 	SPGenericEllipse *referenceEllipse = NULL; // Last ellipse in selection
 
 	bool arrangeOnEllipse = !arrangeOnParametersRadio.get_active();
 	bool arrangeOnFirstEllipse = arrangeOnEllipse && arrangeOnFirstCircleRadio.get_active();
 
 	int count = 0;
-	while(tmp)
+	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++)
 	{
 		if(arrangeOnEllipse)
 		{
-			SPItem *item = SP_ITEM(tmp->data);
+			SPItem *item = *i;
 
 			if(arrangeOnFirstEllipse)
 			{
@@ -322,7 +321,6 @@ void PolarArrangeTab::arrange()
 					referenceEllipse = SP_GENERICELLIPSE(item);
 			}
 		}
-		tmp = tmp->next;
 		++count;
 	}
 
@@ -374,11 +372,10 @@ void PolarArrangeTab::arrange()
 
 	Geom::Point realCenter = Geom::Point(cx, cy) * transformation;
 
-	tmp = items;
 	int i = 0;
-	while(tmp)
+	for(std::vector<SPItem*>::const_iterator it=tmp.begin();it!=tmp.end();it++)
 	{
-		SPItem *item = SP_ITEM(tmp->data);
+		SPItem *item = *it;
 
 		// Ignore the reference ellipse if any
 		if(item != referenceEllipse)
@@ -396,7 +393,6 @@ void PolarArrangeTab::arrange()
 
 			++i;
 		}
-		tmp = tmp->next;
 	}
 
     DocumentUndo::done(parent->getDesktop()->getDocument(), SP_VERB_SELECTION_ARRANGE,

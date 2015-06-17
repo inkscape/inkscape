@@ -3,8 +3,7 @@ set(INKSCAPE_LIBS "")
 set(INKSCAPE_INCS "")
 set(INKSCAPE_INCS_SYS "")
 
-list(APPEND INKSCAPE_INCS
-	${PROJECT_SOURCE_DIR}
+list(APPEND INKSCAPE_INCS ${PROJECT_SOURCE_DIR}
 	${PROJECT_SOURCE_DIR}/src
 
 	# generated includes
@@ -20,11 +19,25 @@ list(APPEND INKSCAPE_INCS_SYS ${GSL_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${GSL_LIBRARIES})
 if (WIN32)
 	list(APPEND INKSCAPE_LIBS "-L$ENV{DEVLIBS_PATH}/lib")  # FIXME
-	list(APPEND INKSCAPE_LIBS "-lintl.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangowin32-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lgthread-2.0.dll")  # FIXME
+elseif(APPLE)
+	if(DEFINED ENV{CMAKE_PREFIX_PATH})
+		# Adding the library search path explicitly seems not required
+		# if MacPorts is installed in default prefix ('/opt/local') - 
+		# Cmake then can rely on the hard-coded paths in its modules.
+		# Only prepend search path if $CMAKE_PREFIX_PATH is defined:
+		list(APPEND INKSCAPE_LIBS "-L$ENV{CMAKE_PREFIX_PATH}/lib")  # FIXME
+	endif()
+	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
+	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0")  # FIXME
+	list(APPEND INKSCAPE_LIBS "-lfontconfig")  # FIXME
+	if(${GTK+_2.0_TARGET} MATCHES "x11")
+		# only link X11 if using X11 backend of GTK2
+		list(APPEND INKSCAPE_LIBS "-lX11")  # FIXME
+	endif()
 else()
 	list(APPEND INKSCAPE_LIBS "-ldl")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
@@ -65,6 +78,16 @@ if(ENABLE_LCMS)
     endif()
 endif()
 
+find_package(Iconv REQUIRED)
+list(APPEND INKSCAPE_INCS_SYS ${ICONV_INCLUDE_DIRS})
+list(APPEND INKSCAPE_LIBS ${ICONV_LIBRARIES})
+add_definitions(${ICONV_DEFINITIONS})
+
+find_package(Intl REQUIRED)
+list(APPEND INKSCAPE_INCS_SYS ${Intl_INCLUDE_DIRS})
+list(APPEND INKSCAPE_LIBS ${Intl_LIBRARIES})
+add_definitions(${Intl_DEFINITIONS})
+
 find_package(BoehmGC REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${BOEHMGC_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${BOEHMGC_LIBRARIES})
@@ -94,6 +117,10 @@ if(ENABLE_POPPLER)
 		   POPPLER_VERSION VERSION_EQUAL   "0.26.0")
 			set(POPPLER_EVEN_NEWER_COLOR_SPACE_API ON)
 		endif()
+		if(POPPLER_VERSION VERSION_GREATER "0.29.0" OR
+		   POPPLER_VERSION VERSION_EQUAL   "0.29.0")
+			set(POPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API ON)
+		endif()
 		if(POPPLER_VERSION VERSION_GREATER "0.15.1" OR
 		   POPPLER_VERSION VERSION_EQUAL   "0.15.1")
 			set(POPPLER_NEW_GFXPATCH ON)
@@ -117,8 +144,9 @@ add_definitions(${POPPLER_DEFINITIONS})
 if(WITH_LIBWPG)
 	find_package(LibWPG)
 	if(LIBWPG_FOUND)
-		set(WITH_LIBWPG01 ${LIBWPG01_FOUND})
-		set(WITH_LIBWPG02 ${LIBWPG02_FOUND})
+		set(WITH_LIBWPG01 ${LIBWPG-0.1_FOUND})
+		set(WITH_LIBWPG02 ${LIBWPG-0.2_FOUND})
+		set(WITH_LIBWPG03 ${LIBWPG-0.3_FOUND})
 		list(APPEND INKSCAPE_INCS_SYS ${LIBWPG_INCLUDE_DIRS})
 		list(APPEND INKSCAPE_LIBS     ${LIBWPG_LIBRARIES})
 		add_definitions(${LIBWPG_DEFINITIONS})
@@ -126,6 +154,40 @@ if(WITH_LIBWPG)
 		set(WITH_LIBWPG OFF)
 	endif()
 endif()
+
+if(WITH_LIBVISIO)
+	find_package(LibVisio)
+	if(LIBVISIO_FOUND)
+		set(WITH_LIBVISIO00 ${LIBVISIO-0.0_FOUND})
+		set(WITH_LIBVISIO01 ${LIBVISIO-0.1_FOUND})
+		list(APPEND INKSCAPE_INCS_SYS ${LIBVISIO_INCLUDE_DIRS})
+		list(APPEND INKSCAPE_LIBS     ${LIBVISIO_LIBRARIES})
+		add_definitions(${LIBVISIO_DEFINITIONS})
+	else()
+		set(WITH_LIBVISIO OFF)
+	endif()
+endif()
+
+if(WITH_LIBCDR)
+	find_package(LibCDR)
+	if(LIBCDR_FOUND)
+		set(WITH_LIBCDR00 ${LIBCDR-0.0_FOUND})
+		set(WITH_LIBCDR01 ${LIBCDR-0.1_FOUND})
+		list(APPEND INKSCAPE_INCS_SYS ${LIBCDR_INCLUDE_DIRS})
+		list(APPEND INKSCAPE_LIBS     ${LIBCDR_LIBRARIES})
+		add_definitions(${LIBCDR_DEFINITIONS})
+	else()
+		set(WITH_LIBCDR OFF)
+	endif()
+endif()
+
+FIND_PACKAGE(JPEG REQUIRED)
+#IF(JPEG_FOUND)
+  #INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR})
+  #TARGET_LINK_LIBRARIES(mpo ${JPEG_LIBRARIES})
+#ENDIF()
+list(APPEND INKSCAPE_INCS_SYS ${JPEG_INCLUDE_DIR})
+list(APPEND INKSCAPE_LIBS ${JPEG_LIBRARIES})
 
 find_package(PNG REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${PNG_PNG_INCLUDE_DIR})
@@ -144,6 +206,14 @@ if(WITH_DBUS)
 		list(APPEND INKSCAPE_LIBS ${DBUS_LIBRARIES})
 	else()
 		set(WITH_DBUS OFF)
+	endif()
+endif()
+
+if(WITH_GTEST)
+	if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
+	
+	else()
+		set(WITH_GTEST off)
 	endif()
 endif()
 
@@ -223,13 +293,14 @@ if(WITH_GTKSPELL)
 		list(APPEND INKSCAPE_INCS_SYS ${GTKSPELL_INCLUDE_DIR})
 		list(APPEND INKSCAPE_LIBS     ${GTKSPELL_LIBRARIES})
 		add_definitions(${GTKSPELL_DEFINITIONS})
+	else()
+		set(WITH_GTKSPELL OFF)
 	endif()
-	set(WITH_GTKSPELL ${GTKSPELL_FOUND})
 endif()
 
-find_package(OpenSSL)
-list(APPEND INKSCAPE_INCS_SYS ${OPENSSL_INCLUDE_DIR})
-list(APPEND INKSCAPE_LIBS ${OPENSSL_LIBRARIES})
+#find_package(OpenSSL)
+#list(APPEND INKSCAPE_INCS_SYS ${OPENSSL_INCLUDE_DIR})
+#list(APPEND INKSCAPE_LIBS ${OPENSSL_LIBRARIES})
 
 find_package(LibXslt REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${LIBXSLT_INCLUDE_DIR})
@@ -241,36 +312,59 @@ list(APPEND INKSCAPE_INCS_SYS ${LIBXML2_INCLUDE_DIR})
 list(APPEND INKSCAPE_LIBS ${LIBXML2_LIBRARIES})
 add_definitions(${LIBXML2_DEFINITIONS})
 
-find_package(OpenMP)
-if(OpenMP_FOUND)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-	if(APPLE AND ${CMAKE_GENERATOR} MATCHES "Xcode")
-		set(CMAKE_XCODE_ATTRIBUTE_ENABLE_OPENMP_SUPPORT "YES")
+if(WITH_OPENMP)
+	find_package(OpenMP)
+	if(OPENMP_FOUND)
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+		if(APPLE AND ${CMAKE_GENERATOR} MATCHES "Xcode")
+			set(CMAKE_XCODE_ATTRIBUTE_ENABLE_OPENMP_SUPPORT "YES")
+		endif()
+		mark_as_advanced(OpenMP_C_FLAGS)
+		mark_as_advanced(OpenMP_CXX_FLAGS)
+		# '-fopenmp' is in OpenMP_C_FLAGS, OpenMP_CXX_FLAGS and implies '-lgomp'
+		# uncomment explicit linking below if still needed:
+		set(HAVE_OPENMP ON)
+		#list(APPEND INKSCAPE_LIBS "-lgomp")  # FIXME
+	else()
+		set(HAVE_OPENMP OFF)
+		set(WITH_OPENMP OFF)
 	endif()
-	mark_as_advanced(OpenMP_C_FLAGS)
-	mark_as_advanced(OpenMP_CXX_FLAGS)
 endif()
 
 find_package(ZLIB REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${ZLIB_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${ZLIB_LIBRARIES})
 
-find_package(ImageMagick COMPONENTS MagickCore Magick++)
-if(ImageMagick_FOUND)
-	list(APPEND INKSCAPE_INCS_SYS ${ImageMagick_MagickCore_INCLUDE_DIR})
-	list(APPEND INKSCAPE_LIBS ${ImageMagick_Magick++_LIBRARY})
+if(WITH_IMAGE_MAGICK)
+	find_package(ImageMagick COMPONENTS MagickCore Magick++)
+	if(ImageMagick_FOUND)
+		# the component-specific paths apparently fail to get detected correctly
+		# on some linux distros (or with older Cmake versions).
+		# Use variables which list all include dirs and libraries instead:
+		list(APPEND INKSCAPE_INCS_SYS ${ImageMagick_INCLUDE_DIRS})
+		list(APPEND INKSCAPE_LIBS ${ImageMagick_LIBRARIES})
+		# TODO: Cmake's ImageMagick module misses required defines for newer
+		# versions of ImageMagick. See also:
+		# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776832
+		#add_definitions(-DMAGICKCORE_HDRI_ENABLE=0)  # FIXME (version check?)
+		#add_definitions(-DMAGICKCORE_QUANTUM_DEPTH=16)  # FIXME (version check?)
+	else()
+		set(WITH_IMAGE_MAGICK OFF)  # enable 'Extensions > Raster'
+	endif()
 endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/IncludeJava.cmake)
 # end Dependencies
 
+list(REMOVE_DUPLICATES INKSCAPE_LIBS)
+list(REMOVE_DUPLICATES INKSCAPE_INCS_SYS)
 
 # C/C++ Flags
 include_directories(${INKSCAPE_INCS})
 include_directories(SYSTEM ${INKSCAPE_INCS_SYS})
 
+include(${CMAKE_CURRENT_LIST_DIR}/ConfigChecks.cmake)
+
 unset(INKSCAPE_INCS)
 unset(INKSCAPE_INCS_SYS)
-
-include(${CMAKE_CURRENT_LIST_DIR}/ConfigChecks.cmake)

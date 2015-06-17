@@ -52,6 +52,7 @@ class SPObject;
 #include <sigc++/connection.h>
 #include <sigc++/functors/slot.h>
 #include <sigc++/signal.h>
+#include <vector>
 
 #include "version.h"
 #include "util/forward-pointer-iterator.h"
@@ -328,10 +329,10 @@ public:
     enum Action { ActionGeneral, ActionBBox, ActionUpdate, ActionShow };
 
     /**
-     * Retrieves the children as a GSList object, optionally ref'ing the children
+     * Retrieves the children as a std vector object, optionally ref'ing the children
      * in the process, if add_ref is specified.
      */
-    GSList *childList(bool add_ref, Action action = ActionGeneral);
+    std::vector<SPObject*> childList(bool add_ref, Action action = ActionGeneral);
 
     /**
      * Append repr as child of this object.
@@ -875,6 +876,7 @@ public:
  *   -1    first object's position is less than the second   \endverbatim
  */
 int sp_object_compare_position(SPObject const *first, SPObject const *second);
+bool sp_object_compare_position_bool(SPObject const *first, SPObject const *second);
 
 
 #endif // SP_OBJECT_H_SEEN

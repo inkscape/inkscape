@@ -19,8 +19,8 @@
 
 /*
 File:      uwmf.c
-Version:   0.0.15
-Date:      11-APR-2014
+Version:   0.0.17
+Date:      28-MAR-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
 Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
@@ -47,6 +47,7 @@ extern "C" {
 #endif
 #include "uwmf.h"
 #include "uwmf_endian.h"
+#include "uemf_safe.h"
 
 /**
     \brief Look up the full numeric type of a WMR record by type. 
@@ -671,6 +672,52 @@ const char *U_wmr_escnames(int idx){
 /* one prototype from uwmf_endian.  Put it here because end user should never need to see it, so
 not in uemf.h or uwmf_endian.h */
 void U_swap2(void *ul, unsigned int count);
+
+/**
+    \brief Check that the bitmap in the specified packed DIB is compatible with the record size
+    
+    \return 1 on success, 0 on failure
+    \param record     EMF record that contains a DIB pixel array
+    \param blimit     one byte past the end of the record.
+
+    This method can only test DIBs that hold Microsoft's various bitmap types.  PNG or JPG is just a bag
+    of bytes, and there is no possible way to derive from the known width and height how big it should be.
+    
+    This should not be called directly by end user code.
+*/
+int packed_DIB_safe(
+       const char      *record,
+       const char      *blimit
+   ){
+   int  dibparams = U_BI_UNKNOWN;       // type of image not yet determined
+   const char      *px      = NULL;     // DIB pixels
+   const U_RGBQUAD *ct      = NULL;     // DIB color table
+   int              bs;
+   int              usedbytes;
+
+   if(!bitmapinfo_safe(record, blimit))return(0);  // this DIB has issues with colors fitting into the record
+   uint32_t numCt;                                 // these values will be set in get_DIB_params
+   int32_t width, height, colortype, invert;       // these values will be set in get_DIB_params
+   // next call returns pointers and values, but allocates no memory
+   dibparams = wget_DIB_params(record, &px, (const U_RGBQUAD **) &ct, &numCt, &width, &height, &colortype, &invert);
+   // sanity checking
+   if(numCt && colortype  >= U_BCBM_COLOR16)return(0);  //color tables not used above 16 bit pixels
+   if(!numCt && colortype < U_BCBM_COLOR16)return(0);   //color tables mandatory for < 16 bit
+ 
+   if(dibparams ==U_BI_RGB){  
+       // this is the only DIB type where we can calculate how big it should be when stored in the WMF file
+       bs = colortype/8;
+       if(bs<1){
+          usedbytes = (width*colortype + 7)/8;      // width of line in fully and partially occupied bytes
+       }
+       else {
+          usedbytes = width*bs;
+       }
+       if(IS_MEM_UNSAFE(px, usedbytes, blimit))return(0);
+   }
+   return(1);
+}
+
 //! \endcond
 
 /**
@@ -1518,7 +1565,7 @@ int  wmf_finish(
   
 #if U_BYTE_SWAP
     //This is a Big Endian machine, WMF data must be  Little Endian
-    U_wmf_endian(wt->buf,wt->used,1); 
+    U_wmf_endian(wt->buf,wt->used,1,0);  // BE to LE, entire file
 #endif
 
    (void) U_wmr_properties(U_WMR_INVALID);     /* force the release of the lookup table memory, returned value is irrelevant */
@@ -1564,7 +1611,7 @@ int wmf_readdata(
          else {
 #if U_BYTE_SWAP
             //This is a Big Endian machine, WMF data is Little Endian
-            U_wmf_endian(*contents,*length,0);  // LE to BE
+            U_wmf_endian(*contents,*length,0,0);  // LE to BE, entire file
 #endif
           }
       }
@@ -4439,9 +4486,7 @@ size_t U_WMRRECSAFE_get(
    memcpy(&Size16, contents + offsetof(U_METARECORD,Size16_4), 4);
    size = 2*Size16;
    /* Record is not self consistent - described size past the end of WMF in memory */
-   if(size < U_SIZE_METARECORD ||
-      contents + size - 1 >= blimit ||
-      contents + size - 1 <  contents)size=0;
+   if(size < U_SIZE_METARECORD || IS_MEM_UNSAFE(contents, size, blimit))size=0;
    return(size);
 }
 
@@ -4676,10 +4721,10 @@ int U_WMRCORE_PALETTE_get(
 */
 void U_BITMAPCOREHEADER_get(
        const char *BmiCh,
-       int32_t    *Size,
-       int32_t    *Width,
-       int32_t    *Height,
-       int32_t    *BitCount
+       uint32_t    *Size,
+       int32_t     *Width,
+       int32_t     *Height,
+       int32_t     *BitCount
     ){
     uint32_t utmp4;
     uint16_t utmp2;
@@ -4756,14 +4801,14 @@ int wget_DIB_params(
        const char   *dib,
        const char  **px,
        const U_RGBQUAD **ct,
-       int32_t      *numCt,
-       int32_t      *width,
-       int32_t      *height,
-       int32_t      *colortype,
-       int32_t      *invert
+       uint32_t      *numCt,
+       int32_t       *width,
+       int32_t       *height,
+       int32_t       *colortype,
+       int32_t       *invert
    ){
    uint32_t bic;
-   int32_t Size;
+   uint32_t Size;
    bic = U_BI_RGB;  // this information is not in the coreheader;
    U_BITMAPCOREHEADER_get(dib, &Size, width, height, colortype);
    if(Size != 0xC ){ //BitmapCoreHeader
@@ -4772,7 +4817,7 @@ int wget_DIB_params(
        */
        uint32_t uig4;
        int32_t  ig4;
-       U_BITMAPINFOHEADER_get(dib, &uig4, width, height,&uig4, (uint32_t *) colortype, &bic, &uig4, &ig4, &ig4,&uig4, &uig4);
+       U_BITMAPINFOHEADER_get(dib, &uig4, width, height,&uig4, (uint32_t *) colortype, &bic, &uig4, &ig4, &ig4, &uig4, &uig4);
    }
    if(*height < 0){
       *height = -*height;
@@ -4826,20 +4871,21 @@ int wmfheader_get(
    ){
    uint32_t Key;
    int size=0;
-   if(!Placeable || !Header || contents + 4 >= blimit)return(0);
+   if(!contents || !Placeable || !Header || !blimit)return(0);
+   if(IS_MEM_UNSAFE(contents, 4, blimit))return(0);
    memcpy(&Key, contents + offsetof(U_WMRPLACEABLE,Key), 4);
    if(Key == 0x9AC6CDD7){
       size     += U_SIZE_WMRPLACEABLE;
-      if(contents + size >= blimit)return(0);
+      if(IS_MEM_UNSAFE(contents, size, blimit))return(0);
       memcpy(Placeable, contents, U_SIZE_WMRPLACEABLE);
       contents += U_SIZE_WMRPLACEABLE;
    }
    else {
       memset(Placeable, 0, U_SIZE_WMRPLACEABLE);
    }
-   if(contents + size + U_SIZE_WMRHEADER >= blimit)return(0);
+   if(IS_MEM_UNSAFE(contents, size + U_SIZE_WMRHEADER, blimit))return(0);
    size += 2* (*(uint16_t *)(contents + offsetof(U_WMRHEADER,Size16w))); 
-   if(contents + size >= blimit)return(0);
+   if(IS_MEM_UNSAFE(contents, size, blimit))return(0);
    memcpy(Header, contents, U_SIZE_WMRHEADER);
    return(size);
 }
@@ -5512,7 +5558,12 @@ int U_WMRPOLYGON_get(
       uint16_t     *Length, 
       const char  **Data
     ){
-    return U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRPOLYGON), NULL, Length, Data);
+    int size = U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRPOLYGON), NULL, Length, Data);
+    if(size){
+        int iLength = (*Length)*sizeof(U_POINT16);
+        if(IS_MEM_UNSAFE(*Data, iLength, contents+size))return(0);
+    }
+    return size;
 }
 
 /**
@@ -5527,7 +5578,12 @@ int U_WMRPOLYLINE_get(
       uint16_t    *Length, 
       const char **Data
     ){
-    return U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRPOLYLINE), NULL, Length, Data);
+    int size = U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRPOLYGON), NULL, Length, Data);
+    if(size){
+        int iLength = (*Length)*sizeof(U_POINT16);
+        if(IS_MEM_UNSAFE(*Data, iLength, contents+size))return(0);
+    }
+    return size;
 }
 
 /**
@@ -5550,7 +5606,12 @@ int U_WMRESCAPE_get(
       uint16_t    *Length, 
       const char **Data
    ){
-   return U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRESCAPE), Escape, Length, Data);
+   int size = U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRESCAPE), Escape, Length, Data);
+   if(size){
+       int iLength=*Length;
+       if(IS_MEM_UNSAFE(*Data, iLength, contents+size))return(0);
+   }
+   return size;
 }
 
 /**
@@ -5787,6 +5848,7 @@ int U_WMRSETDIBTODEV_get(
    Dst->y      = *(int16_t *)( contents + offsetof(U_WMRSETDIBTODEV, yDst      ));
    Dst->x      = *(int16_t *)( contents + offsetof(U_WMRSETDIBTODEV, xDst      ));
    *dib        =             ( contents + offsetof(U_WMRSETDIBTODEV, dib       ));
+   if(!packed_DIB_safe(*dib, *dib+size))return(0);
    return(size);
 }
 
@@ -5948,6 +6010,7 @@ int U_WMRDIBBITBLT_get(
               Dst->y     = *(int16_t *)( contents + offsetof(U_WMRDIBBITBLT_PX, yDst      ));
               Dst->x     = *(int16_t *)( contents + offsetof(U_WMRDIBBITBLT_PX, xDst      ));
               *dib       =             ( contents + offsetof(U_WMRDIBBITBLT_PX, dib       ));
+              if(!packed_DIB_safe(*dib, *dib+size))return(0);
    }
    return(size);
 }
@@ -5999,6 +6062,7 @@ int U_WMRDIBSTRETCHBLT_get(
               cDst->y    = *(int16_t *)( contents + offsetof(U_WMRDIBSTRETCHBLT_PX, hDst      ));
               cDst->x    = *(int16_t *)( contents + offsetof(U_WMRDIBSTRETCHBLT_PX, wDst      ));
               *dib       =             ( contents + offsetof(U_WMRDIBSTRETCHBLT_PX, dib       ));
+              if(!packed_DIB_safe(*dib, *dib+size))return(0);
    }
    return(size);
 }
@@ -6040,11 +6104,13 @@ int U_WMRDIBCREATEPATTERNBRUSH_get(
       if(TmpBm16.Width  <= 0 || TmpBm16.Height <= 0 || TmpBm16.Planes != 1 || TmpBm16.BitsPixel == 0){
          *Bm16 = NULL;
          *dib  = (contents + offsetof(U_WMRDIBCREATEPATTERNBRUSH, Src));
+         if(!packed_DIB_safe(*dib, *dib+size))return(0);
       }
    }
    else { /* from DIB */
       *Bm16 = NULL;
       *dib  = (contents + offsetof(U_WMRDIBCREATEPATTERNBRUSH, Src));
+      if(!packed_DIB_safe(*dib, *dib+size))return(0);
    }
    return(size);
 }
@@ -6085,6 +6151,7 @@ int U_WMRSTRETCHDIB_get(
    Dst->y     = *(int16_t *)(  contents + offsetof(U_WMRSTRETCHDIB, yDst      ));  
    Dst->x     = *(int16_t *)(  contents + offsetof(U_WMRSTRETCHDIB, xDst      ));
    *dib       =             (  contents + offsetof(U_WMRSTRETCHDIB, dib       ));
+   if(!packed_DIB_safe(*dib, *dib+size))return(0);
    return(size);
 }
 
@@ -6914,7 +6981,12 @@ int U_WMRCREATEFONTINDIRECT_get(
       const char   *contents,
       const char  **font
    ){
-   return U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRCREATEFONTINDIRECT), NULL, NULL, font);
+   int size = U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRCREATEFONTINDIRECT), NULL, NULL, font);
+   if(size){
+       if(IS_MEM_UNSAFE(*font, U_SIZE_FONT_CORE, contents+size))return(0);
+       if(contents + size - *font > U_SIZE_FONT_CORE + 32)return(0); // font name must fit in a 32 bit field
+   }
+   return size;
 }
 
 /**
@@ -6927,6 +6999,7 @@ int U_WMRCREATEBRUSHINDIRECT_get(
       const char   *contents,
       const char  **brush
     ){
+    // U_SIZE_WMRCREATEBRUSHINDIRECT is everything, no variable part, so the test below is sufficient
     return U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRCREATEBRUSHINDIRECT), NULL, NULL, brush);
 }
 
@@ -6947,13 +7020,16 @@ int U_WMRCREATEBITMAP_get(void){
     \return length of the U_WMRCREATEREGION record in bytes, or 0 on error
     \param  contents   record to extract data from
     \param  Region     pointer to U_REGION structure in memory.  Pointer may not be aligned properly for structure.
+    
+    Caller must check at the returned Region does not extend outside of the record!
 */
 int U_WMRCREATEREGION_get(
       const char   *contents,
       const char  **Region
     ){
-    return U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRCREATEREGION), NULL, NULL, Region);
+   return U_WMRCORE_2U16_N16_get(contents, (U_SIZE_WMRCREATEREGION), NULL, NULL, Region);
 }
+
 
 
 

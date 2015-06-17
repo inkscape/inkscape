@@ -97,12 +97,9 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name, NULL);
 
     bool modmade = false;
-    for (GSList const *items = desktop->getSelection()->itemList();
-         items != NULL;
-         items = items->next)
-    {
-        SPItem *item = SP_ITEM(items->data);
-
+    std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_GENERICELLIPSE(item)) {
 
             SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
@@ -166,11 +163,9 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
     bool modmade = false;
 
     if ( ege_select_one_action_get_active(act) != 0 ) {
-        for (GSList const *items = desktop->getSelection()->itemList();
-             items != NULL;
-             items = items->next)
-        {
-            SPItem *item = reinterpret_cast<SPItem*>(items->data);
+    	std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
+        for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+            SPItem *item = *i;
             if (SP_IS_GENERICELLIPSE(item)) {
                 Inkscape::XML::Node *repr = item->getRepr();
                 repr->setAttribute("sodipodi:open", "true");
@@ -179,11 +174,9 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
             }
         }
     } else {
-        for (GSList const *items = desktop->getSelection()->itemList();
-             items != NULL;
-             items = items->next)
-        {
-            SPItem *item = reinterpret_cast<SPItem *>(items->data);
+    	std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
+        for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+            SPItem *item = *i;
             if (SP_IS_GENERICELLIPSE(item)) {
                 Inkscape::XML::Node *repr = item->getRepr();
                 repr->setAttribute("sodipodi:open", NULL);
@@ -271,11 +264,9 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
 
     purge_repr_listener( tbl, tbl );
 
-    for (GSList const *items = selection->itemList();
-         items != NULL;
-         items = items->next)
-    {
-        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_GENERICELLIPSE(item)) {
             n_selected++;
             repr = item->getRepr();

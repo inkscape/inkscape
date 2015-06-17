@@ -67,12 +67,11 @@ static void te_update_layout_now (SPItem *item)
 void te_update_layout_now_recursive(SPItem *item)
 {
     if (SP_IS_GROUP(item)) {
-        GSList *item_list = sp_item_group_item_list(SP_GROUP(item));
-        for(GSList* elem = item_list; elem; elem = elem->next) {
-            SPItem* list_item = static_cast<SPItem*>(elem->data);
+    	std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(item));
+        for(std::vector<SPItem*>::const_iterator i=item_list.begin();i!=item_list.end();i++){
+            SPItem* list_item = *i;
             te_update_layout_now_recursive(list_item);
         }
-        g_slist_free(item_list);
     } else if (SP_IS_TEXT(item))
         SP_TEXT(item)->rebuildLayout();
     else if (SP_IS_FLOWTEXT (item))

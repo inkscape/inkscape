@@ -13,7 +13,7 @@
 
 typedef struct _GSList GSList;
 
-void unclump(GSList *items);
+void unclump(std::vector<SPItem*> &items);
 
 #endif /* !UNCLUMP_H_SEEN */
 

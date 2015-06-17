@@ -353,9 +353,9 @@ sp_lpe_item_create_original_path_recursive(SPLPEItem *lpeitem)
         sp_lpe_item_create_original_path_recursive(SP_LPE_ITEM(clipPath->firstChild()));
     }
     if (SP_IS_GROUP(lpeitem)) {
-        GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
-        for ( GSList const *iter = item_list; iter; iter = iter->next ) {
-            SPObject *subitem = static_cast<SPObject *>(iter->data);
+    	std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
+        for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+            SPObject *subitem = *iter;
             if (SP_IS_LPE_ITEM(subitem)) {
                 sp_lpe_item_create_original_path_recursive(SP_LPE_ITEM(subitem));
             }
@@ -387,9 +387,9 @@ sp_lpe_item_cleanup_original_path_recursive(SPLPEItem *lpeitem)
                 sp_lpe_item_cleanup_original_path_recursive(SP_LPE_ITEM(clipPath->firstChild()));
             }
         }
-        GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
-        for ( GSList const *iter = item_list; iter; iter = iter->next ) {
-            SPObject *subitem = static_cast<SPObject *>(iter->data);
+        std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
+        for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+            SPObject *subitem = *iter;
             if (SP_IS_LPE_ITEM(subitem)) {
                 sp_lpe_item_cleanup_original_path_recursive(SP_LPE_ITEM(subitem));
             }
@@ -680,9 +680,9 @@ SPLPEItem::apply_to_clippath(SPItem *item)
         }
     }
     if(SP_IS_GROUP(item)){
-        GSList const *item_list = sp_item_group_item_list(SP_GROUP(item));
-        for ( GSList const *iter = item_list; iter; iter = iter->next ) {
-            SPObject *subitem = static_cast<SPObject *>(iter->data);
+    	std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(item));
+        for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+            SPObject *subitem = *iter;
             apply_to_clippath(SP_ITEM(subitem));
         }
     }
@@ -732,9 +732,9 @@ SPLPEItem::apply_to_mask(SPItem *item)
         }
     }
     if(SP_IS_GROUP(item)){
-        GSList const *item_list = sp_item_group_item_list(SP_GROUP(item));
-        for ( GSList const *iter = item_list; iter; iter = iter->next ) {
-            SPObject *subitem = static_cast<SPObject *>(iter->data);
+    	std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(item));
+        for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+            SPObject *subitem = *iter;
             apply_to_mask(SP_ITEM(subitem));
         }
     }
@@ -746,9 +746,9 @@ SPLPEItem::apply_to_clip_or_mask_group(SPItem *group, SPItem *item)
     if (!SP_IS_GROUP(group)) {
         return;
     }
-    GSList *item_list = sp_item_group_item_list(SP_GROUP(group));
-    for ( GSList *iter = item_list; iter; iter = iter->next ) {
-        SPObject *subitem = static_cast<SPObject *>(iter->data);
+    std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(group));
+    for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+        SPObject *subitem = *iter;
         if (SP_IS_GROUP(subitem)) {
             apply_to_clip_or_mask_group(SP_ITEM(subitem), item);
         } else if (SP_IS_SHAPE(subitem)) {

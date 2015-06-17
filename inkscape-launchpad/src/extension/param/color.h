@@ -9,6 +9,7 @@
  */
 
 #include "parameter.h"
+#include "ui/selected-color.h"
 
 class SPDocument;
 
@@ -25,14 +26,17 @@ namespace Extension {
 
 class ParamColor : public Parameter {
 private:
-    guint32 _value;
+    void _onColorChanged();
+
+    Inkscape::UI::SelectedColor _color;
+    sigc::connection _color_changed;
 public:
     ParamColor(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
 
     virtual ~ParamColor(void);
 
     /** Returns \c _value, with a \i const to protect it. */
-    guint32 get( SPDocument const * /*doc*/, Inkscape::XML::Node const * /*node*/ ) const { return _value; }
+    guint32 get( SPDocument const * /*doc*/, Inkscape::XML::Node const * /*node*/ ) const { return _color.value(); }
 
     guint32 set (guint32 in, SPDocument * doc, Inkscape::XML::Node * node);
 
@@ -44,6 +48,7 @@ public:
     virtual void string (std::string &string) const;
 
     sigc::signal<void> * _changeSignal;
+
 }; // class ParamColor
 
 }  // namespace Extension

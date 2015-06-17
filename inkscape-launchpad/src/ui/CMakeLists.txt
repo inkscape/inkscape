@@ -6,6 +6,7 @@ set(ui_SRC
 	interface.cpp
 	object-edit.cpp
 	previewholder.cpp
+	selected-color.cpp
 	shape-editor.cpp
 	tool-factory.cpp
 	tools-switch.cpp
@@ -115,13 +116,20 @@ set(ui_SRC
 	widget/anchor-selector.cpp
 	widget/button.cpp
 	widget/clipmaskicon.cpp
+	widget/color-entry.cpp
+	widget/color-icc-selector.cpp
+	widget/color-notebook.cpp
 	widget/color-picker.cpp
 	widget/color-preview.cpp
+	widget/color-scales.cpp
+	widget/color-slider.cpp
+	widget/color-wheel-selector.cpp
 	widget/dock-item.cpp
 	widget/dock.cpp
 	widget/entity-entry.cpp
 	widget/entry.cpp
 	widget/filter-effect-chooser.cpp
+	widget/font-variants.cpp
 	widget/frame.cpp
 	widget/gimpcolorwheel.c
 	widget/gimpspinscale.c
@@ -174,6 +182,7 @@ set(ui_SRC
 	previewable.h
 	previewfillable.h
 	previewholder.h
+	selected-color.h
 	shape-editor.h
 	tool-factory.h
 	tools-switch.h
@@ -217,6 +226,7 @@ set(ui_SRC
 	dialog/livepatheffect-add.h
 	dialog/livepatheffect-editor.h
 	dialog/lpe-fillet-chamfer-properties.h
+	dialog/lpe-powerstroke-properties.h
 	dialog/memory.h
 	dialog/messages.h
 	dialog/new-from-template.h
@@ -233,6 +243,7 @@ set(ui_SRC
 	dialog/svg-fonts-dialog.h
 	dialog/swatches.h
 	dialog/symbols.h
+	dialog/tags.h
 	dialog/template-load-tab.h
 	dialog/template-widget.h
 	dialog/text-edit.h
@@ -284,24 +295,36 @@ set(ui_SRC
 	tools/tweak-tool.h
 	tools/zoom-tool.h
 
+	widget/addtoicon.h
 	widget/anchor-selector.h
 	widget/attr-widget.h
 	widget/button.h
+	widget/clipmaskicon.h
+	widget/color-entry.h
+	widget/color-icc-selector.h
+	widget/color-notebook.h
 	widget/color-picker.h
 	widget/color-preview.h
+	widget/color-scales.h
+	widget/color-slider.h
+	widget/color-wheel-selector.h
 	widget/combo-enums.h
 	widget/dock-item.h
 	widget/dock.h
 	widget/entity-entry.h
 	widget/entry.h
 	widget/filter-effect-chooser.h
+	widget/font-variants.h
 	widget/frame.h
 	widget/gimpspinscale.h
 	widget/gimpcolorwheel.h
+	widget/highlight-picker.h
+	widget/insertordericon.h
 	widget/imageicon.h
 	widget/imagetoggler.h
 	widget/labelled.h
 	widget/layer-selector.h
+	widget/layertypeicon.h
 	widget/licensor.h
 	widget/notebook-page.h
 	widget/object-composite-settings.h

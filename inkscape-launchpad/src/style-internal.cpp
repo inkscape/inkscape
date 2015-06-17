@@ -45,6 +45,8 @@
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 
+#include <glibmm/regex.h>
+
 // TODO REMOVE OR MAKE MEMBER FUNCTIONS
 void sp_style_fill_paint_server_ref_changed(  SPObject *old_ref, SPObject *ref, SPStyle *style);
 void sp_style_stroke_paint_server_ref_changed(SPObject *old_ref, SPObject *ref, SPStyle *style);
@@ -663,6 +665,241 @@ SPIEnum::operator==(const SPIBase& rhs) {
     }
 }
 
+
+// SPIEnumBits ----------------------------------------------------------
+// Used for 'font-variant-xxx'
+void
+SPIEnumBits::read( gchar const *str ) {
+
+    if( !str ) return;
+    std::cout << "SPIEnumBits: " << name << ": " << str << std::endl;
+    if( !strcmp(str, "inherit") ) {
+        set = true;
+        inherit = true;
+    } else {
+        for (unsigned i = 0; enums[i].key; i++) {
+            if (!strcmp(str, enums[i].key)) {
+                std::cout << "  found: " << enums[i].key << std::endl;
+                set = true;
+                inherit = false;
+                value += enums[i].value;
+                /* Save copying for values not needing it */
+                computed = value;
+            }
+        }
+    }
+}
+
+const Glib::ustring
+SPIEnumBits::write( guint const flags, SPIBase const *const base) const {
+
+    SPIEnum const *const my_base = dynamic_cast<const SPIEnum*>(base);
+    if ( (flags & SP_STYLE_FLAG_ALWAYS) ||
+         ((flags & SP_STYLE_FLAG_IFSET) && this->set) ||
+         ((flags & SP_STYLE_FLAG_IFDIFF) && this->set
+          && (!my_base->set || this != my_base )))
+    {
+        if (this->inherit) {
+            return (name + ":inherit;");
+        }
+        if (this->value == 0 ) {
+            return (name + ":normal");
+        }
+        Glib::ustring return_string = name + ":";
+        unsigned j = 1;
+        for (unsigned i = 0; enums[i].key; ++i) {
+            if (j & this->value ) {
+                return_string += enums[i].value + " ";
+            }
+            j *= 2;
+        }
+        return return_string;
+    }
+    return Glib::ustring("");
+}
+
+
+// SPILigatures -----------------------------------------------------
+// Used for 'font-variant-ligatures'
+void
+SPILigatures::read( gchar const *str ) {
+
+    if( !str ) return;
+
+    value = SP_CSS_FONT_VARIANT_LIGATURES_NORMAL;
+    if( !strcmp(str, "inherit") ) {
+        set = true;
+        inherit = true;
+    } else if (!strcmp(str, "normal" )) {
+        // Defaults for TrueType
+        inherit = false;
+        set = true;
+    } else if (!strcmp(str, "none" )) {
+        value = SP_CSS_FONT_VARIANT_LIGATURES_NONE;
+        inherit = false;
+        set = true;
+    } else {
+        // We need to parse in order
+        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("\\s+", str );
+        for( unsigned i = 0; i < tokens.size(); ++i ) {
+            for (unsigned j = 0; enums[j].key; ++j ) {
+                if (tokens[i].compare( enums[j].key ) == 0 ) {
+                    set = true;
+                    inherit = false;
+                    if( enums[j].value < SP_CSS_FONT_VARIANT_LIGATURES_NOCOMMON ) {
+                        // Turn on
+                        value |= enums[j].value;
+                    } else {
+                        // Turn off
+                        value &= ~(enums[j].value >> 4);
+                    }
+                }
+            }
+        }
+    }
+    computed = value;
+}
+
+const Glib::ustring
+SPILigatures::write( guint const flags, SPIBase const *const base) const {
+
+    SPIEnum const *const my_base = dynamic_cast<const SPIEnum*>(base);
+    if ( (flags & SP_STYLE_FLAG_ALWAYS) ||
+         ((flags & SP_STYLE_FLAG_IFSET) && this->set) ||
+         ((flags & SP_STYLE_FLAG_IFDIFF) && this->set
+          && (!my_base->set || this != my_base )))
+    {
+        if (this->inherit) {
+            return (name + ":inherit;");
+        }
+        if (value == SP_CSS_FONT_VARIANT_LIGATURES_NONE ) {
+                return (name + ":none;");
+        }
+        if (value == SP_CSS_FONT_VARIANT_LIGATURES_NORMAL ) {
+                return (name + ":normal;");
+        }
+
+        Glib::ustring return_string = name + ":";
+        if ( !(value & SP_CSS_FONT_VARIANT_LIGATURES_COMMON) )
+            return_string += "no-common-ligatures ";
+        if (   value & SP_CSS_FONT_VARIANT_LIGATURES_DISCRETIONARY )
+            return_string += "discretionary-ligatures ";
+        if (   value & SP_CSS_FONT_VARIANT_LIGATURES_HISTORICAL )
+            return_string += "historical-ligatures ";
+        if ( !(value & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL) )
+            return_string += "no-contextual ";
+        return_string.erase( return_string.size() - 1 );
+        return_string += ";";
+        return return_string;
+    }
+    return Glib::ustring("");
+}
+
+
+// SPINumeric -----------------------------------------------------
+// Used for 'font-variant-numeric'
+void
+SPINumeric::read( gchar const *str ) {
+
+    if( !str ) return;
+
+    value = SP_CSS_FONT_VARIANT_NUMERIC_NORMAL;
+    if( !strcmp(str, "inherit") ) {
+        set = true;
+        inherit = true;
+    } else if (!strcmp(str, "normal" )) {
+        // Defaults for TrueType
+        inherit = false;
+        set = true;
+    } else {
+        // We need to parse in order
+        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("\\s+", str );
+        for( unsigned i = 0; i < tokens.size(); ++i ) {
+            for (unsigned j = 0; enums[j].key; ++j ) {
+                if (tokens[i].compare( enums[j].key ) == 0 ) {
+                    set = true;
+                    inherit = false;
+                    value |=  enums[j].value;
+
+                    // Must switch off incompatible value
+                    switch (enums[j].value ) {
+                        case SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS;
+                            break;
+                        case SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS;
+                            break;
+
+                        case SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS;
+                            break;
+                        case SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS;
+                            break;
+
+                        case SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS;
+                            break;
+                        case SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS:
+                            value &= ~SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS;
+                            break;
+
+                        case SP_CSS_FONT_VARIANT_NUMERIC_NORMAL:
+                        case SP_CSS_FONT_VARIANT_NUMERIC_ORDINAL:
+                        case SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO:
+                            // Do nothing
+                            break;
+
+                        default:
+                            std::cerr << "SPINumeric::read(): Invalid value." << std::endl;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    computed = value;
+}
+
+const Glib::ustring
+SPINumeric::write( guint const flags, SPIBase const *const base) const {
+
+    SPIEnum const *const my_base = dynamic_cast<const SPIEnum*>(base);
+    if ( (flags & SP_STYLE_FLAG_ALWAYS) ||
+         ((flags & SP_STYLE_FLAG_IFSET) && this->set) ||
+         ((flags & SP_STYLE_FLAG_IFDIFF) && this->set
+          && (!my_base->set || this != my_base )))
+    {
+        if (this->inherit) {
+            return (name + ":inherit;");
+        }
+        if (value == SP_CSS_FONT_VARIANT_NUMERIC_NORMAL ) {
+                return (name + ":normal;");
+        }
+
+        Glib::ustring return_string = name + ":";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS )
+            return_string += "lining-nums ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS )
+            return_string += "oldstyle-nums ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS )
+            return_string += "proportional-nums ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS )
+            return_string += "tabular-nums ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS )
+            return_string += "diagonal-fractions ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS )
+            return_string += "stacked-fractions ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_ORDINAL )
+            return_string += "ordinal ";
+        if ( value & SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO )
+            return_string += "slashed-zero ";
+        return_string.erase( return_string.size() - 1 );
+        return_string += ";";
+        return return_string;
+    }
+    return Glib::ustring("");
+}
 
 
 // SPIString ------------------------------------------------------------
@@ -1694,6 +1931,11 @@ SPIFontSize::read( gchar const *str ) {
             unit     = length.unit;
             value    = length.value;
             computed = length.computed;
+            /*  Set a minimum font size to something much smaller than should ever (ever!) be encountered in a real file.
+                If a bad SVG file is encountered and this is zero odd things
+                might happen because the inverse is used in some scaling actions.
+            */
+            if ( computed <= 1.0e-32 ) { computed = 1.0e-32; }
             if( unit == SP_CSS_UNIT_PERCENT ) {
                 type = SP_FONT_SIZE_PERCENTAGE;
             } else {
@@ -1774,6 +2016,11 @@ SPIFontSize::cascade( const SPIBase* const parent ) {
                     break;
             }
         }
+        /*  Set a minimum font size to something much smaller than should ever (ever!) be encountered in a real file.
+            If a bad SVG file is encountered and this is zero odd things
+            might happen because the inverse is used in some scaling actions.
+        */
+        if ( computed <= 1.0e-32 ) { computed = 1.0e-32; }
     } else {
         std::cerr << "SPIFontSize::cascade(): Incorrect parent type" << std::endl;
     }
@@ -1862,6 +2109,11 @@ SPIFontSize::merge( const SPIBase* const parent ) {
                     }
                 }
             } // Relative size
+            /*  Set a minimum font size to something much smaller than should ever (ever!) be encountered in a real file.
+                If a bad SVG file is encountered and this is zero odd things
+                might happen because the inverse is used in some scaling actions.
+            */
+            if ( computed <= 1.0e-32 ) { computed = 1.0e-32; }
         } // Parent set and not inherit
     } else {
         std::cerr << "SPIFontSize::merge(): Incorrect parent type" << std::endl;

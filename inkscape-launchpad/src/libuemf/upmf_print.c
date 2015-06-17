@@ -6,11 +6,11 @@
 
 /*
 File:      upmf_print.c
-Version:   0.0.3
-Date:      24-MAR-2014
+Version:   0.0.7
+Date:      21-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 /* compiler options:
@@ -30,6 +30,7 @@ extern "C" {
 #include <string.h>
 #include "upmf_print.h"
 #include "uemf_print.h"
+#include "uemf_safe.h"
 
 
 //! \cond
@@ -49,7 +50,7 @@ int U_PMR_NODATAREC_print(const char *contents){
 /* 
  this function is not visible in the API.  Common routine used by many functions that draw points.
 */
-void U_PMF_VARPOINTS_print(const char **contents, int Flags, uint32_t Elements){
+void U_PMF_VARPOINTS_print(const char **contents, int Flags, uint32_t Elements, const char *blimit){
    unsigned int i;
    U_FLOAT Xpos, Ypos;
    
@@ -58,9 +59,9 @@ void U_PMF_VARPOINTS_print(const char **contents, int Flags, uint32_t Elements){
    else {                     printf("   +  Points(Float):");    }
    for(Xpos = Ypos = i = 0; i<Elements; i++){
       printf(" %d:",i);
-      if(     Flags & U_PPF_P){  (void) U_PMF_POINTR_print(contents, &Xpos, &Ypos); }
-      else if(Flags & U_PPF_C){  (void) U_PMF_POINT_print(contents);                }
-      else {                     (void) U_PMF_POINTF_print(contents);               }
+      if(     Flags & U_PPF_P){  (void) U_PMF_POINTR_print(contents, &Xpos, &Ypos, blimit); }
+      else if(Flags & U_PPF_C){  (void) U_PMF_POINT_print(contents, blimit);                }
+      else {                     (void) U_PMF_POINTF_print(contents, blimit);               }
    }
 #if 0
 int residual;
@@ -120,21 +121,28 @@ int U_PMF_VARBRUSHID_print(int btype, uint32_t BrushID){
     \brief Print any EMF+ record
     \returns record length for a normal record, 0 for EMREOF or , -1 for a bad record
     \param contents   pointer to a buffer holding this EMF+ record
-    \param blimit     one byte past the end of data of this EMF+ record
+    \param blimit     one byte after this EMF+ record
     \param recnum     EMF number of this record in contents
-    \param off        Offset from the beginning of the EMF+ file.
+    \param off        Offset from the beginning of the EMF+ file to the start of this record.
 */
 int U_pmf_onerec_print(const char *contents, const char *blimit, int recnum, int off){
    int status;
+   int rstatus;
    static  U_OBJ_ACCUM ObjCont={NULL,0,0,0,0};           /* for keeping track of object continuation. These may
                                                             be split across multiple EMF Comment records */
    U_PMF_CMN_HDR Header;
    const char *contemp = contents;
+   
+   /* Check that COMMON header data in record can be touched without an access violation.  If it cannot be
+       this is either a corrupt EMF or one engineered to cause a buffer overflow.  Pointer math
+       could wrap so check both sides of the range.
+   */
+   if(IS_MEM_UNSAFE(contents, sizeof(U_PMF_CMN_HDR), blimit))return(-1);
    if(!U_PMF_CMN_HDR_get(&contemp, &Header)){return(-1);}
 
    int type = Header.Type & U_PMR_TYPE_MASK; /* strip the U_PMR_RECFLAG bit, leaving the indexable part */
    if(type < U_PMR_MIN || type > U_PMR_MAX)return(-1);   /* unknown EMF+ record type */
-   status = U_PMF_CMN_HDR_print(Header, recnum, off);  /* EMF+ part */
+   status = U_PMF_CMN_HDR_print(contents, Header, recnum, off);  /* EMF+ part */
 
    /* Buggy EMF+ can set the continue bit and then do something else. In that case, force out the pending
       Object.  Side effect - clears the pending object. */
@@ -142,81 +150,88 @@ int U_pmf_onerec_print(const char *contents, const char *blimit, int recnum, int
          U_PMR_OBJECT_print(contents, blimit, &ObjCont, 1);
    }
 
+   /* Check that the record size is OK, abort if not. */
+   if(Header.Size < sizeof(U_PMF_CMN_HDR)           ||
+      IS_MEM_UNSAFE(contents, Header.Size, blimit))return(-1);
+
    switch(type){  
-      case (U_PMR_HEADER):                   U_PMR_HEADER_print(contents);                       break;                     
-      case (U_PMR_ENDOFFILE):                U_PMR_ENDOFFILE_print(contents);
-                                             U_OA_release(&ObjCont);                             break;
-      case (U_PMR_COMMENT):                  U_PMR_COMMENT_print(contents);                      break;
-      case (U_PMR_GETDC):                    U_PMR_GETDC_print(contents);                        break;
-      case (U_PMR_MULTIFORMATSTART):         U_PMR_MULTIFORMATSTART_print(contents);             break;
-      case (U_PMR_MULTIFORMATSECTION):       U_PMR_MULTIFORMATSECTION_print(contents);           break;
-      case (U_PMR_MULTIFORMATEND):           U_PMR_MULTIFORMATEND_print(contents);               break;
-      case (U_PMR_OBJECT):                   U_PMR_OBJECT_print(contents,blimit,&ObjCont,0);     break;
-      case (U_PMR_CLEAR):                    U_PMR_CLEAR_print(contents);                        break;
-      case (U_PMR_FILLRECTS):                U_PMR_FILLRECTS_print(contents, blimit);            break;
-      case (U_PMR_DRAWRECTS):                U_PMR_DRAWRECTS_print(contents, blimit);            break;
-      case (U_PMR_FILLPOLYGON):              U_PMR_FILLPOLYGON_print(contents);                  break;
-      case (U_PMR_DRAWLINES):                U_PMR_DRAWLINES_print(contents);                    break;
-      case (U_PMR_FILLELLIPSE):              U_PMR_FILLELLIPSE_print(contents);                  break;
-      case (U_PMR_DRAWELLIPSE):              U_PMR_DRAWELLIPSE_print(contents);                  break;
-      case (U_PMR_FILLPIE):                  U_PMR_FILLPIE_print(contents);                      break;
-      case (U_PMR_DRAWPIE):                  U_PMR_DRAWPIE_print(contents);                      break;
-      case (U_PMR_DRAWARC):                  U_PMR_DRAWARC_print(contents);                      break;
-      case (U_PMR_FILLREGION):               U_PMR_FILLREGION_print(contents);                   break;
-      case (U_PMR_FILLPATH):                 U_PMR_FILLPATH_print(contents);                     break;
-      case (U_PMR_DRAWPATH):                 U_PMR_DRAWPATH_print(contents);                     break;
-      case (U_PMR_FILLCLOSEDCURVE):          U_PMR_FILLCLOSEDCURVE_print(contents);              break;
-      case (U_PMR_DRAWCLOSEDCURVE):          U_PMR_DRAWCLOSEDCURVE_print(contents);              break;
-      case (U_PMR_DRAWCURVE):                U_PMR_DRAWCURVE_print(contents);                    break;
-      case (U_PMR_DRAWBEZIERS):              U_PMR_DRAWBEZIERS_print(contents);                  break;
-      case (U_PMR_DRAWIMAGE):                U_PMR_DRAWIMAGE_print(contents);                    break;
-      case (U_PMR_DRAWIMAGEPOINTS):          U_PMR_DRAWIMAGEPOINTS_print(contents);              break;
-      case (U_PMR_DRAWSTRING):               U_PMR_DRAWSTRING_print(contents);                   break;
-      case (U_PMR_SETRENDERINGORIGIN):       U_PMR_SETRENDERINGORIGIN_print(contents);           break;
-      case (U_PMR_SETANTIALIASMODE):         U_PMR_SETANTIALIASMODE_print(contents);             break;
-      case (U_PMR_SETTEXTRENDERINGHINT):     U_PMR_SETTEXTRENDERINGHINT_print(contents);         break;
-      case (U_PMR_SETTEXTCONTRAST):          U_PMR_SETTEXTCONTRAST_print(contents);              break;
-      case (U_PMR_SETINTERPOLATIONMODE):     U_PMR_SETINTERPOLATIONMODE_print(contents);         break;
-      case (U_PMR_SETPIXELOFFSETMODE):       U_PMR_SETPIXELOFFSETMODE_print(contents);           break;
-      case (U_PMR_SETCOMPOSITINGMODE):       U_PMR_SETCOMPOSITINGMODE_print(contents);           break;
-      case (U_PMR_SETCOMPOSITINGQUALITY):    U_PMR_SETCOMPOSITINGQUALITY_print(contents);        break;
-      case (U_PMR_SAVE):                     U_PMR_SAVE_print(contents);                         break;
-      case (U_PMR_RESTORE):                  U_PMR_RESTORE_print(contents);                      break;
-      case (U_PMR_BEGINCONTAINER):           U_PMR_BEGINCONTAINER_print(contents);               break;
-      case (U_PMR_BEGINCONTAINERNOPARAMS):   U_PMR_BEGINCONTAINERNOPARAMS_print(contents);       break;
-      case (U_PMR_ENDCONTAINER):             U_PMR_ENDCONTAINER_print(contents);                 break;
-      case (U_PMR_SETWORLDTRANSFORM):        U_PMR_SETWORLDTRANSFORM_print(contents);            break;
-      case (U_PMR_RESETWORLDTRANSFORM):      U_PMR_RESETWORLDTRANSFORM_print(contents);          break;
-      case (U_PMR_MULTIPLYWORLDTRANSFORM):   U_PMR_MULTIPLYWORLDTRANSFORM_print(contents);       break;
-      case (U_PMR_TRANSLATEWORLDTRANSFORM):  U_PMR_TRANSLATEWORLDTRANSFORM_print(contents);      break;
-      case (U_PMR_SCALEWORLDTRANSFORM):      U_PMR_SCALEWORLDTRANSFORM_print(contents);          break;
-      case (U_PMR_ROTATEWORLDTRANSFORM):     U_PMR_ROTATEWORLDTRANSFORM_print(contents);         break;
-      case (U_PMR_SETPAGETRANSFORM):         U_PMR_SETPAGETRANSFORM_print(contents);             break;
-      case (U_PMR_RESETCLIP):                U_PMR_RESETCLIP_print(contents);                    break;
-      case (U_PMR_SETCLIPRECT):              U_PMR_SETCLIPRECT_print(contents);                  break;
-      case (U_PMR_SETCLIPPATH):              U_PMR_SETCLIPPATH_print(contents);                  break;
-      case (U_PMR_SETCLIPREGION):            U_PMR_SETCLIPREGION_print(contents);                break;
-      case (U_PMR_OFFSETCLIP):               U_PMR_OFFSETCLIP_print(contents);                   break;
-      case (U_PMR_DRAWDRIVERSTRING):         U_PMR_DRAWDRIVERSTRING_print(contents);             break;
-      case (U_PMR_STROKEFILLPATH):           U_PMR_STROKEFILLPATH_print(contents);               break;
-      case (U_PMR_SERIALIZABLEOBJECT):       U_PMR_SERIALIZABLEOBJECT_print(contents);           break;
-      case (U_PMR_SETTSGRAPHICS):            U_PMR_SETTSGRAPHICS_print(contents);                break;
-      case (U_PMR_SETTSCLIP):                U_PMR_SETTSCLIP_print(contents);                    break;
+      case (U_PMR_HEADER):                   rstatus = U_PMR_HEADER_print(contents);                       break;                     
+      case (U_PMR_ENDOFFILE):                rstatus = U_PMR_ENDOFFILE_print(contents);
+                                                       U_OA_release(&ObjCont);                             break;
+      case (U_PMR_COMMENT):                  rstatus = U_PMR_COMMENT_print(contents);                      break;
+      case (U_PMR_GETDC):                    rstatus = U_PMR_GETDC_print(contents);                        break;
+      case (U_PMR_MULTIFORMATSTART):         rstatus = U_PMR_MULTIFORMATSTART_print(contents);             break;
+      case (U_PMR_MULTIFORMATSECTION):       rstatus = U_PMR_MULTIFORMATSECTION_print(contents);           break;
+      case (U_PMR_MULTIFORMATEND):           rstatus = U_PMR_MULTIFORMATEND_print(contents);               break;
+      case (U_PMR_OBJECT):                   rstatus = U_PMR_OBJECT_print(contents,blimit,&ObjCont,0);     break;
+      case (U_PMR_CLEAR):                    rstatus = U_PMR_CLEAR_print(contents);                        break;
+      case (U_PMR_FILLRECTS):                rstatus = U_PMR_FILLRECTS_print(contents);                    break;
+      case (U_PMR_DRAWRECTS):                rstatus = U_PMR_DRAWRECTS_print(contents);                    break;
+      case (U_PMR_FILLPOLYGON):              rstatus = U_PMR_FILLPOLYGON_print(contents);                  break;
+      case (U_PMR_DRAWLINES):                rstatus = U_PMR_DRAWLINES_print(contents);                    break;
+      case (U_PMR_FILLELLIPSE):              rstatus = U_PMR_FILLELLIPSE_print(contents);                  break;
+      case (U_PMR_DRAWELLIPSE):              rstatus = U_PMR_DRAWELLIPSE_print(contents);                  break;
+      case (U_PMR_FILLPIE):                  rstatus = U_PMR_FILLPIE_print(contents);                      break;
+      case (U_PMR_DRAWPIE):                  rstatus = U_PMR_DRAWPIE_print(contents);                      break;
+      case (U_PMR_DRAWARC):                  rstatus = U_PMR_DRAWARC_print(contents);                      break;
+      case (U_PMR_FILLREGION):               rstatus = U_PMR_FILLREGION_print(contents);                   break;
+      case (U_PMR_FILLPATH):                 rstatus = U_PMR_FILLPATH_print(contents);                     break;
+      case (U_PMR_DRAWPATH):                 rstatus = U_PMR_DRAWPATH_print(contents);                     break;
+      case (U_PMR_FILLCLOSEDCURVE):          rstatus = U_PMR_FILLCLOSEDCURVE_print(contents);              break;
+      case (U_PMR_DRAWCLOSEDCURVE):          rstatus = U_PMR_DRAWCLOSEDCURVE_print(contents);              break;
+      case (U_PMR_DRAWCURVE):                rstatus = U_PMR_DRAWCURVE_print(contents);                    break;
+      case (U_PMR_DRAWBEZIERS):              rstatus = U_PMR_DRAWBEZIERS_print(contents);                  break;
+      case (U_PMR_DRAWIMAGE):                rstatus = U_PMR_DRAWIMAGE_print(contents);                    break;
+      case (U_PMR_DRAWIMAGEPOINTS):          rstatus = U_PMR_DRAWIMAGEPOINTS_print(contents);              break;
+      case (U_PMR_DRAWSTRING):               rstatus = U_PMR_DRAWSTRING_print(contents);                   break;
+      case (U_PMR_SETRENDERINGORIGIN):       rstatus = U_PMR_SETRENDERINGORIGIN_print(contents);           break;
+      case (U_PMR_SETANTIALIASMODE):         rstatus = U_PMR_SETANTIALIASMODE_print(contents);             break;
+      case (U_PMR_SETTEXTRENDERINGHINT):     rstatus = U_PMR_SETTEXTRENDERINGHINT_print(contents);         break;
+      case (U_PMR_SETTEXTCONTRAST):          rstatus = U_PMR_SETTEXTCONTRAST_print(contents);              break;
+      case (U_PMR_SETINTERPOLATIONMODE):     rstatus = U_PMR_SETINTERPOLATIONMODE_print(contents);         break;
+      case (U_PMR_SETPIXELOFFSETMODE):       rstatus = U_PMR_SETPIXELOFFSETMODE_print(contents);           break;
+      case (U_PMR_SETCOMPOSITINGMODE):       rstatus = U_PMR_SETCOMPOSITINGMODE_print(contents);           break;
+      case (U_PMR_SETCOMPOSITINGQUALITY):    rstatus = U_PMR_SETCOMPOSITINGQUALITY_print(contents);        break;
+      case (U_PMR_SAVE):                     rstatus = U_PMR_SAVE_print(contents);                         break;
+      case (U_PMR_RESTORE):                  rstatus = U_PMR_RESTORE_print(contents);                      break;
+      case (U_PMR_BEGINCONTAINER):           rstatus = U_PMR_BEGINCONTAINER_print(contents);               break;
+      case (U_PMR_BEGINCONTAINERNOPARAMS):   rstatus = U_PMR_BEGINCONTAINERNOPARAMS_print(contents);       break;
+      case (U_PMR_ENDCONTAINER):             rstatus = U_PMR_ENDCONTAINER_print(contents);                 break;
+      case (U_PMR_SETWORLDTRANSFORM):        rstatus = U_PMR_SETWORLDTRANSFORM_print(contents);            break;
+      case (U_PMR_RESETWORLDTRANSFORM):      rstatus = U_PMR_RESETWORLDTRANSFORM_print(contents);          break;
+      case (U_PMR_MULTIPLYWORLDTRANSFORM):   rstatus = U_PMR_MULTIPLYWORLDTRANSFORM_print(contents);       break;
+      case (U_PMR_TRANSLATEWORLDTRANSFORM):  rstatus = U_PMR_TRANSLATEWORLDTRANSFORM_print(contents);      break;
+      case (U_PMR_SCALEWORLDTRANSFORM):      rstatus = U_PMR_SCALEWORLDTRANSFORM_print(contents);          break;
+      case (U_PMR_ROTATEWORLDTRANSFORM):     rstatus = U_PMR_ROTATEWORLDTRANSFORM_print(contents);         break;
+      case (U_PMR_SETPAGETRANSFORM):         rstatus = U_PMR_SETPAGETRANSFORM_print(contents);             break;
+      case (U_PMR_RESETCLIP):                rstatus = U_PMR_RESETCLIP_print(contents);                    break;
+      case (U_PMR_SETCLIPRECT):              rstatus = U_PMR_SETCLIPRECT_print(contents);                  break;
+      case (U_PMR_SETCLIPPATH):              rstatus = U_PMR_SETCLIPPATH_print(contents);                  break;
+      case (U_PMR_SETCLIPREGION):            rstatus = U_PMR_SETCLIPREGION_print(contents);                break;
+      case (U_PMR_OFFSETCLIP):               rstatus = U_PMR_OFFSETCLIP_print(contents);                   break;
+      case (U_PMR_DRAWDRIVERSTRING):         rstatus = U_PMR_DRAWDRIVERSTRING_print(contents);             break;
+      case (U_PMR_STROKEFILLPATH):           rstatus = U_PMR_STROKEFILLPATH_print(contents);               break;
+      case (U_PMR_SERIALIZABLEOBJECT):       rstatus = U_PMR_SERIALIZABLEOBJECT_print(contents);           break;
+      case (U_PMR_SETTSGRAPHICS):            rstatus = U_PMR_SETTSGRAPHICS_print(contents);                break;
+      case (U_PMR_SETTSCLIP):                rstatus = U_PMR_SETTSCLIP_print(contents);                    break;
    }
+   if(!rstatus)status=-1;
    return(status);
 }
 
 /**
     \brief Print data from a  U_PMF_CMN_HDR object
     \return number of bytes in record, 0 on error
+    \param contents   pointer to a buffer holding this EMF+ record
     \param  Header     Header of the record
     \param  precnum    EMF+ record number in file.
     \param  off        Offset in file to the start of this EMF+ record.
     common structure present at the beginning of all(*) EMF+ records
 */
-int U_PMF_CMN_HDR_print(U_PMF_CMN_HDR Header, int precnum, int off){
-   printf("   %-29srec+:%5d type:%X offset:%8d rsize:%8u dsize:%8u flags:%4.4X\n",
-      U_pmr_names(Header.Type &U_PMR_TYPE_MASK),precnum, Header.Type,off,Header.Size,Header.DataSize,Header.Flags);
+int U_PMF_CMN_HDR_print(const char *contents, U_PMF_CMN_HDR Header, int precnum, int off){
+   printf("   %-29srec+:%5d type:%X offset:%8d rsize:%8u dsize:%8u flags:%4.4X crc32:%8.8X\n",
+      U_pmr_names(Header.Type &U_PMR_TYPE_MASK),precnum, Header.Type,off,Header.Size,Header.DataSize,Header.Flags,
+      lu_crc32(contents,Header.Size));
    return((int) Header.Size);
 }
 
@@ -446,15 +461,16 @@ int U_PMF_NODETYPE_print(int Type){
     \brief Print data from a  U_PMF_BRUSH object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.1.1, Microsoft name: EmfPlusBrush Object
 */
-int U_PMF_BRUSH_print(const char *contents){
+int U_PMF_BRUSH_print(const char *contents, const char *blimit){
    uint32_t Version, Type;
    const char *Data;
-   int status = U_PMF_BRUSH_get(contents, &Version, &Type, &Data);
+   int status = U_PMF_BRUSH_get(contents, &Version, &Type, &Data, blimit);
    if(status){
       printf("   +  Brush:");
-      (void) U_PMF_GRAPHICSVERSION_print((char *)&Version);
+      (void) U_PMF_GRAPHICSVERSION_memsafe_print((char *)&Version);;
       printf(" Type:%X(",Type);
       (void) U_PMF_BRUSHTYPEENUMERATION_print(Type);
       printf(")");
@@ -464,19 +480,19 @@ int U_PMF_BRUSH_print(const char *contents){
             break;
          case U_BT_HatchFill:
             printf("\n");
-            status = U_PMF_HATCHBRUSHDATA_print(Data);
+            status = U_PMF_HATCHBRUSHDATA_print(Data, blimit);
             break;
          case U_BT_TextureFill:
             printf("\n");
-            status = U_PMF_TEXTUREBRUSHDATA_print(Data);
+            status = U_PMF_TEXTUREBRUSHDATA_print(Data, blimit);
             break;
          case U_BT_PathGradient:
             printf("\n");
-            status = U_PMF_PATHGRADIENTBRUSHDATA_print(Data);
+            status = U_PMF_PATHGRADIENTBRUSHDATA_print(Data, blimit);
             break;
          case U_BT_LinearGradient:
             printf("\n");
-            status = U_PMF_LINEARGRADIENTBRUSHDATA_print(Data);
+            status = U_PMF_LINEARGRADIENTBRUSHDATA_print(Data, blimit);
             break;
          default:
             status = 0;
@@ -491,23 +507,24 @@ int U_PMF_BRUSH_print(const char *contents){
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
     \param  Which      A string which is either "Start" or "End".
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.1.2, Microsoft name: EmfPlusCustomLineCap Object
 */
-int U_PMF_CUSTOMLINECAP_print(const char *contents, const char *Which){
+int U_PMF_CUSTOMLINECAP_print(const char *contents, const char *Which, const char *blimit){
    uint32_t Version, Type;
    const char *Data;
-   int status = U_PMF_CUSTOMLINECAP_get(contents, &Version, &Type, &Data);
+   int status = U_PMF_CUSTOMLINECAP_get(contents, &Version, &Type, &Data, blimit);
 
    if(status){      
       printf("   +  %sLineCap:",Which);
-      (void) U_PMF_GRAPHICSVERSION_print((char *)&Version);
+      (void) U_PMF_GRAPHICSVERSION_memsafe_print((char *)&Version);;
       printf(", Type %X\n",Type);
       switch(Type){
          case U_CLCDT_Default:
-            status = U_PMF_CUSTOMLINECAPDATA_print(Data);
+            status = U_PMF_CUSTOMLINECAPDATA_print(Data, blimit);
             break;
          case U_CLCDT_AdjustableArrow:
-            status = U_PMF_CUSTOMLINECAPARROWDATA_print(Data);
+            status = U_PMF_CUSTOMLINECAPARROWDATA_print(Data, blimit);
             break;
          default:
             status = 0;
@@ -520,18 +537,19 @@ int U_PMF_CUSTOMLINECAP_print(const char *contents, const char *Which){
     \brief Print data from a  U_PMF_FONT object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.1.3, Microsoft name: EmfPlusFont Object
 */
-int U_PMF_FONT_print(const char *contents){
+int U_PMF_FONT_print(const char *contents, const char *blimit){
    uint32_t Version, SizeUnit, Length;
    U_FLOAT EmSize;
    int32_t FSFlags;
    const char *Data;
    char *string;
-   int status = U_PMF_FONT_get(contents, &Version, &EmSize, &SizeUnit, &FSFlags, &Length, &Data);
+   int status = U_PMF_FONT_get(contents, &Version, &EmSize, &SizeUnit, &FSFlags, &Length, &Data, blimit);
    if(status){      
       printf("   +  Font:");
-      (void) U_PMF_GRAPHICSVERSION_print((char *)&Version);
+      (void) U_PMF_GRAPHICSVERSION_memsafe_print((char *)&Version);;
       printf(" EmSize:%f ",  EmSize  );  
       printf(" SizeUnit:%d ",SizeUnit);
       printf(" FSFlags:%d ", FSFlags ); 
@@ -553,25 +571,27 @@ int U_PMF_FONT_print(const char *contents){
     \brief Print data from a  U_PMF_IMAGE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
+
     EMF+ manual 2.2.1.4, Microsoft name: EmfPlusImage Object
 */
-int U_PMF_IMAGE_print(const char *contents){
+int U_PMF_IMAGE_print(const char *contents, const char *blimit){
    uint32_t Version, Type;
    const char *Data;
-   int status = U_PMF_IMAGE_get(contents, &Version, &Type, &Data);
+   int status = U_PMF_IMAGE_get(contents, &Version, &Type, &Data, blimit);
    if(status){      
       printf("   +  Image:");
-      (void) U_PMF_GRAPHICSVERSION_print((char *)&Version);
+      (void) U_PMF_GRAPHICSVERSION_memsafe_print((char *)&Version);;
       printf(" Type:%X\n",Type);
       switch(Type){
         case U_IDT_Unknown:
             printf("   +  Unknown Image Type\n");
             break;
          case U_IDT_Bitmap:
-            status = U_PMF_BITMAP_print(Data);
+            status = U_PMF_BITMAP_print(Data, blimit);
             break;
          case U_IDT_Metafile:
-            status = U_PMF_METAFILE_print(Data);
+            status = U_PMF_METAFILE_print(Data, blimit);
             break;
          default:
             status = 0;
@@ -585,15 +605,16 @@ int U_PMF_IMAGE_print(const char *contents){
     \brief Print data from a  U_PMF_IMAGEATTRIBUTES object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.1.5, Microsoft name: EmfPlusImageAttributes Object
 */
-int U_PMF_IMAGEATTRIBUTES_print(const char *contents){
+int U_PMF_IMAGEATTRIBUTES_print(const char *contents, const char *blimit){
    uint32_t Version, WrapMode, ClampColor, ObjectClamp;
-   int status = U_PMF_IMAGEATTRIBUTES_get(contents, &Version, &WrapMode, &ClampColor, &ObjectClamp);
+   int status = U_PMF_IMAGEATTRIBUTES_get(contents, &Version, &WrapMode, &ClampColor, &ObjectClamp, blimit);
 
    if(status){      
       printf("   +  Image Attributes: ");
-      (void) U_PMF_GRAPHICSVERSION_print((char *)&Version);
+      (void) U_PMF_GRAPHICSVERSION_memsafe_print((char *)&Version);;
       printf(" WrapMode:%X",      WrapMode);
       printf(" ClampColor:%X",    ClampColor);
       printf(" ObjectClamp:%X\n", ObjectClamp);
@@ -607,20 +628,21 @@ int U_PMF_IMAGEATTRIBUTES_print(const char *contents){
     \brief Print data from a  U_PMF_PATH object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.1.6, Microsoft name: EmfPlusPath Object
 */
-int U_PMF_PATH_print(const char *contents){
+int U_PMF_PATH_print(const char *contents, const char *blimit){
    unsigned int i, pos;
    uint32_t     Version, Count;
    uint16_t     Flags;
    const char  *Points;
    const char  *Types;
-   int status = U_PMF_PATH_get(contents, &Version, &Count, &Flags, &Points, &Types);
+   int status = U_PMF_PATH_get(contents, &Version, &Count, &Flags, &Points, &Types, blimit);
    if(status){
       printf("   +  Path: Version:%X Count:%d Flags:%X\n",Version, Count, Flags);
 
       /* Points part */
-      U_PMF_VARPOINTS_print(&Points, Flags, Count);
+      U_PMF_VARPOINTS_print(&Points, Flags, Count, blimit);
 
       /* Types part */
       printf("   +  Types:");
@@ -631,12 +653,12 @@ int U_PMF_PATH_print(const char *contents){
             is which type. */
          if(Flags & U_PPF_R){
             printf(" %u:",pos);
-            pos += U_PMF_PATHPOINTTYPERLE_print(Types);
+            pos += U_PMF_PATHPOINTTYPERLE_print(Types, blimit);
             Types+=2;
          }
          else {
             printf(" %d:",i);
-            (void) U_PMF_PATHPOINTTYPE_print(Types);
+            (void) U_PMF_PATHPOINTTYPE_print(Types, blimit);
             Types++;
          }
       }
@@ -651,15 +673,15 @@ int U_PMF_PATH_print(const char *contents){
     \param  contents   Record from which to print data
     EMF+ manual 2.2.1.7, Microsoft name: EmfPlusPen Object
 */
-int U_PMF_PEN_print(const char *contents){
+int U_PMF_PEN_print(const char *contents, const char *blimit){
    uint32_t     Version, Type;
    const char  *PenData;
    const char  *Brush;
-   int status = U_PMF_PEN_get(contents, &Version, &Type, &PenData, &Brush);
+   int status = U_PMF_PEN_get(contents, &Version, &Type, &PenData, &Brush, blimit);
    if(status){
       printf("   +  Pen: Version:%X Type:%d\n",Version,Type);
-      (void) U_PMF_PENDATA_print(PenData);
-      (void) U_PMF_BRUSH_print(Brush);
+      (void) U_PMF_PENDATA_print(PenData, blimit);
+      (void) U_PMF_BRUSH_print(Brush, blimit);
    }
    return(status);
 }
@@ -668,17 +690,19 @@ int U_PMF_PEN_print(const char *contents){
     \brief Print data from a  U_PMF_REGION object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
+
     EMF+ manual 2.2.1.8, Microsoft name: EmfPlusRegion Object
 */
-int U_PMF_REGION_print(const char *contents){
+int U_PMF_REGION_print(const char *contents, const char *blimit){
    uint32_t      Version, Count;
    const char   *Nodes;
-   int status = U_PMF_REGION_get(contents, &Version, &Count, &Nodes);
+   int status = U_PMF_REGION_get(contents, &Version, &Count, &Nodes, blimit);
    if(status){
       printf("   + ");
-      (void) U_PMF_GRAPHICSVERSION_print((char *) &Version);
+      (void) U_PMF_GRAPHICSVERSION_memsafe_print((char *)&Version);;
       printf(" ChildNodes:%d",Count);
-      (void) U_PMF_REGIONNODE_print(Nodes, 1); /* 1 == top level*/
+      (void) U_PMF_REGIONNODE_print(Nodes, 1, blimit); /* 1 == top level*/
    }
    return(status);
 }
@@ -687,12 +711,13 @@ int U_PMF_REGION_print(const char *contents){
     \brief Print data from a  U_PMF_STRINGFORMAT object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.1.9, Microsoft name: EmfPlusStringFormat Object
 */
-int U_PMF_STRINGFORMAT_print(const char *contents){
+int U_PMF_STRINGFORMAT_print(const char *contents, const char *blimit){
    U_PMF_STRINGFORMAT Sfs;
    const char *Data;
-   int status = U_PMF_STRINGFORMAT_get(contents, &Sfs, &Data);
+   int status = U_PMF_STRINGFORMAT_get(contents, &Sfs, &Data, blimit);
    if(status){
       printf("   +  StringFormat: ");
       printf(" Version:%X",          Sfs.Version          );
@@ -710,7 +735,7 @@ int U_PMF_STRINGFORMAT_print(const char *contents){
       printf(" Trimming:%X",         Sfs.Trimming         );
       printf(" TabStopCount:%u",     Sfs.TabStopCount     );
       printf(" RangeCount:%u",       Sfs.RangeCount       );
-      (void) U_PMF_STRINGFORMATDATA_print(Data, Sfs.TabStopCount, Sfs.RangeCount);
+      (void) U_PMF_STRINGFORMATDATA_print(Data, Sfs.TabStopCount, Sfs.RangeCount, blimit);
    }
    return(status);
 }
@@ -719,11 +744,13 @@ int U_PMF_STRINGFORMAT_print(const char *contents){
     \brief Print data from a  U_PMF_ARGB object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+
+    Does not accept a blimit value.  
     EMF+ manual 2.2.2.1, Microsoft name: EmfPlusARGB Object
 */
 int U_PMF_ARGB_print(const char *contents){
    uint8_t Blue, Green, Red, Alpha;
-   int status = U_PMF_ARGB_get(contents, &Blue, &Green, &Red, &Alpha);
+   int status = U_PMF_ARGB_get(contents, &Blue, &Green, &Red, &Alpha, contents + sizeof(U_RGBQUAD));
    if(status){
       printf(" RGBA{%2.2X,%2.2X,%2.2X,%2.2X}", Red, Green, Blue, Alpha);
    }
@@ -735,12 +762,13 @@ int U_PMF_ARGB_print(const char *contents){
     \brief Print data from a  U_PMF_BITMAP object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.2, Microsoft name: EmfPlusBitmap Object
 */
-int U_PMF_BITMAP_print(const char *contents){
+int U_PMF_BITMAP_print(const char *contents, const char *blimit){
    U_PMF_BITMAP  Bs;
    const char *Data;
-   int status = U_PMF_BITMAP_get(contents, &Bs, &Data);
+   int status = U_PMF_BITMAP_get(contents, &Bs, &Data, blimit);
    if(status){
       printf("   +  Bitmap: Width:%d Height:%d Stride:%d\n",Bs.Width, Bs.Height, Bs.Stride);
       U_PMF_PX_FMT_ENUM_print(Bs.PxFormat);
@@ -759,14 +787,15 @@ int U_PMF_BITMAP_print(const char *contents){
     \brief Print data from a  U_PMF_BITMAPDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.3, Microsoft name: EmfPlusBitmapData Object
 */
-int U_PMF_BITMAPDATA_print(const char *contents){
+int U_PMF_BITMAPDATA_print(const char *contents, const char *blimit){
    unsigned int  i;
    U_PMF_PALETTE Ps;
    const char   *Colors;
    const char   *Data;
-   int status = U_PMF_BITMAPDATA_get(contents, &Ps, &Colors, &Data);
+   int status = U_PMF_BITMAPDATA_get(contents, &Ps, &Colors, &Data, blimit);
    if(status){
       status = 0;
       printf(" BMData: Flags:%X, Elements:%u Colors:", Ps.Flags, Ps.Elements);
@@ -781,14 +810,15 @@ int U_PMF_BITMAPDATA_print(const char *contents){
     \brief Print data from a  U_PMF_BLENDCOLORS object
     \return size in bytes on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.4, Microsoft name: EmfPlusBlendColors Object
 */
-int U_PMF_BLENDCOLORS_print(const char *contents){
+int U_PMF_BLENDCOLORS_print(const char *contents, const char *blimit){
    unsigned int i;
    uint32_t     Elements;
    U_FLOAT     *Positions;
    const char  *Colors;
-   int status = U_PMF_BLENDCOLORS_get(contents, &Elements, &Positions, &Colors);
+   int status = U_PMF_BLENDCOLORS_get(contents, &Elements, &Positions, &Colors, blimit);
    if(status){
       printf("   +  BlendColors:  Entries:%d (entry,pos,color): ", Elements);
       for(i=0; i<Elements; i++){
@@ -808,14 +838,15 @@ int U_PMF_BLENDCOLORS_print(const char *contents){
     \return size on success, 0 on error
     \param  type       Type of BlendFactors, usually H or V
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.5, Microsoft name: EmfPlusBlendFactors Object
 */
-int U_PMF_BLENDFACTORS_print(const char *contents, const char *type){
+int U_PMF_BLENDFACTORS_print(const char *contents, const char *type, const char *blimit){
    unsigned int i;
    uint32_t     Elements;
    U_FLOAT     *Positions;
    U_FLOAT     *Factors;
-   int status = U_PMF_BLENDFACTORS_get(contents, &Elements, &Positions, &Factors);
+   int status = U_PMF_BLENDFACTORS_get(contents, &Elements, &Positions, &Factors, blimit);
    if(status){
       printf("   +  BlendFactors%s: Entries:%d (entry,pos,factor): ",type, Elements);
       for(i=0; i<Elements; i++){
@@ -832,15 +863,16 @@ int U_PMF_BLENDFACTORS_print(const char *contents, const char *type){
     \brief Print data from a  U_PMF_BOUNDARYPATHDATA object
     \return size on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.6, Microsoft name: EmfPlusBoundaryPathData Object
 */
-int U_PMF_BOUNDARYPATHDATA_print(const char *contents){
+int U_PMF_BOUNDARYPATHDATA_print(const char *contents, const char * blimit){
    int32_t       Size;
    const char *Data;
-   int status = U_PMF_BOUNDARYPATHDATA_get(contents, &Size, &Data);
+   int status = U_PMF_BOUNDARYPATHDATA_get(contents, &Size, &Data, blimit);
    if(status){
       printf("   +  BoundaryPathData: Size:%d\n",Size);
-      (void) U_PMF_PATH_print(Data);
+      (void) U_PMF_PATH_print(Data, blimit);
    }
    return(status);
 }
@@ -850,12 +882,13 @@ int U_PMF_BOUNDARYPATHDATA_print(const char *contents){
     \brief Print data from a  U_PMF_BOUNDARYPOINTDATA object
     \return size on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.7, Microsoft name: EmfPlusBoundaryPointData Object
 */
-int U_PMF_BOUNDARYPOINTDATA_print(const char *contents){
+int U_PMF_BOUNDARYPOINTDATA_print(const char *contents, const char *blimit){
    int32_t       Elements;
    U_PMF_POINTF *Points;
-   int status = U_PMF_BOUNDARYPOINTDATA_get(contents, &Elements, &Points);
+   int status = U_PMF_BOUNDARYPOINTDATA_get(contents, &Elements, &Points, blimit);
    if(status){
       printf("   +  BoundaryPointData: Elements:%u\n",Elements);
       U_PMF_VARPOINTF_S_print(Points, Elements);
@@ -868,11 +901,12 @@ int U_PMF_BOUNDARYPOINTDATA_print(const char *contents){
     \brief Print data from a  U_PMF_CHARACTERRANGE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.8, Microsoft name: EmfPlusCharacterRange Object
 */
-int U_PMF_CHARACTERRANGE_print(const char *contents){
+int U_PMF_CHARACTERRANGE_print(const char *contents, const char *blimit){
    int32_t  First, Length;
-   int status = U_PMF_CHARACTERRANGE_get(contents, &First, &Length);
+   int status = U_PMF_CHARACTERRANGE_get(contents, &First, &Length, blimit);
    if(status){
       printf(" {%d,%d}",First,Length);
    }
@@ -882,14 +916,15 @@ int U_PMF_CHARACTERRANGE_print(const char *contents){
 /**
     \brief Print data from a  U_PMF_DASHEDLINEDATA object
     \return 1 on success, 0 on error
+    \param  blimit     one byte past the end of data
     \param  contents   Record from which to print data
     EMF+ manual 2.2.2.9, Microsoft name: EmfPlusCompoundLineData Object
 */
-int U_PMF_COMPOUNDLINEDATA_print(const char *contents){
+int U_PMF_COMPOUNDLINEDATA_print(const char *contents, const char *blimit){
    int32_t       Elements;
    U_FLOAT      *Widths;
    U_FLOAT      *hold;
-   int status = U_PMF_COMPOUNDLINEDATA_get(contents, &Elements, &Widths);
+   int status = U_PMF_COMPOUNDLINEDATA_get(contents, &Elements, &Widths, blimit);
    if(status){
       printf("   +  CompoundLineData: Elements:%u {",Elements);
       Elements--;
@@ -905,13 +940,14 @@ int U_PMF_COMPOUNDLINEDATA_print(const char *contents){
     \brief Print data from a  U_PMF_COMPRESSEDIMAGE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.10, Microsoft name: EmfPlusCompressedImage Object
 
     This function does not do anything useful, but it is included so that all objects have a corresponding _get().
 */
-int U_PMF_COMPRESSEDIMAGE_print(const char *contents){
+int U_PMF_COMPRESSEDIMAGE_print(const char *contents, const char *blimit){
    const char *Data;
-   int status = U_PMF_COMPRESSEDIMAGE_get(contents, &Data);
+   int status = U_PMF_COMPRESSEDIMAGE_get(contents, &Data, blimit);
    if(status){
       printf("CompressedImage:\n");
    }
@@ -922,15 +958,16 @@ int U_PMF_COMPRESSEDIMAGE_print(const char *contents){
     \brief Print data from a  U_PMF_CUSTOMENDCAPDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.11, Microsoft name: EmfPlusCustomEndCapData Object
 */
-int U_PMF_CUSTOMENDCAPDATA_print(const char *contents){
+int U_PMF_CUSTOMENDCAPDATA_print(const char *contents, const char *blimit){
    int32_t       Size;
    const char *Data;
-   int status =  U_PMF_CUSTOMENDCAPDATA_get(contents, &Size, &Data);
+   int status =  U_PMF_CUSTOMENDCAPDATA_get(contents, &Size, &Data, blimit);
    if(status){
       printf("   +  CustomEndCap: Size:%d\n",Size);
-      (void) U_PMF_CUSTOMLINECAP_print(Data, "End");
+      (void) U_PMF_CUSTOMLINECAP_print(Data, "End", blimit);
    }
    return(status);
 }
@@ -939,11 +976,12 @@ int U_PMF_CUSTOMENDCAPDATA_print(const char *contents){
     \brief Print data from a  U_PMF_CUSTOMLINECAPARROWDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.12, Microsoft name: EmfPlusCustomLineCapArrowData Object
 */
-int U_PMF_CUSTOMLINECAPARROWDATA_print(const char *contents){
+int U_PMF_CUSTOMLINECAPARROWDATA_print(const char *contents, const char *blimit){
    U_PMF_CUSTOMLINECAPARROWDATA Ccad;
-   int status =  U_PMF_CUSTOMLINECAPARROWDATA_get(contents, &Ccad);
+   int status =  U_PMF_CUSTOMLINECAPARROWDATA_get(contents, &Ccad, blimit);
    if(status){
       printf("CustomLineCapArrowData: ");
       printf(" Width:%f",           Ccad.Width                             );
@@ -966,12 +1004,13 @@ int U_PMF_CUSTOMLINECAPARROWDATA_print(const char *contents){
     \brief Print data from a  U_PMF_CUSTOMLINECAPDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.13, Microsoft name: EmfPlusCustomLineCapData Object
 */
-int U_PMF_CUSTOMLINECAPDATA_print(const char *contents){
+int U_PMF_CUSTOMLINECAPDATA_print(const char *contents, const char *blimit){
    U_PMF_CUSTOMLINECAPDATA  Clcd;
    const char *Data;
-   int status =  U_PMF_CUSTOMLINECAPDATA_get(contents, &Clcd, &Data);
+   int status =  U_PMF_CUSTOMLINECAPDATA_get(contents, &Clcd, &Data, blimit);
    if(status){
       printf("   +  CustomLineCapData: ");
       printf(" Flags:%X",           Clcd.Flags                             );
@@ -984,7 +1023,7 @@ int U_PMF_CUSTOMLINECAPDATA_print(const char *contents){
       printf(" WidthScale:%f",      Clcd.WidthScale                        );
       printf(" FillHotSpot:{%f,%f}",Clcd.FillHotSpot[0],Clcd.FillHotSpot[1]);
       printf(" LineHotSpot:{%f,%f}\n",Clcd.LineHotSpot[0],Clcd.LineHotSpot[1]);
-      (void) U_PMF_CUSTOMLINECAPOPTIONALDATA_print(Data, Clcd.Flags);
+      (void) U_PMF_CUSTOMLINECAPOPTIONALDATA_print(Data, Clcd.Flags, blimit);
       /* preceding line always emits an EOL */
    }
    return(status);
@@ -996,18 +1035,19 @@ int U_PMF_CUSTOMLINECAPDATA_print(const char *contents){
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
     \param  Flags      CustomLineCapData Flags
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.14, Microsoft name: EmfPlusCustomLineCapOptionalData Object
 */
-int U_PMF_CUSTOMLINECAPOPTIONALDATA_print(const char *contents, uint32_t Flags){
+int U_PMF_CUSTOMLINECAPOPTIONALDATA_print(const char *contents, uint32_t Flags, const char *blimit){
    const char *FillData;
    const char *LineData;
-   int status = U_PMF_CUSTOMLINECAPOPTIONALDATA_get(contents, Flags, &FillData, &LineData);
+   int status = U_PMF_CUSTOMLINECAPOPTIONALDATA_get(contents, Flags, &FillData, &LineData, blimit);
    if(status){ /* True even if there is nothing in it! */
       printf("   +  CustomLineCapOptionalData:");
       if(FillData || LineData){
-         if(FillData){ (void) U_PMF_FILLPATHOBJ_print(FillData); }
-         if(LineData){ (void) U_PMF_LINEPATH_print(LineData);  }
+         if(FillData){ (void) U_PMF_FILLPATHOBJ_print(FillData, blimit); }
+         if(LineData){ (void) U_PMF_LINEPATH_print(LineData, blimit);  }
       }
       else {
          printf("None");
@@ -1021,15 +1061,16 @@ int U_PMF_CUSTOMLINECAPOPTIONALDATA_print(const char *contents, uint32_t Flags){
     \brief Print data from a  U_PMF_CUSTOMSTARTCAPDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.15, Microsoft name: EmfPlusCustomStartCapData Object
 */
-int U_PMF_CUSTOMSTARTCAPDATA_print(const char *contents){
+int U_PMF_CUSTOMSTARTCAPDATA_print(const char *contents, const char *blimit){
    int32_t  Size;
    const char *Data;
-   int status =  U_PMF_CUSTOMSTARTCAPDATA_get(contents, &Size, &Data);
+   int status =  U_PMF_CUSTOMSTARTCAPDATA_get(contents, &Size, &Data, blimit);
    if(status){
       printf("   +  CustomStartCap: Size:%d ",Size);
-      (void) U_PMF_CUSTOMLINECAP_print(Data, "Start");
+      (void) U_PMF_CUSTOMLINECAP_print(Data, "Start", blimit);
    }
    return(status);
 }
@@ -1038,13 +1079,14 @@ int U_PMF_CUSTOMSTARTCAPDATA_print(const char *contents){
     \brief Print data from a  U_PMF_DASHEDLINEDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.16, Microsoft name: EmfPlusDashedLineData Object
 */
-int U_PMF_DASHEDLINEDATA_print(const char *contents){
+int U_PMF_DASHEDLINEDATA_print(const char *contents, const char *blimit){
    int32_t  Elements;
    U_FLOAT *Lengths;
    U_FLOAT *hold;
-   int status = U_PMF_DASHEDLINEDATA_get(contents, &Elements, &Lengths);
+   int status = U_PMF_DASHEDLINEDATA_get(contents, &Elements, &Lengths, blimit);
    if(status){
       printf(" DashedLineData: Elements:%u {",Elements);
       Elements--;
@@ -1059,15 +1101,16 @@ int U_PMF_DASHEDLINEDATA_print(const char *contents){
     \brief Print data from a  U_PMF_FILLPATHOBJ object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.17, Microsoft name: EmfPlusFillPath Object
 */
-int U_PMF_FILLPATHOBJ_print(const char *contents){
+int U_PMF_FILLPATHOBJ_print(const char *contents, const char * blimit){
    int32_t  Size;
    const char *Data;
-   int status = U_PMF_FILLPATHOBJ_get(contents, &Size, &Data);
+   int status = U_PMF_FILLPATHOBJ_get(contents, &Size, &Data, blimit);
    if(status){
       printf(" FillPathObj: Size:%d\n",Size);
-      if(Size){ (void) U_PMF_PATH_print(Data); }
+      if(Size){ (void) U_PMF_PATH_print(Data, blimit); }
    }
    return(status);
 }
@@ -1076,12 +1119,13 @@ int U_PMF_FILLPATHOBJ_print(const char *contents){
     \brief Print data from a  U_PMF_FOCUSSCALEDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.18, Microsoft name: EmfPlusFocusScaleData Object
 */
-int U_PMF_FOCUSSCALEDATA_print(const char *contents){
+int U_PMF_FOCUSSCALEDATA_print(const char *contents, const char *blimit){
    uint32_t Count;
    U_FLOAT  ScaleX, ScaleY;
-   int status = U_PMF_FOCUSSCALEDATA_get(contents, &Count, &ScaleX, &ScaleY);
+   int status = U_PMF_FOCUSSCALEDATA_get(contents, &Count, &ScaleX, &ScaleY, blimit);
    if(status){
       printf(" FocusScaleData: Count:%d ScaleX:%f ScaleY:%f ",Count,ScaleX,ScaleY);
    }
@@ -1089,14 +1133,31 @@ int U_PMF_FOCUSSCALEDATA_print(const char *contents){
 }
 
 /**
-    \brief Print data from a  U_PMF_GRAPHICSVERSION_print object
+    \brief Print data from a  U_PMF_GRAPHICSVERSION object already known to be memory safe
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
     EMF+ manual 2.2.2.19, Microsoft name: EmfPlusGraphicsVersion Object
+    
+    In this module the only time a U_PMF_GRAPHICSVERSION is printed is after it
+    has already been copied into a safe memory structure.  This routine fakes up
+    a blimit for the general routine.
+
 */
-int U_PMF_GRAPHICSVERSION_print(const char *contents){
+int U_PMF_GRAPHICSVERSION_memsafe_print(const char *contents){
+   const char *blimit = contents + sizeof(U_PMF_GRAPHICSVERSION);
+   return(U_PMF_GRAPHICSVERSION_print(contents, blimit));
+}
+
+/**
+    \brief Print data from a  U_PMF_GRAPHICSVERSION object
+    \return 1 on success, 0 on error
+    \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
+    EMF+ manual 2.2.2.19, Microsoft name: EmfPlusGraphicsVersion Object
+*/
+int U_PMF_GRAPHICSVERSION_print(const char *contents, const char *blimit){
    int Signature,GrfVersion;
-   int status = U_PMF_GRAPHICSVERSION_get(contents, &Signature, &GrfVersion);
+   int status = U_PMF_GRAPHICSVERSION_get(contents, &Signature, &GrfVersion, blimit);
    if(status){
       printf(" MetaFileSig:%X",Signature );
       printf(" GraphicsVersion:%X", GrfVersion);
@@ -1106,15 +1167,16 @@ int U_PMF_GRAPHICSVERSION_print(const char *contents){
 
 
 /**
-    \brief Print data from a  U_PMF_HATCHBRUSHDATA_print object
+    \brief Print data from a  U_PMF_HATCHBRUSHDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     One byte past the last record in memory.
     EMF+ manual 2.2.2.20, Microsoft name: EmfPlusHatchBrushData Object
 */
-int U_PMF_HATCHBRUSHDATA_print(const char *contents){
+int U_PMF_HATCHBRUSHDATA_print(const char *contents, const char *blimit){
    uint32_t Style;
    U_PMF_ARGB Foreground, Background;
-   int status = U_PMF_HATCHBRUSHDATA_get(contents, &Style, &Foreground, &Background);
+   int status = U_PMF_HATCHBRUSHDATA_get(contents, &Style, &Foreground, &Background, blimit);
    if(status){
       printf("   +  HBdata: Style:%u(",Style);
       U_PMF_HATCHSTYLEENUMERATION_print(Style);
@@ -1148,12 +1210,13 @@ int U_PMF_LANGUAGEIDENTIFIER_print(U_PMF_LANGUAGEIDENTIFIER LId){
     \brief Print data from a  U_PMF_LINEARGRADIENTBRUSHDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     One byte past the last record in memory.
     EMF+ manual 2.2.2.24, Microsoft name: EmfPlusLinearGradientBrushData Object
 */
-int U_PMF_LINEARGRADIENTBRUSHDATA_print(const char *contents){
+int U_PMF_LINEARGRADIENTBRUSHDATA_print(const char *contents, const char *blimit){
    U_PMF_LINEARGRADIENTBRUSHDATA Lgbd;
    const char *Data;
-   int   status = U_PMF_LINEARGRADIENTBRUSHDATA_get(contents, &Lgbd, &Data);
+   int   status = U_PMF_LINEARGRADIENTBRUSHDATA_get(contents, &Lgbd, &Data, blimit);
    if(status){
       printf("   +  LinearGradientBrushData: Flags:%X WrapMode:%d Rect:",Lgbd.Flags, Lgbd.WrapMode);
       (void) U_PMF_RECTF_S_print(&(Lgbd.RectF));
@@ -1167,7 +1230,7 @@ int U_PMF_LINEARGRADIENTBRUSHDATA_print(const char *contents){
       printf(" Reserved2:");
       (void) U_PMF_ARGB_print((char *)&(Lgbd.Reserved2));
       printf("\n");
-      (void) U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_print(Data, Lgbd.Flags);
+      (void) U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_print(Data, Lgbd.Flags, blimit);
    }
    return(status);
 }
@@ -1179,16 +1242,17 @@ int U_PMF_LINEARGRADIENTBRUSHDATA_print(const char *contents){
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
     \param  BDFlag     Describes optional values in contents
+    \param  blimit     One byte past the last record in memory.
     EMF+ manual 2.2.2.25, Microsoft name: EmfPlusLinearGradientBrushOptionalData Object
 */
-int U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_print(const char *contents, int BDFlag){
+int U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_print(const char *contents, int BDFlag, const char *blimit){
    U_PMF_TRANSFORMMATRIX Tm;
    const char *Bc;
    const char *BfH;
    const char *BfV;
    int         None=1;
    printf("   +  LinearGradientBrushOptionalData: ");
-   int status = U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_get(contents, BDFlag, &Tm, &Bc, &BfH, &BfV);
+   int status = U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_get(contents, BDFlag, &Tm, &Bc, &BfH, &BfV, blimit);
    if(status){
       if(BDFlag & U_BD_Transform){
          U_PMF_TRANSFORMMATRIX2_print(&Tm); 
@@ -1196,17 +1260,17 @@ int U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_print(const char *contents, int BDFlag
       }
       if(Bc){
          printf("\n");
-         (void) U_PMF_BLENDCOLORS_print(Bc);
+         (void) U_PMF_BLENDCOLORS_print(Bc, blimit);
          None=0;
       }
       if(BfH){ 
          printf("\n");
-         (void) U_PMF_BLENDFACTORS_print(BfH,"H");
+         (void) U_PMF_BLENDFACTORS_print(BfH,"H", blimit);
          None=0;
       }
       if(BfV){ 
          printf("\n");
-         (void) U_PMF_BLENDFACTORS_print(BfV,"V");
+         (void) U_PMF_BLENDFACTORS_print(BfV,"V", blimit);
          None=0;
       }
       if(None){
@@ -1220,15 +1284,16 @@ int U_PMF_LINEARGRADIENTBRUSHOPTIONALDATA_print(const char *contents, int BDFlag
     \brief Print data from a  U_PMF_LINEPATH object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.26, Microsoft name: EmfPlusLinePath Object
 */
-int U_PMF_LINEPATH_print(const char *contents){
+int U_PMF_LINEPATH_print(const char *contents, const char * blimit){
    int32_t  Size;
    const char *Data;
-   int   status = U_PMF_LINEPATH_get(contents, &Size, &Data);
+   int   status = U_PMF_LINEPATH_get(contents, &Size, &Data, blimit);
    if(status){
       printf(" LinePath: Size:%d\n", Size);
-      (void) U_PMF_PATH_print(Data);
+      (void) U_PMF_PATH_print(Data, blimit);
    }
    return(status);
 }
@@ -1237,13 +1302,14 @@ int U_PMF_LINEPATH_print(const char *contents){
     \brief Print data from a  U_PMF_METAFILE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.27, Microsoft name: EmfPlusMetafile Object
 */
-int U_PMF_METAFILE_print(const char *contents){
+int U_PMF_METAFILE_print(const char *contents, const char * blimit){
    uint32_t Type;
    uint32_t Size;
    const char *Data;
-   int   status = U_PMF_METAFILE_get(contents, &Type, &Size, &Data);
+   int   status = U_PMF_METAFILE_get(contents, &Type, &Size, &Data, blimit);
    if(status){
       printf(" MetaFile: Type:%X Size:%d",Type, Size);
       /* embedded metafiles are not handled beyond this*/
@@ -1255,14 +1321,15 @@ int U_PMF_METAFILE_print(const char *contents){
     \brief Print data from a  U_PMF_PALETTE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.28, Microsoft name: EmfPlusPalette Object
 */
-int U_PMF_PALETTE_print(const char *contents){
+int U_PMF_PALETTE_print(const char *contents, const char *blimit){
    unsigned int i;
    uint32_t     Flags;
    uint32_t     Elements;
    const char  *Data;
-   int status = U_PMF_PALETTE_get(contents, &Flags, &Elements, &Data);
+   int status = U_PMF_PALETTE_get(contents, &Flags, &Elements, &Data, blimit);
    if(status){
       printf(" Palette: Flags:%X Elements:%u Colors:",Flags, Elements);
       for(i=0; i<Elements; i++){
@@ -1278,15 +1345,16 @@ int U_PMF_PALETTE_print(const char *contents){
     \brief Print data from a  U_PMF_PATHGRADIENTBRUSHDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.29, Microsoft name: EmfPlusPathGradientBrushData Object
 */
-int U_PMF_PATHGRADIENTBRUSHDATA_print(const char *contents){
+int U_PMF_PATHGRADIENTBRUSHDATA_print(const char *contents, const char *blimit){
    U_PMF_PATHGRADIENTBRUSHDATA Pgbd;
    const char *Gradient;
    const char *Boundary;
    const char *Data=NULL;
    unsigned int i;
-   int   status = U_PMF_PATHGRADIENTBRUSHDATA_get(contents, &Pgbd, &Gradient, &Boundary, &Data);
+   int   status = U_PMF_PATHGRADIENTBRUSHDATA_get(contents, &Pgbd, &Gradient, &Boundary, &Data, blimit);
    if(status){
       printf("   +  PathGradientBrushData: Flags:%X WrapMode:%d, CenterColor:",Pgbd.Flags, Pgbd.WrapMode);
       (void) U_PMF_ARGB_print((char *)&(Pgbd.CenterColor));
@@ -1301,12 +1369,12 @@ int U_PMF_PATHGRADIENTBRUSHDATA_print(const char *contents){
          printf("\n");
       }
       if(Pgbd.Flags & U_BD_Path){
-         (void) U_PMF_BOUNDARYPATHDATA_print(Boundary);
+         (void) U_PMF_BOUNDARYPATHDATA_print(Boundary, blimit);
       }
       else {
-         (void) U_PMF_BOUNDARYPOINTDATA_print(Boundary);
+         (void) U_PMF_BOUNDARYPOINTDATA_print(Boundary, blimit);
       }
-      (void) U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_print(Data, Pgbd.Flags);
+      (void) U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_print(Data, Pgbd.Flags, blimit);
    }
    return(status);
 }
@@ -1316,25 +1384,26 @@ int U_PMF_PATHGRADIENTBRUSHDATA_print(const char *contents){
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
     \param  BDFlag     Describes optional values in contents
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.30, Microsoft name: EmfPlusPathGradientBrushOptionalData Object
 */
-int U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_print(const char *contents, int BDFlag){
+int U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_print(const char *contents, int BDFlag, const char *blimit){
    if(BDFlag & (U_BD_Transform | U_BD_PresetColors | U_BD_BlendFactorsH | U_BD_FocusScales)){
          printf("   +  PathGradientBrushOptionalData: ");
    }
    if(BDFlag & U_BD_Transform){
-      U_PMF_TRANSFORMMATRIX_print(contents);
+      U_PMF_TRANSFORMMATRIX_print(contents, blimit);
       contents += sizeof(U_PMF_TRANSFORMMATRIX);
    }
    if(BDFlag & U_BD_PresetColors){ /* If this is present, BlendFactorsH will not be */
-      contents += U_PMF_BLENDCOLORS_print(contents);
+      contents += U_PMF_BLENDCOLORS_print(contents, blimit);
    }
    if(BDFlag & U_BD_BlendFactorsH){/* If this is present, U_BD_PresetColors will not be */
-     contents += U_PMF_BLENDFACTORS_print(contents,"");
+     contents += U_PMF_BLENDFACTORS_print(contents,"", blimit);
    }
    if(BDFlag & U_BD_FocusScales){
-     contents += U_PMF_BLENDFACTORS_print(contents,"");
-     U_PMF_FOCUSSCALEDATA_print(contents);
+     contents += U_PMF_BLENDFACTORS_print(contents,"", blimit);
+     U_PMF_FOCUSSCALEDATA_print(contents, blimit);
    }
    return(1);
 }
@@ -1343,11 +1412,12 @@ int U_PMF_PATHGRADIENTBRUSHOPTIONALDATA_print(const char *contents, int BDFlag){
     \brief Print data from a  U_PMF_PATHPOINTTYPE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.31, Microsoft name: EmfPlusPathPointType Object
 */
-int U_PMF_PATHPOINTTYPE_print(const char *contents){
+int U_PMF_PATHPOINTTYPE_print(const char *contents, const char *blimit){
    int Flags, Type;
-   int status = U_PMF_PATHPOINTTYPE_get(contents, &Flags, &Type);
+   int status = U_PMF_PATHPOINTTYPE_get(contents, &Flags, &Type, blimit);
    if(status){
       printf("{Flags:%X Type:",Flags);
       (void) U_PMF_PATHPOINTTYPE_ENUM_print(Type);
@@ -1360,11 +1430,12 @@ int U_PMF_PATHPOINTTYPE_print(const char *contents){
     \brief Print data from a  U_PMF_PATHPOINTTYPERLE object
     \return Number of elements in the run, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.32, Microsoft name: EmfPlusPathPointTypeRLE Object
 */
-int U_PMF_PATHPOINTTYPERLE_print(const char *contents){
+int U_PMF_PATHPOINTTYPERLE_print(const char *contents, const char *blimit){
    int Bezier, Elements, Type;
-   int status = U_PMF_PATHPOINTTYPERLE_get(contents, &Bezier, &Elements, &Type);
+   int status = U_PMF_PATHPOINTTYPERLE_get(contents, &Bezier, &Elements, &Type, blimit);
    if(status){
       status = Elements;
       printf(" PathPointTypeRLE: Bezier:%c Elements:%u, Type: ",(Bezier ? 'Y' : 'N'), Elements);
@@ -1378,16 +1449,17 @@ int U_PMF_PATHPOINTTYPERLE_print(const char *contents){
     \brief Print data from a  U_PMF_PATHPOINTTYPERLE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.33, Microsoft name: EmfPlusPenData Object
 */
-int U_PMF_PENDATA_print(const char *contents){
+int U_PMF_PENDATA_print(const char *contents, const char *blimit){
    uint32_t  Flags, Unit;
    U_FLOAT   Width;
    const char *Data;
-   int status =  U_PMF_PENDATA_get(contents, &Flags, &Unit, &Width, &Data);
+   int status =  U_PMF_PENDATA_get(contents, &Flags, &Unit, &Width, &Data, blimit);
    if(status){
       printf("   +  Pendata: Flags:%X Unit:%X Width:%f",Flags, Unit, Width);
-      (void) U_PMF_PENOPTIONALDATA_print(Data, Flags); /* prints a new line at end */
+      (void) U_PMF_PENOPTIONALDATA_print(Data, Flags, blimit); /* prints a new line at end */
    }
    return(status);
 }
@@ -1398,11 +1470,12 @@ int U_PMF_PENDATA_print(const char *contents){
     \brief Print data from a  U_PMF_PENOPTIONALDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     \param  Flags      PenData Flags that determine which optionaldata fields are present in the record.
 
     EMF+ manual 2.2.2.34, Microsoft name: EmfPlusPenOptionalData Object
 */
-int U_PMF_PENOPTIONALDATA_print(const char *contents, int Flags){
+int U_PMF_PENOPTIONALDATA_print(const char *contents, int Flags, const char *blimit){
    U_PMF_TRANSFORMMATRIX  Matrix;
    int32_t     StartCap;
    int32_t     EndCap;
@@ -1431,7 +1504,8 @@ int U_PMF_PENOPTIONALDATA_print(const char *contents, int Flags){
                  &Alignment,
                  &CmpndLineData,
                  &CSCapData,
-                 &CECapData);
+                 &CECapData,
+                 blimit);
    if(status){
       if(Flags & U_PD_Transform){      (void) U_PMF_TRANSFORMMATRIX2_print(&Matrix);}
       if(Flags & U_PD_StartCap){       printf(" StartCap:%d",   StartCap        );}
@@ -1441,14 +1515,14 @@ int U_PMF_PENOPTIONALDATA_print(const char *contents, int Flags){
       if(Flags & U_PD_LineStyle){      printf(" Style:%X",      Style           );}
       if(Flags & U_PD_DLCap){          printf(" DLCap:%X",      DLCap           );}
       if(Flags & U_PD_DLOffset){       printf(" DLOffset:%f",   DLOffset        );}
-      if(Flags & U_PD_DLData){         (void) U_PMF_DASHEDLINEDATA_print(DLData );}
+      if(Flags & U_PD_DLData){         (void) U_PMF_DASHEDLINEDATA_print(DLData, blimit );}
       if(Flags & U_PD_NonCenter){      printf(" Alignment:%d",  Alignment       );}
       if(Flags & (U_PD_Transform | U_PD_StartCap   | U_PD_EndCap    |
                   U_PD_Join      | U_PD_MiterLimit | U_PD_LineStyle |
                   U_PD_DLCap     | U_PD_DLOffset   |U_PD_DLData     |U_PD_NonCenter)){ printf("\n"); }
-      if(Flags & U_PD_CLData){         (void) U_PMF_COMPOUNDLINEDATA_print(CmpndLineData); }
-      if(Flags & U_PD_CustomStartCap){ (void) U_PMF_CUSTOMSTARTCAPDATA_print(CSCapData);   }
-      if(Flags & U_PD_CustomEndCap){   (void) U_PMF_CUSTOMENDCAPDATA_print(CECapData);     }
+      if(Flags & U_PD_CLData){         (void) U_PMF_COMPOUNDLINEDATA_print(CmpndLineData, blimit);   }
+      if(Flags & U_PD_CustomStartCap){ (void) U_PMF_CUSTOMSTARTCAPDATA_print(CSCapData, blimit);     }
+      if(Flags & U_PD_CustomEndCap){   (void) U_PMF_CUSTOMENDCAPDATA_print(CECapData, blimit);       }
    }
    return(status);
 }
@@ -1456,11 +1530,12 @@ int U_PMF_PENOPTIONALDATA_print(const char *contents, int Flags){
     \brief Print data from a  U_PMF_POINT object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.35, Microsoft name: EmfPlusPoint Object
 */
-int U_PMF_POINT_print(const char **contents){
+int U_PMF_POINT_print(const char **contents, const char *blimit){
    U_FLOAT X, Y;
-   int status = U_PMF_POINT_get(contents, &X, &Y);
+   int status = U_PMF_POINT_get(contents, &X, &Y, blimit);
    if(status){
       printf("{%f,%f}", X, Y);
    }
@@ -1483,11 +1558,12 @@ int U_PMF_POINT_S_print(U_PMF_POINT *Point){\
     \brief Print data from a  U_PMF_POINTF object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.36, Microsoft name: EmfPlusPointF Object
 */
-int U_PMF_POINTF_print(const char **contents){
+int U_PMF_POINTF_print(const char **contents, const char *blimit){
    U_FLOAT X, Y;
-   int status = U_PMF_POINTF_get(contents, &X, &Y);
+   int status = U_PMF_POINTF_get(contents, &X, &Y, blimit);
    if(status){
       printf("{%f,%f}", X, Y);
    }
@@ -1512,6 +1588,7 @@ int U_PMF_POINTF_S_print(U_PMF_POINTF *Point){
     \param  contents   Pointer to next data to print
     \param  Xpos       X coordinate for current point
     \param  Ypos       Y coordinate for current point
+    \param  blimit     one byte past the end of data
 
     On each call the next relative offset is extracted, the current
     coordinates are modified with that offset, and the pointer is 
@@ -1519,9 +1596,9 @@ int U_PMF_POINTF_S_print(U_PMF_POINTF *Point){
 
     EMF+ manual 2.2.2.37, Microsoft name: EmfPlusPointR Object
 */
-int U_PMF_POINTR_print(const char **contents, U_FLOAT *Xpos, U_FLOAT *Ypos){
+int U_PMF_POINTR_print(const char **contents, U_FLOAT *Xpos, U_FLOAT *Ypos, const char *blimit){
    U_FLOAT X, Y;
-   int status = U_PMF_POINTR_get(contents, &X, &Y);
+   int status = U_PMF_POINTR_get(contents, &X, &Y, blimit);
    *Xpos += X;
    *Ypos += Y;
    if(status){
@@ -1534,11 +1611,12 @@ int U_PMF_POINTR_print(const char **contents, U_FLOAT *Xpos, U_FLOAT *Ypos){
     \brief Print data from a  U_PMF_RECT object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.38, Microsoft name: EmfPlusRect Object
 */
-int U_PMF_RECT_print(const char **contents){
+int U_PMF_RECT_print(const char **contents, const char *blimit){
    int16_t X, Y, Width, Height;
-   int status = U_PMF_RECT_get(contents, &X, &Y, &Width, &Height);
+   int status = U_PMF_RECT_get(contents, &X, &Y, &Width, &Height, blimit);
    if(status){
       printf("{UL{%d,%d},WH{%d,%d}}", X, Y, Width, Height);
    }
@@ -1560,11 +1638,12 @@ int U_PMF_RECT_S_print(U_PMF_RECT *Rect){
     \brief Print data from a  U_PMF_RECTF object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.39, Microsoft name: EmfPlusRectF Object
 */
-int U_PMF_RECTF_print(const char **contents){
+int U_PMF_RECTF_print(const char **contents, const char *blimit){
    U_FLOAT X, Y, Width, Height;
-   int status = U_PMF_RECTF_get(contents, &X, &Y, &Width, &Height);
+   int status = U_PMF_RECTF_get(contents, &X, &Y, &Width, &Height, blimit);
    if(status){
       printf("{UL{%f,%f},WH{%f,%f}}", X, Y, Width, Height);
    }
@@ -1587,27 +1666,28 @@ int U_PMF_RECTF_S_print(U_PMF_RECTF *Rect){
     \return size on success, 0 on error
     \param  contents   Record from which to print data
     \param  Level      Tree level.  This routine is recursive and could go down many levels. 1 is the top, >1 are child nodes.
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.40, Microsoft name: EmfPlusRegionNode Object
 */
-int U_PMF_REGIONNODE_print(const char *contents, int Level){
+int U_PMF_REGIONNODE_print(const char *contents, int Level, const char *blimit){
    int len=4;  /* Type will always be present */
    uint32_t  Type;
    const char *Data;
-   int status = U_PMF_REGIONNODE_get(contents, &Type, &Data);
+   int status = U_PMF_REGIONNODE_get(contents, &Type, &Data, blimit);
    if(status){
       printf("\n   +  RegionNode(Level:%d) { Type:%X(",Level,Type);
       U_PMF_NODETYPE_print(Type);
       printf(")");
       if(Type >= U_RNDT_And && Type <= U_RNDT_Complement){
-         len += U_PMF_REGIONNODECHILDNODES_print(Data, Level+1);
+         len += U_PMF_REGIONNODECHILDNODES_print(Data, Level+1, blimit);
       }
       else if(Type == U_RNDT_Rect){
          len += sizeof(U_PMF_RECTF);
-         (void) U_PMF_RECTF_print(&Data);
+         (void) U_PMF_RECTF_print(&Data, blimit);
          printf("\n");
       }
       else if(Type == U_RNDT_Path){
-         len += U_PMF_REGIONNODEPATH_print(Data);
+         len += U_PMF_REGIONNODEPATH_print(Data, blimit);
       }
       /* U_RNDT_Empty and  U_RNDT_Infinite do not change the length */
       else if(Type == U_RNDT_Empty     ){ printf(" Empty"     ); }
@@ -1624,18 +1704,19 @@ int U_PMF_REGIONNODE_print(const char *contents, int Level){
     \return size on success, 0 on error
     \param  contents   Record from which to print data
     \param  Level      Tree level.  This routine is recursive and could go down many levels. 1 is the top, >1 are child nodes.
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.41, Microsoft name: EmfPlusRegionNodeChildNodes Object
 */
-int U_PMF_REGIONNODECHILDNODES_print(const char *contents, int Level){
+int U_PMF_REGIONNODECHILDNODES_print(const char *contents, int Level, const char *blimit){
    uint32_t    size,rsize;
    printf(" RegionNodeChildNodes:\n");
    printf("   +  RNCN__Left(Level:%d) {",    Level);
-   size = U_PMF_REGIONNODE_print(contents, Level);
+   size = U_PMF_REGIONNODE_print(contents, Level, blimit);
    printf("   +  RNCN__Left(Level:%d) },\n", Level);
    if(size){
       contents += size;
       printf("   +  RNCN_Right(Level:%d) {",   Level);
-      rsize = U_PMF_REGIONNODE_print(contents, Level);
+      rsize = U_PMF_REGIONNODE_print(contents, Level, blimit);
       size += rsize;
       printf("   +  RNCN_Right(Level:%d) },\n",Level);
    }
@@ -1646,15 +1727,16 @@ int U_PMF_REGIONNODECHILDNODES_print(const char *contents, int Level){
     \brief Print data from a  U_PMF_REGIONNODEPATH object
     \return Size of data on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.42, Microsoft name: EmfPlusRegionNodePath Object
 */
-int U_PMF_REGIONNODEPATH_print(const char *contents){
+int U_PMF_REGIONNODEPATH_print(const char *contents, const char * blimit){
    int32_t Size;
    const char *Data;
-   int status = U_PMF_REGIONNODEPATH_get(contents, &Size, &Data);
+   int status = U_PMF_REGIONNODEPATH_get(contents, &Size, &Data, blimit);
    if(status){
       printf(" RegionNodePath: \n");
-      (void) U_PMF_PATH_print(Data);
+      (void) U_PMF_PATH_print(Data, blimit);
       status = Size + 4; /* data sizee + the 4 bytes encoding the size */
    }
    return(status);
@@ -1665,11 +1747,12 @@ int U_PMF_REGIONNODEPATH_print(const char *contents){
     \brief Print data from a  U_PMF_SOLIDBRUSHDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.43, Microsoft name: EmfPlusSolidBrushData Object
 */
-int U_PMF_SOLIDBRUSHDATA_print(const char *contents){
+int U_PMF_SOLIDBRUSHDATA_print(const char *contents, const char *blimit){
    U_PMF_ARGB Color;
-   int status = U_PMF_SOLIDBRUSHDATA_get(contents, &Color);
+   int status = U_PMF_SOLIDBRUSHDATA_get(contents, &Color, blimit);
    if(status){
       printf(" SolidBrushData: ");
       (void) U_PMF_ARGB_print((char *) &Color);
@@ -1683,12 +1766,13 @@ int U_PMF_SOLIDBRUSHDATA_print(const char *contents){
     \param  contents      Record from which to print data
     \param  TabStopCount  Entries in TabStop array
     \param  RangeCount    Entries in CharRange array
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.44, Microsoft name: EmfPlusStringFormatData Object
 */
-int U_PMF_STRINGFORMATDATA_print(const char *contents, uint32_t TabStopCount, uint32_t RangeCount){
+int U_PMF_STRINGFORMATDATA_print(const char *contents, uint32_t TabStopCount, uint32_t RangeCount, const char *blimit){
    const U_FLOAT               *TabStops;
    const U_PMF_CHARACTERRANGE  *CharRange;
-   int status = U_PMF_STRINGFORMATDATA_get(contents, TabStopCount, RangeCount, &TabStops, &CharRange);
+   int status = U_PMF_STRINGFORMATDATA_get(contents, TabStopCount, RangeCount, &TabStops, &CharRange, blimit);
    if(status){
       printf(" SFdata: TabStopCount:%u RangeCount:%u\n", TabStopCount, RangeCount);
 
@@ -1708,13 +1792,14 @@ int U_PMF_STRINGFORMATDATA_print(const char *contents, uint32_t TabStopCount, ui
     \brief Print data from a  U_PMF_TEXTUREBRUSHDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.45, Microsoft name: EmfPlusTextureBrushData Object
 */
-int U_PMF_TEXTUREBRUSHDATA_print(const char *contents){
+int U_PMF_TEXTUREBRUSHDATA_print(const char *contents, const char *blimit){
    uint32_t Flags;
    int32_t  WrapMode;
    const char *Data;
-   int status = U_PMF_TEXTUREBRUSHDATA_get(contents, &Flags, &WrapMode, &Data);
+   int status = U_PMF_TEXTUREBRUSHDATA_get(contents, &Flags, &WrapMode, &Data, blimit);
    if(status){
       printf("   +  TBdata: Flags:%X WrapMode:%d", Flags, WrapMode);
    }
@@ -1725,18 +1810,23 @@ int U_PMF_TEXTUREBRUSHDATA_print(const char *contents){
     \brief Print data from a  U_PMF_TEXTUREBRUSHOPTIONALDATA object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  HasMatrix  True if the record contains a matrix.
     \param  HasImage   True if the record contains an image.
+    \param  blimit     one byte past the end of data
 
     EMF+ manual 2.2.2.46, Microsoft name: EmfPlusTextureBrushOptionalData Object
 */
-int U_PMF_TEXTUREBRUSHOPTIONALDATA_print(const char *contents, int HasImage){
+int U_PMF_TEXTUREBRUSHOPTIONALDATA_print(const char *contents, int HasMatrix, int HasImage, const char *blimit){
    U_PMF_TRANSFORMMATRIX   Matrix;
+   U_PMF_TRANSFORMMATRIX  *pMatrix;
    const char *Image;
-   int status = U_PMF_TEXTUREBRUSHOPTIONALDATA_get(contents, HasImage, &Matrix, &Image);
+   if(HasMatrix){ pMatrix = &Matrix; }
+   else {         pMatrix = NULL;    }
+   int status = U_PMF_TEXTUREBRUSHOPTIONALDATA_get(contents, HasImage, pMatrix, &Image, blimit);
    if(status){
       printf("   +  TBOptdata: Image:%c", (HasImage ? 'Y' : 'N'));
       (void) U_PMF_TRANSFORMMATRIX2_print(&Matrix);
-      (void) U_PMF_IMAGE_print(Image);
+      (void) U_PMF_IMAGE_print(Image, blimit);
    }
    return(status);
 }
@@ -1745,11 +1835,12 @@ int U_PMF_TEXTUREBRUSHOPTIONALDATA_print(const char *contents, int HasImage){
     \brief Print data from a  U_PMF_TRANSFORMMATRIX object stored in file byte order.
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.2.47, Microsoft name: EmfPlusTransformMatrix Object
 */
-int U_PMF_TRANSFORMMATRIX_print(const char *contents){
+int U_PMF_TRANSFORMMATRIX_print(const char *contents, const char *blimit){
    U_PMF_TRANSFORMMATRIX Tm;
-   int status =  U_PMF_TRANSFORMMATRIX_get(contents, &Tm);
+   int status =  U_PMF_TRANSFORMMATRIX_get(contents, &Tm, blimit);
    if(status){
       U_PMF_TRANSFORMMATRIX2_print(&Tm);
    }
@@ -1763,7 +1854,12 @@ int U_PMF_TRANSFORMMATRIX_print(const char *contents){
     EMF+ manual 2.2.2.47, Microsoft name: EmfPlusTransformMatrix Object
 */
 int U_PMF_TRANSFORMMATRIX2_print(U_PMF_TRANSFORMMATRIX *Tm){
-   printf(" Matrix:{%f,%f,%f,%f,%f,%f}", Tm->m11, Tm->m12, Tm->m21, Tm->m22, Tm->dX, Tm->dY);
+   if(Tm){
+      printf(" Matrix:{%f,%f,%f,%f,%f,%f}", Tm->m11, Tm->m12, Tm->m21, Tm->m22, Tm->dX, Tm->dY);
+   }
+   else {
+      printf(" Matrix:(None)");
+   }
    return(1);
 }
 
@@ -1782,12 +1878,13 @@ int U_PMF_ROTMATRIX2_print(U_PMF_ROTMATRIX *Rm){
     \brief Print data from a  U_PMF_IE_BLUR object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.1, Microsoft name: BlurEffect Object
 */
-int U_PMF_IE_BLUR_print(const char *contents){
+int U_PMF_IE_BLUR_print(const char *contents, const char *blimit){
    U_FLOAT  Radius;
    uint32_t ExpandEdge;
-   int status = U_PMF_IE_BLUR_get(contents, &Radius, &ExpandEdge);
+   int status = U_PMF_IE_BLUR_get(contents, &Radius, &ExpandEdge, blimit);
    if(status){
       printf("BlurEffect Radius:%f ExpandEdge:%u\n", Radius, ExpandEdge);
    }
@@ -1798,11 +1895,12 @@ int U_PMF_IE_BLUR_print(const char *contents){
     \brief Print data from a  U_PMF_IE_BRIGHTNESSCONTRAST object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.2, Microsoft name: BrightnessContrastEffect Object
 */
-int U_PMF_IE_BRIGHTNESSCONTRAST_print(const char *contents){
+int U_PMF_IE_BRIGHTNESSCONTRAST_print(const char *contents, const char *blimit){
    int32_t Brightness, Contrast;
-   int status = U_PMF_IE_BRIGHTNESSCONTRAST_get(contents, &Brightness, &Contrast);
+   int status = U_PMF_IE_BRIGHTNESSCONTRAST_get(contents, &Brightness, &Contrast, blimit);
    if(status){
       printf("BrightnessContrastEffect Brightness:%d Contrast:%d\n", Brightness, Contrast);
    }
@@ -1813,11 +1911,12 @@ int U_PMF_IE_BRIGHTNESSCONTRAST_print(const char *contents){
     \brief Print data from a  U_PMF_IE_COLORBALANCE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.3, Microsoft name: ColorBalanceEffect Object
 */
-int U_PMF_IE_COLORBALANCE_print(const char *contents){
+int U_PMF_IE_COLORBALANCE_print(const char *contents, const char *blimit){
    int32_t CyanRed, MagentaGreen, YellowBlue;
-   int status = U_PMF_IE_COLORBALANCE_get(contents, &CyanRed, &MagentaGreen, &YellowBlue);
+   int status = U_PMF_IE_COLORBALANCE_get(contents, &CyanRed, &MagentaGreen, &YellowBlue, blimit);
    if(status){
       printf("ColorBalanceEffect CyanRed:%d MagentaGreen:%d YellowBlue:%d\n", CyanRed, MagentaGreen, YellowBlue);
    }
@@ -1828,12 +1927,13 @@ int U_PMF_IE_COLORBALANCE_print(const char *contents){
     \brief Print data from a  U_PMF_IE_COLORCURVE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.4, Microsoft name: ColorCurveEffect Object
 */
-int U_PMF_IE_COLORCURVE_print(const char *contents){
+int U_PMF_IE_COLORCURVE_print(const char *contents, const char *blimit){
    uint32_t Adjust, Channel;
    int32_t  Intensity;
-   int status = U_PMF_IE_COLORCURVE_get(contents, &Adjust, &Channel, &Intensity);
+   int status = U_PMF_IE_COLORCURVE_get(contents, &Adjust, &Channel, &Intensity, blimit);
    if(status){
       printf("ColorBalanceEffect Adjust:%u Channel:%u Intensity:%d\n", Adjust, Channel, Intensity);
    }
@@ -1844,11 +1944,12 @@ int U_PMF_IE_COLORCURVE_print(const char *contents){
     \brief Print data from a  U_PMF_IE_COLORLOOKUPTABLE object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.5, Microsoft name: ColorLookupTableEffect Object
 */
-int U_PMF_IE_COLORLOOKUPTABLE_print(const char *contents){
+int U_PMF_IE_COLORLOOKUPTABLE_print(const char *contents, const char *blimit){
    const uint8_t *BLUT, *GLUT, *RLUT, *ALUT;
-   int status = U_PMF_IE_COLORLOOKUPTABLE_get(contents, &BLUT, &GLUT, &RLUT, &ALUT);
+   int status = U_PMF_IE_COLORLOOKUPTABLE_get(contents, &BLUT, &GLUT, &RLUT, &ALUT, blimit);
    if(status){
       printf("ColorLookupTableEffect \n");
       U_PMF_UINT8_ARRAY_print(" BLUT:", BLUT, 256, "\n");
@@ -1863,12 +1964,13 @@ int U_PMF_IE_COLORLOOKUPTABLE_print(const char *contents){
     \brief Print data from a  U_PMF_IE_COLORMATRIX object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.6, Microsoft name: ColorMatrixEffect Object
 */
-int U_PMF_IE_COLORMATRIX_print(const char *contents){
+int U_PMF_IE_COLORMATRIX_print(const char *contents, const char *blimit){
    U_PMF_IE_COLORMATRIX Matrix;
    int i,j;
-   int status = U_PMF_IE_COLORMATRIX_get(contents, &Matrix);
+   int status = U_PMF_IE_COLORMATRIX_get(contents, &Matrix, blimit);
    if(status){
       printf("ColorMatrixEffect\n");
       for(i=0;i<5;i++){
@@ -1885,11 +1987,12 @@ int U_PMF_IE_COLORMATRIX_print(const char *contents){
     \brief Print data from a  U_PMF_IE_HUESATURATIONLIGHTNESS object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.7, Microsoft name: HueSaturationLightnessEffect Object
 */
-int U_PMF_IE_HUESATURATIONLIGHTNESS_print(const char *contents){
+int U_PMF_IE_HUESATURATIONLIGHTNESS_print(const char *contents, const char *blimit){
    int32_t Hue, Saturation, Lightness;
-   int status = U_PMF_IE_HUESATURATIONLIGHTNESS_get(contents, &Hue, &Saturation, &Lightness);
+   int status = U_PMF_IE_HUESATURATIONLIGHTNESS_get(contents, &Hue, &Saturation, &Lightness, blimit);
    if(status){
       printf("HueSaturationLightnessEffect Hue:%d Saturation:%d Lightness:%d\n", Hue, Saturation, Lightness);
    }
@@ -1900,11 +2003,12 @@ int U_PMF_IE_HUESATURATIONLIGHTNESS_print(const char *contents){
     \brief Print data from a  U_PMF_IE_LEVELS object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.8, Microsoft name: LevelsEffect Object
 */
-int U_PMF_IE_LEVELS_print(const char *contents){
+int U_PMF_IE_LEVELS_print(const char *contents, const char *blimit){
    int32_t Highlight, Midtone, Shadow;
-   int status = U_PMF_IE_LEVELS_get(contents, &Highlight, &Midtone, &Shadow);
+   int status = U_PMF_IE_LEVELS_get(contents, &Highlight, &Midtone, &Shadow, blimit);
    if(status){
       printf("LevelEffect Highlight:%d Midtone:%d Shadow:%d\n", Highlight, Midtone, Shadow);
    }
@@ -1915,12 +2019,13 @@ int U_PMF_IE_LEVELS_print(const char *contents){
     \brief Print data from a  U_PMF_IE_REDEYECORRECTION object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.9, Microsoft name: RedEyeCorrectionEffect Object
 */
-int U_PMF_IE_REDEYECORRECTION_print(const char *contents){
+int U_PMF_IE_REDEYECORRECTION_print(const char *contents, const char *blimit){
    int32_t Elements;
    U_RECTL *Rects;
-   int status = U_PMF_IE_REDEYECORRECTION_get(contents, &Elements, &Rects);
+   int status = U_PMF_IE_REDEYECORRECTION_get(contents, &Elements, &Rects, blimit);
    if(status){
       printf("RedEyeCorrectionEffect Elements:%u", Elements);
       for(; Elements; Elements--, Rects++){
@@ -1935,13 +2040,14 @@ int U_PMF_IE_REDEYECORRECTION_print(const char *contents){
 /**
     \brief Print data from a  U_PMF_IE_SHARPEN object
     \return 1 on success, 0 on error
+    \param  blimit     one byte past the end of data
     \param  contents   Record from which to print data
     EMF+ manual 2.2.3.10, Microsoft name: SharpenEffect Object
 */
-int U_PMF_IE_SHARPEN_print(const char *contents){
+int U_PMF_IE_SHARPEN_print(const char *contents, const char *blimit){
    U_FLOAT  Radius;
    int32_t  Sharpen;
-   int status = U_PMF_IE_SHARPEN_get(contents, &Radius, &Sharpen);
+   int status = U_PMF_IE_SHARPEN_get(contents, &Radius, &Sharpen, blimit);
    if(status){
       printf("SharpenEffect Radius:%f Sharpen:%u\n", Radius, Sharpen);
    }
@@ -1952,11 +2058,12 @@ int U_PMF_IE_SHARPEN_print(const char *contents){
     \brief Print data from a  U_PMF_IE_TINT object
     \return 1 on success, 0 on error
     \param  contents   Record from which to print data
+    \param  blimit     one byte past the end of data
     EMF+ manual 2.2.3.11, Microsoft name: TintEffect Object
 */
-int U_PMF_IE_TINT_print(const char *contents){
+int U_PMF_IE_TINT_print(const char *contents, const char *blimit){
    int32_t  Hue, Amount;
-   int status = U_PMF_IE_TINT_get(contents, &Hue, &Amount);
+   int status = U_PMF_IE_TINT_get(contents, &Hue, &Amount, blimit);
    if(status){
       printf("TintEffect Hue:%d Amount:%d\n", Hue, Amount);
    }
@@ -1980,6 +2087,9 @@ int U_PMR_OFFSETCLIP_print(const char *contents){
    int status = U_PMR_OFFSETCLIP_get(contents, &Header, &dX, &dY);
    if(status){
       printf("   +  dx:%f dy:%f\n",dX,dY);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2007,6 +2117,9 @@ int U_PMR_SETCLIPPATH_print(const char *contents){
    if(status){
       printf("   +  PathID:%u CMenum:%d\n",PathID,CMenum);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2027,6 +2140,9 @@ int U_PMR_SETCLIPRECT_print(const char *contents){
       U_PMF_RECTF_S_print(&Rect);
       printf("\n");
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2045,6 +2161,9 @@ int U_PMR_SETCLIPREGION_print(const char *contents){
       U_PMF_COMBINEMODEENUMERATION_print(CMenum);
       printf(")\n");
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2061,6 +2180,11 @@ int U_PMR_COMMENT_print(const char *contents){
    unsigned int i=0;
    int status = U_PMR_COMMENT_get(contents, &Header, &Data);
    if(status){
+      const char *blimit = contents + Header.Size;
+      if(IS_MEM_UNSAFE(Data, Header.DataSize, blimit)){
+         printf("   corrupt record\n");
+         return(0);
+      }
       /* try to print it, but only ASCII, bail on anything that is not ASCII */
       printf("   +  Data:");
       for(i=0; i< Header.DataSize; i++,Data++){
@@ -2069,6 +2193,9 @@ int U_PMR_COMMENT_print(const char *contents){
         else {                                 break;              }
       }
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2107,8 +2234,11 @@ int U_PMR_HEADER_print(const char *contents){
    if(status){
       /* try to print it, but only ASCII, bail on anything that is not ASCII */
       printf("   + ");
-      (void) U_PMF_GRAPHICSVERSION_print((char *) &Version);
+      (void) U_PMF_GRAPHICSVERSION_memsafe_print((char *)&Version);;
       printf(" IsDual:%c IsVideo:%d LogicalDpiX,y:{%u,%u}\n",(IsDual ? 'Y' : 'N'),IsVideo,LogicalDpiX, LogicalDpiY);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2126,6 +2256,9 @@ int U_PMR_CLEAR_print(const char *contents){
       /* try to print it, but only ASCII, bail on anything that is not ASCII */
       printf("   +  Color:");
       (void) U_PMF_ARGB_print((char *) &Color);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2147,6 +2280,9 @@ int U_PMR_DRAWARC_print(const char *contents){
       (void) U_PMF_VARRECTF_S_print(&Rect, 1);
       printf("\n");
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2166,6 +2302,9 @@ int U_PMR_DRAWBEZIERS_print(const char *contents){
       printf("   +  PenIdx:%u ctype:%d RelAbs:%d Elements:%u\n", PenID, ctype, RelAbs, Elements);
       U_PMF_VARPOINTF_S_print(Points, Elements);
       free(Points);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2194,6 +2333,9 @@ int U_PMR_DRAWCLOSEDCURVE_print(const char *contents){
       U_PMF_VARPOINTF_S_print(Points, Elements);
       free(Points);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2220,6 +2362,9 @@ int U_PMR_DRAWCURVE_print(const char *contents){
       printf("   +  PenID:%u ctype:%d Tension:%f Offset:%u NSegs:%u Elements:%u\n", PenID, ctype, Tension, Offset, NSegs, Elements);
       U_PMF_VARPOINTF_S_print(Points, Elements);
       free(Points);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2269,7 +2414,9 @@ int U_PMR_DRAWDRIVERSTRING_print(const char *contents){
          free(Matrix);
          printf("\n");
       }
-
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2289,6 +2436,9 @@ int U_PMR_DRAWELLIPSE_print(const char *contents){
       printf("   +  PenID:%u ctype:%d", PenID,ctype);
       (void) U_PMF_VARRECTF_S_print(&Rect, 1);
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2312,6 +2462,9 @@ int U_PMR_DRAWIMAGE_print(const char *contents){
       printf(" DstRect:");
       (void) U_PMF_RECTF_S_print(&DstRect);
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2339,6 +2492,9 @@ int U_PMR_DRAWIMAGEPOINTS_print(const char *contents){
       U_PMF_VARPOINTF_S_print(Points, Elements);
       free(Points);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2360,6 +2516,9 @@ int U_PMR_DRAWLINES_print(const char *contents){
       U_PMF_VARPOINTF_S_print(Points, Elements);
       free(Points);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2374,6 +2533,9 @@ int U_PMR_DRAWPATH_print(const char *contents){
    int status = U_PMR_DRAWPATH_get(contents, NULL, &PathIdx, &PenIdx);
    if(status){
       printf("   +  PathIdx:%d PenIdx:%d\n", PathIdx, PenIdx);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2395,6 +2557,9 @@ int U_PMR_DRAWPIE_print(const char *contents){
       (void) U_PMF_VARRECTF_S_print(&Rect, 1);
       printf("\n");
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2402,10 +2567,9 @@ int U_PMR_DRAWPIE_print(const char *contents){
     \brief Print data from a  U_PMR_DRAWRECTS record
     \return size of record in bytes on success, 0 on error
     \param  contents   Record from which to print data
-    \param blimit      One byte past the last record in memory.
     EMF+ manual 2.3.4.13, Microsoft name: EmfPlusDrawRects Record, Index 0x0B
 */
-int U_PMR_DRAWRECTS_print(const char *contents, const char *blimit){
+int U_PMR_DRAWRECTS_print(const char *contents){
    uint32_t PenID;
    int      ctype;
    uint32_t Elements;
@@ -2413,10 +2577,12 @@ int U_PMR_DRAWRECTS_print(const char *contents, const char *blimit){
    U_PMF_CMN_HDR hdr;
    int status = U_PMR_DRAWRECTS_get(contents, &hdr, &PenID, &ctype, &Elements, &Rects);
    if(status){
-      if(contents + hdr.Size >= blimit)return(0);
       printf("   +  PenID:%u ctype:%d Elements:%u Rect:", PenID,ctype,Elements);
       (void) U_PMF_VARRECTF_S_print(Rects, Elements);
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    if(Rects)free(Rects);
    return(status);
@@ -2452,6 +2618,9 @@ int U_PMR_DRAWSTRING_print(const char *contents){
          printf(" String(as_UTF8):(none)\n");
       }
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2477,6 +2646,9 @@ int U_PMR_FILLCLOSEDCURVE_print(const char *contents){
       U_PMF_VARPOINTF_S_print(Points, Elements);
       free(Points);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2498,6 +2670,9 @@ int U_PMR_FILLELLIPSE_print(const char *contents){
       (void) U_PMF_VARRECTF_S_print(&Rect, 1);
       printf("\n");
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2515,6 +2690,9 @@ int U_PMR_FILLPATH_print(const char *contents){
       printf("   +  PathID:%u btype:%d",PathID, btype);
       (void) U_PMF_VARBRUSHID_print(btype, BrushID);
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2537,6 +2715,9 @@ int U_PMR_FILLPIE_print(const char *contents){
       (void) U_PMF_VARRECTF_S_print(&Rect, 1);
       printf("\n");
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2558,6 +2739,9 @@ int U_PMR_FILLPOLYGON_print(const char *contents){
       U_PMF_VARPOINTF_S_print(Points, Elements);
       free(Points);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2565,22 +2749,23 @@ int U_PMR_FILLPOLYGON_print(const char *contents){
     \brief Print data from a  U_PMR_FILLRECTS record
     \return size of record in bytes on success, 0 on error
     \param  contents   Record from which to print data
-    \param blimit      One byte past the last record in memory.
     EMF+ manual 2.3.4.20, Microsoft name: EmfPlusFillRects Record, Index 0x0A
 */
-int U_PMR_FILLRECTS_print(const char *contents, const char *blimit){
+int U_PMR_FILLRECTS_print(const char *contents){
    int btype, ctype;
    uint32_t BrushID, Elements;
    U_PMF_RECTF *Rects;
    U_PMF_CMN_HDR hdr;
    int status = U_PMR_FILLRECTS_get(contents, &hdr, &btype,&ctype, &BrushID, &Elements, &Rects);
    if(status){
-      if(contents + hdr.Size >= blimit)return(0);
       printf("   +  btype:%d ctype:%d Elements:%u",btype,ctype,Elements);
       (void) U_PMF_VARBRUSHID_print(btype, BrushID);
       (void) U_PMF_VARRECTF_S_print(Rects, Elements);
       free(Rects);
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2600,6 +2785,9 @@ int U_PMR_FILLREGION_print(const char *contents){
       (void) U_PMF_VARBRUSHID_print(btype, BrushID);
       printf("\n");
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2611,6 +2799,10 @@ int U_PMR_FILLREGION_print(const char *contents){
     \param  ObjCont    Structure that holds accumulated object.
     \param  term       Flag used when an abnormal termination of a series of continuation records is encountered.
     EMF+ manual 2.3.5.1, Microsoft name: EmfPlusObject Record, Index 0x13
+    
+    This is the ONLY EMF+ record type which needs an explicit blimit passed in.  Since it glues
+      together multiple records, and calls itself recursively, the initial caller cannot determine
+      that all of the sizes will be  OK from the first record's header.
 */
 int U_PMR_OBJECT_print(const char *contents, const char *blimit, U_OBJ_ACCUM *ObjCont, int term){
    U_PMF_CMN_HDR Header;
@@ -2641,8 +2833,11 @@ int U_PMR_OBJECT_print(const char *contents, const char *blimit, U_OBJ_ACCUM *Ob
       /* In a corrupt EMF+ file we might hit a new type of record before all the continuation records
          expected have been found.  If that happens terminate whatever we have accumulated so far, and then go on 
          to emit the new (unexpected) record. */
-      if(contents + Header.Size >= blimit)return(0);
-      if(!status)return(status);
+      if(IS_MEM_UNSAFE(contents, Header.Size, blimit))return(0);
+      if(!status){
+         printf("   corrupt record\n");
+         return(status);
+      }
       if((ObjCont->used > 0) && (U_OA_append(ObjCont, NULL, 0, otype, ObjID) < 0)){
          U_PMR_OBJECT_print(contents, blimit, ObjCont, 1);
       }
@@ -2665,16 +2860,17 @@ int U_PMR_OBJECT_print(const char *contents, const char *blimit, U_OBJ_ACCUM *Ob
       ttype = otype;
    }
    if(status){
+      blimit = ObjCont->accum + ObjCont->used;  /* more restrictive blimit, just to end of object */
       switch(ttype){
-         case U_OT_Brush:           (void) U_PMF_BRUSH_print(ObjCont->accum);            break;
-         case U_OT_Pen:             (void) U_PMF_PEN_print(ObjCont->accum);              break;
-         case U_OT_Path:            (void) U_PMF_PATH_print(ObjCont->accum);             break;
-         case U_OT_Region:          (void) U_PMF_REGION_print(ObjCont->accum);           break;
-         case U_OT_Image:           (void) U_PMF_IMAGE_print(ObjCont->accum);            break;
-         case U_OT_Font:            (void) U_PMF_FONT_print(ObjCont->accum);             break;
-         case U_OT_StringFormat:    (void) U_PMF_STRINGFORMAT_print(ObjCont->accum);     break;
-         case U_OT_ImageAttributes: (void) U_PMF_IMAGEATTRIBUTES_print(ObjCont->accum);  break;
-         case U_OT_CustomLineCap:   (void) U_PMF_CUSTOMLINECAP_print(ObjCont->accum,""); break;
+         case U_OT_Brush:           (void) U_PMF_BRUSH_print(ObjCont->accum, blimit);            break;
+         case U_OT_Pen:             (void) U_PMF_PEN_print(ObjCont->accum, blimit);              break;
+         case U_OT_Path:            (void) U_PMF_PATH_print(ObjCont->accum, blimit);             break;
+         case U_OT_Region:          (void) U_PMF_REGION_print(ObjCont->accum, blimit);           break;
+         case U_OT_Image:           (void) U_PMF_IMAGE_print(ObjCont->accum, blimit);            break;
+         case U_OT_Font:            (void) U_PMF_FONT_print(ObjCont->accum, blimit);             break;
+         case U_OT_StringFormat:    (void) U_PMF_STRINGFORMAT_print(ObjCont->accum, blimit);     break;
+         case U_OT_ImageAttributes: (void) U_PMF_IMAGEATTRIBUTES_print(ObjCont->accum, blimit);  break;
+         case U_OT_CustomLineCap:   (void) U_PMF_CUSTOMLINECAP_print(ObjCont->accum,"", blimit); break;
          case U_OT_Invalid:
          default:
             printf("INVALID OBJECT TYPE!!!!\n");
@@ -2707,23 +2903,26 @@ int U_PMR_SERIALIZABLEOBJECT_print(const char *contents){
          printf("\n   +  Effect:");
          free(string);
          switch(iee){
-            case U_IEE_Unknown:                          printf("(undefined)\n");                     break;                        
-            case U_IEE_BlurEffectGuid:                   U_PMF_IE_BLUR_print(Data);                   break;
-            case U_IEE_BrightnessContrastEffectGuid:     U_PMF_IE_BRIGHTNESSCONTRAST_print(Data);     break;
-            case U_IEE_ColorBalanceEffectGuid:           U_PMF_IE_COLORBALANCE_print(Data);           break;
-            case U_IEE_ColorCurveEffectGuid:             U_PMF_IE_COLORCURVE_print(Data);             break;
-            case U_IEE_ColorLookupTableEffectGuid:       U_PMF_IE_COLORLOOKUPTABLE_print(Data);       break;
-            case U_IEE_ColorMatrixEffectGuid:            U_PMF_IE_COLORMATRIX_print(Data);            break;
-            case U_IEE_HueSaturationLightnessEffectGuid: U_PMF_IE_HUESATURATIONLIGHTNESS_print(Data); break;
-            case U_IEE_LevelsEffectGuid:                 U_PMF_IE_LEVELS_print(Data);                 break;
-            case U_IEE_RedEyeCorrectionEffectGuid:       U_PMF_IE_REDEYECORRECTION_print(Data);       break;
-            case U_IEE_SharpenEffectGuid:                U_PMF_IE_SHARPEN_print(Data);                break;
-            case U_IEE_TintEffectGuid:                   U_PMF_IE_TINT_print(Data);                   break;
+            case U_IEE_Unknown:                          printf("(undefined)\n");                                                                     break;                        
+            case U_IEE_BlurEffectGuid:                   U_PMF_IE_BLUR_print(Data, Data + sizeof(U_PMF_IE_BLUR));                                     break;
+            case U_IEE_BrightnessContrastEffectGuid:     U_PMF_IE_BRIGHTNESSCONTRAST_print(Data, Data + sizeof(U_PMF_IE_BRIGHTNESSCONTRAST));         break;
+            case U_IEE_ColorBalanceEffectGuid:           U_PMF_IE_COLORBALANCE_print(Data, Data + sizeof(U_PMF_IE_COLORBALANCE));                     break;
+            case U_IEE_ColorCurveEffectGuid:             U_PMF_IE_COLORCURVE_print(Data, Data + sizeof(U_PMF_IE_COLORCURVE));                         break;
+            case U_IEE_ColorLookupTableEffectGuid:       U_PMF_IE_COLORLOOKUPTABLE_print(Data, Data + sizeof(U_PMF_IE_COLORLOOKUPTABLE));             break;
+            case U_IEE_ColorMatrixEffectGuid:            U_PMF_IE_COLORMATRIX_print(Data, Data + sizeof(U_PMF_IE_COLORMATRIX));                       break;
+            case U_IEE_HueSaturationLightnessEffectGuid: U_PMF_IE_HUESATURATIONLIGHTNESS_print(Data, Data + sizeof(U_PMF_IE_HUESATURATIONLIGHTNESS)); break;
+            case U_IEE_LevelsEffectGuid:                 U_PMF_IE_LEVELS_print(Data, Data + sizeof(U_PMF_IE_LEVELS));                                 break;
+            case U_IEE_RedEyeCorrectionEffectGuid:       U_PMF_IE_REDEYECORRECTION_print(Data, Data + sizeof(U_PMF_IE_REDEYECORRECTION));             break;
+            case U_IEE_SharpenEffectGuid:                U_PMF_IE_SHARPEN_print(Data, Data + sizeof(U_PMF_IE_SHARPEN));                               break;
+            case U_IEE_TintEffectGuid:                   U_PMF_IE_TINT_print(Data, Data + sizeof(U_PMF_IE_TINT));                                     break;
          }
       }
       else {
          printf("   +  GUID:ERROR Size:%u\n",Size);
       }
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2740,6 +2939,9 @@ int U_PMR_SETANTIALIASMODE_print(const char *contents){
    if(status){
       printf("   +  SMenum:%d AntiAlias:%c\n",SMenum,(aatype ? 'Y' : 'N'));
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2754,6 +2956,9 @@ int U_PMR_SETCOMPOSITINGMODE_print(const char *contents){
    int status = U_PMR_SETCOMPOSITINGMODE_get(contents, NULL, &CMenum);
    if(status){
       printf("   +  CMenum:%d\n",CMenum);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2770,6 +2975,9 @@ int U_PMR_SETCOMPOSITINGQUALITY_print(const char *contents){
    if(status){
       printf("   +  CQenum:%d\n",CQenum);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2784,6 +2992,9 @@ int U_PMR_SETINTERPOLATIONMODE_print(const char *contents){
    int status = U_PMR_SETINTERPOLATIONMODE_get(contents, NULL, &IMenum);
    if(status){
       printf("   +  IMenum:%d\n",IMenum);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2800,6 +3011,9 @@ int U_PMR_SETPIXELOFFSETMODE_print(const char *contents){
    if(status){
       printf("   +  POMenum:%d\n",POMenum);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2814,6 +3028,9 @@ int U_PMR_SETRENDERINGORIGIN_print(const char *contents){
    int status = U_PMR_SETRENDERINGORIGIN_get(contents, NULL, &X, &Y);
    if(status){
       printf("   +  X:%d Y:%d\n", X, Y);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2830,6 +3047,9 @@ int U_PMR_SETTEXTCONTRAST_print(const char *contents){
    if(status){
       printf("   +  GC:%d\n", GC);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2844,6 +3064,9 @@ int U_PMR_SETTEXTRENDERINGHINT_print(const char *contents){
    int status = U_PMR_SETTEXTRENDERINGHINT_get(contents, NULL, &TRHenum);
    if(status){
       printf("   +  TRHenum:%d\n",TRHenum);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2865,6 +3088,9 @@ int U_PMR_BEGINCONTAINER_print(const char *contents){
       printf(" SrcRect:");   (void) U_PMF_RECTF_S_print(&SrcRect);
       printf(" StackID:%u\n", StackID);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2879,6 +3105,9 @@ int U_PMR_BEGINCONTAINERNOPARAMS_print(const char *contents){
    int status = U_PMR_BEGINCONTAINERNOPARAMS_get(contents, NULL, &StackID);
    if(status){
       printf("   +  StackID:%u\n", StackID);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2895,6 +3124,9 @@ int U_PMR_ENDCONTAINER_print(const char *contents){
    if(status){
       printf("   +  StackID:%u\n", StackID);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2910,6 +3142,9 @@ int U_PMR_RESTORE_print(const char *contents){
    if(status){
       printf("   +  StackID:%u\n", StackID);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -2924,6 +3159,9 @@ int U_PMR_SAVE_print(const char *contents){
    int status = U_PMR_SAVE_get(contents, NULL, &StackID);
    if(status){
       printf("   +  StackID:%u\n", StackID);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2944,6 +3182,9 @@ int U_PMR_SETTSCLIP_print(const char *contents){
       (void) U_PMF_VARRECTF_S_print(Rects, Elements);
       free(Rects);
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2967,6 +3208,7 @@ int U_PMR_SETTSGRAPHICS_print(const char *contents){
       &RenderOriginX, &RenderOriginY,  &TextContrast,    &FilterType,
       &PixelOffset,   &WorldToDevice, &Data);
    if(status){
+      const char *blimit = contents + status;
       printf("   +  vgatype:%d pptype:%u",vgatype,pptype);
       printf(" AntiAliasMode:%u TextRenderHint:%u CompositingMode:%u CompositingQuality:%u",
          AntiAliasMode, TextRenderHint, CompositingMode, CompositingQuality);
@@ -2974,8 +3216,11 @@ int U_PMR_SETTSGRAPHICS_print(const char *contents){
       printf(" TextContrast:%u",TextContrast);
       printf(" WorldToDevice:");
       U_PMF_TRANSFORMMATRIX2_print(&WorldToDevice);
-      if(pptype){ (void) U_PMF_PALETTE_print(Data); }
+      if(pptype && !U_PMF_PALETTE_print(Data, blimit))return(0);
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -2995,6 +3240,9 @@ int U_PMR_MULTIPLYWORLDTRANSFORM_print(const char *contents){
       printf("   +  xmtype:%d Multiply:%s",xmtype,(xmtype ? "Post" : "Pre"));
       U_PMF_TRANSFORMMATRIX2_print(&Matrix);
       printf("\n");
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -3022,6 +3270,9 @@ int U_PMR_ROTATEWORLDTRANSFORM_print(const char *contents){
    if(status){
       printf("   +  xmtype:%d Multiply:%s Angle:%f\n",xmtype,(xmtype ? "Post" : "Pre"), Angle);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -3038,6 +3289,9 @@ int U_PMR_SCALEWORLDTRANSFORM_print(const char *contents){
    if(status){
       printf("   +  xmtype:%d Multiply:%s ScaleX:%f ScaleY:%f\n",xmtype,(xmtype ? "Post" : "Pre"), Sx, Sy);
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -3053,6 +3307,9 @@ int U_PMR_SETPAGETRANSFORM_print(const char *contents){
    int status = U_PMR_SETPAGETRANSFORM_get(contents, NULL, &UTenum, &Scale);
    if(status){
       printf("   +  UTenum:%d Scale:%f\n",UTenum, Scale);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }
@@ -3071,6 +3328,9 @@ int U_PMR_SETWORLDTRANSFORM_print(const char *contents){
       U_PMF_TRANSFORMMATRIX2_print(&Matrix);
       printf("\n");
    }
+   else {
+      printf("   corrupt record\n");
+   }
    return(status);
 }
 
@@ -3086,6 +3346,9 @@ int U_PMR_TRANSLATEWORLDTRANSFORM_print(const char *contents){
    int status = U_PMR_TRANSLATEWORLDTRANSFORM_get(contents, NULL, &xmtype, &Dx, &Dy);
    if(status){
       printf("   +  xmtype:%d Multiply:%s TranslateX:%f TranlateY:%f\n",xmtype,(xmtype ? "Post" : "Pre"), Dx, Dy);
+   }
+   else {
+      printf("   corrupt record\n");
    }
    return(status);
 }

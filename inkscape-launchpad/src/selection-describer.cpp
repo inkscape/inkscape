@@ -40,14 +40,14 @@
 #include "sp-spiral.h"
 
 // Returns a list of terms for the items to be used in the statusbar
-char* collect_terms (GSList *items)
+char* collect_terms (const std::vector<SPItem*> &items)
 {
     GSList *check = NULL;
     std::stringstream ss;
     bool first = true;
 
-    for (GSList *i = (GSList *)items; i != NULL; i = i->next) {
-        SPItem *item = dynamic_cast<SPItem *>(reinterpret_cast<SPObject *>(i->data));
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+        SPItem *item = *iter;
         if (item) {
             const char *term = item->displayName();
             if (term != NULL && g_slist_find (check, term) == NULL) {
@@ -61,12 +61,12 @@ char* collect_terms (GSList *items)
 }
 
 // Returns the number of terms in the list
-static int count_terms (GSList *items)
+static int count_terms (const std::vector<SPItem*> &items)
 {
     GSList *check = NULL;
     int count=0;
-    for (GSList *i = (GSList *)items; i != NULL; i = i->next) {
-        SPItem *item = dynamic_cast<SPItem *>(reinterpret_cast<SPObject *>(i->data));
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+        SPItem *item = *iter;
         if (item) {
             const char *term = item->displayName();
             if (term != NULL && g_slist_find (check, term) == NULL) {
@@ -79,11 +79,11 @@ static int count_terms (GSList *items)
 }
 
 // Returns the number of filtered items in the list
-static int count_filtered (GSList *items)
+static int count_filtered (const std::vector<SPItem*> &items)
 {
     int count=0;
-    for (GSList *i = items; i != NULL; i = i->next) {
-        SPItem *item = dynamic_cast<SPItem *>(reinterpret_cast<SPObject *>((i->data)));
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+        SPItem *item = *iter;
         if (item) {
             count += item->isFiltered();
         }
@@ -122,12 +122,12 @@ void SelectionDescriber::_selectionModified(Inkscape::Selection *selection, guin
 }
 
 void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *selection) {
-    GSList const *items = selection->itemList();
+	std::vector<SPItem*> const items = selection->itemList();
 
-    if (!items) { // no items
+    if (items.empty()) { // no items
         _context.set(Inkscape::NORMAL_MESSAGE, _when_nothing);
     } else {
-        SPItem *item = dynamic_cast<SPItem *>(reinterpret_cast<SPObject *>(items->data));
+        SPItem *item = items[0];
         g_assert(item != NULL);
         SPObject *layer = selection->layers()->layerForObject(item);
         SPObject *root = selection->layers()->currentRoot();
@@ -188,7 +188,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         g_free (layer_name);
         g_free (parent_name);
 
-        if (!items->next) { // one item
+        if (items.size()==1) { // one item
             char *item_desc = item->detailedDescription();
 
             bool isUse = dynamic_cast<SPUse *>(item) != NULL;
@@ -228,9 +228,9 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
 
             g_free(item_desc);
         } else { // multiple items
-            int objcount = g_slist_length((GSList *)items);
-            char *terms = collect_terms ((GSList *)items);
-            int n_terms = count_terms((GSList *)items);
+            int objcount = items.size();
+            char *terms = collect_terms (items);
+            int n_terms = count_terms(items);
             
             gchar *objects_str = g_strdup_printf(ngettext(
                 "<b>%1$i</b> objects selected of type %2$s",
@@ -241,7 +241,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
 
             // indicate all, some, or none filtered
             gchar *filt_str = NULL;
-            int n_filt = count_filtered((GSList *)items);  //all filtered
+            int n_filt = count_filtered(items);  //all filtered
             if (n_filt) {
                 filt_str = g_strdup_printf(ngettext("; <i>%d filtered object</i> ",
                                                      "; <i>%d filtered objects</i> ", n_filt), n_filt);

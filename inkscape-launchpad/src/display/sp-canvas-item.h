@@ -69,7 +69,12 @@ struct SPCanvasItem {
     gboolean visible;
     gboolean need_update;
     gboolean need_affine;
- 
+
+    // If true, then SPCanvasGroup::point() and sp_canvas_item_invoke_point() will calculate
+    // the distance to the pointer, such that this item can be picked in pickCurrentItem()
+    // Only if an item can be picked, then it can be set as current_item and receive events!
+    bool pickable;
+
     bool in_destruction;
 };
 

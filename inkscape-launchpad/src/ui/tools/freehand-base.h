@@ -78,7 +78,7 @@ public:
 
     //ALternative curve to use on continuing exisiting curve in case of bspline or spirolive 
     //because usigh anchor curves give memory and random bugs, - and obscure code- in some plataform reported by su_v in mac
-    SPCurve *overwriteCurve;
+    SPCurve *overwrite_curve;
 
     // Start anchor
     SPDrawAnchor *sa;

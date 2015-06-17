@@ -129,6 +129,10 @@ bool Selector::event(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *eve
     return false;
 }
 
+bool Selector::doubleClicked() {
+    return _dragger->doubleClicked();
+}
+
 } // namespace UI
 } // namespace Inkscape
 

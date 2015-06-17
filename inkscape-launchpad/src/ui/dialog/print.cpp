@@ -81,7 +81,7 @@ static void draw_page(
                 width, height,
                 (unsigned long)(Inkscape::Util::Quantity::convert(width, "px", "in") * dpi),
                 (unsigned long)(Inkscape::Util::Quantity::convert(height, "px", "in") * dpi),
-                dpi, dpi, bgcolor, NULL, NULL, true, NULL);
+                dpi, dpi, bgcolor, NULL, NULL, true, std::vector<SPItem*>());
 
             // This doesn't seem to work:
             //context->set_cairo_context ( Cairo::Context::create (Cairo::ImageSurface::create_from_png (tmp_png) ), dpi, dpi );

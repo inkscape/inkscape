@@ -116,6 +116,9 @@
 /* Define to 1 if you have the `mkdir' function. */
 #cmakedefine HAVE_MKDIR 1
 
+/* Use OpenMP (via cmake) */
+#cmakedefine HAVE_OPENMP 1
+
 /* Use aspell for built-in spellchecker */
 #cmakedefine HAVE_ASPELL 1
 
@@ -136,6 +139,9 @@
 
 /* Use color space API from Poppler >= 0.26.0 */
 #cmakedefine POPPLER_EVEN_NEWER_COLOR_SPACE_API 1
+
+/* Use color space API from Poppler >= 0.29.0 */
+#cmakedefine POPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API 1
 
 /* Use new error API from Poppler >= 0.20.0 */
 #cmakedefine POPPLER_NEW_ERRORAPI
@@ -292,6 +298,24 @@
 /* enable openoffice files (SVG jars) */
 #cmakedefine WITH_INKJAR 1
 
+/* Build in libcdr */
+#cmakedefine WITH_LIBCDR 1
+
+/* Build using libcdr 0.0.x */
+#cmakedefine WITH_LIBCDR00 1
+
+/* Build using libcdr 0.1.x */
+#cmakedefine WITH_LIBCDR01 1
+
+/* Build in libvisio */
+#cmakedefine WITH_LIBVISIO 1
+
+/* Build using libvisio 0.0.x */
+#cmakedefine WITH_LIBVISIO00 1
+
+/* Build using libvisio 0.1.x */
+#cmakedefine WITH_LIBVISIO01 1
+
 /* Build in libwpg */
 #cmakedefine WITH_LIBWPG 1
 
@@ -300,6 +324,9 @@
 
 /* Build in libwpg-0.2 */
 #cmakedefine WITH_LIBWPG02 1
+
+/* Build in libwpg-0.3 */
+#cmakedefine WITH_LIBWPG03 1
 
 /* Use MMX optimizations, if CPU supports it */
 #cmakedefine WITH_MMX 1

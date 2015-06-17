@@ -20,10 +20,6 @@
 // This has to be included prior to anything that includes setjmp.h, it croaks otherwise
 #include <png.h>
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/dialog.h>
@@ -605,7 +601,7 @@ void Export::onBatchClicked ()
 
 void Export::updateCheckbuttons ()
 {
-    gint num = g_slist_length((GSList *) SP_ACTIVE_DESKTOP->getSelection()->itemList());
+    gint num = SP_ACTIVE_DESKTOP->getSelection()->itemList().size();
     if (num >= 2) {
         batch_export.set_sensitive(true);
         batch_export.set_label(g_strdup_printf (ngettext("B_atch export %d selected object","B_atch export %d selected objects",num), num));
@@ -817,9 +813,9 @@ void Export::onAreaToggled ()
                    one that's nice */
                 if (filename.empty()) {
                     const gchar * id = "object";
-                    const GSList * reprlst = SP_ACTIVE_DESKTOP->getSelection()->reprList();
-                    for(; reprlst != NULL; reprlst = reprlst->next) {
-                        Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
+                    const std::vector<XML::Node*> reprlst = SP_ACTIVE_DESKTOP->getSelection()->reprList();
+                    for(std::vector<XML::Node*>::const_iterator i=reprlst.begin(); reprlst.end() != i; i++) {
+                        Inkscape::XML::Node * repr = *i;
                         if (repr->attribute("id")) {
                             id = repr->attribute("id");
                             break;
@@ -1010,7 +1006,7 @@ void Export::onExport ()
     if (batch_export.get_active ()) {
         // Batch export of selected objects
 
-        gint num = g_slist_length(const_cast<GSList *>(desktop->getSelection()->itemList()));
+        gint num = (desktop->getSelection()->itemList()).size();
         gint n = 0;
 
         if (num < 1) {
@@ -1024,8 +1020,9 @@ void Export::onExport ()
 
         gint export_count = 0;
 
-        for (GSList *i = const_cast<GSList *>(desktop->getSelection()->itemList()); i && !interrupted; i = i->next) {
-            SPItem *item = reinterpret_cast<SPItem *>(i->data);
+        std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
+        for(std::vector<SPItem*>::const_iterator i = itemlist.begin();i!=itemlist.end() && !interrupted ;i++){
+            SPItem *item = *i;
 
             prog_dlg->set_data("current", GINT_TO_POINTER(n));
             prog_dlg->set_data("total", GINT_TO_POINTER(num));
@@ -1063,13 +1060,13 @@ void Export::onExport ()
                                               _("Exporting file <b>%s</b>..."), safeFile), desktop);
                     MessageCleaner msgFlashCleanup(desktop->messageStack()->flashF(Inkscape::IMMEDIATE_MESSAGE,
                                                    _("Exporting file <b>%s</b>..."), safeFile), desktop);
-
+                    std::vector<SPItem*> x;
                     if (!sp_export_png_file (doc, path.c_str(),
                                              *area, width, height, dpi, dpi,
                                              nv->pagecolor,
                                              onProgressCallback, (void*)prog_dlg,
                                              TRUE,  // overwrite without asking
-                                             hide ? const_cast<GSList *>(desktop->getSelection()->itemList()) : NULL
+                                             hide ? (desktop->getSelection()->itemList()) : x
                                             )) {
                         gchar * error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
 
@@ -1153,12 +1150,13 @@ void Export::onExport ()
         prog_dlg->set_data("total", GINT_TO_POINTER(0));
 
         /* Do export */
+        std::vector<SPItem*> x;
         ExportResult status = sp_export_png_file(desktop->getDocument(), path.c_str(),
                               Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
                               nv->pagecolor,
                               onProgressCallback, (void*)prog_dlg,
                               FALSE,
-                              hide ? const_cast<GSList *>(desktop->getSelection()->itemList()) : NULL
+                              hide ? (desktop->getSelection()->itemList()) : x
                                                 );
         if (status == EXPORT_ERROR) {
             gchar * safeFile = Inkscape::IO::sanitizeString(path.c_str());
@@ -1224,7 +1222,7 @@ void Export::onExport ()
             break;
         }
         case SELECTION_SELECTION: {
-            const GSList * reprlst;
+        	std::vector<XML::Node*> reprlst;
             SPDocument * doc = SP_ACTIVE_DOCUMENT;
             bool modified = false;
 
@@ -1232,8 +1230,8 @@ void Export::onExport ()
             DocumentUndo::setUndoSensitive(doc, false);
             reprlst = desktop->getSelection()->reprList();
 
-            for(; reprlst != NULL; reprlst = reprlst->next) {
-                Inkscape::XML::Node * repr = static_cast<Inkscape::XML::Node *>(reprlst->data);
+            for(std::vector<Inkscape::XML::Node*>::const_iterator i=reprlst.begin(); reprlst.end() != i; i++) {
+                Inkscape::XML::Node * repr = *i;
                 const gchar * temp_string;
                 Glib::ustring dir = Glib::path_get_dirname(filename.c_str());
                 const gchar* docURI=SP_ACTIVE_DOCUMENT->getURI();

@@ -24,10 +24,6 @@
 #include <cstring>
 #include <string>
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include "widgets/swatch-selector.h"
 #include "sp-pattern.h"
 #include <glibmm/i18n.h>
@@ -35,10 +31,10 @@
 #include "widgets/widget-sizes.h"
 #include "xml/repr.h"
 
-#include "sp-color-notebook.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-mesh.h"
+#include "sp-stop.h"
 /* fixme: Move it from dialogs to here */
 #include "gradient-selector.h"
 #include <inkscape.h>
@@ -51,6 +47,7 @@
 #include "io/sys.h"
 #include "helper/stock-items.h"
 #include "ui/icon-names.h"
+#include "ui/widget/color-notebook.h"
 
 #include "paint-selector.h"
 
@@ -61,6 +58,7 @@
 #include <gtk/gtk.h>
 
 using Inkscape::Widgets::SwatchSelector;
+using Inkscape::UI::SelectedColor;
 
 enum {
     MODE_CHANGED,
@@ -97,8 +95,7 @@ static gchar const* modeStrings[] = {
     "MODE_EMPTY",
     "MODE_MULTIPLE",
     "MODE_NONE",
-    "MODE_COLOR_RGB",
-    "MODE_COLOR_CMYK",
+    "MODE_SOLID_COLOR",
     "MODE_GRADIENT_LINEAR",
     "MODE_GRADIENT_RADIAL",
     "MODE_PATTERN",
@@ -221,7 +218,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
     psel->none = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-none"),
                                                     SPPaintSelector::MODE_NONE, _("No paint"));
     psel->solid = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-solid"),
-                                                     SPPaintSelector::MODE_COLOR_RGB, _("Flat color"));
+                                                     SPPaintSelector::MODE_SOLID_COLOR, _("Flat color"));
     psel->gradient = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-gradient-linear"),
                                                         SPPaintSelector::MODE_GRADIENT_LINEAR, _("Linear gradient"));
     psel->radial = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON("paint-gradient-radial"),
@@ -295,8 +292,13 @@ sp_paint_selector_init(SPPaintSelector *psel)
 
 
     /* Last used color */
-    psel->color.set( 0.0, 0.0, 0.0 );
-    psel->alpha = 1.0;
+    psel->selected_color = new SelectedColor;
+    psel->updating_color = false;
+
+    psel->selected_color->signal_grabbed.connect(sigc::mem_fun(psel, &SPPaintSelector::onSelectedColorGrabbed));
+    psel->selected_color->signal_dragged.connect(sigc::mem_fun(psel, &SPPaintSelector::onSelectedColorDragged));
+    psel->selected_color->signal_released.connect(sigc::mem_fun(psel, &SPPaintSelector::onSelectedColorReleased));
+    psel->selected_color->signal_changed.connect(sigc::mem_fun(psel, &SPPaintSelector::onSelectedColorChanged));
 }
 
 static void sp_paint_selector_dispose(GObject *object)
@@ -305,6 +307,11 @@ static void sp_paint_selector_dispose(GObject *object)
 
     // clean up our long-living pattern menu
     g_object_set_data(G_OBJECT(psel),"patternmenu",NULL);
+
+    if (psel->selected_color) {
+        delete psel->selected_color;
+        psel->selected_color = NULL;
+    }
 
     if ((G_OBJECT_CLASS(sp_paint_selector_parent_class))->dispose)
         (G_OBJECT_CLASS(sp_paint_selector_parent_class))->dispose(object);
@@ -399,8 +406,7 @@ void SPPaintSelector::setMode(Mode mode)
             case MODE_NONE:
                 sp_paint_selector_set_mode_none(this);
                 break;
-            case MODE_COLOR_RGB:
-            case MODE_COLOR_CMYK:
+            case MODE_SOLID_COLOR:
                 sp_paint_selector_set_mode_color(this, mode);
                 break;
             case MODE_GRADIENT_LINEAR:
@@ -441,7 +447,6 @@ void SPPaintSelector::setFillrule(FillRule fillrule)
 void SPPaintSelector::setColorAlpha(SPColor const &color, float alpha)
 {
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
-    SPColorSelector *csel = 0;
 /*
     guint32 rgba = 0;
 
@@ -458,12 +463,13 @@ void SPPaintSelector::setColorAlpha(SPColor const &color, float alpha)
 #ifdef SP_PS_VERBOSE
         g_print("PaintSelector set RGBA\n");
 #endif
-        setMode(MODE_COLOR_RGB);
+        setMode(MODE_SOLID_COLOR);
     }
 
-    csel = reinterpret_cast<SPColorSelector*>(g_object_get_data(G_OBJECT(selector), "color-selector"));
+    updating_color = true;
+    selected_color->setColorAlpha(color, alpha);
+    updating_color = false;
     //rgba = color.toRGBA32( alpha );
-    csel->base->setColorAlpha( color, alpha );
 }
 
 void SPPaintSelector::setSwatch(SPGradient *vector )
@@ -544,11 +550,7 @@ void SPPaintSelector::getGradientProperties( SPGradientUnits &units, SPGradientS
  */
 void SPPaintSelector::getColorAlpha(SPColor &color, gfloat &alpha) const
 {
-    SPColorSelector *csel;
-
-    csel = reinterpret_cast<SPColorSelector*>(g_object_get_data(G_OBJECT(selector), "color-selector"));
-
-    csel->base->getColorAlpha( color, alpha );
+    selected_color->colorAlpha(color, alpha);
 
     g_assert( ( 0.0 <= alpha )
               && ( alpha <= 1.0 ) );
@@ -584,6 +586,9 @@ sp_paint_selector_clear_frame(SPPaintSelector *psel)
 
     if (psel->selector) {
 
+        //This is a hack to work around GtkNotebook bug in ColorSelector. Is sends signal switch-page on destroy
+        //The widget is hidden firts so it can recognize that it should not process signals from notebook child
+        gtk_widget_set_visible(psel->selector, false);
         gtk_widget_destroy(psel->selector);
         psel->selector = NULL;
     }
@@ -636,69 +641,82 @@ sp_paint_selector_set_mode_none(SPPaintSelector *psel)
 
 /* Color paint */
 
-static void sp_paint_selector_color_grabbed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
-{
-    g_signal_emit(G_OBJECT(psel), psel_signals[GRABBED], 0);
+void SPPaintSelector::onSelectedColorGrabbed() {
+    g_signal_emit(G_OBJECT(this), psel_signals[GRABBED], 0);
 }
 
-static void sp_paint_selector_color_dragged(SPColorSelector * /*csel*/, SPPaintSelector *psel)
-{
-    g_signal_emit(G_OBJECT(psel), psel_signals[DRAGGED], 0);
+void SPPaintSelector::onSelectedColorDragged() {
+    if (updating_color) {
+        return;
+    }
+    g_signal_emit(G_OBJECT(this), psel_signals[DRAGGED], 0);
 }
 
-static void sp_paint_selector_color_released(SPColorSelector * /*csel*/, SPPaintSelector *psel)
-{
-    g_signal_emit(G_OBJECT(psel), psel_signals[RELEASED], 0);
+void SPPaintSelector::onSelectedColorReleased() {
+    g_signal_emit(G_OBJECT(this), psel_signals[RELEASED], 0);
 }
 
-static void
-sp_paint_selector_color_changed(SPColorSelector *csel, SPPaintSelector *psel)
-{
-    csel->base->getColorAlpha( psel->color, psel->alpha );
+void SPPaintSelector::onSelectedColorChanged() {
+    if (updating_color) {
+        return;
+    }
 
-    g_signal_emit(G_OBJECT(psel), psel_signals[CHANGED], 0);
+    if (mode == MODE_SOLID_COLOR) {
+        g_signal_emit(G_OBJECT(this), psel_signals[CHANGED], 0);
+    } else {
+        g_warning("SPPaintSelector::onSelectedColorChanged(): selected color changed while not in color selection mode");
+    }
 }
 
 static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelector::Mode /*mode*/)
 {
-    GtkWidget *csel;
+    using Inkscape::UI::Widget::ColorNotebook;
+
+    if ((psel->mode == SPPaintSelector::MODE_SWATCH) 
+            || (psel->mode == SPPaintSelector::MODE_GRADIENT_LINEAR)
+            || (psel->mode == SPPaintSelector::MODE_GRADIENT_RADIAL) ) {
+        SPGradientSelector *gsel = getGradientFromData(psel);
+        if (gsel) {
+            SPGradient *gradient = gsel->getVector();
+
+            // Gradient can be null if object paint is changed externally (ie. with a color picker tool)
+            if (gradient)
+            {
+                SPColor color = gradient->getFirstStop()->specified_color;
+                float alpha = gradient->getFirstStop()->opacity;
+                psel->selected_color->setColorAlpha(color, alpha, false);
+            }
+        }
+    }
 
     sp_paint_selector_set_style_buttons(psel, psel->solid);
     gtk_widget_set_sensitive(psel->style, TRUE);
 
-    if ((psel->mode == SPPaintSelector::MODE_COLOR_RGB) || (psel->mode == SPPaintSelector::MODE_COLOR_CMYK)) {
+    if ((psel->mode == SPPaintSelector::MODE_SOLID_COLOR)) {
         /* Already have color selector */
-        csel = GTK_WIDGET(g_object_get_data(G_OBJECT(psel->selector), "color-selector"));
+        // Do nothing
     } else {
 
         sp_paint_selector_clear_frame(psel);
         /* Create new color selector */
         /* Create vbox */
 #if GTK_CHECK_VERSION(3,0,0)
-        GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
-        gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
+    GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
 #else
         GtkWidget *vb = gtk_vbox_new(FALSE, 4);
 #endif
         gtk_widget_show(vb);
 
         /* Color selector */
-        csel = sp_color_selector_new( SP_TYPE_COLOR_NOTEBOOK );
-        gtk_widget_show(csel);
-        g_object_set_data(G_OBJECT(vb), "color-selector", csel);
-        gtk_box_pack_start(GTK_BOX(vb), csel, TRUE, TRUE, 0);
-        g_signal_connect(G_OBJECT(csel), "grabbed", G_CALLBACK(sp_paint_selector_color_grabbed), psel);
-        g_signal_connect(G_OBJECT(csel), "dragged", G_CALLBACK(sp_paint_selector_color_dragged), psel);
-        g_signal_connect(G_OBJECT(csel), "released", G_CALLBACK(sp_paint_selector_color_released), psel);
-        g_signal_connect(G_OBJECT(csel), "changed", G_CALLBACK(sp_paint_selector_color_changed), psel);
+        Gtk::Widget *color_selector = Gtk::manage(new ColorNotebook(*(psel->selected_color)));
+        color_selector->show();
+        gtk_box_pack_start(GTK_BOX(vb), color_selector->gobj(), TRUE, TRUE, 0);
+
         /* Pack everything to frame */
         gtk_container_add(GTK_CONTAINER(psel->frame), vb);
 
         psel->selector = vb;
-
-        /* Set color */
-        SP_COLOR_SELECTOR( csel )->base->setColorAlpha( psel->color, psel->alpha );
-
     }
 
     gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Flat color</b>"));
@@ -710,22 +728,22 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
 
 /* Gradient */
 
-static void sp_paint_selector_gradient_grabbed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
+static void sp_paint_selector_gradient_grabbed(SPGradientSelector * /*csel*/, SPPaintSelector *psel)
 {
     g_signal_emit(G_OBJECT(psel), psel_signals[GRABBED], 0);
 }
 
-static void sp_paint_selector_gradient_dragged(SPColorSelector * /*csel*/, SPPaintSelector *psel)
+static void sp_paint_selector_gradient_dragged(SPGradientSelector * /*csel*/, SPPaintSelector *psel)
 {
     g_signal_emit(G_OBJECT(psel), psel_signals[DRAGGED], 0);
 }
 
-static void sp_paint_selector_gradient_released(SPColorSelector * /*csel*/, SPPaintSelector *psel)
+static void sp_paint_selector_gradient_released(SPGradientSelector * /*csel*/, SPPaintSelector *psel)
 {
     g_signal_emit(G_OBJECT(psel), psel_signals[RELEASED], 0);
 }
 
-static void sp_paint_selector_gradient_changed(SPColorSelector * /*csel*/, SPPaintSelector *psel)
+static void sp_paint_selector_gradient_changed(SPGradientSelector * /*csel*/, SPPaintSelector *psel)
 {
     g_signal_emit(G_OBJECT(psel), psel_signals[CHANGED], 0);
 }
@@ -828,7 +846,7 @@ ink_pattern_list_get (SPDocument *source)
     GSList *pl = NULL;
     GSList const *patterns = source->getResourceList("pattern");
     for (GSList *l = const_cast<GSList *>(patterns); l != NULL; l = l->next) {
-        if (SP_PATTERN(l->data) == pattern_getroot(SP_PATTERN(l->data))) {  // only if this is a root pattern
+        if (SP_PATTERN(l->data) == SP_PATTERN(l->data)->rootPattern()) {  // only if this is a root pattern
             pl = g_slist_prepend(pl, l->data);
         }
     }
@@ -1148,7 +1166,7 @@ SPPattern *SPPaintSelector::getPattern()
         }
         g_free(paturn);
     } else {
-        pat = pattern_getroot(SP_PATTERN(patid));
+        pat = SP_PATTERN(patid)->rootPattern();
     }
 
     if (pat && !SP_IS_PATTERN(pat)) {
@@ -1255,7 +1273,7 @@ SPPaintSelector::Mode SPPaintSelector::getModeForStyle(SPStyle const & style, Fi
         }
     } else if ( target.isColor() ) {
         // TODO this is no longer a valid assertion:
-        mode = MODE_COLOR_RGB; // so far only rgb can be read from svg
+        mode = MODE_SOLID_COLOR; // so far only rgb can be read from svg
     } else if ( target.isNone() ) {
         mode = MODE_NONE;
     } else {

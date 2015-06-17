@@ -162,11 +162,17 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
         fontlister->fill_css( css );
 
         SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
-        sp_desktop_set_style (desktop, css, true, true); // Results in selection change called twice.
+        if( desktop->getSelection()->isEmpty() ) {
+            // Update default
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->mergeStyle("/tools/text/style", css);
+        } else {
+            // If there is a selection, update
+            sp_desktop_set_style (desktop, css, true, true); // Results in selection change called twice.
+            DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
+                               _("Text: Change font family"));
+        }
         sp_repr_css_attr_unref (css);
-
-        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
-                       _("Text: Change font family"));
     }
 
     // unfreeze
@@ -366,9 +372,10 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 
     // move the x of all texts to preserve the same bbox
     Inkscape::Selection *selection = desktop->getSelection();
-    for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
-        if (SP_IS_TEXT(SP_ITEM(items->data))) {
-            SPItem *item = SP_ITEM(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        if (SP_IS_TEXT(*i)) {
+            SPItem *item = *i;
 
             unsigned writing_mode = item->style->writing_mode.value;
             // below, variable names suggest horizontal move, but we check the writing direction
@@ -517,11 +524,11 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     // Until deprecated sodipodi:linespacing purged:
     Inkscape::Selection *selection = desktop->getSelection();
-    GSList const *items = selection->itemList();
     bool modmade = false;
-    for (; items != NULL; items = items->next) {
-        if (SP_IS_TEXT (items->data)) {
-            SP_OBJECT(items->data)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        if (SP_IS_TEXT (*i)) {
+            (*i)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
             modmade = true;
         }
     }
@@ -863,12 +870,11 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     // Only flowed text can be justified, only normal text can be kerned...
     // Find out if we have flowed text now so we can use it several places
     gboolean isFlow = false;
-    for (GSList const *items = SP_ACTIVE_DESKTOP->getSelection()->itemList();
-         items != NULL;
-         items = items->next) {
+    std::vector<SPItem*> itemlist=SP_ACTIVE_DESKTOP->getSelection()->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
         // const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
         // std::cout << "    " << id << std::endl;
-        if( SP_IS_FLOWTEXT(SP_ITEM(items->data))) {
+        if( SP_IS_FLOWTEXT(*i)) {
             isFlow = true;
             // std::cout << "   Found flowed text" << std::endl;
             break;
@@ -1153,14 +1159,14 @@ static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*p
   //std::cout << "text_toolbox_missing_font_cb: selecting: " << family << std::endl;
 
   // Get all items with matching font-family set (not inherited!).
-  GSList *selectList = NULL;
+  std::vector<SPItem*> selectList;
 
   SPDesktop *desktop = SP_ACTIVE_DESKTOP;
   SPDocument *document = desktop->getDocument();
-  GSList *allList = get_all_items(NULL, document->getRoot(), desktop, false, false, true, NULL);
-  for (GSList *i = allList; i != NULL; i = i->next) {
-
-    SPItem *item = SP_ITEM(i->data);
+  std::vector<SPItem*> x,y;
+  std::vector<SPItem*> allList = get_all_items(x, document->getRoot(), desktop, false, false, true, y);
+  for(std::vector<SPItem*>::const_reverse_iterator i=allList.rbegin();i!=allList.rend();i++){
+      SPItem *item = *i;
     SPStyle *style = item->style;
 
     if (style) {
@@ -1177,7 +1183,7 @@ static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*p
 
       if (family_style.compare( family ) == 0 ) {
         //std::cout << "   found: " << item->getId() << std::endl;
-	selectList = g_slist_prepend (selectList, item);
+	selectList.push_back(item);
       }
     }
   }

@@ -112,7 +112,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _opposite_for_bboxpoints(Geom::Point(0,0)),
     _origin_for_specpoints(Geom::Point(0,0)),
     _origin_for_bboxpoints(Geom::Point(0,0)),
-    _stamp_cache(NULL),
+    _stamp_cache(std::vector<SPItem*>()),
     _message_context(desktop->messageStack()),
     _bounding_box_prefs_observer(*this)
 {
@@ -239,8 +239,9 @@ void Inkscape::SelTrans::setCenter(Geom::Point const &p)
     _center_is_set = true;
 
     // Write the new center position into all selected items
-    for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
-        SPItem *it = SP_ITEM(l->data);
+    std::vector<SPItem*> items=_desktop->selection->itemList();
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+        SPItem *it = SP_ITEM(*iter);
         it->setCenter(p);
         // only set the value; updating repr and document_done will be done once, on ungrab
     }
@@ -268,8 +269,9 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         return;
     }
 
-    for (GSList const *l = selection->itemList(); l; l = l->next) {
-        SPItem *it = reinterpret_cast<SPItem*>(sp_object_ref(SP_ITEM(l->data), NULL));
+    std::vector<SPItem*> items=_desktop->selection->itemList();
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+        SPItem *it = static_cast<SPItem*>(sp_object_ref(*iter, NULL));
         _items.push_back(it);
         _items_const.push_back(it);
         _items_affines.push_back(it->i2dt_affine());
@@ -370,7 +372,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     }
 
     _updateHandles();
-    g_return_if_fail(_stamp_cache == NULL);
+    g_return_if_fail(_stamp_cache.empty());
 }
 
 void Inkscape::SelTrans::transform(Geom::Affine const &rel_affine, Geom::Point const &norm)
@@ -432,10 +434,8 @@ void Inkscape::SelTrans::ungrab()
         for (int i = 0; i < 4; i++)
             sp_canvas_item_hide(_l[i]);
     }
-
-    if (_stamp_cache) {
-        g_slist_free(_stamp_cache);
-        _stamp_cache = NULL;
+    if(!_stamp_cache.empty()){
+        _stamp_cache.clear();
     }
 
     _message_context.clear();
@@ -491,8 +491,9 @@ void Inkscape::SelTrans::ungrab()
 
         if (_center_is_set) {
             // we were dragging center; update reprs and commit undoable action
-            for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
-                SPItem *it = SP_ITEM(l->data);
+        	std::vector<SPItem*> items=_desktop->selection->itemList();
+            for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+                SPItem *it = *iter;
                 it->updateRepr();
             }
             DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
@@ -515,26 +516,25 @@ void Inkscape::SelTrans::stamp()
     Inkscape::Selection *selection = _desktop->getSelection();
 
     bool fixup = !_grabbed;
-    if ( fixup && _stamp_cache ) {
+    if ( fixup && !_stamp_cache.empty() ) {
         // TODO - give a proper fix. Simple temporary work-around for the grab() issue
-        g_slist_free(_stamp_cache);
-        _stamp_cache = NULL;
+        _stamp_cache.clear();
     }
 
     /* stamping mode */
     if (!_empty) {
-        GSList *l;
-        if (_stamp_cache) {
+    	std::vector<SPItem*> l;
+        if (!_stamp_cache.empty()) {
             l = _stamp_cache;
         } else {
             /* Build cache */
-            l  = g_slist_copy((GSList *) selection->itemList());
-            l  = g_slist_sort(l, (GCompareFunc) sp_object_compare_position);
+            l = selection->itemList();
+            sort(l.begin(),l.end(),sp_object_compare_position_bool);
             _stamp_cache = l;
         }
 
-        while (l) {
-            SPItem *original_item = SP_ITEM(l->data);
+        for(std::vector<SPItem*>::const_iterator x=l.begin();x!=l.end();x++) {
+            SPItem *original_item = *x;
             Inkscape::XML::Node *original_repr = original_item->getRepr();
 
             // remember the position of the item
@@ -568,16 +568,14 @@ void Inkscape::SelTrans::stamp()
             }
 
             Inkscape::GC::release(copy_repr);
-            l = l->next;
         }
         DocumentUndo::done(_desktop->getDocument(), SP_VERB_CONTEXT_SELECT,
                            _("Stamp"));
     }
 
-    if ( fixup && _stamp_cache ) {
+    if ( fixup && !_stamp_cache.empty() ) {
         // TODO - give a proper fix. Simple temporary work-around for the grab() issue
-        g_slist_free(_stamp_cache);
-        _stamp_cache = NULL;
+        _stamp_cache.clear();
     }
 }
 
@@ -712,8 +710,9 @@ void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHa
         case HANDLE_CENTER:
             if (state & GDK_SHIFT_MASK) {
                 // Unset the  center position for all selected items
-                for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
-                    SPItem *it = SP_ITEM(l->data);
+            	std::vector<SPItem*> items=_desktop->selection->itemList();
+                for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+                    SPItem *it = *iter;
                     it->unsetCenter();
                     it->updateRepr();
                     _center_is_set = false;  // center has changed
@@ -1283,7 +1282,7 @@ gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
     // items will share a single center. While dragging that single center, it should never snap to the
     // centers of any of the selected objects. Therefore we will have to pass the list of selected items
     // to the snapper, to avoid self-snapping of the rotation center
-    GSList *items = (GSList *) const_cast<Selection *>(_selection)->itemList();
+	std::vector<SPItem*> items = const_cast<Selection *>(_selection)->itemList();
     SnapManager &m = _desktop->namedview->snap_manager;
     m.setup(_desktop);
     m.setRotationCenterSource(items);

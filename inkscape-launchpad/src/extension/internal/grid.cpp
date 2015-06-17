@@ -15,10 +15,6 @@
 # include <config.h>
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/box.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/spinbutton.h>
@@ -190,13 +186,10 @@ Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View
 {
     SPDocument * current_document = view->doc();
 
-    using Inkscape::Util::GSListConstIterator;
-
-    // FIXME very unsafe cast
-    GSListConstIterator<SPItem *> selected = ((SPDesktop *)view)->getSelection()->itemList();
+    std::vector<SPItem*> selected = ((SPDesktop *)view)->getSelection()->itemList();
     Inkscape::XML::Node * first_select = NULL;
-    if (selected != NULL) {
-        first_select = (*selected)->getRepr();
+    if (!selected.empty()) {
+        first_select = selected[0]->getRepr();
     }
 
     return module->autogui(current_document, first_select, changeSignal);

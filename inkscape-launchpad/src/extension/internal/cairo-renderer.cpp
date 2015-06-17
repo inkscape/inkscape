@@ -294,14 +294,12 @@ static void sp_group_render(SPGroup *group, CairoRenderContext *ctx)
     CairoRenderer *renderer = ctx->getRenderer();
     TRACE(("sp_group_render opacity: %f\n", SP_SCALE24_TO_FLOAT(item->style->opacity.value)));
 
-    GSList *l = g_slist_reverse(group->childList(false));
-    while (l) {
-        SPObject *o = reinterpret_cast<SPObject *>(l->data);
-        SPItem *item = dynamic_cast<SPItem *>(o);
+    std::vector<SPObject*> l(group->childList(false));
+    for(std::vector<SPObject*>::const_iterator x = l.begin(); x!= l.end(); x++){
+        SPItem *item = dynamic_cast<SPItem*>(*x);
         if (item) {
             renderer->renderItem(ctx, item);
         }
-        l = g_slist_remove (l, o);
     }
 }
 

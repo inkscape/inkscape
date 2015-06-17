@@ -14,8 +14,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
 #include <2geom/forward.h>
+
+
 class SPDocument;
 
 enum ExportResult {
@@ -33,12 +34,12 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
 				double x0, double y0, double x1, double y1,
 				unsigned long int width, unsigned long int height, double xdpi, double ydpi,
 				unsigned long bgcolor,
-				unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, GSList *items_only = NULL);
+				unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, const std::vector<SPItem*> &items_only = std::vector<SPItem*>());
 
 ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
 				Geom::Rect const &area,
 				unsigned long int width, unsigned long int height, double xdpi, double ydpi,
 				unsigned long bgcolor,
-				unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, GSList *items_only = NULL);
+				unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, const std::vector<SPItem*> &items_only = std::vector<SPItem*>());
 
 #endif // SEEN_SP_PNG_WRITE_H

@@ -427,7 +427,13 @@ PathParam::paste_param_path(const char *svgd)
     if (svgd && *svgd) {
         // remove possible link to path
         remove_link();
-
+        SPItem * item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
+        if (item != NULL) {
+            Geom::PathVector path_clipboard =  sp_svg_read_pathv(svgd);
+            path_clipboard *= item->i2doc_affine().inverse();
+            svgd = sp_svg_write_path( path_clipboard );
+        }
+        
         param_write_to_repr(svgd);
         signal_path_pasted.emit();
     }

@@ -44,13 +44,22 @@
 
 using Inkscape::DocumentUndo;
 
+
+inline bool less_than_items(SPItem const *first, SPItem const *second)
+{
+    return sp_repr_compare_position(first->getRepr(),
+                                    second->getRepr())<0;
+}
+
 void
 sp_selected_path_combine(SPDesktop *desktop)
 {
     Inkscape::Selection *selection = desktop->getSelection();
     SPDocument *doc = desktop->getDocument();
+
+    std::vector<SPItem*> items(selection->itemList());
     
-    if (g_slist_length((GSList *) selection->itemList()) < 1) {
+    if (items.size() < 1) {
         desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to combine."));
         return;
     }
@@ -59,28 +68,23 @@ sp_selected_path_combine(SPDesktop *desktop)
     // set "busy" cursor
     desktop->setWaitingCursor();
 
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
-
     items = sp_degroup_list (items); // descend into any groups in selection
 
-    GSList *to_paths = NULL;
-    for (GSList *i = items; i != NULL; i = i->next) {
-        SPItem *item = (SPItem *) i->data;
-        if (!dynamic_cast<SPPath *>(item) && !dynamic_cast<SPGroup *>(item)) {
-            to_paths = g_slist_prepend(to_paths, item);
+    std::vector<SPItem*> to_paths;
+    for (std::vector<SPItem*>::const_reverse_iterator i = items.rbegin(); i != items.rend(); i++) {
+        if (!dynamic_cast<SPPath *>(*i) && !dynamic_cast<SPGroup *>(*i)) {
+            to_paths.push_back(*i);
         }
     }
-    GSList *converted = NULL;
-    bool did = sp_item_list_to_curves(to_paths, &items, &converted);
-    g_slist_free(to_paths);
-    for (GSList *i = converted; i != NULL; i = i->next)
-        items = g_slist_prepend(items, doc->getObjectByRepr((Inkscape::XML::Node*)(i->data)));
+    std::vector<Inkscape::XML::Node*> converted;
+    bool did = sp_item_list_to_curves(to_paths, items, converted);
+    for (std::vector<Inkscape::XML::Node*>::const_iterator i = converted.begin(); i != converted.end(); i++)
+        items.push_back((SPItem*)doc->getObjectByRepr(*i));
 
     items = sp_degroup_list (items); // converting to path may have added more groups, descend again
 
-    items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
-    items = g_slist_reverse(items);
-    assert(items); // cannot be NULL because of list length check at top of function
+    sort(items.begin(),items.end(),less_than_items);
+    assert(!items.empty()); // cannot be NULL because of list length check at top of function
 
     // remember the position, id, transform and style of the topmost path, they will be assigned to the combined one
     gint position = 0;
@@ -97,9 +101,9 @@ sp_selected_path_combine(SPDesktop *desktop)
         selection->clear();
     }
 
-    for (GSList *i = items; i != NULL; i = i->next) {  // going from top to bottom
+    for (std::vector<SPItem*>::const_reverse_iterator i = items.rbegin(); i != items.rend(); i++){
 
-        SPItem *item = (SPItem *) i->data;
+        SPItem *item = *i;
         SPPath *path = dynamic_cast<SPPath *>(item);
         if (!path) {
             continue;
@@ -136,7 +140,6 @@ sp_selected_path_combine(SPDesktop *desktop)
         }
     }
 
-    g_slist_free(items);
 
     if (did) {
         first->deleteObject(false);
@@ -200,11 +203,10 @@ sp_selected_path_break_apart(SPDesktop *desktop)
 
     bool did = false;
 
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
-         items != NULL;
-         items = items->next) {
+    std::vector<SPItem*> itemlist(selection->itemList());
+    for (std::vector<SPItem*>::const_iterator i = itemlist.begin(); i != itemlist.end(); i++){
 
-        SPItem *item = (SPItem *) items->data;
+        SPItem *item = *i;
 
         SPPath *path = dynamic_cast<SPPath *>(item);
         if (!path) {
@@ -241,7 +243,7 @@ sp_selected_path_break_apart(SPDesktop *desktop)
 
         curve->unref();
 
-        GSList *reprs = NULL;
+        std::vector<Inkscape::XML::Node*> reprs;
         for (GSList *l = list; l != NULL; l = l->next) {
             curve = (SPCurve *) l->data;
 
@@ -267,14 +269,12 @@ sp_selected_path_break_apart(SPDesktop *desktop)
             if (l == list)
                 repr->setAttribute("id", id);
 
-            reprs = g_slist_prepend (reprs, repr);
+            reprs.push_back(repr);
 
             Inkscape::GC::release(repr);
         }
-
         selection->setReprList(reprs);
 
-        g_slist_free(reprs);
         g_slist_free(list);
         g_free(style);
         g_free(path_effect);
@@ -307,18 +307,15 @@ sp_selected_path_to_curves(Inkscape::Selection *selection, SPDesktop *desktop, b
         desktop->setWaitingCursor();
     }
 
-    GSList *selected = g_slist_copy((GSList *) selection->itemList());
-    GSList *to_select = NULL;
+    std::vector<SPItem*> selected(selection->itemList());
+    std::vector<Inkscape::XML::Node*> to_select;
     selection->clear();
-    GSList *items = g_slist_copy(selected);
+    std::vector<SPItem*> items(selected);
 
-    did = sp_item_list_to_curves(items, &selected, &to_select);
+    did = sp_item_list_to_curves(items, selected, to_select);
 
-    g_slist_free (items);
     selection->setReprList(to_select);
     selection->addList(selected);
-    g_slist_free (to_select);
-    g_slist_free (selected);
 
     if (interactive && desktop) {
         desktop->clearWaitingCursor();
@@ -341,33 +338,24 @@ void sp_selected_to_lpeitems(SPDesktop *desktop)
         return;
     }
 
-    GSList *selected = g_slist_copy((GSList *) selection->itemList());
-    GSList *to_select = NULL;
+    std::vector<SPItem*> selected(selection->itemList());
+    std::vector<Inkscape::XML::Node*> to_select;
     selection->clear();
-    GSList *items = g_slist_copy(selected);
+    std::vector<SPItem*> items(selected);
 
-    sp_item_list_to_curves(items, &selected, &to_select, true);
 
-    g_slist_free(items);
-    items = 0;
+    sp_item_list_to_curves(items, selected, to_select, true);
+
     selection->setReprList(to_select);
     selection->addList(selected);
-    g_slist_free(to_select);
-    to_select = 0;
-    g_slist_free(selected);
-    selected = 0;
 }
 
 bool
-sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select, bool skip_all_lpeitems)
+sp_item_list_to_curves(const std::vector<SPItem*> &items, std::vector<SPItem*>& selected, std::vector<Inkscape::XML::Node*> &to_select, bool skip_all_lpeitems)
 {
     bool did = false;
-    
-    for (;
-         items != NULL;
-         items = items->next) {
-
-        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(items->data));
+    for (std::vector<SPItem*>::const_iterator i = items.begin(); i != items.end(); i++){
+        SPItem *item = *i;
         g_assert(item != NULL);
         SPDocument *document = item->document;
 
@@ -398,9 +386,9 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
             Inkscape::XML::Node *repr = box3d_convert_to_group(box)->getRepr();
             
             if (repr) {
-                *to_select = g_slist_prepend (*to_select, repr);
+                to_select.insert(to_select.begin(),repr);
                 did = true;
-                *selected = g_slist_remove (*selected, item);
+                selected.erase(remove(selected.begin(), selected.end(), item), selected.end());
             }
 
             continue;
@@ -408,17 +396,14 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
         
         if (group) {
             group->removeAllPathEffects(true);
-            GSList *item_list = sp_item_group_item_list(group);
+            std::vector<SPItem*> item_list = sp_item_group_item_list(group);
             
-            GSList *item_to_select = NULL;
-            GSList *item_selected = NULL;
+            std::vector<Inkscape::XML::Node*> item_to_select;
+            std::vector<SPItem*> item_selected;
             
-            if (sp_item_list_to_curves(item_list, &item_selected, &item_to_select))
+            if (sp_item_list_to_curves(item_list, item_selected, item_to_select))
                 did = true;
 
-            g_slist_free(item_list);
-            g_slist_free(item_to_select);
-            g_slist_free(item_selected);
 
             continue;
         }
@@ -428,7 +413,7 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
             continue;
 
         did = true;
-        *selected = g_slist_remove (*selected, item);
+        selected.erase(remove(selected.begin(), selected.end(), item), selected.end());
 
         // remember the position of the item
         gint pos = item->getRepr()->position();
@@ -470,7 +455,7 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
 
         /* Buglet: We don't re-add the (new version of the) object to the selection of any other
          * desktops where it was previously selected. */
-        *to_select = g_slist_prepend (*to_select, repr);
+        to_select.insert(to_select.begin(),repr);
         Inkscape::GC::release(repr);
     }
     
@@ -488,6 +473,9 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     if (dynamic_cast<SPText *>(item) || dynamic_cast<SPFlowtext *>(item)) {
         // Special treatment for text: convert each glyph to separate path, then group the paths
         Inkscape::XML::Node *g_repr = xml_doc->createElement("svg:g");
+
+        Glib::ustring original_text; // To save original text of accessibility.
+
         g_repr->setAttribute("transform", item->getRepr()->attribute("transform"));
         /* Mask */
         gchar *mask_str = (gchar *) item->getRepr()->attribute("mask");
@@ -508,6 +496,8 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
         Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
         do {
+            original_text += (gunichar)te_get_layout(item)->characterAt( iter );
+
             Inkscape::Text::Layout::iterator iter_next = iter;
             iter_next.nextGlyph(); // iter_next is one glyph ahead from iter
             if (iter == iter_next)
@@ -547,6 +537,11 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
             p_repr->setAttribute("style", style_str.c_str());
 
             g_repr->appendChild(p_repr);
+
+            // For accessibility, store original string
+            if( original_text.size() > 0 ) {
+                g_repr->setAttribute("aria-label", original_text.c_str() );
+            }
             Inkscape::GC::release(p_repr);
 
             if (iter == te_get_layout(item)->end())
@@ -612,9 +607,9 @@ void
 sp_selected_path_reverse(SPDesktop *desktop)
 {
     Inkscape::Selection *selection = desktop->getSelection();
-    GSList *items = (GSList *) selection->itemList();
+    std::vector<SPItem*> items = selection->itemList();
 
-    if (!items) {
+    if (items.empty()) {
         desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to reverse."));
         return;
     }
@@ -626,9 +621,9 @@ sp_selected_path_reverse(SPDesktop *desktop)
     bool did = false;
     desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Reversing paths..."));
 
-    for (GSList *i = items; i != NULL; i = i->next) {
+    for (std::vector<SPItem*>::const_iterator i = items.begin(); i != items.end(); i++){
 
-        SPPath *path = dynamic_cast<SPPath *>(static_cast<SPObject *>(i->data));
+        SPPath *path = dynamic_cast<SPPath *>(*i);
         if (!path) {
             continue;
         }

@@ -1,22 +1,25 @@
 Overview:
 
-libUEMF is a portable C99 implementation for reading/writing Enhanced Metafile (EMF)
-and Windows Metafile (WMF) files.  libUEMF avoids collisions with with Microsoft defined 
-functions and values, so portable programs which use it, and have a Windows version, do
-not require any conditional logic to separate the native GDI support from the WMF/EMF support
-proviced by libUEMF.  To accomplish this libUEMF does not implement GDI calls. Instead, 
-for each WMR/EMR record type, and each object type incorporated into such a record, it provides
-corresponding *_set, *_print, and *_swap functions.  (For WMF there are also *_get functions, see below.)
-For example, for the U_EMRBITBLT record there are corresponding functions:
-U_EMRBITBLT_set, U_EMRBITBLT_print,  and U_EMRBITBLT_swap. A few additional functions are provided for
-assembling the EMF in memory, debugging, and converting the EMF file to/from Little Endian representation.
-(EMF files' internal data representation is always Little Endian.)
+libUEMF is a portable C99 implementation for reading/writing Enhanced Metafile (EMF),
+Enhanced Metafile Format Plus (PMF), and Windows Metafile (WMF) files.  libUEMF
+avoids  collisions with Microsoft defined  functions and values, so portable programs
+which use  it and have a Windows version, do not require any conditional logic to
+separate the native GDI support from the WMF/EMF/PMF support proviced by libUEMF.  To
+accomplish this libUEMF does not implement GDI calls. Instead,  for each WMR/EMR/PMR
+record type, and each object type incorporated into such a record, it provides
+corresponding *_set, *_print, and *_swap functions.  For PMF and WMF there are also
+*_get functions, see below. For example, for the U_EMRBITBLT record there are
+corresponding functions: U_EMRBITBLT_set, U_EMRBITBLT_print,  and U_EMRBITBLT_swap. A
+few additional functions are provided for assembling the EMF in memory, debugging, and
+converting the EMF file to/from Little Endian representation. (EMF files' internal
+data representation is always Little Endian.)
 
-This code has been tested on 32 bit Ubuntu (LE), 32 bit Mingw, 64 bit Manriva, and 64 bit Solaris (BE).
+This code has been tested on 32 bit Ubuntu (LE), 32 bit Mingw, 64 bit Mageia, and 64
+bit Solaris (BE).
 
 libUEMF is released under the GPL 2 license, read the file 'COPYING' for more information
 
-Version 0.1.10, released January 15, 2014.
+Version 0.2.1, released April 23, 2015.
 
 To report bugs or provide feedback send email to David Mathog, mathog@caltech.edu.
 
@@ -76,7 +79,14 @@ uemf_endian.c     Contains the *_swap functions needed to rearrange bytes betwee
                   
 uemf_endian.h     Prototype for U_emf_endian() and definitions for Endian type of the local machine.
 
-
+uemf_safe.c       Contains the *_safe functions for EMF records, which verify that all 
+                  offsets and counts stay within the declared size of a record.  Also checks that 
+                  core record sizes are sane. U_emf_record_safe() is the only _safe function which 
+                  user code should call directly, and then ONLY after a previous call to 
+                  U_emf_record_sizeok(), which is in the endian file.
+                  
+uemf_safe.h       Prototype for U_emf_record_safe().
+                  .
 upmf.c            Contains the *_set and *_get functions needed to construct or read an EMF+ file.
                   Also contains auxilliary functions for debugging and constructing
                   EMF+ files in memory.
@@ -366,9 +376,69 @@ History
   (Note, version numbers in files represent the libUEMF release where it was last modified, so not
   all files will show the same version numbers in each release.)
 
+0.2.1.2015_04_23
+  Bug in safety check on EMREXTCREATEFONTINDIRECTW because it had alternative "standard" record sizes.
+  Changed warnings on unimplemented EMF record types encounterd in swap or safe from stdout to stderr.
+  Added memory checking for WMF polyline and polygon records, for the variable part and some others.
+  Note:  U_WMRCREATEREGION_get does not check that the variable part stays within the record.  Current
+    implementation seems to be broken since it does not show up in XP preview.
+0.2.0 2015_03_20
+  Added  UEMF _safe functions to better handle corrupt records, where variable sizes fields might
+    have been specified to read past the end of memory. These are records with offsets, arrays
+    with counts, and bitmaps.  Also any record which specifies a size smaller than the minimum
+    for that record type.
+  Added similar code for EMF+. 
+  These changed the API so the minor version number was bumped by 1.
+
+0.1.18 2015_01_15
+  Pierre-Francois Carpentier sent some EMF examples which used U_EMR_EXTSELECTCLIPRGN, which had
+  not previously been encountered and showed that the handling of regions was broken.
+  Added tests for U_EMRFILLRGN, U_EMRFRAMERGN, U_EMRFRAMERGN, U_EMREXTSELECTCLIPRGN to testbed_emf.
+
+0.1.18 2014_04_28
+  Fixed typo in testbed_wmf.c. "include,include" in one place should have been
+  "exclude,exclude".
+
+0.1.17 2014_04_25
+  Added text clipping tests to testbed_emf.c, testbed_wmf.c, and testbed_pmf.c.
+  Added option to omit clipping tests in testbed's.
+
+0.1.16 2014_04_14
+  Fixed bug in U_WMRRESTOREDC_set.
+  Added clipping tests to testbed_wmf.c.
+
+0.1.15 2014_04_04
+  Changed record flags for U_EMRSELECTCLIPPATH record, it consumes a path but does not ALTER (which
+     forced a premature draw.)
+  Added U_EMROFFSETCLIPRGN test to testbed_emf.c.
+  Changed location on dist drawing where clipping appears.
+
+0.1.14 2014_03_27
+  Fixed bug, in U_PMF_RECTN_set() in upmf.c.  Never tested.
+  Fixed a few potential bugs in upmf.c if a null pointer was passed for
+     certain function arguments.  (Previously unhandled cases.)
+  Fixed bug, operations setting variables that are never read along those
+     execution paths: upmf_print.c, uemf.c, uwmf.c, uemf_endian.cm upmf.c.
+  Fixed potential (but very unlikely) memory leaks in upmf.c and uemf_utf.c.
+  Added test of U_PMF_RECTN_set to testbed_pmf.c.
+  Changed U_wmr_names() and U_wmr_escnames() to const char* (from char*).
+  Changed method for suppressing unused parameter warnings.
+
+
+0.1.13 2014-03-21
+  Fixed bug, cutemf was messing up the object count (pens, brushes, etc.).
+  Added cutemf can now take ranges of lines.
+  Added testbed_emf generates clipping records for rect and path (but not region).
+
+0.1.12 2014-02-14
+  Documentation change, U_WMRCREATEPATTERNBRUSH is obsolete.
+  Changed wmf_finish() so that it accurately reflects the largest number of objects used, 
+     previously it showed the number of appends, which was much larger.
+
 0.1.11 2014-01-29
   Fixed bug in uwmf.c (wrong minimum record size on U_WMRTEXTOUT)
   Fixed bug in uwmf.c (U_WMRCREATEPATTERNBRUSH not right)
+  Fixed bug in uwmf_print.c (U_WMRTEXTOUT_print, x,y were reversed)
   Added error handling to uemf_utf.c for cases where src is a null pointer.
   Added a test of createpatternbrush to testlib_wmf
   

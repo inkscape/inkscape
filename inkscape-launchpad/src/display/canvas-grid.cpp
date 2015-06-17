@@ -17,10 +17,6 @@
 # include "config.h"
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
 
@@ -910,7 +906,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     gdouble const syg = floor ((buf->rect.top() - ow[Geom::Y]) / sw[Geom::Y]) * sw[Geom::Y] + ow[Geom::Y];
     gint const  ylinestart = round((syg - ow[Geom::Y]) / sw[Geom::Y]);
 
-    //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
+    // no_emphasize_when_zoomedout determines color (minor or major) when only major grid lines/dots shown.
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint32 _empcolor;
     bool no_emp_when_zoomed_out = prefs->getBool("/options/grids/no_emphasize_when_zoomedout", false);
@@ -926,6 +922,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     cairo_set_line_cap(buf->ct, CAIRO_LINE_CAP_SQUARE);
 
     if (!render_dotted) {
+        // Line grid
         gint ylinenum;
         gdouble y;
         for (y = syg, ylinenum = ylinestart; y < buf->rect.bottom(); y += sw[Geom::Y], ylinenum++) {
@@ -948,8 +945,23 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
             }
         }
     } else {
+        // Dotted grid
         gint ylinenum;
         gdouble y;
+
+        // alpha needs to be larger than in the line case to maintain a similar visual impact but
+        // setting it to the maximal value makes the dots dominant in some cases. Solution,
+        // increase the alpha by a factor of 4. This then allows some user adjustment.
+        guint32 _empdot = (_empcolor & 0xff) << 2;
+        if (_empdot > 0xff)
+            _empdot = 0xff;
+        _empdot += (_empcolor & 0xffffff00);
+
+        guint32 _colordot = (color & 0xff) << 2;
+        if (_colordot > 0xff)
+            _colordot = 0xff;
+        _colordot += (color & 0xffffff00);
+
         for (y = syg, ylinenum = ylinestart; y < buf->rect.bottom(); y += sw[Geom::Y], ylinenum++) {
             gint const iy = round(y);
 
@@ -961,13 +973,15 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
                      || (!scaled[Geom::Y] && (ylinenum % empspacing) != 0)
                      || ((scaled[Geom::X] || scaled[Geom::Y]) && no_emp_when_zoomed_out) )
                 {
-                    grid_dot (buf, ix, iy, color | (guint32)0x000000FF); // put alpha to max value
+                    // Minor point: dot only
+                    grid_dot (buf, ix, iy, _colordot); // | (guint32)0x000000FF); // put alpha to max value
                 } else {
+                    // Major point: small cross
                     gint const pitch = 1;
                     grid_dot (buf, ix-pitch, iy, _empcolor);
                     grid_dot (buf, ix+pitch, iy, _empcolor);
 
-                    grid_dot (buf, ix, iy, _empcolor | (guint32)0x000000FF);  // put alpha to max value
+                    grid_dot (buf, ix, iy, _empdot ); // | (guint32)0x000000FF);  // put alpha to max value
 
                     grid_dot (buf, ix, iy-pitch, _empcolor);
                     grid_dot (buf, ix, iy+pitch, _empcolor);

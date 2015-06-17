@@ -2,9 +2,15 @@ MESSAGE(STATUS "Creating build files in: ${CMAKE_CURRENT_BINARY_DIR}")
 
 IF(WIN32)
     SET(PACKAGE_LOCALE_DIR "locale")
-ELSEIF(WIN32)
+    set(SHARE_INSTALL "share" CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
+ELSE(WIN32)
     # TODO: check and change this to correct value:
     SET(PACKAGE_LOCALE_DIR "locale")
+
+  if(NOT SHARE_INSTALL)
+    set(SHARE_INSTALL "share" CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
+  endif(NOT SHARE_INSTALL)
+  mark_as_advanced(SHARE_INSTALL)
 ENDIF(WIN32)
 
 #SET(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)

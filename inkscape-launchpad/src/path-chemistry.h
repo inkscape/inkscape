@@ -33,7 +33,7 @@ void sp_selected_path_to_curves (Inkscape::Selection *selection, SPDesktop *desk
 void sp_selected_to_lpeitems(SPDesktop *desktop);
 Inkscape::XML::Node *sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy);
 void sp_selected_path_reverse (SPDesktop *desktop);
-bool sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select, bool skip_all_lpeitems = false);
+bool sp_item_list_to_curves(const std::vector<SPItem*> &items, std::vector<SPItem*> &selected, std::vector<Inkscape::XML::Node*> &to_select, bool skip_all_lpeitems = false);
 
 #endif // SEEN_PATH_CHEMISTRY_H
 

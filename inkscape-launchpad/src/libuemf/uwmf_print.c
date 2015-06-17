@@ -6,11 +6,11 @@
 
 /*
 File:      uwmf_print.c
-Version:   0.0.4
-Date:      05-FEB-2014
+Version:   0.0.6
+Date:      21-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -319,7 +319,7 @@ void scan_print(
     \param dh void pointer to DIB header
     A DIB header in an WMF may be either a BitmapCoreHeader or BitmapInfoHeader.
 */
-void dibheader_print(const void *dh){
+void dibheader_print(const char *dh, const char *blimit){
    uint32_t Size;
    memcpy(&Size, dh, 4); /* may not be aligned */
    if(Size == 0xC ){
@@ -330,7 +330,7 @@ void dibheader_print(const void *dh){
    }
    else {
        printf(" (BitmapInfoHeader) ");
-       bitmapinfo_print(dh); /* may not be aligned, called routine must handle it */
+       bitmapinfo_print(dh, blimit); /* may not be aligned, called routine must handle it */
    }
 }
 
@@ -922,7 +922,7 @@ void U_WMRSETDIBTODEV_print(const char *contents){
       printf("    Src X,Y:{%d,%d}\n", Src.x,  Src.y );
       printf("    W,H:%d,%d\n",       cwh.x,  cwh.y );
       printf("    Dst X,Y:{%d,%d}\n", Dst.x,  Dst.y );
-      printf("    DIB:");   dibheader_print(dib);   printf("\n");
+      printf("    DIB:");   dibheader_print(dib, dib+size);   printf("\n");
    }
 }
 
@@ -993,7 +993,7 @@ void U_WMRDIBBITBLT_print(const char *contents){
       printf("    Src X,Y:{%d,%d}\n", Src.x, Src.x );
       printf("    W,H:%d,%d\n",       cwh.x, cwh.y );
       printf("    Dst X,Y:{%d,%d}\n", Dst.x, Dst.y );
-      if(dib){  printf("    DIB:");   dibheader_print(dib);  printf("\n"); }
+      if(dib){  printf("    DIB:");   dibheader_print(dib, dib+size);  printf("\n"); }
       else {    printf("    DIB: none\n");                                 }
    }
 }
@@ -1009,7 +1009,7 @@ void U_WMRDIBSTRETCHBLT_print(const char *contents){
       printf("    Src X,Y:{%d,%d}\n", Src.x,  Src.x );
       printf("    Dst W,H:%d,%d\n",   cDst.x, cDst.y );
       printf("    Dst X,Y:{%d,%d}\n", Dst.x,  Dst.y );
-      if(dib){  printf("    DIB:");   dibheader_print(dib);  printf("\n"); }
+      if(dib){  printf("    DIB:");   dibheader_print(dib, dib+size);  printf("\n"); }
       else {    printf("    DIB: none\n");                                 }
    }
 }
@@ -1028,7 +1028,7 @@ void U_WMRDIBCREATEPATTERNBRUSH_print(const char *contents){
          printf("   Src:Bitmap16:");  bitmap16_print(Bm16); printf("\n");
       }
       else { /* from DIB */
-         printf("   Src:DIB:");       dibheader_print(dib); printf("\n");
+         printf("   Src:DIB:");       dibheader_print(dib, dib+size); printf("\n");
       }
    }
 }
@@ -1046,7 +1046,7 @@ void U_WMRSTRETCHDIB_print(const char *contents){
       printf("    Src X,Y:{%d,%d}\n", Src.x,  Src.x );
       printf("    Dst W,H:%d,%d\n",   cDst.x, cDst.y );
       printf("    Dst X,Y:{%d,%d}\n", Dst.x,  Dst.y );
-      if(dib){  printf("    DIB:");   dibheader_print(dib);  printf("\n"); }
+      if(dib){  printf("    DIB:");   dibheader_print(dib, dib+size);  printf("\n"); }
       else {    printf("    DIB: none\n");                                 }
    }
 }
@@ -1351,13 +1351,20 @@ int U_wmf_onerec_print(const char *contents, const char *blimit, int recnum, siz
 
     iType     = *(uint8_t *)(contents + offsetof(U_METARECORD, iType )  );
 
-#if 1
-   printf("%-30srecord:%5d type:%-4u offset:%8d rsize:%8u\n",
-      U_wmr_names(iType), recnum, iType, (int) off, (int) size);
-#else /* show record checksums, this is NOT portable, result changes with endian type, useful for debugging */
-   printf("%-30srecord:%5d type:%-4u offset:%8d size:%8u recchecksum:%u\n",
-      U_wmr_names(iType), recnum, iType, (int) off, (int) size, U_16_checksum((int16_t *)contents, size));
+    uint32_t crc;   
+#if U_BYTE_SWAP
+    //This is a Big Endian machine, WMF crc values must be calculated on Little Endian form
+    char *swapbuf=malloc(size);
+    if(!swapbuf)return(-1);
+    memcpy(swapbuf,contents,size);
+    U_wmf_endian(swapbuf,size,1,1);  // BE to LE
+    crc=lu_crc32(swapbuf,size);
+    free(swapbuf);
+#else 
+    crc=lu_crc32(contents,size);
 #endif
+    printf("%-30srecord:%5d type:%-4u offset:%8d rsize:%8u crc32:%8.8X\n",
+      U_wmr_names(iType), recnum, iType, (int) off, (int) size, crc);
 
     switch (iType)
     {

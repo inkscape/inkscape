@@ -1485,7 +1485,9 @@ void png_flush_base64stream(png_structp png_ptr)
  *
  */
 Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height,
-        GfxImageColorMap *color_map, int *mask_colors, bool alpha_only, bool invert_alpha) {
+                                              GfxImageColorMap *color_map, bool interpolate,
+                                              int *mask_colors, bool alpha_only,
+                                              bool invert_alpha) {
 
     // Create PNG write struct
     png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
@@ -1655,6 +1657,13 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
     Inkscape::XML::Node *image_node = _xml_doc->createElement("svg:image");
     sp_repr_set_svg_double(image_node, "width", 1);
     sp_repr_set_svg_double(image_node, "height", 1);
+    if( !interpolate ) {
+        SPCSSAttr *css = sp_repr_css_attr_new();
+        // This should be changed after CSS4 Images widely supported.
+        sp_repr_css_set_property(css, "image-rendering", "optimizeSpeed");
+        sp_repr_css_change(image_node, css, "style");
+        sp_repr_css_attr_unref(css);
+    }
 
     // PS/PDF images are placed via a transformation matrix, no preserveAspectRatio used
     image_node->setAttribute("preserveAspectRatio", "none");
@@ -1715,9 +1724,9 @@ Inkscape::XML::Node *SvgBuilder::_createMask(double width, double height) {
 }
 
 void SvgBuilder::addImage(GfxState * /*state*/, Stream *str, int width, int height,
-                          GfxImageColorMap *color_map, int *mask_colors) {
+                          GfxImageColorMap *color_map, bool interpolate, int *mask_colors) {
 
-     Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, mask_colors);
+     Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, interpolate, mask_colors);
      if (image_node) {
          _container->appendChild(image_node);
         Inkscape::GC::release(image_node);
@@ -1725,7 +1734,7 @@ void SvgBuilder::addImage(GfxState * /*state*/, Stream *str, int width, int heig
 }
 
 void SvgBuilder::addImageMask(GfxState *state, Stream *str, int width, int height,
-                              bool invert) {
+                              bool invert, bool interpolate) {
 
     // Create a rectangle
     Inkscape::XML::Node *rect = _xml_doc->createElement("svg:rect");
@@ -1742,7 +1751,8 @@ void SvgBuilder::addImageMask(GfxState *state, Stream *str, int width, int heigh
 
     // Scaling 1x1 surfaces might not work so skip setting a mask with this size
     if ( width > 1 || height > 1 ) {
-        Inkscape::XML::Node *mask_image_node = _createImage(str, width, height, NULL, NULL, true, invert);
+        Inkscape::XML::Node *mask_image_node =
+            _createImage(str, width, height, NULL, interpolate, NULL, true, invert);
         if (mask_image_node) {
             // Create the mask
             Inkscape::XML::Node *mask_node = _createMask(1.0, 1.0);
@@ -1762,13 +1772,13 @@ void SvgBuilder::addImageMask(GfxState *state, Stream *str, int width, int heigh
 }
 
 void SvgBuilder::addMaskedImage(GfxState * /*state*/, Stream *str, int width, int height,
-                                GfxImageColorMap *color_map,
+                                GfxImageColorMap *color_map, bool interpolate,
                                 Stream *mask_str, int mask_width, int mask_height,
-                                bool invert_mask) {
+                                bool invert_mask, bool mask_interpolate) {
 
     Inkscape::XML::Node *mask_image_node = _createImage(mask_str, mask_width, mask_height,
-                                                        NULL, NULL, true, invert_mask);
-    Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, NULL);
+                                          NULL, mask_interpolate, NULL, true, invert_mask);
+    Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, interpolate, NULL);
     if ( mask_image_node && image_node ) {
         // Create mask for the image
         Inkscape::XML::Node *mask_node = _createMask(1.0, 1.0);
@@ -1795,13 +1805,13 @@ void SvgBuilder::addMaskedImage(GfxState * /*state*/, Stream *str, int width, in
 }
     
 void SvgBuilder::addSoftMaskedImage(GfxState * /*state*/, Stream *str, int width, int height,
-                                    GfxImageColorMap *color_map,
+                                    GfxImageColorMap *color_map, bool interpolate,
                                     Stream *mask_str, int mask_width, int mask_height,
-                                    GfxImageColorMap *mask_color_map) {
+                                    GfxImageColorMap *mask_color_map, bool mask_interpolate) {
 
     Inkscape::XML::Node *mask_image_node = _createImage(mask_str, mask_width, mask_height,
-                                                        mask_color_map, NULL, true);
-    Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, NULL);
+                                                        mask_color_map, mask_interpolate, NULL, true);
+    Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, interpolate, NULL);
     if ( mask_image_node && image_node ) {
         // Create mask for the image
         Inkscape::XML::Node *mask_node = _createMask(1.0, 1.0);

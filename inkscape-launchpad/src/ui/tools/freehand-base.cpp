@@ -92,7 +92,7 @@ FreehandBase::FreehandBase(gchar const *const *cursor_shape, gint hot_x, gint ho
     , white_item(NULL)
     , white_curves(NULL)
     , white_anchors(NULL)
-    , overwriteCurve(NULL)
+    , overwrite_curve(NULL)
     , sa(NULL)
     , ea(NULL)
     , waiting_LPE_type(Inkscape::LivePathEffect::INVALID_LPE)
@@ -149,7 +149,7 @@ void FreehandBase::setup() {
     this->green_closed = FALSE;
 
     // Create start anchor alternative curve
-    this->overwriteCurve = new SPCurve();
+    this->overwrite_curve = new SPCurve();
 
     this->attach = TRUE;
     spdc_attach_selection(this, this->selection);
@@ -575,12 +575,12 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
         }
         if(prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 1 || 
             prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 2){
-            dc->overwriteCurve->append_continuous(c, 0.0625);
+            dc->overwrite_curve->append_continuous(c, 0.0625);
             c->unref();
-            dc->overwriteCurve->closepath_current();
+            dc->overwrite_curve->closepath_current();
             if(dc->sa){
                 dc->white_curves = g_slist_remove(dc->white_curves, dc->sa->curve);
-                dc->white_curves = g_slist_append(dc->white_curves, dc->overwriteCurve);
+                dc->white_curves = g_slist_append(dc->white_curves, dc->overwrite_curve);
             }
         }else{
             dc->sa->curve->append_continuous(c, 0.0625);
@@ -597,7 +597,7 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
         dc->white_curves = g_slist_remove(dc->white_curves, s);
         if(prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 1 || 
             prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 2){
-                s = dc->overwriteCurve;
+                s = dc->overwrite_curve;
         }
         if (dc->sa->start) {
             s = reverse_then_unref(s);

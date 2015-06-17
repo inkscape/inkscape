@@ -15,6 +15,10 @@
 # include "config.h"
 #endif
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
+#include <glibmm/threads.h>
+#endif
+
 #ifdef linux  // does the dollar sign need escaping when passed as string parameter?
 # define ESCAPE_DOLLAR_COMMANDLINE
 #endif
@@ -26,8 +30,7 @@
 #include "document-private.h"
 #include "sp-object.h"
 #include <color.h>
-#include "widgets/sp-color-selector.h"
-#include "widgets/sp-color-notebook.h"
+#include "ui/widget/color-notebook.h"
 
 #include "parameter.h"
 #include "bool.h"

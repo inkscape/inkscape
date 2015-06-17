@@ -87,8 +87,9 @@ void ms_read_selection( Inkscape::Selection *selection,
     bool first = true;
     ms_type = SP_MESH_TYPE_COONS;
     
-    for (GSList const* i = selection->itemList(); i; i = i->next) {
-        SPItem *item = SP_ITEM(i->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         SPStyle *style = item->style;
 
         if (style && (style->fill.isPaintserver())) {
@@ -213,8 +214,9 @@ void ms_get_dt_selected_gradient(Inkscape::Selection *selection, SPMesh *&ms_sel
 {
     SPMesh *gradient = 0;
 
-    for (GSList const* i = selection->itemList(); i; i = i->next) {
-         SPItem *item = SP_ITEM(i->data); // get the items gradient, not the getVector() version
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;// get the items gradient, not the getVector() version
          SPStyle *style = item->style;
          SPPaintServer *server = 0;
 

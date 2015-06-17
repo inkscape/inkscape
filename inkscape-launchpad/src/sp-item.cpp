@@ -349,17 +349,11 @@ void SPItem::lowerToBottom() {
     using Inkscape::Util::MutableList;
     using Inkscape::Util::reverse_list;
 
-    MutableList<SPObject &> bottom=find_last_if(
-        reverse_list<SPObject::SiblingIterator>(
-            parent->firstChild(), this
-        ),
-        MutableList<SPObject &>(),
-        &is_item
-    );
+    SPObject * bottom=parent->firstChild();
+    while(dynamic_cast<SPObject*>(bottom) && dynamic_cast<SPObject*>(bottom->next) && bottom!=this && !is_item(*(bottom->next))) bottom=bottom->next;
     if (bottom) {
-        ++bottom;
         Inkscape::XML::Node *ref = ( bottom ? bottom->getRepr() : NULL );
-        getRepr()->parent()->changeOrder(getRepr(), ref);
+        parent->getRepr()->changeOrder(getRepr(), ref);
     }
 }
 
@@ -367,20 +361,20 @@ void SPItem::moveTo(SPItem *target, bool intoafter) {
 
     Inkscape::XML::Node *target_ref = ( target ? target->getRepr() : NULL );
     Inkscape::XML::Node *our_ref = getRepr();
-    gboolean first = FALSE;
+
+    if (!target_ref) {
+        // Assume move to the "first" in the top node, find the top node
+        intoafter = false;
+        SPObject* bottom = this->document->getObjectByRepr(our_ref->root())->firstChild();
+        while(!dynamic_cast<SPItem*>(bottom->next)){
+        	bottom=bottom->next;
+        }
+        target_ref = bottom->getRepr();
+    }
 
     if (target_ref == our_ref) {
         // Move to ourself ignore
         return;
-    }
-
-    if (!target_ref) {
-        // Assume move to the "first" in the top node, find the top node
-        target_ref = our_ref;
-        while (target_ref->parent() != target_ref->root()) {
-            target_ref = target_ref->parent();
-        }
-        first = TRUE;
     }
 
     if (intoafter) {
@@ -391,15 +385,9 @@ void SPItem::moveTo(SPItem *target, bool intoafter) {
         // Change in parent, need to remove and add
         our_ref->parent()->removeChild(our_ref);
         target_ref->parent()->addChild(our_ref, target_ref);
-    } else if (!first) {
+    } else {
         // Same parent, just move
         our_ref->parent()->changeOrder(our_ref, target_ref);
-    }
-
-    if (first && parent) {
-        // If "first" ensure it appears after the defs etc
-        lowerToBottom();
-        return;
     }
 }
 
@@ -1234,8 +1222,8 @@ void SPItem::adjust_pattern(Geom::Affine const &postmul, bool set, PatternTransf
         SPObject *server = style->getFillPaintServer();
         SPPattern *serverPatt = dynamic_cast<SPPattern *>(server);
         if ( serverPatt ) {
-            SPPattern *pattern = sp_pattern_clone_if_necessary(this, serverPatt, "fill");
-            sp_pattern_transform_multiply(pattern, postmul, set);
+            SPPattern *pattern = serverPatt->clone_if_necessary(this, "fill");
+            pattern->transform_multiply(postmul, set);
         }
     }
 
@@ -1244,8 +1232,8 @@ void SPItem::adjust_pattern(Geom::Affine const &postmul, bool set, PatternTransf
         SPObject *server = style->getStrokePaintServer();
         SPPattern *serverPatt = dynamic_cast<SPPattern *>(server);
         if ( serverPatt ) {
-            SPPattern *pattern = sp_pattern_clone_if_necessary(this, serverPatt, "stroke");
-            sp_pattern_transform_multiply(pattern, postmul, set);
+            SPPattern *pattern = serverPatt->clone_if_necessary(this, "stroke");
+            pattern->transform_multiply(postmul, set);
         }
     }
 }

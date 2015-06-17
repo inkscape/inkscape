@@ -63,13 +63,11 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double old_offset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0, "px");
 
-    using Inkscape::Util::GSListConstIterator;
     // TODO need to properly refcount the items, at least
-    std::list<SPItem *> items;
-    items.insert<GSListConstIterator<SPItem *> >(items.end(), selection->itemList(), NULL);
+    std::vector<SPItem*> items(selection->itemList());
     selection->clear();
 
-    for(std::list<SPItem *>::iterator item = items.begin();
+    for(std::vector<SPItem*>::iterator item = items.begin();
             item != items.end(); ++item) {
         SPItem * spitem = *item;
 

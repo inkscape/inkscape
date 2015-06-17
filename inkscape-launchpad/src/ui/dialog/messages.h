@@ -16,14 +16,6 @@
 #ifndef INKSCAPE_UI_DIALOG_MESSAGES_H
 #define INKSCAPE_UI_DIALOG_MESSAGES_H
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/box.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/button.h>

@@ -716,7 +716,7 @@ Inkscape::UI::Widget::Dock* SPDesktop::getDock() {
 /**
  * \see SPDocument::getItemFromListAtPointBottom()
  */
-SPItem *SPDesktop::getItemFromListAtPointBottom(const GSList *list, Geom::Point const &p) const
+SPItem *SPDesktop::getItemFromListAtPointBottom(const std::vector<SPItem*> &list, Geom::Point const &p) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
     return SPDocument::getItemFromListAtPointBottom(dkey, doc()->getRoot(), list, p);
@@ -947,7 +947,6 @@ void SPDesktop::zoom_quick(bool enable)
 
         if (!zoomed) {
             zoom_relative(_quick_zoom_stored_area.midpoint()[Geom::X], _quick_zoom_stored_area.midpoint()[Geom::Y], 2.0);
-            zoomed = true;
         }
     } else {
         set_display_area(_quick_zoom_stored_area, false);

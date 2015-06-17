@@ -666,8 +666,7 @@ void EraserTool::set_to_accumulated() {
             Geom::OptRect eraserBbox = acid->visualBounds();
             Geom::Rect bounds = (*eraserBbox) * desktop->doc2dt();
             std::vector<SPItem*> remainingItems;
-            GSList* toWorkOn = 0;
-
+            std::vector<SPItem*> toWorkOn;
             if (selection->isEmpty()) {
                 if ( eraserMode ) {
                     toWorkOn = desktop->getDocument()->getItemsPartiallyInBox(desktop->dkey, bounds);
@@ -675,17 +674,16 @@ void EraserTool::set_to_accumulated() {
                     Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
                     toWorkOn = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints());
                 }
-
-                toWorkOn = g_slist_remove( toWorkOn, acid );
+                toWorkOn.erase(std::remove(toWorkOn.begin(), toWorkOn.end(), acid), toWorkOn.end());
             } else {
-                toWorkOn = g_slist_copy(const_cast<GSList*>(selection->itemList()));
+                toWorkOn= selection->itemList();
                 wasSelection = true;
             }
 
-            if ( g_slist_length(toWorkOn) > 0 ) {
+            if ( !toWorkOn.empty() ) {
                 if ( eraserMode ) {
-                    for (GSList *i = toWorkOn ; i ; i = i->next ) {
-                        SPItem *item = SP_ITEM(i->data);
+                    for (std::vector<SPItem*>::const_iterator i = toWorkOn.begin(); i != toWorkOn.end(); i++){
+                    SPItem *item = *i;
 
                         if ( eraserMode ) {
                             Geom::OptRect bbox = item->visualBounds();
@@ -702,13 +700,10 @@ void EraserTool::set_to_accumulated() {
 
                                 if ( !selection->isEmpty() ) {
                                     // If the item was not completely erased, track the new remainder.
-                                    GSList *nowSel = g_slist_copy(const_cast<GSList *>(selection->itemList()));
-
-                                    for (GSList const *i2 = nowSel ; i2 ; i2 = i2->next ) {
-                                        remainingItems.push_back(SP_ITEM(i2->data));
+                                	std::vector<SPItem*> nowSel(selection->itemList());
+                                    for (std::vector<SPItem*>::const_iterator i2 = nowSel.begin();i2!=nowSel.end();i2++) {
+                                        remainingItems.push_back(*i2);
                                     }
-
-                                    g_slist_free(nowSel);
                                 }
                             } else {
                                 remainingItems.push_back(item);
@@ -716,19 +711,17 @@ void EraserTool::set_to_accumulated() {
                         }
                     }
                 } else {
-                    for (GSList *i = toWorkOn ; i ; i = i->next ) {
-                        sp_object_ref( SP_ITEM(i->data), 0 );
+                    for (std::vector<SPItem*> ::const_iterator i = toWorkOn.begin();i!=toWorkOn.end();i++) {
+                        sp_object_ref( *i, 0 );
                     }
 
-                    for (GSList *i = toWorkOn ; i ; i = i->next ) {
-                        SPItem *item = SP_ITEM(i->data);
+                    for (std::vector<SPItem*>::const_iterator i = toWorkOn.begin();i!=toWorkOn.end();i++) {
+                        SPItem *item = *i;
                         item->deleteObject(true);
                         sp_object_unref(item);
                         workDone = true;
                     }
                 }
-
-                g_slist_free(toWorkOn);
 
                 if ( !eraserMode ) {
                     //sp_selection_delete(desktop);

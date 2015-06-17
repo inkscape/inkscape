@@ -153,7 +153,7 @@ void TweakTool::update_cursor (bool with_shift) {
     gchar *sel_message = NULL;
 
     if (!desktop->selection->isEmpty()) {
-        num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
+        num = desktop->selection->itemList().size();
         sel_message = g_strdup_printf(ngettext("<b>%i</b> object selected","<b>%i</b> objects selected",num), num);
     } else {
         sel_message = g_strdup_printf("%s", _("<b>Nothing</b> selected"));
@@ -372,14 +372,13 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
     }
 
     if (dynamic_cast<SPText *>(item) || dynamic_cast<SPFlowtext *>(item)) {
-        GSList *items = g_slist_prepend (NULL, item);
-        GSList *selected = NULL;
-        GSList *to_select = NULL;
+    	std::vector<SPItem*> items;
+        items.push_back(item);
+        std::vector<SPItem*> selected;
+        std::vector<Inkscape::XML::Node*> to_select;
         SPDocument *doc = item->document;
-        sp_item_list_to_curves (items, &selected, &to_select);
-        g_slist_free (items);
-        SPObject* newObj = doc->getObjectByRepr(static_cast<Inkscape::XML::Node *>(to_select->data));
-        g_slist_free (to_select);
+        sp_item_list_to_curves (items, selected, to_select);
+        SPObject* newObj = doc->getObjectByRepr(to_select[0]);
         item = dynamic_cast<SPItem *>(newObj);
         g_assert(item != NULL);
         selection->add(item);
@@ -1078,11 +1077,9 @@ sp_tweak_dilate (TweakTool *tc, Geom::Point event_p, Geom::Point p, Geom::Point 
     double move_force = get_move_force(tc);
     double color_force = MIN(sqrt(path_force)/20.0, 1);
 
-    for (GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
-         items != NULL;
-         items = items->next) {
-
-        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(items->data));
+    std::vector<SPItem*> items=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        SPItem *item = *i;
 
         if (is_color_mode (tc->mode)) {
             if (do_fill || do_stroke || do_opacity) {
@@ -1189,7 +1186,7 @@ bool TweakTool::root_handler(GdkEvent* event) {
 
                 guint num = 0;
                 if (!desktop->selection->isEmpty()) {
-                    num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
+                    num = desktop->selection->itemList().size();
                 }
                 if (num == 0) {
                     this->message_context->flash(Inkscape::ERROR_MESSAGE, _("<b>Nothing selected!</b> Select objects to tweak."));

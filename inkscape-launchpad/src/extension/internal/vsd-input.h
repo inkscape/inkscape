@@ -19,10 +19,6 @@
 
 #ifdef WITH_LIBVISIO
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/dialog.h>
 
 #include "../implementation/implementation.h"

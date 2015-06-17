@@ -209,7 +209,7 @@ Inkscape::XML::Node* SPMask::write(Inkscape::XML::Document* xml_doc, Inkscape::X
 
 // Create a mask element (using passed elements), add it to <defs>
 const gchar *
-sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTransform)
+sp_mask_create (std::vector<Inkscape::XML::Node*> &reprs, SPDocument *document, Geom::Affine const* applyTransform)
 {
     Inkscape::XML::Node *defsrepr = document->getDefs()->getRepr();
 
@@ -221,13 +221,12 @@ sp_mask_create (GSList *reprs, SPDocument *document, Geom::Affine const* applyTr
     const gchar *mask_id = repr->attribute("id");
     SPObject *mask_object = document->getObjectById(mask_id);
     
-    for (GSList *it = reprs; it != NULL; it = it->next) {
-        Inkscape::XML::Node *node = (Inkscape::XML::Node *)(it->data);
+    for (std::vector<Inkscape::XML::Node*>::const_iterator it = reprs.begin(); it != reprs.end(); it++) {
+        Inkscape::XML::Node *node = (*it);
         SPItem *item = SP_ITEM(mask_object->appendChildRepr(node));
         
         if (NULL != applyTransform) {
-            Geom::Affine transform (item->transform);
-            transform *= (*applyTransform);
+            Geom::Affine transform (item->transform * (*applyTransform));
             item->doWriteTransform(item->getRepr(), transform);
         }
     }

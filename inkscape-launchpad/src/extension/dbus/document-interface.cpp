@@ -186,10 +186,10 @@ selection_get_center_y (Inkscape::Selection *sel){
  * know we never bothered to implement it seperatly.  Although
  * they might see the selection box flicker if used in a loop.
  */
-const GSList *
+std::vector<SPObject*>
 selection_swap(Inkscape::Selection *sel, gchar *name, GError **error)
 {
-    const GSList *oldsel = g_slist_copy((GSList *)sel->list());
+    std::vector<SPObject*> oldsel = sel->list();
     
     sel->set(get_object_by_name(sel->layers()->getDocument(), name, error));
     return oldsel;
@@ -199,9 +199,11 @@ selection_swap(Inkscape::Selection *sel, gchar *name, GError **error)
  * See selection_swap, above
  */
 void
-selection_restore(Inkscape::Selection *sel, const GSList * oldsel)
+selection_restore(Inkscape::Selection *sel, std::vector<SPObject*> oldsel)
 {
-    sel->setList(oldsel);
+    // ... setList used to work here
+    sel->clear();
+    sel->add(oldsel.begin(), oldsel.end());
 }
 
 /*
@@ -708,8 +710,8 @@ gboolean
 document_interface_move (DocumentInterface *doc_interface, gchar *name, gdouble x, 
                          gdouble y, GError **error)
 {
-    const GSList *oldsel = selection_swap(doc_interface->target.getSelection(), name, error);
-    if (!oldsel)
+    std::vector<SPObject*> oldsel = selection_swap(doc_interface->target.getSelection(), name, error);
+    if (oldsel.empty())
         return FALSE;
     sp_selection_move (doc_interface->target.getSelection(), x, 0 - y);
     selection_restore(doc_interface->target.getSelection(), oldsel);
@@ -720,8 +722,8 @@ gboolean
 document_interface_move_to (DocumentInterface *doc_interface, gchar *name, gdouble x, 
                          gdouble y, GError **error)
 {
-    const GSList *oldsel = selection_swap(doc_interface->target.getSelection(), name, error);
-    if (!oldsel)
+    std::vector<SPObject*> oldsel = selection_swap(doc_interface->target.getSelection(), name, error);
+    if (oldsel.empty())
         return FALSE;
     Inkscape::Selection * sel = doc_interface->target.getSelection();
     sp_selection_move (doc_interface->target.getSelection(), x - selection_get_center_x(sel),
@@ -734,8 +736,8 @@ gboolean
 document_interface_object_to_path (DocumentInterface *doc_interface, 
                                    char *shape, GError **error)
 {
-    const GSList *oldsel = selection_swap(doc_interface->target.getSelection(), shape, error);
-    if (!oldsel)
+    std::vector<SPObject*> oldsel = selection_swap(doc_interface->target.getSelection(), shape, error);
+    if (oldsel.empty())
         return FALSE;
     dbus_call_verb (doc_interface, SP_VERB_OBJECT_TO_CURVE, error);
     selection_restore(doc_interface->target.getSelection(), oldsel);
@@ -849,8 +851,8 @@ gboolean
 document_interface_move_to_layer (DocumentInterface *doc_interface, gchar *shape, 
                               gchar *layerstr, GError **error)
 {
-    const GSList *oldsel = selection_swap(doc_interface->target.getSelection(), shape, error);
-    if (!oldsel)
+    std::vector<SPObject*> oldsel = selection_swap(doc_interface->target.getSelection(), shape, error);
+    if (oldsel.empty())
         return FALSE;
         
     document_interface_selection_move_to_layer(doc_interface, layerstr, error);
@@ -1085,15 +1087,15 @@ void document_interface_update(DocumentInterface *doc_interface, GError ** error
 gboolean document_interface_selection_get(DocumentInterface *doc_interface, char ***out, GError ** /*error*/)
 {
     Inkscape::Selection * sel = doc_interface->target.getSelection();
-    GSList const *oldsel = sel->list();
+    std::vector<SPObject*> oldsel = sel->list();
 
-    int size = g_slist_length((GSList *) oldsel);
+    int size = oldsel.size();
 
     *out = g_new0 (char *, size + 1);
 
     int i = 0;
-    for (GSList const *iter = oldsel; iter != NULL; iter = iter->next) {
-      (*out)[i] = g_strdup(SP_OBJECT(iter->data)->getRepr()->attribute("id"));
+    for (std::vector<SPObject*>::iterator iter = oldsel.begin(), e = oldsel.end(); iter != e; ++iter) {
+        (*out)[i] = g_strdup((*iter)->getId());
         i++;
     }
     (*out)[i] = NULL;
@@ -1426,23 +1428,21 @@ gboolean dbus_send_ping (SPDesktop* desk,     SPItem *item)
 gboolean
 document_interface_get_children (DocumentInterface *doc_interface,  char *name, char ***out, GError **error)
 {
-  SPItem* parent=(SPItem* )get_object_by_name(doc_interface->target.getDocument(), name, error);
+    SPItem* parent=(SPItem* )get_object_by_name(doc_interface->target.getDocument(), name, error);
+    std::vector<SPObject*> children = parent->childList(false);
 
-  GSList const *children = parent->childList(false);
-
-    int size = g_slist_length((GSList *) children);
+    int size = children.size();
 
     *out = g_new0 (char *, size + 1);
 
     int i = 0;
-    for (GSList const *iter = children; iter != NULL; iter = iter->next) {
-      (*out)[i] = g_strdup(SP_OBJECT(iter->data)->getRepr()->attribute("id"));
+    for (std::vector<SPObject*>::iterator iter = children.begin(), e = children.end(); iter != e; ++iter) {
+        (*out)[i] = g_strdup((*iter)->getId());
         i++;
     }
     (*out)[i] = NULL;
 
     return TRUE;
-
 }
 
 

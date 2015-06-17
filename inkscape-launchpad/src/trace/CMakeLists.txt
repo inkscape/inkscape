@@ -28,6 +28,7 @@ set(trace_SRC
 
 	potrace/auxiliary.h
 	potrace/bitmap.h
+	potrace/bitops.h
 	potrace/curve.h
 	potrace/decompose.h
 	potrace/greymap.h

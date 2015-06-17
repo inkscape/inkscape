@@ -78,7 +78,7 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value){
                 g_warning("helper-fns::helperfns_read_vector() Unable to convert \"%s\" to number", beg);
                 // We could leave this out, too. If strtod can't convert
                 // anything, it will return zero.
-                ret = 0;
+                // ret = 0;
                 break;
             }
             v.push_back(ret);

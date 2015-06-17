@@ -524,7 +524,7 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
         return;
     }
 
-    Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
+    Inkscape::XML::Node* node = sel->reprList().front();
     if (!node) return;//TODO: should this be an assert?
     if (!node->matchAttributeName("d") || !node->attribute("d")){
         char *msg = _("The selected object does not have a <b>path</b> description.");
@@ -566,7 +566,7 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
         return;
     }
 
-    Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
+    Inkscape::XML::Node* node = sel->reprList().front();
     if (!node) return;//TODO: should this be an assert?
     if (!node->matchAttributeName("d") || !node->attribute("d")){
         char *msg = _("The selected object does not have a <b>path</b> description.");

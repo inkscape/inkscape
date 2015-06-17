@@ -1303,12 +1303,12 @@ void cc_selection_set_avoid(bool const set_avoid)
 
     Inkscape::Selection *selection = desktop->getSelection();
 
-    GSList *l = const_cast<GSList *>(selection->itemList());
 
     int changes = 0;
 
-    while (l) {
-        SPItem *item = SP_ITEM(l->data);
+    std::vector<SPItem*> l = selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=l.begin();i!=l.end();i++) {
+        SPItem *item = *i;
 
         char const *value = (set_avoid) ? "true" : NULL;
 
@@ -1317,8 +1317,6 @@ void cc_selection_set_avoid(bool const set_avoid)
             item->avoidRef->handleSettingChange();
             changes++;
         }
-
-        l = l->next;
     }
 
     if (changes == 0) {

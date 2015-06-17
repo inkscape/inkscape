@@ -16,10 +16,6 @@
 
 #ifdef HAVE_POPPLER
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/dialog.h>
 
 #include "../../implementation/implementation.h"
@@ -48,6 +44,7 @@ namespace Gtk {
 #else
   class HScale;
 #endif
+  class RadioButton;
   class VBox;
   class Label;
 }
@@ -75,7 +72,7 @@ public:
 
     bool showDialog();
     int getSelectedPage();
-    int getImportMethod();
+    bool getImportMethod();
     void getImportSettings(Inkscape::XML::Node *prefs);
 
 private:
@@ -90,7 +87,10 @@ private:
     void _onPageNumberChanged();
     void _onToggleCropping();
     void _onPrecisionChanged();
-
+#ifdef HAVE_POPPLER_CAIRO
+    void _onToggleImport();
+#endif
+    
     class Gtk::Button * cancelbutton;
     class Gtk::Button * okbutton;
     class Gtk::Label * _labelSelect;
@@ -105,7 +105,10 @@ private:
     class Gtk::Label * _labelPrecision;
     class Gtk::Label * _labelPrecisionWarning;
 #ifdef HAVE_POPPLER_CAIRO
-    class Gtk::CheckButton * _importviaPopplerCheck; // using poppler_cairo for importing
+    class Gtk::RadioButton * _importViaPoppler;  // Use poppler_cairo importing
+    class Gtk::Label * _labelViaPoppler;
+    class Gtk::RadioButton * _importViaInternal; // Use native (poppler based) importing
+    class Gtk::Label * _labelViaInternal;
 #endif
 #if WITH_GTKMM_3_0
     class Gtk::Scale * _fallbackPrecisionSlider;

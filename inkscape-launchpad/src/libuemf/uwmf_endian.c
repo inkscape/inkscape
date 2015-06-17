@@ -6,11 +6,11 @@
 
 /*
 File:      uwmf_endian.c
-Version:   0.1.3
-Date:      27-MAR-2014
+Version:   0.1.5
+Date:      28-MAY-2015
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2014 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -1470,21 +1470,25 @@ void U_WMRCREATEREGION_swap(char *record, int torev){
     \param contents   pointer to the buffer holding the entire EMF in memory
     \param length     number of bytes in the buffer
     \param torev      1 for native to reversed, 0 for reversed to native
+    \param onerec     1 if this is operating on a single record instead of an entire file
     
     Normally this would be called immediately before writing the data to a file
     or immediately after reading the data from a file.
 */
-int U_wmf_endian(char *contents, size_t length, int torev){
-    size_t    off;
+int U_wmf_endian(char *contents, size_t length, int torev, int onerec){
+    size_t    off=0;
     uint32_t  OK, Size16;
     uint8_t   iType;
     char     *record;
-    int       recnum, offset;
+    int       recnum;
+    int       offset=0;
 
     record  = contents;
-    off     = wmfheader_swap(record,torev); fflush(stdout); /* WMF header is not a normal record, handle it separately */
-    record += off;
-    offset  = off;
+    if(!onerec){
+       off     = wmfheader_swap(record,torev); fflush(stdout); /* WMF header is not a normal record, handle it separately */
+       record += off;
+       offset  = off;
+    }
     OK      = 1;
     recnum  = 1;  /* used when debugging */
 
@@ -1756,6 +1760,7 @@ int U_wmf_endian(char *contents, size_t length, int torev){
 	  case  U_WMR_CREATEREGION:           U_WMRCREATEREGION_swap(record, torev);             break;
 	  default:                            U_WMRNOTIMPLEMENTED_swap(record, torev);           break;
        }  //end of switch
+       if(onerec)break;
        record += 2*Size16;
        offset += 2*Size16;
        recnum++;

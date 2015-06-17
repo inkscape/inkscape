@@ -20,10 +20,6 @@
 
 #include "widgets/desktop-widget.h"
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include "shortcuts.h"
 #include "file.h"
 #include "ui/tools/tool-base.h"
@@ -1178,11 +1174,9 @@ SPItem *sp_event_context_find_item(SPDesktop *desktop, Geom::Point const &p,
 SPItem *
 sp_event_context_over_item(SPDesktop *desktop, SPItem *item,
         Geom::Point const &p) {
-    GSList *temp = NULL;
-    temp = g_slist_prepend(temp, item);
+	std::vector<SPItem*> temp;
+    temp.push_back(item);
     SPItem *item_at_point = desktop->getItemFromListAtPointBottom(temp, p);
-    g_slist_free(temp);
-
     return item_at_point;
 }
 

@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import math
 import re
 import string
-#from StringIO import StringIO
 # local libraries
 import bezmisc
 import cspsubdiv
@@ -66,6 +65,7 @@ class hpglEncoder:
         self.sizeY = 'False'
         self.dryRun = True
         self.lastPoint = [0, 0, 0]
+        self.lastPen = -1
         self.offsetX = 0
         self.offsetY = 0
         self.scaleX = self.options.resolutionX / effect.unittouu("1.0in") # dots per inch to dots per user unit
@@ -109,7 +109,7 @@ class hpglEncoder:
         # dryRun to find edges
         groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, 0.0], [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, 0.0]]
         groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
-        self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
+        self.vData = [['', 'False', 0, 0], ['', 'False', 0, 0], ['', 'False', 0, 0], ['', 'False', 0, 0]]
         self.processGroups(self.doc, groupmat)
         if self.divergenceX == 'False' or self.divergenceY == 'False' or self.sizeX == 'False' or self.sizeY == 'False':
             raise Exception('NO_PATHS')
@@ -156,11 +156,11 @@ class hpglEncoder:
         groupmat = [[self.mirrorX * self.scaleX * self.viewBoxTransformX, 0.0, -self.divergenceX + self.offsetX],
             [0.0, self.mirrorY * self.scaleY * self.viewBoxTransformY, -self.divergenceY + self.offsetY]]
         groupmat = simpletransform.composeTransform(groupmat, simpletransform.parseTransform('rotate(' + self.options.orientation + ')'))
-        self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
+        self.vData = [['', 'False', 0, 0], ['', 'False', 0, 0], ['', 'False', 0, 0], ['', 'False', 0, 0]]
         # add move to zero point and precut
         if self.toolOffset > 0.0 and self.options.precut:
             if self.options.center:
-                # position precut outside of drawing plus one times the tooloffset
+                # position precut outside of drawing plus one time the tooloffset
                 if self.offsetX >= 0.0:
                     precutX = self.offsetX + self.toolOffset
                 else:
@@ -169,17 +169,16 @@ class hpglEncoder:
                     precutY = self.offsetY + self.toolOffset
                 else:
                     precutY = self.offsetY - self.toolOffset
-                self.processOffset('PU', precutX, precutY)
-                self.processOffset('PD', precutX, precutY + self.toolOffset * 8)
+                self.processOffset('PU', precutX, precutY, self.options.pen)
+                self.processOffset('PD', precutX, precutY + self.toolOffset * 8, self.options.pen)
             else:
-                self.processOffset('PU', 0, 0)
-                self.processOffset('PD', 0, self.toolOffset * 8)
-        else:
-            self.processOffset('PU', 0, 0)
+                self.processOffset('PU', 0, 0, self.options.pen)
+                self.processOffset('PD', 0, self.toolOffset * 8, self.options.pen)
         # start conversion
         self.processGroups(self.doc, groupmat)
         # shift an empty node in in order to process last node in cache
-        self.processOffset('PU', 0, 0)
+        if self.toolOffset > 0.0 and not self.dryRun:
+            self.processOffset('PU', 0, 0, 0)
         if self.options.debug:
             return self.hpgl, self
         else:
@@ -190,7 +189,7 @@ class hpglEncoder:
         paths = []
         for node in doc:
             if (node.tag == inkex.addNS('g', 'svg') and self.isGroupVisible(node)) or node.tag == inkex.addNS('path', 'svg'):
-                paths.append([node.tag, node, self.mergeTransform(node, groupmat)])
+                paths.append([node.tag, node, self.mergeTransform(node, groupmat), self.getPenNumber(node)])
         doc = ''
         hasGroups = True
         while hasGroups:
@@ -200,11 +199,19 @@ class hpglEncoder:
                     hasGroups = True
                     for path in paths[i][1]:
                         if (path.tag == inkex.addNS('g', 'svg') and self.isGroupVisible(path)) or path.tag == inkex.addNS('path', 'svg'):
-                            paths.append([path.tag, path, self.mergeTransform(path, paths[i][2])])
+                            paths.insert(i + 1, [path.tag, path, self.mergeTransform(path, paths[i][2]), paths[i][3]])
                     paths[i][0] = ''
         for node in paths:
             if node[0] == inkex.addNS('path', 'svg'):
-                self.processPath(node[1], node[2])
+                self.processPath(node[1], node[2], node[3])
+
+    def getPenNumber(self, doc):
+        penNum = str(doc.get('{' + inkex.NSS['inkscape'] + '}label')).lower().strip(' \t\n\r')
+        if re.search(r'( |\A)pen *\d+( |\Z)', penNum):
+            penNum = re.sub(r'(.* |\A)pen *(\d+)( .*|\Z)', r'\2', penNum, 1)
+            return int(penNum)
+        else:
+            return self.options.pen
 
     def mergeTransform(self, doc, matrix):
         # get and merge two matrixes into one
@@ -222,7 +229,7 @@ class hpglEncoder:
                 return False
         return True
 
-    def processPath(self, node, mat):
+    def processPath(self, node, mat, pen):
         # process path
         path = node.get('d')
         if path:
@@ -239,7 +246,7 @@ class hpglEncoder:
                     posX, posY = singlePathPoint[1]
                     # check if point is repeating, if so, ignore
                     if int(round(posX)) != int(round(oldPosX)) or int(round(posY)) != int(round(oldPosY)):
-                        self.processOffset(cmd, posX, posY)
+                        self.processOffset(cmd, posX, posY, pen)
                         cmd = 'PD'
                         oldPosX = posX
                         oldPosY = posY
@@ -255,10 +262,10 @@ class hpglEncoder:
                                 overcutLength += self.getLength(oldPosX, oldPosY, posX, posY)
                                 if overcutLength >= self.overcut:
                                     newLength = self.changeLength(oldPosX, oldPosY, posX, posY, - (overcutLength - self.overcut))
-                                    self.processOffset(cmd, newLength[0], newLength[1])
+                                    self.processOffset(cmd, newLength[0], newLength[1], pen)
                                     break
                                 else:
-                                    self.processOffset(cmd, posX, posY)
+                                    self.processOffset(cmd, posX, posY, pen)
                                 oldPosX = posX
                                 oldPosY = posY
 
@@ -277,34 +284,34 @@ class hpglEncoder:
         y = y2 + (y2 - y1) / self.getLength(x1, y1, x2, y2, False) * offset
         return [x, y]
 
-    def processOffset(self, cmd, posX, posY):
+    def processOffset(self, cmd, posX, posY, pen):
         # calculate offset correction (or dont)
         if self.toolOffset == 0.0 or self.dryRun:
-            self.storePoint(cmd, posX, posY)
+            self.storePoint(cmd, posX, posY, pen)
         else:
             # insert data into cache
             self.vData.pop(0)
-            self.vData.insert(3, [cmd, posX, posY])
+            self.vData.insert(3, [cmd, posX, posY, pen])
             # decide if enough data is availabe
-            if self.vData[2][1] != -1.0:
-                if self.vData[1][1] == -1.0:
-                    self.storePoint(self.vData[2][0], self.vData[2][1], self.vData[2][2])
+            if self.vData[2][1] != 'False':
+                if self.vData[1][1] == 'False':
+                    self.storePoint(self.vData[2][0], self.vData[2][1], self.vData[2][2], self.vData[2][3])
                 else:
                     # perform tool offset correction (It's a *tad* complicated, if you want to understand it draw the data as lines on paper)
                     if self.vData[2][0] == 'PD': # If the 3rd entry in the cache is a pen down command make the line longer by the tool offset
                         pointThree = self.changeLength(self.vData[1][1], self.vData[1][2], self.vData[2][1], self.vData[2][2], self.toolOffset)
-                        self.storePoint('PD', pointThree[0], pointThree[1])
-                    elif self.vData[0][1] != -1.0:
+                        self.storePoint('PD', pointThree[0], pointThree[1], self.vData[2][3])
+                    elif self.vData[0][1] != 'False':
                         # Elif the 1st entry in the cache is filled with data and the 3rd entry is a pen up command shift
                         # the 3rd entry by the current tool offset position according to the 2nd command
                         pointThree = self.changeLength(self.vData[0][1], self.vData[0][2], self.vData[1][1], self.vData[1][2], self.toolOffset)
                         pointThree[0] = self.vData[2][1] - (self.vData[1][1] - pointThree[0])
                         pointThree[1] = self.vData[2][2] - (self.vData[1][2] - pointThree[1])
-                        self.storePoint('PU', pointThree[0], pointThree[1])
+                        self.storePoint('PU', pointThree[0], pointThree[1], self.vData[2][3])
                     else:
                         # Else just write the 3rd entry
                         pointThree = [self.vData[2][1], self.vData[2][2]]
-                        self.storePoint('PU', pointThree[0], pointThree[1])
+                        self.storePoint('PU', pointThree[0], pointThree[1], self.vData[2][3])
                     if self.vData[3][0] == 'PD':
                         # If the 4th entry in the cache is a pen down command guide tool to next line with a circle between the prolonged 3rd and 4th entry
                         if self.getLength(self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2]) >= self.toolOffset:
@@ -324,16 +331,16 @@ class hpglEncoder:
                         if angleVector >= 0:
                             angle = angleStart + self.toolOffsetFlat
                             while angle < angleStart + angleVector:
-                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.toolOffset, self.vData[2][2] + math.sin(angle) * self.toolOffset)
+                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.toolOffset, self.vData[2][2] + math.sin(angle) * self.toolOffset, self.vData[2][3])
                                 angle += self.toolOffsetFlat
                         else:
                             angle = angleStart - self.toolOffsetFlat
                             while angle > angleStart + angleVector:
-                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.toolOffset, self.vData[2][2] + math.sin(angle) * self.toolOffset)
+                                self.storePoint('PD', self.vData[2][1] + math.cos(angle) * self.toolOffset, self.vData[2][2] + math.sin(angle) * self.toolOffset, self.vData[2][3])
                                 angle -= self.toolOffsetFlat
-                        self.storePoint('PD', pointFour[0], pointFour[1])
+                        self.storePoint('PD', pointFour[0], pointFour[1], self.vData[3][3])
 
-    def storePoint(self, command, x, y):
+    def storePoint(self, command, x, y, pen):
         x = int(round(x))
         y = int(round(y))
         # skip when no change in movement
@@ -357,11 +364,15 @@ class hpglEncoder:
                     x = 0
                 if y < 0:
                     y = 0
+            # select correct pen
+            if self.lastPen != pen:
+                self.hpgl += ';SP%d' % pen
             # do not repeat command
-            if command == 'PD' and self.lastPoint[0] == 'PD':
+            if command == 'PD' and self.lastPoint[0] == 'PD' and self.lastPen == pen:
                 self.hpgl += ',%d,%d' % (x, y)
             else:
                 self.hpgl += ';%s%d,%d' % (command, x, y)
+            self.lastPen = pen
         self.lastPoint = [command, x, y]
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

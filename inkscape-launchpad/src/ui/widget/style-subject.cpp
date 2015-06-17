@@ -55,13 +55,11 @@ Inkscape::Selection *StyleSubject::Selection::_getSelection() const {
     }
 }
 
-StyleSubject::iterator StyleSubject::Selection::begin() {
+std::vector<SPObject*> StyleSubject::Selection::list(){
     Inkscape::Selection *selection = _getSelection();
-    if (selection) {
-        return iterator(selection->list());
-    } else {
-        return iterator(NULL);
-    }
+    if(selection)
+        return selection->list();
+    else return std::vector<SPObject*>();
 }
 
 Geom::OptRect StyleSubject::Selection::getBounds(SPItem::BBoxType type) {
@@ -104,8 +102,7 @@ void StyleSubject::Selection::setCSS(SPCSSAttr *css) {
 }
 
 StyleSubject::CurrentLayer::CurrentLayer() {
-    _element.data = NULL;
-    _element.next = NULL;
+    _element = NULL;
 }
 
 StyleSubject::CurrentLayer::~CurrentLayer() {
@@ -114,10 +111,10 @@ StyleSubject::CurrentLayer::~CurrentLayer() {
 void StyleSubject::CurrentLayer::_setLayer(SPObject *layer) {
     _layer_release.disconnect();
     _layer_modified.disconnect();
-    if (_element.data) {
-        sp_object_unref(static_cast<SPObject *>(_element.data), NULL);
+    if (_element) {
+        sp_object_unref(_element, NULL);
     }
-    _element.data = layer;
+    _element = layer;
     if (layer) {
         sp_object_ref(layer, NULL);
         _layer_release = layer->connectRelease(sigc::hide(sigc::bind(sigc::mem_fun(*this, &CurrentLayer::_setLayer), (SPObject *)NULL)));
@@ -127,19 +124,18 @@ void StyleSubject::CurrentLayer::_setLayer(SPObject *layer) {
 }
 
 SPObject *StyleSubject::CurrentLayer::_getLayer() const {
-    return static_cast<SPObject *>(_element.data);
+    return _element;
 }
 
-GSList *StyleSubject::CurrentLayer::_getLayerSList() const {
-    if (_element.data) {
-        return &_element;
-    } else {
-        return NULL;
-    }
+SPObject *StyleSubject::CurrentLayer::_getLayerSList() const {
+        return _element;
+
 }
 
-StyleSubject::iterator StyleSubject::CurrentLayer::begin() {
-    return iterator(_getLayerSList());
+std::vector<SPObject*> StyleSubject::CurrentLayer::list(){
+    std::vector<SPObject*> list;
+    list.push_back(_element);
+    return list;
 }
 
 Geom::OptRect StyleSubject::CurrentLayer::getBounds(SPItem::BBoxType type) {
@@ -152,8 +148,10 @@ Geom::OptRect StyleSubject::CurrentLayer::getBounds(SPItem::BBoxType type) {
 }
 
 int StyleSubject::CurrentLayer::queryStyle(SPStyle *query, int property) {
-    GSList *list = _getLayerSList();
-    if (list) {
+	std::vector<SPItem*> list;
+    SPObject* i=_getLayerSList();
+    if (i) {
+		list.push_back((SPItem*)i);
         return sp_desktop_query_style_from_list(list, query, property);
     } else {
         return QUERY_STYLE_NOTHING;

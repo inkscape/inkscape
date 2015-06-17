@@ -467,14 +467,14 @@ void ObjectProperties::_labelChanged()
     gchar *id = g_strdup(_entry_id.get_text().c_str());
     g_strcanon(id, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.:", '_');
     if (strcmp(id, item->getId()) == 0) {
-        _label_id.set_markup_with_mnemonic(_("_ID:"));
+        _label_id.set_markup_with_mnemonic(_("_ID:") + Glib::ustring(" "));
     } else if (!*id || !isalnum (*id)) {
         _label_id.set_text(_("Id invalid! "));
     } else if (SP_ACTIVE_DOCUMENT->getObjectById(id) != NULL) {
         _label_id.set_text(_("Id exists! "));
     } else {
         SPException ex;
-        _label_id.set_markup_with_mnemonic(_("_ID:"));
+        _label_id.set_markup_with_mnemonic(_("_ID:") + Glib::ustring(" "));
         SP_EXCEPTION_INIT(&ex);
         item->setAttribute("id", id, &ex);
         DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, _("Set object ID"));
@@ -529,10 +529,12 @@ void ObjectProperties::_imageRenderingChanged()
     SPCSSAttr *css = sp_repr_css_attr_new();
     sp_repr_css_set_property(css, "image-rendering", scale.c_str());
     Inkscape::XML::Node *image_node = item->getRepr();
-    if( image_node ) {
+    if (image_node) {
         sp_repr_css_change(image_node, css, "style");
+        DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+                _("Set image rendering option"));
     }
-    sp_repr_css_attr_unref( css );
+    sp_repr_css_attr_unref(css);
         
     _blocked = false;
 }

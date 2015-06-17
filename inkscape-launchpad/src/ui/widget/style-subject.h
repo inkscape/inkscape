@@ -10,7 +10,6 @@
 #ifndef SEEN_INKSCAPE_UI_WIDGET_STYLE_SUBJECT_H
 #define SEEN_INKSCAPE_UI_WIDGET_STYLE_SUBJECT_H
 
-#include "util/glib-list-iterators.h"
 #include <boost/optional.hpp>
 #include <2geom/rect.h>
 #include "sp-item.h"
@@ -35,7 +34,6 @@ public:
     class Selection;
     class CurrentLayer;
 
-    typedef Util::GSListConstIterator<SPObject *> iterator;
 
     StyleSubject();
     virtual ~StyleSubject();
@@ -43,11 +41,10 @@ public:
     void setDesktop(SPDesktop *desktop);
     SPDesktop *getDesktop() const { return _desktop; }
 
-    virtual iterator begin() = 0;
-    virtual iterator end() { return iterator(NULL); }
     virtual Geom::OptRect getBounds(SPItem::BBoxType type) = 0;
     virtual int queryStyle(SPStyle *query, int property) = 0;
     virtual void setCSS(SPCSSAttr *css) = 0;
+    virtual std::vector<SPObject*> list(){return std::vector<SPObject*>();};
 
     sigc::connection connectChanged(sigc::signal<void>::slot_type slot) {
         return _changed_signal.connect(slot);
@@ -67,10 +64,10 @@ public:
     Selection();
     ~Selection();
 
-    virtual iterator begin();
     virtual Geom::OptRect getBounds(SPItem::BBoxType type);
     virtual int queryStyle(SPStyle *query, int property);
     virtual void setCSS(SPCSSAttr *css);
+    virtual std::vector<SPObject*> list();
 
 protected:
     virtual void _afterDesktopSwitch(SPDesktop *desktop);
@@ -88,10 +85,10 @@ public:
     CurrentLayer();
     ~CurrentLayer();
 
-    virtual iterator begin();
     virtual Geom::OptRect getBounds(SPItem::BBoxType type);
     virtual int queryStyle(SPStyle *query, int property);
     virtual void setCSS(SPCSSAttr *css);
+    virtual std::vector<SPObject*> list();
 
 protected:
     virtual void _afterDesktopSwitch(SPDesktop *desktop);
@@ -99,12 +96,12 @@ protected:
 private:
     SPObject *_getLayer() const;
     void _setLayer(SPObject *layer);
-    GSList *_getLayerSList() const;
+    SPObject *_getLayerSList() const;
 
     sigc::connection _layer_switched;
     sigc::connection _layer_release;
     sigc::connection _layer_modified;
-    mutable GSList _element;
+    mutable SPObject* _element;
 };
 
 }

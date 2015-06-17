@@ -96,15 +96,16 @@ void Inkscape::SelCue::_updateItemBboxes(Inkscape::Preferences *prefs)
 
 void Inkscape::SelCue::_updateItemBboxes(gint mode, int prefs_bbox)
 {
-    GSList const *items = _selection->itemList();
-    if (_item_bboxes.size() != g_slist_length((GSList *) items)) {
+    const std::vector<SPItem*> items = _selection->itemList();
+    if (_item_bboxes.size() != items.size()) {
         _newItemBboxes();
         return;
     }
 
     int bcount = 0;
-    for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = static_cast<SPItem *>(l->data);
+    std::vector<SPItem*> ll=_selection->itemList();
+    for (std::vector<SPItem*>::const_iterator l = ll.begin(); l != ll.end(); l++) {
+        SPItem *item = *l;
         SPCanvasItem* box = _item_bboxes[bcount ++];
 
         if (box) {
@@ -145,8 +146,9 @@ void Inkscape::SelCue::_newItemBboxes()
 
     int prefs_bbox = prefs->getBool("/tools/bounding_box");
     
-    for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = static_cast<SPItem *>(l->data);
+    std::vector<SPItem*> ll=_selection->itemList();
+    for (std::vector<SPItem*>::const_iterator l = ll.begin(); l != ll.end(); l++) {
+        SPItem *item = *l;
 
         Geom::OptRect const b = (prefs_bbox == 0) ?
             item->desktopVisualBounds() : item->desktopGeometricBounds();
@@ -199,8 +201,9 @@ void Inkscape::SelCue::_newTextBaselines()
     }
     _text_baselines.clear();
 
-    for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = static_cast<SPItem *>(l->data);
+    std::vector<SPItem*> ll = _selection->itemList();
+    for (std::vector<SPItem*>::const_iterator l=ll.begin();l!=ll.end();l++) {
+        SPItem *item = *l;
 
         SPCanvasItem* baseline_point = NULL;
         if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) { // visualize baseline

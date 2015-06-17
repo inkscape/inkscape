@@ -53,6 +53,7 @@ static Geom::Point pencil_drag_origin_w(0, 0);
 static bool pencil_within_tolerance = false;
 
 static bool in_svg_plane(Geom::Point const &p) { return Geom::LInfty(p) < 1e18; }
+const double HANDLE_CUBIC_GAP = 0.01;
 
 const std::string& PencilTool::getPrefsPath() {
 	return PencilTool::prefsPath;
@@ -191,7 +192,7 @@ bool PencilTool::_handleButtonPress(GdkEventButton const &bevent) {
                 }
                 if (anchor) {
                     p = anchor->dp;
-                    this->overwriteCurve = anchor->curve;
+                    this->overwrite_curve = anchor->curve;
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
                 } else {
                     m.setup(desktop);
@@ -357,7 +358,6 @@ bool PencilTool::_handleButtonRelease(GdkEventButton const &revent) {
                     // Ctrl+click creates a single point so only set context in ADDLINE mode when Ctrl isn't pressed
                     this->state = SP_PENCIL_CONTEXT_ADDLINE;
                 }
-                ret = true;
                 break;
             case SP_PENCIL_CONTEXT_ADDLINE:
                 /* Finish segment now */
@@ -371,7 +371,6 @@ bool PencilTool::_handleButtonRelease(GdkEventButton const &revent) {
                 this->_finishEndpoint();
                 this->state = SP_PENCIL_CONTEXT_IDLE;
                 sp_event_context_discard_delayed_snap_event(this);
-                ret = true;
                 break;
             case SP_PENCIL_CONTEXT_FREEHAND:
                 if (revent.state & GDK_MOD1_MASK) {
@@ -413,7 +412,6 @@ bool PencilTool::_handleButtonRelease(GdkEventButton const &revent) {
                     // reset sketch mode too
                     this->sketch_n = 0;
                 }
-                ret = true;
                 break;
             case SP_PENCIL_CONTEXT_SKETCH:
             default:
@@ -663,11 +661,11 @@ void PencilTool::_interpolate() {
         for (int c = 0; c < n_segs; c++) {
             // if we are in BSpline we modify the trace to create adhoc nodes 
             if(mode == 2){
-                Geom::Point BP = b[4*c+0] + (1./3)*(b[4*c+3] - b[4*c+0]);
-                BP = Geom::Point(BP[X] + 0.0001,BP[Y] + 0.0001);
-                Geom::Point CP = b[4*c+3] + (1./3)*(b[4*c+0] - b[4*c+3]);
-                CP = Geom::Point(CP[X] + 0.0001,CP[Y] + 0.0001);
-                this->green_curve->curveto(BP,CP,b[4*c+3]);
+                Geom::Point point_at1 = b[4 * c + 0] + (1./3) * (b[4 * c + 3] - b[4 * c + 0]);
+                point_at1 = Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
+                Geom::Point point_at2 = b[4 * c + 3] + (1./3) * (b[4 * c + 0] - b[4 * c + 3]);
+                point_at2 = Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
+                this->green_curve->curveto(point_at1,point_at2,b[4*c+3]);
             }else{
                 this->green_curve->curveto(b[4 * c + 1], b[4 * c + 2], b[4 * c + 3]);
             }
@@ -810,11 +808,11 @@ void PencilTool::_fitAndSplit() {
             // if we are in BSpline we modify the trace to create adhoc nodes
         guint mode = prefs->getInt("/tools/freehand/pencil/freehand-mode", 0);
         if(mode == 2){
-            Geom::Point B = b[0] + (1./3)*(b[3] - b[0]);
-            B = Geom::Point(B[X] + 0.0001,B[Y] + 0.0001);
-            Geom::Point C = b[3] + (1./3)*(b[0] - b[3]);
-            C = Geom::Point(C[X] + 0.0001,C[Y] + 0.0001);
-            this->red_curve->curveto(B,C,b[3]);
+            Geom::Point point_at1 = b[0] + (1./3)*(b[3] - b[0]);
+            point_at1 = Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
+            Geom::Point point_at2 = b[3] + (1./3)*(b[0] - b[3]);
+            point_at2 = Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
+            this->red_curve->curveto(point_at1,point_at2,b[3]);
         }else{
             this->red_curve->curveto(b[1], b[2], b[3]);
         }

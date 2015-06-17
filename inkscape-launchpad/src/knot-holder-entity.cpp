@@ -140,19 +140,19 @@ KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape:
 
 static gdouble sp_pattern_extract_theta(SPPattern const *pat)
 {
-    Geom::Affine transf = pat->patternTransform;
+    Geom::Affine transf = pat->getTransform();
     return Geom::atan2(transf.xAxis());
 }
 
 static Geom::Point sp_pattern_extract_scale(SPPattern const *pat)
 {
-    Geom::Affine transf = pat->patternTransform;
+    Geom::Affine transf = pat->getTransform();
     return Geom::Point( transf.expansionX(), transf.expansionY() );
 }
 
 static Geom::Point sp_pattern_extract_trans(SPPattern const *pat)
 {
-    return Geom::Point(pat->patternTransform[4], pat->patternTransform[5]);
+    return Geom::Point(pat->getTransform()[4], pat->getTransform()[5]);
 }
 
 void
@@ -191,7 +191,7 @@ PatternKnotHolderEntityAngle::knot_get() const
 {
     SPPattern *pat = _fill ? SP_PATTERN(item->style->getFillPaintServer()) : SP_PATTERN(item->style->getStrokePaintServer());
 
-    gdouble x = pattern_width(pat);
+    gdouble x = pat->width();
     gdouble y = 0;
     Geom::Point delta = Geom::Point(x,y);
     Geom::Point scale = sp_pattern_extract_scale(pat);
@@ -240,8 +240,8 @@ PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &
 
     // Get the new scale from the position of the knotholder
     Geom::Point d = p_snapped - sp_pattern_extract_trans(pat);
-    gdouble pat_x = pattern_width(pat);
-    gdouble pat_y = pattern_height(pat);
+    gdouble pat_x = pat->width();
+    gdouble pat_y = pat->height();
     Geom::Scale scl(1);
     if ( state & GDK_CONTROL_MASK ) {
         // if ctrl is pressed: use 1:1 scaling
@@ -267,10 +267,10 @@ PatternKnotHolderEntityScale::knot_get() const
 {
     SPPattern *pat = _fill ? SP_PATTERN(item->style->getFillPaintServer()) : SP_PATTERN(item->style->getStrokePaintServer());
 
-    gdouble x = pattern_width(pat);
-    gdouble y = pattern_height(pat);
+    gdouble x = pat->width();
+    gdouble y = pat->height();
     Geom::Point delta = Geom::Point(x,y);
-    Geom::Affine a = pat->patternTransform;
+    Geom::Affine a = pat->getTransform();
     a[4] = 0;
     a[5] = 0;
     delta = delta * a;

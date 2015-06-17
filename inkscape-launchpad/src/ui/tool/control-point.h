@@ -193,6 +193,8 @@ public:
     virtual bool _eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEvent *event);
     SPDesktop *const _desktop; ///< The desktop this control point resides on.
 
+    bool doubleClicked() {return _double_clicked;}
+
 protected:
 
     struct ColorEntry {
@@ -361,6 +363,8 @@ protected:
     /** Events which should be captured when a handle is being dragged. */
     static int const _grab_event_mask;
 
+    static bool _drag_initiated;
+
 private:
 
     ControlPoint(ControlPoint const &other);
@@ -397,7 +401,7 @@ private:
 
     static bool _event_grab;
 
-    static bool _drag_initiated;
+    bool _double_clicked;
 };
 
 

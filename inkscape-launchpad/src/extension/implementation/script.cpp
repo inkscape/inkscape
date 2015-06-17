@@ -689,14 +689,13 @@ void Script::effect(Inkscape::Extension::Effect *module,
         return;
     }
 
-    Inkscape::Util::GSListConstIterator<SPItem *> selected =
+    std::vector<SPItem*> selected =
         desktop->getSelection()->itemList(); //desktop should not be NULL since doc was checked and desktop is a casted pointer
-    while ( selected != NULL ) {
+    for(std::vector<SPItem*>::const_iterator x = selected.begin(); x != selected.end(); x++){
         Glib::ustring selected_id;
         selected_id += "--id=";
-        selected_id += (*selected)->getId();
+        selected_id += (*x)->getId();
         params.insert(params.begin(), selected_id);
-        ++selected;
     }
 
     file_listener fileout;
@@ -813,6 +812,12 @@ void Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newr
         }
     }
 
+    if(!oldroot_namedview)
+    {
+        g_warning("Error on copy_doc: No namedview on destination document.");
+        return;
+    }
+
     // Unparent (delete)
     for (unsigned int i = 0; i < delete_list.size(); i++) {
         sp_repr_unparent(delete_list[i]);
@@ -824,12 +829,10 @@ void Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newr
             child = child->next()) {
         if (!strcmp("sodipodi:namedview", child->name())) {
             newroot_namedview = child;
-            if (oldroot_namedview != NULL) {
-                for (Inkscape::XML::Node * newroot_namedview_child = child->firstChild();
-                        newroot_namedview_child != NULL;
-                        newroot_namedview_child = newroot_namedview_child->next()) {
-                    oldroot_namedview->appendChild(newroot_namedview_child->duplicate(oldroot->document()));
-                }
+            for (Inkscape::XML::Node * newroot_namedview_child = child->firstChild();
+                    newroot_namedview_child != NULL;
+                    newroot_namedview_child = newroot_namedview_child->next()) {
+                oldroot_namedview->appendChild(newroot_namedview_child->duplicate(oldroot->document()));
             }
         } else {
             oldroot->appendChild(child->duplicate(oldroot->document()));
@@ -1027,7 +1030,10 @@ int Script::execute (const std::list<std::string> &in_command,
         return 0;
     }
 
-    _main_loop = Glib::MainLoop::create(false);
+    // Create a new MainContext for the loop so that the original context sources are not run here,
+    // this enforces that only the file_listeners should be read in this new MainLoop
+    Glib::RefPtr<Glib::MainContext> _main_context = Glib::MainContext::create();
+    _main_loop = Glib::MainLoop::create(_main_context, false);
 
     file_listener fileerr;
     fileout.init(stdout_pipe, _main_loop);

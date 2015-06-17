@@ -14,6 +14,7 @@
 #ifndef SEEN_SP_REPR_H
 #define SEEN_SP_REPR_H
 
+#include <vector>
 #include <glibmm/quark.h>
 
 #include "xml/node.h"
@@ -120,7 +121,9 @@ unsigned sp_repr_set_svg_length(Inkscape::XML::Node *repr, char const *key, SVGL
 unsigned sp_repr_set_point(Inkscape::XML::Node *repr, char const *key, Geom::Point const & val);
 unsigned sp_repr_get_point(Inkscape::XML::Node *repr, char const *key, Geom::Point *val);
 
+//c++-style comparison : returns (bool)(a<b)
 int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second);
+bool sp_repr_compare_position_bool(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second);
 
 // Searching
 /**
@@ -142,6 +145,10 @@ Inkscape::XML::Node *sp_repr_lookup_name(Inkscape::XML::Node *repr,
 Inkscape::XML::Node const *sp_repr_lookup_name(Inkscape::XML::Node const *repr,
                                                char const *name,
                                                int maxdepth = -1);
+                                               
+std::vector<Inkscape::XML::Node const *> sp_repr_lookup_name_many(Inkscape::XML::Node const *repr,
+                                                                  char const *name,
+                                                                  int maxdepth = -1);
 
 Inkscape::XML::Node *sp_repr_lookup_child(Inkscape::XML::Node *repr,
                                           char const *key,

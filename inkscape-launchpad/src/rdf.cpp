@@ -39,7 +39,7 @@
    </Agent></dc:rights>
    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
    <dc:source rdf:resource="source"/>
-   <license rdf:resource="http://creativecommons.org/licenses/by/2.0/" 
+   <license rdf:resource="http://creativecommons.org/licenses/by/4.0/" 
 />
 </Work>
 
@@ -173,32 +173,32 @@ struct rdf_double_t rdf_license_ofl [] = {
 
 struct rdf_license_t rdf_licenses [] = {
     { N_("CC Attribution"), 
-      "http://creativecommons.org/licenses/by/3.0/",
+      "http://creativecommons.org/licenses/by/4.0/",
       rdf_license_cc_a,
     },
 
     { N_("CC Attribution-ShareAlike"), 
-      "http://creativecommons.org/licenses/by-sa/3.0/",
+      "http://creativecommons.org/licenses/by-sa/4.0/",
       rdf_license_cc_a_sa,
     },
 
     { N_("CC Attribution-NoDerivs"), 
-      "http://creativecommons.org/licenses/by-nd/3.0/",
+      "http://creativecommons.org/licenses/by-nd/4.0/",
       rdf_license_cc_a_nd,
     },
 
     { N_("CC Attribution-NonCommercial"), 
-      "http://creativecommons.org/licenses/by-nc/3.0/",
+      "http://creativecommons.org/licenses/by-nc/4.0/",
       rdf_license_cc_a_nc,
     },
 
     { N_("CC Attribution-NonCommercial-ShareAlike"), 
-      "http://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "http://creativecommons.org/licenses/by-nc-sa/4.0/",
       rdf_license_cc_a_nc_sa,
     },
 
     { N_("CC Attribution-NonCommercial-NoDerivs"), 
-      "http://creativecommons.org/licenses/by-nc-nd/3.0/",
+      "http://creativecommons.org/licenses/by-nc-nd/4.0/",
       rdf_license_cc_a_nc_nd,
     },
 

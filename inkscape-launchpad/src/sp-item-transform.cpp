@@ -152,7 +152,7 @@ Geom::Affine get_scale_transform_for_uniform_stroke(Geom::Rect const &bbox_visua
 
     gdouble scale_x = 1;
     gdouble scale_y = 1;
-    gdouble r1 = r0;
+    gdouble r1;
 
     if ((fabs(w0 - stroke_x) < 1e-6) || w1 == 0) { // We have a vertical line at hand
         scale_y = h1/h0;
@@ -310,8 +310,8 @@ Geom::Affine get_scale_transform_for_variable_stroke(Geom::Rect const &bbox_visu
 
     gdouble scale_x = 1;
     gdouble scale_y = 1;
-    gdouble r1h = r0h;
-    gdouble r1w = r0w;
+    gdouble r1h;
+    gdouble r1w;
 
     if ((fabs(w0 - r0w) < 1e-6) || w1 == 0) { // We have a vertical line at hand
         scale_y = h1/h0;

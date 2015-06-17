@@ -79,11 +79,9 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name.data(), NULL);
 
     bool modmade = false;
-    for (GSList const *items = desktop->getSelection()->itemList();
-         items != NULL;
-         items = items->next)
-    {
-        SPItem *item = reinterpret_cast<SPItem*>(items->data);
+    std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_SPIRAL(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_svg_double( repr, namespaced_name,
@@ -197,11 +195,9 @@ static void sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, 
 
     purge_repr_listener( tbl, tbl );
 
-    for (GSList const *items = selection->itemList();
-         items != NULL;
-         items = items->next)
-    {
-        SPItem *item = reinterpret_cast<SPItem*>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_SPIRAL(item)) {
             n_selected++;
             repr = item->getRepr();

@@ -4,6 +4,7 @@ set(libuemf_SRC
 	uemf.c
 	uemf_endian.c
 	uemf_print.c
+	uemf_safe.c
 	uemf_utf.c
 	uwmf.c
 	uwmf_endian.c
@@ -17,6 +18,7 @@ set(libuemf_SRC
 	uemf.h
 	uemf_endian.h
 	uemf_print.h
+	uemf_safe.h
 	uemf_utf.h
 	uwmf.h
 	uwmf_endian.h

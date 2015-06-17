@@ -326,21 +326,21 @@ void
 sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool_op bop, const unsigned int verb, const Glib::ustring description)
 {
     SPDocument *doc = selection->layers()->getDocument();
-    GSList *il = (GSList *) selection->itemList();
+    std::vector<SPItem*> il= selection->itemList();
     
     // allow union on a single object for the purpose of removing self overlapse (svn log, revision 13334)
-    if ( (g_slist_length(il) < 2) && (bop != bool_op_union)) {
+    if ( (il.size() < 2) && (bop != bool_op_union)) {
         boolop_display_error_message(desktop, _("Select <b>at least 2 paths</b> to perform a boolean operation."));
         return;
     }
-    else if ( g_slist_length(il) < 1 ) {
+    else if ( il.size() < 1 ) {
         boolop_display_error_message(desktop, _("Select <b>at least 1 path</b> to perform a boolean union."));
         return;
     }
 
-    g_assert(il != NULL);
+    g_assert(!il.empty());
 
-    if (g_slist_length(il) > 2) {
+    if (il.size() > 2) {
         if (bop == bool_op_diff || bop == bool_op_cut || bop == bool_op_slice ) {
             boolop_display_error_message(desktop, _("Select <b>exactly 2 paths</b> to perform difference, division, or path cut."));
             return;
@@ -354,8 +354,8 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
 
     if (bop == bool_op_diff || bop == bool_op_cut || bop == bool_op_slice) {
         // check in the tree to find which element of the selection list is topmost (for 2-operand commands only)
-        Inkscape::XML::Node *a = SP_OBJECT(il->data)->getRepr();
-        Inkscape::XML::Node *b = SP_OBJECT(il->next->data)->getRepr();
+        Inkscape::XML::Node *a = il.front()->getRepr();
+        Inkscape::XML::Node *b = il.back()->getRepr();
 
         if (a == NULL || b == NULL) {
             boolop_display_error_message(desktop, _("Unable to determine the <b>z-order</b> of the objects selected for difference, XOR, division, or path cut."));
@@ -394,38 +394,36 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
         }
     }
 
-    il = g_slist_copy(il);
-    g_assert(il != NULL);
+    g_assert(!il.empty());
 
     // first check if all the input objects have shapes
     // otherwise bail out
-    for (GSList *l = il; l != NULL; l = l->next)
+    for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++)
     {
-        SPItem *item = SP_ITEM(l->data);
+        SPItem *item = *l;
         if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item) && !SP_IS_FLOWTEXT(item))
         {
             boolop_display_error_message(desktop, _("One of the objects is <b>not a path</b>, cannot perform boolean operation."));
-            g_slist_free(il);
             return;
         }
     }
 
     // extract the livarot Paths from the source objects
     // also get the winding rule specified in the style
-    int nbOriginaux = g_slist_length(il);
+    int nbOriginaux = il.size();
     std::vector<Path *> originaux(nbOriginaux);
     std::vector<FillRule> origWind(nbOriginaux);
     int curOrig;
     {
         curOrig = 0;
-        for (GSList *l = il; l != NULL; l = l->next)
+        for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++)
         {
             // apply live path effects prior to performing boolean operation
-            if (SP_IS_LPE_ITEM(l->data)) {
-                SP_LPE_ITEM(l->data)->removeAllPathEffects(true);
+            if (SP_IS_LPE_ITEM(*l)) {
+                SP_LPE_ITEM(*l)->removeAllPathEffects(true);
             }
 
-            SPCSSAttr *css = sp_repr_css_attr(reinterpret_cast<SPObject *>(il->data)->getRepr(), "style");
+            SPCSSAttr *css = sp_repr_css_attr(reinterpret_cast<SPObject *>(il[0])->getRepr(), "style");
             gchar const *val = sp_repr_css_property(css, "fill-rule", NULL);
             if (val && strcmp(val, "nonzero") == 0) {
                 origWind[curOrig]= fill_nonZero;
@@ -435,11 +433,10 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
                 origWind[curOrig]= fill_nonZero;
             }
 
-            originaux[curOrig] = Path_for_item((SPItem *) l->data, true, true);
+            originaux[curOrig] = Path_for_item(*l, true, true);
             if (originaux[curOrig] == NULL || originaux[curOrig]->descr_cmd.size() <= 1)
             {
                 for (int i = curOrig; i >= 0; i--) delete originaux[i];
-                g_slist_free(il);
                 return;
             }
             curOrig++;
@@ -472,7 +469,8 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
         theShapeA->ConvertToShape(theShape, origWind[0]);
 
         curOrig = 1;
-        for (GSList *l = il->next; l != NULL; l = l->next) {
+        for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
+            if(*l==il[0])continue;
             originaux[curOrig]->ConvertWithBackData(0.1);
 
             originaux[curOrig]->Fill(theShape, curOrig);
@@ -668,15 +666,13 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
     if (res->descr_cmd.size() <= 1)
     {
         // only one command, presumably a moveto: it isn't a path
-        for (GSList *l = il; l != NULL; l = l->next)
-        {
-            SP_OBJECT(l->data)->deleteObject();
+        for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
+            (*l)->deleteObject();
         }
         DocumentUndo::done(doc, SP_VERB_NONE, description);
         selection->clear();
 
         delete res;
-        g_slist_free(il);
         return;
     }
 
@@ -684,19 +680,17 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
     SPObject *source;
     if ( bop == bool_op_diff || bop == bool_op_cut || bop == bool_op_slice ) {
         if (reverseOrderForOp) {
-             source = SP_OBJECT(il->data);
+             source = il[0];
         } else {
-             source = SP_OBJECT(il->next->data);
+             source = il.back();
         }
     } else {
         // find out the bottom object
-        GSList *sorted = g_slist_copy((GSList *) selection->reprList());
+    	std::vector<Inkscape::XML::Node*> sorted(selection->reprList());
 
-        sorted = g_slist_sort(sorted, (GCompareFunc) sp_repr_compare_position);
+        sort(sorted.begin(),sorted.end(),sp_repr_compare_position_bool);
 
-        source = doc->getObjectByRepr((Inkscape::XML::Node *)sorted->data);
-
-        g_slist_free(sorted);
+        source = doc->getObjectByRepr(sorted.front());
     }
 
     // adjust style properties that depend on a possible transform in the source object in order
@@ -721,17 +715,16 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
     gchar *desc = source->desc();
     // remove source paths
     selection->clear();
-    for (GSList *l = il; l != NULL; l = l->next) {
+    for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
         // if this is the bottommost object,
-        if (!strcmp(reinterpret_cast<SPObject *>(l->data)->getRepr()->attribute("id"), id)) {
+        if (!strcmp(reinterpret_cast<SPObject *>(*l)->getRepr()->attribute("id"), id)) {
             // delete it so that its clones don't get alerted; this object will be restored shortly, with the same id
-            SP_OBJECT(l->data)->deleteObject(false);
+            (*l)->deleteObject(false);
         } else {
             // delete the object for real, so that its clones can take appropriate action
-            SP_OBJECT(l->data)->deleteObject();
+            (*l)->deleteObject();
         }
     }
-    g_slist_free(il);
 
     // premultiply by the inverse of parent's repr
     SPItem *parent_item = SP_ITEM(doc->getObjectByRepr(parent));
@@ -1159,12 +1152,9 @@ sp_selected_path_outline(SPDesktop *desktop)
     }
 
     bool did = false;
-
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
-         items != NULL;
-         items = items->next) {
-
-        SPItem *item = SP_ITEM(items->data);
+    std::vector<SPItem*> il(selection->itemList());
+    for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
+        SPItem *item = *l;
 
         if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
             continue;
@@ -1776,12 +1766,9 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
     }
 
     bool did = false;
-
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
-         items != NULL;
-         items = items->next) {
-
-        SPItem *item = SP_ITEM(items->data);
+    std::vector<SPItem*> il(selection->itemList());
+    for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
+        SPItem *item = *l;
         SPCurve *curve = NULL;
 
         if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
@@ -1977,7 +1964,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
 
 static bool
 sp_selected_path_simplify_items(SPDesktop *desktop,
-                                Inkscape::Selection *selection, GSList *items,
+                                Inkscape::Selection *selection, std::vector<SPItem*> &items,
                                 float threshold,  bool justCoalesce,
                                 float angleLimit, bool breakableAngles,
                                 bool modifySelection);
@@ -1996,7 +1983,7 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
 
     //If this is a group, do the children instead
     if (SP_IS_GROUP(item)) {
-        GSList *items = sp_item_group_item_list(SP_GROUP(item));
+    	std::vector<SPItem*> items = sp_item_group_item_list(SP_GROUP(item));
         
         return sp_selected_path_simplify_items(desktop, selection, items,
                                                threshold, justCoalesce,
@@ -2121,7 +2108,7 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
 
 bool
 sp_selected_path_simplify_items(SPDesktop *desktop,
-                                Inkscape::Selection *selection, GSList *items,
+                                Inkscape::Selection *selection, std::vector<SPItem*> &items,
                                 float threshold,  bool justCoalesce,
                                 float angleLimit, bool breakableAngles,
                                 bool modifySelection)
@@ -2147,13 +2134,13 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
     gdouble simplifySize  = selectionSize;
 
     int pathsSimplified = 0;
-    int totalPathCount  = g_slist_length(items);
+    int totalPathCount  = items.size();
 
     // set "busy" cursor
     desktop->setWaitingCursor();
 
-    for (; items != NULL; items = items->next) {
-        SPItem *item = (SPItem *) items->data;
+    for (std::vector<SPItem*>::const_iterator l = items.begin(); l != items.end(); l++){
+        SPItem *item = *l;
 
         if (!(SP_IS_GROUP(item) || SP_IS_SHAPE(item) || SP_IS_TEXT(item)))
           continue;
@@ -2201,7 +2188,7 @@ sp_selected_path_simplify_selection(SPDesktop *desktop, float threshold, bool ju
         return;
     }
 
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    std::vector<SPItem*> items(selection->itemList());
 
     bool didSomething = sp_selected_path_simplify_items(desktop, selection,
                                                         items, threshold,

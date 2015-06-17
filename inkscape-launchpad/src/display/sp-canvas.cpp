@@ -375,6 +375,7 @@ sp_canvas_item_init(SPCanvasItem *item)
     // used for rubberbanding, path outline, etc.
     item->visible = TRUE;
     item->in_destruction = false;
+    item->pickable = true;
 }
 
 SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GType type, gchar const *first_arg_name, ...)
@@ -728,7 +729,6 @@ bool sp_canvas_item_is_visible(SPCanvasItem *item)
 	return item->visible;
 }
 
-
 /**
  * Sets visible flag on item and requests a redraw.
  */
@@ -1009,21 +1009,21 @@ double SPCanvasGroup::point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **ac
         if ((child->x1 <= x2) && (child->y1 <= y2) && (child->x2 >= x1) && (child->y2 >= y1)) {
             SPCanvasItem *point_item = NULL; // cater for incomplete item implementations
 
-            int has_point;
-            if (child->visible && SP_CANVAS_ITEM_GET_CLASS(child)->point) {
+            int pickable;
+            if (child->visible && child->pickable && SP_CANVAS_ITEM_GET_CLASS(child)->point) {
                 dist = sp_canvas_item_invoke_point(child, p, &point_item);
-                has_point = TRUE;
+                pickable = TRUE;
             } else {
-                has_point = FALSE;
+                pickable = FALSE;
             }
 
-            // This metric should be improved, because in case of (partly) overlapping items we will now
+            // TODO: This metric should be improved, because in case of (partly) overlapping items we will now
             // always select the last one that has been added to the group. We could instead select the one
             // of which the center is the closest, for example. One can then move to the center
             // of the item to be focused, and have that one selected. Of course this will only work if the
             // centers are not coincident, but at least it's better than what we have now.
             // See the extensive comment in Inkscape::SelTrans::_updateHandles()
-            if (has_point && point_item && ((int) (dist + 0.5) <= item->canvas->close_enough)) {
+            if (pickable && point_item && ((int) (dist + 0.5) <= item->canvas->close_enough)) {
                 best = dist;
                 *actual_item = point_item;
             }
@@ -1480,20 +1480,6 @@ int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
     if (canvas->grabbed_item && !is_descendant (canvas->current_item, canvas->grabbed_item)) {
         item = canvas->grabbed_item;
     } else {
-        // Make sure that current_item is up-to-date. If a snap indicator was just deleted, then
-        // sp_canvas_item_dispose has been called and there is no current_item specified. We need
-        // that though because otherwise we don't know where to send this event to, leading to a
-        // lost event. We can't wait for idle events to have current_item updated, we need it now!
-        // Otherwise, scrolling when hovering above a pre-snap indicator won't work (for example)
-        // See this bug report: https://bugs.launchpad.net/inkscape/+bug/522335/comments/8
-        if (canvas->need_repick && !canvas->in_repick && event->type == GDK_SCROLL) {
-            // To avoid side effects, we'll only do this for scroll events, because this is the
-            // only thing we want to fix here. An example of a reported side effect is that
-            // otherwise selection of nodes in the node editor by dragging a rectangle using a
-            // tablet will break
-            canvas->need_repick = FALSE;
-            pickCurrentItem(canvas, reinterpret_cast<GdkEvent *>(event));
-        }
         item = canvas->current_item;
     }
 
@@ -1527,7 +1513,7 @@ int SPCanvasImpl::pickCurrentItem(SPCanvas *canvas, GdkEvent *event)
 {
     int button_down = 0;
 
-    if (!canvas->root) // canvas may have already be destroyed by closing desktop durring interrupted display!
+    if (!canvas->root) // canvas may have already be destroyed by closing desktop during interrupted display!
         return FALSE;
 
     int retval = FALSE;

@@ -40,6 +40,10 @@ public:
    I've added these manually.
 
    SVG 2: white-space, shape-inside, shape-outside, shape-padding, shape-margin
+   SVG 2: text-decoration-fill, text-decoration-stroke
+   SVG 2: solid-color, solid-opacity
+   SVG 2: Hatches and Meshes
+   CSS 3: font-variant-xxx, font-feature-settings
 */
 struct {char const *attr; bool supported;} const all_attrs[] = {
     {"attributeName", true},
@@ -124,11 +128,18 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"flood-color", true},
     {"flood-opacity", true},
     {"font-family", true},
+    {"font-feature-settings", true},
     {"font-size", true},
     {"font-size-adjust", true},
     {"font-stretch", true},
     {"font-style", true},
     {"font-variant", true},
+    {"font-variant-ligatures", true},
+    {"font-variant-position", true},
+    {"font-variant-caps", true},
+    {"font-variant-numeric", true},
+    {"font-variant-east-asian", true},
+    {"font-variant-alternates", true},
     {"font-weight", true},
     {"format", false},
     {"from", true},
@@ -288,6 +299,8 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"text-decoration-line", true},
     {"text-decoration-style", true},
     {"text-decoration-color", true},
+    {"text-decoration-fill", true},
+    {"text-decoration-stroke", true},
     {"text-indent", true},
     {"text-rendering", true},
     {"text-transform", true},
@@ -381,8 +394,11 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:pageopacity", true},
     {"inkscape:pageshadow", true},
     {"inkscape:path-effect", true},
+    // SPItem
     {"inkscape:transform-center-x", true},
     {"inkscape:transform-center-y", true},
+    {"inkscape:highlight-color", true},
+    // Namedview
     {"inkscape:zoom", true},
     {"inkscape:cx", true},
     {"inkscape:cy", true},
@@ -392,6 +408,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:window-y", true},
     {"inkscape:window-maximized", true},
     {"inkscape:current-layer", true},
+    // Connector tool
     {"inkscape:connector-type", true},
     {"inkscape:connection-start", true},
     {"inkscape:connection-end", true},
@@ -401,10 +418,12 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:connector-curvature", true},
     {"inkscape:connector-avoid", true},
     {"inkscape:connector-spacing", true},
+    // Ellipse, Spiral, Star
     {"sodipodi:cx", true},
     {"sodipodi:cy", true},
     {"sodipodi:rx", true},
     {"sodipodi:ry", true},
+    // Box tool
     {"inkscape:perspectiveID", true},
     {"inkscape:corner0", true},
     {"inkscape:corner7", true},
@@ -414,6 +433,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:vp_y", true},
     {"inkscape:vp_z", true},
     {"inkscape:persp3d-origin", true},
+    // Star tool
     {"sodipodi:start", true},
     {"sodipodi:end", true},
     {"sodipodi:open", true},
@@ -446,9 +466,19 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:layoutOptions", true},
     {"osb:paint", true},
 
+    /* SPSolidColor" */
+    {"solid-color", true},
+    {"solid-opacity", true},
+
     /* SPMeshPatch */
     {"tensor", true},
 
+    /* SPHash */
+    {"hatchUnits", true},
+    {"hatchContentUnits", true},
+    {"hatchTransform", true},
+    {"pitch", true},
+    
     /* SPNamedView */
     {"fit-margin-top", true},
     {"fit-margin-left", true},
@@ -485,8 +515,10 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"pagecolor", true},
 
     /* SPGuide */
-    {"position", true}
+    {"position", true},
 
+    /* SPTag */
+    {"inkscape:expanded", true}
 };
 
 

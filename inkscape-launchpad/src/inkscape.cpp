@@ -22,10 +22,6 @@
 
 #include <map>
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/messagedialog.h>
 #include "debug/simple-event.h"
 #include "debug/event-tracker.h"

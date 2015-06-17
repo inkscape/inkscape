@@ -713,13 +713,21 @@ bool LayersPanel::_handleDragDrop(const Glib::RefPtr<Gdk::DragContext>& /*contex
  */
 void LayersPanel::_doTreeMove( )
 {
-    if (_dnd_source ) {
+    if (_dnd_source &&  _dnd_source->getRepr() ) {
+        if(!_dnd_target){
+            _dnd_source->doWriteTransform(_dnd_source->getRepr(), _dnd_source->document->getRoot()->i2doc_affine().inverse() * _dnd_source->i2doc_affine());
+        }else{
+            SPItem* parent = _dnd_into ? _dnd_target : dynamic_cast<SPItem*>(_dnd_target->parent);
+            if(parent){
+                Geom::Affine move = parent->i2doc_affine().inverse() * _dnd_source->i2doc_affine();
+                _dnd_source->doWriteTransform(_dnd_source->getRepr(), move);
+            }
+        }
         _dnd_source->moveTo(_dnd_target, _dnd_into);
         _selectLayer(_dnd_source);
         _dnd_source = NULL;
         DocumentUndo::done( _desktop->doc() , SP_VERB_NONE,
-                                            _("Moved layer"));
-
+                                            _("Move layer"));
     }
 }
 

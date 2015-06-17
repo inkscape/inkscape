@@ -161,11 +161,9 @@ void SPGroup::update(SPCtx *ctx, unsigned int flags) {
       childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
     childflags &= SP_OBJECT_MODIFIED_CASCADE;
-
-    GSList *l = g_slist_reverse(this->childList(true, SPObject::ActionUpdate));
-    while (l) {
-        SPObject *child = SP_OBJECT (l->data);
-        l = g_slist_remove (l, child);
+    std::vector<SPObject*> l=this->childList(true, SPObject::ActionUpdate);
+    for(std::vector<SPObject*> ::const_iterator i=l.begin();i!=l.end();i++){
+        SPObject *child = *i;
 
         if (childflags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             SPItem *item = dynamic_cast<SPItem *>(child);
@@ -201,20 +199,15 @@ void SPGroup::update(SPCtx *ctx, unsigned int flags) {
 void SPGroup::modified(guint flags) {
     // std::cout << "SPGroup::modified(): " << (getId()?getId():"null") << std::endl;
     SPLPEItem::modified(flags);
-
-    SPObject *child;
-
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
     	flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
 
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    GSList *l = g_slist_reverse(this->childList(true));
-
-    while (l) {
-        child = SP_OBJECT (l->data);
-        l = g_slist_remove (l, child);
+    std::vector<SPObject*> l=this->childList(true);
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+        SPObject *child = *i;
 
         if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             child->emitModified(flags);
@@ -286,35 +279,27 @@ Geom::OptRect SPGroup::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
     Geom::OptRect bbox;
 
     // TODO CPPIFY: replace this const_cast later
-    GSList *l = const_cast<SPGroup*>(this)->childList(false, SPObject::ActionBBox);
-
-    while (l) {
-        SPObject *o = SP_OBJECT (l->data);
-
+    std::vector<SPObject*> l = const_cast<SPGroup*>(this)->childList(false, SPObject::ActionBBox);
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+        SPObject *o = *i;
         SPItem *item = dynamic_cast<SPItem *>(o);
         if (item && !item->isHidden()) {
             Geom::Affine const ct(item->transform * transform);
             bbox |= item->bounds(bboxtype, ct);
         }
-
-        l = g_slist_remove (l, o);
     }
 
     return bbox;
 }
 
 void SPGroup::print(SPPrintContext *ctx) {
-    GSList *l = g_slist_reverse(this->childList(false));
-
-    while (l) {
-        SPObject *o = SP_OBJECT (l->data);
-
+	std::vector<SPObject*> l=this->childList(false);
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+        SPObject *o = *i;
         SPItem *item = dynamic_cast<SPItem *>(o);
         if (item) {
             item->invoke_print(ctx);
         }
-
-        l = g_slist_remove (l, o);
     }
 }
 
@@ -362,17 +347,14 @@ Inkscape::DrawingItem *SPGroup::show (Inkscape::Drawing &drawing, unsigned int k
 }
 
 void SPGroup::hide (unsigned int key) {
-    GSList *l = g_slist_reverse(this->childList(false, SPObject::ActionShow));
-
-    while (l) {
-        SPObject *o = SP_OBJECT (l->data);
+	std::vector<SPObject*> l=this->childList(false, SPObject::ActionShow);
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+        SPObject *o = *i;
 
         SPItem *item = dynamic_cast<SPItem *>(o);
         if (item) {
             item->invoke_hide(key);
         }
-
-        l = g_slist_remove (l, o);
     }
 
 //    SPLPEItem::onHide(key);
@@ -393,7 +375,7 @@ void sp_item_group_ungroup_handle_clones(SPItem *parent, Geom::Affine const g)
 {
     for(std::list<SPObject*>::const_iterator refd=parent->hrefList.begin();refd!=parent->hrefList.end();refd++){
         SPItem *citem = dynamic_cast<SPItem *>(*refd);
-        if (citem) {
+        if (citem && !citem->cloned) {
             SPUse *useitem = dynamic_cast<SPUse *>(citem);
             if (useitem && useitem->get_original() == parent) {
                 Geom::Affine ctrans;
@@ -407,7 +389,7 @@ void sp_item_group_ungroup_handle_clones(SPItem *parent, Geom::Affine const g)
 }
 
 void
-sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
+sp_item_group_ungroup (SPGroup *group, std::vector<SPItem*> &children, bool do_done)
 {
     g_return_if_fail (group != NULL);
 
@@ -559,15 +541,12 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 
         if (item) {
             item->doWriteTransform(repr, item->transform, NULL, false);
+            children.insert(children.begin(),item);
         } else {
             g_assert_not_reached();
         }
 
         Inkscape::GC::release(repr);
-        if (children && item) {
-            *children = g_slist_prepend(*children, item);
-        }
-
         items = g_slist_remove (items, items->data);
     }
 
@@ -580,19 +559,17 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
  * some API for list aspect of SPGroup
  */
 
-GSList *sp_item_group_item_list(SPGroup * group)
+std::vector<SPItem*> sp_item_group_item_list(SPGroup * group)
 {
-    g_return_val_if_fail(group != NULL, NULL);
-
-    GSList *s = NULL;
+    std::vector<SPItem*> s;
+    g_return_val_if_fail(group != NULL, s);
 
     for (SPObject *o = group->firstChild() ; o ; o = o->getNext() ) {
         if ( dynamic_cast<SPItem *>(o) ) {
-            s = g_slist_prepend(s, o);
+            s.push_back((SPItem*)o);
         }
     }
-
-    return g_slist_reverse (s);
+    return s;
 }
 
 SPObject *sp_item_group_get_child_by_name(SPGroup *group, SPObject *ref, const gchar *name)
@@ -807,9 +784,9 @@ gint SPGroup::getItemCount() const {
 
 void SPGroup::_showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags) {
     Inkscape::DrawingItem *ac = NULL;
-    GSList *l = g_slist_reverse(this->childList(false, SPObject::ActionShow));
-    while (l) {
-        SPObject *o = SP_OBJECT (l->data);
+    std::vector<SPObject*> l=this->childList(false, SPObject::ActionShow);
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+        SPObject *o = *i;
         SPItem * child = dynamic_cast<SPItem *>(o);
         if (child) {
             ac = child->invoke_show (drawing, key, flags);
@@ -817,7 +794,6 @@ void SPGroup::_showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *
                 ai->appendChild(ac);
             }
         }
-        l = g_slist_remove (l, o);
     }
 }
 
@@ -826,10 +802,10 @@ void SPGroup::update_patheffect(bool write) {
     g_message("sp_group_update_patheffect: %p\n", lpeitem);
 #endif
 
-    GSList const *item_list = sp_item_group_item_list(this);
+    std::vector<SPItem*> const item_list = sp_item_group_item_list(this);
 
-    for ( GSList const *iter = item_list; iter; iter = iter->next ) {
-        SPObject *subitem = static_cast<SPObject *>(iter->data);
+    for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+        SPObject *subitem = *iter;
 
         SPLPEItem *lpeItem = dynamic_cast<SPLPEItem *>(subitem);
         if (lpeItem) {
@@ -854,10 +830,10 @@ void SPGroup::update_patheffect(bool write) {
 static void
 sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write)
 {
-    GSList const *item_list = sp_item_group_item_list(group);
+    std::vector<SPItem*> const item_list = sp_item_group_item_list(group);
 
-    for ( GSList const *iter = item_list; iter; iter = iter->next ) {
-        SPObject *subitem = static_cast<SPObject *>(iter->data);
+    for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+        SPObject *subitem = *iter;
 
         SPGroup *subGroup = dynamic_cast<SPGroup *>(subitem);
         if (subGroup) {

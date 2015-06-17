@@ -19,10 +19,6 @@
 # include "config.h"
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/widget.h>
 #include <stddef.h>
 #include <sigc++/connection.h>

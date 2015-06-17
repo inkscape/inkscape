@@ -5,11 +5,11 @@
 #include "document-undo.h"
 #include "gradient-chemistry.h"
 #include "gradient-selector.h"
-#include "sp-color-notebook.h"
 #include "sp-stop.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg-color.h"
 #include "verbs.h"
+#include "ui/widget/color-notebook.h"
 #include "xml/node.h"
 
 namespace Inkscape
@@ -20,8 +20,10 @@ namespace Widgets
 SwatchSelector::SwatchSelector() :
     Gtk::VBox(),
     _gsel(0),
-    _csel(0)
+    _updating_color(false)
 {
+    using Inkscape::UI::Widget::ColorNotebook;
+
     GtkWidget *gsel = sp_gradient_selector_new();
     _gsel = SP_GRADIENT_SELECTOR(gsel);
     g_object_set_data( G_OBJECT(gobj()), "base", this );
@@ -31,27 +33,18 @@ SwatchSelector::SwatchSelector() :
 
     pack_start(*Gtk::manage(Glib::wrap(gsel)));
 
+    Gtk::Widget *color_selector = Gtk::manage(new ColorNotebook(_selected_color));
+    color_selector->show();
+    pack_start(*color_selector);
 
-    GtkWidget *csel = sp_color_selector_new( SP_TYPE_COLOR_NOTEBOOK );
-    _csel = SP_COLOR_SELECTOR(csel);
-    Gtk::Widget *wrappedCSel = Glib::wrap(csel);
-    wrappedCSel->show();
-    //gtk_widget_show(csel);
-
-
-    GObject *obj = G_OBJECT(csel);
-
-    g_signal_connect(obj, "grabbed", G_CALLBACK(_grabbedCb), this);
-    g_signal_connect(obj, "dragged", G_CALLBACK(_draggedCb), this);
-    g_signal_connect(obj, "released", G_CALLBACK(_releasedCb), this);
-    g_signal_connect(obj, "changed", G_CALLBACK(_changedCb), this);
-
-    pack_start(*Gtk::manage(wrappedCSel));
+    _selected_color.signal_grabbed.connect(sigc::mem_fun(this, &SwatchSelector::_grabbedCb));
+    _selected_color.signal_dragged.connect(sigc::mem_fun(this, &SwatchSelector::_draggedCb));
+    _selected_color.signal_released.connect(sigc::mem_fun(this, &SwatchSelector::_releasedCb));
+    _selected_color.signal_changed.connect(sigc::mem_fun(this, &SwatchSelector::_changedCb));
 }
 
 SwatchSelector::~SwatchSelector()
 {
-    _csel = 0; // dtor should be handled by Gtk::manage()
     _gsel = 0;
 }
 
@@ -60,13 +53,13 @@ SPGradientSelector *SwatchSelector::getGradientSelector()
     return _gsel;
 }
 
-void SwatchSelector::_grabbedCb(SPColorSelector * /*csel*/, void * /*data*/)
+void SwatchSelector::_grabbedCb()
 {
 }
 
-void SwatchSelector::_draggedCb(SPColorSelector * /*csel*/, void *data)
+void SwatchSelector::_draggedCb()
 {
-    if (data) {
+   // if (data) {
         //SwatchSelector *swsel = reinterpret_cast<SwatchSelector*>(data);
 
         // TODO might have to block cycles
@@ -92,50 +85,46 @@ void SwatchSelector::_draggedCb(SPColorSelector * /*csel*/, void *data)
             }
         }
         */
+  //  }
+}
+
+void SwatchSelector::_releasedCb()
+{
+}
+
+void SwatchSelector::_changedCb()
+{
+    if (_updating_color) {
+        return;
     }
-}
+    // TODO might have to block cycles
 
-void SwatchSelector::_releasedCb(SPColorSelector * /*csel*/, void * /*data*/)
-{
-}
+    if (_gsel && _gsel->getVector()) {
+        SPGradient *gradient = _gsel->getVector();
+        SPGradient *ngr = sp_gradient_ensure_vector_normalized(gradient);
+        if (ngr != gradient) {
+            /* Our master gradient has changed */
+            // TODO replace with proper - sp_gradient_vector_widget_load_gradient(GTK_WIDGET(swsel->_gsel), ngr);
+        }
 
-void SwatchSelector::_changedCb(SPColorSelector */*csel*/, void *data)
-{
-    if (data) {
-        SwatchSelector *swsel = reinterpret_cast<SwatchSelector*>(data);
-
-        // TODO might have to block cycles
-
-        if (swsel->_gsel && swsel->_gsel->getVector()) {
-            SPGradient *gradient = swsel->_gsel->getVector();
-            SPGradient *ngr = sp_gradient_ensure_vector_normalized(gradient);
-            if (ngr != gradient) {
-                /* Our master gradient has changed */
-                // TODO replace with proper - sp_gradient_vector_widget_load_gradient(GTK_WIDGET(swsel->_gsel), ngr);
-            }
-
-            ngr->ensureVector();
+        ngr->ensureVector();
 
 
-            SPStop* stop = ngr->getFirstStop();
-            if (stop) {
-                SPColor color;
-                float alpha = 0;
-                guint32 rgb = 0;
+        SPStop* stop = ngr->getFirstStop();
+        if (stop) {
+            SPColor color = _selected_color.color();
+            gfloat alpha = _selected_color.alpha();
+            guint32 rgb = color.toRGBA32( 0x00 );
 
-                swsel->_csel->base->getColorAlpha( color, alpha );
-                rgb = color.toRGBA32( 0x00 );
+            // TODO replace with generic shared code that also handles icc-color
+            Inkscape::CSSOStringStream os;
+            gchar c[64];
+            sp_svg_write_color(c, sizeof(c), rgb);
+            os << "stop-color:" << c << ";stop-opacity:" << static_cast<gdouble>(alpha) <<";";
+            stop->getRepr()->setAttribute("style", os.str().c_str());
 
-                // TODO replace with generic shared code that also handles icc-color
-                Inkscape::CSSOStringStream os;
-                gchar c[64];
-                sp_svg_write_color(c, sizeof(c), rgb);
-                os << "stop-color:" << c << ";stop-opacity:" << static_cast<gdouble>(alpha) <<";";
-                stop->getRepr()->setAttribute("style", os.str().c_str());
-
-                DocumentUndo::done(ngr->document, SP_VERB_CONTEXT_GRADIENT,
-                                   _("Change swatch color"));
-            }
+            DocumentUndo::done(ngr->document, SP_VERB_CONTEXT_GRADIENT,
+                               _("Change swatch color"));
         }
     }
 }
@@ -173,11 +162,10 @@ void SwatchSelector::setVector(SPDocument */*doc*/, SPGradient *vector)
         SPStop* stop = vector->getFirstStop();
 
         guint32 const colorVal = stop->get_rgba32();
-        _csel->base->setAlpha(SP_RGBA32_A_F(colorVal));
-        SPColor color( SP_RGBA32_R_F(colorVal), SP_RGBA32_G_F(colorVal), SP_RGBA32_B_F(colorVal) );
-        // set its color, from the stored array
-        _csel->base->setColor( color );
-        gtk_widget_show_all( GTK_WIDGET(_csel) );
+        _updating_color = true;
+        _selected_color.setValue(colorVal);
+        _updating_color = false;
+        // gtk_widget_show_all( GTK_WIDGET(_csel) );
     } else {
         //gtk_widget_hide( GTK_WIDGET(_csel) );
     }

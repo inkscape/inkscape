@@ -70,6 +70,8 @@ public:
 
     void insertNodeAtExtremum(ExtremumType extremum);
     void insertNodes();
+    void insertNode(Geom::Point);
+    void insertNode(NodeList::iterator first, double t, bool take_selection);
     void duplicateNodes();
     void weldNodes(NodeList::iterator preserve_pos = NodeList::iterator());
     void weldSegments();
@@ -96,7 +98,7 @@ public:
     NodeList::iterator extremeNode(NodeList::iterator origin, bool search_selected,
         bool search_unselected, bool closest);
 
-    int BSplineGetSteps() const;
+    int _bsplineGetSteps() const;
     // this is necessary for Tab-selection in MultiPathManipulator
     SubpathList &subpathList() { return _subpaths; }
 
@@ -107,11 +109,11 @@ private:
 
     void _createControlPointsFromGeometry();
 
-    void recalculateIsBSpline();
-    bool isBSpline() const;
-    double BSplineHandlePosition(Handle *h, Handle *h2 = NULL);
-    Geom::Point BSplineHandleReposition(Handle *h, Handle *h2 = NULL);
-    Geom::Point BSplineHandleReposition(Handle *h, double pos);
+    void _recalculateIsBSpline();
+    bool _isBSpline() const;
+    double _bsplineHandlePosition(Handle *h, Handle *h2 = NULL);
+    Geom::Point _bsplineHandleReposition(Handle *h, Handle *h2 = NULL);
+    Geom::Point _bsplineHandleReposition(Handle *h, double pos);
     void _createGeometryFromControlPoints(bool alert_LPE = false);
     unsigned _deleteStretch(NodeList::iterator first, NodeList::iterator last, bool keep_shape);
     std::string _createTypeString();
@@ -133,7 +135,7 @@ private:
     void _removeNodesFromSelection();
     void _commit(Glib::ustring const &annotation);
     void _commit(Glib::ustring const &annotation, gchar const *key);
-    void _updateDragPoint(Geom::Point const &);
+    Geom::Coord _updateDragPoint(Geom::Point const &);
     void _updateOutlineOnZoomChange();
     double _getStrokeTolerance();
     Handle *_chooseHandle(Node *n, int which);
@@ -143,7 +145,7 @@ private:
     SPPath *_path; ///< can be an SPPath or an Inkscape::LivePathEffect::Effect  !!!
     SPCurve *_spcurve; // in item coordinates
     SPCanvasItem *_outline;
-    CurveDragPoint *_dragpoint; // an invisible control point hoverng over curve
+    CurveDragPoint *_dragpoint; // an invisible control point hovering over curve
     PathManipulatorObserver *_observer;
     Geom::Affine _d2i_transform; ///< desktop-to-item transform
     Geom::Affine _i2d_transform; ///< item-to-desktop transform, inverse of _d2i_transform

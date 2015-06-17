@@ -83,9 +83,9 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
     bool modmade = false;
 
     Inkscape::Selection *selection = desktop->getSelection();
-    GSList const *items = selection->itemList();
-    for (; items != NULL; items = items->next) {
-        SPItem *item = reinterpret_cast<SPItem*>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_int(repr,"sodipodi:sides",
@@ -128,9 +128,9 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
 
     bool modmade = false;
     Inkscape::Selection *selection = desktop->getSelection();
-    GSList const *items = selection->itemList();
-    for (; items != NULL; items = items->next) {
-        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
 
@@ -178,7 +178,6 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
     g_object_set_data( dataKludge, "freeze", GINT_TO_POINTER(TRUE) );
 
     Inkscape::Selection *selection = desktop->getSelection();
-    GSList const *items = selection->itemList();
     GtkAction* prop_action = GTK_ACTION( g_object_get_data( dataKludge, "prop_action" ) );
     bool modmade = false;
 
@@ -186,8 +185,9 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
         gtk_action_set_sensitive( prop_action, !flat );
     }
 
-    for (; items != NULL; items = items->next) {
-        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
             repr->setAttribute("inkscape:flatsided", flat ? "true" : "false" );
@@ -224,9 +224,9 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
     bool modmade = false;
 
     Inkscape::Selection *selection = desktop->getSelection();
-    GSList const *items = selection->itemList();
-    for (; items != NULL; items = items->next) {
-        SPItem *item = reinterpret_cast<SPItem*>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_svg_double(repr, "inkscape:rounded",
@@ -264,9 +264,9 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
     bool modmade = false;
 
     Inkscape::Selection *selection = desktop->getSelection();
-    GSList const *items = selection->itemList();
-    for (; items != NULL; items = items->next) {
-        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_svg_double(repr, "inkscape:randomized",
@@ -367,11 +367,9 @@ sp_star_toolbox_selection_changed(Inkscape::Selection *selection, GObject *tbl)
 
     purge_repr_listener( tbl, tbl );
 
-    for (GSList const *items = selection->itemList();
-         items != NULL;
-         items = items->next)
-    {
-        SPItem* item = reinterpret_cast<SPItem *>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (SP_IS_STAR(item)) {
             n_selected++;
             repr = item->getRepr();

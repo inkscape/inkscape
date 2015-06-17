@@ -65,7 +65,7 @@ SPImage *Tracer::getSelectedSPImage()
     if (sioxEnabled)
         {
         SPImage *img = NULL;
-        GSList const *list = sel->itemList();
+        std::vector<SPItem*> const list = sel->itemList();
         std::vector<SPItem *> items;
         sioxShapes.clear();
 
@@ -74,13 +74,13 @@ SPImage *Tracer::getSelectedSPImage()
            them as bottom-to-top so that we can discover the image and any
            SPItems above it
         */
-        for ( ; list ; list=list->next)
+        for (std::vector<SPItem*>::const_iterator i=list.begin() ; list.end()!=i ; i++)
             {
-            if (!SP_IS_ITEM(list->data))
+            if (!SP_IS_ITEM(*i))
                 {
                 continue;
                 }
-            SPItem *item = SP_ITEM(list->data);
+            SPItem *item = *i;
             items.insert(items.begin(), item);
             }
         std::vector<SPItem *>::iterator iter;

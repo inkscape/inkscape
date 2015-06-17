@@ -68,7 +68,7 @@ public:
 };
 
 // Map type for gathering UI family and style names
-typedef std::map<Glib::ustring, std::list<StyleNames> > FamilyToStylesMap;
+// typedef std::map<Glib::ustring, std::list<StyleNames> > FamilyToStylesMap;
 
 class font_factory {
 public:

@@ -14,10 +14,6 @@
 # include "config.h"
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/dialog.h>
 #include <gtkmm/stock.h>
 #include <glibmm/main.h>
@@ -116,7 +112,7 @@ bool FloatingBehavior::_trans_timer (void) {
     }
 
     float goal, current;
-    goal = current = _d->get_opacity();
+    current = _d->get_opacity();
 
     if (_dialog_active.get_value()) {
         goal = _trans_focus;

@@ -549,7 +549,7 @@ bool Find::item_font_match(SPItem *item, const gchar *text, bool exact, bool cas
 }
 
 
-GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
+std::vector<SPItem*> Find::filter_fields (std::vector<SPItem*> &l, bool exact, bool casematch)
 {
     Glib::ustring tmp = entry_find.getEntry()->get_text();
     if (tmp.empty()) {
@@ -557,17 +557,17 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
     }
     gchar* text = g_strdup(tmp.c_str());
 
-    GSList *in = l;
-    GSList *out = NULL;
+    std::vector<SPItem*> in = l;
+    std::vector<SPItem*> out;
 
     if (check_searchin_text.get_active()) {
-        for (GSList *i = in; i != NULL; i = i->next) {
-            SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+        for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+            SPObject *obj = *i;
             SPItem *item = dynamic_cast<SPItem *>(obj);
             g_assert(item != NULL);
             if (item_text_match(item, text, exact, casematch)) {
-                if (!g_slist_find(out, i->data)) {
-                    out = g_slist_prepend (out, i->data);
+                if (out.end()==find(out.begin(),out.end(), *i)) {
+                    out.push_back(*i);
                     if (_action_replace) {
                         item_text_match(item, text, exact, casematch, _action_replace);
                     }
@@ -584,12 +584,12 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
         bool attrvalue = check_attributevalue.get_active();
 
         if (ids) {
-            for (GSList *i = in; i != NULL; i = i->next) {
-                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+                SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 if (item_id_match(item, text, exact, casematch)) {
-                    if (!g_slist_find(out, i->data)) {
-                        out = g_slist_prepend (out, i->data);
+                    if (out.end()==find(out.begin(),out.end(), *i)) {
+                        out.push_back(*i);
                         if (_action_replace) {
                             item_id_match(item, text, exact, casematch, _action_replace);
                         }
@@ -600,14 +600,13 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
 
         if (style) {
-            for (GSList *i = in; i != NULL; i = i->next) {
-                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+                SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 g_assert(item != NULL);
                 if (item_style_match(item, text, exact, casematch)) {
-                    if (!g_slist_find(out, i->data))
-                        if (!g_slist_find(out, i->data)) {
-                            out = g_slist_prepend (out, i->data);
+                    if (out.end()==find(out.begin(),out.end(), *i)){
+                            out.push_back(*i);
                             if (_action_replace) {
                                 item_style_match(item, text, exact, casematch, _action_replace);
                             }
@@ -618,13 +617,13 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
 
         if (attrname) {
-            for (GSList *i = in; i != NULL; i = i->next) {
-                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+                SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 g_assert(item != NULL);
                 if (item_attr_match(item, text, exact, casematch)) {
-                    if (!g_slist_find(out, i->data)) {
-                        out = g_slist_prepend (out, i->data);
+                    if (out.end()==find(out.begin(),out.end(), *i)) {
+                        out.push_back(*i);
                         if (_action_replace) {
                             item_attr_match(item, text, exact, casematch, _action_replace);
                         }
@@ -635,13 +634,13 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
 
         if (attrvalue) {
-            for (GSList *i = in; i != NULL; i = i->next) {
-                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+                SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 g_assert(item != NULL);
                 if (item_attrvalue_match(item, text, exact, casematch)) {
-                    if (!g_slist_find(out, i->data)) {
-                        out = g_slist_prepend (out, i->data);
+                    if (out.end()==find(out.begin(),out.end(), *i)) {
+                        out.push_back(*i);
                         if (_action_replace) {
                             item_attrvalue_match(item, text, exact, casematch, _action_replace);
                         }
@@ -652,13 +651,13 @@ GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 
 
         if (font) {
-            for (GSList *i = in; i != NULL; i = i->next) {
-                SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+                SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 g_assert(item != NULL);
                 if (item_font_match(item, text, exact, casematch)) {
-                    if (!g_slist_find(out, i->data)) {
-                        out = g_slist_prepend (out, i->data);
+                    if (out.end()==find(out.begin(),out.end(),*i)) {
+                        out.push_back(*i);
                         if (_action_replace) {
                             item_font_match(item, text, exact, casematch, _action_replace);
                         }
@@ -716,29 +715,29 @@ bool Find::item_type_match (SPItem *item)
     return false;
 }
 
-GSList *Find::filter_types (GSList *l)
+std::vector<SPItem*> Find::filter_types (std::vector<SPItem*> &l)
 {
-    GSList *n = NULL;
-    for (GSList *i = l; i != NULL; i = i->next) {
-        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+    std::vector<SPItem*> n;
+    for(std::vector<SPItem*>::const_reverse_iterator i=l.rbegin(); l.rend() != i; i++) {
+        SPObject *obj = *i;
         SPItem *item = dynamic_cast<SPItem *>(obj);
         g_assert(item != NULL);
         if (item_type_match(item)) {
-            n = g_slist_prepend (n, i->data);
+        	n.push_back(*i);
         }
     }
     return n;
 }
 
 
-GSList *Find::filter_list (GSList *l, bool exact, bool casematch)
+std::vector<SPItem*> &Find::filter_list (std::vector<SPItem*> &l, bool exact, bool casematch)
 {
     l = filter_types (l);
     l = filter_fields (l, exact, casematch);
     return l;
 }
 
-GSList *Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
+std::vector<SPItem*> &Find::all_items (SPObject *r, std::vector<SPItem*> &l, bool hidden, bool locked)
 {
     if (dynamic_cast<SPDefs *>(r)) {
         return l; // we're not interested in items in defs
@@ -752,7 +751,7 @@ GSList *Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
         SPItem *item = dynamic_cast<SPItem *>(child);
         if (item && !child->cloned && !desktop->isLayer(item)) {
             if ((hidden || !desktop->itemIsHidden(item)) && (locked || !item->isLocked())) {
-                l = g_slist_prepend (l, child);
+                l.insert(l.begin(),(SPItem*)child);
             }
         }
         l = all_items (child, l, hidden, locked);
@@ -760,16 +759,17 @@ GSList *Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
     return l;
 }
 
-GSList *Find::all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked)
+std::vector<SPItem*> &Find::all_selection_items (Inkscape::Selection *s, std::vector<SPItem*> &l, SPObject *ancestor, bool hidden, bool locked)
 {
-    for (GSList *i = (GSList *) s->itemList(); i != NULL; i = i->next) {
-        SPObject *obj = reinterpret_cast<SPObject *>(i->data);
+	std::vector<SPItem*> itemlist=s->itemList();
+    for(std::vector<SPItem*>::const_reverse_iterator i=itemlist.rbegin(); itemlist.rend() != i; i++) {
+        SPObject *obj = *i;
         SPItem *item = dynamic_cast<SPItem *>(obj);
         g_assert(item != NULL);
         if (item && !item->cloned && !desktop->isLayer(item)) {
             if (!ancestor || ancestor->isAncestorOf(item)) {
                 if ((hidden || !desktop->itemIsHidden(item)) && (locked || !item->isLocked())) {
-                    l = g_slist_prepend (l, i->data);
+                    l.push_back(*i);
                 }
             }
         }
@@ -817,7 +817,7 @@ void Find::onAction()
     bool casematch = check_case_sensitive.get_active();
     blocked = true;
 
-    GSList *l = NULL;
+    std::vector<SPItem*> l;
     if (check_scope_selection.get_active()) {
         if (check_scope_layer.get_active()) {
             l = all_selection_items (desktop->selection, l, desktop->currentLayer(), hidden, locked);
@@ -831,12 +831,12 @@ void Find::onAction()
             l = all_items(desktop->getDocument()->getRoot(), l, hidden, locked);
         }
     }
-    guint all = g_slist_length (l);
+    guint all = l.size();
 
-    GSList *n = filter_list (l, exact, casematch);
+    std::vector<SPItem*> n = filter_list (l, exact, casematch);
 
-    if (n != NULL) {
-        int count = g_slist_length (n);
+    if (!n.empty()) {
+        int count = n.size();
         desktop->messageStack()->flashF(Inkscape::NORMAL_MESSAGE,
                                         // TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
                                         ngettext("<b>%d</b> object found (out of <b>%d</b>), %s match.",
@@ -857,7 +857,7 @@ void Find::onAction()
         Inkscape::Selection *selection = desktop->getSelection();
         selection->clear();
         selection->setList(n);
-        SPObject *obj = reinterpret_cast<SPObject *>(n->data);
+        SPObject *obj = n[0];
         SPItem *item = dynamic_cast<SPItem *>(obj);
         g_assert(item != NULL);
         scroll_to_show_item(desktop, item);

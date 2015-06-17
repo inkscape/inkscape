@@ -523,8 +523,9 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
 
         // resize each object in the selection
         if (separately) {
-            for (GSList *i = const_cast<GSList*>(selection->itemList()) ; i ; i = i->next) {
-                SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(i->data));
+        	std::vector<SPItem*> itemlist=selection->itemList();
+            for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+                SPItem *item = *i;
                 if (item) {
                     Geom::OptRect obj_size = item->desktopVisualBounds();
                     if ( obj_size ) {
@@ -578,8 +579,9 @@ bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
                 desktop->doc()->importDefs(tempdoc);
                 // make sure all selected items are converted to paths first (i.e. rectangles)
                 sp_selected_to_lpeitems(desktop);
-                for (GSList *itemptr = const_cast<GSList *>(selection->itemList()) ; itemptr ; itemptr = itemptr->next) {
-                    SPItem *item = reinterpret_cast<SPItem*>(itemptr->data);
+                std::vector<SPItem*> itemlist=selection->itemList();
+                for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+                    SPItem *item = *i;
                     _applyPathEffect(item, effectstack);
                 }
 
@@ -659,10 +661,10 @@ Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId(SPDesktop *desktop)
  */
 void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 {
-    GSList const *items = selection->itemList();
     // copy the defs used by all items
-    for (GSList *i = const_cast<GSList *>(items) ; i != NULL ; i = i->next) {
-        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(i->data));
+	std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (item) {
             _copyUsedDefs(item);
         } else {
@@ -671,11 +673,11 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
     }
 
     // copy the representation of the items
-    GSList *sorted_items = g_slist_copy(const_cast<GSList *>(items));
-    sorted_items = g_slist_sort(sorted_items, (GCompareFunc) sp_object_compare_position);
+    std::vector<SPItem*> sorted_items(itemlist);
+    sort(sorted_items.begin(),sorted_items.end(),sp_object_compare_position_bool);
 
-    for (GSList *i = sorted_items ; i ; i = i->next) {
-        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(i->data));
+    for(std::vector<SPItem*>::const_iterator i=sorted_items.begin();i!=sorted_items.end();i++){
+        SPItem *item = *i;
         if (item) {
             Inkscape::XML::Node *obj = item->getRepr();
             Inkscape::XML::Node *obj_copy = _copyNode(obj, _doc, _root);
@@ -703,8 +705,8 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
     }
 
     // copy style for Paste Style action
-    if (sorted_items) {
-        SPObject *object = static_cast<SPObject *>(sorted_items->data);
+    if (!sorted_items.empty()) {
+        SPObject *object = sorted_items[0];
         SPItem *item = dynamic_cast<SPItem *>(object);
         if (item) {
             SPCSSAttr *style = take_style_from_item(item);
@@ -727,7 +729,6 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         sp_repr_set_point(_clipnode, "max", size->max());
     }
 
-    g_slist_free(sorted_items);
 }
 
 
@@ -1164,8 +1165,8 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
                 sp_repr_get_double(nv, "inkscape:pageopacity", &opacity);
                 bgcolor |= SP_COLOR_F_TO_U(opacity);
             }
-
-            sp_export_png_file(_clipboardSPDoc, filename, area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, NULL);
+            std::vector<SPItem*> x;
+            sp_export_png_file(_clipboardSPDoc, filename, area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, x);
         }
         else
         {

@@ -22,10 +22,6 @@
 # include <config.h>
 #endif
 
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <gtkmm/box.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/button.h>
@@ -36,9 +32,11 @@
 #include "ui/widget/panel.h"
 #include "ui/widget/frame.h"
 #include "ui/dialog/desktop-tracker.h"
+#include "ui/widget/font-variants.h"
 
 class SPItem;
 struct SPFontSelector;
+class FontVariants;
 class font_instance;
 class SPCSSAttr;
 
@@ -113,6 +111,17 @@ protected:
      * @param self pointer to the current instance of the dialog.
      */
     static void onFontChange (SPFontSelector *fontsel, gchar* fontspec, TextEdit *self);
+
+    /**
+     * Callback invoked when the user modifies the font variant through the dialog.
+     *
+     * onFontChange updates the dialog UI. The subfunction setPreviewText updates the preview label.
+     *
+     * @param fontsel pointer to FontVariant (currently not used).
+     * @param fontspec for the text to be previewed.
+     * @param self pointer to the current instance of the dialog.
+     */
+    static void onFontVariantChange (TextEdit *self);
 
     /**
      * Callback invoked when the user modifies the startOffset of text on a path.
@@ -217,6 +226,9 @@ private:
     GtkWidget *text_view; // TODO - Convert this to a Gtk::TextView, but GtkSpell doesn't seem to work with it
     GtkTextBuffer *text_buffer;
 
+    Inkscape::UI::Widget::FontVariants vari_vbox;
+    Gtk::Label vari_label;
+    
     Gtk::HBox button_row;
     Gtk::Button setasdefault_button;
     Gtk::Button close_button;
@@ -228,6 +240,7 @@ private:
     sigc::connection selectChangedConn;
     sigc::connection subselChangedConn;
     sigc::connection selectModifiedConn;
+    sigc::connection fontVariantChangedConn;
 
     bool blocked;
     const Glib::ustring samplephrase;

@@ -1359,7 +1359,7 @@ void CloneTiler::clonetiler_change_selection(Inkscape::Selection *selection, Gtk
         return;
     }
 
-    if (g_slist_length ((GSList *) selection->itemList()) > 1) {
+    if (selection->itemList().size() > 1) {
         gtk_widget_set_sensitive (buttons, FALSE);
         gtk_label_set_markup (GTK_LABEL(status), _("<small>More than one object selected.</small>"));
         return;
@@ -2096,7 +2096,7 @@ void CloneTiler::clonetiler_unclump(GtkWidget */*widget*/, void *)
     Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
-    if (selection->isEmpty() || g_slist_length((GSList *) selection->itemList()) > 1) {
+    if (selection->isEmpty() || selection->itemList().size() > 1) {
         desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one object</b> whose tiled clones to unclump."));
         return;
     }
@@ -2104,19 +2104,17 @@ void CloneTiler::clonetiler_unclump(GtkWidget */*widget*/, void *)
     SPObject *obj = selection->singleItem();
     SPObject *parent = obj->parent;
 
-    GSList *to_unclump = NULL; // not including the original
+    std::vector<SPItem*> to_unclump; // not including the original
 
     for (SPObject *child = parent->firstChild(); child != NULL; child = child->next) {
         if (clonetiler_is_a_clone_of (child, obj)) {
-            to_unclump = g_slist_prepend (to_unclump, child);
+            to_unclump.push_back((SPItem*)child);
         }
     }
 
     desktop->getDocument()->ensureUpToDate();
-
+    reverse(to_unclump.begin(),to_unclump.end());
     unclump (to_unclump);
-
-    g_slist_free (to_unclump);
 
     DocumentUndo::done(desktop->getDocument(), SP_VERB_DIALOG_CLONETILER,
                        _("Unclump tiled clones"));
@@ -2147,7 +2145,7 @@ void CloneTiler::clonetiler_remove(GtkWidget */*widget*/, GtkWidget *dlg, bool d
     Inkscape::Selection *selection = desktop->getSelection();
 
     // check if something is selected
-    if (selection->isEmpty() || g_slist_length((GSList *) selection->itemList()) > 1) {
+    if (selection->isEmpty() || selection->itemList().size() > 1) {
         desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one object</b> whose tiled clones to remove."));
         return;
     }
@@ -2225,7 +2223,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     }
 
     // Check if more than one object is selected.
-    if (g_slist_length((GSList *) selection->itemList()) > 1) {
+    if (selection->itemList().size() > 1) {
         desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."));
         return;
     }

@@ -335,7 +335,7 @@ Glib::ustring FontLister::system_fontspec(Glib::ustring fontspec)
 
     PangoFontDescription *descr = pango_font_description_from_string(fontspec.c_str());
     font_instance *res = (font_factory::Default())->Face(descr);
-    if (res->pFont) {
+    if (res && res->pFont) {
         PangoFontDescription *nFaceDesc = pango_font_describe(res->pFont);
         out = sp_font_description_get_family(nFaceDesc);
     }

@@ -19,18 +19,18 @@
 #include "selection.h"
 
 namespace Inkscape {
-	namespace Display {
-		class TemporaryItem;
-	}
+    namespace Display {
+        class TemporaryItem;
+    }
 
-	namespace UI {
-		class MultiPathManipulator;
-		class ControlPointSelection;
-		class Selector;
-		class ControlPoint;
+    namespace UI {
+        class MultiPathManipulator;
+        class ControlPointSelection;
+        class Selector;
+        class ControlPoint;
 
-		struct PathSharedData;
-	}
+        struct PathSharedData;
+    }
 }
 
 struct SPCanvasGroup;
@@ -44,26 +44,26 @@ namespace Tools {
 
 class NodeTool : public ToolBase {
 public:
-	NodeTool();
-	virtual ~NodeTool();
+    NodeTool();
+    virtual ~NodeTool();
 
-	Inkscape::UI::ControlPointSelection* _selected_nodes;
+    Inkscape::UI::ControlPointSelection* _selected_nodes;
     Inkscape::UI::MultiPathManipulator* _multipath;
 
     bool edit_clipping_paths;
     bool edit_masks;
 
-	static const std::string prefsPath;
+    static const std::string prefsPath;
 
-	virtual void setup();
-	virtual void update_helperpath();
-	virtual void set(const Inkscape::Preferences::Entry& val);
-	virtual bool root_handler(GdkEvent* event);
+    virtual void setup();
+    virtual void update_helperpath();
+    virtual void set(const Inkscape::Preferences::Entry& val);
+    virtual bool root_handler(GdkEvent* event);
 
-	virtual const std::string& getPrefsPath();
+    virtual const std::string& getPrefsPath();
 
 private:
-	sigc::connection _selection_changed_connection;
+    sigc::connection _selection_changed_connection;
     sigc::connection _mouseover_changed_connection;
     sigc::connection _sizeUpdatedConn;
 
@@ -85,13 +85,16 @@ private:
     bool show_transform_handles;
     bool single_node_transform_handles;
 
-	void selection_changed(Inkscape::Selection *sel);
+    std::vector<SPItem*> _current_selection;
+    std::vector<SPItem*> _previous_selection;
 
-	void select_area(Geom::Rect const &sel, GdkEventButton *event);
-	void select_point(Geom::Point const &sel, GdkEventButton *event);
-	void mouseover_changed(Inkscape::UI::ControlPoint *p);
-	void update_tip(GdkEvent *event);
-	void handleControlUiStyleChange();
+    void selection_changed(Inkscape::Selection *sel);
+
+    void select_area(Geom::Rect const &sel, GdkEventButton *event);
+    void select_point(Geom::Point const &sel, GdkEventButton *event);
+    void mouseover_changed(Inkscape::UI::ControlPoint *p);
+    void update_tip(GdkEvent *event);
+    void handleControlUiStyleChange();
 };
 
 }

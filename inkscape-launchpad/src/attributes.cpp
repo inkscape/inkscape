@@ -419,6 +419,16 @@ static SPStyleProp const props[] = {
     {SP_PROP_FONT_STYLE, "font-style"},
     {SP_PROP_FONT_VARIANT, "font-variant"},
     {SP_PROP_FONT_WEIGHT, "font-weight"},
+
+    /* Font Variants CSS 3 */
+    {SP_PROP_FONT_VARIANT_LIGATURES,  "font-variant-ligatures"},
+    {SP_PROP_FONT_VARIANT_POSITION,   "font-variant-position"},
+    {SP_PROP_FONT_VARIANT_CAPS,       "font-variant-caps"},
+    {SP_PROP_FONT_VARIANT_NUMERIC,    "font-variant-numeric"},
+    {SP_PROP_FONT_VARIANT_ALTERNATES, "font-variant-alternates"},
+    {SP_PROP_FONT_VARIANT_EAST_ASIAN, "font-variant-east-asian"},
+    {SP_PROP_FONT_FEATURE_SETTINGS,   "font-feature-settings"},
+
     /* Text */
     {SP_PROP_TEXT_INDENT, "text-indent"},
     {SP_PROP_TEXT_ALIGN, "text-align"},
@@ -426,6 +436,7 @@ static SPStyleProp const props[] = {
     {SP_PROP_LETTER_SPACING, "letter-spacing"},
     {SP_PROP_WORD_SPACING, "word-spacing"},
     {SP_PROP_TEXT_TRANSFORM, "text-transform"},
+
     /* Text (css3) */
     {SP_PROP_DIRECTION, "direction"},
     {SP_PROP_BLOCK_PROGRESSION, "block-progression"},
@@ -439,16 +450,21 @@ static SPStyleProp const props[] = {
     {SP_PROP_KERNING, "kerning"},
     {SP_PROP_TEXT_ANCHOR, "text-anchor"},
     {SP_PROP_WHITE_SPACE, "white-space"},
+
     /* SVG 2 Text Wrapping */
     {SP_PROP_SHAPE_INSIDE,  "shape-inside"},
     {SP_PROP_SHAPE_OUTSIDE, "shape-outside"},
     {SP_PROP_SHAPE_PADDING, "shape-padding"},
     {SP_PROP_SHAPE_MARGIN,  "shape-margin"},
+
     /* Text Decoration */
-    {SP_PROP_TEXT_DECORATION, "text-decoration"},
-    {SP_PROP_TEXT_DECORATION_LINE, "text-decoration-line"},
-    {SP_PROP_TEXT_DECORATION_STYLE,"text-decoration-style"},
-    {SP_PROP_TEXT_DECORATION_COLOR,"text-decoration-color"},
+    {SP_PROP_TEXT_DECORATION,       "text-decoration"},
+    {SP_PROP_TEXT_DECORATION_LINE,  "text-decoration-line"},
+    {SP_PROP_TEXT_DECORATION_STYLE, "text-decoration-style"},
+    {SP_PROP_TEXT_DECORATION_COLOR, "text-decoration-color"},
+    {SP_PROP_TEXT_DECORATION_FILL,  "text-decoration-fill"},
+    {SP_PROP_TEXT_DECORATION_STROKE,"text-decoration-stroke"},
+
     /* Misc */
     {SP_PROP_CLIP, "clip"},
     {SP_PROP_COLOR, "color"},

@@ -79,6 +79,7 @@ void SPFilter::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "height" );
     this->readAttr( "filterRes" );
     this->readAttr( "xlink:href" );
+    this->_refcount = 0;
 
 	SPObject::build(document, repr);
 
@@ -190,6 +191,15 @@ void SPFilter::set(unsigned int key, gchar const *value) {
     }
 }
 
+
+/**
+ * Returns the number of references to the filter.
+ */
+guint SPFilter::getRefCount() {
+	// NOTE: this is currently updated by sp_style_filter_ref_changed() in style.cpp
+	return _refcount;
+}
+
 /**
  * Receives update notifications.
  */
@@ -235,11 +245,9 @@ void SPFilter::update(SPCtx *ctx, guint flags) {
       childflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
     childflags &= SP_OBJECT_MODIFIED_CASCADE;
-
-    GSList *l = g_slist_reverse(this->childList(true, SPObject::ActionUpdate));
-    while (l) {
-        SPObject *child = SP_OBJECT (l->data);
-        l = g_slist_remove (l, child);
+    std::vector<SPObject*> l(this->childList(true, SPObject::ActionUpdate));
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+        SPObject *child = *i;
         if( SP_IS_FILTER_PRIMITIVE( child ) ) {
             child->updateDisplay(ctx, childflags);
         }

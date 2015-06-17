@@ -450,7 +450,11 @@ StrokeStyle::makeRadioButton(Gtk::RadioButtonGroup &grp,
  */
 void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMarkerLoc const /*which*/)
 {
-    if (spw->update) {
+    bool markers_update = spw->startMarkerCombo->update() ||
+                          spw->midMarkerCombo->update() ||
+                          spw->endMarkerCombo->update();
+
+    if (spw->update || markers_update) {
         return;
     }
 
@@ -475,9 +479,9 @@ void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw,
     //spw->updateMarkerHist(which);
 
     Inkscape::Selection *selection = spw->desktop->getSelection();
-    GSList const *items = selection->itemList();
-    for (; items != NULL; items = items->next) {
-        SPItem *item = reinterpret_cast<SPItem *>(items->data);
+    std::vector<SPItem*> itemlist=selection->itemList();
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+        SPItem *item = *i;
         if (!SP_IS_SHAPE(item) || SP_IS_RECT(item)) { // can't set marker to rect, until it's converted to using <path>
             continue;
         }
@@ -901,8 +905,8 @@ StrokeStyle::updateLine()
     if (!sel || sel->isEmpty())
         return;
 
-    GSList const *objects = sel->itemList();
-    SPObject * const object = SP_OBJECT(objects->data);
+    std::vector<SPItem*> const objects = sel->itemList();
+    SPObject * const object = objects[0];
     SPStyle * const style = object->style;
 
     /* Markers */
@@ -957,13 +961,12 @@ StrokeStyle::scaleLine()
     
     SPDocument *document = desktop->getDocument();
     Inkscape::Selection *selection = desktop->getSelection();
-
-    GSList const *items = selection->itemList();
+    std::vector<SPItem*> items=selection->itemList();
 
     /* TODO: Create some standardized method */
     SPCSSAttr *css = sp_repr_css_attr_new();
 
-    if (items) {
+    if (!items.empty()) {
 #if WITH_GTKMM_3_0
         double width_typed = (*widthAdj)->get_value();
         double const miterlimit = (*miterLimitAdj)->get_value();
@@ -978,13 +981,13 @@ StrokeStyle::scaleLine()
         int ndash;
         dashSelector->get_dash(&ndash, &dash, &offset);
 
-        for (GSList const *i = items; i != NULL; i = i->next) {
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
             /* Set stroke width */
             double width;
             if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
                 width = Inkscape::Util::Quantity::convert(width_typed, unit, "px");
             } else { // percentage
-                gdouble old_w = SP_OBJECT(i->data)->style->stroke_width.computed;
+                gdouble old_w = (*i)->style->stroke_width.computed;
                 width = old_w * width_typed / 100;
             }
 
@@ -1003,7 +1006,7 @@ StrokeStyle::scaleLine()
             /* Set dash */
             setScaledDash(css, ndash, dash, offset, width);
 
-            sp_desktop_apply_css_recursive (SP_OBJECT(i->data), css, true);
+            sp_desktop_apply_css_recursive ((*i), css, true);
         }
 
         g_free(dash);
@@ -1144,7 +1147,7 @@ StrokeStyle::setCapButtons(Gtk::ToggleButton *active)
  * that marker.
  */
 void
-StrokeStyle::updateAllMarkers(GSList const *objects)
+StrokeStyle::updateAllMarkers(std::vector<SPItem*> const &objects)
 {
     struct { MarkerComboBox *key; int loc; } const keyloc[] = {
             { startMarkerCombo, SP_MARKER_LOC_START },
@@ -1153,9 +1156,10 @@ StrokeStyle::updateAllMarkers(GSList const *objects)
     };
 
     bool all_texts = true;
-    for (GSList *i = (GSList *) objects; i != NULL; i = i->next) {
-        if (!SP_IS_TEXT (i->data)) {
+    for(std::vector<SPItem*>::const_iterator i=objects.begin();i!=objects.end();i++){
+        if (!SP_IS_TEXT (*i)) {
             all_texts = false;
+            break;
         }
     }
 
@@ -1167,7 +1171,7 @@ StrokeStyle::updateAllMarkers(GSList const *objects)
 
     // We show markers of the first object in the list only
     // FIXME: use the first in the list that has the marker of each type, if any
-    SPObject *object = SP_OBJECT(objects->data);
+    SPObject *object = objects[0];
 
     for (unsigned i = 0; i < G_N_ELEMENTS(keyloc); ++i) {
         // For all three marker types,

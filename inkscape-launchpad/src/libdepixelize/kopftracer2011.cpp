@@ -28,11 +28,6 @@
 
 #include <glibmm.h>
 
-// Build fix under Inkscape build tree
-#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
-#include <glibmm/threads.h>
-#endif
-
 #include <algorithm>
 #include "kopftracer2011.h"
 #include "priv/colorspace.h"
@@ -667,4 +662,4 @@ inline bool Heuristics::islands(PixelGraph::const_iterator a,
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

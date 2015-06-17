@@ -505,9 +505,9 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
 static void
 collectPathsAndWidths (SPLPEItem const *lpeitem, std::vector<Geom::Path> &paths, std::vector<double> &stroke_widths){
     if (SP_IS_GROUP(lpeitem)) {
-        GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
-        for ( GSList const *iter = item_list; iter; iter = iter->next ) {
-            SPObject *subitem = static_cast<SPObject *>(iter->data);
+    	std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
+        for ( std::vector<SPItem*>::const_iterator iter = item_list.begin(); iter != item_list.end(); iter++) {
+            SPObject *subitem = *iter;
             if (SP_IS_LPE_ITEM(subitem)) {
                 collectPathsAndWidths(SP_LPE_ITEM(subitem), paths, stroke_widths);
             }

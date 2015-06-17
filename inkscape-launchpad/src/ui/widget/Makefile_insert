@@ -6,10 +6,22 @@ ink_common_sources +=	\
 	ui/widget/attr-widget.h	\
 	ui/widget/button.h	\
 	ui/widget/button.cpp	\
+	ui/widget/color-entry.cpp    \
+	ui/widget/color-entry.h     \
+	ui/widget/color-icc-selector.cpp	\
+	ui/widget/color-icc-selector.h	\
+	ui/widget/color-notebook.cpp   \
+	ui/widget/color-notebook.h  \
+	ui/widget/color-wheel-selector.cpp    \
+	ui/widget/color-wheel-selector.h    \
 	ui/widget/color-picker.cpp     \
 	ui/widget/color-picker.h        \
 	ui/widget/color-preview.cpp     \
 	ui/widget/color-preview.h       \
+	ui/widget/color-slider.cpp      \
+	ui/widget/color-slider.h       \
+	ui/widget/color-scales.cpp   \
+	ui/widget/color-scales.h    \
 	ui/widget/combo-enums.h \
 	ui/widget/dock.h		\
 	ui/widget/dock.cpp		\
@@ -21,8 +33,10 @@ ink_common_sources +=	\
 	ui/widget/entry.h        \
 	ui/widget/filter-effect-chooser.h \
 	ui/widget/filter-effect-chooser.cpp \
-	ui/widget/gimpspinscale.c      \
-	ui/widget/gimpspinscale.h        \
+	ui/widget/font-variants.h      	\
+	ui/widget/font-variants.cpp     \
+	ui/widget/gimpspinscale.c	\
+	ui/widget/gimpspinscale.h       \
 	ui/widget/gimpcolorwheel.c \
 	ui/widget/gimpcolorwheel.h \
 	ui/widget/frame.cpp      \
