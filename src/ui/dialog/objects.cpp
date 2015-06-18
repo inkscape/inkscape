@@ -1614,6 +1614,12 @@ ObjectsPanel::ObjectsPanel() :
     _pending(0),
     _toggleEvent(0),
     _defer_target(),
+    _visibleHeader(_("V")),
+    _lockHeader(_("L")),
+    _typeHeader(_("T")),
+    _clipmaskHeader(_("CM")),
+    _highlightHeader(_("HL")),
+    _nameHeader(_("Label")),
     _composite_vbox(false, 0),
     _opacity_vbox(false, 0),
     _opacity_label(_("Opacity:")),
@@ -1641,7 +1647,7 @@ ObjectsPanel::ObjectsPanel() :
 
     //Set up the tree
     _tree.set_model( _store );
-    _tree.set_headers_visible(false);
+    _tree.set_headers_visible(true);
     _tree.set_reorderable(true);
     _tree.enable_model_drag_dest (Gdk::ACTION_MOVE);
 
@@ -1654,6 +1660,10 @@ ObjectsPanel::ObjectsPanel() :
     Gtk::TreeViewColumn* col = _tree.get_column(visibleColNum);
     if ( col ) {
         col->add_attribute( eyeRenderer->property_active(), _model->_colVisible );
+        // In order to get tooltips on header, we must create our own label.
+        _visibleHeader.set_tooltip_text(_("Toggle visibility of Layer, Group, or Object."));
+        _visibleHeader.show();
+        col->set_widget( _visibleHeader );
     }
 
     //Locked
@@ -1664,6 +1674,9 @@ ObjectsPanel::ObjectsPanel() :
     col = _tree.get_column(lockedColNum);
     if ( col ) {
         col->add_attribute( renderer->property_active(), _model->_colLocked );
+        _lockHeader.set_tooltip_text(_("Toggle lock of Layer, Group, or Object."));
+        _lockHeader.show();
+        col->set_widget( _lockHeader );
     }
     
     //Type
@@ -1673,6 +1686,9 @@ ObjectsPanel::ObjectsPanel() :
     col = _tree.get_column(typeColNum);
     if ( col ) {
         col->add_attribute( typeRenderer->property_active(), _model->_colType );
+        _typeHeader.set_tooltip_text(_("Type: Layer, Group, or Object. Clicking on Layer or Group icon, toggles between the two types."));
+        _typeHeader.show();
+        col->set_widget( _typeHeader );
     }
 
     //Insert order (LiamW: unused)
@@ -1689,6 +1705,9 @@ ObjectsPanel::ObjectsPanel() :
     col = _tree.get_column(clipColNum);
     if ( col ) {
         col->add_attribute( clipRenderer->property_active(), _model->_colClipMask );
+        _clipmaskHeader.set_tooltip_text(_("Is object clipped and/or masked?"));
+        _clipmaskHeader.show();
+        col->set_widget( _clipmaskHeader );
     }
     
     //Highlight
@@ -1697,13 +1716,21 @@ ObjectsPanel::ObjectsPanel() :
     col = _tree.get_column(highlightColNum);
     if ( col ) {
         col->add_attribute( highlightRenderer->property_active(), _model->_colHighlight );
+        _highlightHeader.set_tooltip_text(_("Highlight color of outline in Node tool. Click to set. If alpha is zero, use inherited color."));
+        _highlightHeader.show();
+        col->set_widget( _highlightHeader );
     }
 
     //Label
     _text_renderer = Gtk::manage(new Gtk::CellRendererText());
     int nameColNum = _tree.append_column("Name", *_text_renderer) - 1;
     _name_column = _tree.get_column(nameColNum);
-    _name_column->add_attribute(_text_renderer->property_text(), _model->_colLabel);
+    if( _name_column ) {
+        _name_column->add_attribute(_text_renderer->property_text(), _model->_colLabel);
+        _nameHeader.set_tooltip_text(_("Layer/Group/Object label (inkscape:label). Double-click to set. Default value is object 'id'."));
+        _nameHeader.show();
+        _name_column->set_widget( _nameHeader );
+    }
 
     //Set the expander and search columns
     _tree.set_expander_column( *_tree.get_column(nameColNum) );

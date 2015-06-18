@@ -147,7 +147,14 @@ private:
     Gtk::Menu _popupMenu;
     Inkscape::UI::Widget::SpinButton _spinBtn;
     Gtk::VBox _page;
-    
+
+    Gtk::Label _visibleHeader;
+    Gtk::Label _lockHeader;
+    Gtk::Label _typeHeader;
+    Gtk::Label _clipmaskHeader;
+    Gtk::Label _highlightHeader;
+    Gtk::Label _nameHeader;
+
     /* Composite Settings */
     Gtk::VBox       _composite_vbox;
     Gtk::VBox       _opacity_vbox;
