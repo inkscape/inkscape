@@ -133,8 +133,8 @@ SprayTool::SprayTool()
     : ToolBase(cursor_spray_xpm, 4, 4, false)
     , pressure(TC_DEFAULT_PRESSURE)
     , dragging(false)
-    , usepressure(0)
-    , usetilt(0)
+    , usepressure(false)
+    , usetilt(false)
     , usetext(false)
     , width(0.2)
     , ratio(0)
@@ -542,7 +542,7 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
     double move_standard_deviation = get_move_standard_deviation(tc);
 
     {
-    	std::vector<SPItem*> const items(selection->itemList());
+        std::vector<SPItem*> const items(selection->itemList());
 
         for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
             SPItem *item = *i;
