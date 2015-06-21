@@ -1190,6 +1190,66 @@ SPStyle::_mergeObjectStylesheet( SPObject const *const object ) {
     }
 }
 
+std::string
+SPStyle::getFontFeatureString() {
+
+    std::string feature_string;
+
+    if ( font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_COMMON )
+        feature_string += "liga, clig, ";
+    else
+        feature_string += "liga 0, clig 0, ";
+    if (   font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_DISCRETIONARY )
+        feature_string += "dlig, ";
+    if (   font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_HISTORICAL )
+        feature_string += "hlig, ";
+    if ( font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL )
+        feature_string += "calt, ";
+    else
+        feature_string += "calt 0, ";
+
+    if ( font_variant_position.value & SP_CSS_FONT_VARIANT_POSITION_SUB )
+        feature_string += "subs, ";
+    if ( font_variant_position.value & SP_CSS_FONT_VARIANT_POSITION_SUPER )
+        feature_string += "sups, ";
+
+    if ( font_variant_caps.value & SP_CSS_FONT_VARIANT_CAPS_SMALL )
+        feature_string += "smcp, ";
+    if ( font_variant_caps.value & SP_CSS_FONT_VARIANT_CAPS_ALL_SMALL )
+        feature_string += "smcp, c2sc, ";
+    if ( font_variant_caps.value & SP_CSS_FONT_VARIANT_CAPS_PETITE )
+        feature_string += "pcap, ";
+    if ( font_variant_caps.value & SP_CSS_FONT_VARIANT_CAPS_ALL_PETITE )
+        feature_string += "pcap, c2pc, ";
+    if ( font_variant_caps.value & SP_CSS_FONT_VARIANT_CAPS_UNICASE )
+        feature_string += "unic, ";
+    if ( font_variant_caps.value & SP_CSS_FONT_VARIANT_CAPS_TITLING )
+        feature_string += "titl, ";
+
+    if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_LINING_NUMS )
+        feature_string += "lnum, ";
+    if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_OLDSTYLE_NUMS )
+        feature_string += "onum, ";
+    if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_PROPORTIONAL_NUMS )
+        feature_string += "pnum, ";
+    if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_TABULAR_NUMS )
+        feature_string += "tnum, ";
+    if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_DIAGONAL_FRACTIONS )
+        feature_string += "frac, ";
+    if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_STACKED_FRACTIONS )
+        feature_string += "afrc, ";
+    if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_ORDINAL )
+        feature_string += "ordn, ";
+    if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO )
+        feature_string += "zero, ";
+
+    feature_string.erase( feature_string.size() - 1 );
+    feature_string.erase( feature_string.size() - 1 );
+
+    return feature_string;
+}
+
+
 // Internal
 /**
  * Release callback.
