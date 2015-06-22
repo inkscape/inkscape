@@ -70,7 +70,6 @@ public:
     double ratio;
     double tilt;
     double rotation_variation;
-    double force;
     double population;
     double scale_variation;
     double scale;
