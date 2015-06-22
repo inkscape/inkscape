@@ -1195,17 +1195,13 @@ SPStyle::getFontFeatureString() {
 
     std::string feature_string;
 
-    if ( font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_COMMON )
-        feature_string += "liga, clig, ";
-    else
+    if ( !(font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_COMMON) )
         feature_string += "liga 0, clig 0, ";
     if (   font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_DISCRETIONARY )
         feature_string += "dlig, ";
     if (   font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_HISTORICAL )
         feature_string += "hlig, ";
-    if ( font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL )
-        feature_string += "calt, ";
-    else
+    if ( !(font_variant_ligatures.value & SP_CSS_FONT_VARIANT_LIGATURES_CONTEXTUAL) )
         feature_string += "calt 0, ";
 
     if ( font_variant_position.value & SP_CSS_FONT_VARIANT_POSITION_SUB )
@@ -1243,8 +1239,38 @@ SPStyle::getFontFeatureString() {
     if ( font_variant_numeric.value & SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO )
         feature_string += "zero, ";
 
-    feature_string.erase( feature_string.size() - 1 );
-    feature_string.erase( feature_string.size() - 1 );
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_JIS78 )
+        feature_string += "jp78, ";
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_JIS83 )
+        feature_string += "jp83, ";
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_JIS90 )
+        feature_string += "jp90, ";
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_JIS04 )
+        feature_string += "jp04, ";
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_SIMPLIFIED )
+        feature_string += "smpl, ";
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_TRADITIONAL )
+        feature_string += "trad, ";
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_FULL_WIDTH )
+        feature_string += "fwid, ";
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_PROPORTIONAL_WIDTH )
+        feature_string += "pwid, ";
+    if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_RUBY )
+        feature_string += "ruby, ";
+
+    if ( strcmp( font_feature_settings.value, "normal") ) {
+        // We do no sanity checking...
+        feature_string += font_feature_settings.value; 
+        feature_string += ", ";
+    }
+
+    if (feature_string.empty()) {
+        feature_string = "normal";
+    } else {
+        // Remove last ", "
+        feature_string.erase( feature_string.size() - 1 );
+        feature_string.erase( feature_string.size() - 1 );
+    }
 
     return feature_string;
 }
