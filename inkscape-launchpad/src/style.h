@@ -303,6 +303,12 @@ public:
     SPPaintServer       *getStrokePaintServer()       { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
     SPPaintServer const *getStrokePaintServer() const { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
     char        const  *getStrokeURI()         const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : NULL; }
+
+    /**
+     * Return a font feature string useful for Pango.
+     */
+    std::string getFontFeatureString();
+
 };
 
 SPStyle *sp_style_ref(SPStyle *style); // SPStyle::ref();

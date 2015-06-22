@@ -958,6 +958,10 @@ void Layout::Calculator::ParagraphInfo::free()
  */
 void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) const
 {
+    TRACE(("pango version string: %s\n", pango_version_string() ));
+#if PANGO_VERSION_CHECK(1,37,1)
+    TRACE((" ... compiled for font features\n"));
+#endif
     Glib::ustring para_text;
     PangoAttrList *attributes_list;
     unsigned input_index;
@@ -986,9 +990,22 @@ void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) con
 
             PangoAttribute *attribute_font_description = pango_attr_font_desc_new(font->descr);
             attribute_font_description->start_index = para_text.bytes();
+
+#if PANGO_VERSION_CHECK(1,37,1)
+            PangoAttribute *attribute_font_features =
+                pango_attr_font_features_new( text_source->style->getFontFeatureString().c_str());
+//                pango_attr_font_features_new( "hlig 1, dlig 1");
+            attribute_font_features->start_index = para_text.bytes();
+#endif
             para_text.append(&*text_source->text_begin.base(), text_source->text_length);     // build the combined text
             attribute_font_description->end_index = para_text.bytes();
             pango_attr_list_insert(attributes_list, attribute_font_description);
+
+#if PANGO_VERSION_CHECK(1,37,1)
+            attribute_font_features->end_index = para_text.bytes();
+            pango_attr_list_insert(attributes_list, attribute_font_features);
+#endif
+
             // ownership of attribute is assumed by the list
             font->Unref();
         }
