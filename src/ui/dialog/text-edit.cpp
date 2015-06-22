@@ -391,7 +391,9 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
         // Update font variant widget
         //int result_variants =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTVARIANTS);
-        vari_vbox.update( &query );
+        int result_features =
+            sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTFEATURESETTINGS);
+        vari_vbox.update( &query, result_features == QUERY_STYLE_MULTIPLE_DIFFERENT );
 
     }
     blocked = false;

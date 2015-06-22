@@ -13,6 +13,7 @@
 #include <gtkmm/expander.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/radiobutton.h>
+#include <gtkmm/entry.h>
 
 class SPDesktop;
 class SPObject;
@@ -81,6 +82,11 @@ protected:
     Gtk::CheckButton    _numeric_ordinal;
     Gtk::CheckButton    _numeric_slashed_zero;
 
+    Gtk::Expander       _feature_frame;
+    Gtk::VBox           _feature_vbox;
+    Gtk::Entry          _feature_entry;
+    Gtk::Label          _feature_label;
+    
 private:
     void ligatures_init();
     void ligatures_callback();
@@ -93,6 +99,9 @@ private:
 
     void numeric_init();
     void numeric_callback();
+
+    void feature_init();
+    void feature_callback();
 
     // To determine if we need to write out property (may not be necessary)
     unsigned _ligatures_all;
@@ -109,6 +118,7 @@ private:
     bool _position_changed;
     bool _caps_changed;
     bool _numeric_changed;
+    bool _feature_changed;
 
     sigc::signal<void> _changed_signal;
 
@@ -117,7 +127,7 @@ public:
     /**
      * Update GUI based on query results.
      */
-    void update( SPStyle const *query );
+    void update( SPStyle const *query, bool different_features );
 
     /**
      * Fill SPCSSAttr based on settings of buttons.

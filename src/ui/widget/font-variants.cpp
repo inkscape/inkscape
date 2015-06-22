@@ -68,6 +68,9 @@ namespace Widget {
     _numeric_ordinal          ( Glib::ustring(_("Ordinal"      )) ),
     _numeric_slashed_zero     ( Glib::ustring(_("Slashed Zero" )) ),
 
+    _feature_frame            ( Glib::ustring(_("Feature Settings")) ),
+    _feature_label            ( Glib::ustring(_("Selection has different Feature Settings!")) ),
+    
     _ligatures_changed( false ),
     _position_changed( false ),
     _caps_changed( false ),
@@ -231,6 +234,21 @@ namespace Widget {
     add( _numeric_frame );
     
 
+    // Feature settings ---------------------
+
+    // Add tooltips
+    _feature_entry.set_tooltip_text( _("Feature settings in CSS form. No sanity checking is performed."));
+
+    // Add to frame
+    _feature_vbox.add( _feature_entry );
+    _feature_vbox.add( _feature_label );
+    _feature_frame.add( _feature_vbox );
+    add( _feature_frame );
+
+    // Add signals
+    //_feature_entry.signal_key_press_event().connect ( sigc::mem_fun(*this, &FontVariants::feature_callback) );
+    _feature_entry.signal_changed().connect( sigc::mem_fun(*this, &FontVariants::feature_callback) );
+    
     show_all_children();
 
   }
@@ -283,9 +301,21 @@ namespace Widget {
       _changed_signal.emit();
   }
 
+  void
+  FontVariants::feature_init() {
+      // std::cout << "FontVariants::feature_init()" << std::endl;
+  }
+  
+  void
+  FontVariants::feature_callback() {
+      // std::cout << "FontVariants::feature_callback()" << std::endl;
+      _feature_changed = true;
+      _changed_signal.emit();
+  }
+
   // Update GUI based on query.
   void
-  FontVariants::update( SPStyle const *query ) {
+  FontVariants::update( SPStyle const *query, bool different_features ) {
 
       _ligatures_all = query->font_variant_ligatures.computed;
       _ligatures_mix = query->font_variant_ligatures.value;
@@ -370,10 +400,19 @@ namespace Widget {
       _numeric_ordinal.set_inconsistent(      _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_ORDINAL );
       _numeric_slashed_zero.set_inconsistent( _numeric_mix & SP_CSS_FONT_VARIANT_NUMERIC_SLASHED_ZERO );
 
+      if( query->font_feature_settings.value )
+          _feature_entry.set_text( query->font_feature_settings.value );
+      if( different_features ) {
+          _feature_label.show();
+      } else {
+          _feature_label.hide();
+      }
+
       _ligatures_changed = false;
       _position_changed  = false;
       _caps_changed      = false;
       _numeric_changed   = false;
+      _feature_changed   = false;
   }
 
   void
@@ -494,6 +533,11 @@ namespace Widget {
           sp_repr_css_set_property(css, "font-variant-numeric", css_string.c_str() );
       }
 
+      // Feature settings
+      Glib::ustring feature_string = _feature_entry.get_text();
+      if( !feature_string.empty() || feature_string.compare( "normal" ) ) {
+          sp_repr_css_set_property(css, "font-feature-settings", feature_string.c_str());
+      }
   }
    
 } // namespace Widget
