@@ -497,7 +497,7 @@ std::vector<TracingEngineResult> PotraceTracingEngine::traceBrightnessMulti(GdkP
                 if ( !d.empty() ) {
                     //### get style info
                     int grayVal = (int)(256.0 * brightnessThreshold);
-                    ustring style = ustring::compose("fill-opacity:1.0;fill:%1%2%3", twohex(grayVal), twohex(grayVal), twohex(grayVal) );
+                    ustring style = ustring::compose("fill-opacity:1.0;fill:#%1%2%3", twohex(grayVal), twohex(grayVal), twohex(grayVal) );
 
                     //g_message("### GOT '%s' \n", style.c_str());
                     TracingEngineResult result(style, d, nodeCount);
