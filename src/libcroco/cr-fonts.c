@@ -768,7 +768,7 @@ cr_font_weight_get_bolder (enum CRFontWeight a_weight)
         } else if (a_weight < FONT_WEIGHT_NORMAL) {
                 return FONT_WEIGHT_NORMAL ;
         } else if (a_weight == FONT_WEIGHT_BOLDER
-                   || a_weight == FONT_WEIGHT_BOLDER) {
+                   || a_weight == FONT_WEIGHT_LIGHTER) {
                 cr_utils_trace_info ("FONT_WEIGHT_BOLDER or FONT_WEIGHT_LIGHTER should not appear here") ;
                 return FONT_WEIGHT_NORMAL ;
         } else {
