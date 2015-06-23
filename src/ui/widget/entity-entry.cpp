@@ -188,8 +188,7 @@ EntityMultiLineEntry::on_changed()
     Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
     Glib::ustring text = tv->get_buffer()->get_text();
     if (rdf_set_work_entity (doc, _entity, text.c_str())) {
-        DocumentUndo::done(doc, SP_VERB_NONE,
-                            /* TODO: annotate */ "entity-entry.cpp:146");
+        DocumentUndo::done(doc, SP_VERB_NONE, "Document metadata updated");
     }
     _wr->setUpdating (false);
 }
