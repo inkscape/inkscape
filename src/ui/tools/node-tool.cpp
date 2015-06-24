@@ -665,9 +665,27 @@ void NodeTool::update_tip(GdkEvent *event) {
     unsigned total = this->_selected_nodes->allPoints().size();
 
     if (sz != 0) {
-        char *nodestring = g_strdup_printf(
-            ngettext("<b>%u of %u</b> node selected.", "<b>%u of %u</b> nodes selected.", total),
-            sz, total);
+        char *nodestring; 
+        if (sz == 2) {
+            // if there are only two nodes selected, display the angle
+            // of a line going through them relative to the X axis.
+            Inkscape::UI::ControlPointSelection::Set &selection_nodes = this->_selected_nodes->allPoints();
+            std::vector<Geom::Point> positions;
+            for (Inkscape::UI::ControlPointSelection::Set::iterator i = selection_nodes.begin(); i != selection_nodes.end(); ++i) {
+                if ((*i)->selected()) {
+                    Inkscape::UI::Node *n = dynamic_cast<Inkscape::UI::Node *>(*i);
+                    positions.push_back(n->position());
+                }
+            }
+            g_assert(positions.size() == 2);
+            const double angle = Geom::rad_to_deg(Geom::Line(positions[0], positions[1]).angle());
+            nodestring = g_strdup_printf("<b>%u of %u</b> nodes selected, angle: %.2f°.", sz, total, angle);
+        }
+        else {
+            nodestring = g_strdup_printf(
+                ngettext("<b>%u of %u</b> node selected.", "<b>%u of %u</b> nodes selected.", total),
+                sz, total);
+        }
 
         if (this->_last_over) {
             // TRANSLATORS: The %s below is where the "%u of %u nodes selected" sentence gets put
