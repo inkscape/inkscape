@@ -270,6 +270,9 @@ void FilletChamferPointArrayParam::recalculate_knots(
     Piecewise<D2<SBasis> > const &pwd2_in)
 {
     bool change = false;
+    if(_vector.size() == 0){
+        return;
+    }
     PathVector pathv = path_from_piecewise(pwd2_in, 0.001);
     if (!pathv.empty()) {
         std::vector<Point> result;
