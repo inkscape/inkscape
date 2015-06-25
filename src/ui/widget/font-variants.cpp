@@ -13,7 +13,7 @@
 
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
-
+#include <libnrtype/font-instance.h>
 #include <iostream>
 
 #include "font-variants.h"
@@ -315,7 +315,7 @@ namespace Widget {
 
   // Update GUI based on query.
   void
-  FontVariants::update( SPStyle const *query, bool different_features ) {
+  FontVariants::update( SPStyle const *query, bool different_features, Glib::ustring& font_spec ) {
 
       _ligatures_all = query->font_variant_ligatures.computed;
       _ligatures_mix = query->font_variant_ligatures.value;
@@ -407,6 +407,169 @@ namespace Widget {
       } else {
           _feature_label.hide();
       }
+
+
+      // Disable/Enable based on available OpenType tables.
+      font_instance* res = font_factory::Default()->FaceFromFontSpecification( font_spec.c_str() );
+      if( res ) {
+
+          std::map<Glib::ustring,int>::iterator it;
+
+          if((it = res->openTypeTables.find("liga"))!= res->openTypeTables.end() ||
+             (it = res->openTypeTables.find("clig"))!= res->openTypeTables.end()) {
+              _ligatures_common.set_sensitive();
+          } else {
+              _ligatures_common.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("dlig"))!= res->openTypeTables.end()) {
+              _ligatures_discretionary.set_sensitive();
+          } else {
+              _ligatures_discretionary.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("hlig"))!= res->openTypeTables.end()) {
+              _ligatures_historical.set_sensitive();
+          } else {
+              _ligatures_historical.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("calt"))!= res->openTypeTables.end()) {
+              _ligatures_contextual.set_sensitive();
+          } else {
+              _ligatures_contextual.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("subs"))!= res->openTypeTables.end()) {
+              _position_sub.set_sensitive();
+          } else {
+              _position_sub.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("sups"))!= res->openTypeTables.end()) {
+              _position_super.set_sensitive();
+          } else {
+              _position_super.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("smcp"))!= res->openTypeTables.end()) {
+              _caps_small.set_sensitive();
+          } else {
+              _caps_small.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("c2sc"))!= res->openTypeTables.end() &&
+             (it = res->openTypeTables.find("smcp"))!= res->openTypeTables.end()) {
+              _caps_all_small.set_sensitive();
+          } else {
+              _caps_all_small.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("pcap"))!= res->openTypeTables.end()) {
+              _caps_petite.set_sensitive();
+          } else {
+              _caps_petite.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("c2sc"))!= res->openTypeTables.end() &&
+             (it = res->openTypeTables.find("pcap"))!= res->openTypeTables.end()) {
+              _caps_all_petite.set_sensitive();
+          } else {
+              _caps_all_petite.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("unic"))!= res->openTypeTables.end()) {
+              _caps_unicase.set_sensitive();
+          } else {
+              _caps_unicase.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("titl"))!= res->openTypeTables.end()) {
+              _caps_titling.set_sensitive();
+          } else {
+              _caps_titling.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("lnum"))!= res->openTypeTables.end()) {
+              _numeric_lining.set_sensitive();
+          } else {
+              _numeric_lining.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("onum"))!= res->openTypeTables.end()) {
+              _numeric_old_style.set_sensitive();
+          } else {
+              _numeric_old_style.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("pnum"))!= res->openTypeTables.end()) {
+              _numeric_proportional.set_sensitive();
+          } else {
+              _numeric_proportional.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("tnum"))!= res->openTypeTables.end()) {
+              _numeric_tabular.set_sensitive();
+          } else {
+              _numeric_tabular.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("frac"))!= res->openTypeTables.end()) {
+              _numeric_diagonal.set_sensitive();
+          } else {
+              _numeric_diagonal.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("afrac"))!= res->openTypeTables.end()) {
+              _numeric_stacked.set_sensitive();
+          } else {
+              _numeric_stacked.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("ordn"))!= res->openTypeTables.end()) {
+              _numeric_ordinal.set_sensitive();
+          } else {
+              _numeric_ordinal.set_sensitive( false );
+          }
+
+          if((it = res->openTypeTables.find("zero"))!= res->openTypeTables.end()) {
+              _numeric_slashed_zero.set_sensitive();
+          } else {
+              _numeric_slashed_zero.set_sensitive( false );
+          }
+
+          // Make list of tables not handled above... eventually add Gtk::Label with
+          // this info.
+          // std::map<Glib::ustring,int> table_copy = res->openTypeTables;
+          // if( (it = table_copy.find("liga")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("clig")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("dlig")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("hlig")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("calt")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("subs")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("sups")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("smcp")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("c2sc")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("pcap")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("unic")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("titl")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("lnum")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("onum")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("pnum")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("tnum")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("frac")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("afrc")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("ordn")) != table_copy.end() ) table_copy.erase( it );
+          // if( (it = table_copy.find("zero")) != table_copy.end() ) table_copy.erase( it );
+          // for(it = table_copy.begin(); it != table_copy.end(); ++it) {
+          //     std::cout << "Other: " << it->first << "  Occurances: " << it->second << std::endl;
+          // }
+
+      } else {
+          std::cerr << "FontVariants::update(): Couldn't find font_instance for: "
+                    << font_spec << std::endl;
+      }
+
 
       _ligatures_changed = false;
       _position_changed  = false;

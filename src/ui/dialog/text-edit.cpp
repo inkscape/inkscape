@@ -393,7 +393,7 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTVARIANTS);
         int result_features =
             sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTFEATURESETTINGS);
-        vari_vbox.update( &query, result_features == QUERY_STYLE_MULTIPLE_DIFFERENT );
+        vari_vbox.update( &query, result_features == QUERY_STYLE_MULTIPLE_DIFFERENT, fontspec );
 
     }
     blocked = false;

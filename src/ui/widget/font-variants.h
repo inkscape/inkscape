@@ -127,7 +127,7 @@ public:
     /**
      * Update GUI based on query results.
      */
-    void update( SPStyle const *query, bool different_features );
+    void update( SPStyle const *query, bool different_features, Glib::ustring& font_spec );
 
     /**
      * Fill SPCSSAttr based on settings of buttons.

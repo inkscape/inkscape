@@ -36,6 +36,9 @@ public:
     int                   nbGlyph, maxGlyph;
     font_glyph*           glyphs;
 
+    // Map of OpenType tables found in font (convert to std::set?)
+    std::map<Glib::ustring, int> openTypeTables;
+
     font_instance(void);
     virtual ~font_instance(void);
 
@@ -68,6 +71,8 @@ public:
 private:
     void                 FreeTheFace();
 
+    // Temp: make public
+public:
 #ifdef USE_PANGO_WIN32
     HFONT                 theFace;
 #else

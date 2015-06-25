@@ -36,7 +36,7 @@
 
 class SPItem;
 struct SPFontSelector;
-class FontVariants;
+//class FontVariants;
 class font_instance;
 class SPCSSAttr;
 
