@@ -72,7 +72,13 @@ class WebSlicer_Export(WebSlicer_Effect):
             else:
                 inkex.errormsg(_('The directory "%s" does not exists.') % self.options.dir)
                 return
-        self.unique_html_id( self.get_slicer_layer() )
+        # Check whether slicer layer exists (bug #1198826)
+        slicer_layer = self.get_slicer_layer()
+        if slicer_layer is None:
+            inkex.errormsg(_('No slicer layer found.'))
+            return {'error':'No slicer layer found.'}
+        else:
+            self.unique_html_id( slicer_layer )
         return None
 
 
