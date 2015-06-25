@@ -491,6 +491,13 @@ std::vector<double> FilletChamferPointArrayParam::get_times(int index, std::vect
     curve_it1 = subpaths[positions.first][positions.second].duplicate();
     Coord it1_length = (*curve_it1).length(tolerance);
     double time_it1, time_it2, time_it1_B, intpart;
+    if(_vector.size() <= index){
+        std::vector<double> out;
+        out.push_back(0);
+        out.push_back(1);
+        out.push_back(0);
+        return out;
+    }
     time_it1 = modf(to_time(index, _vector[index][X]), &intpart);
     if (_vector[index][Y] == 0) {
         time_it1 = 0;
