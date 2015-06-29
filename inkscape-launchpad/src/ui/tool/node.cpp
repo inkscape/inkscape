@@ -1464,13 +1464,14 @@ Glib::ustring Node::_getTip(unsigned state) const
 
     // No modifiers: assemble tip from node type
     char const *nodetype = node_type_to_localized_string(_type);
+    double power = _pm()._bsplineHandlePosition(h,h2);
     if (_selection.transformHandlesEnabled() && selected()) {
         if (_selection.size() == 1 && !isBSpline) {
             return format_tip(C_("Path node tip",
                 "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"), nodetype);
         }else if(_selection.size() == 1){
             return format_tip(C_("Path node tip",
-                "<b>BSpline node</b>: drag to shape the path (more: Shift, Ctrl, Alt). %g power"),_pm()._bsplineHandlePosition(h,h2));
+                "<b>BSpline node</b>: drag to shape the path (more: Shift, Ctrl, Alt). %g power"), power);
         }
         return format_tip(C_("Path node tip",
             "<b>%s</b>: drag to shape the path, click to toggle scale/rotation handles (more: Shift, Ctrl, Alt)"), nodetype);
@@ -1480,7 +1481,7 @@ Glib::ustring Node::_getTip(unsigned state) const
             "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"), nodetype);
     }else{
         return format_tip(C_("Path node tip",
-            "<b>BSpline node</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt). %g power"),_pm()._bsplineHandlePosition(h,h2));
+            "<b>BSpline node</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt). %g power"), power);
     
     }
 }

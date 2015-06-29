@@ -270,6 +270,9 @@ void FilletChamferPointArrayParam::recalculate_knots(
     Piecewise<D2<SBasis> > const &pwd2_in)
 {
     bool change = false;
+    if(_vector.size() == 0){
+        return;
+    }
     PathVector pathv = path_from_piecewise(pwd2_in, 0.001);
     if (!pathv.empty()) {
         std::vector<Point> result;
@@ -491,6 +494,13 @@ std::vector<double> FilletChamferPointArrayParam::get_times(int index, std::vect
     curve_it1 = subpaths[positions.first][positions.second].duplicate();
     Coord it1_length = (*curve_it1).length(tolerance);
     double time_it1, time_it2, time_it1_B, intpart;
+    if(_vector.size() <= index){
+        std::vector<double> out;
+        out.push_back(0);
+        out.push_back(1);
+        out.push_back(0);
+        return out;
+    }
     time_it1 = modf(to_time(index, _vector[index][X]), &intpart);
     if (_vector[index][Y] == 0) {
         time_it1 = 0;

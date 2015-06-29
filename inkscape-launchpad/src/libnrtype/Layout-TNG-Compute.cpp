@@ -994,7 +994,6 @@ void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) con
 #if PANGO_VERSION_CHECK(1,37,1)
             PangoAttribute *attribute_font_features =
                 pango_attr_font_features_new( text_source->style->getFontFeatureString().c_str());
-//                pango_attr_font_features_new( "hlig 1, dlig 1");
             attribute_font_features->start_index = para_text.bytes();
 #endif
             para_text.append(&*text_source->text_begin.base(), text_source->text_length);     // build the combined text

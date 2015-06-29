@@ -1179,7 +1179,7 @@ objects_query_fontvariants (const std::vector<SPItem*> &objects, SPStyle *style_
     SPIEnum* position_res       = &(style_res->font_variant_position);
     SPIEnum* caps_res           = &(style_res->font_variant_caps);
     SPINumeric* numeric_res     = &(style_res->font_variant_numeric);
-    
+
     // Stores 'and' of all values
     ligatures_res->computed = SP_CSS_FONT_VARIANT_LIGATURES_NORMAL;
     position_res->computed  = SP_CSS_FONT_VARIANT_POSITION_NORMAL;
@@ -1243,6 +1243,63 @@ objects_query_fontvariants (const std::vector<SPItem*> &objects, SPStyle *style_
 
     if (texts == 0 || !set)
         return QUERY_STYLE_NOTHING;
+
+    if (texts > 1) {
+        if (different) {
+            return QUERY_STYLE_MULTIPLE_DIFFERENT;
+        } else {
+            return QUERY_STYLE_MULTIPLE_SAME;
+        }
+    } else {
+        return QUERY_STYLE_SINGLE;
+    }
+}
+
+
+int
+objects_query_fontfeaturesettings (const std::vector<SPItem*> &objects, SPStyle *style_res)
+{
+    bool different = false;
+    int texts = 0;
+
+    if (style_res->font_feature_settings.value) {
+        g_free(style_res->font_feature_settings.value);
+        style_res->font_feature_settings.value = NULL;
+    }
+    style_res->font_feature_settings.set = FALSE;
+
+    for (std::vector<SPItem*>::const_iterator i = objects.begin(); i != objects.end(); i++) {
+        SPObject *obj = *i;
+
+        // std::cout << "  " << reinterpret_cast<SPObject*>(i->data)->getId() << std::endl;
+        if (!isTextualItem(obj)) {
+            continue;
+        }
+
+        SPStyle *style = obj->style;
+        if (!style) {
+            continue;
+        }
+
+        texts ++;
+
+        if (style_res->font_feature_settings.value && style->font_feature_settings.value &&
+            strcmp (style_res->font_feature_settings.value, style->font_feature_settings.value)) {
+            different = true;  // different fonts
+        }
+
+        if (style_res->font_feature_settings.value) {
+            g_free(style_res->font_feature_settings.value);
+            style_res->font_feature_settings.value = NULL;
+        }
+
+        style_res->font_feature_settings.set = TRUE;
+        style_res->font_feature_settings.value = g_strdup(style->font_feature_settings.value);
+    }
+
+    if (texts == 0 || !style_res->font_feature_settings.set) {
+        return QUERY_STYLE_NOTHING;
+    }
 
     if (texts > 1) {
         if (different) {
@@ -1667,6 +1724,8 @@ sp_desktop_query_style_from_list (const std::vector<SPItem*> &list, SPStyle *sty
         return objects_query_fontstyle (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_FONTVARIANTS) {
         return objects_query_fontvariants (list, style);
+    } else if (property == QUERY_STYLE_PROPERTY_FONTFEATURESETTINGS) {
+        return objects_query_fontfeaturesettings (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_FONTNUMBERS) {
         return objects_query_fontnumbers (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_BASELINES) {

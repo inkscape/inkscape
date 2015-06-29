@@ -1266,25 +1266,28 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt inkscape">
 -->
 <xsl:template mode="fill_rule" match="*">
   <xsl:choose>
-    <xsl:when test="@fill-rule and (@fill-rule = 'nonzero' or @fill-rule = 'evenodd')">
-      <xsl:attribute name="FillRule">
-        <xsl:value-of select="normalize-space(@fill-rule)" />
-      </xsl:attribute>
+    <xsl:when test="@fill-rule and (@fill-rule = 'nonzero')">
+      <xsl:attribute name="FillRule">NonZero</xsl:attribute>
+    </xsl:when>
+    <xsl:when test="@fill-rule and (@fill-rule = 'evenodd')">
+      <xsl:attribute name="FillRule">EvenOdd</xsl:attribute>
     </xsl:when>
     <xsl:when test="@style and contains(@style, 'fill-rule:')">
       <xsl:variable name="FillRule" select="normalize-space(substring-after(@style, 'fill-rule:'))" />
       <xsl:choose>
         <xsl:when test="contains($FillRule, ';')">
-          <xsl:if test="substring-before($FillRule, ';') = 'nonzero' or substring-before($FillRule, ';') = 'evenodd'">
-            <xsl:attribute name="FillRule">
-              <xsl:value-of select="substring-before($FillRule, ';')" />
-            </xsl:attribute>
+          <xsl:if test="substring-before($FillRule, ';') = 'nonzero'">
+            <xsl:attribute name="FillRule">NonZero</xsl:attribute>
+          </xsl:if>
+          <xsl:if test="substring-before($FillRule, ';') = 'evenodd'">
+            <xsl:attribute name="FillRule">EvenOdd</xsl:attribute>
           </xsl:if>
         </xsl:when>
-        <xsl:when test="$FillRule = 'nonzero' or $FillRule = 'evenodd'">
-          <xsl:attribute name="FillRule">
-            <xsl:value-of select="$FillRule" />
-          </xsl:attribute>
+        <xsl:when test="$FillRule = 'nonzero'">
+          <xsl:attribute name="FillRule">NonZero</xsl:attribute>
+        </xsl:when>
+        <xsl:when test="$FillRule = 'evenodd'">
+          <xsl:attribute name="FillRule">EvenOdd</xsl:attribute>
         </xsl:when>
       </xsl:choose>
     </xsl:when>

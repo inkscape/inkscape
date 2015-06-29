@@ -187,6 +187,10 @@ Glib::ustring CurveDragPoint::_getTip(unsigned state) const
     if (_pm.empty()) return "";
     if (!first || !first.next()) return "";
     bool linear = first->front()->isDegenerate() && first.next()->back()->isDegenerate();
+    if(state_held_shift(state) && _pm._isBSpline()){
+        return C_("Path segment tip",
+            "<b>Shift</b>: drag to open or move BSpline handles");
+    }
     if (state_held_shift(state)) {
         return C_("Path segment tip",
             "<b>Shift</b>: click to toggle segment selection");
@@ -194,6 +198,11 @@ Glib::ustring CurveDragPoint::_getTip(unsigned state) const
     if (state_held_control(state) && state_held_alt(state)) {
         return C_("Path segment tip",
             "<b>Ctrl+Alt</b>: click to insert a node");
+    }
+    if(_pm._isBSpline()){
+        return C_("Path segment tip",
+            "<b>BSpline segment</b>: drag to shape the segment, doubleclick to insert node, "
+            "click to select (more: Shift, Ctrl+Alt)");
     }
     if (linear) {
         return C_("Path segment tip",

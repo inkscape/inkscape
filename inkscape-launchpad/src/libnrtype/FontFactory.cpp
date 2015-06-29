@@ -18,9 +18,11 @@
 
 #include <glibmm/i18n.h>
 #include <pango/pangoft2.h>
+#include <pango/pango-ot.h>
 #include "libnrtype/FontFactory.h"
 #include "libnrtype/font-instance.h"
 #include "util/unordered-containers.h"
+#include <map>
 
 typedef INK_UNORDERED_MAP<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
 
@@ -591,7 +593,23 @@ font_instance* font_factory::FaceFromFontSpecification(char const *fontSpecifica
     return font;
 }
 
+void dump_tag( guint32 *tag, Glib::ustring prefix = "" ) {
+    std::cout << prefix
+              << ((char)((*tag & 0xff000000)>>24))
+              << ((char)((*tag & 0x00ff0000)>>16))
+              << ((char)((*tag & 0x0000ff00)>>8))
+              << ((char)((*tag & 0x000000ff)>>0))
+              << std::endl;
+}
 
+Glib::ustring extract_tag( guint32 *tag ) {
+    Glib::ustring tag_name;
+    tag_name += ((char)((*tag & 0xff000000)>>24));
+    tag_name += ((char)((*tag & 0x00ff0000)>>16));
+    tag_name += ((char)((*tag & 0x0000ff00)>>8));
+    tag_name += ((char)((*tag & 0x000000ff)>>0));
+    return tag_name;
+}
 
 font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
 {
@@ -657,6 +675,76 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
                 pango_font_description_free(descr);
             }
         }
+
+        // Extract which OpenType tables are in the font. We'll make a list of all tables
+        // regardless of which script and langauge they are in.  These functions are deprecated but
+        // will eventually be replaced by newer functions (according to Behdad).
+        PangoOTInfo* info = pango_ot_info_get( res->theFace );
+
+        PangoOTTag* scripts = pango_ot_info_list_scripts( info, PANGO_OT_TABLE_GSUB ); 
+        // std::cout << "  scripts: " << std::endl;
+        for( unsigned i = 0; scripts[i] != 0; ++i ) {
+            // dump_tag( &scripts[i], "    " );
+
+            guint script_index = -1;
+            if( pango_ot_info_find_script( info, PANGO_OT_TABLE_GSUB, scripts[i], &script_index )) {
+
+                PangoOTTag* languages =
+                    pango_ot_info_list_languages( info, PANGO_OT_TABLE_GSUB, script_index, NULL);
+                // if( languages[0] != 0 )
+                //   std::cout << "      languages: " << std::endl;
+
+                for( unsigned j = 0; languages[j] != 0; ++j ) {
+                    // dump_tag( &languages[j], "        lang: ");
+
+                    guint language_index = -1;
+                    if( pango_ot_info_find_language(info, PANGO_OT_TABLE_GSUB, script_index, languages[j], &language_index, NULL)) {
+
+                        PangoOTTag* features =
+                            pango_ot_info_list_features( info, PANGO_OT_TABLE_GSUB, 0, i, j );
+                        if( features[0] != 0 )
+                            // std::cout << "          features: " << std::endl;
+
+                        for( unsigned k = 0; features[k] != 0; ++k ) {
+                            // dump_tag( &features[k], "            feature: ");
+                            ++(res->openTypeTables[ extract_tag(&features[k])]);
+                        }
+                        g_free( features );
+                    } else {
+                        // std::cout << "      No languages defined" << std::endl;
+                        PangoOTTag* features =
+                            pango_ot_info_list_features( info, PANGO_OT_TABLE_GSUB, 0, i, PANGO_OT_DEFAULT_LANGUAGE );
+                        // if( features[0] != 0 )
+                        //   std::cout << "          default features: " << std::endl;
+
+                        for( unsigned k = 0; features[k] != 0; ++k ) {
+                            // dump_tag( &features[k], "            feature: " );
+                            ++(res->openTypeTables[ extract_tag(&features[k])]);
+                        }
+                        g_free( features );
+                    }
+                }
+                g_free( languages );
+            } else {
+                // std::cout << "  No scripts defined! " << std::endl;
+            }
+        }
+        g_free( scripts );
+
+        PangoOTTag* features =
+            pango_ot_info_list_features( info, PANGO_OT_TABLE_GSUB, 0, 0, PANGO_OT_DEFAULT_LANGUAGE );
+        // if( features[0] != 0 )
+        //   std::cout << "  DFTL DFTL features: " << std::endl;
+        for( unsigned i = 0; features[i] != 0; ++i ) {
+            // dump_tag( &features[i], "            feature: " );
+            ++(res->openTypeTables[ extract_tag(&features[i])]);
+        }
+        // std::map<Glib::ustring,int>::iterator it;
+        // for( it = res->openTypeTables.begin(); it != res->openTypeTables.end(); ++it) {
+        //     std::cout << "Table: " << it->first << "  Occurances: " << it->second << std::endl;
+        // }
+        g_free( features );
+
     } else {
         // already here
         res = loadedFaces[descr];

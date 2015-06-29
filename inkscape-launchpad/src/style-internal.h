@@ -501,12 +501,12 @@ public:
 public:
     SPStyleEnum const *enums;
 
-    unsigned value : 8;
-    unsigned computed: 8;
+    unsigned value : 16;  // 9 bits required for 'font-variant-east-asian'
+    unsigned computed: 16;
 
 private:
-    unsigned value_default : 8;
-    unsigned computed_default: 8; // for font-weight
+    unsigned value_default : 16;
+    unsigned computed_default: 16; // for font-weight
 };
 
 
@@ -546,7 +546,7 @@ public:
     {}
 
     SPILigatures( Glib::ustring const &name, SPStyleEnum const *enums) :
-        SPIEnum( name, enums, SP_CSS_FONT_VARIANT_NORMAL )
+        SPIEnum( name, enums, SP_CSS_FONT_VARIANT_LIGATURES_NORMAL )
     {}
 
     virtual ~SPILigatures()
