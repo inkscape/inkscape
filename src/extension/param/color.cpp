@@ -86,9 +86,11 @@ Gtk::Widget *ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node *
 {
     using Inkscape::UI::Widget::ColorNotebook;
 
-	if (_gui_hidden) return NULL;
+    if (_gui_hidden) return NULL; 
 
-    _changeSignal = new sigc::signal<void>(*changeSignal);
+    if (changeSignal) {
+        _changeSignal = new sigc::signal<void>(*changeSignal);
+    }
 
     if (_color.value() < 1) {
         _color_changed.block(true);
