@@ -95,7 +95,7 @@ static char const preferences_skeleton[] =
 "      <eventcontext id=\"pencil\" tolerance=\"4.0\" selcue=\"1\" style=\"stroke-width:1px;\" usecurrent=\"0\" average_all_sketches=\"1\"/>\n"
 "      <eventcontext id=\"pen\" mode=\"drag\" selcue=\"1\" style=\"stroke-width:1px;\" usecurrent=\"0\"/>\n"
 "    </group>\n"
-"    <eventcontext id=\"calligraphic\" style=\"fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;\"\n"
+"    <eventcontext id=\"calligraphic\" style=\"fill:black;fill-opacity:1;stroke:none;\"\n"
 "                       mass=\"2\" angle=\"30\" width=\"15\" thinning=\"10\" flatness=\"90\" cap_rounding=\"0.0\" usecurrent=\"1\"\n"
 "                       tracebackground=\"0\" usepressure=\"1\" usetilt=\"0\" keep_selected=\"1\">\n"
 "    <group id=\"preset\">\n"
