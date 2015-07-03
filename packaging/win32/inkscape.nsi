@@ -118,6 +118,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE Breton
 !insertmacro INKLANGFILE Catalan
 !insertmacro INKLANGFILE Czech
+!insertmacro INKLANGFILE Danish
 !insertmacro INKLANGFILE Dutch
 !insertmacro INKLANGFILE Finnish
 !insertmacro INKLANGFILE French
@@ -125,7 +126,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE German
 !insertmacro INKLANGFILE Greek
 !insertmacro INKLANGFILE Indonesian
-!insertmacro INKLANGFILE Icelandics
+!insertmacro INKLANGFILE Icelandic
 !insertmacro INKLANGFILE Italian
 !insertmacro INKLANGFILE Japanese
 !insertmacro INKLANGFILE Polish
@@ -667,6 +668,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect Breton        1150
   !insertmacro LanguageAutoSelect Catalan       1027
   !insertmacro LanguageAutoSelect Czech         1029
+  !insertmacro LanguageAutoSelect Danish        1030
   !insertmacro LanguageAutoSelect Dutch         1043
   !insertmacro LanguageAutoSelect Finnish       1035
   !insertmacro LanguageAutoSelect French        1036
