@@ -93,7 +93,7 @@ template<class T>
 void worker(const typename HomogeneousSplines<T>::Polygon &source,
             Splines::Path &dest, bool optimize)
 {
-    dest.pathVector.reserve(source.holes.size() + 1);
+    //dest.pathVector.reserve(source.holes.size() + 1);
 
     for ( int i = 0 ; i != 4 ; ++i )
         dest.rgba[i] = source.rgba[i];

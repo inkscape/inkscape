@@ -77,7 +77,7 @@ PathParam::~PathParam()
     g_free(defvalue);
 }
 
-std::vector<Geom::Path> const &
+Geom::PathVector const &
 PathParam::get_pathvector() const
 {
     return _pathvector;
@@ -255,7 +255,7 @@ PathParam::param_transform_multiply(Geom::Affine const& postmul, bool /*set*/)
 }
 
 /*
- * See comments for set_new_value(std::vector<Geom::Path>).
+ * See comments for set_new_value(Geom::PathVector).
  */
 void
 PathParam::set_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpath, bool write_to_svg)
@@ -291,7 +291,7 @@ PathParam::set_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpa
  *          The new path data is not written to SVG. This method will emit the signal_path_changed signal.
  */
 void
-PathParam::set_new_value (std::vector<Geom::Path> const &newpath, bool write_to_svg)
+PathParam::set_new_value (Geom::PathVector const &newpath, bool write_to_svg)
 {
     remove_link();
     _pathvector = newpath;

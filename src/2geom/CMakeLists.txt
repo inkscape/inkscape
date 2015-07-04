@@ -2,23 +2,26 @@
 set(2geom_SRC
 	affine.cpp
 	basic-intersection.cpp
+	bezier.cpp
 	bezier-clipping.cpp
 	bezier-curve.cpp
 	bezier-utils.cpp
-	circle-circle.cpp
+	cairo-path-sink.cpp
 	circle.cpp
 	# conic_section_clipper_impl.cpp
 	# conicsec.cpp
-	conjugate_gradient.cpp
-	convex-cover.cpp
+	convex-hull.cpp
+	coord.cpp
 	crossing.cpp
 	curve.cpp
 	d2-sbasis.cpp
 	ellipse.cpp
 	elliptical-arc.cpp
+	elliptical-arc-from-sbasis.cpp
 	geom.cpp
+	intersection-graph.cpp
 	line.cpp
-	nearest-point.cpp
+	nearest-time.cpp
 	numeric/matrix.cpp
 	path-intersection.cpp
 	path-sink.cpp
@@ -26,11 +29,9 @@ set(2geom_SRC
 	pathvector.cpp
 	piecewise.cpp
 	point.cpp
-	poly.cpp
-	quadtree.cpp
+	polynomial.cpp
 	rect.cpp
 	# recursive-bezier-intersection.cpp
-	region.cpp
 	sbasis-2d.cpp
 	sbasis-geometric.cpp
 	sbasis-math.cpp
@@ -38,16 +39,16 @@ set(2geom_SRC
 	sbasis-roots.cpp
 	sbasis-to-bezier.cpp
 	sbasis.cpp
-	shape.cpp
 	solve-bezier.cpp
 	solve-bezier-one-d.cpp
 	solve-bezier-parametric.cpp
-	svg-elliptical-arc.cpp
 	svg-path-parser.cpp
-	sweep.cpp
+	svg-path-writer.cpp
+	sweep-bounds.cpp
 	toposweep.cpp
 	transforms.cpp
 	utils.cpp
+	viewbox.cpp
 
 
 	# -------
@@ -62,7 +63,6 @@ set(2geom_SRC
 	bezier.h
 	choose.h
 	circle.h
-	circulator.h
 	concepts.h
 	conic_section_clipper.h
 	conic_section_clipper_cr.h
@@ -100,8 +100,7 @@ set(2geom_SRC
 	piecewise.h
 	point-ops.h
 	point.h
-	poly.h
-	quadtree.h
+	polynomial.h
 	ray.h
 	rect.h
 	region.h
@@ -114,9 +113,10 @@ set(2geom_SRC
 	sbasis.h
 	shape.h
 	solver.h
-	svg-elliptical-arc.h
 	svg-path-parser.h
-	sweep.h
+	svg-path-writer.h
+	sweeper.h
+	sweep-bounds.h
 	toposweep.h
 	transforms.h
 	utils.h

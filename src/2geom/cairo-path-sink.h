@@ -1,8 +1,8 @@
 /**
  * @file
- * @brief Routines for solving a system of linear equations using the conjugate gradient method
+ * @brief  Path sink for Cairo contexts
  *//*
- * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
+ * Copyright 2014 Krzysztof Kosiński
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -29,29 +29,52 @@
  *
  */
 
-#ifndef _2GEOM_CONJUGATE_GRADIENT_H
-#define _2GEOM_CONJUGATE_GRADIENT_H
+#ifndef LIB2GEOM_SEEN_CAIRO_PATH_SINK_H
+#define LIB2GEOM_SEEN_CAIRO_PATH_SINK_H
 
-#include <valarray>
+#include <2geom/path-sink.h>
+#include <cairo.h>
 
-namespace Geom
+namespace Geom {
+
+
+/** @brief Output paths to a Cairo drawing context
+ *
+ * This class converts from 2Geom path representation to the Cairo representation.
+ * Use it to simplify visualizing the results of 2Geom operations with the Cairo library,
+ * for example:
+ * @code
+ *   CairoPathSink sink(cr);
+ *   sink.feed(pv);
+ *   cairo_stroke(cr);
+ * @endcode
+ *
+ * Currently the flush method is a no-op, but this is not guaranteed
+ * to hold forever.
+ */
+class CairoPathSink
+    : public PathSink
 {
+public:
+    CairoPathSink(cairo_t *cr);
 
-double
-inner(std::valarray<double> const &x, 
-      std::valarray<double> const &y);
+    void moveTo(Point const &p);
+    void lineTo(Point const &p);
+    void curveTo(Point const &c0, Point const &c1, Point const &p);
+    void quadTo(Point const &c, Point const &p);
+    void arcTo(Coord rx, Coord ry, Coord angle,
+               bool large_arc, bool sweep, Point const &p);
+    void closePath();
+    void flush();
 
-void 
-conjugate_gradient(std::valarray<double> const &A, 
-		   std::valarray<double> &x, 
-		   std::valarray<double> const &b, 
-		   unsigned n, double tol,
-		   unsigned max_iterations, bool ortho1);
+private:
+    cairo_t *_cr;
+    Point _current_point;
+};
 
-} // namespace Geom
+}
 
-#endif // _2GEOM_CONJUGATE_GRADIENT_H
-
+#endif // !LIB2GEOM_SEEN_CAIRO_PATH_SINK_H
 /*
   Local Variables:
   mode:c++

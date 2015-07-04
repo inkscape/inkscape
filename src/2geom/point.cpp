@@ -35,6 +35,7 @@
 
 #include <assert.h>
 #include <math.h>
+#include <2geom/coord.h>
 #include <2geom/point.h>
 #include <2geom/transforms.h>
 
@@ -146,8 +147,8 @@ bool is_zero(Point const &p) {
 
 /** @brief True if the point has a length near 1. The are_near() function is used.
  * @relates Point */
-bool is_unit_vector(Point const &p) {
-    return are_near(L2(p), 1.0);
+bool is_unit_vector(Point const &p, Coord eps) {
+    return are_near(L2(p), 1.0, eps);
 }
 /** @brief Return the angle between the point and the +X axis.
  * @return Angle in \f$(-\pi, \pi]\f$.
@@ -161,7 +162,7 @@ Coord atan2(Point const &p) {
  * @return Angle in \f$(-\pi, \pi]\f$.
  * @relates Point */
 Coord angle_between(Point const &a, Point const &b) {
-    return std::atan2(cross(b,a), dot(b,a));
+    return std::atan2(cross(a,b), dot(a,b));
 }
 
 /** @brief Create a normalized version of a point.
@@ -228,6 +229,13 @@ Point constrain_angle(Point const &A, Point const &B, unsigned int n, Point cons
     double angle = -angle_between(diff, dir);
     double k = round(angle * (double)n / (2.0*M_PI));
     return A + dir * Rotate(k * 2.0 * M_PI / (double)n) * L2(diff);
+}
+
+std::ostream &operator<<(std::ostream &out, const Geom::Point &p)
+{
+    out << "(" << format_coord_nice(p[X]) << ", "
+               << format_coord_nice(p[Y]) << ")";
+    return out;
 }
 
 } // end namespace Geom

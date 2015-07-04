@@ -466,6 +466,15 @@ SBasis compose(SBasis const &a, SBasis const &b, unsigned k) {
     return r;
 }
 
+SBasis portion(const SBasis &t, double from, double to) {
+    double fv = t.valueAt(from);
+    double tv = t.valueAt(to);
+    SBasis ret = compose(t, Linear(from, to));
+    ret.at0() = fv;
+    ret.at1() = tv;
+    return ret;
+}
+
 /*
 Inversion algorithm. The notation is certainly very misleading. The
 pseudocode should say:
@@ -632,7 +641,6 @@ SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order, double 
 
         //TODO: handle det~0!!
         if (fabs(det)<zero){
-            det = zero;
             a=b=0;
         }else{
             a=( q01*r10-q10*r01)/det;

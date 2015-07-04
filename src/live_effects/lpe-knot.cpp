@@ -155,7 +155,7 @@ findShadowedTime(Geom::Path const &patha, std::vector<Geom::Point> const &pt_and
 //    -for each component, the time at which this crossing occurs + the order of this crossing along the component (when starting from 0).
 
 namespace LPEKnotNS {//just in case...
-CrossingPoints::CrossingPoints(std::vector<Geom::Path> const &paths) : std::vector<CrossingPoint>(){
+CrossingPoints::CrossingPoints(Geom::PathVector const &paths) : std::vector<CrossingPoint>(){
 //    std::cout<<"\nCrossingPoints creation from path vector\n";
     for( unsigned i=0; i<paths.size(); i++){
         for( unsigned ii=0; ii < size_nondegenerate(paths[i]); ii++){
@@ -391,11 +391,11 @@ LPEKnot::updateSwitcher(){
     }
 }
 
-std::vector<Geom::Path>
-LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
+Geom::PathVector
+LPEKnot::doEffect_path (Geom::PathVector const &path_in)
 {
     using namespace Geom;
-    std::vector<Geom::Path> path_out;
+    Geom::PathVector path_out;
 
     if (gpaths.size()==0){
         return path_in;
@@ -433,7 +433,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
                 std::vector<Point> flag_j = gpaths[j][curveidx].pointAndDerivatives(t,1);
 
 
-                int geom_sign = ( cross(flag_i[1],flag_j[1]) > 0 ? 1 : -1);
+                int geom_sign = ( cross(flag_i[1], flag_j[1]) < 0 ? 1 : -1);
 
                 bool i0_is_under = false;
                 if ( crossing_points[p].sign * geom_sign > 0 ){
@@ -486,8 +486,9 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
                 ++beg_comp;
                 --end_comp;
                 Path first = gpaths[i0].portion(dom.back());
-                //FIXME: STITCH_DISCONTINUOUS should not be necessary (?!?)
-                first.append(gpaths[i0].portion(dom.front()), Path::STITCH_DISCONTINUOUS);
+                //FIXME: stitching should not be necessary (?!?)
+                first.setStitching(true);
+                first.append(gpaths[i0].portion(dom.front()));
                 path_out.push_back(first);
             }
         }
@@ -503,7 +504,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
 
 //recursively collect gpaths and stroke widths (stolen from "sp-lpe_item.cpp").
 static void
-collectPathsAndWidths (SPLPEItem const *lpeitem, std::vector<Geom::Path> &paths, std::vector<double> &stroke_widths){
+collectPathsAndWidths (SPLPEItem const *lpeitem, Geom::PathVector &paths, std::vector<double> &stroke_widths){
     if (SP_IS_GROUP(lpeitem)) {
     	std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
         for ( std::vector<SPItem*>::const_iterator iter = item_list.begin(); iter != item_list.end(); iter++) {
@@ -615,8 +616,7 @@ LPEKnot::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::Pat
         svgd = "M 10,0 C 10,5.52 5.52,10 0,10 -5.52,10 -10,5.52 -10,0 c 0,-5.52 4.48,-10 10,-10 5.52,0 10,4.48 10,10 z";
     }
     PathVector pathv = sp_svg_read_pathv(svgd);
-    pathv *= Affine(r,0,0,r,0,0);
-    pathv += switcher;
+    pathv *= Affine(r,0,0,r,0,0) * Translate(switcher);
     hp_vec.push_back(pathv);
 }
 

@@ -1,13 +1,6 @@
-#ifndef _SBASIS_TO_POLY
-#define _SBASIS_TO_POLY
-
-#include <2geom/poly.h>
-#include <2geom/sbasis.h>
-
-/**
- * \file
- * \brief Conversion between SBasis and Poly.  Not recommended for general use due to instability.
- *
+/** @file
+ * @brief Conversion between SBasis and Poly.  Not recommended for general use due to instability.
+ *//*
  * Authors:
  *      ? <?@?.?>
  * 
@@ -35,8 +28,13 @@
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
  * OF ANY KIND, either express or implied. See the LGPL or the MPL for
  * the specific language governing rights and limitations.
- *
  */
+
+#ifndef LIB2GEOM_SEEN_SBASIS_POLY_H
+#define LIB2GEOM_SEEN_SBASIS_POLY_H
+
+#include <2geom/polynomial.h>
+#include <2geom/sbasis.h>
 
 namespace Geom{
 
@@ -45,6 +43,7 @@ Poly sbasis_to_poly(SBasis const & s);
 
 };
 
+#endif
 /*
   Local Variables:
   mode:c++
@@ -55,5 +54,3 @@ Poly sbasis_to_poly(SBasis const & s);
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
-
-#endif

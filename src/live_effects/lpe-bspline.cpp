@@ -124,12 +124,12 @@ void LPEBSpline::doEffect(SPCurve *curve)
                 if(are_near((*cubic)[1],(*cubic)[0]) && !are_near((*cubic)[2],(*cubic)[3])) {
                     point_at1 = sbasis_in.valueAt(DEFAULT_START_POWER);
                 } else {
-                    point_at1 = sbasis_in.valueAt(Geom::nearest_point((*cubic)[1], *in->first_segment()));
+                    point_at1 = sbasis_in.valueAt(Geom::nearest_time((*cubic)[1], *in->first_segment()));
                 }
                 if(are_near((*cubic)[2],(*cubic)[3]) && !are_near((*cubic)[1],(*cubic)[0])) {
                     point_at2 = sbasis_in.valueAt(DEFAULT_END_POWER);
                 } else {
-                    point_at2 = sbasis_in.valueAt(Geom::nearest_point((*cubic)[2], *in->first_segment()));
+                    point_at2 = sbasis_in.valueAt(Geom::nearest_time((*cubic)[2], *in->first_segment()));
                 }
             } else {
                 point_at1 = in->first_segment()->initialPoint();
@@ -147,7 +147,7 @@ void LPEBSpline::doEffect(SPCurve *curve)
                     if(are_near((*cubic)[1],(*cubic)[0]) && !are_near((*cubic)[2],(*cubic)[3])) {
                         next_point_at1 = sbasis_in.valueAt(DEFAULT_START_POWER);
                     } else {
-                        next_point_at1 = sbasis_out.valueAt(Geom::nearest_point((*cubic)[1], *out->first_segment()));
+                        next_point_at1 = sbasis_out.valueAt(Geom::nearest_time((*cubic)[1], *out->first_segment()));
                     }
                 } else {
                     next_point_at1 = out->first_segment()->initialPoint();
@@ -164,7 +164,7 @@ void LPEBSpline::doEffect(SPCurve *curve)
                 cubic = dynamic_cast<Geom::CubicBezier const *>(&*path_it->begin());
                 if (cubic) {
                     line_helper->moveto(sbasis_start.valueAt(
-                                           Geom::nearest_point((*cubic)[1], *start->first_segment())));
+                                           Geom::nearest_time((*cubic)[1], *start->first_segment())));
                 } else {
                     line_helper->moveto(start->first_segment()->initialPoint());
                 }
@@ -178,7 +178,7 @@ void LPEBSpline::doEffect(SPCurve *curve)
                 cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
                 if (cubic) {
                     line_helper->lineto(sbasis_end.valueAt(
-                                           Geom::nearest_point((*cubic)[2], *end->first_segment())));
+                                           Geom::nearest_time((*cubic)[2], *end->first_segment())));
                 } else {
                     line_helper->lineto(end->first_segment()->finalPoint());
                 }
@@ -236,7 +236,7 @@ LPEBSpline::drawHandle(Geom::Point p, double helper_size)
     Geom::Affine aff = Geom::Affine();
     aff *= Geom::Scale(helper_size);
     pathv *= aff;
-    pathv += p - Geom::Point(0.5*helper_size, 0.5*helper_size);
+    pathv *= Geom::Translate(p - Geom::Point(0.5*helper_size, 0.5*helper_size));
     hp.push_back(pathv[0]);
 }
 

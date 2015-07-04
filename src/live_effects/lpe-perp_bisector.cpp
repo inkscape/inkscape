@@ -67,7 +67,7 @@ KnotHolderEntityEnd::bisector_end_set(Geom::Point const &p, guint state, bool le
 
     Geom::Point const s = snap_knot_position(p, state);
 
-    double lambda = Geom::nearest_point(s, lpe->M, lpe->perp_dir);
+    double lambda = Geom::nearest_time(s, lpe->M, lpe->perp_dir);
     if (left) {
         lpe->C = lpe->M + lpe->perp_dir * lambda;
         lpe->length_left.param_set_value(lambda);
@@ -146,7 +146,7 @@ LPEPerpBisector::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
     C = M + perp_dir * length_left;
     D = M - perp_dir * length_right;
 
-    output = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
+    output = Piecewise<D2<SBasis> >(D2<SBasis>(SBasis(C[X], D[X]), SBasis(C[Y], D[Y])));
 
     return output;
 }

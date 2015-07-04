@@ -15,14 +15,7 @@
 #include <vector>
 #include <sigc++/signal.h>
 #include <glibmm/value.h>
-
-namespace Geom {
-	class Affine;
-	class OptRect;
-	class Path;
-	typedef std::vector<Path> PathVector;
-	class Point;
-}
+#include <2geom/forward.h>
 
 namespace Gtk {
 	class Widget;

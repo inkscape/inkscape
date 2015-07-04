@@ -1,7 +1,38 @@
-/** root finding for sbasis functions.
- * Copyright 2006 N Hurst
- * Copyright 2007 JF Barraud
+/**
+ * @file
+ * @brief Root finding for sbasis functions.
+ *//*
+ * Authors: 
+ *   Nathan Hurst <njh@njhurst.com>
+ *   JF Barraud
+ * Copyright 2006-2007 Authors
+  *
+ * This library is free software; you can redistribute it and/or
+ * modify it either under the terms of the GNU Lesser General Public
+ * License version 2.1 as published by the Free Software Foundation
+ * (the "LGPL") or, at your option, under the terms of the Mozilla
+ * Public License Version 1.1 (the "MPL"). If you do not alter this
+ * notice, a recipient may use your version of this file under either
+ * the MPL or the LGPL.
  *
+ * You should have received a copy of the LGPL along with this library
+ * in the file COPYING-LGPL-2.1; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the MPL along with this library
+ * in the file COPYING-MPL-1.1
+ *
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
+ * OF ANY KIND, either express or implied. See the LGPL or the MPL for
+ * the specific language governing rights and limitations.
+ *
+ */
+ 
+ /*
  * It is more efficient to find roots of f(t) = c_0, c_1, ... all at once, rather than iterating.
  *
  * Todo/think about:
@@ -98,20 +129,20 @@ OptInterval bounds_fast(const SBasis &sb, int order) {
         double b=sb[j][1];
 
         double v, t = 0;
-        v = res[0];
+        v = res.min();
         if (v<0) t = ((b-a)/v+1)*0.5;
         if (v>=0 || t<0 || t>1) {
-            res[0] = std::min(a,b);
-        }else{
-            res[0]=lerp(t, a+v*t, b);
+            res.setMin(std::min(a,b));
+        } else {
+            res.setMin(lerp(t, a+v*t, b));
         }
 
-        v = res[1];
+        v = res.max();
         if (v>0) t = ((b-a)/v+1)*0.5;
         if (v<=0 || t<0 || t>1) {
-            res[1] = std::max(a,b);
+            res.setMax(std::max(a,b));
         }else{
-            res[1]=lerp(t, a+v*t, b);
+            res.setMax(lerp(t, a+v*t, b));
         }
     }
     if (order>0) res*=std::pow(.25,order);
@@ -576,6 +607,7 @@ std::vector<double> roots1(SBasis const & s, Interval const ivl) {
 
 /** Find all t s.t s(t) = 0
  \param a sbasis function
+ \see Bezier::roots
  \returns vector of zeros (roots)
 
 */

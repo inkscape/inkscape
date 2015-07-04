@@ -348,15 +348,17 @@ class Vector : public detail::VectorImpl
 inline
 void swap(Vector & v1, Vector & v2)
 {
-	assert( v1.size() == v2.size() );
-	std::swap(v1.m_vector, v2.m_vector);
+    assert(v1.size() == v2.size());
+    using std::swap;
+    swap(v1.m_vector, v2.m_vector);
 }
 
 inline
 void swap_any(Vector & v1, Vector & v2)
 {
-    std::swap(v1.m_vector, v2.m_vector);
-    std::swap(v1.m_size, v2.m_size);
+	using std::swap;
+    swap(v1.m_vector, v2.m_vector);
+    swap(v1.m_size, v2.m_size);
 }
 
 
@@ -552,7 +554,8 @@ inline
 void swap_view(VectorView & v1, VectorView & v2)
 {
 	assert( v1.size() == v2.size() );
-	std::swap(v1.m_vector_view, v2.m_vector_view); // not swap m_vector too
+	using std::swap;
+	swap(v1.m_vector_view, v2.m_vector_view); // not swap m_vector too
 }
 
 inline

@@ -14,15 +14,13 @@
  * Released under GNU GPL
  */
 
-#include <2geom/hvlinesegment.h>
 #include <2geom/line.h>
 #include <2geom/bezier-curve.h>
 
 /// \todo un-inline this function
-inline bool is_straight_curve(Geom::Curve const & c) {
-    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
-        dynamic_cast<Geom::HLineSegment const*>(&c) ||
-        dynamic_cast<Geom::VLineSegment const*>(&c) )
+inline bool is_straight_curve(Geom::Curve const & c)
+{
+    if( dynamic_cast<Geom::LineSegment const*>(&c) )
     {
         return true;
     }
@@ -31,7 +29,7 @@ inline bool is_straight_curve(Geom::Curve const & c) {
     Geom::BezierCurve const *curve = dynamic_cast<Geom::BezierCurve const *>(&c);
     if (curve) {
         Geom::Line line(curve->initialPoint(), curve->finalPoint());
-        std::vector<Geom::Point> pts = curve->points();
+        std::vector<Geom::Point> pts = curve->controlPoints();
         for (unsigned i = 1; i < pts.size() - 1; ++i) {
             if (!are_near(pts[i], line))
                 return false;

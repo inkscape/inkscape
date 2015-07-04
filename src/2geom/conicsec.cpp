@@ -40,44 +40,16 @@
 #include <sstream>
 #include <stdexcept>
 
-
-
-
-
 namespace Geom
 {
 
 LineSegment intersection(Line l, Rect r) {
-    Point p0, p1;
-    double a,b,c;
-    std::vector<double> ifc = l.coefficients();
-    a = ifc[0];
-    b = ifc[1];
-    c = ifc[2];
-    if (fabs(b) > fabs(a)) {
-        p0 = Point(r[0][0], (-c - a*r[0][0])/b);
-        if (p0[1] < r[1][0])
-            p0 = Point((-c - b*r[1][0])/a, r[1][0]);
-        if (p0[1] > r[1][1])
-            p0 = Point((-c - b*r[1][1])/a, r[1][1]);
-        p1 = Point(r[0][1], (-c - a*r[0][1])/b);
-        if (p1[1] < r[1][0])
-            p1 = Point((-c - b*r[1][0])/a, r[1][0]);
-        if (p1[1] > r[1][1])
-            p1 = Point((-c - b*r[1][1])/a, r[1][1]);
+    boost::optional<LineSegment> seg = l.clip(r);
+    if (seg) {
+        return *seg;
     } else {
-        p0 = Point((-c - b*r[1][0])/a, r[1][0]);
-        if (p0[0] < r[0][0])
-            p0 = Point(r[0][0], (-c - a*r[0][0])/b);
-        if (p0[0] > r[0][1])
-            p0 = Point(r[0][1], (-c - a*r[0][1])/b);
-        p1 = Point((-c - b*r[1][1])/a, r[1][1]);
-        if (p1[0] < r[0][0])
-            p1 = Point(r[0][0], (-c - a*r[0][0])/b);
-        if (p1[0] > r[0][1])
-            p1 = Point(r[0][1], (-c - a*r[0][1])/b);
+        return LineSegment(Point(0,0), Point(0,0));
     }
-    return LineSegment(p0, p1);
 }
 
 static double det(Point a, Point b) {
@@ -107,41 +79,6 @@ static T det3(T M[3][3]) {
 static double boxprod(Point a, Point b, Point c) {
     return det(a,b) - det(a,c) + det(b,c);
 }
-
-
-/**
- * Find the roots of (q2x + q1)x+q0 = 0
- * Tries to be numerically robust.
- */
-template <typename T>
-static std::vector<T> quadratic_roots(T q0, T q1, T q2) {
-    std::vector<double> r;
-    if(q2 == 0) {
-        if(q1 == 0) { // zero or infinite roots
-            return r;
-        }
-        r.push_back(-q0/q1);
-    } else {
-        double desc = q1*q1 - 4*q2*q0;
-        /*cout << q2 << ", "
-          << q1 << ", "
-          << q0 << "; "
-          << desc << "\n";*/
-        if (desc < 0)
-            return r;
-        else if (desc == 0)
-            r.push_back(-q1/(2*q2));
-        else {
-            desc = std::sqrt(desc);
-            double t = -0.5*(q1+sgn(q1)*desc);
-            r.push_back(t/q2);
-            r.push_back(q0/t);
-        }
-    }
-    return r;
-}
-
-
 
 class BadConversion : public std::runtime_error {
 public:
@@ -673,7 +610,7 @@ std::vector<double> xAx::roots(Line const &l) const {
 
 Interval xAx::quad_ex(double a, double b, double c, Interval ivl) {
   double cx = -b*0.5/a;
-  Interval bnds((a*ivl[0]+b)*ivl[0]+c, (a*ivl[1]+b)*ivl[1]+c);
+  Interval bnds((a*ivl.min()+b)*ivl.min()+c, (a*ivl.max()+b)*ivl.max()+c);
   if(ivl.contains(cx))
     bnds.expandTo((a*cx+b)*cx+c);
   return bnds;
@@ -714,14 +651,14 @@ Interval xAx::extrema(Rect r) const {
       ext |= Interval(valueAt(r.corner(i)));
     return ext;
   }
-  double k = r[0][0];
-  Interval ext = quad_ex(c[2], c[1]*k+c[4],  (c[0]*k + c[3])*k + c[5], r[1]);
-  k = r[0][1];
-  ext |= quad_ex(c[2], c[1]*k+c[4],  (c[0]*k + c[3])*k + c[5], r[1]);
-  k = r[1][0];
-  ext |= quad_ex(c[0], c[1]*k+c[3],  (c[2]*k + c[4])*k + c[5], r[0]);
-  k = r[1][1];
-  ext |= quad_ex(c[0], c[1]*k+c[3],  (c[2]*k + c[4])*k + c[5], r[0]);
+  double k = r[X].min();
+  Interval ext = quad_ex(c[2], c[1]*k+c[4],  (c[0]*k + c[3])*k + c[5], r[Y]);
+  k = r[X].max();
+  ext |= quad_ex(c[2], c[1]*k+c[4],  (c[0]*k + c[3])*k + c[5], r[Y]);
+  k = r[Y].min();
+  ext |= quad_ex(c[0], c[1]*k+c[3],  (c[2]*k + c[4])*k + c[5], r[X]);
+  k = r[Y].max();
+  ext |= quad_ex(c[0], c[1]*k+c[3],  (c[2]*k + c[4])*k + c[5], r[X]);
   boost::optional<Point> B0 = bottom();
   if (B0 && r.contains(*B0))
     ext.expandTo(0);
@@ -753,7 +690,7 @@ bool at_infinity (Point const& p)
 inline
 double signed_triangle_area (Point const& p1, Point const& p2, Point const& p3)
 {
-    return (cross(p3, p2) - cross(p3, p1) + cross(p2, p1));
+    return (cross(p2, p3) - cross(p1, p3) + cross(p1, p2));
 }
 
 
@@ -801,6 +738,8 @@ void xAx::set(std::vector<Point> const& points)
  */
 void xAx::set (const Point& _vertex, double _angle, double _dist1, double _dist2)
 {
+    using std::swap;
+
     if (_dist2 == infinity() || _dist2 == -infinity())  // parabola
     {
         if (_dist1 == infinity()) // degenerate to a line
@@ -842,7 +781,7 @@ void xAx::set (const Point& _vertex, double _angle, double _dist1, double _dist2
 
     if (std::fabs(_dist1) > std::fabs(_dist2))
     {
-        std::swap (_dist1, _dist2);
+        swap (_dist1, _dist2);
     }
     if (_dist1 < 0)
     {
@@ -1442,38 +1381,35 @@ Rect xAx::arc_bound (const Point & P1, const Point & Q, const Point & P2) const
             if (sgn(Mside) == sgn(Qside))
             {
                 //std::cout << "BOUND: M.size() == 1" << std::endl;
-                if (M[0][dim] > B[dim][1])
-                    B[dim][1] = M[0][dim];
-                else if (M[0][dim] < B[dim][0])
-                    B[dim][0] = M[0][dim];
+                B[dim].expandTo(M[0][dim]);
             }
         }
         else if (M.size() == 2)
         {
             //std::cout << "BOUND: M.size() == 2" << std::endl;
             if (M[0][dim] > M[1][dim])
-                std::swap (M[0], M[1]);
+                swap (M[0], M[1]);
 
-            if (M[0][dim] > B[dim][1])
+            if (M[0][dim] > B[dim].max())
             {
                 double Mside = signed_triangle_area (P1, M[0], P2);
                 if (sgn(Mside) == sgn(Qside))
-                    B[dim][1] = M[0][dim];
+                    B[dim].setMax(M[0][dim]);
             }
-            else if (M[1][dim] < B[dim][0])
+            else if (M[1][dim] < B[dim].min())
             {
                 double Mside = signed_triangle_area (P1, M[1], P2);
                 if (sgn(Mside) == sgn(Qside))
-                    B[dim][0] = M[1][dim];
+                    B[dim].setMin(M[1][dim]);
             }
             else
             {
                 double Mside = signed_triangle_area (P1, M[0], P2);
                 if (sgn(Mside) == sgn(Qside))
-                    B[dim][0] = M[0][dim];
+                    B[dim].setMin(M[0][dim]);
                 Mside = signed_triangle_area (P1, M[1], P2);
                 if (sgn(Mside) == sgn(Qside))
-                    B[dim][1] = M[1][dim];
+                    B[dim].setMax(M[1][dim]);
             }
         }
     }
@@ -1486,7 +1422,7 @@ Rect xAx::arc_bound (const Point & P1, const Point & Q, const Point & P2) const
  *
  *  P: the point to compute the nearest one
  */
-std::vector<Point> xAx::allNearestPoints (const Point &P) const
+std::vector<Point> xAx::allNearestTimes (const Point &P) const
 {
     // TODO: manage the circle - centre case
     std::vector<Point> points;

@@ -56,8 +56,8 @@ LPEAngleBisector::~LPEAngleBisector()
 {
 }
 
-std::vector<Geom::Path>
-LPEAngleBisector::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPEAngleBisector::doEffect_path (Geom::PathVector const & path_in)
 {
     using namespace Geom;
 
@@ -73,7 +73,7 @@ LPEAngleBisector::doEffect_path (std::vector<Geom::Path> const & path_in)
     Geom::Point D = ptA - dir * length_left;
     Geom::Point E = ptA + dir * length_right;
 
-    Piecewise<D2<SBasis> > output = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(D[X], E[X]), Linear(D[Y], E[Y])));
+    Piecewise<D2<SBasis> > output = Piecewise<D2<SBasis> >(D2<SBasis>(SBasis(D[X], E[X]), SBasis(D[Y], E[Y])));
 
     return path_from_piecewise(output, LPE_CONVERSION_TOLERANCE);
 }
@@ -103,7 +103,7 @@ KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*ori
 
     Geom::Point const s = snap_knot_position(p, state);
 
-    double lambda = Geom::nearest_point(s, lpe->ptA, lpe->dir);
+    double lambda = Geom::nearest_time(s, lpe->ptA, lpe->dir);
     lpe->length_left.param_set_value(-lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
@@ -116,7 +116,7 @@ KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*or
 
     Geom::Point const s = snap_knot_position(p, state);
 
-    double lambda = Geom::nearest_point(s, lpe->ptA, lpe->dir);
+    double lambda = Geom::nearest_time(s, lpe->ptA, lpe->dir);
     lpe->length_right.param_set_value(lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);

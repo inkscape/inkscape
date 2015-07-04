@@ -55,8 +55,7 @@
 #include <style.h>
 #include "display/curve.h"
 #include <2geom/pathvector.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include <2geom/transforms.h>
 #include <helper/geom.h>
 #include "helper/geom-curves.h"
@@ -1299,7 +1298,7 @@ writePath(Writer &outs, Geom::PathVector const &pathv,
                     outs.printf("L %.3f %.3f ",  destx, desty);
                 }
                 else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
-                    std::vector<Geom::Point> points = cubic->points();
+                    std::vector<Geom::Point> points = cubic->controlPoints();
                     for (unsigned i = 1; i <= 3; i++) {
                         if (fabs(points[i][X])<1.0) points[i][X] = 0.0;   // Why is this needed? Shouldn't we just round all numbers then?
                         if (fabs(points[i][Y])<1.0) points[i][Y] = 0.0;

@@ -346,7 +346,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
         //TODO: put this 4 as a parameter in the UI...
         //TODO: what if with v=0?
         double l = tgtlength*(1-tgtlength_rdm)/v_t.length();
-        double r = std::pow(v_t.length(),3)/cross(a_t,v_t);
+        double r = std::pow(v_t.length(), 3) / cross(v_t, a_t);
         r = sqrt((2*fabs(r)-tgtscale)*tgtscale)/v_t.length();
         l=(r<l)?r:l;
         //collect the tgt segment into output.

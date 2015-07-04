@@ -62,10 +62,10 @@ LPESkeleton::doEffect (SPCurve * curve)
     // spice this up to make the effect actually *do* something!
 }
 
-std::vector<Geom::Path>
-LPESkeleton::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPESkeleton::doEffect_path (Geom::PathVector const & path_in)
 {
-        std::vector<Geom::Path> path_out;
+        Geom::PathVector path_out;
 
         path_out = path_in;   // spice this up to make the effect actually *do* something!
 

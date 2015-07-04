@@ -32,14 +32,12 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef SEEN_GEOM_FORWARD_H
-#define SEEN_GEOM_FORWARD_H
-
-#include <vector>   // include this dependency so PathVector can be defined more explicitly
+#ifndef LIB2GEOM_SEEN_FORWARD_H
+#define LIB2GEOM_SEEN_FORWARD_H
 
 namespace Geom {
 
-// basic types
+// primitives
 typedef double Coord;
 typedef int IntCoord;
 class Point;
@@ -63,6 +61,12 @@ typedef GenericOptRect<IntCoord> OptIntRect;
 class Linear;
 class Bezier;
 class SBasis;
+class Poly;
+
+// shapes
+class Circle;
+class Ellipse;
+class ConvexHull;
 
 // curves
 class Curve;
@@ -75,11 +79,13 @@ typedef BezierCurveN<1> LineSegment;
 typedef BezierCurveN<2> QuadraticBezier;
 typedef BezierCurveN<3> CubicBezier;
 class EllipticalArc;
-class SVGEllipticalArc;
 
 // paths and path sequences
 class Path;
-typedef std::vector<Path> PathVector;
+class PathVector;
+struct PathTime;
+class PathInterval;
+struct PathVectorTime;
 
 // errors
 class Exception;
@@ -102,11 +108,6 @@ class Zoom;
 // templates
 template <typename> class D2;
 template <typename> class Piecewise;
-
-class Shape;
-class Region;
-class Hat;
-class Tri;
 
 // misc
 class SVGPathSink;

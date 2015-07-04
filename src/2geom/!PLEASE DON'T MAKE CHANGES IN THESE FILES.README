@@ -1,9 +1,13 @@
-All code files in this directory are *direct* copies of the files in 2geom's BZR repo.
-If you want to change the code, please change it in 2geom, then copy the files here.
-Otherwise, I will probably miss that you changed something in Inkscape's copy, and
-destroy your changes by copying 2geom's files over it during the next time I update
-Inkscape's copy of 2geom.
-     - Johan Engelen
+This is an in-tree copy of lib2geom, a 2D geometry library started
+by Inkscape developers. If you want to change code in 2Geom, you should
+commit it first to upstream repository and then execute this command:
+
+rsync -r --existing /path/to/lib2geom/src/2geom /path/to/inkscape/src/2geom
+
+The command above will only update existing files. If you add new files
+to 2Geom, you'll need to copy the new files manually. Same if you remove
+some files.
 
 2geom's BZR repo = lp:lib2geom
 http://lib2geom.sourceforge.net
+

@@ -75,6 +75,10 @@ public:
      * @param eps Maximum value of the area to consider empty
      * @return True if rectangle has an area smaller than tolerance, false otherwise */
     bool hasZeroArea(Coord eps = EPSILON) const { return (area() <= eps); }
+    /// Check whether the rectangle has finite area
+    bool isFinite() const { return (*this)[X].isFinite() && (*this)[Y].isFinite(); }
+    /// Calculate the diameter of the smallest circle that would contain the rectangle.
+    Coord diameter() const { return distance(corner(0), corner(2)); }
     /// @}
 
     /// @name Test other rectangles and points for inclusion.
@@ -153,6 +157,10 @@ public:
 
 Coord distanceSq(Point const &p, Rect const &rect);
 Coord distance(Point const &p, Rect const &rect);
+/// Minimum square of distance to rectangle, or infinity if empty.
+Coord distanceSq(Point const &p, OptRect const &rect);
+/// Minimum distance to rectangle, or infinity if empty.
+Coord distance(Point const &p, OptRect const &rect);
 
 inline bool Rect::interiorContains(OptRect const &r) const {
     return !r || interiorContains(static_cast<Rect const &>(*r));

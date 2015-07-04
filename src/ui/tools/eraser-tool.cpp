@@ -789,6 +789,8 @@ add_cap(SPCurve *curve,
 }
 
 void EraserTool::accumulate() {
+    // construct a crude outline of the eraser's path.
+    // this desperately needs to be rewritten to use the path outliner...
     if ( !this->cal1->is_empty() && !this->cal2->is_empty() ) {
         this->accumulated->reset(); /*  Is this required ?? */
         SPCurve *rev_cal2 = this->cal2->create_reverse();
@@ -798,10 +800,10 @@ void EraserTool::accumulate() {
         g_assert( ! this->cal1->first_path()->closed() );
         g_assert( ! rev_cal2->first_path()->closed() );
 
-        Geom::CubicBezier const * dc_cal1_firstseg  = dynamic_cast<Geom::CubicBezier const *>( this->cal1->first_segment() );
-        Geom::CubicBezier const * rev_cal2_firstseg = dynamic_cast<Geom::CubicBezier const *>( rev_cal2->first_segment() );
-        Geom::CubicBezier const * dc_cal1_lastseg   = dynamic_cast<Geom::CubicBezier const *>( this->cal1->last_segment() );
-        Geom::CubicBezier const * rev_cal2_lastseg  = dynamic_cast<Geom::CubicBezier const *>( rev_cal2->last_segment() );
+        Geom::BezierCurve const * dc_cal1_firstseg  = dynamic_cast<Geom::BezierCurve const *>( this->cal1->first_segment() );
+        Geom::BezierCurve const * rev_cal2_firstseg = dynamic_cast<Geom::BezierCurve const *>( rev_cal2->first_segment() );
+        Geom::BezierCurve const * dc_cal1_lastseg   = dynamic_cast<Geom::BezierCurve const *>( this->cal1->last_segment() );
+        Geom::BezierCurve const * rev_cal2_lastseg  = dynamic_cast<Geom::BezierCurve const *>( rev_cal2->last_segment() );
 
         g_assert( dc_cal1_firstseg );
         g_assert( rev_cal2_firstseg );
@@ -810,11 +812,21 @@ void EraserTool::accumulate() {
 
         this->accumulated->append(this->cal1, FALSE);
 
-        add_cap(this->accumulated, (*dc_cal1_lastseg)[2], (*dc_cal1_lastseg)[3], (*rev_cal2_firstseg)[0], (*rev_cal2_firstseg)[1], this->cap_rounding);
+        add_cap(this->accumulated,
+                dc_cal1_lastseg->finalPoint() - dc_cal1_lastseg->unitTangentAt(1),
+                dc_cal1_lastseg->finalPoint(),
+                rev_cal2_firstseg->initialPoint(),
+                rev_cal2_firstseg->initialPoint() + rev_cal2_firstseg->unitTangentAt(0),
+                this->cap_rounding);
 
         this->accumulated->append(rev_cal2, TRUE);
 
-        add_cap(this->accumulated, (*rev_cal2_lastseg)[2], (*rev_cal2_lastseg)[3], (*dc_cal1_firstseg)[0], (*dc_cal1_firstseg)[1], this->cap_rounding);
+        add_cap(this->accumulated,
+                rev_cal2_lastseg->finalPoint() - rev_cal2_lastseg->unitTangentAt(1),
+                rev_cal2_lastseg->finalPoint(),
+                dc_cal1_firstseg->initialPoint(),
+                dc_cal1_firstseg->initialPoint() + dc_cal1_firstseg->unitTangentAt(0),
+                this->cap_rounding);
 
         this->accumulated->closepath();
 

@@ -49,7 +49,7 @@ public:
     LPEVonKoch(LivePathEffectObject *lpeobject);
     virtual ~LPEVonKoch();
 
-    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
+    virtual Geom::PathVector doEffect_path (Geom::PathVector const & path_in);
 
     virtual void resetDefaults(SPItem const* item);
 

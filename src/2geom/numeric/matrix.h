@@ -432,16 +432,17 @@ class Matrix: public detail::MatrixImpl
 inline
 void swap(Matrix & m1, Matrix & m2)
 {
-	assert( m1.rows() == m2.rows() && m1.columns() ==  m2.columns() );
-	std::swap(m1.m_matrix, m2.m_matrix);
+    assert(m1.rows() == m2.rows() && m1.columns() == m2.columns());
+    using std::swap;
+    swap(m1.m_matrix, m2.m_matrix);
 }
 
-inline
-void swap_any(Matrix & m1, Matrix & m2)
+inline void swap_any(Matrix &m1, Matrix &m2)
 {
-    std::swap(m1.m_matrix, m2.m_matrix);
-    std::swap(m1.m_rows, m2.m_rows);
-    std::swap(m1.m_columns, m2.m_columns);
+    using std::swap;
+    swap(m1.m_matrix, m2.m_matrix);
+    swap(m1.m_rows, m2.m_rows);
+    swap(m1.m_columns, m2.m_columns);
 }
 
 
@@ -569,8 +570,9 @@ class MatrixView : public detail::MatrixImpl
 inline
 void swap_view(MatrixView & m1, MatrixView & m2)
 {
-	assert( m1.rows() == m2.rows() && m1.columns() ==  m2.columns() );
-	std::swap(m1.m_matrix_view, m2.m_matrix_view);
+    assert(m1.rows() == m2.rows() && m1.columns() == m2.columns());
+    using std::swap;
+    swap(m1.m_matrix_view, m2.m_matrix_view);
 }
 
 Vector operator*( detail::BaseMatrixImpl const& A,

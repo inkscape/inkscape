@@ -29,9 +29,10 @@
  *
  */
 
-#ifndef SEEN_SVG_PATH_H
-#define SEEN_SVG_PATH_H
+#ifndef LIB2GEOM_SEEN_PATH_SINK_H
+#define LIB2GEOM_SEEN_PATH_SINK_H
 
+#include <2geom/forward.h>
 #include <2geom/pathvector.h>
 #include <2geom/curves.h>
 #include <iterator>
@@ -44,58 +45,73 @@ namespace Geom {
  * PathSink provides an interface that allows one to easily write
  * code which processes path data, for instance when converting
  * between path formats used by different graphics libraries.
+ * It is also useful for writing algorithms which must do something
+ * for each curve in the path.
  *
  * To store a path in a new format, implement the virtual methods
- * for segments in a derived class and call path() or pathvector().
+ * for segments in a derived class and call feed().
+ *
+ * @ingroup Paths
  */
 class PathSink {
 public:
-    /** Move to a different point without creating a segment.
+    /** @brief Move to a different point without creating a segment.
      * Usually starts a new subpath. */
     virtual void moveTo(Point const &p) = 0;
-    /// Output a horizontal line segment. Only the X coordinate of the final point is given.
-    virtual void hlineTo(Coord v) = 0;
-    /// Output a vertical line segment. Only the Y coordinate of the final point is given.
-    virtual void vlineTo(Coord v) = 0;
     /// Output a line segment.
     virtual void lineTo(Point const &p) = 0;
     /// Output a quadratic Bezier segment.
     virtual void curveTo(Point const &c0, Point const &c1, Point const &p) = 0;
     /// Output a cubic Bezier segment.
     virtual void quadTo(Point const &c, Point const &p) = 0;
-    /** Output an elliptical arc segment.
+    /** @brief Output an elliptical arc segment.
      * See the EllipticalArc class for the documentation of parameters. */
-    virtual void arcTo(double rx, double ry, double angle,
+    virtual void arcTo(Coord rx, Coord ry, Coord angle,
                        bool large_arc, bool sweep, Point const &p) = 0;
 
     /// Close the current path with a line segment.
     virtual void closePath() = 0;
-    /** Flush any internal state of the generator.
-     * 
+    /** @brief Flush any internal state of the generator.
      * This call should implicitly finish the current subpath.
      * Calling this method should be idempotent, because the default
-     * implementations of path() and pathvector() will be call it
+     * implementations of path() and pathvector() will call it
      * multiple times in a row. */
     virtual void flush() = 0;
+    // Get the current point, e.g. where the initial point of the next segment will be.
+    //virtual Point currentPoint() const = 0;
 
-    /** Undo the last segment.
+    /** @brief Undo the last segment.
      * This method is optional.
      * @return true true if a segment was erased, false otherwise. */
     virtual bool backspace() { return false; }
 
     // these have a default implementation
-    /** Output a subpath.
+    virtual void feed(Curve const &c, bool moveto_initial = true);
+    /** @brief Output a subpath.
      * Calls the appropriate segment methods according to the contents
-     * of the passed subpath. You can override this function. */
-    virtual void path(Path const &p);
-    /** Output a path.
-     * Calls the appropriate segment methods according to the contents
-     * of the passed path. You can override this function. */
-    virtual void pathvector(PathVector const &v);
+     * of the passed subpath. You can override this function.
+     * NOTE: if you override only some of the feed() functions,
+     * always write this in the derived class:
+     * @code
+       using PathSink::feed;
+       @endcode
+     * Otherwise the remaining methods will be hidden. */
+    virtual void feed(Path const &p);
+    /** @brief Output a path.
+     * Calls feed() on each path in the vector. You can override this function. */
+    virtual void feed(PathVector const &v);
+    /// Output an axis-aligned rectangle, using moveTo, lineTo and closePath.
+    virtual void feed(Rect const &);
+    /// Output a circle as two elliptical arcs.
+    virtual void feed(Circle const &e);
+    /// Output an ellipse as two elliptical arcs.
+    virtual void feed(Ellipse const &e);
 
     virtual ~PathSink() {}
 };
 
+/** @brief Store paths to an output iterator
+ * @ingroup Paths */
 template <typename OutputIterator>
 class PathIteratorSink : public PathSink {
 public:
@@ -109,22 +125,6 @@ public:
         _in_path = true;
     }
 //TODO: what if _in_path = false?
-
-    void hlineTo(Coord v) {
-    // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
-        if (!_in_path) {
-            moveTo(_start_p);
-        }
-        _path.template appendNew<HLineSegment>(Point(v, _path.finalPoint()[Y]));
-    }
-
-    void vlineTo(Coord v) {
-    // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
-        if (!_in_path) {
-            moveTo(_start_p);
-        }
-        _path.template appendNew<VLineSegment>(Point(_path.finalPoint()[X], v));
-    }
 
     void lineTo(Point const &p) {
         // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
@@ -150,15 +150,15 @@ public:
         _path.template appendNew<CubicBezier>(c0, c1, p);
     }
 
-    void arcTo(double rx, double ry, double angle,
+    void arcTo(Coord rx, Coord ry, Coord angle,
                bool large_arc, bool sweep, Point const &p)
     {
         // check for implicit moveto, like in: "M 1,1 L 2,2 z l 2,2 z"
         if (!_in_path) {
             moveTo(_start_p);
         }
-        _path.template appendNew<SVGEllipticalArc>(rx, ry, angle,
-                                                 large_arc, sweep, p);
+        _path.template appendNew<EllipticalArc>(rx, ry, angle,
+                                                large_arc, sweep, p);
     }
 
     bool backspace()
@@ -170,12 +170,12 @@ public:
         return false;
     }
 
-    void append(Path const &other, Path::Stitching stitching = Path::NO_STITCHING)
+    void append(Path const &other)
     {
         if (!_in_path) {
             moveTo(other.initialPoint());
         }
-        _path.append(other, stitching);
+        _path.append(other);
     }
 
     void closePath() {
@@ -188,11 +188,15 @@ public:
             _in_path = false;
             *_out++ = _path;
             _path.clear();
-            _path.close(false);
         }
     }
+    
+    void setStitching(bool s) {
+        _path.setStitching(s);
+    }
 
-    void path(Path const &other)
+    using PathSink::feed;
+    void feed(Path const &other)
     {
         flush();
         *_out++ = other;
@@ -205,14 +209,23 @@ protected:
     Point _start_p;
 };
 
-typedef std::back_insert_iterator<std::vector<Path> > iter;
+typedef std::back_insert_iterator<PathVector> SubpathInserter;
 
-class PathBuilder : public PathIteratorSink<iter> {
+/** @brief Store paths to a PathVector
+ * @ingroup Paths */
+class PathBuilder : public PathIteratorSink<SubpathInserter> {
 private:
-    std::vector<Path> _pathset;
+    PathVector _pathset;
 public:
-    PathBuilder() : PathIteratorSink<iter>(iter(_pathset)) {}
-    std::vector<Path> const &peek() const {return _pathset;}
+    /// Create a builder that outputs to an internal pathvector.
+    PathBuilder() : PathIteratorSink<SubpathInserter>(SubpathInserter(_pathset)) {}
+    /// Create a builder that outputs to pathvector given by reference.
+    PathBuilder(PathVector &pv) : PathIteratorSink<SubpathInserter>(SubpathInserter(pv)) {}
+
+    /// Retrieve the path
+    PathVector const &peek() const {return _pathset;}
+    /// Clear the stored path vector
+    void clear() { _pathset.clear(); }
 };
 
 }

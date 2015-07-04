@@ -35,9 +35,11 @@
 #include <2geom/interval.h>
 #include <2geom/point.h>
 #include <2geom/rect.h>
+#include <2geom/intersection.h>
 #include <vector>
-#include <boost/concept_check.hpp>
+#include <boost/concept/assert.hpp>
 #include <2geom/forward.h>
+#include <2geom/transforms.h>
 
 namespace Geom {
 
@@ -71,16 +73,18 @@ struct FragmentConcept {
     SbType sb;
     void constraints() {
         t = T(o);
-        b = t.isZero();
-        b = t.isConstant();
+        b = t.isZero(d);
+        b = t.isConstant(d);
         b = t.isFinite();
         o = t.at0();
         o = t.at1();
+        t.at0() = o;
+        t.at1() = o;
         o = t.valueAt(d);
         o = t(d);
         v = t.valueAndDerivatives(d, u-1);
-		//Is a pure derivative (ignoring others) accessor ever much faster?
-		//u = number of values returned. first val is value.
+        //Is a pure derivative (ignoring others) accessor ever much faster?
+        //u = number of values returned. first val is value.
         sb = t.toSBasis();
         t = reverse(t);
         i = bounds_fast(t);
@@ -97,7 +101,49 @@ struct FragmentConcept {
 };
 
 template <typename T>
+struct ShapeConcept {
+    typedef typename ShapeTraits<T>::TimeType Time;
+    typedef typename ShapeTraits<T>::IntervalType Interval;
+    typedef typename ShapeTraits<T>::AffineClosureType AffineClosure;
+    typedef typename ShapeTraits<T>::IntersectionType Isect;
+
+    T shape, other;
+    Time t;
+    Point p;
+    AffineClosure ac;
+    Affine m;
+    Translate tr;
+    Coord c;
+    bool bool_;
+    std::vector<Isect> ivec;
+
+    void constraints() {
+        p = shape.pointAt(t);
+        c = shape.valueAt(t, X);
+        ivec = shape.intersect(other);
+        t = shape.nearestTime(p);
+        shape *= tr;
+        ac = shape;
+        ac *= m;
+        bool_ = (shape == shape);
+        bool_ = (shape != other);
+        bool_ = shape.isDegenerate();
+        //bool_ = are_near(shape, other, c);
+    }
+};
+
+template <typename T>
 inline T portion(const T& t, const Interval& i) { return portion(t, i.min(), i.max()); }
+
+template <typename T>
+struct EqualityComparableConcept {
+    T a, b;
+    bool bool_;
+    void constaints() {
+        bool_ = (a == b);
+        bool_ = (a != b);
+    }
+};
 
 template <typename T>
 struct NearConcept {

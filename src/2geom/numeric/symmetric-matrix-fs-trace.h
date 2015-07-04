@@ -73,13 +73,7 @@ bool abs_less (double x, double y)
 template <size_t K, size_t N>
 struct trace
 {
-    static
-    double evaluate (const ConstBaseSymmetricMatrix<N> & /*S*/)
-    {
-        THROW_NOTIMPLEMENTED();
-        return K;
-    }
-
+    static double evaluate(const ConstBaseSymmetricMatrix<N> &S);
 };
 
 template <size_t N>

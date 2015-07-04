@@ -1,8 +1,11 @@
-/*
- * convex-cover.cpp
- *
- * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
- * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>
+/** @file
+ * @brief Convex hull of a set of points
+ *//*
+ * Authors:
+ *   Nathan Hurst <njh@mail.csse.monash.edu.au>
+ *   Michael G. Sloan <mgsloan@gmail.com>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ * Copyright 2006-2015 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -29,11 +32,13 @@
  *
  */
 
-#include <2geom/convex-cover.h>
+#include <2geom/convex-hull.h>
 #include <2geom/exception.h>
 #include <algorithm>
 #include <map>
-#include <assert.h>
+#include <iostream>
+#include <cassert>
+#include <boost/array.hpp>
 
 /** Todo:
     + modify graham scan to work top to bottom, rather than around angles
@@ -50,9 +55,237 @@ using std::vector;
 using std::map;
 using std::pair;
 using std::make_pair;
+using std::swap;
 
-namespace Geom{
+namespace Geom {
 
+ConvexHull::ConvexHull(Point const &a, Point const &b)
+    : _boundary(2)
+    , _lower(0)
+{
+    _boundary[0] = a;
+    _boundary[1] = b;
+    std::sort(_boundary.begin(), _boundary.end(), Point::LexLess<X>());
+    _construct();
+}
+
+ConvexHull::ConvexHull(Point const &a, Point const &b, Point const &c)
+    : _boundary(3)
+    , _lower(0)
+{
+    _boundary[0] = a;
+    _boundary[1] = b;
+    _boundary[2] = c;
+    std::sort(_boundary.begin(), _boundary.end(), Point::LexLess<X>());
+    _construct();
+}
+
+ConvexHull::ConvexHull(Point const &a, Point const &b, Point const &c, Point const &d)
+    : _boundary(4)
+    , _lower(0)
+{
+    _boundary[0] = a;
+    _boundary[1] = b;
+    _boundary[2] = c;
+    _boundary[3] = d;
+    std::sort(_boundary.begin(), _boundary.end(), Point::LexLess<X>());
+    _construct();
+}
+
+ConvexHull::ConvexHull(std::vector<Point> const &pts)
+    : _lower(0)
+{
+    //if (pts.size() > 16) { // arbitrary threshold
+    //    _prune(pts.begin(), pts.end(), _boundary);
+    //} else {
+        _boundary = pts;
+        std::sort(_boundary.begin(), _boundary.end(), Point::LexLess<X>());
+    //}
+    _construct();
+}
+
+bool ConvexHull::_is_clockwise_turn(Point const &a, Point const &b, Point const &c)
+{
+    if (b == c) return false;
+    return cross(b-a, c-a) > 0;
+}
+
+void ConvexHull::_construct()
+{
+    // _boundary must already be sorted in LexLess<X> order
+    if (_boundary.empty()) {
+        _lower = 0;
+        return;
+    }
+    if (_boundary.size() == 1 || (_boundary.size() == 2 && _boundary[0] == _boundary[1])) {
+        _boundary.resize(1);
+        _lower = 1;
+        return;
+    }
+    if (_boundary.size() == 2) {
+        _lower = 2;
+        return;
+    }
+
+    std::size_t k = 2;
+    for (std::size_t i = 2; i < _boundary.size(); ++i) {
+        while (k >= 2 && !_is_clockwise_turn(_boundary[k-2], _boundary[k-1], _boundary[i])) {
+            --k;
+        }
+        std::swap(_boundary[k++], _boundary[i]);
+    }
+
+    _lower = k;
+    std::sort(_boundary.begin() + k, _boundary.end(), Point::LexGreater<X>());
+    _boundary.push_back(_boundary.front());
+    for (std::size_t i = _lower; i < _boundary.size(); ++i) {
+        while (k > _lower && !_is_clockwise_turn(_boundary[k-2], _boundary[k-1], _boundary[i])) {
+            --k;
+        }
+        std::swap(_boundary[k++], _boundary[i]);
+    }
+
+    _boundary.resize(k-1);
+}
+
+double ConvexHull::area() const
+{
+    if (size() <= 2) return 0;
+
+    double a = 0;
+    for (std::size_t i = 0; i < size()-1; ++i) {
+        a += cross(_boundary[i], _boundary[i+1]);
+    }
+    a += cross(_boundary.back(), _boundary.front());
+    return fabs(a * 0.5);
+}
+
+OptRect ConvexHull::bounds() const
+{
+    OptRect ret;
+    if (empty()) return ret;
+    ret = Rect(left(), top(), right(), bottom());
+    return ret;
+}
+
+Point ConvexHull::topPoint() const
+{
+    Point ret;
+    ret[Y] = std::numeric_limits<Coord>::infinity();
+
+    for (UpperIterator i = upperHull().begin(); i != upperHull().end(); ++i) {
+        if (ret[Y] >= i->y()) {
+            ret = *i;
+        } else {
+            break;
+        }
+    }
+
+    return ret;
+}
+
+Point ConvexHull::bottomPoint() const
+{
+    Point ret;
+    ret[Y] = -std::numeric_limits<Coord>::infinity();
+
+    for (LowerIterator j = lowerHull().begin(); j != lowerHull().end(); ++j) {
+        if (ret[Y] <= j->y()) {
+            ret = *j;
+        } else {
+            break;
+        }
+    }
+
+    return ret;
+}
+
+template <typename Iter, typename Lex>
+bool below_x_monotonic_polyline(Point const &p, Iter first, Iter last, Lex lex)
+{
+    typename Lex::Secondary above;
+    Iter f = std::lower_bound(first, last, p, lex);
+    if (f == last) return false;
+    if (f == first) {
+        if (p == *f) return true;
+        return false;
+    }
+
+    Point a = *(f-1), b = *f;
+    if (a[X] == b[X]) {
+        if (above(p[Y], a[Y]) || above(b[Y], p[Y])) return false;
+    } else {
+        // TODO: maybe there is a more numerically stable method
+        Coord y = lerp((p[X] - a[X]) / (b[X] - a[X]), a[Y], b[Y]);
+        if (above(p[Y], y)) return false;
+    }
+    return true;
+}
+
+bool ConvexHull::contains(Point const &p) const
+{
+    if (_boundary.empty()) return false;
+    if (_boundary.size() == 1) {
+        if (_boundary[0] == p) return true;
+        return false;
+    }
+
+    // 1. verify that the point is in the relevant X range
+    if (p[X] < _boundary[0][X] || p[X] > _boundary[_lower-1][X]) return false;
+
+    // 2. check whether it is below the upper hull
+    UpperIterator ub = upperHull().begin(), ue = upperHull().end();
+    if (!below_x_monotonic_polyline(p, ub, ue, Point::LexLess<X>())) return false;
+
+    // 3. check whether it is above the lower hull
+    LowerIterator lb = lowerHull().begin(), le = lowerHull().end();
+    if (!below_x_monotonic_polyline(p, lb, le, Point::LexGreater<X>())) return false;
+    
+    return true;
+}
+
+bool ConvexHull::contains(Rect const &r) const
+{
+    for (unsigned i = 0; i < 4; ++i) {
+        if (!contains(r.corner(i))) return false;
+    }
+    return true;
+}
+
+bool ConvexHull::contains(ConvexHull const &ch) const
+{
+    // TODO: requires interiorContains.
+    // We have to check all points of ch, and each point takes logarithmic time.
+    // If there are more points in ch that here, it is faster to make the check
+    // the other way around.
+    /*if (ch.size() > size()) {
+        for (iterator i = begin(); i != end(); ++i) {
+            if (ch.interiorContains(*i)) return false;
+        }
+        return true;
+    }*/
+
+    for (iterator i = ch.begin(); i != ch.end(); ++i) {
+        if (!contains(*i)) return false;
+    }
+    return true;
+}
+
+void ConvexHull::swap(ConvexHull &other)
+{
+    _boundary.swap(other._boundary);
+    std::swap(_lower, other._lower);
+}
+
+void ConvexHull::swap(std::vector<Point> &pts)
+{
+    _boundary.swap(pts);
+    _lower = 0;
+    std::sort(_boundary.begin(), _boundary.end(), Point::LexLess<X>());
+    _construct();
+}
+
+#if 0
 /*** SignedTriangleArea
  * returns the area of the triangle defined by p0, p1, p2.  A clockwise triangle has positive area.
  */
@@ -118,212 +351,12 @@ public:
 #endif
 };
 
-void
-ConvexHull::find_pivot() {
-    // Find pivot P;
-    unsigned pivot = 0;
-    for (unsigned i = 1; i < boundary.size(); i++)
-        if(boundary[i] <= boundary[pivot])
-            pivot = i;
-
-    std::swap(boundary[0], boundary[pivot]);
-}
-
-void
-ConvexHull::angle_sort() {
-// sort points by angle (resolve ties in favor of point farther from P);
-// we leave the first one in place as our pivot
-    std::sort(boundary.begin()+1, boundary.end(), angle_cmp(boundary[0]));
-}
-
-
-void
-ConvexHull::graham_scan() {
-    // prune out equal points.  points are sorted, so equals are adjacent
-    std::vector<Point>::iterator e = 
-        std::unique(boundary.begin(), boundary.end());
-    boundary.resize(e - boundary.begin());
-    for(unsigned int i = 2; i < boundary.size(); i++) {
-        
-    }
-    if (boundary.size() < 4) {
-        return;
-    }
-    unsigned stac = 2;
-    for(unsigned int i = 2; i < boundary.size(); i++) {
-        double o = SignedTriangleArea(boundary[stac-2],
-                                      boundary[stac-1],
-                                      boundary[i]);
-        if(o == 0) { // colinear - dangerous...
-            stac--;
-        } else if(o < 0) { // anticlockwise
-        } else { // remove concavity
-            while(o >= 0 && stac > 2) {
-                stac--;
-                o = SignedTriangleArea(boundary[stac-2],
-                                       boundary[stac-1],
-                                       boundary[i]);
-            }
-        }
-        boundary[stac++] = boundary[i];
-    }
-    boundary.resize(stac);
-}
-
-// following code is from marco.
-
-/*
- * return true in case the oriented polyline p0, p1, p2 is a right turn
- */
-inline
-bool is_a_right_turn (Point const& p0, Point const& p1, Point const& p2)
-{
-    if (p1 == p2) return false;
-    Point q1 = p1 - p0;
-    Point q2 = p2 - p0;
-    if (q1 == -q2) return false;
-    return (cross (q1, q2) < 0);
-}
-
-/*
- * return true if p < q wrt the lexicographyc order induced by the coordinates
- */
-struct lex_less
-{
-    bool operator() (Point const& p, Point const& q)
-    {
-      return ((p[Y] < q[Y]) || (p[Y] == q[Y] && p[X] < q[X]));
-    }
-};
-
-/*
- * return true if p > q wrt the lexicographyc order induced by the coordinates
- */
-struct lex_greater
-{
-    bool operator() (Point const& p, Point const& q)
-    {
-        return ((p[Y] > q[Y]) || (p[Y] == q[Y] && p[X] > q[X]));
-    }
-};
-
-/*
- * Compute the convex hull of a set of points.
- * The implementation is based on the Andrew's scan algorithm
- * note: in the Bezier clipping for collinear normals it seems
- * to be more stable wrt the Graham's scan algorithm and in general
- * a bit quikier
- */
-void ConvexHull::andrew_scan ()
-{
-    vector<Point> & P = boundary;
-    size_t n = P.size();
-    if (n < 2)  return;
-    std::sort(P.begin(), P.end(), lex_less());
-    if (n < 4) return;
-    // upper hull
-    size_t u = 2;
-    for (size_t i = 2; i < n; ++i)
-    {
-        while (u > 1 && !is_a_right_turn(P[u-2], P[u-1], P[i]))
-        {
-            --u;
-        }
-        std::swap(P[u], P[i]);
-        ++u;
-    }
-    std::sort(P.begin() + u, P.end(), lex_greater());
-    std::rotate(P.begin(), P.begin() + 1, P.end());
-    // lower hull
-    size_t l = u;
-    size_t k = u - 1;
-    for (size_t i = l; i < n; ++i)
-    {
-        while (l > k && !is_a_right_turn(P[l-2], P[l-1], P[i]))
-        {
-            --l;
-        }
-        std::swap(P[l], P[i]);
-        ++l;
-    }
-    P.resize(l);
-}
-
-void
-ConvexHull::graham() {
-    /*if(is_degenerate()) // nothing to do
-      return;*/
-    //find_pivot();
-    //angle_sort();
-    //graham_scan();
-    andrew_scan();
-}
-
 //Mathematically incorrect mod, but more useful.
 int mod(int i, int l) {
     return i >= 0 ?
            i % l : (i % l) + l;
 }
 //OPT: usages can often be replaced by conditions
-
-/*** ConvexHull::left
- * Tests if a point is left (outside) of a particular segment, n. */
-bool
-ConvexHull::is_left(Point p, int n) {
-    return SignedTriangleArea((*this)[n], (*this)[n+1], p) > 0;
-}
-
-/*** ConvexHull::strict_left
- * Tests if a point is left (outside) of a particular segment, n. */
-bool
-ConvexHull::is_strict_left(Point p, int n) {
-    return SignedTriangleArea((*this)[n], (*this)[n+1], p) >= 0;
-}
-
-/*** ConvexHull::find_left
- * May return any number n where the segment n -> n + 1 (possibly looped around) in the hull such
- * that the point is on the wrong side to be within the hull.  Returns -1 if it is within the hull.*/
-int
-ConvexHull::find_left(Point p) {
-    int l = boundary.size(); //Who knows if C++ is smart enough to optimize this?
-    for(int i = 0; i < l; i++) {
-        if(is_left(p, i)) return i;
-    }
-    return -1;
-}
-
-
-/*** ConvexHull::find_positive
- * May return any number n where the segment n -> n + 1 (possibly looped around) in the hull such
- * that the point is on the wrong side to be within the hull.  Returns -1 if it is within the hull.*/
-int
-ConvexHull::find_strict_left(Point p) {
-    int l = boundary.size(); //Who knows if C++ is smart enough to optimize this?
-    for(int i = 0; i < l; i++) {
-        if(is_strict_left(p, i)) return i;
-    }
-    return -1;
-}
-
-//OPT: do a spread iteration - quasi-random with no repeats and full coverage.
-
-/*** ConvexHull::contains_point
- * In order to test whether a point is inside a convex hull we can travel once around the outside making
- * sure that each triangle made from an edge and the point has positive area. */
-bool
-ConvexHull::contains_point(Point p) {
-    if(size() == 0) return false;
-    return find_left(p) == -1;
-}
-
-/*** ConvexHull::strict_contains_point
- * In order to test whether a point is strictly inside (not on the boundary) a convex hull we can travel once around the outside making
- * sure that each triangle made from an edge and the point has positive area. */
-bool
-ConvexHull::strict_contains_point(Point p) {
-    if(size() == 0) return false;
-    return find_strict_left(p) == -1;
-}
 
 /*** ConvexHull::add_point
  * to add a point we need to find whether the new point extends the boundary, and if so, what it
@@ -332,18 +365,18 @@ void
 ConvexHull::merge(Point p) {
     std::vector<Point> out;
 
-    int l = boundary.size();
+    int len = boundary.size();
 
-    if(l < 2) {
+    if(len < 2) {
         if(boundary.empty() || boundary[0] != p)
             boundary.push_back(p);
         return;
     }
 
     bool pushed = false;
-
+ 
     bool pre = is_left(p, -1);
-    for(int i = 0; i < l; i++) {
+    for(int i = 0; i < len; i++) {
         bool cur = is_left(p, i);
         if(pre) {
             if(cur) {
@@ -595,7 +628,7 @@ ConvexHull graham_merge(ConvexHull a, ConvexHull b) {
 
     // we can avoid the find pivot step because of top_point_first
     if(b.boundary[0] <= a.boundary[0])
-        std::swap(a, b);
+        swap(a, b);
 
     result.boundary = a.boundary;
     result.boundary.insert(result.boundary.end(),
@@ -615,7 +648,7 @@ ConvexHull andrew_merge(ConvexHull a, ConvexHull b) {
 
     // we can avoid the find pivot step because of top_point_first
     if(b.boundary[0] <= a.boundary[0])
-        std::swap(a, b);
+        swap(a, b);
 
     result.boundary = a.boundary;
     result.boundary.insert(result.boundary.end(),
@@ -697,6 +730,7 @@ double ConvexHull::narrowest_diameter(Point &a, Point &b, Point &c) {
     }
     return d;
 }
+#endif
 
 };
 

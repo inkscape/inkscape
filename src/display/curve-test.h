@@ -25,8 +25,8 @@ public:
         path2.close();
         // Open path
         path3.append(Geom::SVGEllipticalArc(Geom::Point(4,0),1,2,M_PI,false,false,Geom::Point(5,1)));
-        path3.append(Geom::VLineSegment(Geom::Point(5,1),2), Geom::Path::STITCH_DISCONTINUOUS);
-        path3.append(Geom::HLineSegment(Geom::Point(6,4),2), Geom::Path::STITCH_DISCONTINUOUS);
+        path3.append(Geom::LineSegment(Geom::Point(5,1),Geom::Point(5,2)));
+        path3.append(Geom::LineSegment(Geom::Point(6,4),Geom::Point(2,4)));
     }
     virtual ~CurveTest() {}
 

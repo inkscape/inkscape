@@ -529,7 +529,8 @@ LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake
             }
             if ( fat_output.get_value() ){
                 res_comp = res_comp_bot;
-                res_comp.append(res_comp_top.reverse(),Geom::Path::STITCH_DISCONTINUOUS);
+                res_comp.setStitching(true);
+                res_comp.append(res_comp_top.reversed());
             }
             result.concat(res_comp.toPwSb());
         }

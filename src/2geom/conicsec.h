@@ -1,7 +1,6 @@
-/**
- * \file
- * \brief Conic Section
- *
+/** @file
+ * @brief Conic Section
+ *//*
  * Authors:
  *      Nathan Hurst <njh@njhurst.com>
  *
@@ -32,8 +31,8 @@
  */
 
 
-#ifndef _2GEOM_CONIC_SECTION_H_
-#define _2GEOM_CONIC_SECTION_H_
+#ifndef LIB2GEOM_SEEN_CONICSEC_H
+#define LIB2GEOM_SEEN_CONICSEC_H
 
 #include <2geom/exception.h>
 #include <2geom/angle.h>
@@ -463,33 +462,28 @@ public:
     bool arc_contains (const Point & _point, const Point & _initial,
                        const Point & _inner, const Point & _final) const
     {
-        double pa = angle_at (_point);
-        double sa = angle_at (_initial);
-        double ia = angle_at (_inner);
-        double ea = angle_at (_final);
-        // we test if _point and _inner have the same position
-        // wrt _initial and _final
-        return Geom::arc_contains (pa, sa, ia, ea);
+        AngleInterval ai(angle_at(_initial), angle_at(_inner), angle_at(_final));
+        return ai.contains(angle_at(_point));
     }
 
     Rect arc_bound (const Point & P1, const Point & Q, const Point & P2) const;
 
-    std::vector<Point> allNearestPoints (const Point &P) const;
+    std::vector<Point> allNearestTimes (const Point &P) const;
 
     /*
      *  Return the point on the conic section nearest to the passed point "P".
      *
      *  P: the point to compute the nearest one
      */
-    Point nearestPoint (const Point &P) const
+    Point nearestTime (const Point &P) const
     {
-        std::vector<Point> points = allNearestPoints (P);
+        std::vector<Point> points = allNearestTimes (P);
         if ( !points.empty() )
         {
             return points.front();
         }
         // else
-        THROW_LOGICALERROR ("nearestPoint: no nearest point found");
+        THROW_LOGICALERROR ("nearestTime: no nearest point found");
         return Point();
     }
 
@@ -509,8 +503,7 @@ inline std::ostream &operator<< (std::ostream &out_file, const xAx &x) {
 };
 
 
-#endif // _2GEOM_CONIC_SECTION_H_
-
+#endif // LIB2GEOM_SEEN_CONICSEC_H
 
 /*
   Local Variables:

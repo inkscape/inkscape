@@ -19,6 +19,7 @@
 #include <2geom/rect.h>
 #include <2geom/line.h>
 #include <2geom/circle.h>
+#include <2geom/path-sink.h>
 #include "document.h"
 #include "sp-namedview.h"
 #include "sp-image.h"
@@ -517,14 +518,14 @@ void Inkscape::ObjectSnapper::_snapPaths(IntermSnapResults &isr,
             for(Geom::PathVector::iterator it_pv = (it_p->path_vector)->begin(); it_pv != (it_p->path_vector)->end(); ++it_pv) {
                 // Find a nearest point for each curve within this path
                 // n curves will return n time values with 0 <= t <= 1
-                std::vector<double> anp = (*it_pv).nearestPointPerCurve(p_doc);
+                std::vector<double> anp = (*it_pv).nearestTimePerCurve(p_doc);
 
                 //std::cout << "#nearest points = " << anp.size() << " | p = " << p.getPoint() << std::endl;
                 // Now we will examine each of the nearest points, and determine whether it's within snapping range and if we should snap to it
                 std::vector<double>::const_iterator np = anp.begin();
                 unsigned int index = 0;
                 for (; np != anp.end(); ++np, index++) {
-                    Geom::Curve const *curve = &((*it_pv).at_index(index));
+                    Geom::Curve const *curve = &(it_pv->at(index));
                     Geom::Point const sp_doc = curve->pointAt(*np);
                     //dt->snapindicator->set_new_debugging_point(sp_doc*dt->doc2dt());
                     bool c1 = true;
@@ -623,10 +624,13 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(IntermSnapResults &isr,
     // PS: Because the paths we're about to snap to are all expressed relative to document coordinate system, we will have
     // to convert the snapper coordinates from the desktop coordinates to document coordinates
 
-    std::vector<Geom::Path> constraint_path;
+    Geom::PathVector constraint_path;
     if (c.isCircular()) {
         Geom::Circle constraint_circle(dt->dt2doc(c.getPoint()), c.getRadius());
-        constraint_circle.getPath(constraint_path);
+        Geom::PathBuilder pb;
+        pb.feed(constraint_circle);
+        pb.flush();
+        constraint_path = pb.peek();
     } else {
         Geom::Path constraint_line;
         constraint_line.start(p_min_on_cl);

@@ -37,11 +37,11 @@ public:
     LPEFilletChamfer(LivePathEffectObject *lpeobject);
     virtual ~LPEFilletChamfer();
 
-    virtual std::vector<Geom::Path> doEffect_path(std::vector<Geom::Path> const &path_in);
+    virtual Geom::PathVector doEffect_path(Geom::PathVector const &path_in);
 
     virtual void doOnApply(SPLPEItem const *lpeItem);
     virtual void doBeforeEffect(SPLPEItem const *lpeItem);
-    virtual void adjustForNewPath(std::vector<Geom::Path> const &path_in);
+    virtual void adjustForNewPath(Geom::PathVector const &path_in);
     virtual Gtk::Widget* newWidget();
 
     int getKnotsNumber(SPCurve const *c);
@@ -53,8 +53,8 @@ public:
     void fillet();
     void inverseFillet();
     void updateFillet();
-    void doUpdateFillet(std::vector<Geom::Path> const& original_pathv, double power);
-    void doChangeType(std::vector<Geom::Path> const& original_pathv, int type);
+    void doUpdateFillet(Geom::PathVector const& original_pathv, double power);
+    void doChangeType(Geom::PathVector const& original_pathv, int type);
     void refreshKnots();
 
     FilletChamferPointArrayParam fillet_chamfer_values;

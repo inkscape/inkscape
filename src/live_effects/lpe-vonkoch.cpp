@@ -76,12 +76,12 @@ LPEVonKoch::~LPEVonKoch()
 
 }
 
-std::vector<Geom::Path>
-LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPEVonKoch::doEffect_path (Geom::PathVector const & path_in)
 {
     using namespace Geom;
 
-    std::vector<Geom::Path> generating_path = generator.get_pathvector();
+    Geom::PathVector generating_path = generator.get_pathvector();
     
     if (generating_path.empty()) {
         return path_in;
@@ -148,15 +148,15 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
     }
 
     //Generate path:
-    std::vector<Geom::Path> pathi = path_in;
-    std::vector<Geom::Path> path_out = path_in;
+    Geom::PathVector pathi = path_in;
+    Geom::PathVector path_out = path_in;
     
     for (unsigned i = 0; i<nbgenerations; i++){
         if (drawall.get_value()){
             path_out =  path_in;
             complexity = path_in_complexity;
         }else{
-            path_out = std::vector<Geom::Path>();
+            path_out = Geom::PathVector();
             complexity = 0;
         }
         for (unsigned j = 0; j<transforms.size(); j++){
@@ -203,7 +203,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
             hp_vec.push_back(refbox_as_vect);
         }
         //Draw the transformed boxes
-        std::vector<Geom::Path> generating_path = generator.get_pathvector();
+        Geom::PathVector generating_path = generator.get_pathvector();
         for (unsigned i=0;i<generating_path.size(); i++){
             if (generating_path[i].size()==0){
                 //Ooops! this should not happen.
@@ -243,7 +243,7 @@ LPEVonKoch::doBeforeEffect (SPLPEItem const* lpeitem)
     using namespace Geom;
     original_bbox(lpeitem);
     
-    std::vector<Geom::Path> paths = ref_path.get_pathvector();
+    Geom::PathVector paths = ref_path.get_pathvector();
     Geom::Point A,B;
     if (paths.empty()||paths.front().size()==0){
         //FIXME: a path is used as ref instead of 2 points to work around path/point param incompatibility bug.
@@ -258,7 +258,7 @@ LPEVonKoch::doBeforeEffect (SPLPEItem const* lpeitem)
     if (paths.size()!=1||paths.front().size()!=1){
         Geom::Path tmp_path(A);
         tmp_path.appendNew<LineSegment>(B);
-        std::vector<Geom::Path> tmp_pathv;
+        Geom::PathVector tmp_pathv;
         tmp_pathv.push_back(tmp_path);
         ref_path.set_new_value(tmp_pathv,true);
     }
@@ -282,7 +282,7 @@ LPEVonKoch::resetDefaults(SPItem const* item)
     B[Geom::X] = boundingbox_X.max();
     B[Geom::Y] = boundingbox_Y.middle();
 
-    std::vector<Geom::Path> paths,refpaths;
+    Geom::PathVector paths,refpaths;
     Geom::Path path = Geom::Path(A);
     path.appendNew<Geom::LineSegment>(B);
 
@@ -298,7 +298,7 @@ LPEVonKoch::resetDefaults(SPItem const* item)
     //refA[Geom::Y] = boundingbox_Y.middle();
     //refB[Geom::X] = boundingbox_X.max();
     //refB[Geom::Y] = boundingbox_Y.middle();
-    //std::vector<Geom::Path> paths;
+    //Geom::PathVector paths;
     //Geom::Path path = Geom::Path( (Point) refA);
     //path.appendNew<Geom::LineSegment>( (Point) refB );
     //paths.push_back(path * Affine(1./3,0,0,1./3, refA[X]*2./3, refA[Y]*2./3 + boundingbox_Y.extent()/2));

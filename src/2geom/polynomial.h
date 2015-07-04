@@ -3,9 +3,10 @@
  * \brief Polynomial in canonical (monomial) basis
  *//*
  * Authors:
- *      ? <?@?.?>
+ *    MenTaLguY <mental@rydia.net>
+ *    Krzysztof Kosiński <tweenk.pl@gmail.com>
  * 
- * Copyright ?-?  authors
+ * Copyright 2007-2015 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -29,7 +30,6 @@
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
  * OF ANY KIND, either express or implied. See the LGPL or the MPL for
  * the specific language governing rights and limitations.
- *
  */
 
 #ifndef LIB2GEOM_SEEN_POLY_H
@@ -39,10 +39,13 @@
 #include <iostream>
 #include <algorithm>
 #include <complex>
+#include <2geom/coord.h>
 #include <2geom/utils.h>
 
 namespace Geom {
 
+/** @brief Polynomial in canonical (monomial) basis.
+ * @ingroup Fragments */
 class Poly : public std::vector<double>{
 public:
     // coeff; // sum x^i*coeff[i]
@@ -213,6 +216,18 @@ std::vector<std::complex<double> > solve(const Poly & p);
 std::vector<double> solve_reals(const Poly & p);
 #endif
 double polish_root(Poly const & p, double guess, double tol);
+
+
+/** @brief Analytically solve quadratic equation.
+ * The equation is given in the standard form: ax^2 + bx + c = 0.
+ * Only real roots are returned. */
+std::vector<Coord> solve_quadratic(Coord a, Coord b, Coord c);
+
+/** @brief Analytically solve cubic equation.
+ * The equation is given in the standard form: ax^3 + bx^2 + cx + d = 0.
+ * Only real roots are returned. */
+std::vector<Coord> solve_cubic(Coord a, Coord b, Coord c, Coord d);
+
 
 inline std::ostream &operator<< (std::ostream &out_file, const Poly &in_poly) {
     if(in_poly.size() == 0)

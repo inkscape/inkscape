@@ -45,7 +45,7 @@ void LPEBoundingBox::doEffect (SPCurve * curve)
             p.appendNew<Geom::LineSegment>(Geom::Point(bbox->right(), bbox->bottom()));
             p.appendNew<Geom::LineSegment>(Geom::Point(bbox->left(), bbox->bottom()));
             p.appendNew<Geom::LineSegment>(Geom::Point(bbox->left(), bbox->top()));
-            std::vector<Geom::Path> out;
+            Geom::PathVector out;
             out.push_back(p);
             curve->set_pathvector(out);
         }

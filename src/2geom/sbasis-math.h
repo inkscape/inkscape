@@ -1,7 +1,6 @@
-/**
- * \file
- * \brief some std functions to work with (pw)s-basis
- *
+/** @file
+ * @brief some std functions to work with (pw)s-basis
+ *//*
  *  Authors:
  *   Jean-Francois Barraud
  *
@@ -36,8 +35,8 @@
 //TODO: in all these functions, compute 'order' according to 'tol'.
 //TODO: use template to define the pw version automatically from the sb version?
 
-#ifndef SEEN_GEOM_SB_CALCULS_H
-#define SEEN_GEOM_SB_CALCULS_H
+#ifndef LIB2GEOM_SEEN_SBASIS_MATH_H
+#define LIB2GEOM_SEEN_SBASIS_MATH_H
 
 
 #include <2geom/sbasis.h>

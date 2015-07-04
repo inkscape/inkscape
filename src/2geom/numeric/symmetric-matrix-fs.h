@@ -339,7 +339,10 @@ class BaseSymmetricMatrix : public ConstBaseSymmetricMatrix<N>
     {
     }
 
-    using base_type::operator();
+    double operator() (size_t i, size_t j) const 
+    {
+        return m_data[base_type::get_index(i,j)];
+    }
 
     double& operator() (size_t i, size_t j)
     {

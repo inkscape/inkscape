@@ -406,8 +406,12 @@ public:
 
     void setClosed(bool c) { _closed = c; }
     iterator before(double t, double *fracpart = NULL);
+    iterator before(Geom::PathTime const &pvp);
     const_iterator before(double t, double *fracpart = NULL) const {
         return const_iterator(before(t, fracpart)._node);
+    }
+    const_iterator before(Geom::PathTime const &pvp) const {
+        return const_iterator(before(pvp)._node);
     }
 
     // list operations

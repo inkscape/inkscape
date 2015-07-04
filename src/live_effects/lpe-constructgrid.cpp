@@ -41,8 +41,8 @@ LPEConstructGrid::~LPEConstructGrid()
 
 }
 
-std::vector<Geom::Path>
-LPEConstructGrid::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPEConstructGrid::doEffect_path (Geom::PathVector const & path_in)
 {
   // Check that the path has at least 3 nodes (i.e. 2 segments), more nodes are ignored
     if (path_in[0].size() >= 2) {
@@ -64,7 +64,7 @@ LPEConstructGrid::doEffect_path (std::vector<Geom::Path> const & path_in)
         second_path.appendNew<LineSegment>( origin + second_p*nr_x );
 
         // use the gridpaths and set them in the correct grid
-        std::vector<Geom::Path> path_out;
+        Geom::PathVector path_out;
         path_out.push_back(first_path);
         for (int ix = 0; ix < nr_x; ix++) {
             path_out.push_back(path_out.back() * second_translation );

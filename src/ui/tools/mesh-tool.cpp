@@ -275,7 +275,7 @@ sp_mesh_context_is_over_line (MeshTool *rc, SPItem *item, Geom::Point event_p)
 
     SPCtrlCurve *curve = SP_CTRLCURVE(item);
     Geom::BezierCurveN<3> b( curve->p0, curve->p1, curve->p2, curve->p3 );
-    Geom::Coord coord = b.nearestPoint( rc->mousepoint_doc ); // Coord == double
+    Geom::Coord coord = b.nearestTime( rc->mousepoint_doc ); // Coord == double
     Geom::Point nearest = b( coord );
 
     double dist_screen = Geom::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();

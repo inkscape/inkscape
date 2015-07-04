@@ -40,7 +40,7 @@ public:
     }
     gchar *href;
     URIReference ref;
-    std::vector<Geom::Path> _pathvector;
+    Geom::PathVector _pathvector;
     bool reversed;
     
     sigc::connection linked_changed_connection;

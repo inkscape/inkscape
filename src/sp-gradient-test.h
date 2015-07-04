@@ -102,10 +102,10 @@ public:
             Geom::Affine const g2d(sp_gradient_get_g2d_matrix(gr, Geom::identity(), unit_rect));
             Geom::Affine const gs2d(sp_gradient_get_gs2d_matrix(gr, Geom::identity(), unit_rect));
             TS_ASSERT_EQUALS( g2d, Geom::identity() );
-            TS_ASSERT( Geom::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
+            TS_ASSERT( Geom::are_near(gs2d, gr->gradientTransform * g2d, 1e-12) );
 
             sp_gradient_set_gs2d_matrix(gr, Geom::identity(), unit_rect, gs2d);
-            TS_ASSERT( Geom::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
+            TS_ASSERT( Geom::are_near(gr->gradientTransform, grXform, 1e-12) );
         }
 
         gr->gradientTransform = grXform;
@@ -116,10 +116,10 @@ public:
             Geom::Affine const g2d(sp_gradient_get_g2d_matrix(gr, funny, unit_rect));
             Geom::Affine const gs2d(sp_gradient_get_gs2d_matrix(gr, funny, unit_rect));
             TS_ASSERT_EQUALS( g2d, funny );
-            TS_ASSERT( Geom::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
+            TS_ASSERT( Geom::are_near(gs2d, gr->gradientTransform * g2d, 1e-12) );
 
             sp_gradient_set_gs2d_matrix(gr, funny, unit_rect, gs2d);
-            TS_ASSERT( Geom::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
+            TS_ASSERT( Geom::are_near(gr->gradientTransform, grXform, 1e-12) );
         }
 
         gr->gradientTransform = grXform;
@@ -130,16 +130,16 @@ public:
             TS_ASSERT_EQUALS( g2d, Geom::Affine(3, 0,
                                               0, 4,
                                               5, 6) * funny );
-            TS_ASSERT( Geom::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
+            TS_ASSERT( Geom::are_near(gs2d, gr->gradientTransform * g2d, 1e-12) );
 
             sp_gradient_set_gs2d_matrix(gr, funny, larger_rect, gs2d);
-            TS_ASSERT( Geom::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
+            TS_ASSERT( Geom::are_near(gr->gradientTransform, grXform, 1e-12) );
 
             SP_OBJECT(gr)->setKeyValue( SP_ATTR_GRADIENTUNITS, "userSpaceOnUse");
             Geom::Affine const user_g2d(sp_gradient_get_g2d_matrix(gr, funny, larger_rect));
             Geom::Affine const user_gs2d(sp_gradient_get_gs2d_matrix(gr, funny, larger_rect));
             TS_ASSERT_EQUALS( user_g2d, funny );
-            TS_ASSERT( Geom::matrix_equalp(user_gs2d, gr->gradientTransform * user_g2d, 1e-12) );
+            TS_ASSERT( Geom::are_near(user_gs2d, gr->gradientTransform * user_g2d, 1e-12) );
         }
         g_object_unref(gr);
     }

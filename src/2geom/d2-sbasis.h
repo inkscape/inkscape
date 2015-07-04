@@ -35,11 +35,11 @@
  *
  */
 
-#ifdef SEEN_LIB2GEOM_D2_H  /*This is intentional: we don't actually want anyone to
+#ifdef LIB2GEOM_SEEN_D2_H  /*This is intentional: we don't actually want anyone to
                              include this, other than D2.h.  If somone else tries, D2
                              won't be defined.  If it is, this will already be included. */
-#ifndef SEEN_LIB2GEOM_D2_SBASIS_H
-#define SEEN_LIB2GEOM_D2_SBASIS_H
+#ifndef LIB2GEOM_SEEN_D2_SBASIS_H
+#define LIB2GEOM_SEEN_D2_SBASIS_H
 
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>
@@ -149,8 +149,8 @@ std::vector<std::vector<Interval> > level_sets( D2<SBasis> const &f, std::vector
 
 }
 
-#endif
-#endif
+#endif // LIB2GEOM_SEEN_D2_SBASIS_H
+#endif // LIB2GEOM_SEEN_D2_H
 
 
 /*

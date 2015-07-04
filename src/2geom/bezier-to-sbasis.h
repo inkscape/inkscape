@@ -29,8 +29,8 @@
  *
  */
 
-#ifndef _BEZIER_TO_SBASIS
-#define _BEZIER_TO_SBASIS
+#ifndef LIB2GEOM_SEEN_BEZIER_TO_SBASIS_H
+#define LIB2GEOM_SEEN_BEZIER_TO_SBASIS_H
 
 #include <2geom/coord.h>
 #include <2geom/point.h>
@@ -79,13 +79,9 @@ D2<SBasis> handles_to_sbasis(T const& handles, unsigned order)
     return sbc;
 }
 
-
 } // end namespace Geom
 
-
-
-
-#endif
+#endif // LIB2GEOM_SEEN_BEZIER_TO_SBASIS_H
 /*
   Local Variables:
   mode:c++

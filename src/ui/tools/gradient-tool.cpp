@@ -207,7 +207,7 @@ sp_gradient_context_is_over_line (GradientTool *rc, SPItem *item, Geom::Point ev
         SPCtrlLine* line = SP_CTRLLINE(item);
 
         Geom::LineSegment ls(line->s, line->e);
-        Geom::Point nearest = ls.pointAt(ls.nearestPoint(rc->mousepoint_doc));
+        Geom::Point nearest = ls.pointAt(ls.nearestTime(rc->mousepoint_doc));
         double dist_screen = Geom::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
 
         double tolerance = (double) SP_EVENT_CONTEXT(rc)->tolerance;

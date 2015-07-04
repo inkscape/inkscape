@@ -1,6 +1,5 @@
-/**
- *  \file
- *  \brief Cartesian point / 2D vector and related operations
+/** @file
+ * @brief Cartesian point / 2D vector and related operations
  *//*
  *  Authors:
  *    Michael G. Sloan <mgsloan@gmail.com>
@@ -33,8 +32,8 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef SEEN_Geom_POINT_H
-#define SEEN_Geom_POINT_H
+#ifndef LIB2GEOM_SEEN_POINT_H
+#define LIB2GEOM_SEEN_POINT_H
 
 #include "config.h"
 #include <iostream>
@@ -59,10 +58,14 @@ class Point
     , MultipliableNoncommutative< Point, HShear
     , MultipliableNoncommutative< Point, VShear
     , MultipliableNoncommutative< Point, Zoom
-      > > > > > > > > > > // this uses chaining so it looks weird, but works
+      > > > > > > > > > > // base class chaining, see documentation for Boost.Operator
 {
     Coord _pt[2];
 public:
+    typedef Coord D1Value;
+    typedef Coord &D1Reference;
+    typedef Coord const &D1ConstReference;
+
     /// @name Create points
     /// @{
     /** Construct a point on the origin. */
@@ -116,6 +119,11 @@ public:
      * @return Length of the vector from origin to this point */
     Coord length() const { return hypot(_pt[0], _pt[1]); }
     void normalize();
+    Point normalized() const {
+        Point ret(*this);
+        ret.normalize();
+        return ret;
+    }
 
     /** @brief Return a point like this point but rotated -90 degrees.
      * If the y axis grows downwards and the x axis grows to the
@@ -223,40 +231,73 @@ public:
     }
     /// @}
 
-    /** @brief Lexicographical ordering functor. */
-    template <Dim2 d> struct LexOrder;
+    /** @brief Lexicographical ordering functor.
+     * @param d The dimension with higher significance */
+    template <Dim2 DIM> struct LexLess;
+    template <Dim2 DIM> struct LexGreater;
+    //template <Dim2 DIM, typename First = std::less<Coord>, typename Second = std::less<Coord> > LexOrder;
     /** @brief Lexicographical ordering functor with runtime dimension. */
-    class LexOrderRt {
-    public:
-        LexOrderRt(Dim2 d) : dim(d) {}
-        inline bool operator()(Point const &a, Point const &b);
+    struct LexLessRt {
+        LexLessRt(Dim2 d) : dim(d) {}
+        inline bool operator()(Point const &a, Point const &b) const;
     private:
         Dim2 dim;
     };
-
-    friend inline std::ostream &operator<< (std::ostream &out_file, const Geom::Point &in_pnt);
+    struct LexGreaterRt {
+        LexGreaterRt(Dim2 d) : dim(d) {}
+        inline bool operator()(Point const &a, Point const &b) const;
+    private:
+        Dim2 dim;
+    };
+    //template <typename First = std::less<Coord>, typename Second = std::less<Coord> > LexOrder
 };
 
 /** @brief Output operator for points.
  * Prints out the coordinates.
  * @relates Point */
-inline std::ostream &operator<< (std::ostream &out_file, const Geom::Point &in_pnt) {
-    out_file << "X: " << in_pnt[X] << "  Y: " << in_pnt[Y];
-    return out_file;
-}
+std::ostream &operator<<(std::ostream &out, const Geom::Point &p);
 
-template<> struct Point::LexOrder<X> {
-    bool operator()(Point const &a, Point const &b) {
+template<> struct Point::LexLess<X> {
+    typedef std::less<Coord> Primary;
+    typedef std::less<Coord> Secondary;
+    typedef std::less<Coord> XOrder;
+    typedef std::less<Coord> YOrder;
+    bool operator()(Point const &a, Point const &b) const {
         return a[X] < b[X] || (a[X] == b[X] && a[Y] < b[Y]);
     }
 };
-template<> struct Point::LexOrder<Y> {
-    bool operator()(Point const &a, Point const &b) {
+template<> struct Point::LexLess<Y> {
+    typedef std::less<Coord> Primary;
+    typedef std::less<Coord> Secondary;
+    typedef std::less<Coord> XOrder;
+    typedef std::less<Coord> YOrder;
+    bool operator()(Point const &a, Point const &b) const {
         return a[Y] < b[Y] || (a[Y] == b[Y] && a[X] < b[X]);
     }
 };
-inline bool Point::LexOrderRt::operator()(Point const &a, Point const &b) {
-    return dim ? Point::LexOrder<Y>()(a, b) : Point::LexOrder<X>()(a, b);
+template<> struct Point::LexGreater<X> {
+    typedef std::greater<Coord> Primary;
+    typedef std::greater<Coord> Secondary;
+    typedef std::greater<Coord> XOrder;
+    typedef std::greater<Coord> YOrder;
+    bool operator()(Point const &a, Point const &b) const {
+        return a[X] > b[X] || (a[X] == b[X] && a[Y] > b[Y]);
+    }
+};
+template<> struct Point::LexGreater<Y> {
+    typedef std::greater<Coord> Primary;
+    typedef std::greater<Coord> Secondary;
+    typedef std::greater<Coord> XOrder;
+    typedef std::greater<Coord> YOrder;
+    bool operator()(Point const &a, Point const &b) const {
+        return a[Y] > b[Y] || (a[Y] == b[Y] && a[X] > b[X]);
+    }
+};
+inline bool Point::LexLessRt::operator()(Point const &a, Point const &b) const {
+    return dim ? Point::LexLess<Y>()(a, b) : Point::LexLess<X>()(a, b);
+}
+inline bool Point::LexGreaterRt::operator()(Point const &a, Point const &b) const {
+    return dim ? Point::LexGreater<Y>()(a, b) : Point::LexGreater<X>()(a, b);
 }
 
 /** @brief Compute the second (Euclidean) norm of @a p.
@@ -265,8 +306,7 @@ inline bool Point::LexOrderRt::operator()(Point const &a, Point const &b) {
  * in a <code>double</code>.
  * @return \f$\sqrt{p_X^2 + p_Y^2}\f$
  * @relates Point */
-inline Coord L2(Point const &p)
-{
+inline Coord L2(Point const &p) {
     return p.length();
 }
 
@@ -274,26 +314,8 @@ inline Coord L2(Point const &p)
  * Warning: this can overflow where L2 won't.
  * @return \f$p_X^2 + p_Y^2\f$
  * @relates Point */
-inline Coord L2sq(Point const &p)
-{
+inline Coord L2sq(Point const &p) {
     return p[0]*p[0] + p[1]*p[1];
-}
-
-//IMPL: NearConcept
-/** @brief Nearness predicate for points.
- * True if neither coordinate of @a a is further than @a eps from the corresponding
- * coordinate of @a b.
- * @relates Point */
-inline bool are_near(Point const &a, Point const &b, double const eps=EPSILON)
-{
-    return ( are_near(a[X],b[X],eps) && are_near(a[Y],b[Y],eps) );
-}
-
-/** @brief Return a point halfway between the specified ones.
- * @relates Point */
-inline Point middle_point(Point const& P1, Point const& P2)
-{
-    return (P1 + P2) / 2;
 }
 
 /** @brief Returns p * Geom::rotate_degrees(90), but more efficient.
@@ -305,8 +327,7 @@ inline Point middle_point(Point const& P1, Point const& P2)
  *
  * There is no function to rotate by -90 degrees: use -rot90(p) instead.
  * @relates Point */
-inline Point rot90(Point const &p)
-{
+inline Point rot90(Point const &p) {
     return Point(-p[Y], p[X]);
 }
 
@@ -317,9 +338,14 @@ inline Point rot90(Point const &p)
  * @return Point on a line between a and b. The ratio of its distance from a
  *         and the distance between a and b will be equal to t.
  * @relates Point */
-inline Point lerp(double const t, Point const &a, Point const &b)
-{
-    return (a * (1 - t) + b * t);
+inline Point lerp(Coord t, Point const &a, Point const &b) {
+    return (1 - t) * a + t * b;
+}
+
+/** @brief Return a point halfway between the specified ones.
+ * @relates Point */
+inline Point middle_point(Point const &p1, Point const &p2) {
+    return lerp(0.5, p1, p2);
 }
 
 /** @brief Compute the dot product of a and b.
@@ -328,45 +354,60 @@ inline Point lerp(double const t, Point const &a, Point const &b)
  * and the sign depends on whether they point in the same direction (+) or opposite ones (-).
  * @return \f$a \cdot b = a_X b_X + a_Y b_Y\f$.
  * @relates Point */
-inline Coord dot(Point const &a, Point const &b)
-{
-    return a[0] * b[0] + a[1] * b[1];
+inline Coord dot(Point const &a, Point const &b) {
+    return a[X] * b[X] + a[Y] * b[Y];
 }
 
 /** @brief Compute the 2D cross product.
- * Defined as dot(a, b.cw()). This means it will be zero for parallel vectors,
- * and its absolute value highest for perpendicular vectors.
+ * This is also known as "perp dot product". It will be zero for parallel vectors,
+ * and the absolute value will be highest for perpendicular vectors.
+ * @return \f$a \times b = a_X b_Y - a_Y b_X\f$.
  * @relates Point*/
 inline Coord cross(Point const &a, Point const &b)
 {
-    return dot(a, b.cw());
+    // equivalent implementation:
+    // return dot(a, b.ccw());
+    return a[X] * b[Y] - a[Y] * b[X];
 }
 
-/** @brief Compute the (Euclidean) distance between points.
- * @relates Point */
-inline Coord distance (Point const &a, Point const &b)
-{
-    return L2(a - b);
+/// Compute the (Euclidean) distance between points.
+/// @relates Point
+inline Coord distance (Point const &a, Point const &b) {
+    return (a - b).length();
 }
 
-/** @brief Compute the square of the distance between points.
- * @relates Point */
-inline Coord distanceSq (Point const &a, Point const &b)
-{
+/// Compute the square of the distance between points.
+/// @relates Point
+inline Coord distanceSq (Point const &a, Point const &b) {
     return L2sq(a - b);
+}
+
+//IMPL: NearConcept
+/// Test whether two points are no further apart than some threshold.
+/// @relates Point
+inline bool are_near(Point const &a, Point const &b, double eps = EPSILON) {
+    return are_near(distance(a, b), 0, eps);
+}
+
+/// Test whether three points lie approximately on the same line.
+/// @relates Point
+inline bool are_collinear(Point const& p1, Point const& p2, Point const& p3,
+                          double eps = EPSILON)
+{
+    return are_near( cross(p3, p2) - cross(p3, p1) + cross(p2, p1), 0, eps);
 }
 
 Point unit_vector(Point const &a);
 Coord L1(Point const &p);
 Coord LInfty(Point const &p);
 bool is_zero(Point const &p);
-bool is_unit_vector(Point const &p);
+bool is_unit_vector(Point const &p, Coord eps = EPSILON);
 double atan2(Point const &p);
 double angle_between(Point const &a, Point const &b);
 Point abs(Point const &b);
 Point constrain_angle(Point const &A, Point const &B, unsigned int n = 4, Geom::Point const &dir = Geom::Point(1,0));
 
-} /* namespace Geom */
+} // end namespace Geom
 
 // This is required to fix a bug in GCC 4.3.3 (and probably others) that causes the compiler
 // to try to instantiate the iterator_traits template and fail. Probably it thinks that Point
@@ -375,7 +416,7 @@ namespace std {
 template <> class iterator_traits<Geom::Point> {};
 }
 
-#endif /* !SEEN_Geom_POINT_H */
+#endif // LIB2GEOM_SEEN_POINT_H
 
 /*
   Local Variables:

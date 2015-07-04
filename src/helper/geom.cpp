@@ -15,8 +15,7 @@
 #include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/path.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include <2geom/transforms.h>
 #include <2geom/rect.h>
 #include <2geom/coord.h>
@@ -468,8 +467,8 @@ pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
 
     for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
         output.push_back( Geom::Path() );
+        output.back().setStitching(true);
         output.back().start( pit->initialPoint() );
-        output.back().close( pit->closed() );
 
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit) {
             if (is_straight_curve(*cit)) {
@@ -483,10 +482,13 @@ pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
                 } else {
                     // convert all other curve types to cubicbeziers
                     Geom::Path cubicbezier_path = Geom::cubicbezierpath_from_sbasis(cit->toSBasis(), 0.1);
+                    cubicbezier_path.close(false);
                     output.back().append(cubicbezier_path);
                 }
             }
         }
+        
+        output.back().close( pit->closed() );
     }
     
     return output;
@@ -520,8 +522,7 @@ pathv_to_linear( Geom::PathVector const &pathv, double /*maxdisp*/)
             } 
             else { /* all others must be Bezier curves */
                 Geom::BezierCurve const *curve = dynamic_cast<Geom::BezierCurve const *>(&*cit);
-                Geom::CubicBezier b((*curve)[0], (*curve)[1], (*curve)[2], (*curve)[3]);
-                std::vector<Geom::Point> bzrpoints = b.points();
+                std::vector<Geom::Point> bzrpoints = curve->controlPoints();
                 Geom::Point A = bzrpoints[0];
                 Geom::Point B = bzrpoints[1];
                 Geom::Point C = bzrpoints[2];
@@ -579,7 +580,7 @@ pathv_to_cubicbezier( Geom::PathVector const &pathv)
             pitCubic.appendNew<Geom::LineSegment>( pitCubic.initialPoint() );
             pitCubic.close(true);
         }
-        for (Geom::Path::const_iterator cit = pitCubic.begin(); cit != pitCubic.end_open(); ++cit) {
+        for (Geom::Path::iterator cit = pitCubic.begin(); cit != pitCubic.end_open(); ++cit) {
             if (is_straight_curve(*cit)) {
                 Geom::CubicBezier b(cit->initialPoint(), cit->pointAt(0.3334) + Geom::Point(cubicGap,cubicGap), cit->finalPoint(), cit->finalPoint());
                 output.back().append(b);
@@ -848,41 +849,6 @@ recursive_bezier4(const double x1, const double y1,
         recursive_bezier4(x1, y1, x12, y12, x123, y123, x1234, y1234, m_points, level + 1); 
         recursive_bezier4(x1234, y1234, x234, y234, x34, y34, x4, y4, m_points, level + 1); 
 }
-
-
-/**
- * rounds all corners of the rectangle 'outwards', i.e. x0 and y0 are floored, x1 and y1 are ceiled.
- */
-void round_rectangle_outwards(Geom::Rect & rect) {
-    Geom::Interval ints[2];
-    for (int i=0; i < 2; i++) {
-        ints[i] = Geom::Interval(std::floor(rect[i][0]), std::ceil(rect[i][1]));
-    }
-    rect = Geom::Rect(ints[0], ints[1]);
-}
-
-
-namespace Geom {
-
-bool transform_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon) {
-    return
-        Geom::are_near(m0[0], m1[0], epsilon) &&
-        Geom::are_near(m0[1], m1[1], epsilon) &&
-        Geom::are_near(m0[2], m1[2], epsilon) &&
-        Geom::are_near(m0[3], m1[3], epsilon);
-}
-
-
-bool translate_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon) {
-    return Geom::are_near(m0[4], m1[4], epsilon) && Geom::are_near(m0[5], m1[5], epsilon);
-}
-
-
-bool matrix_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon) {
-    return transform_equalp(m0, m1, epsilon) && translate_equalp(m0, m1, epsilon);
-}
-
-} //end namespace Geom
 
 /*
   Local Variables:

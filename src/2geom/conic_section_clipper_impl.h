@@ -1,7 +1,6 @@
-/**
- * \file
- * \brief Conic section clipping with respect to a rectangle
- *
+/** @file
+ * @brief Conic section clipping with respect to a rectangle
+ *//*
  * Authors:
  *      Marco Cecchetti <mrcekets at gmail>
  *
@@ -31,11 +30,8 @@
  * the specific language governing rights and limitations.
  */
 
-
-
-
-#ifndef _2GEOM_CONIC_SECTION_CLIPPER_IMPL_H_
-#define _2GEOM_CONIC_SECTION_CLIPPER_IMPL_H_
+#ifndef LIB2GEOM_SEEN_CONIC_SECTION_CLIPPER_IMPL_H
+#define LIB2GEOM_SEEN_CONIC_SECTION_CLIPPER_IMPL_H
 
 
 #include <2geom/conicsec.h>
@@ -336,13 +332,7 @@ void CLIPPER_CLASS::rsplit (std::list<Point> & points,
 
 } // end namespace Geom
 
-
-
-
-#endif // _2GEOM_CONIC_SECTION_CLIPPER_IMPL_H_
-
-
-
+#endif // LIB2GEOM_SEEN_CONIC_SECTION_CLIPPER_IMPL_H
 
 /*
   Local Variables:

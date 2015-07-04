@@ -1068,7 +1068,7 @@ void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, guint poi
                 // using X-coordinates only to determine the offset, assuming p has been snapped to the vector from begin to end.
                 Geom::Point begin(lg->x1.computed, lg->y1.computed);
                 Geom::Point end(lg->x2.computed, lg->y2.computed);
-                double offset = Geom::LineSegment(begin, end).nearestPoint(p);
+                double offset = Geom::LineSegment(begin, end).nearestTime(p);
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (lg, false);
                 lg->ensureVector();
                 lg->vector.stops.at(point_i).offset = offset;
@@ -1163,7 +1163,7 @@ void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, guint poi
             {
                 Geom::Point start = Geom::Point (rg->cx.computed, rg->cy.computed);
                 Geom::Point end   = Geom::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
-                double offset = Geom::LineSegment(start, end).nearestPoint(p);
+                double offset = Geom::LineSegment(start, end).nearestTime(p);
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (rg, false);
                 rg->ensureVector();
                 rg->vector.stops.at(point_i).offset = offset;
@@ -1180,7 +1180,7 @@ void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, guint poi
             {
                 Geom::Point start = Geom::Point (rg->cx.computed, rg->cy.computed);
                 Geom::Point end   = Geom::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
-                double offset = Geom::LineSegment(start, end).nearestPoint(p);
+                double offset = Geom::LineSegment(start, end).nearestTime(p);
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(rg, false);
                 rg->ensureVector();
                 rg->vector.stops.at(point_i).offset = offset;

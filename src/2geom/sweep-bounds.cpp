@@ -1,8 +1,26 @@
-#include <2geom/sweep.h>
+#include <2geom/sweep-bounds.h>
 
 #include <algorithm>
 
 namespace Geom {
+
+struct Event {
+    double x;
+    unsigned ix;
+    bool closing;
+    Event(double pos, unsigned i, bool c) : x(pos), ix(i), closing(c) {}
+// Lexicographic ordering by x then closing
+    bool operator<(Event const &other) const {
+        if(x < other.x) return true;
+        if(x > other.x) return false;
+        return closing < other.closing;
+    }
+    bool operator==(Event const &other) const {
+        return other.x == x && other.ix == ix && other.closing == closing;
+    }
+};
+
+std::vector<std::vector<unsigned> > fake_cull(unsigned a, unsigned b);
 
 /**
  * \brief Make a list of pairs of self intersections in a list of Rects.
@@ -19,8 +37,8 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> rs, Dim2 d) {
     std::vector<std::vector<unsigned> > pairs(rs.size());
 
     for(unsigned i = 0; i < rs.size(); i++) {
-        events.push_back(Event(rs[i][d][0], i, false));
-        events.push_back(Event(rs[i][d][1], i, true));
+        events.push_back(Event(rs[i][d].min(), i, false));
+        events.push_back(Event(rs[i][d].max(), i, true));
     }
     std::sort(events.begin(), events.end());
 
@@ -66,8 +84,8 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vecto
         events[n].reserve(sz*2);
         for(unsigned i = 0; i < sz; i++) {
             Rect r = n ? b[i] : a[i];
-            events[n].push_back(Event(r[d][0], i, false));
-            events[n].push_back(Event(r[d][1], i, true));
+            events[n].push_back(Event(r[d].min(), i, false));
+            events[n].push_back(Event(r[d].max(), i, true));
         }
         std::sort(events[n].begin(), events[n].end());
     }

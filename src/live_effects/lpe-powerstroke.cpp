@@ -27,12 +27,13 @@
 #include <2geom/sbasis-geometric.h>
 #include <2geom/transforms.h>
 #include <2geom/bezier-utils.h>
-#include <2geom/svg-elliptical-arc.h>
+#include <2geom/elliptical-arc.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/path-sink.h>
 #include <2geom/path-intersection.h>
 #include <2geom/crossing.h>
 #include <2geom/ellipse.h>
+#include <2geom/circle.h>
 #include <2geom/math-utils.h>
 #include <math.h>
 
@@ -46,9 +47,9 @@ namespace Geom {
 static boost::optional<Point> intersection_point( Point const & origin_a, Point const & vector_a,
                                            Point const & origin_b, Point const & vector_b)
 {
-    Coord denom = cross(vector_b, vector_a);
+    Coord denom = cross(vector_a, vector_b);
     if (!are_near(denom,0.)){
-        Coord t = (cross(origin_a,vector_b) + cross(vector_b,origin_b)) / denom;
+        Coord t = (cross(origin_b, vector_a) + cross(origin_b, vector_b)) / denom;
         return origin_a + t * vector_a;
     }
     return boost::none;
@@ -91,71 +92,6 @@ static Ellipse find_ellipse(Point P, Point Q, Point O)
     double F = c*f*K+f*f-2*f+c*c-2*c+1;
 
     return Ellipse(A, B, C, D, E, F);
-}
-
-/**
- * Refer to: Weisstein, Eric W. "Circle-Circle Intersection."
-             From MathWorld--A Wolfram Web Resource.
-             http://mathworld.wolfram.com/Circle-CircleIntersection.html
- *
- * @return 0 if no intersection
- * @return 1 if one circle is contained in the other
- * @return 2 if intersections are found (they are written to p0 and p1)
- */
-static int circle_circle_intersection(Circle const &circle0, Circle const &circle1,
-                                      Point & p0, Point & p1)
-{
-    Point X0 = circle0.center();
-    double r0 = circle0.ray();
-    Point X1 = circle1.center();
-    double r1 = circle1.ray();
-
-    /* dx and dy are the vertical and horizontal distances between
-    * the circle centers.
-    */
-    Point D = X1 - X0;
-
-    /* Determine the straight-line distance between the centers. */
-    double d = L2(D);
-
-    /* Check for solvability. */
-    if (d > (r0 + r1))
-    {
-        /* no solution. circles do not intersect. */
-        return 0;
-    }
-    if (d <= fabs(r0 - r1))
-    {
-        /* no solution. one circle is contained in the other */
-        return 1;
-    }
-
-    /* 'point 2' is the point where the line through the circle
-    * intersection points crosses the line between the circle
-    * centers.  
-    */
-
-    /* Determine the distance from point 0 to point 2. */
-    double a = ((r0*r0) - (r1*r1) + (d*d)) / (2.0 * d) ;
-
-    /* Determine the coordinates of point 2. */
-    Point p2 = X0 + D * (a/d);
-
-    /* Determine the distance from point 2 to either of the
-    * intersection points.
-    */
-    double h = std::sqrt((r0*r0) - (a*a));
-
-    /* Now determine the offsets of the intersection points from
-    * point 2.
-    */
-    Point r = (h/d)*rot90(D);
-
-    /* Determine the absolute intersection points. */
-    p0 = p2 + r;
-    p1 = p2 - r;
-
-    return 2;
 }
 
 /**
@@ -313,7 +249,7 @@ LPEPowerStroke::doOnApply(SPLPEItem const* lpeitem)
             Geom::Path const &path = pathv.front();
             Geom::Path::size_type const size = path.size_default();
             if (!path.closed()) {
-            	points.push_back( Geom::Point(0.2,width) );
+                points.push_back( Geom::Point(0.2,width) );
             }
             points.push_back( Geom::Point(0.5*size,width) );
             if (!path.closed()) {
@@ -362,7 +298,7 @@ void LPEPowerStroke::doOnRemove(SPLPEItem const* lpeitem)
 }
 
 void
-LPEPowerStroke::adjustForNewPath(std::vector<Geom::Path> const & path_in)
+LPEPowerStroke::adjustForNewPath(Geom::PathVector const & path_in)
 {
     if (!path_in.empty()) {
         offset_points.recalculate_controlpoints_for_new_pwd2(path_in[0].toPwSb());
@@ -386,6 +322,8 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
     if (B.size() == 0) {
         return pb.peek().front();
     }
+
+    pb.setStitching(true);
 
     Geom::Point start = B[0].at0();
     pb.moveTo(start);
@@ -446,7 +384,7 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                          break;
                     }
 
-                    pb.arcTo( ellipse.ray(Geom::X), ellipse.ray(Geom::Y), ellipse.rot_angle(),
+                    pb.arcTo( ellipse.ray(Geom::X), ellipse.ray(Geom::Y), ellipse.rotationAngle(),
                               false, width < 0, B[i].at0() );
 
                     break;
@@ -482,24 +420,24 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                     // Extrapolate using the curvature at the end of the path segments to join
                     Geom::Circle circle1 = Geom::touching_circle(reverse(B[prev_i]), 0.0);
                     Geom::Circle circle2 = Geom::touching_circle(B[i], 0.0);
-                    Geom::Point points[2];
-                    int solutions = circle_circle_intersection(circle1, circle2, points[0], points[1]);
-                    if (solutions == 2) {
+                    std::vector<Geom::ShapeIntersection> solutions;
+                    solutions = circle1.intersect(circle2);
+                    if (solutions.size() == 2) {
                         Geom::Point sol(0.,0.);
-                        if ( dot(tang2,points[0]-B[i].at0()) > 0 ) {
+                        if ( dot(tang2, solutions[0].point() - B[i].at0()) > 0 ) {
                             // points[0] is bad, choose points[1]
-                            sol = points[1];
-                        } else if ( dot(tang2,points[1]-B[i].at0()) > 0 ) { // points[0] could be good, now check points[1]
+                            sol = solutions[1].point();
+                        } else if ( dot(tang2, solutions[1].point() - B[i].at0()) > 0 ) { // points[0] could be good, now check points[1]
                             // points[1] is bad, choose points[0]
-                            sol = points[0];
+                            sol = solutions[0].point();
                         } else {
                             // both points are good, choose nearest
-                            sol = ( distanceSq(B[i].at0(), points[0]) < distanceSq(B[i].at0(), points[1]) ) ?
-                                    points[0] : points[1];
+                            sol = ( distanceSq(B[i].at0(), solutions[0].point()) < distanceSq(B[i].at0(), solutions[1].point()) ) ?
+                                    solutions[0].point() : solutions[1].point();
                         }
 
-                        Geom::EllipticalArc *arc0 = circle1.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+sol), sol, true);
-                        Geom::EllipticalArc *arc1 = circle2.arc(sol, 0.5*(sol+B[i].at0()), B[i].at0(), true);
+                        Geom::EllipticalArc *arc0 = circle1.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+sol), sol);
+                        Geom::EllipticalArc *arc1 = circle2.arc(sol, 0.5*(sol+B[i].at0()), B[i].at0());
 
                         if (arc0) {
                             build_from_sbasis(pb,arc0->toSBasis(), tol, false);
@@ -574,7 +512,7 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
 
                     Geom::Path spiro;
                     Spiro::spiro_run(controlpoints, 4, spiro);
-                    pb.append(spiro.portion(1,spiro.size_open()-1), Geom::Path::STITCH_DISCONTINUOUS);
+                    pb.append(spiro.portion(1, spiro.size_open() - 1));
                     break;
                 }
                 case LINEJOIN_BEVEL:
@@ -593,15 +531,15 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                 if (cross.size() != 1) {
                     // empty crossing or too many crossings: default to bevel
                     pb.lineTo(B[i].at0());
-                    pb.append(bzr2, Geom::Path::STITCH_DISCONTINUOUS);
+                    pb.append(bzr2);
                 } else {
                     // :-) quick hack:
                     for (unsigned i=0; i < bzr1.size_open(); ++i) {
                         pb.backspace();
                     }
 
-                    pb.append( bzr1.portion(0, cross[0].ta), Geom::Path::STITCH_DISCONTINUOUS );
-                    pb.append( bzr2.portion(cross[0].tb, bzr2.size_open()), Geom::Path::STITCH_DISCONTINUOUS );
+                    pb.append( bzr1.portion(0, cross[0].ta) );
+                    pb.append( bzr2.portion(cross[0].tb, bzr2.size_open()) );
                 }
             }
         } else {
@@ -615,12 +553,12 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
 }
 
 
-std::vector<Geom::Path>
-LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
 {
     using namespace Geom;
 
-    std::vector<Geom::Path> path_out;
+    Geom::PathVector path_out;
     if (path_in.empty()) {
         return path_out;
     }
@@ -737,12 +675,12 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
             default:
             {
                 double radius1 = 0.5 * distance(pwd2_out.lastValue(), mirrorpath.firstValue());
-                fixed_path.appendNew<SVGEllipticalArc>( radius1, radius1, M_PI/2., false, y.lastValue() < 0, mirrorpath.firstValue() );
+                fixed_path.appendNew<EllipticalArc>( radius1, radius1, M_PI/2., false, y.lastValue() < 0, mirrorpath.firstValue() );
                 break;
             }
         }
 
-        fixed_path.append(fixed_mirrorpath, Geom::Path::STITCH_DISCONTINUOUS);
+        fixed_path.append(fixed_mirrorpath);
 
         switch (start_linecap) {
             case LINECAP_ZERO_WIDTH:
@@ -775,7 +713,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
             default:
             {
                 double radius2 = 0.5 * distance(pwd2_out.firstValue(), mirrorpath.lastValue());
-                fixed_path.appendNew<SVGEllipticalArc>( radius2, radius2, M_PI/2., false, y.firstValue() < 0, pwd2_out.firstValue() );
+                fixed_path.appendNew<EllipticalArc>( radius2, radius2, M_PI/2., false, y.firstValue() < 0, pwd2_out.firstValue() );
                 break;
             }
         }

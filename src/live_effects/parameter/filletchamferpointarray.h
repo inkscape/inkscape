@@ -47,9 +47,9 @@ public:
     virtual double len_to_rad(int index, double len);
     virtual double len_to_time(int index, double len);
     virtual double time_to_len(int index, double time);
-    virtual std::pair<std::size_t, std::size_t> get_positions(int index, std::vector<Geom::Path> subpaths);
-    virtual int last_index(int index, std::vector<Geom::Path> subpaths);
-    std::vector<double> get_times(int index, std::vector<Geom::Path> subpaths, bool last);
+    virtual std::pair<std::size_t, std::size_t> get_positions(int index, Geom::PathVector subpaths);
+    virtual int last_index(int index, Geom::PathVector subpaths);
+    std::vector<double> get_times(int index, Geom::PathVector subpaths, bool last);
     virtual void set_helper_size(int hs);
     virtual void set_use_distance(bool use_knot_distance);
     virtual void set_chamfer_steps(int value_chamfer_steps);

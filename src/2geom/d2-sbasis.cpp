@@ -200,7 +200,7 @@ Point unitTangentAt(D2<SBasis> const & a, Coord t, unsigned n)
 
 static void set_first_point(Piecewise<D2<SBasis> > &f, Point a){
     if ( f.empty() ){
-        f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(a[X]),Linear(a[Y]))));
+        f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(SBasis(Linear(a[X])), SBasis(Linear(a[Y])))));
         return;
     }
     for (unsigned dim=0; dim<2; dim++){
@@ -213,7 +213,7 @@ static void set_first_point(Piecewise<D2<SBasis> > &f, Point a){
 }
 static void set_last_point(Piecewise<D2<SBasis> > &f, Point a){
     if ( f.empty() ){
-        f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(a[X]),Linear(a[Y]))));
+        f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(SBasis(Linear(a[X])), SBasis(Linear(a[Y])))));
         return;
     }
     for (unsigned dim=0; dim<2; dim++){

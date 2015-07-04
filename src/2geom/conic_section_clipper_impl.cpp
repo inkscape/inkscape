@@ -173,7 +173,7 @@ bool CLIPPER_CLASS::intersect (std::vector<Point> & crossing_points) const
               cpts.size())
 
     // remove duplicates
-    std::sort (cpts.begin(), cpts.end(), Point::LexOrder<X>());
+    std::sort (cpts.begin(), cpts.end(), Point::LexLess<X>());
     cpts.erase (std::unique (cpts.begin(), cpts.end()), cpts.end());
 
 
@@ -203,7 +203,7 @@ bool CLIPPER_CLASS::intersect (std::vector<Point> & crossing_points) const
 inline
 double signed_triangle_area (Point const& p1, Point const& p2, Point const& p3)
 {
-    return (cross(p3, p2) - cross(p3, p1) + cross(p2, p1));
+    return (cross(p2, p3) - cross(p1, p3) + cross(p1, p2));
 }
 
 
@@ -216,6 +216,8 @@ double signed_triangle_area (Point const& p1, Point const& p2, Point const& p3)
  */
 bool CLIPPER_CLASS::are_paired (Point& M, const Point & P1, const Point & P2) const
 {
+    using std::swap;
+
     /*
      *  we looks for the points on the conic whose tangent is parallel to the
      *  arc chord P1P2, they will be extrema of the conic arc P1P2 wrt the
@@ -257,9 +259,8 @@ bool CLIPPER_CLASS::are_paired (Point& M, const Point & P1, const Point & P2) co
 
         if (sgn(side0) == sgn(side1))
         {
-            if (std::fabs(side0) > std::fabs(side1))
-            {
-                std::swap (extrema[0], extrema[1]);
+            if (std::fabs(side0) > std::fabs(side1)) {
+                swap(extrema[0], extrema[1]);
             }
             extrema.pop_back();
         }
@@ -371,6 +372,8 @@ void CLIPPER_CLASS::pairing (std::vector<Point> & paired_points,
  */
 bool CLIPPER_CLASS::clip (std::vector<RatQuad> & arcs)
 {
+    using std::swap;
+
     arcs.clear();
     std::vector<Point> crossing_points;
     std::vector<Point> paired_points;
@@ -454,14 +457,14 @@ bool CLIPPER_CLASS::clip (std::vector<RatQuad> & arcs)
             double angle = cs.axis_angle();
             Line axis1 (*c, angle);
             rts = cs.roots (axis1);
-            if (rts[0] > rts[1])  std::swap (rts[0], rts[1]);
+            if (rts[0] > rts[1])  swap (rts[0], rts[1]);
             paired_points[0] = axis1.pointAt (rts[0]);
             paired_points[1] = axis1.pointAt (rts[1]);
             paired_points[2] = paired_points[1];
             paired_points[3] = paired_points[0];
             Line axis2 (*c, angle + M_PI/2);
             rts = cs.roots (axis2);
-            if (rts[0] > rts[1])  std::swap (rts[0], rts[1]);
+            if (rts[0] > rts[1])  swap (rts[0], rts[1]);
             inner_points.push_back (axis2.pointAt (rts[0]));
             inner_points.push_back (axis2.pointAt (rts[1]));
         }

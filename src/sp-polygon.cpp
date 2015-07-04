@@ -16,8 +16,7 @@
 #include "display/curve.h"
 #include <glibmm/i18n.h>
 #include <2geom/pathvector.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include "helper/geom-curves.h"
 #include "svg/stringstream.h"
 #include "xml/repr.h"

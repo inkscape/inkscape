@@ -14,54 +14,53 @@
 // include effects:
 #include "live_effects/lpe-patternalongpath.h"
 #include "live_effects/effect.h"
-#include "live_effects/lpe-bendpath.h"
-#include "live_effects/lpe-sketch.h"
-#include "live_effects/lpe-vonkoch.h"
-#include "live_effects/lpe-knot.h"
-#include "live_effects/lpe-rough-hatches.h"
-#include "live_effects/lpe-dynastroke.h"
-#include "live_effects/lpe-test-doEffect-stack.h"
-#include "live_effects/lpe-gears.h"
-#include "live_effects/lpe-curvestitch.h"
-#include "live_effects/lpe-circle_with_radius.h"
-#include "live_effects/lpe-perspective_path.h"
-#include "live_effects/lpe-perspective-envelope.h"
-#include "live_effects/lpe-spiro.h"
-#include "live_effects/lpe-lattice.h"
-#include "live_effects/lpe-lattice2.h"
-#include "live_effects/lpe-roughen.h"
-#include "live_effects/lpe-show_handles.h"
-#include "live_effects/lpe-simplify.h"
-#include "live_effects/lpe-envelope.h"
-#include "live_effects/lpe-constructgrid.h"
-#include "live_effects/lpe-perp_bisector.h"
-#include "live_effects/lpe-tangent_to_curve.h"
-#include "live_effects/lpe-mirror_symmetry.h"
-#include "live_effects/lpe-circle_3pts.h"
 #include "live_effects/lpe-angle_bisector.h"
-#include "live_effects/lpe-parallel.h"
+#include "live_effects/lpe-attach-path.h"
+#include "live_effects/lpe-bendpath.h"
+#include "live_effects/lpe-bounding-box.h"
+#include "live_effects/lpe-bspline.h"
+#include "live_effects/lpe-circle_3pts.h"
+#include "live_effects/lpe-circle_with_radius.h"
+#include "live_effects/lpe-clone-original.h"
+#include "live_effects/lpe-constructgrid.h"
 #include "live_effects/lpe-copy_rotate.h"
-#include "live_effects/lpe-offset.h"
-#include "live_effects/lpe-ruler.h"
-#include "live_effects/lpe-boolops.h"
+#include "live_effects/lpe-curvestitch.h"
+#include "live_effects/lpe-dynastroke.h"
+#include "live_effects/lpe-ellipse_5pts.h"
+#include "live_effects/lpe-envelope.h"
+#include "live_effects/lpe-extrude.h"
+#include "live_effects/lpe-fill-between-many.h"
+#include "live_effects/lpe-fill-between-strokes.h"
+#include "live_effects/lpe-fillet-chamfer.h"
+#include "live_effects/lpe-gears.h"
 #include "live_effects/lpe-interpolate.h"
 #include "live_effects/lpe-interpolate_points.h"
-#include "live_effects/lpe-text_label.h"
-#include "live_effects/lpe-path_length.h"
-#include "live_effects/lpe-line_segment.h"
-#include "live_effects/lpe-recursiveskeleton.h"
-#include "live_effects/lpe-extrude.h"
-#include "live_effects/lpe-powerstroke.h"
-#include "live_effects/lpe-clone-original.h"
-#include "live_effects/lpe-bspline.h"
-#include "live_effects/lpe-attach-path.h"
-#include "live_effects/lpe-fill-between-strokes.h"
-#include "live_effects/lpe-fill-between-many.h"
-#include "live_effects/lpe-ellipse_5pts.h"
-#include "live_effects/lpe-bounding-box.h"
 #include "live_effects/lpe-jointype.h"
+#include "live_effects/lpe-knot.h"
+#include "live_effects/lpe-lattice2.h"
+#include "live_effects/lpe-lattice.h"
+#include "live_effects/lpe-line_segment.h"
+#include "live_effects/lpe-mirror_symmetry.h"
+#include "live_effects/lpe-offset.h"
+#include "live_effects/lpe-parallel.h"
+#include "live_effects/lpe-path_length.h"
+#include "live_effects/lpe-perp_bisector.h"
+#include "live_effects/lpe-perspective-envelope.h"
+#include "live_effects/lpe-perspective_path.h"
+#include "live_effects/lpe-powerstroke.h"
+#include "live_effects/lpe-recursiveskeleton.h"
+#include "live_effects/lpe-roughen.h"
+#include "live_effects/lpe-rough-hatches.h"
+#include "live_effects/lpe-ruler.h"
+#include "live_effects/lpe-show_handles.h"
+#include "live_effects/lpe-simplify.h"
+#include "live_effects/lpe-sketch.h"
+#include "live_effects/lpe-spiro.h"
+#include "live_effects/lpe-tangent_to_curve.h"
 #include "live_effects/lpe-taperstroke.h"
-#include "live_effects/lpe-fillet-chamfer.h"
+#include "live_effects/lpe-test-doEffect-stack.h"
+#include "live_effects/lpe-text_label.h"
+#include "live_effects/lpe-vonkoch.h"
 
 #include "xml/node-event-vector.h"
 #include "sp-object.h"
@@ -98,8 +97,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),     "doeffectstacktest"},
     {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
-    // TRANSLATORS: boolean operations
-    {BOOLOPS,               N_("Boolops"),                 "boolops"},
     {CIRCLE_WITH_RADIUS,    N_("Circle (by center and radius)"),   "circle_with_radius"},
     {CIRCLE_3PTS,           N_("Circle by 3 points"),      "circle_3pts"},
     {DYNASTROKE,            N_("Dynamic stroke"),          "dynastroke"},
@@ -242,9 +239,6 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case RULER:
             neweffect = static_cast<Effect*> ( new LPERuler(lpeobj) );
-            break;
-        case BOOLOPS:
-            neweffect = static_cast<Effect*> ( new LPEBoolops(lpeobj) );
             break;
         case INTERPOLATE:
             neweffect = static_cast<Effect*> ( new LPEInterpolate(lpeobj) );
@@ -520,24 +514,24 @@ Effect::acceptParamPath (SPPath const*/*param_path*/) {
 void
 Effect::doEffect (SPCurve * curve)
 {
-    std::vector<Geom::Path> orig_pathv = curve->get_pathvector();
+    Geom::PathVector orig_pathv = curve->get_pathvector();
 
-    std::vector<Geom::Path> result_pathv = doEffect_path(orig_pathv);
+    Geom::PathVector result_pathv = doEffect_path(orig_pathv);
 
     curve->set_pathvector(result_pathv);
 }
 
-std::vector<Geom::Path>
-Effect::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+Effect::doEffect_path (Geom::PathVector const & path_in)
 {
-    std::vector<Geom::Path> path_out;
+    Geom::PathVector path_out;
 
     if ( !concatenate_before_pwd2 ) {
         // default behavior
         for (unsigned int i=0; i < path_in.size(); i++) {
             Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in = path_in[i].toPwSb();
             Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_out = doEffect_pwd2(pwd2_in);
-            std::vector<Geom::Path> path = Geom::path_from_piecewise( pwd2_out, LPE_CONVERSION_TOLERANCE);
+            Geom::PathVector path = Geom::path_from_piecewise( pwd2_out, LPE_CONVERSION_TOLERANCE);
             // add the output path vector to the already accumulated vector:
             for (unsigned int j=0; j < path.size(); j++) {
                 path_out.push_back(path[j]);

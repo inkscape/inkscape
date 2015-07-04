@@ -890,7 +890,7 @@ sp_offset_distance_to_original (SPOffset * offset, Geom::Point px)
                 if (ab > 0 && ab < len * len)
                 {
                     // we're in the zone of influence of the segment
-                    double ndist = (cross(pxsx,nx)) / len;
+                    double ndist = (cross(nx, pxsx)) / len;
 
                     if (arSet == false || fabs (ndist) < fabs (arDist))
                     {

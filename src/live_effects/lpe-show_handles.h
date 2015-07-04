@@ -36,7 +36,7 @@ public:
 
 protected:
 
-    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
+    virtual Geom::PathVector doEffect_path (Geom::PathVector const & path_in);
 
 private:
 

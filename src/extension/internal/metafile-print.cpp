@@ -389,7 +389,7 @@ Geom::PathVector PrintMetafile::center_ellipse_as_SVG_PathV(Geom::Point ctr, dou
 
     char text[256];
     sprintf(text, " M %f,%f A %f %f %f 0 0 %f %f A %f %f %f 0 0 %f %f z", x1, y1,  rx, ry, F * 360. / (2.*M_PI), x2, y2,   rx, ry, F * 360. / (2.*M_PI), x1, y1);
-    std::vector<Geom::Path> outres =  Geom::parse_svg_path(text);
+    Geom::PathVector outres =  Geom::parse_svg_path(text);
     return outres;
 }
 
@@ -419,7 +419,7 @@ Geom::PathVector PrintMetafile::center_elliptical_ring_as_SVG_PathV(Geom::Point 
     sprintf(text, " M %f,%f A %f %f %f 0 1 %f %f A %f %f %f 0 1 %f %f z M %f,%f  A %f %f %f 0 0 %f %f A %f %f %f 0 0 %f %f z",
             x11, y11,  rx1, ry1, degrot, x12, y12,   rx1, ry1, degrot, x11, y11,
             x21, y21,  rx2, ry2, degrot, x22, y22,   rx2, ry2, degrot, x21, y21);
-    std::vector<Geom::Path> outres =  Geom::parse_svg_path(text);
+    Geom::PathVector outres = Geom::parse_svg_path(text);
 
     return outres;
 }
@@ -440,7 +440,7 @@ Geom::PathVector PrintMetafile::center_elliptical_hole_as_SVG_PathV(Geom::Point 
     char text[256];
     sprintf(text, " M %f,%f A %f %f %f 0 0 %f %f A %f %f %f 0 0 %f %f z M 50000,50000 50000,-50000 -50000,-50000 -50000,50000 z",
             x1, y1,  rx, ry, F * 360. / (2.*M_PI), x2, y2,   rx, ry, F * 360. / (2.*M_PI), x1, y1);
-    std::vector<Geom::Path> outres =  Geom::parse_svg_path(text);
+    Geom::PathVector outres =  Geom::parse_svg_path(text);
     return outres;
 }
 
@@ -452,7 +452,7 @@ width  vector to side edge
 */
 Geom::PathVector PrintMetafile::rect_cutter(Geom::Point ctr, Geom::Point pos, Geom::Point neg, Geom::Point width)
 {
-    std::vector<Geom::Path> outres;
+    Geom::PathVector outres;
     Geom::Path cutter;
     cutter.start(ctr + pos - width);
     cutter.appendNew<Geom::LineSegment>(ctr + pos + width);

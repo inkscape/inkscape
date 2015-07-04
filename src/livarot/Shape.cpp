@@ -1683,7 +1683,7 @@ Shape::CmpToVert (Geom::Point ax, Geom::Point bx,bool as,bool bs)
   Geom::Point av, bv;
   av = ax;
   bv = bx;
-  double si = cross (bv, av);
+  double si = cross(av, bv);
   int tstSi = 0;
   if (si > 0.000001) tstSi = 1;
   if (si < -0.000001) tstSi = -1;
@@ -2104,7 +2104,7 @@ Shape::PtWinding (const Geom::Point px) const
     }
 
     Geom::Point const diff = px - ast;
-    double const cote = cross(diff, adir);
+    double const cote = cross(adir, diff);
     if (cote == 0) continue;
     if (cote < 0) {
       if (ast[0] > px[0]) lr += nWeight;

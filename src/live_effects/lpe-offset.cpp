@@ -20,7 +20,7 @@
 #include <2geom/path.h>
 #include <2geom/piecewise.h>
 #include <2geom/sbasis-geometric.h>
-#include <2geom/svg-elliptical-arc.h>
+#include <2geom/elliptical-arc.h>
 #include <2geom/transforms.h>
 
 namespace Inkscape {
@@ -52,7 +52,7 @@ static void append_half_circle(Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
     using namespace Geom;
 
     double r = L2(dir);
-    SVGEllipticalArc cap(center + dir, r, r, angle_between(Point(1,0), dir), false, false, center - dir);
+    EllipticalArc cap(center + dir, r, r, angle_between(Point(1,0), dir), false, false, center - dir);
     Piecewise<D2<SBasis> > cap_pwd2(cap.toSBasis());
     pwd2.continuousConcat(cap_pwd2);
 }
@@ -72,7 +72,7 @@ LPEOffset::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
 
     Piecewise<D2<SBasis> > output;
 
-    double t = nearest_point(offset_pt, pwd2_in);
+    double t = nearest_time(offset_pt, pwd2_in);
     Point A = pwd2_in.valueAt(t);
     double offset = L2(A - offset_pt);
 

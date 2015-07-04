@@ -1,6 +1,5 @@
-/**
- * \file
- * \brief Comparator template
+/** @file
+ * @brief Comparator template
  *//*
  * Authors:
  *      ? <?@?.?>
@@ -32,8 +31,8 @@
  *
  */
 
-#ifndef __2GEOM_ORD__
-#define __2GEOM_ORD__
+#ifndef LIB2GEOM_SEEN_ORD_H
+#define LIB2GEOM_SEEN_ORD_H
 
 namespace {
 

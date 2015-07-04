@@ -84,6 +84,17 @@ Coord distance(Point const &p, Rect const &rect)
     return hypot(dx, dy);
 }
 
+Coord distanceSq(Point const &p, OptRect const &rect)
+{
+    if (!rect) return std::numeric_limits<Coord>::max();
+    return distanceSq(p, *rect);
+}
+Coord distance(Point const &p, OptRect const &rect)
+{
+    if (!rect) return std::numeric_limits<Coord>::max();
+    return distance(p, *rect);
+}
+
 } // namespace Geom
 
 /*

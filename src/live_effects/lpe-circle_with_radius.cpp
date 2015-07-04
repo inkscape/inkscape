@@ -15,11 +15,9 @@
 #include "display/curve.h"
 
 // You might need to include other 2geom files. You can add them here:
-#include <2geom/path.h>
-#include <2geom/sbasis.h>
-#include <2geom/bezier-to-sbasis.h>
-#include <2geom/d2.h>
+#include <2geom/pathvector.h>
 #include <2geom/circle.h>
+#include <2geom/path-sink.h>
 
 using namespace Geom;
 
@@ -40,10 +38,10 @@ LPECircleWithRadius::~LPECircleWithRadius()
 
 }
 
-std::vector<Geom::Path>
-LPECircleWithRadius::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPECircleWithRadius::doEffect_path (Geom::PathVector const & path_in)
 {
-    std::vector<Geom::Path> path_out = std::vector<Geom::Path>();
+    Geom::PathVector path_out = Geom::PathVector();
 
     Geom::Point center = path_in[0].initialPoint();
     Geom::Point pt = path_in[0].finalPoint();
@@ -51,9 +49,7 @@ LPECircleWithRadius::doEffect_path (std::vector<Geom::Path> const & path_in)
     double radius = Geom::L2(pt - center);
 
     Geom::Circle c(center, radius);
-    c.getPath(path_out);
-
-    return path_out;
+    return Geom::Path(c);
 }
 
 /*

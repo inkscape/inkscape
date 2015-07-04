@@ -27,7 +27,7 @@ public:
     virtual ~LPEdoEffectStackTest();
 
     virtual void                                     doEffect (SPCurve * curve);
-    virtual std::vector<Geom::Path>                  doEffect_path (std::vector<Geom::Path> const & path_in);
+    virtual Geom::PathVector                  doEffect_path (Geom::PathVector const & path_in);
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
 private:

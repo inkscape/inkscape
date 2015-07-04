@@ -1,8 +1,7 @@
-
 /**
  * \file
  * \brief  TopoSweep - topology / graph representation of a PathVector, for boolean operations and related tasks
- *
+ *//*
  * Authors:
  * 		Michael Sloan <mgsloan at gmail.com>
  * 		Nathan Hurst <njhurst at njhurst.com>
@@ -33,8 +32,8 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef SEEN_GEOM_TOPOSWEEP_H
-#define SEEN_GEOM_TOPOSWEEP_H
+#ifndef LIB2GEOM_SEEN_TOPOSWEEP_H
+#define LIB2GEOM_SEEN_TOPOSWEEP_H
 
 #include <2geom/coord.h>
 #include <2geom/point.h>
@@ -69,10 +68,11 @@ struct Section {
     Section(CurveIx cix, double fd, double td, Point fdp, Point tdp) : curve(cix), f(fd), t(td), fp(fdp), tp(tdp) { }
     Section(CurveIx cix, double fd, double td, PathVector ps, Dim2 d) : curve(cix), f(fd), t(td) {
         fp = curve.get(ps).pointAt(f), tp = curve.get(ps).pointAt(t);
-        if (Point::LexOrderRt(d)(tp, fp)) {
+        if (Point::LexLessRt(d)(tp, fp)) {
             //swap from and to, since tp is left or above fp
-            std::swap(f, t);
-            std::swap(fp, tp);
+            using std::swap;
+            swap(f, t);
+            swap(fp, tp);
         }
     }
     Rect bbox() const { return Rect(fp, tp); }
@@ -167,7 +167,7 @@ struct SweepSorter {
     Dim2 dim;
     SweepSorter(Dim2 d) : dim(d) {}
     bool operator()(const Section &a, const Section &b) const {
-        return Point::LexOrderRt(dim)(a.fp, b.fp);
+        return Point::LexLessRt(dim)(a.fp, b.fp);
     }
 };
 
@@ -208,7 +208,7 @@ Areas filter_areas(PathVector const &ps, Areas const & areas, Z const &z) {
 
 } // end namespace Geom
 
-#endif // SEEN_GEOM_TOPOSWEEP_H
+#endif // LIB2GEOM_SEEN_TOPOSWEEP_H
 
 /*
   Local Variables:

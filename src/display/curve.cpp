@@ -31,14 +31,12 @@
 SPCurve::SPCurve()
   : _refcount(1),
     _pathv()
-{
-}
+{}
 
 SPCurve::SPCurve(Geom::PathVector const& pathv)
   : _refcount(1),
     _pathv(pathv)
-{
-}
+{}
 
 SPCurve *
 SPCurve::new_from_rect(Geom::Rect const &rect, bool all_four_sides)
@@ -90,13 +88,7 @@ SPCurve::get_pathvector() const
 size_t
 SPCurve::get_segment_count() const
 {
-    size_t nr = 0;
-    for(Geom::PathVector::const_iterator it = _pathv.begin(); it != _pathv.end(); ++it) {
-        nr += (*it).size();
-
-        if (it->closed())   nr += 1;
-    }
-    return nr;
+    return _pathv.curveCount();
 }
 
 /**
@@ -476,7 +468,7 @@ SPCurve::last_point() const
 SPCurve *
 SPCurve::create_reverse() const
 {
-    SPCurve *new_curve = new SPCurve(Geom::reverse_paths_and_order(_pathv));
+    SPCurve *new_curve = new SPCurve(_pathv.reversed());
 
     return new_curve;
 }

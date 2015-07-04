@@ -323,7 +323,7 @@ LPEPerspectiveEnvelope::vertical(PointParam &param_one, PointParam &param_two, G
     double Y = (A[Geom::Y] + B[Geom::Y])/2;
     A[Geom::Y] = Y;
     B[Geom::Y] = Y;
-    Geom::Point nearest = vert.pointAt(vert.nearestPoint(A));
+    Geom::Point nearest = vert.pointAt(vert.nearestTime(A));
     double distance_one = Geom::distance(A,nearest);
     double distance_two = Geom::distance(B,nearest);
     double distance_middle = (distance_one + distance_two)/2;
@@ -344,7 +344,7 @@ LPEPerspectiveEnvelope::horizontal(PointParam &param_one, PointParam &param_two,
     double X = (A[Geom::X] + B[Geom::X])/2;
     A[Geom::X] = X;
     B[Geom::X] = X;
-    Geom::Point nearest = horiz.pointAt(horiz.nearestPoint(A));
+    Geom::Point nearest = horiz.pointAt(horiz.nearestTime(A));
     double distance_one = Geom::distance(A,nearest);
     double distance_two = Geom::distance(B,nearest);
     double distance_middle = (distance_one + distance_two)/2;

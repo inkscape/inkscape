@@ -1,8 +1,9 @@
-#include <2geom/solver.h>
+#include <2geom/bezier.h>
 #include <2geom/point.h>
+#include <2geom/solver.h>
 #include <algorithm>
 
-namespace  Geom{
+namespace Geom {
 
 /*** Find the zeros of the parametric function in 2d defined by two beziers X(t), Y(t).  The code subdivides until it happy with the linearity of the bezier.  This requires an n^2 subdivision for each step, even when there is only one solution.
  * 
@@ -14,13 +15,6 @@ namespace  Geom{
 /*
  *  Forward declarations
  */
-static Geom::Point 
-Bezier(Geom::Point const *V,
-       unsigned degree,
-       double t,
-       Geom::Point *Left,
-       Geom::Point *Right);
-
 unsigned
 crossing_count(Geom::Point const *V, unsigned degree);
 static unsigned 
@@ -74,7 +68,7 @@ find_parametric_bezier_roots(Geom::Point const *w, /* The control points  */
     //    Right[degree+1];	/* control polygons  */
     std::vector<Geom::Point> Left( degree+1 ), Right(degree+1);
 
-    Bezier(w, degree, 0.5, Left.data(), Right.data());
+    casteljau_subdivision(0.5, w, Left.data(), Right.data(), degree);
     total_subs ++;
     find_parametric_bezier_roots(Left.data(),  degree, solutions, depth+1);
     find_parametric_bezier_roots(Right.data(), degree, solutions, depth+1);
@@ -179,43 +173,6 @@ compute_x_intercept(Geom::Point const *V, /*  Control points	*/
     const Geom::Point A = V[degree] - V[0];
 
     return (A[Geom::X]*V[0][Geom::Y] - A[Geom::Y]*V[0][Geom::X]) / -A[Geom::Y];
-}
-
-
-/*
- *  Bezier : 
- *	Evaluate a Bezier curve at a particular parameter value
- *      Fill in control points for resulting sub-curves.
- * 
- */
-static Geom::Point 
-Bezier(Geom::Point const *V, /* Control pts	*/
-       unsigned degree,	/* Degree of bezier curve */
-       double t,	/* Parameter value */
-       Geom::Point *Left,	/* RETURN left half ctl pts */
-       Geom::Point *Right)	/* RETURN right half ctl pts */
-{
-    //Geom::Point Vtemp[degree+1][degree+1];
-    std::vector<std::vector<Geom::Point> > Vtemp(degree+1);
-    for ( size_t i = 0; i < degree + 1; ++i )
-        Vtemp.reserve(degree+1);
-
-    /* Copy control points	*/
-    std::copy(V, V+degree+1, Vtemp[0].begin());
-
-    /* Triangle computation	*/
-    for (unsigned i = 1; i <= degree; i++) {	
-        for (unsigned j = 0; j <= degree - i; j++) {
-            Vtemp[i][j] = lerp(t, Vtemp[i-1][j], Vtemp[i-1][j+1]);
-        }
-    }
-    
-    for (unsigned j = 0; j <= degree; j++)
-        Left[j]  = Vtemp[j][0];
-    for (unsigned j = 0; j <= degree; j++)
-        Right[j] = Vtemp[degree-j][j];
-
-    return (Vtemp[degree][0]);
 }
 
 };

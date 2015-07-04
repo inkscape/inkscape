@@ -79,9 +79,9 @@ void LPEShowHandles::doBeforeEffect (SPLPEItem const* lpeitem)
     stroke_width = item->style->stroke_width.computed;
 }
 
-std::vector<Geom::Path> LPEShowHandles::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector LPEShowHandles::doEffect_path (Geom::PathVector const & path_in)
 {
-    std::vector<Geom::Path> path_out;
+    Geom::PathVector path_out;
     Geom::PathVector const original_pathv = pathv_to_linear_and_cubic_beziers(path_in);
     if(original_path) {
         for (unsigned int i=0; i < path_in.size(); i++) {
@@ -112,14 +112,14 @@ LPEShowHandles::generateHelperPath(Geom::PathVector result)
             continue;
         }
         //Itreadores
-        Geom::Path::const_iterator curve_it1 = path_it->begin(); // incoming curve
-        Geom::Path::const_iterator curve_it2 = ++(path_it->begin()); // outgoing curve
-        Geom::Path::const_iterator curve_endit = path_it->end_default(); // this determines when the loop has to stop
+        Geom::Path::iterator curve_it1 = path_it->begin(); // incoming curve
+        Geom::Path::iterator curve_it2 = ++(path_it->begin()); // outgoing curve
+        Geom::Path::iterator curve_endit = path_it->end_default(); // this determines when the loop has to stop
 
         if (path_it->closed()) {
             // if the path is closed, maybe we have to stop a bit earlier because the
             // closing line segment has zerolength.
-            const Geom::Curve &closingline = path_it->back_closed(); // the closing line segment is always of type
+            Geom::Curve const &closingline = path_it->back_closed(); // the closing line segment is always of type
             // Geom::LineSegment.
             if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
                 // closingline.isDegenerate() did not work, because it only checks for
@@ -165,9 +165,7 @@ LPEShowHandles::drawNode(Geom::Point p)
         char const * svgd;
         svgd = "M 0.05,0 A 0.05,0.05 0 0 1 0,0.05 0.05,0.05 0 0 1 -0.05,0 0.05,0.05 0 0 1 0,-0.05 0.05,0.05 0 0 1 0.05,0 Z M -0.5,-0.5 0.5,-0.5 0.5,0.5 -0.5,0.5 Z";
         Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-        pathv *= Geom::Rotate::from_degrees(rotate_nodes);
-        pathv *= Geom::Scale (diameter);
-        pathv += p;
+        pathv *= Geom::Rotate::from_degrees(rotate_nodes) * Geom::Scale(diameter) * Geom::Translate(p);
         outline_path.push_back(pathv[0]);
         outline_path.push_back(pathv[1]);
     }
@@ -181,8 +179,7 @@ LPEShowHandles::drawHandle(Geom::Point p)
         char const * svgd;
         svgd = "M 0.7,0.35 A 0.35,0.35 0 0 1 0.35,0.7 0.35,0.35 0 0 1 0,0.35 0.35,0.35 0 0 1 0.35,0 0.35,0.35 0 0 1 0.7,0.35 Z";
         Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-        pathv *= Geom::Scale (diameter);
-        pathv += p-Geom::Point(diameter * 0.35,diameter * 0.35);
+        pathv *= Geom::Scale (diameter) * Geom::Translate(p - Geom::Point(diameter * 0.35,diameter * 0.35));
         outline_path.push_back(pathv[0]);
     }
 }

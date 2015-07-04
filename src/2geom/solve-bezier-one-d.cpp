@@ -27,7 +27,7 @@ static int SGN(t x) { return (x > 0 ? 1 : (x < 0 ? -1 : 0)); }
  **/
 class Bernsteins{
 public:
-    static const size_t MAX_DEPTH = 22;
+    static const size_t MAX_DEPTH = 53;
     size_t degree, N;
     std::vector<double> &solutions;
     //std::vector<double> bc;
@@ -38,16 +38,8 @@ public:
     {
     }
 
-    void subdivide(double const *V,
-                   double t,
-                   double *Left,
-                   double *Right);
-
     unsigned
     control_poly_flat_enough(double const *V);
-
-    double horner(const double *b, double t);
-
 
     void
     find_bernstein_roots(double const *w, /* The control points  */
@@ -134,7 +126,7 @@ void Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
             r = (fs*t - ft*s) / (fs - ft);
             if (fabs(t-s) < e * fabs(t+s))  break;
 
-            double fr = horner(w, r);
+            double fr = bernstein_value_at(r, w, degree);
 
             if (fr * ft > 0)
             {
@@ -190,24 +182,6 @@ void Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
     find_bernstein_roots(Right, depth+1, mid_t, right_t);
     delete[] LR;
 }
-
-
-// suggested by Sederberg.
-double Bernsteins::horner(const double *b, double t)
-{
-    double u, tn, tmp;
-    u = 1.0 - t;
-    tn = 1.0;
-    tmp = b[0] * u;
-    for(size_t i = 1; i < degree; ++i)
-    {
-        tn *= t;
-        tmp = (tmp + tn*bc[i]*b[i]) * u;
-    }
-    return (tmp + tn*t*b[degree]);
-}
-
-
 
 #if 0
 /*

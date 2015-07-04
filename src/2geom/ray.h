@@ -98,7 +98,7 @@ public:
         }
         return result;
     }
-    Coord nearestPoint(Point const& point) const {
+    Coord nearestTime(Point const& point) const {
         if ( isDegenerate() ) return 0;
         double t = dot(point - _origin, _versor);
         if (t < 0) t = 0;
@@ -123,7 +123,7 @@ public:
 
 inline
 double distance(Point const& _point, Ray const& _ray) {
-	double t = _ray.nearestPoint(_point);
+	double t = _ray.nearestTime(_point);
 	return ::Geom::distance(_point, _ray.pointAt(t));
 }
 

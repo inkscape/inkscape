@@ -117,9 +117,9 @@ SweepTree::Find(Geom::Point const &px, SweepTree *newOne, SweepTree *&insertL,
         nNorm=nNorm.ccw();
 
         if (sweepSens) {
-            y = cross(nNorm, bNorm);
-        } else {
             y = cross(bNorm, nNorm);
+        } else {
+            y = cross(nNorm, bNorm);
         }
         if (y == 0) {
             y = dot(bNorm, nNorm);
@@ -345,7 +345,7 @@ SweepTree::InsertAt(SweepTreeList &list, SweepEventQueue &queue,
 
   SweepTree *insertL = NULL;
   SweepTree *insertR = NULL;
-  double ang = cross(nNorm, bNorm);
+  double ang = cross(bNorm, nNorm);
   if (ang == 0)
     {
       insertL = insNode;
@@ -384,7 +384,7 @@ SweepTree::InsertAt(SweepTreeList &list, SweepEventQueue &queue,
 	    {
 	      bNorm = -bNorm;
 	    }
-	  ang = cross(nNorm, bNorm);
+	  ang = cross(bNorm, nNorm);
 	  if (ang <= 0)
 	    {
 	      break;
@@ -426,7 +426,7 @@ SweepTree::InsertAt(SweepTreeList &list, SweepEventQueue &queue,
 	    {
 	      bNorm = -bNorm;
 	    }
-	  ang = cross(nNorm, bNorm);
+	  ang = cross(bNorm, nNorm);
 	  if (ang > 0)
 	    {
 	      break;

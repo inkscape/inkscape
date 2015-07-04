@@ -47,14 +47,14 @@ LPEdoEffectStackTest::doEffect (SPCurve * curve)
     }
 }
 
-std::vector<Geom::Path>
-LPEdoEffectStackTest::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPEdoEffectStackTest::doEffect_path (Geom::PathVector const &path_in)
 {
     if (step >= 2) {
         return Effect::doEffect_path(path_in);
     } else {
         // return here
-        std::vector<Geom::Path> path_out = path_in;
+        Geom::PathVector path_out = path_in;
         return path_out;
     }
 }

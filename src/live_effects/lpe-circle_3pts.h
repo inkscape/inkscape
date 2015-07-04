@@ -27,7 +27,7 @@ public:
     LPECircle3Pts(LivePathEffectObject *lpeobject);
     virtual ~LPECircle3Pts();
 
-    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
+    virtual Geom::PathVector doEffect_path (Geom::PathVector const & path_in);
 
 private:
     LPECircle3Pts(const LPECircle3Pts&);

@@ -139,6 +139,24 @@ Affine &Affine::operator*=(Zoom const &z) {
     return *this;
 }
 
+Affine Rotate::around(Point const &p, Coord angle)
+{
+    Affine result = Translate(-p) * Rotate(angle) * Translate(p);
+    return result;
+}
+
+Affine reflection(Point const & vector, Point const & origin)
+{
+    Geom::Point vn = unit_vector(vector);
+    Coord cx2 = vn[X] * vn[X];
+    Coord cy2 = vn[Y] * vn[Y];
+    Coord c2xy = 2 * vn[X] * vn[Y];
+    Affine mirror ( cx2 - cy2, c2xy,
+                    c2xy, cy2 - cx2,
+                    0, 0 );
+    return Translate(-origin) * mirror * Translate(origin);
+}
+
 // this checks whether the requirements of TransformConcept are satisfied for all transforms.
 // if you add a new transform type, include it here!
 void check_transforms()
@@ -171,14 +189,6 @@ void check_transforms()
     m = h * t; m = h * s; m = h * r; m = h * h; m = h * v; m = h * z;
     m = v * t; m = v * s; m = v * r; m = v * h; m = v * v; m = v * z;
     m = z * t; m = z * s; m = z * r; m = z * h; m = z * v; m = z * z;
-}
-
-Affine reflection(Point const & vector, Point const & origin) {
-    Geom::Point vec_norm = unit_vector(vector);
-    Affine mirror ( vec_norm[X]*vec_norm[X] - vec_norm[Y]*vec_norm[Y], 2 * vec_norm[X] * vec_norm[Y] ,
-                    2 * vec_norm[X] * vec_norm[Y], vec_norm[Y]*vec_norm[Y] - vec_norm[X]*vec_norm[X] ,
-                    0 ,0 );
-    return Translate(-origin) * mirror * Translate(origin);
 }
 
 } // namespace Geom

@@ -1,5 +1,4 @@
-/**
- * @file circulator.h
+/** @file
  * @brief Circular iterator adapter
  *//*
  * Copyright 2006 MenTaLguY <mental@rydia.net>
@@ -29,8 +28,8 @@
  *
  */
 
-#ifndef SEEN_Circulator_H
-#define SEEN_Circulator_H
+#ifndef LIB2GEOM_SEEN_CIRCULATOR_H
+#define LIB2GEOM_SEEN_CIRCULATOR_H
 
 #include <iterator>
 
@@ -137,7 +136,7 @@ Geom::Circulator<T> operator+(int n, Geom::Circulator<T> const &c) {
     return c + n;
 }
 
-#endif // SEEN_Circulator_H
+#endif // LIB2GEOM_SEEN_CIRCULATOR_H
 
 /*
   Local Variables:
