@@ -861,6 +861,11 @@
 <stop id="stop1014-7" offset="0.0000000" style="stop-color:#e4ffa6;stop-opacity:1" />
 <stop id="stop1015-3" offset="1.0000000" style="stop-color:#3a7801;stop-opacity:1" />
 </linearGradient>
+<linearGradient inkscape:collect="always" id="linearGradient5799-9" gradientUnits="userSpaceOnUse" gradientTransform="translate(-157.4999,-207.5)" x1="160" y1="213" x2="176" y2="213" xlink:href="#linearGradient3480" />
+<linearGradient y2="218.5416" x2="173.724" y1="209.14059" x1="163.85941" gradientTransform="matrix(1.102855,0,0,1.148517,-174.5451,-237.7814)" gradientUnits="userSpaceOnUse" id="linearGradient20188" xlink:href="#linearGradient1887" inkscape:collect="always" />
+<linearGradient y2="217.2552" x2="173.0313" y1="207.7552" x1="161.2865" gradientTransform="matrix(1.102855,0,0,1.148517,-175.0966,-238.3557)" gradientUnits="userSpaceOnUse" id="linearGradient20190" xlink:href="#linearGradient3480" inkscape:collect="always" />
+<linearGradient y2="218.5416" x2="173.724" y1="209.14059" x1="163.85941" gradientTransform="matrix(1.102855,0,0,1.148517,-174.5451,-237.7814)" gradientUnits="userSpaceOnUse" id="linearGradient20197" xlink:href="#linearGradient1887" inkscape:collect="always" />
+<linearGradient y2="217.2552" x2="173.0313" y1="207.7552" x1="161.2865" gradientTransform="matrix(1.102855,0,0,1.148517,-175.0966,-238.3557)" gradientUnits="userSpaceOnUse" id="linearGradient20199" xlink:href="#linearGradient3480" inkscape:collect="always" />
 </defs>
 <sodipodi:namedview inkscape:guide-bbox="true" inkscape:current-layer="svg1" inkscape:grid-bbox="true" inkscape:pageopacity="1.0000000" pagecolor="#e8e8e4" snaptoguides="true" showguides="true" inkscape:window-y="27" inkscape:window-x="0" inkscape:window-height="958" inkscape:window-width="1280" inkscape:cy="328.8988" inkscape:cx="391.7387" inkscape:zoom="2.736" gridtolerance="6" snaptogrid="false" showgrid="false" id="base" inkscape:document-units="px" inkscape:grid-points="true" guidetolerance="8" fill="#8ab3de" stroke="#646464" inkscape:object-nodes="false" objecttolerance="11" inkscape:snap-bbox="false" inkscape:snap-nodes="true" inkscape:bbox-nodes="false" inkscape:bbox-paths="false" inkscape:snap-global="false" inkscape:snap-center="false" inkscape:snap-midpoints="false" inkscape:snap-intersection-paths="true" inkscape:object-paths="false" inkscape:snap-object-midpoints="true" inkscape:window-maximized="1" inkscape:snap-grids="true" inkscape:snap-smooth-nodes="false" inkscape:snap-text-baseline="false" inkscape:snap-page="true" inkscape:snap-bbox-midpoints="false" inkscape:snap-bbox-edge-midpoints="false">
 <inkscape:grid type="xygrid" id="grid9252" originx="0px" originy="0px" spacingx="0.5px" spacingy="0.5px" empspacing="2" visible="true" enabled="true" snapvisiblegridlinesonly="true" />
@@ -3940,5 +3945,13 @@ http://www.inkscape.org/</dc:description>
 <path style="color:#000000;fill:#ffffff;fill-rule:evenodd;stroke:url(#linearGradient33212)" d="M 21.07254,187.466 15.90515,192.6334" id="path10688" inkscape:connector-curvature="0" sodipodi:nodetypes="cc" inkscape:transform-center-x="3.571613" inkscape:transform-center-y="5.253199" />
 <ellipse style="color:#000000;fill:none;stroke:url(#linearGradient33191);stroke-linejoin:round" id="ellipse10324" cx="18.48884" cy="207.5353" rx="6.611154" ry="6.515604" transform="matrix(0.8723531,0,0,0.8723531,2.360048,9.005643)" />
 <rect style="color:#000000;fill:none;stroke-width:0.531496" id="rect9056-0" width="15.99999" height="15.99999" x="10.48885" y="182.0497" />
+</g>
+<g inkscape:label="dialog-templates" id="dialog-templates" transform="translate(10,185)">
+<rect y="0" x="0" height="16" width="16" id="rect20201" style="fill:none;stroke-linecap:square;stroke-linejoin:round;stroke-dasharray:1, 1" />
+<path style="fill:url(#linearGradient20197);fill-rule:evenodd;stroke:url(#linearGradient20199);stroke-linejoin:round;stroke-dasharray:1, 1;stroke-dashoffset:0.5" d="M 12.5,15.5 2.5,15.5 2.5,1.5" id="path4679-4" />
+<path style="fill:url(#linearGradient20188);fill-rule:evenodd;stroke:url(#linearGradient20190);stroke-linecap:square;stroke-linejoin:round" d="m 2.5,1.5 0,-1 7,0 4,4 0,11 -1,0" id="path20168" />
+<path style="fill:none;stroke:#c8c8c8;stroke-dasharray:1, 1;stroke-dashoffset:1" d="M 3,14.5 12.5,14.5" id="path20172" />
+<path style="fill:none;stroke:#c8c8c8;stroke-width:1px;stroke-linecap:square" d="m 12.5,14.5 0,-9" id="path5602-7" />
+<path style="fill:#ffffff;fill-rule:evenodd;stroke:url(#linearGradient5799-9);stroke-width:1px;stroke-linecap:round;stroke-linejoin:round" d="m 9.5,0.5 4,4 -4,0 0,-4 z" id="path4681-4" />
 </g>
 </svg>
