@@ -627,20 +627,10 @@ SPCurve::nodes_in_path() const
 {
     size_t nr = 0;
     for(Geom::PathVector::const_iterator it = _pathv.begin(); it != _pathv.end(); ++it) {
-        nr += (*it).size();
-
-        nr++; // count last node (this works also for closed paths because although they don't have a 'last node', they do have an extra segment
-
-        // do not count closing knot double for zero-length closing line segments
-        // however, if the path is only a moveto, and is closed, do not subtract 1 (otherwise the result will be zero nodes)
-        if ( it->closed()
-             && ((*it).size() != 0) )
-        {
-            Geom::Curve const &c = it->back_closed();
-            if (are_near(c.initialPoint(), c.finalPoint())) {
-                nr--;   
-            }
-        }
+        // if the path does not have any segments, it is a naked moveto,
+        // and therefore any path has at least one valid node
+        size_t psize = std::max(1ul, it->size_closed());
+        nr += psize;
     }
 
     return nr;

@@ -72,8 +72,6 @@ class ConvexHull;
 class Curve;
 class SBasisCurve;
 class BezierCurve;
-class HLineSegment;
-class VLineSegment;
 template <unsigned degree> class BezierCurveN;
 typedef BezierCurveN<1> LineSegment;
 typedef BezierCurveN<2> QuadraticBezier;

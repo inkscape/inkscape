@@ -389,6 +389,7 @@ public:
         swap(other._curves, _curves);
         swap(other._closing_seg, _closing_seg);
         swap(other._closed, _closed);
+        swap(other._exception_on_stitch, _exception_on_stitch);
     }
     /** @brief Swap contents of two paths.
      * @relates Path */
