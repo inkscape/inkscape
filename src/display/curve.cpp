@@ -629,7 +629,7 @@ SPCurve::nodes_in_path() const
     for(Geom::PathVector::const_iterator it = _pathv.begin(); it != _pathv.end(); ++it) {
         // if the path does not have any segments, it is a naked moveto,
         // and therefore any path has at least one valid node
-        size_t psize = std::max(1ul, it->size_closed());
+        size_t psize = std::max<size_t>(1, it->size_closed());
         nr += psize;
     }
 
