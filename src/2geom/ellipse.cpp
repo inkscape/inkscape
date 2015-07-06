@@ -499,7 +499,7 @@ std::vector<ShapeIntersection> Ellipse::intersect(Ellipse const &other) const
     Line lines[2];
 
     if (aa != 0) {
-        bb /= aa; cc /= aa; dd /= aa; ee /= aa; ff /= aa;
+        bb /= aa; cc /= aa; dd /= aa; ee /= aa; /*ff /= aa;*/
         Coord s = (ee + std::sqrt(ee*ee - 4*bb)) / 2;
         Coord q = ee - s;
         Coord alpha = (dd - cc*q) / (s - q);
@@ -508,7 +508,7 @@ std::vector<ShapeIntersection> Ellipse::intersect(Ellipse const &other) const
         lines[0] = Line(1, q, alpha);
         lines[1] = Line(1, s, beta);
     } else if (bb != 0) {
-        cc /= bb; dd /= bb; ee /= bb; ff /= bb;
+        cc /= bb; /*dd /= bb;*/ ee /= bb; ff /= bb;
         Coord s = ee;
         Coord q = 0;
         Coord alpha = cc / ee;

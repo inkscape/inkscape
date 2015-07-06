@@ -80,7 +80,7 @@ Coord nearest_time(Point const &p, D2<Bezier> const &input, Coord from, Coord to
         t = 0;
     }
     if (dfinal < mind) {
-        mind = dfinal;
+        //mind = dfinal;
         t = 1;
     }
 
