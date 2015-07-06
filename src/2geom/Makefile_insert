@@ -57,7 +57,6 @@
 	2geom/generic-rect.h \
 	2geom/geom.cpp \
 	2geom/geom.h \
-	2geom/hvlinesegment.h \
 	2geom/intersection.h \
 	2geom/intersection-graph.cpp \
 	2geom/intersection-graph.h \
