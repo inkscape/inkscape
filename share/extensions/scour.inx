@@ -2,9 +2,9 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Optimized SVG Output</_name>
     <id>org.inkscape.output.scour</id>
-    <dependency type="executable" location="extensions">scour.py</dependency>
-    <dependency type="executable" location="extensions">svg_regex.py</dependency>
-    <dependency type="executable" location="extensions">yocto_css.py</dependency>
+    <dependency type="executable" location="extensions">scour/scour.py</dependency>
+    <dependency type="executable" location="extensions">scour/svg_regex.py</dependency>
+    <dependency type="executable" location="extensions">scour/yocto_css.py</dependency>
     <param name="tab" type="notebook">
         <page name="Options" _gui-text="Options">            
             <param name="simplify-colors"  type="boolean" _gui-text="Shorten color values">true</param>
@@ -63,6 +63,6 @@
         <_filetypetooltip>Scalable Vector Graphics</_filetypetooltip>
     </output>
     <script>
-        <command reldir="extensions" interpreter="python">scour.inkscape.py</command>
+        <command reldir="extensions" interpreter="python">scour/scour.inkscape.py</command>
     </script>
 </inkscape-extension>
