@@ -1337,6 +1337,7 @@ bool xAx::decompose (Line& l1, Line& l2) const
  */
 Rect xAx::arc_bound (const Point & P1, const Point & Q, const Point & P2) const
 {
+    using std::swap;
     //std::cout << "BOUND: P1 = " << P1 << std::endl;
     //std::cout << "BOUND: Q = " << Q << std::endl;
     //std::cout << "BOUND: P2 = " << P2 << std::endl;

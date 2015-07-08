@@ -386,7 +386,9 @@ inline Coord distanceSq (Point const &a, Point const &b) {
 /// Test whether two points are no further apart than some threshold.
 /// @relates Point
 inline bool are_near(Point const &a, Point const &b, double eps = EPSILON) {
-    return are_near(distance(a, b), 0, eps);
+    // do not use an unqualified calls to distance before the empty
+    // specialization of iterator_traits is defined - see end of file
+    return are_near((a - b).length(), 0, eps);
 }
 
 /// Test whether three points lie approximately on the same line.

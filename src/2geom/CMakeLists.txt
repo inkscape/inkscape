@@ -68,8 +68,6 @@ set(2geom_SRC
 	conic_section_clipper_cr.h
 	conic_section_clipper_impl.h
 	conicsec.h
-	conjugate_gradient.h
-	convex-cover.h
 	coord.h
 	crossing.h
 	curve.h
@@ -83,7 +81,6 @@ set(2geom_SRC
 	generic-interval.h
 	generic-rect.h
 	geom.h
-	hvlinesegment.h
 	int-interval.h
 	int-point.h
 	int-rect.h
@@ -91,19 +88,16 @@ set(2geom_SRC
 	line.h
 	linear.h
 	math-utils.h
-	nearest-point.h
 	ord.h
 	path-intersection.h
 	path-sink.h
 	path.h
 	pathvector.h
 	piecewise.h
-	point-ops.h
 	point.h
 	polynomial.h
 	ray.h
 	rect.h
-	region.h
 	sbasis-2d.h
 	sbasis-curve.h
 	sbasis-geometric.h
@@ -111,7 +105,6 @@ set(2geom_SRC
 	sbasis-poly.h
 	sbasis-to-bezier.h
 	sbasis.h
-	shape.h
 	solver.h
 	svg-path-parser.h
 	svg-path-writer.h
