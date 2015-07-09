@@ -57,8 +57,7 @@
 #include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/affine.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include "helper/geom-nodetype.h"
 #include "helper/geom-curves.h"
 
@@ -71,7 +70,7 @@
 
 #define INKSCAPE_LPE_BSPLINE_C
 #include "live_effects/lpe-bspline.h"
-#include <2geom/nearest-point.h>
+#include <2geom/nearest-time.h>
 
 #include "live_effects/effect.h"
 
@@ -1515,7 +1514,7 @@ void PenTool::_bsplineSpiroMotion(bool shift){
                 Geom::D2< Geom::SBasis > SBasisweight_power;
                 weight_power->moveto(tmp_curve ->last_segment()->finalPoint());
                 weight_power->lineto(tmp_curve ->last_segment()->initialPoint());
-                float WP = Geom::nearest_point((*cubic)[2],*weight_power->first_segment());
+                float WP = Geom::nearest_time((*cubic)[2],*weight_power->first_segment());
                 weight_power->reset();
                 weight_power->moveto(this->red_curve->last_segment()->initialPoint());
                 weight_power->lineto(this->red_curve->last_segment()->finalPoint());
@@ -1737,7 +1736,7 @@ void PenTool::_bsplineSpiroBuild()
 //from LPE BSPLINE:
 void PenTool::_bsplineDoEffect(SPCurve * curve)
 {
-    const double NO_POWER = 0.0;
+    //const double NO_POWER = 0.0;
     const double DEFAULT_START_POWER = 0.3334;
     const double DEFAULT_END_POWER = 0.6667;
     if (curve->get_segment_count() < 1) {
@@ -1791,12 +1790,12 @@ void PenTool::_bsplineDoEffect(SPCurve * curve)
                 if(are_near((*cubic)[1],(*cubic)[0]) && !are_near((*cubic)[2],(*cubic)[3])) {
                     point_at1 = sbasis_in.valueAt(DEFAULT_START_POWER);
                 } else {
-                    point_at1 = sbasis_in.valueAt(Geom::nearest_point((*cubic)[1], *in->first_segment()));
+                    point_at1 = sbasis_in.valueAt(Geom::nearest_time((*cubic)[1], *in->first_segment()));
                 }
                 if(are_near((*cubic)[2],(*cubic)[3]) && !are_near((*cubic)[1],(*cubic)[0])) {
                     point_at2 = sbasis_in.valueAt(DEFAULT_END_POWER);
                 } else {
-                    point_at2 = sbasis_in.valueAt(Geom::nearest_point((*cubic)[2], *in->first_segment()));
+                    point_at2 = sbasis_in.valueAt(Geom::nearest_time((*cubic)[2], *in->first_segment()));
                 }
             } else {
                 point_at1 = in->first_segment()->initialPoint();
@@ -1814,7 +1813,7 @@ void PenTool::_bsplineDoEffect(SPCurve * curve)
                     if(are_near((*cubic)[1],(*cubic)[0]) && !are_near((*cubic)[2],(*cubic)[3])) {
                         next_point_at1 = sbasis_in.valueAt(DEFAULT_START_POWER);
                     } else {
-                        next_point_at1 = sbasis_out.valueAt(Geom::nearest_point((*cubic)[1], *out->first_segment()));
+                        next_point_at1 = sbasis_out.valueAt(Geom::nearest_time((*cubic)[1], *out->first_segment()));
                     }
                 } else {
                     next_point_at1 = out->first_segment()->initialPoint();
@@ -1831,7 +1830,7 @@ void PenTool::_bsplineDoEffect(SPCurve * curve)
                 cubic = dynamic_cast<Geom::CubicBezier const *>(&*path_it->begin());
                 if (cubic) {
                     line_helper->moveto(sbasis_start.valueAt(
-                                           Geom::nearest_point((*cubic)[1], *start->first_segment())));
+                                           Geom::nearest_time((*cubic)[1], *start->first_segment())));
                 } else {
                     line_helper->moveto(start->first_segment()->initialPoint());
                 }
@@ -1845,7 +1844,7 @@ void PenTool::_bsplineDoEffect(SPCurve * curve)
                 cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
                 if (cubic) {
                     line_helper->lineto(sbasis_end.valueAt(
-                                           Geom::nearest_point((*cubic)[2], *end->first_segment())));
+                                           Geom::nearest_time((*cubic)[2], *end->first_segment())));
                 } else {
                     line_helper->lineto(end->first_segment()->finalPoint());
                 }

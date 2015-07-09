@@ -67,10 +67,10 @@ static double _det5(double (*mat)[5])
     return mat[4][4];
 }
 
-std::vector<Geom::Path>
-LPEEllipse5Pts::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPEEllipse5Pts::doEffect_path (Geom::PathVector const & path_in)
 {
-    std::vector<Geom::Path> path_out = std::vector<Geom::Path>();
+    Geom::PathVector path_out = Geom::PathVector();
 
     if (path_in[0].size() < 4) {
         
@@ -190,7 +190,7 @@ LPEEllipse5Pts::doEffect_path (std::vector<Geom::Path> const & path_in)
         p.appendNew<Geom::CubicBezier>(Geom::Point(x1,y1), Geom::Point(x2,y2), Geom::Point(x3,y3));
     }
     
-    Geom::Affine aff = Geom::Scale(el.ray(Geom::X), el.ray(Geom::Y)) * Geom::Rotate(el.rot_angle()) * Geom::Translate(el.center());
+    Geom::Affine aff = Geom::Scale(el.rays()) * Geom::Rotate(el.rotationAngle()) * Geom::Translate(el.center());
     
     path_out.push_back(p * aff);
 

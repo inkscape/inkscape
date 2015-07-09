@@ -378,7 +378,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
             Geom::Point begin   = getGradientCoords(item, POINT_LG_BEGIN, 0, fill_or_stroke);
             Geom::Point end     = getGradientCoords(item, POINT_LG_END, 0, fill_or_stroke);
             Geom::LineSegment ls(begin, end);
-            double offset = ls.nearestPoint(mouse_p);
+            double offset = ls.nearestTime(mouse_p);
             Geom::Point nearest = ls.pointAt(offset);
             double dist_screen = Geom::distance(mouse_p, nearest);
             if ( dist_screen < tolerance ) {
@@ -391,7 +391,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
             Geom::Point begin = getGradientCoords(item, POINT_RG_CENTER, 0, fill_or_stroke);
             Geom::Point end   = getGradientCoords(item, POINT_RG_R1, 0, fill_or_stroke);
             Geom::LineSegment ls(begin, end);
-            double offset = ls.nearestPoint(mouse_p);
+            double offset = ls.nearestTime(mouse_p);
             Geom::Point nearest = ls.pointAt(offset);
             double dist_screen = Geom::distance(mouse_p, nearest);
             if ( dist_screen < tolerance ) {
@@ -403,7 +403,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
             } else {
                 end = getGradientCoords(item, POINT_RG_R2, 0, fill_or_stroke);
                 ls = Geom::LineSegment(begin, end);
-                offset = ls.nearestPoint(mouse_p);
+                offset = ls.nearestTime(mouse_p);
                 nearest = ls.pointAt(offset);
                 dist_screen = Geom::distance(mouse_p, nearest);
                 if ( dist_screen < tolerance ) {
@@ -442,7 +442,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
                         p[2] = patch.getPoint( 0, 2 ) * transform; 
                         p[3] = patch.getPoint( 0, 3 ) * transform; 
                         Geom::BezierCurveN<3> b( p[0], p[1], p[2], p[3] );
-                        Geom::Coord coord = b.nearestPoint( mouse_p );
+                        Geom::Coord coord = b.nearestTime( mouse_p );
                         Geom::Point nearest = b( coord );
                         double dist_screen = Geom::L2 ( mouse_p - nearest );
                         if ( dist_screen < closest ) {
@@ -460,7 +460,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
                         p[2] = patch.getPoint( 1, 2 ) * transform; 
                         p[3] = patch.getPoint( 1, 3 ) * transform; 
                         Geom::BezierCurveN<3> b( p[0], p[1], p[2], p[3] );
-                        Geom::Coord coord = b.nearestPoint( mouse_p );
+                        Geom::Coord coord = b.nearestTime( mouse_p );
                         Geom::Point nearest = b( coord );
                         double dist_screen = Geom::L2 ( mouse_p - nearest );
                         if ( dist_screen < closest ) {
@@ -478,7 +478,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
                         p[2] = patch.getPoint( 2, 2 ) * transform; 
                         p[3] = patch.getPoint( 2, 3 ) * transform; 
                         Geom::BezierCurveN<3> b( p[0], p[1], p[2], p[3] );
-                        Geom::Coord coord = b.nearestPoint( mouse_p );
+                        Geom::Coord coord = b.nearestTime( mouse_p );
                         Geom::Point nearest = b( coord );
                         double dist_screen = Geom::L2 ( mouse_p - nearest );
                         if ( dist_screen < closest ) {
@@ -496,7 +496,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
                         p[2] = patch.getPoint( 3, 2 ) * transform; 
                         p[3] = patch.getPoint( 3, 3 ) * transform; 
                         Geom::BezierCurveN<3> b( p[0], p[1], p[2], p[3] );
-                        Geom::Coord coord = b.nearestPoint( mouse_p );
+                        Geom::Coord coord = b.nearestTime( mouse_p );
                         Geom::Point nearest = b( coord );
                         double dist_screen = Geom::L2 ( mouse_p - nearest );
                         if ( dist_screen < closest ) {
@@ -603,7 +603,7 @@ bool GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
         for (GSList *l = lines; (l != NULL) && (!over_line); l = l->next) {
             SPCtrlLine *line = (SPCtrlLine*) l->data;
             Geom::LineSegment ls(line->s, line->e);
-            Geom::Point nearest = ls.pointAt(ls.nearestPoint(p));
+            Geom::Point nearest = ls.pointAt(ls.nearestTime(p));
             double dist_screen = Geom::L2(p - nearest) * desktop->current_zoom();
             if (line->item && dist_screen < 5) {
                 SPStop *stop = addStopNearPoint(line->item, p, 5/desktop->current_zoom());
@@ -1018,10 +1018,10 @@ static void gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &
 
     if (state & GDK_CONTROL_MASK) {
         Geom::LineSegment ls(low_lim, high_lim);
-        p = ls.pointAt(round(ls.nearestPoint(p) / snap_fraction) * snap_fraction);
+        p = ls.pointAt(round(ls.nearestTime(p) / snap_fraction) * snap_fraction);
     } else {
         Geom::LineSegment ls(low_lim, high_lim);
-        p = ls.pointAt(ls.nearestPoint(p));
+        p = ls.pointAt(ls.nearestTime(p));
         if (!(state & GDK_SHIFT_MASK)) {
             Inkscape::Snapper::SnapConstraint cl(low_lim, high_lim - low_lim);
             SPDesktop *desktop = dragger->parent->desktop;
@@ -2394,7 +2394,7 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
         gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, &moving);
 
         Geom::LineSegment ls(low_lim, high_lim);
-        Geom::Point p = ls.pointAt(ls.nearestPoint(dragger->point + Geom::Point(x,y)));
+        Geom::Point p = ls.pointAt(ls.nearestTime(dragger->point + Geom::Point(x,y)));
         Geom::Point displacement = p - dragger->point;
 
         for (GSList const* i = moving; i != NULL; i = i->next) {

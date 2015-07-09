@@ -1,4 +1,41 @@
-#include <2geom/poly.h>
+/**
+ * \file
+ * \brief Polynomial in canonical (monomial) basis
+ *//*
+ * Authors:
+ *    MenTaLguY <mental@rydia.net>
+ *    Krzysztof Kosiński <tweenk.pl@gmail.com>
+ * 
+ * Copyright 2007-2015 Authors
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it either under the terms of the GNU Lesser General Public
+ * License version 2.1 as published by the Free Software Foundation
+ * (the "LGPL") or, at your option, under the terms of the Mozilla
+ * Public License Version 1.1 (the "MPL"). If you do not alter this
+ * notice, a recipient may use your version of this file under either
+ * the MPL or the LGPL.
+ *
+ * You should have received a copy of the LGPL along with this library
+ * in the file COPYING-LGPL-2.1; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the MPL along with this library
+ * in the file COPYING-MPL-1.1
+ *
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
+ * OF ANY KIND, either express or implied. See the LGPL or the MPL for
+ * the specific language governing rights and limitations.
+ */
+
+#include <algorithm>
+#include <2geom/polynomial.h>
+#include <2geom/math-utils.h>
+#include <math.h>
 
 #ifdef HAVE_GSL
 #include <gsl/gsl_poly.h>
@@ -181,6 +218,100 @@ Poly gcd(Poly const &a, Poly const &b, const double /*tol*/) {
     return gcd(b, r);
 }
 
+
+
+
+std::vector<Coord> solve_quadratic(Coord a, Coord b, Coord c)
+{
+    std::vector<Coord> result;
+
+    if (a == 0) {
+        // linear equation
+        if (b == 0) return result;
+        result.push_back(-c/b);
+        return result;
+    }
+
+    Coord delta = b*b - 4*a*c;
+
+    if (delta == 0) {
+        // one root
+        result.push_back(-b / (2*a));
+    } else if (delta > 0) {
+        // two roots
+        Coord delta_sqrt = sqrt(delta);
+
+        // Use different formulas depending on sign of b to preserve
+        // numerical stability. See e.g.:
+        // http://people.csail.mit.edu/bkph/articles/Quadratics.pdf
+        Coord t = -0.5 * (b + sgn(b) * delta_sqrt);
+        result.push_back(t / a);
+        result.push_back(c / t);
+    }
+    // no roots otherwise
+
+    std::sort(result.begin(), result.end());
+    return result;
+}
+
+
+std::vector<Coord> solve_cubic(Coord a, Coord b, Coord c, Coord d)
+{
+    // based on:
+    // http://mathworld.wolfram.com/CubicFormula.html
+
+    if (a == 0) {
+        return solve_quadratic(b, c, d);
+    }
+    if (d == 0) {
+        // divide by x
+        std::vector<Coord> result = solve_quadratic(a, b, c);
+        result.push_back(0);
+        std::sort(result.begin(), result.end());
+        return result;
+    }
+
+    std::vector<Coord> result;
+
+    // 1. divide everything by a to bring to canonical form
+    b /= a;
+    c /= a;
+    d /= a;
+
+    // 2. eliminate x^2 term: x^3 + 3Qx - 2R = 0
+    Coord Q = (3*c - b*b) / 9;
+    Coord R = (-27 * d + b * (9*c - 2*b*b)) / 54;
+
+    // 3. compute polynomial discriminant
+    Coord D = Q*Q*Q + R*R;
+    Coord term1 = b/3;
+
+    if (D > 0) {
+        // only one real root
+        Coord S = cbrt(R + sqrt(D));
+        Coord T = cbrt(R - sqrt(D));
+        result.push_back(-b/3 + S + T);
+    } else if (D == 0) {
+        // 3 real roots, 2 of which are equal
+        Coord rroot = cbrt(R);
+        result.reserve(3);
+        result.push_back(-term1 + 2*rroot);
+        result.push_back(-term1 - rroot);
+        result.push_back(-term1 - rroot);
+    } else {
+        // 3 distinct real roots
+        assert(Q < 0);
+        Coord theta = acos(R / sqrt(-Q*Q*Q));
+        Coord rroot = 2 * sqrt(-Q);
+        result.reserve(3);
+        result.push_back(-term1 + rroot * cos(theta / 3));
+        result.push_back(-term1 + rroot * cos((theta + 2*M_PI) / 3));
+        result.push_back(-term1 + rroot * cos((theta + 4*M_PI) / 3));
+    }
+
+    std::sort(result.begin(), result.end());
+    return result;
+}
 
 
 /*Poly divide_out_root(Poly const & p, double x) {

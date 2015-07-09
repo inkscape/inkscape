@@ -6,9 +6,10 @@
  * This code is in public domain
  */
 
-#include <2geom/utils.h>
 #include <2geom/affine.h>
 #include <2geom/point.h>
+#include <2geom/polynomial.h>
+#include <2geom/utils.h>
 
 namespace Geom {
 
@@ -36,8 +37,7 @@ Point Affine::yAxis() const {
     return Point(_c[2], _c[3]);
 }
 
-/** Gets the translation imparted by the Affine.
- */
+/// Gets the translation imparted by the Affine.
 Point Affine::translation() const {
     return Point(_c[4], _c[5]);
 }
@@ -52,8 +52,7 @@ void Affine::setYAxis(Point const &vec) {
         _c[i + 2] = vec[i];
 }
 
-/** Sets the translation imparted by the Affine.
- */
+/// Sets the translation imparted by the Affine.
 void Affine::setTranslation(Point const &loc) {
     for(int i = 0; i < 2; i++)
         _c[i + 4] = loc[i];
@@ -61,33 +60,35 @@ void Affine::setTranslation(Point const &loc) {
 
 /** Calculates the amount of x-scaling imparted by the Affine.  This is the scaling applied to
  *  the original x-axis region.  It is \emph{not} the overall x-scaling of the transformation.
- *  Equivalent to L2(m.xAxis())
- */
+ *  Equivalent to L2(m.xAxis()). */
 double Affine::expansionX() const {
     return sqrt(_c[0] * _c[0] + _c[1] * _c[1]);
 }
 
 /** Calculates the amount of y-scaling imparted by the Affine.  This is the scaling applied before
  *  the other transformations.  It is \emph{not} the overall y-scaling of the transformation. 
- *  Equivalent to L2(m.yAxis())
- */
+ *  Equivalent to L2(m.yAxis()). */
 double Affine::expansionY() const {
     return sqrt(_c[2] * _c[2] + _c[3] * _c[3]);
 }
 
 void Affine::setExpansionX(double val) {
     double exp_x = expansionX();
-    if(!are_near(exp_x, 0.0)) {  //TODO: best way to deal with it is to skip op?
+    if (exp_x != 0.0) {  //TODO: best way to deal with it is to skip op?
         double coef = val / expansionX();
-        for(unsigned i=0;i<2;i++) _c[i] *= coef;
+        for (unsigned i = 0; i < 2; ++i) {
+            _c[i] *= coef;
+        }
     }
 }
 
 void Affine::setExpansionY(double val) {
     double exp_y = expansionY();
-    if(!are_near(exp_y, 0.0)) {  //TODO: best way to deal with it is to skip op?
+    if (exp_y != 0.0) {  //TODO: best way to deal with it is to skip op?
         double coef = val / expansionY();
-        for(unsigned i=2; i<4; i++) _c[i] *= coef;
+        for (unsigned i = 2; i < 4; ++i) {
+            _c[i] *= coef;
+        }
     }
 }
 
@@ -222,6 +223,29 @@ bool Affine::isNonzeroRotation(Coord eps) const {
            are_near(_c[0]*_c[0] + _c[1]*_c[1], 1.0, eps);
 }
 
+/** @brief Check whether this matrix represents a non-zero rotation about any point.
+ * @param eps Numerical tolerance
+ * @return True iff the matrix is of the form
+ *         \f$\left[\begin{array}{ccc}
+           a & b & 0 \\
+           -b & a & 0 \\
+           c & d & 1 \end{array}\right]\f$, \f$a^2 + b^2 = 1\f$ and \f$a \neq 1\f$. */
+bool Affine::isNonzeroNonpureRotation(Coord eps) const {
+    return !are_near(_c[0], 1.0, eps) &&
+           are_near(_c[0], _c[3], eps) && are_near(_c[1], -_c[2], eps) &&
+           are_near(_c[0]*_c[0] + _c[1]*_c[1], 1.0, eps);
+}
+
+/** @brief For a (possibly non-pure) non-zero-rotation matrix, calculate the rotation center.
+ * @pre The matrix must be a non-zero-rotation matrix to prevent division by zero, see isNonzeroNonpureRotation().
+ * @return The rotation center x, the solution to the equation
+ *         \f$A x = x\f$. */
+Point Affine::rotationCenter() const {
+    Coord x = (_c[2]*_c[5]+_c[4]-_c[4]*_c[3]) / (1-_c[3]-_c[0]+_c[0]*_c[3]-_c[2]*_c[1]);
+    Coord y = (_c[1]*x + _c[5]) / (1 - _c[3]);
+    return Point(x,y);
+};
+
 /** @brief Check whether this matrix represents pure horizontal shearing.
  * @param eps Numerical tolerance
  * @return True iff the matrix is of the form
@@ -342,8 +366,7 @@ bool Affine::preservesDistances(Coord eps) const
 /** @brief Check whether this transformation flips objects.
  * A transformation flips objects if it has a negative scaling component. */
 bool Affine::flips() const {
-    // TODO shouldn't this be det() < 0?
-    return cross(xAxis(), yAxis()) > 0;
+    return det() < 0;
 }
 
 /** @brief Check whether this matrix is singular.
@@ -356,7 +379,7 @@ bool Affine::isSingular(Coord eps) const {
 }
 
 /** @brief Compute the inverse matrix.
- * Inverse is a matrix (denoted \f$A^{-1}) such that \f$AA^{-1} = A^{-1}A = I\f$.
+ * Inverse is a matrix (denoted \f$A^{-1}\f$) such that \f$AA^{-1} = A^{-1}A = I\f$.
  * Singular matrices have no inverse (for example a matrix that has two of its columns equal).
  * For such matrices, the identity matrix will be returned instead.
  * @param eps Numerical tolerance
@@ -369,7 +392,7 @@ Affine Affine::inverse() const {
                          fabs(_c[2]) + fabs(_c[3])); // a random matrix norm (either l1 or linfty
     if(mx > 0) {
         Geom::Coord const determ = det();
-        if (!rel_error_bound(determ, mx*mx)) {
+        if (!rel_error_bound(std::sqrt(fabs(determ)), mx)) {
             Geom::Coord const ideterm = 1.0 / (determ);
             
             d._c[0] =  _c[3] * ideterm;
@@ -446,55 +469,38 @@ Affine elliptic_quadratic_form(Affine const &m) {
 Eigen::Eigen(Affine const &m) {
     double const B = -m[0] - m[3];
     double const C = m[0]*m[3] - m[1]*m[2];
-    double const center = -B/2.0;
-    double const delta = sqrt(B*B-4*C)/2.0;
-    values[0] = center + delta; values[1] = center - delta;
-    for (int i = 0; i < 2; i++) {
-        vectors[i] = unit_vector(rot90(Point(m[0]-values[i], m[1])));
-    }
-}
 
-static void quadratic_roots(const double q0, const double q1, const double q2, int &n, double&r0, double&r1) {
-    if(q2 == 0) {
-        if(q1 == 0) { // zero or infinite roots
-            n = 0;
-        } else {
-            n = 1;
-            r0 = -q0/q1;
-        }
-    } else {
-        double desc = q1*q1 - 4*q2*q0;
-        if (desc < 0)
-            n = 0;
-        else if (desc == 0) {
-            n = 1;
-            r0 = -q1/(2*q2);
-        } else {
-            n = 2;
-            desc = std::sqrt(desc);
-            double t = -0.5*(q1+sgn(q1)*desc);
-            r0 = t/q2;
-            r1 = q0/t;
-        }
+    std::vector<double> v = solve_quadratic(1, B, C);
+
+    for (unsigned i = 0; i < v.size(); ++i) {
+        values[i] = v[i];
+        vectors[i] = unit_vector(rot90(Point(m[0] - values[i], m[1])));
+    }
+    for (unsigned i = v.size(); i < 2; ++i) {
+        values[i] = 0;
+        vectors[i] = Point(0,0);
     }
 }
 
 Eigen::Eigen(double m[2][2]) {
     double const B = -m[0][0] - m[1][1];
     double const C = m[0][0]*m[1][1] - m[1][0]*m[0][1];
-    //double const desc = B*B-4*C;
-    //double t = -0.5*(B+sgn(B)*desc);
-    int n;
-    values[0] = values[1] = 0;
-    quadratic_roots(C, B, 1, n, values[0], values[1]);
-    for (int i = 0; i < n; i++)
-        vectors[i] = unit_vector(rot90(Point(m[0][0]-values[i], m[0][1])));
-    for (int i = n; i < 2; i++) 
+
+    std::vector<double> v = solve_quadratic(1, B, C);
+
+    for (unsigned i = 0; i < v.size(); ++i) {
+        values[i] = v[i];
+        vectors[i] = unit_vector(rot90(Point(m[0][0] - values[i], m[0][1])));
+    }
+    for (unsigned i = v.size(); i < 2; ++i) {
+        values[i] = 0;
         vectors[i] = Point(0,0);
+    }
 }
 
-/** @brief Nearness predicate for affine transforms
- * @returns True if all entries of matrices are within eps of each other */
+/** @brief Nearness predicate for affine transforms.
+ * @returns True if all entries of matrices are within eps of each other.
+ * @relates Affine */
 bool are_near(Affine const &a, Affine const &b, Coord eps)
 {
     return are_near(a[0], b[0], eps) && are_near(a[1], b[1], eps) &&

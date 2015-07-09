@@ -111,7 +111,7 @@ LPERuler::ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType const 
             break;
     }
 
-    Piecewise<D2<SBasis> > seg(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
+    Piecewise<D2<SBasis> > seg(D2<SBasis>(SBasis(C[X], D[X]), SBasis(C[Y], D[Y])));
     return seg;
 }
 

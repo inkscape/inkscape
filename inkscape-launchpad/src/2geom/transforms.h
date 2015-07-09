@@ -40,6 +40,7 @@
 #include <2geom/forward.h>
 #include <2geom/affine.h>
 #include <2geom/angle.h>
+#include <boost/concept/assert.hpp>
 
 namespace Geom {
 
@@ -95,6 +96,7 @@ public:
  * @ingroup Transforms */
 template <typename T>
 T pow(T const &t, int n) {
+    BOOST_CONCEPT_ASSERT((TransformConcept<T>));
     if (n == 0) return T::identity();
     T result(T::identity());
     T x(n < 0 ? t.inverse() : t);
@@ -199,6 +201,7 @@ public:
     /** @brief Get the characteristic vector of the rotation.
      * @return A vector that would be obtained by applying this transform to the X versor. */
     Point vector() const { return vec; }
+    Coord angle() const { return atan2(vec); }
     Coord operator[](Dim2 dim) const { return vec[dim]; }
     Coord operator[](unsigned dim) const { return vec[dim]; }
     Rotate &operator*=(Rotate const &o) { vec *= o; return *this; }
@@ -216,6 +219,7 @@ public:
         Coord rad = (deg / 180.0) * M_PI;
         return Rotate(rad);
     }
+    static Affine around(Point const &p, Coord angle);
 
     friend class Point;
 };
@@ -343,6 +347,8 @@ inline Translate pow(Translate const &t, int n) {
 
 /** @brief Reflects objects about line.
  * The line, defined by a vector along the line and a point on it, acts as a mirror.
+ * @ingroup Transforms
+ * @see Line::reflection()
  */
 Affine reflection(Point const & vector, Point const & origin);
 

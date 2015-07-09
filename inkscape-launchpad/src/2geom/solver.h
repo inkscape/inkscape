@@ -32,16 +32,14 @@
  *
  */
 
-#ifndef _SOLVE_SBASIS_H
-#define _SOLVE_SBASIS_H
+#ifndef LIB2GEOM_SEEN_SOLVER_H
+#define LIB2GEOM_SEEN_SOLVER_H
+
 #include <2geom/point.h>
 #include <2geom/sbasis.h>
-
-
 #include <vector>
 
-
-namespace Geom{
+namespace Geom {
 
 	class Point;
 	class Bezier;
@@ -78,7 +76,6 @@ find_bernstein_roots(std::vector<double> &solutions, /* RETURN candidate t-value
                      double left_t, double right_t);
 
 #endif
-
 /*
   Local Variables:
   mode:c++

@@ -716,7 +716,7 @@ static void ArcAnglesAndCenter(Geom::Point const &iS, Geom::Point const &iE,
 {
     Geom::Point se = iE - iS;
     Geom::Point ca(cos(angle), sin(angle));
-    Geom::Point cse(dot(se, ca), cross(se, ca));
+    Geom::Point cse(dot(ca, se), cross(ca, se));
     cse[0] /= rx;
     cse[1] /= ry;
     double const lensq = dot(cse,cse);
@@ -753,8 +753,8 @@ static void ArcAnglesAndCenter(Geom::Point const &iS, Geom::Point const &iE,
     csd[1] *= ry;
     ca[1] = -ca[1]; // because it's the inverse rotation
 
-    dr[0] = dot(csd, ca);
-    dr[1] = cross(csd, ca);
+    dr[0] = dot(ca, csd);
+    dr[1] = cross(ca, csd);
 
     ca[1] = -ca[1];
 

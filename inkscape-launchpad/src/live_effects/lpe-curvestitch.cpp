@@ -68,8 +68,8 @@ LPECurveStitch::~LPECurveStitch()
 
 }
 
-std::vector<Geom::Path>
-LPECurveStitch::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPECurveStitch::doEffect_path (Geom::PathVector const & path_in)
 {
     if (path_in.size() >= 2) {
         startpoint_edge_variation.resetRandomizer();
@@ -86,7 +86,7 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> const & path_in)
         gdouble scaling = bndsStroke->max() - bndsStroke->min();
         Point stroke_origin(bndsStroke->min(), (bndsStrokeY->max()+bndsStrokeY->min())/2);
 
-        std::vector<Geom::Path> path_out;
+        Geom::PathVector path_out;
 
         // do this for all permutations (ii,jj) if there are more than 2 paths? realllly cool!
         for (unsigned ii = 0   ; ii < path_in.size() - 1; ii++)
@@ -127,7 +127,7 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> const & path_in)
 
                     // add stuff to one big pw<d2<sbasis> > and then outside the loop convert to path?
                     // No: this way, the separate result paths are kept separate which might come in handy some time!
-                    std::vector<Geom::Path> result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
+                    Geom::PathVector result = Geom::path_from_piecewise(pwd2_out, LPE_CONVERSION_TOLERANCE);
                     path_out.push_back(result[0]);
                 }
                 gdouble svA = startpoint_spacing_variation - startpoint_spacing_variation.get_value()/2;
@@ -162,7 +162,7 @@ LPECurveStitch::resetDefaults(SPItem const* item)
     
     // calculate bounding box:  (isn't there a simpler way?)
     Piecewise<D2<SBasis> > pwd2;
-    std::vector<Geom::Path> temppath = sp_svg_read_pathv( item->getRepr()->attribute("inkscape:original-d"));
+    Geom::PathVector temppath = sp_svg_read_pathv( item->getRepr()->attribute("inkscape:original-d"));
     for (unsigned int i=0; i < temppath.size(); i++) {
         pwd2.concat( temppath[i].toPwSb() );
     }

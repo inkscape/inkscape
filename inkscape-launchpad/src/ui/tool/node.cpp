@@ -356,8 +356,8 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         Geom::Line perp_line(parent_pos, parent_pos + Geom::rot90(origin - parent_pos));
         Geom::Point snap_pos = parent_pos + Geom::constrain_angle(
             Geom::Point(0,0), new_pos - parent_pos, snaps, Geom::Point(1,0));
-        Geom::Point orig_pos = original_line.pointAt(original_line.nearestPoint(new_pos));
-        Geom::Point perp_pos = perp_line.pointAt(perp_line.nearestPoint(new_pos));
+        Geom::Point orig_pos = original_line.pointAt(original_line.nearestTime(new_pos));
+        Geom::Point perp_pos = perp_line.pointAt(perp_line.nearestTime(new_pos));
 
         Geom::Point result = snap_pos;
         ctrl_constraint = Inkscape::Snapper::SnapConstraint(parent_pos, parent_pos - snap_pos);
@@ -1565,6 +1565,13 @@ NodeList::iterator NodeList::before(double t, double *fracpart)
 
     iterator ret = begin();
     std::advance(ret, index);
+    return ret;
+}
+
+NodeList::iterator NodeList::before(Geom::PathTime const &pvp)
+{
+    iterator ret = begin();
+    std::advance(ret, pvp.curve_index);
     return ret;
 }
 

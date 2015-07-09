@@ -3,7 +3,6 @@ set(live_effects_SRC
 	lpe-angle_bisector.cpp
 	lpe-attach-path.cpp
 	lpe-bendpath.cpp
-	lpe-boolops.cpp
 	lpe-bounding-box.cpp
 	lpe-bspline.cpp
 	lpe-circle_3pts.cpp
@@ -81,7 +80,6 @@ set(live_effects_SRC
 	lpe-angle_bisector.h
 	lpe-attach-path.h
 	lpe-bendpath.h
-	lpe-boolops.h
 	lpe-bounding-box.h
 	lpe-bspline.h
 	lpe-circle_3pts.h

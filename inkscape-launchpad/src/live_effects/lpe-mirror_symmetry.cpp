@@ -64,24 +64,24 @@ LPEMirrorSymmetry::doOnApply (SPLPEItem const* lpeitem)
     Point B(bbox.left(), bbox.top());
     A *= t;
     B *= t;
-    Piecewise<D2<SBasis> > rline = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(A[X], B[X]), Linear(A[Y], B[Y])));
+    Piecewise<D2<SBasis> > rline = Piecewise<D2<SBasis> >(D2<SBasis>(SBasis(A[X], B[X]), SBasis(A[Y], B[Y])));
     reflection_line.set_new_value(rline, true);
 }
 
-std::vector<Geom::Path>
-LPEMirrorSymmetry::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPEMirrorSymmetry::doEffect_path (Geom::PathVector const & path_in)
 {
     // Don't allow empty path parameter:
     if ( reflection_line.get_pathvector().empty() ) {
         return path_in;
     }
 
-    std::vector<Geom::Path> path_out;
+    Geom::PathVector path_out;
     if (!discard_orig_path) {
         path_out = path_in;
     }
 
-    std::vector<Geom::Path> mline(reflection_line.get_pathvector());
+    Geom::PathVector mline(reflection_line.get_pathvector());
     Geom::Point A(mline.front().initialPoint());
     Geom::Point B(mline.back().finalPoint());
 

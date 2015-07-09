@@ -1108,7 +1108,7 @@ Path::TangentOnCubAt (double at, Geom::Point const &iS, PathDescrCubicTo const &
 			}
 			return;
 		}
-		rad = -l * (dot(dder,dder)) / (cross(ddder,dder));
+		rad = -l * (dot(dder,dder)) / (cross(dder, ddder));
 		tgt = dder / l;
 		if (before) {
 			tgt = -tgt;
@@ -1117,7 +1117,7 @@ Path::TangentOnCubAt (double at, Geom::Point const &iS, PathDescrCubicTo const &
 	}
 	len = l;
 
-	rad = -l * (dot(der,der)) / (cross(dder,der));
+	rad = -l * (dot(der,der)) / (cross(der, dder));
 
 	tgt = der / l;
 }
@@ -1156,7 +1156,7 @@ Path::TangentOnBezAt (double at, Geom::Point const &iS,
 		return;
 	}
 	len = l;
-	rad = -l * (dot(der,der)) / (cross(dder,der));
+	rad = -l * (dot(der,der)) / (cross(der, dder));
 
 	tgt = der / l;
 }
@@ -1180,7 +1180,7 @@ Path::OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point 
     TurnInside ^= PrevPos == pos;
     PrevPos = pos;
 
-	const double angSi = cross (enNor,stNor);
+	const double angSi = cross (stNor, enNor);
 	const double angCo = dot (stNor, enNor);
 
     if ((fabs(angSi) < .0000001) && angCo > 0) { // The join is straight -> nothing to do.

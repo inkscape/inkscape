@@ -172,7 +172,7 @@ static double
 distance_to_segment (Geom::Point const &p, Geom::Point const &a1, Geom::Point const &a2)
 {
     Geom::LineSegment l(a1, a2);
-    Geom::Point np = l.pointAt(l.nearestPoint(p));
+    Geom::Point np = l.pointAt(l.nearestTime(p));
     return Geom::distance(np, p);
 }
 

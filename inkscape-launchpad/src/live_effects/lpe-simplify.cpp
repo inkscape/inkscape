@@ -164,14 +164,13 @@ LPESimplify::generateHelperPathAndSmooth(Geom::PathVector &result)
     Geom::PathVector tmp_path;
     Geom::CubicBezier const *cubic = NULL;
     for (Geom::PathVector::iterator path_it = result.begin(); path_it != result.end(); ++path_it) {
-        //Si está vacío...
         if (path_it->empty()) {
             continue;
         }
-        //Itreadores
-        Geom::Path::const_iterator curve_it1 = path_it->begin(); // incoming curve
-        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());// outgoing curve
-        Geom::Path::const_iterator curve_endit = path_it->end_default(); // this determines when the loop has to stop
+
+        Geom::Path::iterator curve_it1 = path_it->begin(); // incoming curve
+        Geom::Path::iterator curve_it2 = ++(path_it->begin());// outgoing curve
+        Geom::Path::iterator curve_endit = path_it->end_default(); // this determines when the loop has to stop
         SPCurve *nCurve = new SPCurve();
         if (path_it->closed()) {
             // if the path is closed, maybe we have to stop a bit earlier because the
@@ -264,8 +263,7 @@ LPESimplify::drawNode(Geom::Point p)
     char const * svgd;
     svgd = "M 0.55,0.5 A 0.05,0.05 0 0 1 0.5,0.55 0.05,0.05 0 0 1 0.45,0.5 0.05,0.05 0 0 1 0.5,0.45 0.05,0.05 0 0 1 0.55,0.5 Z M 0,0 1,0 1,1 0,1 Z";
     Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-    pathv *= Geom::Affine(r,0,0,r,0,0);
-    pathv += p - Geom::Point(0.5*r,0.5*r);
+    pathv *= Geom::Scale(r) * Geom::Translate(p - Geom::Point(0.5*r,0.5*r));
     hp.push_back(pathv[0]);
     hp.push_back(pathv[1]);
 }
@@ -277,8 +275,7 @@ LPESimplify::drawHandle(Geom::Point p)
     char const * svgd;
     svgd = "M 0.7,0.35 A 0.35,0.35 0 0 1 0.35,0.7 0.35,0.35 0 0 1 0,0.35 0.35,0.35 0 0 1 0.35,0 0.35,0.35 0 0 1 0.7,0.35 Z";
     Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-    pathv *= Geom::Affine(r,0,0,r,0,0);
-    pathv += p - Geom::Point(0.35*r,0.35*r);
+    pathv *= Geom::Scale(r) * Geom::Translate(p - Geom::Point(0.35*r,0.35*r));
     hp.push_back(pathv[0]);
 }
 

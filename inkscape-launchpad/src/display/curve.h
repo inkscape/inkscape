@@ -13,7 +13,7 @@
 #ifndef SEEN_DISPLAY_CURVE_H
 #define SEEN_DISPLAY_CURVE_H
 
-#include <2geom/forward.h>
+#include <2geom/pathvector.h>
 #include <cstddef>
 #include <boost/optional.hpp>
 

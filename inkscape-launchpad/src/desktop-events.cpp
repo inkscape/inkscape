@@ -354,7 +354,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     // the origin should still be constrained to the guide. So let's do
                     // that explicitly first:
                     Geom::Line line(guide->getPoint(), guide->angle());
-                    Geom::Coord t = line.nearestPoint(motion_dt);
+                    Geom::Coord t = line.nearestTime(motion_dt);
                     motion_dt = line.pointAt(t);
                     if (!(event->motion.state & GDK_SHIFT_MASK)) {
                         m.guideConstrainedSnap(motion_dt, *guide);
@@ -435,7 +435,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         // the origin should still be constrained to the guide. So let's
                         // do that explicitly first:
                         Geom::Line line(guide->getPoint(), guide->angle());
-                        Geom::Coord t = line.nearestPoint(event_dt);
+                        Geom::Coord t = line.nearestTime(event_dt);
                         event_dt = line.pointAt(t);
                         if (!(event->button.state & GDK_SHIFT_MASK)) {
                             m.guideConstrainedSnap(event_dt, *guide);

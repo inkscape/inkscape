@@ -1,7 +1,6 @@
-/**
- * \file
- * \brief Piecewise function class
- *
+/** @file
+ * @brief Piecewise function class
+ *//*
  * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -29,8 +28,8 @@
  *
  */
 
-#ifndef SEEN_GEOM_PW_SB_H
-#define SEEN_GEOM_PW_SB_H
+#ifndef LIB2GEOM_SEEN_PIECEWISE_H
+#define LIB2GEOM_SEEN_PIECEWISE_H
 
 #include <vector>
 #include <map>
@@ -43,12 +42,14 @@
 
 namespace Geom {
 /**
- * %Piecewise function class.
+ * @brief Function defined as discrete pieces.
+ *
  * The Piecewise class manages a sequence of elements of a type as segments and
  * the ’cuts’ between them. These cuts are time values which separate the pieces.
  * This function representation allows for more interesting functions, as it provides
  * a viable output for operations such as inversion, which may require multiple
  * SBasis to properly invert the original.
+ *
  * As for technical details, while the actual SBasis segments begin on the ﬁrst
  * cut and end on the last, the function is deﬁned throughout all inputs by ex-
  * tending the ﬁrst and last segments. The exact switching between segments is
@@ -63,6 +64,8 @@ namespace Geom {
  *      s_n,& c_n <= t
  *      \end{array}\right.
  * \f]
+ *
+ * @ingroup Fragments
  */
 template <typename T>
 class Piecewise {
@@ -933,7 +936,7 @@ Piecewise<T> lerp(double t, Piecewise<T> const &a, Piecewise<T> b) {
 }
 
 }
-#endif //SEEN_GEOM_PW_SB_H
+#endif //LIB2GEOM_SEEN_PIECEWISE_H
 /*
   Local Variables:
   mode:c++

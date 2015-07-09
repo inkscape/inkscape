@@ -35,8 +35,7 @@
 #include <extension/system.h>
 #include <2geom/pathvector.h>
 #include <2geom/rect.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
 #include <io/sys.h>
@@ -531,9 +530,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
             {
             //### LINE
-            if ( dynamic_cast<Geom::LineSegment  const *> (&*cit) ||
-                dynamic_cast<Geom::HLineSegment const *> (&*cit) ||
-                dynamic_cast<Geom::VLineSegment const *> (&*cit) )
+            if ( dynamic_cast<Geom::LineSegment  const *> (&*cit) )
                 {
                 Geom::Point p = cit->finalPoint();
                 out("                LineTo {\n");
@@ -545,7 +542,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
             //### BEZIER
             else if (Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
                 {
-                std::vector<Geom::Point> points = cubic->points();
+                std::vector<Geom::Point> points = cubic->controlPoints();
                 Geom::Point p1 = points[1];
                 Geom::Point p2 = points[2];
                 Geom::Point p3 = points[3];

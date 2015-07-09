@@ -297,11 +297,11 @@ Piecewise<SBasis> reciprocalOnDomain(Interval range, double tol){
     if (a<=tol){
         reciprocal_fn.push_cut(0);
         int i0=(int) floor(std::log(tol)/std::log(R));
-        a=pow(R,i0);
+        a = std::pow(R,i0);
         reciprocal_fn.push(Linear(1/a),a);
     }else{
         int i0=(int) floor(std::log(a)/std::log(R));
-        a=pow(R,i0);
+        a = std::pow(R,i0);
         reciprocal_fn.cuts.push_back(a);
     }  
 

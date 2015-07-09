@@ -30,8 +30,7 @@
 #include <extension/system.h>
 #include <2geom/pathvector.h>
 #include <2geom/rect.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
 #include <io/sys.h>
@@ -388,7 +387,7 @@ bool PovOutput::doCurve(SPItem *item, const String &id)
                 }
             else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
             {
-                std::vector<Geom::Point> points = cubic->points();
+                std::vector<Geom::Point> points = cubic->controlPoints();
                 Geom::Point p0 = points[0];
                 Geom::Point p1 = points[1];
                 Geom::Point p2 = points[2];

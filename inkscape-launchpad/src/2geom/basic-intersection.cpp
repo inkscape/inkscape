@@ -1,3 +1,38 @@
+/** @file
+ * @brief Basic intersection routines
+ *//*
+ * Authors:
+ *   Nathan Hurst <njh@njhurst.com>
+ *   Marco Cecchetti <mrcekets at gmail.com>
+ *   Jean-François Barraud <jf.barraud@gmail.com>
+ * 
+ * Copyright 2008-2009 Authors
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it either under the terms of the GNU Lesser General Public
+ * License version 2.1 as published by the Free Software Foundation
+ * (the "LGPL") or, at your option, under the terms of the Mozilla
+ * Public License Version 1.1 (the "MPL"). If you do not alter this
+ * notice, a recipient may use your version of this file under either
+ * the MPL or the LGPL.
+ *
+ * You should have received a copy of the LGPL along with this library
+ * in the file COPYING-LGPL-2.1; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the MPL along with this library
+ * in the file COPYING-MPL-1.1
+ *
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
+ * OF ANY KIND, either express or implied. See the LGPL or the MPL for
+ * the specific language governing rights and limitations.
+ *
+ */
+
 #include <2geom/basic-intersection.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/exception.h>
@@ -33,24 +68,35 @@ namespace Geom {
 //#else
 
 namespace detail{ namespace bezier_clipping {
-void portion (std::vector<Point> & B, Interval const& I);
+void portion(std::vector<Point> &B, Interval const &I);
+void derivative(std::vector<Point> &D, std::vector<Point> const &B);
 }; };
 
 void find_intersections(std::vector<std::pair<double, double> > &xs,
+                        D2<Bezier> const & A,
+                        D2<Bezier> const & B,
+                        double precision)
+{
+    find_intersections_bezier_clipping(xs, bezier_points(A), bezier_points(B), precision);
+}
+
+void find_intersections(std::vector<std::pair<double, double> > &xs,
                         D2<SBasis> const & A,
-                        D2<SBasis> const & B) {
+                        D2<SBasis> const & B,
+                        double precision)
+{
     vector<Point> BezA, BezB;
     sbasis_to_bezier(BezA, A);
     sbasis_to_bezier(BezB, B);
-
-    xs.clear();
     
-    find_intersections_bezier_clipping(xs, BezA, BezB);
+    find_intersections_bezier_clipping(xs, BezA, BezB, precision);
 }
+
 void find_intersections(std::vector< std::pair<double, double> > & xs,
-                         std::vector<Point> const& A,
-                         std::vector<Point> const& B,
-                        double precision){
+                        std::vector<Point> const& A,
+                        std::vector<Point> const& B,
+                        double precision)
+{
     find_intersections_bezier_clipping(xs, A, B, precision);
 }
 
@@ -61,6 +107,7 @@ void find_intersections(std::vector< std::pair<double, double> > & xs,
  * Temporary storage is minimized by using part of the storage for the result
  * to hold an intermediate value until it is no longer needed.
  */
+// TODO replace with Bezier method
 void split(vector<Point> const &p, double t, 
            vector<Point> &left, vector<Point> &right) {
     const unsigned sz = p.size();
@@ -88,44 +135,48 @@ void split(vector<Point> const &p, double t,
 }
 
 
-void
-find_self_intersections(std::vector<std::pair<double, double> > &xs,
-                        D2<SBasis> const & A) {
-    vector<double> dr = roots(derivative(A[X]));
+
+void find_self_intersections(std::vector<std::pair<double, double> > &xs,
+                             D2<Bezier> const &A,
+                             double precision)
+{
+    std::vector<double> dr = derivative(A[X]).roots();
     {
-        vector<double> dyr = roots(derivative(A[Y]));
+        std::vector<double> dyr = derivative(A[Y]).roots();
         dr.insert(dr.begin(), dyr.begin(), dyr.end());
     }
     dr.push_back(0);
     dr.push_back(1);
     // We want to be sure that we have no empty segments
-    sort(dr.begin(), dr.end());
-    vector<double>::iterator new_end = unique(dr.begin(), dr.end());
+    std::sort(dr.begin(), dr.end());
+    std::vector<double>::iterator new_end = std::unique(dr.begin(), dr.end());
     dr.resize( new_end - dr.begin() );
 
-    vector<vector<Point> > pieces;
-    {
-        vector<Point> in, l, r;
-        sbasis_to_bezier(in, A);
+    std::vector< D2<Bezier> > pieces;
+    for (unsigned i = 0; i < dr.size() - 1; ++i) {
+        pieces.push_back(portion(A, dr[i], dr[i+1]));
+    }
+    /*{
+        vector<Point> l, r, in = A;
         for(unsigned i = 0; i < dr.size()-1; i++) {
             split(in, (dr[i+1]-dr[i]) / (1 - dr[i]), l, r);
             pieces.push_back(l);
             in = r;
         }
-    }
+    }*/
 
     for(unsigned i = 0; i < dr.size()-1; i++) {
         for(unsigned j = i+1; j < dr.size()-1; j++) {
             std::vector<std::pair<double, double> > section;
             
-            find_intersections( section, pieces[i], pieces[j]);
+            find_intersections(section, pieces[i], pieces[j], precision);
             for(unsigned k = 0; k < section.size(); k++) {
                 double l = section[k].first;
                 double r = section[k].second;
 // XXX: This condition will prune out false positives, but it might create some false negatives.  Todo: Confirm it is correct.
                 if(j == i+1)
                     //if((l == 1) && (r == 0))
-                    if( ( l > 1-1e-4 ) && (r < 1e-4) )//FIXME: what precision should be used here???
+                    if( ( l > precision ) && (r < precision) )//FIXME: what precision should be used here???
                         continue;
                 xs.push_back(std::make_pair((1-l)*dr[i] + l*dr[i+1],
                                                 (1-r)*dr[j] + r*dr[j+1]));
@@ -136,6 +187,46 @@ find_self_intersections(std::vector<std::pair<double, double> > &xs,
     // Because i is in order, xs should be roughly already in order?
     //sort(xs.begin(), xs.end());
     //unique(xs.begin(), xs.end());
+}
+
+void find_self_intersections(std::vector<std::pair<double, double> > &xs,
+                             D2<SBasis> const &A,
+                             double precision)
+{
+    D2<Bezier> in;
+    sbasis_to_bezier(in, A);
+    find_self_intersections(xs, in, precision);
+}
+
+
+void subdivide(D2<Bezier> const &a,
+               D2<Bezier> const &b,
+               std::vector< std::pair<double, double> > const &xs,
+               std::vector< D2<Bezier> > &av,
+               std::vector< D2<Bezier> > &bv)
+{
+    if (xs.empty()) {
+        av.push_back(a);
+        bv.push_back(b);
+        return;
+    }
+
+    std::pair<double, double> prev = std::make_pair(0., 0.);
+    for (unsigned i = 0; i < xs.size(); ++i) {
+        av.push_back(portion(a, prev.first, xs[i].first));
+        bv.push_back(portion(b, prev.second, xs[i].second));
+        av.back()[X].at0() = bv.back()[X].at0() = lerp(0.5, av.back()[X].at0(), bv.back()[X].at0());
+        av.back()[X].at1() = bv.back()[X].at1() = lerp(0.5, av.back()[X].at1(), bv.back()[X].at1());
+        av.back()[Y].at0() = bv.back()[Y].at0() = lerp(0.5, av.back()[Y].at0(), bv.back()[Y].at0());
+        av.back()[Y].at1() = bv.back()[Y].at1() = lerp(0.5, av.back()[Y].at1(), bv.back()[Y].at1());
+        prev = xs[i];
+    }
+    av.push_back(portion(a, prev.first, 1));
+    bv.push_back(portion(b, prev.second, 1));
+    av.back()[X].at0() = bv.back()[X].at0() = lerp(0.5, av.back()[X].at0(), bv.back()[X].at0());
+    av.back()[X].at1() = bv.back()[X].at1() = lerp(0.5, av.back()[X].at1(), bv.back()[X].at1());
+    av.back()[Y].at0() = bv.back()[Y].at0() = lerp(0.5, av.back()[Y].at0(), bv.back()[Y].at0());
+    av.back()[Y].at1() = bv.back()[Y].at1() = lerp(0.5, av.back()[Y].at1(), bv.back()[Y].at1());
 }
 
 #ifdef HAVE_GSL
@@ -304,38 +395,6 @@ void polish_intersections(std::vector<std::pair<double, double> > &xs,
                               B, xs[i].second);
 }
 
-
- /**
-  * Compute the Hausdorf distance from A to B only.
-  */
-
-
-#if 0
-/** Compute the value of a bezier
-    Todo: find a good palce for this.
- */
-// suggested by Sederberg.
-Point OldBezier::operator()(double t) const {
-    int n = p.size()-1;
-    double u, bc, tn, tmp;
-    int i;
-    Point r;
-    for(int dim = 0; dim < 2; dim++) {
-        u = 1.0 - t;
-        bc = 1;
-        tn = 1;
-        tmp = p[0][dim]*u;
-        for(i=1; i<n; i++){
-            tn = tn*t;
-            bc = bc*(n-i+1)/i;
-            tmp = (tmp + tn*bc*p[i][dim])*u;
-        }
-        r[dim] = (tmp + tn*t*p[n][dim]);
-    }
-    return r;
-}
-#endif
-
 /**
  * Compute the Hausdorf distance from A to B only.
  */
@@ -350,7 +409,7 @@ double hausdorfl(D2<SBasis>& A, D2<SBasis> const& B,
     double h_dist = 0, h_a_t = 0, h_b_t = 0;
     double dist = 0;
     Point Ax = A.at0();
-    double t = Geom::nearest_point(Ax, B);
+    double t = Geom::nearest_time(Ax, B);
     dist = Geom::distance(Ax, B(t));
     if (dist > h_dist) {
         h_a_t = 0;
@@ -358,7 +417,7 @@ double hausdorfl(D2<SBasis>& A, D2<SBasis> const& B,
         h_dist = dist;
     }
     Ax = A.at1();
-    t = Geom::nearest_point(Ax, B);
+    t = Geom::nearest_time(Ax, B);
     dist = Geom::distance(Ax, B(t));
     if (dist > h_dist) {
         h_a_t = 1;
@@ -370,7 +429,7 @@ double hausdorfl(D2<SBasis>& A, D2<SBasis> const& B,
         Point At = A(xs[i].first);
         Point Bu = B(xs[i].second);
         double distAtBu = Geom::distance(At, Bu);
-        t = Geom::nearest_point(At, B);
+        t = Geom::nearest_time(At, B);
         dist = Geom::distance(At, B(t));
         //FIXME: we might miss it due to floating point precision...
         if (dist >= distAtBu-.1 && distAtBu > h_dist) {
@@ -396,7 +455,7 @@ double hausdorf(D2<SBasis>& A, D2<SBasis> const& B,
     
     double dist = 0;
     Point Bx = B.at0();
-    double t = Geom::nearest_point(Bx, A);
+    double t = Geom::nearest_time(Bx, A);
     dist = Geom::distance(Bx, A(t));
     if (dist > h_dist) {
         if(a_t) *a_t = t;
@@ -404,7 +463,7 @@ double hausdorf(D2<SBasis>& A, D2<SBasis> const& B,
         h_dist = dist;
     }
     Bx = B.at1();
-    t = Geom::nearest_point(Bx, A);
+    t = Geom::nearest_time(Bx, A);
     dist = Geom::distance(Bx, A(t));
     if (dist > h_dist) {
         if(a_t) *a_t = t;

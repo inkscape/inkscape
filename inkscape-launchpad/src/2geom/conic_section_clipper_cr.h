@@ -1,7 +1,6 @@
-/**
- * \file
- * \brief Conic section clipping with respect to a rectangle
- *
+/** @file
+ * @brief Conic section clipping with respect to a rectangle
+ *//*
  * Authors:
  *      Marco Cecchetti <mrcekets at gmail>
  *
@@ -39,8 +38,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#ifndef _2GEOM_CONIC_SECTION_CLIPPER_CR_H_
-#define _2GEOM_CONIC_SECTION_CLIPPER_CR_H_
+#ifndef LIB2GEOM_SEEN_CONIC_SECTION_CLIPPER_CR_H
+#define LIB2GEOM_SEEN_CONIC_SECTION_CLIPPER_CR_H
 
 
 #define CLIP_WITH_CAIRO_SUPPORT

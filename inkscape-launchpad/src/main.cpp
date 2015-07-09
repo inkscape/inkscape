@@ -1542,7 +1542,7 @@ static int sp_do_export_png(SPDocument *doc)
     }
 
     if (sp_export_area_snap) {
-        round_rectangle_outwards(area);
+        area = area.roundOutwards();
     }
 
     // default dpi

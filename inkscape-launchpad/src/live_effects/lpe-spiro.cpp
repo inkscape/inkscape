@@ -10,8 +10,7 @@
 #include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/affine.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include "helper/geom-nodetype.h"
 #include "helper/geom-curves.h"
 

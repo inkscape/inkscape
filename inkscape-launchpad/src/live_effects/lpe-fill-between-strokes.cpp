@@ -39,17 +39,17 @@ void LPEFillBetweenStrokes::doEffect (SPCurve * curve)
 {
     if (curve) {
         if ( linked_path.linksToPath() && second_path.linksToPath() && linked_path.getObject() && second_path.getObject() ) {
-            std::vector<Geom::Path> linked_pathv = linked_path.get_pathvector();
-            std::vector<Geom::Path> second_pathv = second_path.get_pathvector();
-            std::vector<Geom::Path> result_linked_pathv;
-            std::vector<Geom::Path> result_second_pathv;
+            Geom::PathVector linked_pathv = linked_path.get_pathvector();
+            Geom::PathVector second_pathv = second_path.get_pathvector();
+            Geom::PathVector result_linked_pathv;
+            Geom::PathVector result_second_pathv;
             Geom::Affine second_transform = second_path.getObject()->getRelativeTransform(linked_path.getObject());
 
-            for (std::vector<Geom::Path>::iterator iter = linked_pathv.begin(); iter != linked_pathv.end(); ++iter)
+            for (Geom::PathVector::iterator iter = linked_pathv.begin(); iter != linked_pathv.end(); ++iter)
             {
                 result_linked_pathv.push_back((*iter));
             }
-            for (std::vector<Geom::Path>::iterator iter = second_pathv.begin(); iter != second_pathv.end(); ++iter)
+            for (Geom::PathVector::iterator iter = second_pathv.begin(); iter != second_pathv.end(); ++iter)
             {
                 result_second_pathv.push_back((*iter) * second_transform);
             }
@@ -58,7 +58,7 @@ void LPEFillBetweenStrokes::doEffect (SPCurve * curve)
                 if (reverse_second.get_value())
                 {
                     result_linked_pathv.front().appendNew<Geom::LineSegment>(result_second_pathv.front().finalPoint());
-                    result_linked_pathv.front().append(result_second_pathv.front().reverse());
+                    result_linked_pathv.front().append(result_second_pathv.front().reversed());
                 }
                 else
                 {
@@ -75,10 +75,10 @@ void LPEFillBetweenStrokes::doEffect (SPCurve * curve)
             }
         }
         else if ( linked_path.linksToPath() && linked_path.getObject() ) {
-            std::vector<Geom::Path> linked_pathv = linked_path.get_pathvector();
-            std::vector<Geom::Path> result_pathv;
+            Geom::PathVector linked_pathv = linked_path.get_pathvector();
+            Geom::PathVector result_pathv;
 
-            for (std::vector<Geom::Path>::iterator iter = linked_pathv.begin(); iter != linked_pathv.end(); ++iter)
+            for (Geom::PathVector::iterator iter = linked_pathv.begin(); iter != linked_pathv.end(); ++iter)
             {
                 result_pathv.push_back((*iter));
             }
@@ -87,10 +87,10 @@ void LPEFillBetweenStrokes::doEffect (SPCurve * curve)
             }
         }
         else if ( second_path.linksToPath() && second_path.getObject() ) {
-            std::vector<Geom::Path> second_pathv = second_path.get_pathvector();
-            std::vector<Geom::Path> result_pathv;
+            Geom::PathVector second_pathv = second_path.get_pathvector();
+            Geom::PathVector result_pathv;
 
-            for (std::vector<Geom::Path>::iterator iter = second_pathv.begin(); iter != second_pathv.end(); ++iter)
+            for (Geom::PathVector::iterator iter = second_pathv.begin(); iter != second_pathv.end(); ++iter)
             {
                 result_pathv.push_back((*iter));
             }

@@ -271,8 +271,8 @@ SPCurve *LPERoughen::addNodesAndJitter(const Geom::Curve *A, double t)
     }
     if (cubic) {
         std::pair<Geom::CubicBezier, Geom::CubicBezier> div = cubic->subdivide(t);
-        std::vector<Geom::Point> seg1 = div.first.points(),
-                                 seg2 = div.second.points();
+        std::vector<Geom::Point> seg1 = div.first.controlPoints(),
+                                 seg2 = div.second.controlPoints();
         out->moveto(seg1[0]);
         out->curveto(seg1[1] + point1, seg1[2] + point2, seg1[3] + point3);
         out->curveto(seg2[1] + point_b1, seg2[2], seg2[3]);

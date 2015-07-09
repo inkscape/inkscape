@@ -64,7 +64,7 @@ void LPEAttachPath::resetDefaults(SPItem const * /*item*/)
 
 void LPEAttachPath::doEffect (SPCurve * curve)
 {
-    std::vector<Geom::Path> this_pathv = curve->get_pathvector();
+    Geom::PathVector this_pathv = curve->get_pathvector();
     if (sp_lpe_item && !this_pathv.empty()) {
         Geom::Path p = Geom::Path(this_pathv.front().initialPoint());
         
@@ -73,7 +73,7 @@ void LPEAttachPath::doEffect (SPCurve * curve)
         
         if (start_path.linksToPath()) {
 
-            std::vector<Geom::Path> linked_pathv = start_path.get_pathvector();
+            Geom::PathVector linked_pathv = start_path.get_pathvector();
             Geom::Affine linkedtransform = start_path.getObject()->getRelativeTransform(sp_lpe_item);
 
             if ( !linked_pathv.empty() )
@@ -87,7 +87,7 @@ void LPEAttachPath::doEffect (SPCurve * curve)
                     Geom::Coord length = derivs[deriv_n].length();
                     if ( ! Geom::are_near(length, 0) ) {
                         if (set_start_end) {
-                            start_path_position.param_set_value(transformedpath.nearestPoint(start_path_curve_end.getOrigin()));
+                            start_path_position.param_set_value(transformedpath.nearestTime(start_path_curve_end.getOrigin()).asFlatTime());
                         }
                         
                         if (start_path_position > transformedpath.size()) {
@@ -95,7 +95,8 @@ void LPEAttachPath::doEffect (SPCurve * curve)
                         } else if (start_path_position < 0) {
                             start_path_position.param_set_value(0);
                         }
-                        const Geom::Curve *c = start_path_position >= transformedpath.size() ? &transformedpath.back() : &transformedpath.at_index((int)start_path_position);
+                        Geom::Curve const *c = start_path_position >= transformedpath.size() ?
+							&transformedpath.back() : &transformedpath.at((int)start_path_position);
 
                         std::vector<Geom::Point> derivs_2 = c->pointAndDerivatives(start_path_position >= transformedpath.size() ? 1 : (start_path_position - (int)start_path_position), 3);
                         for (unsigned deriv_n_2 = 1; deriv_n_2 < derivs_2.size(); deriv_n_2++) {
@@ -126,7 +127,7 @@ void LPEAttachPath::doEffect (SPCurve * curve)
         
         if (end_path.linksToPath()) {
 
-            std::vector<Geom::Path> linked_pathv = end_path.get_pathvector();
+            Geom::PathVector linked_pathv = end_path.get_pathvector();
             Geom::Affine linkedtransform = end_path.getObject()->getRelativeTransform(sp_lpe_item);
 
             if ( !linked_pathv.empty() )
@@ -141,7 +142,7 @@ void LPEAttachPath::doEffect (SPCurve * curve)
                     Geom::Coord length = derivs[deriv_n].length();
                     if ( ! Geom::are_near(length, 0) ) {
                         if (set_end_end) {
-                            end_path_position.param_set_value(transformedpath.nearestPoint(end_path_curve_end.getOrigin()));
+                            end_path_position.param_set_value(transformedpath.nearestTime(end_path_curve_end.getOrigin()).asFlatTime());
                         }
                         
                         if (end_path_position > transformedpath.size()) {
@@ -149,7 +150,8 @@ void LPEAttachPath::doEffect (SPCurve * curve)
                         } else if (end_path_position < 0) {
                             end_path_position.param_set_value(0);
                         }
-                        const Geom::Curve *c = end_path_position >= transformedpath.size() ? &transformedpath.back() : &transformedpath.at_index((int)end_path_position);
+                        const Geom::Curve *c = end_path_position >= transformedpath.size() ?
+							&transformedpath.back() : &transformedpath.at((int)end_path_position);
 
                         std::vector<Geom::Point> derivs_2 = c->pointAndDerivatives(end_path_position >= transformedpath.size() ? 1 : (end_path_position - (int)end_path_position), 3);
                         for (unsigned deriv_n_2 = 1; deriv_n_2 < derivs_2.size(); deriv_n_2++) {

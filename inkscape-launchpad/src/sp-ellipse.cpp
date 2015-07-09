@@ -18,6 +18,7 @@
 #include <glibmm/i18n.h>
 
 #include <2geom/angle.h>
+#include <2geom/circle.h>
 #include <2geom/ellipse.h>
 #include <2geom/path-sink.h>
 #include <2geom/pathvector.h>

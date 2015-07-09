@@ -18,9 +18,7 @@
 #include <glib/gstdio.h>
 #include <glibmm/fileutils.h>
 #include <2geom/pathvector.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/elliptical-arc.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include <2geom/affine.h>
 #include <2geom/point.h>
 #include <2geom/path.h>
@@ -531,7 +529,7 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Affine const & tran
     case 2:
     {
         Geom::QuadraticBezier const *quadratic_bezier = static_cast<Geom::QuadraticBezier const*>(&c);
-        std::vector<Geom::Point> points = quadratic_bezier->points();
+        std::vector<Geom::Point> points = quadratic_bezier->controlPoints();
         points[0] *= trans;
         points[1] *= trans;
         points[2] *= trans;
@@ -554,7 +552,7 @@ feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Affine const & tran
     case 3:
     {
         Geom::CubicBezier const *cubic_bezier = static_cast<Geom::CubicBezier const*>(&c);
-        std::vector<Geom::Point> points = cubic_bezier->points();
+        std::vector<Geom::Point> points = cubic_bezier->controlPoints();
         //points[0] *= trans; // don't do this one here for fun: it is only needed for optimized strokes
         points[1] *= trans;
         points[2] *= trans;

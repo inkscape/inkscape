@@ -37,12 +37,10 @@ public:
                    double *Left,
                    double *Right);
 
-    double secant(Bezier bz);
-
-    double horner(Bezier bz, double t);
+    double secant(Bezier const &bz);
 
 
-    void find_bernstein_roots(Bezier bz, unsigned depth,
+    void find_bernstein_roots(Bezier const &bz, unsigned depth,
                          double left_t, double right_t);
 };
 
@@ -55,27 +53,7 @@ inline std::ostream &operator<< (std::ostream &out_file, const std::vector<T> & 
     return out_file << "]";
 }
 
-Bezier subRight(Bezier bz, double t) {
-    unsigned order = bz.order();
-    unsigned N = order+1;
-    std::valarray<Coord> row(N);
-    for (unsigned i = 0; i < N; i++)
-        row[i] = bz[i];
-
-    // Triangle computation
-    const double omt = (1-t);
-    Bezier Right = bz;
-    Right[order] = row[order];
-    for (unsigned i = 1; i < N; i++) {
-        for (unsigned j = 0; j < N - i; j++) {
-            row[j] = omt*row[j] + t*row[j+1];
-        }
-        Right[order-i] = row[order-i];
-    }
-    return Right;
-}
-
-void convex_hull_marching(Bezier src_bz, Bezier bz,
+void convex_hull_marching(Bezier const &src_bz, Bezier bz,
                           std::vector<double> &solutions,
                           double left_t,
                           double right_t)
@@ -111,7 +89,7 @@ void convex_hull_marching(Bezier src_bz, Bezier bz,
                   << " = " << bz(left_bound) << std::endl; 
         double new_left_t = left_bound * (right_t - left_t) + left_t;
         std::cout << "new_left_t = " << new_left_t << std::endl;
-        Bezier bzr = subRight(src_bz, new_left_t);
+        Bezier bzr = portion(src_bz, new_left_t, 1);
         while(bzr.order() > 0 && bzr[0] == 0) {
             std::cout << "deflate\n";
             bzr = bzr.deflate();
@@ -171,7 +149,7 @@ Bezier::find_bezier_roots(std::vector<double> &solutions,
     //std::cout << solutions << std::endl;
 }
 
-void Bernsteins::find_bernstein_roots(Bezier bz,
+void Bernsteins::find_bernstein_roots(Bezier const &bz,
                                       unsigned depth,
                                       double left_t,
                                       double right_t)
@@ -194,6 +172,11 @@ void Bernsteins::find_bernstein_roots(Bezier bz,
             old_sign = sign;
         }
     }
+    // if last control point is zero, that counts as crossing too
+    if (SGN(bz[bz.size()-1]) == 0) { 
+        ++n_crossings;
+    }
+
     //std::cout << "n_crossings = " << n_crossings << std::endl;
     if (n_crossings == 0)  return; // no solutions here
 
@@ -271,23 +254,7 @@ void Bernsteins::find_bernstein_roots(Bezier bz,
     }
 }
 
-
-// suggested by Sederberg.
-double Bernsteins::horner(Bezier bz, double t)
-{
-    double u, tn, tmp;
-    u = 1.0 - t;
-    tn = 1.0;
-    tmp = bz.at0() * u;
-    for(size_t i = 1; i < bz.degree(); ++i)
-    {
-        tn *= t;
-        tmp = (tmp + tn*choose<double>(bz.order(), (unsigned)i)*bz[i]) * u;
-    }
-    return (tmp + tn*t*bz.at1());
-}
-
-double Bernsteins::secant(Bezier bz) {
+double Bernsteins::secant(Bezier const &bz) {
     double s = 0, t = 1;
     double e = 1e-14;
     int side = 0;
@@ -303,7 +270,7 @@ double Bernsteins::secant(Bezier bz) {
             return r;
         }
 
-        double fr = horner(bz, r);
+        double fr = bz.valueAt(r);
 
         if (fr * ft > 0)
         {

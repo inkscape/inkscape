@@ -292,7 +292,7 @@ void Path::DoJoin (Shape *dest, double width, JoinType join, Geom::Point pos, Ge
 {
     Geom::Point pnor = prev.ccw();
     Geom::Point nnor = next.ccw();
-    double angSi = cross(next, prev);
+    double angSi = cross(prev, next);
 
     /* FIXED: this special case caused bug 1028953 */
     if (angSi > -0.0001 && angSi < 0.0001) {
@@ -416,7 +416,7 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
 {
     Geom::Point pnor=prev.ccw();
     Geom::Point nnor=next.ccw();
-    double angSi = cross (next, prev);
+    double angSi = cross(prev, next);
     if (angSi > -0.0001 && angSi < 0.0001)
     {
         double angCo = dot (prev, next);
@@ -444,7 +444,7 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
         /*		Geom::Point     biss;
                         biss.x=next.x-prev.x;
                         biss.y=next.y-prev.y;
-                        double   c2=cross(biss,next);
+                        double   c2=cross(next, biss);
                         double   l=width/c2;
                         double		projn=l*(dot(biss,next));
                         double		projp=-l*(dot(biss,prev));
@@ -503,7 +503,7 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
             }
             else
             {
-                double s2 = cross (biss, nnor);
+                double s2 = cross(nnor, biss);
                 double dec = (l - emiter) * c2 / s2;
                 const Geom::Point tbiss=biss.ccw();
 
@@ -560,7 +560,7 @@ Path::DoRightJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
 {
     const Geom::Point pnor=prev.ccw();
     const Geom::Point nnor=next.ccw();
-    double angSi = cross (next,prev);
+    double angSi = cross(prev, next);
     if (angSi > -0.0001 && angSi < 0.0001)
     {
         double angCo = dot (prev, next);
@@ -614,7 +614,7 @@ Path::DoRightJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
             }
             else
             {
-                double s2 = cross (biss, nnor);
+                double s2 = cross(nnor, biss);
                 double dec = (l - emiter) * c2 / s2;
                 const Geom::Point tbiss=biss.ccw();
 
@@ -667,7 +667,7 @@ Path::DoRightJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
         /*		Geom::Point     biss;
                         biss=next.x-prev.x;
                         biss.y=next.y-prev.y;
-                        double   c2=cross(next,biss);
+                        double   c2=cross(biss, next);
                         double   l=width/c2;
                         double		projn=l*(dot(biss,next));
                         double		projp=-l*(dot(biss,prev));
@@ -719,7 +719,7 @@ void Path::RecRound(Shape *dest, int sNo, int eNo, // start and end index
         sia = 1;
     } else {
         double coa = dot(nS, nE);
-        sia = cross(nS, nE);
+        sia = cross(nE, nS);
         ang = acos(coa);
         if ( coa >= 1 ) {
             ang = 0;

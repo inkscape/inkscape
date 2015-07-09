@@ -110,7 +110,7 @@ static bool try_get_intersect_point_with_item(SPPath* conn, SPItem* item,
     if (!at_start)
     {
         // connectors are actually a single path, so consider the first element from a Geom::PathVector
-        conn_pv[0] = conn_pv[0].reverse();
+        conn_pv[0] = conn_pv[0].reversed();
     }
 
     // We start with the intersection point at the beginning of the path

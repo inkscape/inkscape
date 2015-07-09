@@ -30,11 +30,12 @@
  *
  */
 
-#ifndef SEEN_LIB2GEOM_UTILS_H
-#define SEEN_LIB2GEOM_UTILS_H
+#ifndef LIB2GEOM_SEEN_UTILS_H
+#define LIB2GEOM_SEEN_UTILS_H
 
 #include <cstddef>
 #include <vector>
+#include <boost/operators.hpp>
 
 namespace Geom {
 
@@ -59,9 +60,20 @@ struct MultipliableNoncommutative : B
     }
 };
 
+/** @brief Null output iterator
+ * Use this if you want to discard a result returned through an output iterator. */
+struct NullIterator
+    : public boost::output_iterator_helper<NullIterator>
+{
+    NullIterator() {}
+
+    template <typename T>
+    void operator=(T const &v) {}
+};
+
 } // end namespace Geom
 
-#endif // SEEN_LIB2GEOM_UTILS_H
+#endif // LIB2GEOM_SEEN_UTILS_H
 
 /*
   Local Variables:

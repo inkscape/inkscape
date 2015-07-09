@@ -48,16 +48,16 @@ LPELineSegment::doBeforeEffect (SPLPEItem const* lpeitem)
     Inkscape::UI::Tools::lpetool_get_limiting_bbox_corners(lpeitem->document, bboxA, bboxB);
 }
 
-std::vector<Geom::Path>
-LPELineSegment::doEffect_path (std::vector<Geom::Path> const & path_in)
+Geom::PathVector
+LPELineSegment::doEffect_path (Geom::PathVector const & path_in)
 {
-    std::vector<Geom::Path> output;
+    Geom::PathVector output;
 
-    A = initialPoint(path_in);
-    B = finalPoint(path_in);
+    A = path_in.initialPoint();
+    B = path_in.finalPoint();
 
     Geom::Rect dummyRect(bboxA, bboxB);
-    boost::optional<Geom::LineSegment> intersection_segment = Geom::rect_line_intersect(dummyRect, Geom::Line(A, B));
+    boost::optional<Geom::LineSegment> intersection_segment = Geom::Line(A, B).clip(dummyRect);
 
     if (!intersection_segment) {
         g_print ("Possible error - no intersection with limiting bounding box.\n");
@@ -65,11 +65,11 @@ LPELineSegment::doEffect_path (std::vector<Geom::Path> const & path_in)
     }
 
     if (end_type == END_OPEN_INITIAL || end_type == END_OPEN_BOTH) {
-        A = (*intersection_segment).initialPoint();
+        A = intersection_segment->initialPoint();
     }
 
     if (end_type == END_OPEN_FINAL || end_type == END_OPEN_BOTH) {
-        B = (*intersection_segment).finalPoint();
+        B = intersection_segment->finalPoint();
     }
 
     Geom::Path path(A);

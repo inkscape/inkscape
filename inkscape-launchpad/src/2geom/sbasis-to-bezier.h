@@ -32,11 +32,11 @@
  *
  */
 
-#ifndef _SBASIS_TO_BEZIER
-#define _SBASIS_TO_BEZIER
+#ifndef LIB2GEOM_SEEN_SBASIS_TO_BEZIER_H
+#define LIB2GEOM_SEEN_SBASIS_TO_BEZIER_H
 
 #include <2geom/d2.h>
-#include <2geom/path.h>
+#include <2geom/pathvector.h>
 
 #include <vector>
 
@@ -44,7 +44,8 @@ namespace Geom {
 
 class PathBuilder;
 
-void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz = 0);
+void sbasis_to_bezier (Bezier &bz, SBasis const &sb, size_t sz = 0);
+void sbasis_to_bezier (D2<Bezier> &bz, D2<SBasis> const &sb, size_t sz = 0);
 void sbasis_to_bezier (std::vector<Point> & bz, D2<SBasis> const& sb, size_t sz = 0);
 void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb);
 void bezier_to_sbasis (SBasis & sb, Bezier const& bz);
@@ -65,7 +66,7 @@ sbasis_to_bezier(D2<SBasis> const &B, unsigned q = 0);
 #endif
 
 
-std::vector<Path> path_from_piecewise(Piecewise<D2<SBasis> > const &B, double tol, bool only_cubicbeziers = false);
+PathVector path_from_piecewise(Piecewise<D2<SBasis> > const &B, double tol, bool only_cubicbeziers = false);
 
 Path path_from_sbasis(D2<SBasis> const &B, double tol, bool only_cubicbeziers = false);
 inline Path cubicbezierpath_from_sbasis(D2<SBasis> const &B, double tol)
@@ -73,10 +74,7 @@ inline Path cubicbezierpath_from_sbasis(D2<SBasis> const &B, double tol)
 
 } // end namespace Geom
 
-
-
 #endif
-
 /*
   Local Variables:
   mode:c++

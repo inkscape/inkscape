@@ -313,7 +313,7 @@ void ColorProfile::set(unsigned key, gchar const *value) {
                     //# 1.  Get complete URI of document
                     gchar const *docbase = doc->getURI();
 
-                    gchar* escaped = g_uri_escape_string(this->href, "!*'();:@=+$,/?#[]", TRUE);
+                    gchar* escaped = g_uri_escape_string(this->href, "!*'();:@=+$,/?#", TRUE);
 
                     //g_message("docbase:%s\n", docbase);
                     //org::w3c::dom::URI docUri(docbase);

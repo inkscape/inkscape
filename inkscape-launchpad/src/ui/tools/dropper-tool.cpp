@@ -84,8 +84,7 @@ void DropperTool::setup() {
     ToolBase::setup();
 
     /* TODO: have a look at CalligraphicTool::setup where the same is done.. generalize? */
-    Geom::PathVector path;
-    Geom::Circle(0, 0, 1).getPath(path);
+    Geom::PathVector path = Geom::Path(Geom::Circle(0,0,1));
 
     SPCurve *c = new SPCurve(path);
 

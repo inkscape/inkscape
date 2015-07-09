@@ -17,8 +17,7 @@
 
 #include <2geom/pathvector.h>
 #include <2geom/sbasis-to-bezier.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include <2geom/curves.h>
 #include <errno.h>
 #include <signal.h>
 #include "util/units.h"
@@ -300,7 +299,7 @@ PrintLatex::print_2geomcurve(SVGOStringStream &os, Geom::Curve const &c)
         os << "\\lineto(" << c.finalPoint()[X] << "," << c.finalPoint()[Y] << ")\n";
     }
     else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&c)) {
-        std::vector<Geom::Point> points = cubic_bezier->points();
+        std::vector<Geom::Point> points = cubic_bezier->controlPoints();
         os << "\\curveto(" << points[1][X] << "," << points[1][Y] << ")("
                            << points[2][X] << "," << points[2][Y] << ")("
                            << points[3][X] << "," << points[3][Y] << ")\n";

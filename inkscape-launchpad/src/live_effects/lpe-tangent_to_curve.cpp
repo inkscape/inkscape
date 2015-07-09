@@ -90,7 +90,7 @@ LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const
     C = ptA - derivA * length_left;
     D = ptA + derivA * length_right;
 
-    output = Piecewise<D2<SBasis> >(D2<SBasis>(Linear(C[X], D[X]), Linear(C[Y], D[Y])));
+    output = Piecewise<D2<SBasis> >(D2<SBasis>(SBasis(C[X], D[X]), SBasis(C[Y], D[Y])));
 
     return output;
 }
@@ -135,7 +135,7 @@ KnotHolderEntityAttachPt::knot_set(Geom::Point const &p, Geom::Point const &/*or
     }
     Piecewise<D2<SBasis> > pwd2 = paths_to_pw( lpe->pathvector_before_effect );
     
-    double t0 = nearest_point(s, pwd2);
+    double t0 = nearest_time(s, pwd2);
     lpe->t_attach.param_set_value(t0);
 
     // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
@@ -149,7 +149,7 @@ KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*ori
 
     Geom::Point const s = snap_knot_position(p, state);
 
-    double lambda = Geom::nearest_point(s, lpe->ptA, lpe->derivA);
+    double lambda = Geom::nearest_time(s, lpe->ptA, lpe->derivA);
     lpe->length_left.param_set_value(-lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
@@ -162,7 +162,7 @@ KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*or
     
     Geom::Point const s = snap_knot_position(p, state);
 
-    double lambda = Geom::nearest_point(s, lpe->ptA, lpe->derivA);
+    double lambda = Geom::nearest_time(s, lpe->ptA, lpe->derivA);
     lpe->length_right.param_set_value(lambda);
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);

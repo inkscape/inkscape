@@ -453,38 +453,6 @@ private:
                             return false;
                         }
                     }
-                    else if(Geom::HLineSegment const *la = dynamic_cast<Geom::HLineSegment const*>(ca))
-                    {
-                        Geom::HLineSegment const *lb = dynamic_cast<Geom::HLineSegment const*>(cb);
-                        if (!Geom::are_near((*la).initialPoint(),(*lb).initialPoint(), eps)) {
-                            char temp[200];
-                            sprintf(temp, "Different start of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).initialPoint()[Geom::X], (*la).initialPoint()[Geom::Y], (*lb).initialPoint()[Geom::X], (*lb).initialPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_FAIL(temp);
-                            return false;
-                        }
-                        if (!Geom::are_near((*la).finalPoint(),(*lb).finalPoint(), eps)) {
-                            char temp[200];
-                            sprintf(temp, "Different end of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).finalPoint()[Geom::X], (*la).finalPoint()[Geom::Y], (*lb).finalPoint()[Geom::X], (*lb).finalPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_FAIL(temp);
-                            return false;
-                        }
-                    }
-                    else if(Geom::VLineSegment const *la = dynamic_cast<Geom::VLineSegment const*>(ca))
-                    {
-                        Geom::VLineSegment const *lb = dynamic_cast<Geom::VLineSegment const*>(cb);
-                        if (!Geom::are_near((*la).initialPoint(),(*lb).initialPoint(), eps)) {
-                            char temp[200];
-                            sprintf(temp, "Different start of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).initialPoint()[Geom::X], (*la).initialPoint()[Geom::Y], (*lb).initialPoint()[Geom::X], (*lb).initialPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_FAIL(temp);
-                            return false;
-                        }
-                        if (!Geom::are_near((*la).finalPoint(),(*lb).finalPoint(), eps)) {
-                            char temp[200];
-                            sprintf(temp, "Different end of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).finalPoint()[Geom::X], (*la).finalPoint()[Geom::Y], (*lb).finalPoint()[Geom::X], (*lb).finalPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_FAIL(temp);
-                            return false;
-                        }
-                    }
                     else if(Geom::CubicBezier const *la = dynamic_cast<Geom::CubicBezier const*>(ca))
                     {
                         Geom::CubicBezier const *lb = dynamic_cast<Geom::CubicBezier const*>(cb);
@@ -522,91 +490,10 @@ private:
                 }
                 else // not same type
                 {
-                    if(Geom::LineSegment const *la = dynamic_cast<Geom::LineSegment const*>(ca))
-                    {
-                        if (Geom::HLineSegment const *lb = dynamic_cast<Geom::HLineSegment const*>(cb)) {
-                            if (!Geom::are_near((*la).initialPoint(),(*lb).initialPoint(), eps)) {
-                                char temp[200];
-                                sprintf(temp, "Different start of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).initialPoint()[Geom::X], (*la).initialPoint()[Geom::Y], (*lb).initialPoint()[Geom::X], (*lb).initialPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                                TS_FAIL(temp);
-                                return false;
-                            }
-                            if (!Geom::are_near((*la).finalPoint(),(*lb).finalPoint(), eps)) {
-                                char temp[200];
-                                sprintf(temp, "Different end of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).finalPoint()[Geom::X], (*la).finalPoint()[Geom::Y], (*lb).finalPoint()[Geom::X], (*lb).finalPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                                TS_FAIL(temp);
-                                return false;
-                            }
-                            char temp[200];
-                            sprintf(temp, "A LineSegment and an HLineSegment have been considered equal. Subpath: %u, segment: %u", static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_TRACE(temp);
-                        } else if (Geom::VLineSegment const *lb = dynamic_cast<Geom::VLineSegment const*>(cb)) {
-                            if (!Geom::are_near((*la).initialPoint(),(*lb).initialPoint(), eps)) {
-                                char temp[200];
-                                sprintf(temp, "Different start of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).initialPoint()[Geom::X], (*la).initialPoint()[Geom::Y], (*lb).initialPoint()[Geom::X], (*lb).initialPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                                TS_FAIL(temp);
-                                return false;
-                            }
-                            if (!Geom::are_near((*la).finalPoint(),(*lb).finalPoint(), eps)) {
-                                char temp[200];
-                                sprintf(temp, "Different end of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).finalPoint()[Geom::X], (*la).finalPoint()[Geom::Y], (*lb).finalPoint()[Geom::X], (*lb).finalPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                                TS_FAIL(temp);
-                                return false;
-                            }
-                            char temp[200];
-                            sprintf(temp, "A LineSegment and a VLineSegment have been considered equal. Subpath: %u, segment: %u", static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_TRACE(temp);
-                        } else {
-                            char temp[200];
-                            sprintf(temp, "Different curve types: %s != %s, subpath: %u, segment: %u", typeid(*ca).name(), typeid(*cb).name(), static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_FAIL(temp);
-                        }
-                    }
-                    else if(Geom::LineSegment const *lb = dynamic_cast<Geom::LineSegment const*>(cb))
-                    {
-                        if (Geom::HLineSegment const *la = dynamic_cast<Geom::HLineSegment const*>(ca)) {
-                            if (!Geom::are_near((*la).initialPoint(),(*lb).initialPoint(), eps)) {
-                                char temp[200];
-                                sprintf(temp, "Different start of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).initialPoint()[Geom::X], (*la).initialPoint()[Geom::Y], (*lb).initialPoint()[Geom::X], (*lb).initialPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                                TS_FAIL(temp);
-                                return false;
-                            }
-                            if (!Geom::are_near((*la).finalPoint(),(*lb).finalPoint(), eps)) {
-                                char temp[200];
-                                sprintf(temp, "Different end of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).finalPoint()[Geom::X], (*la).finalPoint()[Geom::Y], (*lb).finalPoint()[Geom::X], (*lb).finalPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                                TS_FAIL(temp);
-                                return false;
-                            }
-                            char temp[200];
-                            sprintf(temp, "An HLineSegment and a LineSegment have been considered equal. Subpath: %u, segment: %u", static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_TRACE(temp);
-                        } else if (Geom::VLineSegment const *la = dynamic_cast<Geom::VLineSegment const*>(ca)) {
-                            if (!Geom::are_near((*la).initialPoint(),(*lb).initialPoint(), eps)) {
-                                char temp[200];
-                                sprintf(temp, "Different start of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).initialPoint()[Geom::X], (*la).initialPoint()[Geom::Y], (*lb).initialPoint()[Geom::X], (*lb).initialPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                                TS_FAIL(temp);
-                                return false;
-                            }
-                            if (!Geom::are_near((*la).finalPoint(),(*lb).finalPoint(), eps)) {
-                                char temp[200];
-                                sprintf(temp, "Different end of segment: (%g,%g) != (%g,%g), subpath: %u, segment: %u", (*la).finalPoint()[Geom::X], (*la).finalPoint()[Geom::Y], (*lb).finalPoint()[Geom::X], (*lb).finalPoint()[Geom::Y], static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                                TS_FAIL(temp);
-                                return false;
-                            }
-                            char temp[200];
-                            sprintf(temp, "A VLineSegment and a LineSegment have been considered equal. Subpath: %u, segment: %u", static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_TRACE(temp);
-                        } else {
-                            char temp[200];
-                            sprintf(temp, "Different curve types: %s != %s, subpath: %u, segment: %u", typeid(*ca).name(), typeid(*cb).name(), static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                            TS_FAIL(temp);
-                            return false;
-                        }
-                    } else {
-                        char temp[200];
-                        sprintf(temp, "Different curve types: %s != %s, subpath: %u, segment: %u", typeid(*ca).name(), typeid(*cb).name(), static_cast<unsigned int>(i), static_cast<unsigned int>(j));
-                        TS_FAIL(temp);
-                    }
+                    char temp[200];
+                    sprintf(temp, "Different curve types: %s != %s, subpath: %u, segment: %u", typeid(*ca).name(), typeid(*cb).name(), static_cast<unsigned int>(i), static_cast<unsigned int>(j));
+                    TS_FAIL(temp);
+                    return false;
                 }
             }
         }

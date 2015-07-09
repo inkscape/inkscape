@@ -33,14 +33,14 @@
  *
  */
 
-#ifndef __GEOM_CROSSING_H
-#define __GEOM_CROSSING_H
+#ifndef LIB2GEOM_SEEN_CROSSING_H
+#define LIB2GEOM_SEEN_CROSSING_H
 
 #include <vector>
 #include <2geom/rect.h>
-#include <2geom/sweep.h>
+#include <2geom/sweep-bounds.h>
 #include <boost/optional/optional.hpp>
-#include <2geom/path.h>
+#include <2geom/pathvector.h>
 
 namespace Geom {
 
@@ -99,7 +99,7 @@ struct TimeOrder {
 };
 
 class Path;
-CrossingGraph create_crossing_graph(std::vector<Path> const &p, Crossings const &crs);
+CrossingGraph create_crossing_graph(PathVector const &p, Crossings const &crs);
 */
 
 /*inline bool are_near(Crossing a, Crossing b) {
@@ -143,11 +143,24 @@ std::vector<Rect> bounds(Path const &a);
 
 inline void sort_crossings(Crossings &cr, unsigned ix) { std::sort(cr.begin(), cr.end(), CrossingOrder(ix)); }
 
+template <typename T>
+struct CrossingTraits {
+    typedef std::vector<T> VectorT;
+    static inline VectorT init(T const &x) { return VectorT(1, x); }
+};
+template <>
+struct CrossingTraits<Path> {
+    typedef PathVector VectorT;
+    static inline VectorT vector_one(Path const &x) { return VectorT(x); }
+};
+
 template<typename T>
 struct Crosser {
+    typedef typename CrossingTraits<T>::VectorT VectorT;
     virtual ~Crosser() {}
-    virtual Crossings crossings(T const &a, T const &b) { return crossings(std::vector<T>(1,a), std::vector<T>(1,b))[0]; }
-    virtual CrossingSet crossings(std::vector<T> const &a, std::vector<T> const &b) {
+    virtual Crossings crossings(T const &a, T const &b) {
+        return crossings(CrossingTraits<T>::vector_one(a), CrossingTraits<T>::vector_one(b))[0]; }
+    virtual CrossingSet crossings(VectorT const &a, VectorT const &b) {
         CrossingSet results(a.size() + b.size(), Crossings());
     
         std::vector<std::vector<unsigned> > cull = sweep_bounds(bounds(a), bounds(b));
@@ -185,7 +198,7 @@ CrossingSet reverse_tb(CrossingSet const &cr, unsigned split, std::vector<double
 void clean(Crossings &cr_a, Crossings &cr_b);
 void delete_duplicates(Crossings &crs);
 
-}
+} // end namespace Geom
 
 #endif
 /*

@@ -79,7 +79,7 @@ PowerStrokePointArrayParam::recalculate_controlpoints_for_new_pwd2(Geom::Piecewi
                 Geom::Point pt = _vector[i];
                 Geom::Point position = last_pwd2.valueAt(pt[Geom::X]) + pt[Geom::Y] * last_pwd2_normal.valueAt(pt[Geom::X]);
                 
-                double t = nearest_point(position, pwd2_in);
+                double t = nearest_time(position, pwd2_in);
                 double offset = dot(position - pwd2_in.valueAt(t), normal.valueAt(t));
                 _vector[i] = Geom::Point(t, offset);
             }
@@ -161,7 +161,7 @@ PowerStrokePointArrayParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom:
     Piecewise<D2<SBasis> > const & n = _pparam->get_pwd2_normal();
 
     Geom::Point const s = snap_knot_position(p, state);
-    double t = nearest_point(s, pwd2);
+    double t = nearest_time(s, pwd2);
     double offset = dot(s - pwd2.valueAt(t), n.valueAt(t));
     _pparam->_vector.at(_index) = Geom::Point(t, offset);
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);

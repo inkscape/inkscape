@@ -38,8 +38,8 @@
  *
  */
 
-#ifndef LIB2GEOM_EXCEPTION_HEADER
-#define LIB2GEOM_EXCEPTION_HEADER
+#ifndef LIB2GEOM_SEEN_EXCEPTION_H
+#define LIB2GEOM_SEEN_EXCEPTION_H
 
 #include <exception>
 #include <sstream>

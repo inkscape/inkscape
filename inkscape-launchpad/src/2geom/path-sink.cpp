@@ -31,78 +31,63 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/path-sink.h>
 #include <2geom/exception.h>
+#include <2geom/circle.h>
+#include <2geom/ellipse.h>
 
 namespace Geom {
 
-void output(Curve const &curve, PathSink &sink) {
-    std::vector<Point> pts;
-    sbasis_to_bezier(pts, curve.toSBasis(), 2); //TODO: use something better!
-    sink.curveTo(pts[0], pts[1], pts[2]);
+void PathSink::feed(Curve const &c, bool moveto_initial)
+{
+    c.feed(*this, moveto_initial);
 }
 
-void output(HLineSegment const &curve, PathSink &sink) {
-    sink.hlineTo(curve.finalPoint()[X]);
-}
-
-void output(VLineSegment const &curve, PathSink &sink) {
-    sink.vlineTo(curve.finalPoint()[Y]);
-}
-
-void output(LineSegment const &curve, PathSink &sink) {
-    sink.lineTo(curve[1]);
-}
-
-void output(CubicBezier const &curve, PathSink &sink) {
-    sink.curveTo(curve[1], curve[2], curve[3]);
-}
-
-void output(QuadraticBezier const &curve, PathSink &sink) {
-    sink.quadTo(curve[1], curve[2]);
-}
-
-void output(SVGEllipticalArc const &curve, PathSink &sink) {
-    sink.arcTo( curve.ray(X), curve.ray(Y), curve.rotationAngle(),
-    			curve.largeArc(), curve.sweep(),
-    			curve.finalPoint() );
-}
-
-template <typename T>
-bool output_as(Curve const &curve, PathSink &sink) {
-    T const *t = dynamic_cast<T const *>(&curve);
-    if (t) {
-        output(*t, sink);
-        return true;
-    } else {
-        return false;
-    }
-}
-
-void PathSink::path(Path const &path) {
+void PathSink::feed(Path const &path) {
     flush();
     moveTo(path.front().initialPoint());
 
-    Path::const_iterator iter;
-    for (iter = path.begin(); iter != path.end(); ++iter) {
-    	output_as<HLineSegment>(*iter, *this) ||
-    	output_as<VLineSegment>(*iter, *this) ||
-        output_as<LineSegment>(*iter, *this) ||
-        output_as<CubicBezier>(*iter, *this) ||
-        output_as<QuadraticBezier>(*iter, *this) ||
-        output_as<SVGEllipticalArc>(*iter, *this) ||
-        output_as<Curve>(*iter, *this);
+    // never output the closing segment to the sink
+    Path::const_iterator iter = path.begin(), last = path.end_open();
+    for (; iter != last; ++iter) {
+        iter->feed(*this, false);
     }
-
     if (path.closed()) {
         closePath();
     }
     flush();
 }
 
-void PathSink::pathvector(PathVector const &pv) {
-    flush();
+void PathSink::feed(PathVector const &pv) {
     for (PathVector::const_iterator i = pv.begin(); i != pv.end(); ++i) {
-        path(*i);
+        feed(*i);
     }
+}
+
+void PathSink::feed(Rect const &r) {
+    moveTo(r.corner(0));
+    lineTo(r.corner(1));
+    lineTo(r.corner(2));
+    lineTo(r.corner(3));
+    closePath();
+}
+
+void PathSink::feed(Circle const &e) {
+    Coord r = e.radius();
+    Point c = e.center();
+    Point a = c + Point(0, c[Y] + r);
+    Point b = c + Point(0, c[Y] - r);
+
+    moveTo(a);
+    arcTo(r, r, 0, false, false, b);
+    arcTo(r, r, 0, false, false, a);
+    closePath();
+}
+
+void PathSink::feed(Ellipse const &e) {
+    Point s = e.pointAt(0);
+    moveTo(s);
+    arcTo(e.ray(X), e.ray(Y), e.rotationAngle(), false, false, e.pointAt(M_PI));
+    arcTo(e.ray(X), e.ray(Y), e.rotationAngle(), false, false, s);
+    closePath();
 }
 
 }

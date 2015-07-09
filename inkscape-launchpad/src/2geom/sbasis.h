@@ -1,7 +1,6 @@
-/**
- * \file
- * \brief Defines S-power basis function class
- *
+/** @file
+ * @brief Polynomial in symmetric power basis (S-basis)
+ *//*
  *  Authors:
  *   Nathan Hurst <njh@mail.csse.monash.edu.au>
  *   Michael Sloan <mgsloan@gmail.com>
@@ -32,8 +31,8 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef SEEN_SBASIS_H
-#define SEEN_SBASIS_H
+#ifndef LIB2GEOM_SEEN_SBASIS_H
+#define LIB2GEOM_SEEN_SBASIS_H
 #include <vector>
 #include <cassert>
 #include <iostream>
@@ -61,13 +60,13 @@ class SBasis : public SBasisN<1>;
 };
 #else
 
-namespace Geom{
+namespace Geom {
 
 /**
-* \brief S-power basis function class
-*
-* An empty SBasis is identically 0. */
-class SBasis{
+ * @brief Polynomial in symmetric power basis
+ * @ingroup Fragments
+ */
+class SBasis {
     std::vector<Linear> d;
     void push_back(Linear const&l) { d.push_back(l); }
 
@@ -101,11 +100,17 @@ public:
 
     
     SBasis() {}
-    explicit SBasis(double a) {
-        push_back(Linear(a,a));
+    explicit SBasis(double a)
+        : d(1)
+    {
+        d[0][0] = a;
+        d[0][1] = a;
     }
-    explicit SBasis(double a, double b) {
-        push_back(Linear(a,b));
+    explicit SBasis(double a, double b)
+        : d(1)
+    {
+        d[0][0] = a;
+        d[0][1] = b;
     }
     SBasis(SBasis const & a) :
         d(a.d)
@@ -117,9 +122,68 @@ public:
         push_back(bo);
     }
     SBasis(Linear* bo) {
-        push_back(*bo);
+        if (bo) {
+            push_back(*bo);
+        }
     }
     explicit SBasis(size_t n, Linear const&l) : d(n, l) {}
+
+    SBasis(Coord c0, Coord c1, Coord c2, Coord c3)
+        : d(2)
+    {
+        d[0][0] = c0;
+        d[1][0] = c1;
+        d[1][1] = c2;
+        d[0][1] = c3;
+    }
+    SBasis(Coord c0, Coord c1, Coord c2, Coord c3, Coord c4, Coord c5)
+        : d(3)
+    {
+        d[0][0] = c0;
+        d[1][0] = c1;
+        d[2][0] = c2;
+        d[2][1] = c3;
+        d[1][1] = c4;
+        d[0][1] = c5;
+    }
+    SBasis(Coord c0, Coord c1, Coord c2, Coord c3, Coord c4, Coord c5,
+           Coord c6, Coord c7)
+        : d(4)
+    {
+        d[0][0] = c0;
+        d[1][0] = c1;
+        d[2][0] = c2;
+        d[3][0] = c3;
+        d[3][1] = c4;
+        d[2][1] = c5;
+        d[1][1] = c6;
+        d[0][1] = c7;
+    }
+    SBasis(Coord c0, Coord c1, Coord c2, Coord c3, Coord c4, Coord c5,
+           Coord c6, Coord c7, Coord c8, Coord c9)
+        : d(5)
+    {
+        d[0][0] = c0;
+        d[1][0] = c1;
+        d[2][0] = c2;
+        d[3][0] = c3;
+        d[4][0] = c4;
+        d[4][1] = c5;
+        d[3][1] = c6;
+        d[2][1] = c7;
+        d[1][1] = c8;
+        d[0][1] = c9;
+    }
+
+    // construct from a sequence of coefficients
+    template <typename Iter>
+    SBasis(Iter first, Iter last) {
+        assert(std::distance(first, last) % 2 == 0);
+        for (; first != last; ++first) {
+            --last;
+            push_back(Linear(*first, *last));
+        }
+    }
 
     //IMPL: FragmentConcept
     typedef double output_type;
@@ -140,12 +204,10 @@ public:
     }
 
     bool isFinite() const;
-    inline double at0() const { 
-        if(empty()) return 0; else return (*this)[0][0];
-    }
-    inline double at1() const{
-        if(empty()) return 0; else return (*this)[0][1];
-    }
+    inline Coord at0() const { return (*this)[0][0]; }
+    inline Coord &at0() { return (*this)[0][0]; }
+    inline Coord at1() const { return (*this)[0][1]; }
+    inline Coord &at1() { return (*this)[0][1]; }
     
     int degreesOfFreedom() const { return size()*2;}
 
@@ -348,8 +410,8 @@ SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order=2, doubl
  \return sbasis
  \relates SBasis
 */
-inline SBasis portion(const SBasis &t, double from, double to) { return compose(t, Linear(from, to)); }
-inline SBasis portion(const SBasis &t, Interval ivl) { return compose(t, Linear(ivl.min(), ivl.max())); }
+SBasis portion(const SBasis &t, double from, double to);
+inline SBasis portion(const SBasis &t, Interval const &ivl) { return portion(t, ivl.min(), ivl.max()); }
 
 // compute f(g)
 inline SBasis
@@ -364,7 +426,10 @@ inline std::ostream &operator<< (std::ostream &out_file, const Linear &bo) {
 
 inline std::ostream &operator<< (std::ostream &out_file, const SBasis & p) {
     for(unsigned i = 0; i < p.size(); i++) {
-        out_file << p[i] << "s^" << i << " + ";
+        if (i != 0) {
+            out_file << " + ";
+        }
+        out_file << p[i] << "s^" << i;
     }
     return out_file;
 }

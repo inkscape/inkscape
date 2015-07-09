@@ -33,8 +33,8 @@
  *
  */
 
-#ifndef SEEN_SBASIS_2D_H
-#define SEEN_SBASIS_2D_H
+#ifndef LIB2GEOM_SEEN_SBASIS_2D_H
+#define LIB2GEOM_SEEN_SBASIS_2D_H
 #include <vector>
 #include <cassert>
 #include <algorithm>
@@ -356,8 +356,9 @@ sb2dsolve(SBasis2d const &f, Geom::Point const &A, Geom::Point const &B, unsigne
 D2<SBasis>
 sb2d_cubic_solve(SBasis2d const &f, Geom::Point const &A, Geom::Point const &B);
 
-};
+} // end namespace Geom
 
+#endif
 /*
   Local Variables:
   mode:c++
@@ -368,4 +369,3 @@ sb2d_cubic_solve(SBasis2d const &f, Geom::Point const &A, Geom::Point const &B);
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
-#endif

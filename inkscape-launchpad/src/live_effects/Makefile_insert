@@ -14,8 +14,6 @@ ink_common_sources += \
 	live_effects/lpe-patternalongpath.h	\
 	live_effects/lpe-bendpath.cpp	\
 	live_effects/lpe-bendpath.h	\
-	live_effects/lpe-boolops.cpp	\
-	live_effects/lpe-boolops.h	\
 	live_effects/lpe-dynastroke.cpp	\
 	live_effects/lpe-dynastroke.h	\
 	live_effects/lpe-extrude.cpp	\

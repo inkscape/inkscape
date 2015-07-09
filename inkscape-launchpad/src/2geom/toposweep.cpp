@@ -189,7 +189,7 @@ bool SectionSorter::operator()(Section const &a, Section const &b) const {
         }
     }
     
-    return Point::LexOrderRt(dim)(a.fp, b.fp);
+    return Point::LexLessRt(dim)(a.fp, b.fp);
 }
 
 // splits a section into pieces, as specified by an array of doubles, mutating the section to
@@ -203,7 +203,7 @@ std::vector<boost::shared_ptr<Section> > split_section(boost::shared_ptr<Section
     
     s->t = cuts[1];
     s->tp = s->curve.get(ps)(cuts[1]);
-    assert(Point::LexOrderRt(d)(s->fp, s->tp));
+    assert(Point::LexLessRt(d)(s->fp, s->tp));
     
     ret.reserve(cuts.size() - 2);
     for(int i = cuts.size() - 1; i > 1; i--) ret.push_back(boost::shared_ptr<Section>(new Section(s->curve, cuts[i-1], cuts[i], ps, d)));
@@ -380,7 +380,7 @@ TopoGraph::TopoGraph(PathVector const &ps, Dim2 d, double t) : dim(d), tol(t) {
         //find all sections to remove
         for(int i = context.size() - 1; i >= 0; i--) {
             boost::shared_ptr<Section> sec = context[i].section;
-            if(Point::LexOrderRt(d)(lim, sec->tp)) {
+            if(Point::LexLessRt(d)(lim, sec->tp)) {
                 //sec->tp is less than or equal to lim
                 if(context[i].to_vert == -1) {
                     //we need to create a new vertex; add everything that enters it
@@ -639,6 +639,7 @@ void remove_area_whiskers(Areas &areas) {
 
 Path area_to_path(PathVector const &ps, Area const &area) {
     Path ret;
+    ret.setStitching(true);
     if(area.size() == 0) return ret;
     Point prev = area[0]->fp;
     for(unsigned i = 0; i < area.size(); i++) {
@@ -646,17 +647,18 @@ Path area_to_path(PathVector const &ps, Area const &area) {
         Curve *curv = area[i]->curve.get(ps).portion(
                           forward ? area[i]->f : area[i]->t,
                           forward ? area[i]->t : area[i]->f);
-        ret.append(*curv, Path::STITCH_DISCONTINUOUS);
+        ret.append(*curv);
         delete curv;
         prev = forward ? area[i]->tp : area[i]->fp;
     }
+    ret.setStitching(false);
     return ret;
 }
 
 PathVector areas_to_paths(PathVector const &ps, Areas const &areas) {
-    std::vector<Path> ret;
-    ret.reserve(areas.size());
-    for(unsigned i = 0; i < areas.size(); i++)
+    PathVector ret;
+    //ret.reserve(areas.size());
+    for(unsigned i = 0; i < areas.size(); ++i)
         ret.push_back(area_to_path(ps, areas[i]));
     return ret;
 }

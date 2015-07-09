@@ -28,11 +28,9 @@
  * the specific language governing rights and limitations.
  */
 
-
-#include <2geom/line.h>
-
 #include <algorithm>
-
+#include <2geom/line.h>
+#include <2geom/math-utils.h>
 
 namespace Geom
 {
@@ -41,12 +39,18 @@ namespace Geom
  * @class Line
  * @brief Infinite line on a plane.
  *
- * Every line in 2Geom has a special point on it, called the origin. The direction of the line
- * is stored as a unit vector (versor). This way a line can be interpreted as a function
- * \f$ f: (-\infty, \infty) \to \mathbb{R}^2\f$. Zero corresponds to the origin point,
- * positive values to the points in the direction of the unit vector, and negative values
- * to points in the opposite direction.
- * 
+ * A line is specified as two points through which it passes. Lines can be interpreted as functions
+ * \f$ f: (-\infty, \infty) \to \mathbb{R}^2\f$. Zero corresponds to the first (origin) point,
+ * one corresponds to the second (final) point. All other points are computed as a linear
+ * interpolation between those two: \f$p = (1-t) a + t b\f$. Many such functions have the same
+ * image and therefore represent the same lines; for example, adding \f$b-a\f$ to both points
+ * yields the same line.
+ *
+ * 2Geom can represent the same line in many ways by design: using a different representation
+ * would lead to precision loss. For example, a line from (1e30, 1e30) to (10,0) would actually
+ * evaluate to (0,0) at time 1 if it was stored as origin and normalized versor,
+ * or origin and angle.
+ *
  * @ingroup Primitives
  */
 
@@ -54,36 +58,69 @@ namespace Geom
  * A line is a set of points that satisfies the line equation
  * \f$Ax + By + C = 0\f$. This function changes the line so that its points
  * satisfy the line equation with the given coefficients. */
-void Line::setCoefficients (double a, double b, double c) {
+void Line::setCoefficients (Coord a, Coord b, Coord c)
+{
+    // degenerate case
     if (a == 0 && b == 0) {
         if (c != 0) {
-            THROW_LOGICALERROR("the passed coefficients gives the empty set");
+            THROW_LOGICALERROR("the passed coefficients give the empty set");
         }
-        m_versor = Point(0,0);
-        m_origin = Point(0,0);
-    } else {
-        double l = hypot(a,b);
-        a /= l;
-        b /= l;
-        c /= l;
-        Point N(a, b);
-        m_versor = N.ccw();
-        m_origin = -c * N;
+        _initial = Point(0,0);
+        _final = Point(0,0);
+        return;
     }
+
+    // The way final / initial points are set based on coefficients is somewhat unusual.
+    // This is done to make sure that calling coefficients() will give back
+    // (almost) the same values.
+
+    // vertical case
+    if (a == 0) {
+        // b must be nonzero
+        _initial = Point(-b/2, -c / b);
+        _final = _initial;
+        _final[X] = b/2;
+        return;
+    }
+
+    // horizontal case
+    if (b == 0) {
+        _initial = Point(-c / a, a/2);
+        _final = _initial;
+        _final[Y] = -a/2;
+        return;
+    }
+
+    // This gives reasonable results regardless of the magnitudes of a, b and c.
+    _initial = Point(-b/2,a/2);
+    _final = Point(b/2,-a/2);
+
+    Point offset(-c/(2*a), -c/(2*b));
+
+    _initial += offset;
+    _final += offset;
 }
 
-/** @brief Get the line equation coefficients of this line.
+void Line::coefficients(Coord &a, Coord &b, Coord &c) const
+{
+    Point v = versor().cw();
+    a = v[X];
+    b = v[Y];
+    c = cross(_initial, _final);
+}
+
+/** @brief Get the implicit line equation coefficients.
+ * Note that conversion to implicit form always causes loss of
+ * precision when dealing with lines that start far from the origin
+ * and end very close to it. It is recommended to normalize the line
+ * before converting it to implicit form.
  * @return Vector with three values corresponding to the A, B and C
  *         coefficients of the line equation for this line. */
-std::vector<double> Line::coefficients() const {
-    std::vector<double> coeff;
-    coeff.reserve(3);
-    Point N = versor().cw();
-    coeff.push_back (N[X]);
-    coeff.push_back (N[Y]);
-    double d = - dot (N, origin());
-    coeff.push_back (d);
-    return coeff;
+std::vector<Coord> Line::coefficients() const
+{
+    std::vector<Coord> c(3);
+    coefficients(c[0], c[1], c[2]);
+    return c;
 }
 
 /** @brief Find intersection with an axis-aligned line.
@@ -91,15 +128,90 @@ std::vector<double> Line::coefficients() const {
  * @param d Which axis the coordinate is on. X means a vertical line, Y means a horizontal line.
  * @return Time values at which this line intersects the query line. */
 std::vector<Coord> Line::roots(Coord v, Dim2 d) const {
-    if (d < 0 || d > 1)
-        THROW_RANGEERROR("Line::roots, dimension argument out of range");
     std::vector<Coord> result;
-    if ( m_versor[d] != 0 )
-    {
-        result.push_back( (v - m_origin[d]) / m_versor[d] );
+    Coord r = root(v, d);
+    if (IS_FINITE(r)) {
+        result.push_back(r);
     }
-    // TODO: else ?
     return result;
+}
+
+Coord Line::root(Coord v, Dim2 d) const
+{
+    assert(d == X || d == Y);
+    Point vs = versor();
+    if (vs[d] != 0) {
+        return (v - _initial[d]) / vs[d];
+    } else {
+        return nan("");
+    }
+}
+
+boost::optional<LineSegment> Line::clip(Rect const &r) const
+{
+    Point v = versor();
+    // handle horizontal and vertical lines first,
+    // since the root-based code below will break for them
+    for (unsigned i = 0; i < 2; ++i) {
+        Dim2 d = (Dim2) i;
+        Dim2 o = other_dimension(d);
+        if (v[d] != 0) continue;
+        if (r[d].contains(_initial[d])) {
+            Point a, b;
+            a[o] = r[o].min();
+            b[o] = r[o].max();
+            a[d] = b[d] = _initial[d];
+            if (v[o] > 0) {
+                return LineSegment(a, b);
+            } else {
+                return LineSegment(b, a);
+            }
+        } else {
+            return boost::none;
+        }
+    }
+
+    Interval xpart(root(r[X].min(), X), root(r[X].max(), X));
+    Interval ypart(root(r[Y].min(), Y), root(r[Y].max(), Y));
+    if (!xpart.isFinite() || !ypart.isFinite()) {
+        return boost::none;
+    }
+
+    OptInterval common = xpart & ypart;
+    if (common) {
+        Point p1 = pointAt(common->min()), p2 = pointAt(common->max());
+        LineSegment result(r.clamp(p1), r.clamp(p2));
+        return result;
+    } else {
+        return boost::none;
+    }
+
+    /* old implementation using coefficients:
+
+    if (fabs(b) > fabs(a)) {
+        p0 = Point(r[X].min(), (-c - a*r[X].min())/b);
+        if (p0[Y] < r[Y].min())
+            p0 = Point((-c - b*r[Y].min())/a, r[Y].min());
+        if (p0[Y] > r[Y].max())
+            p0 = Point((-c - b*r[Y].max())/a, r[Y].max());
+        p1 = Point(r[X].max(), (-c - a*r[X].max())/b);
+        if (p1[Y] < r[Y].min())
+            p1 = Point((-c - b*r[Y].min())/a, r[Y].min());
+        if (p1[Y] > r[Y].max())
+            p1 = Point((-c - b*r[Y].max())/a, r[Y].max());
+    } else {
+        p0 = Point((-c - b*r[Y].min())/a, r[Y].min());
+        if (p0[X] < r[X].min())
+            p0 = Point(r[X].min(), (-c - a*r[X].min())/b);
+        if (p0[X] > r[X].max())
+            p0 = Point(r[X].max(), (-c - a*r[X].max())/b);
+        p1 = Point((-c - b*r[Y].max())/a, r[Y].max());
+        if (p1[X] < r[X].min())
+            p1 = Point(r[X].min(), (-c - a*r[X].min())/b);
+        if (p1[X] > r[X].max())
+            p1 = Point(r[X].max(), (-c - a*r[X].max())/b);
+    }
+    return LineSegment(p0, p1); */
 }
 
 /** @brief Get a time value corresponding to a point.
@@ -107,71 +219,122 @@ std::vector<Coord> Line::roots(Coord v, Dim2 d) const {
  *          the returned value will be meaningless.
  * @return Time value t such that \f$f(t) = p\f$.
  * @see timeAtProjection */
-Coord Line::timeAt(Point const& _point) const {
-    Coord t;
-    if ( m_versor[X] != 0 ) {
-        t = (_point[X] - m_origin[X]) / m_versor[X];
+Coord Line::timeAt(Point const &p) const
+{
+    Point v = versor();
+    // degenerate case
+    if (v[X] == 0 && v[Y] == 0) {
+        return 0;
     }
-    else if ( m_versor[Y] != 0 ) {
-        t = (_point[Y] - m_origin[Y]) / m_versor[Y];
+
+    // use the coordinate that will give better precision
+    if (fabs(v[X]) > fabs(v[Y])) {
+        return (p[X] - _initial[X]) / v[X];
+    } else {
+        return (p[Y] - _initial[Y]) / v[Y];
     }
-    else { // degenerate case
-        t = 0;
+}
+
+std::vector<ShapeIntersection> Line::intersect(Line const &other) const
+{
+    std::vector<ShapeIntersection> result;
+
+    Point v1 = versor();
+    Point v2 = other.versor();
+    Coord cp = cross(v1, v2);
+    if (cp == 0) return result;
+
+    Point odiff = other.initialPoint() - initialPoint();
+    Coord t1 = cross(odiff, v2) / cp;
+    Coord t2 = cross(odiff, v1) / cp;
+    result.push_back(ShapeIntersection(*this, other, t1, t2));
+    return result;
+}
+
+std::vector<ShapeIntersection> Line::intersect(Ray const &r) const
+{
+    Line other(r);
+    std::vector<ShapeIntersection> result = intersect(other);
+    filter_ray_intersections(result, false, true);
+    return result;
+}
+
+std::vector<ShapeIntersection> Line::intersect(LineSegment const &ls) const
+{
+    Line other(ls);
+    std::vector<ShapeIntersection> result = intersect(other);
+    filter_line_segment_intersections(result, false, true);
+    return result;
+}
+
+
+
+void filter_line_segment_intersections(std::vector<ShapeIntersection> &xs, bool a, bool b)
+{
+    Interval unit(0, 1);
+    std::vector<ShapeIntersection>::reverse_iterator i = xs.rbegin(), last = xs.rend();
+    while (i != last) {
+        if ((a && !unit.contains(i->first)) || (b && !unit.contains(i->second))) {
+            xs.erase((++i).base());
+        } else {
+            ++i;
+        }
     }
-    return t;
+}
+
+void filter_ray_intersections(std::vector<ShapeIntersection> &xs, bool a, bool b)
+{
+    Interval unit(0, 1);
+    std::vector<ShapeIntersection>::reverse_iterator i = xs.rbegin(), last = xs.rend();
+    while (i != last) {
+        if ((a && i->first < 0) || (b && i->second < 0)) {
+            xs.erase((++i).base());
+        } else {
+            ++i;
+        }
+    }
 }
 
 namespace detail
 {
 
 inline
-OptCrossing intersection_impl(Point const& V1, Point const O1,
-                        Point const& V2, Point const O2 )
+OptCrossing intersection_impl(Point const &v1, Point const &o1,
+                              Point const &v2, Point const &o2)
 {
-    double detV1V2 = V1[X] * V2[Y] - V2[X] * V1[Y];
-    if (are_near(detV1V2, 0)) return OptCrossing();
+    Coord cp = cross(v1, v2);
+    if (cp == 0) return OptCrossing();
 
-    Point B = O2 - O1;
-    double detBV2 = B[X] * V2[Y] - V2[X] * B[Y];
-    double detV1B =	B[X] * V1[Y] - V1[X] * B[Y];
-    double inv_detV1V2 = 1 / detV1V2;
+    Point odiff = o2 - o1;
 
     Crossing c;
-    c.ta = detBV2 * inv_detV1V2;
-    c.tb = detV1B * inv_detV1V2;
-//	std::cerr << "ta = " << c.ta << std::endl;
-//	std::cerr << "tb = " << c.tb << std::endl;
-    return OptCrossing(c);
+    c.ta = cross(odiff, v2) / cp;
+    c.tb = cross(odiff, v1) / cp;
+    return c;
 }
 
 
 OptCrossing intersection_impl(Ray const& r1, Line const& l2, unsigned int i)
 {
+    using std::swap;
+
     OptCrossing crossing =
         intersection_impl(r1.versor(), r1.origin(),
                           l2.versor(), l2.origin() );
 
-    if (crossing)
-    {
-        if (crossing->ta < 0)
-        {
+    if (crossing) {
+        if (crossing->ta < 0) {
             return OptCrossing();
-        }
-        else
-        {
-            if (i != 0)
-            {
-                std::swap(crossing->ta, crossing->tb);
+        } else {
+            if (i != 0) {
+                swap(crossing->ta, crossing->tb);
             }
             return crossing;
         }
     }
-    if (are_near(r1.origin(), l2))
-    {
+    if (are_near(r1.origin(), l2)) {
         THROW_INFINITESOLUTIONS();
-    }
-    else
-    {
+    } else {
         return OptCrossing();
     }
 }
@@ -181,34 +344,29 @@ OptCrossing intersection_impl( LineSegment const& ls1,
                                Line const& l2,
                                unsigned int i )
 {
+    using std::swap;
+
     OptCrossing crossing =
         intersection_impl(ls1.finalPoint() - ls1.initialPoint(),
                           ls1.initialPoint(),
                           l2.versor(),
                           l2.origin() );
 
-    if (crossing)
-    {
+    if (crossing) {
         if ( crossing->getTime(0) < 0
              || crossing->getTime(0) > 1 )
         {
             return OptCrossing();
-        }
-        else
-        {
-            if (i != 0)
-            {
-                std::swap((*crossing).ta, (*crossing).tb);
+        } else {
+            if (i != 0) {
+                swap((*crossing).ta, (*crossing).tb);
             }
             return crossing;
         }
     }
-    if (are_near(ls1.initialPoint(), l2))
-    {
+    if (are_near(ls1.initialPoint(), l2)) {
         THROW_INFINITESOLUTIONS();
-    }
-    else
-    {
+    } else {
         return OptCrossing();
     }
 }
@@ -218,6 +376,8 @@ OptCrossing intersection_impl( LineSegment const& ls1,
                                Ray const& r2,
                                unsigned int i )
 {
+    using std::swap;
+
     Point direction = ls1.finalPoint() - ls1.initialPoint();
     OptCrossing crossing =
         intersection_impl( direction,
@@ -225,57 +385,40 @@ OptCrossing intersection_impl( LineSegment const& ls1,
                            r2.versor(),
                            r2.origin() );
 
-    if (crossing)
-    {
+    if (crossing) {
         if ( (crossing->getTime(0) < 0)
              || (crossing->getTime(0) > 1)
              || (crossing->getTime(1) < 0) )
         {
             return OptCrossing();
-        }
-        else
-        {
-            if (i != 0)
-            {
-                std::swap(crossing->ta, crossing->tb);
+        } else {
+            if (i != 0) {
+                swap(crossing->ta, crossing->tb);
             }
             return crossing;
         }
     }
 
-    if ( are_near(r2.origin(), ls1) )
-    {
+    if ( are_near(r2.origin(), ls1) ) {
         bool eqvs = (dot(direction, r2.versor()) > 0);
-        if ( are_near(ls1.initialPoint(), r2.origin()) && !eqvs  )
-        {
+        if ( are_near(ls1.initialPoint(), r2.origin()) && !eqvs)  {
             crossing->ta = crossing->tb = 0;
             return crossing;
-        }
-        else if ( are_near(ls1.finalPoint(), r2.origin()) && eqvs )
-        {
-            if (i == 0)
-            {
+        } else if ( are_near(ls1.finalPoint(), r2.origin()) && eqvs) {
+            if (i == 0) {
                 crossing->ta = 1;
                 crossing->tb = 0;
-            }
-            else
-            {
+            }  else {
                 crossing->ta = 0;
                 crossing->tb = 1;
             }
             return crossing;
-        }
-        else
-        {
+        } else {
             THROW_INFINITESOLUTIONS();
         }
-    }
-    else if ( are_near(ls1.initialPoint(), r2) )
-    {
+    } else if ( are_near(ls1.initialPoint(), r2) ) {
         THROW_INFINITESOLUTIONS();
-    }
-    else
-    {
+    } else {
         OptCrossing no_crossing;
         return no_crossing;
     }
@@ -287,23 +430,15 @@ OptCrossing intersection_impl( LineSegment const& ls1,
 
 OptCrossing intersection(Line const& l1, Line const& l2)
 {
-    OptCrossing crossing =
-        detail::intersection_impl( l1.versor(), l1.origin(),
-                                   l2.versor(), l2.origin() );
-    if (crossing)
-    {
-        return crossing;
-    }
-    if (are_near(l1.origin(), l2))
-    {
+    OptCrossing c = detail::intersection_impl(
+        l1.versor(), l1.origin(),
+        l2.versor(), l2.origin());
+
+    if (!c && distance(l1.origin(), l2) == 0) {
         THROW_INFINITESOLUTIONS();
     }
-    else
-    {
-        return crossing;
-    }
+    return c;
 }
-
 
 OptCrossing intersection(Ray const& r1, Ray const& r2)
 {
@@ -415,64 +550,6 @@ OptCrossing intersection( LineSegment const& ls1, LineSegment const& ls2 )
         return no_crossing;
     }
 }
-
-
-boost::optional<LineSegment> clip (Line const& l, Rect const& r)
-{
-    typedef boost::optional<LineSegment> opt_linesegment;
-    LineSegment result;
-    //size_t index = 0;
-    std::vector<Point> points;
-    LineSegment ls (r.corner(0), r.corner(1));
-    try
-    {
-        OptCrossing oc = intersection (ls, l);
-        if (oc)
-        {
-            points.push_back (l.pointAt (oc->tb));
-        }
-    }
-    catch (InfiniteSolutions const &e)
-    {
-        return opt_linesegment(ls);
-    }
-
-    for (size_t i = 2; i < 5; ++i)
-    {
-        ls.setInitial (ls[1]);
-        ls.setFinal (r.corner(i));
-        try
-        {
-            OptCrossing oc = intersection (ls, l);
-            if (oc)
-            {
-                points.push_back (l.pointAt (oc->tb));
-                if (points.size() > 1)
-                {
-                    size_t sz = points.size();
-                    if (!are_near (points[sz - 2], points[sz - 1], 1e-10))
-                    {
-                        result.setInitial (points[sz - 2]);
-                        result.setFinal (points[sz - 1]);
-                        return opt_linesegment(result);
-                    }
-                }
-            }
-        }
-        catch (InfiniteSolutions const &e)
-        {
-            return opt_linesegment(ls);
-        }
-    }
-    if ( !points.empty() )
-    {
-        result.setInitial (points[0]);
-        result.setFinal (points[0]);
-        return opt_linesegment(result);
-    }
-    return opt_linesegment();
-}
-
 
 Line make_angle_bisector_line(Line const& l1, Line const& l2)
 {

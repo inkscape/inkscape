@@ -31,7 +31,7 @@ public:
                 const gchar * default_value = "M0,0 L1,1");
     virtual ~PathParam();
 
-    std::vector<Geom::Path> const & get_pathvector() const;
+    Geom::PathVector const & get_pathvector() const;
     Geom::Piecewise<Geom::D2<Geom::SBasis> > const & get_pwd2();
 
     virtual Gtk::Widget * param_newWidget();
@@ -41,7 +41,7 @@ public:
 
     virtual void param_set_default();
     void param_set_and_write_default();
-    void set_new_value (std::vector<Geom::Path> const &newpath, bool write_to_svg);
+    void set_new_value (Geom::PathVector const &newpath, bool write_to_svg);
     void set_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &newpath, bool write_to_svg);
 
     virtual void param_editOncanvas(SPItem * item, SPDesktop * dt);
@@ -59,7 +59,7 @@ public:
     void on_paste_button_click();
 
 protected:
-    std::vector<Geom::Path> _pathvector;   // this is primary data storage, since it is closest to SVG.
+    Geom::PathVector _pathvector;   // this is primary data storage, since it is closest to SVG.
 
     Geom::Piecewise<Geom::D2<Geom::SBasis> > _pwd2; // secondary, hence the bool must_recalculate_pwd2
     bool must_recalculate_pwd2; // set when _pathvector was updated, but _pwd2 not

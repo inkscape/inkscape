@@ -128,7 +128,7 @@ static double DistanceToCubic(Geom::Point const &start, PathDescrCubicTo res, Ge
     }
     
     Geom::Point seg = res.p - start;
-    nnle = Geom::cross(seg, sp);
+    nnle = Geom::cross(sp, seg);
     nnle *= nnle;
     nnle /= Geom::dot(seg, seg);
     if ( nnle < nle ) {

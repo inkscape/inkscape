@@ -31,8 +31,8 @@
  * the specific language governing rights and limitations.
  */
 
-#ifndef SEEN_LIB2GEOM_2GEOM_H
-#define SEEN_LIB2GEOM_2GEOM_H
+#ifndef LIB2GEOM_SEEN_2GEOM_H
+#define LIB2GEOM_SEEN_2GEOM_H
 
 #include <2geom/forward.h>
 
@@ -62,7 +62,7 @@
 #include <2geom/math-utils.h>
 #include <2geom/utils.h>
 
-#endif // SEEN_LIB2GEOM_HEADER_H
+#endif // LIB2GEOM_SEEN_2GEOM_H
 /*
   Local Variables:
   mode:c++

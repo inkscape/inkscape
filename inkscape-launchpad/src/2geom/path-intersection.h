@@ -32,21 +32,19 @@
  *
  */
 
-#ifndef __GEOM_PATH_INTERSECTION_H
-#define __GEOM_PATH_INTERSECTION_H
-
-#include <2geom/path.h>
+#ifndef LIB2GEOM_SEEN_PATH_INTERSECTION_H
+#define LIB2GEOM_SEEN_PATH_INTERSECTION_H
 
 #include <2geom/crossing.h>
-
-#include <2geom/sweep.h>
+#include <2geom/path.h>
+#include <2geom/sweep-bounds.h>
 
 namespace Geom {
 
-int winding(Path const &path, Point p);
+int winding(Path const &path, Point const &p);
 bool path_direction(Path const &p);
 
-inline bool contains(Path const & p, Point i, bool evenodd = true) {
+inline bool contains(Path const & p, Point const &i, bool evenodd = true) {
     return (evenodd ? winding(p, i) % 2 : winding(p, i)) != 0;
 }
 
@@ -74,19 +72,19 @@ Crossings mono_intersect(Curve const & A, Interval const &Ad,
 struct SimpleCrosser : public Crosser<Path> {
     Crossings crossings(Curve const &a, Curve const &b);
     Crossings crossings(Path const &a, Path const &b) { return curve_sweep<SimpleCrosser>(a, b); }
-    CrossingSet crossings(std::vector<Path> const &a, std::vector<Path> const &b) { return Crosser<Path>::crossings(a, b); }
+    CrossingSet crossings(PathVector const &a, PathVector const &b) { return Crosser<Path>::crossings(a, b); }
 };
 
 struct MonoCrosser : public Crosser<Path> {
-    Crossings crossings(Path const &a, Path const &b) { return crossings(std::vector<Path>(1,a), std::vector<Path>(1,b))[0]; }
-    CrossingSet crossings(std::vector<Path> const &a, std::vector<Path> const &b);
+    Crossings crossings(Path const &a, Path const &b) { return crossings(PathVector(a), PathVector(b))[0]; }
+    CrossingSet crossings(PathVector const &a, PathVector const &b);
 };
 
 typedef SimpleCrosser DefaultCrosser;
 
 std::vector<double> path_mono_splits(Path const &p);
 
-CrossingSet crossings_among(std::vector<Path> const & p);
+CrossingSet crossings_among(PathVector const & p);
 Crossings self_crossings(Path const & a);
 
 inline Crossings crossings(Curve const & a, Curve const & b) {
@@ -99,7 +97,7 @@ inline Crossings crossings(Path const & a, Path const & b) {
     return c.crossings(a, b);
 }
 
-inline CrossingSet crossings(std::vector<Path> const & a, std::vector<Path> const & b) {
+inline CrossingSet crossings(PathVector const & a, PathVector const & b) {
     DefaultCrosser c = DefaultCrosser();
     return c.crossings(a, b);
 }

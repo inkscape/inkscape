@@ -666,9 +666,9 @@ Point
 bezier_pt(unsigned const degree, Point const V[], double const t)
 {
     /** Pascal's triangle. */
-    static int const pascal[4][4] = {{1},
-                                     {1, 1},
-                                     {1, 2, 1},
+    static int const pascal[4][4] = {{1, 0, 0, 0},
+                                     {1, 1, 0, 0},
+                                     {1, 2, 1, 0},
                                      {1, 3, 3, 1}};
     assert( degree < 4);
     double const s = 1.0 - t;

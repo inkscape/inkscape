@@ -28,7 +28,7 @@ LPECloneOriginal::~LPECloneOriginal()
 void LPECloneOriginal::doEffect (SPCurve * curve)
 {
     if ( linked_path.linksToPath() ) {
-        std::vector<Geom::Path> linked_pathv = linked_path.get_pathvector();
+        Geom::PathVector linked_pathv = linked_path.get_pathvector();
         if ( !linked_pathv.empty() ) {
             curve->set_pathvector(linked_pathv);
         }

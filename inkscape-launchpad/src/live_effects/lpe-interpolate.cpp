@@ -61,7 +61,7 @@ LPEInterpolate::doEffect_path (Geom::PathVector const & path_in)
         return path_in;
     }
 
-    std::vector<Geom::Path> path_out;
+    Geom::PathVector path_out;
 
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_A = path_in[0].toPwSb();
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_B = path_in[1].toPwSb();

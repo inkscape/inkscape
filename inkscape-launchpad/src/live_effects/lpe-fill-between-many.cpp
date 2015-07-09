@@ -35,14 +35,14 @@ LPEFillBetweenMany::~LPEFillBetweenMany()
 
 void LPEFillBetweenMany::doEffect (SPCurve * curve)
 {
-    std::vector<Geom::Path> res_pathv;
+    Geom::PathVector res_pathv;
     SPItem * firstObj = NULL;
     for (std::vector<PathAndDirection*>::iterator iter = linked_paths._vector.begin(); iter != linked_paths._vector.end(); iter++) {
         SPObject *obj;
         if ((*iter)->ref.isAttached() && (obj = (*iter)->ref.getObject()) && SP_IS_ITEM(obj) && !(*iter)->_pathvector.empty()) {
             Geom::Path linked_path;
             if ((*iter)->reversed) {
-                linked_path = (*iter)->_pathvector.front().reverse();
+                linked_path = (*iter)->_pathvector.front().reversed();
             } else {
                 linked_path = (*iter)->_pathvector.front();
             }

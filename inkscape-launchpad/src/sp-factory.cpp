@@ -27,6 +27,7 @@
 #include "sp-font.h"
 #include "sp-font-face.h"
 #include "sp-glyph.h"
+#include "sp-glyph-kerning.h"
 #include "sp-guide.h"
 #include "sp-hatch.h"
 #include "sp-hatch-path.h"
@@ -150,6 +151,10 @@ SPObject *SPFactory::createObject(std::string const& id)
         ret = new SPFontFace;
     else if (id == "svg:glyph")
         ret = new SPGlyph;
+    else if (id == "svg:hkern")
+        ret = new SPHkern;
+    else if (id == "svg:vkern")
+        ret = new SPVkern;
     else if (id == "sodipodi:guide")
         ret = new SPGuide;
     else if (id == "svg:hatch")

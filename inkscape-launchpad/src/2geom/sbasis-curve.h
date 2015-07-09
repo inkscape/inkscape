@@ -37,7 +37,7 @@
 #define LIB2GEOM_SEEN_SBASIS_CURVE_H
 
 #include <2geom/curve.h>
-#include <2geom/nearest-point.h>
+#include <2geom/nearest-time.h>
 #include <2geom/sbasis-geometric.h>
 #include <2geom/transforms.h>
 
@@ -84,11 +84,11 @@ public:
     explicit SBasisCurve(D2<SBasis> const &sb) : inner(sb) {}
     explicit SBasisCurve(Curve const &other) : inner(other.toSBasis()) {}
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
     virtual Curve *duplicate() const { return new SBasisCurve(*this); }
     virtual Point initialPoint() const    { return inner.at0(); }
     virtual Point finalPoint() const      { return inner.at1(); }
-    virtual bool isDegenerate() const     { return inner.isConstant(); }
+    virtual bool isDegenerate() const     { return inner.isConstant(0); }
+    virtual bool isLineSegment() const    { return inner[X].size() == 1; }
     virtual Point pointAt(Coord t) const  { return inner.valueAt(t); }
     virtual std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const {
         return inner.valueAndDerivatives(t, n);
@@ -106,33 +106,34 @@ public:
         return bounds_local(inner, i, deg);
     }
     virtual std::vector<Coord> roots(Coord v, Dim2 d) const { return Geom::roots(inner[d] - v); }
-    virtual Coord nearestPoint( Point const& p, Coord from = 0, Coord to = 1 ) const {
-        return nearest_point(p, inner, from, to);
+    virtual Coord nearestTime( Point const& p, Coord from = 0, Coord to = 1 ) const {
+        return nearest_time(p, inner, from, to);
     }
-    virtual std::vector<Coord> allNearestPoints( Point const& p, Coord from = 0,
+    virtual std::vector<Coord> allNearestTimes( Point const& p, Coord from = 0,
         Coord to = 1 ) const
     {
-        return all_nearest_points(p, inner, from, to);
+        return all_nearest_times(p, inner, from, to);
     }
     virtual Coord length(Coord tolerance) const { return ::Geom::length(inner, tolerance); }
     virtual Curve *portion(Coord f, Coord t) const {
         return new SBasisCurve(Geom::portion(inner, f, t));
     }
 
-    virtual Curve *transformed(Affine const &m) const { return new SBasisCurve(inner * m); }
-    virtual Curve &operator*=(Translate const &m) {
-        inner += m.vector();
-        return *this;
-    };
+    using Curve::operator*=;
+    virtual void operator*=(Affine const &m) { inner = inner * m; }
 
     virtual Curve *derivative() const {
         return new SBasisCurve(Geom::derivative(inner));
     }
     virtual D2<SBasis> toSBasis() const { return inner; }
+    virtual bool operator==(Curve const &c) const {
+        SBasisCurve const *other = dynamic_cast<SBasisCurve const *>(&c);
+        if (!other) return false;
+        return inner == other->inner;
+    }
     virtual int degreesOfFreedom() const {
         return inner[0].degreesOfFreedom() + inner[1].degreesOfFreedom();
     }
-#endif
 };
 
 } // end namespace Geom

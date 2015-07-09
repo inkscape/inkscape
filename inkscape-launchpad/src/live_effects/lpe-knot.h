@@ -42,8 +42,8 @@ struct CrossingPoint {
 class CrossingPoints : public  std::vector<CrossingPoint>{
 public:
   CrossingPoints() : std::vector<CrossingPoint>() {}
-  CrossingPoints(Geom::CrossingSet const &cs, std::vector<Geom::Path> const &path);//for self crossings only!
-  CrossingPoints(std::vector<Geom::Path> const &paths);
+  CrossingPoints(Geom::CrossingSet const &cs, Geom::PathVector const &path);//for self crossings only!
+  CrossingPoints(Geom::PathVector const &paths);
   CrossingPoints(std::vector<double> const &input);
   std::vector<double> to_vector();
   CrossingPoint get(unsigned const i, unsigned const ni);
@@ -57,7 +57,7 @@ public:
   virtual ~LPEKnot();
   
   virtual void doBeforeEffect (SPLPEItem const* lpeitem);
-  virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & input_path);
+  virtual Geom::PathVector doEffect_path (Geom::PathVector const & input_path);
   
   /* the knotholder entity classes must be declared friends */
   friend class KnotHolderEntityCrossingSwitcher;
@@ -65,7 +65,7 @@ public:
 
 protected:
   virtual void addCanvasIndicators(SPLPEItem const *lpeitem, std::vector<Geom::PathVector> &hp_vec);
-  std::vector<Geom::Path> supplied_path; //for knotholder business
+  Geom::PathVector supplied_path; //for knotholder business
   
 private:
   void updateSwitcher();
@@ -79,7 +79,7 @@ private:
   
   LPEKnotNS::CrossingPoints crossing_points;//topology representation of the knot.
   
-  std::vector<Geom::Path> gpaths;//the collection of all the paths in the object or group.
+  Geom::PathVector gpaths;//the collection of all the paths in the object or group.
   std::vector<double> gstroke_widths;//the collection of all the stroke widths in the object or group.
 
   //UI: please, someone, help me to improve this!!

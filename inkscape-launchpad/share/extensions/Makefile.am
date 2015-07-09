@@ -2,9 +2,10 @@
 SUBDIRS = \
 	alphabet_soup \
 	Barcode \
-	Poly3DObjects \
-	test \
 	ink2canvas \
+	Poly3DObjects \
+	scour \
+	test \
 	xaml2svg
 
 extensiondir = $(datadir)/inkscape/extensions

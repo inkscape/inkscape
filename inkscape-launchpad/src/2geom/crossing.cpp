@@ -28,7 +28,7 @@ double wrap_dist(double from, double to, double size, bool rev) {
     }
 }
 /*
-CrossingGraph create_crossing_graph(std::vector<Path> const &p, Crossings const &crs) {
+CrossingGraph create_crossing_graph(PathVector const &p, Crossings const &crs) {
     std::vector<Point> locs;
     CrossingGraph ret;
     for(unsigned i = 0; i < crs.size(); i++) {
