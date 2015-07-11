@@ -297,7 +297,7 @@ class Effect:
 
         svgwidth = self.document.getroot().get('width')
         viewboxstr = self.document.getroot().get('viewBox')
-        if viewboxstr:
+        if viewboxstr and svgwidth is not None:
             unitmatch = re.compile('(%s)$' % '|'.join(self.__uuconv.keys()))
             param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
 
