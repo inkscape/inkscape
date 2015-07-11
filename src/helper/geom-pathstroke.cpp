@@ -1,7 +1,8 @@
-/* Author:
+/* Authors:
  *   Liam P. White
+ *   Tavmjong Bah
  *
- * Copyright (C) 2014-2015 Author
+ * Copyright (C) 2014-2015 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -60,14 +61,14 @@ namespace {
 
 // Internal data structure
 
-struct join_data
-{
+struct join_data {
     join_data(Geom::Path &_res, Geom::Path const&_outgoing, Geom::Point _in_tang, Geom::Point _out_tang, double _miter, double _width)
-        : res(_res), outgoing(_outgoing), in_tang(_in_tang)
-        , out_tang(_out_tang), miter(_miter), width(_width) {}
+        : res(_res), outgoing(_outgoing), in_tang(_in_tang), out_tang(_out_tang), miter(_miter), width(_width) {};
 
-    // I/O
+    // contains the current path that is being built on
     Geom::Path &res;
+
+    // contains the next curve to append
     Geom::Path const& outgoing;
 
     // input tangents
@@ -382,47 +383,6 @@ void tangents(Geom::Point tang[2], Geom::Curve const& incoming, Geom::Curve cons
     tang[0] = tang1, tang[1] = tang2;
 }
 
-void outline_helper(Geom::Path &res, Geom::Path const& temp, Geom::Point in_tang, Geom::Point out_tang, double width, double miter, Inkscape::LineJoinType join)
-{
-    if (res.size() == 0 || temp.size() == 0)
-        return;
-
-    Geom::Curve const& outgoing = temp.front();
-    if (Geom::are_near(res.finalPoint(), outgoing.initialPoint())) {
-        // if the points are /that/ close, just ignore this one
-        res.setFinal(temp.initialPoint());
-        res.append(temp);
-        return;
-    }
-
-    join_data jd(res, temp, in_tang, out_tang, miter, width);
-
-    bool on_outside = (Geom::cross(in_tang, out_tang) > 0);
-
-    if (on_outside) {
-        join_func *jf;
-        switch (join) {
-            case Inkscape::JOIN_BEVEL:
-                jf = &bevel_join;
-                break;
-            case Inkscape::JOIN_ROUND:
-                jf = &round_join;
-                break;
-            case Inkscape::JOIN_EXTRAPOLATE:
-                jf = &extrapolate_join;
-                break;
-            case Inkscape::JOIN_MITER_CLIP:
-                jf = &miter_clip_join;
-                break;
-            default:
-                jf = &miter_join;
-        }
-        jf(jd);
-    } else {
-        join_inside(jd);
-    }
-}
-
 // Offsetting a line segment is mathematically stable and quick to do
 Geom::LineSegment offset_line(Geom::LineSegment const& l, double width)
 {
@@ -696,7 +656,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
             res.append(temp);
         } else {
             tangents(tang, input[u-1], input[u]);
-            outline_helper(res, temp, tang[0], tang[1], width, miter, join);
+            outline_join(res, temp, tang[0], tang[1], width, miter, join);
         }
 
         // odd number of paths
@@ -704,7 +664,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
             temp = Geom::Path();
             offset_curve(temp, &input[u+1], width);
             tangents(tang, input[u], input[u+1]);
-            outline_helper(res, temp, tang[0], tang[1], width, miter, join);
+            outline_join(res, temp, tang[0], tang[1], width, miter, join);
         }
     }
 
@@ -716,7 +676,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
         Geom::Path temp2;
         temp2.append(c2);
         tangents(tang, input.back(), input.front());
-        outline_helper(temp, temp2, tang[0], tang[1], width, miter, join);
+        outline_join(temp, temp2, tang[0], tang[1], width, miter, join);
         res.erase(res.begin());
         res.erase_last();
         //
@@ -725,6 +685,47 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
     }
 
     return res;
+}
+
+void outline_join(Geom::Path &res, Geom::Path const& temp, Geom::Point in_tang, Geom::Point out_tang, double width, double miter, Inkscape::LineJoinType join)
+{
+    if (res.size() == 0 || temp.size() == 0)
+        return;
+
+    Geom::Curve const& outgoing = temp.front();
+    if (Geom::are_near(res.finalPoint(), outgoing.initialPoint())) {
+        // if the points are /that/ close, just ignore this one
+        res.setFinal(temp.initialPoint());
+        res.append(temp);
+        return;
+    }
+
+    join_data jd(res, temp, in_tang, out_tang, miter, width);
+
+    bool on_outside = (Geom::cross(in_tang, out_tang) > 0);
+
+    if (on_outside) {
+        join_func *jf;
+        switch (join) {
+            case Inkscape::JOIN_BEVEL:
+                jf = &bevel_join;
+                break;
+            case Inkscape::JOIN_ROUND:
+                jf = &round_join;
+                break;
+            case Inkscape::JOIN_EXTRAPOLATE:
+                jf = &extrapolate_join;
+                break;
+            case Inkscape::JOIN_MITER_CLIP:
+                jf = &miter_clip_join;
+                break;
+            default:
+                jf = &miter_join;
+        }
+        jf(jd);
+    } else {
+        join_inside(jd);
+    }
 }
 
 } // namespace Inkscape
