@@ -945,17 +945,19 @@ Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
 Glib::ustring Export::filename_add_extension (Glib::ustring filename, Glib::ustring extension)
 {
     Glib::ustring::size_type dot;
+    Glib::ustring::size_type dot_ext;
 
     dot = filename.find_last_of(".");
-    if ( !dot )
+    dot_ext = filename.lowercase().rfind("." + extension.lowercase());
+    if ( dot == std::string::npos )
     {
         return filename = filename + "." + extension;
     }
     else
     {
-        if (dot==filename.find_last_of(Glib::ustring::compose(".", extension)))
+        if (dot == dot_ext)
         {
-            return filename;
+            return filename = filename;
         }
         else
         {

@@ -1351,8 +1351,9 @@ void PenTool::_bsplineSpiroColor()
 
 void PenTool::_bsplineSpiro(bool shift)
 {
-    if(!this->spiro && !this->bspline)
+    if(!this->spiro && !this->bspline){
         return;
+    }
 
     shift?this->_bsplineSpiroOff():this->_bsplineSpiroOn();
     this->_bsplineSpiroBuild();
@@ -1413,13 +1414,19 @@ void PenTool::_bsplineSpiroStartAnchor(bool shift)
     }else{
         this->spiro = false;
     }
-    if(!this->spiro && !this->bspline)
+    if(!this->spiro && !this->bspline){
+        SPCurve *tmp_curve = this->sa->curve->copy();
+        if (this->sa->start) {
+            tmp_curve  = tmp_curve ->create_reverse();
+        }
+        this->overwrite_curve = tmp_curve ;
         return;
-
-    if(shift)
+    }
+    if(shift){
         this->_bsplineSpiroStartAnchorOff();
-    else
+    } else {
         this->_bsplineSpiroStartAnchorOn();
+    }
 }
 
 void PenTool::_bsplineSpiroStartAnchorOn()
@@ -1482,9 +1489,9 @@ void PenTool::_bsplineSpiroStartAnchorOff()
 }
 
 void PenTool::_bsplineSpiroMotion(bool shift){
-    if(!this->spiro && !this->bspline)
+    if(!this->spiro && !this->bspline){
         return;
-
+    }
     using Geom::X;
     using Geom::Y;
     if(this->red_curve->is_empty()) return;
