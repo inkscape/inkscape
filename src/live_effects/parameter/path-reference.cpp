@@ -22,7 +22,7 @@ bool PathReference::_acceptObject(SPObject * const obj) const
             return false;
         }
         // TODO: check whether the referred path has this LPE applied, if so: deny deny deny!
-        return true;
+        return URIReference::_acceptObject(obj);
     } else {
         return false;
     }

@@ -92,7 +92,7 @@ class SPMarkerReference : public Inkscape::URIReference {
 	}
 protected:
 	virtual bool _acceptObject(SPObject *obj) const {
-		return SP_IS_MARKER(obj);
+		return SP_IS_MARKER(obj) && URIReference::_acceptObject(obj);
 	}
 };
 

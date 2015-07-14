@@ -24,14 +24,7 @@
 bool SPTagUseReference::_acceptObject(SPObject * const obj) const
 {
     if (SP_IS_ITEM(obj)) {
-        SPObject * const owner = getOwner();
-        // Refuse references to us or to an ancestor.
-        for ( SPObject *iter = owner ; iter ; iter = iter->parent ) {
-            if ( iter == obj ) {
-                return false;
-            }
-        }
-        return true;
+        return URIReference::_acceptObject(obj);
     } else {
         return false;
     }

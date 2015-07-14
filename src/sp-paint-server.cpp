@@ -27,7 +27,7 @@ SPPaintServer *SPPaintServerReference::getObject() const
 
 bool SPPaintServerReference::_acceptObject(SPObject *obj) const
 {
-    return SP_IS_PAINT_SERVER(obj);
+    return SP_IS_PAINT_SERVER(obj) && URIReference::_acceptObject(obj);
 }
 
 SPPaintServer::SPPaintServer() : SPObject() {

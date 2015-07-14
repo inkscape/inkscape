@@ -21,7 +21,7 @@ bool SPTRefReference::_acceptObject(SPObject * const obj) const
 {
     SPObject *owner = getOwner();
     if (SP_IS_TREF(owner))
-        return sp_tref_reference_allowed(SP_TREF(getOwner()), obj);
+        return URIReference::_acceptObject(obj);
     else
         return false;
 }
