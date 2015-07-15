@@ -441,7 +441,6 @@ std::vector<PathTime> Path::roots(Coord v, Dim2 d) const
 // The class below implements sweepline optimization for curve intersection in paths.
 // Instead of O(N^2), this takes O(N + X), where X is the number of overlaps
 // between the bounding boxes of curves.
-namespace {
 
 struct CurveSweepTraits {
     struct Bound {
@@ -511,8 +510,6 @@ private:
     std::vector<PathIntersection> &_result;
     Coord _precision;
 };
-
-} // end anonymous namespace
 
 std::vector<PathIntersection> Path::intersect(Path const &other, Coord precision) const
 {
