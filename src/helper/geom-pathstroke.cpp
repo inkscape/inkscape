@@ -647,7 +647,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
     const size_t k = (input.back_closed().isDegenerate() && input.closed())
             ?input.size_default()-1:input.size_default();
     for (size_t u = 0; u < k; u += 2) {
-        temp = Geom::Path();
+        temp.clear();
 
         offset_curve(temp, &input[u], width);
 
@@ -661,7 +661,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
 
         // odd number of paths
         if (u < k - 1) {
-            temp = Geom::Path();
+            temp.clear();
             offset_curve(temp, &input[u+1], width);
             tangents(tang, input[u], input[u+1]);
             outline_join(res, temp, tang[0], tang[1], width, miter, join);
@@ -671,7 +671,7 @@ Geom::Path half_outline(Geom::Path const& input, double width, double miter, Lin
     if (input.closed()) {
         Geom::Curve const &c1 = res.back();
         Geom::Curve const &c2 = res.front();
-        temp = Geom::Path();
+        temp.clear();
         temp.append(c1);
         Geom::Path temp2;
         temp2.append(c2);
