@@ -64,7 +64,11 @@ ConverterSPCurve::curveto(double x1, double y1, double x2, double y2, double x3,
 }
 
 
-
+ConverterPath::ConverterPath(Geom::Path &path)
+    : _path(path)
+{
+    _path.setStitching(true);
+}
 
 void
 ConverterPath::moveto(double x, double y, bool is_open)

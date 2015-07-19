@@ -25,11 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #define INKSCAPE_SPIRO_H
 
 #include "live_effects/spiro-converters.h"
+#include <2geom/forward.h>
 
 class SPCurve;
-namespace Geom {
-    class Path;
-}
 
 namespace Spiro {
 

@@ -25,7 +25,7 @@ class ConverterSPCurve : public ConverterBase {
 public:
     ConverterSPCurve(SPCurve &curve)
         : _curve(curve)
-    {} ;
+    {}
 
     virtual void moveto(double x, double y, bool is_open);
     virtual void lineto(double x, double y);
@@ -45,9 +45,7 @@ private:
  */
 class ConverterPath : public ConverterBase {
 public:
-    ConverterPath(Geom::Path &path)
-        : _path(path)
-    {} ;
+    ConverterPath(Geom::Path &path);
 
     virtual void moveto(double x, double y, bool is_open);
     virtual void lineto(double x, double y);
