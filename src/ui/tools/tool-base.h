@@ -75,7 +75,12 @@ public:
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         double value = prefs->getDoubleLimited("/options/snapdelay/value", 0, 0, 1000);
 
-        _timer_id = g_timeout_add(value, &sp_event_context_snap_watchdog_callback, this);
+        // We used to have this specified in milliseconds; this has changed to seconds now for consistency's sake
+        if (value > 1) { // Apparently we have an old preference file, this value must have been in milliseconds;
+            value = value / 1000.0; // now convert this value to seconds
+        }
+
+        _timer_id = g_timeout_add(value*1000.0, &sp_event_context_snap_watchdog_callback, this);
         _event = gdk_event_copy((GdkEvent*) event);
 
         ((GdkEventMotion *)_event)->time = GDK_CURRENT_TIME;

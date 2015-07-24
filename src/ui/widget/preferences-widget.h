@@ -59,6 +59,7 @@ class PrefCheckButton : public Gtk::CheckButton
 public:
     void init(Glib::ustring const &label, Glib::ustring const &prefs_path,
               bool default_value);
+    sigc::signal<void, bool> changed_signal;
 protected:
     Glib::ustring _prefs_path;
     void on_toggled();
