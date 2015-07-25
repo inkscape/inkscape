@@ -268,6 +268,9 @@ void PenTool::_endpointSnap(Geom::Point &p, guint const state) const {
     if ((state & GDK_CONTROL_MASK) && !this->polylines_paraxial) { //CTRL enables angular snapping
         if (this->npoints > 0) {
             spdc_endpoint_snap_rotation(this, p, this->p[0], state);
+        } else {
+            boost::optional<Geom::Point> origin = boost::optional<Geom::Point>();
+            spdc_endpoint_snap_free(this, p, origin, state);
         }
     } else {
         // We cannot use shift here to disable snapping because the shift-key is already used
