@@ -215,154 +215,154 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
 
     switch (event->type) {
     case GDK_2BUTTON_PRESS:
-            if (event->button.button == 1) {
-                knot->doubleclicked_signal.emit(knot, event->button.state);
+        if (event->button.button == 1) {
+            knot->doubleclicked_signal.emit(knot, event->button.state);
+
+            grabbed = FALSE;
+            moved = FALSE;
+            consumed = TRUE;
+        }
+        break;
+    case GDK_BUTTON_PRESS:
+        if ((event->button.button == 1) && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
+            Geom::Point const p = knot->desktop->w2d(Geom::Point(event->button.x, event->button.y));
+            knot->startDragging(p, (gint) event->button.x, (gint) event->button.y, event->button.time);
+
+            consumed = TRUE;
+        }
+        break;
+    case GDK_BUTTON_RELEASE:
+        if (event->button.button == 1 && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
+            // If we have any pending snap event, then invoke it now
+            if (knot->desktop->event_context->_delayed_snap_event) {
+                sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
+            }
+
+            sp_event_context_discard_delayed_snap_event(knot->desktop->event_context);
+
+            knot->pressure = 0;
+
+            if (transform_escaped) {
+                transform_escaped = false;
+                consumed = TRUE;
+            } else {
+                knot->setFlag(SP_KNOT_GRABBED, FALSE);
+
+                if (!nograb) {
+                    sp_canvas_item_ungrab(knot->item, event->button.time);
+                }
+
+                if (moved) {
+                    knot->setFlag(SP_KNOT_DRAGGING, FALSE);
+
+                    knot->ungrabbed_signal.emit(knot, event->button.state);
+                } else {
+                    knot->click_signal.emit(knot, event->button.state);
+                }
 
                 grabbed = FALSE;
                 moved = FALSE;
                 consumed = TRUE;
             }
-            break;
-    case GDK_BUTTON_PRESS:
-            if ((event->button.button == 1) && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
-                Geom::Point const p = knot->desktop->w2d(Geom::Point(event->button.x, event->button.y));
-                knot->startDragging(p, (gint) event->button.x, (gint) event->button.y, event->button.time);
+        }
+        if (tools_isactive(knot->desktop, TOOLS_NODES)) {
+            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(knot->desktop->event_context);
+            nt->update_helperpath();
+        }
+        break;
+    case GDK_MOTION_NOTIFY:
+        if (grabbed && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
+            consumed = TRUE;
 
-                consumed = TRUE;
+            if ( within_tolerance
+                 && ( abs( (gint) event->motion.x - xp ) < tolerance )
+                 && ( abs( (gint) event->motion.y - yp ) < tolerance ) ) {
+                break; // do not drag if we're within tolerance from origin
             }
-            break;
-    case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1 && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
-                // If we have any pending snap event, then invoke it now
-                if (knot->desktop->event_context->_delayed_snap_event) {
-                    sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
+
+            // Once the user has moved farther than tolerance from the original location
+            // (indicating they intend to move the object, not click), then always process the
+            // motion notify coordinates as given (no snapping back to origin)
+            within_tolerance = false;
+
+            if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &knot->pressure)) {
+                knot->pressure = CLAMP (knot->pressure, 0, 1);
+            } else {
+                knot->pressure = 0.5;
+            }
+
+            if (!moved) {
+                knot->grabbed_signal.emit(knot, event->motion.state);
+
+                knot->setFlag(SP_KNOT_DRAGGING, TRUE);
+            }
+
+            sp_event_context_snap_delay_handler(knot->desktop->event_context, NULL, knot, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::KNOT_HANDLER);
+            sp_knot_handler_request_position(event, knot);
+            moved = TRUE;
+        }
+        if (tools_isactive(knot->desktop, TOOLS_NODES)) {
+            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(knot->desktop->event_context);
+            nt->update_helperpath();
+        }
+        break;
+    case GDK_ENTER_NOTIFY:
+        knot->setFlag(SP_KNOT_MOUSEOVER, TRUE);
+        knot->setFlag(SP_KNOT_GRABBED, FALSE);
+
+        if (knot->tip && knot->desktop && knot->desktop->event_context) {
+            knot->desktop->event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, knot->tip);
+        }
+
+        grabbed = FALSE;
+        moved = FALSE;
+        consumed = TRUE;
+        break;
+    case GDK_LEAVE_NOTIFY:
+        knot->setFlag(SP_KNOT_MOUSEOVER, FALSE);
+        knot->setFlag(SP_KNOT_GRABBED, FALSE);
+
+        if (knot->tip && knot->desktop && knot->desktop->event_context) {
+            knot->desktop->event_context->defaultMessageContext()->clear();
+        }
+
+        grabbed = FALSE;
+        moved = FALSE;
+        consumed = TRUE;
+        break;
+    case GDK_KEY_PRESS: // keybindings for knot
+        switch (Inkscape::UI::Tools::get_group0_keyval(&event->key)) {
+            case GDK_KEY_Escape:
+                knot->setFlag(SP_KNOT_GRABBED, FALSE);
+
+                if (!nograb) {
+                    sp_canvas_item_ungrab(knot->item, event->button.time);
                 }
+
+                if (moved) {
+                    knot->setFlag(SP_KNOT_DRAGGING, FALSE);
+
+                    knot->ungrabbed_signal.emit(knot, event->button.state);
+
+                    DocumentUndo::undo(knot->desktop->getDocument());
+                    knot->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Node or handle drag canceled."));
+                    transform_escaped = true;
+                    consumed = TRUE;
+                }
+
+                grabbed = FALSE;
+                moved = FALSE;
 
                 sp_event_context_discard_delayed_snap_event(knot->desktop->event_context);
-
-                knot->pressure = 0;
-
-                if (transform_escaped) {
-                    transform_escaped = false;
-                    consumed = TRUE;
-                } else {
-                    knot->setFlag(SP_KNOT_GRABBED, FALSE);
-
-                    if (!nograb) {
-                        sp_canvas_item_ungrab(knot->item, event->button.time);
-                    }
-
-                    if (moved) {
-                        knot->setFlag(SP_KNOT_DRAGGING, FALSE);
-
-                        knot->ungrabbed_signal.emit(knot, event->button.state);
-                    } else {
-                        knot->click_signal.emit(knot, event->button.state);
-                    }
-
-                    grabbed = FALSE;
-                    moved = FALSE;
-                    consumed = TRUE;
-                }
-            }
-            if (tools_isactive(knot->desktop, TOOLS_NODES)) {
-                Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(knot->desktop->event_context);
-                nt->update_helperpath();
-            }
-            break;
-    case GDK_MOTION_NOTIFY:
-            if (grabbed && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
-                consumed = TRUE;
-
-                if ( within_tolerance
-                     && ( abs( (gint) event->motion.x - xp ) < tolerance )
-                     && ( abs( (gint) event->motion.y - yp ) < tolerance ) ) {
-                    break; // do not drag if we're within tolerance from origin
-                }
-
-                // Once the user has moved farther than tolerance from the original location
-                // (indicating they intend to move the object, not click), then always process the
-                // motion notify coordinates as given (no snapping back to origin)
-                within_tolerance = false;
-
-                if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &knot->pressure)) {
-                    knot->pressure = CLAMP (knot->pressure, 0, 1);
-                } else {
-                    knot->pressure = 0.5;
-                }
-
-                if (!moved) {
-                    knot->grabbed_signal.emit(knot, event->motion.state);
-
-                    knot->setFlag(SP_KNOT_DRAGGING, TRUE);
-                }
-
-                sp_event_context_snap_delay_handler(knot->desktop->event_context, NULL, knot, (GdkEventMotion *)event, Inkscape::UI::Tools::DelayedSnapEvent::KNOT_HANDLER);
-                sp_knot_handler_request_position(event, knot);
-                moved = TRUE;
-            }
-            if (tools_isactive(knot->desktop, TOOLS_NODES)) {
-                Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(knot->desktop->event_context);
-                nt->update_helperpath();
-            }
-            break;
-    case GDK_ENTER_NOTIFY:
-            knot->setFlag(SP_KNOT_MOUSEOVER, TRUE);
-            knot->setFlag(SP_KNOT_GRABBED, FALSE);
-
-            if (knot->tip && knot->desktop && knot->desktop->event_context) {
-                knot->desktop->event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, knot->tip);
-            }
-
-            grabbed = FALSE;
-            moved = FALSE;
-            consumed = TRUE;
-            break;
-    case GDK_LEAVE_NOTIFY:
-            knot->setFlag(SP_KNOT_MOUSEOVER, FALSE);
-            knot->setFlag(SP_KNOT_GRABBED, FALSE);
-
-            if (knot->tip && knot->desktop && knot->desktop->event_context) {
-                knot->desktop->event_context->defaultMessageContext()->clear();
-            }
-
-            grabbed = FALSE;
-            moved = FALSE;
-            consumed = TRUE;
-            break;
-    case GDK_KEY_PRESS: // keybindings for knot
-            switch (Inkscape::UI::Tools::get_group0_keyval(&event->key)) {
-                case GDK_KEY_Escape:
-                            knot->setFlag(SP_KNOT_GRABBED, FALSE);
-
-                            if (!nograb) {
-                                sp_canvas_item_ungrab(knot->item, event->button.time);
-                            }
-
-                            if (moved) {
-                                knot->setFlag(SP_KNOT_DRAGGING, FALSE);
-
-                                knot->ungrabbed_signal.emit(knot, event->button.state);
-
-                                DocumentUndo::undo(knot->desktop->getDocument());
-                                knot->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Node or handle drag canceled."));
-                                transform_escaped = true;
-                                consumed = TRUE;
-                            }
-
-                            grabbed = FALSE;
-                            moved = FALSE;
-
-                            sp_event_context_discard_delayed_snap_event(knot->desktop->event_context);
-                            break;
-                default:
-                            consumed = FALSE;
-                            key_press_event_unconsumed = TRUE;
-                            break;
-                    }
-                    break;
+                break;
+            default:
+                consumed = FALSE;
+                key_press_event_unconsumed = TRUE;
+                break;
+        }
+        break;
     default:
-            break;
+        break;
     }
 
     knot_unref(knot);
