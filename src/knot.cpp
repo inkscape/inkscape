@@ -206,6 +206,8 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
         return true;
     }
 
+    bool key_press_event_unconsumed = FALSE;
+
     knot_ref(knot);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -355,6 +357,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                             break;
                 default:
                             consumed = FALSE;
+                            key_press_event_unconsumed = TRUE;
                             break;
                     }
                     break;
@@ -364,7 +367,11 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
 
     knot_unref(knot);
 
-    return consumed || grabbed;
+    if (key_press_event_unconsumed) {
+        return false; // e.g. in case "%" was pressed to toggle snapping, or Q for quick zoom (while dragging a handle)
+    } else {
+        return  consumed || grabbed;
+    }
 }
 
 void sp_knot_handler_request_position(GdkEvent *event, SPKnot *knot) {
