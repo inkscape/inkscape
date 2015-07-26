@@ -398,6 +398,7 @@ static gchar const * ui_descr =
         "    <toolitem action='FreehandModeActionPencil' />"
         "    <separator />"
         "    <toolitem action='PencilToleranceAction' />"
+        "    <toolitem action='PencilLpeSimplify' />"
         "    <separator />"
         "    <toolitem action='PencilResetAction' />"
         "    <separator />"

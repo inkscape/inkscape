@@ -21,6 +21,7 @@
 #endif
 
 #include "live_effects/lpe-patternalongpath.h"
+#include "live_effects/lpe-simplify.h"
 #include "display/canvas-bpath.h"
 #include "xml/repr.h"
 #include "svg/svg.h"
@@ -266,6 +267,21 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
     lpe->getRepr()->setAttribute("offset_points", s.str().c_str());
 }
 
+static void spdc_apply_simplify(std::string threshold, FreehandBase *dc, SPItem *item)
+{
+    using namespace Inkscape::LivePathEffect;
+
+    Effect::createAndApply(SIMPLIFY, dc->desktop->doc(), item);
+    Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
+    // write powerstroke parameters:
+    lpe->getRepr()->setAttribute("steps", "1");
+    lpe->getRepr()->setAttribute("threshold", threshold);
+    lpe->getRepr()->setAttribute("smooth_angles", "360");
+    lpe->getRepr()->setAttribute("helper_size", "0");
+    lpe->getRepr()->setAttribute("simplifyindividualpaths", "false");
+    lpe->getRepr()->setAttribute("simplifyJustCoalesce", "false");
+}
+
 static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item, SPCurve *curve)
 {
     using namespace Inkscape::LivePathEffect;
@@ -287,6 +303,14 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
 
 
         shapeType shape = (shapeType)prefs->getInt(tool_name(dc) + "/shape", 0);
+        bool simplify = prefs->getInt(tool_name(dc) + "/simplify", 0);
+        if(simplify){
+            double tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
+            tol = tol/(100.0*(101.0-tol));
+            std::ostringstream ss;
+            ss << tol;
+            spdc_apply_simplify(ss.str(), dc, item);
+        }
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
