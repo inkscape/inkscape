@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-05-18 12:45+0200\n"
-"PO-Revision-Date: 2015-06-02 22:42+0100\n"
+"PO-Revision-Date: 2015-06-02 23:12+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -9644,15 +9644,13 @@ msgstr "Aantal stappen veranderen bij indrukken van CTRL"
 
 #: ../src/live_effects/lpe-bspline.cpp:26
 #: ../src/live_effects/lpe-simplify.cpp:33
-#, fuzzy
 msgid "Helper size:"
-msgstr "H_andvatgrootte:"
+msgstr "Handvatgrootte:"
 
 #: ../src/live_effects/lpe-bspline.cpp:26
 #: ../src/live_effects/lpe-simplify.cpp:33
-#, fuzzy
 msgid "Helper size"
-msgstr "H_andvatgrootte:"
+msgstr "Handvatgrootte"
 
 #: ../src/live_effects/lpe-bspline.cpp:27
 msgid "Ignore cusp nodes"
@@ -9677,7 +9675,7 @@ msgstr "Grootte verandering van effect"
 
 #: ../src/live_effects/lpe-bspline.cpp:260
 msgid "Default weight"
-msgstr "Stadnaardwaarde"
+msgstr "Standaardwaarde"
 
 #: ../src/live_effects/lpe-bspline.cpp:265
 msgid "Make cusp"
@@ -9860,9 +9858,8 @@ msgid "Reverse Second"
 msgstr "Tweede omdraaien"
 
 #: ../src/live_effects/lpe-fill-between-strokes.cpp:25
-#, fuzzy
 msgid "Reverses the second path order"
-msgstr "Richting kleurverloop omdraaien"
+msgstr "Volgorde tweede pad omdraaien"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:41
 #: ../share/extensions/render_barcode_qrcode.inx.h:5
@@ -9870,27 +9867,24 @@ msgid "Auto"
 msgstr "Automatisch"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:42
-#, fuzzy
 msgid "Force arc"
-msgstr "Kracht"
+msgstr "Boog forceren"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:43
 msgid "Force bezier"
-msgstr ""
+msgstr "Bezier forceren"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:53
-#, fuzzy
 msgid "Fillet point"
-msgstr "Vulkleur"
+msgstr "Afschuiningspunt"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:54
 msgid "Hide knots"
 msgstr "Knooppunten verbergen"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:55
-#, fuzzy
 msgid "Ignore 0 radius knots"
-msgstr "De eerste en laatste punten negeren"
+msgstr "0 straalpunten negeren"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:57
 msgid "Flexible radius size (%)"
@@ -9898,68 +9892,63 @@ msgstr "Flexibele straal (%)"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:58
 msgid "Use knots distance instead radius"
-msgstr ""
+msgstr "Knooppuntafstand in plaats van straal gebruiken"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
 msgid "Method:"
 msgstr "Methode:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
-#, fuzzy
 msgid "Fillets methods"
-msgstr "Vulmethode:"
+msgstr "Afschuiningsmethode"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:60
-#, fuzzy
 msgid "Radius (unit or %):"
-msgstr "Straal (eenheid of %)"
+msgstr "Straal (eenheid of %):"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:60
 msgid "Radius, in unit or %"
 msgstr "straal, in eenheid of in %"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
-#, fuzzy
 msgid "Chamfer steps:"
-msgstr "Aantal stappen:"
+msgstr "Afschuiningsstappen:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
-#, fuzzy
 msgid "Chamfer steps"
-msgstr "Aantal stappen:"
+msgstr "Afschuiningsstappen"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:63
-#, fuzzy
 msgid "Helper size with direction:"
-msgstr "Hoek in X-richting"
+msgstr "Handvatgrootte met richting:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:63
 msgid "Helper size with direction"
-msgstr ""
+msgstr "Handvatgrootte met richting"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:154
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:71
 #, fuzzy
 msgid "Fillet"
-msgstr "Vulling"
+msgstr "Band"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:158
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:73
 #, fuzzy
 msgid "Inverse fillet"
-msgstr "Vulling inverteren"
+msgstr "Omgekeerde band"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:163
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:75
 #, fuzzy
 msgid "Chamfer"
-msgstr "Cham"
+msgstr "Afschuining"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:167
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:77
 #, fuzzy
 msgid "Inverse chamfer"
-msgstr "Vulling inverteren"
+msgstr "Omgekeerde afschuining"
 
 #: ../src/live_effects/lpe-gears.cpp:214
 msgid "_Teeth:"
@@ -10208,9 +10197,8 @@ msgstr "Knooppunten horizontaal verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:48
 #: ../src/live_effects/lpe-perspective-envelope.cpp:44
-#, fuzzy
 msgid "Mirror movements in vertical"
-msgstr "Knooppunten verticaal verplaatsen"
+msgstr "Verticale bewegingen spiegelen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control 0:"
@@ -10219,6 +10207,8 @@ msgstr "Handvat 0:"
 #: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 0 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 1:"
@@ -10227,6 +10217,8 @@ msgstr "Handvat 1:"
 #: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 1 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 2:"
@@ -10235,6 +10227,8 @@ msgstr "Handvat 2:"
 #: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 2 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 3:"
@@ -10243,6 +10237,8 @@ msgstr "Handvat 3:"
 #: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 3 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 4:"
@@ -10251,6 +10247,8 @@ msgstr "Handvat 4:"
 #: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 4 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 5:"
@@ -10259,6 +10257,8 @@ msgstr "Handvat 5:"
 #: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 5 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 6:"
@@ -10267,6 +10267,8 @@ msgstr "Handvat 6:"
 #: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 6 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 7:"
@@ -10275,6 +10277,8 @@ msgstr "Handvat 7:"
 #: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 7 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
 msgid "Control 8x9:"
@@ -10284,6 +10288,8 @@ msgstr "Handvat 8x9:"
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 8x9 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
 msgid "Control 10x11:"
@@ -10293,7 +10299,7 @@ msgstr "Handvat 10x11:"
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 10x11 - Ctrl+Alt+Klikken om te resetten, <b>Ctrl</b>: langs assen "
+"Handvat 10x11 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
@@ -10303,6 +10309,8 @@ msgstr "Handvat 12:"
 #: ../src/live_effects/lpe-lattice2.cpp:59
 msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 12 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 13:"
@@ -10311,6 +10319,8 @@ msgstr "Handvat 13:"
 #: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 13 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 14:"
@@ -10319,6 +10329,8 @@ msgstr "Handvat 14:"
 #: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 14 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 15:"
@@ -10327,6 +10339,8 @@ msgstr "Handvat 15:"
 #: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 15 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 16:"
@@ -10335,6 +10349,8 @@ msgstr "Handvat 16:"
 #: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 16 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
 msgid "Control 17:"
@@ -10343,6 +10359,8 @@ msgstr "Handvat 17:"
 #: ../src/live_effects/lpe-lattice2.cpp:64
 msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 17 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
 msgid "Control 18:"
@@ -10351,6 +10369,8 @@ msgstr "Handvat 18:"
 #: ../src/live_effects/lpe-lattice2.cpp:65
 msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 18 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
 msgid "Control 19:"
@@ -10359,77 +10379,86 @@ msgstr "Handvat 19:"
 #: ../src/live_effects/lpe-lattice2.cpp:66
 msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Handvat 19 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
 msgid "Control 20x21:"
 msgstr "Handvat 20x21:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-#, fuzzy
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Handvat 20x21 - Ctrl+Alt+Klikken om te resetten"
+msgstr ""
+"Handvat 20x21 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
 msgid "Control 22x23:"
 msgstr "Handvat 22x23:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-#, fuzzy
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Handvat 22x23 - Ctrl+Alt+Klikken om te resetten"
+msgstr ""
+"Handvat 22x23 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
 msgid "Control 24x26:"
 msgstr "Handvat 24x26:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-#, fuzzy
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Handvat 24x26 - Ctrl+Alt+Klikken om te resetten"
+msgstr ""
+"Handvat 24x26 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
 msgid "Control 25x27:"
 msgstr "Handvat 25x27:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-#, fuzzy
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Handvat 25x27 - Ctrl+Alt+Klikken om te resetten"
+msgstr ""
+"Handvat 25x27 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
 msgid "Control 28x30:"
 msgstr "Handvat 28x30:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-#, fuzzy
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Handvat 28x30 - Ctrl+Alt+Klikken om te resetten"
+msgstr ""
+"Handvat 28x30 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
 msgid "Control 29x31:"
 msgstr "Handvat 29x31:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
-#, fuzzy
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Handvat 29x31 - Ctrl+Alt+Klikken om te resetten"
+msgstr ""
+"Handvat 29x31 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
 msgid "Control 32x33x34x35:"
 msgstr "Handvat 32x33x34x35:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
-#, fuzzy
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
-msgstr "Handvat 32x33x34x35 - Ctrl+Alt+Klikken om te resetten"
+msgstr ""
+"Handvat 32x33x34x35 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs "
+"assen verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:236
 msgid "Reset grid"
@@ -18126,7 +18155,7 @@ msgstr "Indonesisch (id)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Icelandic (is)"
-msgstr ""
+msgstr "Ijslands (is)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Italian (it)"
@@ -24473,7 +24502,7 @@ msgstr "Zeilen"
 
 #: ../src/ui/widget/font-variants.cpp:58
 msgid "Numeric"
-msgstr ""
+msgstr "Numeriek"
 
 #: ../src/ui/widget/font-variants.cpp:59
 #, fuzzy
@@ -24494,7 +24523,7 @@ msgstr "Proportioneel"
 
 #: ../src/ui/widget/font-variants.cpp:63
 msgid "Tabular"
-msgstr ""
+msgstr "Tabulair"
 
 #: ../src/ui/widget/font-variants.cpp:64
 msgid "Default Width"
@@ -28816,7 +28845,7 @@ msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:478
 msgid "Bicubic"
-msgstr ""
+msgstr "Bicubisch"
 
 #: ../src/widgets/mesh-toolbar.cpp:480
 msgid "Coons"
@@ -32335,12 +32364,11 @@ msgstr "DXF-invoer"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Method of Scaling:"
-msgstr ""
+msgstr "Schalingsmethode:"
 
 #: ../share/extensions/dxf_input.inx.h:4
-#, fuzzy
 msgid "Manual scale factor:"
-msgstr "Of manuele schalingsfactor gebruiken:"
+msgstr "Manuele schalingsfactor:"
 
 #: ../share/extensions/dxf_input.inx.h:5
 msgid "Manual x-axis origin (mm):"
@@ -32364,7 +32392,6 @@ msgid "Text Font:"
 msgstr "Lettertype tekst:"
 
 #: ../share/extensions/dxf_input.inx.h:11
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 and newer.\n"
 "- for manual scaling, assume dxf drawing is in mm.\n"
@@ -32376,8 +32403,12 @@ msgid ""
 "- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 "- AutoCAD versie 13 en nieuwer.\n"
-"- dxf tekening moet in mm zijn.\n"
-"- svg tekening moet in punten zijn, op 90 ppi.\n"
+"- voor manuale schaling, veronderstel dat dxf in mm is.\n"
+"- veronderstel dat svg in pixels is met 96 ppi.\n"
+"- schalingsfactor en oorsprong worden alleen bij manuele schaling "
+"toegepast.\n"
+"- 'Automatic scaling' geeft de breedte van een A4 pagina.\n"
+"- 'Read from file' gebruikt de variabele $MEASUREMENT.\n"
 "- lagen worden enkel behouden bij Bestand->Openen, niet bij Importeren.\n"
 "- beperkte ondersteuning voor BLOCKS, gebruik AutoCAD Explode Blocks indien "
 "nodig."
@@ -32411,14 +32442,12 @@ msgid "Character Encoding:"
 msgstr "Karakterencodering:"
 
 #: ../share/extensions/dxf_outlines.inx.h:7
-#, fuzzy
 msgid "Layer export selection:"
-msgstr "Te exporteren lagen"
+msgstr "Te exporteren lagen:"
 
 #: ../share/extensions/dxf_outlines.inx.h:8
-#, fuzzy
 msgid "Layer match name:"
-msgstr "Naamovereenkomst laag"
+msgstr "Naamovereenkomst laag:"
 
 #: ../share/extensions/dxf_outlines.inx.h:9
 msgid "pt"
@@ -35913,7 +35942,7 @@ msgstr "De te gebruiken commandotaal (Standaard: HPGL)"
 
 #: ../share/extensions/plotter.inx.h:21
 msgid "Initialization commands:"
-msgstr ""
+msgstr "Initialisatiecommando's:"
 
 #: ../share/extensions/plotter.inx.h:22
 msgid ""
