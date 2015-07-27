@@ -194,7 +194,9 @@ Inkscape::XML::Node* SPFilterPrimitive::write(Inkscape::XML::Document *doc, Inks
 
 int sp_filter_primitive_read_in(SPFilterPrimitive *prim, gchar const *name)
 {
-    if (!name) return Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
+    if (!name | !prim){
+        return Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
+    }
     // TODO: are these case sensitive or not? (assumed yes)
     switch (name[0]) {
         case 'S':
