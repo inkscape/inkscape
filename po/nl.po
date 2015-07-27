@@ -10207,7 +10207,7 @@ msgstr "Handvat 0:"
 #: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 0 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 0 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
@@ -10217,7 +10217,7 @@ msgstr "Handvat 1:"
 #: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 1 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 1 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
@@ -10227,7 +10227,7 @@ msgstr "Handvat 2:"
 #: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 2 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 2 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
@@ -10237,7 +10237,7 @@ msgstr "Handvat 3:"
 #: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 3 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 3 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
@@ -10247,7 +10247,7 @@ msgstr "Handvat 4:"
 #: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 4 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 4 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
@@ -10257,7 +10257,7 @@ msgstr "Handvat 5:"
 #: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 5 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 5 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
@@ -10267,7 +10267,7 @@ msgstr "Handvat 6:"
 #: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 6 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 6 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
@@ -10277,7 +10277,7 @@ msgstr "Handvat 7:"
 #: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 7 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 7 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
@@ -10288,7 +10288,7 @@ msgstr "Handvat 8x9:"
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 8x9 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 8x9 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
@@ -10299,7 +10299,7 @@ msgstr "Handvat 10x11:"
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 10x11 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 10x11 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
@@ -10309,7 +10309,7 @@ msgstr "Handvat 12:"
 #: ../src/live_effects/lpe-lattice2.cpp:59
 msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 12 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 12 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
@@ -10319,7 +10319,7 @@ msgstr "Handvat 13:"
 #: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 13 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 13 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
@@ -10329,7 +10329,7 @@ msgstr "Handvat 14:"
 #: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 14 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 14 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
@@ -10339,7 +10339,7 @@ msgstr "Handvat 15:"
 #: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 15 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 15 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
@@ -10349,7 +10349,7 @@ msgstr "Handvat 16:"
 #: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 16 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 16 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
@@ -10359,7 +10359,7 @@ msgstr "Handvat 17:"
 #: ../src/live_effects/lpe-lattice2.cpp:64
 msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 17 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 17 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
@@ -10369,7 +10369,7 @@ msgstr "Handvat 18:"
 #: ../src/live_effects/lpe-lattice2.cpp:65
 msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 18 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 18 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
@@ -10379,7 +10379,7 @@ msgstr "Handvat 19:"
 #: ../src/live_effects/lpe-lattice2.cpp:66
 msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 19 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 19 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
@@ -10390,7 +10390,7 @@ msgstr "Handvat 20x21:"
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 20x21 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 20x21 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
@@ -10401,7 +10401,7 @@ msgstr "Handvat 22x23:"
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 22x23 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 22x23 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
@@ -10412,7 +10412,7 @@ msgstr "Handvat 24x26:"
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 24x26 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 24x26 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
@@ -10423,7 +10423,7 @@ msgstr "Handvat 25x27:"
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 25x27 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 25x27 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
@@ -10434,7 +10434,7 @@ msgstr "Handvat 28x30:"
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 28x30 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 28x30 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
@@ -10445,7 +10445,7 @@ msgstr "Handvat 29x31:"
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Handvat 29x31 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs assen "
+"Handvat 29x31 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs assen "
 "verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
@@ -10457,7 +10457,7 @@ msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
 msgstr ""
-"Handvat 32x33x34x35 - <b>Ctrl+Alt+Klikken</>: resetten, <b>Ctrl</b>: langs "
+"Handvat 32x33x34x35 - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: langs "
 "assen verplaatsen"
 
 #: ../src/live_effects/lpe-lattice2.cpp:236
