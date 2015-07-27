@@ -30,6 +30,7 @@
 
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
+#include <list>
 
 #include "pencil-toolbar.h"
 #include "desktop.h"
@@ -45,9 +46,11 @@
 #include "ui/uxmanager.h"
 #include "widgets/spinbutton-events.h"
 #include <selection.h>
+#include "live_effects/effect.h"
 #include "live_effects/lpe-simplify.h"
 #include "live_effects/effect-enum.h"
 #include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
 #include "sp-lpe-item.h"
 #include "util/glib-list-iterators.h"
 
@@ -233,6 +236,41 @@ static void sp_pencil_tb_defaults(GtkWidget * /*widget*/, GObject *obj)
     spinbutton_defocus(tbl);
 }
 
+static void sp_simplify_flatten(GtkWidget * /*widget*/, GObject *obj)
+{
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(obj, "desktop"));
+    std::vector<SPItem *> selected = desktop->getSelection()->itemList();
+    for (std::vector<SPItem *>::iterator it(selected.begin()); it != selected.end(); ++it){
+        SPLPEItem* lpeitem = dynamic_cast<SPLPEItem*>(*it);
+        if (lpeitem && lpeitem->hasPathEffect()){
+            PathEffectList lpelist = lpeitem->getEffectList();
+            std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
+            for (i = lpelist.begin(); i != lpelist.end(); ++i) {
+                LivePathEffectObject *lpeobj = (*i)->lpeobject;
+                if (lpeobj) {
+                    Inkscape::LivePathEffect::Effect *lpe = lpeobj->get_lpe();
+                    if (dynamic_cast<Inkscape::LivePathEffect::LPESimplify *>(lpe)) {
+                        SPShape * shape = dynamic_cast<SPShape *>(lpeitem);
+                        if(shape){
+                            SPCurve * c = shape->getCurveBeforeLPE();
+                            lpe->doEffect(c);
+                            lpeitem->setCurrentPathEffect(*i);
+                            if (lpelist.size() > 1){
+                                lpeitem->removeCurrentPathEffect(true);
+                                shape->setCurveBeforeLPE(c);
+                            } else {
+                                lpeitem->removeCurrentPathEffect(false);
+                                shape->setCurve(c,0);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 static void sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
     // quit if run by the attr_changed listener
@@ -255,7 +293,7 @@ static void sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tb
                 Inkscape::LivePathEffect::LPESimplify *lpe = dynamic_cast<Inkscape::LivePathEffect::LPESimplify*>(thisEffect->getLPEObj()->get_lpe());
                 if (lpe) {
                     double tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
-                    tol = tol/(100.0*(101.0-tol));
+                    tol = tol/(100.0*(102.0-tol));
                     std::ostringstream ss;
                     ss << tol;
                     lpe->getRepr()->setAttribute("threshold", ss.str());
@@ -345,6 +383,16 @@ void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(itact), prefs->getInt("/tools/freehand/pencil/simplify", 0) );
         g_signal_connect_after(  G_OBJECT(itact), "toggled", G_CALLBACK(freehand_simplify_lpe), holder) ;
         gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
+    }
+    /* LPE simplify flatten */
+    {
+        InkAction* inky = ink_action_new( "PencilLpeSimplifyFlatten",
+                                          _("LPE simplify flatten"),
+                                          _("LPE simplify flatten"),
+                                          INKSCAPE_ICON("flatten_simplify"),
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_simplify_flatten), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
