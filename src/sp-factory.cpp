@@ -297,7 +297,7 @@ SPObject *SPFactory::createObject(std::string const& id)
     else if (id.empty()) // comments
         {}
     else {
-        fprintf(stderr, "WARNING: unknown type: %s", id.c_str());
+        fprintf(stderr, "WARNING: unknown type: %s\n", id.c_str());
     }
 
     return ret;
