@@ -288,6 +288,14 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (item && SP_IS_LPE_ITEM(item)) {
+        bool simplify = prefs->getInt(tool_name(dc) + "/simplify", 0);
+        if(simplify){
+            double tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
+            tol = tol/(100.0*(102.0-tol));
+            std::ostringstream ss;
+            ss << tol;
+            spdc_apply_simplify(ss.str(), dc, item);
+        }
         if (prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 1) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
         }
@@ -303,14 +311,6 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
 
 
         shapeType shape = (shapeType)prefs->getInt(tool_name(dc) + "/shape", 0);
-        bool simplify = prefs->getInt(tool_name(dc) + "/simplify", 0);
-        if(simplify){
-            double tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
-            tol = tol/(100.0*(101.0-tol));
-            std::ostringstream ss;
-            ss << tol;
-            spdc_apply_simplify(ss.str(), dc, item);
-        }
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
