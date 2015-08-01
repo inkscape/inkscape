@@ -46,8 +46,10 @@
 #include "ui/uxmanager.h"
 #include "widgets/spinbutton-events.h"
 #include <selection.h>
+#include "display/curve.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpe-simplify.h"
+#include "live_effects/lpe-powerstroke.h"
 #include "live_effects/effect-enum.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
@@ -289,15 +291,42 @@ static void sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tb
     for (std::vector<SPItem *>::iterator it(selected.begin()); it != selected.end(); ++it){
         SPLPEItem* lpeitem = dynamic_cast<SPLPEItem*>(*it);
         if (lpeitem && lpeitem->hasPathEffect()){
-            Inkscape::LivePathEffect::Effect* thisEffect = lpeitem->getPathEffectOfType(Inkscape::LivePathEffect::SIMPLIFY);
-            if(thisEffect){
-                Inkscape::LivePathEffect::LPESimplify *lpe = dynamic_cast<Inkscape::LivePathEffect::LPESimplify*>(thisEffect->getLPEObj()->get_lpe());
-                if (lpe) {
+            Inkscape::LivePathEffect::Effect* simplify = lpeitem->getPathEffectOfType(Inkscape::LivePathEffect::SIMPLIFY);
+            if(simplify){
+                Inkscape::LivePathEffect::LPESimplify *lpe_simplify = dynamic_cast<Inkscape::LivePathEffect::LPESimplify*>(simplify->getLPEObj()->get_lpe());
+                if (lpe_simplify) {
                     double tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
                     tol = tol/(100.0*(102.0-tol));
                     std::ostringstream ss;
                     ss << tol;
-                    lpe->getRepr()->setAttribute("threshold", ss.str());
+                    Inkscape::LivePathEffect::Effect* powerstroke = lpeitem->getPathEffectOfType(Inkscape::LivePathEffect::POWERSTROKE);
+                    bool simplified = false;
+                    if(powerstroke){
+                        Inkscape::LivePathEffect::LPEPowerStroke *lpe_powerstroke = dynamic_cast<Inkscape::LivePathEffect::LPEPowerStroke*>(powerstroke->getLPEObj()->get_lpe());
+                        if(lpe_powerstroke){
+                            lpe_powerstroke->getRepr()->setAttribute("is_visible", "false");
+                            sp_lpe_item_update_patheffect(lpeitem, false, false);
+                            SPShape *sp_shape = dynamic_cast<SPShape *>(lpeitem);
+                            if (sp_shape) {
+                                guint previous_curve_length = sp_shape->getCurve()->get_segment_count();
+                                lpe_simplify->getRepr()->setAttribute("threshold", ss.str());
+                                sp_lpe_item_update_patheffect(lpeitem, false, false);
+                                simplified = true;
+                                guint curve_length = sp_shape->getCurve()->get_segment_count();
+                                std::vector<Geom::Point> ts = lpe_powerstroke->offset_points.data();
+                                double factor = (double)curve_length/ (double)previous_curve_length;
+                                for (size_t i = 0; i < ts.size(); i++) {
+                                    ts[i][Geom::X] = ts[i][Geom::X] * factor;
+                                }
+                                lpe_powerstroke->offset_points.param_setValue(ts);
+                            }
+                            lpe_powerstroke->getRepr()->setAttribute("is_visible", "true");
+                            sp_lpe_item_update_patheffect(lpeitem, false, false);
+                        }
+                    }
+                    if(!simplified){
+                        lpe_simplify->getRepr()->setAttribute("threshold", ss.str());
+                    }
                 }
             }
         }

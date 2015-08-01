@@ -289,7 +289,7 @@ static void spdc_apply_simplify(std::string threshold, FreehandBase *dc, SPItem 
 
     Effect::createAndApply(SIMPLIFY, dc->desktop->doc(), item);
     Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
-    // write powerstroke parameters:
+    // write simplify parameters:
     lpe->getRepr()->setAttribute("steps", "1");
     lpe->getRepr()->setAttribute("threshold", threshold);
     lpe->getRepr()->setAttribute("smooth_angles", "360");
@@ -314,20 +314,22 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             std::ostringstream ss;
             ss << tol;
             spdc_apply_simplify(ss.str(), dc, item);
+            sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
         }
         if (prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 1) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
         }
-        //add the bspline node in the waiting effects
+
         if (prefs->getInt(tool_name(dc) + "/freehand-mode", 0) == 2) {
             Effect::createAndApply(BSPLINE, dc->desktop->doc(), item);
         }
+        SPShape *sp_shape = dynamic_cast<SPShape *>(item);
+        if (sp_shape) {
+            curve = sp_shape->getCurve();
+        }
 
         //Store the clipboard path to apply in the future without the use of clipboard
-
         static Geom::PathVector previous_shape_pathv;
-        
-
 
         shapeType shape = (shapeType)prefs->getInt(tool_name(dc) + "/shape", 0);
         bool shape_applied = false;
