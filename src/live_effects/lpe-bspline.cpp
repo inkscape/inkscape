@@ -245,6 +245,7 @@ LPEBSpline::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::
 {
     hp_vec.push_back(hp);
 }
+
 Gtk::Widget *LPEBSpline::newWidget()
 {
     // use manage here, because after deletion of Effect object, others might

@@ -38,7 +38,7 @@ public:
     virtual Geom::Point knot_get() const;
 };
 
-} // namespace TtC
+} // namespace AB
 
 LPEAngleBisector::LPEAngleBisector(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
