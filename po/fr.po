@@ -12,7 +12,7 @@
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2006.
 # Florent Becker <florent.becker@ens-lyon.org>
 # Sophie Gousset <contact@sophieweb.com>
-# Nicolas Dufour <nicoduf@yahoo.fr>, 2008-2012.
+# Nicolas Dufour <nicoduf@yahoo.fr>, 2008-2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"

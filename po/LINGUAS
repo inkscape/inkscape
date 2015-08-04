@@ -5,6 +5,7 @@
 #
 am
 ar
+as
 az
 be
 bg
@@ -16,6 +17,7 @@ ca@valencia
 cs
 da
 de
+doi
 dz
 el
 en_AU
@@ -32,7 +34,9 @@ fi
 fr
 ga
 gl
+gu
 he
+hi
 hr
 hu
 hy
@@ -50,6 +54,7 @@ nb
 ne
 nl
 nn
+or
 pa
 pl
 pt_BR
@@ -57,12 +62,15 @@ pt
 ro
 ru
 rw
+sat@deva
+sat@olck
 sk
 sl
 sq
 sr@latin
 sr
 sv
+ta
 te
 th
 tr
