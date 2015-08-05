@@ -414,7 +414,11 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                     bend_item = dc->selection->singleItem();
                     if(bend_item){
                         bend_item->moveTo(item,false);
-                        bend_item->transform =  Geom::Affine(1,0,0,1,0,0);
+                        Geom::Coord expansion_X = bend_item->transform.expansionX();
+                        Geom::Coord expansion_Y = bend_item->transform.expansionY();
+                        bend_item->transform = Geom::Affine(1,0,0,1,0,0);
+                        bend_item->transform.setExpansionX(expansion_X);
+                        bend_item->transform.setExpansionY(expansion_Y);
                         spdc_apply_bend_shape(svgd, dc, bend_item);
                         dc->selection->add(SP_OBJECT(bend_item));
                     } else {
@@ -446,7 +450,11 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                         bend_item = dc->selection->singleItem();
                         if(bend_item){
                             bend_item->moveTo(item,false);
+                            Geom::Coord expansion_X = bend_item->transform.expansionX();
+                            Geom::Coord expansion_Y = bend_item->transform.expansionY();
                             bend_item->transform = Geom::Affine(1,0,0,1,0,0);
+                            bend_item->transform.setExpansionX(expansion_X);
+                            bend_item->transform.setExpansionY(expansion_Y);
                             spdc_apply_bend_shape(svgd, dc, bend_item);
                             dc->selection->add(SP_OBJECT(bend_item));
                             shape = BEND_CLIPBOARD;
