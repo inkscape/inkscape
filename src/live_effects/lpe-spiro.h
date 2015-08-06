@@ -27,6 +27,8 @@ private:
     LPESpiro& operator=(const LPESpiro&);
 };
 
+void sp_spiro_do_effect(SPCurve *curve);
+
 }; //namespace LivePathEffect
 }; //namespace Inkscape
 

@@ -25,14 +25,13 @@ public:
     virtual void doOnApply(SPLPEItem const* lpeitem);
     virtual void doEffect(SPCurve *curve);
     virtual void doBeforeEffect (SPLPEItem const* lpeitem);
-    void drawHandle(Geom::Point p, double radiusHelperNodes);
-    virtual void doBSplineFromWidget(SPCurve *curve, double value);
+    void doBSplineFromWidget(SPCurve *curve, double value);
     void addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec);
     virtual Gtk::Widget *newWidget();
-    virtual void changeWeight(double weightValue);
-    virtual void toDefaultWeight();
-    virtual void toMakeCusp();
-    virtual void toWeight();
+    void changeWeight(double weightValue);
+    void toDefaultWeight();
+    void toMakeCusp();
+    void toWeight();
 
     // TODO make this private
     ScalarParam steps;
@@ -42,12 +41,12 @@ private:
     BoolParam ignore_cusp;
     BoolParam only_selected;
     ScalarParam weight;
-    Geom::PathVector hp;
 
     LPEBSpline(const LPEBSpline &);
     LPEBSpline &operator=(const LPEBSpline &);
 
 };
+void sp_bspline_do_effect(SPCurve *curve, double helper_size);
 
 } //namespace LivePathEffect
 } //namespace Inkscape

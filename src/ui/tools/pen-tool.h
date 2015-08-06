@@ -112,8 +112,6 @@ private:
     void _bsplineSpiroEndAnchorOff();
     //CHECK: join all the curves "in game" and we call doEffect function
     void _bsplineSpiroBuild();
-    //function bspline cloned from lpe-bspline.cpp
-    void _bsplineDoEffect(SPCurve * curve);
     //function spiro cloned from lpe-spiro.cpp
     void _spiroDoEffect(SPCurve * curve);
 

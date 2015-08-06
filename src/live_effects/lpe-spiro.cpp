@@ -37,6 +37,10 @@ LPESpiro::~LPESpiro()
 void
 LPESpiro::doEffect(SPCurve * curve)
 {
+    sp_spiro_do_effect(curve);
+}
+
+void sp_spiro_do_effect(SPCurve *curve){
     using Geom::X;
     using Geom::Y;
 
@@ -54,7 +58,7 @@ LPESpiro::doEffect(SPCurve * curve)
 
         // start of path
         {
-            Geom::Point p = path_it->front().pointAt(0);
+            Geom::Point p = path_it->initialPoint();
             path[ip].x = p[X];
             path[ip].y = p[Y];
             path[ip].ty = '{' ;  // for closed paths, this is overwritten
@@ -64,17 +68,7 @@ LPESpiro::doEffect(SPCurve * curve)
         // midpoints
         Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
         Geom::Path::const_iterator curve_it2 = ++(path_it->begin());         // outgoing curve
-
         Geom::Path::const_iterator curve_endit = path_it->end_default(); // this determines when the loop has to stop
-        if (path_it->closed()) {
-            // if the path is closed, maybe we have to stop a bit earlier because the closing line segment has zerolength.
-            const Geom::Curve &closingline = path_it->back_closed(); // the closing line segment is always of type Geom::LineSegment.
-            if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
-                // closingline.isDegenerate() did not work, because it only checks for *exact* zero length, which goes wrong for relative coordinates and rounding errors...
-                // the closing line segment has zero-length. So stop before that one!
-                curve_endit = path_it->end_open();
-            }
-        }
 
         while ( curve_it2 != curve_endit )
         {

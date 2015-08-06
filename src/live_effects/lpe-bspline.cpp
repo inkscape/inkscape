@@ -20,6 +20,8 @@ const double HANDLE_CUBIC_GAP = 0.01;
 const double NO_POWER = 0.0;
 const double DEFAULT_START_POWER = 0.3334;
 const double DEFAULT_END_POWER = 0.6667;
+Geom::PathVector hp;
+void sp_bspline_drawHandle(Geom::Point p, double helper_size);
 
 LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
@@ -65,179 +67,6 @@ void LPEBSpline::doOnApply(SPLPEItem const* lpeitem)
         SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
         item->removeCurrentPathEffect(false);
     }
-}
-
-void LPEBSpline::doEffect(SPCurve *curve)
-{
-
-    if (curve->get_segment_count() < 1) {
-        return;
-    }
-    // Make copy of old path as it is changed during processing
-    Geom::PathVector const original_pathv = curve->get_pathvector();
-
-    curve->reset();
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
-            path_it != original_pathv.end(); ++path_it) {
-        if (path_it->empty()) {
-            continue;
-        }
-        if (!prefs->getBool("/tools/nodes/show_outline", true)){
-            hp.push_back(*path_it);
-        }
-        Geom::Path::const_iterator curve_it1 = path_it->begin();
-        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());
-        Geom::Path::const_iterator curve_endit = path_it->end_default();
-        SPCurve *curve_n = new SPCurve();
-        Geom::Point previousNode(0, 0);
-        Geom::Point node(0, 0);
-        Geom::Point point_at1(0, 0);
-        Geom::Point point_at2(0, 0);
-        Geom::Point next_point_at1(0, 0);
-        Geom::D2<Geom::SBasis> sbasis_in;
-        Geom::D2<Geom::SBasis> sbasis_out;
-        Geom::D2<Geom::SBasis> sbasis_helper;
-        Geom::CubicBezier const *cubic = NULL;
-        if (path_it->closed()) {
-            // if the path is closed, maybe we have to stop a bit earlier because the
-            // closing line segment has zerolength.
-            const Geom::Curve &closingline =
-                path_it->back_closed(); // the closing line segment is always of type
-            // Geom::LineSegment.
-            if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
-                // closingline.isDegenerate() did not work, because it only checks for
-                // *exact* zero length, which goes wrong for relative coordinates and
-                // rounding errors...
-                // the closing line segment has zero-length. So stop before that one!
-                curve_endit = path_it->end_open();
-            }
-        }
-        curve_n->moveto(curve_it1->initialPoint());
-        while (curve_it1 != curve_endit) {
-            SPCurve *in = new SPCurve();
-            in->moveto(curve_it1->initialPoint());
-            in->lineto(curve_it1->finalPoint());
-            cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
-            if (cubic) {
-                sbasis_in = in->first_segment()->toSBasis();
-                if(are_near((*cubic)[1],(*cubic)[0]) && !are_near((*cubic)[2],(*cubic)[3])) {
-                    point_at1 = sbasis_in.valueAt(DEFAULT_START_POWER);
-                } else {
-                    point_at1 = sbasis_in.valueAt(Geom::nearest_time((*cubic)[1], *in->first_segment()));
-                }
-                if(are_near((*cubic)[2],(*cubic)[3]) && !are_near((*cubic)[1],(*cubic)[0])) {
-                    point_at2 = sbasis_in.valueAt(DEFAULT_END_POWER);
-                } else {
-                    point_at2 = sbasis_in.valueAt(Geom::nearest_time((*cubic)[2], *in->first_segment()));
-                }
-            } else {
-                point_at1 = in->first_segment()->initialPoint();
-                point_at2 = in->first_segment()->finalPoint();
-            }
-            in->reset();
-            delete in;
-            if ( curve_it2 != curve_endit ) {
-                SPCurve *out = new SPCurve();
-                out->moveto(curve_it2->initialPoint());
-                out->lineto(curve_it2->finalPoint());
-                cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it2);
-                if (cubic) {
-                    sbasis_out = out->first_segment()->toSBasis();
-                    if(are_near((*cubic)[1],(*cubic)[0]) && !are_near((*cubic)[2],(*cubic)[3])) {
-                        next_point_at1 = sbasis_in.valueAt(DEFAULT_START_POWER);
-                    } else {
-                        next_point_at1 = sbasis_out.valueAt(Geom::nearest_time((*cubic)[1], *out->first_segment()));
-                    }
-                } else {
-                    next_point_at1 = out->first_segment()->initialPoint();
-                }
-                out->reset();
-                delete out;
-            }
-            if (path_it->closed() && curve_it2 == curve_endit) {
-                SPCurve *start = new SPCurve();
-                start->moveto(path_it->begin()->initialPoint());
-                start->lineto(path_it->begin()->finalPoint());
-                Geom::D2<Geom::SBasis> sbasis_start = start->first_segment()->toSBasis();
-                SPCurve *line_helper = new SPCurve();
-                cubic = dynamic_cast<Geom::CubicBezier const *>(&*path_it->begin());
-                if (cubic) {
-                    line_helper->moveto(sbasis_start.valueAt(
-                                           Geom::nearest_time((*cubic)[1], *start->first_segment())));
-                } else {
-                    line_helper->moveto(start->first_segment()->initialPoint());
-                }
-                start->reset();
-                delete start;
-
-                SPCurve *end = new SPCurve();
-                end->moveto(curve_it1->initialPoint());
-                end->lineto(curve_it1->finalPoint());
-                Geom::D2<Geom::SBasis> sbasis_end = end->first_segment()->toSBasis();
-                cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
-                if (cubic) {
-                    line_helper->lineto(sbasis_end.valueAt(
-                                           Geom::nearest_time((*cubic)[2], *end->first_segment())));
-                } else {
-                    line_helper->lineto(end->first_segment()->finalPoint());
-                }
-                end->reset();
-                delete end;
-                sbasis_helper = line_helper->first_segment()->toSBasis();
-                line_helper->reset();
-                delete line_helper;
-                node = sbasis_helper.valueAt(0.5);
-                curve_n->curveto(point_at1, point_at2, node);
-                curve_n->move_endpoints(node, node);
-            } else if ( curve_it2 == curve_endit) {
-                curve_n->curveto(point_at1, point_at2, curve_it1->finalPoint());
-                curve_n->move_endpoints(path_it->begin()->initialPoint(), curve_it1->finalPoint());
-            } else {
-                SPCurve *line_helper = new SPCurve();
-                line_helper->moveto(point_at2);
-                line_helper->lineto(next_point_at1);
-                sbasis_helper = line_helper->first_segment()->toSBasis();
-                line_helper->reset();
-                delete line_helper;
-                previousNode = node;
-                node = sbasis_helper.valueAt(0.5);
-                Geom::CubicBezier const *cubic2 = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
-                if((cubic && are_near((*cubic)[0],(*cubic)[1])) || (cubic2 && are_near((*cubic2)[2],(*cubic2)[3]))) {
-                    node = curve_it1->finalPoint();
-                }
-                curve_n->curveto(point_at1, point_at2, node);
-            }
-            if(!are_near(node,curve_it1->finalPoint()) && helper_size > 0.0) {
-                drawHandle(node, helper_size);
-            }
-            ++curve_it1;
-            ++curve_it2;
-        }
-        //y cerramos la curva
-        if (path_it->closed()) {
-            curve_n->closepath_current();
-        }
-        curve->append(curve_n, false);
-        curve_n->reset();
-        delete curve_n;
-    }
-    if(helper_size > 0.0) {
-        Geom::PathVector const pathv = curve->get_pathvector();
-        hp.push_back(pathv[0]);
-    }
-}
-
-void
-LPEBSpline::drawHandle(Geom::Point p, double helper_size)
-{
-    char const * svgd = "M 1,0.5 A 0.5,0.5 0 0 1 0.5,1 0.5,0.5 0 0 1 0,0.5 0.5,0.5 0 0 1 0.5,0 0.5,0.5 0 0 1 1,0.5 Z";
-    Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-    Geom::Affine aff = Geom::Affine();
-    aff *= Geom::Scale(helper_size);
-    pathv *= aff;
-    pathv *= Geom::Translate(p - Geom::Point(0.5*helper_size, 0.5*helper_size));
-    hp.push_back(pathv[0]);
 }
 
 void
@@ -338,6 +167,166 @@ void LPEBSpline::changeWeight(double weight_ammount)
     }
 }
 
+void LPEBSpline::doEffect(SPCurve *curve)
+{
+    sp_bspline_do_effect(curve, helper_size);
+}
+
+void sp_bspline_do_effect(SPCurve *curve, double helper_size)
+{
+    if (curve->get_segment_count() < 1) {
+        return;
+    }
+    Geom::PathVector const original_pathv = curve->get_pathvector();
+    curve->reset();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
+            path_it != original_pathv.end(); ++path_it) {
+        if (path_it->empty()) {
+            continue;
+        }
+        if (!prefs->getBool("/tools/nodes/show_outline", true)){
+            hp.push_back(*path_it);
+        }
+        Geom::Path::const_iterator curve_it1 = path_it->begin();
+        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());
+        Geom::Path::const_iterator curve_endit = path_it->end_default();
+        SPCurve *curve_n = new SPCurve();
+        Geom::Point previousNode(0, 0);
+        Geom::Point node(0, 0);
+        Geom::Point point_at1(0, 0);
+        Geom::Point point_at2(0, 0);
+        Geom::Point next_point_at1(0, 0);
+        Geom::D2<Geom::SBasis> sbasis_in;
+        Geom::D2<Geom::SBasis> sbasis_out;
+        Geom::D2<Geom::SBasis> sbasis_helper;
+        Geom::CubicBezier const *cubic = NULL;
+        curve_n->moveto(curve_it1->initialPoint());
+        while (curve_it1 != curve_endit) {
+            SPCurve *in = new SPCurve();
+            in->moveto(curve_it1->initialPoint());
+            in->lineto(curve_it1->finalPoint());
+            cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
+            if (cubic) {
+                sbasis_in = in->first_segment()->toSBasis();
+                if(are_near((*cubic)[1],(*cubic)[0]) && !are_near((*cubic)[2],(*cubic)[3])) {
+                    point_at1 = sbasis_in.valueAt(DEFAULT_START_POWER);
+                } else {
+                    point_at1 = sbasis_in.valueAt(Geom::nearest_time((*cubic)[1], *in->first_segment()));
+                }
+                if(are_near((*cubic)[2],(*cubic)[3]) && !are_near((*cubic)[1],(*cubic)[0])) {
+                    point_at2 = sbasis_in.valueAt(DEFAULT_END_POWER);
+                } else {
+                    point_at2 = sbasis_in.valueAt(Geom::nearest_time((*cubic)[2], *in->first_segment()));
+                }
+            } else {
+                point_at1 = in->first_segment()->initialPoint();
+                point_at2 = in->first_segment()->finalPoint();
+            }
+            in->reset();
+            delete in;
+            if ( curve_it2 != curve_endit ) {
+                SPCurve *out = new SPCurve();
+                out->moveto(curve_it2->initialPoint());
+                out->lineto(curve_it2->finalPoint());
+                cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it2);
+                if (cubic) {
+                    sbasis_out = out->first_segment()->toSBasis();
+                    if(are_near((*cubic)[1],(*cubic)[0]) && !are_near((*cubic)[2],(*cubic)[3])) {
+                        next_point_at1 = sbasis_in.valueAt(DEFAULT_START_POWER);
+                    } else {
+                        next_point_at1 = sbasis_out.valueAt(Geom::nearest_time((*cubic)[1], *out->first_segment()));
+                    }
+                } else {
+                    next_point_at1 = out->first_segment()->initialPoint();
+                }
+                out->reset();
+                delete out;
+            }
+            if (path_it->closed() && curve_it2 == curve_endit) {
+                SPCurve *start = new SPCurve();
+                start->moveto(path_it->begin()->initialPoint());
+                start->lineto(path_it->begin()->finalPoint());
+                Geom::D2<Geom::SBasis> sbasis_start = start->first_segment()->toSBasis();
+                SPCurve *line_helper = new SPCurve();
+                cubic = dynamic_cast<Geom::CubicBezier const *>(&*path_it->begin());
+                if (cubic) {
+                    line_helper->moveto(sbasis_start.valueAt(
+                                           Geom::nearest_time((*cubic)[1], *start->first_segment())));
+                } else {
+                    line_helper->moveto(start->first_segment()->initialPoint());
+                }
+                start->reset();
+                delete start;
+
+                SPCurve *end = new SPCurve();
+                end->moveto(curve_it1->initialPoint());
+                end->lineto(curve_it1->finalPoint());
+                Geom::D2<Geom::SBasis> sbasis_end = end->first_segment()->toSBasis();
+                cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
+                if (cubic) {
+                    line_helper->lineto(sbasis_end.valueAt(
+                                           Geom::nearest_time((*cubic)[2], *end->first_segment())));
+                } else {
+                    line_helper->lineto(end->first_segment()->finalPoint());
+                }
+                end->reset();
+                delete end;
+                sbasis_helper = line_helper->first_segment()->toSBasis();
+                line_helper->reset();
+                delete line_helper;
+                node = sbasis_helper.valueAt(0.5);
+                curve_n->curveto(point_at1, point_at2, node);
+                curve_n->move_endpoints(node, node);
+            } else if ( curve_it2 == curve_endit) {
+                curve_n->curveto(point_at1, point_at2, curve_it1->finalPoint());
+                curve_n->move_endpoints(path_it->begin()->initialPoint(), curve_it1->finalPoint());
+            } else {
+                SPCurve *line_helper = new SPCurve();
+                line_helper->moveto(point_at2);
+                line_helper->lineto(next_point_at1);
+                sbasis_helper = line_helper->first_segment()->toSBasis();
+                line_helper->reset();
+                delete line_helper;
+                previousNode = node;
+                node = sbasis_helper.valueAt(0.5);
+                Geom::CubicBezier const *cubic2 = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
+                if((cubic && are_near((*cubic)[0],(*cubic)[1])) || (cubic2 && are_near((*cubic2)[2],(*cubic2)[3]))) {
+                    node = curve_it1->finalPoint();
+                }
+                curve_n->curveto(point_at1, point_at2, node);
+            }
+            if(!are_near(node,curve_it1->finalPoint()) && helper_size > 0.0) {
+                sp_bspline_drawHandle(node, helper_size);
+            }
+            ++curve_it1;
+            ++curve_it2;
+        }
+        if (path_it->closed()) {
+            curve_n->closepath_current();
+        }
+        curve->append(curve_n, false);
+        curve_n->reset();
+        delete curve_n;
+    }
+    if(helper_size > 0.0) {
+        Geom::PathVector const pathv = curve->get_pathvector();
+        hp.push_back(pathv[0]);
+    }
+}
+
+
+void sp_bspline_drawHandle(Geom::Point p, double helper_size)
+{
+    char const * svgd = "M 1,0.5 A 0.5,0.5 0 0 1 0.5,1 0.5,0.5 0 0 1 0,0.5 0.5,0.5 0 0 1 0.5,0 0.5,0.5 0 0 1 1,0.5 Z";
+    Geom::PathVector pathv = sp_svg_read_pathv(svgd);
+    Geom::Affine aff = Geom::Affine();
+    aff *= Geom::Scale(helper_size);
+    pathv *= aff;
+    pathv *= Geom::Translate(p - Geom::Point(0.5*helper_size, 0.5*helper_size));
+    hp.push_back(pathv[0]);
+}
+
 void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
 {
     using Geom::X;
@@ -367,20 +356,6 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
         Geom::D2<Geom::SBasis> sbasis_in;
         Geom::D2<Geom::SBasis> sbasis_out;
         Geom::CubicBezier const *cubic = NULL;
-        if (path_it->closed()) {
-            // if the path is closed, maybe we have to stop a bit earlier because the
-            // closing line segment has zerolength.
-            const Geom::Curve &closingline =
-                path_it->back_closed(); // the closing line segment is always of type
-            // Geom::LineSegment.
-            if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
-                // closingline.isDegenerate() did not work, because it only checks for
-                // *exact* zero length, which goes wrong for relative coordinates and
-                // rounding errors...
-                // the closing line segment has zero-length. So stop before that one!
-                curve_endit = path_it->end_open();
-            }
-        }
         curve_n->moveto(curve_it1->initialPoint());
         while (curve_it1 != curve_endit) {
             SPCurve *in = new SPCurve();
