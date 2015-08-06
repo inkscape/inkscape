@@ -21,14 +21,12 @@ msgstr ""
 "n%100>=20) ? 1 : 2);\n"
 
 #: ../inkscape.desktop.in.h:1
-#, fuzzy
 msgid "Inkscape"
-msgstr "Напуштање програма"
+msgstr "Inkscape"
 
 #: ../inkscape.desktop.in.h:2
-#, fuzzy
 msgid "Vector Graphics Editor"
-msgstr "Inkscape програм за векторско цртање"
+msgstr "Програм за векторско цртање"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
@@ -39,104 +37,101 @@ msgid "Create and edit Scalable Vector Graphics images"
 msgstr "Прављење и уређивање SVG векторских слика"
 
 #: ../inkscape.desktop.in.h:5
-#, fuzzy
 msgid "New Drawing"
-msgstr "Цртеж"
+msgstr "Нови цртеж"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
-#, fuzzy
 msgctxt "Palette"
 msgid "Black"
 msgstr "Црна"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "90% Gray"
-msgstr "Сиво"
+msgstr "90% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:4
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "80% Gray"
-msgstr "Сиво"
+msgstr "80% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:5
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "70% Gray"
-msgstr "Сиво"
+msgstr "70% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "60% Gray"
-msgstr "Сиво"
+msgstr "60% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:7
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "50% Gray"
-msgstr "Сиво"
+msgstr "50% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "40% Gray"
-msgstr "Сиво"
+msgstr "40% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:9
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "30% Gray"
-msgstr "Сиво"
+msgstr "30% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:10
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "20% Gray"
-msgstr "Сиво"
+msgstr "20% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:11
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "10% Gray"
-msgstr "Сиво"
+msgstr "10% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:12
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "7.5% Gray"
-msgstr "Сиво"
+msgstr "7,5% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:13
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "5% Gray"
-msgstr "Сиво"
+msgstr "5% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:14
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "2.5% Gray"
-msgstr "Сиво"
+msgstr "2,5% сива"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:15
-#, fuzzy
 msgctxt "Palette"
 msgid "White"
 msgstr "Бела"
@@ -145,31 +140,31 @@ msgstr "Бела"
 #: ../share/palettes/palettes.h:16
 msgctxt "Palette"
 msgid "Maroon (#800000)"
-msgstr ""
+msgstr "Бордо (#800000)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:17
 msgctxt "Palette"
 msgid "Red (#FF0000)"
-msgstr ""
+msgstr "Црвена (#FF0000)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:18
 msgctxt "Palette"
 msgid "Olive (#808000)"
-msgstr ""
+msgstr "Маслинаста (#808000)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:19
 msgctxt "Palette"
 msgid "Yellow (#FFFF00)"
-msgstr ""
+msgstr "Жута (#FFFF00)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:20
 msgctxt "Palette"
 msgid "Green (#008000)"
-msgstr ""
+msgstr "Зелена (#008000)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:21
@@ -3898,9 +3893,8 @@ msgid "Raster"
 msgstr "Растер"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:49
-#, fuzzy
 msgid "Apply adaptive thresholding to selected bitmap(s)"
-msgstr "Примени прилагодљиви праг на изабрану битмапу"
+msgstr "Примени прилагодљиви праг на изабране битмапу"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:45
 msgid "Add Noise"
@@ -3924,11 +3918,11 @@ msgstr "Униформни шум"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:49
 msgid "Gaussian Noise"
-msgstr "Гаусни шум"
+msgstr "Гаусов шум"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:50
 msgid "Multiplicative Gaussian Noise"
-msgstr "Умноживи гаусни шум"
+msgstr "Множећи Гаусов шум"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:51
 msgid "Impulse Noise"
@@ -3943,9 +3937,8 @@ msgid "Poisson Noise"
 msgstr "Отровни шум"
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:60
-#, fuzzy
 msgid "Add random noise to selected bitmap(s)"
-msgstr "Додавање насумичног шума на изабрану битмапу"
+msgstr "Додаје насумични шум на изабране битмапе"
 
 #: ../src/extension/internal/bitmap/blur.cpp:38 ../src/extension/internal/filter/blurs.h:54
 #: ../src/extension/internal/filter/paint.h:710
@@ -3960,22 +3953,20 @@ msgstr "Замућење"
 #: ../src/extension/internal/bitmap/sharpen.cpp:40
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:43
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2894
-#, fuzzy
 msgid "Radius:"
-msgstr "Полупречник"
+msgstr "Полупречник:"
 
 #: ../src/extension/internal/bitmap/blur.cpp:41 ../src/extension/internal/bitmap/charcoal.cpp:41
 #: ../src/extension/internal/bitmap/emboss.cpp:41
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:41
 #: ../src/extension/internal/bitmap/sharpen.cpp:41
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:44
-#, fuzzy
 msgid "Sigma:"
-msgstr "Сигма"
+msgstr "Сигма:"
 
 #: ../src/extension/internal/bitmap/blur.cpp:47
 msgid "Blur selected bitmap(s)"
-msgstr "Замућење изабраних битмапа"
+msgstr "Замућује изабране битмапе"
 
 #: ../src/extension/internal/bitmap/channel.cpp:48
 msgid "Channel"
@@ -4082,9 +4073,8 @@ msgid "Color"
 msgstr "Боја"
 
 #: ../src/extension/internal/bitmap/colorize.cpp:58
-#, fuzzy
 msgid "Colorize selected bitmap(s) with specified color, using given opacity"
-msgstr "Примени обојеност изабране битмапе одређеном бојом, поштујући задату провидност."
+msgstr "Мења обојеност изабране битмапе одређеном бојом, поштујући задату провидност."
 
 #: ../src/extension/internal/bitmap/contrast.cpp:40 ../src/extension/internal/filter/color.h:1114
 msgid "Contrast"
@@ -4102,31 +4092,27 @@ msgstr "Повећава или смањује контраст на битма�
 #: ../src/extension/internal/bitmap/crop.cpp:66 ../src/extension/internal/filter/bumps.h:86
 #: ../src/extension/internal/filter/bumps.h:315
 msgid "Crop"
-msgstr ""
+msgstr "Одсецање"
 
 #: ../src/extension/internal/bitmap/crop.cpp:68
 msgid "Top (px):"
-msgstr ""
+msgstr "Врх (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:69
-#, fuzzy
 msgid "Bottom (px):"
-msgstr "Дно:"
+msgstr "Дно (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:70
-#, fuzzy
 msgid "Left (px):"
-msgstr "Померање X"
+msgstr "Лево (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:71
-#, fuzzy
 msgid "Right (px):"
-msgstr "Десно:"
+msgstr "Десно (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:77
-#, fuzzy
 msgid "Crop selected bitmap(s)."
-msgstr "Замућење изабраних битмапа"
+msgstr "Одсеца изабране битмапе."
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:37
 msgid "Cycle Colormap"
@@ -4148,27 +4134,24 @@ msgid "Despeckle"
 msgstr "Чишћење шума"
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:43
-#, fuzzy
 msgid "Reduce speckle noise of selected bitmap(s)"
-msgstr "Смањење тачкастог шума на изабраној битмапи."
+msgstr "Смањује тачкасти шум на изабраним битмапама"
 
 #: ../src/extension/internal/bitmap/edge.cpp:37
 msgid "Edge"
 msgstr "Контуре"
 
 #: ../src/extension/internal/bitmap/edge.cpp:45
-#, fuzzy
 msgid "Highlight edges of selected bitmap(s)"
-msgstr "Наглашавање ивица изабраним битмапама."
+msgstr "Наглашава ивице у изабраним битмапама"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:38
 msgid "Emboss"
 msgstr "Рељеф"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:47
-#, fuzzy
 msgid "Emboss selected bitmap(s); highlight edges with 3D effect"
-msgstr "Истицање рељефа на изабраној битмапи - истицање контура 3D ефектом."
+msgstr "Истиче рељеф у изабраним битмапама - истицање контура 3D ефектом."
 
 #: ../src/extension/internal/bitmap/enhance.cpp:35
 msgid "Enhance"
@@ -4190,19 +4173,17 @@ msgstr "Исправљање изабране битмапе - исправља�
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:38 ../src/filter-enums.cpp:28
 msgid "Gaussian Blur"
-msgstr "Гаусно замућење"
+msgstr "Гаусово замућење"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:40
 #: ../src/extension/internal/bitmap/implode.cpp:39
 #: ../src/extension/internal/bitmap/solarize.cpp:41
-#, fuzzy
 msgid "Factor:"
-msgstr "Фактор"
+msgstr "Множилац:"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:47
-#, fuzzy
 msgid "Gaussian blur selected bitmap(s)"
-msgstr "Гаусно замућење изабране битмапе."
+msgstr "Примењује Гаусово замућење на изабране битмапе"
 
 #: ../src/extension/internal/bitmap/implode.cpp:37
 msgid "Implode"
@@ -4265,35 +4246,28 @@ msgstr ""
 "колорне палете."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:37
-#, fuzzy
 msgid "Median"
-msgstr "Средње"
+msgstr "Усредњавање"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:45
-#, fuzzy
 msgid "Replace each pixel component with the median color in a circular neighborhood"
-msgstr ""
-"Филтер који на изабраној битмапи сваки пиксел замењује бојом просечне вредности у односу на "
-"околне пикселе."
+msgstr "Замењује боју сваког пиксела усредњеном бојом околних пиксела"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:40
 msgid "HSB Adjust"
 msgstr "НЗО прилагођавање"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
-#, fuzzy
 msgid "Hue:"
-msgstr "Нијанса"
+msgstr "Нијанса:"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
-#, fuzzy
 msgid "Saturation:"
-msgstr "Засићеност"
+msgstr "Засићеност:"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:44
-#, fuzzy
 msgid "Brightness:"
-msgstr "Осветљеност"
+msgstr "Осветљеност:"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:50
 msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
@@ -4319,12 +4293,11 @@ msgstr "Нормализација изабране битмапе, ширење
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:37
 msgid "Oil Paint"
-msgstr "Уљани цртеж"
+msgstr "Уљане боје"
 
-#: ../src/extension/internal/bitmap/oilPaint.cpp:45
-#, fuzzy
+#: ../src/extension/internal/bitmap/ц.cpp:45
 msgid "Stylize selected bitmap(s) so that they appear to be painted with oils"
-msgstr "Стилизација изабране битмапе тако да изгледа као да је бојена уљаним бојама."
+msgstr "Стилизује изабране битмапе тако да изгледају као сликане уљаним бојама"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:38 ../src/extension/internal/filter/blurs.h:333
 #: ../src/extension/internal/filter/transparency.h:279 ../src/ui/dialog/clonetiler.cpp:840
@@ -4372,14 +4345,12 @@ msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter"
 msgstr "Корекција шума на изабраној битмапи коришћењем филтера за елиминацију пикова шума."
 
 #: ../src/extension/internal/bitmap/sample.cpp:39
-#, fuzzy
 msgid "Resample"
-msgstr "Пример"
+msgstr "Измени резолуцију"
 
 #: ../src/extension/internal/bitmap/sample.cpp:48
-#, fuzzy
 msgid "Alter the resolution of selected image by resizing it to the given pixel size"
-msgstr "Утицај на резолуцију изабране слике променом њене величине на задате димензије."
+msgstr "Измени резолуцију изабране слике променом њене величине на задате димензије"
 
 #: ../src/extension/internal/bitmap/shade.cpp:40
 msgid "Shade"
@@ -4439,14 +4410,12 @@ msgid "Swirl"
 msgstr "Увијање"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:39
-#, fuzzy
 msgid "Degrees:"
-msgstr "Степени"
+msgstr "Степени:"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:45
-#, fuzzy
 msgid "Swirl selected bitmap(s) around center point"
-msgstr "Увијање изабране битмапе око централне тачке."
+msgstr "Увијање изабране битмапе око централне тачке"
 
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-threshold.html
 #: ../src/extension/internal/bitmap/threshold.cpp:38
@@ -4465,12 +4434,11 @@ msgstr "Ограничавање изабране битмапе."
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:41
 msgid "Unsharp Mask"
-msgstr "Дефокусирање мапе"
+msgstr "Маскирање неоштрина"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:52
-#, fuzzy
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms"
-msgstr "Изоштравање изабране битмапе помоћу алгоритма за дефокусирање."
+msgstr "Изоштравање изабраних битмапа помоћу алгоритма за маскирање неоштрина"
 
 #: ../src/extension/internal/bitmap/wave.cpp:38
 msgid "Wave"
@@ -4910,9 +4878,8 @@ msgid "Removes or decreases glows and jaggeries around objects edges after apply
 msgstr ""
 
 #: ../src/extension/internal/filter/blurs.h:185
-#, fuzzy
 msgid "Cross Blur"
-msgstr "Гаусно замућење"
+msgstr "Унакрсно замућење"
 
 #: ../src/extension/internal/filter/blurs.h:188
 #, fuzzy
@@ -5870,9 +5837,8 @@ msgstr "Режим храпављења"
 
 #: ../src/extension/internal/filter/distort.h:192 ../src/extension/internal/filter/overlays.h:60
 #: ../src/extension/internal/filter/paint.h:691 ../src/extension/internal/filter/textures.h:64
-#, fuzzy
 msgid "Turbulence type:"
-msgstr "Турбуленција"
+msgstr "Врста турбуленције:"
 
 #: ../src/extension/internal/filter/distort.h:208
 #, fuzzy
@@ -5959,7 +5925,6 @@ msgstr "Ширина"
 
 #: ../src/extension/internal/filter/morphology.h:69
 #: ../src/extension/internal/filter/morphology.h:190
-#, fuzzy
 msgid "Antialiasing"
 msgstr "Умекшавање ивица"
 
@@ -6388,9 +6353,8 @@ msgid "Post-saturation"
 msgstr "Засићеност"
 
 #: ../src/extension/internal/filter/paint.h:872
-#, fuzzy
 msgid "Simulate antialiasing"
-msgstr "Симулација излаза на екрану"
+msgstr "Симулирај умекшавање ивица"
 
 #: ../src/extension/internal/filter/paint.h:880
 #, fuzzy
@@ -6805,7 +6769,7 @@ msgstr "кутија медија"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:72
 msgid "crop box"
-msgstr "кутија исецања"
+msgstr "кутија одсецања"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:73
 msgid "trim box"
@@ -12806,14 +12770,12 @@ msgstr "<b>Лиценца</b>"
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:111
-#, fuzzy
 msgid "Use antialiasing"
-msgstr "Умекшавање ивица"
+msgstr "Користи умекшавање ивица"
 
 #: ../src/ui/dialog/document-properties.cpp:111
-#, fuzzy
 msgid "If unset, no antialiasing will be done on the drawing"
-msgstr "Ако је омогућено, оквир је увек изнад цртежа"
+msgstr "Ако је онемогућено, умекшавање ивица неће бити примењено нигде на цртежу"
 
 #: ../src/ui/dialog/document-properties.cpp:112
 msgid "Show page _border"
@@ -12840,9 +12802,8 @@ msgid "If set, page border shows a shadow on its right and lower side"
 msgstr "Ако је омогућено, приказује се сенка испод десне и доње стране"
 
 #: ../src/ui/dialog/document-properties.cpp:115
-#, fuzzy
 msgid "Back_ground color:"
-msgstr "Боја позадине"
+msgstr "Боја _позадине:"
 
 #: ../src/ui/dialog/document-properties.cpp:115
 msgid ""
@@ -12852,7 +12813,7 @@ msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:116
 msgid "Border _color:"
-msgstr "_Боја оквира:"
+msgstr "Боја _оквира:"
 
 #: ../src/ui/dialog/document-properties.cpp:116
 msgid "Page border color"
@@ -13008,24 +12969,22 @@ msgid "When snapping to paths or guides, then also try snapping tangentially"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:146
-#, fuzzy
 msgctxt "Grid"
 msgid "_New"
 msgstr "_Нова"
 
 #: ../src/ui/dialog/document-properties.cpp:146
 msgid "Create new grid."
-msgstr "Прављење нове мреже."
+msgstr "Прави нову мрежу."
 
 #: ../src/ui/dialog/document-properties.cpp:147
-#, fuzzy
 msgctxt "Grid"
 msgid "_Remove"
 msgstr "_Уклони"
 
 #: ../src/ui/dialog/document-properties.cpp:147
 msgid "Remove selected grid."
-msgstr "Уклањање изабране мреже."
+msgstr "Уклања изабрану мрежу."
 
 #: ../src/ui/dialog/document-properties.cpp:154 ../src/widgets/toolbox.cpp:1835
 msgid "Guides"
@@ -13044,14 +13003,12 @@ msgid "<b>General</b>"
 msgstr "<b>Опште</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:324
-#, fuzzy
 msgid "<b>Page Size</b>"
-msgstr "<b>Линија</b>"
+msgstr "<b>Величина стране</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:326
-#, fuzzy
 msgid "<b>Display</b>"
-msgstr "<b>п</b>"
+msgstr "<b>Приказ</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:361
 msgid "<b>Guides</b>"
@@ -13070,9 +13027,8 @@ msgid "<b>Snap to guides</b>"
 msgstr "<b>Лепи уз вођице</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:385
-#, fuzzy
 msgid "<b>Miscellaneous</b>"
-msgstr "Разно:"
+msgstr "<b>Разно</b>"
 
 #. TODO check if this next line was sometimes needed. It being there caused an assertion.
 #. Inkscape::GC::release(defsRepr);
@@ -13099,23 +13055,20 @@ msgid "Link Profile"
 msgstr "Повежи профил"
 
 #: ../src/ui/dialog/document-properties.cpp:626
-#, fuzzy
 msgid "Unlink Profile"
-msgstr "Повежи профил"
+msgstr "Развежи профил"
 
 #: ../src/ui/dialog/document-properties.cpp:710
 msgid "Profile Name"
 msgstr "Назив профила"
 
 #: ../src/ui/dialog/document-properties.cpp:746
-#, fuzzy
 msgid "External scripts"
-msgstr "Додај спољашни скрипт..."
+msgstr "Спољашњи скриптови"
 
 #: ../src/ui/dialog/document-properties.cpp:747
-#, fuzzy
 msgid "Embedded scripts"
-msgstr "Уклони мрежу"
+msgstr "Уграђени скриптови"
 
 #: ../src/ui/dialog/document-properties.cpp:752
 msgid "<b>External script files:</b>"
@@ -13135,9 +13088,8 @@ msgid "Filename"
 msgstr "Назив датотеке"
 
 #: ../src/ui/dialog/document-properties.cpp:841
-#, fuzzy
 msgid "<b>Embedded script files:</b>"
-msgstr "<b>Спољне датотеке скрипти:</b>"
+msgstr "<b>Уграђене датотеке скрипти:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:843
 #, fuzzy
@@ -14187,8 +14139,8 @@ msgid ""
 msgstr ""
 "Основни филтер <b>feConvolveMatrix</b> дозвољава одређивање Увијања која ће се применити на "
 "слику. Најчећи ефекат добијен увијајућим матрицама су замућење, изоштравање, додавање треће "
-"димензије и откривање контура. Обратите пажњу да гаусно замућење може да се добије употребом "
-"основног филтера, али је посебан филтер за гаусно замућење бржи и не зависи од резолуције."
+"димензије и откривање контура. Обратите пажњу да Гаусово замућење може да се добије употребом "
+"основног филтера, али је посебан филтер за Гаусово замућење бржи и не зависи од резолуције."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2968
 msgid ""
@@ -17103,7 +17055,7 @@ msgstr "Преузимање профила из повезаних монито
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:977
 msgid "Display rendering intent:"
-msgstr "Сврха рендерованња приказа:"
+msgstr "Сврха рендеровања приказа:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:978
 #, fuzzy
@@ -17841,7 +17793,7 @@ msgstr ""
 #. tooltip
 #: ../src/ui/dialog/inkscape-preferences.cpp:1356
 msgid "Cleanup"
-msgstr "Чишчење"
+msgstr "Чишћење"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1364
 msgid "Number of _Threads:"
@@ -17896,7 +17848,7 @@ msgstr "Најлошији квалитет (најбрже)"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1383
 #, fuzzy
 msgid "Gaussian blur quality for display"
-msgstr "Квалитет приказа замућења:"
+msgstr "Квалитет приказа Гаусовог замућења:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1385 ../src/ui/dialog/inkscape-preferences.cpp:1409
 msgid ""
@@ -19508,7 +19460,7 @@ msgstr "_Умекшавање"
 
 #: ../src/ui/dialog/tracedialog.cpp:653
 msgid "Apply Gaussian blur to the bitmap before tracing"
-msgstr "Примењује Гаусово замућење битмапе пре прецртавања"
+msgstr "Примењује Гаусово замућење на битмапу пре прецртавања"
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:657
@@ -26349,19 +26301,16 @@ msgstr ""
 
 #. Width
 #: ../src/widgets/spray-toolbar.cpp:113
-#, fuzzy
 msgid "(narrow spray)"
-msgstr "најуже"
+msgstr "(уско распрскавање)"
 
 #: ../src/widgets/spray-toolbar.cpp:113
-#, fuzzy
 msgid "(broad spray)"
-msgstr "(широка линија)"
+msgstr "(широко распрскавање)"
 
 #: ../src/widgets/spray-toolbar.cpp:116
-#, fuzzy
 msgid "The width of the spray area (relative to the visible canvas area)"
-msgstr "Ширина површине за обликовање (у односу на видљиву површину платна)"
+msgstr "Ширина површине по којој се распрскавају објекти (у односу на видљиву површину платна)"
 
 #: ../src/widgets/spray-toolbar.cpp:129
 #, fuzzy
@@ -26384,26 +26333,22 @@ msgstr ""
 
 #. Standard_deviation
 #: ../src/widgets/spray-toolbar.cpp:145
-#, fuzzy
 msgid "(minimum scatter)"
-msgstr "(минимална снага)"
+msgstr "(најмање расејање)"
 
 #: ../src/widgets/spray-toolbar.cpp:145
-#, fuzzy
 msgid "(maximum scatter)"
-msgstr "(највеће подрхтавање)"
+msgstr "(највеће расејање)"
 
 #: ../src/widgets/spray-toolbar.cpp:148
-#, fuzzy
 msgctxt "Spray tool"
 msgid "Scatter"
-msgstr "Расипање"
+msgstr "Расејање"
 
 #: ../src/widgets/spray-toolbar.cpp:148
-#, fuzzy
 msgctxt "Spray tool"
 msgid "Scatter:"
-msgstr "Расипање"
+msgstr "Расејање:"
 
 #: ../src/widgets/spray-toolbar.cpp:148
 msgid "Increase to scatter sprayed objects"
@@ -29166,9 +29111,8 @@ msgid "Empty Page"
 msgstr ""
 
 #: ../share/extensions/empty_page.inx.h:2
-#, fuzzy
 msgid "Page size:"
-msgstr "Величина стр_ане:"
+msgstr "Величина стране:"
 
 #: ../share/extensions/empty_page.inx.h:3
 msgid "Page orientation:"
@@ -29447,7 +29391,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:19
 #: ../share/extensions/gcodetools_tools_library.inx.h:14
 msgid "Gcodetools"
-msgstr ""
+msgstr "Алатке за Gcode"
 
 #: ../share/extensions/gcodetools_area.inx.h:1
 #, fuzzy
@@ -30508,7 +30452,7 @@ msgstr "Исцртавање ручки"
 
 #: ../share/extensions/hershey.inx.h:1
 msgid "Hershey Text"
-msgstr ""
+msgstr "Хершијев текст"
 
 #: ../share/extensions/hershey.inx.h:2
 #, fuzzy
@@ -30518,9 +30462,8 @@ msgstr "Прављење"
 #: ../share/extensions/hershey.inx.h:3 ../share/extensions/render_alphabetsoup.inx.h:2
 #: ../share/extensions/render_barcode_datamatrix.inx.h:2
 #: ../share/extensions/render_barcode_qrcode.inx.h:3
-#, fuzzy
 msgid "Text:"
-msgstr "Текст"
+msgstr "Текст:"
 
 #: ../share/extensions/hershey.inx.h:4
 #, fuzzy
@@ -31579,9 +31522,8 @@ msgstr ""
 #: ../share/extensions/layers2svgfont.inx.h:2 ../share/extensions/new_glyph_layer.inx.h:3
 #: ../share/extensions/next_glyph_layer.inx.h:2 ../share/extensions/previous_glyph_layer.inx.h:2
 #: ../share/extensions/setup_typography_canvas.inx.h:7 ../share/extensions/svgfont2layers.inx.h:3
-#, fuzzy
 msgid "Typography"
-msgstr "Спирограф"
+msgstr "Типографија"
 
 #: ../share/extensions/layout_nup.inx.h:1
 msgid "N-up layout"
@@ -31970,53 +31912,44 @@ msgid "View Next Glyph"
 msgstr ""
 
 #: ../share/extensions/param_curves.inx.h:1
-#, fuzzy
 msgid "Parametric Curves"
-msgstr "Параметри"
+msgstr "Параметарске криве"
 
 #: ../share/extensions/param_curves.inx.h:2
 msgid "Range and Sampling"
-msgstr "Оквир и узорак"
+msgstr "Опсег и број узорака"
 
 #: ../share/extensions/param_curves.inx.h:3
-#, fuzzy
 msgid "Start t-value:"
-msgstr "Почетна t вредност"
+msgstr "Почетна вредност параметра t:"
 
 #: ../share/extensions/param_curves.inx.h:4
-#, fuzzy
 msgid "End t-value:"
-msgstr "Крајња x вредност"
+msgstr "Крајња вредност параметра t:"
 
 #: ../share/extensions/param_curves.inx.h:5
-#, fuzzy
 msgid "Multiply t-range by 2*pi"
-msgstr "Множи x-домет са 2*pi"
+msgstr "Помножи опсег параметра t са 2*pi"
 
 #: ../share/extensions/param_curves.inx.h:6
-#, fuzzy
 msgid "X-value of rectangle's left:"
-msgstr "y вредност врха правоугаоника"
+msgstr "X вредност леве стране правоугаоника:"
 
 #: ../share/extensions/param_curves.inx.h:7
-#, fuzzy
 msgid "X-value of rectangle's right:"
-msgstr "y вредност врха правоугаоника"
+msgstr "X вредност десне стране правоугаоника:"
 
 #: ../share/extensions/param_curves.inx.h:8
-#, fuzzy
 msgid "Y-value of rectangle's bottom:"
-msgstr "y вредност дна правоугаоника"
+msgstr "Y вредност доње стране правоугаоника:"
 
 #: ../share/extensions/param_curves.inx.h:9
-#, fuzzy
 msgid "Y-value of rectangle's top:"
-msgstr "y вредност врха правоугаоника"
+msgstr "Y вредност горње стране правоугаоника:"
 
 #: ../share/extensions/param_curves.inx.h:10
-#, fuzzy
 msgid "Samples:"
-msgstr "Примери"
+msgstr "Број узорака:"
 
 #: ../share/extensions/param_curves.inx.h:14
 msgid ""
@@ -32469,32 +32402,29 @@ msgid "Edge-Specified"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
-#, fuzzy
 msgid "Rotate around:"
-msgstr "Ротирање око:"
+msgstr "Ротирај око:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:28 ../share/extensions/spirograph.inx.h:8
 #: ../share/extensions/wireframe_sphere.inx.h:5
-#, fuzzy
 msgid "Rotation (deg):"
-msgstr "Ротација (угао)"
+msgstr "Ротација (степени):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:29
-#, fuzzy
 msgid "Then rotate around:"
 msgstr "Потом ротирај око:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:30
 msgid "X-Axis"
-msgstr "Оса X"
+msgstr "осе X"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
 msgid "Y-Axis"
-msgstr "Оса Y"
+msgstr "осе Y"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
 msgid "Z-Axis"
-msgstr "Оса Z"
+msgstr "осе Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 #, fuzzy
@@ -32502,19 +32432,16 @@ msgid "Scaling factor:"
 msgstr "Фактор промене величине"
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
-#, fuzzy
 msgid "Fill color, Red:"
-msgstr "Боја попуне (црвена)"
+msgstr "Боја попуне (црвена компонента):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:36
-#, fuzzy
 msgid "Fill color, Green:"
-msgstr "Боја попуне (зелена)"
+msgstr "Боја попуне (зелена компонента):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
-#, fuzzy
 msgid "Fill color, Blue:"
-msgstr "Боја попуне (плава)"
+msgstr "Боја попуне (плава компонента):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 #, fuzzy, no-c-format
@@ -32600,7 +32527,7 @@ msgstr "Ознаке штампе"
 
 #: ../share/extensions/printing_marks.inx.h:3
 msgid "Crop Marks"
-msgstr "Ознаке за сечење"
+msgstr "Ознаке за одсецање"
 
 #: ../share/extensions/printing_marks.inx.h:4
 msgid "Bleed Marks"
@@ -32629,9 +32556,8 @@ msgid "Positioning"
 msgstr "Позиционирање"
 
 #: ../share/extensions/printing_marks.inx.h:10
-#, fuzzy
 msgid "Set crop marks to:"
-msgstr "Постављена ознака"
+msgstr "Постави ознаке за одсецање на:"
 
 #: ../share/extensions/printing_marks.inx.h:17
 msgid "Canvas"
@@ -32854,11 +32780,11 @@ msgstr "Само у изабраним објектима"
 
 #: ../share/extensions/restack.inx.h:1
 msgid "Restack"
-msgstr ""
+msgstr "Преслагање"
 
 #: ../share/extensions/restack.inx.h:2
 msgid "Restack Direction:"
-msgstr ""
+msgstr "Смер преслагања:"
 
 #: ../share/extensions/restack.inx.h:3
 msgid "Left to Right (0)"
@@ -32877,19 +32803,16 @@ msgid "Top to Bottom (270)"
 msgstr "С врха на доле (270)"
 
 #: ../share/extensions/restack.inx.h:7
-#, fuzzy
 msgid "Radial Outward"
-msgstr "Кружни прелив"
+msgstr "Радијално према споља"
 
 #: ../share/extensions/restack.inx.h:8
-#, fuzzy
 msgid "Radial Inward"
-msgstr "Кружни прелив"
+msgstr "Радијално ка унутра"
 
 #: ../share/extensions/restack.inx.h:9
-#, fuzzy
 msgid "Arbitrary Angle"
-msgstr "Организуј"
+msgstr "Произвољни угао"
 
 #: ../share/extensions/restack.inx.h:11
 msgid "Horizontal Point:"
@@ -32897,7 +32820,6 @@ msgstr "Хоризонтална тачка:"
 
 #: ../share/extensions/restack.inx.h:13 ../share/extensions/text_extract.inx.h:9
 #: ../share/extensions/text_merge.inx.h:9
-#, fuzzy
 msgid "Middle"
 msgstr "Средина"
 
@@ -32912,9 +32834,8 @@ msgstr "Врх"
 
 #: ../share/extensions/restack.inx.h:17 ../share/extensions/text_extract.inx.h:13
 #: ../share/extensions/text_merge.inx.h:13
-#, fuzzy
 msgid "Bottom"
-msgstr "Дно:"
+msgstr "Дно"
 
 #: ../share/extensions/restack.inx.h:18
 msgid "Arrange"
@@ -34086,7 +34007,7 @@ msgstr "Ротација у смеру казаљке на сату"
 
 #: ../share/extensions/wireframe_sphere.inx.h:1
 msgid "Wireframe Sphere"
-msgstr ""
+msgstr "Мрежаста лопта"
 
 #: ../share/extensions/wireframe_sphere.inx.h:2
 #, fuzzy
@@ -34098,10 +34019,6 @@ msgid "Lines of longitude:"
 msgstr ""
 
 #: ../share/extensions/wireframe_sphere.inx.h:4
-msgid "Tilt (deg):"
-msgstr ""
-
-#: ../share/extensions/wireframe_sphere.inx.h:7
 msgid "Hide lines behind the sphere"
 msgstr ""
 
