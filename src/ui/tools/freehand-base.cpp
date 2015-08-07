@@ -215,7 +215,7 @@ static Glib::ustring const tool_name(FreehandBase *dc)
              : "/tools/freehand/pencil" );
 }
 
-static void spdc_paste_curve_as_freehand_shape(gchar const *svgd, FreehandBase *dc, SPItem *item)
+static void spdc_paste_curve_as_freehand_shape(Geom::PathVector const &newpath, FreehandBase *dc, SPItem *item)
 {
     using namespace Inkscape::LivePathEffect;
 
@@ -223,7 +223,7 @@ static void spdc_paste_curve_as_freehand_shape(gchar const *svgd, FreehandBase *
 
     Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
     Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
-    static_cast<LPEPatternAlongPath*>(lpe)->pattern.paste_param_path(svgd);
+    static_cast<LPEPatternAlongPath*>(lpe)->pattern.set_new_value(newpath,true);
 }
 
 static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points, FreehandBase *dc, SPItem *item)
@@ -385,8 +385,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 c->curveto(SHAPE_LENGTH, (1 + C1) * SHAPE_HEIGHT/2, (1 + C1) * SHAPE_LENGTH/2, SHAPE_HEIGHT, SHAPE_LENGTH/2, SHAPE_HEIGHT);
                 c->curveto((1 - C1) * SHAPE_LENGTH/2, SHAPE_HEIGHT, 0, (1 + C1) * SHAPE_HEIGHT/2, 0, SHAPE_HEIGHT/2);
                 c->closepath();
-                gchar const *svgd = sp_svg_write_path(c->get_pathvector());
-                spdc_paste_curve_as_freehand_shape(svgd, dc, item);
+                spdc_paste_curve_as_freehand_shape(c->get_pathvector(), dc, item);
                 c->unref();
 
                 shape_applied = true;
@@ -396,11 +395,27 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             {
                 // take shape from clipboard;
                 Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-                Glib::ustring svgd = cm->getPathParameter(SP_ACTIVE_DESKTOP);
-                if(svgd != ""){
-                    previous_shape_pathv =  sp_svg_read_pathv(svgd.data());
-                    spdc_paste_curve_as_freehand_shape(svgd.data(), dc, item);
-                    shape_applied = true;
+                if(cm->paste(SP_ACTIVE_DESKTOP,true) == true){
+                    SPItem * pasted_clipboard = dc->selection->singleItem();
+                    if(pasted_clipboard){
+                        Inkscape::XML::Node *pasted_clipboard_root = pasted_clipboard->getRepr();
+                        Inkscape::XML::Node *path = sp_repr_lookup_name(pasted_clipboard_root, "svg:path", -1); // unlimited search depth
+                        if ( path != NULL ) {
+                            gchar const *svgd = path->attribute("d");
+                            dc->selection->remove(SP_OBJECT(pasted_clipboard));
+                            previous_shape_pathv =  sp_svg_read_pathv(svgd);
+                            previous_shape_pathv *= pasted_clipboard->transform;
+                            spdc_paste_curve_as_freehand_shape(previous_shape_pathv, dc, item);
+
+                            shape = CLIPBOARD;
+                            shape_applied = true;
+                            pasted_clipboard->deleteObject();
+                        } else {
+                            shape = NONE;
+                        }
+                    } else {
+                        shape = NONE;
+                    }
                 } else {
                     shape = NONE;
                 }
@@ -421,6 +436,8 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                         bend_item->transform.setExpansionY(expansion_Y);
                         spdc_apply_bend_shape(svgd, dc, bend_item);
                         dc->selection->add(SP_OBJECT(bend_item));
+
+                        shape = BEND_CLIPBOARD;
                     } else {
                         shape = NONE;
                     }
@@ -433,8 +450,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             {
                 if(previous_shape_type == CLIPBOARD){
                     if(previous_shape_pathv.size() != 0){
-                        gchar const *svgd = sp_svg_write_path(previous_shape_pathv);
-                        spdc_paste_curve_as_freehand_shape(svgd, dc, item);
+                        spdc_paste_curve_as_freehand_shape(previous_shape_pathv, dc, item);
 
                         shape_applied = true;
                         shape = CLIPBOARD;
@@ -457,6 +473,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                             bend_item->transform.setExpansionY(expansion_Y);
                             spdc_apply_bend_shape(svgd, dc, bend_item);
                             dc->selection->add(SP_OBJECT(bend_item));
+
                             shape = BEND_CLIPBOARD;
                         } else {
                             shape = NONE;
