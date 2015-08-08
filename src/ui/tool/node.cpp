@@ -176,8 +176,8 @@ void Handle::move(Geom::Point const &new_pos)
 
         //move the handler and its oposite the same proportion
         if(_pm()._isBSpline()){
-            setPosition(_pm()._bsplineHandleReposition(this,this));
-            this->other()->setPosition(_pm()._bsplineHandleReposition(this->other(),this));
+            setPosition(_pm()._bsplineHandleReposition(this, this));
+            this->other()->setPosition(_pm()._bsplineHandleReposition(this->other(), this));
         }
         return;
     }
@@ -193,8 +193,8 @@ void Handle::move(Geom::Point const &new_pos)
 
         //move the handler and its oposite the same proportion
         if(_pm()._isBSpline()){ 
-            setPosition(_pm()._bsplineHandleReposition(this,this));
-            this->other()->setPosition(_pm()._bsplineHandleReposition(this->other(),this));
+            setPosition(_pm()._bsplineHandleReposition(this, this));
+            this->other()->setPosition(_pm()._bsplineHandleReposition(this->other(), this));
         }
         
         return;
@@ -219,8 +219,8 @@ void Handle::move(Geom::Point const &new_pos)
 
     // moves the handler and its oposite the same proportion
     if(_pm()._isBSpline()){
-        setPosition(_pm()._bsplineHandleReposition(this,this));
-        this->other()->setPosition(_pm()._bsplineHandleReposition(this->other(),this));
+        setPosition(_pm()._bsplineHandleReposition(this, this));
+        this->other()->setPosition(_pm()._bsplineHandleReposition(this->other(), this));
     }
 }
 
@@ -313,8 +313,8 @@ bool Handle::_eventHandler(Inkscape::UI::Tools::ToolBase *event_context, GdkEven
 //this function moves the handler and its oposite to the default proportion of defaultStartPower
 void Handle::handle_2button_press(){
     if(_pm()._isBSpline()){
-        setPosition(_pm()._bsplineHandleReposition(this,defaultStartPower));
-        this->other()->setPosition(_pm()._bsplineHandleReposition(this->other(),defaultStartPower));
+        setPosition(_pm()._bsplineHandleReposition(this, defaultStartPower));
+        this->other()->setPosition(_pm()._bsplineHandleReposition(this->other(), defaultStartPower));
         _pm().update();
     }
 }
@@ -375,7 +375,7 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         if(_pm()._isBSpline()){
             setPosition(new_pos);
             int steps = _pm()._bsplineGetSteps();
-            new_pos=_pm()._bsplineHandleReposition(this,ceilf(_pm()._bsplineHandlePosition(this,this)*steps)/steps);
+            new_pos=_pm()._bsplineHandleReposition(this,ceilf(_pm()._bsplineHandlePosition(this, this)*steps)/steps);
         }
     }
 
@@ -549,7 +549,7 @@ Glib::ustring Handle::_getTip(unsigned state) const
                 "<b>Auto node handle</b>: drag to convert to smooth node (%s)"), more);
         }else{
             return format_tip(C_("Path handle tip",
-                "<b>BSpline node handle</b>: Shift to drag, double click to reset (%s). %g power"),more,_pm()._bsplineHandlePosition(h,NULL));
+                "<b>BSpline node handle</b>: Shift to drag, double click to reset (%s). %g power"),more,_pm()._bsplineHandlePosition(h, NULL));
         }
     }
 }
@@ -636,12 +636,12 @@ void Node::move(Geom::Point const &new_pos)
     nodeWeight = fmax(_pm()._bsplineHandlePosition(n->front()),_pm()._bsplineHandlePosition(n->back()));
     if(prevNode){
         if(prevNode->isEndNode()){
-            prevNodeWeight = _pm()._bsplineHandlePosition(prevNode->front(),prevNode->front());
+            prevNodeWeight = _pm()._bsplineHandlePosition(prevNode->front(), prevNode->front());
         }
     }
     if(nextNode){
         if(nextNode->isEndNode()){
-            nextNodeWeight = _pm()._bsplineHandlePosition(nextNode->back(),nextNode->back());
+            nextNodeWeight = _pm()._bsplineHandlePosition(nextNode->back(), nextNode->back());
         }
     }
 
@@ -660,16 +660,16 @@ void Node::move(Geom::Point const &new_pos)
         _back.setPosition(_pm()._bsplineHandleReposition(this->back(),nodeWeight));
         if(prevNode){
             if(prevNode->isEndNode()){
-                prevNode->front()->setPosition(_pm()._bsplineHandleReposition(prevNode->front(),prevNodeWeight));
+                prevNode->front()->setPosition(_pm()._bsplineHandleReposition(prevNode->front(), prevNodeWeight));
             }else{
-                prevNode->front()->setPosition(_pm()._bsplineHandleReposition(prevNode->front(),prevNode->back()));
+                prevNode->front()->setPosition(_pm()._bsplineHandleReposition(prevNode->front(), prevNode->back()));
             }
         }
         if(nextNode){
             if(nextNode->isEndNode()){
-                nextNode->back()->setPosition(_pm()._bsplineHandleReposition(nextNode->back(),nextNodeWeight));
+                nextNode->back()->setPosition(_pm()._bsplineHandleReposition(nextNode->back(), nextNodeWeight));
             }else{
-                nextNode->back()->setPosition(_pm()._bsplineHandleReposition(nextNode->back(),nextNode->front()));
+                nextNode->back()->setPosition(_pm()._bsplineHandleReposition(nextNode->back(), nextNode->front()));
             }
         }
     }
@@ -690,12 +690,12 @@ void Node::transform(Geom::Affine const &m)
     nodeWeight = _pm()._bsplineHandlePosition(n->front());
     if(prevNode){
         if(prevNode->isEndNode()){
-            prevNodeWeight = _pm()._bsplineHandlePosition(prevNode->front(),prevNode->front());
+            prevNodeWeight = _pm()._bsplineHandlePosition(prevNode->front(), prevNode->front());
         }
     }
     if(nextNode){
         if(nextNode->isEndNode()){
-            nextNodeWeight = _pm()._bsplineHandlePosition(nextNode->back(),nextNode->back());
+            nextNodeWeight = _pm()._bsplineHandlePosition(nextNode->back(), nextNode->back());
         }
     }
 
@@ -709,20 +709,20 @@ void Node::transform(Geom::Affine const &m)
 
     // move the involved handlers, first the node ones, later the adjoining ones 
     if(_pm()._isBSpline()){
-        _front.setPosition(_pm()._bsplineHandleReposition(this->front(),nodeWeight));
-        _back.setPosition(_pm()._bsplineHandleReposition(this->back(),nodeWeight));
+        _front.setPosition(_pm()._bsplineHandleReposition(this->front(), nodeWeight));
+        _back.setPosition(_pm()._bsplineHandleReposition(this->back(), nodeWeight));
         if(prevNode){
             if(prevNode->isEndNode()){
-                prevNode->front()->setPosition(_pm()._bsplineHandleReposition(prevNode->front(),prevNodeWeight));
+                prevNode->front()->setPosition(_pm()._bsplineHandleReposition(prevNode->front(), prevNodeWeight));
             }else{
-                prevNode->front()->setPosition(_pm()._bsplineHandleReposition(prevNode->front(),prevNode->back()));
+                prevNode->front()->setPosition(_pm()._bsplineHandleReposition(prevNode->front(), prevNode->back()));
             }
         }
         if(nextNode){
             if(nextNode->isEndNode()){
-                nextNode->back()->setPosition(_pm()._bsplineHandleReposition(nextNode->back(),nextNodeWeight));
+                nextNode->back()->setPosition(_pm()._bsplineHandleReposition(nextNode->back(), nextNodeWeight));
             }else{
-                nextNode->back()->setPosition(_pm()._bsplineHandleReposition(nextNode->back(),nextNode->front()));
+                nextNode->back()->setPosition(_pm()._bsplineHandleReposition(nextNode->back(), nextNode->front()));
             }
         }
     }
@@ -920,8 +920,8 @@ void Node::setType(NodeType type, bool update_handles)
             if(_pm()._bsplineHandlePosition(this->front()) != noPower ){
                 weight = defaultStartPower;
             }
-            _front.setPosition(_pm()._bsplineHandleReposition(this->front(),weight));
-            _back.setPosition(_pm()._bsplineHandleReposition(this->back(),weight));
+            _front.setPosition(_pm()._bsplineHandleReposition(this->front(), weight));
+            _back.setPosition(_pm()._bsplineHandleReposition(this->back(), weight));
         }
     }
     _type = type;
