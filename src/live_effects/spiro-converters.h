@@ -11,10 +11,10 @@ public:
     ConverterBase() {};
     virtual ~ConverterBase() {};
 
-    virtual void moveto(double x, double y, bool is_open) = 0;
-    virtual void lineto(double x, double y) = 0;
-    virtual void quadto(double x1, double y1, double x2, double y2) = 0;
-    virtual void curveto(double x1, double y1, double x2, double y2, double x3, double y3) = 0;
+    virtual void moveto(double x, double y) = 0;
+    virtual void lineto(double x, double y, bool close_last) = 0;
+    virtual void quadto(double x1, double y1, double x2, double y2, bool close_last) = 0;
+    virtual void curveto(double x1, double y1, double x2, double y2, double x3, double y3, bool close_last) = 0;
 };
 
 
@@ -27,10 +27,10 @@ public:
         : _curve(curve)
     {}
 
-    virtual void moveto(double x, double y, bool is_open);
-    virtual void lineto(double x, double y);
-    virtual void quadto(double x1, double y1, double x2, double y2);
-    virtual void curveto(double x1, double y1, double x2, double y2, double x3, double y3);
+    virtual void moveto(double x, double y);
+    virtual void lineto(double x, double y, bool close_last);
+    virtual void quadto(double x1, double y1, double x2, double y2, bool close_last);
+    virtual void curveto(double x1, double y1, double x2, double y2, double x3, double y3, bool close_last);
 
 private:
     SPCurve &_curve;
@@ -47,10 +47,10 @@ class ConverterPath : public ConverterBase {
 public:
     ConverterPath(Geom::Path &path);
 
-    virtual void moveto(double x, double y, bool is_open);
-    virtual void lineto(double x, double y);
-    virtual void quadto(double x1, double y1, double x2, double y2);
-    virtual void curveto(double x1, double y1, double x2, double y2, double x3, double y3);
+    virtual void moveto(double x, double y);
+    virtual void lineto(double x, double y, bool close_last);
+    virtual void quadto(double x1, double y1, double x2, double y2, bool close_last);
+    virtual void curveto(double x1, double y1, double x2, double y2, double x3, double y3, bool close_last);
 
 private:
     Geom::Path &_path;

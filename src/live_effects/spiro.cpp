@@ -847,13 +847,13 @@ solve_spiro(spiro_seg *s, const int nseg)
 static void
 spiro_seg_to_otherpath(const double ks[4],
 		   double x0, double y0, double x1, double y1,
-		   ConverterBase &bc, int depth)
+		   ConverterBase &bc, int depth, bool close_last)
 {
     double bend = fabs(ks[0]) + fabs(.5 * ks[1]) + fabs(.125 * ks[2]) +
 	fabs((1./48) * ks[3]);
 
     if (!(bend > 1e-8)) {
-        bc.lineto(x1, y1);
+        bc.lineto(x1, y1, close_last);
     } else {
 	double seg_ch = hypot(x1 - x0, y1 - y0);
 	double seg_th = atan2(y1 - y0, x1 - x0);
@@ -876,7 +876,7 @@ spiro_seg_to_otherpath(const double ks[4],
 	    vl = (scale * (1./3)) * sin(th_even - th_odd);
 	    ur = (scale * (1./3)) * cos(th_even + th_odd);
 	    vr = (scale * (1./3)) * sin(th_even + th_odd);
-        bc.curveto(x0 + ul, y0 + vl, x1 - ur, y1 - vr, x1, y1);
+        bc.curveto(x0 + ul, y0 + vl, x1 - ur, y1 - vr, x1, y1, close_last);
 	} else {
 	    /* subdivide */
 	    double ksub[4];
@@ -895,11 +895,11 @@ spiro_seg_to_otherpath(const double ks[4],
 	    integrate_spiro(ksub, xysub);
 	    xmid = x0 + cth * xysub[0] - sth * xysub[1];
 	    ymid = y0 + cth * xysub[1] + sth * xysub[0];
-	    spiro_seg_to_otherpath(ksub, x0, y0, xmid, ymid, bc, depth + 1);
+	    spiro_seg_to_otherpath(ksub, x0, y0, xmid, ymid, bc, depth + 1, false);
 	    ksub[0] += .25 * ks[1] + (1./384) * ks[3];
 	    ksub[1] += .125 * ks[2];
 	    ksub[2] += (1./16) * ks[3];
-	    spiro_seg_to_otherpath(ksub, xmid, ymid, x1, y1, bc, depth + 1);
+	    spiro_seg_to_otherpath(ksub, xmid, ymid, x1, y1, bc, depth + 1, close_last);
 	}
     }
 }
@@ -933,9 +933,10 @@ spiro_to_otherpath(const spiro_seg *s, int n, ConverterBase &bc)
 	double y1 = s[i + 1].y;
 
         if (i == 0) {
-            bc.moveto(x0, y0, s[0].ty == '{');
+            bc.moveto(x0, y0);
         }
-        spiro_seg_to_otherpath(s[i].ks, x0, y0, x1, y1, bc, 0);
+        // on the last segment, set the 'close_last' flag if path is closed
+        spiro_seg_to_otherpath(s[i].ks, x0, y0, x1, y1, bc, 0, (nsegs == n) && (i == n - 1));
     }
 }
 
