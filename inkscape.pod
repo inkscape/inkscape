@@ -130,7 +130,7 @@ export area for EPS. For PNG, it can be used in combination with --export-use-hi
 =item B<--export-area-snap>
 
 For PNG export, snap the export area outwards to the nearest integer SVG user unit (px) values. If you are using the 
-default export resolution of 90 dpi and your graphics are pixel-snapped to minimize antialiasing, this switch 
+default export resolution of 96 dpi and your graphics are pixel-snapped to minimize antialiasing, this switch 
 allows you to preserve this alignment even if you are exporting some object's bounding 
 box (with --export-id or --export-area-drawing) which is itself not pixel-aligned.
 
@@ -146,7 +146,7 @@ then the page color set in Inkscape in the Document Options dialog will be used 
 The resolution used for PNG export.
 It is also used for fallback rasterization of filtered objects
 when exporting to PS, EPS, or PDF (unless you specify --export-ignore-filters to suppress
-rasterization). The default is 90 dpi, which corresponds to 1 SVG user unit 
+rasterization). The default is 96 dpi, which corresponds to 1 SVG user unit 
 (px, also called "user unit") exporting to 1 bitmap pixel.
 This value overrides the DPI hint if used with --export-use-hints.
 
@@ -297,7 +297,7 @@ Convert text objects to paths on export, where applicable (for PS, EPS, PDF and 
 =item B<--export-ignore-filters>
 
 Export filtered objects (e.g. those with blur) as vectors, ignoring the filters (for PS, EPS, and PDF export). 
-By default, all filtered objects are rasterized at --export-dpi (default 90 dpi), preserving the appearance.
+By default, all filtered objects are rasterized at --export-dpi (default 96 dpi), preserving the appearance.
 
 =item B<-I>, B<--query-id>
 
@@ -393,7 +393,7 @@ Print an SVG file from the command line:
 
     inkscape filename.svg -p '| lpr'
 
-Export an SVG file into PNG with the default resolution of 90dpi (one SVG user unit translates to one bitmap pixel):
+Export an SVG file into PNG with the default resolution of 96 dpi (one SVG user unit translates to one bitmap pixel):
 
     inkscape filename.svg --export-png=filename.png
 
@@ -410,7 +410,7 @@ the resolution that were used for that object last time when it was exported fro
 
     inkscape filename.svg --export-id=text1555 --export-use-hints
 
-Same, but use the default 90 dpi resolution, specify the filename, 
+Same, but use the default 96 dpi resolution, specify the filename, 
 and snap the exported area outwards to the nearest whole SVG user unit values 
 (to preserve pixel-alignment of objects and thus minimize aliasing):
 
@@ -582,7 +582,7 @@ making Open Source more visually stimulating to larger audiences.
 
 =head1 COPYRIGHT AND LICENSE
 
-B<Copyright (C)> 1999-2010 by Authors.
+B<Copyright (C)> 1999-2015 by Authors.
 
 B<Inkscape> is free software; you can redistribute it and/or modify it
 under the terms of the GPL.

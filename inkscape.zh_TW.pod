@@ -42,10 +42,10 @@ C<inkscape [選項] [檔名 ...]>
     -w, --export-width=寬度          
     -h, --export-height=高度        
 
-    -P, --export-ps=FILENAME
-    -E, --export-eps=FILENAME
-    -A, --export-pdf=FILENAME
-        --export-pdf-version=VERSION-STRING
+    -P, --export-ps=檔名
+    -E, --export-eps=檔名
+    -A, --export-pdf=檔名
+        --export-pdf-version=版本字串
         --export-latex
 
     --export-ps-level {2,3}
@@ -126,7 +126,7 @@ PNG，這個可以和 --export-use-hints 結合使用。
 
 =item B<--export-area-snap>
 
-匯出 PNG 時，向外捉取匯出範圍為最接近的整數 SVG 使用者單位 (px) 數值。如果你使用預設的匯出解析度 90 dpi
+匯出 PNG 時，向外捉取匯出範圍為最接近的整數 SVG 使用者單位 (px) 數值。如果你使用預設的匯出解析度 96 dpi
 且你的圖形是像素捉取來最小化平滑，這項改變允許你維持這種校正方式，即使你正要匯出的物件的外框邊界 (使用 --export-id 或
 --export-area-drawing) 是本身而不是像素校正。
 
@@ -139,7 +139,7 @@ PNG，這個可以和 --export-use-hints 結合使用。
 =item B<-d> I<DPI>, B<--export-dpi>=I<DPI>
 
 匯出 PNG 所使用的解析度。 當匯出為 PS、EPS 或 PDF (除非你指定 --export-ignore-filters 禁止點陣化)
-時，也用於退回套用濾鏡 物件的點陣化過程。預設值為 90 dpi，其對應成 1 SVG 使用者單位 (px, 亦稱「使用者單位」) 匯出為 1 點
+時，也用於退回套用濾鏡 物件的點陣化過程。預設值為 96 dpi，其對應成 1 SVG 使用者單位 (px, 亦稱「使用者單位」) 匯出為 1 點
 陣圖像素。 如果和 --export-use-hints 一起使用，這個數值會覆蓋 DPI 內定值。
 
 =item B<-e> I<檔名>, B<--export-png>=I<檔名>
@@ -161,17 +161,13 @@ DPI 內定值)。
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-For PNG, PS, EPS, PDF and plain SVG export, the id attribute value of the
-object that you want to export from the document; all other objects are not
-exported.  By default the exported area is the bounding box of the object;
-you can override this using --export-area (PNG only) or --export-area-page.
+匯出 PNG、PS、EPS、PDF 和普通 SVG 時, 你想要從文件中匯出的物件的 ID 屬性值；其他剩下的物件都不會被匯出。預設
+情形下匯出的範圍是物件的外框邊界；你可用 --export-area (只適用於 PNG) 或 --export-area-page 覆蓋這項數值。
 
 =item B<-j>, B<--export-id-only>
 
-For PNG and plain SVG, only export the object whose id is given in
---export-id. All other objects are hidden and won't show in export even if
-they overlay the exported object.  Without --export-id, this option is
-ignored. For PDF export, this is the default, so this option has no effect.
+只會把 --export-id 給定 ID 的物件匯出成 PNG 或普通 SVG。其餘全部會被隱藏且不會顯示在匯出圖片中，即使這些物件和
+匯出的物件重疊。 沒有 --export-id 會忽略這個選項。對匯出 PDF 來說，這是預設值，所以這選項不會有任何效果。
 
 =item B<-l>, B<--export-plain-svg>=I<檔名>
 
@@ -244,12 +240,10 @@ DPI 內定值)。
 --export-area-drawing 將匯出範圍設定成繪圖部份。你可以指定 --export-id 來匯出單一物 件 (其餘全部隱藏);
 假如那樣的話匯出範圍就是物件的外框邊界，但可用 --export-area-canvas 設定成畫布。
 
-=item B<--export-pdf-version>=I<PDF-VERSION>
+=item B<--export-pdf-version>=I<PDF 版本>
 
-Select the PDF version of the exported PDF file. This option basically
-exposes the PDF version selector found in the PDF-export dialog of the
-GUI. You must provide one of the versions from that combo-box,
-e.g. "1.4". The default pdf export version is "1.4".
+選擇要匯出的 PDF 版本。此選項基本上會將 PDF 版本選擇器顯示在圖形介面的 PDF-export
+對話窗上。你必須從下拉式選單中選擇一種版本，例如「1.4」。預設的 pdf 匯出版本是「1.4」。
 
 =item B<--export-latex>
 
@@ -261,13 +255,12 @@ PDF/PS/EPS 檔案裡，但會出現在 LaTeX 檔案。這個 LaTeX 檔案包含 
 
 =item B<-T>, B<--export-text-to-path>
 
-Convert text objects to paths on export, where applicable (for PS, EPS, PDF
-and SVG export).
+在適用情形下 (匯出 PS、EPS 和 PDF)，匯出時將文字物件轉換成路徑。
 
 =item B<--export-ignore-filters>
 
 將套用濾鏡的物件 (例如這些物件套用模糊) 匯出成向量屬性，忽略濾鏡 (匯出 PS、EPS 和PDF 時)。 在預設情況下，全部套用濾鏡的物件會以
---export-dpi (預設為 90 dpi) 的解析度轉成點陣圖以維持外觀。
+--export-dpi (預設為 96 dpi) 的解析度轉成點陣圖以維持外觀。
 
 =item B<-I>, B<--query-id>
 
@@ -351,7 +344,7 @@ B<$HOME>/.config/Inkscape/templates/ - 新增檔案的範本。
 
     inkscape 檔名.svg -p '| lpr'
 
-將一個 SVG 檔以預設的解析度 90dpi 匯出成 PNG (1 SVG 使用者單位轉變成 1 點陣圖像素)：
+將一個 SVG 檔以預設的解析度 96 dpi 匯出成 PNG (1 SVG 使用者單位轉變成 1 點陣圖像素)：
 
     inkscape 檔名.svg --export-png=檔名.png
 
@@ -367,7 +360,7 @@ B<$HOME>/.config/Inkscape/templates/ - 新增檔案的範本。
 
     inkscape 檔名.svg --export-id=text1555 --export-use-hints
 
-相同，但使用預設 90 dpi 解析度，指定檔名，並且向外捉取匯出範圍為最接近整個 SVG 使用者單位的值 (維持物件的像素校正，因此最小平滑化)：
+相同，但使用預設 96 dpi 解析度，指定檔名，並且向外捉取匯出範圍為最接近整個 SVG 使用者單位的值 (維持物件的像素校正，因此最小平滑化)：
 
     inkscape 檔名.svg --export-id=text1555 --export-png=文字.png --export-snap-area
 
@@ -395,8 +388,7 @@ B<DISPLAY> 可取得預設主機和顯示編號。
 
 B<TMPDIR> 可設定暫存檔使用的預設目錄的路徑。目錄必須存在。
 
-B<INKSCAPE_PROFILE_DIR> to set the path of the directory to use for the user
-profile.
+B<INKSCAPE_PROFILE_DIR> 可設定用於使用者描述檔的目錄路徑。
 
 =head1 主題
 
@@ -446,8 +438,8 @@ W3C> L<http://www.w3.org/TR/DOM-Level-2-Core/>
 除了 SVG 外，Inkscape 可以匯入 (檔案 > 匯入) 多數的點陣圖格式 (PNG、BMP、JPG、XPM、GIF 等)、 普通純文字檔
 (需要 Perl)、PS 和 EPS (需要 Ghostscript)、PDF 和 AI 格式 (AI 版本 9.0 或更新)。
 
-Inkscape exports 32-bit PNG images (File > Export PNG Image) as well as AI,
-PS, EPS, PDF, DXF, and several other formats via File > Save as.
+Inkscape 可匯出 32-位元 PNG 圖片 (檔案 > 匯出 PNG 圖片)，也可從 檔案 > 另存 儲存成 AI、PS、EPS、PDF、
+DXF 及一些其他格式。
 
 Inkscape 能用繪圖板畫筆的壓力及傾斜感應來變化寬度、角度和一些工具的作用力，包括美工筆。
 
@@ -471,8 +463,7 @@ Inkscape 能使用外部腳本 (stdin-to-stdout 過濾器)，腳本會以擴充�
 
 [% INCLUDE "AUTHORS" %]
 
-This man page was put together by Bryce Harrington
-E<lt>brycehar@bryceharrington.orgE<gt>.
+這份使用說明是由 Bryce Harrington E<lt>brycehar@bryceharrington.orgE<gt> 彙集整合。
 
 =head1 歷史
 
@@ -500,7 +491,7 @@ Ted Gould 成立 Inkscape 計劃，想要以專注於 SVG 相容、介面外觀�
 
 =head1 著作權和許可證
 
-B<著作權 (C)> 1999-2008 作者所有。
+B<著作權 (C)> 1999-2015 作者所有。
 
 B<Inkscape> 是自由軟體；你可以在遵守 GPL 許可證情形下重新發佈或修改它。
 

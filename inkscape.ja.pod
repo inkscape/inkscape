@@ -133,7 +133,7 @@ PNG、PDF、PS、および EPS
 =item B<--export-area-snap>
 
 PNG エクスポートにおいて、エクスポート領域を拡大方向に最も近い SVG ユーザー単位 (px) 値にスナップします。エクスポート解像度がデフォルトの
-90dpi でグラフィックが最小のアンチエイリアスにピクセルスナップされた場合、エクスポートするいくつかのオブジェクトの境界枠 (--export-id
+96dpi でグラフィックが最小のアンチエイリアスにピクセルスナップされた場合、エクスポートするいくつかのオブジェクトの境界枠 (--export-id
 または --export-area-drawing 指定) がピクセルに揃えていない場合であっても、このスイッチで配置を維持できます。
 
 =item B<-b> I<COLOR>, B<--export-background>=I<COLOR>
@@ -144,9 +144,12 @@ pagecolor= 属性) が使用されます。
 
 =item B<-d> I<DPI>, B<--export-dpi>=I<DPI>
 
-PNG エクスポートで使用される解像度になります。PS、EPS、あるいは PDF
-へのエクスポート時のフィルター処理されたオブジェクトにおけるフォールバックラスタライズでも使用されます (--export-ignore-filters
-でラスタライズを抑止している場合を除く)。
+The resolution used for PNG export.  It is also used for fallback
+rasterization of filtered objects when exporting to PS, EPS, or PDF (unless
+you specify --export-ignore-filters to suppress rasterization). The default
+is 96 dpi, which corresponds to 1 SVG user unit (px, also called "user
+unit") exporting to 1 bitmap pixel.  This value overrides the DPI hint if
+used with --export-use-hints.
 
 =item B<-e> I<FILENAME>, B<--export-png>=I<FILENAME>
 
@@ -290,7 +293,7 @@ LaTeX ファイルを入力 (\input{image.tex}) すると、イメージと共�
 =item B<--export-ignore-filters>
 
 ぼかしなどのフィルターが適用されたベクターオブジェクトをエクスポートするとき、フィルターを無視します (PS、EPS、および PDF
-用)。デフォルトでは、フィルターが適用されているオブジェクトは --export-dpi で指定された解像度 (デフォルトは 90 dpi)
+用)。デフォルトでは、フィルターが適用されているオブジェクトは --export-dpi で指定された解像度 (デフォルトは 96 dpi)
 でラスタライズされ、その外見を維持します。
 
 =item B<-I>, B<--query-id>
@@ -384,7 +387,7 @@ SVG ファイルをコマンドラインから印刷する:
 
     inkscape filename.svg -p '| lpr'
 
-SVG ファイルをデフォルトの解像度である 90dpi で PNG にエクスポートする (1 SVG ユーザー単位は 1
+SVG ファイルをデフォルトの解像度である 96dpi で PNG にエクスポートする (1 SVG ユーザー単位は 1
 ビットマップピクセルに変換されます):
 
     inkscape filename.svg --export-png=filename.png
@@ -402,7 +405,7 @@ SVG ファイルをデフォルトの解像度である 90dpi で PNG にエク�
 
     inkscape filename.svg --export-id=text1555 --export-use-hints
 
-同様の処理を、解像度はデフォルトの 90dpi、ファイル名を指定、およびエクスポート領域を拡大方向に最も近い SVG ユーザー単位 (px)
+同様の処理を、解像度はデフォルトの 96dpi、ファイル名を指定、およびエクスポート領域を拡大方向に最も近い SVG ユーザー単位 (px)
 値にスナップして行う:
 
     inkscape filename.svg --export-id=text1555 --export-png=text.png --export-area-snap
@@ -547,7 +550,7 @@ Inkscape
 
 =head1 著作権およびライセンス
 
-B<Copyright (C)> 1999-2010 by Authors.
+B<Copyright (C)> 1999-2015 by Authors.
 
 B<Inkscape> はフリーソフトウェアです。あなたは GPL の示す条件下においてこのプログラムを配布および/または変更できます。
 
