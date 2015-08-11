@@ -12,6 +12,7 @@ bg
 bn
 bn_BD
 br
+brx
 ca
 ca@valencia
 cs
@@ -49,7 +50,9 @@ ko
 lt
 lv
 mk
+ml
 mn
+mr
 nb
 ne
 nl
@@ -62,8 +65,11 @@ pt
 ro
 ru
 rw
+sa
 sat@deva
-sat@olck
+sat
+sd
+sd@deva
 sk
 sl
 sq
@@ -75,6 +81,7 @@ te
 th
 tr
 uk
+ur
 vi
 zh_CN
 zh_TW

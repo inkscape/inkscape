@@ -523,21 +523,21 @@ void InkscapePreferences::initPageUI()
     _path_ui = _page_list.get_model()->get_path(iter_ui);
 
     Glib::ustring languages[] = {_("System default"), _("Albanian (sq)"), _("Amharic (am)"), _("Arabic (ar)"), _("Armenian (hy)"), _("Assamese (as)"), _("Azerbaijani (az)"), _("Basque (eu)"), _("Belarusian (be)"),
-        _("Bulgarian (bg)"), _("Bengali (bn)"), _("Bengali/Bangladesh (bn_BD)"), _("Breton (br)"), _("Catalan (ca)"), _("Valencian Catalan (ca@valencia)"), _("Chinese/China (zh_CN)"),
+        _("Bulgarian (bg)"), _("Bengali (bn)"), _("Bengali/Bangladesh (bn_BD)"), _("Bodo (brx)"), _("Breton (br)"), _("Catalan (ca)"), _("Valencian Catalan (ca@valencia)"), _("Chinese/China (zh_CN)"),
         _("Chinese/Taiwan (zh_TW)"), _("Croatian (hr)"), _("Czech (cs)"),
         _("Danish (da)"), _("Dogri (doi)"), _("Dutch (nl)"), _("Dzongkha (dz)"), _("German (de)"), _("Greek (el)"), _("English (en)"), _("English/Australia (en_AU)"),
         _("English/Canada (en_CA)"), _("English/Great Britain (en_GB)"), _("Pig Latin (en_US@piglatin)"),
         _("Esperanto (eo)"), _("Estonian (et)"), _("Farsi (fa)"), _("Finnish (fi)"),
         _("French (fr)"), _("Irish (ga)"), _("Galician (gl)"), _("Gujarati (gu)"), _("Hebrew (he)"), _("Hindi (hi)"), _("Hungarian (hu)"),
-        _("Indonesian (id)"), _("Icelandic (is)"), _("Italian (it)"), _("Japanese (ja)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Korean (ko)"), _("Lithuanian (lt)"), _("Latvian (lv)"), _("Macedonian (mk)"),
+        _("Indonesian (id)"), _("Icelandic (is)"), _("Italian (it)"), _("Japanese (ja)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Korean (ko)"), _("Lithuanian (lt)"), _("Latvian (lv)"), _("Macedonian (mk)"), _("Malayalam (ml)"), _("Marathi (mr)"),
         _("Mongolian (mn)"), _("Nepali (ne)"), _("Norwegian Bokmål (nb)"), _("Norwegian Nynorsk (nn)"), _("Odia (or)"), _("Panjabi (pa)"),
-        _("Polish (pl)"), _("Portuguese (pt)"), _("Portuguese/Brazil (pt_BR)"), _("Romanian (ro)"), _("Russian (ru)"), _("Santali in Devnagari script (sat@deva)"), _("Santali in Ol-Chiki script (sat@olck)"),
-        _("Serbian (sr)"), _("Serbian in Latin script (sr@latin)"), _("Slovak (sk)"), _("Slovenian (sl)"),  _("Spanish (es)"), _("Spanish/Mexico (es_MX)"),
-        _("Swedish (sv)"), _("Tamil (ta)"), _("Telugu (te)"), _("Thai (th)"), _("Turkish (tr)"), _("Ukrainian (uk)"), _("Vietnamese (vi)")};
-    Glib::ustring langValues[] = {"", "sq", "am", "ar", "hy", "as", "az", "eu", "be", "bg", "bn", "bn_BD", "br", "ca", "ca@valencia", "zh_CN", "zh_TW", "hr", "cs", "da", "doi", "nl",
+        _("Polish (pl)"), _("Portuguese (pt)"), _("Portuguese/Brazil (pt_BR)"), _("Romanian (ro)"), _("Russian (ru)"), _("Sanskrit (sa)"), _("Santali (sat)"), _("Santali in Devanagari script (sat@deva)"),
+        _("Serbian (sr)"), _("Serbian in Latin script (sr@latin)"), _("Sindhi (sd)"), _("Sindhi in Devanagari script (sd@deva)"), _("Slovak (sk)"), _("Slovenian (sl)"),  _("Spanish (es)"), _("Spanish/Mexico (es_MX)"),
+        _("Swedish (sv)"), _("Tamil (ta)"), _("Telugu (te)"), _("Thai (th)"), _("Turkish (tr)"), _("Ukrainian (uk)"), _("Urdu (ur)"), _("Vietnamese (vi)")};
+    Glib::ustring langValues[] = {"", "sq", "am", "ar", "hy", "as", "az", "eu", "be", "bg", "bn", "bn_BD", "brx", "br", "ca", "ca@valencia", "zh_CN", "zh_TW", "hr", "cs", "da", "doi", "nl",
         "dz", "de", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "et", "fa", "fi", "fr", "ga",
-        "gl", "gu", "he", "hi", "hu", "id", "is", "it", "ja", "km", "rw", "ko", "lt", "lv", "mk", "mn", "ne", "nb", "nn", "or", "pa",
-        "pl", "pt", "pt_BR", "ro", "ru", "sat@deva", "sat@olck", "sr", "sr@latin", "sk", "sl", "es", "es_MX", "sv", "ta", "te", "th", "tr", "uk", "vi" };
+        "gl", "gu", "he", "hi", "hu", "id", "is", "it", "ja", "km", "rw", "ko", "lt", "lv", "mk", "ml", "mr", "mn", "ne", "nb", "nn", "or", "pa",
+        "pl", "pt", "pt_BR", "ro", "ru", "sa", "sat", "sat@deva", "sr", "sr@latin", "sd", "sd@deva", "sk", "sl", "es", "es_MX", "sv", "ta", "te", "th", "tr", "uk", "ur", "vi" };
 
     {
         // sorting languages according to translated name
