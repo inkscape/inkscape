@@ -31770,7 +31770,8 @@ msgid ""
 msgstr ""
 "ଟିି୍ୟୁଟୋରିଆଲ , ମାନୁଆଲ୍ସ ଏବଂ ସମର୍ଥନ ସହାୟତା \n"
 " ଇଂରାଜୀ ସହାୟତା ଫୋରମ୍ରେ ମିଳିପାରେ :\n"
-"\thttp://www.cnc-club.ru/gcodetools\and Russian support forum:\n"
+"\thttp://www.cnc-club.ru/gcodetools\n"
+"and Russian support forum:\n"
 "\thttp://www.cnc-club.ru/gcodetoolsru"
 
 #: ../share/extensions/gcodetools.py:6107
