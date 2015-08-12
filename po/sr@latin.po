@@ -2,23 +2,24 @@
 #
 # This file is distributed under the same license as the Inkscape package.
 #
-# Maintainer: Aleksandar Urošević <urke@users.sourceforge.net> 2004, 2005, 2006, 2007, 2008, 2009.
-# Aleksandar Urošević <urke@users.sourceforge.net>, 2009.
+# Maintainer: Aleksandar Urošević <urke@users.sourceforge.net>.
+# Aleksandar Urošević <urke@users.sourceforge.net>, 2004-2009.
+# Aleksandar Marković <alleksandar.markovic@gmail.com>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2014-08-14 23:05-0700\n"
 "PO-Revision-Date: 2009-07-09 22:04+0100\n"
-"Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
+"Last-Translator: Aleksandar Marković <alleksandar.markovic@gmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Inkscape"
@@ -170,43 +171,43 @@ msgstr "Zelena (#008000)"
 #: ../share/palettes/palettes.h:21
 msgctxt "Palette"
 msgid "Lime (#00FF00)"
-msgstr ""
+msgstr "Žutozelena (#00FF00)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:22
 msgctxt "Palette"
 msgid "Teal (#008080)"
-msgstr ""
+msgstr "Plavozelena (#008080)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:23
 msgctxt "Palette"
 msgid "Aqua (#00FFFF)"
-msgstr ""
+msgstr " (#00FFFF)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:24
 msgctxt "Palette"
 msgid "Navy (#000080)"
-msgstr ""
+msgstr "Mornarsko plava (#000080)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:25
 msgctxt "Palette"
 msgid "Blue (#0000FF)"
-msgstr ""
+msgstr "Plava (#0000FF)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:26
 msgctxt "Palette"
 msgid "Purple (#800080)"
-msgstr ""
+msgstr "Purpurna (#800080)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:27
 msgctxt "Palette"
 msgid "Fuchsia (#FF00FF)"
-msgstr ""
+msgstr "Ciklama (#FF00FF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:28
@@ -1044,318 +1045,297 @@ msgstr ""
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:167
-#, fuzzy
 msgctxt "Palette"
 msgid "Butter 1"
-msgstr "Ravan vrh"
+msgstr "Puter 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:168
-#, fuzzy
 msgctxt "Palette"
 msgid "Butter 2"
-msgstr "Ravan vrh"
+msgstr "Puter 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:169
-#, fuzzy
 msgctxt "Palette"
 msgid "Butter 3"
-msgstr "Ravan vrh"
+msgstr "Puter 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:170
 msgctxt "Palette"
 msgid "Chameleon 1"
-msgstr ""
+msgstr "Kameleon 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:171
 msgctxt "Palette"
 msgid "Chameleon 2"
-msgstr ""
+msgstr "Kameleon 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:172
 msgctxt "Palette"
 msgid "Chameleon 3"
-msgstr ""
+msgstr "Kameleon 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:173
-#, fuzzy
 msgctxt "Palette"
 msgid "Orange 1"
-msgstr "Organizovanje"
+msgstr "Narandžasta 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:174
-#, fuzzy
 msgctxt "Palette"
 msgid "Orange 2"
-msgstr "Organizovanje"
+msgstr "Narandžasta 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:175
-#, fuzzy
 msgctxt "Palette"
 msgid "Orange 3"
-msgstr "Organizovanje"
+msgstr "Narandžasta 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:176
 msgctxt "Palette"
 msgid "Sky Blue 1"
-msgstr ""
+msgstr "Nebesko plava 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:177
 msgctxt "Palette"
 msgid "Sky Blue 2"
-msgstr ""
+msgstr "Nebesko plava 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:178
 msgctxt "Palette"
 msgid "Sky Blue 3"
-msgstr ""
+msgstr "Nebesko plava 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:179
 msgctxt "Palette"
 msgid "Plum 1"
-msgstr ""
+msgstr "Šljiva 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:180
 msgctxt "Palette"
 msgid "Plum 2"
-msgstr ""
+msgstr "Šljiva 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:181
 msgctxt "Palette"
 msgid "Plum 3"
-msgstr ""
+msgstr "Šljiva 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:182
 msgctxt "Palette"
 msgid "Chocolate 1"
-msgstr ""
+msgstr "Čokolada 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:183
 msgctxt "Palette"
 msgid "Chocolate 2"
-msgstr ""
+msgstr "Čokolada 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:184
 msgctxt "Palette"
 msgid "Chocolate 3"
-msgstr ""
+msgstr "Čokolada 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:185
-#, fuzzy
 msgctxt "Palette"
 msgid "Scarlet Red 1"
-msgstr "Režim skaliranja"
+msgstr "Skerletno crvena 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:186
-#, fuzzy
 msgctxt "Palette"
 msgid "Scarlet Red 2"
-msgstr "Režim skaliranja"
+msgstr "Skerletno crvena 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:187
-#, fuzzy
 msgctxt "Palette"
 msgid "Scarlet Red 3"
-msgstr "Režim skaliranja"
+msgstr "Skerletno crvena 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:188
-#, fuzzy
 msgctxt "Palette"
 msgid "Snowy White"
-msgstr "Bela"
+msgstr "Snežno bela"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:189
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 1"
-msgstr "Aluminijum NR"
+msgstr "Aluminijum 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:190
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 2"
-msgstr "Aluminijum NR"
+msgstr "Aluminijum 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:191
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 3"
-msgstr "Aluminijum NR"
+msgstr "Aluminijum 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:192
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 4"
-msgstr "Aluminijum NR"
+msgstr "Aluminijum 4"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:193
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 5"
-msgstr "Aluminijum NR"
+msgstr "Aluminijum 5"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:194
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 6"
-msgstr "Aluminijum NR"
+msgstr "Aluminijum 6"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:195
-#, fuzzy
 msgctxt "Palette"
 msgid "Jet Black"
-msgstr "Crna"
+msgstr "Ugalj crna"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:2
 msgctxt "Symbol"
 msgid "AIGA Symbol Signs"
-msgstr ""
+msgstr "Simboli Američkog instituta za grafičke umetnosti"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:3 ../share/symbols/symbols.h:4
 msgctxt "Symbol"
 msgid "Telephone"
-msgstr ""
+msgstr "Telefon"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:5 ../share/symbols/symbols.h:6
 msgctxt "Symbol"
 msgid "Mail"
-msgstr ""
+msgstr "Pošta"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:7 ../share/symbols/symbols.h:8
-#, fuzzy
 msgctxt "Symbol"
 msgid "Currency Exchange"
-msgstr "Trenutni sloj"
+msgstr "Menjačnica"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
 msgctxt "Symbol"
 msgid "Currency Exchange - Euro"
-msgstr ""
+msgstr "Menjačnica - euro"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
 msgctxt "Symbol"
 msgid "Cashier"
-msgstr ""
+msgstr "Blagajna"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
-#, fuzzy
 msgctxt "Symbol"
 msgid "First Aid"
-msgstr "Prvo izabrano"
+msgstr "Prva pomoć"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:15 ../share/symbols/symbols.h:16
-#, fuzzy
 msgctxt "Symbol"
 msgid "Lost and Found"
-msgstr "Nije zaobljeno"
+msgstr "Biro za nadjene stvari"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
 msgctxt "Symbol"
 msgid "Coat Check"
-msgstr ""
+msgstr "Garderoba"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
 msgctxt "Symbol"
 msgid "Baggage Lockers"
-msgstr ""
+msgstr "Kasete za prtljag"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
 msgctxt "Symbol"
 msgid "Escalator"
-msgstr ""
+msgstr "Pokretne stepenice"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:23 ../share/symbols/symbols.h:24
 msgctxt "Symbol"
 msgid "Escalator Down"
-msgstr ""
+msgstr "Pokretne stepenice na dole"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:25 ../share/symbols/symbols.h:26
 msgctxt "Symbol"
 msgid "Escalator Up"
-msgstr ""
+msgstr "Pokretne stepenice na gore"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:27 ../share/symbols/symbols.h:28
 msgctxt "Symbol"
 msgid "Stairs"
-msgstr ""
+msgstr "Stepenice"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:29 ../share/symbols/symbols.h:30
 msgctxt "Symbol"
 msgid "Stairs Down"
-msgstr ""
+msgstr "Stepenice na dole"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:31 ../share/symbols/symbols.h:32
 msgctxt "Symbol"
 msgid "Stairs Up"
-msgstr ""
+msgstr "Stepenice na gore"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:33 ../share/symbols/symbols.h:34
-#, fuzzy
 msgctxt "Symbol"
 msgid "Elevator"
-msgstr "Visina"
+msgstr "Lift"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
 msgctxt "Symbol"
 msgid "Toilets - Men"
-msgstr ""
+msgstr "Muški toalet"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:37 ../share/symbols/symbols.h:38
 msgctxt "Symbol"
 msgid "Toilets - Women"
-msgstr ""
+msgstr "Ženski toalet"
 
-#. Symbols: ./AigaSymbols.svg
+#. SymboLiftAigaSymbols.svg
 #: ../share/symbols/symbols.h:39 ../share/symbols/symbols.h:40
 msgctxt "Symbol"
 msgid "Toilets"
-msgstr ""
+msgstr "Toalet"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1363,43 +1343,39 @@ msgstr ""
 #: ../share/symbols/symbols.h:227
 msgctxt "Symbol"
 msgid "Nursery"
-msgstr ""
+msgstr "Soba za negovanje beba"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
 msgctxt "Symbol"
 msgid "Drinking Fountain"
-msgstr ""
+msgstr "Voda za piće"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
-#, fuzzy
 msgctxt "Symbol"
 msgid "Waiting Room"
-msgstr "Skripte"
+msgstr "Čekaonica"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
 #: ../share/symbols/symbols.h:308
-#, fuzzy
 msgctxt "Symbol"
 msgid "Information"
-msgstr "Podaci"
+msgstr "Informacije"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:49 ../share/symbols/symbols.h:50
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hotel Information"
-msgstr "Podaci o strani"
+msgstr "Informacije o hotelima"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:51 ../share/symbols/symbols.h:52
-#, fuzzy
 msgctxt "Symbol"
 msgid "Air Transportation"
-msgstr "Transformacija"
+msgstr "Vazdušna prevozna sredstva"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1407,7 +1383,7 @@ msgstr "Transformacija"
 #: ../share/symbols/symbols.h:318
 msgctxt "Symbol"
 msgid "Heliport"
-msgstr ""
+msgstr "Heliodrom"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1415,35 +1391,31 @@ msgstr ""
 #: ../share/symbols/symbols.h:314
 msgctxt "Symbol"
 msgid "Taxi"
-msgstr ""
+msgstr "Taksi"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:57 ../share/symbols/symbols.h:58
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bus"
-msgstr "Zamućenja"
+msgstr "Autobus"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:59 ../share/symbols/symbols.h:60
-#, fuzzy
 msgctxt "Symbol"
 msgid "Ground Transportation"
-msgstr "Transformacija"
+msgstr "Kopnena prevozna sredstva"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
-#, fuzzy
 msgctxt "Symbol"
 msgid "Rail Transportation"
-msgstr "Transformacija"
+msgstr "Šinska prevozna sredstva"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:63 ../share/symbols/symbols.h:64
-#, fuzzy
 msgctxt "Symbol"
 msgid "Water Transportation"
-msgstr "Transformacija"
+msgstr "Rečna i pomorska prevozna sredstva"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1451,7 +1423,7 @@ msgstr "Transformacija"
 #: ../share/symbols/symbols.h:316
 msgctxt "Symbol"
 msgid "Car Rental"
-msgstr ""
+msgstr "Iznajmljivanje kola"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1459,102 +1431,97 @@ msgstr ""
 #: ../share/symbols/symbols.h:228
 msgctxt "Symbol"
 msgid "Restaurant"
-msgstr ""
+msgstr "Restoran"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
 msgctxt "Symbol"
 msgid "Coffeeshop"
-msgstr ""
+msgstr "Kafe"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bar"
-msgstr "Kora drveta"
+msgstr "Bar"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:73 ../share/symbols/symbols.h:74
 msgctxt "Symbol"
 msgid "Shops"
-msgstr ""
+msgstr "Prodavnice"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
 msgctxt "Symbol"
 msgid "Barber Shop - Beauty Salon"
-msgstr ""
+msgstr "Berbernica i salon lepote"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
 msgctxt "Symbol"
 msgid "Barber Shop"
-msgstr ""
+msgstr "Berbernica"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
 msgctxt "Symbol"
 msgid "Beauty Salon"
-msgstr ""
+msgstr "Salon lepote"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
 msgctxt "Symbol"
 msgid "Ticket Purchase"
-msgstr ""
+msgstr "Kupovina karata"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:83 ../share/symbols/symbols.h:84
 msgctxt "Symbol"
 msgid "Baggage Check In"
-msgstr ""
+msgstr "Predaja prtljaga"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:85 ../share/symbols/symbols.h:86
 msgctxt "Symbol"
 msgid "Baggage Claim"
-msgstr ""
+msgstr "Preuzimanje prtljaga"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:87 ../share/symbols/symbols.h:88
-#, fuzzy
 msgctxt "Symbol"
 msgid "Customs"
-msgstr "Prilagođeno"
+msgstr "Carinska kontrola"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:89 ../share/symbols/symbols.h:90
-#, fuzzy
 msgctxt "Symbol"
 msgid "Immigration"
-msgstr "Postavke"
+msgstr "Šalter za imigracione poslove"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:91 ../share/symbols/symbols.h:92
-#, fuzzy
 msgctxt "Symbol"
 msgid "Departing Flights"
-msgstr "Visina odredišta"
+msgstr "Odlazni letovi"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:93 ../share/symbols/symbols.h:94
-#, fuzzy
 msgctxt "Symbol"
 msgid "Arriving Flights"
-msgstr "Osvetljenost"
+msgstr "Dolazni letovi"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:95 ../share/symbols/symbols.h:96
 msgctxt "Symbol"
 msgid "Smoking"
-msgstr ""
+msgstr "Pušenje dozvoljeno"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:97 ../share/symbols/symbols.h:98
 msgctxt "Symbol"
 msgid "No Smoking"
-msgstr ""
+msgstr "Pušenje nije dozvoljeno"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1562,25 +1529,25 @@ msgstr ""
 #: ../share/symbols/symbols.h:325
 msgctxt "Symbol"
 msgid "Parking"
-msgstr ""
+msgstr "Parking"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
 msgctxt "Symbol"
 msgid "No Parking"
-msgstr ""
+msgstr "Parkiranje nije dozvoljeno"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
 msgctxt "Symbol"
 msgid "No Dogs"
-msgstr ""
+msgstr "Psi nisu dozvoljeni"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:105 ../share/symbols/symbols.h:106
 msgctxt "Symbol"
 msgid "No Entry"
-msgstr ""
+msgstr "Ulaz nije dozvoljen"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbols.svg
@@ -1588,152 +1555,145 @@ msgstr ""
 #: ../share/symbols/symbols.h:218
 msgctxt "Symbol"
 msgid "Exit"
-msgstr ""
+msgstr "Izlaz"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:109 ../share/symbols/symbols.h:110
 msgctxt "Symbol"
 msgid "Fire Extinguisher"
-msgstr ""
+msgstr "Aparat za gašenje požara"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:111 ../share/symbols/symbols.h:112
-#, fuzzy
 msgctxt "Symbol"
 msgid "Right Arrow"
-msgstr "Desno"
+msgstr "Strelica na desno"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:113 ../share/symbols/symbols.h:114
 msgctxt "Symbol"
 msgid "Forward and Right Arrow"
-msgstr ""
+msgstr "Strelica na gore i desno"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:115 ../share/symbols/symbols.h:116
-#, fuzzy
 msgctxt "Symbol"
 msgid "Up Arrow"
-msgstr "Greške"
+msgstr "Strelica na gore"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:117 ../share/symbols/symbols.h:118
 msgctxt "Symbol"
 msgid "Forward and Left Arrow"
-msgstr ""
+msgstr "Strelica na gore i levo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:119 ../share/symbols/symbols.h:120
-#, fuzzy
 msgctxt "Symbol"
 msgid "Left Arrow"
-msgstr "Greške"
+msgstr "Strelica na levo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:121 ../share/symbols/symbols.h:122
 msgctxt "Symbol"
 msgid "Left and Down Arrow"
-msgstr ""
+msgstr "Strelica na dole i levo"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:123 ../share/symbols/symbols.h:124
-#, fuzzy
 msgctxt "Symbol"
 msgid "Down Arrow"
-msgstr "Greške"
+msgstr "Strelica na dole"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:125 ../share/symbols/symbols.h:126
 msgctxt "Symbol"
 msgid "Right and Down Arrow"
-msgstr ""
+msgstr "Strelica na dole i desno"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:127 ../share/symbols/symbols.h:128
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible - 1996"
-msgstr ""
+msgstr "Omogućen pristup NPS invalidskim kolicima - 1996"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:129 ../share/symbols/symbols.h:130
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible"
-msgstr ""
+msgstr "Omogućen pristup NPS invalidskim kolicima"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:131 ../share/symbols/symbols.h:132
 msgctxt "Symbol"
 msgid "New Wheelchair Accessible"
-msgstr ""
+msgstr "Omogućen pristup novim invalidskim kolicima"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:133
 msgctxt "Symbol"
 msgid "Word Balloons"
-msgstr ""
+msgstr "Oblačići"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:134
 msgctxt "Symbol"
 msgid "Thought Balloon"
-msgstr ""
+msgstr "Oblačić za misao"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:135
 msgctxt "Symbol"
 msgid "Dream Speaking"
-msgstr ""
+msgstr "Oblačić za snove"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:136
-#, fuzzy
 msgctxt "Symbol"
 msgid "Rounded Balloon"
-msgstr "Zaobljeni spojevi"
+msgstr "Zaobljeni oblačić"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:137
-#, fuzzy
 msgctxt "Symbol"
 msgid "Squared Balloon"
-msgstr "Kvadratni vrh"
+msgstr "Kvadratni oblačić"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:138
 msgctxt "Symbol"
 msgid "Over the Phone"
-msgstr ""
+msgstr "Oblačić za glas iz telefonske slušalice"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:139
 msgctxt "Symbol"
 msgid "Hip Balloon"
-msgstr ""
+msgstr "Suženi oblačić"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:140
-#, fuzzy
 msgctxt "Symbol"
 msgid "Circle Balloon"
-msgstr "Kružnica"
+msgstr "Okrugli oblačić"
 
 #. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:141
 msgctxt "Symbol"
 msgid "Exclaim Balloon"
-msgstr ""
+msgstr "Oblačić za uzvik"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:142
 msgctxt "Symbol"
 msgid "Flow Chart Shapes"
-msgstr ""
+msgstr "Simboli dijagrama toka"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:143
 msgctxt "Symbol"
 msgid "Process"
-msgstr ""
+msgstr "Proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
@@ -1749,313 +1709,297 @@ msgstr "Dokument"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:146
-#, fuzzy
 msgctxt "Symbol"
 msgid "Manual Operation"
-msgstr "Zasićenost"
+msgstr "Ručna operacija"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:147
-#, fuzzy
 msgctxt "Symbol"
 msgid "Preparation"
-msgstr "Zasićenost"
+msgstr "Priprema"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:148
-#, fuzzy
 msgctxt "Symbol"
 msgid "Merge"
-msgstr "Kombinovanje"
+msgstr "Spajanje"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:149
-#, fuzzy
 msgctxt "Symbol"
 msgid "Decision"
-msgstr "Preciznost"
+msgstr "Odluka"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:150
 msgctxt "Symbol"
 msgid "Magnetic Tape"
-msgstr ""
+msgstr "Magnetna traka"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
-#, fuzzy
 msgctxt "Symbol"
 msgid "Display"
-msgstr "_Režim prikaza"
+msgstr "Prikaz"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
 msgctxt "Symbol"
 msgid "Auxiliary Operation"
-msgstr ""
+msgstr "Pomoćna operacija"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:153
-#, fuzzy
 msgctxt "Symbol"
 msgid "Manual Input"
-msgstr "EMF ulaz"
+msgstr "Ručni ulaz"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:154
-#, fuzzy
 msgctxt "Symbol"
 msgid "Extract"
-msgstr "Izdvoj slike"
+msgstr "Izdvajanje"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:155
 msgctxt "Symbol"
 msgid "Terminal/Interrupt"
-msgstr ""
+msgstr "Terminal/prekid"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:156
 msgctxt "Symbol"
 msgid "Punched Card"
-msgstr ""
+msgstr "Bušena kartica"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:157
-#, fuzzy
 msgctxt "Symbol"
 msgid "Punch Tape"
-msgstr "Režim guranja"
+msgstr "Bušena traka"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:158
 msgctxt "Symbol"
 msgid "Online Storage"
-msgstr ""
+msgstr "Povezano skladište"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
 msgctxt "Symbol"
 msgid "Keying"
-msgstr ""
+msgstr "Usklađivanje"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
 msgctxt "Symbol"
 msgid "Sort"
-msgstr ""
+msgstr "Sortiranje"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:161
-#, fuzzy
 msgctxt "Symbol"
 msgid "Connector"
 msgstr "Poveznica"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:162
-#, fuzzy
 msgctxt "Symbol"
 msgid "Off-Page Connector"
-msgstr "Poveznica"
+msgstr "Poveznica sa drugom stranom"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:163
 msgctxt "Symbol"
 msgid "Transmittal Tape"
-msgstr ""
+msgstr "Traka za prenos"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:164
 msgctxt "Symbol"
 msgid "Communication Link"
-msgstr ""
+msgstr "Komunikaciona veza"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:165
-#, fuzzy
 msgctxt "Symbol"
 msgid "Collate"
-msgstr "Modulacija"
+msgstr "Sređivanje"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:166
 msgctxt "Symbol"
 msgid "Comment/Annotation"
-msgstr ""
+msgstr "Komentar/pribeleška"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:167
 msgctxt "Symbol"
 msgid "Core"
-msgstr ""
+msgstr "Jezgro"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:168
 msgctxt "Symbol"
 msgid "Predefined Process"
-msgstr ""
+msgstr "Prethodno definisan proces"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:169
 msgctxt "Symbol"
 msgid "Magnetic Disk (Database)"
-msgstr ""
+msgstr "Magnetni disk (baza podataka)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:170
 msgctxt "Symbol"
 msgid "Magnetic Drum (Direct Access)"
-msgstr ""
+msgstr "Magnetni doboš (direktni pristup)"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:171
 msgctxt "Symbol"
 msgid "Offline Storage"
-msgstr ""
+msgstr "Nepovezano skladište"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:172
 msgctxt "Symbol"
 msgid "Logical Or"
-msgstr ""
+msgstr "Logičko ili"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:173
 msgctxt "Symbol"
 msgid "Logical And"
-msgstr ""
+msgstr "Logičko i"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:174
 msgctxt "Symbol"
 msgid "Delay"
-msgstr ""
+msgstr "Kašnjenje"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
 msgid "Loop Limit Begin"
-msgstr ""
+msgstr "Početak petlje"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
 msgid "Loop Limit End"
-msgstr ""
+msgstr "Kraj petlje"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
-#, fuzzy
 msgctxt "Symbol"
 msgid "Logic Symbols"
-msgstr "Kmerski (km)"
+msgstr "Logički simboli"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:178
 msgctxt "Symbol"
 msgid "Xnor Gate"
-msgstr ""
+msgstr "EKSNILI kolo"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:179
 msgctxt "Symbol"
 msgid "Xor Gate"
-msgstr ""
+msgstr "EKSILI kolo"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:180
 msgctxt "Symbol"
 msgid "Nor Gate"
-msgstr ""
+msgstr "NILI kolo"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:181
 msgctxt "Symbol"
 msgid "Or Gate"
-msgstr ""
+msgstr "ILI kolo"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:182
 msgctxt "Symbol"
 msgid "Nand Gate"
-msgstr ""
+msgstr "NI kolo"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:183
 msgctxt "Symbol"
 msgid "And Gate"
-msgstr ""
+msgstr "I kolo"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:184
 msgctxt "Symbol"
 msgid "Buffer"
-msgstr ""
+msgstr "Bafer"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:185
 msgctxt "Symbol"
 msgid "Not Gate"
-msgstr ""
+msgstr "NE kolo"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:186
 msgctxt "Symbol"
 msgid "Buffer Small"
-msgstr ""
+msgstr "Bafer mali"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:187
 msgctxt "Symbol"
 msgid "Not Gate Small"
-msgstr ""
+msgstr "NE kolo malo"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:188
-#, fuzzy
 msgctxt "Symbol"
 msgid "Map Symbols"
-msgstr "Kmerski (km)"
+msgstr "Simboli za mape"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:189
-#, fuzzy
 msgctxt "Symbol"
 msgid "Bed and Breakfast"
-msgstr "Pravljenje i uređivanje preliva"
+msgstr "Prenoćište sa doručkom"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:190
 msgctxt "Symbol"
 msgid "Youth Hostel"
-msgstr ""
+msgstr "Hostel za mlade"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:191
-#, fuzzy
 msgctxt "Symbol"
 msgid "Shelter"
-msgstr "_Filter"
+msgstr "Prenoćište"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:192
 msgctxt "Symbol"
 msgid "Motel"
-msgstr ""
+msgstr "Motel"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:193
 msgctxt "Symbol"
 msgid "Hotel"
-msgstr ""
+msgstr "Hotel"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:194
-#, fuzzy
 msgctxt "Symbol"
 msgid "Hostel"
-msgstr "Host"
+msgstr "Hostel"
 
 #. Symbols: ./MapSymbols.svg
 #: ../share/symbols/symbols.h:195
@@ -3283,15 +3227,11 @@ msgstr "Ništa"
 
 #: ../src/context-fns.cpp:36 ../src/context-fns.cpp:65
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
-msgstr ""
-"<b>Aktivni sloj je sakriven.</b> Ukinite sakrivanje kako bi mogli da crtate "
-"na njemu."
+msgstr "<b>Aktivni sloj je sakriven.</b> Ukinite sakrivanje kako bi mogli da crtate na njemu."
 
 #: ../src/context-fns.cpp:42 ../src/context-fns.cpp:71
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
-msgstr ""
-"<b>Aktivni sloj je zaključan.</b> Otključajte ga kako bi mogli da crtate na "
-"njemu."
+msgstr "<b>Aktivni sloj je zaključan.</b> Otključajte ga kako bi mogli da crtate na njemu."
 
 #: ../src/desktop-events.cpp:225
 msgid "Create guide"
@@ -3425,21 +3365,15 @@ msgid "_Enabled"
 msgstr "_Omogućeno"
 
 #: ../src/display/canvas-grid.cpp:342
-msgid ""
-"Determines whether to snap to this grid or not. Can be 'on' for invisible "
-"grids."
-msgstr ""
-"Određuje da li se uz ovu mrežu lepi ili ne. Može biti „omogućeno“ za "
-"nevidljive mreže."
+msgid "Determines whether to snap to this grid or not. Can be 'on' for invisible grids."
+msgstr "Određuje da li se uz ovu mrežu lepi ili ne. Može biti „omogućeno“ za nevidljive mreže."
 
 #: ../src/display/canvas-grid.cpp:346
 msgid "Snap to visible _grid lines only"
 msgstr "Lepi samo uz vidljive linije _mreže"
 
 #: ../src/display/canvas-grid.cpp:347
-msgid ""
-"When zoomed out, not all grid lines will be displayed. Only the visible ones "
-"will be snapped to"
+msgid "When zoomed out, not all grid lines will be displayed. Only the visible ones will be snapped to"
 msgstr ""
 
 #: ../src/display/canvas-grid.cpp:351
@@ -3447,12 +3381,8 @@ msgid "_Visible"
 msgstr "_Vidljivo"
 
 #: ../src/display/canvas-grid.cpp:352
-msgid ""
-"Determines whether the grid is displayed or not. Objects are still snapped "
-"to invisible grids."
-msgstr ""
-"Određuje da li je mreža vidljiva ili ne. Objekti se i dalje lepe na "
-"nevidljivu mrežu."
+msgid "Determines whether the grid is displayed or not. Objects are still snapped to invisible grids."
+msgstr "Određuje da li je mreža vidljiva ili ne. Objekti se i dalje lepe na nevidljivu mrežu."
 
 #: ../src/display/canvas-grid.cpp:699
 msgid "Spacing _X:"
@@ -3474,8 +3404,7 @@ msgstr "Prikaži _tačke umesto linija"
 
 #: ../src/display/canvas-grid.cpp:733
 msgid "If set, displays dots at gridpoints instead of gridlines"
-msgstr ""
-"Ako je omogućeno, umesto pune linije u mreži prikazuje se tačkasta linija"
+msgstr "Ako je omogućeno, umesto pune linije u mreži prikazuje se tačkasta linija"
 
 #. TRANSLATORS: undefined target for snapping
 #: ../src/display/snap-indicator.cpp:72 ../src/display/snap-indicator.cpp:75
@@ -3757,20 +3686,16 @@ msgstr "Proširenja"
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:52
-msgid ""
-"<span weight=\"bold\" size=\"larger\">One or more extensions failed to load</"
-"span>\n"
+msgid "<span weight=\"bold\" size=\"larger\">One or more extensions failed to load</span>\n"
 "\n"
 "The failed extensions have been skipped.  Inkscape will continue to run "
 "normally but those extensions will be unavailable.  For details to "
 "troubleshoot this problem, please refer to the error log located at: "
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Jedna ili više ekstenzija neuspešno "
-"učitana</span>\n"
+msgstr "<span weight=\"bold\" size=\"larger\">Jedna ili više ekstenzija neuspešno učitana</span>\n"
 "\n"
-"Problematične ekstenzije su preskočene. Inkscape će nastaviti izvršavanje, "
-"ali ove ekstenzije neće biti dostupne. Za detalje o otklanjanju ovih "
-"grešaka, pogledajte dnevnik grešaka sačuvan u: "
+"Problematične ekstenzije su preskočene. Inkscape će nastaviti "
+"izvršavanje, ali ove ekstenzije neće biti dostupne. Za detalje o "
+"otklanjanju ovih grešaka, pogledajte dnevnik grešaka sačuvan u: "
 
 #: ../src/extension/error-file.cpp:66
 msgid "Show dialog on startup"
@@ -3784,13 +3709,10 @@ msgstr "„%s“ radi, budite strpljivi..."
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
 #: ../src/extension/extension.cpp:266
-msgid ""
-"  This is caused by an improper .inx file for this extension.  An improper ."
-"inx file could have been caused by a faulty installation of Inkscape."
-msgstr ""
-"  Ovo je prouzrokovano neprikladnom .inx datotekom za ovu ekstenziju. "
-"Neprikladna .inx datoteka može da bude rezultat greške pri instalaciji "
-"Inkscape-a."
+msgid "  This is caused by an improper .inx file for this extension.  "
+"An improper .inx file could have been caused by a faulty installation of Inkscape."
+msgstr "  Ovo je prouzrokovano neprikladnom .inx datotekom za ovu ekstenziju. "
+"Neprikladna .inx datoteka može da bude rezultat greške pri instalaciji Inkscape-a."
 
 #: ../src/extension/extension.cpp:276
 msgid "the extension is designed for Windows only."
@@ -3856,37 +3778,26 @@ msgid "Deactivated"
 msgstr "Deaktivirano"
 
 #: ../src/extension/extension.cpp:819
-msgid ""
-"Currently there is no help available for this Extension.  Please look on the "
-"Inkscape website or ask on the mailing lists if you have questions regarding "
-"this extension."
+msgid "Currently there is no help available for this Extension.  "
+"Please look on the Inkscape website or ask on the mailing lists "
+"if you have questions regarding this extension."
 msgstr ""
 
 #: ../src/extension/implementation/script.cpp:1037
-msgid ""
-"Inkscape has received additional data from the script executed.  The script "
-"did not return an error, but this may indicate the results will not be as "
-"expected."
-msgstr ""
-"Inkscape je dobio dodatne podatke od skripte koja je izvršena. Skripta nije "
-"vratila grešku, ali ovo može da znači da rezultat neće izgledati kako se "
-"očekuje."
+msgid "Inkscape has received additional data from the script executed.  The script did not return an "
+"error, but this may indicate the results will not be as expected."
+msgstr "Inkscape je dobio dodatne podatke od skripte koja je izvršena. Skripta nije vratila grešku, "
+"ali ovo može da znači da rezultat neće izgledati kako se očekuje."
 
 #: ../src/extension/init.cpp:288
 msgid "Null external module directory name.  Modules will not be loaded."
-msgstr ""
-"Nema naziva direktorijuma za eksterne module. Nikakvi moduli neće biti "
-"učitani."
+msgstr "Nema naziva direktorijuma za eksterne module. Nikakvi moduli neće biti učitani."
 
 #: ../src/extension/init.cpp:302
 #: ../src/extension/internal/filter/filter-file.cpp:59
 #, c-format
-msgid ""
-"Modules directory (%s) is unavailable.  External modules in that directory "
-"will not be loaded."
-msgstr ""
-"Direktorijum sa modulima (%s) je nedostupan. Spoljašnji moduli u tom "
-"direktorijumu neće biti učitani."
+msgid "Modules directory (%s) is unavailable.  External modules in that directory will not be loaded."
+msgstr "Direktorijum sa modulima (%s) je nedostupan. Spoljašnji moduli u tom direktorijumu neće biti učitani."
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:39
 msgid "Adaptive Threshold"
@@ -4047,9 +3958,8 @@ msgid "Channel"
 msgstr "Kanal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:50
-#, fuzzy
 msgid "Layer:"
-msgstr "Sloj"
+msgstr "Sloj:"
 
 #: ../src/extension/internal/bitmap/channel.cpp:51
 #: ../src/extension/internal/bitmap/levelChannel.cpp:55
@@ -4106,9 +4016,8 @@ msgid "Charcoal"
 msgstr "Ugljena olovka"
 
 #: ../src/extension/internal/bitmap/charcoal.cpp:47
-#, fuzzy
 msgid "Apply charcoal stylization to selected bitmap(s)"
-msgstr "Primeni stil ugljene olovke na izabranu bitmapu"
+msgstr "Primenjuje stilizaciju ugljene olovke na izabrane bitmape"
 
 #: ../src/extension/internal/bitmap/colorize.cpp:50
 #: ../src/extension/internal/filter/color.h:317
@@ -4309,49 +4218,38 @@ msgstr "Nivelacija"
 
 #: ../src/extension/internal/bitmap/level.cpp:43
 #: ../src/extension/internal/bitmap/levelChannel.cpp:65
-#, fuzzy
 msgid "Black Point:"
-msgstr "Crna tačka"
+msgstr "Crna tačka:"
 
 #: ../src/extension/internal/bitmap/level.cpp:44
 #: ../src/extension/internal/bitmap/levelChannel.cpp:66
-#, fuzzy
 msgid "White Point:"
-msgstr "Bela tačka"
+msgstr "Bela tačka:"
 
 #: ../src/extension/internal/bitmap/level.cpp:45
 #: ../src/extension/internal/bitmap/levelChannel.cpp:67
-#, fuzzy
 msgid "Gamma Correction:"
-msgstr "Korekcija gamuta"
+msgstr "Korekcija gamuta:"
 
 #: ../src/extension/internal/bitmap/level.cpp:51
-#, fuzzy
-msgid ""
-"Level selected bitmap(s) by scaling values falling between the given ranges "
-"to the full color range"
-msgstr ""
-"Nivelacija izabrane bitmape podešavanjem vrednosti između datih okvira pune "
-"pune kolorne palete."
+msgid "Level selected bitmap(s) by scaling values falling between "
+"the given ranges to the full color range"
+msgstr "Niveliše izabrane bitmape preslikavanjem zadatog opsega boja na puni opseg"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:52
 msgid "Level (with Channel)"
 msgstr "Nivelacija (sa kanalima)"
 
-#: ../src/extension/internal/bitmap/levelChannel.cpp:54
+#: ../src/extension/internal/bitmap/levelChannel.cpp:542
 #: ../src/extension/internal/filter/color.h:636
-#, fuzzy
 msgid "Channel:"
-msgstr "Kanali:"
+msgstr "Kanal:"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:73
-#, fuzzy
-msgid ""
-"Level the specified channel of selected bitmap(s) by scaling values falling "
-"between the given ranges to the full color range"
-msgstr ""
-"Nivelacija određenog kanala izabrane bitmape podešavanjem vrednosti između "
-"datih okvira pune kolorne palete."
+msgid "Level the specified channel of selected bitmap(s) by scaling "
+"values falling between the given ranges to the full color range"
+msgstr "Niveliše određeni kanal izabranih bitmapa preslikavanjem "
+"zadatog opsega na puni opseg boja"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:37
 msgid "Median"
@@ -4386,22 +4284,16 @@ msgid "Negate"
 msgstr "Negativ"
 
 #: ../src/extension/internal/bitmap/negate.cpp:43
-#, fuzzy
 msgid "Negate (take inverse) selected bitmap(s)"
-msgstr "Negativ (izvrtanje boja) izabrane bitmape."
+msgstr "Pravi negativ (izvrće boje) izabranih bitmapa"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:36
 msgid "Normalize"
 msgstr "Normalizacija"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:43
-#, fuzzy
-msgid ""
-"Normalize selected bitmap(s), expanding color range to the full possible "
-"range of color"
-msgstr ""
-"Normalizacija izabrane bitmape, širenjem kolorne palete do najviše moguće "
-"granice boja."
+msgid "Normalize selected bitmap(s), expanding color range to the full possible range of color"
+msgstr "Normalizuje izabrane bitmape širenjem opsega boja do nejvećeg mogućeg"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:37
 msgid "Oil Paint"
@@ -4418,17 +4310,17 @@ msgstr "Stilizuje izabrane bitmape tako da izgledaju kao slikane uljanim bojama"
 #: ../src/widgets/tweak-toolbar.cpp:334
 #: ../share/extensions/interp_att_g.inx.h:16
 msgid "Opacity"
-msgstr "Providnost"
+msgstr "Neprovidnost"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:40
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2884
 #: ../src/widgets/dropper-toolbar.cpp:83
 msgid "Opacity:"
-msgstr "Providnost:"
+msgstr "Neprovidnost:"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:46
 msgid "Modify opacity channel(s) of selected bitmap(s)."
-msgstr "Promena providnosti kanala izabrane bitmape."
+msgstr "Promena neprovidnosti kanala izabrane bitmape."
 
 #: ../src/extension/internal/bitmap/raise.cpp:40
 msgid "Raise"
@@ -4439,31 +4331,23 @@ msgid "Raised"
 msgstr "Izdignuto"
 
 #: ../src/extension/internal/bitmap/raise.cpp:50
-#, fuzzy
-msgid ""
-"Alter lightness the edges of selected bitmap(s) to create a raised appearance"
-msgstr ""
-"Povećanje svetloće ivica izabrane bitmape za pravljenje izdignutog izgleda."
+msgid "Alter lightness the edges of selected bitmap(s) to create a raised appearance"
+msgstr "Povećanje svetloće ivica izabranih bitmapa da bi se stvorio izdignuti izgled"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:40
 msgid "Reduce Noise"
-msgstr "Korekcija šuma"
+msgstr "Smanjivanje šuma"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:42
 #: ../share/extensions/jessyInk_effects.inx.h:3
 #: ../share/extensions/jessyInk_view.inx.h:3
 #: ../share/extensions/lindenmayer.inx.h:5
-#, fuzzy
 msgid "Order:"
-msgstr "Poredak"
+msgstr "Redosled:"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:48
-#, fuzzy
-msgid ""
-"Reduce noise in selected bitmap(s) using a noise peak elimination filter"
-msgstr ""
-"Korekcija šuma na izabranoj bitmapi korišćenjem filtera za eliminaciju "
-"pikova šuma."
+msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter"
+msgstr "Smanjuje šum na izabranim bitmapama korišćenjem filtera za eliminaciju pikova šuma"
 
 #: ../src/extension/internal/bitmap/sample.cpp:39
 msgid "Resample"
@@ -4478,21 +4362,18 @@ msgid "Shade"
 msgstr "Senčenje"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#, fuzzy
 msgid "Azimuth:"
-msgstr "Azimut"
+msgstr "Azimut:"
 
 #: ../src/extension/internal/bitmap/shade.cpp:43
-#, fuzzy
 msgid "Elevation:"
-msgstr "Visina"
+msgstr "Visina:"
 
 #: ../src/extension/internal/bitmap/shade.cpp:44
 msgid "Colored Shading"
 msgstr "Obojeno senčenje"
 
 #: ../src/extension/internal/bitmap/shade.cpp:50
-#, fuzzy
 msgid "Shade selected bitmap(s) simulating distant light source"
 msgstr "Senčenje izabranih bitmapa simulacijom udaljenog izora svetlosti."
 
@@ -4521,13 +4402,8 @@ msgid "Dither"
 msgstr "Međuton"
 
 #: ../src/extension/internal/bitmap/spread.cpp:45
-#, fuzzy
-msgid ""
-"Randomly scatter pixels in selected bitmap(s), within the given radius of "
-"the original position"
-msgstr ""
-"Nasumično rasipanje piksela na izabranoj bitmapi, u okviru zadate "
-"„vrednosti“ poluprečnika."
+msgid "Randomly scatter pixels in selected bitmap(s), within the given radius of the original position"
+msgstr "Nasumično rasipanje piksela izabranih bitmapa, u okviru zadatog poluprečnika, počevši od originalne pozicije"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:37
 msgid "Swirl"
@@ -4570,17 +4446,14 @@ msgid "Wave"
 msgstr "Talasi"
 
 #: ../src/extension/internal/bitmap/wave.cpp:40
-#, fuzzy
 msgid "Amplitude:"
 msgstr "Amplituda"
 
 #: ../src/extension/internal/bitmap/wave.cpp:41
-#, fuzzy
 msgid "Wavelength:"
-msgstr "Dužina talasa"
+msgstr "Dužina talasa:"
 
 #: ../src/extension/internal/bitmap/wave.cpp:47
-#, fuzzy
 msgid "Alter selected bitmap(s) along sine wave"
 msgstr "Rastezanje izabrane bitmape duž sinusnih talasa."
 
@@ -4593,9 +4466,8 @@ msgid "Width in px of the halo"
 msgstr "Širina magle u px"
 
 #: ../src/extension/internal/bluredge.cpp:139
-#, fuzzy
 msgid "Number of steps:"
-msgstr "Broj koraka"
+msgstr "Broj koraka:"
 
 #: ../src/extension/internal/bluredge.cpp:139
 msgid "Number of inset/outset copies of the object to make"
@@ -4618,9 +4490,8 @@ msgstr "PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
 #: ../src/extension/internal/cairo-ps-out.cpp:368
-#, fuzzy
 msgid "Restrict to PS level:"
-msgstr "Ograniči na PS nivo"
+msgstr "Ograniči na PS nivo:"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:330
 #: ../src/extension/internal/cairo-ps-out.cpp:369
@@ -4653,9 +4524,8 @@ msgstr ""
 #: ../src/extension/internal/cairo-ps-out.cpp:336
 #: ../src/extension/internal/cairo-ps-out.cpp:375
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
-#, fuzzy
 msgid "Resolution for rasterization (dpi):"
-msgstr "Rezolucija rasterizacije (dpi)"
+msgstr "Rezolucija rasterizacije (dpi):"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:337
 #: ../src/extension/internal/cairo-ps-out.cpp:376
@@ -4685,9 +4555,8 @@ msgstr "Ispuštena margina"
 #: ../src/extension/internal/cairo-ps-out.cpp:342
 #: ../src/extension/internal/cairo-ps-out.cpp:381
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:259
-#, fuzzy
 msgid "Limit export to the object with ID:"
-msgstr "Ograniči izvoz na objekat koji ima ID"
+msgstr "Ograniči izvoz na objekat koji ima ID:"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:346
 #: ../share/extensions/ps_input.inx.h:2
@@ -4722,14 +4591,12 @@ msgid "Encapsulated PostScript File"
 msgstr "Encapsulated PostScript datoteka"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:244
-#, fuzzy
 msgid "Restrict to PDF version:"
-msgstr "Ograniči na PDF verziju"
+msgstr "Ograniči na PDF verziju:"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:246
-#, fuzzy
 msgid "PDF 1.5"
-msgstr "PDF 1.4"
+msgstr "PDF 1.5"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:248
 msgid "PDF 1.4"
@@ -4748,7 +4615,7 @@ msgstr "Postavi veličinu strane"
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:87
 #: ../src/extension/internal/vsd-input.cpp:101
 msgid "Select page:"
-msgstr "Izaberite stranu"
+msgstr "Izaberite stranu:"
 
 #. Display total number of pages
 #: ../src/extension/internal/cdr-input.cpp:114
@@ -4760,9 +4627,8 @@ msgstr "od %i"
 
 #: ../src/extension/internal/cdr-input.cpp:145
 #: ../src/extension/internal/vsd-input.cpp:144
-#, fuzzy
 msgid "Page Selector"
-msgstr "Izbornik"
+msgstr "Izbornik strane"
 
 #: ../src/extension/internal/cdr-input.cpp:274
 msgid "Corel DRAW Input"
@@ -4906,16 +4772,14 @@ msgstr "Umekšavanja"
 #: ../src/extension/internal/filter/bevels.h:56
 #: ../src/extension/internal/filter/bevels.h:137
 #: ../src/extension/internal/filter/bevels.h:221
-#, fuzzy
 msgid "Elevation (°)"
-msgstr "Visina"
+msgstr "Visina (°)"
 
 #: ../src/extension/internal/filter/bevels.h:57
 #: ../src/extension/internal/filter/bevels.h:138
 #: ../src/extension/internal/filter/bevels.h:222
-#, fuzzy
 msgid "Azimuth (°)"
-msgstr "Azimut"
+msgstr "Azimut (°)"
 
 #: ../src/extension/internal/filter/bevels.h:58
 #: ../src/extension/internal/filter/bevels.h:139
@@ -5018,17 +4882,15 @@ msgstr ""
 #: ../src/extension/internal/filter/blurs.h:189
 #: ../src/extension/internal/filter/blurs.h:329
 #: ../src/extension/internal/filter/distort.h:73
-#, fuzzy
 msgid "Horizontal blur"
-msgstr "_Horizontalno"
+msgstr "Horizontalno zamućenje"
 
 #: ../src/extension/internal/filter/blurs.h:57
 #: ../src/extension/internal/filter/blurs.h:190
 #: ../src/extension/internal/filter/blurs.h:330
 #: ../src/extension/internal/filter/distort.h:74
-#, fuzzy
 msgid "Vertical blur"
-msgstr "_vertikalno"
+msgstr "Vertikalno zamućenje"
 
 #: ../src/extension/internal/filter/blurs.h:58
 #, fuzzy
@@ -5057,14 +4919,11 @@ msgstr "Tamnije ivice"
 #: ../src/extension/internal/filter/paint.h:237
 #: ../src/extension/internal/filter/paint.h:336
 #: ../src/extension/internal/filter/paint.h:341
-#, fuzzy
 msgid "Strength"
-msgstr "Snaga (%):"
+msgstr "Snaga"
 
 #: ../src/extension/internal/filter/blurs.h:135
-msgid ""
-"Removes or decreases glows and jaggeries around objects edges after applying "
-"some filters"
+msgid "Removes or decreases glows and jaggeries around objects edges after applying some filters"
 msgstr ""
 
 #: ../src/extension/internal/filter/blurs.h:185
@@ -5078,9 +4937,8 @@ msgstr "Senčenje"
 
 #: ../src/extension/internal/filter/blurs.h:191
 #: ../src/extension/internal/filter/textures.h:74
-#, fuzzy
 msgid "Blend:"
-msgstr "Mešanje"
+msgstr "Mešanje:"
 
 #: ../src/extension/internal/filter/blurs.h:192
 #: ../src/extension/internal/filter/blurs.h:339
@@ -5095,9 +4953,8 @@ msgstr "Mešanje"
 #: ../src/extension/internal/filter/paint.h:705
 #: ../src/extension/internal/filter/transparency.h:63
 #: ../src/filter-enums.cpp:54
-#, fuzzy
 msgid "Darken"
-msgstr "Tamnije"
+msgstr "Potamni"
 
 #: ../src/extension/internal/filter/blurs.h:193
 #: ../src/extension/internal/filter/blurs.h:340
@@ -5131,9 +4988,8 @@ msgstr "Ekranski"
 #: ../src/extension/internal/filter/paint.h:701
 #: ../src/extension/internal/filter/transparency.h:60
 #: ../src/filter-enums.cpp:52
-#, fuzzy
 msgid "Multiply"
-msgstr "Umnoženo"
+msgstr "Pomnoži"
 
 #: ../src/extension/internal/filter/blurs.h:195
 #: ../src/extension/internal/filter/blurs.h:342
@@ -5147,9 +5003,8 @@ msgstr "Umnoženo"
 #: ../src/extension/internal/filter/paint.h:704
 #: ../src/extension/internal/filter/transparency.h:64
 #: ../src/filter-enums.cpp:55
-#, fuzzy
 msgid "Lighten"
-msgstr "Svetlije"
+msgstr "Posvetli"
 
 #: ../src/extension/internal/filter/blurs.h:204
 #, fuzzy
@@ -5165,9 +5020,8 @@ msgid "Blurred mask on the edge without altering the contents"
 msgstr ""
 
 #: ../src/extension/internal/filter/blurs.h:325
-#, fuzzy
 msgid "Out of Focus"
-msgstr "Boja isticanja za boje van gamuta:"
+msgstr "Van fokusa"
 
 #: ../src/extension/internal/filter/blurs.h:331
 #: ../src/extension/internal/filter/distort.h:75
@@ -5301,19 +5155,16 @@ msgid "Bump from background"
 msgstr "Ukloni pozadinu"
 
 #: ../src/extension/internal/filter/bumps.h:94
-#, fuzzy
 msgid "Lighting type:"
-msgstr " vrsta: "
+msgstr "Vrsta osvetljenja:"
 
 #: ../src/extension/internal/filter/bumps.h:95
-#, fuzzy
 msgid "Specular"
-msgstr "Jačina svetla"
+msgstr "Tačkasto"
 
 #: ../src/extension/internal/filter/bumps.h:96
-#, fuzzy
 msgid "Diffuse"
-msgstr "Difuzno svetlo"
+msgstr "Difuzno"
 
 #: ../src/extension/internal/filter/bumps.h:98
 #: ../src/extension/internal/filter/bumps.h:329
@@ -5341,38 +5192,33 @@ msgstr "Osvetljenost"
 
 #: ../src/extension/internal/filter/bumps.h:100
 #: ../src/extension/internal/filter/bumps.h:331
-#, fuzzy
 msgid "Precision"
 msgstr "Preciznost"
 
 #: ../src/extension/internal/filter/bumps.h:103
-#, fuzzy
 msgid "Light source"
-msgstr "Svetlosni izvor:"
+msgstr "Svetlosni izvor"
 
 #: ../src/extension/internal/filter/bumps.h:104
-#, fuzzy
 msgid "Light source:"
 msgstr "Svetlosni izvor:"
 
 #: ../src/extension/internal/filter/bumps.h:105
-#, fuzzy
 msgid "Distant"
-msgstr "Deformacije"
+msgstr "Udaljen"
 
 #: ../src/extension/internal/filter/bumps.h:106
 #: ../src/ui/dialog/inkscape-preferences.cpp:451
 msgid "Point"
-msgstr "Štamparska tačka"
+msgstr "Tačkast"
 
 #: ../src/extension/internal/filter/bumps.h:107
 msgid "Spot"
-msgstr ""
+msgstr "Usmeren"
 
 #: ../src/extension/internal/filter/bumps.h:109
-#, fuzzy
 msgid "Distant light options"
-msgstr "Udaljeno svetlo"
+msgstr "Opcije za udaljeno svetlo"
 
 #: ../src/extension/internal/filter/bumps.h:110
 #: ../src/extension/internal/filter/bumps.h:332
@@ -5700,14 +5546,12 @@ msgid "Alpha only"
 msgstr "Providnost"
 
 #: ../src/extension/internal/filter/color.h:522
-#, fuzzy
 msgid "Color 1"
-msgstr "Boja"
+msgstr "Boja 1"
 
 #: ../src/extension/internal/filter/color.h:525
-#, fuzzy
 msgid "Color 2"
-msgstr "Boja"
+msgstr "Boja 2"
 
 #: ../src/extension/internal/filter/color.h:535
 #, fuzzy
@@ -5858,10 +5702,9 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:1042
 #, fuzzy
 msgid "Lights"
-msgstr "Desno:"
+msgstr "Svetla"
 
 #: ../src/extension/internal/filter/color.h:1043
-#, fuzzy
 msgid "Shadows"
 msgstr "Senke"
 
@@ -5878,23 +5721,20 @@ msgid "Modify lights and shadows separately"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:1111
-#, fuzzy
 msgid "Lightness-Contrast"
-msgstr "Osvetljenost"
+msgstr "Osvetljenost i kontrast"
 
 #: ../src/extension/internal/filter/color.h:1122
-#, fuzzy
 msgid "Modify lightness and contrast separately"
-msgstr "Povećava ili smanjuje kontrast na bitmapama"
+msgstr "Menja osvetljenost i kontrast nezavisno jedno od drugog"
 
 #: ../src/extension/internal/filter/color.h:1190
 msgid "Nudge RGB"
-msgstr ""
+msgstr "Lagano pomeri RGB"
 
 #: ../src/extension/internal/filter/color.h:1194
-#, fuzzy
 msgid "Red offset"
-msgstr "Razmak šare"
+msgstr "Pomeraj za crvenu boju"
 
 #: ../src/extension/internal/filter/color.h:1195
 #: ../src/extension/internal/filter/color.h:1198
@@ -5913,50 +5753,41 @@ msgstr "X"
 #: ../src/extension/internal/filter/color.h:1311
 #: ../src/extension/internal/filter/color.h:1314
 #: ../src/ui/dialog/input.cpp:1616
-#, fuzzy
 msgid "Y"
-msgstr "Y:"
+msgstr "Y"
 
 #: ../src/extension/internal/filter/color.h:1197
-#, fuzzy
 msgid "Green offset"
-msgstr "Razmak šare"
+msgstr "Pomeraj za zelenu boju"
 
 #: ../src/extension/internal/filter/color.h:1200
-#, fuzzy
 msgid "Blue offset"
-msgstr "Ciljna vrednost"
+msgstr "Pomeraj za plavu boju"
 
 #: ../src/extension/internal/filter/color.h:1215
-msgid ""
-"Nudge RGB channels separately and blend them to different types of "
-"backgrounds"
-msgstr ""
+msgid "Nudge RGB channels separately and blend them to different types of backgrounds"
+msgstr "Lagano pomeri RGB kanale, svaki posebno, i stopi ih sa pozadinom"
 
 #: ../src/extension/internal/filter/color.h:1302
 msgid "Nudge CMY"
-msgstr ""
+msgstr "Lagano pomeri CMY"
 
 #: ../src/extension/internal/filter/color.h:1306
-#, fuzzy
 msgid "Cyan offset"
-msgstr "Razmak šare"
+msgstr "Pomeraj za boju cijan"
 
 #: ../src/extension/internal/filter/color.h:1309
-#, fuzzy
 msgid "Magenta offset"
-msgstr "Dodirno pomeranje"
+msgstr "Pomeraj za boju magenta"
 
 #: ../src/extension/internal/filter/color.h:1312
-#, fuzzy
 msgid "Yellow offset"
-msgstr "Razmak šare"
+msgstr "Pomeraj za žutu boju"
 
 #: ../src/extension/internal/filter/color.h:1327
-msgid ""
-"Nudge CMY channels separately and blend them to different types of "
+msgid "Nudge CMY channels separately and blend them to different types of "
 "backgrounds"
-msgstr ""
+msgstr "Lagano pomeri CMY kanale, svaki posebno, i stopi ih sa pozadinom"
 
 #: ../src/extension/internal/filter/color.h:1408
 msgid "Quadritone fantasy"
@@ -6071,13 +5902,11 @@ msgstr "Linija:"
 
 #: ../src/extension/internal/filter/distort.h:79
 #: ../src/extension/internal/filter/textures.h:76
-#, fuzzy
 msgid "Wide"
-msgstr "_Sakrij"
+msgstr "Široko"
 
 #: ../src/extension/internal/filter/distort.h:80
 #: ../src/extension/internal/filter/textures.h:78
-#, fuzzy
 msgid "Narrow"
 msgstr "usko"
 
@@ -6086,15 +5915,13 @@ msgid "No fill"
 msgstr "Bez popune"
 
 #: ../src/extension/internal/filter/distort.h:83
-#, fuzzy
 msgid "Turbulence:"
-msgstr "Turbulencija"
+msgstr "Turbulencija:"
 
 #: ../src/extension/internal/filter/distort.h:84
 #: ../src/extension/internal/filter/distort.h:193
 #: ../src/extension/internal/filter/overlays.h:61
 #: ../src/extension/internal/filter/paint.h:692
-#, fuzzy
 msgid "Fractal noise"
 msgstr "Fraktalni šum"
 
@@ -6110,39 +5937,34 @@ msgstr "Turbulencija"
 #: ../src/extension/internal/filter/distort.h:196
 #: ../src/extension/internal/filter/paint.h:93
 #: ../src/extension/internal/filter/paint.h:695
-#, fuzzy
 msgid "Horizontal frequency"
-msgstr "Horizontalno pomeranje"
+msgstr "Horizontalna učestalost"
 
 #: ../src/extension/internal/filter/distort.h:88
 #: ../src/extension/internal/filter/distort.h:197
 #: ../src/extension/internal/filter/paint.h:94
 #: ../src/extension/internal/filter/paint.h:696
-#, fuzzy
 msgid "Vertical frequency"
-msgstr "Učestalost drhtanja"
+msgstr "Vertikalna učestalost"
 
 #: ../src/extension/internal/filter/distort.h:89
 #: ../src/extension/internal/filter/distort.h:198
 #: ../src/extension/internal/filter/paint.h:95
 #: ../src/extension/internal/filter/paint.h:697
-#, fuzzy
 msgid "Complexity"
-msgstr "Maksimalna složenost"
+msgstr "Složenost"
 
 #: ../src/extension/internal/filter/distort.h:90
 #: ../src/extension/internal/filter/distort.h:199
 #: ../src/extension/internal/filter/paint.h:96
 #: ../src/extension/internal/filter/paint.h:698
-#, fuzzy
 msgid "Variation"
-msgstr "Zasićenost"
+msgstr "Varijacija"
 
 #: ../src/extension/internal/filter/distort.h:91
 #: ../src/extension/internal/filter/distort.h:200
-#, fuzzy
 msgid "Intensity"
-msgstr "Ukrštanje"
+msgstr "Jačina"
 
 #: ../src/extension/internal/filter/distort.h:96
 #: ../src/extension/internal/filter/distort.h:205
@@ -6154,9 +5976,8 @@ msgid "Blur and displace edges of shapes and pictures"
 msgstr ""
 
 #: ../src/extension/internal/filter/distort.h:190
-#, fuzzy
 msgid "Roughen"
-msgstr "Režim hrapavljenja"
+msgstr "Hrapavljenje"
 
 #: ../src/extension/internal/filter/distort.h:192
 #: ../src/extension/internal/filter/overlays.h:60
@@ -6525,9 +6346,8 @@ msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:238
 #: ../share/extensions/measure.inx.h:11
-#, fuzzy
 msgid "Length"
-msgstr "Dužina:"
+msgstr "Dužina"
 
 #: ../src/extension/internal/filter/paint.h:247
 msgid "Convert image to an engraving made of vertical and horizontal lines"
@@ -6870,9 +6690,8 @@ msgid "Blend"
 msgstr "Mešanje"
 
 #: ../src/extension/internal/filter/transparency.h:55 ../src/rdf.cpp:261
-#, fuzzy
 msgid "Source:"
-msgstr "Izvor"
+msgstr "Izvor:"
 
 #: ../src/extension/internal/filter/transparency.h:56
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1551
@@ -7034,29 +6853,24 @@ msgid "Grid"
 msgstr "Mreža"
 
 #: ../src/extension/internal/grid.cpp:212
-#, fuzzy
 msgid "Line Width:"
-msgstr "Širina linije"
+msgstr "Širina linije:"
 
 #: ../src/extension/internal/grid.cpp:213
-#, fuzzy
 msgid "Horizontal Spacing:"
-msgstr "Horizontalni razmak"
+msgstr "Horizontalni razmak:"
 
 #: ../src/extension/internal/grid.cpp:214
-#, fuzzy
 msgid "Vertical Spacing:"
-msgstr "Vertikalni razmak"
+msgstr "Vertikalni razmak:"
 
 #: ../src/extension/internal/grid.cpp:215
-#, fuzzy
 msgid "Horizontal Offset:"
-msgstr "Horizontalno pomeranje"
+msgstr "Horizontalni pomeraj:"
 
 #: ../src/extension/internal/grid.cpp:216
-#, fuzzy
 msgid "Vertical Offset:"
-msgstr "Vertikalno pomeranje"
+msgstr "Vertikalni pomeraj:"
 
 #: ../src/extension/internal/grid.cpp:220
 #: ../src/ui/dialog/inkscape-preferences.cpp:1468
@@ -10435,7 +10249,7 @@ msgstr "Po_moć"
 
 #: ../src/menus-skeleton.h:282
 msgid "Tutorials"
-msgstr "Vežbe"
+msgstr "Vodiči"
 
 #: ../src/object-edit.cpp:439
 msgid ""
@@ -10752,9 +10566,8 @@ msgid "A name given to the resource"
 msgstr ""
 
 #: ../src/rdf.cpp:238
-#, fuzzy
 msgid "Date:"
-msgstr "Datum"
+msgstr "Datum:"
 
 #: ../src/rdf.cpp:239
 msgid ""
@@ -10763,9 +10576,8 @@ msgid ""
 msgstr ""
 
 #: ../src/rdf.cpp:241 ../share/extensions/webslicer_create_rect.inx.h:3
-#, fuzzy
 msgid "Format:"
-msgstr "Format"
+msgstr "Format:"
 
 #: ../src/rdf.cpp:242
 msgid "The file format, physical medium, or dimensions of the resource"
@@ -10776,20 +10588,16 @@ msgid "The nature or genre of the resource"
 msgstr ""
 
 #: ../src/rdf.cpp:248
-#, fuzzy
 msgid "Creator:"
-msgstr "Autor"
+msgstr "Autor:"
 
 #: ../src/rdf.cpp:249
-#, fuzzy
 msgid "An entity primarily responsible for making the resource"
-msgstr ""
-"Naziv primarnog autora koji je odgovoran za pravljenje sadržaja dokumenta."
+msgstr "Naziv primarnog autora koji je odgovoran za pravljenje sadržaja dokumenta."
 
 #: ../src/rdf.cpp:251
-#, fuzzy
 msgid "Rights:"
-msgstr "Desno:"
+msgstr "Права:"
 
 #: ../src/rdf.cpp:252
 msgid "Information about rights held in and over the resource"
@@ -11769,9 +11577,9 @@ msgstr "Spirala"
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
 #: ../src/sp-spiral.cpp:236
-#, fuzzy, c-format
+#, c-format
 msgid "with %3f turns"
-msgstr "<b>Spirala</b> sa %3f zavoja"
+msgstr "sa %3f zavoja"
 
 #. Star
 #: ../src/sp-star.cpp:256 ../src/ui/dialog/inkscape-preferences.cpp:407
@@ -12391,10 +12199,9 @@ msgstr "Minimalni horizontalni razmak (u pikselima) između kontejnera"
 
 #. TRANSLATORS: "H:" stands for horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:422
-#, fuzzy
 msgctxt "Gap"
 msgid "_H:"
-msgstr "_N"
+msgstr "_H:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:430
 msgid "Minimum vertical gap (in px units) between bounding boxes"
@@ -12402,10 +12209,9 @@ msgstr "Minimalni vertikalni razmak (u pikselima) između kontejnera"
 
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:432
-#, fuzzy
-msgctxt "Gap"
+#sgctxt "Gap"
 msgid "_V:"
-msgstr "V:"
+msgstr "_V:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:468
 #: ../src/ui/dialog/align-and-distribute.cpp:855
@@ -16852,7 +16658,7 @@ msgstr "Arapski (ar)"
 msgid "Armenian (hy)"
 msgstr "Armenijski (hy)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:516
+#: ../src/ui/dialog/inkscape-preferences.cpp:51
 msgid "Azerbaijani (az)"
 msgstr "Azerbejdžanski (az)"
 
@@ -19729,7 +19535,7 @@ msgstr "Heuristike"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:266
 msgid "_Voronoi diagram"
-msgstr "Dijagram _Voronoja"
+msgstr "_Voronojev dijagram"
 
 #: ../src/ui/dialog/pixelartdialog.cpp:267
 msgid "Output composed of straight lines"
@@ -23218,9 +23024,8 @@ msgid "tutorial-tracing.svg"
 msgstr "tutorial-tracing.svg"
 
 #: ../src/verbs.cpp:2120
-#, fuzzy
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "tutorial-tracing.svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2124
@@ -23229,9 +23034,8 @@ msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2128
-#, fuzzy
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-tips.svg"
+msgstr "tutorial-interpolate.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2132
@@ -25211,7 +25015,7 @@ msgstr "Počnite da koristite Inkscape"
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2880
 msgid "Inkscape: _Shapes"
-msgstr "Inkscape: _Oblici"
+msgstr "Inkscape: Ob_lici"
 
 #: ../src/verbs.cpp:2881
 msgid "Using shape tools to create and edit shapes"
@@ -25229,7 +25033,7 @@ msgstr "Napredne teme"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2885
 msgid "Inkscape: T_racing"
-msgstr "Inkscape: _Precrtavanje"
+msgstr "Inkscape: Precrtavanje _bitmapiranih slika"
 
 #: ../src/verbs.cpp:2886
 msgid "Using bitmap tracing"
@@ -25237,13 +25041,12 @@ msgstr "Upotreba alatke za pretvaranje bitmapa u vektore"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2887
-#, fuzzy
 msgid "Inkscape: Tracing Pixel Art"
-msgstr "Inkscape: _Precrtavanje"
+msgstr "Inkscape: Precrtavanje crteža sa _pikselima"
 
 #: ../src/verbs.cpp:2888
 msgid "Using Trace Pixel Art dialog"
-msgstr ""
+msgstr "Upotreba dijaloga za precrtavanje crteža sa pikselima"
 
 #: ../src/verbs.cpp:2889
 msgid "Inkscape: _Calligraphy"
@@ -25254,13 +25057,12 @@ msgid "Using the Calligraphy pen tool"
 msgstr "Upotreba kaligrafskog pera"
 
 #: ../src/verbs.cpp:2891
-#, fuzzy
 msgid "Inkscape: _Interpolate"
-msgstr "Inkscape: _Oblici"
+msgstr "Inkscape: _Interpolacija"
 
 #: ../src/verbs.cpp:2892
 msgid "Using the interpolate extension"
-msgstr ""
+msgstr "Upotreba proširenja za interpolaciju"
 
 #. "tutorial_interpolate"
 #: ../src/verbs.cpp:2893
@@ -25283,18 +25085,16 @@ msgstr "Razni saveti i trikovi"
 #. "tutorial_tips"
 #. Effect -- renamed Extension
 #: ../src/verbs.cpp:2899
-#, fuzzy
 msgid "Previous Exte_nsion"
-msgstr "Prethodno proširenje"
+msgstr "Prethodno p_roširenje"
 
 #: ../src/verbs.cpp:2900
 msgid "Repeat the last extension with the same settings"
 msgstr "Ponavlja poslednjeg proširenja sa istim postavkama"
 
 #: ../src/verbs.cpp:2901
-#, fuzzy
 msgid "_Previous Extension Settings..."
-msgstr "Postavke prethodnog proširenja..."
+msgstr "Postavke _prethodnog proširenja..."
 
 #: ../src/verbs.cpp:2902
 msgid "Repeat the last extension with new settings"
@@ -25309,11 +25109,8 @@ msgid "Fit the page to the drawing"
 msgstr "Prilagođavanje veličine strane crtežu"
 
 #: ../src/verbs.cpp:2910
-msgid ""
-"Fit the page to the current selection or the drawing if there is no selection"
-msgstr ""
-"Prilagođavanje veličine strane trenutnom izboru ili crtežu ako ništa nije "
-"izabrano"
+msgid "Fit the page to the current selection or the drawing if there is no selection"
+msgstr "Prilagođavanje veličine strane trenutnom izboru ili crtežu ako ništa nije izabrano"
 
 #. LockAndHide
 #: ../src/verbs.cpp:2912
@@ -25345,54 +25142,44 @@ msgid "Remove a linked ICC color profile"
 msgstr "Uklanjanje povezanog ICC profila boja"
 
 #: ../src/verbs.cpp:2927
-#, fuzzy
 msgid "Add External Script"
-msgstr "Dodaj spoljašni skript..."
+msgstr "Dodaj spoljašnji skript"
 
 #: ../src/verbs.cpp:2927
-#, fuzzy
 msgid "Add an external script"
-msgstr "Dodaj spoljašni skript..."
+msgstr "Dodaje spoljašnji skript"
 
 #: ../src/verbs.cpp:2929
-#, fuzzy
 msgid "Add Embedded Script"
-msgstr "Dodaj spoljašni skript..."
+msgstr "Dodaj ugrađeni skript"
 
 #: ../src/verbs.cpp:2929
-#, fuzzy
 msgid "Add an embedded script"
-msgstr "Dodaj spoljašni skript..."
+msgstr "Dodaje ugrađeni skript"
 
 #: ../src/verbs.cpp:2931
-#, fuzzy
 msgid "Edit Embedded Script"
-msgstr "Ukloni mrežu"
+msgstr "Uredi ugrađeni skript"
 
 #: ../src/verbs.cpp:2931
-#, fuzzy
 msgid "Edit an embedded script"
-msgstr "Ukloni mrežu"
+msgstr "Uređuje ugrađeni skript"
 
 #: ../src/verbs.cpp:2933
-#, fuzzy
 msgid "Remove External Script"
-msgstr "Ukloni spoljašni skript"
+msgstr "Ukloni spoljašnji skript"
 
 #: ../src/verbs.cpp:2933
-#, fuzzy
 msgid "Remove an external script"
-msgstr "Ukloni spoljašni skript"
+msgstr "Uklanja spoljašnji skript"
 
 #: ../src/verbs.cpp:2935
-#, fuzzy
 msgid "Remove Embedded Script"
-msgstr "Ukloni mrežu"
+msgstr "Ukloni ugrađeni skript"
 
 #: ../src/verbs.cpp:2935
-#, fuzzy
 msgid "Remove an embedded script"
-msgstr "Ukloni mrežu"
+msgstr "Uklanja ugrađeni skript"
 
 #: ../src/verbs.cpp:2957 ../src/verbs.cpp:2958
 msgid "Center on horizontal and vertical axis"
@@ -25816,14 +25603,12 @@ msgid "Choose a preset"
 msgstr "Izaberite postavu"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:622
-#, fuzzy
 msgid "Add/Edit Profile"
-msgstr "Poveži profil"
+msgstr "Dodaj/uredi profil"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:623
-#, fuzzy
 msgid "Add or edit calligraphic profile"
-msgstr "Crtanje kaligrafske linije"
+msgstr "Dodaje ili uređuje kaligrafski profil"
 
 #: ../src/widgets/connector-toolbar.cpp:120
 msgid "Set connector type: orthogonal"
@@ -25834,13 +25619,12 @@ msgid "Set connector type: polyline"
 msgstr ""
 
 #: ../src/widgets/connector-toolbar.cpp:169
-#, fuzzy
 msgid "Change connector curvature"
-msgstr "Promenjen razmak poveznica"
+msgstr "Promeni zakrivljenost poveznica"
 
 #: ../src/widgets/connector-toolbar.cpp:220
 msgid "Change connector spacing"
-msgstr "Promenjen razmak poveznica"
+msgstr "Promeni razmak poveznica"
 
 #: ../src/widgets/connector-toolbar.cpp:313
 msgid "Avoid"
@@ -25859,22 +25643,20 @@ msgid "Make connector orthogonal or polyline"
 msgstr ""
 
 #: ../src/widgets/connector-toolbar.cpp:349
-#, fuzzy
 msgid "Connector Curvature"
-msgstr "Postavke poveznica"
+msgstr "Zakrivljenost poveznica"
 
 #: ../src/widgets/connector-toolbar.cpp:349
-#, fuzzy
 msgid "Curvature:"
-msgstr "minimalno zakrivljenje"
+msgstr "Zakrivljenost:"
 
 #: ../src/widgets/connector-toolbar.cpp:350
 msgid "The amount of connectors curvature"
-msgstr ""
+msgstr "Iznos zakrivljenosti poveznica"
 
 #: ../src/widgets/connector-toolbar.cpp:360
 msgid "Connector Spacing"
-msgstr "Rastojanje poveznica"
+msgstr "Razmak poveznica"
 
 #: ../src/widgets/connector-toolbar.cpp:360
 msgid "Spacing:"
@@ -25882,9 +25664,7 @@ msgstr "Razmak:"
 
 #: ../src/widgets/connector-toolbar.cpp:361
 msgid "The amount of space left around objects by auto-routing connectors"
-msgstr ""
-"Veličina prostora oko objekata koja će ostati slobodna pri automatskom "
-"usmeravanju poveznica"
+msgstr "Veličina prostora oko objekata koja će ostati slobodna pri automatskom usmeravanju poveznica"
 
 #: ../src/widgets/connector-toolbar.cpp:372
 msgid "Graph"
@@ -25975,34 +25755,34 @@ msgid "no filters"
 msgstr "Bez _Filtera"
 
 #: ../src/widgets/desktop-widget.cpp:860
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: %d (%s%s) - Inkscape"
-msgstr "%s: %d - Inkscape"
+msgstr "%s%s: %d (%s%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:862 ../src/widgets/desktop-widget.cpp:866
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: %d (%s) - Inkscape"
-msgstr "%s: %d - Inkscape"
+msgstr "%s%s: %d (%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:868
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: %d - Inkscape"
-msgstr "%s: %d - Inkscape"
+msgstr "%s%s: %d - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:874
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s (%s%s) - Inkscape"
-msgstr "%s - Inkscape"
+msgstr "%s%s (%s%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:876 ../src/widgets/desktop-widget.cpp:880
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s (%s) - Inkscape"
-msgstr "%s - Inkscape"
+msgstr "%s%s (%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:882
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s - Inkscape"
-msgstr "%s - Inkscape"
+msgstr "%s%s - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:1051
 #, fuzzy
@@ -28638,9 +28418,8 @@ msgstr ""
 "Pokušajte sa procedurom Linija | Objekat u liniju."
 
 #: ../share/extensions/dimension.py:109
-#, fuzzy
 msgid "Please select an object."
-msgstr "Udvostručuje izabrane objekte"
+msgstr "Molim izaberite objekat."
 
 #: ../share/extensions/dimension.py:134
 msgid "Unable to process this object.  Try changing it into a path first."
@@ -28983,20 +28762,17 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/generate_voronoi.py:35
-msgid ""
-"Failed to import the subprocess module. Please report this as a bug at: "
-"https://bugs.launchpad.net/inkscape."
+msgid "Failed to import the subprocess module. Please report this as "
+"a bug at: https://bugs.launchpad.net/inkscape."
 msgstr ""
 
 #: ../share/extensions/generate_voronoi.py:36
-#, fuzzy
 msgid "Python version is: "
-msgstr "Pretvaranje u vođice:"
+msgstr "Verzija Python-a je:"
 
 #: ../share/extensions/generate_voronoi.py:94
-#, fuzzy
 msgid "Please select an object"
-msgstr "Udvostručuje izabrane objekte"
+msgstr "Molim izaberite objekat"
 
 #: ../share/extensions/gimp_xcf.py:39
 msgid "Gimp must be installed and set in your path variable."
@@ -29096,11 +28872,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_autoTexts.py:48
-#, fuzzy
-msgid ""
-"To assign an effect, please select an object.\n"
-"\n"
-msgstr "Udvostručuje izabrane objekte"
+msgid "To assign an effect, please select an object.\n\n"
+msgstr "Molim izaberite objekat, da biste mu dodelili efekat.\n\n"
 
 #: ../share/extensions/jessyInk_autoTexts.py:54
 msgid ""
@@ -29494,9 +29267,8 @@ msgid "You need to install the UniConvertor software.\n"
 msgstr ""
 
 #: ../share/extensions/voronoi2svg.py:215
-#, fuzzy
 msgid "Please select objects!"
-msgstr "Udvostručuje izabrane objekte"
+msgstr "Molim izaberite objektе!"
 
 #: ../share/extensions/web-set-att.py:58
 #: ../share/extensions/web-transmit-att.py:54
@@ -29748,36 +29520,32 @@ msgstr "Crno i belo"
 
 #: ../share/extensions/color_blackandwhite.inx.h:2
 msgid "Threshold Color (1-255):"
-msgstr ""
+msgstr "Prag (1-255):"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
 msgstr "Svetlije"
 
 #: ../share/extensions/color_custom.inx.h:1
-#, fuzzy
 msgctxt "Custom color extension"
 msgid "Custom"
 msgstr "Prilagođeno"
 
 #: ../share/extensions/color_custom.inx.h:3
-#, fuzzy
 msgid "Red Function:"
-msgstr "Crvena boja"
+msgstr "Funkcija za crvenu boju:"
 
 #: ../share/extensions/color_custom.inx.h:4
-#, fuzzy
 msgid "Green Function:"
-msgstr "Zelena boja"
+msgstr "Funkcija za zelenu boju:"
 
 #: ../share/extensions/color_custom.inx.h:5
-#, fuzzy
 msgid "Blue Function:"
-msgstr "Plava boja"
+msgstr "Funkcija za plavu boju:"
 
 #: ../share/extensions/color_custom.inx.h:6
 msgid "Input (r,g,b) Color Range:"
-msgstr ""
+msgstr "Ulazni opseg boja (r,g,b):"
 
 #: ../share/extensions/color_custom.inx.h:8
 msgid ""
@@ -31424,28 +31192,33 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/generate_voronoi.inx.h:1
-#, fuzzy
 msgid "Voronoi Pattern"
-msgstr "Pomeranje šare"
+msgstr "Voronojeva šara"
 
 #: ../share/extensions/generate_voronoi.inx.h:3
 msgid "Average size of cell (px):"
-msgstr ""
+msgstr "Prosečna veličina ćelije (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:4
 msgid "Size of Border (px):"
-msgstr ""
+msgstr "Veličina bordure (px)"
 
 #: ../share/extensions/generate_voronoi.inx.h:6
-msgid ""
-"Generate a random pattern of Voronoi cells. The pattern will be accessible "
-"in the Fill and Stroke dialog. You must select an object or a group.\n"
-"\n"
-"If border is zero, the pattern will be discontinuous at the edges. Use a "
-"positive border, preferably greater than the cell size, to produce a smooth "
-"join of the pattern at the edges. Use a negative border to reduce the size "
-"of the pattern and get an empty border."
-msgstr ""
+msgid "Generate a random pattern of Voronoi cells. The pattern "
+"will be accessible in the Fill and Stroke dialog. You must select "
+"an object or a group.\n\n"
+"If border is zero, the pattern will be discontinuous at the edges. "
+"Use a positive border, preferably greater than the cell size, to "
+"produce a smooth join of the pattern at the edges. Use a negative "
+"border to reduce the size of the pattern and get an empty border."
+msgstr "Generiše slučajnu šaru sastavljenu od Voronojevih ćelija. Šaru "
+"je moguće oodesiti u dijalogu sa popunu i liniju. Objakat ili grupa "
+"mora biti izabrana.\n\n"
+"Ako je bordura nula, šara će biti prekinuta na samim ivicama objekta. "
+"Koristite pozitivne vrednosti bordure, najbolje veće od veličine ćelije, "
+"da biste proizveli lepša spajanja šare blizu ivica objekta. "
+"Koristite negativne vrednosti bordure da biste smanjili veličinu šare "
+"i dobili prazan prostor duž ivica."
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
@@ -32286,7 +32059,7 @@ msgstr ""
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
-msgstr "ČPP"
+msgstr "Često postvljana pitanja"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_faq.inx.h:3
@@ -32304,7 +32077,7 @@ msgstr ""
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
-msgstr "Inkscape uputstvo"
+msgstr "Uputstvo за Inkscape"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_manual.inx.h:3
@@ -35079,48 +34852,42 @@ msgid "From Side c and Angles a, b"
 msgstr "Od strane v i uglova a, b"
 
 #: ../share/extensions/voronoi2svg.inx.h:1
-#, fuzzy
 msgid "Voronoi Diagram"
-msgstr "Pomeranje šare"
+msgstr "Voronojev dijagram"
 
 #: ../share/extensions/voronoi2svg.inx.h:3
 msgid "Type of diagram:"
-msgstr ""
+msgstr "Vrsta dijagrama:"
 
 #: ../share/extensions/voronoi2svg.inx.h:4
-#, fuzzy
 msgid "Bounding box of the diagram:"
-msgstr "Kontejner za upotrebu:"
+msgstr "Granični kontejner dijagrama:"
 
 #: ../share/extensions/voronoi2svg.inx.h:5
-#, fuzzy
 msgid "Show the bounding box"
 msgstr "Prikaži granični kontejner"
 
 #: ../share/extensions/voronoi2svg.inx.h:6
-#, fuzzy
 msgid "Delaunay Triangulation"
-msgstr "Odbij poziv"
+msgstr "Delonijeva triangulacija"
 
 #: ../share/extensions/voronoi2svg.inx.h:7
-#, fuzzy
 msgid "Voronoi and Delaunay"
-msgstr "Pomeranje šare"
+msgstr "I Voronoj i Deloni"
 
 #: ../share/extensions/voronoi2svg.inx.h:8
 msgid "Options for Voronoi diagram"
-msgstr ""
+msgstr "Opcije za Voronojev dijagram"
 
 #: ../share/extensions/voronoi2svg.inx.h:10
-#, fuzzy
 msgid "Automatic from selected objects"
-msgstr "Grupiše izabrane objekte"
+msgstr "Automatski iz izabranih objekata"
 
 #: ../share/extensions/voronoi2svg.inx.h:12
-msgid ""
-"Select a set of objects. Their centroids will be used as the sites of the "
-"Voronoi diagram. Text objects are not handled."
-msgstr ""
+msgid "Select a set of objects. Their centroids will be used as "
+"the sites of the Voronoi diagram. Text objects are not handled."
+msgstr "Izaberite skup objekata. Njihova težišta će biti korišćena kao "
+"čvorovi Voronojevog dijagrama. Tekstualni objekti neće biti uzeti u obzir."
 
 #: ../share/extensions/web-set-att.inx.h:1
 msgid "Set Attributes"
@@ -35579,7 +35346,7 @@ msgstr "Windows Metafile ulaz"
 #: ../share/extensions/wmf_input.inx.h:3
 #: ../share/extensions/wmf_output.inx.h:3
 msgid "A popular graphics file format for clipart"
-msgstr "Popularni grafički format datoteka za klipart"
+msgstr "Popularni format grafičkih datoteka za sličice"
 
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
