@@ -222,7 +222,7 @@ static void multi_roots_internal(SBasis const &f,
 				 double b,
 				 double fb){
 
-    if (f.size()==0){
+    if (f.isZero(0)){
         int idx;
         idx=upper_level(levels,0,vtol);
         if (idx<(int)levels.size()&&fabs(levels.at(idx))<=vtol){
@@ -414,7 +414,7 @@ static void level_sets_internal(SBasis const &f,
 				 double fb,
 				 double tol=1e-5){
 
-    if (f.size()==0){
+    if (f.isZero(0)){
         unsigned idx;
         idx=upper_level( levels, 0. );
         if (idx<levels.size() && levels[idx].contains(0.)){
@@ -614,6 +614,7 @@ std::vector<double> roots1(SBasis const & s, Interval const ivl) {
 std::vector<double> roots(SBasis const & s) {
     switch(s.size()) {
         case 0:
+            assert(false);
             return std::vector<double>();
         case 1:
             return roots1(s);
@@ -628,6 +629,7 @@ std::vector<double> roots(SBasis const & s) {
 std::vector<double> roots(SBasis const & s, Interval const ivl) {
     switch(s.size()) {
         case 0:
+        	assert(false);
             return std::vector<double>();
         case 1:
             return roots1(s, ivl);

@@ -372,7 +372,6 @@ class LFMSBasis
 
     void instance(SBasis & sb, ConstVectorView const& raw_data) const
     {
-        sb.clear();
         sb.resize(m_order+1);
         for (unsigned int i = 0, k = 0; i < raw_data.size(); i+=2, ++k)
         {

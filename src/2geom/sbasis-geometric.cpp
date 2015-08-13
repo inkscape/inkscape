@@ -228,7 +228,7 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
     // -This done, unitVector will have jumps at zeros: fill the gaps with arcs of circles.
     D2<SBasis> V = RescaleForNonVanishingEnds(V_in);
 
-    if (V[0].empty() && V[1].empty())
+    if (V[0].isZero(0) && V[1].isZero(0))
         return Piecewise<D2<SBasis> >(D2<SBasis>(Linear(1),SBasis()));
     SBasis x = V[0], y = V[1];
     SBasis r_eqn1, r_eqn2;
