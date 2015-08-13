@@ -23659,7 +23659,7 @@ msgstr "tutorial-tracing.pt_BR.svg"
 #: ../src/verbs.cpp:2120
 #, fuzzy
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "tutorial-tracing-pixelart_ptBR.svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2124

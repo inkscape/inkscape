@@ -23002,7 +23002,7 @@ msgstr "tutorial-tracing.id.svg"
 #: ../src/verbs.cpp:2120
 #, fuzzy
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "tutorial-tracing.id.svg"
+msgstr "tutorial-tracing.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2124
@@ -23012,7 +23012,7 @@ msgstr "tutorial-calligraphy.id.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2128
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-interpolate.id.svg"
+msgstr "tutorial-interpolate.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2132

@@ -26376,12 +26376,12 @@ msgstr "ꯑꯅꯧꯕ ꯑꯦꯂꯤꯃꯦꯟꯠꯒꯤ ꯅꯣꯗ ꯁꯦꯝꯒꯠꯂ
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:2153
 msgid "tutorial-basic.svg"
-msgstr "tutorial-basic.svg "
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2157
 msgid "tutorial-shapes.svg"
-msgstr "tutorial-shapes.svg "
+msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2161

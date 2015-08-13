@@ -24958,7 +24958,7 @@ msgstr "tutorial-tracing.ca.svg"
 
 #: ../src/verbs.cpp:2199
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "tutorial-tracing-pixelart.ca.svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2203
@@ -24968,7 +24968,7 @@ msgstr "tutorial-calligraphy.ca.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2207
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-interpolate.ca.svg"
+msgstr "tutorial-interpolate.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2211

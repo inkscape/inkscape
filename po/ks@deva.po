@@ -26474,47 +26474,46 @@ msgstr "नव अयलीमेयंट नोड बनऑयव "
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:2153
 msgid "tutorial-basic.svg"
-msgstr "तुतवरिअल-सिचॲसवग .svg"
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2157
 msgid "tutorial-shapes.svg"
-msgstr "तुतवरिअल -पेसॲसवग .svg"
+msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2161
 msgid "tutorial-advanced.svg"
-msgstr "तुतवरिअल -दवनचेदॲसवग .svg"
+msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2165
 msgid "tutorial-tracing.svg"
-msgstr "तुतवरिअल -रचिनगॲसवग .svg"
+msgstr "tutorial-tracing.svg"
 
 #: ../src/verbs.cpp:2168
-#, fuzzy
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "तुतवरिअल -रचिनगॲसवग .svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2172
 msgid "tutorial-calligraphy.svg"
-msgstr "तुतवरिअल -ललिगरफयॲसवग .svg"
+msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2176
 msgid "tutorial-interpolate.svg"
-msgstr "तुतवरिअल -नतेरपोलतेॲसवग .svg"
+msgstr "tutorial-interpolate.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2180
 msgid "tutorial-elements.svg"
-msgstr "तुतवरिअल -लेमेनतसॲसवग .svg"
+msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2184
 msgid "tutorial-tips.svg"
-msgstr "तुतवरिअल -पसॲसवग .svg"
+msgstr "tutorial-tips.svg"
 
 #: ../src/verbs.cpp:2370 ../src/verbs.cpp:2969
 msgid "Unlock all objects in the current layer"

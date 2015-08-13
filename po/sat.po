@@ -26740,47 +26740,47 @@ msgstr "ᱱᱟᱣᱟ ᱡᱤᱱᱤᱥ ᱜᱟᱸᱴ ᱛᱮᱭᱟᱨ ᱢᱮ"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:2153
 msgid "tutorial-basic.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-basic.svg "
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2157
 msgid "tutorial-shapes.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-shapes.svg"
+msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2161
 msgid "tutorial-advanced.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-advanced.svg"
+msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2165
 msgid "tutorial-tracing.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-tracing.svg"
+msgstr "tutorial-tracing.svg"
 
 #: ../src/verbs.cpp:2168
 #, fuzzy
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-tracing.svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2172
 msgid "tutorial-calligraphy.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-calligraphy.svg"
+msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2176
 msgid "tutorial-interpolate.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-interpolate.svg"
+msgstr "tutorial-interpolate.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2180
 msgid "tutorial-elements.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-elements.svg"
+msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2184
 msgid "tutorial-tips.svg"
-msgstr "ᱥᱤᱠᱷᱟᱹᱣ ᱮᱢ-tips.svg"
+msgstr "tutorial-tips.svg"
 
 #: ../src/verbs.cpp:2370 ../src/verbs.cpp:2969
 msgid "Unlock all objects in the current layer"

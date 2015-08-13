@@ -26372,47 +26372,46 @@ msgstr "নতুন উপাদান নোড সৃষ্টি কৰক"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:2153
 msgid "tutorial-basic.svg"
-msgstr "টিউটৰিএল-মূল.svg"
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2157
 msgid "tutorial-shapes.svg"
-msgstr "টিউটৰিএল-আকৃতি বিলাক.svg"
+msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2161
 msgid "tutorial-advanced.svg"
-msgstr "টিউটৰিএল-আগতীয়াকে কৰা.svg"
+msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2165
 msgid "tutorial-tracing.svg"
-msgstr "টিউটৰিএল-বিছাৰি উলিয়াই থকা.svg"
+msgstr "tutorial-tracing.svg"
 
 #: ../src/verbs.cpp:2168
-#, fuzzy
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "টিউটৰিএল-বিছাৰি উলিয়াই থকা.svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2172
 msgid "tutorial-calligraphy.svg"
-msgstr "টিউটৰিয়েল-কলিগ্ৰাফী.svg"
+msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2176
 msgid "tutorial-interpolate.svg"
-msgstr "টিউটৰিয়েল-ইন্টাৰপোলেশ্বন.svg"
+msgstr "tutorial-interpolate.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2180
 msgid "tutorial-elements.svg"
-msgstr "টিউটৰিএল-উপাদানবোৰ.svg"
+msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2184
 msgid "tutorial-tips.svg"
-msgstr "টিউটৰিএল-পৰামৰ্শবোৰ.svg"
+msgstr "tutorial-tips.svg"
 
 #: ../src/verbs.cpp:2370 ../src/verbs.cpp:2969
 msgid "Unlock all objects in the current layer"

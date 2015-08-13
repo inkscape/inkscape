@@ -26198,7 +26198,7 @@ msgstr "नूतनतत्त्वनोड् उत्पादय "
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:2153
 msgid "tutorial-basic.svg"
-msgstr "tutorial-basic.svg "
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2157

@@ -26454,7 +26454,7 @@ msgstr "नमां तत्व नोड बनाओ "
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:2153
 msgid "tutorial-basic.svg"
-msgstr "tutorial-basic.svg "
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2157
@@ -26472,9 +26472,8 @@ msgid "tutorial-tracing.svg"
 msgstr "tutorial-tracing.svg"
 
 #: ../src/verbs.cpp:2168
-#, fuzzy
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "tutorial-tracing.svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2172

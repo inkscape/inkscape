@@ -22778,47 +22778,46 @@ msgstr "উল্লম্বভাবে ফ্লিপ করুন"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:2105
 msgid "tutorial-basic.svg"
-msgstr "টিউটোরিয়াল-মৌলিক.svg"
+msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2109
 msgid "tutorial-shapes.svg"
-msgstr "টিউটোরিয়াল-আকৃতি.svg"
+msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2113
 msgid "tutorial-advanced.svg"
-msgstr "টিউটোরিয়াল-উচ্চতর.svg"
+msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2117
 msgid "tutorial-tracing.svg"
-msgstr "টিউটোরিয়াল-পথানুসরণ.svg"
+msgstr "tutorial-tracing.svg"
 
 #: ../src/verbs.cpp:2120
-#, fuzzy
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "টিউটোরিয়াল-পথানুসরণ.svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2124
 msgid "tutorial-calligraphy.svg"
-msgstr "টিউটোরিয়াল-ক্যালিগ্রাফি.svg"
+msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2128
 msgid "tutorial-interpolate.svg"
-msgstr "টিউটোরিয়াল-অন্তঃপ্রবেশন.svg"
+msgstr "tutorial-interpolate.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2132
 msgid "tutorial-elements.svg"
-msgstr "টিউটোরিয়াল-উপকরণ.svg"
+msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2136
 msgid "tutorial-tips.svg"
-msgstr "টিউটোরিয়াল-ইঙ্গিত.svg"
+msgstr "tutorial-tips.svg"
 
 #: ../src/verbs.cpp:2322 ../src/verbs.cpp:2913
 msgid "Unlock all objects in the current layer"
