@@ -111,8 +111,8 @@ private:
 
     void _recalculateIsBSpline();
     bool _isBSpline() const;
-    double _bsplineHandlePosition(Handle *h, Handle *h2 = NULL);
-    Geom::Point _bsplineHandleReposition(Handle *h, Handle *h2 = NULL);
+    double _bsplineHandlePosition(Handle *h, bool check_other = true);
+    Geom::Point _bsplineHandleReposition(Handle *h, bool check_other = true);
     Geom::Point _bsplineHandleReposition(Handle *h, double pos);
     void _createGeometryFromControlPoints(bool alert_LPE = false);
     unsigned _deleteStretch(NodeList::iterator first, NodeList::iterator last, bool keep_shape);
