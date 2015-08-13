@@ -7,11 +7,14 @@
 LANG=C
 LC_ALL=C
 
+# First pass to detect invalid links to installed tutorials (trailing
+# space, typo...).
+echo "===== Checking tutorials links in PO files ======"
 PO_FILE_LIST=`ls -1 "$1/po/" | grep "\.po$" | sort`
 
 echo "$PO_FILE_LIST" |\
 while read PO_FILENAME; do
-  echo; echo "----- $PO_FILENAME -----------------------------------"
+  echo "----- $PO_FILENAME -----------------------------------"
   TRANSLATIONS_IN_CURRENT_PO=`cat "$1/po/$PO_FILENAME" | grep -A 1 "^msgid\ \"tutorial-[^.]*\.svg\""`
   UNTRANSLATED_COUNT=`echo "$TRANSLATIONS_IN_CURRENT_PO" | grep -c "^msgstr \"\""`
   if [ $UNTRANSLATED_COUNT -gt 0 ]; then
@@ -22,29 +25,27 @@ while read PO_FILENAME; do
   while read TUTORIAL_FILENAME_TRANSLATION_LINE; do
     TUTORIAL_FILENAME_TRANSLATION=`echo "$TUTORIAL_FILENAME_TRANSLATION_LINE" |\
     sed 's/^msgstr \"\(.*\)\"[ 	]*$/\1/'`
-    echo -n "$PO_FILENAME references \"$TUTORIAL_FILENAME_TRANSLATION\""
-    if [ -e "$1/share/tutorials/$TUTORIAL_FILENAME_TRANSLATION" ]; then
-      echo "			OK"
-    else
+    if [ ! -e "$1/share/tutorials/$TUTORIAL_FILENAME_TRANSLATION" ]; then
+      echo -n "$PO_FILENAME references \"$TUTORIAL_FILENAME_TRANSLATION\""
       echo "			ERROR: THE REFERENCED FILE DOESN'T EXIST, PLEASE CHECK"
     fi
   done
+  echo
 done
 
-echo; echo
-
+# Second pass to check if a tutorial for a language exists but is not
+# linked in the PO file.
+echo
+echo "===== Checking tutorials not referenced in PO files ======"
 TUTORIAL_FILE_LIST=`ls -1 "$1/share/tutorials/" | grep "^tutorial-[^.]*\...\.svg$" | sort`
 
 echo "$TUTORIAL_FILE_LIST" |\
 while read TUTORIAL_FILENAME; do
-  echo; echo "----- $TUTORIAL_FILENAME -----------------------------------"
   LANGUAGE_CODE=`echo "$TUTORIAL_FILENAME" | sed 's/^tutorial-[^.]*\.\(..\)\.svg$/\1/'`
   if [ -e "$1/po/$LANGUAGE_CODE.po" ]; then
     TRANSLATIONS_IN_CURRENT_PO=`cat "$1/po/$LANGUAGE_CODE.po" | grep -A 1 "^msgid\ \"tutorial-[^.]*\.svg\""`
     echo "$TRANSLATIONS_IN_CURRENT_PO" | grep -q "^msgstr \"$TUTORIAL_FILENAME\""
-    if [ $? -eq 0 ]; then
-      echo "$TUTORIAL_FILENAME is referenced in $LANGUAGE_CODE.po"
-    else
+    if [ $? -ne 0 ]; then
       echo "WARNING: $TUTORIAL_FILENAME IS NOT REFERENCED IN $LANGUAGE_CODE.po"
     fi
   else
@@ -52,8 +53,9 @@ while read TUTORIAL_FILENAME; do
   fi
 done
 
-echo; echo
-
+# Last pass to check if tutorials are correctly added in Makefile.am
+echo
+echo "===== Checking Makefile.am ======"
 TUTORIAL_DIRECTORY_FILELIST=`ls -1 "$1/share/tutorials/" | grep -v "^Makefile.am$" | sort`
 
 echo "$TUTORIAL_DIRECTORY_FILELIST" |\
