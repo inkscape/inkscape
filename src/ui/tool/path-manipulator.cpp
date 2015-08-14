@@ -56,7 +56,7 @@ enum PathChange {
 };
 
 } // anonymous namespace
-const double HANDLE_CUBIC_GAP = 0.01;
+const double HANDLE_CUBIC_GAP = 0.001;
 const double NO_POWER = 0.0;
 const double DEFAULT_START_POWER = 0.3334;
 
@@ -695,10 +695,12 @@ unsigned PathManipulator::_deleteStretch(NodeList::iterator start, NodeList::ite
     // if we are removing, we readjust the handlers
     if(_isBSpline()){
         if(start.prev()){
-            start.prev()->front()->setPosition(_bsplineHandleReposition(start.prev()->front(),start.prev()->back()));
+            double bspline_weight = _bsplineHandlePosition(start.prev()->back(), false);
+            start.prev()->front()->setPosition(_bsplineHandleReposition(start.prev()->front(), bspline_weight));
         }
         if(end){
-            end->back()->setPosition(_bsplineHandleReposition(end->back(),end->front()));
+            double bspline_weight = _bsplineHandlePosition(end->front(), false);
+            end->back()->setPosition(_bsplineHandleReposition(end->back(),bspline_weight));
         }
     }
 

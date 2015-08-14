@@ -84,7 +84,7 @@ namespace Tools {
 static Geom::Point pen_drag_origin_w(0, 0);
 static bool pen_within_tolerance = false;
 static int pen_last_paraxial_dir = 0; // last used direction in horizontal/vertical mode; 0 = horizontal, 1 = vertical
-const double HANDLE_CUBIC_GAP = 0.01;
+const double HANDLE_CUBIC_GAP = 0.001;
 
 const std::string& PenTool::getPrefsPath() {
     return PenTool::prefsPath;

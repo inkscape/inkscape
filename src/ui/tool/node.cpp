@@ -60,10 +60,8 @@ Inkscape::ControlType nodeTypeToCtrlType(Inkscape::UI::NodeType type)
 namespace Inkscape {
 namespace UI {
 
-/*const double handleCubicGap = 0.01;*/
 const double NO_POWER = 0.0;
 const double DEFAULT_START_POWER = 0.3334;
-/*const double defaultEndPower = 0.6667;*/
 
 ControlPoint::ColorSet Node::node_colors = {
     {0xbfbfbf00, 0x000000ff}, // normal fill, stroke

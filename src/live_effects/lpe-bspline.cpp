@@ -16,7 +16,7 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-const double HANDLE_CUBIC_GAP = 0.01;
+const double HANDLE_CUBIC_GAP = 0.001;
 const double NO_POWER = 0.0;
 const double DEFAULT_START_POWER = 0.3334;
 const double DEFAULT_END_POWER = 0.6667;
