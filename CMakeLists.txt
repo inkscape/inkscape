@@ -149,7 +149,7 @@ if(UNIX)
 	# TODO: man, locale
 
 	install(
-		PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape
+                PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape ${EXECUTABLE_OUTPUT_PATH}/inkview
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 	)
 

@@ -2,7 +2,7 @@
 set(svg_SRC
 	css-ostringstream.cpp
 	path-string.cpp
-	sp-svg.def
+        #sp-svg.def
 	stringstream.cpp
 	strip-trailing-zeros.cpp
 	svg-affine.cpp
