@@ -1,0 +1,7 @@
+file(GLOB LANGUAGES *.po)
+foreach(language ${LANGUAGES})
+  string(REGEX REPLACE "(.+(\\\\|/))+" "" language ${language})
+  string(REGEX REPLACE "\\.po$" "" language ${language})
+  set(pofile ${CMAKE_CURRENT_SOURCE_DIR}/${language}.po)
+  GETTEXT_PROCESS_PO_FILES(${language} ALL INSTALL_DESTINATION "share/locale/" PO_FILES ${pofile})
+endforeach(language)

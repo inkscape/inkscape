@@ -355,6 +355,19 @@ if(WITH_IMAGE_MAGICK)
 endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/IncludeJava.cmake)
+
+set(ENABLE_NLS OFF)
+if(WITH_NLS)
+  find_package(Gettext)
+  if(GETTEXT_FOUND)
+    message(STATUS "Found gettext + msgfmt to convert language files. Translation enabled")
+    set(ENABLE_NLS ON)
+  else(GETTEXT_FOUND)
+    message(STATUS "Cannot find gettext + msgfmt to convert language file. Translation won't be enabled")
+  endif(GETTEXT_FOUND)
+endif(WITH_NLS)
+
+
 # end Dependencies
 
 list(REMOVE_DUPLICATES INKSCAPE_LIBS)

@@ -5,7 +5,9 @@ IF(WIN32)
     set(SHARE_INSTALL "share" CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
 ELSE(WIN32)
     # TODO: check and change this to correct value:
-    SET(PACKAGE_LOCALE_DIR "locale")
+  if(NOT PACKAGE_LOCALE_DIR)
+    SET(PACKAGE_LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale") # packagers might overwrite this
+  endif(NOT PACKAGE_LOCALE_DIR)
 
   if(NOT SHARE_INSTALL)
     set(SHARE_INSTALL "share" CACHE STRING "Data file install path. Must be a relative path (from CMAKE_INSTALL_PREFIX), with no trailing slash.")
