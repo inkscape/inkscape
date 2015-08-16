@@ -132,7 +132,7 @@ unsigned DrawingImage::_renderItem(DrawingContext &dc, Geom::IntRect const &/*ar
             }
         }
 
-        dc.paint(_opacity);
+        dc.paint(1);
 
     } else { // outline; draw a rect instead
 
