@@ -507,7 +507,7 @@ void Layout::queryCursorShape(iterator const &it, Geom::Point &position, double 
             position[Geom::Y] = span->line(this).baseline_y + span->baseline_shift;
         }
         // up to now *position is the baseline point, not the final point which will be the bottom of the descent
-        double vertical_scale = _glyphs.back().vertical_scale;
+        double vertical_scale = _glyphs.empty() ? 1.0 : _glyphs.back().vertical_scale;
 
         if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
             height = vertical_scale * span->line_height.ascent + span->line_height.descent;
