@@ -528,6 +528,7 @@ unsigned int sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key,
 {
     g_return_val_if_fail(repr != NULL, FALSE);
     g_return_val_if_fail(key != NULL, FALSE);
+    g_return_val_if_fail(val==val, FALSE);//tests for nan
 
     Inkscape::SVGOStringStream os;
     os << val;
