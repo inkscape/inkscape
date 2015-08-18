@@ -1068,6 +1068,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
     // copy definitions
     desktop->doc()->importDefs(clipdoc);
 
+    Inkscape::XML::Node* clipboard;
     // copy objects
     std::vector<Inkscape::XML::Node*> pasted_objects;
     for (Inkscape::XML::Node *obj = root->firstChild() ; obj ; obj = obj->next()) {
@@ -1082,6 +1083,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
             continue;
         }
         if (!strcmp(obj->name(), "inkscape:clipboard")) {
+    	clipboard = obj;
             continue;
         }
         Inkscape::XML::Node *obj_copy = obj->duplicate(target_document->getReprDoc());
@@ -1090,12 +1092,31 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
 
         pasted_objects.push_back(obj_copy);
     }
-    // Change the selection to the freshly pasted objects
+
+    /*  take that stuff into account:
+     *   if( use && selection->includes(use->get_original()) ){//we are copying something whose parent is also copied (!)
+     *       transform = ((SPItem*)(use->get_original()->parent))->i2doc_affine().inverse() * transform;
+     *   }
+     *
+     */
+    std::vector<Inkscape::XML::Node*> pasted_objects_not;
+    for (Inkscape::XML::Node *obj = clipboard->firstChild() ; obj ; obj = obj->next()) {
+    	if(target_document->getObjectById(obj->attribute("id"))) continue;
+        Inkscape::XML::Node *obj_copy = obj->duplicate(target_document->getReprDoc());
+        target_parent->appendChild(obj_copy);
+        Inkscape::GC::release(obj_copy);
+        pasted_objects_not.push_back(obj_copy);
+    }
     Inkscape::Selection *selection = desktop->getSelection();
+    selection->setReprList(pasted_objects_not);
+    Geom::Affine doc2parent = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
+    sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false, false);
+    sp_selection_delete(desktop);
+
+    // Change the selection to the freshly pasted objects
     selection->setReprList(pasted_objects);
 
     // Apply inverse of parent transform
-    Geom::Affine doc2parent = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
     sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false, false);
 
     // Update (among other things) all curves in paths, for bounds() to work

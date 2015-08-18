@@ -154,6 +154,7 @@ private:
     Inkscape::XML::Node *_root; ///< Reference to the clipboard's root node
     Inkscape::XML::Node *_clipnode; ///< The node that holds extra information
     Inkscape::XML::Document *_doc; ///< Reference to the clipboard's Inkscape::XML::Document
+    std::set<SPItem*> cloned_elements;
 
     // we need a way to copy plain text AND remember its style;
     // the standard _clipnode is only available in an SVG tree, hence this special storage
@@ -239,7 +240,7 @@ void ClipboardManagerImpl::copy(SPDesktop *desktop)
     // Special case for when the color picker ("dropper") is active - copies color under cursor
     if (tools_isactive(desktop, TOOLS_DROPPER)) {
         //_setClipboardColor(sp_dropper_context_get_color(desktop->event_context));
-    	_setClipboardColor(SP_DROPPER_CONTEXT(desktop->event_context)->get_color());
+        _setClipboardColor(SP_DROPPER_CONTEXT(desktop->event_context)->get_color());
         _discardInternalClipboard();
         return;
     }
@@ -523,7 +524,7 @@ bool ClipboardManagerImpl::pasteSize(SPDesktop *desktop, bool separately, bool a
 
         // resize each object in the selection
         if (separately) {
-        	std::vector<SPItem*> itemlist=selection->itemList();
+            std::vector<SPItem*> itemlist=selection->itemList();
             for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
                 SPItem *item = *i;
                 if (item) {
@@ -630,7 +631,7 @@ Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId(SPDesktop *desktop)
     // at the first object to be <svg:path> or <svg:text>.
     // but that could then return the id of the object's 
     // clip path or mask, not the original path!
-	
+    
     SPDocument *tempdoc = _retrieveClipboard(); // any target will do here
     if ( tempdoc == NULL ) {
         _userWarn(desktop, _("Nothing on the clipboard."));
@@ -662,7 +663,8 @@ Glib::ustring ClipboardManagerImpl::getShapeOrTextObjectId(SPDesktop *desktop)
 void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 {
     // copy the defs used by all items
-	std::vector<SPItem*> itemlist=selection->itemList();
+    std::vector<SPItem*> itemlist=selection->itemList();
+    cloned_elements.clear();
     for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
         SPItem *item = *i;
         if (item) {
@@ -673,14 +675,33 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
     }
 
     // copy the representation of the items
-    std::vector<SPItem*> sorted_items(itemlist);
+    std::vector<SPObject*> sorted_items;
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++)
+        sorted_items.push_back(*i);
     sort(sorted_items.begin(),sorted_items.end(),sp_object_compare_position_bool);
 
-    for(std::vector<SPItem*>::const_iterator i=sorted_items.begin();i!=sorted_items.end();i++){
-        SPItem *item = *i;
+    //remove already copied elements from cloned_elements
+    std::vector<SPItem*>tr;
+    for(std::set<SPItem*>::iterator it = cloned_elements.begin();it!=cloned_elements.end();it++){
+        if(std::find(sorted_items.begin(),sorted_items.end(),*it)!=sorted_items.end())
+            tr.push_back(*it);
+    }
+    for(std::vector<SPItem*>::iterator it = tr.begin();it!=tr.end();it++){
+        cloned_elements.erase(*it);
+    }
+
+    sorted_items.insert(sorted_items.end(),cloned_elements.begin(),cloned_elements.end());
+
+    for(std::vector<SPObject*>::const_iterator i=sorted_items.begin();i!=sorted_items.end();i++){
+        SPItem *item = dynamic_cast<SPItem*>(*i);
         if (item) {
             Inkscape::XML::Node *obj = item->getRepr();
-            Inkscape::XML::Node *obj_copy = _copyNode(obj, _doc, _root);
+            Inkscape::XML::Node *obj_copy;
+            if(cloned_elements.find(item)==cloned_elements.end())
+                obj_copy = _copyNode(obj, _doc, _root);
+            else
+                obj_copy = _copyNode(obj, _doc, _clipnode);
+
 
             // copy complete inherited style
             SPCSSAttr *css = sp_repr_css_attr_inherited(obj, "style");
@@ -737,6 +758,12 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
  */
 void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
 {
+    SPUse *use=dynamic_cast<SPUse *>(item);
+    if(use){
+        if(cloned_elements.insert(use->get_original()).second)
+            _copyUsedDefs(use->get_original());
+    }
+
     // copy fill and stroke styles (patterns and gradients)
     SPStyle *style = item->style;
 
