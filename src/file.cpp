@@ -1068,7 +1068,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
     // copy definitions
     desktop->doc()->importDefs(clipdoc);
 
-    Inkscape::XML::Node* clipboard;
+    Inkscape::XML::Node* clipboard = NULL;
     // copy objects
     std::vector<Inkscape::XML::Node*> pasted_objects;
     for (Inkscape::XML::Node *obj = root->firstChild() ; obj ; obj = obj->next()) {
@@ -1100,6 +1100,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
      *
      */
     std::vector<Inkscape::XML::Node*> pasted_objects_not;
+    if(clipboard)
     for (Inkscape::XML::Node *obj = clipboard->firstChild() ; obj ; obj = obj->next()) {
     	if(target_document->getObjectById(obj->attribute("id"))) continue;
         Inkscape::XML::Node *obj_copy = obj->duplicate(target_document->getReprDoc());
