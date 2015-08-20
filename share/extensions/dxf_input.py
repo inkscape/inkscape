@@ -75,7 +75,7 @@ def export_POINT():
 def export_LINE():
     # mandatory group codes : (10, 11, 20, 21) (x1, x2, y1, y2)
     if vals[groups['10']] and vals[groups['11']] and vals[groups['20']] and vals[groups['21']]:
-        path = 'M %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], scale*(vals[groups['11']][0] - xmin), height - scale*(vals[groups['21']][0] - ymin))
+        path = 'M %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], scale*(extrude*vals[groups['11']][0] - xmin), height - scale*(vals[groups['21']][0] - ymin))
         attribs = {'d': path, 'style': style}
         inkex.etree.SubElement(layer, 'path', attribs)
 
@@ -230,7 +230,7 @@ def export_HATCH():
                         i40 += 1
                         i72 += 1
                     elif vals[groups['72']][i72] == 1:      # line
-                        path += 'L %f,%f ' % (scale*(vals[groups['11']][i11] - xmin), height - scale*(vals[groups['21']][i11] - ymin))
+                        path += 'L %f,%f ' % (scale*(extrude*vals[groups['11']][i11] - xmin), height - scale*(vals[groups['21']][i11] - ymin))
                         i11 += 1
                         i72 += 1
                     i10 += 1
@@ -259,7 +259,7 @@ def export_DIMENSION():
             return
         attribs = {'d': path, 'style': style + '; marker-start: url(#DistanceX); marker-end: url(#DistanceX); stroke-width: 0.25px'}
         inkex.etree.SubElement(layer, 'path', attribs)
-        x = scale*(vals[groups['11']][0] - xmin)
+        x = scale*(extrude*vals[groups['11']][0] - xmin)
         y = height - scale*(vals[groups['21']][0] - ymin)
         size = 12                   # default fontsize in px
         if vals[groups['3']]:
@@ -279,7 +279,11 @@ def export_INSERT():
     if vals[groups['2']] and vals[groups['10']] and vals[groups['20']]:
         x = vals[groups['10']][0] + scale*xmin
         y = vals[groups['20']][0] - scale*ymin - height
-        attribs = {'x': '%f' % x, 'y': '%f' % y, inkex.addNS('href','xlink'): '#' + quote(vals[groups['2']][0].replace(" ", "_").encode("utf-8"))}
+        attribs = {inkex.addNS('href','xlink'): '#' + quote(vals[groups['2']][0].replace(" ", "_").encode("utf-8"))}
+        tform = 'translate(%f, %f)' % (x, y)
+        if vals[groups['41']] and vals[groups['42']]:
+            tform += ' scale(%f, %f)' % (vals[groups['41']][0], vals[groups['42']][0])
+        attribs.update({'transform': tform})
         inkex.etree.SubElement(layer, 'use', attribs)
 
 def export_BLOCK():
@@ -338,7 +342,7 @@ def get_group(group):
 #   define DXF Entities and specify which Group Codes to monitor
 
 entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'ATTDEF': export_ATTDEF, 'VIEWPORT': False, 'ENDSEC': False}
-groups = {'1': 0, '2': 1, '3': 2, '6': 3, '8': 4, '10': 5, '11': 6, '13': 7, '14': 8, '20': 9, '21': 10, '23': 11, '24': 12, '40': 13, '41': 14, '42': 15, '50': 16, '51': 17, '62': 18, '70': 19, '72': 20, '73': 21, '92': 22, '93': 23, '370': 24}
+groups = {'1': 0, '2': 1, '3': 2, '6': 3, '8': 4, '10': 5, '11': 6, '13': 7, '14': 8, '20': 9, '21': 10, '23': 11, '24': 12, '40': 13, '41': 14, '42': 15, '50': 16, '51': 17, '62': 18, '70': 19, '72': 20, '73': 21, '92': 22, '93': 23, '230': 24, '370': 25}
 colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
             6: '#FF00FF',   8: '#414141',   9: '#808080',  12: '#BD0000',  30: '#FF7F00',
           250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
@@ -468,10 +472,6 @@ while line[0] and (line[1] != 'ENDSEC' or not inENTITIES):
             val = val.decode('unicode_escape')
         elif line[0] == '62' or line[0] == '70' or line[0] == '92' or line[0] == '93':
             val = int(line[1])
-        elif line[0] == '10' or line[0] == '13' or line[0] == '14': # scaled float x value
-            val = scale*(float(line[1]) - xmin)
-        elif line[0] == '20' or line[0] == '23' or line[0] == '24': # scaled float y value
-            val = height - scale*(float(line[1]) - ymin)
         else:                                       # unscaled float value
             val = float(line[1])
         vals[groups[line[0]]].append(val)
@@ -502,10 +502,26 @@ while line[0] and (line[1] != 'ENDSEC' or not inENTITIES):
             if vals[groups['6']]:                   # Common Linetype
                 if linetypes.has_key(vals[groups['6']][0]):
                     style += ';' + linetypes[vals[groups['6']][0]]
+            extrude = 1.0
+            if vals[groups['230']]:
+                extrude = float(vals[groups['230']][0])
+            for xgrp in ['10', '13', '14']:         # scale/reflect x values
+                if vals[groups[xgrp]]:
+                    for i in range (0, len(vals[groups[xgrp]])):
+                        vals[groups[xgrp]][i] = scale*(extrude*vals[groups[xgrp]][i] - xmin)
+            for ygrp in ['20', '23', '24']:         # scale y values
+                if vals[groups[ygrp]]:
+                    for i in range (0, len(vals[groups[ygrp]])):
+                        vals[groups[ygrp]][i] = height - scale*(vals[groups[ygrp]][i] - ymin)
+            if (extrude == -1.0):                   # reflect angles
+                if vals[groups['50']] and vals[groups['51']]:
+                    temp = vals[groups['51']][0]
+                    vals[groups['51']][0] = 180.0 - vals[groups['50']][0]
+                    vals[groups['50']][0] = 180.0 - temp
             if entities[entity]:
                 entities[entity]()
         entity = line[1]
-        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
         seqs = []
 
 if polylines:
