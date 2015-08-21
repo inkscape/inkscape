@@ -26,21 +26,21 @@ class SPCurve;
 class SPDesktop;
 
 namespace Inkscape{ 
-namespace Display {
-    class TemporaryItem;
-}
-namespace LivePathEffect{
-    class LPEObjectReference;
-    class Effect;
-}
+    namespace Display {
+        class TemporaryItem;
+    }
+    namespace LivePathEffect{
+        class LPEObjectReference;
+        class Effect;
+    }
 }
 
 typedef std::list<Inkscape::LivePathEffect::LPEObjectReference *> PathEffectList;
 
 class SPLPEItem : public SPItem {
 public:
-	SPLPEItem();
-	virtual ~SPLPEItem();
+    SPLPEItem();
+    virtual ~SPLPEItem();
 
     int path_effects_enabled;
 
@@ -54,20 +54,20 @@ public:
                              std::vector<LivePathEffectObject const *> const &new_lpeobjs );
 
 
-	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void release();
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+    virtual void release();
 
-	virtual void set(unsigned int key, char const* value);
+    virtual void set(unsigned int key, char const* value);
 
-	virtual void update(SPCtx* ctx, unsigned int flags);
-	virtual void modified(unsigned int flags);
+    virtual void update(SPCtx* ctx, unsigned int flags);
+    virtual void modified(unsigned int flags);
 
-	virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
-	virtual void remove_child(Inkscape::XML::Node* child);
+    virtual void child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref);
+    virtual void remove_child(Inkscape::XML::Node* child);
 
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, unsigned int flags);
 
-	virtual void update_patheffect(bool write);
+    virtual void update_patheffect(bool write);
 
     bool performPathEffect(SPCurve *curve);
 
