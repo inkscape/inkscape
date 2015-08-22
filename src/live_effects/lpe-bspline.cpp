@@ -365,91 +365,52 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
             point_at0 = in->first_segment()->initialPoint();
             point_at3 = in->first_segment()->finalPoint();
             sbasis_in = in->first_segment()->toSBasis();
-            if (!only_selected) {
-                if (cubic) {
-                    if (!ignore_cusp || !Geom::are_near((*cubic)[1], point_at0)) {
+            if (cubic) {
+                if (!ignore_cusp || !Geom::are_near((*cubic)[1], point_at0)) {
+                    if (isNodePointSelected(point_at0) || !only_selected) {
                         point_at1 = sbasis_in.valueAt(weight_ammount);
                         if (weight_ammount != NO_POWER) {
                             point_at1 =
                                 Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
                         }
                     } else {
-                        point_at1 = in->first_segment()->initialPoint();
-                    }
-                    if (!ignore_cusp || !Geom::are_near((*cubic)[2], point_at3)) {
-                        point_at2 = sbasis_in.valueAt(1 - weight_ammount);
-                        if (weight_ammount != NO_POWER) {
-                            point_at2 =
-                                Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
-                        }
-                    } else {
-                        point_at2 = in->first_segment()->finalPoint();
+                        point_at1 = (*cubic)[1];
                     }
                 } else {
-                    if (!ignore_cusp && weight_ammount != NO_POWER) {
-                        point_at1 = sbasis_in.valueAt(weight_ammount);
-                        if (weight_ammount != NO_POWER) {
-                            point_at1 =
-                                Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
-                        }
+                    point_at1 = in->first_segment()->initialPoint();
+                }
+                if (!ignore_cusp || !Geom::are_near((*cubic)[2], point_at3)) {
+                    if (isNodePointSelected(point_at3) || !only_selected) {
                         point_at2 = sbasis_in.valueAt(1 - weight_ammount);
                         if (weight_ammount != NO_POWER) {
                             point_at2 =
                                 Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
                         }
                     } else {
-                        point_at1 = in->first_segment()->initialPoint();
-                        point_at2 = in->first_segment()->finalPoint();
+                        point_at2 = (*cubic)[2];
                     }
+                } else {
+                    point_at2 = in->first_segment()->finalPoint();
                 }
             } else {
-                if (cubic) {
-                    if (!ignore_cusp || !Geom::are_near((*cubic)[1], point_at0)) {
-                        if (isNodePointSelected(point_at0)) {
-                            point_at1 = sbasis_in.valueAt(weight_ammount);
-                            if (weight_ammount != NO_POWER) {
-                                point_at1 =
-                                    Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
-                            }
-                        } else {
-                            point_at1 = (*cubic)[1];
-                        }
+                if (!ignore_cusp && weight_ammount != NO_POWER) {
+                    if (isNodePointSelected(point_at0) || !only_selected) {
+                        point_at1 = sbasis_in.valueAt(weight_ammount);
+                        point_at1 =
+                            Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
                     } else {
                         point_at1 = in->first_segment()->initialPoint();
                     }
-                    if (!ignore_cusp || !Geom::are_near((*cubic)[2], point_at3)) {
-                        if (isNodePointSelected(point_at3)) {
-                            point_at2 = sbasis_in.valueAt(1 - weight_ammount);
-                            if (weight_ammount != NO_POWER) {
-                                point_at2 =
-                                    Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
-                            }
-                        } else {
-                            point_at2 = (*cubic)[2];
-                        }
+                    if (isNodePointSelected(point_at3) || !only_selected) {
+                        point_at2 = sbasis_in.valueAt(weight_ammount);
+                        point_at2 =
+                            Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
                     } else {
                         point_at2 = in->first_segment()->finalPoint();
                     }
                 } else {
-                    if (!ignore_cusp && weight_ammount != NO_POWER) {
-                        if (isNodePointSelected(point_at0)) {
-                            point_at1 = sbasis_in.valueAt(weight_ammount);
-                            point_at1 =
-                                Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
-                        } else {
-                            point_at1 = in->first_segment()->initialPoint();
-                        }
-                        if (isNodePointSelected(point_at3)) {
-                            point_at2 = sbasis_in.valueAt(weight_ammount);
-                            point_at2 =
-                                Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
-                        } else {
-                            point_at2 = in->first_segment()->finalPoint();
-                        }
-                    } else {
-                        point_at1 = in->first_segment()->initialPoint();
-                        point_at2 = in->first_segment()->finalPoint();
-                    }
+                    point_at1 = in->first_segment()->initialPoint();
+                    point_at2 = in->first_segment()->finalPoint();
                 }
             }
             in->reset();
