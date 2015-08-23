@@ -294,6 +294,8 @@ SPObject *SPFactory::createObject(std::string const& id)
         {}
     else if (id == "inkscape:clipboard") // SP node not necessary
         {}
+    else if (id == "inkscape:_templateinfo") // ?
+        {}
     else if (id.empty()) // comments
         {}
     else {
