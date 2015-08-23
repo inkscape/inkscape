@@ -1064,8 +1064,11 @@ gdl_dock_item_paint (GtkWidget      *widget,
                    "dockitem",
                    0, 0, -1, -1);
 
+/* see bug #950556: avoid regression with GTK2/Quartz */
+#if !defined(GDK_WINDOWING_QUARTZ)
     if (GTK_IS_WIDGET(item->_priv->grip))
       gtk_widget_queue_draw (GTK_WIDGET(item->_priv->grip));
+#endif
 }
 
 static gint

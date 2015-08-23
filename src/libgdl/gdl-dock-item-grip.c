@@ -149,6 +149,8 @@ gdl_dock_item_grip_expose (GtkWidget      *widget,
         
     }
   
+/* see bug #950556: may contribute to regression with GTK2/Quartz */
+#if !defined(GDK_WINDOWING_QUARTZ)
    if (gdl_dock_item_or_child_has_focus(grip->item)) { 
 	   
       gtk_paint_focus (gtk_widget_get_style (widget),
@@ -157,6 +159,7 @@ gdl_dock_item_grip_expose (GtkWidget      *widget,
                        &event->area, widget,
                        NULL, 0, 0, -1, -1);
    }
+#endif //GDK_WINDOWING_QUARTZ
 
     return GTK_WIDGET_CLASS (gdl_dock_item_grip_parent_class)->expose_event (widget, event);
 }
