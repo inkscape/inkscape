@@ -57,6 +57,7 @@
 #include "live_effects/lpe-sketch.h"
 #include "live_effects/lpe-spiro.h"
 #include "live_effects/lpe-tangent_to_curve.h"
+#include "live_effects/lpe-transform_2pts.h"
 #include "live_effects/lpe-taperstroke.h"
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-text_label.h"
@@ -150,6 +151,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {PERSPECTIVE_ENVELOPE,  N_("Perspective/Envelope"),        "perspective-envelope"},
     {FILLET_CHAMFER,        N_("Fillet/Chamfer"),          "fillet-chamfer"},
     {INTERPOLATE_POINTS,    N_("Interpolate points"),      "interpolate_points"},
+    {TRANSFORM_2PTS,           N_("Transform by 2 points"),      "transform_2pts"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
@@ -314,6 +316,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case SHOW_HANDLES:
             neweffect = static_cast<Effect*> ( new LPEShowHandles(lpeobj) );
+            break;
+        case TRANSFORM_2PTS:
+            neweffect = static_cast<Effect*> ( new LPETransform2Pts(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New called with invalid patheffect type (%d)", lpenr);
