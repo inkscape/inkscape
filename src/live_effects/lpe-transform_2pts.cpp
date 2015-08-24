@@ -67,6 +67,9 @@ LPETransform2Pts::doOnApply(SPLPEItem const* lpeitem)
     if(!pathvector.empty()) {
         point_a = pathvector.initialPoint();
         point_b = pathvector.finalPoint();
+        if(are_near(point_a,point_b)){
+            point_b = pathvector.back().finalCurve().initialPoint();
+        }
         size_t nnodes = nodeCount(pathvector);
         last_knot.param_set_value(nnodes);
     }
@@ -98,6 +101,7 @@ LPETransform2Pts::doBeforeEffect (SPLPEItem const* lpeitem)
         point_a = pointAtNodeIndex(pathvector,(size_t)first_knot-1);
         point_b = pointAtNodeIndex(pathvector,(size_t)last_knot-1);
         size_t nnodes = nodeCount(pathvector);
+        std::cout << nnodes << "nnodes\n";
         first_knot.param_set_range(1, last_knot-1);
         last_knot.param_set_range(first_knot+1, nnodes);
         from_original_width.param_setValue(false);
