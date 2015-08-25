@@ -127,6 +127,7 @@ enum SPAttributeEnum {
     /* SPGuide */
     SP_ATTR_ORIENTATION,
     SP_ATTR_POSITION,
+    SP_ATTR_INKSCAPE_COLOR,
     /* SPImage */
     SP_ATTR_X,
     SP_ATTR_Y,
