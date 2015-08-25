@@ -39,7 +39,9 @@ SPPaintServer::~SPPaintServer() {
 
 bool SPPaintServer::isSwatch() const
 {
-    return swatch;
+    if( this ) // Protect against assumption that "vector" always exists.
+        return swatch;
+    return( false );
 }
 
 
