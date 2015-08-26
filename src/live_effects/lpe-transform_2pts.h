@@ -49,16 +49,22 @@ protected:
     virtual void addCanvasIndicators(SPLPEItem const *lpeitem, std::vector<Geom::PathVector> &hp_vec);
 
 private:
+    ToggleButtonParam elastic;
+    ToggleButtonParam fixed;
     ToggleButtonParam from_original_width;
     PointParam start;
     PointParam end;
+    ScalarParam fixed_width;
     ScalarParam first_knot;
     ScalarParam last_knot;
+    ScalarParam helper_size;
     bool from_original_width_toggler;
     Geom::Point point_a;
     Geom::Point point_b;
     Geom::PathVector pathvector;
     bool append_path;
+    Geom::Angle previous_angle;
+    Geom::Point previous_start;
     LPETransform2Pts(const LPETransform2Pts&);
     LPETransform2Pts& operator=(const LPETransform2Pts&);
 };
