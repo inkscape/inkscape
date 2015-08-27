@@ -50,8 +50,9 @@ protected:
 
 private:
     ToggleButtonParam elastic;
-    ToggleButtonParam lock_width;
     ToggleButtonParam from_original_width;
+    ToggleButtonParam lock_lenght;
+    ToggleButtonParam lock_angle;
     PointParam start;
     PointParam end;
     ScalarParam first_knot;
@@ -64,7 +65,7 @@ private:
     bool append_path;
     Geom::Angle previous_angle;
     Geom::Point previous_start;
-    double previous_width;
+    double previous_lenght;
     LPETransform2Pts(const LPETransform2Pts&);
     LPETransform2Pts& operator=(const LPETransform2Pts&);
 };
