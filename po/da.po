@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-05-18 12:45+0200\n"
-"PO-Revision-Date: 2015-07-04 17:23+0200\n"
+"PO-Revision-Date: 2015-08-27 00:00+0200\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -304,7 +304,7 @@ msgstr "GNOME-udskrivning"
 #: ../src/extension/internal/filter/paint.h:877
 #: ../src/extension/internal/filter/paint.h:981
 msgid "Image Paint and Draw"
-msgstr ""
+msgstr "Billedmal og -tegn"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Simulate oil painting style"
@@ -480,9 +480,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:203
 #: ../share/filters/filters.svg.h:207 ../share/filters/filters.svg.h:215
 #: ../share/filters/filters.svg.h:223
-#, fuzzy
 msgid "Ridges"
-msgstr "Udtvær kant"
+msgstr "Sprækker"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Bubble effect with refraction and glow"
@@ -560,9 +559,8 @@ msgstr "Hjul"
 #: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:235
 #: ../share/filters/filters.svg.h:271 ../share/filters/filters.svg.h:639
 #: ../share/extensions/pathscatter.inx.h:1
-#, fuzzy
 msgid "Scatter"
-msgstr "Mønster"
+msgstr "Spredning"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Leaves on the ground in Fall, or living foliage"
@@ -2149,98 +2147,96 @@ msgstr "Hæng _knudepunkter på objekter"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
-#, fuzzy
 msgctxt "Palette"
 msgid "Black"
 msgstr "Sort"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "90% Gray"
-msgstr "Ombryd"
+msgstr "90% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:4
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "80% Gray"
-msgstr "Ombryd"
+msgstr "80% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:5
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "70% Gray"
-msgstr "Ombryd"
+msgstr "70% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "60% Gray"
-msgstr "Ombryd"
+msgstr "60% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:7
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "50% Gray"
-msgstr "Ombryd"
+msgstr "50% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "40% Gray"
-msgstr "Ombryd"
+msgstr "40% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:9
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "30% Gray"
-msgstr "Ombryd"
+msgstr "30% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:10
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "20% Gray"
-msgstr "Ombryd"
+msgstr "20% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:11
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "10% Gray"
-msgstr "Ombryd"
+msgstr "10% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:12
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "7.5% Gray"
-msgstr "Ombryd"
+msgstr "7,5% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:13
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "5% Gray"
-msgstr "Ombryd"
+msgstr "5% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:14
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "2.5% Gray"
-msgstr "Ombryd"
+msgstr "2,5% grå"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:15
-#, fuzzy
 msgctxt "Palette"
 msgid "White"
 msgstr "Hvid"
@@ -2255,7 +2251,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:17
 msgctxt "Palette"
 msgid "Red (#FF0000)"
-msgstr ""
+msgstr "Rød (#FF0000)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:18
@@ -2267,13 +2263,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:19
 msgctxt "Palette"
 msgid "Yellow (#FFFF00)"
-msgstr ""
+msgstr "Gul (#FFFF00)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:20
 msgctxt "Palette"
 msgid "Green (#008000)"
-msgstr ""
+msgstr "Grøn (#008000)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:21
@@ -2303,13 +2299,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:25
 msgctxt "Palette"
 msgid "Blue (#0000FF)"
-msgstr ""
+msgstr "Blå (#0000FF)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:26
 msgctxt "Palette"
 msgid "Purple (#800080)"
-msgstr ""
+msgstr "Lilla (#800080)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:27
@@ -3863,7 +3859,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:108
 msgctxt "Symbol"
 msgid "Input/Output"
-msgstr "Inddata/uddata"
+msgstr "Input/output"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:109
@@ -3974,14 +3970,14 @@ msgstr ""
 #: ../share/symbols/symbols.h:125
 msgctxt "Symbol"
 msgid "Connector"
-msgstr "Forbinder"
+msgstr "Tilslutter"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:126
 #, fuzzy
 msgctxt "Symbol"
 msgid "Off-Page Connector"
-msgstr "Forbinder"
+msgstr ""
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:127
@@ -4740,9 +4736,8 @@ msgstr ""
 #: ../src/display/canvas-axonomgrid.cpp:370
 #: ../src/ui/dialog/inkscape-preferences.cpp:779
 #: ../src/widgets/box3d-toolbar.cpp:381
-#, fuzzy
 msgid "Angle Z:"
-msgstr "Vinkel:"
+msgstr "Vinkel Z:"
 
 #: ../src/display/canvas-axonomgrid.cpp:370
 #: ../src/ui/dialog/inkscape-preferences.cpp:779
@@ -6214,9 +6209,8 @@ msgid "Enhanced Metafiles"
 msgstr ""
 
 #: ../src/extension/internal/emf-inout.cpp:3598
-#, fuzzy
 msgid "EMF Output"
-msgstr "DXF-uddata"
+msgstr "EMF-output"
 
 #: ../src/extension/internal/emf-inout.cpp:3600
 #: ../src/extension/internal/wmf-inout.cpp:3174
@@ -6372,9 +6366,9 @@ msgstr "Farve på frem_hævning:"
 #: ../src/extension/internal/filter/transparency.h:287
 #: ../src/extension/internal/filter/transparency.h:349
 #: ../src/ui/dialog/inkscape-preferences.cpp:1751
-#, fuzzy, c-format
+#, c-format
 msgid "Filters"
-msgstr "Fladhed"
+msgstr "Filtre"
 
 #: ../src/extension/internal/filter/bevels.h:66
 msgid "Basic diffuse bevel to use for building textures"
@@ -7816,7 +7810,7 @@ msgstr "Ingen udfyldning"
 #: ../share/extensions/webslicer_create_group.inx.h:2
 #: ../share/extensions/webslicer_export.inx.h:2
 msgid "Options"
-msgstr ""
+msgstr "Indstillinger/Valgmuligheder"
 
 #: ../src/extension/internal/filter/overlays.h:64
 #, fuzzy
@@ -8499,9 +8493,8 @@ msgid "Draw a path which is a grid"
 msgstr "Tegn en sti som er et gitter"
 
 #: ../src/extension/internal/javafx-out.cpp:966
-#, fuzzy
 msgid "JavaFX Output"
-msgstr "LaTeX-uddata"
+msgstr "JavaFX-output"
 
 #: ../src/extension/internal/javafx-out.cpp:971
 msgid "JavaFX (*.fx)"
@@ -8514,7 +8507,7 @@ msgstr "PovRay Raytracer fil"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:95
 msgid "LaTeX Output"
-msgstr "LaTeX-uddata"
+msgstr "LaTeX-output"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:100
 msgid "LaTeX With PSTricks macros (*.tex)"
@@ -8530,7 +8523,7 @@ msgstr "LaTeX udskrivning"
 
 #: ../src/extension/internal/odf.cpp:2142
 msgid "OpenDocument Drawing Output"
-msgstr "OpenDocument Drawing-uddata"
+msgstr "OpenDocument Drawing-output"
 
 #: ../src/extension/internal/odf.cpp:2147
 msgid "OpenDocument drawing (*.odg)"
@@ -8675,7 +8668,7 @@ msgstr "Åbn filer gemt med Adobe Illustrator"
 
 #: ../src/extension/internal/pov-out.cpp:715
 msgid "PovRay Output"
-msgstr "PovRay-uddata"
+msgstr "PovRay-output"
 
 #: ../src/extension/internal/pov-out.cpp:720
 #, fuzzy
@@ -8700,7 +8693,7 @@ msgstr "Inkscapes eget filformat og W3C-standard"
 
 #: ../src/extension/internal/svg.cpp:114
 msgid "SVG Output Inkscape"
-msgstr "SVG-Inkscape-uddata"
+msgstr "SVG-output Inkscape"
 
 #: ../src/extension/internal/svg.cpp:119
 msgid "Inkscape SVG (*.svg)"
@@ -8712,7 +8705,7 @@ msgstr "SVG-format med Inkscape-udvidelser"
 
 #: ../src/extension/internal/svg.cpp:128
 msgid "SVG Output"
-msgstr "SVG-uddata"
+msgstr "SVG-output"
 
 #: ../src/extension/internal/svg.cpp:133
 msgid "Plain SVG (*.svg)"
@@ -8736,7 +8729,7 @@ msgstr "SVG filformat komprimeret med GZip"
 
 #: ../src/extension/internal/svgz.cpp:61 ../src/extension/internal/svgz.cpp:75
 msgid "SVGZ Output"
-msgstr "SVGZ-uddata"
+msgstr "SVGZ-output"
 
 #: ../src/extension/internal/svgz.cpp:67
 msgid "Inkscape's native file format compressed with GZip"
@@ -8816,9 +8809,8 @@ msgid "Windows Metafiles"
 msgstr "Windows Metafile-inddata"
 
 #: ../src/extension/internal/wmf-inout.cpp:3172
-#, fuzzy
 msgid "WMF Output"
-msgstr "DXF-uddata"
+msgstr "WMF-output"
 
 #: ../src/extension/internal/wmf-inout.cpp:3182
 msgid "Map all fill patterns to standard WMF hatches"
@@ -9638,9 +9630,8 @@ msgstr "Omdøb det aktuelle lag"
 #: ../src/ui/widget/page-sizer.cpp:283
 #: ../src/widgets/gradient-selector.cpp:154
 #: ../src/widgets/sp-xmlview-attr-list.cpp:49
-#, fuzzy
 msgid "Name"
-msgstr "Navn:"
+msgstr "Navn"
 
 #: ../src/libgdl/gdl-dock-object.c:126
 msgid "Unique name for identifying the dock object"
@@ -11535,14 +11526,12 @@ msgid "None"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:33 ../src/widgets/arc-toolbar.cpp:319
-#, fuzzy
 msgid "Start"
-msgstr "Start:"
+msgstr "Start"
 
 #: ../src/live_effects/lpe-ruler.cpp:34 ../src/widgets/arc-toolbar.cpp:332
-#, fuzzy
 msgid "End"
-msgstr "Ende:"
+msgstr "Slut"
 
 #: ../src/live_effects/lpe-ruler.cpp:41
 #, fuzzy
@@ -11559,9 +11548,8 @@ msgstr "Afstand mellem lodrette gitterlinjer"
 #: ../share/extensions/interp_att_g.inx.h:9
 #: ../share/extensions/layout_nup.inx.h:3
 #: ../share/extensions/printing_marks.inx.h:11
-#, fuzzy
 msgid "Unit:"
-msgstr "Enheder:"
+msgstr "Enhed:"
 
 #: ../src/live_effects/lpe-ruler.cpp:42 ../src/widgets/ruler.cpp:202
 msgid "Unit"
@@ -12129,7 +12117,7 @@ msgstr "Udskriv Inkscapes versionsnummer"
 
 #: ../src/main.cpp:300
 msgid "Do not use X server (only process files from console)"
-msgstr "Benyt ikke X-serveren (behandl kun filer fra konsollen)"
+msgstr "Brug ikke X-serveren (behandl kun filer fra konsollen)"
 
 #: ../src/main.cpp:305
 msgid "Try to use X server (even if $DISPLAY is not set)"
@@ -12825,9 +12813,8 @@ msgid "A related resource"
 msgstr "endeknudepunkt"
 
 #: ../src/rdf.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1870
-#, fuzzy
 msgid "Language:"
-msgstr "Sprog"
+msgstr "Sprog:"
 
 #: ../src/rdf.cpp:268
 msgid "A language of the resource"
@@ -13055,7 +13042,7 @@ msgstr "Indsæt størrelse separat"
 
 #: ../src/selection-chemistry.cpp:1335
 msgid "Select <b>object(s)</b> to move to the layer above."
-msgstr "Markér <b>objekt(er)</b> at flytte til laget ovenover."
+msgstr "Markér <b>objekt(er)</b> at flytte til overliggende lag."
 
 #: ../src/selection-chemistry.cpp:1360
 msgid "Raise to next layer"
@@ -14237,9 +14224,12 @@ msgstr "about.svg"
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:426
-#, fuzzy
 msgid "translator-credits"
-msgstr "_Oversættere"
+msgstr ""
+"Keld Simonsen (keld@dkuug.dk)\n"
+"Kjartan Maraas (kmaraas@online.no)\n"
+"Rune Rønde Laursen (runerl@skjoldhoej.dk)\n"
+"scootergrisen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:170
 #: ../src/ui/dialog/align-and-distribute.cpp:847
@@ -15276,6 +15266,7 @@ msgstr "<small>Tilfældiggør:</small>"
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
+"Farve: <b>%s</b>; <b>Klik</b> for at vælge udfyldning, <b>Skift+klik</b> for at bestryge"
 
 #: ../src/ui/dialog/color-item.cpp:505
 #, fuzzy
@@ -16431,7 +16422,7 @@ msgstr "Effe_kter"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1818
 #, fuzzy
 msgid "Connections"
-msgstr "Forbinder"
+msgstr "Tilslutninger"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1956
 msgid "Remove filter primitive"
@@ -16952,9 +16943,8 @@ msgid "Find objects by their content or properties (exact or partial match)"
 msgstr "Find objekter ud fra deres tekstindhold (nøjagtig eller delvis match)"
 
 #: ../src/ui/dialog/find.cpp:73
-#, fuzzy
 msgid "R_eplace:"
-msgstr "_Slip"
+msgstr "_Erstat:"
 
 #: ../src/ui/dialog/find.cpp:73
 #, fuzzy
@@ -16963,7 +16953,7 @@ msgstr "0 (gennemsigtig)"
 
 #: ../src/ui/dialog/find.cpp:75
 msgid "_All"
-msgstr ""
+msgstr "_Alt"
 
 #: ../src/ui/dialog/find.cpp:75
 #, fuzzy
@@ -16971,16 +16961,14 @@ msgid "Search in all layers"
 msgstr "Markér i alle lag"
 
 #: ../src/ui/dialog/find.cpp:76
-#, fuzzy
 msgid "Current _layer"
-msgstr "Aktuelt lag"
+msgstr "Aktuelt _lag"
 
 #: ../src/ui/dialog/find.cpp:76
 msgid "Limit search to the current layer"
 msgstr "Begræns søgning til det aktuelle lag"
 
 #: ../src/ui/dialog/find.cpp:77
-#, fuzzy
 msgid "Sele_ction"
 msgstr "Markering"
 
@@ -16994,27 +16982,24 @@ msgid "Search in text objects"
 msgstr "Søg efter tekstobjekter"
 
 #: ../src/ui/dialog/find.cpp:79
-#, fuzzy
 msgid "_Properties"
-msgstr "Linke_genskaber"
+msgstr "E_genskaber"
 
 #: ../src/ui/dialog/find.cpp:79
 msgid "Search in object properties, styles, attributes and IDs"
 msgstr ""
 
 #: ../src/ui/dialog/find.cpp:81
-#, fuzzy
 msgid "Search in"
-msgstr "Søg efter grupper"
+msgstr "Søg i"
 
 #: ../src/ui/dialog/find.cpp:82
 msgid "Scope"
-msgstr ""
+msgstr "Område"
 
 #: ../src/ui/dialog/find.cpp:84
-#, fuzzy
 msgid "Case sensiti_ve"
-msgstr "Gribefølsomhed:"
+msgstr "_Versalfølsom"
 
 #: ../src/ui/dialog/find.cpp:84
 msgid "Match upper/lower case"
@@ -17048,9 +17033,8 @@ msgid "Include locked objects in search"
 msgstr "Inkludér låste objekter i søgningen"
 
 #: ../src/ui/dialog/find.cpp:89
-#, fuzzy
 msgid "General"
-msgstr "<b>Generelt</b>"
+msgstr "Generelt"
 
 #: ../src/ui/dialog/find.cpp:91
 #, fuzzy
@@ -17102,9 +17086,8 @@ msgid "Search fonts"
 msgstr "Søg efter kloner"
 
 #: ../src/ui/dialog/find.cpp:96
-#, fuzzy
 msgid "Properties"
-msgstr "Linke_genskaber"
+msgstr "Egenskaber"
 
 #: ../src/ui/dialog/find.cpp:98
 msgid "All types"
@@ -17199,9 +17182,8 @@ msgid "Search offset objects"
 msgstr "Søg efter forskudte objekter"
 
 #: ../src/ui/dialog/find.cpp:112
-#, fuzzy
 msgid "Object types"
-msgstr "Objekt"
+msgstr "Objekttyper"
 
 #: ../src/ui/dialog/find.cpp:115
 msgid "_Find"
@@ -17447,9 +17429,8 @@ msgid "Ogham"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:91
-#, fuzzy
 msgid "Old Italic"
-msgstr "Kursiv"
+msgstr "Gammel kursiv"
 
 #: ../src/ui/dialog/glyphs.cpp:92 ../src/ui/dialog/glyphs.cpp:175
 msgid "Oriya"
@@ -18579,12 +18560,12 @@ msgstr "Indstillinger for overgange"
 #: ../src/ui/dialog/inkscape-preferences.cpp:373
 #, fuzzy
 msgid "Show transform handles for single nodes"
-msgstr "Vis Bezier-håndtag på markerede knudepunkter"
+msgstr "Vis Bezierhåndtag på markerede knudepunkter"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:374
 #, fuzzy
 msgid "Show transform handles even when only a single node is selected"
-msgstr "Vis Bezier-håndtag på markerede knudepunkter"
+msgstr "Vis Bezierhåndtag på markerede knudepunkter"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:375
 #, fuzzy
@@ -18621,7 +18602,7 @@ msgstr "Mål"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "Ignore first and last points"
-msgstr ""
+msgstr "Ignorer første og sidste punkt"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:393
 msgid ""
@@ -18805,7 +18786,7 @@ msgstr "Pipette"
 #. Connector
 #: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid "Connector"
-msgstr "Forbinder"
+msgstr "Tilslutter"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
 msgid "If on, connector attachment points will not be shown for text objects"
@@ -19104,9 +19085,8 @@ msgid "Vietnamese (vi)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:568
-#, fuzzy
 msgid "Language (requires restart):"
-msgstr "Om dialoger skal have en lukkeknap (kræver genstart)"
+msgstr "Sprog (kræver genstart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:569
 msgid "Set the language for menus and number formats"
@@ -19131,9 +19111,8 @@ msgid "Smaller"
 msgstr "lille"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:576
-#, fuzzy
 msgid "Toolbox icon size:"
-msgstr "Værktøjskontrollinjen"
+msgstr "Værktøjskasse ikonstørrelse:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:577
 #, fuzzy
@@ -19141,9 +19120,8 @@ msgid "Set the size for the tool icons (requires restart)"
 msgstr "Om dialoger skal have en lukkeknap (kræver genstart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:580
-#, fuzzy
 msgid "Control bar icon size:"
-msgstr "Værktøjskontrollinjen"
+msgstr "Kontrollinje ikonstørrelse:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:581
 #, fuzzy
@@ -19152,9 +19130,8 @@ msgid ""
 msgstr "Om dialoger skal have en lukkeknap (kræver genstart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:584
-#, fuzzy
 msgid "Secondary toolbar icon size:"
-msgstr "Værktøjskontrollinjen"
+msgstr "Sekundær værktøjslinje ikonstørrelse:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:585
 #, fuzzy
@@ -19178,9 +19155,8 @@ msgid "Clear list"
 msgstr "Ryd værdier"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:598
-#, fuzzy
 msgid "Maximum documents in Open _Recent:"
-msgstr "Maksimale nylige dokumenter:"
+msgstr "Højeste antal dokumente_r i Åbn seneste:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:599
 #, fuzzy
@@ -19549,7 +19525,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:843
 msgid "Input/Output"
-msgstr "Inddata/uddata"
+msgstr "Input/output"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:846
 msgid "Use current directory for \"Save As ...\""
@@ -19565,7 +19541,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:850
 msgid "Add label comments to printing output"
-msgstr "Tilføj etiketkommentarer til udskrivning-uddata"
+msgstr "Tilføj etiketkommentarer til udskrivningsoutput"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:852
 msgid ""
@@ -19656,7 +19632,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:877
 msgid "Input devices"
-msgstr "Inddata-enheder"
+msgstr "Inputenheder"
 
 #. SVG output options
 #: ../src/ui/dialog/inkscape-preferences.cpp:880
@@ -19865,7 +19841,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:946
 msgid "SVG output"
-msgstr "SVG-uddata"
+msgstr "SVG-output"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
 #: ../src/ui/dialog/inkscape-preferences.cpp:952
@@ -19996,9 +19972,8 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:1046
 #: ../src/ui/widget/color-icc-selector.cpp:395
 #: ../src/ui/widget/color-icc-selector.cpp:674
-#, fuzzy
 msgid "<none>"
-msgstr "ingen"
+msgstr "<ingen>"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 msgid "Color management"
@@ -20824,9 +20799,8 @@ msgstr "Gengivelse"
 #. Note: /options/bitmapoversample removed with Cairo renderer
 #: ../src/ui/dialog/inkscape-preferences.cpp:1434 ../src/verbs.cpp:156
 #: ../src/widgets/calligraphy-toolbar.cpp:626
-#, fuzzy
 msgid "Edit"
-msgstr "_Redigér"
+msgstr "Redigér"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1435
 msgid "Automatically reload bitmaps"
@@ -20932,7 +20906,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1497
 msgid "Shortcut file:"
-msgstr ""
+msgstr "Genvejsfil:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1500
 #: ../src/ui/dialog/template-load-tab.cpp:48
@@ -20941,7 +20915,7 @@ msgstr "Søg:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1512
 msgid "Shortcut"
-msgstr ""
+msgstr "Genvej"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1513
 #: ../src/ui/widget/page-sizer.cpp:285
@@ -20953,9 +20927,8 @@ msgstr "Beskrivelse"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:699
 #: ../src/ui/dialog/tracedialog.cpp:813
 #: ../src/ui/widget/preferences-widget.cpp:745
-#, fuzzy
 msgid "Reset"
-msgstr " _Nulstil "
+msgstr "Nulstil"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1568
 msgid ""
@@ -20964,18 +20937,16 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1572
-#, fuzzy
 msgid "Import ..."
-msgstr "_Importér..."
+msgstr "Importér ..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1572
 msgid "Import custom keyboard shortcuts from a file"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1575
-#, fuzzy
 msgid "Export ..."
-msgstr "_Eksportér punktbillede..."
+msgstr "Eksportér ..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1575
 #, fuzzy
@@ -21001,9 +20972,8 @@ msgid "Set the main spell check language"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1874
-#, fuzzy
 msgid "Second language:"
-msgstr "Sprog"
+msgstr "Andet sprog:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1875
 msgid ""
@@ -21012,9 +20982,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1878
-#, fuzzy
 msgid "Third language:"
-msgstr "Sprog"
+msgstr "Tredje sprog:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1879
 msgid ""
@@ -21024,7 +20993,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1881
 msgid "Ignore words with digits"
-msgstr ""
+msgstr "Ignorer ord med tal"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1883
 msgid "Ignore words containing digits, such as \"R2D2\""
@@ -21032,7 +21001,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1885
 msgid "Ignore words in ALL CAPITALS"
-msgstr ""
+msgstr "Ignorer ord med STORE BOGSTAVER"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1887
 msgid "Ignore words in all capitals, such as \"IUPAC\""
@@ -21539,11 +21508,11 @@ msgstr "I brug"
 #. More typical usage is to call this memory "free" rather than "slack".
 #: ../src/ui/dialog/memory.cpp:100
 msgid "Slack"
-msgstr "Fri"
+msgstr "Ledig"
 
 #: ../src/ui/dialog/memory.cpp:101
 msgid "Total"
-msgstr "Total"
+msgstr "Samlet"
 
 #: ../src/ui/dialog/memory.cpp:141 ../src/ui/dialog/memory.cpp:147
 #: ../src/ui/dialog/memory.cpp:154 ../src/ui/dialog/memory.cpp:186
@@ -21556,7 +21525,7 @@ msgstr "Kombineret"
 
 #: ../src/ui/dialog/memory.cpp:209
 msgid "Recalculate"
-msgstr "Genberegn"
+msgstr "Beregn igen"
 
 #: ../src/ui/dialog/messages.cpp:47
 #, fuzzy
@@ -21622,14 +21591,12 @@ msgstr "Optegn"
 #: ../src/ui/dialog/object-properties.cpp:399
 #: ../src/ui/dialog/object-properties.cpp:470
 #: ../src/ui/dialog/object-properties.cpp:477
-#, fuzzy
 msgid "_ID:"
-msgstr "_ID: "
+msgstr "_ID:"
 
 #: ../src/ui/dialog/object-properties.cpp:60
-#, fuzzy
 msgid "_Title:"
-msgstr "Titel"
+msgstr "_Titel:"
 
 #: ../src/ui/dialog/object-properties.cpp:61
 #, fuzzy
@@ -22353,9 +22320,8 @@ msgid "Add font"
 msgstr "Tilføj lag"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:913 ../src/ui/dialog/text-edit.cpp:69
-#, fuzzy
 msgid "_Font"
-msgstr "Skrifttype"
+msgstr "Skri_fttype"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:921
 #, fuzzy
@@ -22490,7 +22456,7 @@ msgstr ""
 
 #: ../src/ui/dialog/template-widget.cpp:37
 msgid "More info"
-msgstr "Mere info"
+msgstr "Flere oplysninger"
 
 #: ../src/ui/dialog/template-widget.cpp:39
 msgid "no template selected"
@@ -22517,12 +22483,11 @@ msgstr ""
 
 #: ../src/ui/dialog/text-edit.cpp:72
 msgid "_Variants"
-msgstr ""
+msgstr "_Varianters"
 
 #: ../src/ui/dialog/text-edit.cpp:73
-#, fuzzy
 msgid "Set as _default"
-msgstr "Vælg som standard"
+msgstr "Anven_d som standard"
 
 #: ../src/ui/dialog/text-edit.cpp:87
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
@@ -24330,7 +24295,6 @@ msgid "Visible Colors"
 msgstr "Farver:"
 
 #: ../src/ui/tools/flood-tool.cpp:102
-#, fuzzy
 msgctxt "Flood autogap"
 msgid "None"
 msgstr "Ingen"
@@ -24821,13 +24785,12 @@ msgid "Click selection to toggle scale/rotation handles"
 msgstr "Klik på markeringen for at skifte skalerings- eller roteringshåndtag"
 
 #: ../src/ui/tools/select-tool.cpp:161
-#, fuzzy
 msgid ""
 "No objects selected. Click, Shift+click, Alt+scroll mouse on top of objects, "
 "or drag around objects to select."
 msgstr ""
-"Ingen objekter markeret. Klik, Shift+klik, eller træk omkring objekterne for "
-"at markere."
+"Ingen objekter markeret. Klik, Skift+klik, Alt+rul musen oven på et objekt, "
+"eller træk omkring objekter for at markere."
 
 #: ../src/ui/tools/select-tool.cpp:214
 msgid "Move canceled."
@@ -25040,13 +25003,12 @@ msgid "Insert no-break space"
 msgstr "Ikke-brudt mellemrum"
 
 #: ../src/ui/tools/text-tool.cpp:831
-#, fuzzy
 msgid "Make bold"
-msgstr "Gør hel"
+msgstr "Gør fed"
 
 #: ../src/ui/tools/text-tool.cpp:848
 msgid "Make italic"
-msgstr ""
+msgstr "Gør kursiv"
 
 #: ../src/ui/tools/text-tool.cpp:886
 #, fuzzy
@@ -25783,7 +25745,6 @@ msgid "Border"
 msgstr "Rækkefølge"
 
 #: ../src/ui/widget/panel.cpp:208
-#, fuzzy
 msgctxt "Swatches border"
 msgid "None"
 msgstr "Ingen"
@@ -25866,9 +25827,8 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:131
 #: ../src/ui/widget/style-swatch.cpp:127
-#, fuzzy
 msgid "Fill:"
-msgstr "Udfyldning"
+msgstr "Udfyldning:"
 
 #: ../src/ui/widget/selected-style.cpp:133
 msgid "O:"
@@ -26250,12 +26210,12 @@ msgstr "R-overgang"
 #: ../src/ui/widget/style-swatch.cpp:312
 #, c-format
 msgid "Fill: %06x/%.3g"
-msgstr ""
+msgstr "Udfyldning: %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:314
 #, c-format
 msgid "Stroke: %06x/%.3g"
-msgstr ""
+msgstr "Bestrygning: %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:319
 #, fuzzy
@@ -26325,9 +26285,8 @@ msgstr[1] ""
 "adskille"
 
 #: ../src/verbs.cpp:137
-#, fuzzy
 msgid "File"
-msgstr "_Fil"
+msgstr "Fil"
 
 #: ../src/verbs.cpp:232 ../share/extensions/interp_att_g.inx.h:22
 #, fuzzy
@@ -26932,7 +26891,7 @@ msgstr "Markér alle objekter eller alle knudepunkter"
 
 #: ../src/verbs.cpp:2496
 msgid "Select All in All La_yers"
-msgstr "Markér alle i alle la_g"
+msgstr "Markér alt i alle la_g"
 
 #: ../src/verbs.cpp:2497
 msgid "Select all objects in all visible and unlocked layers"
@@ -27334,7 +27293,7 @@ msgstr "Omdøb det aktuelle lag"
 
 #: ../src/verbs.cpp:2616
 msgid "Switch to Layer Abov_e"
-msgstr "Skift til laget ov_enfor"
+msgstr "Skift til ov_erliggende lag"
 
 #: ../src/verbs.cpp:2617
 msgid "Switch to the layer above the current"
@@ -27342,7 +27301,7 @@ msgstr "Skift til laget ovenover det aktuelle"
 
 #: ../src/verbs.cpp:2618
 msgid "Switch to Layer Belo_w"
-msgstr "Skift til laget neden_under"
+msgstr "Skift til _underliggende lag"
 
 #: ../src/verbs.cpp:2619
 msgid "Switch to the layer below the current"
@@ -27350,7 +27309,7 @@ msgstr "Skift til laget under det aktuelle"
 
 #: ../src/verbs.cpp:2620
 msgid "Move Selection to Layer Abo_ve"
-msgstr "Flyt markering til laget oveno_ver"
+msgstr "Flyt markering til o_verliggende lag"
 
 #: ../src/verbs.cpp:2621
 msgid "Move selection to the layer above the current"
@@ -27358,7 +27317,7 @@ msgstr "Flyt markering til laget nedenunder det aktuelle"
 
 #: ../src/verbs.cpp:2622
 msgid "Move Selection to Layer Bel_ow"
-msgstr "Flyt mark til _laget nedenunder"
+msgstr "Flyt markering til _underliggende lag"
 
 #: ../src/verbs.cpp:2623
 msgid "Move selection to the layer below the current"
@@ -27643,7 +27602,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2703
 msgid "Tweak objects by sculpting or painting"
-msgstr "Tweak objekter ved at forme eller male"
+msgstr "Tweak objekter ved formning eller maling"
 
 #: ../src/verbs.cpp:2704
 #, fuzzy
@@ -27722,7 +27681,7 @@ msgstr "Pen"
 
 #: ../src/verbs.cpp:2719
 msgid "Draw Bezier curves and straight lines"
-msgstr "Tegn bezier-kurver og rette linjer"
+msgstr "Tegn bezierkurver og rette linjer"
 
 #: ../src/verbs.cpp:2720
 #, fuzzy
@@ -27780,7 +27739,7 @@ msgstr "Pipette"
 #: ../src/verbs.cpp:2734
 msgctxt "ContextVerb"
 msgid "Connector"
-msgstr "Forbinder"
+msgstr "Tilslutter"
 
 #: ../src/verbs.cpp:2735
 msgid "Create diagram connectors"
@@ -28051,7 +28010,7 @@ msgstr "Vis eller skjul lærredets rullepaneler"
 
 #: ../src/verbs.cpp:2794
 msgid "Page _Grid"
-msgstr "Side _gitter"
+msgstr "Side_gitter"
 
 #: ../src/verbs.cpp:2794
 msgid "Show or hide the page grid"
@@ -28074,15 +28033,15 @@ msgstr "Forhåndsvis"
 
 #: ../src/verbs.cpp:2797
 msgid "_Commands Bar"
-msgstr "_Kommandoværktøjslinje"
+msgstr "_Kommandolinje"
 
 #: ../src/verbs.cpp:2797
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr "Vis eller skjul kommandoværktøjslinjen (under menuen)"
+msgstr "Vis eller skjul kommandolinjen (under menuen)"
 
 #: ../src/verbs.cpp:2798
 msgid "Sn_ap Controls Bar"
-msgstr "Fastgør værktøjslinjen"
+msgstr "F_astgørelseskontrollinje"
 
 #: ../src/verbs.cpp:2798
 #, fuzzy
@@ -28396,7 +28355,7 @@ msgstr "Vis og redigér dokumentets XML-træ"
 
 #: ../src/verbs.cpp:2887
 msgid "_Find/Replace..."
-msgstr "_Find/Erstat ..."
+msgstr "_Find/erstat ..."
 
 #: ../src/verbs.cpp:2888
 msgid "Find objects in document"
@@ -28458,11 +28417,11 @@ msgstr "Redigér id, status for låsning og synlighed og andre objektegenskaber"
 
 #: ../src/verbs.cpp:2903
 msgid "_Input Devices..."
-msgstr "_Inddata-enheder ..."
+msgstr "_Inputenheder ..."
 
 #: ../src/verbs.cpp:2904
 msgid "Configure extended input devices, such as a graphics tablet"
-msgstr "Indstil yderligere inddata-enheder som f.eks. en tegneplade"
+msgstr "Indstil yderligere inputenheder som f.eks. en tegneplade"
 
 #: ../src/verbs.cpp:2905
 msgid "_Extensions..."
@@ -28694,7 +28653,7 @@ msgstr "Vis alle"
 
 #: ../src/verbs.cpp:2974
 msgid "Unhide All in All Layers"
-msgstr "Vis alle i alle lag"
+msgstr "Vis alt i alle lag"
 
 #: ../src/verbs.cpp:2978
 msgid "Link an ICC color profile"
@@ -28861,9 +28820,8 @@ msgid "Angle in Y direction"
 msgstr ""
 
 #: ../src/widgets/box3d-toolbar.cpp:342
-#, fuzzy
 msgid "Angle Y:"
-msgstr "Vinkel:"
+msgstr "Vinkel Y:"
 
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/box3d-toolbar.cpp:344
@@ -29182,7 +29140,7 @@ msgstr ""
 
 #: ../src/widgets/calligraphy-toolbar.cpp:579
 msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr "Benyt inddata-enhedens tryk til at ændre pennens bredde"
+msgstr "Brug inputenhedens tryk til at ændre pennens bredde"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:591
 #, fuzzy
@@ -29191,7 +29149,7 @@ msgstr "Titel"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:592
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr "Benyt inddata-enhedens hældning til at ændre på pennespidsens vinkel"
+msgstr "Brug inputenhedens hældning til at ændre på pennespidsens vinkel"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:607
 #, fuzzy
@@ -29276,9 +29234,8 @@ msgid "Graph"
 msgstr "Ombryd"
 
 #: ../src/widgets/connector-toolbar.cpp:378
-#, fuzzy
 msgid "Connector Length"
-msgstr "Forbinder"
+msgstr "Tilslutterlængde"
 
 #: ../src/widgets/connector-toolbar.cpp:378
 msgid "Length:"
@@ -29536,14 +29493,13 @@ msgstr "Mønsterstreg"
 
 #: ../src/widgets/font-selector.cpp:120 ../src/widgets/text-toolbar.cpp:953
 #: ../src/widgets/text-toolbar.cpp:1265
-#, fuzzy
 msgid "Font size"
-msgstr "Skrifttypestørrelse:"
+msgstr "Skrifttypestørrelse"
 
 #. Family frame
 #: ../src/widgets/font-selector.cpp:134
 msgid "Font family"
-msgstr "Skrifttype"
+msgstr "Skrifttypefamilie"
 
 #. Style frame
 #: ../src/widgets/font-selector.cpp:179
@@ -30026,9 +29982,8 @@ msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:483 ../src/widgets/pencil-toolbar.cpp:278
-#, fuzzy
 msgid "Smoothing:"
-msgstr "Udjævnet"
+msgstr "Udjævning:"
 
 #: ../src/widgets/node-toolbar.cpp:341
 #, fuzzy
@@ -30203,12 +30158,12 @@ msgstr "Tegn håndtag"
 #: ../src/widgets/node-toolbar.cpp:511
 #, fuzzy
 msgid "Show transformation handles for selected nodes"
-msgstr "Vis Bezier-håndtag på markerede knudepunkter"
+msgstr "Vis Bezierhåndtag på markerede knudepunkter"
 
 #: ../src/widgets/node-toolbar.cpp:522
 #, fuzzy
 msgid "Show Bezier handles of selected nodes"
-msgstr "Vis Bezier-håndtag på markerede knudepunkter"
+msgstr "Vis Bezierhåndtag på markerede knudepunkter"
 
 #: ../src/widgets/node-toolbar.cpp:532
 #, fuzzy
@@ -30483,9 +30438,8 @@ msgid "Last applied"
 msgstr ""
 
 #: ../src/widgets/pencil-toolbar.cpp:190 ../src/widgets/pencil-toolbar.cpp:191
-#, fuzzy
 msgid "Shape:"
-msgstr "Figurer"
+msgstr "Form:"
 
 #: ../src/widgets/pencil-toolbar.cpp:190
 msgid "Shape of new paths drawn by this tool"
@@ -30501,9 +30455,8 @@ msgid "(few nodes, smooth)"
 msgstr "Udjævn markerede knudepunkter"
 
 #: ../src/widgets/pencil-toolbar.cpp:278
-#, fuzzy
 msgid "Smoothing: "
-msgstr "Udjævnet"
+msgstr "Udjævning: "
 
 #: ../src/widgets/pencil-toolbar.cpp:279
 msgid "How much smoothing (simplifying) is applied to the line"
@@ -30913,9 +30866,8 @@ msgid "Focus"
 msgstr "spids"
 
 #: ../src/widgets/spray-toolbar.cpp:132
-#, fuzzy
 msgid "Focus:"
-msgstr "Kilde"
+msgstr "Fokus:"
 
 #: ../src/widgets/spray-toolbar.cpp:132
 msgid "0 to spray a spot; increase to enlarge the ring radius"
@@ -30993,7 +30945,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Use the pressure of the input device to alter the amount of sprayed objects"
-msgstr "Benyt inddata-enhedens tryk til at ændre pennens bredde"
+msgstr "Brug inputenhedens tryk til at ændre pennens bredde"
 
 #: ../src/widgets/spray-toolbar.cpp:235
 #, fuzzy
@@ -31002,11 +30954,11 @@ msgstr "Udskrivningsdestination"
 
 #: ../src/widgets/spray-toolbar.cpp:238
 msgid "Rotation"
-msgstr "Rotering"
+msgstr "Rotation"
 
 #: ../src/widgets/spray-toolbar.cpp:238
 msgid "Rotation:"
-msgstr "Rotering:"
+msgstr "Rotation:"
 
 #: ../src/widgets/spray-toolbar.cpp:240
 #, no-c-format
@@ -31394,9 +31346,8 @@ msgid "Text: Change orientation"
 msgstr "Sideorientering:"
 
 #: ../src/widgets/text-toolbar.cpp:1216
-#, fuzzy
 msgid "Font Family"
-msgstr "Skrifttype"
+msgstr "Skrifttypefamilie"
 
 #: ../src/widgets/text-toolbar.cpp:1217
 #, fuzzy
@@ -31847,9 +31798,8 @@ msgid "Force"
 msgstr "Kilde"
 
 #: ../src/widgets/tweak-toolbar.cpp:145
-#, fuzzy
 msgid "Force:"
-msgstr "Kilde"
+msgstr "Tryk:"
 
 #: ../src/widgets/tweak-toolbar.cpp:145
 msgid "The force of the tweak action"
@@ -32047,7 +31997,7 @@ msgstr ""
 #: ../src/widgets/tweak-toolbar.cpp:373
 #, fuzzy
 msgid "Use the pressure of the input device to alter the force of tweak action"
-msgstr "Benyt inddata-enhedens tryk til at ændre pennens bredde"
+msgstr "Brug inputenhedens tryk til at ændre pennens bredde"
 
 #: ../share/extensions/convert2dashes.py:100
 msgid ""
@@ -33018,7 +32968,7 @@ msgstr "Antal trin"
 #: ../share/extensions/straightseg.inx.h:4
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
 msgid "Modify Path"
-msgstr "Ændr Sti"
+msgstr "Ændr sti"
 
 #: ../share/extensions/ai_input.inx.h:1
 #, fuzzy
@@ -33807,7 +33757,7 @@ msgstr "Desktop-CNC-fræser (*.DXF)"
 
 #: ../share/extensions/dxf_output.inx.h:1
 msgid "DXF Output"
-msgstr "DXF-uddata"
+msgstr "DXF-output"
 
 #: ../share/extensions/dxf_output.inx.h:2
 #, fuzzy
@@ -34436,9 +34386,8 @@ msgstr ""
 #: ../share/extensions/gcodetools_graffiti.inx.h:25
 #: ../share/extensions/gcodetools_lathe.inx.h:26
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:15
-#, fuzzy
 msgid "Minimum arc radius:"
-msgstr "Indre radius:"
+msgstr "Inderste radius:"
 
 #: ../share/extensions/gcodetools_area.inx.h:34
 #: ../share/extensions/gcodetools_engraving.inx.h:12
@@ -34809,7 +34758,7 @@ msgstr "Forskydningssti"
 #: ../share/extensions/gcodetools_lathe.inx.h:10
 #, fuzzy
 msgid "Lathe modify path"
-msgstr "Ændr Sti"
+msgstr "Ændr sti"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:11
 msgid ""
@@ -35429,11 +35378,11 @@ msgstr "mellem"
 
 #: ../share/extensions/hershey.inx.h:11
 msgid "Serif medium italic"
-msgstr ""
+msgstr "Serif medium kursiv"
 
 #: ../share/extensions/hershey.inx.h:12
 msgid "Serif bold italic"
-msgstr ""
+msgstr "Serif fed kursiv"
 
 #: ../share/extensions/hershey.inx.h:13
 #, fuzzy
@@ -35606,9 +35555,8 @@ msgid "Import an HP Graphics Language file"
 msgstr "XFIG grafikfil (*.fig)"
 
 #: ../share/extensions/hpgl_output.inx.h:1
-#, fuzzy
 msgid "HPGL Output"
-msgstr "SVG-uddata"
+msgstr "HPGL-output"
 
 #: ../share/extensions/hpgl_output.inx.h:2
 msgid ""
@@ -35833,7 +35781,7 @@ msgstr "http://wiki.inkscape.org/wiki/index.php/FAQ"
 
 #: ../share/extensions/inkscape_help_keys.inx.h:1
 msgid "Keys and Mouse Reference"
-msgstr "Tastatur- og musegeveje"
+msgstr "Tastatur- og musegenveje"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_keys.inx.h:3
@@ -37202,7 +37150,7 @@ msgstr ""
 #: ../share/extensions/plotter.inx.h:3
 #, fuzzy
 msgid "Connection Settings "
-msgstr "Forbinder"
+msgstr "Tilslutningsindstillinger "
 
 #: ../share/extensions/plotter.inx.h:4
 #, fuzzy
@@ -37268,9 +37216,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:19
-#, fuzzy
 msgid "Command language:"
-msgstr "Sprog"
+msgstr "Kommandosprog:"
 
 #: ../share/extensions/plotter.inx.h:20
 msgid "The command language to use (Default: HPGL)"
@@ -37993,7 +37940,7 @@ msgstr ""
 
 #: ../share/extensions/scour.inx.h:1
 msgid "Optimized SVG Output"
-msgstr "Optimeret SVG-uddata"
+msgstr "Optimeret SVG-output"
 
 #: ../share/extensions/scour.inx.h:3
 #, fuzzy
@@ -38336,9 +38283,8 @@ msgid "Envelope"
 msgstr "Indyldning"
 
 #: ../share/extensions/svg2fxg.inx.h:1
-#, fuzzy
 msgid "FXG Output"
-msgstr "SVG-uddata"
+msgstr "FXG-output"
 
 #: ../share/extensions/svg2fxg.inx.h:2
 #, fuzzy
@@ -38350,9 +38296,8 @@ msgid "Adobe's XML Graphics file format"
 msgstr ""
 
 #: ../share/extensions/svg2xaml.inx.h:1
-#, fuzzy
 msgid "XAML Output"
-msgstr "DXF-uddata"
+msgstr "XAML-output"
 
 #: ../share/extensions/svg2xaml.inx.h:2
 msgid "Silverlight compatible XAML"
@@ -38565,9 +38510,8 @@ msgid "Load only the first 30 glyphs (Recommended)"
 msgstr ""
 
 #: ../share/extensions/synfig_output.inx.h:1
-#, fuzzy
 msgid "Synfig Output"
-msgstr "SVG-uddata"
+msgstr ""
 
 #: ../share/extensions/synfig_output.inx.h:2
 msgid "Synfig Animation (*.sif)"
