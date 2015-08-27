@@ -38,9 +38,9 @@ public:
     void updateIndex();
 
     size_t nodeCount(Geom::PathVector pathvector) const;
-    
+
     Geom::Point pointAtNodeIndex(Geom::PathVector pathvector, size_t index) const;
-    
+
     Geom::Path pathAtNodeIndex(Geom::PathVector pathvector, size_t index) const;
 
     void reset();
@@ -50,11 +50,10 @@ protected:
 
 private:
     ToggleButtonParam elastic;
-    ToggleButtonParam fixed;
+    ToggleButtonParam lock_width;
     ToggleButtonParam from_original_width;
     PointParam start;
     PointParam end;
-    ScalarParam fixed_width;
     ScalarParam first_knot;
     ScalarParam last_knot;
     ScalarParam helper_size;
@@ -65,6 +64,7 @@ private:
     bool append_path;
     Geom::Angle previous_angle;
     Geom::Point previous_start;
+    double previous_width;
     LPETransform2Pts(const LPETransform2Pts&);
     LPETransform2Pts& operator=(const LPETransform2Pts&);
 };
