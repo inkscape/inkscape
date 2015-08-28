@@ -9,7 +9,7 @@
  */
 
 #ifndef SEEN_COLOR_ENTRY_H
-#define SEEN_COLOR_ENTRY_H_
+#define SEEN_COLOR_ENTRY_H
 
 #include <gtkmm/entry.h>
 #include "ui/selected-color.h"
