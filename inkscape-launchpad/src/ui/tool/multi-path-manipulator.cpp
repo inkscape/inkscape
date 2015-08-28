@@ -683,13 +683,14 @@ bool MultiPathManipulator::event(Inkscape::UI::Tools::ToolBase *event_context, G
                 //if the trace is bspline ( mode 2)
                 if(mode==2){
                     //  is this correct ?
-                    if(del_preserves_shape ^ held_control(event->key))
+                    if(del_preserves_shape ^ held_control(event->key)){
                         deleteNodes(false);
-                    else
+                    } else {
                         deleteNodes(true);
-                }
-                else
+                    }
+                } else {
                     deleteNodes(del_preserves_shape ^ held_control(event->key));
+                }
 
                 // Delete any selected gradient nodes as well
                 event_context->deleteSelectedDrag(held_control(event->key));

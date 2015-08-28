@@ -1640,7 +1640,7 @@ void SPDocument::importDefs(SPDocument *source)
     prevent_id_clashes(source, this);
     
     for (std::vector<Inkscape::XML::Node const *>::iterator defs = defsNodes.begin(); defs != defsNodes.end(); ++defs) {
-        importDefsNode(source, const_cast<Inkscape::XML::Node *>(*defs), target_defs);
+       importDefsNode(source, const_cast<Inkscape::XML::Node *>(*defs), target_defs);
     }
 }
 
@@ -1688,11 +1688,10 @@ void SPDocument::importDefsNode(SPDocument *source, Inkscape::XML::Node *defs, I
     
     /* First pass: remove duplicates in clipboard of definitions in document */
     for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
-
+        if(def->type() != Inkscape::XML::ELEMENT_NODE)continue;
         /* If this  clipboard has been pasted into one document, and is now being pasted into another,
         or pasted again into the same, it will already have been processed.  If we detect that then 
         skip the rest of this pass. */
-
         Glib::ustring defid = def->attribute("id");
         if( defid.find( DuplicateDefString ) != Glib::ustring::npos )break;
 
@@ -1722,6 +1721,7 @@ void SPDocument::importDefsNode(SPDocument *source, Inkscape::XML::Node *defs, I
 
     /* Second pass: remove duplicates in clipboard of earlier definitions in clipboard */
     for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
+        if(def->type() != Inkscape::XML::ELEMENT_NODE)continue;
         Glib::ustring defid = def->attribute("id");
         if( defid.find( DuplicateDefString ) != Glib::ustring::npos )continue; // this one already handled
         SPObject *src = source->getObjectByRepr(def);
@@ -1749,6 +1749,7 @@ void SPDocument::importDefsNode(SPDocument *source, Inkscape::XML::Node *defs, I
 
     /* Final pass: copy over those parts which are not duplicates  */
     for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
+        if(def->type() != Inkscape::XML::ELEMENT_NODE)continue;
 
         /* Ignore duplicate defs marked in the first pass */
         Glib::ustring defid = def->attribute("id");

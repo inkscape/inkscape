@@ -328,9 +328,9 @@ SBasis derivative(SBasis const &a) {
     }
     int k = a.size()-1;
     double d = (2*k+1)*(a[k][1] - a[k][0]);
-    if(d == 0)
+    if (d == 0 && k > 0) {
         c.pop_back();
-    else {
+    } else {
         c[k][0] = d;
         c[k][1] = d;
     }
@@ -351,9 +351,9 @@ void SBasis::derive() { // in place version
     }
     int k = size()-1;
     double d = (2*k+1)*((*this)[k][1] - (*this)[k][0]);
-    if(d == 0)
+    if (d == 0 && k > 0) {
         pop_back();
-    else {
+    } else {
         (*this)[k][0] = d;
         (*this)[k][1] = d;
     }

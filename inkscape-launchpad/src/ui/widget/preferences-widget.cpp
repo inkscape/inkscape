@@ -205,6 +205,7 @@ void PrefCheckButton::init(Glib::ustring const &label, Glib::ustring const &pref
 
 void PrefCheckButton::on_toggled()
 {
+    this->changed_signal.emit(this->get_active());
     if (this->get_visible()) //only take action if the user toggled it
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();

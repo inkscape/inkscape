@@ -15,11 +15,15 @@
  */
 
 #include <cstddef>
+#include <vector>
+#include <set>
 #include <sigc++/connection.h>
 #include <sigc++/trackable.h>
 
 #include "bad-uri-exception.h"
 #include "sp-object.h"
+#include "sp-item.h"
+#include "sp-use.h"
 
 namespace Inkscape {
 
@@ -122,11 +126,7 @@ public:
     SPObject   *getOwnerObject()   { return _owner; }
 
 protected:
-    virtual bool _acceptObject(SPObject *obj) const {
-        (void)obj;
-        return true;
-    }
-
+    virtual bool _acceptObject(SPObject *obj) const;
 private:
     SPObject *_owner;
     SPDocument *_owner_document;

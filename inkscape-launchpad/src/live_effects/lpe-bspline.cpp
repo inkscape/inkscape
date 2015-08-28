@@ -16,10 +16,12 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-const double HANDLE_CUBIC_GAP = 0.01;
+const double HANDLE_CUBIC_GAP = 0.001;
 const double NO_POWER = 0.0;
 const double DEFAULT_START_POWER = 0.3334;
 const double DEFAULT_END_POWER = 0.6667;
+Geom::PathVector hp;
+void sp_bspline_drawHandle(Geom::Point p, double helper_size);
 
 LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
@@ -67,15 +69,115 @@ void LPEBSpline::doOnApply(SPLPEItem const* lpeitem)
     }
 }
 
+void
+LPEBSpline::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
+{
+    hp_vec.push_back(hp);
+}
+
+Gtk::Widget *LPEBSpline::newWidget()
+{
+    // use manage here, because after deletion of Effect object, others might
+    // still be pointing to this widget.
+    Gtk::VBox *vbox = Gtk::manage(new Gtk::VBox(Effect::newWidget()));
+
+    vbox->set_border_width(5);
+    std::vector<Parameter *>::iterator it = param_vector.begin();
+    while (it != param_vector.end()) {
+        if ((*it)->widget_is_visible) {
+            Parameter *param = *it;
+            Gtk::Widget *widg = dynamic_cast<Gtk::Widget *>(param->param_newWidget());
+            if (param->param_key == "weight") {
+                Gtk::HBox * buttons = Gtk::manage(new Gtk::HBox(true,0));
+                Gtk::Button *default_weight =
+                    Gtk::manage(new Gtk::Button(Glib::ustring(_("Default weight"))));
+                default_weight->signal_clicked()
+                .connect(sigc::mem_fun(*this, &LPEBSpline::toDefaultWeight));
+                buttons->pack_start(*default_weight, true, true, 2);
+                Gtk::Button *make_cusp =
+                    Gtk::manage(new Gtk::Button(Glib::ustring(_("Make cusp"))));
+                make_cusp->signal_clicked()
+                .connect(sigc::mem_fun(*this, &LPEBSpline::toMakeCusp));
+                buttons->pack_start(*make_cusp, true, true, 2);
+                vbox->pack_start(*buttons, true, true, 2);
+            }
+            if (param->param_key == "weight" || param->param_key == "steps") {
+                Inkscape::UI::Widget::Scalar *widg_registered =
+                    Gtk::manage(dynamic_cast<Inkscape::UI::Widget::Scalar *>(widg));
+                widg_registered->signal_value_changed()
+                .connect(sigc::mem_fun(*this, &LPEBSpline::toWeight));
+                widg = dynamic_cast<Gtk::Widget *>(widg_registered);
+                if (widg) {
+                    Gtk::HBox * hbox_weight_steps = dynamic_cast<Gtk::HBox *>(widg);
+                    std::vector< Gtk::Widget* > childList = hbox_weight_steps->get_children();
+                    Gtk::Entry* entry_widget = dynamic_cast<Gtk::Entry *>(childList[1]);
+                    entry_widget->set_width_chars(6);
+                }
+            }
+            if (param->param_key == "only_selected") {
+                Gtk::CheckButton *widg_registered =
+                    Gtk::manage(dynamic_cast<Gtk::CheckButton *>(widg));
+                widg = dynamic_cast<Gtk::Widget *>(widg_registered);
+            }
+            if (param->param_key == "ignore_cusp") {
+                Gtk::CheckButton *widg_registered =
+                    Gtk::manage(dynamic_cast<Gtk::CheckButton *>(widg));
+                widg = dynamic_cast<Gtk::Widget *>(widg_registered);
+            }
+            Glib::ustring *tip = param->param_getTooltip();
+            if (widg) {
+                vbox->pack_start(*widg, true, true, 2);
+                if (tip) {
+                    widg->set_tooltip_text(*tip);
+                } else {
+                    widg->set_tooltip_text("");
+                    widg->set_has_tooltip(false);
+                }
+            }
+        }
+
+        ++it;
+    }
+    return dynamic_cast<Gtk::Widget *>(vbox);
+}
+
+void LPEBSpline::toDefaultWeight()
+{
+    changeWeight(DEFAULT_START_POWER);
+}
+
+void LPEBSpline::toMakeCusp()
+{
+    changeWeight(NO_POWER);
+}
+
+void LPEBSpline::toWeight()
+{
+    changeWeight(weight);
+}
+
+void LPEBSpline::changeWeight(double weight_ammount)
+{
+    SPPath *path = dynamic_cast<SPPath *>(sp_lpe_item);
+    if(path) {
+        SPCurve *curve = path->get_curve_for_edit();
+        doBSplineFromWidget(curve, weight_ammount);
+        gchar *str = sp_svg_write_path(curve->get_pathvector());
+        path->getRepr()->setAttribute("inkscape:original-d", str);
+    }
+}
+
 void LPEBSpline::doEffect(SPCurve *curve)
 {
+    sp_bspline_do_effect(curve, helper_size);
+}
 
+void sp_bspline_do_effect(SPCurve *curve, double helper_size)
+{
     if (curve->get_segment_count() < 1) {
         return;
     }
-    // Make copy of old path as it is changed during processing
     Geom::PathVector const original_pathv = curve->get_pathvector();
-
     curve->reset();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
@@ -99,20 +201,6 @@ void LPEBSpline::doEffect(SPCurve *curve)
         Geom::D2<Geom::SBasis> sbasis_out;
         Geom::D2<Geom::SBasis> sbasis_helper;
         Geom::CubicBezier const *cubic = NULL;
-        if (path_it->closed()) {
-            // if the path is closed, maybe we have to stop a bit earlier because the
-            // closing line segment has zerolength.
-            const Geom::Curve &closingline =
-                path_it->back_closed(); // the closing line segment is always of type
-            // Geom::LineSegment.
-            if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
-                // closingline.isDegenerate() did not work, because it only checks for
-                // *exact* zero length, which goes wrong for relative coordinates and
-                // rounding errors...
-                // the closing line segment has zero-length. So stop before that one!
-                curve_endit = path_it->end_open();
-            }
-        }
         curve_n->moveto(curve_it1->initialPoint());
         while (curve_it1 != curve_endit) {
             SPCurve *in = new SPCurve();
@@ -209,12 +297,11 @@ void LPEBSpline::doEffect(SPCurve *curve)
                 curve_n->curveto(point_at1, point_at2, node);
             }
             if(!are_near(node,curve_it1->finalPoint()) && helper_size > 0.0) {
-                drawHandle(node, helper_size);
+                sp_bspline_drawHandle(node, helper_size);
             }
             ++curve_it1;
             ++curve_it2;
         }
-        //y cerramos la curva
         if (path_it->closed()) {
             curve_n->closepath_current();
         }
@@ -228,8 +315,8 @@ void LPEBSpline::doEffect(SPCurve *curve)
     }
 }
 
-void
-LPEBSpline::drawHandle(Geom::Point p, double helper_size)
+
+void sp_bspline_drawHandle(Geom::Point p, double helper_size)
 {
     char const * svgd = "M 1,0.5 A 0.5,0.5 0 0 1 0.5,1 0.5,0.5 0 0 1 0,0.5 0.5,0.5 0 0 1 0.5,0 0.5,0.5 0 0 1 1,0.5 Z";
     Geom::PathVector pathv = sp_svg_read_pathv(svgd);
@@ -238,103 +325,6 @@ LPEBSpline::drawHandle(Geom::Point p, double helper_size)
     pathv *= aff;
     pathv *= Geom::Translate(p - Geom::Point(0.5*helper_size, 0.5*helper_size));
     hp.push_back(pathv[0]);
-}
-
-void
-LPEBSpline::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
-{
-    hp_vec.push_back(hp);
-}
-Gtk::Widget *LPEBSpline::newWidget()
-{
-    // use manage here, because after deletion of Effect object, others might
-    // still be pointing to this widget.
-    Gtk::VBox *vbox = Gtk::manage(new Gtk::VBox(Effect::newWidget()));
-
-    vbox->set_border_width(5);
-    std::vector<Parameter *>::iterator it = param_vector.begin();
-    while (it != param_vector.end()) {
-        if ((*it)->widget_is_visible) {
-            Parameter *param = *it;
-            Gtk::Widget *widg = dynamic_cast<Gtk::Widget *>(param->param_newWidget());
-            if (param->param_key == "weight") {
-                Gtk::HBox * buttons = Gtk::manage(new Gtk::HBox(true,0));
-                Gtk::Button *default_weight =
-                    Gtk::manage(new Gtk::Button(Glib::ustring(_("Default weight"))));
-                default_weight->signal_clicked()
-                .connect(sigc::mem_fun(*this, &LPEBSpline::toDefaultWeight));
-                buttons->pack_start(*default_weight, true, true, 2);
-                Gtk::Button *make_cusp =
-                    Gtk::manage(new Gtk::Button(Glib::ustring(_("Make cusp"))));
-                make_cusp->signal_clicked()
-                .connect(sigc::mem_fun(*this, &LPEBSpline::toMakeCusp));
-                buttons->pack_start(*make_cusp, true, true, 2);
-                vbox->pack_start(*buttons, true, true, 2);
-            }
-            if (param->param_key == "weight" || param->param_key == "steps") {
-                Inkscape::UI::Widget::Scalar *widg_registered =
-                    Gtk::manage(dynamic_cast<Inkscape::UI::Widget::Scalar *>(widg));
-                widg_registered->signal_value_changed()
-                .connect(sigc::mem_fun(*this, &LPEBSpline::toWeight));
-                widg = dynamic_cast<Gtk::Widget *>(widg_registered);
-                if (widg) {
-                    Gtk::HBox * hbox_weight_steps = dynamic_cast<Gtk::HBox *>(widg);
-                    std::vector< Gtk::Widget* > childList = hbox_weight_steps->get_children();
-                    Gtk::Entry* entry_widget = dynamic_cast<Gtk::Entry *>(childList[1]);
-                    entry_widget->set_width_chars(6);
-                }
-            }
-            if (param->param_key == "only_selected") {
-                Gtk::CheckButton *widg_registered =
-                    Gtk::manage(dynamic_cast<Gtk::CheckButton *>(widg));
-                widg = dynamic_cast<Gtk::Widget *>(widg_registered);
-            }
-            if (param->param_key == "ignore_cusp") {
-                Gtk::CheckButton *widg_registered =
-                    Gtk::manage(dynamic_cast<Gtk::CheckButton *>(widg));
-                widg = dynamic_cast<Gtk::Widget *>(widg_registered);
-            }
-            Glib::ustring *tip = param->param_getTooltip();
-            if (widg) {
-                vbox->pack_start(*widg, true, true, 2);
-                if (tip) {
-                    widg->set_tooltip_text(*tip);
-                } else {
-                    widg->set_tooltip_text("");
-                    widg->set_has_tooltip(false);
-                }
-            }
-        }
-
-        ++it;
-    }
-    return dynamic_cast<Gtk::Widget *>(vbox);
-}
-
-void LPEBSpline::toDefaultWeight()
-{
-    changeWeight(DEFAULT_START_POWER);
-}
-
-void LPEBSpline::toMakeCusp()
-{
-    changeWeight(NO_POWER);
-}
-
-void LPEBSpline::toWeight()
-{
-    changeWeight(weight);
-}
-
-void LPEBSpline::changeWeight(double weight_ammount)
-{
-    SPPath *path = dynamic_cast<SPPath *>(sp_lpe_item);
-    if(path) {
-        SPCurve *curve = path->get_curve_for_edit();
-        doBSplineFromWidget(curve, weight_ammount);
-        gchar *str = sp_svg_write_path(curve->get_pathvector());
-        path->getRepr()->setAttribute("inkscape:original-d", str);
-    }
 }
 
 void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
@@ -366,20 +356,6 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
         Geom::D2<Geom::SBasis> sbasis_in;
         Geom::D2<Geom::SBasis> sbasis_out;
         Geom::CubicBezier const *cubic = NULL;
-        if (path_it->closed()) {
-            // if the path is closed, maybe we have to stop a bit earlier because the
-            // closing line segment has zerolength.
-            const Geom::Curve &closingline =
-                path_it->back_closed(); // the closing line segment is always of type
-            // Geom::LineSegment.
-            if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
-                // closingline.isDegenerate() did not work, because it only checks for
-                // *exact* zero length, which goes wrong for relative coordinates and
-                // rounding errors...
-                // the closing line segment has zero-length. So stop before that one!
-                curve_endit = path_it->end_open();
-            }
-        }
         curve_n->moveto(curve_it1->initialPoint());
         while (curve_it1 != curve_endit) {
             SPCurve *in = new SPCurve();
@@ -389,91 +365,52 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
             point_at0 = in->first_segment()->initialPoint();
             point_at3 = in->first_segment()->finalPoint();
             sbasis_in = in->first_segment()->toSBasis();
-            if (!only_selected) {
-                if (cubic) {
-                    if (!ignore_cusp || !Geom::are_near((*cubic)[1], point_at0)) {
+            if (cubic) {
+                if (!ignore_cusp || !Geom::are_near((*cubic)[1], point_at0)) {
+                    if (isNodePointSelected(point_at0) || !only_selected) {
                         point_at1 = sbasis_in.valueAt(weight_ammount);
                         if (weight_ammount != NO_POWER) {
                             point_at1 =
                                 Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
                         }
                     } else {
-                        point_at1 = in->first_segment()->initialPoint();
-                    }
-                    if (!ignore_cusp || !Geom::are_near((*cubic)[2], point_at3)) {
-                        point_at2 = sbasis_in.valueAt(1 - weight_ammount);
-                        if (weight_ammount != NO_POWER) {
-                            point_at2 =
-                                Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
-                        }
-                    } else {
-                        point_at2 = in->first_segment()->finalPoint();
+                        point_at1 = (*cubic)[1];
                     }
                 } else {
-                    if (!ignore_cusp && weight_ammount != NO_POWER) {
-                        point_at1 = sbasis_in.valueAt(weight_ammount);
-                        if (weight_ammount != NO_POWER) {
-                            point_at1 =
-                                Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
-                        }
+                    point_at1 = in->first_segment()->initialPoint();
+                }
+                if (!ignore_cusp || !Geom::are_near((*cubic)[2], point_at3)) {
+                    if (isNodePointSelected(point_at3) || !only_selected) {
                         point_at2 = sbasis_in.valueAt(1 - weight_ammount);
                         if (weight_ammount != NO_POWER) {
                             point_at2 =
                                 Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
                         }
                     } else {
-                        point_at1 = in->first_segment()->initialPoint();
-                        point_at2 = in->first_segment()->finalPoint();
+                        point_at2 = (*cubic)[2];
                     }
+                } else {
+                    point_at2 = in->first_segment()->finalPoint();
                 }
             } else {
-                if (cubic) {
-                    if (!ignore_cusp || !Geom::are_near((*cubic)[1], point_at0)) {
-                        if (isNodePointSelected(point_at0)) {
-                            point_at1 = sbasis_in.valueAt(weight_ammount);
-                            if (weight_ammount != NO_POWER) {
-                                point_at1 =
-                                    Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
-                            }
-                        } else {
-                            point_at1 = (*cubic)[1];
-                        }
+                if (!ignore_cusp && weight_ammount != NO_POWER) {
+                    if (isNodePointSelected(point_at0) || !only_selected) {
+                        point_at1 = sbasis_in.valueAt(weight_ammount);
+                        point_at1 =
+                            Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
                     } else {
                         point_at1 = in->first_segment()->initialPoint();
                     }
-                    if (!ignore_cusp || !Geom::are_near((*cubic)[2], point_at3)) {
-                        if (isNodePointSelected(point_at3)) {
-                            point_at2 = sbasis_in.valueAt(1 - weight_ammount);
-                            if (weight_ammount != NO_POWER) {
-                                point_at2 =
-                                    Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
-                            }
-                        } else {
-                            point_at2 = (*cubic)[2];
-                        }
+                    if (isNodePointSelected(point_at3) || !only_selected) {
+                        point_at2 = sbasis_in.valueAt(weight_ammount);
+                        point_at2 =
+                            Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
                     } else {
                         point_at2 = in->first_segment()->finalPoint();
                     }
                 } else {
-                    if (!ignore_cusp && weight_ammount != NO_POWER) {
-                        if (isNodePointSelected(point_at0)) {
-                            point_at1 = sbasis_in.valueAt(weight_ammount);
-                            point_at1 =
-                                Geom::Point(point_at1[X] + HANDLE_CUBIC_GAP, point_at1[Y] + HANDLE_CUBIC_GAP);
-                        } else {
-                            point_at1 = in->first_segment()->initialPoint();
-                        }
-                        if (isNodePointSelected(point_at3)) {
-                            point_at2 = sbasis_in.valueAt(weight_ammount);
-                            point_at2 =
-                                Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
-                        } else {
-                            point_at2 = in->first_segment()->finalPoint();
-                        }
-                    } else {
-                        point_at1 = in->first_segment()->initialPoint();
-                        point_at2 = in->first_segment()->finalPoint();
-                    }
+                    point_at1 = in->first_segment()->initialPoint();
+                    point_at2 = in->first_segment()->finalPoint();
                 }
             }
             in->reset();

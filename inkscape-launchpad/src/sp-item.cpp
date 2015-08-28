@@ -351,8 +351,8 @@ void SPItem::lowerToBottom() {
 
     SPObject * bottom=parent->firstChild();
     while(dynamic_cast<SPObject*>(bottom) && dynamic_cast<SPObject*>(bottom->next) && bottom!=this && !is_item(*(bottom->next))) bottom=bottom->next;
-    if (bottom) {
-        Inkscape::XML::Node *ref = ( bottom ? bottom->getRepr() : NULL );
+    if (bottom && bottom != this) {
+        Inkscape::XML::Node *ref = bottom->getRepr() ;
         parent->getRepr()->changeOrder(getRepr(), ref);
     }
 }

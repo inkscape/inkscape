@@ -899,21 +899,6 @@ if test "x$enable_strict_build" = "xhigh"; then
         CPPFLAGS="-Werror=deprecated-declarations $CPPFLAGS"
 fi
 
-# Check for Apple Mac OS X Carbon framework
-carbon_ok=no
-AC_MSG_CHECKING([for Mac OS X Carbon support])
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <Carbon/Carbon.h>
-#include <CoreServices/CoreServices.h>]], [])
-], [carbon_ok=yes])
-AC_MSG_RESULT($carbon_ok)
-if test "x$carbon_ok" = "xyes"; then
-  AC_DEFINE(HAVE_CARBON, 1, [define to 1 if Carbon is available])
-  CARBON_LDFLAGS="-framework Carbon"
-  AC_SUBST(CARBON_LDFLAGS)
-fi
-AM_CONDITIONAL(HAVE_CARBON, test "x$carbon_ok" = "xyes")
-
 # Check for some boost header files
 AC_CHECK_HEADERS([boost/concept_check.hpp], [], AC_MSG_ERROR([You need the boost package (e.g. libboost-dev)]))
 

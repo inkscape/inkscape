@@ -25540,9 +25540,8 @@ msgstr "tutorial-calligraphy.ru.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2207
-#, fuzzy
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-interpolate.svg"
+msgstr "tutorial-interpolate.ru.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2211

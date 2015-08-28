@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 
 # Written by Jabiertxof
-# V.04
+# V.05
 
-import inkex
-import re
-import os
+import inkex, sys, re, os
 from lxml import etree
 
 class C(inkex.Effect):
@@ -15,9 +13,13 @@ class C(inkex.Effect):
     self.OptionParser.add_option("-z", "--height", action="store", type="int",    dest="desktop_height", default="100", help="Custom height")
 
   def effect(self):
-
+    saveout = sys.stdout
+    sys.stdout = sys.stderr
     width  = self.options.desktop_width
     height = self.options.desktop_height
+    if height == 0 | width == 0:
+        return;
+    factor = float(width)/float(height)
     path = os.path.dirname(os.path.realpath(__file__))
     self.document = etree.parse(os.path.join(path, "seamless_pattern.svg"))
     root = self.document.getroot()
@@ -32,11 +34,48 @@ class C(inkex.Effect):
         clipPathRect[0].set("width", str(width))
         clipPathRect[0].set("height", str(height))
 
-    xpathStr = '//svg:g[@id="designTop"] | //svg:g[@id="designBottom"]'
+    xpathStr = '//svg:pattern[@id="Checkerboard"]'
+    designZoneData = root.xpath(xpathStr, namespaces=inkex.NSS)
+    if designZoneData != []:
+        if factor <= 1:
+            designZoneData[0].set("patternTransform", "scale(" + str(10.0) + "," + str(factor * 10) + ")")
+        else:
+            designZoneData[0].set("patternTransform", "scale(" + str(10.0/factor) + "," + str(10.0) + ")")
+
+    xpathStr = '//svg:g[@id="designTop"] | //svg:g[@id="designBottom"] | //svg:g[@id="transparencyPreview"]'
     designZone = root.xpath(xpathStr, namespaces=inkex.NSS)
     if designZone != []:
-        designZone[0].set("transform", "scale(" + str(width/100.) + ","+ str(height/100.) + ")")
-        designZone[1].set("transform", "scale(" + str(width/100.) + ","+ str(height/100.) + ")")
+        designZone[0].set("transform", "scale(" + str(width/100.0) + "," + str(height/100.0) + ")")
+        designZone[1].set("transform", "scale(" + str(width /100.0) + "," + str(height/100.0) + ")")
+        designZone[2].set("transform", "scale(" + str(width /100.0) + "," + str(height/100.0) + ")")
+
+    xpathStr = '//svg:g[@id="designTop"]/child::*'
+    designZoneData = root.xpath(xpathStr, namespaces=inkex.NSS)
+    if designZoneData != []:
+        if factor <= 1:
+            designZoneData[0].set("transform", "scale(1," + str(factor) + ")")
+            designZoneData[1].set("transform", "scale(1," + str(factor) + ")")
+            designZoneData[2].set("transform", "scale(1," + str(factor) + ")")
+        else:
+            designZoneData[0].set("transform", "scale(" + str(1.0/factor) + ",1)")
+            designZoneData[1].set("transform", "scale(" + str(1.0/factor) + ",1)")
+            designZoneData[2].set("transform", "scale(" + str(1.0/factor) + ",1)")
+
+    xpathStr = '//svg:g[@id="textPreview"]'
+    previewText = root.xpath(xpathStr, namespaces=inkex.NSS)
+    if previewText != []:
+        if factor <= 1:
+            previewText[0].set("transform", "translate(" + str(width * 2) + ",0) scale(" + str(width/100.0) + "," + str((height/100.0) * factor) + ")")
+        else:
+            previewText[0].set("transform", "translate(" + str(width * 2) + ",0) scale(" + str((width/100.0)/factor) + "," + str(height/100.0) + ")")
+
+    xpathStr = '//svg:g[@id="infoGroup"]'
+    infoGroup = root.xpath(xpathStr, namespaces=inkex.NSS)
+    if infoGroup != []:
+        if factor <= 1:
+            infoGroup[0].set("transform", "scale(" + str(width/100.0) + "," + str((height/100.0) * factor) + ")")
+        else:
+            infoGroup[0].set("transform", "scale(" + str(width/1000.0) + "," + str((height/1000.0) * factor) + ")")
 
     xpathStr = '//svg:use[@id="top1"] | //svg:use[@id="bottom1"]'
     pattern1 = root.xpath(xpathStr, namespaces=inkex.NSS)
@@ -153,7 +192,8 @@ class C(inkex.Effect):
 
     namedview.set(inkex.addNS('cx',        'inkscape'), str((width*5.5)/2.0) )
     namedview.set(inkex.addNS('cy',        'inkscape'), "0" )
-    namedview.set(inkex.addNS('zoom',        'inkscape'), str(1.0 / (width/100.0)) )
+    namedview.set(inkex.addNS('zoom',        'inkscape'), str(1.0 / (width/100.00)) )
+    sys.stdout = saveout
 
 c = C()
 c.affect()

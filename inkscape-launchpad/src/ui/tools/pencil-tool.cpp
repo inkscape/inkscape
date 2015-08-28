@@ -635,8 +635,11 @@ void PencilTool::_interpolate() {
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
-    double const tolerance_sq = 0.02 * square(this->desktop->w2d().descrim() * tol) * exp(0.2 * tol - 2);
-
+    double tolerance_sq = 0.02 * square(this->desktop->w2d().descrim() * tol) * exp(0.2 * tol - 2);
+    bool simplify = prefs->getInt("/tools/freehand/pencil/simplify", 0);
+    if(simplify){
+        tolerance_sq = 0;
+    }
     g_assert(is_zero(this->req_tangent) || is_unit_vector(this->req_tangent));
 
     this->green_curve->reset();
@@ -703,8 +706,11 @@ void PencilTool::_sketchInterpolate() {
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
-    double const tolerance_sq = 0.02 * square(this->desktop->w2d().descrim() * tol) * exp(0.2 * tol - 2);
-
+    double tolerance_sq = 0.02 * square(this->desktop->w2d().descrim() * tol) * exp(0.2 * tol - 2);
+    bool simplify = prefs->getInt("/tools/freehand/pencil/simplify", 0);
+    if(simplify){
+        tolerance_sq = 0;
+    }
     bool average_all_sketches = prefs->getBool("/tools/freehand/pencil/average_all_sketches", true);
 
     g_assert(is_zero(this->req_tangent) || is_unit_vector(this->req_tangent));

@@ -721,6 +721,9 @@ void SPObject::invoke_build(SPDocument *document, Inkscape::XML::Node *repr, uns
     }
     this->cloned = cloned;
 
+    /* Invoke derived methods, if any */
+    this->build(document, repr);
+
     if ( !cloned ) {
         this->document->bindObjectToRepr(this->repr, this);
 
@@ -754,8 +757,6 @@ void SPObject::invoke_build(SPDocument *document, Inkscape::XML::Node *repr, uns
         g_assert(this->getId() == NULL);
     }
 
-    /* Invoke derived methods, if any */
-    this->build(document, repr);
 
     /* Signalling (should be connected AFTER processing derived methods */
     sp_repr_add_listener(repr, &object_event_vector, this);

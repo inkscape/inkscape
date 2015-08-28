@@ -35,7 +35,8 @@ Persp3DReference::~Persp3DReference(void)
 bool
 Persp3DReference::_acceptObject(SPObject *obj) const
 {
-    return SP_IS_PERSP3D(obj);
+    return SP_IS_PERSP3D(obj) && URIReference::_acceptObject(obj);
+;
     /* effic: Don't bother making this an inline function: _acceptObject is a virtual function,
        typically called from a context where the runtime type is not known at compile time. */
 }

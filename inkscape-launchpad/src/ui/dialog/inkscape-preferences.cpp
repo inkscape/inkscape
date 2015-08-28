@@ -522,22 +522,54 @@ void InkscapePreferences::initPageUI()
     Gtk::TreeModel::iterator iter_ui = this->AddPage(_page_ui, _("Interface"), PREFS_PAGE_UI);
     _path_ui = _page_list.get_model()->get_path(iter_ui);
 
-    Glib::ustring languages[] = {_("System default"), _("Albanian (sq)"), _("Amharic (am)"), _("Arabic (ar)"), _("Armenian (hy)"),_("Azerbaijani (az)"), _("Basque (eu)"), _("Belarusian (be)"),
-        _("Bulgarian (bg)"), _("Bengali (bn)"), _("Bengali/Bangladesh (bn_BD)"), _("Breton (br)"), _("Catalan (ca)"), _("Valencian Catalan (ca@valencia)"), _("Chinese/China (zh_CN)"),
-        _("Chinese/Taiwan (zh_TW)"), _("Croatian (hr)"), _("Czech (cs)"),
-        _("Danish (da)"), _("Dutch (nl)"), _("Dzongkha (dz)"), _("German (de)"), _("Greek (el)"), _("English (en)"), _("English/Australia (en_AU)"),
-        _("English/Canada (en_CA)"), _("English/Great Britain (en_GB)"), _("Pig Latin (en_US@piglatin)"),
-        _("Esperanto (eo)"), _("Estonian (et)"), _("Farsi (fa)"), _("Finnish (fi)"),
-        _("French (fr)"), _("Irish (ga)"), _("Galician (gl)"), _("Hebrew (he)"), _("Hungarian (hu)"),
-        _("Indonesian (id)"), _("Icelandic (is)"), _("Italian (it)"), _("Japanese (ja)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Korean (ko)"), _("Lithuanian (lt)"), _("Latvian (lv)"), _("Macedonian (mk)"),
-        _("Mongolian (mn)"), _("Nepali (ne)"), _("Norwegian Bokmål (nb)"), _("Norwegian Nynorsk (nn)"), _("Panjabi (pa)"),
-        _("Polish (pl)"), _("Portuguese (pt)"), _("Portuguese/Brazil (pt_BR)"), _("Romanian (ro)"), _("Russian (ru)"),
-        _("Serbian (sr)"), _("Serbian in Latin script (sr@latin)"), _("Slovak (sk)"), _("Slovenian (sl)"),  _("Spanish (es)"), _("Spanish/Mexico (es_MX)"),
-        _("Swedish (sv)"),_("Telugu (te)"), _("Thai (th)"), _("Turkish (tr)"), _("Ukrainian (uk)"), _("Vietnamese (vi)")};
-    Glib::ustring langValues[] = {"", "sq", "am", "ar", "hy", "az", "eu", "be", "bg", "bn", "bn_BD", "br", "ca", "ca@valencia", "zh_CN", "zh_TW", "hr", "cs", "da", "nl",
-        "dz", "de", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "et", "fa", "fi", "fr", "ga",
-        "gl", "he", "hu", "id", "is", "it", "ja", "km", "rw", "ko", "lt", "lv", "mk", "mn", "ne", "nb", "nn", "pa",
-        "pl", "pt", "pt_BR", "ro", "ru", "sr", "sr@latin", "sk", "sl", "es", "es_MX", "sv", "te", "th", "tr", "uk", "vi" };
+    Glib::ustring languages[] = {_("System default"),
+        _("Albanian (sq)"), _("Amharic (am)"), _("Arabic (ar)"), _("Armenian (hy)"), _("Assamese (as)"), _("Azerbaijani (az)"),
+        _("Basque (eu)"), _("Belarusian (be)"), _("Bulgarian (bg)"), _("Bengali (bn)"), _("Bengali/Bangladesh (bn_BD)"), _("Bodo (brx)"), _("Breton (br)"),
+        _("Catalan (ca)"), _("Valencian Catalan (ca@valencia)"), _("Chinese/China (zh_CN)"),  _("Chinese/Taiwan (zh_TW)"), _("Croatian (hr)"), _("Czech (cs)"),
+        _("Danish (da)"), _("Dogri (doi)"), _("Dutch (nl)"), _("Dzongkha (dz)"),
+        _("German (de)"), _("Greek (el)"),
+        _("English (en)"), _("English/Australia (en_AU)"), _("English/Canada (en_CA)"), _("English/Great Britain (en_GB)"), _("Pig Latin (en_US@piglatin)"), _("Esperanto (eo)"), _("Estonian (et)"),
+        _("Farsi (fa)"), _("Finnish (fi)"), _("French (fr)"),
+        _("Galician (gl)"), _("Gujarati (gu)"),
+        _("Hebrew (he)"), _("Hindi (hi)"), _("Hungarian (hu)"),
+        _("Icelandic (is)"), _("Indonesian (id)"), _("Irish (ga)"), _("Italian (it)"),
+        _("Japanese (ja)"),
+        _("Kannada (kn)"), _("Kashmiri in Peso-Arabic script (ks@aran)"), _("Kashmiri in Devanagari script (ks@deva)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Konkani (kok)"), _("Konkani in Latin script (kok@latin)"), _("Korean (ko)"),
+        _("Latvian (lv)"), _("Lithuanian (lt)"),
+        _("Macedonian (mk)"), _("Maithili (mai)"), _("Malayalam (ml)"), _("Manipuri (mni)"), _("Manipuri in Bengali script (mni@beng)"), _("Marathi (mr)"), _("Mongolian (mn)"),
+        _("Nepali (ne)"), _("Norwegian Bokmål (nb)"), _("Norwegian Nynorsk (nn)"),
+        _("Odia (or)"),
+        _("Panjabi (pa)"), _("Polish (pl)"), _("Portuguese (pt)"), _("Portuguese/Brazil (pt_BR)"),
+        _("Romanian (ro)"), _("Russian (ru)"),
+        _("Sanskrit (sa)"), _("Santali (sat)"), _("Santali in Devanagari script (sat@deva)"), _("Serbian (sr)"), _("Serbian in Latin script (sr@latin)"),
+        _("Sindhi (sd)"), _("Sindhi in Devanagari script (sd@deva)"), _("Slovak (sk)"), _("Slovenian (sl)"),  _("Spanish (es)"), _("Spanish/Mexico (es_MX)"), _("Swedish (sv)"),
+        _("Tamil (ta)"), _("Telugu (te)"), _("Thai (th)"), _("Turkish (tr)"),
+        _("Ukrainian (uk)"), _("Urdu (ur)"),
+        _("Vietnamese (vi)")};
+    Glib::ustring langValues[] = {"",
+        "sq", "am", "ar", "hy", "as", "az",
+        "eu", "be", "bg", "bn", "bn_BD", "brx", "br",
+        "ca", "ca@valencia", "zh_CN", "zh_TW", "hr", "cs",
+        "da", "doi", "nl", "dz",
+        "de", "el",
+        "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "et",
+        "fa", "fi", "fr",
+        "gl", "gu",
+        "he", "hi", "hu",
+        "is", "id", "ga", "it",
+        "ja",
+        "kn", "ks@aran", "ks@deva", "km", "rw", "kok", "kok@latin", "ko",
+        "lv", "lt",
+        "mk", "mai", "ml", "mni", "mni@beng", "mr", "mn",
+        "ne", "nb", "nn",
+        "or",
+        "pa", "pl", "pt", "pt_BR",
+        "ro", "ru",
+        "sa", "sat", "sat@deva", "sr", "sr@latin",
+        "sd", "sd@deva", "sk", "sl", "es", "es_MX", "sv",
+        "ta", "te", "th", "tr",
+        "uk", "ur",
+        "vi" };
 
     {
         // sorting languages according to translated name
@@ -1229,25 +1261,37 @@ void InkscapePreferences::initPageBehavior()
     this->AddPage(_page_scrolling, _("Scrolling"), iter_behavior, PREFS_PAGE_BEHAVIOR_SCROLLING);
 
     // Snapping options
+    _page_snapping.add_group_header( _("Snap indicator"));
+
     _snap_indicator.init( _("Enable snap indicator"), "/options/snapindicator/value", true);
-    _page_snapping.add_line( false, "", _snap_indicator, "",
+    _page_snapping.add_line( true, "", _snap_indicator, "",
                              _("After snapping, a symbol is drawn at the point that has snapped"));
 
-    _snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
-    _page_snapping.add_line( false, _("_Delay (in ms):"), _snap_delay, "",
-                             _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate."), true);
+    _snap_indicator.changed_signal.connect( sigc::mem_fun(_snap_persistence, &Gtk::Widget::set_sensitive) );
+
+    _snap_persistence.init("/options/snapindicatorpersistence/value", 0.1, 10, 0.1, 1, 2, 1);
+    _page_snapping.add_line( true, _("Snap indicator persistence (in seconds):"), _snap_persistence, "",
+                             _("Controls how long the snap indicator message will be shown, before it disappears"), true);
+
+    _page_snapping.add_group_header( _("What should snap"));
 
     _snap_closest_only.init( _("Only snap the node closest to the pointer"), "/options/snapclosestonly/value", false);
-    _page_snapping.add_line( false, "", _snap_closest_only, "",
+    _page_snapping.add_line( true, "", _snap_closest_only, "",
                              _("Only try to snap the node that is initially closest to the mouse pointer"));
 
     _snap_weight.init("/options/snapweight/value", 0, 1, 0.1, 0.2, 0.5, 1);
-    _page_snapping.add_line( false, _("_Weight factor:"), _snap_weight, "",
+    _page_snapping.add_line( true, _("_Weight factor:"), _snap_weight, "",
                              _("When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"), true);
 
     _snap_mouse_pointer.init( _("Snap the mouse pointer when dragging a constrained knot"), "/options/snapmousepointer/value", false);
-    _page_snapping.add_line( false, "", _snap_mouse_pointer, "",
+    _page_snapping.add_line( true, "", _snap_mouse_pointer, "",
                              _("When dragging a knot along a constraint line, then snap the position of the mouse pointer instead of snapping the projection of the knot onto the constraint line"));
+
+    _page_snapping.add_group_header( _("Delayed snap"));
+
+    _snap_delay.init("/options/snapdelay/value", 0, 1, 0.1, 0.2, 0.3, 1);
+    _page_snapping.add_line( true, _("Delay (in seconds):"), _snap_delay, "",
+                             _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate."), true);
 
     this->AddPage(_page_snapping, _("Snapping"), iter_behavior, PREFS_PAGE_BEHAVIOR_SNAPPING);
 

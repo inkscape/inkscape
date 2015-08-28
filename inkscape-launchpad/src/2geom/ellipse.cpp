@@ -205,22 +205,50 @@ Ellipse::arc(Point const &ip, Point const &inner, Point const &fp)
     bool sweep_flag = false;
 
     // Determination of large arc flag:
-    // The arc is larger than half of the ellipse if the inner point
-    // is on the same side of the line going from the initial
-    // to the final point as the center of the ellipse
-    Point versor = fp - ip;
-    double sdist_c = cross(versor, _center - ip);
-    double sdist_inner = cross(versor, inner - ip);
+    // large_arc is false when the inner point is on the same side
+    // of the center---initial point line as the final point, AND
+    // is on the same side of the center---final point line as the
+    // initial point.
+    // Additionally, large_arc is always false when we have exactly
+    // 1/2 of an arc, i.e. the cross product of the center -> initial point
+    // and center -> final point vectors is zero.
+    // Negating the above leads to the condition for large_arc being true.
+    Point fv = fp - _center;
+    Point iv = ip - _center;
+    Point innerv = inner - _center;
+    double ifcp = cross(fv, iv);
 
-    // if we have exactly half of an arc, do not set the large flag.
-    if (sdist_c != 0 && sgn(sdist_c) == sgn(sdist_inner)) {
+    if (ifcp != 0 && (sgn(cross(fv, innerv)) != sgn(ifcp) ||
+                      sgn(cross(iv, innerv)) != sgn(-ifcp)))
+    {
         large_arc_flag = true;
     }
 
+    //cross(-iv, fv) && large_arc_flag
+    
+
     // Determination of sweep flag:
-    // If the inner point is on the left side of the ip-fp line,
-    // we go in clockwise direction.
-    if (sdist_inner < 0) {
+    // For clarity, let's assume that Y grows up. Then the cross product
+    // is positive for points on the left side of a vector and negative
+    // on the right side of a vector.
+    //
+    //     cross(?, v) > 0
+    //  o------------------->
+    //     cross(?, v) < 0
+    //
+    // If the arc is small (large_arc_flag is false) and the final point
+    // is on the right side of the vector initial point -> center,
+    // we have to go in the direction of increasing angles
+    // (counter-clockwise) and the sweep flag is true.
+    // If the arc is large, the opposite is true, since we have to reach
+    // the final point going the long way - in the other direction.
+    // We can express this observation as:
+    // cross(_center - ip, fp - _center) < 0 xor large_arc flag
+    // This is equal to:
+    // cross(-iv, fv) < 0 xor large_arc flag
+    // But cross(-iv, fv) is equal to cross(fv, iv) due to antisymmetry
+    // of the cross product, so we end up with the condition below.
+    if ((ifcp < 0) ^ large_arc_flag) {
         sweep_flag = true;
     }
 

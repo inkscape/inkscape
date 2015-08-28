@@ -168,7 +168,7 @@ public:
 
 protected:
     virtual bool _acceptObject(SPObject *obj) const {
-        return dynamic_cast<SPHatch *>(obj) != NULL;
+        return dynamic_cast<SPHatch *>(obj) != NULL && URIReference::_acceptObject(obj);
     }
 };
 

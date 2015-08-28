@@ -28,7 +28,9 @@
 # include "config.h"
 #endif
 
+#include <gtkmm.h>
 #include <glibmm/i18n.h>
+#include <list>
 
 #include "pencil-toolbar.h"
 #include "desktop.h"
@@ -43,6 +45,16 @@
 #include "ui/tools/pen-tool.h"
 #include "ui/uxmanager.h"
 #include "widgets/spinbutton-events.h"
+#include <selection.h>
+#include "display/curve.h"
+#include "live_effects/effect.h"
+#include "live_effects/lpe-simplify.h"
+#include "live_effects/lpe-powerstroke.h"
+#include "live_effects/effect-enum.h"
+#include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
+#include "sp-lpe-item.h"
+#include "util/glib-list-iterators.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
@@ -151,6 +163,12 @@ static void freehand_change_shape(EgeSelectOneAction* act, GObject *dataKludge) 
     prefs->setInt(freehand_tool_name(dataKludge) + "/shape", shape);
 }
 
+static void freehand_simplify_lpe(InkToggleAction* itact, GObject *dataKludge) {
+    gint simplify = gtk_toggle_action_get_active( GTK_TOGGLE_ACTION(itact) );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(freehand_tool_name(dataKludge) + "/simplify", simplify);
+}
+
 /**
  * Generate the list of freehand advanced shape option entries.
  */
@@ -162,6 +180,7 @@ static GList * freehand_shape_dropdown_items_list() {
     glist = g_list_append (glist, _("Triangle out"));
     glist = g_list_append (glist, _("Ellipse"));
     glist = g_list_append (glist, _("From clipboard"));
+    glist = g_list_append (glist, _("Bend from clipboard"));
     glist = g_list_append (glist, _("Last applied"));
 
     return glist;
@@ -220,6 +239,41 @@ static void sp_pencil_tb_defaults(GtkWidget * /*widget*/, GObject *obj)
     spinbutton_defocus(tbl);
 }
 
+static void sp_simplify_flatten(GtkWidget * /*widget*/, GObject *obj)
+{
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(obj, "desktop"));
+    std::vector<SPItem *> selected = desktop->getSelection()->itemList();
+    for (std::vector<SPItem *>::iterator it(selected.begin()); it != selected.end(); ++it){
+        SPLPEItem* lpeitem = dynamic_cast<SPLPEItem*>(*it);
+        if (lpeitem && lpeitem->hasPathEffect()){
+            PathEffectList lpelist = lpeitem->getEffectList();
+            std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
+            for (i = lpelist.begin(); i != lpelist.end(); ++i) {
+                LivePathEffectObject *lpeobj = (*i)->lpeobject;
+                if (lpeobj) {
+                    Inkscape::LivePathEffect::Effect *lpe = lpeobj->get_lpe();
+                    if (dynamic_cast<Inkscape::LivePathEffect::LPESimplify *>(lpe)) {
+                        SPShape * shape = dynamic_cast<SPShape *>(lpeitem);
+                        if(shape){
+                            SPCurve * c = shape->getCurveBeforeLPE();
+                            lpe->doEffect(c);
+                            lpeitem->setCurrentPathEffect(*i);
+                            if (lpelist.size() > 1){
+                                lpeitem->removeCurrentPathEffect(true);
+                                shape->setCurveBeforeLPE(c);
+                            } else {
+                                lpeitem->removeCurrentPathEffect(false);
+                                shape->setCurve(c,0);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 static void sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
     // quit if run by the attr_changed listener
@@ -232,6 +286,51 @@ static void sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tb
     prefs->setDouble("/tools/freehand/pencil/tolerance",
             gtk_adjustment_get_value(adj));
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(tbl, "desktop"));
+    std::vector<SPItem *> selected = desktop->getSelection()->itemList();
+    for (std::vector<SPItem *>::iterator it(selected.begin()); it != selected.end(); ++it){
+        SPLPEItem* lpeitem = dynamic_cast<SPLPEItem*>(*it);
+        if (lpeitem && lpeitem->hasPathEffect()){
+            Inkscape::LivePathEffect::Effect* simplify = lpeitem->getPathEffectOfType(Inkscape::LivePathEffect::SIMPLIFY);
+            if(simplify){
+                Inkscape::LivePathEffect::LPESimplify *lpe_simplify = dynamic_cast<Inkscape::LivePathEffect::LPESimplify*>(simplify->getLPEObj()->get_lpe());
+                if (lpe_simplify) {
+                    double tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
+                    tol = tol/(100.0*(102.0-tol));
+                    std::ostringstream ss;
+                    ss << tol;
+                    Inkscape::LivePathEffect::Effect* powerstroke = lpeitem->getPathEffectOfType(Inkscape::LivePathEffect::POWERSTROKE);
+                    bool simplified = false;
+                    if(powerstroke){
+                        Inkscape::LivePathEffect::LPEPowerStroke *lpe_powerstroke = dynamic_cast<Inkscape::LivePathEffect::LPEPowerStroke*>(powerstroke->getLPEObj()->get_lpe());
+                        if(lpe_powerstroke){
+                            lpe_powerstroke->getRepr()->setAttribute("is_visible", "false");
+                            sp_lpe_item_update_patheffect(lpeitem, false, false);
+                            SPShape *sp_shape = dynamic_cast<SPShape *>(lpeitem);
+                            if (sp_shape) {
+                                guint previous_curve_length = sp_shape->getCurve()->get_segment_count();
+                                lpe_simplify->getRepr()->setAttribute("threshold", ss.str());
+                                sp_lpe_item_update_patheffect(lpeitem, false, false);
+                                simplified = true;
+                                guint curve_length = sp_shape->getCurve()->get_segment_count();
+                                std::vector<Geom::Point> ts = lpe_powerstroke->offset_points.data();
+                                double factor = (double)curve_length/ (double)previous_curve_length;
+                                for (size_t i = 0; i < ts.size(); i++) {
+                                    ts[i][Geom::X] = ts[i][Geom::X] * factor;
+                                }
+                                lpe_powerstroke->offset_points.param_setValue(ts);
+                            }
+                            lpe_powerstroke->getRepr()->setAttribute("is_visible", "true");
+                            sp_lpe_item_update_patheffect(lpeitem, false, false);
+                        }
+                    }
+                    if(!simplified){
+                        lpe_simplify->getRepr()->setAttribute("threshold", ss.str());
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*
@@ -301,6 +400,28 @@ void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                           INKSCAPE_ICON("edit-clear"),
                                           Inkscape::ICON_SIZE_SMALL_TOOLBAR );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_pencil_tb_defaults), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+    /* LPE simplify based tolerance */
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        InkToggleAction* itact = ink_toggle_action_new( "PencilLpeSimplify",
+                                                        _("LPE based interactive simplify"),
+                                                        _("LPE based interactive simplify"),
+                                                        INKSCAPE_ICON("interactive_simplify"),
+                                                        Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(itact), prefs->getInt("/tools/freehand/pencil/simplify", 0) );
+        g_signal_connect_after(  G_OBJECT(itact), "toggled", G_CALLBACK(freehand_simplify_lpe), holder) ;
+        gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
+    }
+    /* LPE simplify flatten */
+    {
+        InkAction* inky = ink_action_new( "PencilLpeSimplifyFlatten",
+                                          _("LPE simplify flatten"),
+                                          _("LPE simplify flatten"),
+                                          INKSCAPE_ICON("flatten_simplify"),
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_simplify_flatten), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 

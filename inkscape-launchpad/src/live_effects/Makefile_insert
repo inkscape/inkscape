@@ -74,6 +74,8 @@ ink_common_sources += \
 	live_effects/lpe-mirror_symmetry.h	\
 	live_effects/lpe-circle_3pts.cpp	\
 	live_effects/lpe-circle_3pts.h	\
+	live_effects/lpe-transform_2pts.cpp	\
+	live_effects/lpe-transform_2pts.h	\
 	live_effects/lpe-angle_bisector.cpp	\
 	live_effects/lpe-angle_bisector.h	\
 	live_effects/lpe-parallel.cpp	\

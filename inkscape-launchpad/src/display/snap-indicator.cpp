@@ -256,7 +256,12 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
                                         "shape", SP_KNOT_SHAPE_CROSS,
                                         NULL );
 
-        const int timeout_val = 4000;
+        double timeout_val = prefs->getDouble("/options/snapindicatorpersistence/value", 2.0);
+        if (timeout_val < 0.1) {
+            timeout_val = 0.1; // a zero value would mean infinite persistence (i.e. until new snap occurs)
+            // Besides, negatives values would ....?
+        }
+
 
         // The snap indicator will be deleted after some time-out, and sp_canvas_item_dispose
         // will be called. This will set canvas->current_item to NULL if the snap indicator was
@@ -272,7 +277,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         SP_CTRL(canvasitem)->pickable = false;
 
         SP_CTRL(canvasitem)->moveto(p.getPoint());
-        _snaptarget = _desktop->add_temporary_canvasitem(canvasitem, timeout_val);
+        _snaptarget = _desktop->add_temporary_canvasitem(canvasitem, timeout_val*1000.0);
         _snaptarget_is_presnap = pre_snap;
 
         // Display the tooltip, which reveals the type of snap source and the type of snap target
@@ -307,7 +312,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             SP_CANVASTEXT(canvas_tooltip)->anchor_position = TEXT_ANCHOR_CENTER;
             g_free(tooltip_str);
 
-            _snaptarget_tooltip = _desktop->add_temporary_canvasitem(canvas_tooltip, timeout_val);
+            _snaptarget_tooltip = _desktop->add_temporary_canvasitem(canvas_tooltip, timeout_val*1000.0);
         }
 
         // Display the bounding box, if we snapped to one

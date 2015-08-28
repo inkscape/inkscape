@@ -203,8 +203,9 @@ SPCurve::moveto(double x, double y)
 void
 SPCurve::moveto(Geom::Point const &p)
 {
-    _pathv.push_back( Geom::Path() );  // for some reason Geom::Path(p) does not work...
-    _pathv.back().start(p);
+    Geom::Path path(p);
+    path.setStitching(true);
+    _pathv.push_back(path);
 }
 
 /**

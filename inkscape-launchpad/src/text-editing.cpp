@@ -1805,6 +1805,14 @@ static bool tidy_operator_redundant_semi_nesting(SPObject **item, bool /*has_tex
     return false;
 }
 
+
+/* tidy_operator_styled_whitespace commented out: not only did it have bugs, 
+ * but it did *not* preserve the rendering: spaces in different font sizes, 
+ * for instance, have different width, so moving them out of tspans changes 
+ * the document. cf https://bugs.launchpad.net/inkscape/+bug/1477723
+*/
+
+#if 0
 /** helper for tidy_operator_styled_whitespace(), finds the last string object
 in a paragraph which is not \a not_obj. */
 static SPString* find_last_string_child_not_equal_to(SPObject *root, SPObject *not_obj)
@@ -1883,6 +1891,7 @@ static bool tidy_operator_styled_whitespace(SPObject **item, bool has_text_decor
     delete_obj->deleteObject();
     return true;
 }
+#endif
 
 /* possible tidy operators that are not yet implemented, either because
 they are difficult, occur infrequently, or because I'm not sure that the
@@ -1917,8 +1926,7 @@ static bool tidy_xml_tree_recursively(SPObject *root, bool has_text_decoration)
         tidy_operator_repeated_spans,
         tidy_operator_excessive_nesting,
         tidy_operator_redundant_double_nesting,
-        tidy_operator_redundant_semi_nesting,
-        tidy_operator_styled_whitespace
+        tidy_operator_redundant_semi_nesting
     };
     bool changes = false;
 

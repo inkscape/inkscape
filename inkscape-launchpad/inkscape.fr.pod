@@ -153,7 +153,7 @@ PNG, avec --export-use-hints.
 
 Arrondi les dimensions de la zone à exporter aux valeurs entières
 supérieures en unités SVG utilisateur (px). Si vous utilisez une résolution
-d'export de 90 ppp et que vos objets sont alignés aux pixels afin de
+d'export de 96 ppp et que vos objets sont alignés aux pixels afin de
 minimiser l'anti-crénelage, cette option permet de préserver cet alignement
 même si l'export se fait selon des boîtes de contour (avec --export-id ou
 --export-area-drawing) qui ne sont pas correctement alignées sur les pixels.
@@ -171,7 +171,7 @@ utilisée (enregistrée dans l'attribut pagecolor= de sodipodi:namedview).
 La résolution utilisée pour l'export en PNG. Elle est également utilisée
 pour définir le niveau de rastérisation des objets filtrés lors de l'export
 en PS, EPS ou PDF (sauf si l'option --export-ignore-filters est
-utilisée). Elle est de 90 par défaut, correspondant à 1 pixel SVG (px, aussi
+utilisée). Elle est de 96 par défaut, correspondant à 1 pixel SVG (px, aussi
 appelé « unité utilisateur ») s'exportant vers 1 pixel bitmap. Cette valeur
 préempte la PPP enregistrée avec le document si la commande est utilisée
 avec --export-use-hints.
@@ -362,7 +362,7 @@ l'exportation en PS, EPS, PDF ou SVG).
 Exporte les objets filtrés (avec du flou, par exemple) comme des vecteurs,
 en ignorant les filtres (pour l'exportation en PS, EPS ou PDF). Par défaut,
 tous les objets filtrés sont rastérisés à une définition choisie par
---export-dpi (par défaut 90 ppp), en préservant son apparence.
+--export-dpi (par défaut 96 ppp), en préservant son apparence.
 
 =item B<-I>, B<--query-id>
 
@@ -474,7 +474,7 @@ Imprimer un fichier S<SVG :>
 
     inkscape nomdefichier.svg -p '| lpr'
 
-Exporter un fichier SVG en PNG avec la résolution par défaut de 90 ppp (un
+Exporter un fichier SVG en PNG avec la résolution par défaut de 96 ppp (un
 pixel bitmap correspondant à une unité utilisateur S<SVG) :>
 
     inkscape nomdefichier.svg --export-png=nomdefichier.png
@@ -494,7 +494,7 @@ S<graphique :>
 
     inkscape nomdefichier.svg --export-id=text1555 --export-use-hints
 
-Idem, mais en utilisant une résolution de 90 ppp, en spécifiant un nom de
+Idem, mais en utilisant une résolution de 96 ppp, en spécifiant un nom de
 fichier et en arrondissant la zone à exporter aux valeurs entières juste
 supérieures en unités utilisateur SVG (afin de préserver l'alignement des
 objets sur des pixels et minimiser S<l'anti-crénelage) :>
@@ -682,7 +682,7 @@ l'Open Source plus stimulant visuellement parlant pour un plus large public.
 
 =head1 COPYRIGHT ET LICENSE
 
-B<Copyright (C)> 1999-2011 des auteurs.
+B<Copyright (C)> 1999-2015 par les auteurs.
 
 B<Inkscape> est un logiciel libre; vous pouvez le redistribuer et/ou le
 modifier selon les termes de la license GPL.  

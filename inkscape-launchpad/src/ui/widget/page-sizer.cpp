@@ -266,12 +266,14 @@ PageSizer::PageSizer(Registry & _wr)
     _viewboxW.setDigits(2);
     _viewboxH.setDigits(2);
 
+    _dimensionWidth.setRange( 0.00001, 10000000 );
+    _dimensionHeight.setRange( 0.00001, 10000000 );
     _scaleX.setRange( 0.00001, 100000 );
     _scaleY.setRange( 0.00001, 100000 );
     _viewboxX.setRange( -100000, 100000 );
     _viewboxY.setRange( -100000, 100000 );
-    _viewboxW.setRange( 0, 200000 );
-    _viewboxH.setRange( 0, 200000 );
+    _viewboxW.setRange( 0.01, 200000 );
+    _viewboxH.setRange( 0.01, 200000 );
 
     _scaleY.set_sensitive (false); // We only want to display Y scale.
 

@@ -199,36 +199,8 @@ void SVGPreview::showImage(Glib::ustring &theFileName)
     // files so we assume they are well formed.
 
     // std::cout << "SVGPreview::showImage: " << theFileName << std::endl;
-    std::ifstream input(theFileName.c_str());
-
     std::string width;
     std::string height;
-
-    if( !input ) {
-        std::cerr << "SVGPreview::showImage: Failed to open file: " << theFileName << std::endl;
-    } else {
-
-        std::string token;
-
-        Glib::MatchInfo match_info;
-        Glib::RefPtr<Glib::Regex> regex1 = Glib::Regex::create("width=\"(.*)\"");
-        Glib::RefPtr<Glib::Regex> regex2 = Glib::Regex::create("height=\"(.*)\"");
- 
-        while( !input.eof() && (height.empty() || width.empty()) ) {
-
-            input >> token;
-            // std::cout << "|" << token << "|" << std::endl;
-
-            if (regex1->match(token, match_info)) {
-                width = match_info.fetch(1).raw();
-            }
-
-            if (regex2->match(token, match_info)) {
-                height = match_info.fetch(1).raw();
-            }
-
-        }
-    }
 
     /*#####################################
     # LET'S HAVE SOME FUN WITH SVG!
@@ -265,6 +237,46 @@ void SVGPreview::showImage(Glib::ustring &theFileName)
 
     gint imgWidth = img->get_width();
     gint imgHeight = img->get_height();
+    
+    Glib::ustring svg = ".svg";
+    if (hasSuffix(fileName, svg)) {
+        std::ifstream input(theFileName.c_str());
+        if( !input ) {
+            std::cerr << "SVGPreview::showImage: Failed to open file: " << theFileName << std::endl;
+        } else {
+
+            std::string token;
+
+            Glib::MatchInfo match_info;
+            Glib::RefPtr<Glib::Regex> regex1 = Glib::Regex::create("width=\"(.*)\"");
+            Glib::RefPtr<Glib::Regex> regex2 = Glib::Regex::create("height=\"(.*)\"");
+     
+            while( !input.eof() && (height.empty() || width.empty()) ) {
+
+                input >> token;
+                // std::cout << "|" << token << "|" << std::endl;
+
+                if (regex1->match(token, match_info)) {
+                    width = match_info.fetch(1).raw();
+                }
+
+                if (regex2->match(token, match_info)) {
+                    height = match_info.fetch(1).raw();
+                }
+
+            }
+        }
+    }
+    
+    // TODO: replace int to string conversion with std::to_string when fully C++11 compliant
+    if (height.empty() || width.empty()) {
+        std::ostringstream s_width;
+        std::ostringstream s_height;
+        s_width << imgWidth;
+        s_height << imgHeight;
+        width = s_width.str();
+        height = s_height.str();
+    }
 
     // Find the minimum scale to fit the image inside the preview area
     double scaleFactorX = (0.9 * (double)previewWidth) / ((double)imgWidth);

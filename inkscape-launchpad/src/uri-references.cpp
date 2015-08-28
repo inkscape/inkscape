@@ -43,6 +43,56 @@ URIReference::~URIReference()
     detach();
 }
 
+/*
+ * The main ideas here are:
+ * (1) "If we are inside a clone, then we can accept if and only if our "original thing" can accept the reference"
+ * (this caused problems when there are clones because a change in ids triggers signals for the object hrefing this id, but also its cloned reprs
+ * (descendants of <use> referencing an ancestor of the href'ing object)). The way it is done here is *atrocious*, but i could not find a better way.
+ * FIXME: find a better and safer way to find the "original object" of anyone with the flag ->cloned
+ *
+ * (2) Once we have an (potential owner) object, it can accept a href to obj, iff the graph of objects where directed edges are
+ * either parent->child relations , *** or href'ing to href'ed *** relations, stays acyclic.
+ * We can go either from owner and up in the tree, or from obj and down, in either case this will be in the worst case linear in the number of objects.
+ * There are no easy objects allowing to do the second proposition, while "hrefList" is a "list of objects href'ing us", so we'll take this.
+ * Then we keep a set of already visited elements, and do a DFS on this graph. if we find obj, then BOOM.
+ */
+
+bool URIReference::_acceptObject(SPObject *obj) const {
+	//we go back following hrefList and parent to find if the object already references ourselves indirectly
+	std::set<SPObject*> done;
+	SPObject * owner = getOwner();
+	if(!owner)return true;
+	while(owner->cloned){
+		std::vector<int> positions;
+        while(owner->cloned){
+        	int position=0;
+        	SPObject* c = owner->parent->firstChild();
+        	while(c != owner && dynamic_cast<SPObject*>(c) ){position++;c=c->next;}
+	    	positions.push_back(position);
+    		owner=owner->parent;
+    	}
+		    owner = ((SPUse*)owner)->get_original();
+		    for(int i=positions.size()-2;i>=0;i--)owner=owner->childList(false)[positions[i]];
+	}
+	//once we have the "original" object (hopefully) we look at who is referencing it
+	std::list<SPObject*> todo(owner->hrefList);
+	todo.push_front(owner->parent);
+	while(!todo.empty()){
+	    SPObject* e = todo.front();
+	    todo.pop_front();
+	    if(!dynamic_cast<SPObject*>(e))continue;
+	    if(done.insert(e).second){
+	    	if(e==obj){return false;}
+	    	todo.push_front(e->parent);
+	    	todo.insert(todo.begin(),e->hrefList.begin(),e->hrefList.end());
+	    }
+	}
+    return true;
+}
+
+
+
+
 void URIReference::attach(const URI &uri) throw(BadURIException)
 {
     SPDocument *document = NULL;

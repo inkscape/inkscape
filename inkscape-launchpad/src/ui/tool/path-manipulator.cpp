@@ -56,9 +56,9 @@ enum PathChange {
 };
 
 } // anonymous namespace
-const double HANDLE_CUBIC_GAP = 0.01;
+const double HANDLE_CUBIC_GAP = 0.001;
 const double NO_POWER = 0.0;
-const double defaultStartPower = 0.3334;
+const double DEFAULT_START_POWER = 0.3334;
 
 
 /**
@@ -695,10 +695,12 @@ unsigned PathManipulator::_deleteStretch(NodeList::iterator start, NodeList::ite
     // if we are removing, we readjust the handlers
     if(_isBSpline()){
         if(start.prev()){
-            start.prev()->front()->setPosition(_bsplineHandleReposition(start.prev()->front(),start.prev()->back()));
+            double bspline_weight = _bsplineHandlePosition(start.prev()->back(), false);
+            start.prev()->front()->setPosition(_bsplineHandleReposition(start.prev()->front(), bspline_weight));
         }
         if(end){
-            end->back()->setPosition(_bsplineHandleReposition(end->back(),end->front()));
+            double bspline_weight = _bsplineHandlePosition(end->front(), false);
+            end->back()->setPosition(_bsplineHandleReposition(end->back(),bspline_weight));
         }
     }
 
@@ -1033,7 +1035,7 @@ NodeList::iterator PathManipulator::subdivideSegment(NodeList::iterator first, d
                 line_inside_nodes->moveto(n->position());
                 line_inside_nodes->lineto(second->position());
                 sbasis_inside_nodes = line_inside_nodes->first_segment()->toSBasis();
-                Geom::Point next = sbasis_inside_nodes.valueAt(defaultStartPower);
+                Geom::Point next = sbasis_inside_nodes.valueAt(DEFAULT_START_POWER);
                 next = Geom::Point(next[Geom::X] + HANDLE_CUBIC_GAP,next[Geom::Y] + HANDLE_CUBIC_GAP);
                 line_inside_nodes->reset();
                 n->front()->setPosition(next);
@@ -1044,7 +1046,7 @@ NodeList::iterator PathManipulator::subdivideSegment(NodeList::iterator first, d
                 line_inside_nodes->moveto(n->position());
                 line_inside_nodes->lineto(first->position());
                 sbasis_inside_nodes = line_inside_nodes->first_segment()->toSBasis();
-                Geom::Point previous = sbasis_inside_nodes.valueAt(defaultStartPower);
+                Geom::Point previous = sbasis_inside_nodes.valueAt(DEFAULT_START_POWER);
                 previous = Geom::Point(previous[Geom::X] + HANDLE_CUBIC_GAP,previous[Geom::Y] + HANDLE_CUBIC_GAP);
                 n->back()->setPosition(previous);
             }else{
@@ -1277,13 +1279,10 @@ bool PathManipulator::_isBSpline() const {
 }
 
 // returns the corresponding strength to the position of the handlers
-double PathManipulator::_bsplineHandlePosition(Handle *h, Handle *h2)
+double PathManipulator::_bsplineHandlePosition(Handle *h, bool check_other)
 {
     using Geom::X;
     using Geom::Y;
-    if(h2){
-        h = h2;
-    }
     double pos = NO_POWER;
     Node *n = h->parent();
     Node * next_node = NULL;
@@ -1296,16 +1295,16 @@ double PathManipulator::_bsplineHandlePosition(Handle *h, Handle *h2)
             pos = Geom::nearest_time(Geom::Point(h->position()[X] - HANDLE_CUBIC_GAP, h->position()[Y] - HANDLE_CUBIC_GAP), *line_inside_nodes->first_segment());
         }
     }
-    if (pos == NO_POWER && !h2){
-        return _bsplineHandlePosition(h, h->other());
+    if (pos == NO_POWER && check_other){
+        return _bsplineHandlePosition(h->other(), false);
     }
     return pos;
 }
 
 // give the location for the handler in the corresponding position
-Geom::Point PathManipulator::_bsplineHandleReposition(Handle *h, Handle *h2)
+Geom::Point PathManipulator::_bsplineHandleReposition(Handle *h, bool check_other)
 {
-    double pos = this->_bsplineHandlePosition(h, h2);
+    double pos = this->_bsplineHandlePosition(h, check_other);
     return _bsplineHandleReposition(h,pos);
 }
 

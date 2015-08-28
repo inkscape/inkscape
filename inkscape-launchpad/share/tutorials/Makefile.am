@@ -131,6 +131,7 @@ tutorial_DATA = \
     tutorial-interpolate.nl.svg \
     tutorial-interpolate.pl.svg \
     tutorial-interpolate.pt_BR.svg \
+    tutorial-interpolate.ru.svg \
     tutorial-interpolate.sk.svg \
     tutorial-interpolate.sl.svg \
     tutorial-interpolate.vi.svg \
@@ -202,6 +203,10 @@ tutorial_DATA = \
     tutorial-tracing.vi.svg \
     tutorial-tracing.zh_TW.svg \
     tutorial-tracing-pixelart.svg \
+    tutorial-tracing-pixelart.el.svg \
+    tutorial-tracing-pixelart.fr.svg \
+    tutorial-tracing-pixelart.nl.svg \
+    tutorial-tracing-pixelart.zh_TW.svg \
     tux.png
 
 

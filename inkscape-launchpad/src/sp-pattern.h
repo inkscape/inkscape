@@ -129,9 +129,8 @@ public:
     }
 
 protected:
-    virtual bool _acceptObject(SPObject *obj) const
-    {
-        return SP_IS_PATTERN(obj);
+    virtual bool _acceptObject(SPObject *obj) const {
+        return SP_IS_PATTERN (obj)&& URIReference::_acceptObject(obj);
     }
 };
 

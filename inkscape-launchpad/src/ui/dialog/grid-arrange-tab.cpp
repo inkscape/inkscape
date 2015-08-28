@@ -311,7 +311,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
 
              GSList *current_row = NULL;
              col_cnt = 0;
-             for(;it!=sorted.end()&&col<NoOfCols;it++) {
+             for(;it!=sorted.end()&&col_cnt<NoOfCols;it++) {
                  current_row = g_slist_append (current_row, *it);
                  col_cnt++;
              }

@@ -147,12 +147,12 @@ Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f, double 
                 SBasis &prev_sb=result.segs[prev][dim];
                 SBasis &cur_sb =result.segs[cur][dim];
                 Coord const c=pt0[dim];
-                if (prev_sb.empty()) {
+                if (prev_sb.isZero(0)) {
                   prev_sb = SBasis(Linear(0.0, c));
                 } else {
                   prev_sb[0][1] = c;
                 }
-                if (cur_sb.empty()) {
+                if (cur_sb.isZero(0)) {
                   cur_sb = SBasis(Linear(c, 0.0));
                 } else {
                   cur_sb[0][0] = c;
@@ -198,30 +198,22 @@ Point unitTangentAt(D2<SBasis> const & a, Coord t, unsigned n)
     return Point (0,0);
 }
 
-static void set_first_point(Piecewise<D2<SBasis> > &f, Point a){
+static void set_first_point(Piecewise<D2<SBasis> > &f, Point const &a){
     if ( f.empty() ){
         f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(SBasis(Linear(a[X])), SBasis(Linear(a[Y])))));
         return;
     }
     for (unsigned dim=0; dim<2; dim++){
-        if (f.segs.front()[dim].size() == 0){
-            f.segs.front()[dim] = SBasis(Linear(a[dim],0));
-        }else{
-            f.segs.front()[dim][0][0] = a[dim];
-        }
+        f.segs.front()[dim][0][0] = a[dim];
     }
 }
-static void set_last_point(Piecewise<D2<SBasis> > &f, Point a){
+static void set_last_point(Piecewise<D2<SBasis> > &f, Point const &a){
     if ( f.empty() ){
         f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(SBasis(Linear(a[X])), SBasis(Linear(a[Y])))));
         return;
     }
     for (unsigned dim=0; dim<2; dim++){
-        if (f.segs.back()[dim].size() == 0){
-            f.segs.back()[dim] = SBasis(Linear(0,a[dim]));
-        }else{
-            f.segs.back()[dim][0][1] = a[dim];
-        }
+        f.segs.back()[dim][0][1] = a[dim];
     }
 }
 

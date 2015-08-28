@@ -125,6 +125,7 @@ static SPStyleProp const props[] = {
     /* SPGuide */
     {SP_ATTR_ORIENTATION, "orientation"},
     {SP_ATTR_POSITION, "position"},
+    {SP_ATTR_INKSCAPE_COLOR, "inkscape:color"},
     /* SPImage */
     {SP_ATTR_X, "x"},
     {SP_ATTR_Y, "y"},

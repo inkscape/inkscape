@@ -25327,7 +25327,7 @@ msgstr "tutorial-tracing.de.svg"
 
 #: ../src/verbs.cpp:2199
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "tutorial-tracing-pixelart.de.svg"
+msgstr "tutorial-tracing-pixelart.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2203

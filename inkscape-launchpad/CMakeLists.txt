@@ -89,10 +89,12 @@ option(WITH_IMAGE_MAGICK "Compile with support of ImageMagick for raster extensi
 option(WITH_LIBCDR "Compile with support of libcdr for CorelDRAW Diagrams" ON)
 option(WITH_LIBVISIO "Compile with support of libvisio for Microsoft Visio Diagrams" ON)
 option(WITH_LIBWPG "Compile with support of libwpg for WordPerfect Graphics" ON)
+option(WITH_NLS "Compile with Native Language Support (using gettext)" ON)
 
 include(CMakeScripts/ConfigPaths.cmake) # Installation Paths
 include(CMakeScripts/DefineDependsandFlags.cmake) # Includes, Compiler Flags, and Link Libraries
 include(CMakeScripts/HelperMacros.cmake) # Misc Utility Macros
+include(CMakeScripts/FindGettext.cmake) # custom FindGetText
 
 
 
@@ -139,6 +141,9 @@ add_custom_target(uninstall
 # -----------------------------------------------------------------------------
 
 add_subdirectory(src)
+if(ENABLE_NLS)
+  add_subdirectory(po)
+endif(ENABLE_NLS)
 
 
 # -----------------------------------------------------------------------------
@@ -149,7 +154,7 @@ if(UNIX)
 	# TODO: man, locale
 
 	install(
-		PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape
+                PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape ${EXECUTABLE_OUTPUT_PATH}/inkview
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 	)
 
