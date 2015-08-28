@@ -340,7 +340,11 @@ LPETransform2Pts::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const 
     if(elastic) {
         Geom::Angle original_angle = original.angle();
         m *= Geom::Rotate(-original_angle);
-        m *= Geom::Scale(sca, 1.0);
+        if(sca > 1){
+            m *= Geom::Scale(sca, 1.0);
+        } else {
+            m *= Geom::Scale(sca, 1.0-((1.0-sca)/2.0));
+        }
         m *= Geom::Rotate(transformed.angle());
         helper *= m;
         m *= Geom::Translate((Geom::Point)start - helper.initialPoint());
