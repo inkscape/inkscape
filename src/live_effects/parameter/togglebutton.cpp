@@ -119,6 +119,10 @@ ToggleButtonParam::param_newWidget()
 void
 ToggleButtonParam::refresh_button()
 {
+    if (!_toggled_connection.connected()) {
+        return;
+    }
+
     if(!checkwdg){
         return;
     }
