@@ -285,8 +285,8 @@ void PrintMetafile::brush_classify(SPObject *parent, int depth, Inkscape::Pixbuf
                 return;
             }
             char temp[32];  // large enough
-            temp[31] = '\0';
-            strncpy(temp, pat_i->getAttribute("id"), 31); // Some names may be longer than [EW]MFhatch#_######
+            strncpy(temp, pat_i->getAttribute("id"), sizeof(temp)-1); // Some names may be longer than [EW]MFhatch#_######
+            temp[sizeof(temp)-1] = '\0';
             hatch_classify(temp, hatchType, hatchColor, bkColor);
             if (*hatchType != -1) {
                 return;
