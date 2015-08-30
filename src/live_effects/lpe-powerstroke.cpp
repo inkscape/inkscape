@@ -102,11 +102,14 @@ static Circle touching_circle( D2<SBasis> const &curve, double t, double tol=0.0
 {
     //Piecewise<SBasis> k = curvature(curve, tol);
     D2<SBasis> dM=derivative(curve);
-    if ( are_near(L2sq(dM(t)),0.) ) {
+    if ( are_near(L2sq(dM(t)),0.) && (dM[0].size() > 1) && (dM[1].size() > 1) ) {
         dM=derivative(dM);
     }
-    if ( are_near(L2sq(dM(t)),0.) ) {   // try second time
+    if ( are_near(L2sq(dM(t)),0.) && (dM[0].size() > 1) && (dM[1].size() > 1) ) {   // try second time
         dM=derivative(dM);
+    }
+    if ( are_near(L2sq(dM(t)),0.) && (dM[0].size() > 1) && (dM[1].size() > 1) ) {   // admit defeat
+        return Geom::Circle(Geom::Point(0., 0.), 0.);
     }
     Piecewise<D2<SBasis> > unitv = unitVector(dM,tol);
     Piecewise<SBasis> dMlength = dot(Piecewise<D2<SBasis> >(dM),unitv);
