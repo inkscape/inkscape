@@ -1876,6 +1876,8 @@ SPDesktop::show_dialogs()
     mapVerbPreference.insert(std::make_pair ("ObjectProperties", "/dialogs/object") );
     mapVerbPreference.insert(std::make_pair ("SpellCheck", "/dialogs/spellcheck") );
     mapVerbPreference.insert(std::make_pair ("Symbols", "/dialogs/symbols") );
+    mapVerbPreference.insert(std::make_pair ("ObjectsPanel", "/dialogs/objects") );
+    mapVerbPreference.insert(std::make_pair ("TagsPanel", "/dialogs/tags") );
 
     for (std::map<Glib::ustring, Glib::ustring>::const_iterator iter = mapVerbPreference.begin(); iter != mapVerbPreference.end(); ++iter) {
         Glib::ustring pref = iter->second;
