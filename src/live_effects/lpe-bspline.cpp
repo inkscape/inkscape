@@ -27,16 +27,16 @@ LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
       steps(_("Steps with CTRL:"), _("Change number of steps with CTRL pressed"), "steps", &wr, this, 2),
       helper_size(_("Helper size:"), _("Helper size"), "helper_size", &wr, this, 0),
-      apply_cusp(_("Apply on cusp nodes"), _("Apply on cusp nodes"), "apply_cusp", &wr, this, true),
-      apply_non_cusp(_("Apply on non cusp nodes"), _("Apply on non cusp nodes"), "apply_non_cusp", &wr, this, true),
+      apply_no_weight(_("Apply changes if weight = 0%"), _("Apply changes if weight = 0%"), "apply_no_weight", &wr, this, true),
+      apply_with_weight(_("Apply changes if weight > 0%"), _("Apply changes if weight > 0%"), "apply_with_weight", &wr, this, true),
       only_selected(_("Change only selected nodes"), _("Change only selected nodes"), "only_selected", &wr, this, false),
       weight(_("Change weight %:"), _("Change weight percent of the effect"), "weight", &wr, this, DEFAULT_START_POWER * 100)
 {
     registerParameter(&weight);
     registerParameter(&steps);
     registerParameter(&helper_size);
-    registerParameter(&apply_cusp);
-    registerParameter(&apply_non_cusp);
+    registerParameter(&apply_no_weight);
+    registerParameter(&apply_with_weight);
     registerParameter(&only_selected);
 
     weight.param_set_range(NO_POWER, 100.0);
@@ -116,7 +116,7 @@ Gtk::Widget *LPEBSpline::newWidget()
                     entry_widget->set_width_chars(9);
                 }
             }
-            if (param->param_key == "only_selected" || param->param_key == "apply_cusp" || param->param_key == "apply_non_cusp") {
+            if (param->param_key == "only_selected" || param->param_key == "apply_no_weight" || param->param_key == "apply_with_weight") {
                 Gtk::CheckButton *widg_registered =
                     Gtk::manage(dynamic_cast<Gtk::CheckButton *>(widg));
                 widg = dynamic_cast<Gtk::Widget *>(widg_registered);
@@ -363,9 +363,9 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
             point_at3 = in->first_segment()->finalPoint();
             sbasis_in = in->first_segment()->toSBasis();
             if (cubic) {
-                if ((apply_cusp && apply_non_cusp) ||
-                    (apply_cusp && Geom::are_near((*cubic)[1], point_at0)) ||
-                    (apply_non_cusp && !Geom::are_near((*cubic)[1], point_at0)))
+                if ((apply_no_weight && apply_with_weight) ||
+                    (apply_no_weight && Geom::are_near((*cubic)[1], point_at0)) ||
+                    (apply_with_weight && !Geom::are_near((*cubic)[1], point_at0)))
                 {
                     if (isNodePointSelected(point_at0) || !only_selected) {
                         point_at1 = sbasis_in.valueAt(weight_ammount);
@@ -379,9 +379,9 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
                 } else {
                     point_at1 = (*cubic)[1];
                 }
-                if ((apply_cusp && apply_non_cusp) ||
-                    (apply_cusp && Geom::are_near((*cubic)[2], point_at3)) ||
-                    (apply_non_cusp && !Geom::are_near((*cubic)[2], point_at3)))
+                if ((apply_no_weight && apply_with_weight) ||
+                    (apply_no_weight && Geom::are_near((*cubic)[2], point_at3)) ||
+                    (apply_with_weight && !Geom::are_near((*cubic)[2], point_at3)))
                 {
                     if (isNodePointSelected(point_at3) || !only_selected) {
                         point_at2 = sbasis_in.valueAt(1 - weight_ammount);
@@ -396,9 +396,9 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
                     point_at2 = (*cubic)[2];
                 }
             } else {
-                if ((apply_cusp && apply_non_cusp) || 
-                    (apply_cusp && weight_ammount == NO_POWER) ||
-                    (apply_non_cusp && weight_ammount != NO_POWER))
+                if ((apply_no_weight && apply_with_weight) || 
+                    (apply_no_weight && weight_ammount == NO_POWER) ||
+                    (apply_with_weight && weight_ammount != NO_POWER))
                 {
                     if (isNodePointSelected(point_at0) || !only_selected) {
                         point_at1 = sbasis_in.valueAt(weight_ammount);
