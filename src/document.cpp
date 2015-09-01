@@ -1335,20 +1335,11 @@ SPItem *SPDocument::getItemFromListAtPointBottom(unsigned int dkey, SPGroup *gro
 }
 
 /**
-Returns the topmost (in z-order) item from the descendants of group (recursively) which
-is at the point p, or NULL if none. Honors into_groups on whether to recurse into
-non-layer groups or not. Honors take_insensitive on whether to return insensitive
-items. If upto != NULL, then if item upto is encountered (at any level), stops searching
-upwards in z-order and returns what it has found so far (i.e. the found item is
-guaranteed to be lower than upto).
- */
-static SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const &p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
+Turn the SVG DOM into a flat list of nodes that can be searched from top-down.
+The list can be persisted, which improves "find at multiple points" speed.
+*/
+static void build_flat_item_list(std::deque<SPItem*> *nodes, unsigned int dkey, SPGroup *group, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
 {
-    SPItem *seen = NULL;
-    SPItem *newseen = NULL;
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gdouble delta = prefs->getDouble("/options/cursortolerance/value", 1.0);
-
     for ( SPObject *o = group->firstChild() ; o ; o = o->getNext() ) {
         if (!SP_IS_ITEM(o)) {
             continue;
@@ -1359,27 +1350,43 @@ static SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point
         }
 
         if (SP_IS_GROUP(o) && (SP_GROUP(o)->effectiveLayerMode(dkey) == SPGroup::LAYER || into_groups)) {
-            // if nothing found yet, recurse into the group
-            newseen = find_item_at_point(dkey, SP_GROUP(o), p, into_groups, take_insensitive, upto);
-            if (newseen) {
-                seen = newseen;
-                newseen = NULL;
-            }
-
-            if (item_is_in_group(upto, SP_GROUP(o))) {
-                break;
-            }
+            build_flat_item_list(nodes, dkey, SP_GROUP(o), into_groups, take_insensitive, upto);
         } else {
             SPItem *child = SP_ITEM(o);
-            Inkscape::DrawingItem *arenaitem = child->get_arenaitem(dkey);
 
-            // seen remembers the last (topmost) of items pickable at this point
-            if (arenaitem && arenaitem->pick(p, delta, 1) != NULL
-                && (take_insensitive || child->isVisibleAndUnlocked(dkey))) {
-                seen = child;
+            if (take_insensitive || child->isVisibleAndUnlocked(dkey)) {
+                nodes->push_front(child);
             }
         }
     }
+}
+
+/**
+Returns the topmost (in z-order) item from the descendants of group (recursively) which
+is at the point p, or NULL if none. Honors into_groups on whether to recurse into
+non-layer groups or not. Honors take_insensitive on whether to return insensitive
+items. If upto != NULL, then if item upto is encountered (at any level), stops searching
+upwards in z-order and returns what it has found so far (i.e. the found item is
+guaranteed to be lower than upto). Requires a list of nodes built by
+build_flat_item_list.
+ */
+static SPItem *find_item_at_point(std::deque<SPItem*> *nodes, unsigned int dkey, Geom::Point const &p)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gdouble delta = prefs->getDouble("/options/cursortolerance/value", 1.0);
+
+    SPItem *seen = NULL;
+    SPItem *child;
+    for (unsigned long i = 0; i < nodes->size(); ++i) {
+        child = nodes->at(i);
+        Inkscape::DrawingItem *arenaitem = child->get_arenaitem(dkey);
+
+        if (arenaitem && arenaitem->pick(p, delta, 1) != NULL) {
+            seen = child;
+            break;
+        }
+    }
+
     return seen;
 }
 
@@ -1454,9 +1461,12 @@ std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vecto
     gdouble saved_delta = prefs->getDouble("/options/cursortolerance/value", 1.0);
     prefs->setDouble("/options/cursortolerance/value", 0.25);
 
+    // Cache a flattened SVG DOM to speed up selection.
+    std::deque<SPItem*> nodes;
+    build_flat_item_list(&nodes, key, SP_GROUP(this->root), true, false, NULL);
+
     for(int i = points.size()-1;i>=0; i--) {
-        SPItem *item = getItemAtPoint(key, points[i],
-                                                 false, NULL);
+        SPItem *item = find_item_at_point(&nodes, key, points[i]);
         if (item && items.end()==find(items.begin(),items.end(), item))
             items.push_back(item);
     }
@@ -1472,7 +1482,11 @@ SPItem *SPDocument::getItemAtPoint( unsigned const key, Geom::Point const &p,
 {
     g_return_val_if_fail(this->priv != NULL, NULL);
 
-    return find_item_at_point(key, SP_GROUP(this->root), p, into_groups, false, upto);
+    // Build a flattened SVG DOM for find_item_at_point.
+    std::deque<SPItem*> nodes;
+    build_flat_item_list(&nodes, key, SP_GROUP(this->root), into_groups, false, upto);
+
+    return find_item_at_point(&nodes, key, p);
 }
 
 SPItem *SPDocument::getGroupAtPoint(unsigned int key, Geom::Point const &p) const
@@ -1481,7 +1495,6 @@ SPItem *SPDocument::getGroupAtPoint(unsigned int key, Geom::Point const &p) cons
 
     return find_group_at_point(key, SP_GROUP(this->root), p);
 }
-
 
 // Resource management
 
