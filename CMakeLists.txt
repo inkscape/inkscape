@@ -94,8 +94,6 @@ option(WITH_NLS "Compile with Native Language Support (using gettext)" ON)
 include(CMakeScripts/ConfigPaths.cmake) # Installation Paths
 include(CMakeScripts/DefineDependsandFlags.cmake) # Includes, Compiler Flags, and Link Libraries
 include(CMakeScripts/HelperMacros.cmake) # Misc Utility Macros
-include(CMakeScripts/FindGettext.cmake) # custom FindGetText
-
 
 
 # -----------------------------------------------------------------------------
