@@ -289,6 +289,9 @@
 /* Image Magick++ support for bitmap effects */
 #cmakedefine WITH_IMAGE_MAGICK 1
 
+/* Use libjpeg */
+#cmakedefine HAVE_JPEG 1
+
 /* Build in Inkboard support */
 #cmakedefine WITH_INKBOARD 1
 
