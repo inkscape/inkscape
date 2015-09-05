@@ -3106,6 +3106,8 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
 
         symbol_repr->setAttribute("style",  the_group->getAttribute("style"));
         symbol_repr->setAttribute("class",  the_group->getAttribute("class"));
+        Glib::ustring id = the_group->getAttribute("id");
+        the_group->setAttribute("id", id + "_transform");
         symbol_repr->setAttribute("id",     the_group->getAttribute("id")   );
 
         // This should eventually be replaced by 'refX' and 'refY' once SVG WG approves it.
@@ -3116,9 +3118,6 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
                                   the_group->getAttribute("inkscape:transform-center-y"));
 
         the_group->setAttribute("style", NULL);
-        Glib::ustring id = symbol_repr->attribute("id");
-        id += "_transform";
-        the_group->setAttribute("id", id);
 
     }
 
