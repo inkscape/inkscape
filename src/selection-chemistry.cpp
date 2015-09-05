@@ -3056,6 +3056,7 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
     doc->ensureUpToDate();
 
     std::vector<SPObject*> items(selection->list());
+    sort(items.begin(),items.end(),sp_object_compare_position_bool);
 
     // Keep track of parent, this is where <use> will be inserted.
     Inkscape::XML::Node *the_first_repr = items[0]->getRepr();
@@ -3122,7 +3123,7 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
     }
 
     // Move selected items to new <symbol>
-    for (std::vector<SPObject*>::const_iterator i=items.begin();i!=items.end();i++){
+    for (std::vector<SPObject*>::const_reverse_iterator i=items.rbegin();i!=items.rend();i++){
       Inkscape::XML::Node *repr = (*i)->getRepr();
       repr->parent()->removeChild(repr);
       symbol_repr->addChild(repr,NULL);
