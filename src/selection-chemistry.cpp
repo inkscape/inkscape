@@ -3108,7 +3108,7 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
         symbol_repr->setAttribute("class",  the_group->getAttribute("class"));
         Glib::ustring id = the_group->getAttribute("id");
         the_group->setAttribute("id", id + "_transform");
-        symbol_repr->setAttribute("id",     the_group->getAttribute("id")   );
+        symbol_repr->setAttribute("id", id);
 
         // This should eventually be replaced by 'refX' and 'refY' once SVG WG approves it.
         // It is done here for round-tripping
