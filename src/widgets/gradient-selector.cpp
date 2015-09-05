@@ -555,6 +555,10 @@ sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *s
 
     if (gr) {
         repr = gr->getRepr()->duplicate(xml_doc);
+        // Rename the new gradients id to be similar to the cloned gradients
+        Glib::ustring old_id = gr->getId();
+        rename_id(gr, old_id);
+        doc->getDefs()->getRepr()->addChild(repr, NULL);
     } else {
         repr = xml_doc->createElement("svg:linearGradient");
         Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
@@ -567,17 +571,10 @@ sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *s
         stop->setAttribute("style", "stop-color:#fff;stop-opacity:1;");
         repr->appendChild(stop);
         Inkscape::GC::release(stop);
+        doc->getDefs()->getRepr()->addChild(repr, NULL);
+        gr = SP_GRADIENT(doc->getObjectByRepr(repr));
     }
-
-    doc->getDefs()->getRepr()->addChild(repr, NULL);
-
-    Glib::ustring old_id = gr->getId();
-
-    gr = SP_GRADIENT(doc->getObjectByRepr(repr));
-
-    // Rename the new gradients id to be similar to the cloned gradients
-    rename_id(gr, old_id);
-
+    
     sp_gradient_vector_selector_set_gradient( SP_GRADIENT_VECTOR_SELECTOR (sel->vectors), doc, gr);
 
     sel->selectGradientInTree(gr);
