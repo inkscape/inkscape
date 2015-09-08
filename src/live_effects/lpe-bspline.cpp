@@ -408,7 +408,7 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
                         point_at1 = in->first_segment()->initialPoint();
                     }
                     if (isNodePointSelected(point_at3) || !only_selected) {
-                        point_at2 = sbasis_in.valueAt(weight_ammount);
+                        point_at2 = sbasis_in.valueAt(1 - weight_ammount);
                         point_at2 =
                             Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
                     } else {
