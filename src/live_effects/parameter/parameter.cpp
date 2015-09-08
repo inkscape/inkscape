@@ -41,8 +41,6 @@ void
 Parameter::param_write_to_repr(const char * svgd)
 {
     param_effect->getRepr()->setAttribute(param_key.c_str(), svgd);
-    DocumentUndo::done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
-               _("Updated value to scalar parameter"));
 }
 
 void Parameter::write_to_SVG(void)
@@ -73,6 +71,7 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
 
 ScalarParam::~ScalarParam()
 {
+    _value_changed_connection.disconnect();
 }
 
 bool
@@ -146,6 +145,13 @@ ScalarParam::param_make_integer(bool yes)
     inc_page = 10;
 }
 
+void
+ScalarParam::on_value_changed()
+{
+    DocumentUndo::done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+        _("Change scalar parameter"));
+}
+
 Gtk::Widget *
 ScalarParam::param_newWidget()
 {
@@ -162,7 +168,7 @@ ScalarParam::param_newWidget()
     }
 
     rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
-
+    _value_changed_connection = rsu->signal_value_changed().connect (sigc::mem_fun (*this, &ScalarParam::on_value_changed));
     return dynamic_cast<Gtk::Widget *> (rsu);
 }
 

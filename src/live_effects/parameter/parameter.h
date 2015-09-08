@@ -12,6 +12,7 @@
 #include <glibmm/ustring.h>
 #include <2geom/forward.h>
 #include <2geom/pathvector.h>
+#include <sigc++/sigc++.h>
 
 // In gtk2, this wasn't an issue; we could toss around
 // G_MAXDOUBLE and not worry about size allocations. But
@@ -111,6 +112,7 @@ public:
     virtual void param_set_default();
     void param_set_value(gdouble val);
     void param_make_integer(bool yes = true);
+    void on_value_changed();
     void param_set_range(gdouble min, gdouble max);
     void param_set_digits(unsigned digits);
     void param_set_increments(double step, double page);
@@ -122,6 +124,7 @@ public:
     inline operator gdouble() const { return value; };
 
 protected:
+    sigc::connection  _value_changed_connection;
     gdouble value;
     gdouble min;
     gdouble max;
