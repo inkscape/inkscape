@@ -140,7 +140,7 @@ Gtk::Widget *LPEBSpline::newWidget()
 
 void LPEBSpline::toDefaultWeight()
 {
-    changeWeight(DEFAULT_START_POWER);
+    changeWeight(DEFAULT_START_POWER * 100);
 }
 
 void LPEBSpline::toMakeCusp()
