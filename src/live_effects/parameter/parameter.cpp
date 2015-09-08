@@ -11,6 +11,7 @@
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "xml/repr.h"
+#include "document-undo.h"
 
 #include "svg/stringstream.h"
 
@@ -40,6 +41,8 @@ void
 Parameter::param_write_to_repr(const char * svgd)
 {
     param_effect->getRepr()->setAttribute(param_key.c_str(), svgd);
+    DocumentUndo::done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
+               _("Updated value to scalar parameter"));
 }
 
 void Parameter::write_to_SVG(void)
