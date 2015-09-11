@@ -10,6 +10,8 @@
 #include "svg/svg.h"
 #include "xml/repr.h"
 #include "preferences.h"
+#include "document-undo.h"
+#include "verbs.h"
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
 
@@ -42,10 +44,12 @@ LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
     weight.param_set_range(NO_POWER, 100.0);
     weight.param_set_increments(0.1, 0.1);
     weight.param_set_digits(4);
+    weight.param_overwrite_widget(true);
 
     steps.param_set_range(1, 10);
     steps.param_set_increments(1, 1);
     steps.param_set_digits(0);
+    steps.param_overwrite_widget(true);
 
     helper_size.param_set_range(0.0, 999.0);
     helper_size.param_set_increments(1, 1);
@@ -141,16 +145,19 @@ Gtk::Widget *LPEBSpline::newWidget()
 void LPEBSpline::toDefaultWeight()
 {
     changeWeight(DEFAULT_START_POWER * 100);
+    DocumentUndo::done(getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change to default weight"));
 }
 
 void LPEBSpline::toMakeCusp()
 {
     changeWeight(NO_POWER);
+    DocumentUndo::done(getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change to 0 weight"));
 }
 
 void LPEBSpline::toWeight()
 {
     changeWeight(weight);
+    DocumentUndo::done(getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
 }
 
 void LPEBSpline::changeWeight(double weight_ammount)

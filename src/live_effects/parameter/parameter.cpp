@@ -11,7 +11,6 @@
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "xml/repr.h"
-#include "document-undo.h"
 
 #include "svg/stringstream.h"
 
@@ -65,13 +64,13 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
       digits(2),
       inc_step(0.1),
       inc_page(1),
-      add_slider(false)
+      add_slider(false),
+      overwrite_widget(false)
 {
 }
 
 ScalarParam::~ScalarParam()
 {
-    _value_changed_connection.disconnect();
 }
 
 bool
@@ -146,10 +145,9 @@ ScalarParam::param_make_integer(bool yes)
 }
 
 void
-ScalarParam::on_value_changed()
+ScalarParam::param_overwrite_widget(bool overwrite_widget)
 {
-    DocumentUndo::done(param_effect->getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
-        _("Change scalar parameter"));
+    this->overwrite_widget = overwrite_widget;
 }
 
 Gtk::Widget *
@@ -166,9 +164,9 @@ ScalarParam::param_newWidget()
     if (add_slider) {
         rsu->addSlider();
     }
-
-    rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
-    _value_changed_connection = rsu->signal_value_changed().connect (sigc::mem_fun (*this, &ScalarParam::on_value_changed));
+    if(!overwrite_widget){
+        rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
+    }
     return dynamic_cast<Gtk::Widget *> (rsu);
 }
 
