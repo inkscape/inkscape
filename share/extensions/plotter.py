@@ -53,7 +53,7 @@ class Plot(inkex.Effect):
         self.OptionParser.add_option('--mirrorY',           action='store', type='inkbool', dest='mirrorY',           default='FALSE', help='Mirror Y axis')
         self.OptionParser.add_option('--center',            action='store', type='inkbool', dest='center',            default='FALSE', help='Center zero point')
         self.OptionParser.add_option('--overcut',           action='store', type='float',   dest='overcut',           default=1.0,     help='Overcut (mm)')
-        self.OptionParser.add_option('--toolOffset',        action='store', type='float',   dest='toolOffset',        default=0.25,    help='Tool offset (mm)')
+        self.OptionParser.add_option('--toolOffset',        action='store', type='float',   dest='toolOffset',        default=0.25,    help='Tool (Knife) offset correction (mm)')
         self.OptionParser.add_option('--precut',            action='store', type='inkbool', dest='precut',            default='TRUE',  help='Use precut')
         self.OptionParser.add_option('--flat',              action='store', type='float',   dest='flat',              default=1.2,     help='Curve flatness')
         self.OptionParser.add_option('--autoAlign',         action='store', type='inkbool', dest='autoAlign',         default='TRUE',  help='Auto align')
