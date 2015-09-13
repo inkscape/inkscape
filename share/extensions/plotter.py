@@ -42,7 +42,6 @@ class Plot(inkex.Effect):
         self.OptionParser.add_option('--serialParity',      action='store', type='string',  dest='serialParity',      default='none',  help='Serial parity')
         self.OptionParser.add_option('--serialFlowControl', action='store', type='string',  dest='serialFlowControl', default='0',     help='Flow control')
         self.OptionParser.add_option('--commandLanguage',   action='store', type='string',  dest='commandLanguage',   default='hpgl',  help='Command Language')
-        self.OptionParser.add_option('--initCommands',      action='store', type='string',  dest='initCommands',      default='',      help='Initialization commands')
         self.OptionParser.add_option('--resolutionX',       action='store', type='float',   dest='resolutionX',       default=1016.0,  help='Resolution X (dpi)')
         self.OptionParser.add_option('--resolutionY',       action='store', type='float',   dest='resolutionY',       default=1016.0,  help='Resolution Y (dpi)')
         self.OptionParser.add_option('--pen',               action='store', type='int',     dest='pen',               default=1,       help='Pen number')
@@ -203,8 +202,6 @@ class Plot(inkex.Effect):
                 type, value, traceback = sys.exc_info()
                 raise ValueError, ('', type, value), traceback
         # send data to plotter
-        if self.options.initCommands != '':
-            mySerial.write(self.options.initCommands.decode('string_escape'))
         mySerial.write(self.hpgl)
         mySerial.read(2)
         mySerial.close()
@@ -219,7 +216,6 @@ class Plot(inkex.Effect):
         inkex.errormsg('  Serial parity: ' + self.options.serialParity)
         inkex.errormsg('  Serial Flow control: ' + self.options.serialFlowControl)
         inkex.errormsg('  Command language: ' + self.options.commandLanguage)
-        inkex.errormsg('  Initialization commands: ' + self.options.initCommands)
         inkex.errormsg('  Resolution X (dpi): ' + str(self.options.resolutionX))
         inkex.errormsg('  Resolution Y (dpi): ' + str(self.options.resolutionY))
         inkex.errormsg('  Pen number: ' + str(self.options.pen))
@@ -263,7 +259,7 @@ class Plot(inkex.Effect):
         inkex.errormsg('  Flatness: ' + str(debugObject.flat) + ' plotter steps')
         inkex.errormsg('  Tool offset flatness: ' + str(debugObject.toolOffsetFlat) + ' plotter steps')
         inkex.errormsg("\n" + self.options.commandLanguage + " data:\n")
-        inkex.errormsg(self.options.initCommands + self.hpgl)
+        inkex.errormsg(self.hpgl)
 
 if __name__ == '__main__':
     # start extension
