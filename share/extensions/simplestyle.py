@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 simplestyle.py
 Two simple functions for working with inline css

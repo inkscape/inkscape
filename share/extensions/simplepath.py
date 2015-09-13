@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 simplepath.py
 functions for digesting paths into a simple list structure

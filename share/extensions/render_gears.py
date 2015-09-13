@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 '''
 Copyright (C) 2007 Aaron Spike  (aaron @ ekips.org)
 Copyright (C) 2007 Tavmjong Bah (tavmjong @ free.fr)
