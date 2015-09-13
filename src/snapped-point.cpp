@@ -29,7 +29,6 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const 
     _second_distance (Geom::infinity()),
     _second_tolerance (1),
     _second_always_snap (false),
-    _transformation (Geom::Point(1,1)),
     _target_bbox(target_bbox),
     _pointer_distance (Geom::infinity())
 {
@@ -50,7 +49,6 @@ Inkscape::SnappedPoint::SnappedPoint(Inkscape::SnapCandidatePoint const &p, Snap
     _second_distance (Geom::infinity()),
     _second_tolerance (1),
     _second_always_snap (false),
-    _transformation (Geom::Point(1,1)),
     _target_bbox (p.getTargetBBox()),
     _pointer_distance (Geom::infinity())
 {
@@ -73,7 +71,6 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const 
     _second_always_snap(a2),
     // tolerance should never be smaller than 1 px, as it is used for normalization in
     // isOtherSnapBetter. We don't want a division by zero.
-    _transformation (Geom::Point(1,1)),
     _target_bbox (Geom::OptRect()),
     _pointer_distance (Geom::infinity())
 {
@@ -94,7 +91,6 @@ Inkscape::SnappedPoint::SnappedPoint():
     _second_distance (Geom::infinity()),
     _second_tolerance (1),
     _second_always_snap (false),
-    _transformation (Geom::Point(1,1)),
     _target_bbox (Geom::OptRect()),
     _pointer_distance (Geom::infinity())
 {
@@ -115,7 +111,6 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p):
     _second_distance (Geom::infinity()),
     _second_tolerance (1),
     _second_always_snap (false),
-    _transformation (Geom::Point(1,1)),
     _target_bbox (Geom::OptRect()),
     _pointer_distance (Geom::infinity())
 {

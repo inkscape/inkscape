@@ -66,8 +66,6 @@ public:
     bool getFullyConstrained() const {return _fully_constrained;}
     bool getConstrainedSnap() const {return _constrained_snap;}
     bool getSnapped() const {return _distance < Geom::infinity();}
-    Geom::Point getTransformation() const {return _transformation;}
-    void setTransformation(Geom::Point const &t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() const {return _target;}
     void setTargetBBox(Geom::OptRect const target) {_target_bbox = target;}
@@ -122,8 +120,6 @@ protected:
     Geom::Coord _second_tolerance;
     /* If true then "Always snap" is on */
     bool _second_always_snap;
-    /* The transformation (translation, scale, skew, or stretch) from the original point to the snapped point */
-    Geom::Point _transformation;
     /* The bounding box we've snapped to (when applicable); will be used by the snapindicator */
     Geom::OptRect _target_bbox;
     /* Distance from the un-transformed point to the mouse pointer, measured at the point in time when dragging started */
