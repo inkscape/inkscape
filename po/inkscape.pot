@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-09-10 11:16+0200\n"
+"POT-Creation-Date: 2015-09-13 20:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9406,52 +9406,67 @@ msgstr ""
 msgid "Uses the visual bounding box"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:28
+#: ../src/live_effects/lpe-bspline.cpp:30
 msgid "Steps with CTRL:"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:28
+#: ../src/live_effects/lpe-bspline.cpp:30
 msgid "Change number of steps with CTRL pressed"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:29
+#: ../src/live_effects/lpe-bspline.cpp:31
 #: ../src/live_effects/lpe-simplify.cpp:33
 #: ../src/live_effects/lpe-transform_2pts.cpp:38
 msgid "Helper size:"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:29
+#: ../src/live_effects/lpe-bspline.cpp:31
 #: ../src/live_effects/lpe-simplify.cpp:33
 msgid "Helper size"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:30
+#: ../src/live_effects/lpe-bspline.cpp:32
 msgid "Apply changes if weight = 0%"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:31
+#: ../src/live_effects/lpe-bspline.cpp:33
 msgid "Apply changes if weight > 0%"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:32
+#: ../src/live_effects/lpe-bspline.cpp:34
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:56
 msgid "Change only selected nodes"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:33
+#: ../src/live_effects/lpe-bspline.cpp:35
 msgid "Change weight %:"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:33
+#: ../src/live_effects/lpe-bspline.cpp:35
 msgid "Change weight percent of the effect"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:95
+#: ../src/live_effects/lpe-bspline.cpp:99
 msgid "Default weight"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:100
+#: ../src/live_effects/lpe-bspline.cpp:104
 msgid "Make cusp"
+msgstr ""
+
+#: ../src/live_effects/lpe-bspline.cpp:148
+msgid "Change to default weight"
+msgstr ""
+
+#: ../src/live_effects/lpe-bspline.cpp:154
+msgid "Change to 0 weight"
+msgstr ""
+
+#: ../src/live_effects/lpe-bspline.cpp:160
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:232
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:254
+#: ../src/live_effects/parameter/parameter.cpp:168
+msgid "Change scalar parameter"
 msgstr ""
 
 #: ../src/live_effects/lpe-constructgrid.cpp:27
@@ -9691,24 +9706,41 @@ msgstr ""
 msgid "Helper size with direction"
 msgstr ""
 
-#: ../src/live_effects/lpe-fillet-chamfer.cpp:154
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:157
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:72
 msgid "Fillet"
 msgstr ""
 
-#: ../src/live_effects/lpe-fillet-chamfer.cpp:158
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:161
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:74
 msgid "Inverse fillet"
 msgstr ""
 
-#: ../src/live_effects/lpe-fillet-chamfer.cpp:163
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:166
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:76
 msgid "Chamfer"
 msgstr ""
 
-#: ../src/live_effects/lpe-fillet-chamfer.cpp:167
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:170
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:78
 msgid "Inverse chamfer"
+msgstr ""
+
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:239
+msgid "Convert to fillet"
+msgstr ""
+
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:246
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:270
+msgid "Convert to inverse fillet"
+msgstr ""
+
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:262
+msgid "Convert to chamfer"
+msgstr ""
+
+#: ../src/live_effects/lpe-fillet-chamfer.cpp:282
+msgid "Knots and helper paths refreshed"
 msgstr ""
 
 #: ../src/live_effects/lpe-gears.cpp:214
@@ -11160,11 +11192,6 @@ msgstr ""
 msgid "Remove path"
 msgstr ""
 
-#: ../src/live_effects/parameter/parameter.cpp:152
-#: ../src/live_effects/parameter/parameter.cpp:170
-msgid "Change scalar parameter"
-msgstr ""
-
 #: ../src/live_effects/parameter/path.cpp:170
 msgid "Edit on-canvas"
 msgstr ""
@@ -12097,7 +12124,7 @@ msgstr ""
 
 #. An SVG element cannot have a transform. We could change 'x' and 'y' in response
 #. to a translation... but leave that for another day.
-#: ../src/selection-chemistry.cpp:1526 ../src/seltrans.cpp:390
+#: ../src/selection-chemistry.cpp:1526 ../src/seltrans.cpp:391
 msgid "Cannot transform an embedded SVG."
 msgstr ""
 
@@ -12113,7 +12140,7 @@ msgstr ""
 msgid "Rotate 90° CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1824 ../src/seltrans.cpp:483
+#: ../src/selection-chemistry.cpp:1824 ../src/seltrans.cpp:484
 #: ../src/ui/dialog/transformation.cpp:891
 msgid "Rotate"
 msgstr ""
@@ -12122,7 +12149,7 @@ msgstr ""
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2203 ../src/seltrans.cpp:480
+#: ../src/selection-chemistry.cpp:2203 ../src/seltrans.cpp:481
 #: ../src/ui/dialog/transformation.cpp:865 ../src/ui/widget/page-sizer.cpp:450
 #: ../share/extensions/interp_att_g.inx.h:12
 msgid "Scale"
@@ -12141,7 +12168,7 @@ msgid "Move horizontally"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2249 ../src/selection-chemistry.cpp:2275
-#: ../src/seltrans.cpp:477 ../src/ui/dialog/transformation.cpp:802
+#: ../src/seltrans.cpp:478 ../src/ui/dialog/transformation.cpp:802
 msgid "Move"
 msgstr ""
 
@@ -12455,47 +12482,47 @@ msgid ""
 "Shift also uses this center"
 msgstr ""
 
-#: ../src/seltrans.cpp:486 ../src/ui/dialog/transformation.cpp:980
+#: ../src/seltrans.cpp:487 ../src/ui/dialog/transformation.cpp:980
 msgid "Skew"
 msgstr ""
 
-#: ../src/seltrans.cpp:500
+#: ../src/seltrans.cpp:501
 msgid "Set center"
 msgstr ""
 
-#: ../src/seltrans.cpp:573
+#: ../src/seltrans.cpp:574
 msgid "Stamp"
 msgstr ""
 
-#: ../src/seltrans.cpp:722
+#: ../src/seltrans.cpp:723
 msgid "Reset center"
 msgstr ""
 
-#: ../src/seltrans.cpp:954 ../src/seltrans.cpp:1059
+#: ../src/seltrans.cpp:961 ../src/seltrans.cpp:1065
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1198
+#: ../src/seltrans.cpp:1202
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1273
+#: ../src/seltrans.cpp:1278
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1310
+#: ../src/seltrans.cpp:1315
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1464
+#: ../src/seltrans.cpp:1461
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -12507,8 +12534,8 @@ msgstr ""
 msgid "Keyboard directory (%s) is unavailable."
 msgstr ""
 
-#: ../src/shortcuts.cpp:337 ../src/ui/dialog/export.cpp:1298
-#: ../src/ui/dialog/export.cpp:1332
+#: ../src/shortcuts.cpp:337 ../src/ui/dialog/export.cpp:1305
+#: ../src/ui/dialog/export.cpp:1339
 msgid "Select a filename for exporting"
 msgstr ""
 
@@ -14699,87 +14726,91 @@ msgstr ""
 msgid "Export the bitmap file with these settings"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:607
+#: ../src/ui/dialog/export.cpp:479
+msgid "bitmap"
+msgstr ""
+
+#: ../src/ui/dialog/export.cpp:614
 #, c-format
 msgid "B_atch export %d selected object"
 msgid_plural "B_atch export %d selected objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/dialog/export.cpp:923
+#: ../src/ui/dialog/export.cpp:930
 msgid "Export in progress"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1015
+#: ../src/ui/dialog/export.cpp:1022
 msgid "No items selected."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1019 ../src/ui/dialog/export.cpp:1021
+#: ../src/ui/dialog/export.cpp:1026 ../src/ui/dialog/export.cpp:1028
 msgid "Exporting %1 files"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1062 ../src/ui/dialog/export.cpp:1064
+#: ../src/ui/dialog/export.cpp:1069 ../src/ui/dialog/export.cpp:1071
 #, c-format
 msgid "Exporting file <b>%s</b>..."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1073 ../src/ui/dialog/export.cpp:1165
+#: ../src/ui/dialog/export.cpp:1080 ../src/ui/dialog/export.cpp:1172
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1076
+#: ../src/ui/dialog/export.cpp:1083
 #, c-format
 msgid "Could not export to filename <b>%s</b>."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1091
+#: ../src/ui/dialog/export.cpp:1098
 #, c-format
 msgid "Successfully exported <b>%d</b> files from <b>%d</b> selected items."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1102
+#: ../src/ui/dialog/export.cpp:1109
 msgid "You have to enter a filename."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1103
+#: ../src/ui/dialog/export.cpp:1110
 msgid "You have to enter a filename"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1117
+#: ../src/ui/dialog/export.cpp:1124
 msgid "The chosen area to be exported is invalid."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1118
+#: ../src/ui/dialog/export.cpp:1125
 msgid "The chosen area to be exported is invalid"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1133
+#: ../src/ui/dialog/export.cpp:1140
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr ""
 
 #. TRANSLATORS: %1 will be the filename, %2 the width, and %3 the height of the image
-#: ../src/ui/dialog/export.cpp:1147 ../src/ui/dialog/export.cpp:1149
+#: ../src/ui/dialog/export.cpp:1154 ../src/ui/dialog/export.cpp:1156
 msgid "Exporting %1 (%2 x %3)"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1176
+#: ../src/ui/dialog/export.cpp:1183
 #, c-format
 msgid "Drawing exported to <b>%s</b>."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1180
+#: ../src/ui/dialog/export.cpp:1187
 msgid "Export aborted."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1301 ../src/ui/interface.cpp:1392
+#: ../src/ui/dialog/export.cpp:1308 ../src/ui/interface.cpp:1392
 #: ../src/widgets/desktop-widget.cpp:1122
 #: ../src/widgets/desktop-widget.cpp:1184
 msgid "_Cancel"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1302 ../src/ui/dialog/input.cpp:1082
+#: ../src/ui/dialog/export.cpp:1309 ../src/ui/dialog/input.cpp:1082
 #: ../src/verbs.cpp:2406 ../src/widgets/desktop-widget.cpp:1123
 msgid "_Save"
 msgstr ""
@@ -19296,7 +19327,7 @@ msgid "_Bitmap editor:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1485
-#: ../share/extensions/guillotine.inx.h:5 ../share/extensions/plotter.inx.h:67
+#: ../share/extensions/guillotine.inx.h:5 ../share/extensions/plotter.inx.h:65
 #: ../share/extensions/print_win32_vector.inx.h:2
 msgid "Export"
 msgstr ""
@@ -22159,44 +22190,44 @@ msgstr ""
 msgid "Retract handle"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:195
+#: ../src/ui/tool/transform-handle-set.cpp:203
 msgctxt "Transform handle tip"
 msgid "<b>Shift+Ctrl</b>: scale uniformly about the rotation center"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:197
+#: ../src/ui/tool/transform-handle-set.cpp:205
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl:</b> scale uniformly"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:202
+#: ../src/ui/tool/transform-handle-set.cpp:210
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Shift+Alt</b>: scale using an integer ratio about the rotation center"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:204
+#: ../src/ui/tool/transform-handle-set.cpp:212
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: scale from the rotation center"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:207
+#: ../src/ui/tool/transform-handle-set.cpp:215
 msgctxt "Transform handle tip"
 msgid "<b>Alt</b>: scale using an integer ratio"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:209
+#: ../src/ui/tool/transform-handle-set.cpp:217
 msgctxt "Transform handle tip"
 msgid "<b>Scale handle</b>: drag to scale the selection"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:214
+#: ../src/ui/tool/transform-handle-set.cpp:222
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Scale by %.2f%% x %.2f%%"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:438
+#: ../src/ui/tool/transform-handle-set.cpp:449
 #, c-format
 msgctxt "Transform handle tip"
 msgid ""
@@ -22204,18 +22235,18 @@ msgid ""
 "increments"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:441
+#: ../src/ui/tool/transform-handle-set.cpp:452
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: rotate around the opposite corner"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:445
+#: ../src/ui/tool/transform-handle-set.cpp:456
 #, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap angle to %f° increments"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:447
+#: ../src/ui/tool/transform-handle-set.cpp:458
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Rotation handle</b>: drag to rotate the selection around the rotation "
@@ -22223,13 +22254,13 @@ msgid ""
 msgstr ""
 
 #. event
-#: ../src/ui/tool/transform-handle-set.cpp:452
+#: ../src/ui/tool/transform-handle-set.cpp:463
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Rotate by %.2f°"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:578
+#: ../src/ui/tool/transform-handle-set.cpp:588
 #, c-format
 msgctxt "Transform handle tip"
 msgid ""
@@ -22237,36 +22268,36 @@ msgid ""
 "increments"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:581
+#: ../src/ui/tool/transform-handle-set.cpp:591
 msgctxt "Transform handle tip"
 msgid "<b>Shift</b>: skew about the rotation center"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:585
+#: ../src/ui/tool/transform-handle-set.cpp:595
 #, c-format
 msgctxt "Transform handle tip"
 msgid "<b>Ctrl</b>: snap skew angle to %f° increments"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:588
+#: ../src/ui/tool/transform-handle-set.cpp:598
 msgctxt "Transform handle tip"
 msgid ""
 "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:594
+#: ../src/ui/tool/transform-handle-set.cpp:604
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Skew horizontally by %.2f°"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:597
+#: ../src/ui/tool/transform-handle-set.cpp:607
 #, c-format
 msgctxt "Transform handle tip"
 msgid "Skew vertically by %.2f°"
 msgstr ""
 
-#: ../src/ui/tool/transform-handle-set.cpp:656
+#: ../src/ui/tool/transform-handle-set.cpp:666
 msgctxt "Transform handle tip"
 msgid "<b>Rotation center</b>: drag to change the origin of transforms"
 msgstr ""
@@ -30016,11 +30047,11 @@ msgstr ""
 msgid "The sliced bitmaps have been saved as:"
 msgstr ""
 
-#: ../share/extensions/hpgl_decoder.py:43
+#: ../share/extensions/hpgl_decoder.py:42
 msgid "Movements"
 msgstr ""
 
-#: ../share/extensions/hpgl_decoder.py:44
+#: ../share/extensions/hpgl_decoder.py:43
 msgid "Pen "
 msgstr ""
 
@@ -30340,12 +30371,12 @@ msgid ""
 msgstr ""
 
 #. issue error if no paths found
-#: ../share/extensions/plotter.py:70
+#: ../share/extensions/plotter.py:69
 msgid ""
 "No paths where found. Please convert all objects you want to plot into paths."
 msgstr ""
 
-#: ../share/extensions/plotter.py:148
+#: ../share/extensions/plotter.py:147
 msgid ""
 "pySerial is not installed.\n"
 "\n"
@@ -30356,7 +30387,7 @@ msgid ""
 "3. Restart Inkscape."
 msgstr ""
 
-#: ../share/extensions/plotter.py:200
+#: ../share/extensions/plotter.py:199
 msgid ""
 "Could not open port. Please check that your plotter is running, connected "
 "and the settings are correct."
@@ -32869,13 +32900,13 @@ msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:3
 #: ../share/extensions/hpgl_output.inx.h:4
-#: ../share/extensions/plotter.inx.h:34
+#: ../share/extensions/plotter.inx.h:32
 msgid "Resolution X (dpi):"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:4
 #: ../share/extensions/hpgl_output.inx.h:5
-#: ../share/extensions/plotter.inx.h:35
+#: ../share/extensions/plotter.inx.h:33
 msgid ""
 "The amount of steps the plotter moves if it moves for 1 inch on the X axis "
 "(Default: 1016.0)"
@@ -32883,13 +32914,13 @@ msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:5
 #: ../share/extensions/hpgl_output.inx.h:6
-#: ../share/extensions/plotter.inx.h:36
+#: ../share/extensions/plotter.inx.h:34
 msgid "Resolution Y (dpi):"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:6
 #: ../share/extensions/hpgl_output.inx.h:7
-#: ../share/extensions/plotter.inx.h:37
+#: ../share/extensions/plotter.inx.h:35
 msgid ""
 "The amount of steps the plotter moves if it moves for 1 inch on the Y axis "
 "(Default: 1016.0)"
@@ -32924,34 +32955,34 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:3
-#: ../share/extensions/plotter.inx.h:33
+#: ../share/extensions/plotter.inx.h:31
 msgid "Plotter Settings "
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:8
-#: ../share/extensions/plotter.inx.h:38
+#: ../share/extensions/plotter.inx.h:36
 msgid "Pen number:"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:9
-#: ../share/extensions/plotter.inx.h:39
+#: ../share/extensions/plotter.inx.h:37
 msgid "The number of the pen (tool) to use (Standard: '1')"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:10
-#: ../share/extensions/plotter.inx.h:40
+#: ../share/extensions/plotter.inx.h:38
 msgid "Pen force (g):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:11
-#: ../share/extensions/plotter.inx.h:41
+#: ../share/extensions/plotter.inx.h:39
 msgid ""
 "The amount of force pushing down the pen in grams, set to 0 to omit command; "
 "most plotters ignore this command (Default: 0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:12
-#: ../share/extensions/plotter.inx.h:42
+#: ../share/extensions/plotter.inx.h:40
 msgid "Pen speed (cm/s or mm/s):"
 msgstr ""
 
@@ -32967,43 +32998,43 @@ msgid "Rotation (°, Clockwise):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:15
-#: ../share/extensions/plotter.inx.h:45
+#: ../share/extensions/plotter.inx.h:43
 msgid "Rotation of the drawing (Default: 0°)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:16
-#: ../share/extensions/plotter.inx.h:46
+#: ../share/extensions/plotter.inx.h:44
 msgid "Mirror X axis"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:17
-#: ../share/extensions/plotter.inx.h:47
+#: ../share/extensions/plotter.inx.h:45
 msgid "Check this to mirror the X axis (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:18
-#: ../share/extensions/plotter.inx.h:48
+#: ../share/extensions/plotter.inx.h:46
 msgid "Mirror Y axis"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:19
-#: ../share/extensions/plotter.inx.h:49
+#: ../share/extensions/plotter.inx.h:47
 msgid "Check this to mirror the Y axis (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:20
-#: ../share/extensions/plotter.inx.h:50
+#: ../share/extensions/plotter.inx.h:48
 msgid "Center zero point"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:21
-#: ../share/extensions/plotter.inx.h:51
+#: ../share/extensions/plotter.inx.h:49
 msgid ""
 "Check this if your plotter uses a centered zero point (Default: Unchecked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:22
-#: ../share/extensions/plotter.inx.h:52
+#: ../share/extensions/plotter.inx.h:50
 msgid ""
 "If you want to use multiple pens on your pen plotter create one layer for "
 "each pen, name the layers \"Pen 1\", \"Pen 2\", etc., and put your drawings "
@@ -33011,65 +33042,65 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:23
-#: ../share/extensions/plotter.inx.h:53
+#: ../share/extensions/plotter.inx.h:51
 msgid "Plot Features "
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:24
-#: ../share/extensions/plotter.inx.h:54
+#: ../share/extensions/plotter.inx.h:52
 msgid "Overcut (mm):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:25
-#: ../share/extensions/plotter.inx.h:55
+#: ../share/extensions/plotter.inx.h:53
 msgid ""
 "The distance in mm that will be cut over the starting point of the path to "
 "prevent open paths, set to 0.0 to omit command (Default: 1.00)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:26
-#: ../share/extensions/plotter.inx.h:56
-msgid "Tool offset (mm):"
+#: ../share/extensions/plotter.inx.h:54
+msgid "Tool (Knife) offset correction (mm):"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:27
-#: ../share/extensions/plotter.inx.h:57
+#: ../share/extensions/plotter.inx.h:55
 msgid ""
 "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit "
 "command (Default: 0.25)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:28
-#: ../share/extensions/plotter.inx.h:58
-msgid "Use precut"
+#: ../share/extensions/plotter.inx.h:56
+msgid "Precut"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:29
-#: ../share/extensions/plotter.inx.h:59
+#: ../share/extensions/plotter.inx.h:57
 msgid ""
 "Check this to cut a small line before the real drawing starts to correctly "
 "align the tool orientation. (Default: Checked)"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:30
-#: ../share/extensions/plotter.inx.h:60
+#: ../share/extensions/plotter.inx.h:58
 msgid "Curve flatness:"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:31
-#: ../share/extensions/plotter.inx.h:61
+#: ../share/extensions/plotter.inx.h:59
 msgid ""
 "Curves are divided into lines, this number controls how fine the curves will "
 "be reproduced, the smaller the finer (Default: '1.2')"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:32
-#: ../share/extensions/plotter.inx.h:62
+#: ../share/extensions/plotter.inx.h:60
 msgid "Auto align"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:33
-#: ../share/extensions/plotter.inx.h:63
+#: ../share/extensions/plotter.inx.h:61
 msgid ""
 "Check this to auto align the drawing to the zero point (Plus the tool offset "
 "if used). If unchecked you have to make sure that all parts of your drawing "
@@ -33077,7 +33108,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:34
-#: ../share/extensions/plotter.inx.h:66
+#: ../share/extensions/plotter.inx.h:64
 msgid ""
 "All these settings depend on the plotter you use, for more information "
 "please consult the manual or homepage for your plotter."
@@ -34480,76 +34511,66 @@ msgid "The command language to use (Default: HPGL)"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:21
-msgid "Initialization commands:"
-msgstr ""
-
-#: ../share/extensions/plotter.inx.h:22
-msgid ""
-"Commands that will be sent to the plotter before the main data stream, only "
-"use this if you know what you are doing! (Default: Empty)"
-msgstr ""
-
-#: ../share/extensions/plotter.inx.h:23
 msgid "Software (XON/XOFF)"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:24
+#: ../share/extensions/plotter.inx.h:22
 msgid "Hardware (RTS/CTS)"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:25
+#: ../share/extensions/plotter.inx.h:23
 msgid "Hardware (DSR/DTR + RTS/CTS)"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:26
+#: ../share/extensions/plotter.inx.h:24
 msgctxt "Flow control"
 msgid "None"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:27
+#: ../share/extensions/plotter.inx.h:25
 msgid "HPGL"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:28
+#: ../share/extensions/plotter.inx.h:26
 msgid "DMPL"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:29
+#: ../share/extensions/plotter.inx.h:27
 msgid "KNK Plotter (HPGL variant)"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:30
+#: ../share/extensions/plotter.inx.h:28
 msgid ""
 "Using wrong settings can under certain circumstances cause Inkscape to "
 "freeze. Always save your work before plotting!"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:31
+#: ../share/extensions/plotter.inx.h:29
 msgid ""
 "This can be a physical serial connection or a USB-to-Serial bridge. Ask your "
 "plotter manufacturer for drivers if needed."
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:32
+#: ../share/extensions/plotter.inx.h:30
 msgid "Parallel (LPT) connections are not supported."
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:43
+#: ../share/extensions/plotter.inx.h:41
 msgid ""
 "The speed the pen will move with in centimeters or millimeters per second "
 "(depending on your plotter model), set to 0 to omit command. Most plotters "
 "ignore this command. (Default: 0)"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:44
+#: ../share/extensions/plotter.inx.h:42
 msgid "Rotation (°, clockwise):"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:64
+#: ../share/extensions/plotter.inx.h:62
 msgid "Show debug information"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:65
+#: ../share/extensions/plotter.inx.h:63
 msgid ""
 "Check this to get verbose information about the plot without actually "
 "sending something to the plotter (A.k.a. data dump) (Default: Unchecked)"
