@@ -1514,7 +1514,15 @@ bool SPDocument::addResource(gchar const *key, SPObject *object)
         g_hash_table_insert(priv->resources, (gpointer) key, rlist);
 
         GQuark q = g_quark_from_string(key);
-        priv->resources_changed_signals[q].emit();
+
+        /*do not send signal if the object has no id (yet),
+        it means the object is not completely built.
+        (happens when pasting swatches across documents, cf bug 1495106)
+        [this check should be more generally presend on emit() calls since 
+        the backtrace is unusable with crashed from this cause]
+        */
+        if(object->getId())
+            priv->resources_changed_signals[q].emit();
 
         result = true;
     }
