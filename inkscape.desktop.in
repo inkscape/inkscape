@@ -4,6 +4,7 @@ _Name=Inkscape
 _GenericName=Vector Graphics Editor
 _X-GNOME-FullName=Inkscape Vector Graphics Editor
 _Comment=Create and edit Scalable Vector Graphics images
+_Keywords=image;editor;vector;drawing;
 Type=Application
 Categories=Graphics;VectorGraphics;GTK;
 MimeType=image/svg+xml;image/svg+xml-compressed;application/vnd.corel-draw;application/pdf;application/postscript;image/x-eps;application/illustrator;
