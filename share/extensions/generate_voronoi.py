@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import random
 # local library
 import inkex
-import simplestyle
+import simplestyle, simpletransform
 import voronoi
 
 inkex.localize()
@@ -93,17 +93,21 @@ class Pattern(inkex.Effect):
         if not self.options.ids:
             inkex.errormsg(_("Please select an object"))
             exit()
+        scale = self.unittouu('1px')            # convert to document units
+        self.options.size *= scale
+        self.options.border *= scale
         q = {'x':0,'y':0,'width':0,'height':0}  # query the bounding box of ids[0]
         for query in q.keys():
             p = Popen('inkscape --query-%s --query-id=%s "%s"' % (query, self.options.ids[0], self.args[-1]), shell=True, stdout=PIPE, stderr=PIPE)
             rc = p.wait()
-            q[query] = float(p.stdout.read())
+            q[query] = scale*float(p.stdout.read())
+        mat = simpletransform.composeParents(self.selected[self.options.ids[0]], [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
         defs = self.xpathSingle('/svg:svg//svg:defs')
         pattern = inkex.etree.SubElement(defs ,inkex.addNS('pattern','svg'))
         pattern.set('id', 'Voronoi' + str(random.randint(1, 9999)))
         pattern.set('width', str(q['width']))
         pattern.set('height', str(q['height']))
-        pattern.set('patternTransform', 'translate(%s,%s)' % (q['x'], q['y']))
+        pattern.set('patternTransform', 'translate(%s,%s)' % (q['x'] - mat[0][2], q['y'] - mat[1][2]))
         pattern.set('patternUnits', 'userSpaceOnUse')
 
         # generate random pattern of points
@@ -174,7 +178,8 @@ class Pattern(inkex.Effect):
             if x1 or x2 or y1 or y2:
                 path += 'M %.3f,%.3f %.3f,%.3f ' % (x1, y1, x2, y2)
 
-        attribs = {'d': path, 'style': 'stroke:#000000'}
+        patternstyle = {'stroke': '#000000', 'stroke-width': str(scale)}
+        attribs = {'d': path, 'style': simplestyle.formatStyle(patternstyle)}
         inkex.etree.SubElement(pattern, inkex.addNS('path', 'svg'), attribs)
 
         # link selected object to pattern
