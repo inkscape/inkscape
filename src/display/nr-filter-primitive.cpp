@@ -110,17 +110,12 @@ void FilterPrimitive::set_subregion(SVGLength const &x, SVGLength const &y,
 
 Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
 {
-    Geom::OptRect const bb_opt = units.get_item_bbox();
     Geom::OptRect const fa_opt = units.get_filter_area();
-    Geom::Rect bb;
-    Geom::Rect fa;
-    if (!bb_opt || !fa_opt) {
+    if (!fa_opt) {
+        std::cerr << "FilterPrimitive::filter_primitive_area: filter area undefined." << std::endl;
         return Geom::Rect (Geom::Point(0.,0.), Geom::Point(0.,0.));
-    } else {
-        bb = *bb_opt;
-        fa = *fa_opt;
     }
-
+    Geom::Rect fa = *fa_opt;
 
     // x, y, width, and height are independently defined (i.e. one can be defined, by default, to
     // the filter area (via default value ) while another is defined relative to the bounding
@@ -137,6 +132,14 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
     if( !_subregion_height._set ) height = fa.height();
 
     if( units.get_primitive_units() == SP_FILTER_UNITS_OBJECTBOUNDINGBOX ) {
+
+        Geom::OptRect const bb_opt = units.get_item_bbox();
+        if (!bb_opt) {
+            std::cerr << "FilterPrimitive::filter_primitive_area: bounding box undefined and 'primitiveUnits' is 'objectBoundingBox'." << std::endl;
+            return Geom::Rect (Geom::Point(0.,0.), Geom::Point(0.,0.));
+        }
+        Geom::Rect bb = *bb_opt;
+
 
         // Update computed values for ex, em, %.
         // For %, assumes primitive unit is objectBoundingBox.
