@@ -868,11 +868,7 @@ static void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, I
             }
             continue;
         }
-        if (!strcmp(menu_pntr->name(), "separator")
-                // This was spelt wrong in the original version
-                // and so this is for backward compatibility.  It can
-                // probably be dropped after the 0.44 release.
-             || !strcmp(menu_pntr->name(), "separator")) {
+        if (!strcmp(menu_pntr->name(), "separator")) {
             GtkWidget *item = gtk_separator_menu_item_new();
             gtk_widget_show(item);
             gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
