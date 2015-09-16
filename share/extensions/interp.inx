@@ -9,6 +9,7 @@
 	<param name="method" type="int" min="1" max="2" _gui-text="Interpolation method:">2</param>
 	<param name="dup" type="boolean" _gui-text="Duplicate endpaths">true</param>
 	<param name="style" type="boolean" _gui-text="Interpolate style">false</param>
+	<param name="zsort" type="boolean" _gui-text="Use Z-order" _gui-description="Workaround for reversed selection order in Live Preview cycles">false</param>
     <effect>
 		<object-type>path</object-type>
                 <effects-menu>
