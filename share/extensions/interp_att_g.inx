@@ -40,6 +40,7 @@
                 <item>cm</item>
                 <item>mm</item>
             </param>
+            <param name="zsort" type="boolean" _gui-text="Use Z-order" _gui-description="Workaround for reversed selection order in Live Preview cycles" gui-hidden="true">true</param>
         </page>
         <page name="Help" _gui-text="Help">
             <_param name="intro" type="description">This effect applies a value for any interpolatable attribute for all elements inside the selected group or for all elements in a multiple selection.</_param>
