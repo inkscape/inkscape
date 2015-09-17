@@ -19,7 +19,8 @@
 #include "sp-path.h"
 #include "ui/icon-names.h"
 #include "svg/svg.h"
-
+#include "verbs.h"
+// TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
 
 namespace Inkscape {
@@ -31,8 +32,12 @@ LPETransform2Pts::LPETransform2Pts(LivePathEffectObject *lpeobject) :
     from_original_width(_("From original width"), _("From original width"), "from_original_width", &wr, this, false,"", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
     lock_lenght(_("Lock lenght"), _("Lock lenght to current distance"), "lock_lenght", &wr, this, false,"", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
     lock_angle(_("Lock angle"), _("Lock angle"), "lock_angle", &wr, this, false,"", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
+    flip_horizontal(_("Flip horizontal"), _("Flip horizontal"), "flip_horizontal", &wr, this, false,"", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
+    flip_vertical(_("Flip vertical"), _("Flip vertical"), "flip_vertical", &wr, this, false,"", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
     start(_("Start"), _("Start point"), "start", &wr, this, "Start point"),
     end(_("End"), _("End point"), "end", &wr, this, "End point"),
+    strech(_("Strech"), _("Strech the result"), "strech", &wr, this, 1),
+    offset(_("Offset"), _("Offset from knots"), "offset", &wr, this, 0),
     first_knot(_("First Knot"), _("First Knot"), "first_knot", &wr, this, 1),
     last_knot(_("Last Knot"), _("Last Knot"), "last_knot", &wr, this, 1),
     helper_size(_("Helper size:"), _("Rotation helper size"), "helper_size", &wr, this, 3),
@@ -45,21 +50,34 @@ LPETransform2Pts::LPETransform2Pts(LivePathEffectObject *lpeobject) :
     previous_start(Geom::Point()),
     previous_lenght(-1)
 {
-    registerParameter(&start);
-    registerParameter(&end);
+
     registerParameter(&first_knot);
     registerParameter(&last_knot);
     registerParameter(&helper_size);
+    registerParameter(&strech);
+    registerParameter(&offset);
+    registerParameter(&start);
+    registerParameter(&end);
     registerParameter(&elastic);
     registerParameter(&from_original_width);
+    registerParameter(&flip_vertical);
+    registerParameter(&flip_horizontal);
     registerParameter(&lock_lenght);
     registerParameter(&lock_angle);
 
     first_knot.param_make_integer(true);
+    first_knot.param_overwrite_widget(true);
     last_knot.param_make_integer(true);
+    last_knot.param_overwrite_widget(true);
     helper_size.param_set_range(0, 999);
     helper_size.param_set_increments(1, 1);
     helper_size.param_set_digits(0);
+    offset.param_set_range(-999999.0, 999999.0);
+    offset.param_set_increments(1, 1);
+    offset.param_set_digits(2);
+    strech.param_set_range(0, 999.0);
+    strech.param_set_increments(0.01, 0.01);
+    strech.param_set_digits(4);
 }
 
 LPETransform2Pts::~LPETransform2Pts()
@@ -176,6 +194,7 @@ LPETransform2Pts::updateIndex()
         start.param_set_default();
         end.param_set_default();
     }
+    DocumentUndo::done(getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change index of knot"));
 }
 //todo migrate to PathVector class?
 size_t
@@ -259,6 +278,7 @@ Gtk::Widget *LPETransform2Pts::newWidget()
     Gtk::HBox * button1 = Gtk::manage(new Gtk::HBox(true,0));
     Gtk::HBox * button2 = Gtk::manage(new Gtk::HBox(true,0));
     Gtk::HBox * button3 = Gtk::manage(new Gtk::HBox(true,0));
+    Gtk::HBox * button4 = Gtk::manage(new Gtk::HBox(true,0));
     while (it != param_vector.end()) {
         if ((*it)->widget_is_visible) {
             Parameter *param = *it;
@@ -292,10 +312,21 @@ Gtk::Widget *LPETransform2Pts::newWidget()
                         widg->set_has_tooltip(false);
                     }
                 }
-            } else if (param->param_key == "lock_angle" || param->param_key == "lock_lenght") {
+            } else if (param->param_key == "flip_horizontal" || param->param_key == "flip_vertical") {
                 Glib::ustring * tip = param->param_getTooltip();
                 if (widg) {
                     button2->pack_start(*widg, true, true, 2);
+                    if (tip) {
+                        widg->set_tooltip_text(*tip);
+                    } else {
+                        widg->set_tooltip_text("");
+                        widg->set_has_tooltip(false);
+                    }
+                }
+            } else if (param->param_key == "lock_angle" || param->param_key == "lock_lenght") {
+                Glib::ustring * tip = param->param_getTooltip();
+                if (widg) {
+                    button3->pack_start(*widg, true, true, 2);
                     if (tip) {
                         widg->set_tooltip_text(*tip);
                     } else {
@@ -318,10 +349,11 @@ Gtk::Widget *LPETransform2Pts::newWidget()
     }
     Gtk::Button *reset = Gtk::manage(new Gtk::Button(Glib::ustring(_("Reset"))));
     reset->signal_clicked().connect(sigc::mem_fun(*this, &LPETransform2Pts::reset));
-    button3->pack_start(*reset, true, true, 2);
+    button4->pack_start(*reset, true, true, 2);
     vbox->pack_start(*button1, true, true, 2);
     vbox->pack_start(*button2, true, true, 2);
     vbox->pack_start(*button3, true, true, 2);
+    vbox->pack_start(*button4, true, true, 2);
     return dynamic_cast<Gtk::Widget *>(vbox);
 }
 
@@ -337,8 +369,26 @@ LPETransform2Pts::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const 
     helper.start(point_a);
     helper.appendNew<Geom::LineSegment>(point_b);
     Geom::Affine m;
+    Geom::Angle original_angle = original.angle();
+    if(flip_horizontal && flip_vertical){
+        m *= Geom::Rotate(-original_angle);
+        m *= Geom::Scale(-1,-1);
+        m *= Geom::Rotate(original_angle);
+    } else if(flip_vertical){
+        m *= Geom::Rotate(-original_angle);
+        m *= Geom::Scale(1,-1);
+        m *= Geom::Rotate(original_angle);
+    } else if(flip_horizontal){
+        m *= Geom::Rotate(-original_angle);
+        m *= Geom::Scale(-1,1);
+        m *= Geom::Rotate(original_angle);
+    }
+    if(strech != 1){
+        m *= Geom::Rotate(-original_angle);
+        m *= Geom::Scale(1,strech);
+        m *= Geom::Rotate(original_angle);
+    }
     if(elastic) {
-        Geom::Angle original_angle = original.angle();
         m *= Geom::Rotate(-original_angle);
         if(sca > 1){
             m *= Geom::Scale(sca, 1.0);
@@ -346,14 +396,20 @@ LPETransform2Pts::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const 
             m *= Geom::Scale(sca, 1.0-((1.0-sca)/2.0));
         }
         m *= Geom::Rotate(transformed.angle());
-        helper *= m;
-        m *= Geom::Translate((Geom::Point)start - helper.initialPoint());
     } else {
         m *= Geom::Scale(sca);
         m *= Geom::Rotate(rot);
-        helper *= m;
-        m *= Geom::Translate((Geom::Point)start - helper.initialPoint());
     }
+    helper *= m;
+    Geom::Point trans = (Geom::Point)start - helper.initialPoint();
+    if(flip_horizontal){
+        trans = (Geom::Point)end - helper.initialPoint();
+    }
+    if(offset != 0){
+        trans = Geom::Point::polar(transformed.angle() + Geom::deg_to_rad(-90),offset) + trans;
+    }
+    m *= Geom::Translate(trans);
+
     output.concat(pwd2_in * m);
 
     return output;

@@ -53,8 +53,12 @@ private:
     ToggleButtonParam from_original_width;
     ToggleButtonParam lock_lenght;
     ToggleButtonParam lock_angle;
+    ToggleButtonParam flip_horizontal;
+    ToggleButtonParam flip_vertical;
     PointParam start;
     PointParam end;
+    ScalarParam strech;
+    ScalarParam offset;
     ScalarParam first_knot;
     ScalarParam last_knot;
     ScalarParam helper_size;
