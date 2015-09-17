@@ -252,7 +252,9 @@ if ! pkg-config --exists ImageMagick; then
 	exit 1
 fi
 
-if [ ! -e "$LIBPREFIX/lib/aspell-0.60/en.dat" ]; then
+# FIXME: retrieve aspell version from installed files (no pkg-config support)
+ASPELL_VERSION="0.60"
+if [ ! -e "$LIBPREFIX/lib/aspell-$ASPELL_VERSION/en.dat" ]; then
 	echo "Missing aspell en dictionary -- please install at least 'aspell-dict-en', but" >&2
 	echo "preferably more dictionaries ('aspell-dict-*') and try again." >&2
 	exit 1
@@ -625,7 +627,8 @@ sed -e "s,IMAGEMAGICKVER,$IMAGEMAGICKVER,g" -i "" "$scrpath"
 sed -e "s,IMAGEMAGICKVER_MAJOR,$IMAGEMAGICKVER_MAJOR,g" -i "" "$scrpath"
 
 # Copy aspell dictionary files:
-$cp_cmd -r "$LIBPREFIX/share/aspell" "$pkgresources/share/"
+$cp_cmd -r "$LIBPREFIX/lib/aspell-$ASPELL_VERSION" "$pkglib/"
+$cp_cmd -r "$LIBPREFIX/share/aspell" "$pkgshare/"
 
 # Copy Poppler data:
 $cp_cmd -r "$LIBPREFIX/share/poppler" "$pkgshare"
