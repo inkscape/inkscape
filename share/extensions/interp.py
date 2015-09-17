@@ -105,7 +105,7 @@ class Interp(inkex.Effect):
                         help="try interpolation of some style properties")    
         self.OptionParser.add_option("--zsort",
                         action="store", type="inkbool",
-                        dest="zsort", default=True,
+                        dest="zsort", default=False,
                         help="use z-order instead of selection order")
 
     def tweenstyleunit(self, property, start, end, time): # moved here so we can call 'unittouu'
