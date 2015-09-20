@@ -54,6 +54,9 @@ public:
 
     cairo_surface_t *get_result(int slot_nr);
 
+    void set_primitive_area(int slot, Geom::Rect &area);
+    Geom::Rect get_primitive_area(int slot);
+    
     /** Returns the number of slots in use. */
     int get_slot_count();
 
@@ -75,6 +78,11 @@ public:
 private:
     typedef std::map<int, cairo_surface_t *> SlotMap;
     SlotMap _slots;
+
+    // We need to keep track of the primitive area as this is needed in feTile
+    typedef std::map<int, Geom::Rect> PrimitiveAreaMap;
+    PrimitiveAreaMap _primitiveAreas;
+
     DrawingItem *_item;
 
     //Geom::Rect _source_bbox; ///< bounding box of source graphic surface
