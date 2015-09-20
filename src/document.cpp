@@ -1515,13 +1515,13 @@ bool SPDocument::addResource(gchar const *key, SPObject *object)
 
         GQuark q = g_quark_from_string(key);
 
-        /*do not send signal if the object has no id (yet),
+        /*in general, do not send signal if the object has no id (yet),
         it means the object is not completely built.
         (happens when pasting swatches across documents, cf bug 1495106)
         [this check should be more generally presend on emit() calls since 
         the backtrace is unusable with crashed from this cause]
         */
-        if(object->getId())
+        if(object->getId() || dynamic_cast<SPGroup*>(object) )
             priv->resources_changed_signals[q].emit();
 
         result = true;
