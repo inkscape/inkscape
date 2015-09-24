@@ -199,7 +199,7 @@ class Length(inkex.Effect):
                     slengths, stotal = csplength(p)
                     self.group = inkex.etree.SubElement(node.getparent(),inkex.addNS('text','svg'))
                 elif self.options.type == "area":
-                    stotal = csparea(p)*factor*self.options.scale
+                    stotal = abs(csparea(p)*factor*self.options.scale)
                     self.group = inkex.etree.SubElement(node.getparent(),inkex.addNS('text','svg'))
                 else:
                     xc, yc = cspcofm(p)
