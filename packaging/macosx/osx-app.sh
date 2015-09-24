@@ -539,8 +539,15 @@ sed -e "s,__build_arch__,$_build_arch,g" -i "" "$scrpath"
 echo "APPLInks" > $package/Contents/PkgInfo
 
 # Pull in extra requirements for Pango and GTK
-mkdir -p $pkgetc/pango
-touch "$pkgetc/pango/pangorc"
+PANGOVERSION=$(pkg-config --modversion pango)
+PANGOVERSION_MINOR="$(cut -d. -f2 <<< $PANGOVERSION)"
+
+if [ $PANGOVERSION_MINOR -lt 37 ]; then
+	mkdir -p $pkgetc/pango
+	touch "$pkgetc/pango/pangorc"
+else
+	echo "Newer pango version found, modules are built-in"
+fi
 
 # We use a modified fonts.conf file so only need the dtd
 mkdir -p $pkgshare/xml/fontconfig
@@ -552,9 +559,12 @@ $cp_cmd -r $LIBPREFIX/share/fontconfig/conf.avail $pkgshare/fontconfig/
 (cd $pkgetc/fonts/conf.d && $ln_cmd ../../../share/fontconfig/conf.avail/10-autohint.conf)
 (cd $pkgetc/fonts/conf.d && $ln_cmd ../../../share/fontconfig/conf.avail/70-no-bitmaps.conf)
 
-pango_version=`pkg-config --variable=pango_module_version pango`
-mkdir -p $pkglib/pango/$pango_version/modules
-$cp_cmd $LIBPREFIX/lib/pango/$pango_version/modules/*.so $pkglib/pango/$pango_version/modules/
+if [ $PANGOVERSION_MINOR -lt 37 ]; then
+	# Pull in modules
+	pango_mod_version=`pkg-config --variable=pango_module_version pango`
+	mkdir -p $pkglib/pango/$pango_mod_version/modules
+	$cp_cmd $LIBPREFIX/lib/pango/$pango_mod_version/modules/*.so $pkglib/pango/$pango_mod_version/modules/
+fi
 
 gtk_version=`pkg-config --variable=gtk_binary_version gtk+-2.0`
 mkdir -p $pkglib/gtk-2.0/$gtk_version/{engines,immodules,printbackends}
@@ -573,9 +583,11 @@ sed -e "s,__gdk_pixbuf_version__,$gdk_pixbuf_version,g" -i "" "$scrpath"
 # recreate loaders and modules caches based on actually included modules
 
 # Pango modules
-pango-querymodules "$pkglib/pango/$pango_version"/modules/*.so \
-    | sed -e "s,$PWD/$pkgresources,@loader_path/..,g" \
-    > "$pkgetc"/pango/pango.modules
+if [ $PANGOVERSION_MINOR -lt 37 ]; then
+	pango-querymodules "$pkglib/pango/$pango_mod_version"/modules/*.so \
+		| sed -e "s,$PWD/$pkgresources,@loader_path/..,g" \
+		> "$pkgetc"/pango/pango.modules
+fi
 
 # Gtk immodules
 gtk-query-immodules-2.0 "$pkglib/gtk-2.0/$gtk_version"/immodules/*.so \
