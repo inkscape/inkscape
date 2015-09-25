@@ -38228,13 +38228,6 @@ msgstr "XAML ievade"
 #~ msgid "Custom Height (px.):"
 #~ msgstr "Pielāgot augstums (piks.):"
 
-#~ msgid ""
-#~ "Select a file of predefined shortcuts to use. Any customized shortcuts "
-#~ "you create will be added seperately to "
-#~ msgstr ""
-#~ "Izvēlieties datni ar iepriekš definētām saīsnēm. Visas Jūsu izveidotās "
-#~ "pielāgotās saīsnes tiks pievienotas pie "
-
 #~ msgid "x-interval cannot be zero. Please modify 'Start X' or 'End X'"
 #~ msgstr ""
 #~ "x-intervāls nevar būt nulle. Lūdzu, mainiet 'Sākuma X' vai 'Beigu X'"

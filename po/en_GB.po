@@ -20324,7 +20324,7 @@ msgid ""
 "create will be added separately to "
 msgstr ""
 "Select a file of predefined shortcuts to use. Any customised shortcuts you "
-"create will be added seperately to "
+"create will be added separately to "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1541
 msgid "Shortcut file:"
