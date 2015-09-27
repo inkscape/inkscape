@@ -13728,11 +13728,11 @@ msgstr "Positionen zufällig machen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:795
 msgid "Distribute text baselines"
-msgstr "Textgrundlinien verteilen"
+msgstr "Grundlinien der Textelemente verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
 msgid "Align text baselines"
-msgstr "Grundlinien von Text ausrichten"
+msgstr "Grundlinien der Textelemente ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:849
 msgid "Rearrange"
@@ -13790,7 +13790,7 @@ msgstr "Oberkanten ausrichten"
 #: ../src/ui/dialog/align-and-distribute.cpp:893 ../src/verbs.cpp:3007
 #: ../src/verbs.cpp:3008
 msgid "Center on horizontal axis"
-msgstr "Zentren horizontal ausrichten"
+msgstr "Horizontal zentrieren"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:896 ../src/verbs.cpp:3009
 #: ../src/verbs.cpp:3010
@@ -13804,7 +13804,7 @@ msgstr "Objektoberkanten an Unterkante der Verankerung ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:904
 msgid "Align baseline anchors of texts horizontally"
-msgstr "Grundlinien der Textelemente horizontal ausrichten"
+msgstr "Textanker horizontal ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:907
 msgid "Align baselines of texts"
@@ -13812,43 +13812,43 @@ msgstr "Grundlinien der Textelemente ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:912
 msgid "Make horizontal gaps between objects equal"
-msgstr "Horizontale Abstände zwischen Objekten ausgleichen"
+msgstr "Horizontale Abstände zwischen Objekten angleichen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:916
 msgid "Distribute left edges equidistantly"
-msgstr "Linke Objektkanten gleichmäßig anordnen"
+msgstr "Linke Kanten gleichmäßig verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 msgid "Distribute centers equidistantly horizontally"
-msgstr "Objektmittelpunkten horizontal gleichmäßig anordnen"
+msgstr "Objektmittelpunkte horizontal gleichmäßig verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:922
 msgid "Distribute right edges equidistantly"
-msgstr "Rechte Objektkanten gleichmäßig anordnen"
+msgstr "Rechte Kanten gleichmäßig verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:926
 msgid "Make vertical gaps between objects equal"
-msgstr "Vertikale Abstände zwischen Objekten ausgleichen"
+msgstr "Vertikale Abstände zwischen Objekten angleichen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:930
 msgid "Distribute top edges equidistantly"
-msgstr "Oberkanten der Objekte gleichmäßig anordnen"
+msgstr "Oberkanten gleichmäßig verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:933
 msgid "Distribute centers equidistantly vertically"
-msgstr "Objektmittelpunkten vertikal gleichmäßig anordnen"
+msgstr "Objektmittelpunkte vertikal gleichmäßig verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:936
 msgid "Distribute bottom edges equidistantly"
-msgstr "Unterkanten gleichmäßig anordnen"
+msgstr "Unterkanten gleichmäßig verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:941
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr "Grundlinien von Textelementen horizontal verteilen"
+msgstr "Textanker horizontal gleichmäßig verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:944
 msgid "Distribute baselines of texts vertically"
-msgstr "Grundlinien von Textelementen vertikal verteilen"
+msgstr "Grundlinien der Textelemente vertikal gleichmäßig verteilen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:950
 #: ../src/widgets/connector-toolbar.cpp:369
@@ -17428,7 +17428,8 @@ msgstr "Gleiche Höhe"
 #: ../src/ui/dialog/grid-arrange-tab.cpp:642
 msgid "If not set, each row has the height of the tallest object in it"
 msgstr ""
-"Wenn nicht gesetzt, dann hat jede Zeile die Höhe seines größten Objektes"
+"Wenn nicht gesetzt, dann hat jede Zeile die Höhe des größten enthaltenen "
+"Objektes"
 
 #. #### Number of columns ####
 #: ../src/ui/dialog/grid-arrange-tab.cpp:658
@@ -17446,7 +17447,7 @@ msgstr "Gleiche Breite"
 #: ../src/ui/dialog/grid-arrange-tab.cpp:681
 msgid "If not set, each column has the width of the widest object in it"
 msgstr ""
-"Wenn nicht gesetzt, dann hat jede Spalte die Breite seines breitesten "
+"Wenn nicht gesetzt, dann hat jede Spalte die Breite des größten enthaltenen "
 "Objektes"
 
 #. Anchor selection widget
@@ -20951,7 +20952,7 @@ msgstr "Log-Erfassung gestoppt."
 
 #: ../src/ui/dialog/new-from-template.cpp:27
 msgid "Create from template"
-msgstr "Erstellen von Vorlage"
+msgstr "Aus Vorlage erstellen"
 
 #: ../src/ui/dialog/new-from-template.cpp:29
 msgid "New From Template"
@@ -32593,7 +32594,7 @@ msgstr "RGB-Tonne"
 
 #: ../share/extensions/convert2dashes.inx.h:1
 msgid "Convert to Dashes"
-msgstr "Umwandeln in Blindenschrift"
+msgstr "Muster in einzelne Pfadabschnitte aufteilen"
 
 #: ../share/extensions/dhw_input.inx.h:1
 msgid "DHW file input"
@@ -35211,7 +35212,7 @@ msgstr "Kommandozeilen-Optionen"
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_commandline.inx.h:3
 msgid "http://inkscape.org/doc/inkscape-man.html"
-msgstr "https://inkscape.org/doc/inkscape-man.de.html"
+msgstr "http://inkscape.org/doc/inkscape-man.de.html"
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
@@ -36949,7 +36950,7 @@ msgstr "Windows32-Vektor-Druck"
 
 #: ../share/extensions/printing_marks.inx.h:1
 msgid "Printing Marks"
-msgstr "Druck-Markierungen"
+msgstr "Druckmarken"
 
 #: ../share/extensions/printing_marks.inx.h:3
 msgid "Crop Marks"
@@ -36957,7 +36958,7 @@ msgstr "Schnittmarken"
 
 #: ../share/extensions/printing_marks.inx.h:4
 msgid "Bleed Marks"
-msgstr "blutende Markierungen"
+msgstr "Beschnittzugabemarken"
 
 #: ../share/extensions/printing_marks.inx.h:5
 msgid "Registration Marks"
@@ -36965,15 +36966,15 @@ msgstr "Registrierungsmarken"
 
 #: ../share/extensions/printing_marks.inx.h:6
 msgid "Star Target"
-msgstr "Sternenziel"
+msgstr "Siemensstern"
 
 #: ../share/extensions/printing_marks.inx.h:7
 msgid "Color Bars"
-msgstr "Farbleisten"
+msgstr "Farbkontrollstreifen"
 
 #: ../share/extensions/printing_marks.inx.h:8
 msgid "Page Information"
-msgstr "Seiten-Information"
+msgstr "Seiteninformation"
 
 #: ../share/extensions/printing_marks.inx.h:9
 msgid "Positioning"
@@ -36981,7 +36982,7 @@ msgstr "Positionierung"
 
 #: ../share/extensions/printing_marks.inx.h:10
 msgid "Set crop marks to:"
-msgstr "Setze Schnittmarkierung auf"
+msgstr "Setze Schnittmarken für"
 
 #: ../share/extensions/printing_marks.inx.h:17
 msgid "Canvas"
@@ -36989,7 +36990,7 @@ msgstr "Arbeitsfläche"
 
 #: ../share/extensions/printing_marks.inx.h:19
 msgid "Bleed Margin"
-msgstr "Beschnittgrenze"
+msgstr "Beschnittzugabe"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "PostScript Input"
