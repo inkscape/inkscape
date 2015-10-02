@@ -474,7 +474,13 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
         // Special treatment for text: convert each glyph to separate path, then group the paths
         Inkscape::XML::Node *g_repr = xml_doc->createElement("svg:g");
 
-        Glib::ustring original_text; // To save original text of accessibility.
+        // Save original text for accessibility.
+        Glib::ustring original_text = sp_te_get_string_multiline( item,
+                                                                  te_get_layout(item)->begin(),
+                                                                  te_get_layout(item)->end() );
+        if( original_text.size() > 0 ) {
+            g_repr->setAttribute("aria-label", original_text.c_str() );
+        }
 
         g_repr->setAttribute("transform", item->getRepr()->attribute("transform"));
         /* Mask */
@@ -494,10 +500,8 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
             item->style->write( SP_STYLE_FLAG_IFDIFF, item->parent ? item->parent->style : NULL); // TODO investigate posibility
         g_repr->setAttribute("style", style_str.c_str());
 
-        Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
+        Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin();
         do {
-            original_text += (gunichar)te_get_layout(item)->characterAt( iter );
-
             Inkscape::Text::Layout::iterator iter_next = iter;
             iter_next.nextGlyph(); // iter_next is one glyph ahead from iter
             if (iter == iter_next)
@@ -538,10 +542,6 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
             g_repr->appendChild(p_repr);
 
-            // For accessibility, store original string
-            if( original_text.size() > 0 ) {
-                g_repr->setAttribute("aria-label", original_text.c_str() );
-            }
             Inkscape::GC::release(p_repr);
 
             if (iter == te_get_layout(item)->end())
