@@ -741,7 +741,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
 
         switch (get_group0_keyval(&event->key)) {
         case GDK_KEY_space:
-            if (within_tolerance || !allow_panning) {
+            if (within_tolerance) {
                 // Space was pressed, but not panned
                 sp_toggle_selector(desktop);
 
