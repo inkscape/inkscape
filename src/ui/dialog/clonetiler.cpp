@@ -2479,7 +2479,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
 
             // Trace tab
             if (dotrace) {
-                Geom::Rect bbox_t = transform_rect (bbox_original, t);
+                Geom::Rect bbox_t = transform_rect (bbox_original, t*Geom::Scale(1.0/scale_units));
 
                 guint32 rgba = clonetiler_trace_pick (bbox_t);
                 float r = SP_RGBA32_R_F(rgba);
