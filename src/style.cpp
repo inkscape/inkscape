@@ -1258,7 +1258,7 @@ SPStyle::getFontFeatureString() {
     if( font_variant_east_asian.value & SP_CSS_FONT_VARIANT_EAST_ASIAN_RUBY )
         feature_string += "ruby, ";
 
-    if ( strcmp( font_feature_settings.value, "normal") ) {
+    if ( font_feature_settings.value && strcmp( font_feature_settings.value, "normal") ) {
         // We do no sanity checking...
         feature_string += font_feature_settings.value; 
         feature_string += ", ";
