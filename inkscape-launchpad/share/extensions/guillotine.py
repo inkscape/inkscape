@@ -88,11 +88,11 @@ class Guillotine(inkex.Effect):
         for g in xpath:
             guide = {}
             (x, y) = g.attrib['position'].split(',')
-            if g.attrib['orientation'] == '0,1':
+            if g.attrib['orientation'][:2] == '0,':
                 guide['orientation'] = 'horizontal'
                 guide['position'] = y
                 guides.append(guide)
-            elif g.attrib['orientation'] == '1,0':
+            elif g.attrib['orientation'][-2:] == ',0':
                 guide['orientation'] = 'vertical'
                 guide['position'] = x
                 guides.append(guide)

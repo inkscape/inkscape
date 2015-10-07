@@ -498,6 +498,7 @@ void SvgBuilder::addShadedFill(GfxShading *shading, double *matrix, GfxPath *pat
             // Obtain clipping path's id from the URL
             gchar clip_path_id[32];
             strncpy(clip_path_id, clip_path_url + 5, strlen(clip_path_url) - 6);
+	    clip_path_id[sizeof (clip_path_id) - 1] = '\0';
             SPObject *clip_obj = _doc->getObjectById(clip_path_id);
             if (clip_obj) {
                 clip_obj->deleteObject();

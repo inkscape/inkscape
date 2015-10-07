@@ -75,16 +75,10 @@ static bool sp_compare_x_position(SPItem *first, SPItem *second)
         a_in_b_vert = false;
     }
 
-    if (!a_in_b_vert) {
-        return true;
+    if (!a_in_b_vert) { // a and b are not in the same row
+        return (a->min()[Y] < b->min()[Y]);
     }
-    if (a_in_b_vert && a->min()[X] > b->min()[X]) {
-        return false;
-    }
-    if (a_in_b_vert && a->min()[X] < b->min()[X]) {
-        return true;
-    }
-    return false;
+    return (a->min()[X] < b->min()[X]);
 }
 
 /*

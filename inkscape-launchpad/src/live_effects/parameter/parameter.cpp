@@ -64,7 +64,8 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
       digits(2),
       inc_step(0.1),
       inc_page(1),
-      add_slider(false)
+      add_slider(false),
+      overwrite_widget(false)
 {
 }
 
@@ -143,6 +144,12 @@ ScalarParam::param_make_integer(bool yes)
     inc_page = 10;
 }
 
+void
+ScalarParam::param_overwrite_widget(bool overwrite_widget)
+{
+    this->overwrite_widget = overwrite_widget;
+}
+
 Gtk::Widget *
 ScalarParam::param_newWidget()
 {
@@ -157,9 +164,9 @@ ScalarParam::param_newWidget()
     if (add_slider) {
         rsu->addSlider();
     }
-
-    rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
-
+    if(!overwrite_widget){
+        rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
+    }
     return dynamic_cast<Gtk::Widget *> (rsu);
 }
 

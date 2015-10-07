@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the INKSCAPE package.
 # Copyright (C) 2000-2015 Free Software Foundation, Inc.
 # Translators:
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-07-06 10:27+0200\n"
+"POT-Creation-Date: 2015-09-10 11:16+0200\n"
 "PO-Revision-Date: 2013-09-26 07:10+0530\n"
 "Last-Translator: \n"
 "Language-Team: Konkani\n"
@@ -4702,8 +4702,8 @@ msgid "_Origin X:"
 msgstr "_Mull X:"
 
 #: ../src/display/canvas-axonomgrid.cpp:359 ../src/display/canvas-grid.cpp:699
-#: ../src/ui/dialog/inkscape-preferences.cpp:746
-#: ../src/ui/dialog/inkscape-preferences.cpp:771
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
+#: ../src/ui/dialog/inkscape-preferences.cpp:803
 msgid "X coordinate of grid origin"
 msgstr "zalli mullacho X nirdexonk"
 
@@ -4712,8 +4712,8 @@ msgid "O_rigin Y:"
 msgstr "mu_ll Y:"
 
 #: ../src/display/canvas-axonomgrid.cpp:362 ../src/display/canvas-grid.cpp:702
-#: ../src/ui/dialog/inkscape-preferences.cpp:747
-#: ../src/ui/dialog/inkscape-preferences.cpp:772
+#: ../src/ui/dialog/inkscape-preferences.cpp:779
+#: ../src/ui/dialog/inkscape-preferences.cpp:804
 msgid "Y coordinate of grid origin"
 msgstr "zalli mullacho Y nirdexonk"
 
@@ -4722,29 +4722,29 @@ msgid "Spacing _Y:"
 msgstr "suvat_Y:"
 
 #: ../src/display/canvas-axonomgrid.cpp:365
-#: ../src/ui/dialog/inkscape-preferences.cpp:775
+#: ../src/ui/dialog/inkscape-preferences.cpp:807
 msgid "Base length of z-axis"
 msgstr "z-okxachem tholl lambai "
 
 #: ../src/display/canvas-axonomgrid.cpp:368
-#: ../src/ui/dialog/inkscape-preferences.cpp:778
+#: ../src/ui/dialog/inkscape-preferences.cpp:810
 #: ../src/widgets/box3d-toolbar.cpp:302
 msgid "Angle X:"
 msgstr "konn X:"
 
 #: ../src/display/canvas-axonomgrid.cpp:368
-#: ../src/ui/dialog/inkscape-preferences.cpp:778
+#: ../src/ui/dialog/inkscape-preferences.cpp:810
 msgid "Angle of x-axis"
 msgstr "x-okxacho kon"
 
 #: ../src/display/canvas-axonomgrid.cpp:370
-#: ../src/ui/dialog/inkscape-preferences.cpp:779
+#: ../src/ui/dialog/inkscape-preferences.cpp:811
 #: ../src/widgets/box3d-toolbar.cpp:381
 msgid "Angle Z:"
 msgstr "kon Z:"
 
 #: ../src/display/canvas-axonomgrid.cpp:370
-#: ../src/ui/dialog/inkscape-preferences.cpp:779
+#: ../src/ui/dialog/inkscape-preferences.cpp:811
 msgid "Angle of z-axis"
 msgstr "z-okxacho kon"
 
@@ -4754,7 +4754,7 @@ msgid "Minor grid line _color:"
 msgstr "promukh zalli volli rong:"
 
 #: ../src/display/canvas-axonomgrid.cpp:374 ../src/display/canvas-grid.cpp:713
-#: ../src/ui/dialog/inkscape-preferences.cpp:730
+#: ../src/ui/dialog/inkscape-preferences.cpp:762
 #, fuzzy
 msgid "Minor grid line color"
 msgstr "promukh zalli vollincho rong"
@@ -4769,7 +4769,7 @@ msgid "Ma_jor grid line color:"
 msgstr "promu_kh zalli vollincho rong"
 
 #: ../src/display/canvas-axonomgrid.cpp:379 ../src/display/canvas-grid.cpp:718
-#: ../src/ui/dialog/inkscape-preferences.cpp:732
+#: ../src/ui/dialog/inkscape-preferences.cpp:764
 msgid "Major grid line color"
 msgstr "promukh zalli vollincho rong"
 
@@ -4835,12 +4835,12 @@ msgid "Spacing _X:"
 msgstr "Suvati_ X:"
 
 #: ../src/display/canvas-grid.cpp:705
-#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#: ../src/ui/dialog/inkscape-preferences.cpp:784
 msgid "Distance between vertical grid lines"
 msgstr "ubea zalli volli modlo ontor"
 
 #: ../src/display/canvas-grid.cpp:708
-#: ../src/ui/dialog/inkscape-preferences.cpp:753
+#: ../src/ui/dialog/inkscape-preferences.cpp:785
 msgid "Distance between horizontal grid lines"
 msgstr "addvea zalli volli modlo ontor"
 
@@ -5002,11 +5002,11 @@ msgstr "merayil'lo pette kendrbindu"
 msgid "Bounding box side midpoint"
 msgstr "merayil'lo pette dege kendrbindu"
 
-#: ../src/display/snap-indicator.cpp:196 ../src/ui/tool/node.cpp:1507
+#: ../src/display/snap-indicator.cpp:196 ../src/ui/tool/node.cpp:1484
 msgid "Smooth node"
 msgstr "move gantt"
 
-#: ../src/display/snap-indicator.cpp:199 ../src/ui/tool/node.cpp:1506
+#: ../src/display/snap-indicator.cpp:199 ../src/ui/tool/node.cpp:1483
 msgid "Cusp node"
 msgstr "bhette gantt"
 
@@ -5058,7 +5058,7 @@ msgstr ""
 msgid "Multiple of grid spacing"
 msgstr "chodd zalli suvat"
 
-#: ../src/display/snap-indicator.cpp:281
+#: ../src/display/snap-indicator.cpp:286
 msgid " to "
 msgstr "haka"
 
@@ -6321,7 +6321,7 @@ msgstr "_rong Ttollay:"
 #: ../src/extension/internal/filter/transparency.h:214
 #: ../src/extension/internal/filter/transparency.h:287
 #: ../src/extension/internal/filter/transparency.h:349
-#: ../src/ui/dialog/inkscape-preferences.cpp:1751
+#: ../src/ui/dialog/inkscape-preferences.cpp:1795
 #, c-format
 msgid "Filters"
 msgstr "Gallnni"
@@ -6549,7 +6549,7 @@ msgstr "_sommixronn madori"
 #: ../src/extension/internal/filter/paint.h:702
 #: ../src/extension/internal/filter/textures.h:77
 #: ../src/extension/internal/filter/transparency.h:61
-#: ../src/filter-enums.cpp:52 ../src/ui/dialog/inkscape-preferences.cpp:653
+#: ../src/filter-enums.cpp:52 ../src/ui/dialog/inkscape-preferences.cpp:685
 #: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
 msgid "Normal"
 msgstr "samany"
@@ -6887,7 +6887,7 @@ msgstr "tela pintravnni"
 #: ../src/extension/internal/filter/color.h:157
 #: ../src/extension/internal/filter/color.h:332
 #: ../src/extension/internal/filter/paint.h:87 ../src/filter-enums.cpp:66
-#: ../src/ui/dialog/inkscape-preferences.cpp:952
+#: ../src/ui/dialog/inkscape-preferences.cpp:984
 #: ../src/ui/tools/flood-tool.cpp:95
 #: ../src/ui/widget/color-icc-selector.cpp:183
 #: ../src/ui/widget/color-icc-selector.cpp:188
@@ -7024,7 +7024,7 @@ msgstr "protyek"
 
 #: ../src/extension/internal/filter/color.h:505 ../src/filter-enums.cpp:113
 #: ../src/live_effects/lpe-interpolate_points.cpp:25
-#: ../src/live_effects/lpe-powerstroke.cpp:130
+#: ../src/live_effects/lpe-powerstroke.cpp:133
 msgid "Linear"
 msgstr "rekhiy"
 
@@ -7233,7 +7233,7 @@ msgstr "savott"
 
 #: ../src/extension/internal/filter/color.h:1119
 #: ../src/extension/internal/filter/paint.h:356 ../src/filter-enums.cpp:33
-#: ../src/live_effects/effect.cpp:107
+#: ../src/live_effects/effect.cpp:108
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1048
 #: ../src/widgets/gradient-toolbar.cpp:1162
 msgid "Offset"
@@ -7513,7 +7513,7 @@ msgid "Blur and displace edges of shapes and pictures"
 msgstr "vosu ani pinturam bhitor ronganvcho dega porzoll zoddta"
 
 #: ../src/extension/internal/filter/distort.h:190
-#: ../src/live_effects/effect.cpp:137
+#: ../src/live_effects/effect.cpp:138
 msgid "Roughen"
 msgstr "dorog"
 
@@ -7872,7 +7872,7 @@ msgstr "pintravnni"
 #: ../src/extension/internal/filter/paint.h:496
 #: ../src/extension/internal/filter/paint.h:590
 #: ../src/extension/internal/filter/paint.h:976
-#: ../src/live_effects/effect.cpp:148 ../src/splivarot.cpp:2204
+#: ../src/live_effects/effect.cpp:149 ../src/splivarot.cpp:2204
 msgid "Simplify"
 msgstr "soroll"
 
@@ -8199,14 +8199,14 @@ msgid "Source:"
 msgstr "zhor"
 
 #: ../src/extension/internal/filter/transparency.h:56
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1591
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1603
 msgid "Background"
 msgstr "patt buim"
 
 #: ../src/extension/internal/filter/transparency.h:59
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2855
 #: ../src/ui/dialog/input.cpp:1088 ../src/widgets/eraser-toolbar.cpp:106
-#: ../src/widgets/pencil-toolbar.cpp:132 ../src/widgets/spray-toolbar.cpp:186
+#: ../src/widgets/pencil-toolbar.cpp:144 ../src/widgets/spray-toolbar.cpp:186
 #: ../src/widgets/tweak-toolbar.cpp:254 ../share/extensions/extrude.inx.h:2
 #: ../share/extensions/triangle.inx.h:8
 msgid "Mode:"
@@ -8278,13 +8278,13 @@ msgstr ""
 "hea koddtoracher ul'lekh korta ani hor koddtoram sangata fuddem vetat"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:191
-#: ../src/ui/dialog/inkscape-preferences.cpp:1456
+#: ../src/ui/dialog/inkscape-preferences.cpp:1500
 #, fuzzy, c-format
 msgid "Embed"
 msgstr "guttlai"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:192 ../src/sp-anchor.cpp:105
-#: ../src/ui/dialog/inkscape-preferences.cpp:1456
+#: ../src/ui/dialog/inkscape-preferences.cpp:1500
 #, fuzzy, c-format
 msgid "Link"
 msgstr "ganch:"
@@ -8324,19 +8324,19 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:201
-#: ../src/ui/dialog/inkscape-preferences.cpp:1463
+#: ../src/ui/dialog/inkscape-preferences.cpp:1507
 #, fuzzy, c-format
 msgid "None (auto)"
 msgstr "kai na (mull)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:202
-#: ../src/ui/dialog/inkscape-preferences.cpp:1463
+#: ../src/ui/dialog/inkscape-preferences.cpp:1507
 #, c-format
 msgid "Smooth (optimizeQuality)"
 msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:203
-#: ../src/ui/dialog/inkscape-preferences.cpp:1463
+#: ../src/ui/dialog/inkscape-preferences.cpp:1507
 #, c-format
 msgid "Blocky (optimizeSpeed)"
 msgstr ""
@@ -8393,7 +8393,7 @@ msgid "Vertical Offset:"
 msgstr "ubi offset"
 
 #: ../src/extension/internal/grid.cpp:215
-#: ../src/ui/dialog/inkscape-preferences.cpp:1477
+#: ../src/ui/dialog/inkscape-preferences.cpp:1521
 #: ../share/extensions/draw_from_triangle.inx.h:58
 #: ../share/extensions/eqtexsvg.inx.h:4
 #: ../share/extensions/foldablebox.inx.h:9
@@ -8425,8 +8425,8 @@ msgstr "prostut kor"
 
 #: ../src/extension/internal/grid.cpp:216
 #: ../src/ui/dialog/document-properties.cpp:162
-#: ../src/ui/dialog/inkscape-preferences.cpp:787
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/ui/dialog/inkscape-preferences.cpp:819
+#: ../src/widgets/toolbox.cpp:1825
 msgid "Grids"
 msgstr "zalli"
 
@@ -8808,7 +8808,7 @@ msgstr "default.svg"
 msgid "Broken links have been changed to point to existing files."
 msgstr ""
 
-#: ../src/file.cpp:339 ../src/file.cpp:1252
+#: ../src/file.cpp:339 ../src/file.cpp:1274
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "vinovnnechem koddtor %s bhorcheant solvolem"
@@ -8881,7 +8881,7 @@ msgid "Document saved."
 msgstr "dostavez zogoilem"
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:866 ../src/file.cpp:1411
+#: ../src/file.cpp:866 ../src/file.cpp:1433
 #, fuzzy
 msgid "drawing"
 msgstr "%s  soddonvchem"
@@ -8907,20 +8907,20 @@ msgstr "zogonvk bodlovonn gorz na"
 msgid "Saving document..."
 msgstr "dostovez zogoyta.."
 
-#: ../src/file.cpp:1249 ../src/ui/dialog/inkscape-preferences.cpp:1450
+#: ../src/file.cpp:1271 ../src/ui/dialog/inkscape-preferences.cpp:1494
 #: ../src/ui/dialog/ocaldialogs.cpp:1244
 msgid "Import"
 msgstr "ayot"
 
-#: ../src/file.cpp:1299
+#: ../src/file.cpp:1321
 msgid "Select file to import"
 msgstr "koddtor ayot korun vinch"
 
-#: ../src/file.cpp:1432
+#: ../src/file.cpp:1454
 msgid "Select file to export to"
 msgstr "koddtor niryat korunk vinch"
 
-#: ../src/file.cpp:1685
+#: ../src/file.cpp:1707
 #, fuzzy
 msgid "Import Clip Art"
 msgstr "ayot/niryat"
@@ -9065,7 +9065,7 @@ msgstr "_Nitllai"
 msgid "Copy"
 msgstr "_proti kadd"
 
-#: ../src/filter-enums.cpp:97 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1611
+#: ../src/filter-enums.cpp:97 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1623
 msgid "Destination"
 msgstr "xevott"
 
@@ -9318,7 +9318,7 @@ msgstr "hea suvatenk zogoinatul'lim dostaveza svocholit backupam keleant:\n"
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "hea dostavezanchem svocholit backup solvolem:\n"
 
-#: ../src/knot.cpp:346
+#: ../src/knot.cpp:348
 msgid "Node or handle drag canceled."
 msgstr "gantt vo hatallo vodd rod'd"
 
@@ -9359,20 +9359,20 @@ msgstr "Toddipott'tti  xeili"
 msgid "Dockbar style to show items on it"
 msgstr "tachio voilio gozoli dakonvk Toddipott'tti  xeili"
 
-#: ../src/libgdl/gdl-dock-item-grip.c:399
+#: ../src/libgdl/gdl-dock-item-grip.c:402
 msgid "Iconify this dock"
 msgstr "hea toddik chinn rup di"
 
-#: ../src/libgdl/gdl-dock-item-grip.c:401
+#: ../src/libgdl/gdl-dock-item-grip.c:404
 msgid "Close this dock"
 msgstr "hi todd bond kor"
 
-#: ../src/libgdl/gdl-dock-item-grip.c:720
+#: ../src/libgdl/gdl-dock-item-grip.c:723
 #: ../src/libgdl/gdl-dock-tablabel.c:125
 msgid "Controlling dock item"
 msgstr "toddi gozol "
 
-#: ../src/libgdl/gdl-dock-item-grip.c:721
+#: ../src/libgdl/gdl-dock-item-grip.c:724
 msgid "Dockitem which 'owns' this grip"
 msgstr "hea muttin 'apnnayil'li' toddi gozoli "
 
@@ -9455,27 +9455,27 @@ msgstr ""
 "%s haka %s prokarachem upokoronn zoddunk yotn korta, punn tantum ek pavttim "
 "ek matr upokoronn asyet; tantum yedolluch %s prokarachem upokoronn asa"
 
-#: ../src/libgdl/gdl-dock-item.c:1471 ../src/libgdl/gdl-dock-item.c:1521
+#: ../src/libgdl/gdl-dock-item.c:1474 ../src/libgdl/gdl-dock-item.c:1524
 #, c-format
 msgid "Unsupported docking strategy %s in dock object of type %s"
 msgstr "toddi vost %s prokarant pattimbo natul'li toddik lagonvchem tontr %s"
 
 #. UnLock menuitem
-#: ../src/libgdl/gdl-dock-item.c:1629
+#: ../src/libgdl/gdl-dock-item.c:1632
 msgid "UnLock"
 msgstr "ofichar"
 
 #. Hide menuitem.
-#: ../src/libgdl/gdl-dock-item.c:1636
+#: ../src/libgdl/gdl-dock-item.c:1639
 msgid "Hide"
 msgstr "lipoi"
 
 #. Lock menuitem
-#: ../src/libgdl/gdl-dock-item.c:1641
+#: ../src/libgdl/gdl-dock-item.c:1644
 msgid "Lock"
 msgstr "fichar"
 
-#: ../src/libgdl/gdl-dock-item.c:1904
+#: ../src/libgdl/gdl-dock-item.c:1907
 #, c-format
 msgid "Attempt to bind an unbound item %p"
 msgstr "bandavollint mellanatul'li gozal %p banduk yotn kelem"
@@ -9525,7 +9525,7 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-notebook.c:132
 #: ../src/ui/dialog/align-and-distribute.cpp:998
 #: ../src/ui/dialog/document-properties.cpp:160
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1537
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1549
 #: ../src/widgets/desktop-widget.cpp:1994
 #: ../share/extensions/empty_page.inx.h:1
 #: ../share/extensions/voronoi2svg.inx.h:9
@@ -9538,8 +9538,8 @@ msgstr "prostut panachi VorgikrutVelleri"
 
 #: ../src/libgdl/gdl-dock-object.c:125
 #: ../src/live_effects/parameter/originalpatharray.cpp:82
-#: ../src/ui/dialog/inkscape-preferences.cpp:1511
-#: ../src/ui/widget/page-sizer.cpp:283
+#: ../src/ui/dialog/inkscape-preferences.cpp:1555
+#: ../src/ui/widget/page-sizer.cpp:285
 #: ../src/widgets/gradient-selector.cpp:154
 #: ../src/widgets/sp-xmlview-attr-list.cpp:49
 msgid "Name"
@@ -9710,8 +9710,8 @@ msgstr "%p vhoddilam thavn %p haka burgea niyojon ghetana guspoddit ghoddlem"
 msgid "Dockitem which 'owns' this tablabel"
 msgstr "hem tab-patto 'apnnayil'li' toddi vost"
 
-#: ../src/libgdl/gdl-dock.c:176 ../src/ui/dialog/inkscape-preferences.cpp:642
-#: ../src/ui/dialog/inkscape-preferences.cpp:685
+#: ../src/libgdl/gdl-dock.c:176 ../src/ui/dialog/inkscape-preferences.cpp:674
+#: ../src/ui/dialog/inkscape-preferences.cpp:717
 msgid "Floating"
 msgstr "upyenvchem"
 
@@ -9756,211 +9756,216 @@ msgstr "Todd #%d"
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Pango ji dospott'tta tachi kuttma vinne okxorsonchachi durlokxa korta"
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:99
 msgid "doEffect stack test"
 msgstr "doEffect muttea topasnni"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:100
 msgid "Angle bisector"
 msgstr "kon dvibhajok"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:101
 msgid "Circle (by center and radius)"
 msgstr "vrot (kendr ani trijy thavn)"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:102
 msgid "Circle by 3 points"
 msgstr "3 bindu thavn Vrot"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:103
 msgid "Dynamic stroke"
 msgstr "sokriy dhoko"
 
-#: ../src/live_effects/effect.cpp:103 ../share/extensions/extrude.inx.h:1
+#: ../src/live_effects/effect.cpp:104 ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "bhair ghal"
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:105
 msgid "Lattice Deformation"
 msgstr "Zalli viruponn"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:106
 msgid "Line Segment"
 msgstr "volli vantto"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:107
 msgid "Mirror symmetry"
 msgstr "arsea somonota"
 
-#: ../src/live_effects/effect.cpp:108
+#: ../src/live_effects/effect.cpp:109
 msgid "Parallel"
 msgstr "somanantor"
 
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:110
 msgid "Path length"
 msgstr "vatte lambai"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:111
 msgid "Perpendicular bisector"
 msgstr "lomb dvibajok"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:112
 msgid "Perspective path"
 msgstr "droxy vatt"
 
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:113
 msgid "Rotate copies"
 msgstr "protio gunvddai"
 
-#: ../src/live_effects/effect.cpp:113
+#: ../src/live_effects/effect.cpp:114
 msgid "Recursive skeleton"
 msgstr "punorovortit haddavoll"
 
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:115
 msgid "Tangent to curve"
 msgstr "vokrotak sporx voll"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:116
 msgid "Text label"
 msgstr "lekh patto"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:119
 msgid "Bend"
 msgstr "baggoi"
 
-#: ../src/live_effects/effect.cpp:119
+#: ../src/live_effects/effect.cpp:120
 msgid "Gears"
 msgstr "geari"
 
-#: ../src/live_effects/effect.cpp:120
+#: ../src/live_effects/effect.cpp:121
 msgid "Pattern Along Path"
 msgstr "vatte songim nomuno"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:121
+#: ../src/live_effects/effect.cpp:122
 msgid "Stitch Sub-Paths"
 msgstr "upo-vattenk xinvonn"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:123
+#: ../src/live_effects/effect.cpp:124
 msgid "VonKoch"
 msgstr "VonKoch"
 
-#: ../src/live_effects/effect.cpp:124
+#: ../src/live_effects/effect.cpp:125
 msgid "Knot"
 msgstr "gantt"
 
-#: ../src/live_effects/effect.cpp:125
+#: ../src/live_effects/effect.cpp:126
 msgid "Construct grid"
 msgstr "zalli roch"
 
-#: ../src/live_effects/effect.cpp:126
+#: ../src/live_effects/effect.cpp:127
 msgid "Spiro spline"
 msgstr "Spiro khill"
 
-#: ../src/live_effects/effect.cpp:127
+#: ../src/live_effects/effect.cpp:128
 msgid "Envelope Deformation"
 msgstr "virupi lokotto"
 
-#: ../src/live_effects/effect.cpp:128
+#: ../src/live_effects/effect.cpp:129
 msgid "Interpolate Sub-Paths"
 msgstr "ontorvexon upo-vatto"
 
-#: ../src/live_effects/effect.cpp:129
+#: ../src/live_effects/effect.cpp:130
 msgid "Hatches (rough)"
 msgstr "Konddio (dorog)"
 
-#: ../src/live_effects/effect.cpp:130
+#: ../src/live_effects/effect.cpp:131
 msgid "Sketch"
 msgstr "Rekhachitr"
 
-#: ../src/live_effects/effect.cpp:131
+#: ../src/live_effects/effect.cpp:132
 msgid "Ruler"
 msgstr "MezpaPott’tti"
 
 #. 0.91
-#: ../src/live_effects/effect.cpp:133
+#: ../src/live_effects/effect.cpp:134
 #, fuzzy
 msgid "Power stroke"
 msgstr "nomuno dhoko"
 
-#: ../src/live_effects/effect.cpp:134
+#: ../src/live_effects/effect.cpp:135
 #, fuzzy
 msgid "Clone original path"
 msgstr "vatt bond kor."
 
 #. EXPERIMENTAL
-#: ../src/live_effects/effect.cpp:136
+#: ../src/live_effects/effect.cpp:137
 #: ../src/live_effects/lpe-show_handles.cpp:26
 #, fuzzy
 msgid "Show handles"
 msgstr "hatalle dakoi"
 
-#: ../src/live_effects/effect.cpp:138 ../src/widgets/pencil-toolbar.cpp:109
+#: ../src/live_effects/effect.cpp:139 ../src/widgets/pencil-toolbar.cpp:121
 #, fuzzy
 msgid "BSpline"
 msgstr "volli"
 
-#: ../src/live_effects/effect.cpp:139
+#: ../src/live_effects/effect.cpp:140
 #, fuzzy
 msgid "Join type"
 msgstr "gantti zodd"
 
-#: ../src/live_effects/effect.cpp:140
+#: ../src/live_effects/effect.cpp:141
 #, fuzzy
 msgid "Taper stroke"
 msgstr "nomuno dhoko"
 
 #. Ponyscape
-#: ../src/live_effects/effect.cpp:142
+#: ../src/live_effects/effect.cpp:143
 #, fuzzy
 msgid "Attach path"
 msgstr "Xinvnne vatt"
 
-#: ../src/live_effects/effect.cpp:143
+#: ../src/live_effects/effect.cpp:144
 #, fuzzy
 msgid "Fill between strokes"
 msgstr "_bhor ani dhoko di"
 
-#: ../src/live_effects/effect.cpp:144 ../src/selection-chemistry.cpp:2871
+#: ../src/live_effects/effect.cpp:145 ../src/selection-chemistry.cpp:2871
 msgid "Fill between many"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:145
+#: ../src/live_effects/effect.cpp:146
 #, fuzzy
 msgid "Ellipse by 5 points"
 msgstr "3 bindu thavn Vrot"
 
-#: ../src/live_effects/effect.cpp:146
+#: ../src/live_effects/effect.cpp:147
 #, fuzzy
 msgid "Bounding Box"
 msgstr "bandavollichi pett"
 
-#: ../src/live_effects/effect.cpp:149
+#: ../src/live_effects/effect.cpp:150
 #, fuzzy
 msgid "Lattice Deformation 2"
 msgstr "Zalli viruponn"
 
-#: ../src/live_effects/effect.cpp:150
+#: ../src/live_effects/effect.cpp:151
 #, fuzzy
 msgid "Perspective/Envelope"
 msgstr "Dixttavo "
 
-#: ../src/live_effects/effect.cpp:151
+#: ../src/live_effects/effect.cpp:152
 msgid "Fillet/Chamfer"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:152
+#: ../src/live_effects/effect.cpp:153
 #, fuzzy
 msgid "Interpolate points"
 msgstr "ontorvexon"
 
-#: ../src/live_effects/effect.cpp:356
+#: ../src/live_effects/effect.cpp:154
+#, fuzzy
+msgid "Transform by 2 points"
+msgstr "vikxepok rupantor kor"
+
+#: ../src/live_effects/effect.cpp:361
 msgid "Is visible?"
 msgstr "kitem droxy kai ?"
 
-#: ../src/live_effects/effect.cpp:356
+#: ../src/live_effects/effect.cpp:361
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
@@ -9968,23 +9973,23 @@ msgstr ""
 "topos nhoi tor vostuk probhav lagon urtolo vo to canvasacher totkalik "
 "nixkriy urtolo"
 
-#: ../src/live_effects/effect.cpp:381
+#: ../src/live_effects/effect.cpp:386
 msgid "No effect"
 msgstr "probhav na"
 
-#: ../src/live_effects/effect.cpp:489
+#: ../src/live_effects/effect.cpp:494
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 "Upkar korun %d undira Chachoye sovem LPE '%s' khatir porimann vatto spoxtt "
 "kor"
 
-#: ../src/live_effects/effect.cpp:756
+#: ../src/live_effects/effect.cpp:761
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Poromann sompodon <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:761
+#: ../src/live_effects/effect.cpp:766
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 "lagu kel'le khonchech vatte probhavache porimann canvasacher sompadon korunk "
@@ -10124,58 +10129,57 @@ msgstr "Dixttik bandavollichi pett"
 msgid "Uses the visual bounding box"
 msgstr "Dixttik bandavollichi pett"
 
-#: ../src/live_effects/lpe-bspline.cpp:26
+#: ../src/live_effects/lpe-bspline.cpp:28
 msgid "Steps with CTRL:"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:26
+#: ../src/live_effects/lpe-bspline.cpp:28
 msgid "Change number of steps with CTRL pressed"
 msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:27
+#: ../src/live_effects/lpe-bspline.cpp:29
 #: ../src/live_effects/lpe-simplify.cpp:33
+#: ../src/live_effects/lpe-transform_2pts.cpp:38
 #, fuzzy
 msgid "Helper size:"
 msgstr "folli gatr:"
 
-#: ../src/live_effects/lpe-bspline.cpp:27
+#: ../src/live_effects/lpe-bspline.cpp:29
 #: ../src/live_effects/lpe-simplify.cpp:33
 #, fuzzy
 msgid "Helper size"
 msgstr "pana gatr thorai"
 
-#: ../src/live_effects/lpe-bspline.cpp:28
-#, fuzzy
-msgid "Ignore cusp nodes"
-msgstr "bhett ganttink thap"
+#: ../src/live_effects/lpe-bspline.cpp:30
+msgid "Apply changes if weight = 0%"
+msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:28
-#, fuzzy
-msgid "Change ignoring cusp nodes"
-msgstr "offset ravonk vikxepok bodol"
+#: ../src/live_effects/lpe-bspline.cpp:31
+msgid "Apply changes if weight > 0%"
+msgstr ""
 
-#: ../src/live_effects/lpe-bspline.cpp:29
+#: ../src/live_effects/lpe-bspline.cpp:32
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:56
 #, fuzzy
 msgid "Change only selected nodes"
 msgstr "vinchnnar gantti zodd"
 
-#: ../src/live_effects/lpe-bspline.cpp:30
+#: ../src/live_effects/lpe-bspline.cpp:33
 #, fuzzy
-msgid "Change weight:"
+msgid "Change weight %:"
 msgstr "oparodorxita bodol"
 
-#: ../src/live_effects/lpe-bspline.cpp:30
+#: ../src/live_effects/lpe-bspline.cpp:33
 #, fuzzy
-msgid "Change weight of the effect"
+msgid "Change weight percent of the effect"
 msgstr "gallne probhav prantiachi ubaray"
 
-#: ../src/live_effects/lpe-bspline.cpp:263
+#: ../src/live_effects/lpe-bspline.cpp:95
 #, fuzzy
 msgid "Default weight"
 msgstr "mull mhatallem"
 
-#: ../src/live_effects/lpe-bspline.cpp:268
+#: ../src/live_effects/lpe-bspline.cpp:100
 #, fuzzy
 msgid "Make cusp"
 msgstr "tar kor"
@@ -10533,42 +10537,42 @@ msgstr ""
 "pothochea ganttinchea suvatenk sombondit asta"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:26
-#: ../src/live_effects/lpe-powerstroke.cpp:131
+#: ../src/live_effects/lpe-powerstroke.cpp:134
 #, fuzzy
 msgid "CubicBezierFit"
 msgstr "Bezier"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:27
-#: ../src/live_effects/lpe-powerstroke.cpp:132
+#: ../src/live_effects/lpe-powerstroke.cpp:135
 msgid "CubicBezierJohan"
 msgstr ""
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:28
-#: ../src/live_effects/lpe-powerstroke.cpp:133
+#: ../src/live_effects/lpe-powerstroke.cpp:136
 #, fuzzy
 msgid "SpiroInterpolator"
 msgstr "ontorvexon"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:29
-#: ../src/live_effects/lpe-powerstroke.cpp:134
+#: ../src/live_effects/lpe-powerstroke.cpp:137
 msgid "Centripetal Catmull-Rom"
 msgstr ""
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:37
-#: ../src/live_effects/lpe-powerstroke.cpp:176
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 #, fuzzy
 msgid "Interpolator type:"
 msgstr "ontorvexon xeili"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:38
-#: ../src/live_effects/lpe-powerstroke.cpp:176
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 msgid ""
 "Determines which kind of interpolator will be used to interpolate between "
 "stroke width along the path"
 msgstr ""
 
 #: ../src/live_effects/lpe-jointype.cpp:31
-#: ../src/live_effects/lpe-powerstroke.cpp:163
+#: ../src/live_effects/lpe-powerstroke.cpp:166
 #: ../src/live_effects/lpe-taperstroke.cpp:63
 #, fuzzy
 msgid "Beveled"
@@ -10576,14 +10580,14 @@ msgstr "Kan'nim"
 
 #: ../src/live_effects/lpe-jointype.cpp:32
 #: ../src/live_effects/lpe-jointype.cpp:40
-#: ../src/live_effects/lpe-powerstroke.cpp:164
+#: ../src/live_effects/lpe-powerstroke.cpp:167
 #: ../src/live_effects/lpe-taperstroke.cpp:64
 #: ../src/widgets/star-toolbar.cpp:534
 msgid "Rounded"
 msgstr "golakar"
 
 #: ../src/live_effects/lpe-jointype.cpp:33
-#: ../src/live_effects/lpe-powerstroke.cpp:167
+#: ../src/live_effects/lpe-powerstroke.cpp:170
 #: ../src/live_effects/lpe-taperstroke.cpp:65
 #, fuzzy
 msgid "Miter"
@@ -10596,24 +10600,24 @@ msgstr "Miter _sima:"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
 #: ../src/live_effects/lpe-jointype.cpp:35
-#: ../src/live_effects/lpe-powerstroke.cpp:166
+#: ../src/live_effects/lpe-powerstroke.cpp:169
 msgid "Extrapolated arc"
 msgstr ""
 
 #: ../src/live_effects/lpe-jointype.cpp:39
-#: ../src/live_effects/lpe-powerstroke.cpp:146
+#: ../src/live_effects/lpe-powerstroke.cpp:149
 #, fuzzy
 msgid "Butt"
 msgstr "Butanv"
 
 #: ../src/live_effects/lpe-jointype.cpp:41
-#: ../src/live_effects/lpe-powerstroke.cpp:147
+#: ../src/live_effects/lpe-powerstroke.cpp:150
 #, fuzzy
 msgid "Square"
 msgstr "vorgakor chepem"
 
 #: ../src/live_effects/lpe-jointype.cpp:42
-#: ../src/live_effects/lpe-powerstroke.cpp:149
+#: ../src/live_effects/lpe-powerstroke.cpp:152
 msgid "Peak"
 msgstr ""
 
@@ -10636,13 +10640,13 @@ msgstr "dhokheant vikxepok roch"
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/live_effects/lpe-jointype.cpp:53
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:182
 #: ../src/widgets/stroke-style.cpp:227
 msgid "Join:"
 msgstr "zodd:"
 
 #: ../src/live_effects/lpe-jointype.cpp:53
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:182
 #, fuzzy
 msgid "Determines the shape of the path's corners"
 msgstr "uzvadda zorico rong vyakhyan kor"
@@ -10650,7 +10654,7 @@ msgstr "uzvadda zorico rong vyakhyan kor"
 #. start_lean(_("Start path lean"), _("Start path lean"), "start_lean", &wr, this, 0.),
 #. end_lean(_("End path lean"), _("End path lean"), "end_lean", &wr, this, 0.),
 #: ../src/live_effects/lpe-jointype.cpp:56
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:183
 #: ../src/live_effects/lpe-taperstroke.cpp:78
 msgid "Miter limit:"
 msgstr "Miter _sima:"
@@ -11144,73 +11148,73 @@ msgstr ""
 msgid "Handles:"
 msgstr "hatallo"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:129
+#: ../src/live_effects/lpe-powerstroke.cpp:132
 msgid "CubicBezierSmooth"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:148
+#: ../src/live_effects/lpe-powerstroke.cpp:151
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
 #, fuzzy
 msgid "Round"
 msgstr "golakar"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:150
+#: ../src/live_effects/lpe-powerstroke.cpp:153
 #, fuzzy
 msgid "Zero width"
 msgstr "dokhea rundai"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:168
-#: ../src/widgets/pencil-toolbar.cpp:103
+#: ../src/live_effects/lpe-powerstroke.cpp:171
+#: ../src/widgets/pencil-toolbar.cpp:115
 msgid "Spiro"
 msgstr "Spiro"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:174
+#: ../src/live_effects/lpe-powerstroke.cpp:177
 #, fuzzy
 msgid "Offset points"
 msgstr "Offset vatt"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:175
+#: ../src/live_effects/lpe-powerstroke.cpp:178
 #, fuzzy
 msgid "Sort points"
 msgstr "quadrant pont"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:175
+#: ../src/live_effects/lpe-powerstroke.cpp:178
 msgid "Sort offset points according to their time value along the curve"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:177
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 #: ../share/extensions/fractalize.inx.h:3
 #, fuzzy
 msgid "Smoothness:"
 msgstr "movponn"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:177
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 msgid ""
 "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
 "interpolation, 1 = smooth"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:178
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 #, fuzzy
 msgid "Start cap:"
 msgstr "suru:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:178
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 #, fuzzy
 msgid "Determines the shape of the path's start"
 msgstr "survate thavn okheri poryantlea vattechea mettancho onko nirdhar korta"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:183
 #: ../src/widgets/stroke-style.cpp:278
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "miter hachem odhik chodd lambai (dokho rundai ekankamni)"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:181
+#: ../src/live_effects/lpe-powerstroke.cpp:184
 #, fuzzy
 msgid "End cap:"
 msgstr "gol chepem"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:181
+#: ../src/live_effects/lpe-powerstroke.cpp:184
 #, fuzzy
 msgid "Determines the shape of the path's end"
 msgstr "survate thavn okheri poryantlea vattechea mettancho onko nirdhar korta"
@@ -11500,11 +11504,15 @@ msgctxt "Border mark"
 msgid "None"
 msgstr "kai na"
 
-#: ../src/live_effects/lpe-ruler.cpp:33 ../src/widgets/arc-toolbar.cpp:319
+#: ../src/live_effects/lpe-ruler.cpp:33
+#: ../src/live_effects/lpe-transform_2pts.cpp:34
+#: ../src/widgets/arc-toolbar.cpp:319
 msgid "Start"
 msgstr "suru"
 
-#: ../src/live_effects/lpe-ruler.cpp:34 ../src/widgets/arc-toolbar.cpp:332
+#: ../src/live_effects/lpe-ruler.cpp:34
+#: ../src/live_effects/lpe-transform_2pts.cpp:35
+#: ../src/widgets/arc-toolbar.cpp:332
 msgid "End"
 msgstr "okher"
 
@@ -11608,8 +11616,8 @@ msgid "Scale nodes and handles"
 msgstr "gantti vo hatalle thap"
 
 #: ../src/live_effects/lpe-show_handles.cpp:29
-#: ../src/ui/tool/multi-path-manipulator.cpp:787
-#: ../src/ui/tool/multi-path-manipulator.cpp:790
+#: ../src/ui/tool/multi-path-manipulator.cpp:788
+#: ../src/ui/tool/multi-path-manipulator.cpp:791
 msgid "Rotate nodes"
 msgstr "gantti gunvddai"
 
@@ -11884,6 +11892,70 @@ msgstr ""
 msgid "End point of the taper"
 msgstr "nomuno rundai"
 
+#: ../src/live_effects/lpe-transform_2pts.cpp:30
+#, fuzzy
+msgid "Elastic"
+msgstr "thhapo"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:30
+#, fuzzy
+msgid "Elastic transform mode"
+msgstr "vinch ani vost rupantor kor"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:31
+#, fuzzy
+msgid "From original width"
+msgstr "vatt bond kor."
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:32
+#, fuzzy
+msgid "Lock lenght"
+msgstr "hont fichar"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:32
+#, fuzzy
+msgid "Lock lenght to current distance"
+msgstr "prostut hont fichar vo o-fichar kor"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:33
+#, fuzzy
+msgid "Lock angle"
+msgstr "Xonku kon"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:34
+#, fuzzy
+msgid "Start point"
+msgstr "quadrant pont"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:35
+#, fuzzy
+msgid "End point"
+msgstr "vatt baggoi"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:36
+#, fuzzy
+msgid "First Knot"
+msgstr "poilem slide:"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:37
+#, fuzzy
+msgid "Last Knot"
+msgstr "gantt"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:38
+#, fuzzy
+msgid "Rotation helper size"
+msgstr "gunvdde kendr"
+
+#: ../src/live_effects/lpe-transform_2pts.cpp:319
+#: ../src/ui/dialog/inkscape-preferences.cpp:1612
+#: ../src/ui/dialog/pixelartdialog.cpp:296
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:699
+#: ../src/ui/dialog/tracedialog.cpp:813
+#: ../src/ui/widget/preferences-widget.cpp:746
+msgid "Reset"
+msgstr "porot thoray"
+
 #: ../src/live_effects/lpe-vonkoch.cpp:46
 #, fuzzy
 msgid "N_r of generations:"
@@ -12036,7 +12108,8 @@ msgstr "vatte prabhav sokoil choloi"
 msgid "Remove path"
 msgstr "glyph kadd"
 
-#: ../src/live_effects/parameter/parameter.cpp:161
+#: ../src/live_effects/parameter/parameter.cpp:152
+#: ../src/live_effects/parameter/parameter.cpp:170
 msgid "Change scalar parameter"
 msgstr "sodix porimann bodol"
 
@@ -12206,7 +12279,7 @@ msgid "The ID of the object to export"
 msgstr "vostuchi ID niryat korunk "
 
 #: ../src/main.cpp:366 ../src/main.cpp:479
-#: ../src/ui/dialog/inkscape-preferences.cpp:1514
+#: ../src/ui/dialog/inkscape-preferences.cpp:1558
 msgid "ID"
 msgstr "ID"
 
@@ -12781,7 +12854,7 @@ msgstr "sombond"
 msgid "A related resource"
 msgstr "mull nomuno"
 
-#: ../src/rdf.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1870
+#: ../src/rdf.cpp:267 ../src/ui/dialog/inkscape-preferences.cpp:1914
 msgid "Language:"
 msgstr "bhas:"
 
@@ -12908,7 +12981,7 @@ msgstr "opongodd korcheak ek <b>pongodd</b> vinch."
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "vinchovnnent opongodd korcheak <b>pongodd nant</b> ."
 
-#: ../src/selection-chemistry.cpp:869 ../src/sp-item-group.cpp:554
+#: ../src/selection-chemistry.cpp:869 ../src/sp-item-group.cpp:550
 #: ../src/ui/dialog/objects.cpp:1912
 msgid "Ungroup"
 msgstr "opongodd"
@@ -13068,7 +13141,7 @@ msgid "Rotate by pixels"
 msgstr "Ttipkiamni gunvddai"
 
 #: ../src/selection-chemistry.cpp:2203 ../src/seltrans.cpp:480
-#: ../src/ui/dialog/transformation.cpp:865 ../src/ui/widget/page-sizer.cpp:448
+#: ../src/ui/dialog/transformation.cpp:865 ../src/ui/widget/page-sizer.cpp:450
 #: ../share/extensions/interp_att_g.inx.h:12
 msgid "Scale"
 msgstr "mapon"
@@ -13479,8 +13552,8 @@ msgstr ""
 msgid "Keyboard directory (%s) is unavailable."
 msgstr "Palettes margsuchi (%s) upolobd na."
 
-#: ../src/shortcuts.cpp:337 ../src/ui/dialog/export.cpp:1296
-#: ../src/ui/dialog/export.cpp:1330
+#: ../src/shortcuts.cpp:337 ../src/ui/dialog/export.cpp:1298
+#: ../src/ui/dialog/export.cpp:1332
 msgid "Select a filename for exporting"
 msgstr "Niryat korunk koddtor nanv vinch"
 
@@ -13512,7 +13585,7 @@ msgstr "Arbi"
 #. Ellipse
 #: ../src/sp-ellipse.cpp:367 ../src/sp-ellipse.cpp:374
 #: ../src/ui/dialog/inkscape-preferences.cpp:412
-#: ../src/widgets/pencil-toolbar.cpp:163
+#: ../src/widgets/pencil-toolbar.cpp:181
 msgid "Ellipse"
 msgstr "tantia vrot"
 
@@ -13557,23 +13630,23 @@ msgid_plural "(%d characters%s)"
 msgstr[0] "<b>Fula Lekh</b> (%d okxor%s)"
 msgstr[1] "<b>Fula Lekh</b> (%d okxor%s)"
 
-#: ../src/sp-guide.cpp:246
+#: ../src/sp-guide.cpp:253
 #, fuzzy
 msgid "Create Guides Around the Page"
 msgstr "pana bhovarim margdorxok"
 
-#: ../src/sp-guide.cpp:258 ../src/verbs.cpp:2518
+#: ../src/sp-guide.cpp:265 ../src/verbs.cpp:2518
 #, fuzzy
 msgid "Delete All Guides"
 msgstr "margodorxok kadd"
 
 #. Guide has probably been deleted and no longer has an attached namedview.
-#: ../src/sp-guide.cpp:445
+#: ../src/sp-guide.cpp:452
 #, fuzzy
 msgid "Deleted"
 msgstr "noxtt kor"
 
-#: ../src/sp-guide.cpp:454
+#: ../src/sp-guide.cpp:461
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
@@ -13581,17 +13654,17 @@ msgstr ""
 "gunvddanvk <b>Shift+vodd</b>, mullak cholovnk <b>Ctrl+vodd</b>, noxtt korunk "
 "<b>Del</b>"
 
-#: ../src/sp-guide.cpp:458
+#: ../src/sp-guide.cpp:465
 #, c-format
 msgid "vertical, at %s"
 msgstr "ubhem, %s kadde"
 
-#: ../src/sp-guide.cpp:461
+#: ../src/sp-guide.cpp:468
 #, c-format
 msgid "horizontal, at %s"
 msgstr "addvem, %s kadde"
 
-#: ../src/sp-guide.cpp:466
+#: ../src/sp-guide.cpp:473
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "%d omxeamni, (%s,%s) poreant"
@@ -14078,41 +14151,41 @@ msgid "Trace: Done. %ld nodes created"
 msgstr "Achchi kaddli. %ld gantti rachlio"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:262
+#: ../src/ui/clipboard.cpp:263
 msgid "Nothing was copied."
 msgstr "kitench proti kaddunk na"
 
-#: ../src/ui/clipboard.cpp:393 ../src/ui/clipboard.cpp:607
-#: ../src/ui/clipboard.cpp:636
+#: ../src/ui/clipboard.cpp:394 ../src/ui/clipboard.cpp:608
+#: ../src/ui/clipboard.cpp:637
 msgid "Nothing on the clipboard."
 msgstr "XirkayFolokar kitench na"
 
-#: ../src/ui/clipboard.cpp:451
+#: ../src/ui/clipboard.cpp:452
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Xeili chiddkavnk <b>vost(u)</b> vinch."
 
-#: ../src/ui/clipboard.cpp:462 ../src/ui/clipboard.cpp:479
+#: ../src/ui/clipboard.cpp:463 ../src/ui/clipboard.cpp:480
 msgid "No style on the clipboard."
 msgstr "XirkayFolokar xeili na"
 
-#: ../src/ui/clipboard.cpp:504
+#: ../src/ui/clipboard.cpp:505
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Gatr chiddkavnk <b>vost(u)</b> vinch."
 
-#: ../src/ui/clipboard.cpp:511
+#: ../src/ui/clipboard.cpp:512
 msgid "No size on the clipboard."
 msgstr "XirkayFolokar gatr na."
 
-#: ../src/ui/clipboard.cpp:568
+#: ../src/ui/clipboard.cpp:569
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "jivall vatte probhav chiddkavnk <b>vost(u)</b> vinch."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:594
+#: ../src/ui/clipboard.cpp:595
 msgid "No effect on the clipboard."
 msgstr "XirkayFolokar prabhav na na."
 
-#: ../src/ui/clipboard.cpp:613 ../src/ui/clipboard.cpp:650
+#: ../src/ui/clipboard.cpp:614 ../src/ui/clipboard.cpp:651
 msgid "Clipboard does not contain a path."
 msgstr "XirkayFolokar vatt na"
 
@@ -14230,7 +14303,7 @@ msgid "Rearrange"
 msgstr "manddavoll kor"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:851
-#: ../src/widgets/toolbox.cpp:1725
+#: ../src/widgets/toolbox.cpp:1727
 msgid "Nodes"
 msgstr "gantti"
 
@@ -15456,7 +15529,7 @@ msgid "Remove selected grid."
 msgstr "vinchul'li zalli kadd"
 
 #: ../src/ui/dialog/document-properties.cpp:161
-#: ../src/widgets/toolbox.cpp:1832
+#: ../src/widgets/toolbox.cpp:1834
 msgid "Guides"
 msgstr "margodorxika"
 
@@ -15762,9 +15835,9 @@ msgid "_Height:"
 msgstr "_Unchai"
 
 #: ../src/ui/dialog/export.cpp:304
-#: ../src/ui/dialog/inkscape-preferences.cpp:1443
-#: ../src/ui/dialog/inkscape-preferences.cpp:1447
-#: ../src/ui/dialog/inkscape-preferences.cpp:1471
+#: ../src/ui/dialog/inkscape-preferences.cpp:1487
+#: ../src/ui/dialog/inkscape-preferences.cpp:1491
+#: ../src/ui/dialog/inkscape-preferences.cpp:1515
 msgid "dpi"
 msgstr "dpi"
 
@@ -15788,83 +15861,83 @@ msgstr[1] "vinchnnar %d vostuncho pon_godd niryat kor"
 msgid "Export in progress"
 msgstr "Niryat progotent asa"
 
-#: ../src/ui/dialog/export.cpp:1013
+#: ../src/ui/dialog/export.cpp:1015
 #, fuzzy
 msgid "No items selected."
 msgstr "konchiy gallnni vinchunk na"
 
-#: ../src/ui/dialog/export.cpp:1017 ../src/ui/dialog/export.cpp:1019
+#: ../src/ui/dialog/export.cpp:1019 ../src/ui/dialog/export.cpp:1021
 #, fuzzy
 msgid "Exporting %1 files"
 msgstr "%d koddoram niryat korchim"
 
-#: ../src/ui/dialog/export.cpp:1060 ../src/ui/dialog/export.cpp:1062
+#: ../src/ui/dialog/export.cpp:1062 ../src/ui/dialog/export.cpp:1064
 #, fuzzy, c-format
 msgid "Exporting file <b>%s</b>..."
 msgstr "%d koddoram niryat korchim"
 
-#: ../src/ui/dialog/export.cpp:1071 ../src/ui/dialog/export.cpp:1163
+#: ../src/ui/dialog/export.cpp:1073 ../src/ui/dialog/export.cpp:1165
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "koddtor nanv %s niryat korunk zanvk na.\n"
 
-#: ../src/ui/dialog/export.cpp:1074
+#: ../src/ui/dialog/export.cpp:1076
 #, fuzzy, c-format
 msgid "Could not export to filename <b>%s</b>."
 msgstr "koddtor nanv %s niryat korunk zanvk na.\n"
 
-#: ../src/ui/dialog/export.cpp:1089
+#: ../src/ui/dialog/export.cpp:1091
 #, c-format
 msgid "Successfully exported <b>%d</b> files from <b>%d</b> selected items."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1100
+#: ../src/ui/dialog/export.cpp:1102
 #, fuzzy
 msgid "You have to enter a filename."
 msgstr "tuvem koddtor nanv bhorunk zai"
 
-#: ../src/ui/dialog/export.cpp:1101
+#: ../src/ui/dialog/export.cpp:1103
 msgid "You have to enter a filename"
 msgstr "tuvem koddtor nanv bhorunk zai"
 
-#: ../src/ui/dialog/export.cpp:1115
+#: ../src/ui/dialog/export.cpp:1117
 #, fuzzy
 msgid "The chosen area to be exported is invalid."
 msgstr "niryat korije zal'lem vinchnnar xet omaany"
 
-#: ../src/ui/dialog/export.cpp:1116
+#: ../src/ui/dialog/export.cpp:1118
 msgid "The chosen area to be exported is invalid"
 msgstr "niryat korije zal'lem vinchnnar xet omaany"
 
-#: ../src/ui/dialog/export.cpp:1131
+#: ../src/ui/dialog/export.cpp:1133
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "margodorxika &s ostitvant na vo ti margodorxika nhoi. \n"
 
 #. TRANSLATORS: %1 will be the filename, %2 the width, and %3 the height of the image
-#: ../src/ui/dialog/export.cpp:1145 ../src/ui/dialog/export.cpp:1147
+#: ../src/ui/dialog/export.cpp:1147 ../src/ui/dialog/export.cpp:1149
 #, fuzzy
 msgid "Exporting %1 (%2 x %3)"
 msgstr "%s niryat korchem (%lu x %lu)"
 
-#: ../src/ui/dialog/export.cpp:1174
+#: ../src/ui/dialog/export.cpp:1176
 #, fuzzy, c-format
 msgid "Drawing exported to <b>%s</b>."
 msgstr "Poromann sompodon <b>%s</b>."
 
-#: ../src/ui/dialog/export.cpp:1178
+#: ../src/ui/dialog/export.cpp:1180
 #, fuzzy
 msgid "Export aborted."
 msgstr "Niryat progotent asa"
 
-#: ../src/ui/dialog/export.cpp:1299 ../src/ui/interface.cpp:1392
+#: ../src/ui/dialog/export.cpp:1301 ../src/ui/interface.cpp:1392
 #: ../src/widgets/desktop-widget.cpp:1122
 #: ../src/widgets/desktop-widget.cpp:1184
 #, fuzzy
 msgid "_Cancel"
 msgstr "rod'd kor"
 
-#: ../src/ui/dialog/export.cpp:1300 ../src/ui/dialog/input.cpp:1082
+#: ../src/ui/dialog/export.cpp:1302 ../src/ui/dialog/input.cpp:1082
 #: ../src/verbs.cpp:2406 ../src/widgets/desktop-widget.cpp:1123
 msgid "_Save"
 msgstr "_zogoi"
@@ -15927,103 +16000,103 @@ msgid "Parameters"
 msgstr "porimann"
 
 #. Fill in the template
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:415
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:427
 msgid "No preview"
 msgstr "purv dekhnni na"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:519
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:531
 msgid "too large for preview"
 msgstr "purv dekhnnek ekdom vhodd"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:605
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:617
 msgid "Enable preview"
 msgstr "purv dekhnni karyxil kor"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:755
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:768
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:772
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:775
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:783
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:799
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:814
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:767
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:780
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:784
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:787
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:795
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:811
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:826
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:286
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:417
 msgid "All Files"
 msgstr "sorv koddtoram"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:780
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:796
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:811
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:792
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:808
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:823
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:287
 msgid "All Inkscape Files"
 msgstr "sorv Inkscape koddtoram"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:787
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:803
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:817
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:799
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:815
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:829
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:288
 msgid "All Images"
 msgstr "sorv protima"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:790
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:806
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:820
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:802
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:818
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:832
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:289
 msgid "All Vectors"
 msgstr "sorv vector"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:793
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:809
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:823
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:805
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:821
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:835
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:290
 msgid "All Bitmaps"
 msgstr "sorv bitmap"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1042
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1600
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1054
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1612
 msgid "Append filename extension automatically"
 msgstr "svocholit zavn koddtora nava vistar zodd"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1215
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1468
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1227
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1480
 msgid "Guess from extension"
 msgstr "vistar thavn ondaz kor"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1487
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1499
 msgid "Left edge of source"
 msgstr "davea dege zor"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1488
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1500
 msgid "Top edge of source"
 msgstr "voilea dege zor"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1489
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1501
 msgid "Right edge of source"
 msgstr "ujvea dege zor"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1490
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1502
 msgid "Bottom edge of source"
 msgstr "pondlea dege zor"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1491
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1503
 msgid "Source width"
 msgstr "zori runday"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1492
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1504
 msgid "Source height"
 msgstr "zori ubarai"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1493
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1505
 msgid "Destination width"
 msgstr "xevotta runday"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1494
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1506
 msgid "Destination height"
 msgstr "xevotta ubaray"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1495
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1507
 msgid "Resolution (dots per inch)"
 msgstr "Nirdharann (inchacher bindu)"
 
@@ -16031,31 +16104,31 @@ msgstr "Nirdharann (inchacher bindu)"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1533
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1545
 msgid "Document"
 msgstr "dostavez"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1541 ../src/verbs.cpp:175
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1553 ../src/verbs.cpp:175
 #: ../src/widgets/desktop-widget.cpp:2002
 #: ../share/extensions/printing_marks.inx.h:18
 msgid "Selection"
 msgstr "Vinchovnn"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1545
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1557
 #, fuzzy
 msgctxt "Export dialog"
 msgid "Custom"
 msgstr "Ruparit"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1565
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1577
 msgid "Source"
 msgstr "zhor"
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1585
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1597
 msgid "Cairo"
 msgstr "Cairo "
 
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1588
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1600
 msgid "Antialias"
 msgstr "Antialias "
 
@@ -17016,7 +17089,7 @@ msgstr "revodd"
 msgid "Search spirals"
 msgstr "revodd sodh"
 
-#: ../src/ui/dialog/find.cpp:103 ../src/widgets/toolbox.cpp:1733
+#: ../src/ui/dialog/find.cpp:103 ../src/widgets/toolbox.cpp:1735
 msgid "Paths"
 msgstr "vatto"
 
@@ -17900,11 +17973,11 @@ msgstr "Zodd "
 msgid "Append text"
 msgstr "Lekh Zodd"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:351
+#: ../src/ui/dialog/grid-arrange-tab.cpp:345
 msgid "Arrange in a grid"
 msgstr "zallint mandd"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:577
+#: ../src/ui/dialog/grid-arrange-tab.cpp:571
 #: ../src/ui/dialog/object-attributes.cpp:66
 #: ../src/ui/dialog/object-attributes.cpp:75
 #: ../src/ui/widget/page-sizer.cpp:247 ../src/widgets/desktop-widget.cpp:666
@@ -17912,12 +17985,12 @@ msgstr "zallint mandd"
 msgid "X:"
 msgstr "X:"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:577
+#: ../src/ui/dialog/grid-arrange-tab.cpp:571
 #, fuzzy
 msgid "Horizontal spacing between columns."
 msgstr "khambiyamni addvio suvati (px ekankamni)"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:578
+#: ../src/ui/dialog/grid-arrange-tab.cpp:572
 #: ../src/ui/dialog/object-attributes.cpp:67
 #: ../src/ui/dialog/object-attributes.cpp:76
 #: ../src/ui/widget/page-sizer.cpp:248 ../src/widgets/desktop-widget.cpp:676
@@ -17925,61 +17998,61 @@ msgstr "khambiyamni addvio suvati (px ekankamni)"
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:578
+#: ../src/ui/dialog/grid-arrange-tab.cpp:572
 #, fuzzy
 msgid "Vertical spacing between rows."
 msgstr "pongti modhem ubio suvati (px ekankamni)"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:624
+#: ../src/ui/dialog/grid-arrange-tab.cpp:618
 #, fuzzy
 msgid "_Rows:"
 msgstr "_pongti"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:633
+#: ../src/ui/dialog/grid-arrange-tab.cpp:627
 msgid "Number of rows"
 msgstr "pongtiche onkhdde"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:637
+#: ../src/ui/dialog/grid-arrange-tab.cpp:631
 #, fuzzy
 msgid "Equal _height"
 msgstr "borabor _ubarai"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:648
+#: ../src/ui/dialog/grid-arrange-tab.cpp:642
 msgid "If not set, each row has the height of the tallest object in it"
 msgstr "tharavnk na tor, hor pongtek ubar vostuchi lambai asteli"
 
 #. #### Number of columns ####
-#: ../src/ui/dialog/grid-arrange-tab.cpp:664
+#: ../src/ui/dialog/grid-arrange-tab.cpp:658
 #, fuzzy
 msgid "_Columns:"
 msgstr "khambi:"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:673
+#: ../src/ui/dialog/grid-arrange-tab.cpp:667
 msgid "Number of columns"
 msgstr "khambeanche onkdde"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:677
+#: ../src/ui/dialog/grid-arrange-tab.cpp:671
 #, fuzzy
 msgid "Equal _width"
 msgstr "borabor rundai"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:687
+#: ../src/ui/dialog/grid-arrange-tab.cpp:681
 msgid "If not set, each column has the width of the widest object in it"
 msgstr "tharavnk na tor, hor kambint rund vostuchi mottai asteli"
 
 #. Anchor selection widget
-#: ../src/ui/dialog/grid-arrange-tab.cpp:698
+#: ../src/ui/dialog/grid-arrange-tab.cpp:692
 #, fuzzy
 msgid "Alignment:"
 msgstr "salint ghal"
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
-#: ../src/ui/dialog/grid-arrange-tab.cpp:707
+#: ../src/ui/dialog/grid-arrange-tab.cpp:701
 #, fuzzy
 msgid "_Fit into selection box"
 msgstr "vinchovnne pettent bhor"
 
-#: ../src/ui/dialog/grid-arrange-tab.cpp:714
+#: ../src/ui/dialog/grid-arrange-tab.cpp:708
 #, fuzzy
 msgid "_Set spacing:"
 msgstr "suvat thorai"
@@ -18633,339 +18706,442 @@ msgstr "Interface"
 msgid "System default"
 msgstr "vevosta mull"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Albanian (sq)"
 msgstr "Albanian (sq) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Amharic (am)"
 msgstr "Amharic (am) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Arabic (ar)"
 msgstr "Arabi (ar) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Armenian (hy)"
 msgstr "Armenian (hy) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#, fuzzy
+msgid "Assamese (as)"
+msgstr "Japanese (ja) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Azerbaijani (az)"
 msgstr "Azerbaijani (az) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Basque (eu)"
 msgstr "Basque (eu) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Belarusian (be)"
 msgstr "Belarusian (be) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Bulgarian (bg)"
 msgstr "Bulgarian (bg) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Bengali (bn)"
 msgstr "Bengali (bn) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
 #, fuzzy
 msgid "Bengali/Bangladesh (bn_BD)"
 msgstr "Bengali (bn) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#, fuzzy
+msgid "Bodo (brx)"
+msgstr "Breton (br) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Breton (br)"
 msgstr "Breton (br) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Catalan (ca)"
 msgstr "Catalan (ca) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Valencian Catalan (ca@valencia)"
 msgstr "Valencian Catalan (ca@valencia) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Chinese/China (zh_CN)"
 msgstr "Chinese/China (zh_CN) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Chinese/Taiwan (zh_TW)"
 msgstr "Chinese/Taiwan (zh_TW) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Croatian (hr)"
 msgstr "Croatian (hr) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Czech (cs)"
 msgstr "Czech (cs) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Danish (da)"
 msgstr "Danish (da) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
+msgid "Dogri (doi)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Dutch (nl)"
 msgstr "Dutch (nl) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Dzongkha (dz)"
 msgstr "Dzongkha (dz) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:530
 msgid "German (de)"
 msgstr "German (de) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:530
 msgid "Greek (el)"
 msgstr "Greek (el) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "English (en)"
 msgstr "English (en) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "English/Australia (en_AU)"
 msgstr "English/Australia (en_AU) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "English/Canada (en_CA)"
 msgstr "English/Canada (en_CA) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "English/Great Britain (en_GB)"
 msgstr "English/Great Britain (en_GB) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "Pig Latin (en_US@piglatin)"
 msgstr "Pig Latin (en_US@piglatin) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:530
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "Esperanto (eo)"
 msgstr "Esperanto (eo) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:530
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "Estonian (et)"
 msgstr "Estonian (et) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:530
+#: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Farsi (fa)"
 msgstr "Farsi (fa) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:530
+#: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Finnish (fi)"
 msgstr "Finnish (fi) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "French (fr)"
 msgstr "French (fr) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
-msgid "Irish (ga)"
-msgstr "Irish (ga) "
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Galician (gl)"
 msgstr "Galician (gl) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#, fuzzy
+msgid "Gujarati (gu)"
+msgstr "Gujarati "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hebrew (he)"
 msgstr "Hebrew (he) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:534
+msgid "Hindi (hi)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hungarian (hu)"
 msgstr "Hungarian (hu) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
-msgid "Indonesian (id)"
-msgstr "Indonesian (id) "
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Icelandic (is)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
+msgid "Indonesian (id)"
+msgstr "Indonesian (id) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
+msgid "Irish (ga)"
+msgstr "Irish (ga) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Italian (it)"
 msgstr "Italian (it) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid "Japanese (ja)"
 msgstr "Japanese (ja) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
+#, fuzzy
+msgid "Kannada (kn)"
+msgstr "Kanadi"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
+msgid "Kashmiri in Peso-Arabic script (ks@aran)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
+msgid "Kashmiri in Devanagari script (ks@deva)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Khmer (km)"
 msgstr "Khmer (km) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Kinyarwanda (rw)"
 msgstr "Kinyarwanda (rw) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
+#, fuzzy
+msgid "Konkani (kok)"
+msgstr "Korean (ko) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
+#, fuzzy
+msgid "Konkani in Latin script (kok@latin)"
+msgstr "Serbian in Latin script (sr@latin) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Korean (ko)"
 msgstr "Korean (ko) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
-msgid "Lithuanian (lt)"
-msgstr "Lithuanian (lt) "
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:538
 #, fuzzy
 msgid "Latvian (lv)"
 msgstr "Lithuanian (lt) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:538
+msgid "Lithuanian (lt)"
+msgstr "Lithuanian (lt) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Macedonian (mk)"
 msgstr "Macedonian (mk) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
+msgid "Maithili (mai)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
+#, fuzzy
+msgid "Malayalam (ml)"
+msgstr "Malayalam "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
+msgid "Manipuri (mni)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
+msgid "Manipuri in Bengali script (mni@beng)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
+msgid "Marathi (mr)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Mongolian (mn)"
 msgstr "Mongolian (mn) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:540
 msgid "Nepali (ne)"
 msgstr "Nepali (ne) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:540
 msgid "Norwegian Bokmål (nb)"
 msgstr "Norwegian Bokmål (nb) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:540
 msgid "Norwegian Nynorsk (nn)"
 msgstr "Norwegian Nynorsk (nn) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:541
+msgid "Odia (or)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid "Panjabi (pa)"
 msgstr "Panjabi (pa) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:534
+#: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid "Polish (pl)"
 msgstr "Polish (pl) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:534
+#: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid "Portuguese (pt)"
 msgstr "Portuguese (pt) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:534
+#: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid "Portuguese/Brazil (pt_BR)"
 msgstr "Portuguese/Brazil (pt_BR) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:534
+#: ../src/ui/dialog/inkscape-preferences.cpp:543
 msgid "Romanian (ro)"
 msgstr "Romanian (ro) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:534
+#: ../src/ui/dialog/inkscape-preferences.cpp:543
 msgid "Russian (ru)"
 msgstr "Russian (ru) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:535
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
+msgid "Sanskrit (sa)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
+#, fuzzy
+msgid "Santali (sat)"
+msgstr "Italian (it) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
+#, fuzzy
+msgid "Santali in Devanagari script (sat@deva)"
+msgstr "Serbian in Latin script (sr@latin) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Serbian (sr)"
 msgstr "Serbian (sr) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:535
+#: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Serbian in Latin script (sr@latin)"
 msgstr "Serbian in Latin script (sr@latin) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:535
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
+msgid "Sindhi (sd)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
+#, fuzzy
+msgid "Sindhi in Devanagari script (sd@deva)"
+msgstr "Serbian in Latin script (sr@latin) "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Slovak (sk)"
 msgstr "Slovak (sk) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:535
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Slovenian (sl)"
 msgstr "Slovenian (sl) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:535
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Spanish (es)"
 msgstr "Spanish (es) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:535
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Spanish/Mexico (es_MX)"
 msgstr "Spanish/Mexico (es_MX) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Swedish (sv)"
 msgstr "Swedish (sv) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
+#, fuzzy
+msgid "Tamil (ta)"
+msgstr "Tamil "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 #, fuzzy
 msgid "Telugu (te)"
 msgstr "Telugu "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Thai (th)"
 msgstr "Thai (th) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Turkish (tr)"
 msgstr "Turkish (tr) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:547
 msgid "Ukrainian (uk)"
 msgstr "Ukrainian (uk) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:547
+msgid "Urdu (ur)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:548
 msgid "Vietnamese (vi)"
 msgstr "Vietnamese (vi) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:568
+#: ../src/ui/dialog/inkscape-preferences.cpp:600
 msgid "Language (requires restart):"
 msgstr "bhas (porot suru korchem gorz): "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:569
+#: ../src/ui/dialog/inkscape-preferences.cpp:601
 msgid "Set the language for menus and number formats"
 msgstr "yadee ani onkddea pod'dotenk bhas tharai"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
-#: ../src/ui/dialog/inkscape-preferences.cpp:657
+#: ../src/ui/dialog/inkscape-preferences.cpp:604
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
 msgid "Large"
 msgstr "vhodd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
-#: ../src/ui/dialog/inkscape-preferences.cpp:657
+#: ../src/ui/dialog/inkscape-preferences.cpp:604
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
 #: ../src/ui/widget/font-variants.cpp:51
 msgid "Small"
 msgstr "lhan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:572
+#: ../src/ui/dialog/inkscape-preferences.cpp:604
 msgid "Smaller"
 msgstr "vhodd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:576
+#: ../src/ui/dialog/inkscape-preferences.cpp:608
 msgid "Toolbox icon size:"
 msgstr "sadhon pette icon aakar:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:577
+#: ../src/ui/dialog/inkscape-preferences.cpp:609
 msgid "Set the size for the tool icons (requires restart)"
 msgstr "sadhon icon hankam aakar thari (porot suru korchem gorz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:580
+#: ../src/ui/dialog/inkscape-preferences.cpp:612
 msgid "Control bar icon size:"
 msgstr "niyontronn pott'tte icon gatr:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:581
+#: ../src/ui/dialog/inkscape-preferences.cpp:613
 msgid ""
 "Set the size for the icons in tools' control bars to use (requires restart)"
 msgstr ""
 "sadonachea niyontronn pott'ttenk vaparpa khatir iconacho gatr tharai (porot "
 "suru korchem gorz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:584
+#: ../src/ui/dialog/inkscape-preferences.cpp:616
 msgid "Secondary toolbar icon size:"
 msgstr "dvitiy sadhon pott'tte icon gatr:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:585
+#: ../src/ui/dialog/inkscape-preferences.cpp:617
 msgid ""
 "Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr ""
 "dvitiy sadhon pott'ttenk vaparpa khatir iconacho gatr tharai (porot suru "
 "korchem gorz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:588
+#: ../src/ui/dialog/inkscape-preferences.cpp:620
 msgid "Work-around color sliders not drawing"
 msgstr "rongall nisravnni pintravnni korinatleak porihar"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:590
+#: ../src/ui/dialog/inkscape-preferences.cpp:622
 msgid ""
 "When on, will attempt to work around bugs in certain GTK themes drawing "
 "color sliders"
@@ -18973,16 +19149,16 @@ msgstr ""
 "chalu asul'le velli, thoddea GTK sonkolpanamni pintravnne rongall "
 "nisravnnenchea doxank porihar dinvk yotn korta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:595
+#: ../src/ui/dialog/inkscape-preferences.cpp:627
 msgid "Clear list"
 msgstr "suchi khali kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:598
+#: ../src/ui/dialog/inkscape-preferences.cpp:630
 #, fuzzy
 msgid "Maximum documents in Open _Recent:"
 msgstr "aylevarchim ugtim otyodik dostavezam:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:599
+#: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid ""
 "Set the maximum length of the Open Recent list in the File menu, or clear "
 "the list"
@@ -18990,12 +19166,12 @@ msgstr ""
 "Koddtor yadintlim aylevarchi ugti vollerincho otyodik onkddo thoray, vo "
 "yadee khali kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:602
+#: ../src/ui/dialog/inkscape-preferences.cpp:634
 #, fuzzy
 msgid "_Zoom correction factor (in %):"
 msgstr "tidvonne karonn zomm kor (% hantun):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:603
+#: ../src/ui/dialog/inkscape-preferences.cpp:635
 msgid ""
 "Adjust the slider until the length of the ruler on your screen matches its "
 "real length. This information is used when zooming to 1:1, 1:2, etc., to "
@@ -19005,11 +19181,11 @@ msgstr ""
 "nisravnni chodd-unni kor. ho vivor 1:1, 1:2, ityadi zomm kortana vapartat, "
 "tichea niz akaramni vostu dakonvcheak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:606
+#: ../src/ui/dialog/inkscape-preferences.cpp:638
 msgid "Enable dynamic relayout for incomplete sections"
 msgstr "osompurnn vibhagam khatir cholonatomok relayout sokriy kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:608
+#: ../src/ui/dialog/inkscape-preferences.cpp:640
 msgid ""
 "When on, will allow dynamic layout of components that are not completely "
 "finished being refactored"
@@ -19018,143 +19194,143 @@ msgstr ""
 "refactor zanvk na tichi onumoti dita"
 
 #. show infobox
-#: ../src/ui/dialog/inkscape-preferences.cpp:611
+#: ../src/ui/dialog/inkscape-preferences.cpp:643
 #, fuzzy
 msgid "Show filter primitives infobox (requires restart)"
 msgstr "purvili galln maheti pette dakoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:613
+#: ../src/ui/dialog/inkscape-preferences.cpp:645
 msgid ""
 "Show icons and descriptions for the filter primitives available at the "
 "filter effects dialog"
 msgstr ""
 "gallne prabhav sonvadant upalobd purvili gallnej icon ani vivoron dakoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
-#: ../src/ui/dialog/inkscape-preferences.cpp:624
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 msgid "Icons only"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
-#: ../src/ui/dialog/inkscape-preferences.cpp:624
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 #, fuzzy
 msgid "Text only"
 msgstr "Lekh Input "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:616
-#: ../src/ui/dialog/inkscape-preferences.cpp:624
+#: ../src/ui/dialog/inkscape-preferences.cpp:648
+#: ../src/ui/dialog/inkscape-preferences.cpp:656
 #, fuzzy
 msgid "Icons and text"
 msgstr "bhitor ani bhair"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:621
+#: ../src/ui/dialog/inkscape-preferences.cpp:653
 #, fuzzy
 msgid "Dockbar style (requires restart):"
 msgstr "sonvad sovoy (porot suru korchi gorz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:622
+#: ../src/ui/dialog/inkscape-preferences.cpp:654
 msgid ""
 "Selects whether the vertical bars on the dockbar will show text labels, "
 "icons, or both"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:629
+#: ../src/ui/dialog/inkscape-preferences.cpp:661
 #, fuzzy
 msgid "Switcher style (requires restart):"
 msgstr "(porot suru ovoxyok)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:630
+#: ../src/ui/dialog/inkscape-preferences.cpp:662
 msgid ""
 "Selects whether the dockbar switcher will show text labels, icons, or both"
 msgstr ""
 
 #. Windows
-#: ../src/ui/dialog/inkscape-preferences.cpp:634
+#: ../src/ui/dialog/inkscape-preferences.cpp:666
 msgid "Save and restore window geometry for each document"
 msgstr "hor dosavezak zonela bhovmiti zogoi ani porot dastan kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:635
+#: ../src/ui/dialog/inkscape-preferences.cpp:667
 msgid "Remember and use last window's geometry"
 msgstr "nimannea zonelachi bhovmiti uddas kor ani vapar"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:636
+#: ../src/ui/dialog/inkscape-preferences.cpp:668
 msgid "Don't save window geometry"
 msgstr "zonelachi bhovmiti zogoinaka"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:638
+#: ../src/ui/dialog/inkscape-preferences.cpp:670
 msgid "Save and restore dialogs status"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:639
-#: ../src/ui/dialog/inkscape-preferences.cpp:675
+#: ../src/ui/dialog/inkscape-preferences.cpp:671
+#: ../src/ui/dialog/inkscape-preferences.cpp:707
 msgid "Don't save dialogs status"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:641
-#: ../src/ui/dialog/inkscape-preferences.cpp:683
+#: ../src/ui/dialog/inkscape-preferences.cpp:673
+#: ../src/ui/dialog/inkscape-preferences.cpp:715
 msgid "Dockable"
 msgstr "dock zanvchem tosolem"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:645
+#: ../src/ui/dialog/inkscape-preferences.cpp:677
 msgid "Native open/save dialogs"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:646
+#: ../src/ui/dialog/inkscape-preferences.cpp:678
 msgid "GTK open/save dialogs"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:648
+#: ../src/ui/dialog/inkscape-preferences.cpp:680
 msgid "Dialogs are hidden in taskbar"
 msgstr "sonvad vavrapott'ttent lipleat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:649
+#: ../src/ui/dialog/inkscape-preferences.cpp:681
 #, fuzzy
 msgid "Save and restore documents viewport"
 msgstr "hor dosavezak zonela bhovmiti zogoi ani porot dastan kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:650
+#: ../src/ui/dialog/inkscape-preferences.cpp:682
 msgid "Zoom when window is resized"
 msgstr "zonel porot gatr zal'le vellim zoom kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:651
+#: ../src/ui/dialog/inkscape-preferences.cpp:683
 msgid "Show close button on dialogs"
 msgstr "sonvadant bond butanv dakoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:652
+#: ../src/ui/dialog/inkscape-preferences.cpp:684
 #, fuzzy
 msgctxt "Dialog on top"
 msgid "None"
 msgstr "kai na"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:654
+#: ../src/ui/dialog/inkscape-preferences.cpp:686
 msgid "Aggressive"
 msgstr "akromonnkari"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:657
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
 #, fuzzy
 msgid "Maximized"
 msgstr "onukulit"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:661
+#: ../src/ui/dialog/inkscape-preferences.cpp:693
 #, fuzzy
 msgid "Default window size:"
 msgstr "mull zalli sthapitam"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:662
+#: ../src/ui/dialog/inkscape-preferences.cpp:694
 #, fuzzy
 msgid "Set the default window size"
 msgstr "onupat mull roch"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:665
+#: ../src/ui/dialog/inkscape-preferences.cpp:697
 #, fuzzy
 msgid "Saving window geometry (size and position)"
 msgstr "bhovmitint zonel zogonvchem (gatr ani sthan)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:667
+#: ../src/ui/dialog/inkscape-preferences.cpp:699
 msgid "Let the window manager determine placement of all windows"
 msgstr "sorv zonelanchem niyojon zonel nirvohok nirdharit korum"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:669
+#: ../src/ui/dialog/inkscape-preferences.cpp:701
 msgid ""
 "Remember and use the last window's geometry (saves geometry to user "
 "preferences)"
@@ -19162,7 +19338,7 @@ msgstr ""
 "nimannea zonelachi bhovmiti yaad kor ani vapar (vaparpea posondotent "
 "bhovmiti zogoita)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:671
+#: ../src/ui/dialog/inkscape-preferences.cpp:703
 msgid ""
 "Save and restore window geometry for each document (saves geometry in the "
 "document)"
@@ -19170,83 +19346,83 @@ msgstr ""
 "hor dostavezank zonelachi bhovmiti yaad kor ani vapar (dostavezant bhovmiti "
 "zogoita)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:673
+#: ../src/ui/dialog/inkscape-preferences.cpp:705
 #, fuzzy
 msgid "Saving dialogs status"
 msgstr "sonvad startup dakoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:677
+#: ../src/ui/dialog/inkscape-preferences.cpp:709
 msgid ""
 "Save and restore dialogs status (the last open windows dialogs are saved "
 "when it closes)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:681
+#: ../src/ui/dialog/inkscape-preferences.cpp:713
 #, fuzzy
 msgid "Dialog behavior (requires restart)"
 msgstr "sonvad sovoy (porot suru korchi gorz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:687
+#: ../src/ui/dialog/inkscape-preferences.cpp:719
 #, fuzzy
 msgid "Desktop integration"
 msgstr "xevott"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:689
+#: ../src/ui/dialog/inkscape-preferences.cpp:721
 msgid "Use Windows like open and save dialogs"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:691
+#: ../src/ui/dialog/inkscape-preferences.cpp:723
 msgid "Use GTK open and save dialogs "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:695
+#: ../src/ui/dialog/inkscape-preferences.cpp:727
 msgid "Dialogs on top:"
 msgstr "voir sonvad:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:698
+#: ../src/ui/dialog/inkscape-preferences.cpp:730
 msgid "Dialogs are treated as regular windows"
 msgstr "niyomit zonelam zanv sonvad manun ghetat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:700
+#: ../src/ui/dialog/inkscape-preferences.cpp:732
 msgid "Dialogs stay on top of document windows"
 msgstr "dostavez zonelanchea voir sonvad ravtat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:702
+#: ../src/ui/dialog/inkscape-preferences.cpp:734
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 "samany asul'le bhaxenunch punn thoddea zonela nirvahoka sovem borem kam "
 "korunk puro"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:705
+#: ../src/ui/dialog/inkscape-preferences.cpp:737
 #, fuzzy
 msgid "Dialog Transparency"
 msgstr "sonvad paradorxokota"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:707
+#: ../src/ui/dialog/inkscape-preferences.cpp:739
 #, fuzzy
 msgid "_Opacity when focused:"
 msgstr "Guman dil'le vellim oparodorxita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:709
+#: ../src/ui/dialog/inkscape-preferences.cpp:741
 #, fuzzy
 msgid "Opacity when _unfocused:"
 msgstr "guman dinatul'le vellim oparodorxita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:711
+#: ../src/ui/dialog/inkscape-preferences.cpp:743
 #, fuzzy
 msgid "_Time of opacity change animation:"
 msgstr "oparodorxitecho CholotChitr  bodlunvcho vell"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:714
+#: ../src/ui/dialog/inkscape-preferences.cpp:746
 #, fuzzy
 msgid "Miscellaneous"
 msgstr "itor:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:717
+#: ../src/ui/dialog/inkscape-preferences.cpp:749
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr "zonel niyontrok vavra pott'ttent sonvad zonela lupun urchim kai"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:720
+#: ../src/ui/dialog/inkscape-preferences.cpp:752
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -19256,115 +19432,115 @@ msgstr ""
 "vellim pintravnni zoom kor (ujvea kuvoll pott'ttechea voir ascho butanv "
 "vaparn hem konchea zonelant bodlavonn koryet tem hangsor mull)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:722
+#: ../src/ui/dialog/inkscape-preferences.cpp:754
 msgid ""
 "Save documents viewport (zoom and panning position). Useful to turn off when "
 "sharing version controlled files."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:724
+#: ../src/ui/dialog/inkscape-preferences.cpp:756
 msgid "Whether dialog windows have a close button (requires restart)"
 msgstr "sonvad zonelant bond butanv asat kai (porot suru korchem gorz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:725
+#: ../src/ui/dialog/inkscape-preferences.cpp:757
 msgid "Windows"
 msgstr "zonelam"
 
 #. Grids
-#: ../src/ui/dialog/inkscape-preferences.cpp:728
+#: ../src/ui/dialog/inkscape-preferences.cpp:760
 msgid "Line color when zooming out"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:731
+#: ../src/ui/dialog/inkscape-preferences.cpp:763
 #, fuzzy
 msgid "The gridlines will be shown in minor grid line color"
 msgstr ""
 "tharailam ani zoom out zalam tor, zalli volli promukh zalli volli ronga "
 "bodlak samany rongamni distelio"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:733
+#: ../src/ui/dialog/inkscape-preferences.cpp:765
 #, fuzzy
 msgid "The gridlines will be shown in major grid line color"
 msgstr ""
 "tharailam ani zoom out zalam tor, zalli volli promukh zalli volli ronga "
 "bodlak samany rongamni distelio"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:735
+#: ../src/ui/dialog/inkscape-preferences.cpp:767
 msgid "Default grid settings"
 msgstr "mull zalli sthapitam"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:741
-#: ../src/ui/dialog/inkscape-preferences.cpp:766
+#: ../src/ui/dialog/inkscape-preferences.cpp:773
+#: ../src/ui/dialog/inkscape-preferences.cpp:798
 msgid "Grid units:"
 msgstr "zalli ekankam:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:746
-#: ../src/ui/dialog/inkscape-preferences.cpp:771
+#: ../src/ui/dialog/inkscape-preferences.cpp:778
+#: ../src/ui/dialog/inkscape-preferences.cpp:803
 msgid "Origin X:"
 msgstr "Mull X: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:747
-#: ../src/ui/dialog/inkscape-preferences.cpp:772
+#: ../src/ui/dialog/inkscape-preferences.cpp:779
+#: ../src/ui/dialog/inkscape-preferences.cpp:804
 msgid "Origin Y:"
 msgstr "Mull Y: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:752
+#: ../src/ui/dialog/inkscape-preferences.cpp:784
 msgid "Spacing X:"
 msgstr "Suvat X: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:753
-#: ../src/ui/dialog/inkscape-preferences.cpp:775
+#: ../src/ui/dialog/inkscape-preferences.cpp:785
+#: ../src/ui/dialog/inkscape-preferences.cpp:807
 msgid "Spacing Y:"
 msgstr "Suvat Y: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:755
-#: ../src/ui/dialog/inkscape-preferences.cpp:756
-#: ../src/ui/dialog/inkscape-preferences.cpp:780
-#: ../src/ui/dialog/inkscape-preferences.cpp:781
+#: ../src/ui/dialog/inkscape-preferences.cpp:787
+#: ../src/ui/dialog/inkscape-preferences.cpp:788
+#: ../src/ui/dialog/inkscape-preferences.cpp:812
+#: ../src/ui/dialog/inkscape-preferences.cpp:813
 #, fuzzy
 msgid "Minor grid line color:"
 msgstr "promukh zalli volli rong:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:756
-#: ../src/ui/dialog/inkscape-preferences.cpp:781
+#: ../src/ui/dialog/inkscape-preferences.cpp:788
+#: ../src/ui/dialog/inkscape-preferences.cpp:813
 msgid "Color used for normal grid lines"
 msgstr "samany zalli vollink vaparul'lo rong"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:757
-#: ../src/ui/dialog/inkscape-preferences.cpp:758
-#: ../src/ui/dialog/inkscape-preferences.cpp:782
-#: ../src/ui/dialog/inkscape-preferences.cpp:783
+#: ../src/ui/dialog/inkscape-preferences.cpp:789
+#: ../src/ui/dialog/inkscape-preferences.cpp:790
+#: ../src/ui/dialog/inkscape-preferences.cpp:814
+#: ../src/ui/dialog/inkscape-preferences.cpp:815
 msgid "Major grid line color:"
 msgstr "promukh zalli volli rong:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:758
-#: ../src/ui/dialog/inkscape-preferences.cpp:783
+#: ../src/ui/dialog/inkscape-preferences.cpp:790
+#: ../src/ui/dialog/inkscape-preferences.cpp:815
 msgid "Color used for major (highlighted) grid lines"
 msgstr "ptomukh (nixamni kel'le) zalli vollink vaparul'lo rong"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:760
-#: ../src/ui/dialog/inkscape-preferences.cpp:785
+#: ../src/ui/dialog/inkscape-preferences.cpp:792
+#: ../src/ui/dialog/inkscape-preferences.cpp:817
 msgid "Major grid line every:"
 msgstr "hor promukh zalli volli:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:761
+#: ../src/ui/dialog/inkscape-preferences.cpp:793
 msgid "Show dots instead of lines"
 msgstr "bodlak vollinche bindu dakoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:762
+#: ../src/ui/dialog/inkscape-preferences.cpp:794
 msgid "If set, display dots at gridpoints instead of gridlines"
 msgstr "tharailam torh, zalli volli bodlak zalli pontamni bindu dakoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:843
+#: ../src/ui/dialog/inkscape-preferences.cpp:875
 #, fuzzy
 msgid "Input/Output"
 msgstr "Output"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:846
+#: ../src/ui/dialog/inkscape-preferences.cpp:878
 msgid "Use current directory for \"Save As ...\""
 msgstr "\"Zogoi Oxem ...\" khatir prostut margsuchi vapar"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:848
+#: ../src/ui/dialog/inkscape-preferences.cpp:880
 #, fuzzy
 msgid ""
 "When this option is on, the \"Save as...\" and \"Save a Copy...\" dialogs "
@@ -19376,11 +19552,11 @@ msgstr ""
 "dostavez aschea margsuchint ugoddta; chalu natul'lea vellar, tuvem adi ho "
 "sonvad vaparun zogoil'lea margsuchichea suvater ugoddteli"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:850
+#: ../src/ui/dialog/inkscape-preferences.cpp:882
 msgid "Add label comments to printing output"
 msgstr "mudronna outputak pattea obhiprai zodd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:852
+#: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -19388,28 +19564,28 @@ msgstr ""
 "chalu asul'le velli, jivall mudronn outputak ek obhipray zoddteli, tichea "
 "pattea sovem vostuchea pavit kel'lea outputak nixamni korun."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:854
+#: ../src/ui/dialog/inkscape-preferences.cpp:886
 #, fuzzy
 msgid "Add default metadata to new documents"
 msgstr "Dostavez Gonn'nnMahet sompadon kor (dostaveza sovem zogonvcheak)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:856
+#: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid ""
 "Add default metadata to new documents. Default metadata can be set from "
 "Document Properties->Metadata."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:892
 #, fuzzy
 msgid "_Grab sensitivity:"
 msgstr "Sonvedonxilak HatMar: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:860
+#: ../src/ui/dialog/inkscape-preferences.cpp:892
 #, fuzzy
 msgid "pixels (requires restart)"
 msgstr "(porot suru ovoxyok)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:861
+#: ../src/ui/dialog/inkscape-preferences.cpp:893
 msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
@@ -19417,38 +19593,38 @@ msgstr ""
 "Khonchyay vostuk mouse thavn dorcheak (podd'dea ttipkeamni) somorth  "
 "zanvcheak tumi podd'deachea kitle laggim ravonk zai"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
 #, fuzzy
 msgid "_Click/drag threshold:"
 msgstr "darvotto Chachay/vhodd: "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:863
-#: ../src/ui/dialog/inkscape-preferences.cpp:1205
-#: ../src/ui/dialog/inkscape-preferences.cpp:1209
-#: ../src/ui/dialog/inkscape-preferences.cpp:1219
+#: ../src/ui/dialog/inkscape-preferences.cpp:895
+#: ../src/ui/dialog/inkscape-preferences.cpp:1237
+#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1251
 msgid "pixels"
 msgstr "Ttipke"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:864
+#: ../src/ui/dialog/inkscape-preferences.cpp:896
 msgid ""
 "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr "mousachi otyodik voddni ji chachay ani voddchem nhoi mhunn somozotanv"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:867
+#: ../src/ui/dialog/inkscape-preferences.cpp:899
 #, fuzzy
 msgid "_Handle size:"
 msgstr "folli gatr:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:868
+#: ../src/ui/dialog/inkscape-preferences.cpp:900
 #, fuzzy
 msgid "Set the relative size of node handles"
 msgstr "Shift gantti hatalle"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:870
+#: ../src/ui/dialog/inkscape-preferences.cpp:902
 msgid "Use pressure-sensitive tablet (requires restart)"
 msgstr "dobav-sonvedonxil mezakuddko vapar (porot suru korchem gorjechem) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:872
+#: ../src/ui/dialog/inkscape-preferences.cpp:904
 msgid ""
 "Use the capabilities of a tablet or other pressure-sensitive device. Disable "
 "this only if you have problems with the tablet (you can still use it as a "
@@ -19458,29 +19634,29 @@ msgstr ""
 "mezakuddkea lagim somosso asa tor matr hem nixkriy kor (tumi azun mouse "
 "vaparyet)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:874
+#: ../src/ui/dialog/inkscape-preferences.cpp:906
 msgid "Switch tool based on tablet device (requires restart)"
 msgstr ""
 "mezakuddkea upokoronnacher sadhon  rupan bodol (porot suru korchem gorz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:876
+#: ../src/ui/dialog/inkscape-preferences.cpp:908
 msgid ""
 "Change tool as different devices are used on the tablet (pen, eraser, mouse)"
 msgstr ""
 "mezakuddkeacher itor upokoronna vapartat zal'lean sadhon bodo(tinter, "
 "khoddrobbor, mouse)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:877
+#: ../src/ui/dialog/inkscape-preferences.cpp:909
 #, fuzzy
 msgid "Input devices"
 msgstr "_Input upokoronna..."
 
 #. SVG output options
-#: ../src/ui/dialog/inkscape-preferences.cpp:880
+#: ../src/ui/dialog/inkscape-preferences.cpp:912
 msgid "Use named colors"
 msgstr "nanva rong vapar"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:881
+#: ../src/ui/dialog/inkscape-preferences.cpp:913
 msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
 "'magenta') instead of the numeric value"
@@ -19488,24 +19664,24 @@ msgstr ""
 "tharailam tor, upolobd asul'le vellim onkddea mola bodlak rongachem CSS nanv "
 "boroy (dekik: 'tambddo' vo 'magenta')"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:883
+#: ../src/ui/dialog/inkscape-preferences.cpp:915
 msgid "XML formatting"
 msgstr "XML pod'dotikoronn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:885
+#: ../src/ui/dialog/inkscape-preferences.cpp:917
 msgid "Inline attributes"
 msgstr "volli bitorle gunndorm"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:886
+#: ../src/ui/dialog/inkscape-preferences.cpp:918
 msgid "Put attributes on the same line as the element tag"
 msgstr "gottok tag bhaxen gunndorm teach vollint ghal"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:889
+#: ../src/ui/dialog/inkscape-preferences.cpp:921
 #, fuzzy
 msgid "_Indent, spaces:"
 msgstr "indent, suvati:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:889
+#: ../src/ui/dialog/inkscape-preferences.cpp:921
 msgid ""
 "The number of spaces to use for indenting nested elements; set to 0 for no "
 "indentation"
@@ -19513,41 +19689,41 @@ msgstr ""
 "songrohit ghottokam indent korchea khatir vaparije zal'le suvatenche onkdde; "
 "indent na zanvcheak 0 tharai"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:891
+#: ../src/ui/dialog/inkscape-preferences.cpp:923
 msgid "Path data"
 msgstr "vatte mahet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:894
+#: ../src/ui/dialog/inkscape-preferences.cpp:926
 msgid "Absolute"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:894
+#: ../src/ui/dialog/inkscape-preferences.cpp:926
 #, fuzzy
 msgid "Relative"
 msgstr "haka sombondit:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:894
-#: ../src/ui/dialog/inkscape-preferences.cpp:1184
+#: ../src/ui/dialog/inkscape-preferences.cpp:926
+#: ../src/ui/dialog/inkscape-preferences.cpp:1216
 msgid "Optimized"
 msgstr "onukulit"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:898
+#: ../src/ui/dialog/inkscape-preferences.cpp:930
 #, fuzzy
 msgid "Path string format:"
 msgstr "rupantor zogoi:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:898
+#: ../src/ui/dialog/inkscape-preferences.cpp:930
 msgid ""
 "Path data should be written: only with absolute coordinates, only with "
 "relative coordinates, or optimized for string length (mixed absolute and "
 "relative coordinates)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:900
+#: ../src/ui/dialog/inkscape-preferences.cpp:932
 msgid "Force repeat commands"
 msgstr "porot dinvchea sondexank boll di"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:901
+#: ../src/ui/dialog/inkscape-preferences.cpp:933
 msgid ""
 "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead "
 "of 'L 1,2 3,4')"
@@ -19555,25 +19731,25 @@ msgstr ""
 "teach vatte adexanchea porot dinvcheak boll di (dekik, 'L 1,2 L 3,4' bodlak "
 "'L 1,2 3,4')"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:903
+#: ../src/ui/dialog/inkscape-preferences.cpp:935
 msgid "Numbers"
 msgstr "onkdde"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:906
+#: ../src/ui/dialog/inkscape-preferences.cpp:938
 #, fuzzy
 msgid "_Numeric precision:"
 msgstr "sonkhiy nixkroxttota:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:906
+#: ../src/ui/dialog/inkscape-preferences.cpp:938
 msgid "Significant figures of the values written to the SVG file"
 msgstr "SVG koddtoracher mohotvpurnn onkddeanchi mola boroileant"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:909
+#: ../src/ui/dialog/inkscape-preferences.cpp:941
 #, fuzzy
 msgid "Minimum _exponent:"
 msgstr "konixtt ghatank"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:909
+#: ../src/ui/dialog/inkscape-preferences.cpp:941
 msgid ""
 "The smallest number written to SVG is 10 to the power of this exponent; "
 "anything smaller is written as zero"
@@ -19583,61 +19759,61 @@ msgstr ""
 
 #. Code to add controls for attribute checking options
 #. Add incorrect style properties options
-#: ../src/ui/dialog/inkscape-preferences.cpp:914
+#: ../src/ui/dialog/inkscape-preferences.cpp:946
 #, fuzzy
 msgid "Improper Attributes Actions"
 msgstr "gunndhorm thoranvk"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:916
-#: ../src/ui/dialog/inkscape-preferences.cpp:924
-#: ../src/ui/dialog/inkscape-preferences.cpp:932
+#: ../src/ui/dialog/inkscape-preferences.cpp:948
+#: ../src/ui/dialog/inkscape-preferences.cpp:956
+#: ../src/ui/dialog/inkscape-preferences.cpp:964
 #, fuzzy
 msgid "Print warnings"
 msgstr "Mudronna Nixamni"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:917
+#: ../src/ui/dialog/inkscape-preferences.cpp:949
 msgid ""
 "Print warning if invalid or non-useful attributes found. Database files "
 "located in inkscape_data_dir/attributes."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:918
+#: ../src/ui/dialog/inkscape-preferences.cpp:950
 #, fuzzy
 msgid "Remove attributes"
 msgstr "gunndorm thorai"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:919
+#: ../src/ui/dialog/inkscape-preferences.cpp:951
 msgid "Delete invalid or non-useful attributes from element tag"
 msgstr ""
 
 #. Add incorrect style properties options
-#: ../src/ui/dialog/inkscape-preferences.cpp:922
+#: ../src/ui/dialog/inkscape-preferences.cpp:954
 msgid "Inappropriate Style Properties Actions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:925
+#: ../src/ui/dialog/inkscape-preferences.cpp:957
 msgid ""
 "Print warning if inappropriate style properties found (i.e. 'font-family' "
 "set on a <rect>). Database files located in inkscape_data_dir/attributes."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:926
-#: ../src/ui/dialog/inkscape-preferences.cpp:934
+#: ../src/ui/dialog/inkscape-preferences.cpp:958
+#: ../src/ui/dialog/inkscape-preferences.cpp:966
 #, fuzzy
 msgid "Remove style properties"
 msgstr "hea trikonache gunndorm vordi kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:927
+#: ../src/ui/dialog/inkscape-preferences.cpp:959
 #, fuzzy
 msgid "Delete inappropriate style properties"
 msgstr "hea trikonache gunndorm vordi kor"
 
 #. Add default or inherited style properties options
-#: ../src/ui/dialog/inkscape-preferences.cpp:930
+#: ../src/ui/dialog/inkscape-preferences.cpp:962
 msgid "Non-useful Style Properties Actions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:933
+#: ../src/ui/dialog/inkscape-preferences.cpp:965
 msgid ""
 "Print warning if redundant style properties found (i.e. if a property has "
 "the default value and a different value is not inherited or if value is the "
@@ -19645,72 +19821,72 @@ msgid ""
 "attributes."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:935
+#: ../src/ui/dialog/inkscape-preferences.cpp:967
 #, fuzzy
 msgid "Delete redundant style properties"
 msgstr "MargDorxika GunnDorma thoray"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:937
+#: ../src/ui/dialog/inkscape-preferences.cpp:969
 msgid "Check Attributes and Style Properties on"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:939
+#: ../src/ui/dialog/inkscape-preferences.cpp:971
 #, fuzzy
 msgid "Reading"
 msgstr "Savott"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:940
+#: ../src/ui/dialog/inkscape-preferences.cpp:972
 msgid ""
 "Check attributes and style properties on reading in SVG files (including "
 "those internal to Inkscape which will slow down startup)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:941
+#: ../src/ui/dialog/inkscape-preferences.cpp:973
 #, fuzzy
 msgid "Editing"
 msgstr "_Sompodon"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:942
+#: ../src/ui/dialog/inkscape-preferences.cpp:974
 msgid ""
 "Check attributes and style properties while editing SVG files (may slow down "
 "Inkscape, mostly useful for debugging)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:943
+#: ../src/ui/dialog/inkscape-preferences.cpp:975
 #, fuzzy
 msgid "Writing"
 msgstr "lipiyanvchem"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:944
+#: ../src/ui/dialog/inkscape-preferences.cpp:976
 msgid "Check attributes and style properties on writing out SVG files"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:946
+#: ../src/ui/dialog/inkscape-preferences.cpp:978
 msgid "SVG output"
 msgstr "SVG output"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
-#: ../src/ui/dialog/inkscape-preferences.cpp:952
+#: ../src/ui/dialog/inkscape-preferences.cpp:984
 msgid "Perceptual"
 msgstr "dixttavo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:952
+#: ../src/ui/dialog/inkscape-preferences.cpp:984
 msgid "Relative Colorimetric"
 msgstr "sombondit vornnmapiy"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:952
+#: ../src/ui/dialog/inkscape-preferences.cpp:984
 msgid "Absolute Colorimetric"
 msgstr "poripurnn vornnmapiy"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:956
+#: ../src/ui/dialog/inkscape-preferences.cpp:988
 msgid "(Note: Color management has been disabled in this build)"
 msgstr "(suchon: ronga nirvohokan hem bandop nixkriy kelam)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:960
+#: ../src/ui/dialog/inkscape-preferences.cpp:992
 msgid "Display adjustment"
 msgstr "sodd-dodd dakoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:970
+#: ../src/ui/dialog/inkscape-preferences.cpp:1002
 #, c-format
 msgid ""
 "The ICC profile to use to calibrate display output.\n"
@@ -19719,110 +19895,110 @@ msgstr ""
 "output dakonvchem maponank korunk vaparchem ICC prorup.\n"
 " sodul'lio margsuchi:%s"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:971
+#: ../src/ui/dialog/inkscape-preferences.cpp:1003
 msgid "Display profile:"
 msgstr "prorup dakoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:976
+#: ../src/ui/dialog/inkscape-preferences.cpp:1008
 msgid "Retrieve profile from display"
 msgstr "dakovnne thavn prorup kadd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:979
+#: ../src/ui/dialog/inkscape-preferences.cpp:1011
 msgid "Retrieve profiles from those attached to displays via XICC"
 msgstr "XICC dvarim dakonvcheak chiddkayil'le thavn prorup kadd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:981
+#: ../src/ui/dialog/inkscape-preferences.cpp:1013
 msgid "Retrieve profiles from those attached to displays"
 msgstr "dakonvcheak chiddkayil'le thavn prorup kadd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:986
+#: ../src/ui/dialog/inkscape-preferences.cpp:1018
 msgid "Display rendering intent:"
 msgstr "prostuti korcho ud'dex dakoi:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:987
+#: ../src/ui/dialog/inkscape-preferences.cpp:1019
 msgid "The rendering intent to use to calibrate display output"
 msgstr "dakovnne output hatborpanvcheak vaparul'lo prostuti korcho ud'dex"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:989
+#: ../src/ui/dialog/inkscape-preferences.cpp:1021
 msgid "Proofing"
 msgstr "Proofing"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:991
+#: ../src/ui/dialog/inkscape-preferences.cpp:1023
 msgid "Simulate output on screen"
 msgstr "pod'deacher output onukoronn kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:993
+#: ../src/ui/dialog/inkscape-preferences.cpp:1025
 msgid "Simulates output of target device"
 msgstr "xevottchea hateracher output onukoronn korta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:995
+#: ../src/ui/dialog/inkscape-preferences.cpp:1027
 msgid "Mark out of gamut colors"
 msgstr "gamut rongan mark kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:997
+#: ../src/ui/dialog/inkscape-preferences.cpp:1029
 msgid "Highlights colors that are out of gamut for the target device"
 msgstr "xevottchea haterak gamut bayr aschea ronga nixamni kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1009
+#: ../src/ui/dialog/inkscape-preferences.cpp:1041
 msgid "Out of gamut warning color:"
 msgstr "gamut bair chotray rong:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1010
+#: ../src/ui/dialog/inkscape-preferences.cpp:1042
 msgid "Selects the color used for out of gamut warning"
 msgstr "gamut bair chotrayek vaparul'le rong vinchta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1012
+#: ../src/ui/dialog/inkscape-preferences.cpp:1044
 msgid "Device profile:"
 msgstr "hatera prorup:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1013
+#: ../src/ui/dialog/inkscape-preferences.cpp:1045
 msgid "The ICC profile to use to simulate device output"
 msgstr "hatera output onukoronn korunk vaparchem ICC prorup"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1016
+#: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Device rendering intent:"
 msgstr "hater render korcho ud'dex:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1017
+#: ../src/ui/dialog/inkscape-preferences.cpp:1049
 msgid "The rendering intent to use to calibrate device output"
 msgstr "hatborap output hatera khatir vaparunk render korcho ud'dex"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1019
+#: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Black point compensation"
 msgstr "kallo bindu porihar"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1021
+#: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Enables black point compensation"
 msgstr "kallo bindu porihar sokriy korta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1023
+#: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Preserve black"
 msgstr "kallo zogoita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1030
+#: ../src/ui/dialog/inkscape-preferences.cpp:1062
 msgid "(LittleCMS 1.15 or later required)"
 msgstr "(LittleCMS 1.15 vo fuddlem gorz asa)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1032
+#: ../src/ui/dialog/inkscape-preferences.cpp:1064
 msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr "CMYK -> CMYK rupantoronnant k vahini zogoita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1046
+#: ../src/ui/dialog/inkscape-preferences.cpp:1078
 #: ../src/ui/widget/color-icc-selector.cpp:395
 #: ../src/ui/widget/color-icc-selector.cpp:674
 msgid "<none>"
 msgstr "<kai na>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1091
+#: ../src/ui/dialog/inkscape-preferences.cpp:1123
 msgid "Color management"
 msgstr "ronga nirvohonn"
 
 #. Autosave options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1094
+#: ../src/ui/dialog/inkscape-preferences.cpp:1126
 msgid "Enable autosave (requires restart)"
 msgstr "svo zogo sokriy kor (porot suru korchi gorz)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1095
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
@@ -19830,32 +20006,32 @@ msgstr ""
 "dil'lea ontoralamni prostut dostavez(am) zogoi, oxem duspottchea "
 "prokoronnamni zanvchem luksann unne kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1101
+#: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgctxt "Filesystem"
 msgid "Autosave _directory:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1101
+#: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgid ""
 "The directory where autosaves will be written. This should be an absolute "
 "path (starts with / on UNIX or a drive letter such as C: on Windows). "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1103
+#: ../src/ui/dialog/inkscape-preferences.cpp:1135
 #, fuzzy
 msgid "_Interval (in minutes):"
 msgstr "ontorall (minuttamni):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1103
+#: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "dostavez svo zogoije zal'le ontorall (minuttamni) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1105
+#: ../src/ui/dialog/inkscape-preferences.cpp:1137
 #, fuzzy
 msgid "_Maximum number of autosaves:"
 msgstr "svo zogonvche gorixtt onkdde"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1105
+#: ../src/ui/dialog/inkscape-preferences.cpp:1137
 msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
@@ -19873,17 +20049,17 @@ msgstr ""
 #. _autosave_autosave_interval.signal_changed().connect( sigc::ptr_fun(inkscape_autosave_init), TRUE );
 #.
 #. -----------
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1152
 #, fuzzy
 msgid "Autosave"
 msgstr "svozogoi sopurnn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1124
+#: ../src/ui/dialog/inkscape-preferences.cpp:1156
 #, fuzzy
 msgid "Open Clip Art Library _Server Name:"
 msgstr "Ugtem Xirka Kola Vachonaloy Divpea nanv:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1125
+#: ../src/ui/dialog/inkscape-preferences.cpp:1157
 msgid ""
 "The server name of the Open Clip Art Library webdav server; it's used by the "
 "Import and Export to OCAL function"
@@ -19891,39 +20067,39 @@ msgstr ""
 "Ugtem Xirka Kola Vachonaloy webdav Divpiachem devpea nanv; OCAL kriye khatir "
 "ayot ani niryat tem vapartat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1159
 #, fuzzy
 msgid "Open Clip Art Library _Username:"
 msgstr "Ugtem Xirka Kola Vachonaloy Divpea vaparpea nanv"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "The username used to log into Open Clip Art Library"
 msgstr "Ugtem Xirka Kola Vachonaloy haka log korunk vaparul'lem vaparpea nanv"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1162
 #, fuzzy
 msgid "Open Clip Art Library _Password:"
 msgstr "Ugtem Xirka Kola Vachonaloy gupit utor:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1131
+#: ../src/ui/dialog/inkscape-preferences.cpp:1163
 msgid "The password used to log into Open Clip Art Library"
 msgstr "Ugtem Xirka Kola Vachonaloy haka log in korunk vaparul'lem gupit utor."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1132
+#: ../src/ui/dialog/inkscape-preferences.cpp:1164
 #, fuzzy
 msgid "Open Clip Art"
 msgstr "ugtem arc"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1137
+#: ../src/ui/dialog/inkscape-preferences.cpp:1169
 msgid "Behavior"
 msgstr "sovoy"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1141
+#: ../src/ui/dialog/inkscape-preferences.cpp:1173
 #, fuzzy
 msgid "_Simplification threshold:"
 msgstr "sorollikrot darvotto:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid ""
 "How strong is the Node tool's Simplify command by default. If you invoke "
 "this command several times in quick succession, it will act more and more "
@@ -19934,67 +20110,67 @@ msgstr ""
 "zavn vapar zatolo; il'lea vella uprant to vaparlo tor mull darvottea sovem "
 "to urtolo"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1144
+#: ../src/ui/dialog/inkscape-preferences.cpp:1176
 msgid "Color stock markers the same color as object"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1145
+#: ../src/ui/dialog/inkscape-preferences.cpp:1177
 msgid "Color custom markers the same color as object"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
-#: ../src/ui/dialog/inkscape-preferences.cpp:1356
+#: ../src/ui/dialog/inkscape-preferences.cpp:1178
+#: ../src/ui/dialog/inkscape-preferences.cpp:1400
 msgid "Update marker color when object color changes"
 msgstr ""
 
 #. Selecting options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1149
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "Select in all layers"
 msgstr "sorv hont vinch"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1182
 msgid "Select only within current layer"
 msgstr "fokot prostut hont vinch"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1183
 msgid "Select in current layer and sublayers"
 msgstr "prostut hont ani upa hont vinch"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1152
+#: ../src/ui/dialog/inkscape-preferences.cpp:1184
 msgid "Ignore hidden objects and layers"
 msgstr "lipul'lio vostu ani honta durlokxa kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1185
 msgid "Ignore locked objects and layers"
 msgstr "fichar vostu ani honta durlokxa kor ani"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1154
+#: ../src/ui/dialog/inkscape-preferences.cpp:1186
 msgid "Deselect upon layer change"
 msgstr "hont bodlavonne sovem o-vinch"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1157
+#: ../src/ui/dialog/inkscape-preferences.cpp:1189
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
 msgstr "prostut hont bodoltana prostut vostu vinch'che khatir hem o-topas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1159
+#: ../src/ui/dialog/inkscape-preferences.cpp:1191
 #, fuzzy
 msgid "Ctrl+A, Tab, Shift+Tab"
 msgstr "Ctrl+A, Tab, Shift+Tab"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1161
+#: ../src/ui/dialog/inkscape-preferences.cpp:1193
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr ""
 "keyboard vinchonvnne adex sorv hontachea vostu sovem kam korchea bhaxen kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1163
+#: ../src/ui/dialog/inkscape-preferences.cpp:1195
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "keyboard vinchonvnne adex prostut hontachea vostu sovem matr kam korchea "
 "bhaxen kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1165
+#: ../src/ui/dialog/inkscape-preferences.cpp:1197
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -20002,7 +20178,7 @@ msgstr ""
 "keyboard vinchonvnne adex prostut hontachea vostu sovem ani tachea upa "
 "hontamni kam korchea bhaxen kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1167
+#: ../src/ui/dialog/inkscape-preferences.cpp:1199
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden layer)"
@@ -20010,7 +20186,7 @@ msgstr ""
 "lipul'lio vostu vinch'che khatir he o-topas (tache itleak vo lipte hontamni "
 "asche sovem)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1169
+#: ../src/ui/dialog/inkscape-preferences.cpp:1201
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked layer)"
@@ -20018,90 +20194,90 @@ msgstr ""
 "fichar vostu vinch'che khatir he o-topas (tache itleak vo ficharit hontamni "
 "asche sovem)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/ui/dialog/inkscape-preferences.cpp:1203
 msgid "Wrap when cycling objects in z-order"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1173
+#: ../src/ui/dialog/inkscape-preferences.cpp:1205
 msgid "Alt+Scroll Wheel"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1175
+#: ../src/ui/dialog/inkscape-preferences.cpp:1207
 msgid "Wrap around at start and end when cycling objects in z-order"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1177
+#: ../src/ui/dialog/inkscape-preferences.cpp:1209
 msgid "Selecting"
 msgstr "vinch'chem"
 
 #. Transforms options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1180
+#: ../src/ui/dialog/inkscape-preferences.cpp:1212
 #: ../src/widgets/select-toolbar.cpp:572
 msgid "Scale stroke width"
 msgstr "dokea rundai mapon kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1181
+#: ../src/ui/dialog/inkscape-preferences.cpp:1213
 msgid "Scale rounded corners in rectangles"
 msgstr "ayotamni vaddkull konxe mapon kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1182
+#: ../src/ui/dialog/inkscape-preferences.cpp:1214
 msgid "Transform gradients"
 msgstr "vikxepok rupantor kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1183
+#: ../src/ui/dialog/inkscape-preferences.cpp:1215
 msgid "Transform patterns"
 msgstr "nomune rupantor kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1185
+#: ../src/ui/dialog/inkscape-preferences.cpp:1217
 msgid "Preserved"
 msgstr "sonvrokxit"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1188
+#: ../src/ui/dialog/inkscape-preferences.cpp:1220
 #: ../src/widgets/select-toolbar.cpp:573
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr "vostu mapon kortana, teach porimannan dokea runday mapon kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1190
+#: ../src/ui/dialog/inkscape-preferences.cpp:1222
 #: ../src/widgets/select-toolbar.cpp:584
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr "ayot mapon kortana, vaddkull konxeanche radii mapon kor "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1192
+#: ../src/ui/dialog/inkscape-preferences.cpp:1224
 #: ../src/widgets/select-toolbar.cpp:595
 msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "vikxepokank vostu sovem choloi (bhor vo doko hantun)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1194
+#: ../src/ui/dialog/inkscape-preferences.cpp:1226
 #: ../src/widgets/select-toolbar.cpp:606
 msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "nomune vostu sovem choloy (bhor vo doko hantun)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1195
+#: ../src/ui/dialog/inkscape-preferences.cpp:1227
 #, fuzzy
 msgid "Store transformation"
 msgstr "rupantor zogoi:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1197
+#: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
 msgstr ""
 "sadhy tor, rupantor=gunndorm zoddinastana rupantorponn vostunk lagu kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1199
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "vostuncher rupantor=gunndorm zavn ken'nai rupantorponn zogoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1201
+#: ../src/ui/dialog/inkscape-preferences.cpp:1233
 msgid "Transforms"
 msgstr "rupantor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1205
+#: ../src/ui/dialog/inkscape-preferences.cpp:1237
 #, fuzzy
 msgid "Mouse _wheel scrolls by:"
 msgstr "mouse rodam hache thavn kuvolltat:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1206
+#: ../src/ui/dialog/inkscape-preferences.cpp:1238
 msgid ""
 "One mouse wheel notch scrolls by this distance in screen pixels "
 "(horizontally with Shift)"
@@ -20109,26 +20285,26 @@ msgstr ""
 "eka mouse roda hont podd'dea ttipkeamni hea ontorar kuvollta (Shift sovem "
 "addve ritin)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1207
+#: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Ctrl+arrows"
 msgstr "Ctrl+arrows"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1209
+#: ../src/ui/dialog/inkscape-preferences.cpp:1241
 #, fuzzy
 msgid "Sc_roll by:"
 msgstr "hache thavn kuvolltat:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1210
+#: ../src/ui/dialog/inkscape-preferences.cpp:1242
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr ""
 "Ctrl-tir chavi dambul'lean itlea ontorar kuvollta (podd'deant ttipkeamni)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1212
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 #, fuzzy
 msgid "_Acceleration:"
 msgstr "gotivordhon:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1213
+#: ../src/ui/dialog/inkscape-preferences.cpp:1245
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
@@ -20136,16 +20312,16 @@ msgstr ""
 "Ctrl-tir dambun ani dorul'lean kuvollcho veg sovkas vaddon veta "
 "( gotivordhon na zanvcheak 0)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1214
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Autoscrolling"
 msgstr "svokuvoll"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1216
+#: ../src/ui/dialog/inkscape-preferences.cpp:1248
 #, fuzzy
 msgid "_Speed:"
 msgstr "veg:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1217
+#: ../src/ui/dialog/inkscape-preferences.cpp:1249
 msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
@@ -20153,13 +20329,13 @@ msgstr ""
 "Canvas dege bayr tum vhoddtana kitle vegan canvas svokuvollta (svokuvoll "
 "bond korunk 0)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1219
+#: ../src/ui/dialog/inkscape-preferences.cpp:1251
 #: ../src/ui/dialog/tracedialog.cpp:522 ../src/ui/dialog/tracedialog.cpp:721
 #, fuzzy
 msgid "_Threshold:"
 msgstr "humbor:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1220
+#: ../src/ui/dialog/inkscape-preferences.cpp:1252
 msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
@@ -20173,11 +20349,11 @@ msgstr ""
 #. _page_scrolling.add_line( false, "", _scroll_space, "",
 #. _("When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator); when off, Space temporarily switches to Selector tool (default)"));
 #.
-#: ../src/ui/dialog/inkscape-preferences.cpp:1226
+#: ../src/ui/dialog/inkscape-preferences.cpp:1258
 msgid "Mouse wheel zooms by default"
 msgstr "mouse rod mull zavn zoom zata"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1228
+#: ../src/ui/dialog/inkscape-preferences.cpp:1260
 msgid ""
 "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when "
 "off, it zooms with Ctrl and scrolls without Ctrl"
@@ -20185,49 +20361,53 @@ msgstr ""
 "Chalu aslear, Ctrl vinne mouse rod zoom zata ani Ctr sovem canvasacher "
 "kuvollta; chalu naslear, tem ctrl sovem zoom zata ani Ctrl vinne kuvollta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1229
+#: ../src/ui/dialog/inkscape-preferences.cpp:1261
 msgid "Scrolling"
 msgstr "kuvollchem"
 
 #. Snapping options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1232
+#: ../src/ui/dialog/inkscape-preferences.cpp:1264
+#, fuzzy
+msgid "Snap indicator"
+msgstr "thap suchok sokriy kor"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1266
 msgid "Enable snap indicator"
 msgstr "thap suchok sokriy kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid "After snapping, a symbol is drawn at the point that has snapped"
 msgstr "thapul'le uprant, ek sonket thapul'le binducher pintrayta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1237
-#, fuzzy
-msgid "_Delay (in ms):"
-msgstr "villomb (ms hantun)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
-msgid ""
-"Postpone snapping as long as the mouse is moving, and then wait an "
-"additional fraction of a second. This additional delay is specified here. "
-"When set to zero or to a very small number, snapping will be immediate."
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
+msgid "Snap indicator persistence (in seconds):"
 msgstr ""
-"mouse cholon asta poryant thapchem mukar lott, ani ek choddit sekundachea "
-"omxeak rak. hi choddit gollay hangasor suchit kelea. xuny vo lhan onkddea "
-"vellim thapchem tokxonn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1240
+#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+msgid ""
+"Controls how long the snap indicator message will be shown, before it "
+"disappears"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1276
+msgid "What should snap"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1278
 msgid "Only snap the node closest to the pointer"
 msgstr "suchokak laggim zanv gantt thap"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1242
+#: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid ""
 "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr "mouse suchok lagxilea  ganttik matr thapunk yotn kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 #, fuzzy
 msgid "_Weight factor:"
 msgstr "zoddae karonn:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1246
+#: ../src/ui/dialog/inkscape-preferences.cpp:1284
 msgid ""
 "When multiple snap solutions are found, then Inkscape can either prefer the "
 "closest transformation (when set to 0), or prefer the node that was "
@@ -20237,11 +20417,11 @@ msgstr ""
 "posond korta (0 tharayil'le vellim), vo suchokachea laggim asul'li gantt "
 "posond korta (1 tharayil'le vellim)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1248
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Snap the mouse pointer when dragging a constrained knot"
 msgstr "nirbondit gantt voddtana mouse suchok thap"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1250
+#: ../src/ui/dialog/inkscape-preferences.cpp:1288
 msgid ""
 "When dragging a knot along a constraint line, then snap the position of the "
 "mouse pointer instead of snapping the projection of the knot onto the "
@@ -20250,17 +20430,37 @@ msgstr ""
 "nirbondit vollik songim gantt voddtana, gantichex sadorponn nirbondit vollik "
 "thapchea bodlak  mouse suchokachem sthan thap"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1252
+#: ../src/ui/dialog/inkscape-preferences.cpp:1290
+#, fuzzy
+msgid "Delayed snap"
+msgstr "ken'naim thap"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1293
+#, fuzzy
+msgid "Delay (in seconds):"
+msgstr "villomb (ms hantun)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1294
+msgid ""
+"Postpone snapping as long as the mouse is moving, and then wait an "
+"additional fraction of a second. This additional delay is specified here. "
+"When set to zero or to a very small number, snapping will be immediate."
+msgstr ""
+"mouse cholon asta poryant thapchem mukar lott, ani ek choddit sekundachea "
+"omxeak rak. hi choddit gollay hangasor suchit kelea. xuny vo lhan onkddea "
+"vellim thapchem tokxonn"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1296
 msgid "Snapping"
 msgstr "thapchem"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:1257
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
 #, fuzzy
 msgid "_Arrow keys move by:"
 msgstr "tir chavim hea dvarim choltat:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1258
+#: ../src/ui/dialog/inkscape-preferences.cpp:1302
 #, fuzzy
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance"
@@ -20269,34 +20469,34 @@ msgstr ""
 "enkankani)"
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:1261
+#: ../src/ui/dialog/inkscape-preferences.cpp:1305
 #, fuzzy
 msgid "> and < _scale by:"
 msgstr "> ani < mapon thavn:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1262
+#: ../src/ui/dialog/inkscape-preferences.cpp:1306
 #, fuzzy
 msgid "Pressing > or < scales selection up or down by this increment"
 msgstr ""
 "dambchem > vo < vinchchem mapon hea vaddovnne prokar chodd vo unne zata (px "
 "enkankani)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1264
+#: ../src/ui/dialog/inkscape-preferences.cpp:1308
 #, fuzzy
 msgid "_Inset/Outset by:"
 msgstr "bhitor thoroy/bhayr tharoy hea thavn:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1265
+#: ../src/ui/dialog/inkscape-preferences.cpp:1309
 #, fuzzy
 msgid "Inset and Outset commands displace the path by this distance"
 msgstr ""
 "bhitor thoroy/bhayr tharoy adex hea ontorar vatto bodli kortat (px enkankani)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1266
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
 msgid "Compass-like display of angles"
 msgstr "Compassa bhaxen konanchi bodli"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -20306,22 +20506,22 @@ msgstr ""
 "ontor, donatmok goddyalla vatten; na tor muddla dixen 0 sovem, -180 tem 189 "
 "ontor, donatmok goddyalla virudh vatten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1314
 #, fuzzy
 msgctxt "Rotation angle"
 msgid "None"
 msgstr "kai na"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1318
 #, fuzzy
 msgid "_Rotation snaps every:"
 msgstr "gunvddi hor thapta:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1318
 msgid "degrees"
 msgstr "degree-iam"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1275
+#: ../src/ui/dialog/inkscape-preferences.cpp:1319
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -20329,28 +20529,28 @@ msgstr ""
 "Ctrl dambun gunvddi hor titlich degree thapta; toxench, [vo] damblear tea "
 "mapan gunvta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1276
+#: ../src/ui/dialog/inkscape-preferences.cpp:1320
 msgid "Relative snapping of guideline angles"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1322
 msgid ""
 "When on, the snap angles when rotating a guideline will be relative to the "
 "original angle"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1280
+#: ../src/ui/dialog/inkscape-preferences.cpp:1324
 #, fuzzy
 msgid "_Zoom in/out by:"
 msgstr "thavn zoom bhitor/bhair:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1280
+#: ../src/ui/dialog/inkscape-preferences.cpp:1324
 #: ../src/ui/dialog/objects.cpp:1626
 #: ../src/ui/widget/filter-effect-chooser.cpp:27
 msgid "%"
 msgstr "%"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1325
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -20358,45 +20558,45 @@ msgstr ""
 "zoom sadhon chachoy, +/- chavio, ani modhem chachay zoom bhitor ani bhair "
 "thea gunnankamni"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1282
+#: ../src/ui/dialog/inkscape-preferences.cpp:1326
 msgid "Steps"
 msgstr "mettam"
 
 #. Clones options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1285
+#: ../src/ui/dialog/inkscape-preferences.cpp:1329
 msgid "Move in parallel"
 msgstr "somantor zanv choloy"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1287
+#: ../src/ui/dialog/inkscape-preferences.cpp:1331
 msgid "Stay unmoved"
 msgstr "cholonastana rav"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1289
+#: ../src/ui/dialog/inkscape-preferences.cpp:1333
 msgid "Move according to transform"
 msgstr "rupantora prokar choloy"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1291
+#: ../src/ui/dialog/inkscape-preferences.cpp:1335
 msgid "Are unlinked"
 msgstr "ganchi vinne asat kai"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1293
+#: ../src/ui/dialog/inkscape-preferences.cpp:1337
 msgid "Are deleted"
 msgstr "noxtt keleat kai"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1340
 #, fuzzy
 msgid "Moving original: clones and linked offsets"
 msgstr "mull sthanantor zatana, tim svoruipt zatat ani ganch dil'le offset"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1298
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 msgid "Clones are translated by the same vector as their original"
 msgstr "tanchea mulla bhaxen sovrup teach vectora thavn rupantor zal'le"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1344
 msgid "Clones preserve their positions when their original is moved"
 msgstr "svorupanchem mull rup sthanantorit zal'le vellim thanchem sthan rakta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1302
+#: ../src/ui/dialog/inkscape-preferences.cpp:1346
 msgid ""
 "Each clone moves according to the value of its transform= attribute; for "
 "example, a rotated clone will move in a different direction than its original"
@@ -20404,29 +20604,29 @@ msgstr ""
 "hor svorup thanchea rupantora porpamnne cholta = gunndhorm; dekhik, runvchem "
 "svorup tichea mull rupachea vivingodd dixen cholta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1303
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
 #, fuzzy
 msgid "Deleting original: clones"
 msgstr "nokol kortana mull+svorup:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1305
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
 msgid "Orphaned clones are converted to regular objects"
 msgstr "onat svorup sodanchio vostu zavn rupantor zatat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1307
+#: ../src/ui/dialog/inkscape-preferences.cpp:1351
 msgid "Orphaned clones are deleted along with their original"
 msgstr "onat svorup thancheam mulla sovem noxtt zatat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1309
+#: ../src/ui/dialog/inkscape-preferences.cpp:1353
 #, fuzzy
 msgid "Duplicating original+clones/linked offset"
 msgstr "nokol kortana mull+svorup:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1311
+#: ../src/ui/dialog/inkscape-preferences.cpp:1355
 msgid "Relink duplicated clones"
 msgstr "nokli svorupank porot ganch di"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1313
+#: ../src/ui/dialog/inkscape-preferences.cpp:1357
 msgid ""
 "When duplicating a selection containing both a clone and its original "
 "(possibly in groups), relink the duplicated clone to the duplicated original "
@@ -20437,26 +20637,26 @@ msgstr ""
 "mull svorupank ganch di"
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
-#: ../src/ui/dialog/inkscape-preferences.cpp:1316
+#: ../src/ui/dialog/inkscape-preferences.cpp:1360
 msgid "Clones"
 msgstr "svorupam"
 
 #. Clip paths and masks options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1319
+#: ../src/ui/dialog/inkscape-preferences.cpp:1363
 msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr "lagu kortana, unchlio vinchnnar vostu xirkayvatt/mukhvadd zavn vapar"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1321
+#: ../src/ui/dialog/inkscape-preferences.cpp:1365
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "sokoil vinchulio vostu xirkai vatt va mukhvadd zavn vaparchem uncheck kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1322
+#: ../src/ui/dialog/inkscape-preferences.cpp:1366
 msgid "Remove clippath/mask object after applying"
 msgstr "xirkai vatt va mukhvadd vostu lagu kel'lea uprant kadd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1324
+#: ../src/ui/dialog/inkscape-preferences.cpp:1368
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
@@ -20464,114 +20664,114 @@ msgstr ""
 "lagu kel'lea uprant, pintravnne thavn xirkai vatt va mukhvadd zavn "
 "vaparul'lio vostu kadd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1326
+#: ../src/ui/dialog/inkscape-preferences.cpp:1370
 #, fuzzy
 msgid "Before applying"
 msgstr "lagu korchea poilem"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1328
+#: ../src/ui/dialog/inkscape-preferences.cpp:1372
 msgid "Do not group clipped/masked objects"
 msgstr "xirkai vatt va mukhvadd vostu pongodd korinaka "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1329
+#: ../src/ui/dialog/inkscape-preferences.cpp:1373
 #, fuzzy
 msgid "Put every clipped/masked object in its own group"
 msgstr "hor xirkai vatt va mukhvadd vostu tichea svont pongddant melloy"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1330
+#: ../src/ui/dialog/inkscape-preferences.cpp:1374
 msgid "Put all clipped/masked objects into one group"
 msgstr "xirkai vatt va mukhvadd vostu eka pongddant ghal"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1333
+#: ../src/ui/dialog/inkscape-preferences.cpp:1377
 msgid "Apply clippath/mask to every object"
 msgstr "xirkai vatt va mukhvadd hor vostunt lagu kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1336
+#: ../src/ui/dialog/inkscape-preferences.cpp:1380
 msgid "Apply clippath/mask to groups containing single object"
 msgstr "xirkai vatt va mukhvadd ekodem vostu ascheam pongddant lagu kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1339
+#: ../src/ui/dialog/inkscape-preferences.cpp:1383
 msgid "Apply clippath/mask to group containing all objects"
 msgstr "xirkai vatt va mukhvadd sorv vostu aschea pongddant lagu kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1341
+#: ../src/ui/dialog/inkscape-preferences.cpp:1385
 #, fuzzy
 msgid "After releasing"
 msgstr "xirkai vatt/mukhvadd mokllik kel'lea uprant"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1343
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
 msgid "Ungroup automatically created groups"
 msgstr "svocholit rochul'le pongodd pongodd-rohit kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1345
+#: ../src/ui/dialog/inkscape-preferences.cpp:1389
 msgid "Ungroup groups created when setting clip/mask"
 msgstr "xirkai/mukhvadd tharaitana pongodd-rohit pongodd rochul'le"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1347
+#: ../src/ui/dialog/inkscape-preferences.cpp:1391
 msgid "Clippaths and masks"
 msgstr "xirkai vatto ani mukhvadd"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1350
+#: ../src/ui/dialog/inkscape-preferences.cpp:1394
 #, fuzzy
 msgid "Stroke Style Markers"
 msgstr "nixamni tinter _suru kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1352
-#: ../src/ui/dialog/inkscape-preferences.cpp:1354
+#: ../src/ui/dialog/inkscape-preferences.cpp:1396
+#: ../src/ui/dialog/inkscape-preferences.cpp:1398
 msgid ""
 "Stroke color same as object, fill color either object fill color or marker "
 "fill color"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1358
+#: ../src/ui/dialog/inkscape-preferences.cpp:1402
 #: ../share/extensions/hershey.inx.h:27
 #, fuzzy
 msgid "Markers"
 msgstr "Marker"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1361
+#: ../src/ui/dialog/inkscape-preferences.cpp:1405
 #, fuzzy
 msgid "Document cleanup"
 msgstr "dostavez"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1362
-#: ../src/ui/dialog/inkscape-preferences.cpp:1364
+#: ../src/ui/dialog/inkscape-preferences.cpp:1406
+#: ../src/ui/dialog/inkscape-preferences.cpp:1408
 msgid "Remove unused swatches when doing a document cleanup"
 msgstr ""
 
 #. tooltip
-#: ../src/ui/dialog/inkscape-preferences.cpp:1365
+#: ../src/ui/dialog/inkscape-preferences.cpp:1409
 #, fuzzy
 msgid "Cleanup"
 msgstr "_Nitllai"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1373
+#: ../src/ui/dialog/inkscape-preferences.cpp:1417
 #, fuzzy
 msgid "Number of _Threads:"
 msgstr "sutanche onkdde:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1373
-#: ../src/ui/dialog/inkscape-preferences.cpp:1909
+#: ../src/ui/dialog/inkscape-preferences.cpp:1417
+#: ../src/ui/dialog/inkscape-preferences.cpp:1953
 msgid "(requires restart)"
 msgstr "(porot suru ovoxyok)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1374
+#: ../src/ui/dialog/inkscape-preferences.cpp:1418
 #, fuzzy
 msgid "Configure number of processors/threads to use when rendering filters"
 msgstr ""
 "gausian ospoxttota doya korcheak prokriyancho onkddo/sutam onkddo sonvrochon "
 "kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1378
+#: ../src/ui/dialog/inkscape-preferences.cpp:1422
 msgid "Rendering _cache size:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1378
+#: ../src/ui/dialog/inkscape-preferences.cpp:1422
 msgctxt "mebibyte (2^20 bytes) abbreviation"
 msgid "MiB"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1378
+#: ../src/ui/dialog/inkscape-preferences.cpp:1422
 msgid ""
 "Set the amount of memory per document which can be used to store rendered "
 "parts of the drawing for later reuse; set to zero to disable caching"
@@ -20579,38 +20779,38 @@ msgstr ""
 
 #. blur quality
 #. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:1381
-#: ../src/ui/dialog/inkscape-preferences.cpp:1405
+#: ../src/ui/dialog/inkscape-preferences.cpp:1425
+#: ../src/ui/dialog/inkscape-preferences.cpp:1449
 msgid "Best quality (slowest)"
 msgstr "boreantlem borem mott'tt (ekdom lov)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1383
-#: ../src/ui/dialog/inkscape-preferences.cpp:1407
+#: ../src/ui/dialog/inkscape-preferences.cpp:1427
+#: ../src/ui/dialog/inkscape-preferences.cpp:1451
 msgid "Better quality (slower)"
 msgstr "borem mott'tt (il'lem lov)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1385
-#: ../src/ui/dialog/inkscape-preferences.cpp:1409
+#: ../src/ui/dialog/inkscape-preferences.cpp:1429
+#: ../src/ui/dialog/inkscape-preferences.cpp:1453
 msgid "Average quality"
 msgstr "sadharonn mott'tt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1387
-#: ../src/ui/dialog/inkscape-preferences.cpp:1411
+#: ../src/ui/dialog/inkscape-preferences.cpp:1431
+#: ../src/ui/dialog/inkscape-preferences.cpp:1455
 msgid "Lower quality (faster)"
 msgstr "unne mott'tt (veg)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1389
-#: ../src/ui/dialog/inkscape-preferences.cpp:1413
+#: ../src/ui/dialog/inkscape-preferences.cpp:1433
+#: ../src/ui/dialog/inkscape-preferences.cpp:1457
 msgid "Lowest quality (fastest)"
 msgstr "unnean unne mott'tt (ekdom veg)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1392
+#: ../src/ui/dialog/inkscape-preferences.cpp:1436
 #, fuzzy
 msgid "Gaussian blur quality for display"
 msgstr "dakovnnek gaussian ospoxtt mott'tt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1394
-#: ../src/ui/dialog/inkscape-preferences.cpp:1418
+#: ../src/ui/dialog/inkscape-preferences.cpp:1438
+#: ../src/ui/dialog/inkscape-preferences.cpp:1462
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
@@ -20618,224 +20818,216 @@ msgstr ""
 "boreantlem borem mott'tt, punn dakovnni unchlea zommamni ekdom lov (bitmap "
 "niryat ken'nai boreantli borem mott'tt vaparta)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1396
-#: ../src/ui/dialog/inkscape-preferences.cpp:1420
+#: ../src/ui/dialog/inkscape-preferences.cpp:1440
+#: ../src/ui/dialog/inkscape-preferences.cpp:1464
 msgid "Better quality, but slower display"
 msgstr "borem mott'tt, punn love dakovnni"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1398
-#: ../src/ui/dialog/inkscape-preferences.cpp:1422
+#: ../src/ui/dialog/inkscape-preferences.cpp:1442
+#: ../src/ui/dialog/inkscape-preferences.cpp:1466
 msgid "Average quality, acceptable display speed"
 msgstr "sadharonn mott'tt, svikrot koryet titlo dakovnne veg"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1400
-#: ../src/ui/dialog/inkscape-preferences.cpp:1424
+#: ../src/ui/dialog/inkscape-preferences.cpp:1444
+#: ../src/ui/dialog/inkscape-preferences.cpp:1468
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr "unne mott'tt (thdde artifact), punn dakovnni il'li vegan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1402
-#: ../src/ui/dialog/inkscape-preferences.cpp:1426
+#: ../src/ui/dialog/inkscape-preferences.cpp:1446
+#: ../src/ui/dialog/inkscape-preferences.cpp:1470
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 "unnean unne mott'tt (manun ghevyet titli artifact) punn dakovnnii ekdom vegan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1416
+#: ../src/ui/dialog/inkscape-preferences.cpp:1460
 #, fuzzy
 msgid "Filter effects quality for display"
 msgstr "dakovnnek prabhava mott'tt gallta"
 
 #. build custom preferences tab
-#: ../src/ui/dialog/inkscape-preferences.cpp:1428
+#: ../src/ui/dialog/inkscape-preferences.cpp:1472
 #: ../src/ui/dialog/print.cpp:215
 msgid "Rendering"
 msgstr "prostut kor"
 
 #. Note: /options/bitmapoversample removed with Cairo renderer
-#: ../src/ui/dialog/inkscape-preferences.cpp:1434 ../src/verbs.cpp:156
+#: ../src/ui/dialog/inkscape-preferences.cpp:1478 ../src/verbs.cpp:156
 #: ../src/widgets/calligraphy-toolbar.cpp:626
 #, fuzzy
 msgid "Edit"
 msgstr "_Sompodon"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1435
+#: ../src/ui/dialog/inkscape-preferences.cpp:1479
 msgid "Automatically reload bitmaps"
 msgstr "svocholit bhorchim bitmap"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1437
+#: ../src/ui/dialog/inkscape-preferences.cpp:1481
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 "koddor diskak bodolul'le vellim svocholit bhorchim ganch dil'lim rupnnim"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1439
+#: ../src/ui/dialog/inkscape-preferences.cpp:1483
 #, fuzzy
 msgid "_Bitmap editor:"
 msgstr "bitmap sompadok:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1441
+#: ../src/ui/dialog/inkscape-preferences.cpp:1485
 #: ../share/extensions/guillotine.inx.h:5 ../share/extensions/plotter.inx.h:67
 #: ../share/extensions/print_win32_vector.inx.h:2
 #, fuzzy
 msgid "Export"
 msgstr "_Niryat kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1443
+#: ../src/ui/dialog/inkscape-preferences.cpp:1487
 #, fuzzy
 msgid "Default export _resolution:"
 msgstr "mull niryat nirdharonn:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1444
+#: ../src/ui/dialog/inkscape-preferences.cpp:1488
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "niryat sonvedonant mull bitmap nirdharonn (incha bitorlea binduvamni)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1445
+#: ../src/ui/dialog/inkscape-preferences.cpp:1489
 #: ../src/ui/dialog/xml-tree.cpp:920
 msgid "Create"
 msgstr "roch"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1447
+#: ../src/ui/dialog/inkscape-preferences.cpp:1491
 #, fuzzy
 msgid "Resolution for Create Bitmap _Copy:"
 msgstr "Create Bitmap Copy khatir nirdharonn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1448
+#: ../src/ui/dialog/inkscape-preferences.cpp:1492
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "Create Bitmap Copy adexa khatir vaparul'lem nirdharonn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1451
+#: ../src/ui/dialog/inkscape-preferences.cpp:1495
 msgid "Ask about linking and scaling when importing"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1453
+#: ../src/ui/dialog/inkscape-preferences.cpp:1497
 msgid "Pop-up linking and scaling dialog when importing bitmap image."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1459
+#: ../src/ui/dialog/inkscape-preferences.cpp:1503
 #, fuzzy
 msgid "Bitmap link:"
 msgstr "bitmap sompadok:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1466
+#: ../src/ui/dialog/inkscape-preferences.cpp:1510
 msgid "Bitmap scale (image-rendering):"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1471
+#: ../src/ui/dialog/inkscape-preferences.cpp:1515
 #, fuzzy
 msgid "Default _import resolution:"
 msgstr "mull niryat nirdharonn:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1472
+#: ../src/ui/dialog/inkscape-preferences.cpp:1516
 #, fuzzy
 msgid "Default bitmap resolution (in dots per inch) for bitmap import"
 msgstr "niryat sonvedonant mull bitmap nirdharonn (incha bitorlea binduvamni)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1473
+#: ../src/ui/dialog/inkscape-preferences.cpp:1517
 #, fuzzy
 msgid "Override file resolution"
 msgstr "ek purnn nirdharonn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1475
+#: ../src/ui/dialog/inkscape-preferences.cpp:1519
 #, fuzzy
 msgid "Use default bitmap resolution in favor of information from file"
 msgstr "niryat sonvedonant mull bitmap nirdharonn (incha bitorlea binduvamni)"
 
 #. rendering outlines for pixmap image tags
-#: ../src/ui/dialog/inkscape-preferences.cpp:1479
+#: ../src/ui/dialog/inkscape-preferences.cpp:1523
 #, fuzzy
 msgid "Images in Outline Mode"
 msgstr "bhaili rekah soddoi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1480
+#: ../src/ui/dialog/inkscape-preferences.cpp:1524
 msgid ""
 "When active will render images while in outline mode instead of a red box "
 "with an x. This is useful for manual tracing."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1482
+#: ../src/ui/dialog/inkscape-preferences.cpp:1526
 msgid "Bitmaps"
 msgstr "Bitmaps"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1494
+#: ../src/ui/dialog/inkscape-preferences.cpp:1538
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added separately to "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1497
+#: ../src/ui/dialog/inkscape-preferences.cpp:1541
 msgid "Shortcut file:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1500
+#: ../src/ui/dialog/inkscape-preferences.cpp:1544
 #: ../src/ui/dialog/template-load-tab.cpp:48
 #, fuzzy
 msgid "Search:"
 msgstr "sodh"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1512
+#: ../src/ui/dialog/inkscape-preferences.cpp:1556
 msgid "Shortcut"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1513
-#: ../src/ui/widget/page-sizer.cpp:285
+#: ../src/ui/dialog/inkscape-preferences.cpp:1557
+#: ../src/ui/widget/page-sizer.cpp:287
 msgid "Description"
 msgstr "vivoronn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1568
-#: ../src/ui/dialog/pixelartdialog.cpp:296
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:699
-#: ../src/ui/dialog/tracedialog.cpp:813
-#: ../src/ui/widget/preferences-widget.cpp:745
-msgid "Reset"
-msgstr "porot thoray"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1568
+#: ../src/ui/dialog/inkscape-preferences.cpp:1612
 msgid ""
 "Remove all your customized keyboard shortcuts, and revert to the shortcuts "
 "in the shortcut file listed above"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1572
+#: ../src/ui/dialog/inkscape-preferences.cpp:1616
 #, fuzzy
 msgid "Import ..."
 msgstr "_ayot..."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1572
+#: ../src/ui/dialog/inkscape-preferences.cpp:1616
 msgid "Import custom keyboard shortcuts from a file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1575
+#: ../src/ui/dialog/inkscape-preferences.cpp:1619
 #, fuzzy
 msgid "Export ..."
 msgstr "_Bitmap niryat kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1575
+#: ../src/ui/dialog/inkscape-preferences.cpp:1619
 #, fuzzy
 msgid "Export custom keyboard shortcuts to a file"
 msgstr "dostavez PS koddtorak niryat kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1585
+#: ../src/ui/dialog/inkscape-preferences.cpp:1629
 msgid "Keyboard Shortcuts"
 msgstr ""
 
 #. Find this group in the tree
-#: ../src/ui/dialog/inkscape-preferences.cpp:1748
+#: ../src/ui/dialog/inkscape-preferences.cpp:1792
 msgid "Misc"
 msgstr "vividh"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1850
+#: ../src/ui/dialog/inkscape-preferences.cpp:1894
 #, fuzzy
 msgctxt "Spellchecker language"
 msgid "None"
 msgstr "kai na"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1871
+#: ../src/ui/dialog/inkscape-preferences.cpp:1915
 msgid "Set the main spell check language"
 msgstr "promuk spelling topas bhas vinch"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1874
+#: ../src/ui/dialog/inkscape-preferences.cpp:1918
 msgid "Second language:"
 msgstr "dusri bhas:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1875
+#: ../src/ui/dialog/inkscape-preferences.cpp:1919
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
@@ -20843,11 +21035,11 @@ msgstr ""
 "dusri spelling topas bhas thorai; tapasul'lean sorv vinchul'lea bhaxenk "
 "kollit natul'lea sobdancher ravta."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1878
+#: ../src/ui/dialog/inkscape-preferences.cpp:1922
 msgid "Third language:"
 msgstr "tisri bhas:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1879
+#: ../src/ui/dialog/inkscape-preferences.cpp:1923
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
@@ -20855,43 +21047,43 @@ msgstr ""
 "tisri spelling topas bhas thorai; tapasul'lean sorv vinchul'lea bhaxenk "
 "kollit natul'lea sobdancher ravta."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1881
+#: ../src/ui/dialog/inkscape-preferences.cpp:1925
 msgid "Ignore words with digits"
 msgstr "sobd onkddea sovem durlokxa kor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1883
+#: ../src/ui/dialog/inkscape-preferences.cpp:1927
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "onkdde asche sobd durlokxa kor, dekhik \"R2D2\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1885
+#: ../src/ui/dialog/inkscape-preferences.cpp:1929
 msgid "Ignore words in ALL CAPITALS"
 msgstr "SORV VHODD OKXORANTLE sobd durlakxa kor "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1887
+#: ../src/ui/dialog/inkscape-preferences.cpp:1931
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Sorv vhodd okxorantle sobd durlakxa kor dekhik \"IUPAC\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1889
+#: ../src/ui/dialog/inkscape-preferences.cpp:1933
 msgid "Spellcheck"
 msgstr "Spellcheck"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1909
+#: ../src/ui/dialog/inkscape-preferences.cpp:1953
 #, fuzzy
 msgid "Latency _skew:"
 msgstr "villombota vokr:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1910
+#: ../src/ui/dialog/inkscape-preferences.cpp:1954
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)"
 msgstr ""
 "niz vellan ghotton ghoddiall vokr zal'lem karann (thoddea vevostemni 0.9766)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1912
+#: ../src/ui/dialog/inkscape-preferences.cpp:1956
 msgid "Pre-render named icons"
 msgstr "purv-prostuti nanv dil'le icon"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1914
+#: ../src/ui/dialog/inkscape-preferences.cpp:1958
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
@@ -20899,91 +21091,91 @@ msgstr ""
 "chalu asul'le vellim, nanv dil'le icon ui dakonvchea poilem prostuti "
 "kortele. hem GTK+ nanv dil'lea kollovnnent chuki thavn suttka zoddunk"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1922
+#: ../src/ui/dialog/inkscape-preferences.cpp:1966
 msgid "System info"
 msgstr "vevosta mahet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1926
+#: ../src/ui/dialog/inkscape-preferences.cpp:1970
 msgid "User config: "
 msgstr "vaparpea sonvrochona:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1926
+#: ../src/ui/dialog/inkscape-preferences.cpp:1970
 msgid "Location of users configuration"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1930
+#: ../src/ui/dialog/inkscape-preferences.cpp:1974
 #, fuzzy
 msgid "User preferences: "
 msgstr "khoddrobber posondota"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1930
+#: ../src/ui/dialog/inkscape-preferences.cpp:1974
 #, fuzzy
 msgid "Location of the users preferences file"
 msgstr "posondotechme koddtor %s rochunk solvolem"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1934
+#: ../src/ui/dialog/inkscape-preferences.cpp:1978
 #, fuzzy
 msgid "User extensions: "
 msgstr "Vedic Vistarit"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1934
+#: ../src/ui/dialog/inkscape-preferences.cpp:1978
 #, fuzzy
 msgid "Location of the users extensions"
 msgstr "Inkscape vistaram vixim mahet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1938
+#: ../src/ui/dialog/inkscape-preferences.cpp:1982
 msgid "User cache: "
 msgstr "vaparpea cache:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1938
+#: ../src/ui/dialog/inkscape-preferences.cpp:1982
 msgid "Location of users cache"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1946
+#: ../src/ui/dialog/inkscape-preferences.cpp:1990
 msgid "Temporary files: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1946
+#: ../src/ui/dialog/inkscape-preferences.cpp:1990
 msgid "Location of the temporary files used for autosave"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1950
+#: ../src/ui/dialog/inkscape-preferences.cpp:1994
 #, fuzzy
 msgid "Inkscape data: "
 msgstr "Inkscape Hatpustok"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1950
+#: ../src/ui/dialog/inkscape-preferences.cpp:1994
 #, fuzzy
 msgid "Location of Inkscape data"
 msgstr "Inkscape vistaram vixim mahet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1954
+#: ../src/ui/dialog/inkscape-preferences.cpp:1998
 #, fuzzy
 msgid "Inkscape extensions: "
 msgstr "Inkscape vistaram vixim mahet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1954
+#: ../src/ui/dialog/inkscape-preferences.cpp:1998
 #, fuzzy
 msgid "Location of the Inkscape extensions"
 msgstr "Inkscape vistaram vixim mahet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1963
+#: ../src/ui/dialog/inkscape-preferences.cpp:2007
 msgid "System data: "
 msgstr "vevosta mahet:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1963
+#: ../src/ui/dialog/inkscape-preferences.cpp:2007
 msgid "Locations of system data"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1987
+#: ../src/ui/dialog/inkscape-preferences.cpp:2031
 msgid "Icon theme: "
 msgstr "Icon sonkolpona"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1987
+#: ../src/ui/dialog/inkscape-preferences.cpp:2031
 msgid "Locations of icon themes"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1989
+#: ../src/ui/dialog/inkscape-preferences.cpp:2033
 msgid "System"
 msgstr "vevosta"
 
@@ -23512,7 +23704,7 @@ msgstr ""
 msgid "Retract handles"
 msgstr "hatallo pattim hadd"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:315 ../src/ui/tool/node.cpp:295
+#: ../src/ui/tool/multi-path-manipulator.cpp:315 ../src/ui/tool/node.cpp:297
 msgid "Change node type"
 msgstr "gantti riti bodol"
 
@@ -23553,86 +23745,86 @@ msgstr "gantti modd"
 msgid "Delete nodes"
 msgstr "gantti kadd"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:776
+#: ../src/ui/tool/multi-path-manipulator.cpp:777
 msgid "Move nodes"
 msgstr "gantti choloy"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:779
+#: ../src/ui/tool/multi-path-manipulator.cpp:780
 msgid "Move nodes horizontally"
 msgstr "gantti addve riti choloy"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:783
+#: ../src/ui/tool/multi-path-manipulator.cpp:784
 msgid "Move nodes vertically"
 msgstr "gantti ube riti choloy"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:794
-#: ../src/ui/tool/multi-path-manipulator.cpp:800
+#: ../src/ui/tool/multi-path-manipulator.cpp:795
+#: ../src/ui/tool/multi-path-manipulator.cpp:801
 msgid "Scale nodes uniformly"
 msgstr "gantti ekarupan mapon kor"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:797
+#: ../src/ui/tool/multi-path-manipulator.cpp:798
 msgid "Scale nodes"
 msgstr "gantti mapon kor"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:804
+#: ../src/ui/tool/multi-path-manipulator.cpp:805
 msgid "Scale nodes horizontally"
 msgstr "gantti addvea ritin mapon kor"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:808
+#: ../src/ui/tool/multi-path-manipulator.cpp:809
 msgid "Scale nodes vertically"
 msgstr "gantti ube ritin mapon kor"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:812
+#: ../src/ui/tool/multi-path-manipulator.cpp:813
 #, fuzzy
 msgid "Skew nodes horizontally"
 msgstr "gantti addvea ritin mapon kor"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:816
+#: ../src/ui/tool/multi-path-manipulator.cpp:817
 #, fuzzy
 msgid "Skew nodes vertically"
 msgstr "gantti ube ritin mapon kor"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:820
+#: ../src/ui/tool/multi-path-manipulator.cpp:821
 msgid "Flip nodes horizontally"
 msgstr "gantti addvea ritin ulltte kor"
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:823
+#: ../src/ui/tool/multi-path-manipulator.cpp:824
 msgid "Flip nodes vertically"
 msgstr "gantti ube ritin ulltte kor"
 
-#: ../src/ui/tool/node.cpp:270
+#: ../src/ui/tool/node.cpp:272
 msgid "Cusp node handle"
 msgstr "gantti hatalle ekttaim kor"
 
-#: ../src/ui/tool/node.cpp:271
+#: ../src/ui/tool/node.cpp:273
 msgid "Smooth node handle"
 msgstr "gantti hatalle nazuk kor"
 
-#: ../src/ui/tool/node.cpp:272
+#: ../src/ui/tool/node.cpp:274
 msgid "Symmetric node handle"
 msgstr "gantti hatalle ek soman"
 
-#: ../src/ui/tool/node.cpp:273
+#: ../src/ui/tool/node.cpp:275
 msgid "Auto-smooth node handle"
 msgstr "gantti hatalle sov-nazuk"
 
-#: ../src/ui/tool/node.cpp:492
+#: ../src/ui/tool/node.cpp:494
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
 msgstr "choddit: Shift, Ctrl, Alt"
 
-#: ../src/ui/tool/node.cpp:494
+#: ../src/ui/tool/node.cpp:496
 #, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Ctrl"
 msgstr "choddit: Ctrl, Alt"
 
-#: ../src/ui/tool/node.cpp:496
+#: ../src/ui/tool/node.cpp:498
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
 msgstr "choddit: Ctrl, Alt"
 
-#: ../src/ui/tool/node.cpp:502
+#: ../src/ui/tool/node.cpp:504
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -23642,7 +23834,7 @@ msgstr ""
 "<b>Shift+Ctrl+Alt</b>: donui hatalle gunvddaitana lambai rak ani gunvddancho "
 "kon %g° choddit onkkedamni haka thap"
 
-#: ../src/ui/tool/node.cpp:507
+#: ../src/ui/tool/node.cpp:509
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -23650,17 +23842,17 @@ msgid ""
 msgstr ""
 "<b>Ctrl+Alt</b>: lambai rak ani gunvddancho kon %g° choddit onkkedamni thap"
 
-#: ../src/ui/tool/node.cpp:513
+#: ../src/ui/tool/node.cpp:515
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
 msgstr "<b>Shift+Alt</b>: hatallea lambai rak ani donui hatalle gunvddai."
 
-#: ../src/ui/tool/node.cpp:516
+#: ../src/ui/tool/node.cpp:518
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
 msgstr "<b>Alt</b>: voddtana hatallea lambai rak"
 
-#: ../src/ui/tool/node.cpp:523
+#: ../src/ui/tool/node.cpp:525
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -23670,12 +23862,12 @@ msgstr ""
 "<b>Shift+Ctrl</b>: gunvddancho kon %g° choddit onkkedamni thap ani donui "
 "hatalle gunvddai"
 
-#: ../src/ui/tool/node.cpp:527
+#: ../src/ui/tool/node.cpp:529
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: Move handle by his actual steps in BSpline Live Effect"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:530
+#: ../src/ui/tool/node.cpp:532
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
@@ -23683,24 +23875,24 @@ msgstr ""
 "<b>Ctrl</b>: gunvddancho kon %g° choddit onkkedamni thap, retract korunk "
 "chachoy"
 
-#: ../src/ui/tool/node.cpp:535
+#: ../src/ui/tool/node.cpp:537
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
 msgstr "<b>Shift</b>: donui hatalle ekach konant gunvddai"
 
-#: ../src/ui/tool/node.cpp:538
+#: ../src/ui/tool/node.cpp:540
 #, fuzzy
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: move handle"
 msgstr "Shift gantti hatalle"
 
-#: ../src/ui/tool/node.cpp:545 ../src/ui/tool/node.cpp:549
+#: ../src/ui/tool/node.cpp:547 ../src/ui/tool/node.cpp:551
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr "<b>Svo gantt hatallo</b>: nazuk ganttik rupantor korcheak vodd (%s)"
 
-#: ../src/ui/tool/node.cpp:552
+#: ../src/ui/tool/node.cpp:554
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -23708,44 +23900,44 @@ msgid ""
 "power"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:572
+#: ../src/ui/tool/node.cpp:574
 #, c-format
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr "hatallo %s thavn choloi, %s; konn %.2f°, lambai %s"
 
-#: ../src/ui/tool/node.cpp:1448
+#: ../src/ui/tool/node.cpp:1425
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr "<b>Shift</b>: hatallo bayr vodd, vinchovnn odol-bodol korunk chachoy"
 
-#: ../src/ui/tool/node.cpp:1450
+#: ../src/ui/tool/node.cpp:1427
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr "<b>Shift</b>: vinchovnn odol-bodol korunk chachoy"
 
-#: ../src/ui/tool/node.cpp:1455
+#: ../src/ui/tool/node.cpp:1432
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr "<b>Ctrl+Alt</b>: hatallea volling choloy, gantt noxtt korunk chachoy"
 
-#: ../src/ui/tool/node.cpp:1458
+#: ../src/ui/tool/node.cpp:1435
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr "<b>Ctrl</b>: okxa vatten choloy, gantti rit bodlunk chachoy"
 
-#: ../src/ui/tool/node.cpp:1462
+#: ../src/ui/tool/node.cpp:1439
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr "<b>Alt</b>: gantti sculpt kor"
 
-#: ../src/ui/tool/node.cpp:1471
+#: ../src/ui/tool/node.cpp:1448
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>: vattek akar dinvk vodd (choddit: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1474
+#: ../src/ui/tool/node.cpp:1451
 #, fuzzy, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -23753,7 +23945,7 @@ msgid ""
 "power"
 msgstr "<b>%s</b>: vattek akar dinvk vodd (choddit: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1477
+#: ../src/ui/tool/node.cpp:1454
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -23763,7 +23955,7 @@ msgstr ""
 "<b>%s</b>: vattek akar dinvk vodd, hatalle mapona/gunvddavnni odol-bodol "
 "korunk chachoy (choddit: Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1481
+#: ../src/ui/tool/node.cpp:1458
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -23773,7 +23965,7 @@ msgstr ""
 "<b>%s</b>: vattek akar dinvk vodd, fokot hi gantt vinchunk chachoy(choddit: "
 "Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1484
+#: ../src/ui/tool/node.cpp:1461
 #, fuzzy, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -23783,17 +23975,17 @@ msgstr ""
 "<b>%s</b>: vattek akar dinvk vodd, fokot hi gantt vinchunk chachoy(choddit: "
 "Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1497
+#: ../src/ui/tool/node.cpp:1474
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr "gantt hea %s, %s thavn choloy"
 
-#: ../src/ui/tool/node.cpp:1508
+#: ../src/ui/tool/node.cpp:1485
 msgid "Symmetric node"
 msgstr "ek soman gantt"
 
-#: ../src/ui/tool/node.cpp:1509
+#: ../src/ui/tool/node.cpp:1486
 msgid "Auto-smooth node"
 msgstr "svo-nazuk gantt"
 
@@ -23801,29 +23993,29 @@ msgstr "svo-nazuk gantt"
 msgid "Add node"
 msgstr "gantt zodd"
 
-#: ../src/ui/tool/path-manipulator.cpp:859
+#: ../src/ui/tool/path-manipulator.cpp:861
 msgid "Scale handle"
 msgstr "mapon hatallo"
 
-#: ../src/ui/tool/path-manipulator.cpp:883
+#: ../src/ui/tool/path-manipulator.cpp:885
 msgid "Rotate handle"
 msgstr "gunvddanvcho hatallo"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1556
+#: ../src/ui/tool/path-manipulator.cpp:1555
 #: ../src/widgets/node-toolbar.cpp:397
 msgid "Delete node"
 msgstr "gantt noxtt kor"
 
-#: ../src/ui/tool/path-manipulator.cpp:1564
+#: ../src/ui/tool/path-manipulator.cpp:1563
 msgid "Cycle node type"
 msgstr "gantt rit cycle kor"
 
-#: ../src/ui/tool/path-manipulator.cpp:1579
+#: ../src/ui/tool/path-manipulator.cpp:1578
 msgid "Drag handle"
 msgstr "hatallo vodd"
 
-#: ../src/ui/tool/path-manipulator.cpp:1588
+#: ../src/ui/tool/path-manipulator.cpp:1587
 msgid "Retract handle"
 msgstr "hatallo pattim hadd"
 
@@ -24327,24 +24519,24 @@ msgstr ""
 "sproxy bhornnek<b>Alt</b>, bhorchem zoddunk suvate <b>bhovarim soddoi</b>"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/ui/tools/freehand-base.cpp:557
+#: ../src/ui/tools/freehand-base.cpp:669
 msgid "Path is closed."
 msgstr "vatt bond."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/ui/tools/freehand-base.cpp:572
+#: ../src/ui/tools/freehand-base.cpp:684
 msgid "Closing path."
 msgstr "vatt bond kor."
 
-#: ../src/ui/tools/freehand-base.cpp:709
+#: ../src/ui/tools/freehand-base.cpp:823
 msgid "Draw path"
 msgstr "vatt soddoi"
 
-#: ../src/ui/tools/freehand-base.cpp:862
+#: ../src/ui/tools/freehand-base.cpp:976
 msgid "Creating single dot"
 msgstr "ek bindu roch'chem"
 
-#: ../src/ui/tools/freehand-base.cpp:863
+#: ../src/ui/tools/freehand-base.cpp:977
 msgid "Create single dot"
 msgstr "ek bindu roch"
 
@@ -24566,36 +24758,36 @@ msgstr "vostu sompadon korunk vincheak vodd"
 msgid "Drawing cancelled"
 msgstr "pintravnni rod'd keli"
 
-#: ../src/ui/tools/pen-tool.cpp:459 ../src/ui/tools/pencil-tool.cpp:196
+#: ../src/ui/tools/pen-tool.cpp:463 ../src/ui/tools/pencil-tool.cpp:196
 msgid "Continuing selected path"
 msgstr "vinchovnne vatten mukhar vechem"
 
-#: ../src/ui/tools/pen-tool.cpp:469 ../src/ui/tools/pencil-tool.cpp:204
+#: ../src/ui/tools/pen-tool.cpp:473 ../src/ui/tools/pencil-tool.cpp:204
 msgid "Creating new path"
 msgstr "novi vatt roch'chem"
 
-#: ../src/ui/tools/pen-tool.cpp:471 ../src/ui/tools/pencil-tool.cpp:207
+#: ../src/ui/tools/pen-tool.cpp:475 ../src/ui/tools/pencil-tool.cpp:207
 msgid "Appending to selected path"
 msgstr "vinchovnne vattek zoddchem"
 
-#: ../src/ui/tools/pen-tool.cpp:636
+#: ../src/ui/tools/pen-tool.cpp:640
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "vatt bond korun oker korunk <b>chachoy</b> vo<b>chachoy ani vodd</b>."
 
-#: ../src/ui/tools/pen-tool.cpp:638
+#: ../src/ui/tools/pen-tool.cpp:642
 #, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to close and finish the path. Shift"
 "+Click make a cusp node"
 msgstr "vatt bond korun oker korunk <b>chachoy</b> vo<b>chachoy ani vodd</b>."
 
-#: ../src/ui/tools/pen-tool.cpp:650
+#: ../src/ui/tools/pen-tool.cpp:654
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 "hea bindu thavn vatt mukar vorunk <b>chachoy</b> vo <b>chachoy ani vodd</b> ."
 
-#: ../src/ui/tools/pen-tool.cpp:652
+#: ../src/ui/tools/pen-tool.cpp:656
 #, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point. "
@@ -24603,7 +24795,7 @@ msgid ""
 msgstr ""
 "hea bindu thavn vatt mukar vorunk <b>chachoy</b> vo <b>chachoy ani vodd</b> ."
 
-#: ../src/ui/tools/pen-tool.cpp:2026
+#: ../src/ui/tools/pen-tool.cpp:1786
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -24612,7 +24804,7 @@ msgstr ""
 "<b>vokrot bhag</b>: kon  %3.2f&#176;, ontor %s; konak thap <b>Ctrl</b> "
 "sovem, vatt okher korunk <b>Enter</b> mar"
 
-#: ../src/ui/tools/pen-tool.cpp:2027
+#: ../src/ui/tools/pen-tool.cpp:1787
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
@@ -24621,7 +24813,7 @@ msgstr ""
 "<b>Volli bhag</b>: kon  %3.2f&#176;, ontor %s; konak thap <b>Ctrl</b> sovem, "
 "vatt okher korunk <b>Enter</b> mar"
 
-#: ../src/ui/tools/pen-tool.cpp:2030
+#: ../src/ui/tools/pen-tool.cpp:1790
 #, fuzzy, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</"
@@ -24630,7 +24822,7 @@ msgstr ""
 "<b>vokrot bhag</b>: kon  %3.2f&#176;, ontor %s; konak thap <b>Ctrl</b> "
 "sovem, vatt okher korunk <b>Enter</b> mar"
 
-#: ../src/ui/tools/pen-tool.cpp:2031
+#: ../src/ui/tools/pen-tool.cpp:1791
 #, fuzzy, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> "
@@ -24639,7 +24831,7 @@ msgstr ""
 "<b>Volli bhag</b>: kon  %3.2f&#176;, ontor %s; konak thap <b>Ctrl</b> sovem, "
 "vatt okher korunk <b>Enter</b> mar"
 
-#: ../src/ui/tools/pen-tool.cpp:2048
+#: ../src/ui/tools/pen-tool.cpp:1808
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -24648,7 +24840,7 @@ msgstr ""
 "<b>Vokrot hatallo</b>: kon %3.2f&#176;, lambai %s; kon thapunk <b>Ctrl</b> "
 "sovem"
 
-#: ../src/ui/tools/pen-tool.cpp:2072
+#: ../src/ui/tools/pen-tool.cpp:1832
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
@@ -24657,7 +24849,7 @@ msgstr ""
 "<b>Vokrot hatallo, sontulit</b>: kon %3.2f&#176;, lambai %s; kon thapunk "
 "<b>Ctrl</b> sovem, fokot ho hatallo cholonvk <b>Shift</b> sovem"
 
-#: ../src/ui/tools/pen-tool.cpp:2073
+#: ../src/ui/tools/pen-tool.cpp:1833
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -24666,7 +24858,7 @@ msgstr ""
 "<b>Vokrot hatallo</b>: kon %3.2f&#176;, lambai %s; kon thapunk <b>Ctrl</b> "
 "sovem, fokot ho hatallo cholonvk <b>Shift</b> sovem"
 
-#: ../src/ui/tools/pen-tool.cpp:2207
+#: ../src/ui/tools/pen-tool.cpp:1967
 msgid "Drawing finished"
 msgstr "pintravnni okher zali"
 
@@ -25702,32 +25894,32 @@ msgstr "mapon:"
 msgid "Scale Y"
 msgstr "mapon"
 
-#: ../src/ui/widget/page-sizer.cpp:321
+#: ../src/ui/widget/page-sizer.cpp:323
 msgid "Orientation:"
 msgstr "Orientation:"
 
-#: ../src/ui/widget/page-sizer.cpp:324
+#: ../src/ui/widget/page-sizer.cpp:326
 msgid "_Landscape"
 msgstr "_Landscape"
 
-#: ../src/ui/widget/page-sizer.cpp:329
+#: ../src/ui/widget/page-sizer.cpp:331
 msgid "_Portrait"
 msgstr "_Portrait"
 
 #. ## Set up custom size frame
-#: ../src/ui/widget/page-sizer.cpp:348
+#: ../src/ui/widget/page-sizer.cpp:350
 msgid "Custom size"
 msgstr "Custom aakar"
 
-#: ../src/ui/widget/page-sizer.cpp:393
+#: ../src/ui/widget/page-sizer.cpp:395
 msgid "Resi_ze page to content..."
 msgstr "pan tichea vixoyank porot aakar kor..."
 
-#: ../src/ui/widget/page-sizer.cpp:445
+#: ../src/ui/widget/page-sizer.cpp:447
 msgid "_Resize page to drawing or selection"
 msgstr "pintravnnek vo vinchovnnek pan porot aakar kor"
 
-#: ../src/ui/widget/page-sizer.cpp:446
+#: ../src/ui/widget/page-sizer.cpp:448
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
@@ -25735,32 +25927,32 @@ msgstr ""
 "prostut vinchovnnek borobor zanvcheak pan porot aakar kor, vo vinchovnn na "
 "tor sogllea pintravnnek"
 
-#: ../src/ui/widget/page-sizer.cpp:477
+#: ../src/ui/widget/page-sizer.cpp:479
 msgid ""
 "While SVG allows non-uniform scaling it is recommended to use only uniform "
 "scaling in Inkscape. To set a non-uniform scaling, set the 'viewBox' "
 "directly."
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:481
+#: ../src/ui/widget/page-sizer.cpp:483
 #, fuzzy
 msgid "_Viewbox..."
 msgstr "_Dekhnni"
 
-#: ../src/ui/widget/page-sizer.cpp:588
+#: ../src/ui/widget/page-sizer.cpp:590
 msgid "Set page size"
 msgstr "pana gatr thorai"
 
-#: ../src/ui/widget/page-sizer.cpp:834
+#: ../src/ui/widget/page-sizer.cpp:836
 msgid "User units per "
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:930
+#: ../src/ui/widget/page-sizer.cpp:932
 #, fuzzy
 msgid "Set page scale"
 msgstr "pana gatr thorai"
 
-#: ../src/ui/widget/page-sizer.cpp:956
+#: ../src/ui/widget/page-sizer.cpp:958
 msgid "Set 'viewBox'"
 msgstr ""
 
@@ -25868,11 +26060,11 @@ msgctxt "Swatches"
 msgid "Wrap"
 msgstr "guttlai"
 
-#: ../src/ui/widget/preferences-widget.cpp:798
+#: ../src/ui/widget/preferences-widget.cpp:799
 msgid "_Browse..."
 msgstr "_Sodner..."
 
-#: ../src/ui/widget/preferences-widget.cpp:884
+#: ../src/ui/widget/preferences-widget.cpp:885
 #, fuzzy
 msgid "Select a bitmap editor"
 msgstr "bitmap sompadok:"
@@ -26344,11 +26536,11 @@ msgstr "Mazvonchim pontam futtoi"
 msgid "Merge vanishing points"
 msgstr "Merge vanishing points "
 
-#: ../src/vanishing-point.cpp:244
+#: ../src/vanishing-point.cpp:246
 msgid "3D box: Move vanishing point"
 msgstr "3D box: Move vanishing point "
 
-#: ../src/vanishing-point.cpp:328
+#: ../src/vanishing-point.cpp:330
 #, c-format
 msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
@@ -26361,7 +26553,7 @@ msgstr[1] ""
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
-#: ../src/vanishing-point.cpp:335
+#: ../src/vanishing-point.cpp:337
 #, c-format
 msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
@@ -26372,7 +26564,7 @@ msgstr[1] ""
 "<b>%d</b> pette thavn <b>Onont</b> vanttul'lim mazvonvchim pontam; vinchnnar "
 "pettenk vingodd korcheak <b>Shift</b> sovem vodd"
 
-#: ../src/vanishing-point.cpp:343
+#: ../src/vanishing-point.cpp:345
 #, c-format
 msgid ""
 "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
@@ -26659,8 +26851,8 @@ msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr ""
-"dostavezachea &lt;defs&gt; thavn (vikxepok vo xirkai vatto tosolim) vaparinatul'lim "
-"vyakhyanam kadd"
+"dostavezachea &lt;defs&gt; thavn (vikxepok vo xirkai vatto tosolim) "
+"vaparinatul'lim vyakhyanam kadd"
 
 #: ../src/verbs.cpp:2417
 msgid "_Import..."
@@ -28970,7 +29162,7 @@ msgstr "(kesa voll)"
 #. Scale
 #: ../src/widgets/calligraphy-toolbar.cpp:427
 #: ../src/widgets/calligraphy-toolbar.cpp:460
-#: ../src/widgets/eraser-toolbar.cpp:125 ../src/widgets/pencil-toolbar.cpp:275
+#: ../src/widgets/eraser-toolbar.cpp:125 ../src/widgets/pencil-toolbar.cpp:374
 #: ../src/widgets/spray-toolbar.cpp:113 ../src/widgets/spray-toolbar.cpp:129
 #: ../src/widgets/spray-toolbar.cpp:145 ../src/widgets/spray-toolbar.cpp:205
 #: ../src/widgets/spray-toolbar.cpp:235 ../src/widgets/spray-toolbar.cpp:253
@@ -30014,7 +30206,7 @@ msgstr ""
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:483 ../src/widgets/pencil-toolbar.cpp:278
+#: ../src/widgets/mesh-toolbar.cpp:483 ../src/widgets/pencil-toolbar.cpp:377
 msgid "Smoothing:"
 msgstr "nazuk korchem:"
 
@@ -30364,7 +30556,7 @@ msgid "Close gaps:"
 msgstr "sondi bond kor:"
 
 #: ../src/widgets/paintbucket-toolbar.cpp:211
-#: ../src/widgets/pencil-toolbar.cpp:299 ../src/widgets/spiral-toolbar.cpp:285
+#: ../src/widgets/pencil-toolbar.cpp:398 ../src/widgets/spiral-toolbar.cpp:285
 #: ../src/widgets/star-toolbar.cpp:564
 msgid "Defaults"
 msgstr "mull"
@@ -30377,96 +30569,109 @@ msgstr ""
 "pintravnni baldi porimanna porot thorai (Inkscape Posondota> mull bodlunk "
 "sadhona)"
 
-#: ../src/widgets/pencil-toolbar.cpp:96
+#: ../src/widgets/pencil-toolbar.cpp:108
 msgid "Bezier"
 msgstr "Bezier"
 
-#: ../src/widgets/pencil-toolbar.cpp:97
+#: ../src/widgets/pencil-toolbar.cpp:109
 msgid "Create regular Bezier path"
 msgstr "sodancho Bezier vatt roch"
 
-#: ../src/widgets/pencil-toolbar.cpp:104
+#: ../src/widgets/pencil-toolbar.cpp:116
 msgid "Create Spiro path"
 msgstr "Spiro vatt roch"
 
-#: ../src/widgets/pencil-toolbar.cpp:110
+#: ../src/widgets/pencil-toolbar.cpp:122
 #, fuzzy
 msgid "Create BSpline path"
 msgstr "Spiro vatt roch"
 
-#: ../src/widgets/pencil-toolbar.cpp:116
+#: ../src/widgets/pencil-toolbar.cpp:128
 msgid "Zigzag"
 msgstr "aadd-modd"
 
-#: ../src/widgets/pencil-toolbar.cpp:117
+#: ../src/widgets/pencil-toolbar.cpp:129
 msgid "Create a sequence of straight line segments"
 msgstr "xida volli vantteache prosong roch"
 
-#: ../src/widgets/pencil-toolbar.cpp:123
+#: ../src/widgets/pencil-toolbar.cpp:135
 msgid "Paraxial"
 msgstr "parxvakx"
 
-#: ../src/widgets/pencil-toolbar.cpp:124
+#: ../src/widgets/pencil-toolbar.cpp:136
 msgid "Create a sequence of paraxial line segments"
 msgstr "parxvakx volli vanttea prosong roch"
 
-#: ../src/widgets/pencil-toolbar.cpp:132
+#: ../src/widgets/pencil-toolbar.cpp:144
 msgid "Mode of new lines drawn by this tool"
 msgstr "hea sadhonant nove voll roch'chi madori"
 
-#: ../src/widgets/pencil-toolbar.cpp:160
+#: ../src/widgets/pencil-toolbar.cpp:178
 #, fuzzy
 msgctxt "Freehand shape"
 msgid "None"
 msgstr "kai na"
 
-#: ../src/widgets/pencil-toolbar.cpp:161
+#: ../src/widgets/pencil-toolbar.cpp:179
 msgid "Triangle in"
 msgstr "tribhuj bhitor"
 
-#: ../src/widgets/pencil-toolbar.cpp:162
+#: ../src/widgets/pencil-toolbar.cpp:180
 msgid "Triangle out"
 msgstr "tribhuj bhayr"
 
-#: ../src/widgets/pencil-toolbar.cpp:164
+#: ../src/widgets/pencil-toolbar.cpp:182
 msgid "From clipboard"
 msgstr "xirkaifoloka thavn"
 
-#: ../src/widgets/pencil-toolbar.cpp:165
+#: ../src/widgets/pencil-toolbar.cpp:183
+#, fuzzy
+msgid "Bend from clipboard"
+msgstr "xirkaifoloka thavn"
+
+#: ../src/widgets/pencil-toolbar.cpp:184
 #, fuzzy
 msgid "Last applied"
 msgstr "nimanni slide:"
 
-#: ../src/widgets/pencil-toolbar.cpp:190 ../src/widgets/pencil-toolbar.cpp:191
+#: ../src/widgets/pencil-toolbar.cpp:209 ../src/widgets/pencil-toolbar.cpp:210
 msgid "Shape:"
 msgstr "akruti:"
 
-#: ../src/widgets/pencil-toolbar.cpp:190
+#: ../src/widgets/pencil-toolbar.cpp:209
 msgid "Shape of new paths drawn by this tool"
 msgstr "hea sadhona thavn soddoyil'lea novea vattechi akruti"
 
-#: ../src/widgets/pencil-toolbar.cpp:275
+#: ../src/widgets/pencil-toolbar.cpp:374
 msgid "(many nodes, rough)"
 msgstr "(zaitio gantti,dorog)"
 
-#: ../src/widgets/pencil-toolbar.cpp:275
+#: ../src/widgets/pencil-toolbar.cpp:374
 msgid "(few nodes, smooth)"
 msgstr "(thoddio gantti, nazuk)"
 
-#: ../src/widgets/pencil-toolbar.cpp:278
+#: ../src/widgets/pencil-toolbar.cpp:377
 msgid "Smoothing: "
 msgstr "nazuk korchem:"
 
-#: ../src/widgets/pencil-toolbar.cpp:279
+#: ../src/widgets/pencil-toolbar.cpp:378
 msgid "How much smoothing (simplifying) is applied to the line"
 msgstr "vollik nazuk korchem (sorollikrot) lagu kelam"
 
-#: ../src/widgets/pencil-toolbar.cpp:300
+#: ../src/widgets/pencil-toolbar.cpp:399
 msgid ""
 "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
 msgstr ""
 "pencil porimanna mullak thorai (Inkscape posondota> mullak bodlunk sadhon)"
+
+#: ../src/widgets/pencil-toolbar.cpp:409 ../src/widgets/pencil-toolbar.cpp:410
+msgid "LPE based interactive simplify"
+msgstr ""
+
+#: ../src/widgets/pencil-toolbar.cpp:420 ../src/widgets/pencil-toolbar.cpp:421
+msgid "LPE simplify flatten"
+msgstr ""
 
 #: ../src/widgets/rect-toolbar.cpp:125
 msgid "Change rectangle"
@@ -31529,140 +31734,140 @@ msgstr "TBD"
 msgid "Style of Paint Bucket fill objects"
 msgstr "pintrai baldi vostu bhorchi xeili"
 
-#: ../src/widgets/toolbox.cpp:1679
+#: ../src/widgets/toolbox.cpp:1681
 msgid "Bounding box"
 msgstr "bandavollichi pett"
 
-#: ../src/widgets/toolbox.cpp:1679
+#: ../src/widgets/toolbox.cpp:1681
 #, fuzzy
 msgid "Snap bounding boxes"
 msgstr "bandavollichi pett konso thap"
 
-#: ../src/widgets/toolbox.cpp:1688
+#: ../src/widgets/toolbox.cpp:1690
 msgid "Bounding box edges"
 msgstr "bandavollichi pett dego"
 
-#: ../src/widgets/toolbox.cpp:1688
+#: ../src/widgets/toolbox.cpp:1690
 msgid "Snap to edges of a bounding box"
 msgstr "bandavollichi pett dego thap"
 
-#: ../src/widgets/toolbox.cpp:1697
+#: ../src/widgets/toolbox.cpp:1699
 msgid "Bounding box corners"
 msgstr "bandavollichi pett konso"
 
-#: ../src/widgets/toolbox.cpp:1697
+#: ../src/widgets/toolbox.cpp:1699
 msgid "Snap bounding box corners"
 msgstr "bandavollichi pett konso thap"
 
-#: ../src/widgets/toolbox.cpp:1706
+#: ../src/widgets/toolbox.cpp:1708
 msgid "BBox Edge Midpoints"
 msgstr "BBox dege modle bindu"
 
-#: ../src/widgets/toolbox.cpp:1706
+#: ../src/widgets/toolbox.cpp:1708
 #, fuzzy
 msgid "Snap midpoints of bounding box edges"
 msgstr "bandavollichi pett degenk modlea bindu thavn poryant thap"
 
-#: ../src/widgets/toolbox.cpp:1716
+#: ../src/widgets/toolbox.cpp:1718
 msgid "BBox Centers"
 msgstr "BBox kendr"
 
-#: ../src/widgets/toolbox.cpp:1716
+#: ../src/widgets/toolbox.cpp:1718
 #, fuzzy
 msgid "Snapping centers of bounding boxes"
 msgstr "bandavollichi pett kedrank modlea bindu thavn poryant thap"
 
-#: ../src/widgets/toolbox.cpp:1725
+#: ../src/widgets/toolbox.cpp:1727
 #, fuzzy
 msgid "Snap nodes, paths, and handles"
 msgstr "gantti vo hatalle thap"
 
-#: ../src/widgets/toolbox.cpp:1733
+#: ../src/widgets/toolbox.cpp:1735
 msgid "Snap to paths"
 msgstr "vattenk thap"
 
-#: ../src/widgets/toolbox.cpp:1742
+#: ../src/widgets/toolbox.cpp:1744
 msgid "Path intersections"
 msgstr "vatt porichhedon"
 
-#: ../src/widgets/toolbox.cpp:1742
+#: ../src/widgets/toolbox.cpp:1744
 msgid "Snap to path intersections"
 msgstr "vatt porichhedonank thap"
 
-#: ../src/widgets/toolbox.cpp:1751
+#: ../src/widgets/toolbox.cpp:1753
 msgid "To nodes"
 msgstr "ganttink"
 
-#: ../src/widgets/toolbox.cpp:1751
+#: ../src/widgets/toolbox.cpp:1753
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1760
+#: ../src/widgets/toolbox.cpp:1762
 msgid "Smooth nodes"
 msgstr "nazuk gantti"
 
-#: ../src/widgets/toolbox.cpp:1760
+#: ../src/widgets/toolbox.cpp:1762
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1769
+#: ../src/widgets/toolbox.cpp:1771
 msgid "Line Midpoints"
 msgstr "modle ponta volli"
 
-#: ../src/widgets/toolbox.cpp:1769
+#: ../src/widgets/toolbox.cpp:1771
 #, fuzzy
 msgid "Snap midpoints of line segments"
 msgstr "volli vannttiachea modlea bindhuchea thavn ani poryant thap"
 
-#: ../src/widgets/toolbox.cpp:1778
+#: ../src/widgets/toolbox.cpp:1780
 #, fuzzy
 msgid "Others"
 msgstr "her"
 
-#: ../src/widgets/toolbox.cpp:1778
+#: ../src/widgets/toolbox.cpp:1780
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1786
+#: ../src/widgets/toolbox.cpp:1788
 msgid "Object Centers"
 msgstr "vostu kendram"
 
-#: ../src/widgets/toolbox.cpp:1786
+#: ../src/widgets/toolbox.cpp:1788
 #, fuzzy
 msgid "Snap centers of objects"
 msgstr "vostuchea kendrank than ani poryant thap"
 
-#: ../src/widgets/toolbox.cpp:1795
+#: ../src/widgets/toolbox.cpp:1797
 msgid "Rotation Centers"
 msgstr "gunvdde kendr"
 
-#: ../src/widgets/toolbox.cpp:1795
+#: ../src/widgets/toolbox.cpp:1797
 #, fuzzy
 msgid "Snap an item's rotation center"
 msgstr "gozali gunvddai kendrachea thavn ani poryant thap"
 
-#: ../src/widgets/toolbox.cpp:1804
+#: ../src/widgets/toolbox.cpp:1806
 msgid "Text baseline"
 msgstr "lekha tholl voll"
 
-#: ../src/widgets/toolbox.cpp:1804
+#: ../src/widgets/toolbox.cpp:1806
 #, fuzzy
 msgid "Snap text anchors and baselines"
 msgstr "lekh mull volli salint ghal"
 
-#: ../src/widgets/toolbox.cpp:1814
+#: ../src/widgets/toolbox.cpp:1816
 msgid "Page border"
 msgstr "pana deg"
 
-#: ../src/widgets/toolbox.cpp:1814
+#: ../src/widgets/toolbox.cpp:1816
 msgid "Snap to the page border"
 msgstr "pana deged thap"
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1825
 msgid "Snap to grids"
 msgstr "zallik thap"
 
-#: ../src/widgets/toolbox.cpp:1832
+#: ../src/widgets/toolbox.cpp:1834
 #, fuzzy
 msgid "Snap guides"
 msgstr "margdorxikak thap"
@@ -31931,7 +32136,7 @@ msgstr "Semiperimeter (px):"
 msgid "Area (px^2): "
 msgstr "Vottar (px^2):"
 
-#: ../share/extensions/dxf_input.py:512
+#: ../share/extensions/dxf_input.py:528
 #, python-format
 msgid ""
 "%d ENTITIES of type POLYLINE encountered and ignored. Please try to convert "
@@ -31946,13 +32151,13 @@ msgstr ""
 "numpy vo numpy.linalg sonvrochona ayat karcheant napas. Hea vistarak hea "
 "sonvrochonachi goroz asa. Upkar korun tim bosoy ani porot yotn kor."
 
-#: ../share/extensions/dxf_outlines.py:299
+#: ../share/extensions/dxf_outlines.py:315
 msgid ""
 "Error: Field 'Layer match name' must be filled when using 'By name match' "
 "option"
 msgstr ""
 
-#: ../share/extensions/dxf_outlines.py:340
+#: ../share/extensions/dxf_outlines.py:356
 #, python-format
 msgid "Warning: Layer '%s' not found!"
 msgstr ""
@@ -35823,11 +36028,6 @@ msgstr ""
 msgid "FAQ"
 msgstr "FAQ"
 
-#. i18n. Please don't translate it unless a page exists in your language
-#: ../share/extensions/inkscape_help_faq.inx.h:3
-msgid "http://wiki.inkscape.org/wiki/index.php/FAQ"
-msgstr ""
-
 #: ../share/extensions/inkscape_help_keys.inx.h:1
 msgid "Keys and Mouse Reference"
 msgstr "Chavio ani Mouse ul'lekh"
@@ -39181,6 +39381,14 @@ msgstr "xirkaikolek lokamogall graphic koddtor pod'dot"
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
 msgstr "XAML Input"
+
+#, fuzzy
+#~ msgid "Ignore cusp nodes"
+#~ msgstr "bhett ganttink thap"
+
+#, fuzzy
+#~ msgid "Change ignoring cusp nodes"
+#~ msgstr "offset ravonk vikxepok bodol"
 
 #~ msgid "Use automatic scaling to size A4"
 #~ msgstr "A4 gatrak svochalit vaddovnni vapar"

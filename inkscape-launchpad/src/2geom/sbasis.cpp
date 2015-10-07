@@ -279,9 +279,11 @@ SBasis multiply_add(SBasis const &a, SBasis const &b, SBasis c) {
 
 */
 SBasis multiply(SBasis const &a, SBasis const &b) {
-    SBasis c(a.size() + b.size(), Linear(0,0));
-    if(a.isZero() || b.isZero())
+    if(a.isZero() || b.isZero()) {
+        SBasis c(1, Linear(0,0));
         return c;
+    }
+    SBasis c(a.size() + b.size(), Linear(0,0));
     return multiply_add(a, b, c);
 }
 #endif 

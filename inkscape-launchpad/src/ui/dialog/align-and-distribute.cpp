@@ -535,7 +535,7 @@ private :
             if (length_a != length_b) return (length_a > length_b);
         }
         // Last criteria: Sort according to the z-coordinate
-        return (a->isSiblingOf(b));
+        return sp_item_repr_compare_position(a,b)<0;
     }
 
     virtual void on_button_click()

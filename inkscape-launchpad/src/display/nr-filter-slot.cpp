@@ -232,6 +232,27 @@ void FilterSlot::set(int slot_nr, cairo_surface_t *surface)
     _last_out = slot_nr;
 }
 
+void FilterSlot::set_primitive_area(int slot_nr, Geom::Rect &area)
+{
+    if (slot_nr == NR_FILTER_SLOT_NOT_SET)
+        slot_nr = NR_FILTER_UNNAMED_SLOT;
+
+    _primitiveAreas[slot_nr] = area;
+}
+
+Geom::Rect FilterSlot::get_primitive_area(int slot_nr)
+{
+    if (slot_nr == NR_FILTER_SLOT_NOT_SET)
+        slot_nr = _last_out;
+
+    PrimitiveAreaMap::iterator s = _primitiveAreas.find(slot_nr);
+
+    if (s == _primitiveAreas.end()) {
+        return *(_units.get_filter_area());
+    }
+    return s->second;
+}
+
 int FilterSlot::get_slot_count()
 {
     return _slots.size();

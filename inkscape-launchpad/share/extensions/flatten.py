@@ -40,7 +40,7 @@ class MyEffect(inkex.Effect):
                             cmd = 'M'
                         first = False
                         np.append([cmd,[csp[1][0],csp[1][1]]])
-                        node.set('d',simplepath.formatPath(np))
+                node.set('d',simplepath.formatPath(np))
 
 if __name__ == '__main__':
     e = MyEffect()

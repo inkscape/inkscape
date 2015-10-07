@@ -972,7 +972,7 @@ ink_pattern_menu(GtkWidget *combo)
 
     }
 
-    // Select the first item that is not a seperator
+    // Select the first item that is not a separator
     if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(store), &iter)) {
         gboolean sep = false;
         gtk_tree_model_get(GTK_TREE_MODEL(store), &iter, COMBO_COL_SEP, &sep, -1);

@@ -358,7 +358,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
 
     /// @todo REmove redundant /value in preference keys
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-
+    bool allow_panning = prefs->getBool("/options/spacebarpans/value");
     gint ret = FALSE;
 
     switch (event->type) {
@@ -582,7 +582,6 @@ bool ToolBase::root_handler(GdkEvent* event) {
     case GDK_KEY_PRESS: {
         double const acceleration = prefs->getDoubleLimited(
                 "/options/scrollingacceleration/value", 0, 0, 6);
-
         int const key_scroll = prefs->getIntLimited("/options/keyscroll/value",
                 10, 0, 1000);
 
@@ -692,10 +691,10 @@ bool ToolBase::root_handler(GdkEvent* event) {
             break;
 
         case GDK_KEY_space:
-            xp = yp = 0;
             within_tolerance = true;
+            xp = yp = 0;
+            if (!allow_panning) break;
             panning = 4;
-
             this->space_panning = true;
             this->message_context->set(Inkscape::INFORMATION_MESSAGE,
                     _("<b>Space+mouse move</b> to pan canvas"));
@@ -742,7 +741,7 @@ bool ToolBase::root_handler(GdkEvent* event) {
 
         switch (get_group0_keyval(&event->key)) {
         case GDK_KEY_space:
-            if (within_tolerance == true) {
+            if (within_tolerance) {
                 // Space was pressed, but not panned
                 sp_toggle_selector(desktop);
 

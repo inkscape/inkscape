@@ -28,8 +28,8 @@
     </page>
     <page name="overcutToolOffset" _gui-text="Plot Features ">
       <param name="overcut" type="float" min="0.0" max="100.0" precision="2" _gui-text="Overcut (mm):" _gui-description="The distance in mm that will be cut over the starting point of the path to prevent open paths, set to 0.0 to omit command (Default: 1.00)">1.00</param>
-      <param name="toolOffset" type="float" min="0.0" max="20.0" precision="2" _gui-text="Tool offset (mm):" _gui-description="The offset from the tool tip to the tool axis in mm, set to 0.0 to omit command (Default: 0.25)">0.25</param>
-      <param name="precut" type="boolean" _gui-text="Use precut" _gui-description="Check this to cut a small line before the real drawing starts to correctly align the tool orientation. (Default: Checked)">true</param>
+      <param name="toolOffset" type="float" min="0.0" max="20.0" precision="2" _gui-text="Tool (Knife) offset correction (mm):" _gui-description="The offset from the tool tip to the tool axis in mm, set to 0.0 to omit command (Default: 0.25)">0.25</param>
+      <param name="precut" type="boolean" _gui-text="Precut" _gui-description="Check this to cut a small line before the real drawing starts to correctly align the tool orientation. (Default: Checked)">true</param>
       <param name="flat" type="float" min="0.1" max="10.0" precision="1" _gui-text="Curve flatness:" _gui-description="Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer (Default: '1.2')">1.2</param>
       <param name="autoAlign" type="boolean" _gui-text="Auto align" _gui-description="Check this to auto align the drawing to the zero point (Plus the tool offset if used). If unchecked you have to make sure that all parts of your drawing are within the document border! (Default: Checked)">true</param>
     </page>

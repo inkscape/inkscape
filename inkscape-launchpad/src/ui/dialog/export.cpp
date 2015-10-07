@@ -474,7 +474,14 @@ void Export::set_default_filename () {
 
         doc_export_name = filename_entry.get_text();
     }
+    else if ( SP_ACTIVE_DOCUMENT )
+    {
+        Glib::ustring filename = create_filepath_from_id (_("bitmap"), filename_entry.get_text());
+        filename_entry.set_text(filename);
+        filename_entry.set_position(filename.length());
 
+        doc_export_name = filename_entry.get_text();
+    }
 }
 
 #if WITH_GTKMM_3_0

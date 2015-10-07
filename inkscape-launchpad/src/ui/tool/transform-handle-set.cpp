@@ -15,9 +15,11 @@
 #include <glib/gi18n.h>
 #include <2geom/transforms.h>
 #include "desktop.h"
+#include "sp-namedview.h"
 
 #include "display/sodipodi-ctrlrect.h"
 #include "preferences.h"
+#include "pure-transform.h"
 #include "snap.h"
 #include "snap-candidate.h"
 #include "sp-namedview.h"
@@ -93,6 +95,7 @@ TransformHandle::TransformHandle(TransformHandleSet &th, SPAnchorType anchor, Gl
     setVisible(false);
 }
 
+// TODO: This code is duplicated in seltrans.cpp; fix this!
 void TransformHandle::getNextClosestPoint(bool reverse)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -113,6 +116,11 @@ void TransformHandle::getNextClosestPoint(bool reverse)
             _snap_points.clear();
             _snap_points.push_back(*_all_snap_sources_iter);
 
+            // Show the updated snap source now; otherwise it won't be shown until the selection is being moved again
+            SnapManager &m = _desktop->namedview->snap_manager;
+            m.setup(_desktop);
+            m.displaySnapsource(*_all_snap_sources_iter);
+            m.unSetup();
         }
     }
 }
@@ -247,7 +255,7 @@ protected:
         if (Geom::are_near(vold[Geom::X], 0) || Geom::are_near(vold[Geom::Y], 0))
             return Geom::identity();
 
-        double scale[2] = { vnew[Geom::X] / vold[Geom::X], vnew[Geom::Y] / vold[Geom::Y] };
+        Geom::Scale scale = Geom::Scale(vnew[Geom::X] / vold[Geom::X], vnew[Geom::Y] / vold[Geom::Y]);
 
         if (held_alt(*event)) {
             for (unsigned i = 0; i < 2; ++i) {
@@ -261,20 +269,21 @@ protected:
             SnapManager &m = _th._desktop->namedview->snap_manager;
             m.setupIgnoreSelection(_th._desktop, true, &_unselected_points);
 
-            Inkscape::SnappedPoint sp;
+            Inkscape::PureScale *ptr;
             if (held_control(*event)) {
                 scale[0] = scale[1] = std::min(scale[0], scale[1]);
-                sp = m.constrainedSnapScale(_snap_points, _origin, Geom::Scale(scale[0], scale[1]), scc);
+                ptr = new Inkscape::PureScaleConstrained(Geom::Scale(scale[0], scale[1]), scc);
             } else {
-                sp = m.freeSnapScale(_snap_points, _origin, Geom::Scale(scale[0], scale[1]), scc);
+                ptr = new Inkscape::PureScale(Geom::Scale(scale[0], scale[1]), scc, false);
             }
+            m.snapTransformed(_snap_points, _origin, (*ptr));
             m.unSetup();
 
-            if (sp.getSnapped()) {
-                Geom::Point result = sp.getTransformation();
-                scale[0] = result[0];
-                scale[1] = result[1];
+            if (ptr->best_snapped_point.getSnapped()) {
+                scale = ptr->getScaleSnapped();
             }
+
+            delete ptr;
         }
 
         _last_scale_x = scale[0];
@@ -349,11 +358,12 @@ protected:
             m.setupIgnoreSelection(_th._desktop, true, &_unselected_points);
 
             bool uniform = held_control(*event);
-            Inkscape::SnappedPoint sp = m.constrainedSnapStretch(_snap_points, _origin, vs[d1], scc, d1, uniform);
+            Inkscape::PureStretchConstrained psc = Inkscape::PureStretchConstrained(vs[d1], scc, d1, uniform);
+            m.snapTransformed(_snap_points, _origin, psc);
             m.unSetup();
 
-            if (sp.getSnapped()) {
-                Geom::Point result = sp.getTransformation();
+            if (psc.best_snapped_point.getSnapped()) {
+                Geom::Point result = psc.getStretchSnapped().vector(); //best_snapped_point.getTransformation();
                 vs[d1] = result[d1];
                 vs[d2] = result[d2];
             } else {
@@ -414,11 +424,12 @@ protected:
         } else {
             SnapManager &m = _th._desktop->namedview->snap_manager;
             m.setupIgnoreSelection(_th._desktop, true, &_unselected_points);
-            Inkscape::SnappedPoint sp = m.constrainedSnapRotate(_snap_points, _origin, angle, rotc);
+            Inkscape::PureRotateConstrained prc = Inkscape::PureRotateConstrained(angle, rotc);
+            m.snapTransformed(_snap_points, _origin, prc);
             m.unSetup();
 
-            if (sp.getSnapped()) {
-                angle = sp.getTransformation()[0];
+            if (prc.best_snapped_point.getSnapped()) {
+                angle = prc.getAngleSnapped(); //best_snapped_point.getTransformation()[0];
             }
         }
 
@@ -528,13 +539,12 @@ protected:
             SnapManager &m = _th._desktop->namedview->snap_manager;
             m.setupIgnoreSelection(_th._desktop, true, &_unselected_points);
 
-            Geom::Point cvec; cvec[d2] = 1.0;
-            Inkscape::Snapper::SnapConstraint const constraint(cvec);
-            Inkscape::SnappedPoint sp = m.constrainedSnapSkew(_snap_points, _origin, constraint, Geom::Point(skew[d1], scale[d1]), scc, d2);
+            Inkscape::PureSkewConstrained psc = Inkscape::PureSkewConstrained(skew[d1], scale[d1], scc, d2);
+            m.snapTransformed(_snap_points, _origin, psc);
             m.unSetup();
 
-            if (sp.getSnapped()) {
-                skew[d1] =  sp.getTransformation()[0];
+            if (psc.best_snapped_point.getSnapped()) {
+                skew[d1] = psc.getSkewSnapped(); //best_snapped_point.getTransformation()[0];
             }
         }
 

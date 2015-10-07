@@ -2756,8 +2756,6 @@ FilterEffectsDialog::FilterEffectsDialog()
     _sizegroup = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_HORIZONTAL);
     _sizegroup->set_ignore_hidden();
 
-    _add_primitive_type.remove_row(NR_FILTER_TILE);
-
     // Initialize widget hierarchy
 #if WITH_GTKMM_3_0
     Gtk::Paned* hpaned = Gtk::manage(new Gtk::Paned);
@@ -2925,7 +2923,7 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->add_lightsource();
 
     _settings->type(NR_FILTER_TILE);
-    _settings->add_notimplemented();
+    _settings->add_no_params();
 
     _settings->type(NR_FILTER_TURBULENCE);
 //    _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
@@ -3017,7 +3015,7 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR_FILTER_TILE):
             _infobox_icon.set_from_icon_name("feTile-icon", Gtk::ICON_SIZE_DIALOG);
-            _infobox_desc.set_markup(_("The <b>feTile</b> filter primitive tiles a region with its input graphic"));
+            _infobox_desc.set_markup(_("The <b>feTile</b> filter primitive tiles a region with an input graphic. The source tile is defined by the filter primitive subregion of the input."));
             break;
         case(NR_FILTER_TURBULENCE):
             _infobox_icon.set_from_icon_name("feTurbulence-icon", Gtk::ICON_SIZE_DIALOG);

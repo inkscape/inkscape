@@ -240,6 +240,7 @@ set(inkscape_SRC
 	print.cpp
 	profile-manager.cpp
 	proj_pt.cpp
+	pure-transform.cpp
 	rdf.cpp
 	removeoverlap.cpp
 	resource-manager.cpp
@@ -367,6 +368,7 @@ set(inkscape_SRC
 	print.h
 	profile-manager.h
 	proj_pt.h
+	pure-transform.h
 	rdf.h
 	remove-last.h
 	removeoverlap.h

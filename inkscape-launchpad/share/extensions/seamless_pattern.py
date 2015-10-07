@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Written by Jabiertxof
-# V.05
+# V.06
 
 import inkex, sys, re, os
 from lxml import etree

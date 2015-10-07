@@ -61,7 +61,7 @@ namespace Inkscape {
 namespace UI {
 
 const double NO_POWER = 0.0;
-const double DEFAULT_START_POWER = 0.3334;
+const double DEFAULT_START_POWER = 0.333334;
 
 ControlPoint::ColorSet Node::node_colors = {
     {0xbfbfbf00, 0x000000ff}, // normal fill, stroke

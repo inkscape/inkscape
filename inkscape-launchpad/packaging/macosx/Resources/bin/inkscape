@@ -43,7 +43,7 @@ if [ -z "$INK_PATH_ORIG" ]; then
 	#	Fink
 	#	MacPorts (former DarwinPorts)
 	#	LaTeX distribution for Mac OS X
-	PATH_OTHER="/usr/texbin:/opt/local/bin:/sw/bin/:/usr/local/bin"
+	PATH_OTHER="/Library/TeX/texbin:/usr/texbin:/opt/local/bin:/sw/bin/:/usr/local/bin"
 
 	# Put /usr/bin at beginning of path so we make sure we use Apple's python 
 	# over one that may be installed be Macports, Fink or some other means.

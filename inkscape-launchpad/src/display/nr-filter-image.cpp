@@ -56,6 +56,8 @@ void FilterImage::render_cairo(FilterSlot &slot)
     // Note: viewport calculation in non-trivial. Do not rely
     // on get_matrix_primitiveunits2pb().
     Geom::Rect vp = filter_primitive_area( slot.get_units() );
+    slot.set_primitive_area(_output, vp); // Needed for tiling
+
     double feImageX      = vp.min()[Geom::X];
     double feImageY      = vp.min()[Geom::Y];
     double feImageWidth  = vp.width();

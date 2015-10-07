@@ -4,7 +4,7 @@
    <id>org.ekips.filter.flatten</id>
        <dependency type="executable" location="extensions">flatten.py</dependency>
        <dependency type="executable" location="extensions">inkex.py</dependency>
-       <param name="flatness" type="float" min="0.0" max="1000.0" _gui-text="Flatness:">10.0</param>
+       <param name="flatness" type="float" min="0.1" max="1000.0" _gui-text="Flatness:">10.0</param>
    <effect>
                <object-type>path</object-type>
                 <effects-menu>

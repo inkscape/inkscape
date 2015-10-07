@@ -10,6 +10,8 @@
 #include "svg/svg.h"
 #include "xml/repr.h"
 #include "preferences.h"
+#include "document-undo.h"
+#include "verbs.h"
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
 
@@ -18,8 +20,8 @@ namespace LivePathEffect {
 
 const double HANDLE_CUBIC_GAP = 0.001;
 const double NO_POWER = 0.0;
-const double DEFAULT_START_POWER = 0.3334;
-const double DEFAULT_END_POWER = 0.6667;
+const double DEFAULT_START_POWER = 0.333334;
+const double DEFAULT_END_POWER = 0.666667;
 Geom::PathVector hp;
 void sp_bspline_drawHandle(Geom::Point p, double helper_size);
 
@@ -27,23 +29,27 @@ LPEBSpline::LPEBSpline(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
       steps(_("Steps with CTRL:"), _("Change number of steps with CTRL pressed"), "steps", &wr, this, 2),
       helper_size(_("Helper size:"), _("Helper size"), "helper_size", &wr, this, 0),
-      ignore_cusp(_("Ignore cusp nodes"), _("Change ignoring cusp nodes"), "ignore_cusp", &wr, this, true),
+      apply_no_weight(_("Apply changes if weight = 0%"), _("Apply changes if weight = 0%"), "apply_no_weight", &wr, this, true),
+      apply_with_weight(_("Apply changes if weight > 0%"), _("Apply changes if weight > 0%"), "apply_with_weight", &wr, this, true),
       only_selected(_("Change only selected nodes"), _("Change only selected nodes"), "only_selected", &wr, this, false),
-      weight(_("Change weight:"), _("Change weight of the effect"), "weight", &wr, this, DEFAULT_START_POWER)
+      weight(_("Change weight %:"), _("Change weight percent of the effect"), "weight", &wr, this, DEFAULT_START_POWER * 100)
 {
     registerParameter(&weight);
     registerParameter(&steps);
     registerParameter(&helper_size);
-    registerParameter(&ignore_cusp);
+    registerParameter(&apply_no_weight);
+    registerParameter(&apply_with_weight);
     registerParameter(&only_selected);
 
-    weight.param_set_range(NO_POWER, 1);
+    weight.param_set_range(NO_POWER, 100.0);
     weight.param_set_increments(0.1, 0.1);
     weight.param_set_digits(4);
+    weight.param_overwrite_widget(true);
 
     steps.param_set_range(1, 10);
     steps.param_set_increments(1, 1);
     steps.param_set_digits(0);
+    steps.param_overwrite_widget(true);
 
     helper_size.param_set_range(0.0, 999.0);
     helper_size.param_set_increments(1, 1);
@@ -111,15 +117,10 @@ Gtk::Widget *LPEBSpline::newWidget()
                     Gtk::HBox * hbox_weight_steps = dynamic_cast<Gtk::HBox *>(widg);
                     std::vector< Gtk::Widget* > childList = hbox_weight_steps->get_children();
                     Gtk::Entry* entry_widget = dynamic_cast<Gtk::Entry *>(childList[1]);
-                    entry_widget->set_width_chars(6);
+                    entry_widget->set_width_chars(9);
                 }
             }
-            if (param->param_key == "only_selected") {
-                Gtk::CheckButton *widg_registered =
-                    Gtk::manage(dynamic_cast<Gtk::CheckButton *>(widg));
-                widg = dynamic_cast<Gtk::Widget *>(widg_registered);
-            }
-            if (param->param_key == "ignore_cusp") {
+            if (param->param_key == "only_selected" || param->param_key == "apply_no_weight" || param->param_key == "apply_with_weight") {
                 Gtk::CheckButton *widg_registered =
                     Gtk::manage(dynamic_cast<Gtk::CheckButton *>(widg));
                 widg = dynamic_cast<Gtk::Widget *>(widg_registered);
@@ -143,17 +144,20 @@ Gtk::Widget *LPEBSpline::newWidget()
 
 void LPEBSpline::toDefaultWeight()
 {
-    changeWeight(DEFAULT_START_POWER);
+    changeWeight(DEFAULT_START_POWER * 100);
+    DocumentUndo::done(getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change to default weight"));
 }
 
 void LPEBSpline::toMakeCusp()
 {
     changeWeight(NO_POWER);
+    DocumentUndo::done(getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change to 0 weight"));
 }
 
 void LPEBSpline::toWeight()
 {
     changeWeight(weight);
+    DocumentUndo::done(getSPDoc(), SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
 }
 
 void LPEBSpline::changeWeight(double weight_ammount)
@@ -161,7 +165,7 @@ void LPEBSpline::changeWeight(double weight_ammount)
     SPPath *path = dynamic_cast<SPPath *>(sp_lpe_item);
     if(path) {
         SPCurve *curve = path->get_curve_for_edit();
-        doBSplineFromWidget(curve, weight_ammount);
+        doBSplineFromWidget(curve, weight_ammount/100.0);
         gchar *str = sp_svg_write_path(curve->get_pathvector());
         path->getRepr()->setAttribute("inkscape:original-d", str);
     }
@@ -366,7 +370,10 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
             point_at3 = in->first_segment()->finalPoint();
             sbasis_in = in->first_segment()->toSBasis();
             if (cubic) {
-                if (!ignore_cusp || !Geom::are_near((*cubic)[1], point_at0)) {
+                if ((apply_no_weight && apply_with_weight) ||
+                    (apply_no_weight && Geom::are_near((*cubic)[1], point_at0)) ||
+                    (apply_with_weight && !Geom::are_near((*cubic)[1], point_at0)))
+                {
                     if (isNodePointSelected(point_at0) || !only_selected) {
                         point_at1 = sbasis_in.valueAt(weight_ammount);
                         if (weight_ammount != NO_POWER) {
@@ -377,9 +384,12 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
                         point_at1 = (*cubic)[1];
                     }
                 } else {
-                    point_at1 = in->first_segment()->initialPoint();
+                    point_at1 = (*cubic)[1];
                 }
-                if (!ignore_cusp || !Geom::are_near((*cubic)[2], point_at3)) {
+                if ((apply_no_weight && apply_with_weight) ||
+                    (apply_no_weight && Geom::are_near((*cubic)[2], point_at3)) ||
+                    (apply_with_weight && !Geom::are_near((*cubic)[2], point_at3)))
+                {
                     if (isNodePointSelected(point_at3) || !only_selected) {
                         point_at2 = sbasis_in.valueAt(1 - weight_ammount);
                         if (weight_ammount != NO_POWER) {
@@ -390,10 +400,13 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
                         point_at2 = (*cubic)[2];
                     }
                 } else {
-                    point_at2 = in->first_segment()->finalPoint();
+                    point_at2 = (*cubic)[2];
                 }
             } else {
-                if (!ignore_cusp && weight_ammount != NO_POWER) {
+                if ((apply_no_weight && apply_with_weight) || 
+                    (apply_no_weight && weight_ammount == NO_POWER) ||
+                    (apply_with_weight && weight_ammount != NO_POWER))
+                {
                     if (isNodePointSelected(point_at0) || !only_selected) {
                         point_at1 = sbasis_in.valueAt(weight_ammount);
                         point_at1 =
@@ -402,7 +415,7 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
                         point_at1 = in->first_segment()->initialPoint();
                     }
                     if (isNodePointSelected(point_at3) || !only_selected) {
-                        point_at2 = sbasis_in.valueAt(weight_ammount);
+                        point_at2 = sbasis_in.valueAt(1 - weight_ammount);
                         point_at2 =
                             Geom::Point(point_at2[X] + HANDLE_CUBIC_GAP, point_at2[Y] + HANDLE_CUBIC_GAP);
                     } else {

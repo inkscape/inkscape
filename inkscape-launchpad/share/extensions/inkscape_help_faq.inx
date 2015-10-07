@@ -3,8 +3,7 @@
   <_name>FAQ</_name>
   <id>org.inkscape.help.faq</id>
   <dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
-  <!-- i18n. Please don't translate it unless a page exists in your language -->
-  <_param name="url" gui-hidden="true" type="string">http://wiki.inkscape.org/wiki/index.php/FAQ</_param>
+  <param name="url" gui-hidden="true" type="string">https://inkscape.org/learn/faq/</param>
   <effect needs-document="false">
     <object-type>all</object-type>
     <effects-menu hidden="true" />

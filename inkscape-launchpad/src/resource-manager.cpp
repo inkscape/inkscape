@@ -222,11 +222,15 @@ std::map<Glib::ustring, Glib::ustring> ResourceManagerImpl::locateLinks(Glib::us
         Glib::ustring uri = (*it)->get_uri();
         std::string scheme = Glib::uri_parse_scheme(uri);
         if ( scheme == "file" ) {
-            std::string path = Glib::filename_from_uri(uri);
-            path = Glib::path_get_dirname(path);
-            if ( std::find(priorLocations.begin(), priorLocations.end(), path) == priorLocations.end() ) {
-                // TODO debug g_message("               ==>[%s]", path.c_str());
-                priorLocations.push_back(path);
+            try {
+                std::string path = Glib::filename_from_uri(uri);
+                path = Glib::path_get_dirname(path);
+                if ( std::find(priorLocations.begin(), priorLocations.end(), path) == priorLocations.end() ) {
+                    // TODO debug g_message("               ==>[%s]", path.c_str());
+                    priorLocations.push_back(path);
+                }
+            } catch (Glib::ConvertError e) {
+                g_warning("Bad URL ignored [%s]", uri.c_str());
             }
         }
     }

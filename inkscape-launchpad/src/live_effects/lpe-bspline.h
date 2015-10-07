@@ -38,7 +38,8 @@ public:
 
 private:
     ScalarParam helper_size;
-    BoolParam ignore_cusp;
+    BoolParam apply_no_weight;
+    BoolParam apply_with_weight;
     BoolParam only_selected;
     ScalarParam weight;
 

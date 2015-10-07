@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="100px" height="100px" viewBox="0 0 100 100" id="SVGRoot" version="1.1" inkscape:version="0.91 r13725" sodipodi:docname="seamless_pattern.svg" inkscape:export-xdpi="96" inkscape:export-ydpi="96" enable-background="new">
-<sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.93166" inkscape:cx="80.27015" inkscape:cy="164.9834" inkscape:document-units="px" inkscape:current-layer="patternLayer" showgrid="false" units="px" inkscape:window-width="1280" inkscape:window-height="960" inkscape:window-x="0" inkscape:window-y="27" inkscape:window-maximized="1" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" borderlayer="true" />
+<sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.93166" inkscape:cx="79.1968" inkscape:cy="164.9834" inkscape:document-units="px" inkscape:current-layer="patternLayer" showgrid="false" units="px" inkscape:window-width="1280" inkscape:window-height="960" inkscape:window-x="0" inkscape:window-y="27" inkscape:window-maximized="1" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" borderlayer="true" />
 <defs id="defs4">
 <pattern inkscape:stockid="Checkerboard" id="Checkerboard" patternTransform="translate(0,0) scale(10,10)" height="2" width="2" patternUnits="userSpaceOnUse" inkscape:collect="always">
 <rect id="rect12513" height="1" width="1" y="0" x="0" style="fill:black;stroke:none" />
@@ -14,9 +14,6 @@
 <clipPath clipPathUnits="userSpaceOnUse" id="patternClipPath">
 <rect y="0" x="0" height="100" width="100" id="clipPathRect" style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:20;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1.09889996;stroke-opacity:1;marker:none;enable-background:accumulate" />
 </clipPath>
-<filter inkscape:collect="always" style="color-interpolation-filters:sRGB" id="filter14836">
-<feBlend inkscape:collect="always" mode="screen" in2="BackgroundImage" id="feBlend14838" />
-</filter>
 </defs>
 <metadata id="metadata7">
 <rdf:RDF>
@@ -30,7 +27,7 @@
 <g inkscape:groupmode="layer" id="transparencyPreview" inkscape:label="Preview Background (not in pattern)" style="display:inline">
 <rect style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.11;fill:url(#Checkerboard);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" id="transparencyChess" width="320" height="320" x="190" y="-110" sodipodi:insensitive="true" />
 </g>
-<g inkscape:groupmode="layer" id="patternLayer" inkscape:label="Pattern" style="display:inline;opacity:0.9;filter:url(#filter14836)">
+<g inkscape:groupmode="layer" id="patternLayer" inkscape:label="Pattern" style="display:inline">
 <g id="g8891" sodipodi:insensitive="true">
 <use x="0" y="0" xlink:href="#fullPattern" id="fullPatternClone" transform="translate(200,-100)" width="100" height="100" inkscape:tile-cx="50" inkscape:tile-cy="50" inkscape:tile-w="100" inkscape:tile-h="100" inkscape:tile-x0="100" inkscape:tile-y0="100" />
 <use height="100%" width="100%" x="0" y="0" inkscape:tiled-clone-of="#fullPatternClone" xlink:href="#fullPatternClone" transform="translate(0,100)" id="clonePreview1" />

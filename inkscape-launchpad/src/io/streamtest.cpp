@@ -202,6 +202,7 @@ void path_init(char *path, char *name)
 	    exit(1);
     }
     strncpy(ptr+1,name,strlen(name)+1);
+    path[PATH_MAX-1] = '\0';
     printf("'%s'\n",path);
 }
 

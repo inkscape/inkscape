@@ -211,12 +211,28 @@ class MyEffect(inkex.Effect):
             y = float(node.get('y'))
             width = float(node.get('width'))
             height = float(node.get('height'))
-            p = [[[x, y],[x, y],[x, y]]]
-            p.append([[x + width, y],[x + width, y],[x + width, y]])
-            p.append([[x + width, y + height],[x + width, y + height],[x + width, y + height]])
-            p.append([[x, y + height],[x, y + height],[x, y + height]])
-            p.append([[x, y],[x, y],[x, y]])
-            p = [p]
+            d = "m %s,%s %s,%s %s,%s %s,%s z" % (x, y, width, 0, 0, height, -width, 0)
+            p = cubicsuperpath.parsePath(d)
+        elif node.tag == inkex.addNS('line','svg'):
+            x1 = float(node.get('x1'))
+            x2 = float(node.get('x2'))
+            y1 = float(node.get('y1'))
+            y2 = float(node.get('y2'))
+            d = "M %s,%s L %s,%s" % (x1, y1, x2, y2)
+            p = cubicsuperpath.parsePath(d)
+        elif node.tag == inkex.addNS('circle','svg'):
+            cx = float(node.get('cx'))
+            cy = float(node.get('cy'))
+            r = float(node.get('r'))
+            d = "m %s,%s a %s,%s 0 0 1 %s,%s %s,%s 0 0 1 %s,%s z" % (cx + r, cy, r, r, -2*r, 0, r, r, 2*r, 0)
+            p = cubicsuperpath.parsePath(d)
+        elif node.tag == inkex.addNS('ellipse','svg'):
+            cx = float(node.get('cx'))
+            cy = float(node.get('cy'))
+            rx = float(node.get('rx'))
+            ry = float(node.get('ry'))
+            d = "m %s,%s a %s,%s 0 0 1 %s,%s %s,%s 0 0 1 %s,%s z" % (cx + rx, cy, rx, ry, -2*rx, 0, rx, ry, 2*rx, 0)
+            p = cubicsuperpath.parsePath(d)
         else:
             return
         trans = node.get('transform')

@@ -1170,6 +1170,9 @@ void Transformation::onReplaceMatrixToggled()
 void Transformation::onScaleProportionalToggled()
 {
     onScaleXValueChanged();
+    if (_scalar_scale_vertical.setProgrammatically) {
+        _scalar_scale_vertical.setProgrammatically = false;
+    }
 }
 
 
