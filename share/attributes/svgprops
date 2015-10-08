@@ -46,7 +46,7 @@
 
 "cy" - "circle","ellipse","radialGradient"
 
-"d" - "path","glyph","missing-glyph"
+"d" - "path","glyph","missing-glyph","hatchpath"
 
 "descent" - "font-face"
 
@@ -106,9 +106,13 @@
 
 "gradientTransform" - "linearGradient","radialGradient"
 
-"gradientUnits" - "linearGradient","radialGradient"
+"gradientUnits" - "linearGradient","radialGradient","mesh"
 
 "hanging" - "font-face"
+
+"hatchContentUnits" - "hatch"
+
+"hatchUnits" - "hatch"
 
 "height" - "filter","foreignObject","image","pattern","rect","svg","use","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feFlood","feGaussianBlur","feImage","feMerge","feMorphology","feOffset","feSpecularLighting","feTile","feTurbulence","mask"
 
@@ -118,7 +122,9 @@
 
 "horiz-origin-y" - "font"
 
-"id" - "a","altGlyph","altGlyphDef","altGlyphItem","animate","animateColor","animateMotion","animateTransform","circle","clipPath","color-profile","cursor","defs","desc","ellipse","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feDistantLight","feFlood","feFuncA","feFuncB","feFuncG","feFuncR","feGaussianBlur","feImage","feMerge","feMergeNode","feMorphology","feOffset","fePointLight","feSpecularLighting","feSpotLight","feTile","feTurbulence","filter","font","font-face","font-face-format","font-face-name","font-face-src","font-face-uri","foreignObject","g","glyph","glyphRef","hkern","image","line","linearGradient","marker","mask","metadata","missing-glyph","mpath","path","pattern","polygon","polyline","radialGradient","rect","script","set","stop","style","svg","switch","symbol","text","textPath","title","tref","tspan","use","view","vkern","flowRoot","flowPara","flowSpan","flowRect","flowRegion","solidColor"
+"href" - "mesh","hatch"
+
+"id" - "a","altGlyph","altGlyphDef","altGlyphItem","animate","animateColor","animateMotion","animateTransform","circle","clipPath","color-profile","cursor","defs","desc","ellipse","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feDistantLight","feFlood","feFuncA","feFuncB","feFuncG","feFuncR","feGaussianBlur","feImage","feMerge","feMergeNode","feMorphology","feOffset","fePointLight","feSpecularLighting","feSpotLight","feTile","feTurbulence","filter","font","font-face","font-face-format","font-face-name","font-face-src","font-face-uri","foreignObject","g","glyph","glyphRef","hkern","image","line","linearGradient","marker","mask","metadata","missing-glyph","mpath","path","pattern","polygon","polyline","radialGradient","rect","script","set","stop","style","svg","switch","symbol","text","textPath","title","tref","tspan","use","view","vkern","flowRoot","flowPara","flowSpan","flowRect","flowRegion","solidColor","mesh","meshrow","meshpatch","hatch","hatchpath"
 
 "ideographic" - "font-face"
 
@@ -182,7 +188,7 @@
 
 "numOctaves" - "feTurbulence"
 
-"offset" - "stop","feFuncA","feFuncB","feFuncG","feFuncR"
+"offset" - "stop","feFuncA","feFuncB","feFuncG","feFuncR","hatchpath"
 
 "onabort" - "svg"
 
@@ -238,7 +244,7 @@
 
 "panose-1" - "font-face"
 
-"path" - "animateMotion"
+"path" - "animateMotion","stop"
 
 "pathLength" - "path"
 
@@ -247,6 +253,8 @@
 "patternTransform" - "pattern"
 
 "patternUnits" - "pattern"
+
+"pitch" - "hatch"
 
 "points" - "polygon","polyline"
 
@@ -284,7 +292,7 @@
 
 "result" - "feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feFlood","feGaussianBlur","feImage","feMerge","feMorphology","feOffset","feSpecularLighting","feTile","feTurbulence"
 
-"rotate" - "altGlyph","animateMotion","text","tref","tspan"
+"rotate" - "altGlyph","animateMotion","text","tref","tspan","hatch"
 
 "rx" - "ellipse","rect"
 
@@ -334,15 +342,13 @@
 
 "targetY" - "feConvolveMatrix"
 
-"tensor" - "meshpatch"
-
 "textLength" - "text","textPath","tref","tspan"
 
 "title" - "style"
 
 "to" - "set","animate","animateColor","animateMotion","animateTransform"
 
-"transform" - "a","circle","clipPath","defs","ellipse","foreignObject","g","image","line","path","polygon","polyline","rect","switch","text","use","flowRoot","flowPara","flowSpan"
+"transform" - "a","circle","clipPath","defs","ellipse","foreignObject","g","image","line","path","polygon","polyline","rect","switch","text","use","flowRoot","flowPara","flowSpan","mesh","hatch"
 
 "type" - "animateTransform","feColorMatrix","feTurbulence","script","style","feFuncA","feFuncB","feFuncG","feFuncR","mesh"
 
@@ -524,6 +530,10 @@
 
 "shape-rendering" - "path","rect","circle","ellipse","line","polyline","polygon","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
+"solid-color" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
+"solid-opacity" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
 "stop-color" - "stop"
 
 "stop-opacity" - "stop"
@@ -549,6 +559,16 @@
 "text-anchor" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "text-decoration" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-color" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-fill" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-line" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-stroke" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"text-decoration-style" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
 
 "text-rendering" - "text","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 

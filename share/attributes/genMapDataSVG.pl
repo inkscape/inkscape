@@ -84,6 +84,25 @@ push @{$attributes{ "style" }->{elements}}, "flowRoot","flowPara","flowSpan","fl
 push @{$attributes{ "xml:space" }->{elements}}, "flowRoot","flowPara","flowSpan";
 push @{$attributes{ "transform" }->{elements}}, "flowRoot","flowPara","flowSpan";
 
+# Mesh gradients
+push @{$attributes{ "id"    }->{elements}}, "mesh","meshrow","meshpatch";
+push @{$attributes{ "path" }->{elements}}, "stop";
+push @{$attributes{ "gradientUnits" }->{elements}}, "mesh";
+push @{$attributes{ "transform" }->{elements}}, "mesh";
+push @{$attributes{ "href" }->{elements}}, "mesh";
+push @{$attributes{ "type" }->{elements}}, "mesh";
+
+# Hatches
+push @{$attributes{ "id"    }->{elements}}, "hatch","hatchpath";
+push @{$attributes{ "pitch" }->{elements}}, "hatch";
+push @{$attributes{ "rotate" }->{elements}}, "hatch";
+push @{$attributes{ "hatchUnits" }->{elements}}, "hatch";
+push @{$attributes{ "hatchContentUnits" }->{elements}}, "hatch";
+push @{$attributes{ "transform" }->{elements}}, "hatch";
+push @{$attributes{ "href" }->{elements}}, "hatch";
+push @{$attributes{ "d" }->{elements}}, "hatchpath";
+push @{$attributes{ "offset" }->{elements}}, "hatchpath";
+
 
 # Output
 
