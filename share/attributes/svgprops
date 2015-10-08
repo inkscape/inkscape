@@ -104,7 +104,7 @@
 
 "glyphRef" - "altGlyph","glyphRef"
 
-"gradientTransform" - "linearGradient","radialGradient"
+"gradientTransform" - "linearGradient","radialGradient","mesh"
 
 "gradientUnits" - "linearGradient","radialGradient","mesh"
 
@@ -348,7 +348,7 @@
 
 "to" - "set","animate","animateColor","animateMotion","animateTransform"
 
-"transform" - "a","circle","clipPath","defs","ellipse","foreignObject","g","image","line","path","polygon","polyline","rect","switch","text","use","flowRoot","flowPara","flowSpan","mesh","hatch"
+"transform" - "a","circle","clipPath","defs","ellipse","foreignObject","g","image","line","path","polygon","polyline","rect","switch","text","use","flowRoot","flowPara","flowSpan","hatch"
 
 "type" - "animateTransform","feColorMatrix","feTurbulence","script","style","feFuncA","feFuncB","feFuncG","feFuncR","mesh"
 
@@ -392,7 +392,7 @@
 
 "widths" - "font-face"
 
-"x" - "altGlyph","cursor","fePointLight","feSpotLight","filter","foreignObject","glyphRef","image","pattern","rect","svg","text","use","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feFlood","feGaussianBlur","feImage","feMerge","feMorphology","feOffset","feSpecularLighting","feTile","feTurbulence","mask","tref","tspan"
+"x" - "altGlyph","cursor","fePointLight","feSpotLight","filter","foreignObject","glyphRef","image","pattern","rect","svg","text","use","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feFlood","feGaussianBlur","feImage","feMerge","feMorphology","feOffset","feSpecularLighting","feTile","feTurbulence","mask","tref","tspan","mesh"
 
 "x-height" - "font-face"
 
@@ -406,7 +406,7 @@
 
 "xlink:arcrole" - "a","altGlyph","animate","animateColor","animateMotion","animateTransform","color-profile","cursor","feImage","filter","font-face-uri","glyphRef","image","linearGradient","mpath","pattern","radialGradient","script","set","textPath","tref","use"
 
-"xlink:href" - "a","altGlyph","color-profile","cursor","feImage","filter","font-face-uri","glyphRef","image","linearGradient","mpath","pattern","radialGradient","script","textPath","use","animate","animateColor","animateMotion","animateTransform","set","tref"
+"xlink:href" - "a","altGlyph","color-profile","cursor","feImage","filter","font-face-uri","glyphRef","image","linearGradient","mpath","pattern","radialGradient","script","textPath","use","animate","animateColor","animateMotion","animateTransform","set","tref","mesh"
 
 "xlink:role" - "a","altGlyph","animate","animateColor","animateMotion","animateTransform","color-profile","cursor","feImage","filter","font-face-uri","glyphRef","image","linearGradient","mpath","pattern","radialGradient","script","set","textPath","tref","use"
 
@@ -422,7 +422,7 @@
 
 "xml:space" - "a","altGlyph","altGlyphDef","altGlyphItem","animate","animateColor","animateMotion","animateTransform","circle","clipPath","color-profile","cursor","defs","desc","ellipse","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feDistantLight","feFlood","feFuncA","feFuncB","feFuncG","feFuncR","feGaussianBlur","feImage","feMerge","feMergeNode","feMorphology","feOffset","fePointLight","feSpecularLighting","feSpotLight","feTile","feTurbulence","filter","font","font-face","font-face-format","font-face-name","font-face-src","font-face-uri","foreignObject","g","glyph","glyphRef","hkern","image","line","linearGradient","marker","mask","metadata","missing-glyph","mpath","path","pattern","polygon","polyline","radialGradient","rect","script","set","stop","style","svg","switch","symbol","text","textPath","title","tref","tspan","use","view","vkern","flowRoot","flowPara","flowSpan"
 
-"y" - "altGlyph","cursor","fePointLight","feSpotLight","filter","foreignObject","glyphRef","image","pattern","rect","svg","text","use","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feFlood","feGaussianBlur","feImage","feMerge","feMorphology","feOffset","feSpecularLighting","feTile","feTurbulence","mask","tref","tspan"
+"y" - "altGlyph","cursor","fePointLight","feSpotLight","filter","foreignObject","glyphRef","image","pattern","rect","svg","text","use","feBlend","feColorMatrix","feComponentTransfer","feComposite","feConvolveMatrix","feDiffuseLighting","feDisplacementMap","feFlood","feGaussianBlur","feImage","feMerge","feMorphology","feOffset","feSpecularLighting","feTile","feTurbulence","mask","tref","tspan","mesh"
 
 "y1" - "line","linearGradient"
 

@@ -88,9 +88,13 @@ push @{$attributes{ "transform" }->{elements}}, "flowRoot","flowPara","flowSpan"
 push @{$attributes{ "id"    }->{elements}}, "mesh","meshrow","meshpatch";
 push @{$attributes{ "path" }->{elements}}, "stop";
 push @{$attributes{ "gradientUnits" }->{elements}}, "mesh";
-push @{$attributes{ "transform" }->{elements}}, "mesh";
+push @{$attributes{ "gradientTransform" }->{elements}}, "mesh";
+#push @{$attributes{ "transform" }->{elements}}, "mesh";
 push @{$attributes{ "href" }->{elements}}, "mesh";
 push @{$attributes{ "type" }->{elements}}, "mesh";
+push @{$attributes{ "x" }->{elements}}, "mesh";
+push @{$attributes{ "y" }->{elements}}, "mesh";
+push @{$attributes{ "xlink:href" }->{elements}}, "mesh";
 
 # Hatches
 push @{$attributes{ "id"    }->{elements}}, "hatch","hatchpath";
