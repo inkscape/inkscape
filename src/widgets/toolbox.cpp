@@ -519,9 +519,12 @@ static gchar const * ui_descr =
 //        "    <toolitem action='MeshEditFillAction' />"
 //        "    <toolitem action='MeshEditStrokeAction' />"
 //        "    <toolitem action='MeshShowHandlesAction' />"
+        "    <toolitem action='MeshToggleSidesAction' />"
+        "    <toolitem action='MeshMakeEllipticalAction' />"
+        "    <toolitem action='MeshPickColorsAction' />"
+        "    <separator />"
         "    <toolitem action='MeshWarningAction' />"
         "    <toolitem action='MeshSmoothAction' />"
-        "    <separator />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"

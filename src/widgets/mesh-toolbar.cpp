@@ -34,6 +34,7 @@
 #include "widgets/gradient-image.h"
 #include "style.h"
 
+#include "inkscape.h"
 #include "preferences.h"
 #include "document-private.h"
 #include "document-undo.h"
@@ -66,6 +67,7 @@
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
+using Inkscape::UI::Tools::MeshTool;
 
 static bool blocked = false;
 
@@ -314,10 +316,49 @@ static void ms_type_changed(EgeSelectOneAction *act, GtkWidget *widget)
     }
 }
 
+/** Temporary hack: Returns the mesh tool in the active desktop.
+ * Will go away during tool refactoring. */
+static MeshTool *get_mesh_tool()
+{
+    MeshTool *tool = 0;
+    if (SP_ACTIVE_DESKTOP ) {
+        Inkscape::UI::Tools::ToolBase *ec = SP_ACTIVE_DESKTOP->event_context;
+        if (SP_IS_MESH_CONTEXT(ec)) {
+            tool = static_cast<MeshTool*>(ec);
+        }
+    }
+    return tool;
+}
+
+static void ms_toggle_sides(void)
+{
+    MeshTool *mt = get_mesh_tool();
+    if (mt) {
+        sp_mesh_context_corner_operation( mt, MG_CORNER_SIDE_TOGGLE );
+    }
+}
+
+static void ms_make_elliptical(void)
+{
+    MeshTool *mt = get_mesh_tool();
+    if (mt) {
+        sp_mesh_context_corner_operation( mt, MG_CORNER_SIDE_ARC );
+    }
+}
+
+static void ms_pick_colors(void)
+{
+    MeshTool *mt = get_mesh_tool();
+    if (mt) {
+        sp_mesh_context_corner_operation( mt, MG_CORNER_COLOR_PICK );
+    }
+}
+
 static void mesh_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 /**
  * Mesh auxiliary toolbar construction and setup.
+ * Don't forget to add to XML in widgets/toolbox.cpp!
  *
  */
 void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -466,7 +507,7 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
 
-    /* Typeing method */
+    /* Type */
     {
         GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
 
@@ -487,6 +528,41 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         g_object_set_data( holder, "mesh_select_type_action", act );
     }
+
+    {
+        InkAction* act = ink_action_new( "MeshToggleSidesAction",
+                                         _("Toggle Sides"),
+                                         _("Toggle selected sides between Beziers and lines."),
+                                         INKSCAPE_ICON("node-segment-line"),
+                                         secondarySize );
+        g_object_set( act, "short_label", _("Toggle side:"), NULL );
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(ms_toggle_sides), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+    }
+
+    {
+        InkAction* act = ink_action_new( "MeshMakeEllipticalAction",
+                                         _("Make elliptical"),
+                                         _("Make selected sides elliptical by changing length of handles. Works best if handles already approximate ellipse."),
+                                         INKSCAPE_ICON("node-segment-curve"),
+                                         secondarySize );
+        g_object_set( act, "short_label", _("Make elliptical:"), NULL );
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(ms_make_elliptical), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+    }
+
+    {
+        InkAction* act = ink_action_new( "MeshPickColorsAction",
+                                         _("Pick colors:"),
+                                         _("Pick colors for selected corner nodes from underneath mesh."),
+                                         INKSCAPE_ICON("color-picker"),
+                                         secondarySize );
+        g_object_set( act, "short_label", _("Pick Color"), NULL );
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(ms_pick_colors), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+    }
+
+
 }
 
 static void mesh_toolbox_watch_ec(SPDesktop* desktop, Inkscape::UI::Tools::ToolBase* ec, GObject* holder)

@@ -316,7 +316,7 @@ static void sp_mesh_context_split_near_point(MeshTool *rc, SPItem *item,  Geom::
 /**
 Wrapper for various mesh operations that require a list of selected corner nodes.
  */
-static void
+void
 sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
 {
 
