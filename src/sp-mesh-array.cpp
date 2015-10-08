@@ -313,7 +313,7 @@ bool SPMeshPatchI::tensorIsSet( unsigned int i ) {
 
 /**
    Return tensor control point for "corner" i.
-   If not sest, returns calculated (Coons) point.
+   If not set, returns calculated (Coons) point.
  */
 Geom::Point SPMeshPatchI::getTensorPoint( guint k ) {
 
@@ -1058,11 +1058,11 @@ void SPMeshNodeArray::create( SPMesh *mg, SPItem *item, Geom::OptRect bbox ) {
     Geom::Point       center = bbox->midpoint();
 
     // Must keep repr and array in sync. We have two choices:
-    //  Build the repr first and the "read" it.
-    //  Construct the array and the "write" it.
+    //  Build the repr first and then "read" it.
+    //  Construct the array and then "write" it.
     // We'll do the second.
 
-    // Remove any existing mesh.  We could chose to simply scale an existing mesh...
+    // Remove any existing mesh.  We could choose to simply scale an existing mesh...
     //clear();
 
     // We get called twice when a new mesh is created...WHY?
@@ -2265,10 +2265,12 @@ guint SPMeshNodeArray::color_pick( std::vector<guint> icorners, SPItem* item ) {
 
         // Region to average over
         Geom::Point p = n->p;
-        // std::cout << " p: " << p << std::endl;
+        // std::cout << " before transform: p: " << p << std::endl;
         p *= gr->gradientTransform;
-        // std::cout << " p: " << p << std::endl;
-
+        // std::cout << " after transform:  p: " << p << std::endl;
+        p *= item->i2doc_affine();
+        // std::cout << " after transform:  p: " << p << std::endl;
+        
         // If on edge, move inward
         guint cols = patch_columns()+1;
         guint rows = patch_rows()+1;
@@ -2277,7 +2279,7 @@ guint SPMeshNodeArray::color_pick( std::vector<guint> icorners, SPItem* item ) {
         guint ncol  = col * 3;
         guint nrow  = row * 3;
 
-        double size = 3.0;
+        const double size = 3.0;
 
         // Top edge
         if( row == 0 ) {
