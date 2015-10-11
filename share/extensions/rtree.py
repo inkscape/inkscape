@@ -1,6 +1,7 @@
 #!/usr/bin/env python 
 '''
 Copyright (C) 2005 Aaron Spike, aaron@ekips.org
+Copyright (C) 2015 su_v, suv-sf@users.sf.net
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,19 +19,23 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import inkex, simplestyle, pturtle, random
 
-def rtree(turtle, size, min):
+def rtree(turtle, size, min, pt=False):
     if size < min:
         return
     turtle.fd(size)
     turn = random.uniform(20, 40)
     turtle.lt(turn)
-    rtree(turtle, size*random.uniform(0.5,0.9), min)
+    rtree(turtle, size*random.uniform(0.5,0.9), min, pt)
     turtle.rt(turn)
     turn = random.uniform(20, 40)
     turtle.rt(turn)
-    rtree(turtle, size*random.uniform(0.5,0.9), min)
+    rtree(turtle, size*random.uniform(0.5,0.9), min, pt)
     turtle.lt(turn)
+    if pt:
+        turtle.pu()
     turtle.bk(size)
+    if pt:
+        turtle.pd()
 
 class RTreeTurtle(inkex.Effect):
     def __init__(self):
@@ -43,6 +48,10 @@ class RTreeTurtle(inkex.Effect):
                         action="store", type="float", 
                         dest="minimum", default=4.0,
                         help="minimum branch size")
+        self.OptionParser.add_option("--pentoggle",
+                        action="store", type="inkbool", 
+                        dest="pentoggle", default=False,
+                        help="Lift pen for backward steps")
     def effect(self):
         self.options.size = self.unittouu(str(self.options.size) + 'px')
         self.options.minimum = self.unittouu(str(self.options.minimum) + 'px')
@@ -54,7 +63,7 @@ class RTreeTurtle(inkex.Effect):
         t.pu()
         t.setpos(self.view_center)
         t.pd()
-        rtree(t, self.options.size, self.options.minimum)
+        rtree(t, self.options.size, self.options.minimum, self.options.pentoggle)
         
         attribs = {'d':t.getPath(),'style':simplestyle.formatStyle(s)}
         inkex.etree.SubElement(self.current_layer, inkex.addNS('path','svg'), attribs)
