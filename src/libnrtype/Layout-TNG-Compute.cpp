@@ -24,15 +24,31 @@ namespace Text {
 #define TRACE(_args) IFTRACE(g_print _args)
 
 // ******* enum conversion tables
+
+// These enums are probably from the SVG 1.0 era where one could interpret 'writing-mode' as setting direction.
+// SVG 1.1 makes it clear that 'direction' should be used. 'direction' has only two values 'ltr' and 'rtl'.
+// The first two values for the 'writing-mode' enum just happen to match the first two value of 'direction' so the
+// existing code worked when 'writing-mode' was changed to 'direction'.
+// static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_pango_direction[] = {
+//     {SP_CSS_WRITING_MODE_LR_TB, PANGO_DIRECTION_LTR},
+//     {SP_CSS_WRITING_MODE_RL_TB, PANGO_DIRECTION_RTL},
+//     {SP_CSS_WRITING_MODE_TB_LR, PANGO_DIRECTION_LTR}};   // this is correct
+
+// static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_my_direction[] = {
+//     {SP_CSS_WRITING_MODE_LR_TB, Layout::LEFT_TO_RIGHT},
+//     {SP_CSS_WRITING_MODE_RL_TB, Layout::RIGHT_TO_LEFT},
+//     {SP_CSS_WRITING_MODE_TB_LR, Layout::LEFT_TO_RIGHT}};   // this is correct
+
+// Proper 'direction' enums
 static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_pango_direction[] = {
-    {SP_CSS_WRITING_MODE_LR_TB, PANGO_DIRECTION_LTR},
-    {SP_CSS_WRITING_MODE_RL_TB, PANGO_DIRECTION_RTL},
-    {SP_CSS_WRITING_MODE_TB_LR, PANGO_DIRECTION_LTR}};   // this is correct
+    {SP_CSS_DIRECTION_LTR, PANGO_DIRECTION_LTR},
+    {SP_CSS_DIRECTION_RTL, PANGO_DIRECTION_RTL}};
 
 static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_my_direction[] = {
-    {SP_CSS_WRITING_MODE_LR_TB, Layout::LEFT_TO_RIGHT},
-    {SP_CSS_WRITING_MODE_RL_TB, Layout::RIGHT_TO_LEFT},
-    {SP_CSS_WRITING_MODE_TB_LR, Layout::LEFT_TO_RIGHT}};   // this is correct
+    {SP_CSS_DIRECTION_LTR, Layout::LEFT_TO_RIGHT},
+    {SP_CSS_DIRECTION_RTL, Layout::RIGHT_TO_LEFT}};
+
+
 
 /** \brief private to Layout. Does the real work of text flowing.
 

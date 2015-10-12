@@ -202,13 +202,13 @@ Layout::Direction Layout::InputStreamTextSource::styleGetBlockProgression() cons
 
 }
 
-static Layout::Alignment text_anchor_to_alignment(unsigned anchor, Layout::Direction /*para_direction*/)
+static Layout::Alignment text_anchor_to_alignment(unsigned anchor, Layout::Direction para_direction)
 {
     switch (anchor) {
         default:
-        case SP_CSS_TEXT_ANCHOR_START:  return Layout::LEFT;
+        case SP_CSS_TEXT_ANCHOR_START:  return para_direction == Layout::LEFT_TO_RIGHT ? Layout::LEFT : Layout::RIGHT;
         case SP_CSS_TEXT_ANCHOR_MIDDLE: return Layout::CENTER;
-        case SP_CSS_TEXT_ANCHOR_END:    return Layout::RIGHT;
+        case SP_CSS_TEXT_ANCHOR_END:    return para_direction == Layout::LEFT_TO_RIGHT ? Layout::RIGHT : Layout::LEFT;
     }
 }
 
