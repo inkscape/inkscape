@@ -565,7 +565,7 @@ bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
     }
 
     Inkscape::Selection *selection = desktop->getSelection();
-    if (selection && selection->isEmpty()) {
+    if (!selection || selection->isEmpty()) {
         _userWarn(desktop, _("Select <b>object(s)</b> to paste live path effect to."));
         return false;
     }
