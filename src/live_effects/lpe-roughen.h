@@ -36,10 +36,10 @@ public:
 
     virtual void doEffect(SPCurve *curve);
     virtual double sign(double randNumber);
-    virtual Geom::Point randomize();
+    virtual Geom::Point randomize(double max_lenght);
     virtual void doBeforeEffect(SPLPEItem const * lpeitem);
     virtual SPCurve const * addNodesAndJitter(Geom::Curve const * A, Geom::Point &prev, double t, bool last);
-    virtual SPCurve *jitter(Geom::Curve const * A);
+    virtual SPCurve *jitter(Geom::Curve const * A,  Geom::Point &prev);
     virtual Geom::Point tPoint(Geom::Point A, Geom::Point B, double t = 0.5);
     virtual Gtk::Widget *newWidget();
 
@@ -53,6 +53,7 @@ private:
     BoolParam shift_nodes;
     BoolParam shift_handles;
     BoolParam shift_handles_sym;
+    BoolParam fixed_displacement;
 
     LPERoughen(const LPERoughen &);
     LPERoughen &operator=(const LPERoughen &);
