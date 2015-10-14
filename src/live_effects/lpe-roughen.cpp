@@ -314,23 +314,19 @@ SPCurve const * LPERoughen::addNodesAndJitter(Geom::Curve const * A, Geom::Point
         if(prev == Geom::Point(0,0)){
             point_a1 = randomize(max_lenght);
         }
-        if(last){
-            prev = A->pointAt(1 - (t / 3)) + point_b2;
-        } else {
-            point_b3 = Geom::Point(0,0);
-            point_b2 = Geom::Point(0,0);
-        }
-        Geom::Ray ray2(seg2[1] + point_b1, seg1[3] + point_a3);
-        point_a2  = Geom::Point::polar(ray2.angle(), max_lenght);
+        ray.setPoints(seg2[1] + point_a3 + point_b1, seg1[3] + point_a3);
+        point_a2  = Geom::Point::polar(ray.angle(), max_lenght);
         if(!last){
             prev = seg1[3] + point_a3 + point_a2;
+        } else {
+            prev = A->pointAt(1 - (t / 3)) + point_b2 + point_b3;
         }
         out->moveto(seg1[0]);
-        out->curveto(seg1[0] + point_a1, seg1[3] + point_a3 + point_a2, seg1[3] + point_a3);
+        out->curveto(seg1[0] + point_a1, seg1[2] + point_a3 + point_a2, seg1[3] + point_a3);
         if(last){
-            out->curveto(seg2[1] + point_b1, A->pointAt(1 - (t / 3)) + point_b2, seg2[3] + point_b3);
+            out->curveto(seg2[1] + point_a3 + point_b1, A->pointAt(1 - (t / 3)) + point_b2 + point_b3, seg2[3] + point_b3);
         } else {
-            out->curveto(seg2[1] + point_b1, seg2[2] + point_b2, seg2[3] + point_b3);
+            out->curveto(seg2[1] + point_a3 + point_b1, seg2[2] + point_b2 + point_b3, seg2[3] + point_b3);
         }
     } else if(shift_handles_sym && !cubic) {
         Geom::Ray ray(prev,A->initialPoint());
@@ -338,35 +334,31 @@ SPCurve const * LPERoughen::addNodesAndJitter(Geom::Curve const * A, Geom::Point
         if(prev==Geom::Point(0,0)){
             point_a1 = randomize(max_lenght);
         }
-        if(last){
-            prev = A->pointAt(1 - (t / 3)) + point_b2;
-        } else {
-            point_b3 = Geom::Point(0,0);
-            point_b2 = Geom::Point(0,0);
-        }
-        Geom::Ray ray2(A->pointAt(t + (t / 3)) + point_b1, A->pointAt(t) + point_a3);
-        point_a2  = Geom::Point::polar(ray2.angle(), max_lenght);
+        ray.setPoints(A->pointAt(t + (t / 3)) + point_a3 + point_b1, A->pointAt(t) + point_a3);
+        point_a2  = Geom::Point::polar(ray.angle(), max_lenght);
         if(!last){
             prev = A->pointAt((t / 3) * 2) +  point_a2;
+        } else {
+            prev = A->pointAt(1 - (t / 3)) + point_b2 + point_b3;
         }
         out->moveto(A->initialPoint());
-        out->curveto(A->initialPoint() + point_a1, A->pointAt(t) + point_a3 + point_a2, A->pointAt(t) + point_a3);
+        out->curveto(A->initialPoint() + point_a1, A->pointAt((t / 3) * 2) + point_a3 + point_a2, A->pointAt(t) + point_a3);
         if(last){
-            out->curveto(A->pointAt(t + (t / 3)) + point_b1, A->pointAt(1 - (t / 3)) + point_b2, A->finalPoint() + point_b3);
+            out->curveto(A->pointAt(t + (t / 3)) + point_a3 + point_b1, A->pointAt(1 - (t / 3)) + point_b2 + point_b3, A->finalPoint() + point_b3);
         } else {
-            out->curveto(A->pointAt(t + (t / 3)) + point_b1, A->pointAt(t +((t / 3) * 2)) + point_b2, A->finalPoint() + point_b3);
+            out->curveto(A->pointAt(t + (t / 3)) + point_a3 + point_b1, A->pointAt(t +((t / 3) * 2)) + point_b2 + point_b3, A->finalPoint() + point_b3);
         }
     } else if (cubic) {
         std::pair<Geom::CubicBezier, Geom::CubicBezier> div = cubic->subdivide(t);
         std::vector<Geom::Point> seg1 = div.first.controlPoints(),
                                  seg2 = div.second.controlPoints();
         out->moveto(seg1[0]);
-        out->curveto(seg1[1] + point_a1, seg1[2] + point_a2, seg1[3] + point_a3);
-        out->curveto(seg2[1] + point_b1, seg2[2]  + point_b2, seg2[3] + point_b3);
+        out->curveto(seg1[1] + point_a1, seg1[2] + point_a2 + point_a3, seg1[3] + point_a3);
+        out->curveto(seg2[1] + point_a3 + point_b1, seg2[2]  + point_b2 + point_b3, seg2[3] + point_b3);
     } else if (shift_handles) {
         out->moveto(A->initialPoint());
-        out->curveto(A->pointAt(t / 3) + point_a1, A->pointAt((t / 3) * 2) + point_a2, A->pointAt(t) + point_a3);
-        out->curveto(A->pointAt(t + (t / 3)) + point_b1, A->pointAt(t +((t / 3) * 2)) + point_b2, A->finalPoint() + point_b3);
+        out->curveto(A->pointAt(t / 3) + point_a1, A->pointAt((t / 3) * 2) + point_a2  + point_a3, A->pointAt(t) + point_a3);
+        out->curveto(A->pointAt(t + (t / 3)) + point_a3 + point_b1, A->pointAt(t +((t / 3) * 2)) + point_b2 + point_b3, A->finalPoint() + point_b3);
     } else {
         out->moveto(A->initialPoint());
         out->lineto(A->pointAt(t) + point_a3);
