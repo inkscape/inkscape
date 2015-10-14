@@ -73,8 +73,8 @@ void PathSink::feed(Rect const &r) {
 void PathSink::feed(Circle const &e) {
     Coord r = e.radius();
     Point c = e.center();
-    Point a = c + Point(0, c[Y] + r);
-    Point b = c + Point(0, c[Y] - r);
+    Point a = c + Point(0, +r);
+    Point b = c + Point(0, -r);
 
     moveTo(a);
     arcTo(r, r, 0, false, false, b);

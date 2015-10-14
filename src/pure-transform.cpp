@@ -63,7 +63,7 @@ void PureTransform::snap(::SnapManager *sm, std::vector<Inkscape::SnapCandidateP
             (*j).setSourceNum(0);
             first_free_snap = false;
         }
-        Inkscape::SnappedPoint snapped_point = snap(sm, *j, (*i).getPoint(), bbox);
+        Inkscape::SnappedPoint snapped_point = snap(sm, *j, (*i).getPoint(), bbox); // Calls the snap() method of the derived classes
 
         // std::cout << "dist = " << snapped_point.getSnapDistance() << std::endl;
         snapped_point.setPointerDistance(Geom::L2(pointer - (*i).getPoint()));
