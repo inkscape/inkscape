@@ -842,7 +842,8 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
 
     GtkWidget *vb, *w, *f;
 
-    g_return_val_if_fail(!gradient || SP_IS_GRADIENT(gradient), NULL);
+    g_return_val_if_fail(gradient != NULL, NULL);
+    g_return_val_if_fail(SP_IS_GRADIENT(gradient), NULL);
 
 #if GTK_CHECK_VERSION(3,0,0)
     vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, PAD);
