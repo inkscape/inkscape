@@ -75,6 +75,7 @@ bool URIReference::_acceptObject(SPObject *obj) const {
 		    for(int i=positions.size()-2;i>=0;i--)owner=owner->childList(false)[positions[i]];
 	}
 	//once we have the "original" object (hopefully) we look at who is referencing it
+        if(obj == owner)return false;
 	std::list<SPObject*> todo(owner->hrefList);
 	todo.push_front(owner->parent);
 	while(!todo.empty()){
