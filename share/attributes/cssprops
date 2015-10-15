@@ -148,6 +148,8 @@
 
 "transform" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
 
+"transform-box" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
 "transform-origin" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
 
 "transform-style" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"

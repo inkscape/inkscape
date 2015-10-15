@@ -148,6 +148,8 @@
 
 "transform" - "none" - "no"
 
+"transform-box" - "NO_DEFAULT" - "no"
+
 "transform-origin" - "NO_DEFAULT" - "no"
 
 "transform-style" - "flat" - "no"

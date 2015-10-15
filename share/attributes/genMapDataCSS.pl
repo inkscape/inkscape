@@ -248,6 +248,11 @@ push @{$properties{ "transform" }->{elements}}, @graphics_elements;
 $properties{ "transform" }->{default} = "none";
 $properties{ "transform" }->{inherit} = "no";
 
+push @{$properties{ "transform-box" }->{elements}}, @container_elements;
+push @{$properties{ "transform-box" }->{elements}}, @graphics_elements;
+$properties{ "transform-box" }->{default} = "NO_DEFAULT";  # Default no 100% fixed.
+$properties{ "transform-box" }->{inherit} = "no";
+
 push @{$properties{ "transform-origin" }->{elements}}, @container_elements;
 push @{$properties{ "transform-origin" }->{elements}}, @graphics_elements;
 $properties{ "transform-origin" }->{default} = "NO_DEFAULT";  # Default is complicated
