@@ -1364,13 +1364,15 @@ public:
 };
 
 void
-OffsetKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, unsigned int /*state*/)
+OffsetKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, unsigned int state)
 {
     SPOffset *offset = dynamic_cast<SPOffset *>(item);
     g_assert(offset != NULL);
 
-    offset->rad = sp_offset_distance_to_original(offset, p);
-    offset->knot = p;
+    Geom::Point const p_snapped = snap_knot_position(p, state);
+
+    offset->rad = sp_offset_distance_to_original(offset, p_snapped);
+    offset->knot = p_snapped;
     offset->knotSet = true;
 
     offset->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
