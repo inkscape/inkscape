@@ -1,5 +1,7 @@
 "alignment-baseline" - "auto" - "no"
 
+"backface-visibility" - "visible" - "no"
+
 "baseline-shift" - "baseline" - "no"
 
 "clip" - "auto" - "no"
@@ -90,6 +92,10 @@
 
 "paint-order" - "normal" - "yes"
 
+"perspective" - "none" - "no"
+
+"perspective-origin" - "NO_DEFAULT" - "no"
+
 "pointer-events" - "visiblePainted" - "yes"
 
 "shape-rendering" - "auto" - "yes"
@@ -124,9 +130,27 @@
 
 "text-decoration" - "NO_DEFAULT" - "no"
 
+"text-decoration-color" - "NO_DEFAULT" - "no"
+
+"text-decoration-fill" - "NO_DEFAULT" - "no"
+
+"text-decoration-line" - "none" - "no"
+
+"text-decoration-stroke" - "NO_DEFAULT" - "no"
+
+"text-decoration-style" - "solid" - "no"
+
+"text-orientation" - "mixed" - "yes"
+
 "text-rendering" - "auto" - "yes"
 
 "title" - "NO DEFAULT" - "no"
+
+"transform" - "none" - "no"
+
+"transform-origin" - "NO_DEFAULT" - "no"
+
+"transform-style" - "flat" - "no"
 
 "unicode-bidi" - "normal" - "no"
 
