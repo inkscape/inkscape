@@ -172,27 +172,24 @@ float Layout::InputStreamTextSource::styleComputeFontSize() const
     return medium_font_size * inherit_multiplier;
 }
 
-static const Layout::EnumConversionItem enum_convert_spstyle_writing_mode_to_direction[] = {
-    {SP_CSS_WRITING_MODE_LR_TB, Layout::TOP_TO_BOTTOM},
-    {SP_CSS_WRITING_MODE_RL_TB, Layout::TOP_TO_BOTTOM},
-    {SP_CSS_WRITING_MODE_TB_RL, Layout::RIGHT_TO_LEFT},
-    {SP_CSS_WRITING_MODE_TB_LR, Layout::LEFT_TO_RIGHT}};
-
 Layout::Direction Layout::InputStreamTextSource::styleGetBlockProgression() const
 {
-    // this function shouldn't be necessary, but since style.cpp doesn't support
-    // shorthand properties yet, it is.
-    SPStyle const *this_style = style;
+  switch( style->writing_mode.computed ) {
 
-    for ( ; ; ) {
-        if (this_style->writing_mode.set)
-            return (Layout::Direction)_enum_converter(this_style->writing_mode.computed, enum_convert_spstyle_writing_mode_to_direction, sizeof(enum_convert_spstyle_writing_mode_to_direction)/sizeof(enum_convert_spstyle_writing_mode_to_direction[0]));
-        if (this_style->object == NULL || this_style->object->parent == NULL) break;
-        this_style = this_style->object->parent->style;
-        if (this_style == NULL) break;
-    }
+  case SP_CSS_WRITING_MODE_LR_TB:
+  case SP_CSS_WRITING_MODE_RL_TB:
     return TOP_TO_BOTTOM;
+      
+  case SP_CSS_WRITING_MODE_TB_RL:
+    return RIGHT_TO_LEFT;
 
+  case SP_CSS_WRITING_MODE_TB_LR:
+    return LEFT_TO_RIGHT;
+
+  default:
+    std::cerr << "Layout::InputTextStream::styleGetBlockProgression: invalid writing mode." << std::endl;
+  }
+  return TOP_TO_BOTTOM;
 }
 
 static Layout::Alignment text_anchor_to_alignment(unsigned anchor, Layout::Direction para_direction)
