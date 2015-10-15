@@ -136,8 +136,8 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     text_transform(   "text-transform",  enum_text_transform,  SP_CSS_TEXT_TRANSFORM_NONE ),
 
     direction(        "direction",       enum_direction,       SP_CSS_DIRECTION_LTR       ),
-    block_progression("block-progression", enum_block_progression, SP_CSS_BLOCK_PROGRESSION_TB),
     writing_mode(     "writing-mode",    enum_writing_mode,    SP_CSS_WRITING_MODE_LR_TB  ),
+    text_orientation( "text-orientation",enum_text_orientation,SP_CSS_TEXT_ORIENTATION_MIXED ),
     baseline_shift(),
     text_anchor(      "text-anchor",     enum_text_anchor,     SP_CSS_TEXT_ANCHOR_START   ),
     white_space(      "white-space",     enum_white_space,     SP_CSS_WHITE_SPACE_NORMAL  ),
@@ -318,9 +318,9 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &word_spacing );
     _properties.push_back( &text_transform );
 
-    _properties.push_back( &direction );
-    _properties.push_back( &block_progression );
     _properties.push_back( &writing_mode );
+    _properties.push_back( &direction );
+    _properties.push_back( &text_orientation );
     _properties.push_back( &baseline_shift );
     _properties.push_back( &text_anchor );
     _properties.push_back( &white_space );
@@ -413,8 +413,8 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( text_transform.name,        reinterpret_cast<SPIBasePtr>(&SPStyle::text_transform        ) ) );
 
     //     _propmap.insert( std::make_pair( direction.name,             reinterpret_cast<SPIBasePtr>(&SPStyle::direction             ) ) );
-    //     _propmap.insert( std::make_pair( block_progression.name,     reinterpret_cast<SPIBasePtr>(&SPStyle::block_progression     ) ) );
     //     _propmap.insert( std::make_pair( writing_mode.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::writing_mode          ) ) );
+    //     _propmap.insert( std::make_pair( text_orientation.name,      reinterpret_cast<SPIBasePtr>(&SPStyle::text_orientation      ) ) );
     //     _propmap.insert( std::make_pair( baseline_shift.name,        reinterpret_cast<SPIBasePtr>(&SPStyle::baseline_shift        ) ) );
     //     _propmap.insert( std::make_pair( text_anchor.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::text_anchor           ) ) );
     //     _propmap.insert( std::make_pair( white_space.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::white_space           ) ) );
@@ -778,11 +778,11 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
         case SP_PROP_DIRECTION:
             direction.readIfUnset( val );
             break;
-        case SP_PROP_BLOCK_PROGRESSION:
-            block_progression.readIfUnset( val );
-            break;
         case SP_PROP_WRITING_MODE:
             writing_mode.readIfUnset( val );
+            break;
+        case SP_PROP_TEXT_ORIENTATION:
+            text_orientation.readIfUnset( val );
             break;
         case SP_PROP_TEXT_ANCHOR:
             text_anchor.readIfUnset( val );
@@ -1689,16 +1689,19 @@ sp_style_unset_property_attrs(SPObject *o)
         repr->setAttribute("text-anchor", NULL);
     }
     if (style->white_space.set) {
-        repr->setAttribute("white_space", NULL);
+        repr->setAttribute("white-space", NULL);
     }
     if (style->shape_inside.set) {
-        repr->setAttribute("shape_inside", NULL);
+        repr->setAttribute("shape-inside", NULL);
     }
     if (style->shape_padding.set) {
-        repr->setAttribute("shape_padding", NULL);
+        repr->setAttribute("shape-padding", NULL);
     }
     if (style->writing_mode.set) {
-        repr->setAttribute("writing_mode", NULL);
+        repr->setAttribute("writing-mode", NULL);
+    }
+    if (style->text_orientation.set) {
+        repr->setAttribute("text-orientation", NULL);
     }
     if (style->filter.set) {
         repr->setAttribute("filter", NULL);
@@ -1781,8 +1784,8 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     sp_repr_css_set_property(css, "word-spacing", NULL);
     sp_repr_css_set_property(css, "text-transform", NULL);
     sp_repr_css_set_property(css, "direction", NULL);
-    sp_repr_css_set_property(css, "block-progression", NULL);
     sp_repr_css_set_property(css, "writing-mode", NULL);
+    sp_repr_css_set_property(css, "text-orientation", NULL);
     sp_repr_css_set_property(css, "text-anchor", NULL);
     sp_repr_css_set_property(css, "white-space", NULL);
     sp_repr_css_set_property(css, "shape-inside", NULL);

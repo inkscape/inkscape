@@ -163,17 +163,21 @@ enum SPCSSDirection {
     SP_CSS_DIRECTION_RTL
 };
 
-enum SPCSSBlockProgression {
-    SP_CSS_BLOCK_PROGRESSION_TB,
-    SP_CSS_BLOCK_PROGRESSION_RL,
-    SP_CSS_BLOCK_PROGRESSION_LR
-};
-
 enum SPCSSWritingMode {
     SP_CSS_WRITING_MODE_LR_TB,
     SP_CSS_WRITING_MODE_RL_TB,
     SP_CSS_WRITING_MODE_TB_RL,
     SP_CSS_WRITING_MODE_TB_LR
+};
+
+// CSS WRITING MODES 3
+enum SPCSSTextOrientation {
+    SP_CSS_TEXT_ORIENTATION_MIXED,
+    SP_CSS_TEXT_ORIENTATION_UPRIGHT,
+    SP_CSS_TEXT_ORIENTATION_SIDEWAYS_RIGHT,
+    SP_CSS_TEXT_ORIENTATION_SIDEWAYS_LEFT,
+    SP_CSS_TEXT_ORIENTATION_SIDEWAYS,
+    SP_CSS_TEXT_ORIENTATION_USE_GLYPH_ORIENTATION
 };
 
 enum SPTextAnchor {
@@ -489,13 +493,6 @@ static SPStyleEnum const enum_direction[] = {
     {NULL, -1}
 };
 
-static SPStyleEnum const enum_block_progression[] = {
-    {"tb", SP_CSS_BLOCK_PROGRESSION_TB},
-    {"rl", SP_CSS_BLOCK_PROGRESSION_RL},
-    {"lr", SP_CSS_BLOCK_PROGRESSION_LR},
-    {NULL, -1}
-};
-
 static SPStyleEnum const enum_writing_mode[] = {
     /* Note that using the same enumerator for lr as lr-tb means we write as lr-tb even if the
      * input file said lr.  We prefer writing lr-tb on the grounds that the spec says the initial
@@ -504,12 +501,28 @@ static SPStyleEnum const enum_writing_mode[] = {
      * ECMA scripts may be surprised to find tb-rl in DOM if they set the attribute to rl, so
      * sharing enumerators for different strings may be a bug (once we support ecma script).
      */
+    // SVG 1.1  Deprecated but still must be supported in SVG 2.
     {"lr-tb", SP_CSS_WRITING_MODE_LR_TB},
     {"rl-tb", SP_CSS_WRITING_MODE_RL_TB},
     {"tb-rl", SP_CSS_WRITING_MODE_TB_RL},
     {"lr", SP_CSS_WRITING_MODE_LR_TB},
     {"rl", SP_CSS_WRITING_MODE_RL_TB},
     {"tb", SP_CSS_WRITING_MODE_TB_RL},
+    // SVG 2 & CSS 3 Writing Modes
+    {"horizontal-tb", SP_CSS_WRITING_MODE_LR_TB}, // This is correct, 'direction' distinguishes between 'lr' and 'rl'.
+    {"vertical-rl", SP_CSS_WRITING_MODE_TB_RL},
+    {"vertical-lr", SP_CSS_WRITING_MODE_TB_LR},
+    {NULL, -1}
+};
+
+// CSS WRITING MODES 3
+static SPStyleEnum const enum_text_orientation[] = {
+    {"mixed",                 SP_CSS_TEXT_ORIENTATION_MIXED}, // Default
+    {"upright",               SP_CSS_TEXT_ORIENTATION_UPRIGHT},
+    {"sideways-right",        SP_CSS_TEXT_ORIENTATION_SIDEWAYS_RIGHT},
+    {"sideways-left",         SP_CSS_TEXT_ORIENTATION_SIDEWAYS_LEFT},
+    {"sideways",              SP_CSS_TEXT_ORIENTATION_SIDEWAYS},
+    {"use-glyph-orientation", SP_CSS_TEXT_ORIENTATION_USE_GLYPH_ORIENTATION},
     {NULL, -1}
 };
 

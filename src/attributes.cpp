@@ -440,8 +440,8 @@ static SPStyleProp const props[] = {
 
     /* Text (css3) */
     {SP_PROP_DIRECTION, "direction"},
-    {SP_PROP_BLOCK_PROGRESSION, "block-progression"},
     {SP_PROP_WRITING_MODE, "writing-mode"},
+    {SP_PROP_TEXT_ORIENTATION, "text-orientation"},
     {SP_PROP_UNICODE_BIDI, "unicode-bidi"},
     {SP_PROP_ALIGNMENT_BASELINE, "alignment-baseline"},
     {SP_PROP_BASELINE_SHIFT, "baseline-shift"},

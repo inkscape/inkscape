@@ -172,11 +172,6 @@ float Layout::InputStreamTextSource::styleComputeFontSize() const
     return medium_font_size * inherit_multiplier;
 }
 
-static const Layout::EnumConversionItem enum_convert_spstyle_block_progression_to_direction[] = {
-    {SP_CSS_BLOCK_PROGRESSION_TB, Layout::TOP_TO_BOTTOM},
-    {SP_CSS_BLOCK_PROGRESSION_LR, Layout::LEFT_TO_RIGHT},
-    {SP_CSS_BLOCK_PROGRESSION_RL, Layout::RIGHT_TO_LEFT}};
-
 static const Layout::EnumConversionItem enum_convert_spstyle_writing_mode_to_direction[] = {
     {SP_CSS_WRITING_MODE_LR_TB, Layout::TOP_TO_BOTTOM},
     {SP_CSS_WRITING_MODE_RL_TB, Layout::TOP_TO_BOTTOM},
@@ -190,8 +185,6 @@ Layout::Direction Layout::InputStreamTextSource::styleGetBlockProgression() cons
     SPStyle const *this_style = style;
 
     for ( ; ; ) {
-        if (this_style->block_progression.set)
-            return (Layout::Direction)_enum_converter(this_style->block_progression.computed, enum_convert_spstyle_block_progression_to_direction, sizeof(enum_convert_spstyle_block_progression_to_direction)/sizeof(enum_convert_spstyle_block_progression_to_direction[0]));
         if (this_style->writing_mode.set)
             return (Layout::Direction)_enum_converter(this_style->writing_mode.computed, enum_convert_spstyle_writing_mode_to_direction, sizeof(enum_convert_spstyle_writing_mode_to_direction)/sizeof(enum_convert_spstyle_writing_mode_to_direction[0]));
         if (this_style->object == NULL || this_style->object->parent == NULL) break;

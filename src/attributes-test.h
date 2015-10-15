@@ -43,6 +43,7 @@ public:
    SVG 2: text-decoration-fill, text-decoration-stroke
    SVG 2: solid-color, solid-opacity
    SVG 2: Hatches and Meshes
+   CSS 3: text-orientation
    CSS 3: font-variant-xxx, font-feature-settings
 */
 struct {char const *attr; bool supported;} const all_attrs[] = {
@@ -69,7 +70,6 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"baseProfile", false},
     {"bbox", true},
     {"bias", true},
-    {"block-progression", true},
     {"by", true},
     {"calcMode", true},
     {"cap-height", true},
@@ -334,6 +334,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"widths", true},
     {"word-spacing", true},
     {"writing-mode", true},
+    {"text-orientation", true},
     {"x", true},
     {"x-height", true},
     {"x1", true},
