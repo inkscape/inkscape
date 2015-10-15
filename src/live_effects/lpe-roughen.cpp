@@ -51,6 +51,8 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
                  true),
       shift_handles(_("Shift node handles"), _("Shift node handles"),
                        "shift_handles", &wr, this, true),
+      retract_handles(_("Retract node handles"), _("Retract node handles"),
+                       "retract_handles", &wr, this, false),
       shift_handles_sym(_("Sym shift node handles"), _("Sym shift node handles"),
                        "shift_handles_sym", &wr, this, false),
       fixed_displacement(_("Fixed displacement"), _("Fixed displacement, 1/3 of segment lenght"),
@@ -64,6 +66,7 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
     registerParameter(&global_randomize);
     registerParameter(&shift_nodes);
     registerParameter(&shift_handles);
+    registerParameter(&retract_handles);
     registerParameter(&shift_handles_sym);
     registerParameter(&fixed_displacement);
     displace_x.param_set_range(0., Geom::infinity());
@@ -167,8 +170,7 @@ Geom::Point LPERoughen::randomize(double max_lenght)
 
 void LPERoughen::doEffect(SPCurve *curve)
 {
-    Geom::PathVector const original_pathv =
-        pathv_to_linear_and_cubic_beziers(curve->get_pathvector());
+    Geom::PathVector const original_pathv = pathv_to_linear_and_cubic_beziers(curve->get_pathvector());
     curve->reset();
     for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
             path_it != original_pathv.end(); ++path_it) {
@@ -180,31 +182,14 @@ void LPERoughen::doEffect(SPCurve *curve)
         Geom::Path::const_iterator curve_endit = path_it->end_default();
         SPCurve *nCurve = new SPCurve();
         Geom::Point prev(0, 0);
-        if (path_it->closed()) {
-            const Geom::Curve &closingline =
-                path_it->back_closed();
-            if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
-                curve_endit = path_it->end_open();
-            }
-        }
         nCurve->moveto(curve_it1->initialPoint());
-        Geom::Point point0(0, 0);
-        Geom::Point point_a1(0, 0);
-        Geom::Point point_a2(0, 0);
-        Geom::Point point_a3(0, 0);
         while (curve_it1 != curve_endit) {
             Geom::CubicBezier const *cubic = NULL;
-            point0 = curve_it1->initialPoint();
-            point_a1 = curve_it1->initialPoint();
-            point_a2 = curve_it1->finalPoint();
-            point_a3 = curve_it1->finalPoint();
             cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
             if (cubic) {
-                point_a1 = (*cubic)[1];
-                point_a2 = (*cubic)[2];
-                nCurve->curveto(point_a1, point_a2, point_a3);
+                nCurve->curveto((*cubic)[1], (*cubic)[2], curve_it1->finalPoint());
             } else {
-                nCurve->lineto(point_a3);
+                nCurve->lineto(curve_it1->finalPoint());
             }
             double length = curve_it1->length(0.001);
             std::size_t splits = 0;
@@ -238,12 +223,10 @@ void LPERoughen::doEffect(SPCurve *curve)
                 delete tmp;
             }
             ++curve_it1;
-            if(curve_it2 != curve_endit) {
-                ++curve_it2;
-            }
+            ++curve_it2;
         }
         if (path_it->closed()) {
-            if(shift_handles_sym && curve_it2 == curve_endit){
+            if(shift_handles_sym && curve_it1 == curve_endit && !retract_handles){
                 SPCurve *out = new SPCurve();
                 nCurve = nCurve->create_reverse();
                 Geom::CubicBezier const *cubic_start = dynamic_cast<Geom::CubicBezier const *>(nCurve->first_segment());
@@ -305,7 +288,17 @@ SPCurve const * LPERoughen::addNodesAndJitter(Geom::Curve const * A, Geom::Point
             point_b2 = point_b3;
         }
     }
-    if(shift_handles_sym && cubic) {
+    if(retract_handles){
+        out->moveto(A->initialPoint());
+        out->lineto(A->pointAt(t) + point_a3);
+        if(cubic && !last){
+            std::pair<Geom::CubicBezier, Geom::CubicBezier> div = cubic->subdivide(t);
+            std::vector<Geom::Point> seg2 = div.second.controlPoints();
+            out->curveto(seg2[1], seg2[2], seg2[3]);
+        } else {
+            out->lineto(A->finalPoint() + point_b3);
+        }
+    } else if(shift_handles_sym && cubic) {
         std::pair<Geom::CubicBezier, Geom::CubicBezier> div = cubic->subdivide(t);
         std::vector<Geom::Point> seg1 = div.first.controlPoints(),
                                  seg2 = div.second.controlPoints();
@@ -314,15 +307,15 @@ SPCurve const * LPERoughen::addNodesAndJitter(Geom::Curve const * A, Geom::Point
         if(prev == Geom::Point(0,0)){
             point_a1 = randomize(max_lenght);
         }
-        ray.setPoints(seg2[1] + point_a3 + point_b1, seg1[3] + point_a3);
+        ray.setPoints(seg2[1] + point_a3 + point_b1, seg2[0] + point_a3);
         point_a2  = Geom::Point::polar(ray.angle(), max_lenght);
-        if(!last){
-            prev = seg1[3] + point_a3 + point_a2;
-        } else {
+        if(last){
             prev = A->pointAt(1 - (t / 3)) + point_b2 + point_b3;
+        } else {
+            prev = seg1[3] + point_a2 + point_a3;
         }
         out->moveto(seg1[0]);
-        out->curveto(seg1[0] + point_a1, seg1[2] + point_a3 + point_a2, seg1[3] + point_a3);
+        out->curveto(seg1[0] + point_a1, seg1[3] + point_a2 + point_a3, seg1[3] + point_a3);
         if(last){
             out->curveto(seg2[1] + point_a3 + point_b1, A->pointAt(1 - (t / 3)) + point_b2 + point_b3, seg2[3] + point_b3);
         } else {
@@ -336,18 +329,14 @@ SPCurve const * LPERoughen::addNodesAndJitter(Geom::Curve const * A, Geom::Point
         }
         ray.setPoints(A->pointAt(t + (t / 3)) + point_a3 + point_b1, A->pointAt(t) + point_a3);
         point_a2  = Geom::Point::polar(ray.angle(), max_lenght);
-        if(!last){
-            prev = A->pointAt((t / 3) * 2) +  point_a2;
+        if(last){
+            prev = A->pointAt(t +((t / 3) * 2)) + point_b2 + point_b3;
         } else {
-            prev = A->pointAt(1 - (t / 3)) + point_b2 + point_b3;
+            prev =  A->pointAt(t) + point_a3 + point_a2;
         }
         out->moveto(A->initialPoint());
-        out->curveto(A->initialPoint() + point_a1, A->pointAt((t / 3) * 2) + point_a3 + point_a2, A->pointAt(t) + point_a3);
-        if(last){
-            out->curveto(A->pointAt(t + (t / 3)) + point_a3 + point_b1, A->pointAt(1 - (t / 3)) + point_b2 + point_b3, A->finalPoint() + point_b3);
-        } else {
-            out->curveto(A->pointAt(t + (t / 3)) + point_a3 + point_b1, A->pointAt(t +((t / 3) * 2)) + point_b2 + point_b3, A->finalPoint() + point_b3);
-        }
+        out->curveto(A->initialPoint() + point_a1, A->pointAt(t) + point_a3 + point_a2, A->pointAt(t) + point_a3);
+        out->curveto(A->pointAt(t + (t / 3)) + point_a3 + point_b1, A->pointAt(t +((t / 3) * 2)) + point_b2 + point_b3, A->finalPoint() + point_b3);
     } else if (cubic) {
         std::pair<Geom::CubicBezier, Geom::CubicBezier> div = cubic->subdivide(t);
         std::vector<Geom::Point> seg1 = div.first.controlPoints(),
@@ -382,7 +371,10 @@ SPCurve *LPERoughen::jitter(Geom::Curve const * A, Geom::Point &prev)
         point_a1 = randomize(max_lenght);
         point_a2 = randomize(max_lenght);
     }
-    if(shift_handles_sym && cubic) {
+    if(retract_handles){
+        out->moveto(A->initialPoint());
+        out->lineto(A->finalPoint() + point_a3);
+    } else if(shift_handles_sym && cubic) {
         Geom::Ray ray(prev,A->initialPoint());
         point_a1  = Geom::Point::polar(ray.angle(), max_lenght);
         if(prev == Geom::Point(0,0)){
@@ -390,7 +382,7 @@ SPCurve *LPERoughen::jitter(Geom::Curve const * A, Geom::Point &prev)
         }
         prev = (*cubic)[2] + point_a2;
         out->moveto((*cubic)[0]);
-        out->curveto((*cubic)[0] + point_a1, (*cubic)[2] + point_a2, (*cubic)[3] + point_a3);
+        out->curveto((*cubic)[0] + point_a1, (*cubic)[2] + point_a2 + point_a3, (*cubic)[3] + point_a3);
     } else if(shift_handles_sym && !cubic) {
         Geom::Ray ray(prev,A->initialPoint());
         point_a1 = Geom::Point::polar(ray.angle(), max_lenght);
@@ -399,13 +391,13 @@ SPCurve *LPERoughen::jitter(Geom::Curve const * A, Geom::Point &prev)
         }
         prev = A->pointAt((1.0/3.0) * 2) +  point_a2;
         out->moveto(A->initialPoint());
-        out->curveto(A->initialPoint() + point_a1, A->pointAt((1.0/3.0) * 2) + point_a2, A->finalPoint() + point_a3);
+        out->curveto(A->initialPoint() + point_a1, A->pointAt((1.0/3.0) * 2) + point_a2 + point_a3, A->finalPoint() + point_a3);
     } else if (cubic) {
         out->moveto((*cubic)[0]);
-        out->curveto((*cubic)[1] + point_a1, (*cubic)[2] + point_a2, (*cubic)[3] + point_a3);
+        out->curveto((*cubic)[1] + point_a1, (*cubic)[2] + point_a2 + point_a3, (*cubic)[3] + point_a3);
     } else if (shift_handles) {
         out->moveto(A->initialPoint());
-        out->curveto(A->pointAt(0.3333) + point_a1, A->pointAt(0.6666) + point_a2,
+        out->curveto(A->pointAt(0.3333) + point_a1, A->pointAt(0.6666) + point_a2 + point_a3,
                      A->finalPoint() + point_a3);
     } else {
         out->moveto(A->initialPoint());

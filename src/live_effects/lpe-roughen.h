@@ -52,6 +52,7 @@ private:
     RandomParam global_randomize;
     BoolParam shift_nodes;
     BoolParam shift_handles;
+    BoolParam retract_handles;
     BoolParam shift_handles_sym;
     BoolParam fixed_displacement;
 
