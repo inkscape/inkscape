@@ -18,6 +18,7 @@
 #include "live_effects/lpe-roughen.h"
 #include "display/curve.h"
 #include "live_effects/parameter/parameter.h"
+#include <boost/functional/hash.hpp>
 #include "helper/geom.h"
 #include <glibmm/i18n.h>
 #include <cmath>
@@ -56,7 +57,9 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
       shift_handles_sym(_("Sym shift node handles"), _("Sym shift node handles"),
                        "shift_handles_sym", &wr, this, false),
       fixed_displacement(_("Fixed displacement"), _("Fixed displacement, 1/3 of segment lenght"),
-                       "fixed_displacement", &wr, this, false)
+                       "fixed_displacement", &wr, this, false),
+      spray_tool_friendly(_("Spray Tool friendly"), _("For use with spray tool"),
+                       "spray_tool_friendly", &wr, this, false)
 {
     registerParameter(&method);
     registerParameter(&max_segment_size);
@@ -69,6 +72,7 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
     registerParameter(&retract_handles);
     registerParameter(&shift_handles_sym);
     registerParameter(&fixed_displacement);
+    registerParameter(&spray_tool_friendly);
     displace_x.param_set_range(0., Geom::infinity());
     displace_y.param_set_range(0., Geom::infinity());
     global_randomize.param_set_range(0., Geom::infinity());
@@ -86,7 +90,12 @@ void LPERoughen::doBeforeEffect(SPLPEItem const *lpeitem)
 {
     displace_x.resetRandomizer();
     displace_y.resetRandomizer();
-    global_randomize.resetRandomizer();
+    if(!spray_tool_friendly){    
+        global_randomize.resetRandomizer();
+    } else {
+        boost::hash<std::string> string_hash;
+        global_randomize.param_set_value(global_randomize.get_value(), static_cast<long>(string_hash(lpeitem->getId())));
+    }
     srand(1);
     SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
     item->apply_to_clippath(item);
@@ -131,6 +140,15 @@ Gtk::Widget *LPERoughen::newWidget()
                 vbox->pack_start(*Gtk::manage(new Gtk::HSeparator()),
                                  Gtk::PACK_EXPAND_WIDGET);
             }
+            if (param->param_key == "shift_nodes") {
+                Gtk::Label *options = Gtk::manage(new Gtk::Label(
+                                                 Glib::ustring(_("<b>Options</b> Modify options to rough")),
+                                                 Gtk::ALIGN_START));
+                options->set_use_markup(true);
+                vbox->pack_start(*options, false, false, 2);
+                vbox->pack_start(*Gtk::manage(new Gtk::HSeparator()),
+                                 Gtk::PACK_EXPAND_WIDGET);
+            }
             Glib::ustring *tip = param->param_getTooltip();
             if (widg) {
                 vbox->pack_start(*widg, true, true, 2);
@@ -142,7 +160,6 @@ Gtk::Widget *LPERoughen::newWidget()
                 }
             }
         }
-
         ++it;
     }
     return dynamic_cast<Gtk::Widget *>(vbox);

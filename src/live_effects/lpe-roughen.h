@@ -55,6 +55,7 @@ private:
     BoolParam retract_handles;
     BoolParam shift_handles_sym;
     BoolParam fixed_displacement;
+    BoolParam spray_tool_friendly;
 
     LPERoughen(const LPERoughen &);
     LPERoughen &operator=(const LPERoughen &);
