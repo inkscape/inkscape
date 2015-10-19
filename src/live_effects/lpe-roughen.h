@@ -28,6 +28,15 @@ enum DivisionMethod {
     DM_END
 };
 
+enum HandlesMethod {
+    HM_ALONG_NODES,
+    HM_RAND,
+    HM_RETRACT,
+    HM_SMOOTH,
+    HM_END
+};
+
+
 class LPERoughen : public Effect {
 
 public:
@@ -36,10 +45,10 @@ public:
 
     virtual void doEffect(SPCurve *curve);
     virtual double sign(double randNumber);
-    virtual Geom::Point randomize(double max_lenght);
+    virtual Geom::Point randomize(double max_lenght, double direction = 0);
     virtual void doBeforeEffect(SPLPEItem const * lpeitem);
-    virtual SPCurve const * addNodesAndJitter(Geom::Curve const * A, Geom::Point &prev, double t, bool last);
-    virtual SPCurve *jitter(Geom::Curve const * A,  Geom::Point &prev);
+    virtual SPCurve const * addNodesAndJitter(Geom::Curve const * A, Geom::Point &prev, Geom::Point &last_move, double t, bool last);
+    virtual SPCurve *jitter(Geom::Curve const * A,  Geom::Point &prev, Geom::Point &last_move);
     virtual Geom::Point tPoint(Geom::Point A, Geom::Point B, double t = 0.5);
     virtual Gtk::Widget *newWidget();
 
@@ -50,13 +59,12 @@ private:
     RandomParam displace_x;
     RandomParam displace_y;
     RandomParam global_randomize;
+    EnumParam<HandlesMethod> handles;
+    ScalarParam max_smooth_angle;
     BoolParam shift_nodes;
-    BoolParam shift_handles;
-    BoolParam retract_handles;
-    BoolParam shift_handles_sym;
     BoolParam fixed_displacement;
     BoolParam spray_tool_friendly;
-
+    long seed;
     LPERoughen(const LPERoughen &);
     LPERoughen &operator=(const LPERoughen &);
 
