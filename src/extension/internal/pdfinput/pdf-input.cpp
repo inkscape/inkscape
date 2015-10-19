@@ -223,6 +223,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _importViaInternal->set_can_focus();
     _importViaInternal->set_relief(Gtk::RELIEF_NORMAL);
     _importViaInternal->set_mode(true);
+    _importViaInternal->set_active(true);
     _labelViaPoppler->set_line_wrap(true);
     _labelViaInternal->set_line_wrap(true);
 #endif
