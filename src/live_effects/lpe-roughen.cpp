@@ -290,7 +290,7 @@ void LPERoughen::doEffect(SPCurve *curve)
                 Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const *>(nCurve->last_segment());
                 if(cubic){
                     out->moveto((*cubic)[0]);
-                    out->curveto((*cubic)[1], (*cubic)[2] - last_move, (*cubic)[3]);
+                    out->curveto((*cubic)[1], (*cubic)[2] - ((*cubic)[3] - nCurve->first_segment()->initialPoint()) , (*cubic)[3]);
                     nCurve->backspace();
                     nCurve->append_continuous(out, 0.001);
                 } 
