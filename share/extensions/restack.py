@@ -21,7 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 """
-import inkex, os, csv, math
+import inkex, os, csv, math, random
+from pathmodifier import zSort
+
+inkex.localize()
 
 try:
     from subprocess import Popen, PIPE
@@ -48,12 +51,48 @@ class Restack(inkex.Effect):
                         action="store", type="string", 
                         dest="yanchor", default="m",
                         help="vertical point to compare")
+        self.OptionParser.add_option("--zsort",
+                        action="store", type="string",
+                        dest="zsort", default="rev",
+                        help="Restack mode based on Z-Order")
+        self.OptionParser.add_option("--tab",
+                        action="store", type="string",
+                        dest="tab",
+                        help="The selected UI-tab when OK was pressed")
+        self.OptionParser.add_option("--nb_direction",
+                        action="store", type="string",
+                        dest="nb_direction",
+                        help="The selected UI-tab when OK was pressed")
+
     def effect(self):
-        if len( self.selected ) > 0:
+        if self.options.tab == '"help"':
+            pass
+        elif len(self.selected) > 0:
+            if self.options.tab == '"positional"':
+                self.restack_positional()
+            elif self.options.tab == '"z_order"':
+                self.restack_z_order()
+        else:
+            inkex.errormsg(_("There is no selection to restack."))
+
+    def restack_positional(self):
+        if 1:  # to be removed (workaround for smaller bzr diff)
+            objects = {}
             objlist = []
-            svg = self.document.getroot()
-            parentnode = self.current_layer
             file = self.args[ -1 ]
+
+            if self.options.nb_direction == '"custom"':
+                self.options.direction = "aa"
+
+            # process selection to get list of objects to be arranged
+            firstobject = self.selected[self.options.ids[0]]
+            if len(self.selected) == 1 and firstobject.tag == inkex.addNS('g', 'svg'):
+                parentnode = firstobject
+                for child in parentnode.iterchildren():
+                    objects[child.get('id')] = child
+            else:
+                parentnode = self.current_layer
+                objects = self.selected
 
             #get all bounding boxes in file by calling inkscape again with the --query-all command line option
             #it returns a comma separated list structured id,x,y,w,h
@@ -81,13 +120,13 @@ class Restack(inkex.Effect):
                 f.close
 				
             #find the center of all selected objects **Not the average!
-            x,y,w,h = dimen[self.selected.keys()[0]]
+            x,y,w,h = dimen[objects.keys()[0]]
             minx = x
             miny = y
             maxx = x + w
             maxy = y + h
 
-            for id, node in self.selected.iteritems():
+            for id, node in objects.iteritems():
                 # get the bounding box
                 x,y,w,h = dimen[id]
                 if x < minx:
@@ -103,7 +142,7 @@ class Restack(inkex.Effect):
             midy = (miny + maxy) / 2
 
             #calculate distances for each selected object
-            for id, node in self.selected.iteritems():
+            for id, node in objects.iteritems():
                 # get the bounding box
                 x,y,w,h = dimen[id]
 
@@ -144,7 +183,29 @@ class Restack(inkex.Effect):
             objlist.sort()
             #move them to the top of the object stack in this order.
             for item in objlist:
-                parentnode.append( self.selected[item[1]])
+                parentnode.append( objects[item[1]])
+
+    def restack_z_order(self):
+        parentnode = None
+        objects = []
+        if len(self.selected) == 1:
+            firstobject = self.selected[self.options.ids[0]]
+            if firstobject.tag == inkex.addNS('g', 'svg'):
+                parentnode = firstobject
+                for child in parentnode.iterchildren(reversed=False):
+                    objects.append(child)
+        else:
+            parentnode = self.current_layer
+            for id_ in zSort(self.document.getroot(), self.selected.keys()):
+                objects.append(self.selected[id_])
+        if self.options.zsort == "rev":
+            objects.reverse()
+        elif self.options.zsort == "rand":
+            random.shuffle(objects)
+        if parentnode is not None:
+            for item in objects:
+                parentnode.append(item)
+
 
 if __name__ == '__main__':
     e = Restack()

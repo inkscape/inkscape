@@ -4,25 +4,49 @@
     <id>org.inkscape.filter.restack</id>
 	<dependency type="executable" location="extensions">restack.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
-    <param name="direction" type="enum" _gui-text="Restack Direction:">
-        <_item value="lr">Left to Right (0)</_item>
-        <_item value="bt">Bottom to Top (90)</_item>
-        <_item value="rl">Right to Left (180)</_item>
-        <_item value="tb">Top to Bottom (270)</_item>
-        <_item value="ro">Radial Outward</_item>
-        <_item value="ri">Radial Inward</_item>
-    	<_item value="aa">Arbitrary Angle</_item>
-    </param>
-	<param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle:">0.00</param>
-    <param name="xanchor" type="enum" _gui-text="Horizontal Point:">
-        <_item value="l">Left</_item>
-        <_item value="m">Middle</_item>
-        <_item value="r">Right</_item>
-    </param>
-    <param name="yanchor" type="enum" _gui-text="Vertical Point:">
-        <_item value="t">Top</_item>
-        <_item value="m">Middle</_item>
-        <_item value="b">Bottom</_item>
+    <param name="tab" type="notebook">
+        <page name="positional" _gui-text="Based on Position">
+            <_param name="desc_dir" type="description" appearance="header">Restack Direction</_param>
+            <param name="nb_direction" type="notebook">
+                <page name="presets" _gui-text="Presets">
+                    <param name="direction" type="enum" _gui-text="">
+                        <_item value="lr">Left to Right (0)</_item>
+                        <_item value="bt">Bottom to Top (90)</_item>
+                        <_item value="rl">Right to Left (180)</_item>
+                        <_item value="tb">Top to Bottom (270)</_item>
+                        <_item value="ro">Radial Outward</_item>
+                        <_item value="ri">Radial Inward</_item>
+                    </param>
+                </page>
+                <page name="custom" _gui-text="Custom">
+                    <param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle:">0.00</param>
+                </page>
+            </param>
+            <_param name="desc_ref" type="description" appearance="header">Object Reference Point</_param>
+            <param name="xanchor" type="enum" _gui-text="Horizontal:">
+                <_item value="l">Left</_item>
+                <_item value="m">Middle</_item>
+                <_item value="r">Right</_item>
+            </param>
+            <param name="yanchor" type="enum" _gui-text="Vertical:">
+                <_item value="t">Top</_item>
+                <_item value="m">Middle</_item>
+                <_item value="b">Bottom</_item>
+            </param>
+        </page>
+        <page name="z_order" _gui-text="Based on Z-Order">
+            <_param name="desc_zsort" type="description" appearance="header">Restack Mode</_param>
+            <param name="zsort" type="enum" _gui-text="">
+                <_item value="rev">Reverse Z-Order</_item>
+                <_item value="rand">Shuffle Z-Order</_item>
+            </param>
+        </page>
+        <page name="help" _gui-text="Help">
+      <_param name="desc_help" type="description">This extension changes the z-order of objects based on their position on the canvas or their current z-order.
+
+Selection:
+The extension restacks either objects inside a single selected group, or a selection of multiple objects on the current drawing level (layer or group).</_param>
+        </page>
     </param>
     <effect>
 	<object-type>path</object-type>
