@@ -6,7 +6,7 @@ add_custom_command(
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${I18N_FILES}
 )
-add_custom_target(palettes.h ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/palettes.h)
+add_custom_target(palettes_h ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/palettes.h)
 
 file(GLOB _FILES "*.gpl")
 

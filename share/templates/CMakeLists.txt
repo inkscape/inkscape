@@ -6,6 +6,6 @@ add_custom_command(
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/i18n.py ${_FILES}
 )
-add_custom_target(templates.h ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/templates.h)
+add_custom_target(templates_h ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/templates.h)
 
 install(FILES ${_FILES} "README" ${CMAKE_CURRENT_BINARY_DIR}/templates.h DESTINATION ${SHARE_INSTALL}/inkscape/templates)

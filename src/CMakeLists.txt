@@ -531,6 +531,10 @@ endif()
 
 add_dependencies(inkscape inkscape_version)
 
+if (NOT "${WITH_EXT_GDL}")
+    list (APPEND INKSCAPE_LIBS "gdl_LIB")
+endif()
+
 set(INKSCAPE_TARGET_LIBS
         # order from automake
         #sp_LIB
@@ -542,7 +546,6 @@ set(INKSCAPE_TARGET_LIBS
 
         croco_LIB
         avoid_LIB
-        gdl_LIB
         cola_LIB
         vpsc_LIB
         livarot_LIB
