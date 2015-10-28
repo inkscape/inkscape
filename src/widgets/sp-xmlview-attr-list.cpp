@@ -145,6 +145,7 @@ void sp_xmlview_attr_list_select_row_by_key(SPXMLViewAttrList * list, const gcha
             break;
         }
         valid = gtk_tree_model_iter_next (GTK_TREE_MODEL(list->store), &iter);
+        // cppcheck-suppress nullPointer  // a string was copied in n by gtk_tree_model_get
         if (n) {
             g_free(n);
         }
@@ -181,6 +182,7 @@ event_attr_changed (Inkscape::XML::Node * /*repr*/,
         }
         row++;
         valid = gtk_tree_model_iter_next (GTK_TREE_MODEL(list->store), &iter);
+        // cppcheck-suppress nullPointer  // a string was copied in n by gtk_tree_model_get
         if (n) {
             g_free(n);
         }

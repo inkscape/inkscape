@@ -246,7 +246,7 @@ void SPFilter::update(SPCtx *ctx, guint flags) {
     }
     childflags &= SP_OBJECT_MODIFIED_CASCADE;
     std::vector<SPObject*> l(this->childList(true, SPObject::ActionUpdate));
-    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *child = *i;
         if( SP_IS_FILTER_PRIMITIVE( child ) ) {
             child->updateDisplay(ctx, childflags);
