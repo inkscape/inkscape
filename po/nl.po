@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-10-21 07:47+0200\n"
-"PO-Revision-Date: 2015-10-28 21:48+0100\n"
+"PO-Revision-Date: 2015-10-28 22:04+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -9931,7 +9931,7 @@ msgstr "Knooppunten verbergen"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:55
 msgid "Ignore 0 radius knots"
-msgstr "0 straalpunten negeren"
+msgstr "0 straalknopen negeren"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:57
 msgid "Flexible radius size (%)"
@@ -18214,9 +18214,8 @@ msgid "Bengali/Bangladesh (bn_BD)"
 msgstr "Bengaals/Bangladesh (bn_BD)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
-#, fuzzy
 msgid "Bodo (brx)"
-msgstr "Bretoens (br)"
+msgstr "Bodo (brx)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Breton (br)"
@@ -18315,9 +18314,8 @@ msgid "Galician (gl)"
 msgstr "Galisisch (gl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:533
-#, fuzzy
 msgid "Gujarati (gu)"
-msgstr "Gujarati"
+msgstr "Gujarati (gu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hebrew (he)"
@@ -18325,7 +18323,7 @@ msgstr "Hebreeuws (he)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hindi (hi)"
-msgstr ""
+msgstr "Hindi (hi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hungarian (hu)"
@@ -18352,17 +18350,16 @@ msgid "Japanese (ja)"
 msgstr "Japans (ja)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
-#, fuzzy
 msgid "Kannada (kn)"
-msgstr "Kannada"
+msgstr "Kannada (kn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Kashmiri in Peso-Arabic script (ks@aran)"
-msgstr ""
+msgstr "Kashmiri in Peso-Arabisch schrift (ks@aran)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Kashmiri in Devanagari script (ks@deva)"
-msgstr ""
+msgstr "Kashmiri in Devanagari schrift (ks@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Khmer (km)"
@@ -18373,14 +18370,12 @@ msgid "Kinyarwanda (rw)"
 msgstr "Rwandees (rw)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
-#, fuzzy
 msgid "Konkani (kok)"
-msgstr "Koreaans (ko)"
+msgstr "Konkani (kok)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
-#, fuzzy
 msgid "Konkani in Latin script (kok@latin)"
-msgstr "Servisch in Latijnse karakters (sr@latin)"
+msgstr "Konkani in Latijnse karakters (kok@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Korean (ko)"
@@ -18400,24 +18395,23 @@ msgstr "Macedonisch (mk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Maithili (mai)"
-msgstr ""
+msgstr "Maithili (mai)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
-#, fuzzy
 msgid "Malayalam (ml)"
-msgstr "Malayalam"
+msgstr "Malayalam (ml)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Manipuri (mni)"
-msgstr ""
+msgstr "Manipuri (mni)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Manipuri in Bengali script (mni@beng)"
-msgstr ""
+msgstr "Manipuri in Bengaals schrift (mni@beng)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Marathi (mr)"
-msgstr ""
+msgstr "Marathi (mr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Mongolian (mn)"
@@ -18437,7 +18431,7 @@ msgstr "Noors Nynorsk (nn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid "Odia (or)"
-msgstr ""
+msgstr "Oriya (or)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid "Panjabi (pa)"
@@ -18465,17 +18459,15 @@ msgstr "Russisch (ru)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Sanskrit (sa)"
-msgstr ""
+msgstr "Sanskriet (sa)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
-#, fuzzy
 msgid "Santali (sat)"
-msgstr "Italiaans (it)"
+msgstr "Santali (sat)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
-#, fuzzy
 msgid "Santali in Devanagari script (sat@deva)"
-msgstr "Servisch in Latijnse karakters (sr@latin)"
+msgstr "Santali in Devanagari schrift (sat@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Serbian (sr)"
@@ -18487,12 +18479,11 @@ msgstr "Servisch in Latijnse karakters (sr@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Sindhi (sd)"
-msgstr ""
+msgstr "Sindhi (sd)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
-#, fuzzy
 msgid "Sindhi in Devanagari script (sd@deva)"
-msgstr "Servisch in Latijnse karakters (sr@latin)"
+msgstr "Sindhi in Devanagari schrift (sd@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Slovak (sk)"
@@ -18515,9 +18506,8 @@ msgid "Swedish (sv)"
 msgstr "Zweeds (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
-#, fuzzy
 msgid "Tamil (ta)"
-msgstr "Tamil"
+msgstr "Tamil (ta)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Telugu (te)"
@@ -18537,7 +18527,7 @@ msgstr "Oekraïens (uk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:547
 msgid "Urdu (ur)"
-msgstr ""
+msgstr "Urdu (ur)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:548
 msgid "Vietnamese (vi)"
@@ -19805,9 +19795,8 @@ msgstr "Verschuiven"
 
 #. Snapping options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1262
-#, fuzzy
 msgid "Snap indicator"
-msgstr "Kleefindicator activeren"
+msgstr "Kleefindicator"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1264
 msgid "Enable snap indicator"
@@ -19820,17 +19809,18 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1271
 msgid "Snap indicator persistence (in seconds):"
-msgstr ""
+msgstr "Duur kleefindicator (in seconden):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1272
 msgid ""
 "Controls how long the snap indicator message will be shown, before it "
 "disappears"
 msgstr ""
+"Bepaalt hoelang de kleefindicatorboodschap getoond wordt voor deze verdwijnt"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid "What should snap"
-msgstr ""
+msgstr "Wat kleeft"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1276
 msgid "Only snap the node closest to the pointer"
@@ -19872,14 +19862,12 @@ msgstr ""
 "plaats van de projectie van het knooppunt op de beperkte lijn"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1288
-#, fuzzy
 msgid "Delayed snap"
-msgstr "Altijd kleven"
+msgstr "Vertraagd kleven"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1291
-#, fuzzy
 msgid "Delay (in seconds):"
-msgstr "_Vertraging (ms):"
+msgstr "Vertraging (in seconden):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1292
 msgid ""
