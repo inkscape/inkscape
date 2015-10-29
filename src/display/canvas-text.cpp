@@ -266,14 +266,10 @@ sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0)
 void
 sp_canvastext_set_coords (SPCanvasText *ct, const Geom::Point start)
 {
-    Geom::Point pos;
-
-    g_return_if_fail (ct != NULL);
+    g_return_if_fail (ct && ct->desktop);
     g_return_if_fail (SP_IS_CANVASTEXT (ct));
     
-    if (ct && ct->desktop) {
-        pos = ct->desktop->doc2dt(start);
-    }
+    Geom::Point pos = ct->desktop->doc2dt(start);
 
     if (DIFFER (pos[0], ct->s[Geom::X]) || DIFFER (pos[1], ct->s[Geom::Y])) {
         ct->s[Geom::X] = pos[0];

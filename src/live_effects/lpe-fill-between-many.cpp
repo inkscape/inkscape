@@ -37,7 +37,7 @@ void LPEFillBetweenMany::doEffect (SPCurve * curve)
 {
     Geom::PathVector res_pathv;
     SPItem * firstObj = NULL;
-    for (std::vector<PathAndDirection*>::iterator iter = linked_paths._vector.begin(); iter != linked_paths._vector.end(); iter++) {
+    for (std::vector<PathAndDirection*>::iterator iter = linked_paths._vector.begin(); iter != linked_paths._vector.end(); ++iter) {
         SPObject *obj;
         if ((*iter)->ref.isAttached() && (obj = (*iter)->ref.getObject()) && SP_IS_ITEM(obj) && !(*iter)->_pathvector.empty()) {
             Geom::Path linked_path;

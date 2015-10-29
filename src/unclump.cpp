@@ -172,7 +172,7 @@ static double unclump_average (SPItem *item, std::list<SPItem*> &others)
 {
     int n = 0;
     double sum = 0;
-    for (std::list<SPItem*>::const_iterator i = others.begin(); i != others.end();i++) {
+    for (std::list<SPItem*>::const_iterator i = others.begin(); i != others.end();++i) {
         SPItem *other = *i;
 
         if (other == item)
@@ -196,7 +196,7 @@ static SPItem *unclump_closest (SPItem *item, std::list<SPItem*> &others)
     double min = HUGE_VAL;
     SPItem *closest = NULL;
 
-    for (std::list<SPItem*>::const_iterator i = others.begin(); i != others.end();i++) {
+    for (std::list<SPItem*>::const_iterator i = others.begin(); i != others.end();++i) {
     	SPItem *other = *i;
 
         if (other == item)
@@ -219,7 +219,7 @@ static SPItem *unclump_farest (SPItem *item, std::list<SPItem*> &others)
 {
     double max = -HUGE_VAL;
     SPItem *farest = NULL;
-    for (std::list<SPItem*>::const_iterator i = others.begin(); i != others.end();i++) {
+    for (std::list<SPItem*>::const_iterator i = others.begin(); i != others.end();++i) {
         SPItem *other = *i;
 
         if (other == item)
@@ -259,7 +259,7 @@ unclump_remove_behind (SPItem *item, SPItem *closest, std::list<SPItem*> &rest)
     double val_item = A * it[Geom::X] + B * it[Geom::Y] + C;
 
     std::vector<SPItem*> out;
-    for (std::list<SPItem*>::const_reverse_iterator i = rest.rbegin(); i != rest.rend();i++) {
+    for (std::list<SPItem*>::const_reverse_iterator i = rest.rbegin(); i != rest.rend();++i) {
         SPItem *other = *i;
 
         if (other == item)
@@ -336,7 +336,7 @@ unclump (std::vector<SPItem*> &items)
     c_cache.clear();
     wh_cache.clear();
 
-    for (std::vector<SPItem*>::const_iterator i = items.begin(); i != items.end();i++) { //  for each original/clone x:
+    for (std::vector<SPItem*>::const_iterator i = items.begin(); i != items.end();++i) { //  for each original/clone x:
         SPItem *item = *i;
 
         std::list<SPItem*> nei;

@@ -61,7 +61,7 @@ ExecutionEnv::ExecutionEnv (Effect * effect, Inkscape::UI::View::View * doc, Imp
 
     if (desktop != NULL) {
     	std::vector<SPItem*> selected = desktop->getSelection()->itemList();
-        for(std::vector<SPItem*>::const_iterator x = selected.begin(); x != selected.end(); x++){
+        for(std::vector<SPItem*>::const_iterator x = selected.begin(); x != selected.end(); ++x){
             Glib::ustring selected_id;
             selected_id = (*x)->getId();
             _selected.insert(_selected.end(), selected_id);

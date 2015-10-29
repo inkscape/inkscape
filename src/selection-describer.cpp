@@ -46,7 +46,7 @@ char* collect_terms (const std::vector<SPItem*> &items)
     std::stringstream ss;
     bool first = true;
 
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();++iter ) {
         SPItem *item = *iter;
         if (item) {
             const char *term = item->displayName();
@@ -65,7 +65,7 @@ static int count_terms (const std::vector<SPItem*> &items)
 {
     GSList *check = NULL;
     int count=0;
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();++iter ) {
         SPItem *item = *iter;
         if (item) {
             const char *term = item->displayName();
@@ -82,7 +82,7 @@ static int count_terms (const std::vector<SPItem*> &items)
 static int count_filtered (const std::vector<SPItem*> &items)
 {
     int count=0;
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();++iter ) {
         SPItem *item = *iter;
         if (item) {
             count += item->isFiltered();
