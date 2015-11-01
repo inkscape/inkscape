@@ -14,7 +14,7 @@
             <_param name="basic_desc1" type="description">Render all bitmap images like in older Inskcape versions.
 
 Available options:</_param>
-            <param name="fix_scaling" type="boolean" _gui-text="Support non-unifom scaling">true</param>
+            <param name="fix_scaling" type="boolean" _gui-text="Support non-uniform scaling">true</param>
             <param name="fix_rendering" type="boolean" _gui-text="Render images blocky">false</param>
         </page>
 

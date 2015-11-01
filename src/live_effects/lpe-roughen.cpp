@@ -63,7 +63,7 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
                      "max_smooth_angle", &wr, this, 20),
       shift_nodes(_("Shift nodes"), _("Shift nodes"), "shift_nodes", &wr, this,
                  true),
-      fixed_displacement(_("Fixed displacement"), _("Fixed displacement, 1/3 of segment lenght"),
+      fixed_displacement(_("Fixed displacement"), _("Fixed displacement, 1/3 of segment length"),
                        "fixed_displacement", &wr, this, false),
       spray_tool_friendly(_("Spray Tool friendly"), _("For use with spray tool"),
                        "spray_tool_friendly", &wr, this, false)
