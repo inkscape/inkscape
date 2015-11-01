@@ -288,7 +288,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
         //TRANSLATORS:  "H" here stands for hue
-        g_object_set( act, "short_label", _("H"), NULL );
+        g_object_set( act, "short_label", C_("Hue", "H"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doh), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/doh", true) );
@@ -304,7 +304,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
         //TRANSLATORS: "S" here stands for Saturation
-        g_object_set( act, "short_label", _("S"), NULL );
+        g_object_set( act, "short_label", C_("Saturation", "S"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dos), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/dos", true) );
@@ -320,7 +320,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
         //TRANSLATORS: "L" here stands for Lightness
-        g_object_set( act, "short_label", _("L"), NULL );
+        g_object_set( act, "short_label", C_("Lightness", "L"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_dol), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/dol", true) );
@@ -336,7 +336,7 @@ void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                       NULL,
                                                       Inkscape::ICON_SIZE_DECORATION );
         //TRANSLATORS: "O" here stands for Opacity
-        g_object_set( act, "short_label", _("O"), NULL );
+        g_object_set( act, "short_label", C_("Opacity", "O"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(tweak_toggle_doo), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/tweak/doo", true) );

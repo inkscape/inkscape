@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-10-21 07:47+0200\n"
+"POT-Creation-Date: 2015-11-01 13:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5794,79 +5794,79 @@ msgstr ""
 msgid "Open presentation exchange files saved in Corel DRAW"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3584
+#: ../src/extension/internal/emf-inout.cpp:3581
 msgid "EMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3589
+#: ../src/extension/internal/emf-inout.cpp:3586
 msgid "Enhanced Metafiles (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3590
+#: ../src/extension/internal/emf-inout.cpp:3587
 msgid "Enhanced Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3598
+#: ../src/extension/internal/emf-inout.cpp:3595
 msgid "EMF Output"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3600
+#: ../src/extension/internal/emf-inout.cpp:3597
 #: ../src/extension/internal/wmf-inout.cpp:3176
 msgid "Convert texts to paths"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3601
+#: ../src/extension/internal/emf-inout.cpp:3598
 #: ../src/extension/internal/wmf-inout.cpp:3177
 msgid "Map Unicode to Symbol font"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3602
+#: ../src/extension/internal/emf-inout.cpp:3599
 #: ../src/extension/internal/wmf-inout.cpp:3178
 msgid "Map Unicode to Wingdings"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3603
+#: ../src/extension/internal/emf-inout.cpp:3600
 #: ../src/extension/internal/wmf-inout.cpp:3179
 msgid "Map Unicode to Zapf Dingbats"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3604
+#: ../src/extension/internal/emf-inout.cpp:3601
 #: ../src/extension/internal/wmf-inout.cpp:3180
 msgid "Use MS Unicode PUA (0xF020-0xF0FF) for converted characters"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3605
+#: ../src/extension/internal/emf-inout.cpp:3602
 #: ../src/extension/internal/wmf-inout.cpp:3181
 msgid "Compensate for PPT font bug"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3606
+#: ../src/extension/internal/emf-inout.cpp:3603
 #: ../src/extension/internal/wmf-inout.cpp:3182
 msgid "Convert dashed/dotted lines to single lines"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3607
+#: ../src/extension/internal/emf-inout.cpp:3604
 #: ../src/extension/internal/wmf-inout.cpp:3183
 msgid "Convert gradients to colored polygon series"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3608
+#: ../src/extension/internal/emf-inout.cpp:3605
 msgid "Use native rectangular linear gradients"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3609
+#: ../src/extension/internal/emf-inout.cpp:3606
 msgid "Map all fill patterns to standard EMF hatches"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3610
+#: ../src/extension/internal/emf-inout.cpp:3607
 msgid "Ignore image rotations"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3614
+#: ../src/extension/internal/emf-inout.cpp:3611
 msgid "Enhanced Metafile (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3615
+#: ../src/extension/internal/emf-inout.cpp:3612
 msgid "Enhanced Metafile"
 msgstr ""
 
@@ -6164,7 +6164,6 @@ msgstr ""
 #: ../src/extension/internal/filter/textures.h:77
 #: ../src/extension/internal/filter/transparency.h:61
 #: ../src/filter-enums.cpp:52 ../src/ui/dialog/inkscape-preferences.cpp:685
-#: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
 msgid "Normal"
 msgstr ""
 
@@ -8944,8 +8943,7 @@ msgid ""
 "Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr ""
 
-#: ../src/libgdl/gdl-dock-paned.c:130 ../src/ui/widget/font-variants.cpp:44
-#: ../src/widgets/ruler.cpp:230
+#: ../src/libgdl/gdl-dock-paned.c:130 ../src/widgets/ruler.cpp:230
 msgid "Position"
 msgstr ""
 
@@ -10662,7 +10660,7 @@ msgid "Fixed displacement"
 msgstr ""
 
 #: ../src/live_effects/lpe-roughen.cpp:66
-msgid "Fixed displacement, 1/3 of segment lenght"
+msgid "Fixed displacement, 1/3 of segment length"
 msgstr ""
 
 #: ../src/live_effects/lpe-roughen.cpp:68
@@ -10841,7 +10839,7 @@ msgid "Smooth angles:"
 msgstr ""
 
 #: ../src/live_effects/lpe-simplify.cpp:32
-msgid "Max degree difference on handles to preform a smooth"
+msgid "Max degree difference on handles to perform a smooth"
 msgstr ""
 
 #: ../src/live_effects/lpe-simplify.cpp:34
@@ -11045,11 +11043,11 @@ msgstr ""
 msgid "Limit for miter joins"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:448
+#: ../src/live_effects/lpe-taperstroke.cpp:447
 msgid "Start point of the taper"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:452
+#: ../src/live_effects/lpe-taperstroke.cpp:451
 msgid "End point of the taper"
 msgstr ""
 
@@ -11066,11 +11064,11 @@ msgid "From original width"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-msgid "Lock lenght"
+msgid "Lock length"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-msgid "Lock lenght to current distance"
+msgid "Lock length to current distance"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:34
@@ -11094,11 +11092,11 @@ msgid "End point"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
-msgid "Strech"
+msgid "Stretch"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
-msgid "Strech the result"
+msgid "Stretch the result"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:40
@@ -11192,29 +11190,29 @@ msgstr ""
 msgid "Change enumeration parameter"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:780
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:841
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:778
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:839
 msgid ""
 "<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:784
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:845
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:782
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
 msgid ""
 "<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:788
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:849
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:786
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
 msgid ""
 "<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:792
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:853
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:790
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:851
 msgid ""
 "<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
@@ -17829,17 +17827,17 @@ msgid "Set the language for menus and number formats"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
-#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Icon size"
 msgid "Large"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
-#: ../src/ui/dialog/inkscape-preferences.cpp:689
-#: ../src/ui/widget/font-variants.cpp:51
+msgctxt "Icon size"
 msgid "Small"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
+msgctxt "Icon size"
 msgid "Smaller"
 msgstr ""
 
@@ -18020,6 +18018,17 @@ msgid "Aggressive"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
+msgid "Small"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
+msgid "Large"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
 msgid "Maximized"
 msgstr ""
 
@@ -19718,6 +19727,7 @@ msgstr ""
 
 #: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743
 #: ../src/ui/dialog/input.cpp:1571 ../src/ui/widget/color-scales.cpp:46
+#: ../share/extensions/plotter.inx.h:24
 msgid "None"
 msgstr ""
 
@@ -20276,23 +20286,27 @@ msgid "Set object blur"
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1617
+msgctxt "Visibility"
 msgid "V"
 msgstr ""
 
-#. TRANSLATORS: "L" here stands for Lightness
-#: ../src/ui/dialog/objects.cpp:1618 ../src/widgets/tweak-toolbar.cpp:323
+#: ../src/ui/dialog/objects.cpp:1618
+msgctxt "Lock"
 msgid "L"
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1619
+msgctxt "Type"
 msgid "T"
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1620
+msgctxt "Clip and mask"
 msgid "CM"
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1621
+msgctxt "Highlight"
 msgid "HL"
 msgstr ""
 
@@ -21043,7 +21057,7 @@ msgid "Set as _default"
 msgstr ""
 
 #: ../src/ui/dialog/text-edit.cpp:87
-msgid "AaBbCcIiPpQq12369$ےے?.;/()"
+msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
 #. Align buttons
@@ -21083,7 +21097,7 @@ msgstr ""
 msgid "Text path offset"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:598 ../src/ui/dialog/text-edit.cpp:685
+#: ../src/ui/dialog/text-edit.cpp:612 ../src/ui/dialog/text-edit.cpp:699
 #: ../src/ui/tools/text-tool.cpp:1446
 msgid "Set text style"
 msgstr ""
@@ -23627,110 +23641,152 @@ msgid "Blur (%)"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:38
+msgctxt "Font variant"
 msgid "Ligatures"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:39
+msgctxt "Font variant"
 msgid "Common"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:40
+msgctxt "Font variant"
 msgid "Discretionary"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:41
+msgctxt "Font variant"
 msgid "Historical"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:42
+msgctxt "Font variant"
 msgid "Contextual"
 msgstr ""
 
+#: ../src/ui/widget/font-variants.cpp:44
+msgctxt "Font variant"
+msgid "Position"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
+msgctxt "Font variant"
+msgid "Normal"
+msgstr ""
+
 #: ../src/ui/widget/font-variants.cpp:46
+msgctxt "Font variant"
 msgid "Subscript"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:47
+msgctxt "Font variant"
 msgid "Superscript"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:49
+msgctxt "Font variant"
 msgid "Capitals"
 msgstr ""
 
+#: ../src/ui/widget/font-variants.cpp:51
+msgctxt "Font variant"
+msgid "Small"
+msgstr ""
+
 #: ../src/ui/widget/font-variants.cpp:52
+msgctxt "Font variant"
 msgid "All small"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:53
+msgctxt "Font variant"
 msgid "Petite"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:54
+msgctxt "Font variant"
 msgid "All petite"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:55
+msgctxt "Font variant"
 msgid "Unicase"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:56
+msgctxt "Font variant"
 msgid "Titling"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:58
+msgctxt "Font variant"
 msgid "Numeric"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:59
+msgctxt "Font variant"
 msgid "Lining"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:60
+msgctxt "Font variant"
 msgid "Old Style"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:61
+msgctxt "Font variant"
 msgid "Default Style"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:62
+msgctxt "Font variant"
 msgid "Proportional"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:63
+msgctxt "Font variant"
 msgid "Tabular"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:64
+msgctxt "Font variant"
 msgid "Default Width"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:65
+msgctxt "Font variant"
 msgid "Diagonal"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:66
+msgctxt "Font variant"
 msgid "Stacked"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:67
+msgctxt "Font variant"
 msgid "Default Fractions"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:68
+msgctxt "Font variant"
 msgid "Ordinal"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:69
+msgctxt "Font variant"
 msgid "Slashed Zero"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:71
+msgctxt "Font variant"
 msgid "Feature Settings"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:72
+msgctxt "Font variant"
 msgid "Selection has different Feature Settings!"
 msgstr ""
 
@@ -29746,6 +29802,7 @@ msgstr ""
 
 #. TRANSLATORS:  "H" here stands for hue
 #: ../src/widgets/tweak-toolbar.cpp:291
+msgctxt "Hue"
 msgid "H"
 msgstr ""
 
@@ -29755,11 +29812,18 @@ msgstr ""
 
 #. TRANSLATORS: "S" here stands for Saturation
 #: ../src/widgets/tweak-toolbar.cpp:307
+msgctxt "Saturation"
 msgid "S"
 msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:319
 msgid "In color mode, act on objects' lightness"
+msgstr ""
+
+#. TRANSLATORS: "L" here stands for Lightness
+#: ../src/widgets/tweak-toolbar.cpp:323
+msgctxt "Lightness"
+msgid "L"
 msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:335
@@ -29768,6 +29832,7 @@ msgstr ""
 
 #. TRANSLATORS: "O" here stands for Opacity
 #: ../src/widgets/tweak-toolbar.cpp:339
+msgctxt "Opacity"
 msgid "O"
 msgstr ""
 
@@ -33249,7 +33314,7 @@ msgstr ""
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:5
-msgid "Support non-unifom scaling"
+msgid "Support non-uniform scaling"
 msgstr ""
 
 #. render images like in 0.48
@@ -34697,11 +34762,6 @@ msgstr ""
 
 #: ../share/extensions/plotter.inx.h:23
 msgid "Hardware (DSR/DTR + RTS/CTS)"
-msgstr ""
-
-#: ../share/extensions/plotter.inx.h:24
-msgctxt "Flow control"
-msgid "None"
 msgstr ""
 
 #: ../share/extensions/plotter.inx.h:25
