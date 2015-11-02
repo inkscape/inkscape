@@ -497,8 +497,6 @@ if [ ${add_python} = "true" ]; then
 		$cp_cmd -RL "$packages_path/../../../share/pygtk" "$pkgshare"
 		$cp_cmd -RL "$packages_path/pygtk.pth" "$pkgpython"
 		$cp_cmd -RL "$packages_path/pygtk.py" "$pkgpython"
-		# ReportLab (for inkscape-hocrpdf, experimental)
-		$cp_cmd -RL "$packages_path/reportlab" "$pkgpython"
 		# cleanup python modules
 		find "$pkgpython" -name *.pyc -print0 | xargs -0 rm -f
 		find "$pkgpython" -name *.pyo -print0 | xargs -0 rm -f
