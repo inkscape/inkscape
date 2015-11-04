@@ -286,6 +286,7 @@ src/ui/tools/flood-tool.cpp
 src/ui/tools/freehand-base.cpp
 src/ui/tools/gradient-tool.cpp
 src/ui/tools/lpe-tool.cpp
+src/ui/tools/measure-tool.cpp
 src/ui/tools/mesh-tool.cpp
 src/ui/tools/node-tool.cpp
 src/ui/tools/pen-tool.cpp
