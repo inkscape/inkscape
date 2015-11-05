@@ -579,7 +579,7 @@ void GlyphsPanel::insertText()
 {
     SPItem *textItem = 0;
     std::vector<SPItem*> itemlist=targetDesktop->selection->itemList();
-        for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; i++) {
+        for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; ++i) {
             if (SP_IS_TEXT(*i) || SP_IS_FLOWTEXT(*i)) {
             textItem = *i;
             break;
@@ -689,7 +689,7 @@ void GlyphsPanel::calcCanInsert()
 {
     int items = 0;
     std::vector<SPItem*> itemlist=targetDesktop->selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; i++) {
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; ++i) {
         if (SP_IS_TEXT(*i) || SP_IS_FLOWTEXT(*i)) {
             ++items;
         }

@@ -154,7 +154,7 @@ std::vector<SPItem*> FontSubstitution::getFontReplacedItems(SPDocument* doc, Gli
     std::map<SPItem *, Glib::ustring> mapFontStyles;
 
     allList = get_all_items(x, doc->getRoot(), desktop, false, false, true, y);
-    for(std::vector<SPItem*>::const_iterator i = allList.begin();i!=allList.end();i++){
+    for(std::vector<SPItem*>::const_iterator i = allList.begin();i!=allList.end();++i){
         SPItem *item = *i;
         SPStyle *style = item->style;
         Glib::ustring family = "";

@@ -812,7 +812,7 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
     bool preserve = prefs->getBool("/options/preservetransform/value", false);
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
     	std::vector<SPItem*> tmp=selection->itemList();
-    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++){
+    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i){
             SPItem *item = *i;
             Geom::OptRect bbox_pref = item->desktopPreferredBounds();
             Geom::OptRect bbox_geom = item->desktopGeometricBounds();
@@ -876,7 +876,7 @@ void Transformation::applyPageRotate(Inkscape::Selection *selection)
 
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
     	std::vector<SPItem*> tmp=selection->itemList();
-    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++){
+    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i){
             SPItem *item = *i;
             sp_item_rotate_rel(item, Geom::Rotate (angle*M_PI/180.0));
         }
@@ -896,7 +896,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
     	std::vector<SPItem*> items=selection->itemList();
-    	for(std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();i++){
+    	for(std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();++i){
             SPItem *item = *i;
 
             if (!_units_skew.isAbsolute()) { // percentage
@@ -998,7 +998,7 @@ void Transformation::applyPageTransform(Inkscape::Selection *selection)
 
     if (_check_replace_matrix.get_active()) {
     	std::vector<SPItem*> tmp=selection->itemList();
-    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++){
+    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i){
             SPItem *item = *i;
             item->set_item_transform(displayed);
             item->updateRepr();

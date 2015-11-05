@@ -215,7 +215,7 @@ void OriginalPathArrayParam::on_up_button_click()
         
         int i = -1;
         std::vector<PathAndDirection*>::iterator piter = _vector.begin();
-        for (std::vector<PathAndDirection*>::iterator iter = _vector.begin(); iter != _vector.end(); piter = iter, i++, iter++) {
+        for (std::vector<PathAndDirection*>::iterator iter = _vector.begin(); iter != _vector.end(); piter = iter, i++, ++iter) {
             if (*iter == row[_model->_colObject]) {
                 _vector.erase(iter);
                 _vector.insert(piter, row[_model->_colObject]);
@@ -241,7 +241,7 @@ void OriginalPathArrayParam::on_down_button_click()
         Gtk::TreeModel::Row row = *iter;
 
         int i = 0;
-        for (std::vector<PathAndDirection*>::iterator iter = _vector.begin(); iter != _vector.end(); i++, iter++) {
+        for (std::vector<PathAndDirection*>::iterator iter = _vector.begin(); iter != _vector.end(); i++, ++iter) {
             if (*iter == row[_model->_colObject]) {
                 std::vector<PathAndDirection*>::iterator niter = _vector.erase(iter);
                 if (niter != _vector.end()) {
@@ -295,7 +295,7 @@ OriginalPathArrayParam::on_link_button_click()
     
     Inkscape::SVGOStringStream os;
     bool foundOne = false;
-    for (std::vector<PathAndDirection*>::const_iterator iter = _vector.begin(); iter != _vector.end(); iter++) {
+    for (std::vector<PathAndDirection*>::const_iterator iter = _vector.begin(); iter != _vector.end(); ++iter) {
         if (foundOne) {
             os << "|";
         } else {
@@ -330,7 +330,7 @@ void OriginalPathArrayParam::unlink(PathAndDirection* to)
 void OriginalPathArrayParam::remove_link(PathAndDirection* to)
 {
     unlink(to);
-    for (std::vector<PathAndDirection*>::iterator iter = _vector.begin(); iter != _vector.end(); iter++) {
+    for (std::vector<PathAndDirection*>::iterator iter = _vector.begin(); iter != _vector.end(); ++iter) {
         if (*iter == to) {
             PathAndDirection *w = *iter;
             _vector.erase(iter);
@@ -455,7 +455,7 @@ gchar * OriginalPathArrayParam::param_getSVGValue() const
 {
     Inkscape::SVGOStringStream os;
     bool foundOne = false;
-    for (std::vector<PathAndDirection*>::const_iterator iter = _vector.begin(); iter != _vector.end(); iter++) {
+    for (std::vector<PathAndDirection*>::const_iterator iter = _vector.begin(); iter != _vector.end(); ++iter) {
         if (foundOne) {
             os << "|";
         } else {

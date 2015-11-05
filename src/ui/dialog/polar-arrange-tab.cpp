@@ -304,7 +304,7 @@ void PolarArrangeTab::arrange()
 	bool arrangeOnFirstEllipse = arrangeOnEllipse && arrangeOnFirstCircleRadio.get_active();
 
 	int count = 0;
-	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++)
+	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i)
 	{
 		if(arrangeOnEllipse)
 		{
