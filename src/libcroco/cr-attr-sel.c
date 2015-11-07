@@ -123,10 +123,10 @@ cr_attr_sel_to_string (CRAttrSel const * a_this)
                 if (cur->name) {
                         guchar *name = NULL;
 
-                        name = g_strndup (cur->name->stryng->str, 
+                        name = (guchar *) g_strndup (cur->name->stryng->str, 
                                           cur->name->stryng->len);
                         if (name) {
-                                g_string_append (str_buf, name);
+                                g_string_append (str_buf, (const gchar *) name);
                                 g_free (name);
                                 name = NULL;
                         }
@@ -135,7 +135,7 @@ cr_attr_sel_to_string (CRAttrSel const * a_this)
                 if (cur->value) {
                         guchar *value = NULL;
 
-                        value = g_strndup (cur->value->stryng->str, 
+                        value = (guchar *) g_strndup (cur->value->stryng->str, 
                                            cur->value->stryng->len);
                         if (value) {
                                 switch (cur->match_way) {
@@ -168,7 +168,7 @@ cr_attr_sel_to_string (CRAttrSel const * a_this)
         }
 
         if (str_buf) {
-                result = str_buf->str;
+                result = (guchar *) str_buf->str;
                 g_string_free (str_buf, FALSE);
         }
 

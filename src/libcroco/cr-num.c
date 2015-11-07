@@ -105,7 +105,7 @@ cr_num_to_string (CRNum const * a_this)
         test_val = a_this->val - (glong) a_this->val;
 
         if (!test_val) {
-                tmp_char1 = g_strdup_printf ("%ld", (glong) a_this->val);
+                tmp_char1 = (guchar *) g_strdup_printf ("%ld", (glong) a_this->val);
         } else {
                 /* We can't use g_ascii_dtostr, because that sometimes uses
                    e notation (which wouldn't be a valid number in CSS). */
@@ -195,7 +195,7 @@ cr_num_to_string (CRNum const * a_this)
         }
 
         if (tmp_char2) {
-                result = g_strconcat (tmp_char1, tmp_char2, NULL);
+                result = (guchar *)  g_strconcat ((gchar *) tmp_char1, tmp_char2, NULL);
                 g_free (tmp_char1);
         } else {
                 result = tmp_char1;

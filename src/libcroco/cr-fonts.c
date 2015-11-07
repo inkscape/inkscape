@@ -78,7 +78,7 @@ cr_font_family_to_string_real (CRFontFamily const * a_this,
                 if (a_this->prev) {
                         g_string_append_printf (*a_string, ", %s", name);
                 } else {
-                        g_string_append (*a_string, name);
+                        g_string_append (*a_string, (const gchar *) name);
                 }
         }
         if (a_walk_list == TRUE && a_this->next) {
@@ -187,7 +187,7 @@ cr_font_family_to_string (CRFontFamily const * a_this,
         GString *stringue = NULL;
 
         if (!a_this) {
-                result = g_strdup ("NULL");
+                result = (guchar *) g_strdup ("NULL");
                 g_return_val_if_fail (result, NULL);
                 return result;
         }
@@ -196,7 +196,7 @@ cr_font_family_to_string (CRFontFamily const * a_this,
                                                 &stringue);
 
         if (status == CR_OK && stringue) {
-                result = stringue->str;
+                result = (guchar *) stringue->str;
                 g_string_free (stringue, FALSE);
                 stringue = NULL;
 
@@ -420,7 +420,7 @@ cr_font_size_set_predefined_absolute_font_size (CRFontSize *a_this,
                                                 enum CRPredefinedAbsoluteFontSize a_predefined)
 {
         g_return_val_if_fail (a_this, CR_BAD_PARAM_ERROR) ;
-        g_return_val_if_fail ((unsigned)a_predefined < NB_FONT_SIZE_TYPE,
+        g_return_val_if_fail ((unsigned)a_predefined < NB_PREDEFINED_ABSOLUTE_FONT_SIZES,
                               CR_BAD_PARAM_ERROR) ;
 
         a_this->type = PREDEFINED_ABSOLUTE_FONT_SIZE ;
@@ -526,7 +526,7 @@ cr_font_size_to_string (CRFontSize const * a_this)
                                 (a_this->value.predefined));
                 break;
         case ABSOLUTE_FONT_SIZE:
-                str = cr_num_to_string (&a_this->value.absolute);
+                str = (gchar *) cr_num_to_string (&a_this->value.absolute);
                 break;
         case RELATIVE_FONT_SIZE:
                 str = g_strdup (cr_relative_font_size_to_string
@@ -683,7 +683,7 @@ cr_font_size_adjust_to_string (CRFontSizeAdjust const * a_this)
                 break;
         case FONT_SIZE_ADJUST_NUMBER:
                 if (a_this->num)
-                        str = cr_num_to_string (a_this->num);
+                        str = (gchar *) cr_num_to_string (a_this->num);
                 else
                         str = g_strdup ("unknow font-size-adjust property value"); /* Should raise an error no?*/
                 break;

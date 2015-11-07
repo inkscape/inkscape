@@ -247,7 +247,7 @@ cr_additional_sel_to_string (CRAdditionalSel const * a_this)
                                 guchar *name = NULL;
 
                                 if (cur->content.class_name) {
-                                        name = g_strndup
+                                        name = (guchar *) g_strndup
                                                 (cur->content.class_name->stryng->str,
                                                  cur->content.class_name->stryng->len);
 
@@ -266,8 +266,8 @@ cr_additional_sel_to_string (CRAdditionalSel const * a_this)
                         {
                                 guchar *name = NULL;
 
-                                if (cur->content.class_name) {
-                                        name = g_strndup
+                                if (cur->content.id_name) {
+                                        name = (guchar *) g_strndup
                                                 (cur->content.id_name->stryng->str,
                                                  cur->content.id_name->stryng->len);
 
@@ -323,7 +323,7 @@ cr_additional_sel_to_string (CRAdditionalSel const * a_this)
         }
 
         if (str_buf) {
-                result = str_buf->str;
+                result = (guchar *) str_buf->str;
                 g_string_free (str_buf, FALSE);
                 str_buf = NULL;
         }
@@ -347,7 +347,7 @@ cr_additional_sel_one_to_string (CRAdditionalSel const *a_this)
                 guchar *name = NULL;
 
                 if (a_this->content.class_name) {
-                        name = g_strndup
+                        name = (guchar *) g_strndup
                                 (a_this->content.class_name->stryng->str,
                                  a_this->content.class_name->stryng->len);
 
@@ -366,8 +366,8 @@ cr_additional_sel_one_to_string (CRAdditionalSel const *a_this)
         {
                 guchar *name = NULL;
 
-                if (a_this->content.class_name) {
-                        name = g_strndup
+                if (a_this->content.id_name) {
+                        name = (guchar *) g_strndup
                                 (a_this->content.id_name->stryng->str,
                                  a_this->content.id_name->stryng->len);
 
@@ -422,7 +422,7 @@ cr_additional_sel_one_to_string (CRAdditionalSel const *a_this)
         }
 
         if (str_buf) {
-                result = str_buf->str;
+                result = (guchar *) str_buf->str;
                 g_string_free (str_buf, FALSE);
                 str_buf = NULL;
         }

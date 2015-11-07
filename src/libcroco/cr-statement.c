@@ -25,8 +25,6 @@
 #include "cr-statement.h"
 #include "cr-parser.h"
 
-#define UNUSED(_param) ((void)(_param))
-
 /**
  *@file
  *Definition of the #CRStatement class.
@@ -38,12 +36,12 @@ static void cr_statement_clear (CRStatement * a_this);
 
 static void  
 parse_font_face_start_font_face_cb (CRDocHandler * a_this,
-                                    CRParsingLocation * a_location)
+                                    CRParsingLocation *a_location)
 {
         CRStatement *stmt = NULL;
         enum CRStatus status = CR_OK;
 
-        UNUSED(a_location);
+        (void) a_location;
 
         stmt = cr_statement_new_at_font_face_rule (NULL, NULL);
         g_return_if_fail (stmt);
@@ -86,7 +84,7 @@ parse_font_face_property_cb (CRDocHandler * a_this,
         CRStatement *stmt = NULL;
         CRStatement **stmtptr = NULL;
 
-        UNUSED(a_important);
+        (void) a_important;
 
         g_return_if_fail (a_this && a_name);
 
@@ -144,13 +142,13 @@ static void
 parse_page_start_page_cb (CRDocHandler * a_this,
                           CRString * a_name, 
                           CRString * a_pseudo_page,
-                          CRParsingLocation * a_location)
+                          CRParsingLocation *a_location)
 {
         CRStatement *stmt = NULL;
         enum CRStatus status = CR_OK;
         CRString *page_name = NULL, *pseudo_name = NULL ;
 
-        UNUSED(a_location);
+        (void) a_location;
 
         if (a_name)
                 page_name = cr_string_dup (a_name) ;
@@ -225,8 +223,8 @@ parse_page_end_page_cb (CRDocHandler * a_this,
         CRStatement *stmt = NULL;
         CRStatement **stmtptr = NULL;
 
-        UNUSED(a_name);
-        UNUSED(a_pseudo_page);
+        (void) a_name;
+        (void) a_pseudo_page;
 
 	stmtptr = &stmt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) stmtptr);
@@ -240,13 +238,13 @@ parse_page_end_page_cb (CRDocHandler * a_this,
 static void
 parse_at_media_start_media_cb (CRDocHandler * a_this, 
                                GList * a_media_list,
-                               CRParsingLocation * a_location)
+                               CRParsingLocation *a_location)
 {
         enum CRStatus status = CR_OK;
         CRStatement *at_media = NULL;
         GList *media_list = NULL;
 
-        UNUSED(a_location);
+        (void) a_location;
 
         g_return_if_fail (a_this && a_this->priv);
 
@@ -380,7 +378,7 @@ parse_at_media_end_media_cb (CRDocHandler * a_this,
         CRStatement *at_media = NULL;
         CRStatement **at_media_ptr = NULL;
 
-        UNUSED(a_media_list);
+        (void) a_media_list;
 
         g_return_if_fail (a_this && a_this->priv);
 
@@ -603,12 +601,13 @@ cr_statement_clear (CRStatement * a_this)
 static gchar *
 cr_statement_ruleset_to_string (CRStatement const * a_this, glong a_indent)
 {
+        GString *stringue = NULL;
         gchar *tmp_str = NULL,
                 *result = NULL;
 
         g_return_val_if_fail (a_this && a_this->type == RULESET_STMT, NULL);
 
-        GString * stringue = (GString *)g_string_new (NULL);
+        stringue = (GString *) g_string_new (NULL);
         if (!stringue) {
             return result;
         }
@@ -617,8 +616,8 @@ cr_statement_ruleset_to_string (CRStatement const * a_this, glong a_indent)
                 if (a_indent)
                         cr_utils_dump_n_chars2 (' ', stringue, a_indent);
 
-                tmp_str = (gchar *)
-                        cr_selector_to_string (a_this->kind.ruleset->
+                tmp_str =
+                        (gchar *) cr_selector_to_string (a_this->kind.ruleset->
                                                sel_list);
                 if (tmp_str) {
                         g_string_append (stringue, tmp_str);
@@ -628,7 +627,7 @@ cr_statement_ruleset_to_string (CRStatement const * a_this, glong a_indent)
         }
         g_string_append (stringue, " {\n");
         if (a_this->kind.ruleset->decl_list) {
-                tmp_str = (gchar *)cr_declaration_list_to_string2
+                tmp_str = (gchar *) cr_declaration_list_to_string2
                         (a_this->kind.ruleset->decl_list,
                          a_indent + DECLARATION_INDENT_NB, TRUE);
                 if (tmp_str) {
@@ -677,13 +676,13 @@ cr_statement_font_face_rule_to_string (CRStatement const * a_this,
                               NULL);
 
         if (a_this->kind.font_face_rule->decl_list) {
-                stringue = (GString *)g_string_new (NULL) ;
+                stringue = (GString *) g_string_new (NULL) ;
                 g_return_val_if_fail (stringue, NULL) ;
                 if (a_indent)
                         cr_utils_dump_n_chars2 (' ', stringue, 
                                         a_indent);
                 g_string_append (stringue, "@font-face {\n");
-                tmp_str = (gchar *)cr_declaration_list_to_string2 
+                tmp_str = (gchar *) cr_declaration_list_to_string2 
                         (a_this->kind.font_face_rule->decl_list,
                          a_indent + DECLARATION_INDENT_NB, TRUE) ;
                 if (tmp_str) {
@@ -762,9 +761,10 @@ static gchar *
 cr_statement_at_page_rule_to_string (CRStatement const *a_this,
                                      gulong a_indent)
 {
+        GString *stringue = NULL;
         gchar *result = NULL ;
 
-        GString *stringue = (GString *)g_string_new (NULL) ;
+        stringue = (GString *) g_string_new (NULL) ;
 
         cr_utils_dump_n_chars2 (' ', stringue, a_indent) ;
         g_string_append (stringue, "@page");
@@ -785,7 +785,7 @@ cr_statement_at_page_rule_to_string (CRStatement const *a_this,
         if (a_this->kind.page_rule->decl_list) {
                 gchar *str = NULL ;
                 g_string_append (stringue, " {\n");
-                str = (gchar *)cr_declaration_list_to_string2
+                str = (gchar *) cr_declaration_list_to_string2
                         (a_this->kind.page_rule->decl_list,
                          a_indent + DECLARATION_INDENT_NB, TRUE) ;
                 if (str) {
@@ -821,17 +821,17 @@ cr_statement_media_rule_to_string (CRStatement const *a_this,
                               NULL);
 
         if (a_this->kind.media_rule) {
-                stringue = (GString *)g_string_new (NULL) ;                
+                stringue = (GString *) g_string_new (NULL) ;
                 cr_utils_dump_n_chars2 (' ', stringue, a_indent);
                 g_string_append (stringue, "@media");
 
                 for (cur = a_this->kind.media_rule->media_list; cur;
                      cur = cur->next) {
                         if (cur->data) {
-                                gchar *str = cr_string_dup2
+                                gchar *str2 = cr_string_dup2
                                         ((CRString const *) cur->data);
 
-                                if (str) {
+                                if (str2) {
                                         if (cur->prev) {
                                                 g_string_append
                                                         (stringue, 
@@ -839,9 +839,9 @@ cr_statement_media_rule_to_string (CRStatement const *a_this,
                                         }
                                         g_string_append_printf 
                                                 (stringue, 
-                                                 " %s", str);
-                                        g_free (str);
-                                        str = NULL;
+                                                 " %s", str2);
+                                        g_free (str2);
+                                        str2 = NULL;
                                 }
                         }
                 }
@@ -878,7 +878,7 @@ cr_statement_import_rule_to_string (CRStatement const *a_this,
 
         if (a_this->kind.import_rule->url
             && a_this->kind.import_rule->url->stryng) { 
-                stringue = (GString *)g_string_new (NULL) ;
+                stringue = (GString *) g_string_new (NULL) ;
                 g_return_val_if_fail (stringue, NULL) ;
                 str = g_strndup (a_this->kind.import_rule->url->stryng->str,
                                  a_this->kind.import_rule->url->stryng->len);
@@ -950,8 +950,7 @@ cr_statement_does_buf_parses_against_core (const guchar * a_buf,
         enum CRStatus status = CR_OK;
         gboolean result = FALSE;
 
-        parser = cr_parser_new_from_buf ((guchar*)a_buf,
-		                                 strlen ((char *)a_buf),
+        parser = cr_parser_new_from_buf ((guchar*)a_buf, strlen ((const char *) a_buf),
                                          a_encoding, FALSE);
         g_return_val_if_fail (parser, FALSE);
 
@@ -1071,8 +1070,7 @@ cr_statement_ruleset_parse_from_buf (const guchar * a_buf,
 
         g_return_val_if_fail (a_buf, NULL);
 
-        parser = cr_parser_new_from_buf ((guchar*)a_buf,
-		                                 strlen ((char *)a_buf), 
+        parser = cr_parser_new_from_buf ((guchar*)a_buf, strlen ((const char *) a_buf), 
                                          a_enc, FALSE);
 
         g_return_val_if_fail (parser, NULL);
@@ -1138,6 +1136,8 @@ cr_statement_new_ruleset (CRStyleSheet * a_sheet,
                           CRDeclaration * a_decl_list,
                           CRStatement * a_parent_media_rule)
 {
+        CRStatement *result = NULL;
+
         g_return_val_if_fail (a_sel_list, NULL);
 
         if (a_parent_media_rule) {
@@ -1148,7 +1148,7 @@ cr_statement_new_ruleset (CRStyleSheet * a_sheet,
                                       NULL);
         }
 
-        CRStatement *result = (CRStatement *)g_try_malloc (sizeof (CRStatement));
+        result = (CRStatement *) g_try_malloc (sizeof (CRStatement));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -1157,7 +1157,7 @@ cr_statement_new_ruleset (CRStyleSheet * a_sheet,
 
         memset (result, 0, sizeof (CRStatement));
         result->type = RULESET_STMT;
-        result->kind.ruleset = (CRRuleSet *)g_try_malloc (sizeof (CRRuleSet));
+        result->kind.ruleset = (CRRuleSet *) g_try_malloc (sizeof (CRRuleSet));
 
         if (!result->kind.ruleset) {
                 cr_utils_trace_info ("Out of memory");
@@ -1207,8 +1207,7 @@ cr_statement_at_media_rule_parse_from_buf (const guchar * a_buf,
         CRDocHandler *sac_handler = NULL;
         enum CRStatus status = CR_OK;
 
-        parser = cr_parser_new_from_buf ((guchar*)a_buf,
-		                                 strlen ((char *)a_buf), 
+        parser = cr_parser_new_from_buf ((guchar*)a_buf, strlen ((const char *) a_buf), 
                                          a_enc, FALSE);
         if (!parser) {
                 cr_utils_trace_info ("Instanciation of the parser failed");
@@ -1278,12 +1277,13 @@ CRStatement *
 cr_statement_new_at_media_rule (CRStyleSheet * a_sheet,
                                 CRStatement * a_rulesets, GList * a_media)
 {
-        CRStatement *cur = NULL;
+        CRStatement *result = NULL,
+                *cur = NULL;
 
         if (a_rulesets)
                 g_return_val_if_fail (a_rulesets->type == RULESET_STMT, NULL);
 
-        CRStatement *result = (CRStatement *)g_try_malloc (sizeof (CRStatement));
+        result = (CRStatement *) g_try_malloc (sizeof (CRStatement));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -1293,7 +1293,7 @@ cr_statement_new_at_media_rule (CRStyleSheet * a_sheet,
         memset (result, 0, sizeof (CRStatement));
         result->type = AT_MEDIA_RULE_STMT;
 
-        result->kind.media_rule = (CRAtMediaRule *)g_try_malloc (sizeof (CRAtMediaRule));
+        result->kind.media_rule = (CRAtMediaRule *) g_try_malloc (sizeof (CRAtMediaRule));
         if (!result->kind.media_rule) {
                 cr_utils_trace_info ("Out of memory");
                 g_free (result);
@@ -1340,7 +1340,9 @@ cr_statement_new_at_import_rule (CRStyleSheet * a_container_sheet,
                                  GList * a_media_list,
                                  CRStyleSheet * a_imported_sheet)
 {
-        CRStatement *result = (CRStatement *)g_try_malloc (sizeof (CRStatement));
+        CRStatement *result = NULL;
+
+        result = (CRStatement *) g_try_malloc (sizeof (CRStatement));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -1350,7 +1352,7 @@ cr_statement_new_at_import_rule (CRStyleSheet * a_container_sheet,
         memset (result, 0, sizeof (CRStatement));
         result->type = AT_IMPORT_RULE_STMT;
 
-        result->kind.import_rule = (CRAtImportRule *)g_try_malloc (sizeof (CRAtImportRule));
+        result->kind.import_rule = (CRAtImportRule *) g_try_malloc (sizeof (CRAtImportRule));
 
         if (!result->kind.import_rule) {
                 cr_utils_trace_info ("Out of memory");
@@ -1391,8 +1393,7 @@ cr_statement_at_import_rule_parse_from_buf (const guchar * a_buf,
         CRString *import_string = NULL;
         CRParsingLocation location = {0,0,0} ;
 
-        parser = cr_parser_new_from_buf ((guchar*)a_buf,
-		                                 strlen ((char *)a_buf),
+        parser = cr_parser_new_from_buf ((guchar*)a_buf, strlen ((const char *) a_buf),
                                          a_encoding, FALSE);
         if (!parser) {
                 cr_utils_trace_info ("Instanciation of parser failed.");
@@ -1425,8 +1426,7 @@ cr_statement_at_import_rule_parse_from_buf (const guchar * a_buf,
                 parser = NULL;
         }
         if (media_list) {
-                GList *cur = NULL;
-                for (cur = media_list; media_list;
+                for (; media_list;
                      media_list = g_list_next (media_list)) {
                         if (media_list->data) {
                                 cr_string_destroy ((CRString*)media_list->data);
@@ -1463,7 +1463,9 @@ cr_statement_new_at_page_rule (CRStyleSheet * a_sheet,
                                CRDeclaration * a_decl_list,
                                CRString * a_name, CRString * a_pseudo)
 {
-        CRStatement *result = (CRStatement *)g_try_malloc (sizeof (CRStatement));
+        CRStatement *result = NULL;
+
+        result = (CRStatement *) g_try_malloc (sizeof (CRStatement));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -1473,7 +1475,7 @@ cr_statement_new_at_page_rule (CRStyleSheet * a_sheet,
         memset (result, 0, sizeof (CRStatement));
         result->type = AT_PAGE_RULE_STMT;
 
-        result->kind.page_rule = (CRAtPageRule *)g_try_malloc (sizeof (CRAtPageRule));
+        result->kind.page_rule = (CRAtPageRule *) g_try_malloc (sizeof (CRAtPageRule));
 
         if (!result->kind.page_rule) {
                 cr_utils_trace_info ("Out of memory");
@@ -1511,14 +1513,14 @@ cr_statement_at_page_rule_parse_from_buf (const guchar * a_buf,
                                           enum CREncoding a_encoding)
 {
         enum CRStatus status = CR_OK;
+        CRParser *parser = NULL;
         CRDocHandler *sac_handler = NULL;
         CRStatement *result = NULL;
         CRStatement **resultptr = NULL;
 
         g_return_val_if_fail (a_buf, NULL);
 
-        CRParser *parser = cr_parser_new_from_buf ((guchar*)a_buf, 
-		                                 strlen ((char *)a_buf),
+        parser = cr_parser_new_from_buf ((guchar*)a_buf, strlen ((const char *) a_buf),
                                          a_encoding, FALSE);
         if (!parser) {
                 cr_utils_trace_info ("Instanciation of the parser failed.");
@@ -1584,9 +1586,11 @@ CRStatement *
 cr_statement_new_at_charset_rule (CRStyleSheet * a_sheet, 
                                   CRString * a_charset)
 {
+        CRStatement *result = NULL;
+
         g_return_val_if_fail (a_charset, NULL);
 
-        CRStatement *result = (CRStatement *)g_try_malloc (sizeof (CRStatement));
+        result = (CRStatement *) g_try_malloc (sizeof (CRStatement));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -1596,7 +1600,7 @@ cr_statement_new_at_charset_rule (CRStyleSheet * a_sheet,
         memset (result, 0, sizeof (CRStatement));
         result->type = AT_CHARSET_RULE_STMT;
 
-        result->kind.charset_rule = (CRAtCharsetRule *)g_try_malloc (sizeof (CRAtCharsetRule));
+        result->kind.charset_rule = (CRAtCharsetRule *) g_try_malloc (sizeof (CRAtCharsetRule));
 
         if (!result->kind.charset_rule) {
                 cr_utils_trace_info ("Out of memory");
@@ -1626,13 +1630,13 @@ cr_statement_at_charset_rule_parse_from_buf (const guchar * a_buf,
                                              enum CREncoding a_encoding)
 {
         enum CRStatus status = CR_OK;
+        CRParser *parser = NULL;
         CRStatement *result = NULL;
         CRString *charset = NULL;
 
         g_return_val_if_fail (a_buf, NULL);
 
-        CRParser *parser = cr_parser_new_from_buf ((guchar*)a_buf,
-		                                 strlen ((char *)a_buf),
+        parser = cr_parser_new_from_buf ((guchar*)a_buf, strlen ((const char *) a_buf),
                                          a_encoding, FALSE);
         if (!parser) {
                 cr_utils_trace_info ("Instanciation of the parser failed.");
@@ -1678,7 +1682,9 @@ CRStatement *
 cr_statement_new_at_font_face_rule (CRStyleSheet * a_sheet,
                                     CRDeclaration * a_font_decls)
 {
-        CRStatement *result = (CRStatement *)g_try_malloc (sizeof (CRStatement));
+        CRStatement *result = NULL;
+
+        result = (CRStatement *) g_try_malloc (sizeof (CRStatement));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -1687,7 +1693,7 @@ cr_statement_new_at_font_face_rule (CRStyleSheet * a_sheet,
         memset (result, 0, sizeof (CRStatement));
         result->type = AT_FONT_FACE_RULE_STMT;
 
-        result->kind.font_face_rule = (CRAtFontFaceRule *)g_try_malloc
+        result->kind.font_face_rule = (CRAtFontFaceRule *) g_try_malloc
                 (sizeof (CRAtFontFaceRule));
 
         if (!result->kind.font_face_rule) {
@@ -1723,12 +1729,11 @@ cr_statement_font_face_rule_parse_from_buf (const guchar * a_buf,
 {
         CRStatement *result = NULL;
         CRStatement **resultptr = NULL;
+        CRParser *parser = NULL;
         CRDocHandler *sac_handler = NULL;
         enum CRStatus status = CR_OK;
 
-        CRParser *parser = (CRParser *)cr_parser_new_from_buf (
-		                                 (guchar*)a_buf,
-										 strlen ((char *)a_buf),
+        parser = cr_parser_new_from_buf ((guchar*)a_buf, strlen ((const char *) a_buf),
                                          a_encoding, FALSE);
         if (!parser)
                 goto cleanup;
@@ -2614,8 +2619,10 @@ cr_statement_dump (CRStatement const * a_this, FILE * a_fp, gulong a_indent)
 void
 cr_statement_dump_ruleset (CRStatement const * a_this, FILE * a_fp, glong a_indent)
 {
+        gchar *str = NULL;
+
         g_return_if_fail (a_fp && a_this);
-        gchar *str = cr_statement_ruleset_to_string (a_this, a_indent);
+        str = cr_statement_ruleset_to_string (a_this, a_indent);
         if (str) {
                 fprintf (a_fp, "%s", str);
                 g_free (str);
@@ -2661,9 +2668,11 @@ cr_statement_dump_font_face_rule (CRStatement const * a_this, FILE * a_fp,
 void
 cr_statement_dump_charset (CRStatement const * a_this, FILE * a_fp, gulong a_indent)
 {
+        gchar *str = NULL;
+
         g_return_if_fail (a_this && a_this->type == AT_CHARSET_RULE_STMT);
 
-        gchar *str = cr_statement_charset_to_string (a_this,
+        str = cr_statement_charset_to_string (a_this,
                                               a_indent) ;
         if (str) {
                 fprintf (a_fp, "%s", str) ;
@@ -2685,11 +2694,13 @@ cr_statement_dump_charset (CRStatement const * a_this, FILE * a_fp, gulong a_ind
 void
 cr_statement_dump_page (CRStatement const * a_this, FILE * a_fp, gulong a_indent)
 {
+        gchar *str = NULL;
+
         g_return_if_fail (a_this
                           && a_this->type == AT_PAGE_RULE_STMT
                           && a_this->kind.page_rule);
 
-        gchar *str = cr_statement_at_page_rule_to_string (a_this, a_indent) ;
+        str = cr_statement_at_page_rule_to_string (a_this, a_indent) ;
         if (str) {
                 fprintf (a_fp, "%s", str);
                 g_free (str) ;

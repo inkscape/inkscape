@@ -78,7 +78,7 @@ typedef struct _CRParserError CRParserError;
  *parsing routines.
  */
 struct _CRParserError {
-        gchar *msg;
+        guchar *msg;
         enum CRStatus status;
         glong line;
         glong column;
@@ -197,9 +197,9 @@ if ((a_status) != CR_OK) \
  */
 #define PEEK_NEXT_CHAR(a_this, a_to_char) \
 {\
-enum CRStatus status ; \
-status = cr_tknzr_peek_char  (PRIVATE (a_this)->tknzr, a_to_char) ; \
-CHECK_PARSING_STATUS (status, TRUE) \
+enum CRStatus pnc_status ; \
+pnc_status = cr_tknzr_peek_char  (PRIVATE (a_this)->tknzr, a_to_char) ; \
+CHECK_PARSING_STATUS (pnc_status, TRUE) \
 }
 
 /**
@@ -374,11 +374,11 @@ static enum CRStatus cr_parser_parse_simple_selector (CRParser * a_this,
 static enum CRStatus cr_parser_parse_simple_sels (CRParser * a_this,
                                                   CRSimpleSel ** a_sel);
 
-static CRParserError *cr_parser_error_new (const gchar * a_msg,
+static CRParserError *cr_parser_error_new (const guchar * a_msg,
                                            enum CRStatus);
 
 static void cr_parser_error_set_msg (CRParserError * a_this,
-                                     const gchar * a_msg);
+                                     const guchar * a_msg);
 
 static void cr_parser_error_dump (CRParserError * a_this);
 
@@ -392,7 +392,7 @@ static void
   cr_parser_error_destroy (CRParserError * a_this);
 
 static enum CRStatus cr_parser_push_error (CRParser * a_this,
-                                           const gchar * a_msg,
+                                           const guchar * a_msg,
                                            enum CRStatus a_status);
 
 static enum CRStatus cr_parser_dump_err_stack (CRParser * a_this,
@@ -411,7 +411,7 @@ static enum CRStatus
  *@return the newly built instance of #CRParserError.
  */
 static CRParserError *
-cr_parser_error_new (const gchar * a_msg, enum CRStatus a_status)
+cr_parser_error_new (const guchar * a_msg, enum CRStatus a_status)
 {
         CRParserError *result = NULL;
 
@@ -436,7 +436,7 @@ cr_parser_error_new (const gchar * a_msg, enum CRStatus a_status)
  *@param a_msg the new message.
  */
 static void
-cr_parser_error_set_msg (CRParserError * a_this, const gchar * a_msg)
+cr_parser_error_set_msg (CRParserError * a_this, const guchar * a_msg)
 {
         g_return_if_fail (a_this);
 
@@ -444,7 +444,7 @@ cr_parser_error_set_msg (CRParserError * a_this, const gchar * a_msg)
                 g_free (a_this->msg);
         }
 
-        a_this->msg = g_strdup (a_msg);
+        a_this->msg = (guchar *) g_strdup ((const gchar *) a_msg);
 }
 
 /**
@@ -515,7 +515,7 @@ cr_parser_error_destroy (CRParserError * a_this)
  */
 static enum CRStatus
 cr_parser_push_error (CRParser * a_this,
-                      const gchar * a_msg, enum CRStatus a_status)
+                      const guchar * a_msg, enum CRStatus a_status)
 {
         enum CRStatus status = CR_OK;
 
@@ -733,7 +733,7 @@ cr_parser_parse_stylesheet_core (CRParser * a_this)
 
  error:
         cr_parser_push_error
-                (a_this, "could not recognize next production", CR_ERROR);
+                (a_this, (const guchar *) "could not recognize next production", CR_ERROR);
 
         cr_parser_dump_err_stack (a_this, TRUE);
 
@@ -1688,14 +1688,12 @@ cr_parser_parse_simple_selector (CRParser * a_this, CRSimpleSel ** a_sel)
             && token->u.unichar == '*') {
                 int comb = (int)sel->type_mask | (int) UNIVERSAL_SELECTOR;
                 sel->type_mask = (enum SimpleSelectorType)comb;
-                //sel->type_mask |= UNIVERSAL_SELECTOR;
                 sel->name = cr_string_new_from_string ("*");
                 found_sel = TRUE;
         } else if (token && token->type == IDENT_TK) {
                 sel->name = token->u.str;
                 int comb = (int)sel->type_mask | (int) TYPE_SELECTOR;
                 sel->type_mask = (enum SimpleSelectorType)comb;
-                //sel->type_mask |= TYPE_SELECTOR;
                 token->u.str = NULL;
                 found_sel = TRUE;
         } else {
@@ -2707,7 +2705,7 @@ cr_parser_parse_stylesheet (CRParser * a_this)
         }
 
         cr_parser_push_error
-                (a_this, "could not recognize next production", CR_ERROR);
+                (a_this, (const guchar *) "could not recognize next production", CR_ERROR);
 
         if (PRIVATE (a_this)->sac_handler
             && PRIVATE (a_this)->sac_handler->unrecoverable_error) {
@@ -3193,7 +3191,7 @@ cr_parser_parse_declaration (CRParser * a_this,
 
         CHECK_PARSING_STATUS_ERR
                 (a_this, status, FALSE,
-                 "while parsing declaration: next property is malformed",
+                 (const guchar *) "while parsing declaration: next property is malformed",
                  CR_SYNTAX_ERROR);
 
         READ_NEXT_CHAR (a_this, &cur_char);
@@ -3202,7 +3200,7 @@ cr_parser_parse_declaration (CRParser * a_this,
                 status = CR_PARSING_ERROR;
                 cr_parser_push_error
                         (a_this,
-                         "while parsing declaration: this char must be ':'",
+                         (const guchar *) "while parsing declaration: this char must be ':'",
                          CR_SYNTAX_ERROR);
                 goto error;
         }
@@ -3213,7 +3211,7 @@ cr_parser_parse_declaration (CRParser * a_this,
 
         CHECK_PARSING_STATUS_ERR
                 (a_this, status, FALSE,
-                 "while parsing declaration: next expression is malformed",
+                 (const guchar *) "while parsing declaration: next expression is malformed",
                  CR_SYNTAX_ERROR);
 
         cr_parser_try_to_skip_spaces_and_comments (a_this);
@@ -3353,7 +3351,7 @@ cr_parser_parse_ruleset (CRParser * a_this)
 
         ENSURE_PARSING_COND_ERR
                 (a_this, cur_char == '{',
-                 "while parsing rulset: current char should be '{'",
+                 (const guchar *) "while parsing rulset: current char should be '{'",
                  CR_SYNTAX_ERROR);
 
         if (PRIVATE (a_this)->sac_handler
@@ -3417,7 +3415,7 @@ cr_parser_parse_ruleset (CRParser * a_this)
         }
         CHECK_PARSING_STATUS_ERR
                 (a_this, status, FALSE,
-                 "while parsing ruleset: next construction should be a declaration",
+                 (const guchar *) "while parsing ruleset: next construction should be a declaration",
                  CR_SYNTAX_ERROR);
 
         for (;;) {
@@ -3459,7 +3457,7 @@ cr_parser_parse_ruleset (CRParser * a_this)
         READ_NEXT_CHAR (a_this, &cur_char);
         ENSURE_PARSING_COND_ERR
                 (a_this, cur_char == '}',
-                 "while parsing rulset: current char must be a '}'",
+                 (const guchar *) "while parsing rulset: current char must be a '}'",
                  CR_SYNTAX_ERROR);
 
         selector->location = end_parsing_location;

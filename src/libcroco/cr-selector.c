@@ -38,7 +38,10 @@
 CRSelector *
 cr_selector_new (CRSimpleSel * a_simple_sel)
 {
-        CRSelector *result = (CRSelector *)g_try_malloc (sizeof (CRSelector));
+        CRSelector *result = NULL;
+
+        result = (CRSelector *) g_try_malloc (sizeof (CRSelector));
+
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
@@ -55,8 +58,7 @@ cr_selector_parse_from_buf (const guchar * a_char_buf, enum CREncoding a_enc)
 
         g_return_val_if_fail (a_char_buf, NULL);
 
-        parser = cr_parser_new_from_buf ((guchar*)a_char_buf,
-		                                 strlen ((char *)a_char_buf),
+        parser = cr_parser_new_from_buf ((guchar*)a_char_buf, strlen ((const char *) a_char_buf),
                                          a_enc, FALSE);
         g_return_val_if_fail (parser, NULL);
 
@@ -140,8 +142,9 @@ guchar *
 cr_selector_to_string (CRSelector const * a_this)
 {
         guchar *result = NULL;
+        GString *str_buf = NULL;
 
-        GString *str_buf = (GString *)g_string_new (NULL);
+        str_buf = (GString *) g_string_new (NULL);
         g_return_val_if_fail (str_buf, NULL);
 
         if (a_this) {
@@ -159,7 +162,7 @@ cr_selector_to_string (CRSelector const * a_this)
                                                 g_string_append (str_buf, 
 								 ", ");
 
-                                        g_string_append (str_buf, (gchar *)tmp_str);
+                                        g_string_append (str_buf, (const gchar *) tmp_str);
 
                                         g_free (tmp_str);
                                         tmp_str = NULL;
@@ -169,7 +172,7 @@ cr_selector_to_string (CRSelector const * a_this)
         }
 
         if (str_buf) {
-                result = (guchar *)str_buf->str;
+                result = (guchar *) str_buf->str;
                 g_string_free (str_buf, FALSE);
                 str_buf = NULL;
         }

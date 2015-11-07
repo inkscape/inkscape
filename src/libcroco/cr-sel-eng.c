@@ -37,7 +37,7 @@
 #define PRIVATE(a_this) (a_this)->priv
 
 struct CRPseudoClassSelHandlerEntry {
-        char *name;
+        guchar *name;
         enum CRPseudoType type;
         CRPseudoClassSelectorHandler handler;
 };
@@ -149,8 +149,8 @@ lang_pseudo_class_handler (CRSelEng *const a_this,
             || a_sel->content.pseudo->extra->stryng->len < 2)
                 return FALSE;
         for (; node; node = get_next_parent_element_node (node_iface, node)) {
-                char *val = node_iface->getProp (node, "lang");
-                if (!val) val = node_iface->getProp (node, "xml:lang");
+                char *val = node_iface->getProp (node, (const xmlChar *) "lang");
+                if (!val) val = node_iface->getProp (node, (const xmlChar *) "xml:lang");
                 if (val) {
                         if (!strcasecmp(val, a_sel->content.pseudo->extra->stryng->str)) {
                                 result = TRUE;
@@ -209,7 +209,7 @@ pseudo_class_add_sel_matches_node (CRSelEng * a_this,
                               && a_node, FALSE);
 
         status = cr_sel_eng_get_pseudo_class_selector_handler
-                (a_this, a_add_sel->content.pseudo->name->stryng->str,
+                (a_this, (guchar *) a_add_sel->content.pseudo->name->stryng->str,
                  a_add_sel->content.pseudo->type, &handler);
         if (status != CR_OK || !handler)
                 return FALSE;
@@ -237,7 +237,7 @@ class_add_sel_matches_node (CRAdditionalSel * a_add_sel,
                               && a_add_sel->content.class_name->stryng->str
                               && a_node, FALSE);
 
-        klass = a_node_iface->getProp (a_node, "class");
+        klass = a_node_iface->getProp (a_node, (const xmlChar *) "class");
         if (klass) {
                 char const *cur;
                 for (cur = klass; cur && *cur; cur++) {
@@ -246,7 +246,7 @@ class_add_sel_matches_node (CRAdditionalSel * a_add_sel,
                                == TRUE)
                                 cur++;
 
-                        if (!strncmp (cur, 
+                        if (!strncmp ((const char *) cur, 
                                       a_add_sel->content.class_name->stryng->str,
                                       a_add_sel->content.class_name->stryng->len)) {
                                 cur += a_add_sel->content.class_name->stryng->len;
@@ -291,9 +291,9 @@ id_add_sel_matches_node (CRAdditionalSel * a_add_sel,
                               && a_add_sel->type == ID_ADD_SELECTOR
                               && a_node, FALSE);
 
-        id = a_node_iface->getProp (a_node, "id");
+        id = a_node_iface->getProp (a_node, (const xmlChar *) "id");
         if (id) {
-                if (!strqcmp (id, a_add_sel->content.id_name->stryng->str,
+                if (!strqcmp ((const char *) id, a_add_sel->content.id_name->stryng->str,
                               a_add_sel->content.id_name->stryng->len)) {
                         result = TRUE;
                 }
@@ -324,7 +324,7 @@ attr_add_sel_matches_node (CRAdditionalSel * a_add_sel,
 
         for (cur_sel = a_add_sel->content.attr_sel;
              cur_sel; cur_sel = cur_sel->next) {
-                if (!cur_sel->name 
+                if (!cur_sel->name
                     || !cur_sel->name->stryng
                     || !cur_sel->name->stryng->str)
                         return FALSE;
@@ -384,7 +384,7 @@ attr_add_sel_matches_node (CRAdditionalSel * a_add_sel,
                                         ptr2 = cur;
 
                                         if (!strncmp
-                                            (ptr1, 
+                                            ((const char *) ptr1, 
                                              cur_sel->value->stryng->str,
                                              ptr2 - ptr1 + 1)) {
                                                 found = TRUE;
@@ -422,7 +422,7 @@ attr_add_sel_matches_node (CRAdditionalSel * a_add_sel,
                                         ptr2 = cur;
 
                                         if (g_strstr_len
-                                            (ptr1, ptr2 - ptr1 + 1,
+                                            ((const gchar *) ptr1, ptr2 - ptr1 + 1,
                                              cur_sel->value->stryng->str)
                                             == ptr1) {
                                                 found = TRUE;
@@ -635,7 +635,7 @@ sel_matches_node_real (CRSelEng * a_this, CRSimpleSel * a_sel,
                          && cur_sel->name->stryng
                          && cur_sel->name->stryng->str)
                      && (!strcmp (cur_sel->name->stryng->str,
-                                  node_iface->getLocalName(cur_node))))
+                                  (const char *) node_iface->getLocalName(cur_node))))
                     || (cur_sel->type_mask & UNIVERSAL_SELECTOR)) {
                         /*
                          *this simple selector
@@ -1121,11 +1121,11 @@ cr_sel_eng_new (void)
         }
         memset (PRIVATE (result), 0, sizeof (CRSelEngPriv));
         cr_sel_eng_register_pseudo_class_sel_handler
-                (result, "first-child",
+                (result, (guchar *) "first-child",
                  IDENT_PSEUDO, /*(CRPseudoClassSelectorHandler)*/
                  first_child_pseudo_class_handler);
         cr_sel_eng_register_pseudo_class_sel_handler
-                (result, "lang",
+                (result, (guchar *) "lang",
                  FUNCTION_PSEUDO, /*(CRPseudoClassSelectorHandler)*/
                  lang_pseudo_class_handler);
 
@@ -1146,7 +1146,7 @@ cr_sel_eng_new (void)
  */
 enum CRStatus
 cr_sel_eng_register_pseudo_class_sel_handler (CRSelEng * a_this,
-                                              char * a_name,
+                                              guchar * a_name,
                                               enum CRPseudoType a_type,
                                               CRPseudoClassSelectorHandler
                                               a_handler)
@@ -1164,7 +1164,7 @@ cr_sel_eng_register_pseudo_class_sel_handler (CRSelEng * a_this,
         }
         memset (handler_entry, 0,
                 sizeof (struct CRPseudoClassSelHandlerEntry));
-        handler_entry->name = g_strdup (a_name);
+        handler_entry->name = (guchar *) g_strdup ((const gchar *) a_name);
         handler_entry->type = a_type;
         handler_entry->handler = a_handler;
         list = g_list_append (PRIVATE (a_this)->pcs_handlers, handler_entry);
@@ -1177,7 +1177,7 @@ cr_sel_eng_register_pseudo_class_sel_handler (CRSelEng * a_this,
 
 enum CRStatus
 cr_sel_eng_unregister_pseudo_class_sel_handler (CRSelEng * a_this,
-                                                char * a_name,
+                                                guchar * a_name,
                                                 enum CRPseudoType a_type)
 {
         GList *elem = NULL,
@@ -1190,7 +1190,7 @@ cr_sel_eng_unregister_pseudo_class_sel_handler (CRSelEng * a_this,
         for (elem = PRIVATE (a_this)->pcs_handlers;
              elem; elem = g_list_next (elem)) {
                 entry = (struct CRPseudoClassSelHandlerEntry *) elem->data;
-                if (!strcmp (entry->name, a_name)
+                if (!strcmp ((const char *) entry->name, (const char *) a_name)
                     && entry->type == a_type) {
                         found = TRUE;
                         break;
@@ -1250,7 +1250,7 @@ cr_sel_eng_unregister_all_pseudo_class_sel_handlers (CRSelEng * a_this)
 
 enum CRStatus
 cr_sel_eng_get_pseudo_class_selector_handler (CRSelEng * a_this,
-                                              char * a_name,
+                                              guchar * a_name,
                                               enum CRPseudoType a_type,
                                               CRPseudoClassSelectorHandler *
                                               a_handler)
@@ -1265,7 +1265,7 @@ cr_sel_eng_get_pseudo_class_selector_handler (CRSelEng * a_this,
         for (elem = PRIVATE (a_this)->pcs_handlers;
              elem; elem = g_list_next (elem)) {
                 entry = (struct CRPseudoClassSelHandlerEntry *) elem->data;
-                if (!strcmp (a_name, entry->name)
+                if (!strcmp ((const char *) a_name, (const char *) entry->name)
                     && entry->type == a_type) {
                         found = TRUE;
                         break;

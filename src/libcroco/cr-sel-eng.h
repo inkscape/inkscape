@@ -65,18 +65,18 @@ typedef gboolean (*CRPseudoClassSelectorHandler) (CRSelEng* a_this,
 CRSelEng * cr_sel_eng_new (void) ;
 
 enum CRStatus cr_sel_eng_register_pseudo_class_sel_handler (CRSelEng *a_this,
-                                                            char *a_pseudo_class_sel_name,
+                                                            guchar *a_pseudo_class_sel_name,
                                                             enum CRPseudoType a_pseudo_class_type,
                                                             CRPseudoClassSelectorHandler a_handler) ;
 
 enum CRStatus cr_sel_eng_unregister_pseudo_class_sel_handler (CRSelEng *a_this,
-                                                              char *a_pseudo_class_sel_name,
+                                                              guchar *a_pseudo_class_sel_name,
                                                               enum CRPseudoType a_pseudo_class_type) ;
 
 enum CRStatus cr_sel_eng_unregister_all_pseudo_class_sel_handlers (CRSelEng *a_this) ;
 
 enum CRStatus cr_sel_eng_get_pseudo_class_selector_handler (CRSelEng *a_this,
-                                                            char *a_pseudo_class_sel_name,
+                                                            guchar *a_pseudo_class_sel_name,
                                                             enum CRPseudoType a_pseudo_class_type,
                                                             CRPseudoClassSelectorHandler *a_handler) ;
 

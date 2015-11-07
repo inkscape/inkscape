@@ -746,7 +746,7 @@ enum CRStatus
 cr_input_peek_char (CRInput const * a_this, guint32 * a_char)
 {
         enum CRStatus status = CR_OK;
-        glong consumed = 0,
+        gulong consumed = 0,
                 nb_bytes_left = 0;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)

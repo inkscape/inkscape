@@ -140,9 +140,9 @@ static CRPropertyDesc gv_prop_table[] = {
         {"font-size", PROP_ID_FONT_SIZE},
         {"font-style", PROP_ID_FONT_STYLE},
         {"font-weight", PROP_ID_FONT_WEIGHT},
-	    {"white-space", PROP_ID_WHITE_SPACE},
+	{"white-space", PROP_ID_WHITE_SPACE},
         /*must be the last one */
-        {NULL, (enum CRPropertyID)0}
+        {NULL, (enum CRPropertyID) 0}
 };
 
 /**
@@ -185,7 +185,7 @@ static struct CRNumPropEnumDumpInfo gv_num_props_dump_infos[] = {
         {NUM_PROP_MARGIN_BOTTOM, "margin-bottom"},
         {NUM_PROP_MARGIN_LEFT, "margin-left"},
         {NUM_PROP_WIDTH, "width"},
-        {(enum CRNumProp)0, NULL}
+        {(enum CRNumProp) 0, NULL}
 };
 
 struct CRRgbPropEnumDumpInfo {
@@ -200,7 +200,7 @@ static struct CRRgbPropEnumDumpInfo gv_rgb_props_dump_infos[] = {
         {RGB_PROP_BORDER_LEFT_COLOR, "left-color"},
         {RGB_PROP_COLOR, "color"},
         {RGB_PROP_BACKGROUND_COLOR, "background-color"},
-        {(enum CRRgbProp)0, NULL}
+        {(enum CRRgbProp) 0, NULL}
 };
 
 struct CRBorderStylePropEnumDumpInfo {
@@ -215,7 +215,7 @@ static struct CRBorderStylePropEnumDumpInfo gv_border_style_props_dump_infos[]
         {BORDER_STYLE_PROP_RIGHT, "border-style-right"},
         {BORDER_STYLE_PROP_BOTTOM, "boder-style-bottom"},
         {BORDER_STYLE_PROP_LEFT, "border-style-left"},
-        {(enum CRBorderStyleProp)0, NULL}
+        {(enum CRBorderStyleProp) 0, NULL}
 };
 
 static enum CRStatus
@@ -319,9 +319,9 @@ set_prop_font_weight_from_value (CRStyle * a_style, CRTerm * a_value);
 static const gchar *
 num_prop_code_to_string (enum CRNumProp a_code)
 {
-        int len = sizeof (gv_num_props_dump_infos) /
+        guint len = sizeof (gv_num_props_dump_infos) /
                 sizeof (struct CRNumPropEnumDumpInfo);
-        if ((int)a_code >= len) {
+        if (a_code >= len) {
                 cr_utils_trace_info ("A field has been added "
                                      "to 'enum CRNumProp' and no matching"
                                      " entry has been "
@@ -342,10 +342,10 @@ num_prop_code_to_string (enum CRNumProp a_code)
 static const gchar *
 rgb_prop_code_to_string (enum CRRgbProp a_code)
 {
-        int len = sizeof (gv_rgb_props_dump_infos) /
+        guint len = sizeof (gv_rgb_props_dump_infos) /
                 sizeof (struct CRRgbPropEnumDumpInfo);
 
-        if ((int)a_code >= len) {
+        if (a_code >= len) {
                 cr_utils_trace_info ("A field has been added "
                                      "to 'enum CRRgbProp' and no matching"
                                      " entry has been "
@@ -366,10 +366,10 @@ rgb_prop_code_to_string (enum CRRgbProp a_code)
 static const gchar *
 border_style_prop_code_to_string (enum CRBorderStyleProp a_code)
 {
-        int len = sizeof (gv_border_style_props_dump_infos) /
+        guint len = sizeof (gv_border_style_props_dump_infos) /
                 sizeof (struct CRBorderStylePropEnumDumpInfo);
 
-        if ((int)a_code >= len) {
+        if (a_code >= len) {
                 cr_utils_trace_info ("A field has been added "
                                      "to 'enum CRBorderStyleProp' and no matching"
                                      " entry has been "
@@ -421,7 +421,7 @@ cr_style_get_prop_id (const guchar * a_prop)
                 cr_style_init_properties ();
         }
 
-        raw_id = (gpointer *)g_hash_table_lookup (gv_prop_hash, a_prop);
+        raw_id = (gpointer *) g_hash_table_lookup (gv_prop_hash, a_prop);
         if (!raw_id) {
                 return PROP_ID_NOT_KNOWN;
         }
@@ -465,7 +465,7 @@ set_prop_padding_x_from_value (CRStyle * a_style,
                 if (a_value->content.str
                     && a_value->content.str->stryng
 		    && a_value->content.str->stryng->str
-                    && !strncmp ("inherit",
+                    && !strncmp ((const char *) "inherit",
                                  a_value->content.str->stryng->str,
                                  sizeof ("inherit")-1)) {
 			status = cr_num_set (num_val, 0.0, NUM_INHERIT);
@@ -569,9 +569,10 @@ static enum CRStatus
 set_prop_border_width_from_value (CRStyle *a_style,
                                   CRTerm *a_value)
 {
+        CRTerm *cur_term = NULL ;
         g_return_val_if_fail (a_style && a_value,
                               CR_BAD_PARAM_ERROR) ;
-        CRTerm *cur_term = a_value ;
+        cur_term = a_value ;
 
         if (!cur_term)
                 return CR_ERROR ;
@@ -579,7 +580,7 @@ set_prop_border_width_from_value (CRStyle *a_style,
         int dir;
         for (dir = (int) DIR_TOP ; dir < (int)NB_DIRS ; dir++) {
                  enum CRDirection direction = (enum CRDirection)dir;
-                 set_prop_border_x_width_from_value (a_style, 
+                 set_prop_border_x_width_from_value (a_style,
                                                     cur_term,
                                                     direction) ;
         }
@@ -696,16 +697,18 @@ static enum CRStatus
 set_prop_border_style_from_value (CRStyle *a_style,
                                   CRTerm *a_value)
 {
+        CRTerm *cur_term = NULL ;
+
         g_return_val_if_fail (a_style && a_value, 
                               CR_BAD_PARAM_ERROR) ;
 
-        CRTerm *cur_term = a_value ;
+        cur_term = a_value ;
         if (!cur_term || cur_term->type != TERM_IDENT) {
                 return CR_ERROR ;
         }
         
         int dir;
-        for (dir = (int)DIR_TOP ; dir < (int)NB_DIRS ; dir++) { 
+        for (dir = (int)DIR_TOP ; dir < (int)NB_DIRS ; dir++) {
                 enum CRDirection direction = (enum CRDirection)dir;
                 set_prop_border_x_style_from_value (a_style, 
                                                     cur_term,
@@ -908,7 +911,7 @@ set_prop_position_from_value (CRStyle * a_style, CRTerm * a_value)
                 break;
         }
 
-        return CR_OK;
+        return status;
 }
 
 static enum CRStatus
@@ -1115,11 +1118,11 @@ set_prop_border_x_color_from_value (CRStyle * a_style, CRTerm * a_value,
                     && a_value->content.str->stryng->str) {
                         status = cr_rgb_set_from_name
                                 (rgb_color, 
-                                 (guchar *)a_value->content.str->stryng->str);
+                                 (const guchar *) a_value->content.str->stryng->str);
 
                 }
                 if (status != CR_OK) {
-                        cr_rgb_set_from_name (rgb_color, (guchar *)"black");
+                        cr_rgb_set_from_name (rgb_color, (const guchar *) "black");
                 }
         } else if (a_value->type == TERM_RGB) {
                 if (a_value->content.rgb) {
@@ -1354,7 +1357,7 @@ set_prop_font_family_from_value (CRStyle * a_style, CRTerm * a_value)
                                     && cur_term->content.str->stryng->str) {
                                         cur_ff = cr_font_family_new
                                                 (FONT_FAMILY_NON_GENERIC,
-                                                 (guchar *)cur_term->content.str->stryng->str);
+                                                 (guchar *) cur_term->content.str->stryng->str);
                                 }
                         }
                         break;
@@ -1707,7 +1710,9 @@ set_prop_white_space_from_value (CRStyle * a_style, CRTerm * a_value)
 CRStyle *
 cr_style_new (gboolean a_set_props_to_initial_values)
 {
-        CRStyle *result = (CRStyle *)g_try_malloc (sizeof (CRStyle));
+        CRStyle *result = NULL;
+
+        result = (CRStyle *) g_try_malloc (sizeof (CRStyle));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
@@ -2018,7 +2023,7 @@ cr_style_set_style_from_decl (CRStyle * a_this, CRDeclaration * a_decl)
                               CR_BAD_PARAM_ERROR);
 
         prop_id = cr_style_get_prop_id
-                ((guchar *)a_decl->property->stryng->str);
+                ((const guchar *) a_decl->property->stryng->str);
 
         value = a_decl->value;
         switch (prop_id) {
@@ -2676,7 +2681,7 @@ cr_style_to_string (CRStyle * a_this, GString ** a_str, guint a_nb_indent)
                  *before outputing it value
                  */
                 cr_utils_dump_n_chars2 (' ', str, indent);
-                tmp_str = (gchar *) num_prop_code_to_string ((enum CRNumProp)i);
+                tmp_str = (gchar *) num_prop_code_to_string ((enum CRNumProp) i);
                 if (tmp_str) {
                         g_string_append_printf (str, "%s: ", tmp_str);
                 } else {
@@ -2690,7 +2695,7 @@ cr_style_to_string (CRStyle * a_this, GString ** a_str, guint a_nb_indent)
         }
         /*loop over the rgb_props and to_string() them all */
         for (i = RGB_PROP_BORDER_TOP_COLOR; i < NB_RGB_PROPS; i++) {
-                tmp_str = (gchar *) rgb_prop_code_to_string ((enum CRRgbProp)i);
+                tmp_str = (gchar *) rgb_prop_code_to_string ((enum CRRgbProp) i);
                 cr_utils_dump_n_chars2 (' ', str, indent);
                 if (tmp_str) {
                         g_string_append_printf (str, "%s: ", tmp_str);
@@ -2705,8 +2710,7 @@ cr_style_to_string (CRStyle * a_this, GString ** a_str, guint a_nb_indent)
         }
         /*loop over the border_style_props and to_string() them */
         for (i = BORDER_STYLE_PROP_TOP; i < NB_BORDER_STYLE_PROPS; i++) {
-                tmp_str = (gchar *) 
-				    border_style_prop_code_to_string ((enum CRBorderStyleProp)i);
+                tmp_str = (gchar *) border_style_prop_code_to_string ((enum CRBorderStyleProp) i);
                 cr_utils_dump_n_chars2 (' ', str, indent);
                 if (tmp_str) {
                         g_string_append_printf (str, "%s: ", tmp_str);
@@ -2741,7 +2745,7 @@ cr_style_to_string (CRStyle * a_this, GString ** a_str, guint a_nb_indent)
 
         cr_utils_dump_n_chars2 (' ', str, indent);
         g_string_append (str, "font-family: ");
-        tmp_str = (gchar *)cr_font_family_to_string (a_this->font_family, TRUE);
+        tmp_str = (gchar *) cr_font_family_to_string (a_this->font_family, TRUE);
         if (tmp_str) {
                 g_string_append (str, tmp_str);
                 g_free (tmp_str);
