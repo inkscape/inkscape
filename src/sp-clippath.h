@@ -93,10 +93,10 @@ protected:
             Inkscape::XML::Node * const owner_repr = owner->getRepr();
             //XML Tree being used directly here while it shouldn't be...
             Inkscape::XML::Node * const obj_repr = obj->getRepr();
-            char const * owner_name = NULL;
-            char const * owner_clippath = NULL;
-            char const * obj_name = NULL;
-            char const * obj_id = NULL;
+            char const * owner_name = "";
+            char const * owner_clippath = "";
+            char const * obj_name = "";
+            char const * obj_id = "";
             if (owner_repr != NULL) {
                 owner_name = owner_repr->name();
                 owner_clippath = owner_repr->attribute("clippath");
