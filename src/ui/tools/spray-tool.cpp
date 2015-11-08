@@ -12,6 +12,7 @@
  *   Steren GIANNINI (steren.giannini@gmail.com)
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
+ *   Jabiertxo Arraiza <jabier.arraiza@marker.es>
  *
  * Copyright (C) 2009 authors
  *
@@ -48,7 +49,15 @@
 #include "sp-path.h"
 #include "path-chemistry.h"
 
+// For color picking
+#include "display/drawing.h"
+#include "display/drawing-context.h"
+#include "display/cairo-utils.h"
+#include "desktop-style.h"
+#include "svg/svg-color.h"
+
 #include "sp-text.h"
+#include "sp-root.h"
 #include "sp-flowtext.h"
 #include "display/sp-canvas.h"
 #include "display/canvas-bpath.h"
@@ -87,6 +96,17 @@ using namespace std;
 namespace Inkscape {
 namespace UI {
 namespace Tools {
+
+enum {
+    PICK_COLOR,
+    PICK_OPACITY,
+    PICK_R,
+    PICK_G,
+    PICK_B,
+    PICK_H,
+    PICK_S,
+    PICK_L
+};
 
 const std::string& SprayTool::getPrefsPath() {
     return SprayTool::prefsPath;
@@ -133,7 +153,9 @@ SprayTool::SprayTool()
     : ToolBase(cursor_spray_xpm, 4, 4, false)
     , pressure(TC_DEFAULT_PRESSURE)
     , dragging(false)
-    , usepressure(false)
+    , usepressurewidth(false)
+    , usepressurepopulation(false)
+    , usepressurescale(false)
     , usetilt(false)
     , usetext(false)
     , width(0.2)
@@ -151,6 +173,13 @@ SprayTool::SprayTool()
     , is_dilating(false)
     , has_dilated(false)
     , dilate_area(NULL)
+    , nooverlap(false)
+    , picker(false)
+    , pickinversevalue(false)
+    , pickfill(false)
+    , pickstroke(false)
+    , visible(false)
+    , offset(0)
 {
 }
 
@@ -221,8 +250,17 @@ void SprayTool::setup() {
     sp_event_context_read(this, "population");
     sp_event_context_read(this, "mean");
     sp_event_context_read(this, "standard_deviation");
-    sp_event_context_read(this, "usepressure");
+    sp_event_context_read(this, "usepressurewidth");
+    sp_event_context_read(this, "usepressurepopulation");
+    sp_event_context_read(this, "usepressurescale");
     sp_event_context_read(this, "Scale");
+    sp_event_context_read(this, "offset");
+    sp_event_context_read(this, "picker");
+    sp_event_context_read(this, "pickinversevalue");
+    sp_event_context_read(this, "pickfill");
+    sp_event_context_read(this, "pickstroke");
+    sp_event_context_read(this, "visible");
+    sp_event_context_read(this, "nooverlap");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/spray/selcue")) {
@@ -241,8 +279,12 @@ void SprayTool::set(const Inkscape::Preferences::Entry& val) {
         this->update_cursor(false);
     } else if (path == "width") {
         this->width = 0.01 * CLAMP(val.getInt(10), 1, 100);
-    } else if (path == "usepressure") {
-        this->usepressure = val.getBool();
+    } else if (path == "usepressurewidth") {
+        this->usepressurewidth = val.getBool();
+    } else if (path == "usepressurepopulation") {
+        this->usepressurepopulation = val.getBool();
+    } else if (path == "usepressurescale") {
+        this->usepressurescale = val.getBool();
     } else if (path == "population") {
         this->population = 0.01 * CLAMP(val.getInt(10), 1, 100);
     } else if (path == "rotation_variation") {
@@ -260,6 +302,20 @@ void SprayTool::set(const Inkscape::Preferences::Entry& val) {
         this->tilt = CLAMP(val.getDouble(0.1), 0, 1000.0);
     } else if (path == "ratio") {
         this->ratio = CLAMP(val.getDouble(), 0.0, 0.9);
+    } else if (path == "offset") {
+        this->offset = CLAMP(val.getDouble(), -1000.0, 1000.0);
+    } else if (path == "picker") {
+        this->picker =  val.getBool();
+    } else if (path == "pickinversevalue") {
+        this->pickinversevalue =  val.getBool();
+    } else if (path == "pickfill") {
+        this->pickfill =  val.getBool();
+    } else if (path == "pickstroke") {
+        this->pickstroke =  val.getBool();
+    } else if (path == "visible") {
+        this->visible =  val.getBool();
+    } else if (path == "nooverlap") {
+        this->nooverlap = val.getBool();
     }
 }
 
@@ -272,9 +328,15 @@ static void sp_spray_extinput(SprayTool *tc, GdkEvent *event)
     }
 }
 
+static double get_width(SprayTool *tc)
+{
+    double pressure = (tc->usepressurewidth? tc->pressure / TC_DEFAULT_PRESSURE : 1);
+    return pressure * tc->width;
+}
+
 static double get_dilate_radius(SprayTool *tc)
 {
-    return 250 * tc->width/SP_EVENT_CONTEXT(tc)->desktop->current_zoom();
+    return 250 * get_width(tc)/SP_EVENT_CONTEXT(tc)->desktop->current_zoom();
 }
 
 static double get_path_mean(SprayTool *tc)
@@ -289,9 +351,14 @@ static double get_path_standard_deviation(SprayTool *tc)
 
 static double get_population(SprayTool *tc)
 {
-    double pressure = (tc->usepressure? tc->pressure / TC_DEFAULT_PRESSURE : 1);
-    //g_warning("Pressure, population: %f, %f", pressure, pressure * tc->population);
+    double pressure = (tc->usepressurepopulation? tc->pressure / TC_DEFAULT_PRESSURE : 1);
     return pressure * tc->population;
+}
+
+static double get_pressure(SprayTool *tc)
+{
+    double pressure = tc->pressure / TC_DEFAULT_PRESSURE;
+    return pressure;
 }
 
 static double get_move_mean(SprayTool *tc)
@@ -332,6 +399,317 @@ static void random_position(double &radius, double &angle, double &a, double &s,
 
 }
 
+static void sp_spray_transform_path(SPItem * item, Geom::Path &path, Geom::Affine affine, Geom::Point center){
+    path *= i2anc_affine(static_cast<SPItem *>(item->parent), NULL).inverse();
+    path *= item->transform.inverse();
+    Geom::Affine dt2p;
+    if (item->parent) {
+        dt2p = static_cast<SPItem *>(item->parent)->i2dt_affine().inverse();
+    } else {
+        SPDesktop *dt = SP_ACTIVE_DESKTOP;
+        dt2p = dt->dt2doc();
+    }
+    Geom::Affine i2dt = item->i2dt_affine() * Geom::Translate(center).inverse() * affine * Geom::Translate(center);
+    path *= i2dt * dt2p;
+    path *= i2anc_affine(static_cast<SPItem *>(item->parent), NULL);
+}
+
+/**
+Randomizes \a val by \a rand, with 0 < val < 1 and all values (including 0, 1) having the same
+probability of being displaced.
+ */
+double randomize01(double val, double rand)
+{
+    double base = MIN (val - rand, 1 - 2*rand);
+    if (base < 0) {
+        base = 0;
+    }
+    val = base + g_random_double_range (0, MIN (2 * rand, 1 - base));
+    return CLAMP(val, 0, 1); // this should be unnecessary with the above provisions, but just in case...
+}
+
+static bool fit_item(SPDesktop *desktop,
+                     SPItem *item,
+                     Geom::OptRect bbox,
+                     Geom::Point &move,
+                     Geom::Point center,
+                     double angle,
+                     double &_scale,
+                     double scale,
+                     bool picker,
+                     bool pickinversevalue,
+                     bool pickfill,
+                     bool pickstroke,
+                     bool visible,
+                     bool nooverlap,
+                     double offset,
+                     SPCSSAttr *css,
+                     bool trace_scale)
+{
+    SPDocument *doc = item->document;
+    double width = bbox->width();
+    double height = bbox->height();
+    double size = std::min(width,height);
+    double offset_min = (offset * size)/100.0 - (size);
+    if(offset_min < 0 ){
+        offset_min = 0;
+    }
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool pick_to_size = prefs->getBool("/dialogs/clonetiler/pick_to_size");
+    bool trace = prefs->getBool("/dialogs/clonetiler/dotrace");
+    if(picker && pick_to_size && !trace_scale && trace){
+        _scale = 0.1;
+    }
+    Geom::OptRect bbox_procesed = Geom::Rect(Geom::Point(bbox->left() - offset_min, bbox->top() - offset_min),Geom::Point(bbox->right() + offset_min, bbox->bottom() + offset_min));
+    Geom::Path path;
+    path.start(Geom::Point(bbox_procesed->left(), bbox_procesed->top()));
+    path.appendNew<Geom::LineSegment>(Geom::Point(bbox_procesed->right(), bbox_procesed->top()));
+    path.appendNew<Geom::LineSegment>(Geom::Point(bbox_procesed->right(), bbox_procesed->bottom()));
+    path.appendNew<Geom::LineSegment>(Geom::Point(bbox_procesed->left(), bbox_procesed->bottom()));
+    path.close(true);
+    sp_spray_transform_path(item, path, Geom::Scale(_scale), center);
+    sp_spray_transform_path(item, path, Geom::Scale(scale), center);
+    sp_spray_transform_path(item, path, Geom::Rotate(angle), center);
+    path *= Geom::Translate(move);
+    path *= desktop->doc2dt();
+    bbox_procesed = path.boundsFast();
+    double bbox_left_main = bbox_procesed->left();
+    double bbox_top_main = bbox_procesed->top();
+    double width_transformed = bbox_procesed->width();
+    double height_transformed = bbox_procesed->height();
+    Geom::Point mid_point = desktop->d2w(bbox_procesed->midpoint());
+    Geom::IntRect area = Geom::IntRect::from_xywh(floor(mid_point[Geom::X]), floor(mid_point[Geom::Y]), 1, 1);
+    double R = 0, G = 0, B = 0, A = 0;
+    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
+    sp_canvas_arena_render_surface(SP_CANVAS_ARENA(desktop->getDrawing()), s, area);
+    ink_cairo_surface_average_color(s, R, G, B, A);
+    cairo_surface_destroy(s);
+    guint32 rgba = SP_RGBA32_F_COMPOSE(R, G, B, A);
+    if(nooverlap && visible && (A==0 || A < 1e-6)){
+        return false;
+    }
+    size = std::min(width_transformed,height_transformed);
+    if(offset < 100 ){
+        offset_min = ((99.0 - offset) * size)/100.0 - size;
+    } else {
+        offset_min = 0;
+    }
+    std::vector<SPItem*> items_down = desktop->getDocument()->getItemsPartiallyInBox(desktop->dkey, *bbox_procesed);
+    Inkscape::Selection *selection = desktop->getSelection();
+    if (selection->isEmpty()) {
+        return false;
+    }
+    std::vector<SPItem*> const items_selected(selection->itemList());
+    for (std::vector<SPItem*>::const_iterator i=items_down.begin(); i!=items_down.end(); i++) {
+        SPItem *item_down = *i;
+        Geom::OptRect bbox_down = item_down->documentVisualBounds();
+        width = bbox_down->width();
+        height = bbox_down->height();
+        double bbox_left = bbox_down->left();
+        double bbox_top = bbox_down->top();
+        gchar const * item_down_sharp = g_strdup_printf("#%s", item_down->getId());
+        for (std::vector<SPItem*>::const_iterator j=items_selected.begin(); j!=items_selected.end(); j++) {
+            SPItem *item_selected = *j;
+            gchar const * spray_origin;
+            if(!item_selected->getAttribute("inkscape:spray-origin")){
+                spray_origin = g_strdup_printf("#%s", item_selected->getId());
+            } else {
+                spray_origin = item_selected->getAttribute("inkscape:spray-origin");
+            }
+            if(strcmp(item_down_sharp, spray_origin) == 0 ||
+                (item_down->getAttribute("inkscape:spray-origin") && 
+                strcmp(item_down->getAttribute("inkscape:spray-origin"),spray_origin) == 0 ))
+            {
+                if(nooverlap){
+                    if(!(offset_min < 0 && std::abs(bbox_left - bbox_left_main) > std::abs(offset_min) && 
+                std::abs(bbox_top - bbox_top_main) > std::abs(offset_min))){
+                        return false;
+                    }
+                } else if(picker || visible){
+                    item_down->setHidden(true);
+                    item_down->updateRepr();
+                }
+            }
+        }
+    }
+    if(picker || visible){
+        if(!nooverlap){
+            doc->ensureUpToDate();
+        }
+        int    pick = prefs->getInt("/dialogs/clonetiler/pick");
+        bool   pick_to_presence = prefs->getBool("/dialogs/clonetiler/pick_to_presence", false);
+        bool   pick_to_color = prefs->getBool("/dialogs/clonetiler/pick_to_color");
+        bool   pick_to_opacity = prefs->getBool("/dialogs/clonetiler/pick_to_opacity");
+        double rand_picked = 0.01 * prefs->getDoubleLimited("/dialogs/clonetiler/rand_picked", 0, 0, 100);
+        bool   invert_picked = prefs->getBool("/dialogs/clonetiler/invert_picked");
+        double gamma_picked = prefs->getDoubleLimited("/dialogs/clonetiler/gamma_picked", 0, -10, 10);
+        double opacity = 1.0;
+        gchar color_string[32]; *color_string = 0;
+        float r = SP_RGBA32_R_F(rgba);
+        float g = SP_RGBA32_G_F(rgba);
+        float b = SP_RGBA32_B_F(rgba);
+        float a = SP_RGBA32_A_F(rgba);
+        //this can fix the bug #1511998 if confirmed 
+        if( a == 0 || a < 1e-6){
+            r = 1;
+            g = 1;
+            b = 1;
+        }
+        if(visible && (a == 0 || a < 1e-6)){
+            return false;
+        }
+
+        if(picker && trace){
+            float hsl[3];
+            sp_color_rgb_to_hsl_floatv (hsl, r, g, b);
+
+            gdouble val = 0;
+            switch (pick) {
+            case PICK_COLOR:
+                val = 1 - hsl[2]; // inverse lightness; to match other picks where black = max
+                break;
+            case PICK_OPACITY:
+                val = a;
+                break;
+            case PICK_R:
+                val = r;
+                break;
+            case PICK_G:
+                val = g;
+                break;
+            case PICK_B:
+                val = b;
+                break;
+            case PICK_H:
+                val = hsl[0];
+                break;
+            case PICK_S:
+                val = hsl[1];
+                break;
+            case PICK_L:
+                val = 1 - hsl[2];
+                break;
+            default:
+                break;
+            }
+
+            if (rand_picked > 0) {
+                val = randomize01 (val, rand_picked);
+                r = randomize01 (r, rand_picked);
+                g = randomize01 (g, rand_picked);
+                b = randomize01 (b, rand_picked);
+            }
+
+            if (gamma_picked != 0) {
+                double power;
+                if (gamma_picked > 0)
+                    power = 1/(1 + fabs(gamma_picked));
+                else
+                    power = 1 + fabs(gamma_picked);
+
+                val = pow (val, power);
+                r = pow ((double)r, (double)power);
+                g = pow ((double)g, (double)power);
+                b = pow ((double)b, (double)power);
+            }
+
+            if (invert_picked) {
+                val = 1 - val;
+                r = 1 - r;
+                g = 1 - g;
+                b = 1 - b;
+            }
+
+            val = CLAMP (val, 0, 1);
+            r = CLAMP (r, 0, 1);
+            g = CLAMP (g, 0, 1);
+            b = CLAMP (b, 0, 1);
+
+            // recompose tweaked color
+            rgba = SP_RGBA32_F_COMPOSE(r, g, b, a);
+            if (pick_to_size) {
+                if(!trace_scale){
+                    if(pickinversevalue) {
+                        _scale = 1.0 - val;
+                    } else {
+                        _scale = val;
+                    }
+                    if(_scale == 0.0) {
+                        return false;
+                    }
+                    if(!fit_item(desktop,
+                         item,
+                         bbox,
+                         move,
+                         center,
+                         angle,
+                         _scale,
+                         scale,
+                         picker,
+                         pickinversevalue,
+                         pickfill,
+                         pickstroke,
+                         visible,
+                         nooverlap,
+                         offset,
+                         css,
+                         true)){
+                            return false;
+                         }
+                }
+            }
+
+            if (pick_to_opacity) {
+                if(pickinversevalue) {
+                    opacity *= 1.0 - val;
+                } else {
+                    opacity *= val;
+                }
+                std::stringstream opacity_str;
+                opacity_str.imbue(std::locale::classic());
+                opacity_str << opacity;
+                sp_repr_css_set_property(css, "opacity", opacity_str.str().c_str());
+            }
+            if (pick_to_presence) {
+                if (g_random_double_range (0, 1) > val) {
+                    //Hidding the element is a way to retain original
+                    //behaviour of tiled clones for presence option.
+                    sp_repr_css_set_property(css, "opacity", "0");
+                }
+            }
+            if (pick_to_color) {
+                sp_svg_write_color(color_string, sizeof(color_string), rgba);
+                if(pickfill){
+                    sp_repr_css_set_property(css, "fill", color_string);
+                }
+                if(pickstroke){
+                    sp_repr_css_set_property(css, "stroke", color_string);
+                }
+            }
+            if (opacity < 1e-6) { // invisibly transparent, skip
+                return false;
+            }
+        }
+        if(!trace){
+            sp_svg_write_color(color_string, sizeof(color_string), rgba);
+            if(pickfill){
+                sp_repr_css_set_property(css, "fill", color_string);
+            }
+            if(pickstroke){
+                sp_repr_css_set_property(css, "stroke", color_string);
+            }
+        }
+        if(!nooverlap && (picker || visible)){
+            for (std::vector<SPItem *>::const_iterator k=items_down.begin(); k!=items_down.end(); k++) {
+                SPItem *item_hidden = *k;
+                item_hidden->setHidden(false);
+                item_hidden->updateRepr();
+            }
+        }
+    }
+    return true;
+}
+
 static bool sp_spray_recursive(SPDesktop *desktop,
                                Inkscape::Selection *selection,
                                SPItem *item,
@@ -348,7 +726,16 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                                double ratio,
                                double tilt,
                                double rotation_variation,
-                               gint _distrib)
+                               gint _distrib,
+                               bool nooverlap,
+                               bool picker,
+                               bool pickinversevalue,
+                               bool pickfill,
+                               bool pickstroke,
+                               bool visible,
+                               double offset,
+                               bool usepressurescale,
+                               double pressure)
 {
     bool did = false;
 
@@ -364,6 +751,9 @@ static bool sp_spray_recursive(SPDesktop *desktop,
     double _fid = g_random_double_range(0, 1);
     double angle = g_random_double_range( - rotation_variation / 100.0 * M_PI , rotation_variation / 100.0 * M_PI );
     double _scale = g_random_double_range( 1.0 - scale_variation / 100.0, 1.0 + scale_variation / 100.0 );
+    if(usepressurescale){
+        _scale = pressure;
+    }
     double dr; double dp;
     random_position( dr, dp, mean, standard_deviation, _distrib );
     dr=dr*radius;
@@ -371,27 +761,44 @@ static bool sp_spray_recursive(SPDesktop *desktop,
     if (mode == SPRAY_MODE_COPY) {
         Geom::OptRect a = item->documentVisualBounds();
         if (a) {
-            SPItem *item_copied;
             if(_fid <= population)
             {
-                // Duplicate
                 SPDocument *doc = item->document;
+                gchar const * spray_origin;
+                if(!item->getAttribute("inkscape:spray-origin")){
+                    spray_origin = g_strdup_printf("#%s", item->getId());
+                } else {
+                    spray_origin = item->getAttribute("inkscape:spray-origin");
+                }
+                Geom::Point center = item->getCenter();
+                Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
+                SPCSSAttr *css = sp_repr_css_attr_new();
+                if(nooverlap || picker || visible){
+                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickinversevalue, pickfill, pickstroke, visible, nooverlap, offset, css, false)){
+                        return false;
+                    }
+                }
+                SPItem *item_copied;
+                // Duplicate
                 Inkscape::XML::Document* xml_doc = doc->getReprDoc();
                 Inkscape::XML::Node *old_repr = item->getRepr();
                 Inkscape::XML::Node *parent = old_repr->parent();
                 Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
+                if(!copy->attribute("inkscape:spray-origin")){
+                    copy->setAttribute("inkscape:spray-origin", spray_origin);
+                }
                 parent->appendChild(copy);
-
                 SPObject *new_obj = doc->getObjectByRepr(copy);
                 item_copied = dynamic_cast<SPItem *>(new_obj);   // Conversion object->item
-                Geom::Point center=item->getCenter();
-                sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(_scale,_scale));
-                sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(scale,scale));
-
+                sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(_scale));
+                sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(scale));
                 sp_spray_rotate_rel(center,desktop,item_copied, Geom::Rotate(angle));
                 // Move the cursor p
-                Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                Inkscape::GC::release(copy);
+                if(picker){
+                    sp_desktop_apply_css_recursive(item_copied, css, true);
+                }
                 did = true;
             }
         }
@@ -425,6 +832,13 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 if (_fid <= population) { // Rules the population of objects sprayed
                     // Duplicates the parent item
                     Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
+                    gchar const * spray_origin;
+                    if(!copy->attribute("inkscape:spray-origin")){
+                        spray_origin = g_strdup_printf("#%s", old_repr->attribute("id"));
+                        copy->setAttribute("inkscape:spray-origin", spray_origin);
+                    } else {
+                        spray_origin = copy->attribute("inkscape:spray-origin");
+                    }
                     parent->appendChild(copy);
                     SPObject *new_obj = doc->getObjectByRepr(copy);
                     item_copied = dynamic_cast<SPItem *>(new_obj);
@@ -456,8 +870,22 @@ static bool sp_spray_recursive(SPDesktop *desktop,
         Geom::OptRect a = item->documentVisualBounds();
         if (a) {
             if(_fid <= population) {
-                SPItem *item_copied;
                 SPDocument *doc = item->document;
+                gchar const * spray_origin;
+                if(!item->getAttribute("inkscape:spray-origin")){
+                    spray_origin = g_strdup_printf("#%s", item->getId());
+                } else {
+                    spray_origin = item->getAttribute("inkscape:spray-origin");
+                }
+                Geom::Point center=item->getCenter();
+                Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
+                SPCSSAttr *css = sp_repr_css_attr_new();
+                if(nooverlap || picker || visible){
+                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickinversevalue, pickfill, pickstroke, visible, nooverlap, offset, css, false)){
+                        return false;
+                    }
+                }
+                SPItem *item_copied;
                 Inkscape::XML::Document* xml_doc = doc->getReprDoc();
                 Inkscape::XML::Node *old_repr = item->getRepr();
                 Inkscape::XML::Node *parent = old_repr->parent();
@@ -467,6 +895,9 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 // Ad the clone to the list of the parent's children
                 parent->appendChild(clone);
                 // Generates the link between parent and child attributes
+                if(!clone->attribute("inkscape:spray-origin")){
+                    clone->setAttribute("inkscape:spray-origin", spray_origin);
+                }
                 gchar *href_str = g_strdup_printf("#%s", old_repr->attribute("id"));
                 clone->setAttribute("xlink:href", href_str, false); 
                 g_free(href_str);
@@ -474,15 +905,14 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 SPObject *clone_object = doc->getObjectByRepr(clone);
                 // Conversion object->item
                 item_copied = dynamic_cast<SPItem *>(clone_object);
-                Geom::Point center = item->getCenter();
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(_scale, _scale));
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(scale, scale));
                 sp_spray_rotate_rel(center, desktop, item_copied, Geom::Rotate(angle));
-                Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 sp_item_move_rel(item_copied, Geom::Translate(move[Geom::X], -move[Geom::Y]));
-
+                if(picker){
+                    sp_desktop_apply_css_recursive(item_copied, css, true);
+                }
                 Inkscape::GC::release(clone);
-
                 did = true;
             }
         }
@@ -529,8 +959,7 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
         for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
             SPItem *item = *i;
             g_assert(item != NULL);
-
-            if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib)) {
+            if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib, tc->nooverlap, tc->picker, tc->pickinversevalue, tc->pickfill, tc->pickstroke, tc->visible, tc->offset, tc->usepressurescale, get_pressure(tc))) {
                 did = true;
             }
         }

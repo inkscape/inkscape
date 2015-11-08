@@ -31,7 +31,7 @@ public:
     virtual ~CloneTiler();
 
     static CloneTiler &getInstance() { return *new CloneTiler(); }
-
+    void show_page_trace();
 protected:
 
     GtkWidget * clonetiler_new_tab(GtkWidget *nb, const gchar *label);
@@ -113,6 +113,8 @@ private:
     CloneTiler& operator=(CloneTiler const &d);
 
     GtkWidget *dlg;
+    GtkWidget *nb;
+    GtkWidget *b;
     SPDesktop *desktop;
     DesktopTracker deskTrack;
     Inkscape::UI::Widget::ColorPicker *color_picker;

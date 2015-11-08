@@ -16,10 +16,11 @@
  *   Tavmjong Bah <tavmjong@free.fr>
  *   Abhishek Sharma
  *   Kris De Gussem <Kris.DeGussem@gmail.com>
+ *   Jabiertxo Arraiza <jabier.arraiza@marker.es>
  *
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2003 MenTaLguY
- * Copyright (C) 1999-2011 authors
+ * Copyright (C) 1999-2015 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -309,14 +310,26 @@ static gchar const * ui_descr =
         "    <toolitem action='SprayModeAction' />"
         "    <separator />"
         "    <toolitem action='SprayWidthAction' />"
+        "    <toolitem action='SprayPressureWidthAction' />"
         "    <toolitem action='SprayPopulationAction' />"
-        "    <toolitem action='SprayPressureAction' />"
+        "    <toolitem action='SprayPressurePopulationAction' />"
         "    <separator />"
         "    <toolitem action='SprayRotationAction' />"
         "    <toolitem action='SprayScaleAction' />"
+        "    <toolitem action='SprayPressureScaleAction' />"
         "    <separator />"
         "    <toolitem action='SprayStandard_deviationAction' />"
         "    <toolitem action='SprayMeanAction' />"
+        "    <separator />"
+        "    <toolitem action='SprayOverVisibleAction' />"
+        "    <toolitem action='SprayNoOverlapAction' />"
+        "    <toolitem action='SprayToolOffsetAction' />"
+        "    <separator />"
+        "    <toolitem action='SprayPickColorAction' />"
+        "    <toolitem action='SprayOverPickInverseValueAction' />"
+        "    <toolitem action='SprayOverPickFillAction' />"
+        "    <toolitem action='SprayOverPickStrokeAction' />"
+        
         "  </toolbar>"
 
         "  <toolbar name='ZoomToolbar'>"

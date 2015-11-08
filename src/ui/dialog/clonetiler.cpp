@@ -85,7 +85,7 @@ CloneTiler::CloneTiler () :
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);
-
+    
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -101,7 +101,7 @@ CloneTiler::CloneTiler () :
 
         contents->pack_start (*Gtk::manage(Glib::wrap(mainbox)), true, true, 0);
 
-        GtkWidget *nb = gtk_notebook_new ();
+        nb = gtk_notebook_new ();
         gtk_box_pack_start (GTK_BOX (mainbox), nb, FALSE, FALSE, 0);
 
 
@@ -662,7 +662,7 @@ CloneTiler::CloneTiler () :
             gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
 
             guint32 rgba = 0x000000ff | sp_svg_read_color (prefs->getString(prefs_path + "initial_color").data(), 0x000000ff);
-            color_picker = new Inkscape::UI::Widget::ColorPicker (*new Glib::ustring(_("Initial color of tiled clones")), *new Glib::ustring(_("Initial color for clones (works only if the original has unset fill or stroke)")), rgba, false);
+            color_picker = new Inkscape::UI::Widget::ColorPicker (*new Glib::ustring(_("Initial color of tiled clones")), *new Glib::ustring(_("Initial color for clones (works only if the original has unset fill or stroke or on spray tool in copy mode)")), rgba, false);
             color_changed_connection = color_picker->connectChanged (sigc::ptr_fun(on_picker_color_changed));
 
             gtk_box_pack_start (GTK_BOX (hb), reinterpret_cast<GtkWidget*>(color_picker->gobj()), FALSE, FALSE, 0);
@@ -776,8 +776,6 @@ CloneTiler::CloneTiler () :
         // Trace
         {
             GtkWidget *vb = clonetiler_new_tab (nb, _("_Trace"));
-
-
         {
 #if GTK_CHECK_VERSION(3,0,0)
             GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
@@ -787,11 +785,11 @@ CloneTiler::CloneTiler () :
 #endif
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
 
-            GtkWidget *b  = gtk_check_button_new_with_label (_("Trace the drawing under the tiles"));
+            b  = gtk_check_button_new_with_label (_("Trace the drawing under the clones/sprayed items"));
             g_object_set_data (G_OBJECT(b), "uncheckable", GINT_TO_POINTER(TRUE));
             bool old = prefs->getBool(prefs_path + "dotrace");
             gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-            gtk_widget_set_tooltip_text (b, _("For each clone, pick a value from the drawing in that clone's location and apply it to the clone"));
+            gtk_widget_set_tooltip_text (b, _("For each clone/sprayed item, pick a value from the drawing in its location and apply it"));
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
 
             g_signal_connect(G_OBJECT(b), "toggled",
@@ -1001,6 +999,18 @@ CloneTiler::CloneTiler () :
         }
         }
 
+        {
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
+            gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
+            GtkWidget *hb = gtk_hbox_new(FALSE, VB_MARGIN);
+#endif
+            gtk_box_pack_start (GTK_BOX (mainbox), hb, FALSE, FALSE, 0);
+            GtkWidget *l = gtk_label_new(_(""));
+            gtk_label_set_markup (GTK_LABEL(l), _("Apply to tiled clones:"));
+            gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
+        }
         // Rows/columns, width/height
         {
 #if GTK_CHECK_VERSION(3,0,0)
@@ -1289,7 +1299,6 @@ CloneTiler::CloneTiler () :
         }
 
         gtk_widget_show_all (mainbox);
-
     }
 
     show_all();
@@ -3004,6 +3013,13 @@ void CloneTiler::clonetiler_do_pick_toggled(GtkToggleButton *tb, GtkWidget *dlg)
         gtk_widget_set_sensitive (vvb, gtk_toggle_button_get_active (tb));
     }
 }
+
+void CloneTiler::show_page_trace()
+{
+    gtk_notebook_set_current_page(GTK_NOTEBOOK(nb),6);
+    gtk_toggle_button_set_active ((GtkToggleButton *) b, false);
+}
+
 
 }
 }

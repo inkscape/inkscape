@@ -12,6 +12,7 @@
  *   Benoît LAVORATA
  *   Vincent MONTAGNE
  *   Pierre BARBRY-BLOT
+ *   Jabiertxo ARRAIZA
  *
  * Copyright (C) 2009 authors
  *
@@ -62,7 +63,9 @@ public:
 
     /* attributes */
     bool dragging;           /* mouse state: mouse is dragging */
-    bool usepressure;
+    bool usepressurewidth;
+    bool usepressurepopulation;
+    bool usepressurescale;
     bool usetilt;
     bool usetext;
 
@@ -86,7 +89,13 @@ public:
     bool has_dilated;
     Geom::Point last_push;
     SPCanvasItem *dilate_area;
-
+    bool nooverlap;
+    bool picker;
+    bool pickinversevalue;
+    bool pickfill;
+    bool pickstroke;
+    bool visible;
+    double offset;
     sigc::connection style_set_connection;
 
     static const std::string prefsPath;
