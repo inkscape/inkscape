@@ -94,7 +94,8 @@ public:
     bool pickinversevalue;
     bool pickfill;
     bool pickstroke;
-    bool visible;
+    bool overtransparent;
+    bool overnotransparent;
     double offset;
     sigc::connection style_set_connection;
 

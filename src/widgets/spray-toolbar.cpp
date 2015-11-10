@@ -186,12 +186,20 @@ static void sp_toggle_pressure_scale( GtkToggleAction* act, gpointer data)
     sp_stb_sensitivize( tbl );
 }
 
-static void sp_toggle_visible( GtkToggleAction* act, gpointer data)
+static void sp_toggle_over_no_transparent( GtkToggleAction* act, gpointer data)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean active = gtk_toggle_action_get_active(act);
-    prefs->setBool("/tools/spray/visible", active);
+    prefs->setBool("/tools/spray/overnotransparent", active);
 }
+
+static void sp_toggle_over_transparent( GtkToggleAction* act, gpointer data)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gboolean active = gtk_toggle_action_get_active(act);
+    prefs->setBool("/tools/spray/overtransparent", active);
+}
+
 
 static void sp_toggle_picker( GtkToggleAction* act, gpointer data )
 {
@@ -472,17 +480,30 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_pick_stroke), holder) ;
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
-    
-    /* Visible */
+
+    /* Over Transparent */
     {
-        InkToggleAction* act = ink_toggle_action_new( "SprayOverVisibleAction",
-                                                      _("Apply only over non transparent areas"),
-                                                      _("Apply only over non transparent areas"),
+        InkToggleAction* act = ink_toggle_action_new( "SprayOverTransparentAction",
+                                                      _("Apply over transparent areas"),
+                                                      _("Apply over transparent areas"),
+                                                      INKSCAPE_ICON("object-hidden"),
+                                                      secondarySize );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/overtransparent", true) );
+        g_object_set_data( holder, "overtransparent", act );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_over_transparent), holder) ;
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+    }
+
+    /* Over No Transparent */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "SprayOverNoTransparentAction",
+                                                      _("Apply over no transparent areas"),
+                                                      _("Apply over no transparent areas"),
                                                       INKSCAPE_ICON("object-visible"),
                                                       secondarySize );
-        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/visible", false) );
-        g_object_set_data( holder, "visible", act );
-        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_visible), holder) ;
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/overnotransparent", true) );
+        g_object_set_data( holder, "overnotransparent", act );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_over_no_transparent), holder) ;
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
 

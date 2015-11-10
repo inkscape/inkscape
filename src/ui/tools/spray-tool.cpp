@@ -178,7 +178,8 @@ SprayTool::SprayTool()
     , pickinversevalue(false)
     , pickfill(false)
     , pickstroke(false)
-    , visible(false)
+    , overtransparent(true)
+    , overnotransparent(true)
     , offset(0)
 {
 }
@@ -259,7 +260,8 @@ void SprayTool::setup() {
     sp_event_context_read(this, "pickinversevalue");
     sp_event_context_read(this, "pickfill");
     sp_event_context_read(this, "pickstroke");
-    sp_event_context_read(this, "visible");
+    sp_event_context_read(this, "overnotransparent");
+    sp_event_context_read(this, "overtransparent");
     sp_event_context_read(this, "nooverlap");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -312,8 +314,10 @@ void SprayTool::set(const Inkscape::Preferences::Entry& val) {
         this->pickfill =  val.getBool();
     } else if (path == "pickstroke") {
         this->pickstroke =  val.getBool();
-    } else if (path == "visible") {
-        this->visible =  val.getBool();
+    } else if (path == "overnotransparent") {
+        this->overnotransparent =  val.getBool();
+    } else if (path == "overtransparent") {
+        this->overtransparent =  val.getBool();
     } else if (path == "nooverlap") {
         this->nooverlap = val.getBool();
     }
@@ -440,7 +444,8 @@ static bool fit_item(SPDesktop *desktop,
                      bool pickinversevalue,
                      bool pickfill,
                      bool pickstroke,
-                     bool visible,
+                     bool overnotransparent,
+                     bool overtransparent,
                      bool nooverlap,
                      double offset,
                      SPCSSAttr *css,
@@ -485,7 +490,10 @@ static bool fit_item(SPDesktop *desktop,
     ink_cairo_surface_average_color(s, R, G, B, A);
     cairo_surface_destroy(s);
     guint32 rgba = SP_RGBA32_F_COMPOSE(R, G, B, A);
-    if(nooverlap && visible && (A==0 || A < 1e-6)){
+    if(nooverlap && !overtransparent && (A==0 || A < 1e-6)){
+        return false;
+    }
+    if(nooverlap && !overnotransparent && A>0){
         return false;
     }
     size = std::min(width_transformed,height_transformed);
@@ -525,14 +533,14 @@ static bool fit_item(SPDesktop *desktop,
                 std::abs(bbox_top - bbox_top_main) > std::abs(offset_min))){
                         return false;
                     }
-                } else if(picker || visible){
+                } else if(picker || !overtransparent || !overnotransparent){
                     item_down->setHidden(true);
                     item_down->updateRepr();
                 }
             }
         }
     }
-    if(picker || visible){
+    if(picker || !overtransparent || !overnotransparent){
         if(!nooverlap){
             doc->ensureUpToDate();
         }
@@ -555,7 +563,10 @@ static bool fit_item(SPDesktop *desktop,
             g = 1;
             b = 1;
         }
-        if(visible && (a == 0 || a < 1e-6)){
+        if(!overtransparent && (a == 0 || a < 1e-6)){
+            return false;
+        }
+        if(!overnotransparent && a >0){
             return false;
         }
 
@@ -649,7 +660,8 @@ static bool fit_item(SPDesktop *desktop,
                          pickinversevalue,
                          pickfill,
                          pickstroke,
-                         visible,
+                         overnotransparent,
+                         overtransparent,
                          nooverlap,
                          offset,
                          css,
@@ -699,7 +711,7 @@ static bool fit_item(SPDesktop *desktop,
                 sp_repr_css_set_property(css, "stroke", color_string);
             }
         }
-        if(!nooverlap && (picker || visible)){
+        if(!nooverlap && (picker || !overtransparent || !overnotransparent)){
             for (std::vector<SPItem *>::const_iterator k=items_down.begin(); k!=items_down.end(); k++) {
                 SPItem *item_hidden = *k;
                 item_hidden->setHidden(false);
@@ -732,7 +744,8 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                                bool pickinversevalue,
                                bool pickfill,
                                bool pickstroke,
-                               bool visible,
+                               bool overnotransparent,
+                               bool overtransparent,
                                double offset,
                                bool usepressurescale,
                                double pressure)
@@ -773,8 +786,8 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Geom::Point center = item->getCenter();
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 SPCSSAttr *css = sp_repr_css_attr_new();
-                if(nooverlap || picker || visible){
-                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickinversevalue, pickfill, pickstroke, visible, nooverlap, offset, css, false)){
+                if(nooverlap || picker || !overtransparent || !overnotransparent){
+                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickinversevalue, pickfill, pickstroke, overnotransparent, overtransparent, nooverlap, offset, css, false)){
                         return false;
                     }
                 }
@@ -880,8 +893,8 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Geom::Point center=item->getCenter();
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 SPCSSAttr *css = sp_repr_css_attr_new();
-                if(nooverlap || picker || visible){
-                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickinversevalue, pickfill, pickstroke, visible, nooverlap, offset, css, false)){
+                if(nooverlap || picker || !overtransparent || !overnotransparent){
+                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickinversevalue, pickfill, pickstroke, overnotransparent, overtransparent, nooverlap, offset, css, false)){
                         return false;
                     }
                 }
@@ -959,7 +972,7 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
         for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
             SPItem *item = *i;
             g_assert(item != NULL);
-            if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib, tc->nooverlap, tc->picker, tc->pickinversevalue, tc->pickfill, tc->pickstroke, tc->visible, tc->offset, tc->usepressurescale, get_pressure(tc))) {
+            if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib, tc->nooverlap, tc->picker, tc->pickinversevalue, tc->pickfill, tc->pickstroke, tc->overnotransparent, tc->overtransparent, tc->offset, tc->usepressurescale, get_pressure(tc))) {
                 did = true;
             }
         }
