@@ -47,7 +47,8 @@ namespace Tools {
 enum {
     SPRAY_MODE_COPY,
     SPRAY_MODE_CLONE,
-    SPRAY_MODE_SINGLE_PATH,    
+    SPRAY_MODE_SINGLE_PATH,
+    SPRAY_MODE_ERASER,
     SPRAY_OPTION,
 };
 

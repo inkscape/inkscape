@@ -68,13 +68,14 @@ static void sp_stb_sensitivize( GObject *tbl )
     GtkAdjustment *adj_scale = ege_adjustment_action_get_adjustment( EGE_ADJUSTMENT_ACTION(spray_scale) );
     GtkToggleAction *no_overlap = GTK_TOGGLE_ACTION( g_object_get_data(tbl, "no_overlap") );
     GtkToggleAction *picker = GTK_TOGGLE_ACTION( g_object_get_data(tbl, "picker") );
+    GtkAction* picker_action = GTK_ACTION( g_object_get_data(tbl, "picker") );
     GtkToggleAction *usepressurescale = GTK_TOGGLE_ACTION( g_object_get_data(tbl, "usepressurescale") );
     GtkAction *pick_fill = GTK_ACTION( g_object_get_data(tbl, "pick_fill") );
     GtkAction *pick_stroke = GTK_ACTION( g_object_get_data(tbl, "pick_stroke") );
     GtkAction *pick_inverse_value = GTK_ACTION( g_object_get_data(tbl, "pick_inverse_value") );
     GtkAction *pick_center = GTK_ACTION( g_object_get_data(tbl, "pick_center") );
     gtk_adjustment_set_value( adj_offset, 100.0 );
-    if (gtk_toggle_action_get_active(no_overlap)) {
+    if (gtk_toggle_action_get_active(no_overlap) && gtk_action_get_sensitive(picker_action)) {
         gtk_action_set_sensitive( offset, TRUE );
     } else {
         gtk_action_set_sensitive( offset, FALSE );
@@ -85,7 +86,7 @@ static void sp_stb_sensitivize( GObject *tbl )
     } else {
         gtk_action_set_sensitive( spray_scale, TRUE );
     }
-    if(gtk_toggle_action_get_active(picker)){
+    if(gtk_toggle_action_get_active(picker) && gtk_action_get_sensitive(picker_action)){
         gtk_action_set_sensitive( pick_fill, TRUE );
         gtk_action_set_sensitive( pick_stroke, TRUE );
         gtk_action_set_sensitive( pick_inverse_value, TRUE );
@@ -96,6 +97,21 @@ static void sp_stb_sensitivize( GObject *tbl )
         gtk_action_set_sensitive( pick_inverse_value, FALSE );
         gtk_action_set_sensitive( pick_center, FALSE );
     }
+}
+
+static void sp_spray_erase_sensitivize( GObject *tbl, bool sensitive){
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "rotate") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "no_overlap") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "over_no_transparent") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "over_transparent") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "pick_no_overlap") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "pick_stroke") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "pick_fill") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "pick_inverse_value") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "pick_center") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "picker") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "offset") ), sensitive );
+    sp_stb_sensitivize( tbl );
 }
 
 Inkscape::UI::Dialog::CloneTiler *get_clone_tiler_panel(SPDesktop *desktop)
@@ -133,11 +149,16 @@ static void sp_spray_standard_deviation_value_changed( GtkAdjustment *adj, GObje
             gtk_adjustment_get_value(adj));
 }
 
-static void sp_spray_mode_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
+static void sp_spray_mode_changed( EgeSelectOneAction *act, GObject * tbl )
 {
     int mode = ege_select_one_action_get_active( act );
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt("/tools/spray/mode", mode);
+    if(mode != 3){
+        sp_spray_erase_sensitivize(tbl, true);
+    } else {
+        sp_spray_erase_sensitivize(tbl, false);
+    }
 }
 
 static void sp_spray_population_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
@@ -210,7 +231,7 @@ static void sp_toggle_picker( GtkToggleAction* act, gpointer data )
     gboolean active = gtk_toggle_action_get_active(act);
     prefs->setBool("/tools/spray/picker", active);
     if(active == true){
-        prefs->setBool("/dialogs/clonetiler/dotrace", true);
+        prefs->setBool("/dialogs/clonetiler/dotrace", false);
         SPDesktop *dt = SP_ACTIVE_DESKTOP;
         if (Inkscape::UI::Dialog::CloneTiler *ct = get_clone_tiler_panel(dt)){
             dt->_dlg_mgr->showDialog("CloneTiler");
@@ -323,7 +344,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
 
     /* Mode */
     {
-        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+        GtkListStore* model = gtk_list_store_new( 4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
         GtkTreeIter iter;
         gtk_list_store_append( model, &iter );
@@ -339,6 +360,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                             1, _("Spray clones of the initial selection"),
                             2, INKSCAPE_ICON("spray-mode-clone"),
                             -1 );
+        
 #ifdef ENABLE_SPRAY_MODE_SINGLE_PATH
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
@@ -347,6 +369,14 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                             2, INKSCAPE_ICON("spray-mode-union"),
                             -1 );
 #endif
+        
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Delete sprayed items"),
+                            1, _("Delete sprayed items from selection"),
+                            2, INKSCAPE_ICON("draw-eraser"),
+                            -1 );
+        
         EgeSelectOneAction* act = ege_select_one_action_new( "SprayModeAction", _("Mode"), (""), NULL, GTK_TREE_MODEL(model) );
         g_object_set( act, "short_label", _("Mode:"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
@@ -575,7 +605,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         g_object_set_data( holder, "offset", eact );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
     }
-    sp_stb_sensitivize(holder);
+    sp_spray_erase_sensitivize(holder, prefs->getInt("/tools/spray/mode") != 3);
 }
 
 

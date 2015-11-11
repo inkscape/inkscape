@@ -252,6 +252,15 @@ void SprayTool::setup() {
 
     this->is_drawing = false;
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/dialogs/clonetiler/dotrace", false);
+    if (prefs->getBool("/tools/spray/selcue")) {
+        this->enableSelectionCue();
+    }
+    if (prefs->getBool("/tools/spray/gradientdrag")) {
+        this->enableGrDrag();
+    }
+
     sp_event_context_read(this, "distrib");
     sp_event_context_read(this, "width");
     sp_event_context_read(this, "ratio");
@@ -276,14 +285,6 @@ void SprayTool::setup() {
     sp_event_context_read(this, "over_no_transparent");
     sp_event_context_read(this, "over_transparent");
     sp_event_context_read(this, "no_overlap");
-
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (prefs->getBool("/tools/spray/selcue")) {
-        this->enableSelectionCue();
-    }
-    if (prefs->getBool("/tools/spray/gradientdrag")) {
-        this->enableGrDrag();
-    }
 }
 
 void SprayTool::setCloneTilerPrefs() {
@@ -491,6 +492,7 @@ static bool fit_item(SPDesktop *desktop,
                      Geom::OptRect bbox,
                      Geom::Point &move,
                      Geom::Point center,
+                     gint mode,
                      double angle,
                      double &_scale,
                      double scale,
@@ -604,7 +606,11 @@ static bool fit_item(SPDesktop *desktop,
                 (item_down->getAttribute("inkscape:spray-origin") && 
                 strcmp(item_down->getAttribute("inkscape:spray-origin"),spray_origin) == 0 ))
             {
-                if(no_overlap){
+                if(mode == SPRAY_MODE_ERASER){
+                    if(strcmp(item_down_sharp, spray_origin) != 0 ){
+                        item_down->deleteObject();
+                    }
+                }else if(no_overlap){
                     if(!(offset_width < 0 && offset_height < 0 && std::abs(bbox_left - bbox_left_main) > std::abs(offset_width) && 
                 std::abs(bbox_top - bbox_top_main) > std::abs(offset_height))){
                         if(!no_overlap && (picker || over_transparent || over_no_transparent)){
@@ -618,6 +624,12 @@ static bool fit_item(SPDesktop *desktop,
                 }
             }
         }
+    }
+    if(mode == SPRAY_MODE_ERASER){
+        if(!no_overlap && (picker || over_transparent || over_no_transparent)){
+            showHidden(items_down);
+        }
+        return false;
     }
     if(picker || over_transparent || over_no_transparent){
         if(!no_overlap){
@@ -743,6 +755,7 @@ static bool fit_item(SPDesktop *desktop,
                                  , bbox
                                  , move
                                  , center
+                                 , mode
                                  , angle
                                  , _scale
                                  , scale
@@ -818,11 +831,11 @@ static bool fit_item(SPDesktop *desktop,
             if (pick_inverse_value) {
                 r = 1 - SP_RGBA32_R_F(rgba);
                 g = 1 - SP_RGBA32_G_F(rgba);
-                b = 1 - SP_RGBA32_G_F(rgba);
+                b = 1 - SP_RGBA32_B_F(rgba);
             } else {
                 r = SP_RGBA32_R_F(rgba);
                 g = SP_RGBA32_G_F(rgba);
-                b = SP_RGBA32_G_F(rgba);
+                b = SP_RGBA32_B_F(rgba);
             }
             rgba = SP_RGBA32_F_COMPOSE(r, g, b, a);
             sp_svg_write_color(color_string, sizeof(color_string), rgba);
@@ -900,7 +913,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
     random_position( dr, dp, mean, standard_deviation, _distrib );
     dr=dr*radius;
 
-    if (mode == SPRAY_MODE_COPY) {
+    if (mode == SPRAY_MODE_COPY || mode == SPRAY_MODE_ERASER) {
         Geom::OptRect a = item->documentVisualBounds();
         if (a) {
             if(_fid <= population)
@@ -921,6 +934,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                                  , a
                                  , move
                                  , center
+                                 , mode
                                  , angle
                                  , _scale
                                  , scale
@@ -1056,6 +1070,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                                  , a
                                  , move
                                  , center
+                                 , mode
                                  , angle
                                  , _scale
                                  , scale
