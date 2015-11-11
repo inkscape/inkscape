@@ -72,6 +72,7 @@ static void sp_stb_sensitivize( GObject *tbl )
     GtkAction *pickfill = GTK_ACTION( g_object_get_data(tbl, "pickfill") );
     GtkAction *pickstroke = GTK_ACTION( g_object_get_data(tbl, "pickstroke") );
     GtkAction *pickinversevalue = GTK_ACTION( g_object_get_data(tbl, "pickinversevalue") );
+    GtkAction *pickcenter = GTK_ACTION( g_object_get_data(tbl, "pickcenter") );
     gtk_adjustment_set_value( adj_offset, 100.0 );
     if (gtk_toggle_action_get_active(nooverlap)) {
         gtk_action_set_sensitive( offset, TRUE );
@@ -88,10 +89,12 @@ static void sp_stb_sensitivize( GObject *tbl )
         gtk_action_set_sensitive( pickfill, TRUE );
         gtk_action_set_sensitive( pickstroke, TRUE );
         gtk_action_set_sensitive( pickinversevalue, TRUE );
+        gtk_action_set_sensitive( pickcenter, TRUE );
     } else {
         gtk_action_set_sensitive( pickfill, FALSE );
         gtk_action_set_sensitive( pickstroke, FALSE );
         gtk_action_set_sensitive( pickinversevalue, FALSE );
+        gtk_action_set_sensitive( pickcenter, FALSE );
     }
 }
 
@@ -216,6 +219,13 @@ static void sp_toggle_picker( GtkToggleAction* act, gpointer data )
     }
     GObject *tbl = G_OBJECT(data);
     sp_stb_sensitivize(tbl);
+}
+
+static void sp_toggle_pick_center( GtkToggleAction* act, gpointer data )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gboolean active = gtk_toggle_action_get_active(act);
+    prefs->setBool("/tools/spray/pickcenter", active);
 }
 
 static void sp_toggle_pick_fill( GtkToggleAction* act, gpointer data )
@@ -428,7 +438,6 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
 
-
     /* Picker */
     {
         InkToggleAction* act = ink_toggle_action_new( "SprayPickColorAction",
@@ -441,12 +450,25 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_picker), holder) ;
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
+    
+    /* Pick from center */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "SprayPickCenterAction",
+                                                      _("Pick from center instead average area."),
+                                                      _("Pick from center instead average area."),
+                                                      INKSCAPE_ICON("snap-bounding-box-center"),
+                                                      secondarySize );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/pickcenter", true) );
+        g_object_set_data( holder, "pickcenter", act );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_pick_center), holder) ;
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+    }
 
     /* Inverse Value Size */
     {
         InkToggleAction* act = ink_toggle_action_new( "SprayOverPickInverseValueAction",
-                                                      _("Inversed pick value retaining color"),
-                                                      _("Inversed pick value retaining color"),
+                                                      _("Inversed pick value, retaining color in advanced trace mode"),
+                                                      _("Inversed pick value, retaining color in advanced trace mode"),
                                                       INKSCAPE_ICON("object-tweak-shrink"),
                                                       secondarySize );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/pickinversevalue", false) );

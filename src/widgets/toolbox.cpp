@@ -327,10 +327,11 @@ static gchar const * ui_descr =
         "    <toolitem action='SprayToolOffsetAction' />"
         "    <separator />"
         "    <toolitem action='SprayPickColorAction' />"
-        "    <toolitem action='SprayOverPickInverseValueAction' />"
         "    <toolitem action='SprayOverPickFillAction' />"
         "    <toolitem action='SprayOverPickStrokeAction' />"
-        
+        "    <toolitem action='SprayOverPickInverseValueAction' />"
+        "    <toolitem action='SprayPickCenterAction' />"
+
         "  </toolbar>"
 
         "  <toolbar name='ZoomToolbar'>"
@@ -369,7 +370,7 @@ static gchar const * ui_descr =
         "    <toolitem action='MeasureToGuides' />"
         "    <toolitem action='MeasureMarkDimension' />"
         "    <toolitem action='MeasureToItem' />"
-        "  </toolbar>"
+        "  </toolbar>" 
 
         "  <toolbar name='StarToolbar'>"
         "    <separator />"
