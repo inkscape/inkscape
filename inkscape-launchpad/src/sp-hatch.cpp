@@ -113,7 +113,7 @@ void SPHatch::child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref)
     SPHatchPath *path_child = dynamic_cast<SPHatchPath *>(document->getObjectByRepr(child));
 
     if (path_child) {
-        for (ViewIterator iter = _display.begin(); iter != _display.end(); iter++) {
+        for (ViewIterator iter = _display.begin(); iter != _display.end(); ++iter) {
             Geom::OptInterval extents = _calculateStripExtents(iter->bbox);
             Inkscape::DrawingItem *ac = path_child->show(iter->arenaitem->drawing(), iter->key, extents);
 

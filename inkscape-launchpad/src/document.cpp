@@ -1450,7 +1450,7 @@ std::vector<SPItem*> SPDocument::getItemsPartiallyInBox(unsigned int dkey, Geom:
     return find_items_in_area(x, SP_GROUP(this->root), dkey, box, overlaps);
 }
 
-std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points) const
+std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points, bool all_layers, size_t limit) const
 {
     std::vector<SPItem*> items;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1464,11 +1464,25 @@ std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vecto
     // Cache a flattened SVG DOM to speed up selection.
     std::deque<SPItem*> nodes;
     build_flat_item_list(&nodes, key, SP_GROUP(this->root), true, false, NULL);
-
+    SPObject *current_layer = SP_ACTIVE_DESKTOP->currentLayer();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    Inkscape::LayerModel *layer_model = NULL;
+    if(desktop){
+        layer_model = desktop->layers;
+    }
+    size_t item_counter = 0;
     for(int i = points.size()-1;i>=0; i--) {
         SPItem *item = find_item_at_point(&nodes, key, points[i]);
         if (item && items.end()==find(items.begin(),items.end(), item))
-            items.push_back(item);
+            if(all_layers || (layer_model && layer_model->layerForObject(item) == current_layer)){
+                items.push_back(item);
+                item_counter++;
+                //limit 0 = no limit
+                if(item_counter == limit){
+                    prefs->setDouble("/options/cursortolerance/value", saved_delta);
+                    return items;
+                }
+            }
     }
 
     // and now we restore it back

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-09-22 10:09+0200\n"
+"POT-Creation-Date: 2015-11-01 13:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5794,79 +5794,79 @@ msgstr ""
 msgid "Open presentation exchange files saved in Corel DRAW"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3584
+#: ../src/extension/internal/emf-inout.cpp:3581
 msgid "EMF Input"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3589
+#: ../src/extension/internal/emf-inout.cpp:3586
 msgid "Enhanced Metafiles (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3590
+#: ../src/extension/internal/emf-inout.cpp:3587
 msgid "Enhanced Metafiles"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3598
+#: ../src/extension/internal/emf-inout.cpp:3595
 msgid "EMF Output"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3600
+#: ../src/extension/internal/emf-inout.cpp:3597
 #: ../src/extension/internal/wmf-inout.cpp:3176
 msgid "Convert texts to paths"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3601
+#: ../src/extension/internal/emf-inout.cpp:3598
 #: ../src/extension/internal/wmf-inout.cpp:3177
 msgid "Map Unicode to Symbol font"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3602
+#: ../src/extension/internal/emf-inout.cpp:3599
 #: ../src/extension/internal/wmf-inout.cpp:3178
 msgid "Map Unicode to Wingdings"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3603
+#: ../src/extension/internal/emf-inout.cpp:3600
 #: ../src/extension/internal/wmf-inout.cpp:3179
 msgid "Map Unicode to Zapf Dingbats"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3604
+#: ../src/extension/internal/emf-inout.cpp:3601
 #: ../src/extension/internal/wmf-inout.cpp:3180
 msgid "Use MS Unicode PUA (0xF020-0xF0FF) for converted characters"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3605
+#: ../src/extension/internal/emf-inout.cpp:3602
 #: ../src/extension/internal/wmf-inout.cpp:3181
 msgid "Compensate for PPT font bug"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3606
+#: ../src/extension/internal/emf-inout.cpp:3603
 #: ../src/extension/internal/wmf-inout.cpp:3182
 msgid "Convert dashed/dotted lines to single lines"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3607
+#: ../src/extension/internal/emf-inout.cpp:3604
 #: ../src/extension/internal/wmf-inout.cpp:3183
 msgid "Convert gradients to colored polygon series"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3608
+#: ../src/extension/internal/emf-inout.cpp:3605
 msgid "Use native rectangular linear gradients"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3609
+#: ../src/extension/internal/emf-inout.cpp:3606
 msgid "Map all fill patterns to standard EMF hatches"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3610
+#: ../src/extension/internal/emf-inout.cpp:3607
 msgid "Ignore image rotations"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3614
+#: ../src/extension/internal/emf-inout.cpp:3611
 msgid "Enhanced Metafile (*.emf)"
 msgstr ""
 
-#: ../src/extension/internal/emf-inout.cpp:3615
+#: ../src/extension/internal/emf-inout.cpp:3612
 msgid "Enhanced Metafile"
 msgstr ""
 
@@ -6164,7 +6164,6 @@ msgstr ""
 #: ../src/extension/internal/filter/textures.h:77
 #: ../src/extension/internal/filter/transparency.h:61
 #: ../src/filter-enums.cpp:52 ../src/ui/dialog/inkscape-preferences.cpp:685
-#: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
 msgid "Normal"
 msgstr ""
 
@@ -7144,6 +7143,7 @@ msgstr ""
 #: ../src/extension/internal/filter/morphology.h:179
 #: ../src/ui/dialog/layer-properties.cpp:185
 #: ../src/ui/dialog/lpe-powerstroke-properties.cpp:59
+#: ../share/extensions/measure.inx.h:5
 msgid "Position:"
 msgstr ""
 
@@ -7184,6 +7184,7 @@ msgid "Erosion 2"
 msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:191
+#: ../src/live_effects/lpe-roughen.cpp:40
 msgid "Smooth"
 msgstr ""
 
@@ -7321,7 +7322,7 @@ msgid "Clean-up"
 msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:238
-#: ../share/extensions/measure.inx.h:11
+#: ../share/extensions/measure.inx.h:17
 msgid "Length"
 msgstr ""
 
@@ -7583,6 +7584,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/textures.h:81
 #: ../share/extensions/markers_strokepaint.inx.h:8
+#: ../share/extensions/restack.inx.h:4
 msgid "Custom"
 msgstr ""
 
@@ -7819,7 +7821,7 @@ msgstr ""
 #: ../share/extensions/render_barcode_datamatrix.inx.h:5
 #: ../share/extensions/render_barcode_qrcode.inx.h:18
 #: ../share/extensions/render_gear_rack.inx.h:5
-#: ../share/extensions/render_gears.inx.h:11 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/render_gears.inx.h:11 ../share/extensions/rtree.inx.h:6
 #: ../share/extensions/seamless_pattern.inx.h:5
 #: ../share/extensions/spirograph.inx.h:10
 #: ../share/extensions/svgcalendar.inx.h:38
@@ -7831,7 +7833,7 @@ msgstr ""
 #: ../src/extension/internal/grid.cpp:216
 #: ../src/ui/dialog/document-properties.cpp:162
 #: ../src/ui/dialog/inkscape-preferences.cpp:819
-#: ../src/widgets/toolbox.cpp:1825
+#: ../src/widgets/toolbox.cpp:1828
 msgid "Grids"
 msgstr ""
 
@@ -7965,51 +7967,51 @@ msgstr ""
 msgid "Import settings"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:290
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:291
 msgid "PDF Import Settings"
-msgstr ""
-
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:437
-msgctxt "PDF input precision"
-msgid "rough"
 msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:438
 msgctxt "PDF input precision"
-msgid "medium"
+msgid "rough"
 msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:439
 msgctxt "PDF input precision"
-msgid "fine"
+msgid "medium"
 msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:440
 msgctxt "PDF input precision"
+msgid "fine"
+msgstr ""
+
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:441
+msgctxt "PDF input precision"
 msgid "very fine"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:936
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:937
 msgid "PDF Input"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:941
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:942
 msgid "Adobe PDF (*.pdf)"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:942
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:943
 msgid "Adobe Portable Document Format"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:949
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:950
 msgid "AI Input"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:954
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:955
 msgid "Adobe Illustrator 9.0 and above (*.ai)"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:955
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:956
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr ""
 
@@ -8426,6 +8428,7 @@ msgstr ""
 #: ../src/filter-enums.cpp:87
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_transitions.inx.h:7
+#: ../share/extensions/measure.inx.h:20
 msgid "Default"
 msgstr ""
 
@@ -8940,8 +8943,7 @@ msgid ""
 "Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr ""
 
-#: ../src/libgdl/gdl-dock-paned.c:130 ../src/ui/widget/font-variants.cpp:44
-#: ../src/widgets/ruler.cpp:230
+#: ../src/libgdl/gdl-dock-paned.c:130 ../src/widgets/ruler.cpp:230
 msgid "Position"
 msgstr ""
 
@@ -9470,7 +9472,7 @@ msgstr ""
 #: ../src/live_effects/lpe-bspline.cpp:160
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:232
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:254
-#: ../src/live_effects/parameter/parameter.cpp:168
+#: ../src/live_effects/parameter/parameter.cpp:170
 msgid "Change scalar parameter"
 msgstr ""
 
@@ -10587,72 +10589,113 @@ msgid ""
 "amount"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:29 ../share/extensions/addnodes.inx.h:4
+#: ../src/live_effects/lpe-roughen.cpp:30 ../share/extensions/addnodes.inx.h:4
 msgid "By number of segments"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:30
+#: ../src/live_effects/lpe-roughen.cpp:31
 msgid "By max. segment size"
 msgstr ""
 
-#. initialise your parameters here:
+#: ../src/live_effects/lpe-roughen.cpp:37
+msgid "Along nodes"
+msgstr ""
+
 #: ../src/live_effects/lpe-roughen.cpp:38
+msgid "Rand"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:39
+msgid "Retract"
+msgstr ""
+
+#. initialise your parameters here:
+#: ../src/live_effects/lpe-roughen.cpp:48
 msgid "Method"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:38
+#: ../src/live_effects/lpe-roughen.cpp:48
 msgid "Division method"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:40
+#: ../src/live_effects/lpe-roughen.cpp:50
 msgid "Max. segment size"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:42
+#: ../src/live_effects/lpe-roughen.cpp:52
 msgid "Number of segments"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:44
+#: ../src/live_effects/lpe-roughen.cpp:54
 msgid "Max. displacement in X"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:46
+#: ../src/live_effects/lpe-roughen.cpp:56
 msgid "Max. displacement in Y"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:48
+#: ../src/live_effects/lpe-roughen.cpp:58
 msgid "Global randomize"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:50
+#: ../src/live_effects/lpe-roughen.cpp:60
+msgid "Handles"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:60
+msgid "Handles options"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:62
+msgid "Max. smooth handle angle"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:64
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift nodes"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:52
-#: ../share/extensions/radiusrand.inx.h:6
-msgid "Shift node handles"
+#: ../src/live_effects/lpe-roughen.cpp:66
+msgid "Fixed displacement"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:100
+#: ../src/live_effects/lpe-roughen.cpp:66
+msgid "Fixed displacement, 1/3 of segment length"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:68
+msgid "Spray Tool friendly"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:68
+msgid "For use with spray tool"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:128
 msgid "<b>Add nodes</b> Subdivide each segment"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:109
+#: ../src/live_effects/lpe-roughen.cpp:137
 msgid "<b>Jitter nodes</b> Move nodes/handles"
 msgstr ""
 
-#: ../src/live_effects/lpe-roughen.cpp:118
+#: ../src/live_effects/lpe-roughen.cpp:146
 msgid "<b>Extra roughen</b> Add a extra layer of rough"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:25 ../share/extensions/restack.inx.h:12
+#: ../src/live_effects/lpe-roughen.cpp:155
+msgid "<b>Options</b> Modify options to rough"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:25 ../share/extensions/measure.inx.h:27
+#: ../share/extensions/restack.inx.h:16
 #: ../share/extensions/text_extract.inx.h:8
 #: ../share/extensions/text_merge.inx.h:8
 msgid "Left"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:26 ../share/extensions/restack.inx.h:14
+#: ../src/live_effects/lpe-ruler.cpp:26 ../share/extensions/measure.inx.h:29
+#: ../share/extensions/restack.inx.h:18
 #: ../share/extensions/text_extract.inx.h:10
 #: ../share/extensions/text_merge.inx.h:10
 msgid "Right"
@@ -10796,7 +10839,7 @@ msgid "Smooth angles:"
 msgstr ""
 
 #: ../src/live_effects/lpe-simplify.cpp:32
-msgid "Max degree difference on handles to preform a smooth"
+msgid "Max degree difference on handles to perform a smooth"
 msgstr ""
 
 #: ../src/live_effects/lpe-simplify.cpp:34
@@ -11000,11 +11043,11 @@ msgstr ""
 msgid "Limit for miter joins"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:448
+#: ../src/live_effects/lpe-taperstroke.cpp:447
 msgid "Start point of the taper"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:452
+#: ../src/live_effects/lpe-taperstroke.cpp:451
 msgid "End point of the taper"
 msgstr ""
 
@@ -11021,11 +11064,11 @@ msgid "From original width"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-msgid "Lock lenght"
+msgid "Lock length"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-msgid "Lock lenght to current distance"
+msgid "Lock length to current distance"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:34
@@ -11049,11 +11092,11 @@ msgid "End point"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
-msgid "Strech"
+msgid "Stretch"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
-msgid "Strech the result"
+msgid "Stretch the result"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:40
@@ -11139,7 +11182,7 @@ msgstr ""
 msgid "Disable effect if the output is too complex"
 msgstr ""
 
-#: ../src/live_effects/parameter/bool.cpp:67
+#: ../src/live_effects/parameter/bool.cpp:68
 msgid "Change bool parameter"
 msgstr ""
 
@@ -11147,29 +11190,29 @@ msgstr ""
 msgid "Change enumeration parameter"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:780
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:841
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:778
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:839
 msgid ""
 "<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:784
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:845
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:782
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
 msgid ""
 "<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:788
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:849
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:786
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
 msgid ""
 "<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:792
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:853
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:790
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:851
 msgid ""
 "<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
@@ -11418,8 +11461,8 @@ msgstr ""
 
 #: ../src/main.cpp:407
 msgid ""
-"Choose the PostScript Level used to export. Possible choices are 2 (the "
-"default) and 3"
+"Choose the PostScript Level used to export. Possible choices are 2 and 3 "
+"(the default)"
 msgstr ""
 
 #: ../src/main.cpp:409
@@ -11974,7 +12017,7 @@ msgstr ""
 msgid "XML fragment for the RDF 'License' section"
 msgstr ""
 
-#: ../src/resource-manager.cpp:332
+#: ../src/resource-manager.cpp:336
 msgid "Fixup broken links"
 msgstr ""
 
@@ -13279,7 +13322,7 @@ msgid "Rearrange"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:851
-#: ../src/widgets/toolbox.cpp:1727
+#: ../src/widgets/toolbox.cpp:1730
 msgid "Nodes"
 msgstr ""
 
@@ -14458,7 +14501,7 @@ msgid "Remove selected grid."
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:161
-#: ../src/widgets/toolbox.cpp:1834
+#: ../src/widgets/toolbox.cpp:1837
 msgid "Guides"
 msgstr ""
 
@@ -14885,11 +14928,11 @@ msgstr ""
 #: ../share/extensions/layout_nup.inx.h:24
 #: ../share/extensions/lindenmayer.inx.h:13
 #: ../share/extensions/lorem_ipsum.inx.h:6
-#: ../share/extensions/measure.inx.h:16
+#: ../share/extensions/measure.inx.h:33
 #: ../share/extensions/pathalongpath.inx.h:16
 #: ../share/extensions/pathscatter.inx.h:18
-#: ../share/extensions/radiusrand.inx.h:8 ../share/extensions/split.inx.h:8
-#: ../share/extensions/voronoi2svg.inx.h:11
+#: ../share/extensions/radiusrand.inx.h:8 ../share/extensions/restack.inx.h:25
+#: ../share/extensions/split.inx.h:8 ../share/extensions/voronoi2svg.inx.h:11
 #: ../share/extensions/web-set-att.inx.h:25
 #: ../share/extensions/web-transmit-att.inx.h:23
 #: ../share/extensions/webslicer_create_group.inx.h:11
@@ -15870,7 +15913,7 @@ msgstr ""
 msgid "Search spirals"
 msgstr ""
 
-#: ../src/ui/dialog/find.cpp:103 ../src/widgets/toolbox.cpp:1735
+#: ../src/ui/dialog/find.cpp:103 ../src/widgets/toolbox.cpp:1738
 msgid "Paths"
 msgstr ""
 
@@ -17784,17 +17827,17 @@ msgid "Set the language for menus and number formats"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
-#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Icon size"
 msgid "Large"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
-#: ../src/ui/dialog/inkscape-preferences.cpp:689
-#: ../src/ui/widget/font-variants.cpp:51
+msgctxt "Icon size"
 msgid "Small"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
+msgctxt "Icon size"
 msgid "Smaller"
 msgstr ""
 
@@ -17975,6 +18018,17 @@ msgid "Aggressive"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
+msgid "Small"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
+msgid "Large"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
 msgid "Maximized"
 msgstr ""
 
@@ -19673,6 +19727,7 @@ msgstr ""
 
 #: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743
 #: ../src/ui/dialog/input.cpp:1571 ../src/ui/widget/color-scales.cpp:46
+#: ../share/extensions/plotter.inx.h:24
 msgid "None"
 msgstr ""
 
@@ -20231,23 +20286,27 @@ msgid "Set object blur"
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1617
+msgctxt "Visibility"
 msgid "V"
 msgstr ""
 
-#. TRANSLATORS: "L" here stands for Lightness
-#: ../src/ui/dialog/objects.cpp:1618 ../src/widgets/tweak-toolbar.cpp:323
+#: ../src/ui/dialog/objects.cpp:1618
+msgctxt "Lock"
 msgid "L"
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1619
+msgctxt "Type"
 msgid "T"
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1620
+msgctxt "Clip and mask"
 msgid "CM"
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1621
+msgctxt "Highlight"
 msgid "HL"
 msgstr ""
 
@@ -20998,7 +21057,7 @@ msgid "Set as _default"
 msgstr ""
 
 #: ../src/ui/dialog/text-edit.cpp:87
-msgid "AaBbCcIiPpQq12369$ےے?.;/()"
+msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
 #. Align buttons
@@ -21038,7 +21097,7 @@ msgstr ""
 msgid "Text path offset"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:598 ../src/ui/dialog/text-edit.cpp:685
+#: ../src/ui/dialog/text-edit.cpp:612 ../src/ui/dialog/text-edit.cpp:699
 #: ../src/ui/tools/text-tool.cpp:1446
 msgid "Set text style"
 msgstr ""
@@ -21875,11 +21934,11 @@ msgid ""
 "with <b>Shift</b> to scale/rotate; with <b>Alt</b> to lock radius"
 msgstr ""
 
-#: ../src/ui/object-edit.cpp:1396
+#: ../src/ui/object-edit.cpp:1398
 msgid "Adjust the <b>offset distance</b>"
 msgstr ""
 
-#: ../src/ui/object-edit.cpp:1433
+#: ../src/ui/object-edit.cpp:1435
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr ""
 
@@ -23582,110 +23641,152 @@ msgid "Blur (%)"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:38
+msgctxt "Font variant"
 msgid "Ligatures"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:39
+msgctxt "Font variant"
 msgid "Common"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:40
+msgctxt "Font variant"
 msgid "Discretionary"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:41
+msgctxt "Font variant"
 msgid "Historical"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:42
+msgctxt "Font variant"
 msgid "Contextual"
 msgstr ""
 
+#: ../src/ui/widget/font-variants.cpp:44
+msgctxt "Font variant"
+msgid "Position"
+msgstr ""
+
+#: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
+msgctxt "Font variant"
+msgid "Normal"
+msgstr ""
+
 #: ../src/ui/widget/font-variants.cpp:46
+msgctxt "Font variant"
 msgid "Subscript"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:47
+msgctxt "Font variant"
 msgid "Superscript"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:49
+msgctxt "Font variant"
 msgid "Capitals"
 msgstr ""
 
+#: ../src/ui/widget/font-variants.cpp:51
+msgctxt "Font variant"
+msgid "Small"
+msgstr ""
+
 #: ../src/ui/widget/font-variants.cpp:52
+msgctxt "Font variant"
 msgid "All small"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:53
+msgctxt "Font variant"
 msgid "Petite"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:54
+msgctxt "Font variant"
 msgid "All petite"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:55
+msgctxt "Font variant"
 msgid "Unicase"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:56
+msgctxt "Font variant"
 msgid "Titling"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:58
+msgctxt "Font variant"
 msgid "Numeric"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:59
+msgctxt "Font variant"
 msgid "Lining"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:60
+msgctxt "Font variant"
 msgid "Old Style"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:61
+msgctxt "Font variant"
 msgid "Default Style"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:62
+msgctxt "Font variant"
 msgid "Proportional"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:63
+msgctxt "Font variant"
 msgid "Tabular"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:64
+msgctxt "Font variant"
 msgid "Default Width"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:65
+msgctxt "Font variant"
 msgid "Diagonal"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:66
+msgctxt "Font variant"
 msgid "Stacked"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:67
+msgctxt "Font variant"
 msgid "Default Fractions"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:68
+msgctxt "Font variant"
 msgid "Ordinal"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:69
+msgctxt "Font variant"
 msgid "Slashed Zero"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:71
+msgctxt "Font variant"
 msgid "Feature Settings"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:72
+msgctxt "Font variant"
 msgid "Selection has different Feature Settings!"
 msgstr ""
 
@@ -27050,7 +27151,7 @@ msgid "Pen Angle"
 msgstr ""
 
 #: ../src/widgets/calligraphy-toolbar.cpp:463
-#: ../share/extensions/motion.inx.h:3 ../share/extensions/restack.inx.h:10
+#: ../share/extensions/motion.inx.h:3 ../share/extensions/restack.inx.h:5
 msgid "Angle:"
 msgstr ""
 
@@ -27605,32 +27706,32 @@ msgid "Create radial (elliptic or circular) gradient"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1047
-#: ../src/widgets/mesh-toolbar.cpp:343
+#: ../src/widgets/mesh-toolbar.cpp:384
 msgid "New:"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1070
-#: ../src/widgets/mesh-toolbar.cpp:366
+#: ../src/widgets/mesh-toolbar.cpp:407
 msgid "fill"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1070
-#: ../src/widgets/mesh-toolbar.cpp:366
+#: ../src/widgets/mesh-toolbar.cpp:407
 msgid "Create gradient in the fill"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1074
-#: ../src/widgets/mesh-toolbar.cpp:370
+#: ../src/widgets/mesh-toolbar.cpp:411
 msgid "stroke"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1074
-#: ../src/widgets/mesh-toolbar.cpp:370
+#: ../src/widgets/mesh-toolbar.cpp:411
 msgid "Create gradient in the stroke"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1077
-#: ../src/widgets/mesh-toolbar.cpp:373
+#: ../src/widgets/mesh-toolbar.cpp:414
 msgid "on:"
 msgstr ""
 
@@ -27694,7 +27795,7 @@ msgstr ""
 
 #. Label
 #: ../src/widgets/gradient-toolbar.cpp:1162
-#: ../src/widgets/gradient-vector.cpp:915
+#: ../src/widgets/gradient-vector.cpp:916
 msgctxt "Gradient"
 msgid "Offset:"
 msgstr ""
@@ -27710,7 +27811,7 @@ msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1194
 #: ../src/widgets/gradient-toolbar.cpp:1195
-#: ../src/widgets/gradient-vector.cpp:897
+#: ../src/widgets/gradient-vector.cpp:898
 msgid "Delete stop"
 msgstr ""
 
@@ -27741,28 +27842,28 @@ msgid "No gradient selected"
 msgstr ""
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:892
+#: ../src/widgets/gradient-vector.cpp:893
 msgid "Add stop"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:895
+#: ../src/widgets/gradient-vector.cpp:896
 msgid "Add another control stop to gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:900
+#: ../src/widgets/gradient-vector.cpp:901
 msgid "Delete current control stop from gradient"
 msgstr ""
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:968
+#: ../src/widgets/gradient-vector.cpp:969
 msgid "Stop Color"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:1007
+#: ../src/widgets/gradient-vector.cpp:1008
 msgid "Gradient editor"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:1359
+#: ../src/widgets/gradient-vector.cpp:1360
 msgid "Change gradient stop color"
 msgstr ""
 
@@ -27852,100 +27953,138 @@ msgstr ""
 msgid "The units to be used for the measurements"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:313
+#: ../src/widgets/mesh-toolbar.cpp:315
 msgid "Set mesh type"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:336
+#: ../src/widgets/mesh-toolbar.cpp:377
 msgid "normal"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:336
+#: ../src/widgets/mesh-toolbar.cpp:377
 msgid "Create mesh gradient"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:340
+#: ../src/widgets/mesh-toolbar.cpp:381
 msgid "conical"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:340
+#: ../src/widgets/mesh-toolbar.cpp:381
 msgid "Create conical gradient"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:395
+#: ../src/widgets/mesh-toolbar.cpp:436
 msgid "Rows"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:395
+#: ../src/widgets/mesh-toolbar.cpp:436
 #: ../share/extensions/guides_creator.inx.h:5
 #: ../share/extensions/layout_nup.inx.h:12
 msgid "Rows:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:395
+#: ../src/widgets/mesh-toolbar.cpp:436
 msgid "Number of rows in new mesh"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:411
+#: ../src/widgets/mesh-toolbar.cpp:452
 msgid "Columns"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:411
+#: ../src/widgets/mesh-toolbar.cpp:452
 #: ../share/extensions/guides_creator.inx.h:4
 msgid "Columns:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:411
+#: ../src/widgets/mesh-toolbar.cpp:452
 msgid "Number of columns in new mesh"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:425
+#: ../src/widgets/mesh-toolbar.cpp:466
 msgid "Edit Fill"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:426
+#: ../src/widgets/mesh-toolbar.cpp:467
 msgid "Edit fill mesh"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:437
+#: ../src/widgets/mesh-toolbar.cpp:478
 msgid "Edit Stroke"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:438
+#: ../src/widgets/mesh-toolbar.cpp:479
 msgid "Edit stroke mesh"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:449 ../src/widgets/node-toolbar.cpp:521
+#: ../src/widgets/mesh-toolbar.cpp:490 ../src/widgets/node-toolbar.cpp:521
 msgid "Show Handles"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:450
+#: ../src/widgets/mesh-toolbar.cpp:491
 msgid "Show side and tensor handles"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:465
+#: ../src/widgets/mesh-toolbar.cpp:506
 msgid "WARNING: Mesh SVG Syntax Subject to Change"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:475
+#: ../src/widgets/mesh-toolbar.cpp:516
 msgctxt "Type"
 msgid "Coons"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:478
+#: ../src/widgets/mesh-toolbar.cpp:519
 msgid "Bicubic"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:480
+#: ../src/widgets/mesh-toolbar.cpp:521
 msgid "Coons"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:481
+#: ../src/widgets/mesh-toolbar.cpp:522
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:483 ../src/widgets/pencil-toolbar.cpp:377
+#: ../src/widgets/mesh-toolbar.cpp:524 ../src/widgets/pencil-toolbar.cpp:377
 msgid "Smoothing:"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:534
+msgid "Toggle Sides"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:535
+msgid "Toggle selected sides between Beziers and lines."
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:538
+msgid "Toggle side:"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:545
+msgid "Make elliptical"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:546
+msgid ""
+"Make selected sides elliptical by changing length of handles. Works best if "
+"handles already approximate ellipse."
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:549
+msgid "Make elliptical:"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:556
+msgid "Pick colors:"
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:557
+msgid "Pick colors for selected corner nodes from underneath mesh."
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:560
+msgid "Pick Color"
 msgstr ""
 
 #: ../src/widgets/node-toolbar.cpp:341
@@ -29387,131 +29526,131 @@ msgstr ""
 msgid "Style of Paint Bucket fill objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1681
+#: ../src/widgets/toolbox.cpp:1684
 msgid "Bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1681
+#: ../src/widgets/toolbox.cpp:1684
 msgid "Snap bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1690
+#: ../src/widgets/toolbox.cpp:1693
 msgid "Bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1690
+#: ../src/widgets/toolbox.cpp:1693
 msgid "Snap to edges of a bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1699
+#: ../src/widgets/toolbox.cpp:1702
 msgid "Bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1699
+#: ../src/widgets/toolbox.cpp:1702
 msgid "Snap bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1708
+#: ../src/widgets/toolbox.cpp:1711
 msgid "BBox Edge Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1708
+#: ../src/widgets/toolbox.cpp:1711
 msgid "Snap midpoints of bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1718
+#: ../src/widgets/toolbox.cpp:1721
 msgid "BBox Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1718
+#: ../src/widgets/toolbox.cpp:1721
 msgid "Snapping centers of bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1727
+#: ../src/widgets/toolbox.cpp:1730
 msgid "Snap nodes, paths, and handles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1735
+#: ../src/widgets/toolbox.cpp:1738
 msgid "Snap to paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1744
+#: ../src/widgets/toolbox.cpp:1747
 msgid "Path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1744
+#: ../src/widgets/toolbox.cpp:1747
 msgid "Snap to path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1753
+#: ../src/widgets/toolbox.cpp:1756
 msgid "To nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1753
+#: ../src/widgets/toolbox.cpp:1756
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1762
+#: ../src/widgets/toolbox.cpp:1765
 msgid "Smooth nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1762
+#: ../src/widgets/toolbox.cpp:1765
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1771
+#: ../src/widgets/toolbox.cpp:1774
 msgid "Line Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1771
+#: ../src/widgets/toolbox.cpp:1774
 msgid "Snap midpoints of line segments"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1780
+#: ../src/widgets/toolbox.cpp:1783
 msgid "Others"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1780
+#: ../src/widgets/toolbox.cpp:1783
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1791
 msgid "Object Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1791
 msgid "Snap centers of objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1797
+#: ../src/widgets/toolbox.cpp:1800
 msgid "Rotation Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1797
+#: ../src/widgets/toolbox.cpp:1800
 msgid "Snap an item's rotation center"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1806
+#: ../src/widgets/toolbox.cpp:1809
 msgid "Text baseline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1806
+#: ../src/widgets/toolbox.cpp:1809
 msgid "Snap text anchors and baselines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1816
+#: ../src/widgets/toolbox.cpp:1819
 msgid "Page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1816
+#: ../src/widgets/toolbox.cpp:1819
 msgid "Snap to the page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1825
+#: ../src/widgets/toolbox.cpp:1828
 msgid "Snap to grids"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1834
+#: ../src/widgets/toolbox.cpp:1837
 msgid "Snap guides"
 msgstr ""
 
@@ -29663,6 +29802,7 @@ msgstr ""
 
 #. TRANSLATORS:  "H" here stands for hue
 #: ../src/widgets/tweak-toolbar.cpp:291
+msgctxt "Hue"
 msgid "H"
 msgstr ""
 
@@ -29672,11 +29812,18 @@ msgstr ""
 
 #. TRANSLATORS: "S" here stands for Saturation
 #: ../src/widgets/tweak-toolbar.cpp:307
+msgctxt "Saturation"
 msgid "S"
 msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:319
 msgid "In color mode, act on objects' lightness"
+msgstr ""
+
+#. TRANSLATORS: "L" here stands for Lightness
+#: ../src/widgets/tweak-toolbar.cpp:323
+msgctxt "Lightness"
+msgid "L"
 msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:335
@@ -29685,6 +29832,7 @@ msgstr ""
 
 #. TRANSLATORS: "O" here stands for Opacity
 #: ../src/widgets/tweak-toolbar.cpp:339
+msgctxt "Opacity"
 msgid "O"
 msgstr ""
 
@@ -30326,14 +30474,14 @@ msgstr ""
 msgid "unable to locate marker: %s"
 msgstr ""
 
-#: ../share/extensions/measure.py:50
+#: ../share/extensions/measure.py:58
 msgid ""
 "Failed to import the numpy modules. These modules are required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 
-#: ../share/extensions/measure.py:112
+#: ../share/extensions/measure.py:120
 msgid "Area is zero, cannot calculate Center of Mass"
 msgstr ""
 
@@ -30526,6 +30674,10 @@ msgstr ""
 
 #: ../share/extensions/replace_font.py:253
 msgid "Please enter a replacement font in the replace all box."
+msgstr ""
+
+#: ../share/extensions/restack.py:76
+msgid "There is no selection to restack."
 msgstr ""
 
 #: ../share/extensions/summersnight.py:44
@@ -30978,7 +31130,7 @@ msgid "Visual"
 msgstr ""
 
 #: ../share/extensions/dimension.inx.h:7 ../share/extensions/dots.inx.h:13
-#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:25
+#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:42
 msgid "Visualize Path"
 msgstr ""
 
@@ -33162,7 +33314,7 @@ msgstr ""
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:5
-msgid "Support non-unifom scaling"
+msgid "Support non-uniform scaling"
 msgstr ""
 
 #. render images like in 0.48
@@ -34128,54 +34280,101 @@ msgid "Measurement Type: "
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:4
-msgid "Text Orientation: "
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:5
-msgid "Angle [with Fixed Angle option only] (°):"
+msgid "Text Presets"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:6
-msgid "Font size (px):"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:7
-msgid "Offset (px):"
+msgid "Text on Path"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:8
-msgid "Precision:"
+#, no-c-format
+msgid "Offset (%)"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:9
-msgid "Scale Factor (Drawing:Real Length) = 1:"
+msgid "Text anchor:"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:10
-msgid "Length Unit:"
+msgid "Fixed Text"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:11
+msgid "Angle (°):"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:12
+msgid "Font size (px):"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:13
+msgid "Offset (px):"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:14
+msgid "Precision:"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:15
+msgid "Scale Factor (Drawing:Real Length) = 1:"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:16
+msgid "Length Unit:"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:18
 msgctxt "measure extension"
 msgid "Area"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:13
+#: ../share/extensions/measure.inx.h:19
 msgctxt "measure extension"
 msgid "Center of Mass"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:14
-msgctxt "measure extension"
-msgid "Text On Path"
+#: ../share/extensions/measure.inx.h:21
+msgid "Text on Path, Start"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:15
-msgctxt "measure extension"
-msgid "Fixed Angle"
+#: ../share/extensions/measure.inx.h:22
+msgid "Text on Path, Middle"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:18
+#: ../share/extensions/measure.inx.h:23
+msgid "Text on Path, End"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:24
+msgid "Fixed Text, Start of Path"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:25
+msgid "Fixed Text, Center of BBox"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:26
+msgid "Fixed Text, Center of Mass"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:28
+msgid "Center"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:30
+msgid "Start of Path"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:31
+msgid "Center of BBox"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:32
+msgid "Center of Mass"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:35
 #, no-c-format
 msgid ""
 "This effect measures the length, area, or center-of-mass of the selected "
@@ -34565,11 +34764,6 @@ msgstr ""
 msgid "Hardware (DSR/DTR + RTS/CTS)"
 msgstr ""
 
-#: ../share/extensions/plotter.inx.h:24
-msgctxt "Flow control"
-msgid "None"
-msgstr ""
-
 #: ../share/extensions/plotter.inx.h:25
 msgid "HPGL"
 msgstr ""
@@ -34912,6 +35106,10 @@ msgstr ""
 msgid "Maximum displacement in Y (px):"
 msgstr ""
 
+#: ../share/extensions/radiusrand.inx.h:6
+msgid "Shift node handles"
+msgstr ""
+
 #: ../share/extensions/radiusrand.inx.h:7
 msgid "Use normal distribution"
 msgstr ""
@@ -35090,64 +35288,96 @@ msgid "Restack"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:2
-msgid "Restack Direction:"
+msgid "Based on Position"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:3
-msgid "Left to Right (0)"
-msgstr ""
-
-#: ../share/extensions/restack.inx.h:4
-msgid "Bottom to Top (90)"
-msgstr ""
-
-#: ../share/extensions/restack.inx.h:5
-msgid "Right to Left (180)"
+msgid "Presets"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:6
-msgid "Top to Bottom (270)"
+msgid "Horizontal:"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:7
-msgid "Radial Outward"
+msgid "Vertical:"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:8
-msgid "Radial Inward"
+msgid "Restack Direction"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:9
-msgid "Arbitrary Angle"
+msgid "Left to Right (0)"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:10
+msgid "Bottom to Top (90)"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:11
-msgid "Horizontal Point:"
+msgid "Right to Left (180)"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:12
+msgid "Top to Bottom (270)"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:13
+msgid "Radial Outward"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:14
+msgid "Radial Inward"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:15
+msgid "Object Reference Point"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:17
 #: ../share/extensions/text_extract.inx.h:9
 #: ../share/extensions/text_merge.inx.h:9
 msgid "Middle"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:15
-msgid "Vertical Point:"
-msgstr ""
-
-#: ../share/extensions/restack.inx.h:16
+#: ../share/extensions/restack.inx.h:19
 #: ../share/extensions/text_extract.inx.h:12
 #: ../share/extensions/text_merge.inx.h:12
 msgid "Top"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:17
+#: ../share/extensions/restack.inx.h:20
 #: ../share/extensions/text_extract.inx.h:13
 #: ../share/extensions/text_merge.inx.h:13
 msgid "Bottom"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/restack.inx.h:21
+msgid "Based on Z-Order"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:22
+msgid "Restack Mode"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:23
+msgid "Reverse Z-Order"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:24
+msgid "Shuffle Z-Order"
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:26
+msgid ""
+"This extension changes the z-order of objects based on their position on the "
+"canvas or their current z-order. Selection: The extension restacks either "
+"objects inside a single selected group, or a selection of multiple objects "
+"on the current drawing level (layer or group)."
+msgstr ""
+
+#: ../share/extensions/restack.inx.h:27
 msgid "Arrange"
 msgstr ""
 
@@ -35161,6 +35391,14 @@ msgstr ""
 
 #: ../share/extensions/rtree.inx.h:3
 msgid "Minimum size:"
+msgstr ""
+
+#: ../share/extensions/rtree.inx.h:4
+msgid "Omit redundant segments"
+msgstr ""
+
+#: ../share/extensions/rtree.inx.h:5
+msgid "Lift pen for backward steps"
 msgstr ""
 
 #: ../share/extensions/rubberstretch.inx.h:1

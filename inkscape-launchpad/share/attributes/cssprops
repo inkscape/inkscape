@@ -1,5 +1,7 @@
 "alignment-baseline" - "tspan","tref","altGlyph","textPath"
 
+"backface-visibility" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
 "baseline-shift" - "tspan","tref","altGlyph","textPath"
 
 "clip" - "svg","symbol","foreignObject","pattern","marker"
@@ -90,6 +92,10 @@
 
 "paint-order" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
+"perspective" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
+"perspective-origin" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
 "pointer-events" - "circle","ellipse","image","line","path","polygon","polyline","rect","text","use","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "shape-rendering" - "path","rect","circle","ellipse","line","polyline","polygon","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
@@ -134,9 +140,19 @@
 
 "text-decoration-style" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
 
+"text-orientation" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
 "text-rendering" - "text","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "title" - "circle","ellipse","image","line","path","polygon","polyline","rect","text","use","g"
+
+"transform" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
+"transform-box" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
+"transform-origin" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
+
+"transform-style" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
 
 "unicode-bidi" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
 

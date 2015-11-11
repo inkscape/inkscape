@@ -16,10 +16,11 @@
  *   Tavmjong Bah <tavmjong@free.fr>
  *   Abhishek Sharma
  *   Kris De Gussem <Kris.DeGussem@gmail.com>
+ *   Jabiertxo Arraiza <jabier.arraiza@marker.es>
  *
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2003 MenTaLguY
- * Copyright (C) 1999-2011 authors
+ * Copyright (C) 1999-2015 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -309,14 +310,28 @@ static gchar const * ui_descr =
         "    <toolitem action='SprayModeAction' />"
         "    <separator />"
         "    <toolitem action='SprayWidthAction' />"
+        "    <toolitem action='SprayPressureWidthAction' />"
         "    <toolitem action='SprayPopulationAction' />"
-        "    <toolitem action='SprayPressureAction' />"
+        "    <toolitem action='SprayPressurePopulationAction' />"
         "    <separator />"
         "    <toolitem action='SprayRotationAction' />"
         "    <toolitem action='SprayScaleAction' />"
+        "    <toolitem action='SprayPressureScaleAction' />"
         "    <separator />"
         "    <toolitem action='SprayStandard_deviationAction' />"
         "    <toolitem action='SprayMeanAction' />"
+        "    <separator />"
+        "    <toolitem action='SprayOverNoTransparentAction' />"
+        "    <toolitem action='SprayOverTransparentAction' />"
+        "    <toolitem action='SprayNoOverlapAction' />"
+        "    <toolitem action='SprayToolOffsetAction' />"
+        "    <separator />"
+        "    <toolitem action='SprayPickColorAction' />"
+        "    <toolitem action='SprayOverPickFillAction' />"
+        "    <toolitem action='SprayOverPickStrokeAction' />"
+        "    <toolitem action='SprayOverPickInverseValueAction' />"
+        "    <toolitem action='SprayPickCenterAction' />"
+
         "  </toolbar>"
 
         "  <toolbar name='ZoomToolbar'>"
@@ -339,9 +354,23 @@ static gchar const * ui_descr =
         "  <toolbar name='MeasureToolbar'>"
         "    <toolitem action='MeasureFontSizeAction' />"
         "    <separator />"
+        "    <toolitem action='MeasurePrecisionAction' />"
+        "    <separator />"
+        "    <toolitem action='MeasureScaleAction' />"
+        "    <separator />"
+        "    <toolitem action='MeasureOffsetAction' />"
+        "    <separator />"
         "    <toolitem action='measure_units_label' />"
         "    <toolitem action='MeasureUnitsAction' />"
-        "  </toolbar>"
+        "    <toolitem action='MeasureIgnore1stAndLast' />"
+        "    <toolitem action='MeasureInBettween' />"
+        "    <toolitem action='MeasureOnlyVisible' />"
+        "    <toolitem action='MeasureAllLayers' />"
+        "    <toolitem action='MeasureReverse' />"
+        "    <toolitem action='MeasureToGuides' />"
+        "    <toolitem action='MeasureMarkDimension' />"
+        "    <toolitem action='MeasureToItem' />"
+        "  </toolbar>" 
 
         "  <toolbar name='StarToolbar'>"
         "    <separator />"
@@ -519,9 +548,12 @@ static gchar const * ui_descr =
 //        "    <toolitem action='MeshEditFillAction' />"
 //        "    <toolitem action='MeshEditStrokeAction' />"
 //        "    <toolitem action='MeshShowHandlesAction' />"
+        "    <toolitem action='MeshToggleSidesAction' />"
+        "    <toolitem action='MeshMakeEllipticalAction' />"
+        "    <toolitem action='MeshPickColorsAction' />"
+        "    <separator />"
         "    <toolitem action='MeshWarningAction' />"
         "    <toolitem action='MeshSmoothAction' />"
-        "    <separator />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"

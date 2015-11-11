@@ -39,9 +39,6 @@ struct _CROMParserPriv {
 
 #define PRIVATE(a_this) ((a_this)->priv)
 
-// Unfortunately, C does not allow unnamed function arguments, so use this macro instead...
-#define UNUSED(x) (void)(x)
-
 /*
  *Forward declaration of a type defined later
  *in this file.
@@ -210,11 +207,11 @@ static void
 start_font_face (CRDocHandler * a_this,
                  CRParsingLocation *a_location)
 {
-    UNUSED(a_location);
-
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
+
+        (void) a_location;
 
         g_return_if_fail (a_this);
 
@@ -307,8 +304,6 @@ static void
 charset (CRDocHandler * a_this, CRString * a_charset,
          CRParsingLocation *a_location)
 {
-    UNUSED(a_location);
-
         enum CRStatus status = CR_OK;
         CRStatement *stmt = NULL,
                 *stmt2 = NULL;
@@ -316,6 +311,8 @@ charset (CRDocHandler * a_this, CRString * a_charset,
 
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
+
+        (void) a_location;
 
         g_return_if_fail (a_this);
 	ctxtptr = &ctxt;
@@ -347,11 +344,11 @@ start_page (CRDocHandler * a_this,
             CRString * a_pseudo,
             CRParsingLocation *a_location)
 {
-    UNUSED(a_location);
-
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
+
+        (void) a_location;
 
         g_return_if_fail (a_this);
 	ctxtptr = &ctxt;
@@ -390,18 +387,21 @@ end_page (CRDocHandler * a_this,
           CRString * a_page, 
           CRString * a_pseudo_page)
 {
-    UNUSED(a_page);
-    UNUSED(a_pseudo_page);
-
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
         CRStatement *stmt = NULL;
 
+        (void) a_page;
+        (void) a_pseudo_page;
+
         g_return_if_fail (a_this);
+
 	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
+
         g_return_if_fail (status == CR_OK && ctxt);
+
         g_return_if_fail (ctxt->cur_stmt
                           && ctxt->cur_stmt->type == AT_PAGE_RULE_STMT
                           && ctxt->stylesheet);
@@ -419,6 +419,8 @@ end_page (CRDocHandler * a_this,
                 cr_statement_destroy (ctxt->cur_stmt);
                 ctxt->cur_stmt = NULL;
         }
+        a_page = NULL;          /*keep compiler happy */
+        a_pseudo_page = NULL;   /*keep compiler happy */
 }
 
 static void
@@ -426,12 +428,12 @@ start_media (CRDocHandler * a_this,
              GList * a_media_list,
              CRParsingLocation *a_location)
 {
-    UNUSED(a_location);
-
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
         GList *media_list = NULL;
+
+        (void) a_location;
 
         g_return_if_fail (a_this);
 	ctxtptr = &ctxt;
@@ -456,17 +458,20 @@ start_media (CRDocHandler * a_this,
 static void
 end_media (CRDocHandler * a_this, GList * a_media_list)
 {
-    UNUSED(a_media_list);
-
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
         CRStatement *stmts = NULL;
 
+        (void) a_media_list;
+
         g_return_if_fail (a_this);
+
 	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
+
         g_return_if_fail (status == CR_OK && ctxt);
+
         g_return_if_fail (ctxt
                           && ctxt->cur_media_stmt
                           && ctxt->cur_media_stmt->type == AT_MEDIA_RULE_STMT
@@ -474,6 +479,7 @@ end_media (CRDocHandler * a_this, GList * a_media_list)
 
         stmts = cr_statement_append (ctxt->stylesheet->statements,
                                      ctxt->cur_media_stmt);
+
         if (!stmts) {
                 cr_statement_destroy (ctxt->cur_media_stmt);
                 ctxt->cur_media_stmt = NULL;
@@ -484,6 +490,7 @@ end_media (CRDocHandler * a_this, GList * a_media_list)
 
         ctxt->cur_stmt = NULL ;
         ctxt->cur_media_stmt = NULL ;
+        a_media_list = NULL;
 }
 
 static void
@@ -493,9 +500,6 @@ import_style (CRDocHandler * a_this,
               CRString * a_uri_default_ns,
               CRParsingLocation *a_location)
 {
-    UNUSED(a_uri_default_ns);
-    UNUSED(a_location);
-
         enum CRStatus status = CR_OK;
         CRString *uri = NULL;
         CRStatement *stmt = NULL,
@@ -504,17 +508,26 @@ import_style (CRDocHandler * a_this,
         ParsingContext **ctxtptr = NULL;
         GList *media_list = NULL ;
 
+        (void) a_uri_default_ns;
+        (void) a_location;
+
         g_return_if_fail (a_this);
+
 	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
+
         g_return_if_fail (status == CR_OK && ctxt);
+
         g_return_if_fail (ctxt->stylesheet);
 
         uri = cr_string_dup (a_uri) ;
+
         if (a_media_list)
                 media_list = cr_utils_dup_glist_of_cr_string (a_media_list) ;
+
         stmt = cr_statement_new_at_import_rule
                 (ctxt->stylesheet, uri, media_list, NULL);
+
         if (!stmt)
                 goto error;
 
@@ -546,6 +559,7 @@ import_style (CRDocHandler * a_this,
                 cr_statement_destroy (stmt);
                 stmt = NULL;
         }
+        a_uri_default_ns = NULL; /*keep compiler happy */
 }
 
 static void
@@ -572,16 +586,19 @@ start_selector (CRDocHandler * a_this, CRSelector * a_selector_list)
 static void
 end_selector (CRDocHandler * a_this, CRSelector * a_selector_list)
 {
-    UNUSED(a_selector_list);
-
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
 
+        (void) a_selector_list;
+
         g_return_if_fail (a_this);
+
 	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
+
         g_return_if_fail (status == CR_OK && ctxt);
+
         g_return_if_fail (ctxt->cur_stmt && ctxt->stylesheet);
 
         if (ctxt->cur_stmt) {
@@ -621,6 +638,8 @@ end_selector (CRDocHandler * a_this, CRSelector * a_selector_list)
                 }
 
         }
+
+        a_selector_list = NULL; /*keep compiler happy */
 }
 
 static void

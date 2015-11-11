@@ -142,12 +142,12 @@ public:
     SPIEnum text_transform;
 
     /* CSS3 Text */
-    /** text direction (css3 text 3.2) */
+    /** text direction (svg1.1) */
     SPIEnum direction;
-    /** block progression (css3 text 3.2) */
-    SPIEnum block_progression;
-    /** Writing mode (css3 text 3.2 and svg1.1 10.7.2) */
+    /** Writing mode (svg1.1 10.7.2, CSS Writing Modes 3) */
     SPIEnum writing_mode;
+    /** Text orientation (CSS Writing Modes 3) */
+    SPIEnum text_orientation;
     /** Baseline shift (svg1.1 10.9.2) */
     SPIBaselineShift baseline_shift;
 

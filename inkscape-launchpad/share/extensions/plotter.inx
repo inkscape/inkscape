@@ -49,7 +49,7 @@
         <_item value="xonxoff">Software (XON/XOFF)</_item>
         <_item value="rtscts">Hardware (RTS/CTS)</_item>
         <_item value="dsrdtrrtscts">Hardware (DSR/DTR + RTS/CTS)</_item>
-        <_item msgctxt="Flow control" value="">None</_item>
+        <_item value="none">None</_item>
       </param>
       <param name="commandLanguage" type="enum" _gui-text="Command language:" _gui-description="The command language to use (Default: HPGL)">
         <_item value="HPGL">HPGL</_item>

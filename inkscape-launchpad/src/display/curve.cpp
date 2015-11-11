@@ -496,7 +496,7 @@ SPCurve::append(SPCurve const *curve2,
             _pathv.push_back( (*it) );
         }
 
-        for (it++; it != curve2->_pathv.end(); ++it) {
+        for (++it; it != curve2->_pathv.end(); ++it) {
             _pathv.push_back( (*it) );
         }
     } else {

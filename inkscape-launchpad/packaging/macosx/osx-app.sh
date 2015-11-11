@@ -486,7 +486,9 @@ if [ ${add_python} = "true" ]; then
 		fi
 		$cp_cmd -RL "$packages_path/sk1libs" "$pkgpython"
 		$cp_cmd -RL "$packages_path/uniconvertor" "$pkgpython"
-		# PyGTK (Sozi)
+		# pySerial for HPGL plotting
+		$cp_cmd -RL "$packages_path/serial" "$pkgpython"
+		# PyGTK (optional)
 		$cp_cmd -RL "$packages_path/cairo" "$pkgpython"
 		$cp_cmd -RL "$packages_path/glib" "$pkgpython"
 		$cp_cmd -RL "$packages_path/gobject" "$pkgpython"

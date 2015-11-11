@@ -98,7 +98,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
 
     bool modmade = false;
     std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
         SPItem *item = *i;
 
         if (Inkscape::UI::Tools::cc_item_is_connector(item)) {
@@ -145,7 +145,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
 
     bool modmade = false;
     std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
         SPItem *item = *i;
 
         if (Inkscape::UI::Tools::cc_item_is_connector(item)) {

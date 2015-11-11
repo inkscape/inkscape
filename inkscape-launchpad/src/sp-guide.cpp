@@ -103,8 +103,8 @@ void SPGuide::set(unsigned int key, const gchar *value) {
         }
         break;
     case SP_ATTR_INKSCAPE_LABEL:
-        if (this->label) g_free(this->label);
-        
+        // this->label already freed in sp_guideline_set_label (src/display/guideline.cpp)
+        // see bug #1498444, bug #1469514
         if (value) {
             this->label = g_strdup(value);
         } else {

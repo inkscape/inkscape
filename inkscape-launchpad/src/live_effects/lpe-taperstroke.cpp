@@ -408,9 +408,8 @@ Piecewise<D2<SBasis> > stretch_along(Piecewise<D2<SBasis> > pwd2_in, Geom::Path 
             n = force_continuity(remove_short_cuts(n,.1));
 
             int nbCopies = 0;
-            double scaling = 1;
+            double scaling = (uskeleton.domain().extent() - toffset)/pattBndsX->extent();
             nbCopies = 1;
-            scaling = (uskeleton.domain().extent() - toffset)/pattBndsX->extent();
 
             double pattWidth = pattBndsX->extent() * scaling;
 

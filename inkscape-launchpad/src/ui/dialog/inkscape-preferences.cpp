@@ -601,7 +601,7 @@ void InkscapePreferences::initPageUI()
                               _("Set the language for menus and number formats"), false);
 
     {
-        Glib::ustring sizeLabels[] = {_("Large"), _("Small"), _("Smaller")};
+        Glib::ustring sizeLabels[] = {C_("Icon size", "Large"), C_("Icon size", "Small"), C_("Icon size", "Smaller")};
         int sizeValues[] = {0, 1, 2};
 
         _misc_small_tools.init( "/toolbox/tools/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
@@ -686,7 +686,7 @@ void InkscapePreferences::initPageUI()
     _win_ontop_agressive.init ( _("Aggressive"), "/options/transientpolicy/value", 2, false, &_win_ontop_none);
 
     {
-        Glib::ustring defaultSizeLabels[] = {_("Small"), _("Large"), _("Maximized")};
+        Glib::ustring defaultSizeLabels[] = {C_("Window size", "Small"), C_("Window size", "Large"), C_("Window size", "Maximized")};
         int defaultSizeValues[] = {0, 1, 2};
 
         _win_default_size.init( "/options/defaultwindowsize/value", defaultSizeLabels, defaultSizeValues, G_N_ELEMENTS(defaultSizeLabels), 1 );

@@ -220,55 +220,107 @@ endif()
 # CMake's builtin
 # ----------------------------------------------------------------------------
 
+SET (TRY_GTKSPELL 1)
 # Include dependencies:
 # use patched version until GTK2_CAIROMMCONFIG_INCLUDE_DIR is added
-find_package(GTK2 COMPONENTS gtk gtkmm REQUIRED)
-list(APPEND INKSCAPE_INCS_SYS
-	${GTK2_GDK_INCLUDE_DIR}
-	${GTK2_GDKMM_INCLUDE_DIR}
-	${GTK2_GDK_PIXBUF_INCLUDE_DIR}
-	${GTK2_GDKCONFIG_INCLUDE_DIR}
-	${GTK2_GDKMMCONFIG_INCLUDE_DIR}
-	${GTK2_GLIB_INCLUDE_DIR}
-	${GTK2_GLIBCONFIG_INCLUDE_DIR}
-	${GTK2_GLIBMM_INCLUDE_DIR}
-	${GTK2_GLIBMMCONFIG_INCLUDE_DIR}
-	${GTK2_GTK_INCLUDE_DIR}
-	${GTK2_GTKMM_INCLUDE_DIR}
-	${GTK2_GTKMMCONFIG_INCLUDE_DIR}
-	${GTK2_ATK_INCLUDE_DIR}
-	${GTK2_ATKMM_INCLUDE_DIR}
-	${GTK2_PANGO_INCLUDE_DIR}
-	${GTK2_PANGOMM_INCLUDE_DIR}
-	${GTK2_PANGOMMCONFIG_INCLUDE_DIR}
-	${GTK2_CAIRO_INCLUDE_DIR}
-	${GTK2_CAIROMM_INCLUDE_DIR}
-	${GTK2_CAIROMMCONFIG_INCLUDE_DIR} # <-- not in cmake 2.8.4
-	${GTK2_GIOMM_INCLUDE_DIR}
-	${GTK2_GIOMMCONFIG_INCLUDE_DIR}
-	${GTK2_SIGC++_INCLUDE_DIR}
-	${GTK2_SIGC++CONFIG_INCLUDE_DIR}
-)
+IF ("${WITH_GTK3_EXPERIMENTAL}")
+    pkg_check_modules(
+        GTK
+        REQUIRED
+        gtkmm-3.0>=3.2
+        gdkmm-3.0>=3.2
+        gtk+-3.0>=3.2
+        gdk-3.0>=3.2
+        gdl-3.0>=3.3.5
+        )
+    message("Using EXPERIMENTAL Gtkmm 3 build")
+    SET (WITH_GTKMM_3_0 1)
+    message("Using external GDL")
+    SET(WITH_EXT_GDL 1)
 
-list(APPEND INKSCAPE_LIBS
-	${GTK2_GDK_LIBRARY}
-	${GTK2_GDKMM_LIBRARY}
-	${GTK2_GDK_PIXBUF_LIBRARY}
-	${GTK2_GLIB_LIBRARY}
-	${GTK2_GLIBMM_LIBRARY}
-	${GTK2_GTK_LIBRARY}
-	${GTK2_GTKMM_LIBRARY}
-	${GTK2_ATK_LIBRARY}
-	${GTK2_ATKMM_LIBRARY}
-	${GTK2_PANGO_LIBRARY}
-	${GTK2_PANGOMM_LIBRARY}
-	${GTK2_CAIRO_LIBRARY}
-	${GTK2_CAIROMM_LIBRARY}
-	${GTK2_GIOMM_LIBRARY}
-	${GTK2_SIGC++_LIBRARY}
-	${GTK2_GOBJECT_LIBRARY}
-)
+	# Check whether we can use new features in Gtkmm 3.10
+	# TODO: Drop this test and bump the version number in the GTK test above
+	#       as soon as all supported distributions provide Gtkmm >= 3.10
+	pkg_check_modules(GTKMM_3_10
+			  gtkmm-3.0>=3.10,
+			  )
 
+    IF ("${GTKMM_3_10_FOUND}")
+        message("Using Gtkmm 3.10 build")
+        SET (WITH_GTKMM_3_10 1)
+    ENDIF()
+
+    pkg_check_modules(GDL_3_6 gdl-3.0>=3.6)
+
+    IF ("${GDL_3_6_FOUND}")
+        message("Using Gdl 3.6 or higher")
+        SET (WITH_GDL_3_6 1)
+    ENDIF()
+
+    SET (TRY_GTKSPELL )
+    pkg_check_modules(GTKSPELL3 gtkspell3-3.0)
+
+    IF ("${GTKSPELL3_FOUND}")
+        message("Using GtkSpell3 3.0")
+        SET (WITH_GTKSPELL 1)
+    ENDIF()
+    list(APPEND INKSCAPE_INCS_SYS
+        ${GTK_INCLUDE_DIRS}
+        ${GTKSPELL3_INCLUDE_DIRS}
+    )
+
+    list(APPEND INKSCAPE_LIBS
+        ${GTK_LIBRARIES}
+        ${GTKSPELL3_LIBRARIES}
+    )
+ELSE()
+    find_package(GTK2 COMPONENTS gtk gtkmm REQUIRED)
+    list(APPEND INKSCAPE_INCS_SYS
+        ${GTK2_GDK_INCLUDE_DIR}
+        ${GTK2_GDKMM_INCLUDE_DIR}
+        ${GTK2_GDK_PIXBUF_INCLUDE_DIR}
+        ${GTK2_GDKCONFIG_INCLUDE_DIR}
+        ${GTK2_GDKMMCONFIG_INCLUDE_DIR}
+        ${GTK2_GLIB_INCLUDE_DIR}
+        ${GTK2_GLIBCONFIG_INCLUDE_DIR}
+        ${GTK2_GLIBMM_INCLUDE_DIR}
+        ${GTK2_GLIBMMCONFIG_INCLUDE_DIR}
+        ${GTK2_GTK_INCLUDE_DIR}
+        ${GTK2_GTKMM_INCLUDE_DIR}
+        ${GTK2_GTKMMCONFIG_INCLUDE_DIR}
+        ${GTK2_ATK_INCLUDE_DIR}
+        ${GTK2_ATKMM_INCLUDE_DIR}
+        ${GTK2_PANGO_INCLUDE_DIR}
+        ${GTK2_PANGOMM_INCLUDE_DIR}
+        ${GTK2_PANGOMMCONFIG_INCLUDE_DIR}
+        ${GTK2_CAIRO_INCLUDE_DIR}
+        ${GTK2_CAIROMM_INCLUDE_DIR}
+        ${GTK2_CAIROMMCONFIG_INCLUDE_DIR} # <-- not in cmake 2.8.4
+        ${GTK2_GIOMM_INCLUDE_DIR}
+        ${GTK2_GIOMMCONFIG_INCLUDE_DIR}
+        ${GTK2_SIGC++_INCLUDE_DIR}
+        ${GTK2_SIGC++CONFIG_INCLUDE_DIR}
+    )
+
+    list(APPEND INKSCAPE_LIBS
+        ${GTK2_GDK_LIBRARY}
+        ${GTK2_GDKMM_LIBRARY}
+        ${GTK2_GDK_PIXBUF_LIBRARY}
+        ${GTK2_GLIB_LIBRARY}
+        ${GTK2_GLIBMM_LIBRARY}
+        ${GTK2_GTK_LIBRARY}
+        ${GTK2_GTKMM_LIBRARY}
+        ${GTK2_ATK_LIBRARY}
+        ${GTK2_ATKMM_LIBRARY}
+        ${GTK2_PANGO_LIBRARY}
+        ${GTK2_PANGOMM_LIBRARY}
+        ${GTK2_CAIRO_LIBRARY}
+        ${GTK2_CAIROMM_LIBRARY}
+        ${GTK2_GIOMM_LIBRARY}
+        ${GTK2_SIGC++_LIBRARY}
+        ${GTK2_GOBJECT_LIBRARY}
+    )
+ENDIF()
 
 find_package(Freetype REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${FREETYPE_INCLUDE_DIRS})
@@ -286,7 +338,7 @@ if(ASPELL_FOUND)
 	set(HAVE_ASPELL TRUE)
 endif()
 
-if(WITH_GTKSPELL)
+if("${TRY_GTKSPELL}" AND "${WITH_GTKSPELL}")
 	find_package(GtkSpell)
 	if(GTKSPELL_FOUND)
 		list(APPEND INKSCAPE_INCS_SYS ${GTKSPELL_INCLUDE_DIR})

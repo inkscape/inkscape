@@ -35,7 +35,7 @@ def export_MTEXT():
         y = vals[groups['20']][0]
         # optional group codes : (21, 40, 50) (direction, text height mm, text angle)
         size = 12                       # default fontsize in px
-        if vals[groups['40']]:
+        if vals[groups['40']] and vals[groups['40']][0]:
             size = scale*vals[groups['40']][0]
         attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %.1fpx; fill: %s; font-family: %s' % (size, color, options.font)}
         angle = 0                       # default angle in degrees

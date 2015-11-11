@@ -54,10 +54,7 @@ public:
 //    PureTranslate();                        // Default constructor
 //    PureTranslate(PureTranslate const &);   // Copy constructor
     virtual ~PureTranslate() {};
-    PureTranslate(Geom::Point vector = Geom::Point()) {
-        _vector = vector;
-        _vector_snapped = vector;
-    }
+    PureTranslate(Geom::Point vector = Geom::Point()) : _vector(vector), _vector_snapped(vector) {}
 
     Geom::Point getTranslationSnapped() {return _vector_snapped;}
 //    PureTranslate * clone () const {return new PureTranslate(*this);}
@@ -100,12 +97,12 @@ public:
 //    PureScale(PureScale const &);   // Copy constructor
     virtual ~PureScale() {};
 
-    PureScale(Geom::Scale scale, Geom::Point origin, bool uniform) {
-        _scale = scale;
-        _scale_snapped = scale;
-        _origin = origin;
-        _uniform = uniform;
-    }
+    PureScale(Geom::Scale scale, Geom::Point origin, bool uniform) : 
+        _scale (scale),
+        _scale_snapped (scale),
+        _origin (origin),
+        _uniform (uniform)
+    {}
 
     Geom::Scale getScaleSnapped() {return _scale_snapped;}
 //    PureScale * clone () const {return new PureScale (*this);}
@@ -142,12 +139,13 @@ protected:
 
 public:
     virtual ~PureStretchConstrained() {};
-    PureStretchConstrained(Geom::Coord magnitude, Geom::Point origin, Geom::Dim2 direction, bool uniform) {
-        _magnitude = magnitude;
-        _origin = origin;
-        _direction = direction;
-        _uniform = uniform;
-        _stretch_snapped = Geom::Scale(magnitude, magnitude);
+    PureStretchConstrained(Geom::Coord magnitude, Geom::Point origin, Geom::Dim2 direction, bool uniform) :
+        _magnitude (magnitude),
+        _stretch_snapped (Geom::Scale(magnitude, magnitude)),
+        _origin (origin),
+        _direction (direction),
+        _uniform (uniform)
+    {
         if (not uniform) {
             _stretch_snapped[1-direction] = 1.0;
         }
@@ -178,13 +176,13 @@ protected:
 
 public:
     virtual ~PureSkewConstrained() {};
-    PureSkewConstrained(Geom::Coord skew, Geom::Coord scale, Geom::Point origin, Geom::Dim2 direction) {
-        _skew = skew;
-        _skew_snapped = skew;
-        _scale = scale;
-        _origin = origin;
-        _direction = direction;
-    };
+    PureSkewConstrained(Geom::Coord skew, Geom::Coord scale, Geom::Point origin, Geom::Dim2 direction) :
+        _skew (skew),
+        _skew_snapped (skew),
+        _scale (scale),
+        _origin (origin),
+        _direction (direction)
+    {};
 
     Geom::Coord getSkewSnapped() {return _skew_snapped;}
 
@@ -212,12 +210,12 @@ public:
 //    PureRotate(PureRotate const &);   // Copy constructor
     virtual ~PureRotateConstrained() {};
 
-    PureRotateConstrained(double angle, Geom::Point origin) {
-        _origin = origin;
-        _angle = angle; // in radians!
-        _angle_snapped = angle;
-        _uniform = true; // We do not yet allow for simultaneous rotation and scaling
-    }
+    PureRotateConstrained(double angle, Geom::Point origin) :
+        _angle (angle), // in radians!
+        _angle_snapped (angle),
+        _origin (origin),
+        _uniform (true) // We do not yet allow for simultaneous rotation and scaling
+    {}
 
     double getAngleSnapped() {return _angle_snapped;}
 

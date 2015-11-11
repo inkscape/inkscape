@@ -21,8 +21,8 @@ namespace LivePathEffect {
 
 BoolParam::BoolParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                      Effect* effect, bool default_value )
-    : Parameter(label, tip, key, wr, effect), value(default_value), defvalue(default_value)
+                      Effect* effect, bool default_value , bool no_widget)
+    : Parameter(label, tip, key, wr, effect), value(default_value), defvalue(default_value), hide_widget(no_widget)
 {
 }
 
@@ -53,20 +53,24 @@ BoolParam::param_getSVGValue() const
 Gtk::Widget *
 BoolParam::param_newWidget()
 {
-    Inkscape::UI::Widget::RegisteredCheckButton * checkwdg = Gtk::manage(
-        new Inkscape::UI::Widget::RegisteredCheckButton( param_label,
-                                                         param_tooltip,
-                                                         param_key,
-                                                         *param_wr,
-                                                         false,
-                                                         param_effect->getRepr(),
-                                                         param_effect->getSPDoc()) );
+    if(!hide_widget){
+        Inkscape::UI::Widget::RegisteredCheckButton * checkwdg = Gtk::manage(
+            new Inkscape::UI::Widget::RegisteredCheckButton( param_label,
+                                                             param_tooltip,
+                                                             param_key,
+                                                             *param_wr,
+                                                             false,
+                                                             param_effect->getRepr(),
+                                                             param_effect->getSPDoc()) );
 
-    checkwdg->setActive(value);
-    checkwdg->setProgrammatically = false;
-    checkwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change bool parameter"));
+        checkwdg->setActive(value);
+        checkwdg->setProgrammatically = false;
+        checkwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change bool parameter"));
 
-    return dynamic_cast<Gtk::Widget *> (checkwdg);
+        return dynamic_cast<Gtk::Widget *> (checkwdg);
+    } else {
+        return NULL;
+    }
 }
 
 void

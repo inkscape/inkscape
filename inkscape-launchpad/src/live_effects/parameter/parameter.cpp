@@ -54,7 +54,7 @@ void Parameter::write_to_SVG(void)
  */
 ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                      Effect* effect, gdouble default_value)
+                      Effect* effect, gdouble default_value, bool no_widget)
     : Parameter(label, tip, key, wr, effect),
       value(default_value),
       min(-SCALARPARAM_G_MAXDOUBLE),
@@ -65,7 +65,8 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
       inc_step(0.1),
       inc_page(1),
       add_slider(false),
-      overwrite_widget(false)
+      overwrite_widget(false),
+      hide_widget(no_widget)
 {
 }
 
@@ -153,21 +154,25 @@ ScalarParam::param_overwrite_widget(bool overwrite_widget)
 Gtk::Widget *
 ScalarParam::param_newWidget()
 {
-    Inkscape::UI::Widget::RegisteredScalar *rsu = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalar(
-        param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc() ) );
+    if(!hide_widget){
+        Inkscape::UI::Widget::RegisteredScalar *rsu = Gtk::manage( new Inkscape::UI::Widget::RegisteredScalar(
+            param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc() ) );
 
-    rsu->setValue(value);
-    rsu->setDigits(digits);
-    rsu->setIncrements(inc_step, inc_page);
-    rsu->setRange(min, max);
-    rsu->setProgrammatically = false;
-    if (add_slider) {
-        rsu->addSlider();
+        rsu->setValue(value);
+        rsu->setDigits(digits);
+        rsu->setIncrements(inc_step, inc_page);
+        rsu->setRange(min, max);
+        rsu->setProgrammatically = false;
+        if (add_slider) {
+            rsu->addSlider();
+        }
+        if(!overwrite_widget){
+            rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
+        }
+        return dynamic_cast<Gtk::Widget *> (rsu);
+    } else {
+        return NULL;
     }
-    if(!overwrite_widget){
-        rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
-    }
-    return dynamic_cast<Gtk::Widget *> (rsu);
 }
 
 void

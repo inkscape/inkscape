@@ -255,7 +255,7 @@ void Selection::addList(std::vector<SPItem*> const &list) {
 
     _invalidateCachedLists();
 
-    for ( std::vector<SPItem*>::const_iterator iter=list.begin();iter!=list.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=list.begin();iter!=list.end(); ++iter) {
         SPObject *obj = *iter;
         if (includes(obj)) continue;
         _add (obj);
@@ -267,7 +267,7 @@ void Selection::addList(std::vector<SPItem*> const &list) {
 void Selection::setReprList(std::vector<XML::Node*> const &list) {
     _clear();
 
-    for ( std::vector<XML::Node*>::const_reverse_iterator iter=list.rbegin();iter!=list.rend();iter++ ) {
+    for ( std::vector<XML::Node*>::const_reverse_iterator iter=list.rbegin();iter!=list.rend(); ++iter) {
         SPObject *obj=_objectForXMLNode(*iter);
         if (obj) {
             _add(obj);
@@ -286,7 +286,7 @@ std::vector<SPObject*> const &Selection::list() {
     if(!_objs_vector.empty())
     return _objs_vector;
 
-    for ( std::list<SPObject*>::const_iterator iter=_objs.begin();iter!=_objs.end();iter++ ) {
+    for ( std::list<SPObject*>::const_iterator iter=_objs.begin();iter!=_objs.end(); ++iter) {
             _objs_vector.push_back(*iter);
     }
     return _objs_vector;
@@ -298,7 +298,7 @@ std::vector<SPItem*> const &Selection::itemList() {
         return _items;
     }
 
-    for ( std::list<SPObject*>::const_iterator iter=_objs.begin();iter!=_objs.end();iter++ ) {
+    for ( std::list<SPObject*>::const_iterator iter=_objs.begin();iter!=_objs.end(); ++iter) {
         SPObject *obj=*iter;
         if (SP_IS_ITEM(obj)) {
             _items.push_back(SP_ITEM(obj));
@@ -310,7 +310,7 @@ std::vector<SPItem*> const &Selection::itemList() {
 std::vector<XML::Node*> const &Selection::reprList() {
     if (!_reprs.empty()) { return _reprs; }
     std::vector<SPItem*> list = itemList();
-    for ( std::vector<SPItem*>::const_iterator iter=list.begin();iter!=list.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=list.begin();iter!=list.end(); ++iter) {
         SPObject *obj = *iter;
         _reprs.push_back(obj->getRepr());
     }
@@ -372,7 +372,7 @@ SPItem *Selection::_sizeistItem(bool sml, Selection::CompareSize compare) {
     gdouble max = sml ? 1e18 : 0;
     SPItem *ist = NULL;
 
-    for ( std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++ ) {
+    for ( std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i) {
         Geom::OptRect obox = SP_ITEM(*i)->desktopPreferredBounds();
         if (!obox || obox.isEmpty()) continue;
         Geom::Rect bbox = *obox;
@@ -404,7 +404,7 @@ Geom::OptRect Selection::geometricBounds() const
     std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
 
     Geom::OptRect bbox;
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
         bbox.unionWith(SP_ITEM(*iter)->desktopGeometricBounds());
     }
     return bbox;
@@ -415,7 +415,7 @@ Geom::OptRect Selection::visualBounds() const
     std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
 
     Geom::OptRect bbox;
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
         bbox.unionWith(SP_ITEM(*iter)->desktopVisualBounds());
     }
     return bbox;
@@ -436,7 +436,7 @@ Geom::OptRect Selection::documentBounds(SPItem::BBoxType type) const
     std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
     if (items.empty()) return bbox;
 
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
         SPItem *item = SP_ITEM(*iter);
         bbox |= item->documentBounds(type);
     }
@@ -463,19 +463,21 @@ boost::optional<Geom::Point> Selection::center() const {
 }
 
 std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPoints(SnapPreferences const *snapprefs) const {
-    std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
-
-    SnapPreferences snapprefs_dummy = *snapprefs; // create a local copy of the snapping prefs
-    snapprefs_dummy.setTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER, false); // locally disable snapping to the item center
     std::vector<Inkscape::SnapCandidatePoint> p;
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
-        SPItem *this_item = *iter;
-        this_item->getSnappoints(p, &snapprefs_dummy);
 
-        //Include the transformation origin for snapping
-        //For a selection or group only the overall center is considered, not for each item individually
-        if (snapprefs != NULL && snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER)) {
-            p.push_back(Inkscape::SnapCandidatePoint(this_item->getCenter(), SNAPSOURCE_ROTATION_CENTER));
+    if (snapprefs != NULL){
+        SnapPreferences snapprefs_dummy = *snapprefs; // create a local copy of the snapping prefs
+        snapprefs_dummy.setTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER, false); // locally disable snapping to the item center
+        std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
+        for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
+            SPItem *this_item = *iter;
+            this_item->getSnappoints(p, &snapprefs_dummy);
+            
+            //Include the transformation origin for snapping
+            //For a selection or group only the overall center is considered, not for each item individually
+            if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_ROTATION_CENTER)) {
+                p.push_back(Inkscape::SnapCandidatePoint(this_item->getCenter(), SNAPSOURCE_ROTATION_CENTER));
+            }
         }
     }
 
@@ -484,7 +486,7 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPoints(SnapPreferenc
 
 void Selection::_removeObjectDescendants(SPObject *obj) {
     std::vector<SPObject*> toremove;
-    for ( std::list<SPObject*>::const_iterator iter=_objs.begin();iter!=_objs.end();iter++ ) {
+    for ( std::list<SPObject*>::const_iterator iter=_objs.begin();iter!=_objs.end(); ++iter) {
         SPObject *sel_obj= dynamic_cast<SPObject*>(*iter);
         SPObject *parent = sel_obj->parent;
         while (parent) {
@@ -495,7 +497,7 @@ void Selection::_removeObjectDescendants(SPObject *obj) {
             parent = parent->parent;
         }
     }
-    for ( std::vector<SPObject*>::const_iterator iter=toremove.begin();iter!=toremove.end();iter++ ) {
+    for ( std::vector<SPObject*>::const_iterator iter=toremove.begin();iter!=toremove.end(); ++iter) {
         _remove(*iter);
     }
 }
@@ -522,7 +524,7 @@ SPObject *Selection::_objectForXMLNode(Inkscape::XML::Node *repr) const {
 size_t Selection::numberOfLayers() {
     std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
     std::set<SPObject*> layers;
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
         SPObject *layer = _layers->layerForObject(*iter);
         layers.insert(layer);
     }
@@ -532,7 +534,7 @@ size_t Selection::numberOfLayers() {
 size_t Selection::numberOfParents() {
     std::vector<SPItem*> const items = const_cast<Selection *>(this)->itemList();
     std::set<SPObject*> parents;
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
         SPObject *parent = (*iter)->parent;
         parents.insert(parent);
     }

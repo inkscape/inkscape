@@ -122,7 +122,7 @@ cr_enc_handler_resolve_enc_alias (const guchar * a_alias_name,
         g_ascii_strup (alias_name_up, -1);
 
         for (i = 0; gv_default_aliases[i].name; i++) {
-                if (!strcmp (gv_default_aliases[i].name, alias_name_up)) {
+                if (!strcmp (gv_default_aliases[i].name, (const gchar *) alias_name_up)) {
                         *a_enc = gv_default_aliases[i].encoding;
                         status = CR_OK;
                         break;

@@ -50,6 +50,11 @@ SPBox3D::SPBox3D() : SPGroup() {
 
     this->persp_href = NULL;
     this->persp_ref = new Persp3DReference(this);
+
+    /* we initialize the z-orders to zero so that they are updated during dragging */
+    for (int i = 0; i < 6; ++i) {
+        z_orders[i] = 0;
+    }
 }
 
 SPBox3D::~SPBox3D() {
@@ -902,7 +907,7 @@ box3d_swap_sides(int z_orders[6], Box3D::Axis axis) {
         }
     }
 
-    if (pos1 != -1){
+    if ((pos1 != -1) && (pos2 != -1)){
         int tmp = z_orders[pos1];
         z_orders[pos1] = z_orders[pos2];
         z_orders[pos2] = tmp;

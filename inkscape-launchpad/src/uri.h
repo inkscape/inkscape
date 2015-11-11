@@ -104,7 +104,7 @@ public:
 
     static char *to_native_filename(char const* uri) throw(BadURIException);
 
-    const std::string getFullPath(std::string const base) const;
+    const std::string getFullPath(std::string const &base) const;
 
     char *toNativeFilename() const throw(BadURIException);
 

@@ -29,7 +29,7 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
       steps(_("Steps:"),_("Change number of simplify steps "), "steps", &wr, this,1),
       threshold(_("Roughly threshold:"), _("Roughly threshold:"), "threshold", &wr, this, 0.003),
-      smooth_angles(_("Smooth angles:"), _("Max degree difference on handles to preform a smooth"), "smooth_angles", &wr, this, 20.),
+      smooth_angles(_("Smooth angles:"), _("Max degree difference on handles to perform a smooth"), "smooth_angles", &wr, this, 20.),
       helper_size(_("Helper size:"), _("Helper size"), "helper_size", &wr, this, 5),
       simplify_individual_paths(_("Paths separately"), _("Simplifying paths (separately)"), "simplify_individual_paths", &wr, this, false,
                               "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),

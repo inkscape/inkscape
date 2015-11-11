@@ -148,7 +148,7 @@ gchar *URI::to_native_filename(gchar const* uri) throw(BadURIException)
  * Does not check if the returned path is the local document's path (local)
  * and thus redundent. Caller is expected to check against the document's path.
  */
-const std::string URI::getFullPath(std::string const base) const {
+const std::string URI::getFullPath(std::string const &base) const {
     if (!_impl->getPath()) {
         return "";
     }

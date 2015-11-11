@@ -102,7 +102,8 @@ public:
                 const Glib::ustring& key,
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
-                gdouble default_value = 1.0);
+                gdouble default_value = 1.0,
+                bool no_widget = false);
     virtual ~ScalarParam();
 
     virtual bool param_readSVGValue(const gchar * strvalue);
@@ -133,6 +134,7 @@ protected:
     double inc_page;
     bool add_slider;
     bool overwrite_widget;
+    bool hide_widget;
 
 private:
     ScalarParam(const ScalarParam&);

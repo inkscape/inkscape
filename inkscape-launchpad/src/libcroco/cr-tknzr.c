@@ -1586,7 +1586,9 @@ cr_tknzr_parse_num (CRTknzr * a_this,
 CRTknzr *
 cr_tknzr_new (CRInput * a_input)
 {
-        CRTknzr *result = (CRTknzr *)g_try_malloc (sizeof (CRTknzr));
+        CRTknzr *result = NULL;
+
+        result = (CRTknzr *) g_try_malloc (sizeof (CRTknzr));
 
         if (result == NULL) {
                 cr_utils_trace_info ("Out of memory");
@@ -1636,7 +1638,9 @@ cr_tknzr_new_from_uri (const guchar * a_file_uri,
                        enum CREncoding a_enc)
 {
         CRTknzr *result = NULL;
-        CRInput *input = cr_input_new_from_uri ((gchar *)a_file_uri, a_enc);
+        CRInput *input = NULL;
+
+        input = cr_input_new_from_uri ((const gchar *) a_file_uri, a_enc);
         g_return_val_if_fail (input != NULL, NULL);
 
         result = cr_tknzr_new (input);
@@ -1909,7 +1913,7 @@ cr_tknzr_consume_chars (CRTknzr * a_this, guint32 a_char, glong * a_nb_char)
         }
 
         return cr_input_consume_chars (PRIVATE (a_this)->input,
-                                       a_char, (gulong *)a_nb_char);
+                                       a_char, a_nb_char);
 }
 
 enum CRStatus
@@ -2097,15 +2101,15 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
                 if (BYTE (input, 2, NULL) == 'r'
                     && BYTE (input, 3, NULL) == 'l'
                     && BYTE (input, 4, NULL) == '(') {
-                        CRString *str = NULL;
+                        CRString *str2 = NULL;
 
-                        status = cr_tknzr_parse_uri (a_this, &str);
+                        status = cr_tknzr_parse_uri (a_this, &str2);
                         if (status == CR_OK) {
-                                status = cr_token_set_uri (token, str);
+                                status = cr_token_set_uri (token, str2);
                                 CHECK_PARSING_STATUS (status, TRUE);
-                                if (str) {
+                                if (str2) {
                                         cr_parsing_location_copy (&token->location,
-                                                                  &str->location) ;
+                                                                  &str2->location) ;
                                 }
                                 goto done;
                         }

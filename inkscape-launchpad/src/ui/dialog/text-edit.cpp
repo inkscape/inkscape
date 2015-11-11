@@ -175,6 +175,19 @@ TextEdit::TextEdit()
     gtk_text_view_set_wrap_mode ((GtkTextView *) text_view, GTK_WRAP_WORD);
 
 #ifdef WITH_GTKSPELL
+#ifdef WITH_GTKMM_3_0
+/*
+       TODO: Use computed xml:lang attribute of relevant element, if present, to specify the
+       language (either as 2nd arg of gtkspell_new_attach, or with explicit
+       gtkspell_set_language call in; see advanced.c example in gtkspell docs).
+       onReadSelection looks like a suitable place.
+*/
+    GtkSpellChecker * speller = gtk_spell_checker_new();
+
+    if (! gtk_spell_checker_attach(speller, GTK_TEXT_VIEW(text_view))) {
+        g_print("gtkspell error:\n");
+    }
+#else
     GError *error = NULL;
 
 /*
@@ -187,6 +200,7 @@ TextEdit::TextEdit()
         g_print("gtkspell error: %s\n", error->message);
         g_error_free(error);
     }
+#endif
 #endif
 
     gtk_widget_set_size_request (text_view, -1, 64);
@@ -430,7 +444,7 @@ SPItem *TextEdit::getSelectedTextItem (void)
         return NULL;
 
     std::vector<SPItem*> tmp=SP_ACTIVE_DESKTOP->getSelection()->itemList();
-	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++)
+	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i)
     {
         if (SP_IS_TEXT(*i) || SP_IS_FLOWTEXT(*i))
             return *i;
@@ -448,7 +462,7 @@ unsigned TextEdit::getSelectedTextCount (void)
     unsigned int items = 0;
 
     std::vector<SPItem*> tmp=SP_ACTIVE_DESKTOP->getSelection()->itemList();
-	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();i++)
+	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i)
     {
         if (SP_IS_TEXT(*i) || SP_IS_FLOWTEXT(*i))
             ++items;
@@ -558,7 +572,7 @@ void TextEdit::onApply()
     SPCSSAttr *css = fillTextStyle ();
     sp_desktop_set_style(desktop, css, true);
 
-	for(std::vector<SPItem*>::const_iterator i=item_list.begin();i!=item_list.end();i++){
+	for(std::vector<SPItem*>::const_iterator i=item_list.begin();i!=item_list.end();++i){
         // apply style to the reprs of all text objects in the selection
         if (SP_IS_TEXT (*i)) {
 

@@ -6,6 +6,7 @@
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="size" type="float" min="0.0" max="1000.0" _gui-text="Initial size:">100.0</param>
 	<param name="minimum" type="float" min="0.0" max="500.0" _gui-text="Minimum size:">40.0</param>
+	<param name="pentoggle" type="boolean" _gui-text="Omit redundant segments" _gui-description="Lift pen for backward steps">false</param>
     <effect>
 		<object-type>all</object-type>
                 <effects-menu>

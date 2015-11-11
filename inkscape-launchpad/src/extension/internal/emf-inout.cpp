@@ -1174,10 +1174,7 @@ Emf::select_extpen(PEMF_CALLBACK_DATA d, int index)
                 if (!d->dc[d->level].style.stroke_dasharray.values.empty() && (d->level==0 || (d->level>0 && d->dc[d->level].style.stroke_dasharray.values!=d->dc[d->level-1].style.stroke_dasharray.values)))
                     d->dc[d->level].style.stroke_dasharray.values.clear();
                 for (unsigned int i=0; i<pEmr->elp.elpNumEntries; i++) {
-//  Doing it this way typically results in a pattern that is tiny, better to assume the array
-//  is the same scale as for dot/dash below, that is, no scaling should be applied
-//                    double dash_length = pix_to_abs_size( d, pEmr->elp.elpStyleEntry[i] );
-                    double dash_length = pEmr->elp.elpStyleEntry[i];
+                    double dash_length = pix_to_abs_size( d, pEmr->elp.elpStyleEntry[i] );
                     d->dc[d->level].style.stroke_dasharray.values.push_back(dash_length);
                 }
                 d->dc[d->level].style.stroke_dasharray.set = 1;

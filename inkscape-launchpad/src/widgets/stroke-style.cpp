@@ -480,7 +480,7 @@ void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw,
 
     Inkscape::Selection *selection = spw->desktop->getSelection();
     std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
         SPItem *item = *i;
         if (!SP_IS_SHAPE(item) || SP_IS_RECT(item)) { // can't set marker to rect, until it's converted to using <path>
             continue;
@@ -981,7 +981,7 @@ StrokeStyle::scaleLine()
         int ndash;
         dashSelector->get_dash(&ndash, &dash, &offset);
 
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();++i){
             /* Set stroke width */
             double width;
             if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
@@ -1156,7 +1156,7 @@ StrokeStyle::updateAllMarkers(std::vector<SPItem*> const &objects)
     };
 
     bool all_texts = true;
-    for(std::vector<SPItem*>::const_iterator i=objects.begin();i!=objects.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=objects.begin();i!=objects.end();++i){
         if (!SP_IS_TEXT (*i)) {
             all_texts = false;
             break;

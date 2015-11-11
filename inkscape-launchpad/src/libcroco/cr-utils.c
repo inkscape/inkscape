@@ -429,9 +429,8 @@ cr_utils_read_char_from_utf8_buf (const guchar * a_in,
                                   gulong a_in_len,
                                   guint32 * a_out, gulong * a_consumed)
 {
-        gulong in_len = 0,
-                in_index = 0,
-                nb_bytes_2_decode = 0;
+        gulong in_index = 0,
+               nb_bytes_2_decode = 0;
         enum CRStatus status = CR_OK;
 
         /*
@@ -447,8 +446,6 @@ cr_utils_read_char_from_utf8_buf (const guchar * a_in,
                 status = CR_OK;
                 goto end;
         }
-
-        in_len = a_in_len;
 
         if (*a_in <= 0x7F) {
                 /*
@@ -901,14 +898,9 @@ cr_utils_ucs1_to_utf8 (const guchar * a_in,
 
         if (*a_in_len == 0) {
                 *a_out_len = 0 ;
-                return CR_OK ;
+                return status;
         }
         g_return_val_if_fail (a_out, CR_BAD_PARAM_ERROR) ;
-
-        if (*a_in_len < 1) {
-                status = CR_OK;
-                goto end;
-        }
 
         in_len = *a_in_len;
         out_len = *a_out_len;
@@ -930,11 +922,10 @@ cr_utils_ucs1_to_utf8 (const guchar * a_in,
                 }
         }                       /*end for */
 
-      end:
         *a_in_len = in_index;
         *a_out_len = out_index;
 
-        return CR_OK;
+        return status;
 }
 
 /**
@@ -951,8 +942,7 @@ cr_utils_ucs1_str_to_utf8 (const guchar * a_in,
                            gulong * a_in_len,
                            guchar ** a_out, gulong * a_out_len)
 {
-        gulong in_len = 0,
-                out_len = 0;
+        gulong out_len = 0;
         enum CRStatus status = CR_OK;
 
         g_return_val_if_fail (a_in && a_in_len && a_out
@@ -968,8 +958,6 @@ cr_utils_ucs1_str_to_utf8 (const guchar * a_in,
                                                 &out_len);
 
         g_return_val_if_fail (status == CR_OK, status);
-
-        in_len = *a_in_len;
 
         *a_out = (guchar *) g_malloc0 (out_len);
 
@@ -1023,7 +1011,6 @@ cr_utils_utf8_to_ucs1 (const guchar * a_in,
                               && a_out && a_out_len, CR_BAD_PARAM_ERROR);
 
         if (*a_in_len < 1) {
-                status = CR_OK;
                 goto end;
         }
 
@@ -1102,7 +1089,6 @@ cr_utils_utf8_to_ucs1 (const guchar * a_in,
                  *(if any) to get the current character.
                  */
                 if (in_index + nb_bytes_2_decode - 1 >= in_len) {
-                        status = CR_OK;
                         goto end;
                 }
 
@@ -1136,7 +1122,7 @@ cr_utils_utf8_to_ucs1 (const guchar * a_in,
         *a_out_len = out_index;
         *a_in_len = in_index;
 
-        return CR_OK;
+        return status;
 }
 
 /**

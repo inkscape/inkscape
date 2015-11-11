@@ -167,6 +167,7 @@ esac
 unset INK_DEBUG # ignore for recursive calls
 
 if [ "x$INK_DEBUG_SHELL" != "x" ]; then
+	unset INK_DEBUG_SHELL  # ignore for recursive calls
 	exec bash
 else
 	$EXEC "$CWD/inkscape-bin" "$@"
