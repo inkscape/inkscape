@@ -235,6 +235,13 @@ static void sp_toggle_pick_fill( GtkToggleAction* act, gpointer data )
     prefs->setBool("/tools/spray/pickfill", active);
 }
 
+static void sp_toggle_pick_no_overlap( GtkToggleAction* act, gpointer data )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gboolean active = gtk_toggle_action_get_active(act);
+    prefs->setBool("/tools/spray/picknooverlap", active);
+}
+
 static void sp_toggle_pick_inverse_value( GtkToggleAction* act, gpointer data )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -466,7 +473,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
 
     /* Inverse Value Size */
     {
-        InkToggleAction* act = ink_toggle_action_new( "SprayOverPickInverseValueAction",
+        InkToggleAction* act = ink_toggle_action_new( "SprayPickInverseValueAction",
                                                       _("Inversed pick value, retaining color in advanced trace mode"),
                                                       _("Inversed pick value, retaining color in advanced trace mode"),
                                                       INKSCAPE_ICON("object-tweak-shrink"),
@@ -479,7 +486,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
 
     /* Pick Fill */
     {
-        InkToggleAction* act = ink_toggle_action_new( "SprayOverPickFillAction",
+        InkToggleAction* act = ink_toggle_action_new( "SprayPickFillAction",
                                                       _("Apply picked color to fill"),
                                                       _("Apply picked color to fill"),
                                                       INKSCAPE_ICON("paint-solid"),
@@ -492,7 +499,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
 
     /* Pick Stroke */
     {
-        InkToggleAction* act = ink_toggle_action_new( "SprayOverPickStrokeAction",
+        InkToggleAction* act = ink_toggle_action_new( "SprayPickStrokeAction",
                                                       _("Apply picked color to stroke"),
                                                       _("Apply picked color to stroke"),
                                                       INKSCAPE_ICON("no-marker"),
@@ -500,6 +507,19 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/pickstroke", false) );
         g_object_set_data( holder, "pickstroke", act );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_pick_stroke), holder) ;
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+    }
+
+    /* Pick No Overlap */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "SprayPickNoOverlapAction",
+                                                      _("No overlap between colors"),
+                                                      _("No overlap between colors"),
+                                                      INKSCAPE_ICON("symbol-bigger"),
+                                                      secondarySize );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/picknooverlap", false) );
+        g_object_set_data( holder, "picknooverlap", act );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_pick_no_overlap), holder) ;
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
 

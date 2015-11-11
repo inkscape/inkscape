@@ -95,6 +95,7 @@ public:
     bool pickinversevalue;
     bool pickfill;
     bool pickstroke;
+    bool picknooverlap;
     bool overtransparent;
     bool overnotransparent;
     double offset;

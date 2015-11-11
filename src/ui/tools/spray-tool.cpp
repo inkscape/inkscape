@@ -179,6 +179,7 @@ SprayTool::SprayTool()
     , pickinversevalue(false)
     , pickfill(false)
     , pickstroke(false)
+    , picknooverlap(false)
     , overtransparent(true)
     , overnotransparent(true)
     , offset(0)
@@ -262,6 +263,7 @@ void SprayTool::setup() {
     sp_event_context_read(this, "pickinversevalue");
     sp_event_context_read(this, "pickfill");
     sp_event_context_read(this, "pickstroke");
+    sp_event_context_read(this, "picknooverlap");
     sp_event_context_read(this, "overnotransparent");
     sp_event_context_read(this, "overtransparent");
     sp_event_context_read(this, "nooverlap");
@@ -318,6 +320,8 @@ void SprayTool::set(const Inkscape::Preferences::Entry& val) {
         this->pickfill =  val.getBool();
     } else if (path == "pickstroke") {
         this->pickstroke =  val.getBool();
+    } else if (path == "picknooverlap") {
+        this->picknooverlap =  val.getBool();
     } else if (path == "overnotransparent") {
         this->overnotransparent =  val.getBool();
     } else if (path == "overtransparent") {
@@ -451,12 +455,18 @@ bool isTrans(Geom::Point N){
     return SP_RGBA32_A_F(rgba)==0 || SP_RGBA32_A_F(rgba) < 1e-6;
 }
 
-bool overTrans(Geom::Point A, Geom::Point B, Geom::Point C, Geom::Point D){
-    return isTrans(A) || isTrans(B) || isTrans(C) || isTrans(D);
+bool overTrans(std::vector<Geom::Point> points){
+    for (std::vector<Geom::Point>::const_iterator k=points.begin(); k!=points.end(); ++k) {
+        Geom::Point point = *k;
+        if(isTrans(point)){
+            return true;
+        }
+    }
+    return false;
 }
 
 static void showHidden(std::vector<SPItem *> items_down){
-    for (std::vector<SPItem *>::const_iterator k=items_down.begin(); k!=items_down.end(); k++) {
+    for (std::vector<SPItem *>::const_iterator k=items_down.begin(); k!=items_down.end(); ++k) {
         SPItem *item_hidden = *k;
         item_hidden->setHidden(false);
         item_hidden->updateRepr();
@@ -476,6 +486,7 @@ static bool fit_item(SPDesktop *desktop,
                      bool pickinversevalue,
                      bool pickfill,
                      bool pickstroke,
+                     bool picknooverlap,
                      bool overnotransparent,
                      bool overtransparent,
                      bool nooverlap,
@@ -511,27 +522,23 @@ static bool fit_item(SPDesktop *desktop,
     path *= desktop->doc2dt();
     bbox_procesed = path.boundsFast();
     double bbox_left_main = bbox_procesed->left();
-    double bbox_right_main = bbox_procesed->right();
     double bbox_top_main = bbox_procesed->top();
-    double bbox_bottom_main = bbox_procesed->bottom();
     double width_transformed = bbox_procesed->width();
     double height_transformed = bbox_procesed->height();
     Geom::Point mid_point = desktop->d2w(bbox_procesed->midpoint());
     Geom::Rect rect_sprayed(mid_point, mid_point);
     rect_sprayed.expandBy(width_transformed/2.0, height_transformed/2.0);
     Geom::IntRect area = Geom::IntRect::from_xywh(floor(mid_point[Geom::X]), floor(mid_point[Geom::Y]), 1, 1);
-    if (!rect_sprayed.hasZeroArea() && (!pickcenter || (overtransparent && !overnotransparent))) {
-        area = rect_sprayed.roundOutwards();
-    }
-    guint32 rgba = getPickerData(area);
-    if(!overtransparent && overnotransparent){
-        Geom::Point lt = desktop->d2w(Geom::Point(floor(bbox_left_main),floor(bbox_top_main)));
-        Geom::Point rt = desktop->d2w(Geom::Point(floor(bbox_right_main),floor(bbox_top_main)));
-        Geom::Point rb = desktop->d2w(Geom::Point(floor(bbox_right_main),floor(bbox_bottom_main)));
-        Geom::Point lb = desktop->d2w(Geom::Point(floor(bbox_left_main),floor(bbox_bottom_main)));
-        if(overTrans(lt, rt, rb, lb)){
+    guint32 rgba;
+    if(picknooverlap && !rect_sprayed.hasZeroArea()){
+        if(getPickerData(area) != getPickerData(rect_sprayed.roundOutwards())){
             return false;
         }
+    }
+    if (!rect_sprayed.hasZeroArea() && !pickcenter) {
+        rgba = getPickerData(rect_sprayed.roundOutwards());
+    } else {
+        rgba = getPickerData(area);
     }
     if(nooverlap && !overtransparent && (SP_RGBA32_A_F(rgba)==0 || SP_RGBA32_A_F(rgba) < 1e-6)){
         return false;
@@ -586,14 +593,14 @@ static bool fit_item(SPDesktop *desktop,
     if(picker || overtransparent || overnotransparent){
         if(!nooverlap){
             doc->ensureUpToDate();
-            rgba = getPickerData(area);
+            if (!rect_sprayed.hasZeroArea() && !pickcenter) {
+                rgba = getPickerData(rect_sprayed.roundOutwards());
+            } else {
+                rgba = getPickerData(area);
+            }
         }
-        if(!overtransparent && overnotransparent){
-            Geom::Point lt = desktop->d2w(Geom::Point(floor(bbox_left_main),floor(bbox_top_main)));
-            Geom::Point rt = desktop->d2w(Geom::Point(floor(bbox_right_main),floor(bbox_top_main)));
-            Geom::Point rb = desktop->d2w(Geom::Point(floor(bbox_right_main),floor(bbox_bottom_main)));
-            Geom::Point lb = desktop->d2w(Geom::Point(floor(bbox_left_main),floor(bbox_bottom_main)));
-            if(overTrans(lt, rt, rb, lb)){
+        if(picknooverlap && !rect_sprayed.hasZeroArea()){
+            if(getPickerData(area) != getPickerData(rect_sprayed.roundOutwards())){
                 if(!nooverlap && (picker || overtransparent || overnotransparent)){
                     showHidden(items_down);
                 }
@@ -726,6 +733,7 @@ static bool fit_item(SPDesktop *desktop,
                          pickinversevalue,
                          pickfill,
                          pickstroke,
+                         picknooverlap,
                          overnotransparent,
                          overtransparent,
                          nooverlap,
@@ -819,6 +827,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                                bool pickinversevalue,
                                bool pickfill,
                                bool pickstroke,
+                               bool picknooverlap,
                                bool overnotransparent,
                                bool overtransparent,
                                double offset,
@@ -862,7 +871,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 SPCSSAttr *css = sp_repr_css_attr_new();
                 if(nooverlap || picker || !overtransparent || !overnotransparent){
-                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickcenter, pickinversevalue, pickfill, pickstroke, overnotransparent, overtransparent, nooverlap, offset, css, false)){
+                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickcenter, pickinversevalue, pickfill, pickstroke, picknooverlap, overnotransparent, overtransparent, nooverlap, offset, css, false)){
                         return false;
                     }
                 }
@@ -969,7 +978,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 SPCSSAttr *css = sp_repr_css_attr_new();
                 if(nooverlap || picker || !overtransparent || !overnotransparent){
-                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickcenter, pickinversevalue, pickfill, pickstroke, overnotransparent, overtransparent, nooverlap, offset, css, false)){
+                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickcenter, pickinversevalue, pickfill, pickstroke, picknooverlap, overnotransparent, overtransparent, nooverlap, offset, css, false)){
                         return false;
                     }
                 }
@@ -1047,7 +1056,7 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
         for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
             SPItem *item = *i;
             g_assert(item != NULL);
-            if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib, tc->nooverlap, tc->picker, tc->pickcenter, tc->pickinversevalue, tc->pickfill, tc->pickstroke, tc->overnotransparent, tc->overtransparent, tc->offset, tc->usepressurescale, get_pressure(tc))) {
+            if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib, tc->nooverlap, tc->picker, tc->pickcenter, tc->pickinversevalue, tc->pickfill, tc->pickstroke, tc->picknooverlap, tc->overnotransparent, tc->overtransparent, tc->offset, tc->usepressurescale, get_pressure(tc))) {
                 did = true;
             }
         }
