@@ -47,7 +47,8 @@ namespace Tools {
 enum {
     SPRAY_MODE_COPY,
     SPRAY_MODE_CLONE,
-    SPRAY_MODE_SINGLE_PATH,    
+    SPRAY_MODE_SINGLE_PATH,
+    SPRAY_MODE_ERASER,
     SPRAY_OPTION,
 };
 
@@ -89,21 +90,32 @@ public:
     bool has_dilated;
     Geom::Point last_push;
     SPCanvasItem *dilate_area;
-    bool nooverlap;
+    bool no_overlap;
     bool picker;
-    bool pickcenter;
-    bool pickinversevalue;
-    bool pickfill;
-    bool pickstroke;
-    bool overtransparent;
-    bool overnotransparent;
+    bool pick_center;
+    bool pick_inverse_value;
+    bool pick_fill;
+    bool pick_stroke;
+    bool pick_no_overlap;
+    bool over_transparent;
+    bool over_no_transparent;
     double offset;
+    int pick;
+    bool do_trace;
+    bool pick_to_size;
+    bool pick_to_presence;
+    bool pick_to_color;
+    bool pick_to_opacity;
+    bool invert_picked;
+    double gamma_picked;
+    double rand_picked;
     sigc::connection style_set_connection;
 
     static const std::string prefsPath;
 
     virtual void setup();
     virtual void set(const Inkscape::Preferences::Entry& val);
+    virtual void setCloneTilerPrefs();
     virtual bool root_handler(GdkEvent* event);
 
     virtual const std::string& getPrefsPath();
