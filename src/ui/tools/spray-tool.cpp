@@ -450,21 +450,6 @@ guint32 getPickerData(Geom::IntRect area){
     return SP_RGBA32_F_COMPOSE(R, G, B, A);
 }
 
-bool isTrans(Geom::Point N){
-    gint32 rgba = getPickerData(Geom::IntRect::from_xywh(floor(N[Geom::X]), floor(N[Geom::Y]), 1, 1));
-    return SP_RGBA32_A_F(rgba)==0 || SP_RGBA32_A_F(rgba) < 1e-6;
-}
-
-bool overTrans(std::vector<Geom::Point> points){
-    for (std::vector<Geom::Point>::const_iterator k=points.begin(); k!=points.end(); ++k) {
-        Geom::Point point = *k;
-        if(isTrans(point)){
-            return true;
-        }
-    }
-    return false;
-}
-
 static void showHidden(std::vector<SPItem *> items_down){
     for (std::vector<SPItem *>::const_iterator k=items_down.begin(); k!=items_down.end(); ++k) {
         SPItem *item_hidden = *k;
