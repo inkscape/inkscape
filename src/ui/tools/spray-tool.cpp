@@ -173,16 +173,25 @@ SprayTool::SprayTool()
     , is_dilating(false)
     , has_dilated(false)
     , dilate_area(NULL)
-    , nooverlap(false)
+    , no_overlap(false)
     , picker(false)
-    , pickcenter(true)
-    , pickinversevalue(false)
-    , pickfill(false)
-    , pickstroke(false)
-    , picknooverlap(false)
-    , overtransparent(true)
-    , overnotransparent(true)
+    , pick_center(true)
+    , pick_inverse_value(false)
+    , pick_fill(false)
+    , pick_stroke(false)
+    , pick_no_overlap(false)
+    , over_transparent(true)
+    , over_no_transparent(true)
     , offset(0)
+    , pick(0)
+    , do_trace(false)
+    , pick_to_size(false)
+    , pick_to_presence(false)
+    , pick_to_color(false)
+    , pick_to_opacity(false)
+    , invert_picked(false)
+    , gamma_picked(0)
+    , rand_picked(0)
 {
 }
 
@@ -259,14 +268,14 @@ void SprayTool::setup() {
     sp_event_context_read(this, "Scale");
     sp_event_context_read(this, "offset");
     sp_event_context_read(this, "picker");
-    sp_event_context_read(this, "pickcenter");
-    sp_event_context_read(this, "pickinversevalue");
-    sp_event_context_read(this, "pickfill");
-    sp_event_context_read(this, "pickstroke");
-    sp_event_context_read(this, "picknooverlap");
-    sp_event_context_read(this, "overnotransparent");
-    sp_event_context_read(this, "overtransparent");
-    sp_event_context_read(this, "nooverlap");
+    sp_event_context_read(this, "pick_center");
+    sp_event_context_read(this, "pick_inverse_value");
+    sp_event_context_read(this, "pick_fill");
+    sp_event_context_read(this, "pick_stroke");
+    sp_event_context_read(this, "pick_no_overlap");
+    sp_event_context_read(this, "over_no_transparent");
+    sp_event_context_read(this, "over_transparent");
+    sp_event_context_read(this, "no_overlap");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/spray/selcue")) {
@@ -275,6 +284,19 @@ void SprayTool::setup() {
     if (prefs->getBool("/tools/spray/gradientdrag")) {
         this->enableGrDrag();
     }
+}
+
+void SprayTool::setCloneTilerPrefs() {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    this->do_trace = prefs->getBool("/dialogs/clonetiler/dotrace", false);
+    this->pick = prefs->getInt("/dialogs/clonetiler/pick");
+    this->pick_to_size = prefs->getBool("/dialogs/clonetiler/pick_to_size", false);
+    this->pick_to_presence = prefs->getBool("/dialogs/clonetiler/pick_to_presence", false);
+    this->pick_to_color = prefs->getBool("/dialogs/clonetiler/pick_to_color", false);
+    this->pick_to_opacity = prefs->getBool("/dialogs/clonetiler/pick_to_opacity", false);
+    this->rand_picked = 0.01 * prefs->getDoubleLimited("/dialogs/clonetiler/rand_picked", 0, 0, 100);
+    this->invert_picked = prefs->getBool("/dialogs/clonetiler/invert_picked", false);
+    this->gamma_picked = prefs->getDoubleLimited("/dialogs/clonetiler/gamma_picked", 0, -10, 10);
 }
 
 void SprayTool::set(const Inkscape::Preferences::Entry& val) {
@@ -309,25 +331,25 @@ void SprayTool::set(const Inkscape::Preferences::Entry& val) {
     } else if (path == "ratio") {
         this->ratio = CLAMP(val.getDouble(), 0.0, 0.9);
     } else if (path == "offset") {
-        this->offset = CLAMP(val.getDouble(), -1000.0, 1000.0);
+        this->offset = val.getDoubleLimited(100.0, 0, 1000.0);
+    } else if (path == "pick_center") {
+        this->pick_center =  val.getBool(true);
+    } else if (path == "pick_inverse_value") {
+        this->pick_inverse_value =  val.getBool(false);
+    } else if (path == "pick_fill") {
+        this->pick_fill =  val.getBool(false);
+    } else if (path == "pick_stroke") {
+        this->pick_stroke =  val.getBool(false);
+    } else if (path == "pick_no_overlap") {
+        this->pick_no_overlap =  val.getBool(false);
+    } else if (path == "over_no_transparent") {
+        this->over_no_transparent =  val.getBool(true);
+    } else if (path == "over_transparent") {
+        this->over_transparent =  val.getBool(true);
+    } else if (path == "no_overlap") {
+        this->no_overlap = val.getBool(false);
     } else if (path == "picker") {
-        this->picker =  val.getBool();
-    } else if (path == "pickcenter") {
-        this->pickcenter =  val.getBool();
-    } else if (path == "pickinversevalue") {
-        this->pickinversevalue =  val.getBool();
-    } else if (path == "pickfill") {
-        this->pickfill =  val.getBool();
-    } else if (path == "pickstroke") {
-        this->pickstroke =  val.getBool();
-    } else if (path == "picknooverlap") {
-        this->picknooverlap =  val.getBool();
-    } else if (path == "overnotransparent") {
-        this->overnotransparent =  val.getBool();
-    } else if (path == "overtransparent") {
-        this->overtransparent =  val.getBool();
-    } else if (path == "nooverlap") {
-        this->nooverlap = val.getBool();
+        this->picker =  val.getBool(false);
     }
 }
 
@@ -473,17 +495,26 @@ static bool fit_item(SPDesktop *desktop,
                      double &_scale,
                      double scale,
                      bool picker,
-                     bool pickcenter,
-                     bool pickinversevalue,
-                     bool pickfill,
-                     bool pickstroke,
-                     bool picknooverlap,
-                     bool overnotransparent,
-                     bool overtransparent,
-                     bool nooverlap,
+                     bool pick_center,
+                     bool pick_inverse_value,
+                     bool pick_fill,
+                     bool pick_stroke,
+                     bool pick_no_overlap,
+                     bool over_no_transparent,
+                     bool over_transparent,
+                     bool no_overlap,
                      double offset,
                      SPCSSAttr *css,
-                     bool trace_scale)
+                     bool trace_scale,
+                     int pick,
+                     bool do_trace,
+                     bool pick_to_size,
+                     bool pick_to_presence,
+                     bool pick_to_color,
+                     bool pick_to_opacity,
+                     bool invert_picked,
+                     double gamma_picked ,
+                     double rand_picked)
 {
     SPDocument *doc = item->document;
     double width = bbox->width();
@@ -496,9 +527,6 @@ static bool fit_item(SPDesktop *desktop,
     if(offset_height < 0 ){
         offset_height = 0;
     }
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool pick_to_size = prefs->getBool("/dialogs/clonetiler/pick_to_size");
-    bool do_trace = prefs->getBool("/dialogs/clonetiler/dotrace");
     if(picker && pick_to_size && !trace_scale && do_trace){
         _scale = 0.1;
     }
@@ -529,18 +557,18 @@ static bool fit_item(SPDesktop *desktop,
     if (!rect_sprayed.hasZeroArea()) {
         rgba2 = getPickerData(rect_sprayed.roundOutwards());
     }
-    if(picknooverlap){
+    if(pick_no_overlap){
         if(rgba != rgba2){
             return false;
         }
     }
-    if(!pickcenter){
+    if(!pick_center){
         rgba = rgba2;
     }
-    if(!overtransparent && (SP_RGBA32_A_F(rgba) == 0 || SP_RGBA32_A_F(rgba) < 1e-6)){
+    if(!over_transparent && (SP_RGBA32_A_F(rgba) == 0 || SP_RGBA32_A_F(rgba) < 1e-6)){
         return false;
     }
-    if(!overnotransparent && SP_RGBA32_A_F(rgba) > 0){
+    if(!over_no_transparent && SP_RGBA32_A_F(rgba) > 0){
         return false;
     }
     if(offset < 100 ){
@@ -576,61 +604,54 @@ static bool fit_item(SPDesktop *desktop,
                 (item_down->getAttribute("inkscape:spray-origin") && 
                 strcmp(item_down->getAttribute("inkscape:spray-origin"),spray_origin) == 0 ))
             {
-                if(nooverlap){
+                if(no_overlap){
                     if(!(offset_width < 0 && offset_height < 0 && std::abs(bbox_left - bbox_left_main) > std::abs(offset_width) && 
                 std::abs(bbox_top - bbox_top_main) > std::abs(offset_height))){
-                        if(!nooverlap && (picker || overtransparent || overnotransparent)){
+                        if(!no_overlap && (picker || over_transparent || over_no_transparent)){
                             showHidden(items_down);
                         }
                         return false;
                     }
-                } else if(picker || overtransparent || overnotransparent){
+                } else if(picker || over_transparent || over_no_transparent){
                     item_down->setHidden(true);
                     item_down->updateRepr();
                 }
             }
         }
     }
-    if(picker || overtransparent || overnotransparent){
-        if(!nooverlap){
+    if(picker || over_transparent || over_no_transparent){
+        if(!no_overlap){
             doc->ensureUpToDate();
             rgba = getPickerData(area);
             if (!rect_sprayed.hasZeroArea()) {
                 rgba2 = getPickerData(rect_sprayed.roundOutwards());
             }
         }
-        if(picknooverlap){
+        if(pick_no_overlap){
             if(rgba != rgba2){
-                if(!nooverlap && (picker || overtransparent || overnotransparent)){
+                if(!no_overlap && (picker || over_transparent || over_no_transparent)){
                     showHidden(items_down);
                 }
                 return false;
             }
         }
-        if(!pickcenter){
+        if(!pick_center){
             rgba = rgba2;
         }
-        int    pick = prefs->getInt("/dialogs/clonetiler/pick");
-        bool   pick_to_presence = prefs->getBool("/dialogs/clonetiler/pick_to_presence", false);
-        bool   pick_to_color = prefs->getBool("/dialogs/clonetiler/pick_to_color");
-        bool   pick_to_opacity = prefs->getBool("/dialogs/clonetiler/pick_to_opacity");
-        double rand_picked = 0.01 * prefs->getDoubleLimited("/dialogs/clonetiler/rand_picked", 0, 0, 100);
-        bool   invert_picked = prefs->getBool("/dialogs/clonetiler/invert_picked");
-        double gamma_picked = prefs->getDoubleLimited("/dialogs/clonetiler/gamma_picked", 0, -10, 10);
         double opacity = 1.0;
         gchar color_string[32]; *color_string = 0;
         float r = SP_RGBA32_R_F(rgba);
         float g = SP_RGBA32_G_F(rgba);
         float b = SP_RGBA32_B_F(rgba);
         float a = SP_RGBA32_A_F(rgba);
-        if(!overtransparent && (a == 0 || a < 1e-6)){
-            if(!nooverlap && (picker || overtransparent || overnotransparent)){
+        if(!over_transparent && (a == 0 || a < 1e-6)){
+            if(!no_overlap && (picker || over_transparent || over_no_transparent)){
                 showHidden(items_down);
             }
             return false;
         }
-        if(!overnotransparent && a > 0){
-            if(!nooverlap && (picker || overtransparent || overnotransparent)){
+        if(!over_no_transparent && a > 0){
+            if(!no_overlap && (picker || over_transparent || over_no_transparent)){
                 showHidden(items_down);
             }
             return false;
@@ -706,47 +727,58 @@ static bool fit_item(SPDesktop *desktop,
             rgba = SP_RGBA32_F_COMPOSE(r, g, b, a);
             if (pick_to_size) {
                 if(!trace_scale){
-                    if(pickinversevalue) {
+                    if(pick_inverse_value) {
                         _scale = 1.0 - val;
                     } else {
                         _scale = val;
                     }
                     if(_scale == 0.0) {
-                        if(!nooverlap && (picker || overtransparent || overnotransparent)){
+                        if(!no_overlap && (picker || over_transparent || over_no_transparent)){
                             showHidden(items_down);
                         }
                         return false;
                     }
-                    if(!fit_item(desktop,
-                         item,
-                         bbox,
-                         move,
-                         center,
-                         angle,
-                         _scale,
-                         scale,
-                         picker,
-                         pickcenter,
-                         pickinversevalue,
-                         pickfill,
-                         pickstroke,
-                         picknooverlap,
-                         overnotransparent,
-                         overtransparent,
-                         nooverlap,
-                         offset,
-                         css,
-                         true)){
-                            if(!nooverlap && (picker || overtransparent || overnotransparent)){
-                                showHidden(items_down);
-                            }
-                            return false;
-                         }
+                    if(!fit_item(desktop
+                                 , item
+                                 , bbox
+                                 , move
+                                 , center
+                                 , angle
+                                 , _scale
+                                 , scale
+                                 , picker
+                                 , pick_center
+                                 , pick_inverse_value
+                                 , pick_fill
+                                 , pick_stroke
+                                 , pick_no_overlap
+                                 , over_no_transparent
+                                 , over_transparent
+                                 , no_overlap
+                                 , offset
+                                 , css
+                                 , true
+                                 , pick
+                                 , do_trace
+                                 , pick_to_size
+                                 , pick_to_presence
+                                 , pick_to_color
+                                 , pick_to_opacity
+                                 , invert_picked
+                                 , gamma_picked
+                                 , rand_picked)
+                        )
+                    {
+                        if(!no_overlap && (picker || over_transparent || over_no_transparent)){
+                            showHidden(items_down);
+                        }
+                        return false;
+                    }
                 }
             }
 
             if (pick_to_opacity) {
-                if(pickinversevalue) {
+                if(pick_inverse_value) {
                     opacity *= 1.0 - val;
                 } else {
                     opacity *= val;
@@ -765,36 +797,43 @@ static bool fit_item(SPDesktop *desktop,
             }
             if (pick_to_color) {
                 sp_svg_write_color(color_string, sizeof(color_string), rgba);
-                if(pickfill){
+                if(pick_fill){
                     sp_repr_css_set_property(css, "fill", color_string);
                 }
-                if(pickstroke){
+                if(pick_stroke){
                     sp_repr_css_set_property(css, "stroke", color_string);
                 }
             }
             if (opacity < 1e-6) { // invisibly transparent, skip
-                if(!nooverlap && (picker || overtransparent || overnotransparent)){
+                if(!no_overlap && (picker || over_transparent || over_no_transparent)){
                     showHidden(items_down);
                 }
                 return false;
             }
         }
         if(!do_trace){
-            if (pickinversevalue) {
-                r = 1 - r;
-                g = 1 - g;
-                b = 1 - b;
+            if(!pick_center){
+                rgba = rgba2;
+            }
+            if (pick_inverse_value) {
+                r = 1 - SP_RGBA32_R_F(rgba);
+                g = 1 - SP_RGBA32_G_F(rgba);
+                b = 1 - SP_RGBA32_G_F(rgba);
+            } else {
+                r = SP_RGBA32_R_F(rgba);
+                g = SP_RGBA32_G_F(rgba);
+                b = SP_RGBA32_G_F(rgba);
             }
             rgba = SP_RGBA32_F_COMPOSE(r, g, b, a);
             sp_svg_write_color(color_string, sizeof(color_string), rgba);
-            if(pickfill){
+            if(pick_fill){
                 sp_repr_css_set_property(css, "fill", color_string);
             }
-            if(pickstroke){
+            if(pick_stroke){
                 sp_repr_css_set_property(css, "stroke", color_string);
             }
         }
-        if(!nooverlap && (picker || overtransparent || overnotransparent)){
+        if(!no_overlap && (picker || over_transparent || over_no_transparent)){
             showHidden(items_down);
         }
     }
@@ -818,18 +857,27 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                                double tilt,
                                double rotation_variation,
                                gint _distrib,
-                               bool nooverlap,
+                               bool no_overlap,
                                bool picker,
-                               bool pickcenter,
-                               bool pickinversevalue,
-                               bool pickfill,
-                               bool pickstroke,
-                               bool picknooverlap,
-                               bool overnotransparent,
-                               bool overtransparent,
+                               bool pick_center,
+                               bool pick_inverse_value,
+                               bool pick_fill,
+                               bool pick_stroke,
+                               bool pick_no_overlap,
+                               bool over_no_transparent,
+                               bool over_transparent,
                                double offset,
                                bool usepressurescale,
-                               double pressure)
+                               double pressure,
+                               int pick,
+                               bool do_trace,
+                               bool pick_to_size,
+                               bool pick_to_presence,
+                               bool pick_to_color,
+                               bool pick_to_opacity,
+                               bool invert_picked,
+                               double gamma_picked ,
+                               double rand_picked)
 {
     bool did = false;
 
@@ -867,8 +915,36 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Geom::Point center = item->getCenter();
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 SPCSSAttr *css = sp_repr_css_attr_new();
-                if(nooverlap || picker || !overtransparent || !overnotransparent){
-                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickcenter, pickinversevalue, pickfill, pickstroke, picknooverlap, overnotransparent, overtransparent, nooverlap, offset, css, false)){
+                if(no_overlap || picker || !over_transparent || !over_no_transparent){
+                    if(!fit_item(desktop
+                                 , item
+                                 , a
+                                 , move
+                                 , center
+                                 , angle
+                                 , _scale
+                                 , scale
+                                 , picker
+                                 , pick_center
+                                 , pick_inverse_value
+                                 , pick_fill
+                                 , pick_stroke
+                                 , pick_no_overlap
+                                 , over_no_transparent
+                                 , over_transparent
+                                 , no_overlap
+                                 , offset
+                                 , css
+                                 , false
+                                 , pick
+                                 , do_trace
+                                 , pick_to_size
+                                 , pick_to_presence
+                                 , pick_to_color
+                                 , pick_to_opacity
+                                 , invert_picked
+                                 , gamma_picked
+                                 , rand_picked)){
                         return false;
                     }
                 }
@@ -974,8 +1050,37 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Geom::Point center=item->getCenter();
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 SPCSSAttr *css = sp_repr_css_attr_new();
-                if(nooverlap || picker || !overtransparent || !overnotransparent){
-                    if(!fit_item(desktop, item, a, move, center, angle, _scale, scale, picker, pickcenter, pickinversevalue, pickfill, pickstroke, picknooverlap, overnotransparent, overtransparent, nooverlap, offset, css, false)){
+                if(no_overlap || picker || !over_transparent || !over_no_transparent){
+                    if(!fit_item(desktop
+                                 , item
+                                 , a
+                                 , move
+                                 , center
+                                 , angle
+                                 , _scale
+                                 , scale
+                                 , picker
+                                 , pick_center
+                                 , pick_inverse_value
+                                 , pick_fill
+                                 , pick_stroke
+                                 , pick_no_overlap
+                                 , over_no_transparent
+                                 , over_transparent
+                                 , no_overlap
+                                 , offset
+                                 , css
+                                 , true
+                                 , pick
+                                 , do_trace
+                                 , pick_to_size
+                                 , pick_to_presence
+                                 , pick_to_color
+                                 , pick_to_opacity
+                                 , invert_picked
+                                 , gamma_picked
+                                 , rand_picked))
+                    {
                         return false;
                     }
                 }
@@ -1053,7 +1158,43 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
         for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
             SPItem *item = *i;
             g_assert(item != NULL);
-            if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib, tc->nooverlap, tc->picker, tc->pickcenter, tc->pickinversevalue, tc->pickfill, tc->pickstroke, tc->picknooverlap, tc->overnotransparent, tc->overtransparent, tc->offset, tc->usepressurescale, get_pressure(tc))) {
+            if (sp_spray_recursive(desktop
+                                , selection
+                                , item
+                                , p, vector
+                                , tc->mode
+                                , radius
+                                , population
+                                , tc->scale
+                                , tc->scale_variation
+                                , reverse
+                                , move_mean
+                                , move_standard_deviation
+                                , tc->ratio
+                                , tc->tilt
+                                , tc->rotation_variation
+                                , tc->distrib
+                                , tc->no_overlap
+                                , tc->picker
+                                , tc->pick_center
+                                , tc->pick_inverse_value
+                                , tc->pick_fill
+                                , tc->pick_stroke
+                                , tc->pick_no_overlap
+                                , tc->over_no_transparent
+                                , tc->over_transparent
+                                , tc->offset
+                                , tc->usepressurescale
+                                , get_pressure(tc)
+                                , tc->pick
+                                , tc->do_trace
+                                , tc->pick_to_size
+                                , tc->pick_to_presence
+                                , tc->pick_to_color
+                                , tc->pick_to_opacity
+                                , tc->invert_picked
+                                , tc->gamma_picked
+                                , tc->rand_picked)) {
                 did = true;
             }
         }
@@ -1100,7 +1241,7 @@ bool SprayTool::root_handler(GdkEvent* event) {
                 if (Inkscape::have_viable_layer(desktop, this->message_context) == false) {
                     return TRUE;
                 }
-
+                this->setCloneTilerPrefs();
                 Geom::Point const motion_w(event->button.x, event->button.y);
                 Geom::Point const motion_dt(desktop->w2d(motion_w));
                 this->last_push = desktop->dt2doc(motion_dt);
