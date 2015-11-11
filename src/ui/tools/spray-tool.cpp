@@ -447,6 +447,12 @@ guint32 getPickerData(Geom::IntRect area){
     sp_canvas_arena_render_surface(SP_CANVAS_ARENA(desktop->getDrawing()), s, area);
     ink_cairo_surface_average_color(s, R, G, B, A);
     cairo_surface_destroy(s);
+    //this can fix the bug #1511998 if confirmed 
+    if( A == 0 || A < 1e-6){
+        R = 1;
+        G = 1;
+        B = 1;
+    }
     return SP_RGBA32_F_COMPOSE(R, G, B, A);
 }
 
@@ -457,7 +463,7 @@ static void showHidden(std::vector<SPItem *> items_down){
         item_hidden->updateRepr();
     }
 }
-
+//todo: maybe move same parameter to preferences
 static bool fit_item(SPDesktop *desktop,
                      SPItem *item,
                      Geom::OptRect bbox,
@@ -482,18 +488,21 @@ static bool fit_item(SPDesktop *desktop,
     SPDocument *doc = item->document;
     double width = bbox->width();
     double height = bbox->height();
-    double size = std::min(width,height);
-    double offset_min = (offset * size)/100.0 - (size);
-    if(offset_min < 0 ){
-        offset_min = 0;
+    double offset_width = (offset * width)/100.0 - (width);
+    if(offset_width < 0 ){
+        offset_width = 0;
+    }
+    double offset_height = (offset * height)/100.0 - (height);
+    if(offset_height < 0 ){
+        offset_height = 0;
     }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool pick_to_size = prefs->getBool("/dialogs/clonetiler/pick_to_size");
-    bool trace = prefs->getBool("/dialogs/clonetiler/dotrace");
-    if(picker && pick_to_size && !trace_scale && trace){
+    bool do_trace = prefs->getBool("/dialogs/clonetiler/dotrace");
+    if(picker && pick_to_size && !trace_scale && do_trace){
         _scale = 0.1;
     }
-    Geom::OptRect bbox_procesed = Geom::Rect(Geom::Point(bbox->left() - offset_min, bbox->top() - offset_min),Geom::Point(bbox->right() + offset_min, bbox->bottom() + offset_min));
+    Geom::OptRect bbox_procesed = Geom::Rect(Geom::Point(bbox->left() - offset_width, bbox->top() - offset_height),Geom::Point(bbox->right() + offset_width, bbox->bottom() + offset_height));
     Geom::Path path;
     path.start(Geom::Point(bbox_procesed->left(), bbox_procesed->top()));
     path.appendNew<Geom::LineSegment>(Geom::Point(bbox_procesed->right(), bbox_procesed->top()));
@@ -507,35 +516,39 @@ static bool fit_item(SPDesktop *desktop,
     path *= desktop->doc2dt();
     bbox_procesed = path.boundsFast();
     double bbox_left_main = bbox_procesed->left();
+    double bbox_right_main = bbox_procesed->right();
     double bbox_top_main = bbox_procesed->top();
+    double bbox_bottom_main = bbox_procesed->bottom();
     double width_transformed = bbox_procesed->width();
     double height_transformed = bbox_procesed->height();
     Geom::Point mid_point = desktop->d2w(bbox_procesed->midpoint());
-    Geom::Rect rect_sprayed(mid_point, mid_point);
-    rect_sprayed.expandBy(width_transformed/2.0, height_transformed/2.0);
     Geom::IntRect area = Geom::IntRect::from_xywh(floor(mid_point[Geom::X]), floor(mid_point[Geom::Y]), 1, 1);
-    guint32 rgba;
-    if(picknooverlap && !rect_sprayed.hasZeroArea()){
-        if(getPickerData(area) != getPickerData(rect_sprayed.roundOutwards())){
+    guint32 rgba = getPickerData(area);
+    guint32 rgba2 = 0xffffff00;
+    Geom::Rect rect_sprayed(desktop->d2w(Geom::Point(bbox_left_main,bbox_top_main)), desktop->d2w(Geom::Point(bbox_right_main,bbox_bottom_main)));
+    if (!rect_sprayed.hasZeroArea()) {
+        rgba2 = getPickerData(rect_sprayed.roundOutwards());
+    }
+    if(picknooverlap){
+        if(rgba != rgba2){
             return false;
         }
     }
-    if (!rect_sprayed.hasZeroArea() && !pickcenter) {
-        rgba = getPickerData(rect_sprayed.roundOutwards());
-    } else {
-        rgba = getPickerData(area);
+    if(!pickcenter){
+        rgba = rgba2;
     }
-    if(nooverlap && !overtransparent && (SP_RGBA32_A_F(rgba)==0 || SP_RGBA32_A_F(rgba) < 1e-6)){
+    if(!overtransparent && (SP_RGBA32_A_F(rgba) == 0 || SP_RGBA32_A_F(rgba) < 1e-6)){
         return false;
     }
-    if(nooverlap && !overnotransparent && SP_RGBA32_A_F(rgba)>0){
+    if(!overnotransparent && SP_RGBA32_A_F(rgba) > 0){
         return false;
     }
-    size = std::min(width_transformed,height_transformed);
     if(offset < 100 ){
-        offset_min = ((99.0 - offset) * size)/100.0 - size;
+        offset_width = ((99.0 - offset) * width_transformed)/100.0 - width_transformed;
+        offset_height = ((99.0 - offset) * height_transformed)/100.0 - height_transformed;
     } else {
-        offset_min = 0;
+        offset_width = 0;
+        offset_height = 0;
     }
     std::vector<SPItem*> items_down = desktop->getDocument()->getItemsPartiallyInBox(desktop->dkey, *bbox_procesed);
     Inkscape::Selection *selection = desktop->getSelection();
@@ -564,8 +577,11 @@ static bool fit_item(SPDesktop *desktop,
                 strcmp(item_down->getAttribute("inkscape:spray-origin"),spray_origin) == 0 ))
             {
                 if(nooverlap){
-                    if(!(offset_min < 0 && std::abs(bbox_left - bbox_left_main) > std::abs(offset_min) && 
-                std::abs(bbox_top - bbox_top_main) > std::abs(offset_min))){
+                    if(!(offset_width < 0 && offset_height < 0 && std::abs(bbox_left - bbox_left_main) > std::abs(offset_width) && 
+                std::abs(bbox_top - bbox_top_main) > std::abs(offset_height))){
+                        if(!nooverlap && (picker || overtransparent || overnotransparent)){
+                            showHidden(items_down);
+                        }
                         return false;
                     }
                 } else if(picker || overtransparent || overnotransparent){
@@ -578,19 +594,21 @@ static bool fit_item(SPDesktop *desktop,
     if(picker || overtransparent || overnotransparent){
         if(!nooverlap){
             doc->ensureUpToDate();
-            if (!rect_sprayed.hasZeroArea() && !pickcenter) {
-                rgba = getPickerData(rect_sprayed.roundOutwards());
-            } else {
-                rgba = getPickerData(area);
+            rgba = getPickerData(area);
+            if (!rect_sprayed.hasZeroArea()) {
+                rgba2 = getPickerData(rect_sprayed.roundOutwards());
             }
         }
-        if(picknooverlap && !rect_sprayed.hasZeroArea()){
-            if(getPickerData(area) != getPickerData(rect_sprayed.roundOutwards())){
+        if(picknooverlap){
+            if(rgba != rgba2){
                 if(!nooverlap && (picker || overtransparent || overnotransparent)){
                     showHidden(items_down);
                 }
                 return false;
             }
+        }
+        if(!pickcenter){
+            rgba = rgba2;
         }
         int    pick = prefs->getInt("/dialogs/clonetiler/pick");
         bool   pick_to_presence = prefs->getBool("/dialogs/clonetiler/pick_to_presence", false);
@@ -605,12 +623,6 @@ static bool fit_item(SPDesktop *desktop,
         float g = SP_RGBA32_G_F(rgba);
         float b = SP_RGBA32_B_F(rgba);
         float a = SP_RGBA32_A_F(rgba);
-        //this can fix the bug #1511998 if confirmed 
-        if( a == 0 || a < 1e-6){
-            r = 1;
-            g = 1;
-            b = 1;
-        }
         if(!overtransparent && (a == 0 || a < 1e-6)){
             if(!nooverlap && (picker || overtransparent || overnotransparent)){
                 showHidden(items_down);
@@ -624,7 +636,7 @@ static bool fit_item(SPDesktop *desktop,
             return false;
         }
 
-        if(picker && trace){
+        if(picker && do_trace){
             float hsl[3];
             sp_color_rgb_to_hsl_floatv (hsl, r, g, b);
 
@@ -767,7 +779,7 @@ static bool fit_item(SPDesktop *desktop,
                 return false;
             }
         }
-        if(!trace){
+        if(!do_trace){
             if (pickinversevalue) {
                 r = 1 - r;
                 g = 1 - g;
