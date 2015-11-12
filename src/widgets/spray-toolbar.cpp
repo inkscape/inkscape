@@ -100,7 +100,6 @@ static void sp_stb_sensitivize( GObject *tbl )
 }
 
 static void sp_spray_erase_sensitivize( GObject *tbl, bool sensitive){
-    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "rotate") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "no_overlap") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "over_no_transparent") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "over_transparent") ), sensitive );
@@ -111,6 +110,7 @@ static void sp_spray_erase_sensitivize( GObject *tbl, bool sensitive){
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "pick_center") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "picker") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "offset") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "spray_rotation") ), sensitive );
     sp_stb_sensitivize( tbl );
 }
 
