@@ -586,6 +586,7 @@ static bool fit_item(SPDesktop *desktop,
         return false;
     }
     std::vector<SPItem*> const items_selected(selection->itemList());
+    std::vector<SPItem*> items_down_erased;
     for (std::vector<SPItem*>::const_iterator i=items_down.begin(); i!=items_down.end(); i++) {
         SPItem *item_down = *i;
         Geom::OptRect bbox_down = item_down->documentVisualBounds();
@@ -594,6 +595,7 @@ static bool fit_item(SPDesktop *desktop,
         double bbox_left = bbox_down->left();
         double bbox_top = bbox_down->top();
         gchar const * item_down_sharp = g_strdup_printf("#%s", item_down->getId());
+        items_down_erased.push_back(item_down);
         for (std::vector<SPItem*>::const_iterator j=items_selected.begin(); j!=items_selected.end(); j++) {
             SPItem *item_selected = *j;
             gchar const * spray_origin;
@@ -607,8 +609,10 @@ static bool fit_item(SPDesktop *desktop,
                 strcmp(item_down->getAttribute("inkscape:spray-origin"),spray_origin) == 0 ))
             {
                 if(mode == SPRAY_MODE_ERASER){
-                    if(strcmp(item_down_sharp, spray_origin) != 0 ){
+                    if(strcmp(item_down_sharp, spray_origin) != 0 && !selection->includes(item_down) ){
                         item_down->deleteObject();
+                        items_down_erased.pop_back();
+                        break;
                     }
                 }else if(no_overlap){
                     if(!(offset_width < 0 && offset_height < 0 && std::abs(bbox_left - bbox_left_main) > std::abs(offset_width) && 
@@ -627,7 +631,7 @@ static bool fit_item(SPDesktop *desktop,
     }
     if(mode == SPRAY_MODE_ERASER){
         if(!no_overlap && (picker || over_transparent || over_no_transparent)){
-            showHidden(items_down);
+            showHidden(items_down_erased);
         }
         return false;
     }
