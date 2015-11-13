@@ -206,6 +206,18 @@ void sp_bspline_do_effect(SPCurve *curve, double helper_size)
         Geom::D2<Geom::SBasis> sbasis_helper;
         Geom::CubicBezier const *cubic = NULL;
         curve_n->moveto(curve_it1->initialPoint());
+        if (path_it->closed()) {
+          const Geom::Curve &closingline = path_it->back_closed(); 
+          // the closing line segment is always of type 
+          // Geom::LineSegment.
+          if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
+            // closingline.isDegenerate() did not work, because it only checks for
+            // *exact* zero length, which goes wrong for relative coordinates and
+            // rounding errors...
+            // the closing line segment has zero-length. So stop before that one!
+            curve_endit = path_it->end_open();
+          }
+        }
         while (curve_it1 != curve_endit) {
             SPCurve *in = new SPCurve();
             in->moveto(curve_it1->initialPoint());
@@ -361,6 +373,18 @@ void LPEBSpline::doBSplineFromWidget(SPCurve *curve, double weight_ammount)
         Geom::D2<Geom::SBasis> sbasis_out;
         Geom::CubicBezier const *cubic = NULL;
         curve_n->moveto(curve_it1->initialPoint());
+        if (path_it->closed()) {
+          const Geom::Curve &closingline = path_it->back_closed(); 
+          // the closing line segment is always of type 
+          // Geom::LineSegment.
+          if (are_near(closingline.initialPoint(), closingline.finalPoint())) {
+            // closingline.isDegenerate() did not work, because it only checks for
+            // *exact* zero length, which goes wrong for relative coordinates and
+            // rounding errors...
+            // the closing line segment has zero-length. So stop before that one!
+            curve_endit = path_it->end_open();
+          }
+        }
         while (curve_it1 != curve_endit) {
             SPCurve *in = new SPCurve();
             in->moveto(curve_it1->initialPoint());
