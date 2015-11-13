@@ -1077,7 +1077,7 @@ sp_tweak_dilate (TweakTool *tc, Geom::Point event_p, Geom::Point p, Geom::Point 
     double color_force = MIN(sqrt(path_force)/20.0, 1);
 
     std::vector<SPItem*> items=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i){
         SPItem *item = *i;
 
         if (is_color_mode (tc->mode)) {

@@ -71,14 +71,14 @@ sp_selected_path_combine(SPDesktop *desktop)
     items = sp_degroup_list (items); // descend into any groups in selection
 
     std::vector<SPItem*> to_paths;
-    for (std::vector<SPItem*>::const_reverse_iterator i = items.rbegin(); i != items.rend(); i++) {
+    for (std::vector<SPItem*>::const_reverse_iterator i = items.rbegin(); i != items.rend(); ++i) {
         if (!dynamic_cast<SPPath *>(*i) && !dynamic_cast<SPGroup *>(*i)) {
             to_paths.push_back(*i);
         }
     }
     std::vector<Inkscape::XML::Node*> converted;
     bool did = sp_item_list_to_curves(to_paths, items, converted);
-    for (std::vector<Inkscape::XML::Node*>::const_iterator i = converted.begin(); i != converted.end(); i++)
+    for (std::vector<Inkscape::XML::Node*>::const_iterator i = converted.begin(); i != converted.end(); ++i)
         items.push_back((SPItem*)doc->getObjectByRepr(*i));
 
     items = sp_degroup_list (items); // converting to path may have added more groups, descend again
@@ -101,7 +101,7 @@ sp_selected_path_combine(SPDesktop *desktop)
         selection->clear();
     }
 
-    for (std::vector<SPItem*>::const_reverse_iterator i = items.rbegin(); i != items.rend(); i++){
+    for (std::vector<SPItem*>::const_reverse_iterator i = items.rbegin(); i != items.rend(); ++i){
 
         SPItem *item = *i;
         SPPath *path = dynamic_cast<SPPath *>(item);
@@ -204,7 +204,7 @@ sp_selected_path_break_apart(SPDesktop *desktop)
     bool did = false;
 
     std::vector<SPItem*> itemlist(selection->itemList());
-    for (std::vector<SPItem*>::const_iterator i = itemlist.begin(); i != itemlist.end(); i++){
+    for (std::vector<SPItem*>::const_iterator i = itemlist.begin(); i != itemlist.end(); ++i){
 
         SPItem *item = *i;
 
@@ -354,7 +354,7 @@ bool
 sp_item_list_to_curves(const std::vector<SPItem*> &items, std::vector<SPItem*>& selected, std::vector<Inkscape::XML::Node*> &to_select, bool skip_all_lpeitems)
 {
     bool did = false;
-    for (std::vector<SPItem*>::const_iterator i = items.begin(); i != items.end(); i++){
+    for (std::vector<SPItem*>::const_iterator i = items.begin(); i != items.end(); ++i){
         SPItem *item = *i;
         g_assert(item != NULL);
         SPDocument *document = item->document;
@@ -621,7 +621,7 @@ sp_selected_path_reverse(SPDesktop *desktop)
     bool did = false;
     desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Reversing paths..."));
 
-    for (std::vector<SPItem*>::const_iterator i = items.begin(); i != items.end(); i++){
+    for (std::vector<SPItem*>::const_iterator i = items.begin(); i != items.end(); ++i){
 
         SPPath *path = dynamic_cast<SPPath *>(*i);
         if (!path) {

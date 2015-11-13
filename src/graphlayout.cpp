@@ -89,7 +89,7 @@ struct CheckProgress : TestConvergence {
  * not connectors in filtered
  */
 void filterConnectors(std::vector<SPItem*> const &items, list<SPItem *> &filtered) {
-    for(std::vector<SPItem*>::const_iterator i = items.begin();i !=items.end(); i++){
+    for(std::vector<SPItem*>::const_iterator i = items.begin();i !=items.end(); ++i){
         SPItem *item = *i;
         if(!isConnector(item)) {
             filtered.push_back(item);

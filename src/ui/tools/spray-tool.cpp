@@ -999,7 +999,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
         int i=1;
         std::vector<SPItem*> items=selection->itemList();
-        for(std::vector<SPItem*>::const_iterator it=items.begin();it!=items.end();it++){
+        for(std::vector<SPItem*>::const_iterator it=items.begin();it!=items.end(); ++it){
             SPItem *item1 = *it;
             if (i == 1) {
                 parent_item = item1;
@@ -1168,13 +1168,13 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
     {
         std::vector<SPItem*> const items(selection->itemList());
 
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i){
             SPItem *item = *i;
             g_assert(item != NULL);
             sp_object_ref(item);
         }
 
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i){
             SPItem *item = *i;
             g_assert(item != NULL);
             if (sp_spray_recursive(desktop
@@ -1218,7 +1218,7 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
             }
         }
 
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i){
             SPItem *item = *i;
             g_assert(item != NULL);
             sp_object_unref(item);
