@@ -36,10 +36,10 @@ static int global_counter = 0;
 
 /* Constructor/destructor for the internal class */
 
-Persp3DImpl::Persp3DImpl() {
-    tmat = Proj::TransfMat3x4 ();
-    document = NULL;
-
+Persp3DImpl::Persp3DImpl() :
+    tmat (Proj::TransfMat3x4 ()),
+    document (NULL)
+{
     my_counter = global_counter++;
 }
 
