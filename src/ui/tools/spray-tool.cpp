@@ -559,21 +559,27 @@ static bool fit_item(SPDesktop *desktop,
     if (!rect_sprayed.hasZeroArea()) {
         rgba2 = getPickerData(rect_sprayed.roundOutwards());
     }
-    if(pick_no_overlap){
-        if(rgba != rgba2){
+    if(pick_no_overlap) {
+        if(rgba != rgba2) {
+            if(mode != SPRAY_MODE_ERASER) {
+                return false;
+            }
+        }
+    }
+    if(!pick_center) {
+        rgba = rgba2;
+    }
+    if(!over_transparent && (SP_RGBA32_A_F(rgba) == 0 || SP_RGBA32_A_F(rgba) < 1e-6)) {
+        if(mode != SPRAY_MODE_ERASER) {
             return false;
         }
     }
-    if(!pick_center){
-        rgba = rgba2;
+    if(!over_no_transparent && SP_RGBA32_A_F(rgba) > 0) {
+        if(mode != SPRAY_MODE_ERASER) {
+            return false;
+        }
     }
-    if(!over_transparent && (SP_RGBA32_A_F(rgba) == 0 || SP_RGBA32_A_F(rgba) < 1e-6)){
-        return false;
-    }
-    if(!over_no_transparent && SP_RGBA32_A_F(rgba) > 0){
-        return false;
-    }
-    if(offset < 100 ){
+    if(offset < 100 ) {
         offset_width = ((99.0 - offset) * width_transformed)/100.0 - width_transformed;
         offset_height = ((99.0 - offset) * height_transformed)/100.0 - height_transformed;
     } else {
@@ -608,13 +614,13 @@ static bool fit_item(SPDesktop *desktop,
                 (item_down->getAttribute("inkscape:spray-origin") && 
                 strcmp(item_down->getAttribute("inkscape:spray-origin"),spray_origin) == 0 ))
             {
-                if(mode == SPRAY_MODE_ERASER){
+                if(mode == SPRAY_MODE_ERASER) {
                     if(strcmp(item_down_sharp, spray_origin) != 0 && !selection->includes(item_down) ){
                         item_down->deleteObject();
                         items_down_erased.pop_back();
                         break;
                     }
-                }else if(no_overlap){
+                } else if(no_overlap) {
                     if(!(offset_width < 0 && offset_height < 0 && std::abs(bbox_left - bbox_left_main) > std::abs(offset_width) && 
                 std::abs(bbox_top - bbox_top_main) > std::abs(offset_height))){
                         if(!no_overlap && (picker || over_transparent || over_no_transparent)){
@@ -622,7 +628,7 @@ static bool fit_item(SPDesktop *desktop,
                         }
                         return false;
                     }
-                } else if(picker || over_transparent || over_no_transparent){
+                } else if(picker || over_transparent || over_no_transparent) {
                     item_down->setHidden(true);
                     item_down->updateRepr();
                 }
