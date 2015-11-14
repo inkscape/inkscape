@@ -594,13 +594,15 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
     
     /* Offset */
     {
+        gchar const* labels[] = {_("(minimum offset)"), 0, 0, 0, _("(default)"), 0, 0, _("(maximum offset)")};
+        gdouble values[] = {0, 25, 50, 75, 100, 150, 200, 1000};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayToolOffsetAction",
                                          _("Offset %"), _("Offset %:"),
                                          _("Increase to segregate objects more (value in percent)"),
                                          "/tools/spray/offset", 100,
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
-                                         0, 10000, 1, 4,
-                                         0, 0, 0,
+                                         0, 1000, 1, 4,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_spray_offset_value_changed, NULL, 0 , 0);
         g_object_set_data( holder, "offset", eact );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
