@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-11-14 10:56+0300\n"
-"PO-Revision-Date: 2015-11-14 12:30+0300\n"
+"PO-Revision-Date: 2015-11-14 12:33+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -5832,7 +5832,6 @@ msgstr "Встроить шрифты"
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:377
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
-#, fuzzy
 msgid "Convert text to paths"
 msgstr "Текст в кривые Безье"
 
