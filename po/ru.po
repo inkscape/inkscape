@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-11-14 10:56+0300\n"
-"PO-Revision-Date: 2015-11-14 12:33+0300\n"
+"POT-Creation-Date: 2015-11-14 13:55+0300\n"
+"PO-Revision-Date: 2015-11-14 14:16+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -3586,7 +3586,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:258 ../share/symbols/symbols.h:259
 msgctxt "Symbol"
 msgid "Parking"
-msgstr ""
+msgstr "Парковка"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
@@ -5856,9 +5856,8 @@ msgstr "Разрешение для растеризации (dpi):"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:340
 #: ../src/extension/internal/cairo-ps-out.cpp:382
-#, fuzzy
 msgid "Output page size"
-msgstr "Смена формата страницы"
+msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:341
 #: ../src/extension/internal/cairo-ps-out.cpp:383
@@ -5927,9 +5926,8 @@ msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:257
-#, fuzzy
 msgid "Output page size:"
-msgstr "Смена формата страницы"
+msgstr ""
 
 #: ../src/extension/internal/cdr-input.cpp:116
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:92
@@ -5947,9 +5945,8 @@ msgstr "из %i"
 
 #: ../src/extension/internal/cdr-input.cpp:165
 #: ../src/extension/internal/vsd-input.cpp:165
-#, fuzzy
 msgid "Page Selector"
-msgstr "Выделитель"
+msgstr "Выбор страницы"
 
 #: ../src/extension/internal/cdr-input.cpp:300
 #, fuzzy
@@ -8978,15 +8975,15 @@ msgstr "<b>Опорная точка</b> радиального градиент
 
 #: ../src/gradient-drag.cpp:106 ../src/ui/tools/mesh-tool.cpp:93
 msgid "Mesh gradient <b>corner</b>"
-msgstr "<b>Угол</b> сеточного градиента"
+msgstr "<b>Угол</b> сетчатого градиента"
 
 #: ../src/gradient-drag.cpp:107 ../src/ui/tools/mesh-tool.cpp:94
 msgid "Mesh gradient <b>handle</b>"
-msgstr "<b>Рычаг</b> сеточного градиента"
+msgstr "<b>Рычаг</b> сетчатого градиента"
 
 #: ../src/gradient-drag.cpp:108 ../src/ui/tools/mesh-tool.cpp:95
 msgid "Mesh gradient <b>tensor</b>"
-msgstr "<b>Тензор</b> сеточного градиента"
+msgstr "<b>Тензор</b> сетчатого градиента"
 
 #: ../src/gradient-drag.cpp:567
 msgid "Added patch row or column"
@@ -10212,9 +10209,8 @@ msgid "Use knots distance instead radius"
 msgstr ""
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
-#, fuzzy
 msgid "Method:"
-msgstr "Режим"
+msgstr "Способ:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
 #, fuzzy
@@ -11348,9 +11344,8 @@ msgstr "Извлечь"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-roughen.cpp:48
-#, fuzzy
 msgid "Method"
-msgstr "Режим"
+msgstr "Способ"
 
 #: ../src/live_effects/lpe-roughen.cpp:48
 #, fuzzy
@@ -11932,9 +11927,8 @@ msgid "Reset"
 msgstr "Сбросить "
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
-#, fuzzy
 msgid "N_r of generations:"
-msgstr "Количество поколений"
+msgstr "Коли_чество поколений:"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:46
 msgid "Depth of the recursion --- keep low!!"
@@ -13858,9 +13852,9 @@ msgid "..."
 msgstr "..."
 
 #: ../src/sp-use.cpp:266
-#, fuzzy, c-format
+#, c-format
 msgid "of: %s"
-msgstr "Ошибка: %s"
+msgstr "из: %s"
 
 #: ../src/splivarot.cpp:71 ../src/splivarot.cpp:77
 msgid "Union"
@@ -17856,9 +17850,8 @@ msgid "Tai Viet"
 msgstr "Тай Вьет"
 
 #: ../src/ui/dialog/glyphs.cpp:285
-#, fuzzy
 msgid "Meetei Mayek"
-msgstr "Слой удалён"
+msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:286
 msgid "Hangul Syllables"
@@ -19053,7 +19046,6 @@ msgid "Large"
 msgstr "Большие"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
-#, fuzzy
 msgctxt "Icon size"
 msgid "Small"
 msgstr "Маленькие"
@@ -19257,7 +19249,6 @@ msgid "Aggressive"
 msgstr "Настойчивый"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:689
-#, fuzzy
 msgctxt "Window size"
 msgid "Small"
 msgstr "Маленькие"
@@ -20693,10 +20684,9 @@ msgid "Rendering _cache size:"
 msgstr "_Размер кэша для рендеринга:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1420
-#, fuzzy
 msgctxt "mebibyte (2^20 bytes) abbreviation"
 msgid "MiB"
-msgstr "Мин:"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1420
 msgid ""
@@ -24479,18 +24469,16 @@ msgstr "Выберите режим инструмента из его конт�
 
 #. create the knots
 #: ../src/ui/tools/measure-tool.cpp:338
-#, fuzzy
 msgid "Measure start"
-msgstr "Измерить контур"
+msgstr "Начало измерения"
 
 #: ../src/ui/tools/measure-tool.cpp:344
-#, fuzzy
 msgid "Measure end"
-msgstr "Измерить контур"
+msgstr "Конец измерения"
 
 #: ../src/ui/tools/measure-tool.cpp:719 ../share/extensions/measure.inx.h:2
 msgid "Measure"
-msgstr "Измерить контур"
+msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:724
 msgid "Base"
@@ -24498,16 +24486,15 @@ msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:733
 msgid "Add guides from measure tool"
-msgstr ""
+msgstr "Направляющие из измерения"
 
 #: ../src/ui/tools/measure-tool.cpp:753
-#, fuzzy
 msgid "Convert measure to items"
-msgstr "Оконтуривание обводки"
+msgstr "Объект из измерения"
 
 #: ../src/ui/tools/measure-tool.cpp:791
 msgid "Add global measure line"
-msgstr ""
+msgstr "Создание размерной линии"
 
 #: ../src/ui/tools/measure-tool.cpp:1221 ../src/ui/tools/measure-tool.cpp:1223
 #, fuzzy, c-format
@@ -25497,7 +25484,6 @@ msgid "Capitals"
 msgstr "Больница"
 
 #: ../src/ui/widget/font-variants.cpp:51
-#, fuzzy
 msgctxt "Font variant"
 msgid "Small"
 msgstr "Маленькие"
@@ -26149,14 +26135,12 @@ msgid "<b>M</b>"
 msgstr "<b>Л:</b>"
 
 #: ../src/ui/widget/selected-style.cpp:221
-#, fuzzy
 msgid "Mesh gradient fill"
-msgstr "Линейная градиентная заливка"
+msgstr "Заливка сетчатого градиента"
 
 #: ../src/ui/widget/selected-style.cpp:221
-#, fuzzy
 msgid "Mesh gradient stroke"
-msgstr "Линейная градиентная обводка"
+msgstr "Обводка сетчатого градиента"
 
 #: ../src/ui/widget/selected-style.cpp:229
 msgid "Different"
@@ -26712,7 +26696,6 @@ msgid "Unhide all objects in all layers"
 msgstr "Раскрыть все объекты во всех слоях"
 
 #: ../src/verbs.cpp:2397
-#, fuzzy
 msgctxt "Verb"
 msgid "None"
 msgstr "Нет"
@@ -27904,7 +27887,7 @@ msgstr "Создавать и править градиенты"
 #: ../src/verbs.cpp:2726
 msgctxt "ContextVerb"
 msgid "Mesh"
-msgstr ""
+msgstr "Сетка"
 
 #: ../src/verbs.cpp:2727
 #, fuzzy
@@ -28090,9 +28073,8 @@ msgid "Open Preferences for the Gradient tool"
 msgstr "Открыть окно параметров инструмента для градиентной заливки"
 
 #: ../src/verbs.cpp:2773
-#, fuzzy
 msgid "Mesh Preferences"
-msgstr "Параметры Ластика"
+msgstr "Параметры сетчатого градиента"
 
 #: ../src/verbs.cpp:2774
 #, fuzzy
@@ -29042,8 +29024,8 @@ msgstr "(волосок)"
 #: ../src/widgets/spray-toolbar.cpp:286 ../src/widgets/spray-toolbar.cpp:315
 #: ../src/widgets/spray-toolbar.cpp:331 ../src/widgets/spray-toolbar.cpp:400
 #: ../src/widgets/spray-toolbar.cpp:430 ../src/widgets/spray-toolbar.cpp:448
-#: ../src/widgets/tweak-toolbar.cpp:125 ../src/widgets/tweak-toolbar.cpp:142
-#: ../src/widgets/tweak-toolbar.cpp:350
+#: ../src/widgets/spray-toolbar.cpp:597 ../src/widgets/tweak-toolbar.cpp:125
+#: ../src/widgets/tweak-toolbar.cpp:142 ../src/widgets/tweak-toolbar.cpp:350
 msgid "(default)"
 msgstr "(по умолчанию)"
 
@@ -30059,7 +30041,7 @@ msgstr "обычная"
 
 #: ../src/widgets/mesh-toolbar.cpp:377
 msgid "Create mesh gradient"
-msgstr "Создать сеточный градиент"
+msgstr "Создать сетчатый градиент"
 
 #: ../src/widgets/mesh-toolbar.cpp:381
 msgid "conical"
@@ -30407,7 +30389,7 @@ msgstr "Радиальный градиент"
 
 #: ../src/widgets/paint-selector.cpp:228
 msgid "Mesh gradient"
-msgstr "Сеточный градиент"
+msgstr "Сетчатый градиент"
 
 #: ../src/widgets/paint-selector.cpp:235
 msgid "Unset paint (make it undefined so it can be inherited)"
@@ -30462,7 +30444,7 @@ msgstr "<b>Радиальный градиент</b>"
 
 #: ../src/widgets/paint-selector.cpp:799
 msgid "<b>Mesh gradient</b>"
-msgstr "<b>Сеточный градиент</b>"
+msgstr "<b>Сетчатый градиент</b>"
 
 #: ../src/widgets/paint-selector.cpp:1098
 msgid ""
@@ -31160,14 +31142,12 @@ msgid "Inversed pick value, retaining color in advanced trace mode"
 msgstr ""
 
 #: ../src/widgets/spray-toolbar.cpp:520 ../src/widgets/spray-toolbar.cpp:521
-#, fuzzy
 msgid "Apply picked color to fill"
-msgstr "Заливка последним выбранным цветом"
+msgstr "Применить снятый цвет к заливке"
 
 #: ../src/widgets/spray-toolbar.cpp:533 ../src/widgets/spray-toolbar.cpp:534
-#, fuzzy
 msgid "Apply picked color to stroke"
-msgstr "Обводка последним выбранным цветом"
+msgstr "Применить снятый цвет к обводке"
 
 #: ../src/widgets/spray-toolbar.cpp:546 ../src/widgets/spray-toolbar.cpp:547
 msgid "No overlap between colors"
@@ -31175,30 +31155,35 @@ msgstr ""
 
 #: ../src/widgets/spray-toolbar.cpp:559 ../src/widgets/spray-toolbar.cpp:560
 msgid "Apply over transparent areas"
-msgstr ""
+msgstr "Распылять над прозрачными областями"
 
 #: ../src/widgets/spray-toolbar.cpp:572 ../src/widgets/spray-toolbar.cpp:573
 msgid "Apply over no transparent areas"
-msgstr ""
+msgstr "Распылять над непрозрачными областями"
 
 #: ../src/widgets/spray-toolbar.cpp:585 ../src/widgets/spray-toolbar.cpp:586
-#, fuzzy
 msgid "Prevent overlapping objects"
-msgstr "Выберите объект."
+msgstr "Исключить перекрывание объектами друг друга"
 
-#: ../src/widgets/spray-toolbar.cpp:598
-#, fuzzy
+#: ../src/widgets/spray-toolbar.cpp:597
+msgid "(minimum offset)"
+msgstr "(минимальное смещение)"
+
+#: ../src/widgets/spray-toolbar.cpp:597
+msgid "(maximum offset)"
+msgstr "(максимальное смещение)"
+
+#: ../src/widgets/spray-toolbar.cpp:600
 msgid "Offset %"
-msgstr "Смещение текстовой метки (px):"
+msgstr "Смещение %"
 
-#: ../src/widgets/spray-toolbar.cpp:598
-#, fuzzy
+#: ../src/widgets/spray-toolbar.cpp:600
 msgid "Offset %:"
-msgstr "Смещение:"
+msgstr "Смещение %:"
 
-#: ../src/widgets/spray-toolbar.cpp:599
+#: ../src/widgets/spray-toolbar.cpp:601
 msgid "Increase to segregate objects more (value in percent)"
-msgstr ""
+msgstr "Чем больше значение, тем дальше объекты друг от друга"
 
 #: ../src/widgets/star-toolbar.cpp:103
 msgid "Star: Change number of corners"
@@ -31471,14 +31456,12 @@ msgid "Set stroke style"
 msgstr "Установка стиля обводки"
 
 #: ../src/widgets/stroke-style.cpp:1206
-#, fuzzy
 msgid "Set marker color"
-msgstr "Установка цвета обводки"
+msgstr "Установка цвета маркера"
 
 #: ../src/widgets/swatch-selector.cpp:127
-#, fuzzy
 msgid "Change swatch color"
-msgstr "Смена цвета опорной точки градиента"
+msgstr "Смена цвета образца"
 
 #: ../src/widgets/text-toolbar.cpp:173
 msgid "Text: Change font family"
@@ -33718,7 +33701,7 @@ msgstr "Импорт DXF"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Method of Scaling:"
-msgstr ""
+msgstr "Способ масштабирования:"
 
 #: ../share/extensions/dxf_input.inx.h:4
 #, fuzzy
@@ -34066,9 +34049,8 @@ msgid "Page orientation:"
 msgstr "Ориентация холста:"
 
 #: ../share/extensions/empty_page.inx.h:4
-#, fuzzy
 msgid "Page background:"
-msgstr "crane background"
+msgstr "Фон страницы:"
 
 #: ../share/extensions/empty_video.inx.h:1
 #, fuzzy
@@ -34786,9 +34768,8 @@ msgid "Graffiti"
 msgstr "Граффити"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:2
-#, fuzzy
 msgid "Maximum segment length:"
-msgstr "Макс. длина сегмента (px)"
+msgstr "Макс. длина сегмента:"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:3
 #, fuzzy
@@ -36666,9 +36647,8 @@ msgid "N-up layout"
 msgstr ""
 
 #: ../share/extensions/layout_nup.inx.h:2
-#, fuzzy
 msgid "Page dimensions"
-msgstr "Размеры"
+msgstr "Размер страницы"
 
 #: ../share/extensions/layout_nup.inx.h:4
 #, fuzzy
@@ -36701,9 +36681,8 @@ msgid "Right:"
 msgstr "Правое:"
 
 #: ../share/extensions/layout_nup.inx.h:10
-#, fuzzy
 msgid "Page margins"
-msgstr "Левое поле"
+msgstr "Поля страницы"
 
 #: ../share/extensions/layout_nup.inx.h:11
 #, fuzzy
@@ -36879,9 +36858,8 @@ msgid "Sentences per paragraph:"
 msgstr "Предложений в абзаце:"
 
 #: ../share/extensions/lorem_ipsum.inx.h:5
-#, fuzzy
 msgid "Paragraph length fluctuation (sentences):"
-msgstr "Вариативность длины абзацев (в предложениях)"
+msgstr "Вариативность длины абзацев (в предложениях):"
 
 #: ../share/extensions/lorem_ipsum.inx.h:7
 msgid ""
@@ -38131,9 +38109,8 @@ msgid "Initial size:"
 msgstr "Исходный размер"
 
 #: ../share/extensions/rtree.inx.h:3
-#, fuzzy
 msgid "Minimum size:"
-msgstr "Минимальный размер"
+msgstr "Минимальный размер:"
 
 #: ../share/extensions/rtree.inx.h:4
 #, fuzzy
