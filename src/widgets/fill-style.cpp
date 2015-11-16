@@ -68,7 +68,7 @@ namespace Inkscape {
 class FillNStroke : public Gtk::VBox
 {
 public:
-    FillNStroke( FillOrStroke kind );
+    FillNStroke( FillOrStroke k );
     ~FillNStroke();
 
     void setFillrule( SPPaintSelector::FillRule mode );
@@ -125,9 +125,9 @@ Gtk::Widget *Inkscape::Widgets::createStyleWidget( FillOrStroke kind )
     return filler;
 }
 
-FillNStroke::FillNStroke( FillOrStroke kind ) :
+FillNStroke::FillNStroke( FillOrStroke k ) :
     Gtk::VBox(),
-    kind(kind),
+    kind(k),
     desktop(0),
     psel(0),
     lastDrag(0),

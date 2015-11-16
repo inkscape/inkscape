@@ -593,16 +593,14 @@ static bool fit_item(SPDesktop *desktop,
     }
     std::vector<SPItem*> const items_selected(selection->itemList());
     std::vector<SPItem*> items_down_erased;
-    for (std::vector<SPItem*>::const_iterator i=items_down.begin(); i!=items_down.end(); i++) {
+    for (std::vector<SPItem*>::const_iterator i=items_down.begin(); i!=items_down.end(); ++i) {
         SPItem *item_down = *i;
         Geom::OptRect bbox_down = item_down->documentVisualBounds();
-        width = bbox_down->width();
-        height = bbox_down->height();
         double bbox_left = bbox_down->left();
         double bbox_top = bbox_down->top();
         gchar const * item_down_sharp = g_strdup_printf("#%s", item_down->getId());
         items_down_erased.push_back(item_down);
-        for (std::vector<SPItem*>::const_iterator j=items_selected.begin(); j!=items_selected.end(); j++) {
+        for (std::vector<SPItem*>::const_iterator j=items_selected.begin(); j!=items_selected.end(); ++j) {
             SPItem *item_selected = *j;
             gchar const * spray_origin;
             if(!item_selected->getAttribute("inkscape:spray-origin")){
