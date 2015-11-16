@@ -846,13 +846,11 @@ static void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, I
 #endif
                     }
                 } else if (menu_pntr->attribute("check") != NULL) {
-                    SPAction *action = NULL;
                     if (verb->get_code() != SP_VERB_NONE) {
-                        action = verb->get_action(Inkscape::ActionContext(view));
-                    }
-                    sp_ui_menu_append_check_item_from_verb(GTK_MENU(menu), view, action->name, action->tip, NULL,
+                        SPAction *action = verb->get_action(Inkscape::ActionContext(view));
+                        sp_ui_menu_append_check_item_from_verb(GTK_MENU(menu), view, action->name, action->tip, NULL,
                             checkitem_toggled, checkitem_update, verb);
-
+                    }
                 } else {
                     sp_ui_menu_append_item_from_verb(GTK_MENU(menu), verb, view);
                     group = NULL;
