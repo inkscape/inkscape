@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-11-14 18:52+0200\n"
-"PO-Revision-Date: 2015-11-14 19:52+0200\n"
-"Last-Translator: Hasan Kiran <Sunder67@hotmail.com>\n"
+"PO-Revision-Date: 2015-11-18 14:27+0200\n"
+"Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Lokalize 2.0\n"
 "Plural-Forms: nplurals=2; plural=0;\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -41,14 +41,12 @@ msgid "image;editor;vector;drawing;"
 msgstr ""
 
 #: ../inkscape.desktop.in.h:6
-#, fuzzy
 msgid "New Drawing"
-msgstr "Çizim"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:2
-#, fuzzy
 msgid "Smart Jelly"
-msgstr "Donukluk Kanalı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:3 ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:15 ../share/filters/filters.svg.h:31
@@ -64,27 +62,24 @@ msgstr "Donukluk Kanalı"
 #: ../src/extension/internal/filter/bevels.h:63
 #: ../src/extension/internal/filter/bevels.h:144
 #: ../src/extension/internal/filter/bevels.h:228
-#, fuzzy
 msgid "Bevels"
-msgstr "Seviye"
+msgstr "Eğimler"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Same as Matte jelly but with more controls"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid "Metal Casting"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:8
 msgid "Smooth drop-like bevel with metallic finish"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:10
-#, fuzzy
 msgid "Apparition"
-msgstr "Doygunluk"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:323
 #: ../share/filters/filters.svg.h:655
@@ -93,9 +88,8 @@ msgstr "Doygunluk"
 #: ../src/extension/internal/filter/blurs.h:201
 #: ../src/extension/internal/filter/blurs.h:267
 #: ../src/extension/internal/filter/blurs.h:351
-#, fuzzy
 msgid "Blurs"
-msgstr "Mavi"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:12
 msgid "Edges are partly feathered out"
@@ -110,9 +104,8 @@ msgid "Low, sharp bevel"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:18
-#, fuzzy
 msgid "Rubber Stamp"
-msgstr "Diş Sayısı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:51
@@ -132,61 +125,53 @@ msgstr "Diş Sayısı"
 #: ../share/filters/filters.svg.h:711 ../share/filters/filters.svg.h:715
 #: ../share/filters/filters.svg.h:723
 #: ../src/extension/internal/filter/overlays.h:80
-#, fuzzy
 msgid "Overlays"
-msgstr "Metre"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:20
-#, fuzzy
 msgid "Random whiteouts inside"
-msgstr "Rastgeleleştir:"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:22
-#, fuzzy
 msgid "Ink Bleed"
-msgstr "Mavi"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:23 ../share/filters/filters.svg.h:27
 #: ../share/filters/filters.svg.h:115 ../share/filters/filters.svg.h:431
-#, fuzzy
 msgid "Protrusions"
-msgstr "Pozisyon:"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:24
 msgid "Inky splotches underneath the object"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:26
-#, fuzzy
 msgid "Fire"
-msgstr "_Dosya"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:28
 msgid "Edges of object are on fire"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:30
-#, fuzzy
 msgid "Bloom"
-msgstr "Büyüt"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:32
 msgid "Soft, cushion-like bevel with matte highlights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:34
-#, fuzzy
 msgid "Ridged Border"
-msgstr "Taşı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:36
 msgid "Ridged border with inner bevel"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:38
-#, fuzzy
 msgid "Ripple"
-msgstr "_Tersini Al"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:123
 #: ../share/filters/filters.svg.h:315 ../share/filters/filters.svg.h:319
@@ -195,38 +180,32 @@ msgstr "_Tersini Al"
 #: ../share/filters/filters.svg.h:635
 #: ../src/extension/internal/filter/distort.h:96
 #: ../src/extension/internal/filter/distort.h:205
-#, fuzzy
 msgid "Distort"
-msgstr "Bö_lüm"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:40
-#, fuzzy
 msgid "Horizontal rippling of edges"
 msgstr ""
-"Dikdörtgenleri ölçeklerken, yuvarlatılmış köşelerin yarıçaplarını ölçekler"
 
 #: ../share/filters/filters.svg.h:42
-#, fuzzy
 msgid "Speckle"
-msgstr "Seçimi Bırak"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:44
 msgid "Fill object with sparse translucent specks"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:46
-#, fuzzy
 msgid "Oil Slick"
-msgstr "Zayıf"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:48
 msgid "Rainbow-colored semitransparent oily splotches"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:50
-#, fuzzy
 msgid "Frost"
-msgstr "Yazı tipi"
+msgstr "Buzlu"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Flake-like white splotches"
@@ -243,9 +222,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:247 ../share/filters/filters.svg.h:255
 #: ../share/filters/filters.svg.h:387 ../share/filters/filters.svg.h:395
 #: ../share/filters/filters.svg.h:399 ../share/filters/filters.svg.h:403
-#, fuzzy
 msgid "Materials"
-msgstr "İşaretle"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:56
 msgid "Leopard spots (loses object's own color)"
@@ -253,16 +231,15 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:58
 msgid "Zebra"
-msgstr ""
+msgstr "Zebra"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Irregular vertical dark stripes (loses object's own color)"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:62
-#, fuzzy
 msgid "Clouds"
-msgstr "_Kapat"
+msgstr "Bulutlar"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Airy, fluffy, sparse white clouds"
@@ -335,27 +312,24 @@ msgid "Detect color edges and retrace them in grayscale"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:82
-#, fuzzy
 msgid "Blueprint"
-msgstr "Eşit genişlik"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:84
 msgid "Detect color edges and retrace them in blue"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:86
-#, fuzzy
 msgid "Age"
-msgstr "Açı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:88
 msgid "Imitate aged photograph"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:90
-#, fuzzy
 msgid "Organic"
-msgstr "Orijin X:"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:127 ../share/filters/filters.svg.h:187
@@ -367,9 +341,8 @@ msgstr "Orijin X:"
 #: ../share/filters/filters.svg.h:379 ../share/filters/filters.svg.h:383
 #: ../share/filters/filters.svg.h:439 ../share/filters/filters.svg.h:467
 #: ../share/filters/filters.svg.h:491 ../share/filters/filters.svg.h:531
-#, fuzzy
 msgid "Textures"
-msgstr "Metinler"
+msgstr "Dokular"
 
 #: ../share/filters/filters.svg.h:92
 msgid "Bulging, knotty, slick 3D surface"
@@ -384,36 +357,32 @@ msgid "Gray bevelled wires with drop shadows"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:98
-#, fuzzy
 msgid "Swiss Cheese"
-msgstr "Stil Yapıştır"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:100
 msgid "Random inner-bevel holes"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:102
-#, fuzzy
 msgid "Blue Cheese"
-msgstr "Mavi Kanal"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:104
 msgid "Marble-like bluish speckles"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:106
-#, fuzzy
 msgid "Button"
-msgstr "Kutu"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:108
 msgid "Soft bevel, slightly depressed middle"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:110
-#, fuzzy
 msgid "Inset"
-msgstr "B_üz"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:267
 #: ../share/filters/filters.svg.h:343 ../share/filters/filters.svg.h:435
@@ -438,9 +407,8 @@ msgid "Random paint streaks downwards"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:118
-#, fuzzy
 msgid "Jam Spread"
-msgstr "Hız"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:120
 msgid "Glossy clumpy jam spread"
@@ -467,9 +435,8 @@ msgid "Under a cracked glass"
 msgstr "Boşlukları Kapat"
 
 #: ../share/filters/filters.svg.h:130
-#, fuzzy
 msgid "Bubbly Bumps"
-msgstr "Yığın"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:307
 #: ../share/filters/filters.svg.h:311 ../share/filters/filters.svg.h:347
@@ -487,9 +454,8 @@ msgstr "Yığın"
 #: ../share/filters/filters.svg.h:799 ../share/filters/filters.svg.h:807
 #: ../src/extension/internal/filter/bumps.h:142
 #: ../src/extension/internal/filter/bumps.h:362
-#, fuzzy
 msgid "Bumps"
-msgstr "Yığın"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:132
 msgid "Flexible bubbles effect with some displacement"
@@ -513,14 +479,12 @@ msgid "Bubble effect with refraction and glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:138
-#, fuzzy
 msgid "Neon"
-msgstr "Hiçbiri"
+msgstr "Neon"
 
 #: ../share/filters/filters.svg.h:140
-#, fuzzy
 msgid "Neon light effect"
-msgstr "Yatay Konum"
+msgstr "Neon ışık efekti"
 
 #: ../share/filters/filters.svg.h:142
 #, fuzzy
@@ -532,9 +496,8 @@ msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:146
-#, fuzzy
 msgid "Pressed Steel"
-msgstr " _Sıfırla"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:148
 #, fuzzy
@@ -579,16 +542,14 @@ msgid "Glowing metal texture"
 msgstr "Yatay yazı"
 
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "Leaves"
-msgstr "Seviye"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:167 ../share/filters/filters.svg.h:235
 #: ../share/filters/filters.svg.h:271 ../share/filters/filters.svg.h:639
 #: ../share/extensions/pathscatter.inx.h:1
-#, fuzzy
 msgid "Scatter"
-msgstr "Örüntü"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:168
 msgid "Leaves on the ground in Fall, or living foliage"
@@ -596,9 +557,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:170
 #: ../src/extension/internal/filter/paint.h:339
-#, fuzzy
 msgid "Translucent"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:172
 msgid "Illuminated translucent plastic or glass effect"
@@ -664,27 +624,24 @@ msgid "Silk carpet texture, horizontal stripes"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:202
-#, fuzzy
 msgid "Refractive Gel A"
-msgstr "Bağlantılı taşı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:204
 msgid "Gel effect with light refraction"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:206
-#, fuzzy
 msgid "Refractive Gel B"
-msgstr "Bağlantılı taşı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:208
 msgid "Gel effect with strong refraction"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:210
-#, fuzzy
 msgid "Metallized Paint"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:212
 msgid ""
@@ -710,27 +667,24 @@ msgid "Strongly raised border around a flat surface"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:222
-#, fuzzy
 msgid "Metallized Ridge"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:224
 msgid "Gel Ridge metallized at its top"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:226
-#, fuzzy
 msgid "Fat Oil"
-msgstr "Düz renk"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:228
 msgid "Fat oil with some adjustable turbulence"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:230
-#, fuzzy
 msgid "Black Hole"
-msgstr "Düz renk"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:231 ../share/filters/filters.svg.h:275
 #: ../share/filters/filters.svg.h:279 ../share/filters/filters.svg.h:835
@@ -746,9 +700,8 @@ msgid "Creates a black light inside and outside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:234
-#, fuzzy
 msgid "Cubes"
-msgstr "Düğüm sayısı"
+msgstr "Küpler"
 
 #: ../share/filters/filters.svg.h:236
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
@@ -944,9 +897,8 @@ msgid "Roughen all inside shapes"
 msgstr "bitiş düğümü"
 
 #: ../share/filters/filters.svg.h:322
-#, fuzzy
 msgid "Evanescent"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:324
 msgid ""
@@ -1064,18 +1016,16 @@ msgid "Ink paint on paper with some turbulent color shift"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:378
-#, fuzzy
 msgid "Tinted Rainbow"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:380
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:382
-#, fuzzy
 msgid "Melted Rainbow"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:384
 msgid "Smooth rainbow colors slightly melted along the edges"
@@ -1273,9 +1223,8 @@ msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:438
-#, fuzzy
 msgid "Warped Rainbow"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:440
 msgid "Smooth rainbow colors warped along the edges and colorizable"
@@ -1740,9 +1689,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:634
 #: ../src/extension/internal/bitmap/swirl.cpp:37
-#, fuzzy
 msgid "Swirl"
-msgstr "Sarmal"
+msgstr "Girdap"
 
 #: ../share/filters/filters.svg.h:636
 msgid ""
@@ -1767,9 +1715,8 @@ msgid "Basic noise transparency texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:646
-#, fuzzy
 msgid "Fill Background"
-msgstr "Arkaplan:"
+msgstr "Arkaplanı Doldur"
 
 #: ../share/filters/filters.svg.h:648
 #, fuzzy
@@ -1919,9 +1866,8 @@ msgid "Uses vertical specular light to draw lines"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:722
-#, fuzzy
 msgid "Liquid"
-msgstr "Çizim"
+msgstr "Sıvı"
 
 #: ../share/filters/filters.svg.h:724
 #, fuzzy
@@ -1929,9 +1875,8 @@ msgid "Colorizable filling with liquid transparency"
 msgstr "bitiş düğümü"
 
 #: ../share/filters/filters.svg.h:726
-#, fuzzy
 msgid "Aluminium"
-msgstr "En küçük boyut"
+msgstr "Alüminyum"
 
 #: ../share/filters/filters.svg.h:728
 msgid "Aluminium effect with sharp brushed reflections"
@@ -1985,9 +1930,8 @@ msgid "Contouring version of smooth shader"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:750
-#, fuzzy
 msgid "Chrome"
-msgstr "_Birleştir"
+msgstr "Krom"
 
 #: ../share/filters/filters.svg.h:752
 #, fuzzy
@@ -2179,9 +2123,8 @@ msgid "Render Cyan, Magenta and Yellow channels with a colorizable background"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:834
-#, fuzzy
 msgid "Contouring table"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:836
 #, fuzzy
@@ -2215,87 +2158,87 @@ msgstr "Siyah"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "90% Gray"
-msgstr "Grafik"
+msgstr "Gri %90"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:4
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "80% Gray"
-msgstr "Grafik"
+msgstr "Gri %8"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:5
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "70% Gray"
-msgstr "Grafik"
+msgstr "Gri %70"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "60% Gray"
-msgstr "Grafik"
+msgstr "Gri %60"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:7
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "50% Gray"
-msgstr "Grafik"
+msgstr "Gri %50"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "40% Gray"
-msgstr "Grafik"
+msgstr "Gri %40"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:9
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "30% Gray"
-msgstr "Grafik"
+msgstr "Gri %30"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:10
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "20% Gray"
-msgstr "Grafik"
+msgstr "Gri %20"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:11
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "10% Gray"
-msgstr "Grafik"
+msgstr "Gri %10"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:12
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "7.5% Gray"
-msgstr "Grafik"
+msgstr "Gri %7.5"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:13
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "5% Gray"
-msgstr "Grafik"
+msgstr "Gri %5"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:14
-#, fuzzy, no-c-format
+#, no-c-format
 msgctxt "Palette"
 msgid "2.5% Gray"
-msgstr "Grafik"
+msgstr "Gri %2.5"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:15
@@ -2307,7 +2250,7 @@ msgstr "Beyaz"
 #: ../share/palettes/palettes.h:16
 msgctxt "Palette"
 msgid "Maroon (#800000)"
-msgstr ""
+msgstr "Kestane rengi (#800000)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:17
@@ -2325,13 +2268,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:19
 msgctxt "Palette"
 msgid "Yellow (#FFFF00)"
-msgstr ""
+msgstr "Sarı (#FFFF00)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:20
 msgctxt "Palette"
 msgid "Green (#008000)"
-msgstr ""
+msgstr "Yeşil (#008000)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:21
@@ -2355,31 +2298,31 @@ msgstr ""
 #: ../share/palettes/palettes.h:24
 msgctxt "Palette"
 msgid "Navy (#000080)"
-msgstr ""
+msgstr "Lacivert (#000080)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:25
 msgctxt "Palette"
 msgid "Blue (#0000FF)"
-msgstr ""
+msgstr "Mavi (#0000FF)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:26
 msgctxt "Palette"
 msgid "Purple (#800080)"
-msgstr ""
+msgstr "Mor  (#800080)"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:27
 msgctxt "Palette"
 msgid "Fuchsia (#FF00FF)"
-msgstr ""
+msgstr "Fuşya (#FF00FF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:28
 msgctxt "Palette"
 msgid "black (#000000)"
-msgstr ""
+msgstr "siyah (#000000)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:29
@@ -2391,25 +2334,25 @@ msgstr ""
 #: ../share/palettes/palettes.h:30
 msgctxt "Palette"
 msgid "gray (#808080)"
-msgstr ""
+msgstr "gri (#808080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:31
 msgctxt "Palette"
 msgid "darkgray (#A9A9A9)"
-msgstr ""
+msgstr "koyu gri (#A9A9A9)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:32
 msgctxt "Palette"
 msgid "silver (#C0C0C0)"
-msgstr ""
+msgstr "gümüş (#C0C0C0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:33
 msgctxt "Palette"
 msgid "lightgray (#D3D3D3)"
-msgstr ""
+msgstr "açık gri (#D3D3D3)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:34
@@ -2427,7 +2370,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:36
 msgctxt "Palette"
 msgid "white (#FFFFFF)"
-msgstr ""
+msgstr "beyaz (#FFFFFF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:37
@@ -2463,19 +2406,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:42
 msgctxt "Palette"
 msgid "maroon (#800000)"
-msgstr ""
+msgstr "kestane rengi (#800000)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:43
 msgctxt "Palette"
 msgid "darkred (#8B0000)"
-msgstr ""
+msgstr "koyu kırmızı (#8B0000)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:44
 msgctxt "Palette"
 msgid "red (#FF0000)"
-msgstr ""
+msgstr "kırmızı (#FF0000)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:45
@@ -2493,19 +2436,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:47
 msgctxt "Palette"
 msgid "salmon (#FA8072)"
-msgstr ""
+msgstr "somon (#FA8072)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:48
 msgctxt "Palette"
 msgid "tomato (#FF6347)"
-msgstr ""
+msgstr "domates (#FF6347)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:49
 msgctxt "Palette"
 msgid "darksalmon (#E9967A)"
-msgstr ""
+msgstr "koyu somon (#E9967A)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:50
@@ -2517,13 +2460,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:51
 msgctxt "Palette"
 msgid "orangered (#FF4500)"
-msgstr ""
+msgstr "Turuncu Kırmızı (#FF4500)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:52
 msgctxt "Palette"
 msgid "lightsalmon (#FFA07A)"
-msgstr ""
+msgstr "açık somon (#FFA07A)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:53
@@ -2541,7 +2484,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:55
 msgctxt "Palette"
 msgid "chocolate (#D2691E)"
-msgstr ""
+msgstr "çikolata (#D2691E)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:56
@@ -2583,7 +2526,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:62
 msgctxt "Palette"
 msgid "darkorange (#FF8C00)"
-msgstr ""
+msgstr "koyu turuncu (#FF8C00)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:63
@@ -2601,7 +2544,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:65
 msgctxt "Palette"
 msgid "antiquewhite (#FAEBD7)"
-msgstr ""
+msgstr "antika beyaz (#FAEBD7)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:66
@@ -2631,7 +2574,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:70
 msgctxt "Palette"
 msgid "orange (#FFA500)"
-msgstr ""
+msgstr "turuncu (#FFA500)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:71
@@ -2673,7 +2616,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:77
 msgctxt "Palette"
 msgid "gold (#FFD700)"
-msgstr ""
+msgstr "altın (#FFD700)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:78
@@ -2721,19 +2664,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:85
 msgctxt "Palette"
 msgid "yellow (#FFFF00)"
-msgstr ""
+msgstr "sarı (#FFFF00)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:86
 msgctxt "Palette"
 msgid "lightyellow (#FFFFE0)"
-msgstr ""
+msgstr "açık sarı (#FFFFE0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:87
 msgctxt "Palette"
 msgid "ivory (#FFFFF0)"
-msgstr ""
+msgstr "fildişi (#FFFFF0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:88
@@ -2745,7 +2688,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:89
 msgctxt "Palette"
 msgid "yellowgreen (#9ACD32)"
-msgstr ""
+msgstr "sarı yeşil (#9ACD32)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:90
@@ -2757,7 +2700,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:91
 msgctxt "Palette"
 msgid "greenyellow (#ADFF2F)"
-msgstr ""
+msgstr "yeşil sarı (#ADFF2F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:92
@@ -2775,13 +2718,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:94
 msgctxt "Palette"
 msgid "darkseagreen (#8FBC8F)"
-msgstr ""
+msgstr "koyu deniz yeşili (#8FBC8F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:95
 msgctxt "Palette"
 msgid "forestgreen (#228B22)"
-msgstr ""
+msgstr "orman yeşili (#228B22)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:96
@@ -2793,7 +2736,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:97
 msgctxt "Palette"
 msgid "lightgreen (#90EE90)"
-msgstr ""
+msgstr "açık yeşil (#90EE90)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:98
@@ -2805,13 +2748,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:99
 msgctxt "Palette"
 msgid "darkgreen (#006400)"
-msgstr ""
+msgstr "koyu yeşil (#006400)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:100
 msgctxt "Palette"
 msgid "green (#008000)"
-msgstr ""
+msgstr "yeşil (#008000)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:101
@@ -2823,25 +2766,25 @@ msgstr ""
 #: ../share/palettes/palettes.h:102
 msgctxt "Palette"
 msgid "honeydew (#F0FFF0)"
-msgstr ""
+msgstr "bal damlası (#F0FFF0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:103
 msgctxt "Palette"
 msgid "seagreen (#2E8B57)"
-msgstr ""
+msgstr "deniz yeşili (#2E8B57)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:104
 msgctxt "Palette"
 msgid "mediumseagreen (#3CB371)"
-msgstr ""
+msgstr "orta deniz yeşili (#3CB371)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:105
 msgctxt "Palette"
 msgid "springgreen (#00FF7F)"
-msgstr ""
+msgstr "bahar yeşili (#00FF7F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:106
@@ -2871,19 +2814,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:110
 msgctxt "Palette"
 msgid "turquoise (#40E0D0)"
-msgstr ""
+msgstr "turkuaz (#40E0D0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:111
 msgctxt "Palette"
 msgid "lightseagreen (#20B2AA)"
-msgstr ""
+msgstr "açık deniz yeşili (#20B2AA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:112
 msgctxt "Palette"
 msgid "mediumturquoise (#48D1CC)"
-msgstr ""
+msgstr "orta turkuaz (#48D1CC)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:113
@@ -2907,19 +2850,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:116
 msgctxt "Palette"
 msgid "darkcyan (#008B8B)"
-msgstr ""
+msgstr "koyu cam göbeği (#008B8B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:117
 msgctxt "Palette"
 msgid "cyan (#00FFFF)"
-msgstr ""
+msgstr "cam göbeği (#00FFFF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:118
 msgctxt "Palette"
 msgid "lightcyan (#E0FFFF)"
-msgstr ""
+msgstr "açık cam göbeği (#E0FFFF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:119
@@ -2931,7 +2874,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:120
 msgctxt "Palette"
 msgid "darkturquoise (#00CED1)"
-msgstr ""
+msgstr "koyu turkuaz (#00CED1)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:121
@@ -2949,31 +2892,31 @@ msgstr ""
 #: ../share/palettes/palettes.h:123
 msgctxt "Palette"
 msgid "lightblue (#ADD8E6)"
-msgstr ""
+msgstr "açık mavi (#ADD8E6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:124
 msgctxt "Palette"
 msgid "deepskyblue (#00BFFF)"
-msgstr ""
+msgstr "derin gök mavisi (#00BFFF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:125
 msgctxt "Palette"
 msgid "skyblue (#87CEEB)"
-msgstr ""
+msgstr "gök mavisi (#87CEEB)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:126
 msgctxt "Palette"
 msgid "lightskyblue (#87CEFA)"
-msgstr ""
+msgstr "açık gök mavisi (#87CEFA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:127
 msgctxt "Palette"
 msgid "steelblue (#4682B4)"
-msgstr ""
+msgstr "çelik mavisi (#4682B4)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:128
@@ -2991,13 +2934,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:130
 msgctxt "Palette"
 msgid "slategray (#708090)"
-msgstr ""
+msgstr "barut grisi (#708090)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:131
 msgctxt "Palette"
 msgid "lightslategray (#778899)"
-msgstr ""
+msgstr "açık barut grisi (#778899)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:132
@@ -3015,31 +2958,31 @@ msgstr ""
 #: ../share/palettes/palettes.h:134
 msgctxt "Palette"
 msgid "royalblue (#4169E1)"
-msgstr ""
+msgstr "asil mavi (#4169E1)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:135
 msgctxt "Palette"
 msgid "midnightblue (#191970)"
-msgstr ""
+msgstr "gece yarısı mavisi (#191970)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:136
 msgctxt "Palette"
 msgid "lavender (#E6E6FA)"
-msgstr ""
+msgstr "lavanta (#E6E6FA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:137
 msgctxt "Palette"
 msgid "navy (#000080)"
-msgstr ""
+msgstr "lacivert (#000080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:138
 msgctxt "Palette"
 msgid "darkblue (#00008B)"
-msgstr ""
+msgstr "koyu mavi (#00008B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:139
@@ -3051,7 +2994,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:140
 msgctxt "Palette"
 msgid "blue (#0000FF)"
-msgstr ""
+msgstr "mavi (#0000FF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:141
@@ -3135,7 +3078,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:154
 msgctxt "Palette"
 msgid "purple (#800080)"
-msgstr ""
+msgstr "mor (#800080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:155
@@ -3153,7 +3096,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:157
 msgctxt "Palette"
 msgid "orchid (#DA70D6)"
-msgstr ""
+msgstr "orkide (#DA70D6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:158
@@ -3171,7 +3114,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:160
 msgctxt "Palette"
 msgid "hotpink (#FF69B4)"
-msgstr ""
+msgstr "sıcak pembe (#FF69B4)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:161
@@ -3195,13 +3138,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:164
 msgctxt "Palette"
 msgid "pink (#FFC0CB)"
-msgstr ""
+msgstr "pembe (#FFC0CB)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:165
 msgctxt "Palette"
 msgid "lightpink (#FFB6C1)"
-msgstr ""
+msgstr "açık pembe (#FFB6C1)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:166
@@ -3231,37 +3174,34 @@ msgstr ""
 #: ../share/palettes/palettes.h:170
 msgctxt "Palette"
 msgid "Chameleon 1"
-msgstr ""
+msgstr "Bukalemun 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:171
 msgctxt "Palette"
 msgid "Chameleon 2"
-msgstr ""
+msgstr "Bukalemun 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:172
 msgctxt "Palette"
 msgid "Chameleon 3"
-msgstr ""
+msgstr "Bukalemun 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:173
-#, fuzzy
 msgctxt "Palette"
 msgid "Orange 1"
 msgstr "Turuncu 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:174
-#, fuzzy
 msgctxt "Palette"
 msgid "Orange 2"
 msgstr "Turuncu 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:175
-#, fuzzy
 msgctxt "Palette"
 msgid "Orange 3"
 msgstr "Turuncu 3"
@@ -3288,37 +3228,37 @@ msgstr ""
 #: ../share/palettes/palettes.h:179
 msgctxt "Palette"
 msgid "Plum 1"
-msgstr ""
+msgstr "Erik 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:180
 msgctxt "Palette"
 msgid "Plum 2"
-msgstr ""
+msgstr "Erik 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:181
 msgctxt "Palette"
 msgid "Plum 3"
-msgstr ""
+msgstr "Erik 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:182
 msgctxt "Palette"
 msgid "Chocolate 1"
-msgstr ""
+msgstr "Çikolata 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:183
 msgctxt "Palette"
 msgid "Chocolate 2"
-msgstr ""
+msgstr "Çikolata 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:184
 msgctxt "Palette"
 msgid "Chocolate 3"
-msgstr ""
+msgstr "Çikolata 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:185
@@ -3350,42 +3290,36 @@ msgstr "Beyaz tahta"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:189
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 1"
 msgstr "Alüminyum 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:190
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 2"
 msgstr "Alüminyum 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:191
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 3"
 msgstr "Alüminyum 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:192
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 4"
 msgstr "Alüminyum 4"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:193
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 5"
 msgstr "Alüminyum 5"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:194
-#, fuzzy
 msgctxt "Palette"
 msgid "Aluminium 6"
 msgstr "Alüminyum 6"
@@ -3600,13 +3534,13 @@ msgstr "Güncel katman"
 #: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
 msgctxt "Symbol"
 msgid "Currency Exchange - Euro"
-msgstr ""
+msgstr "Döviz -Euro"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
 msgctxt "Symbol"
 msgid "Cashier"
-msgstr ""
+msgstr "Kasiyer"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbolsNPS.svg
@@ -3639,7 +3573,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
 msgctxt "Symbol"
 msgid "Escalator"
-msgstr ""
+msgstr "Yürüyen Merdiven"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:23 ../share/symbols/symbols.h:24
@@ -3682,19 +3616,19 @@ msgstr "İlişki"
 #: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
 msgctxt "Symbol"
 msgid "Toilets - Men"
-msgstr ""
+msgstr "Tuvaletler - Erkek"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:37 ../share/symbols/symbols.h:38
 msgctxt "Symbol"
 msgid "Toilets - Women"
-msgstr ""
+msgstr "Tuvaletler - Kadın"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:39 ../share/symbols/symbols.h:40
 msgctxt "Symbol"
 msgid "Toilets"
-msgstr ""
+msgstr "Tuvaletler"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:41 ../share/symbols/symbols.h:42
@@ -3710,19 +3644,17 @@ msgstr ""
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
-#, fuzzy
 msgctxt "Symbol"
 msgid "Waiting Room"
-msgstr "_Betikler..."
+msgstr "Bekleme Odası"
 
 #. Symbols: ./AigaSymbols.svg
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
 #: ../share/symbols/symbols.h:231 ../share/symbols/symbols.h:232
-#, fuzzy
 msgctxt "Symbol"
 msgid "Information"
-msgstr "Dönüşümü depola:"
+msgstr "Bilgi"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:49 ../share/symbols/symbols.h:50
@@ -3742,7 +3674,7 @@ msgstr "Dönüşümü depola:"
 #: ../share/symbols/symbols.h:53 ../share/symbols/symbols.h:54
 msgctxt "Symbol"
 msgid "Heliport"
-msgstr ""
+msgstr "Heliport"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:55 ../share/symbols/symbols.h:56
@@ -3788,13 +3720,13 @@ msgstr "Araç Kiralama"
 #: ../share/symbols/symbols.h:67 ../share/symbols/symbols.h:68
 msgctxt "Symbol"
 msgid "Restaurant"
-msgstr ""
+msgstr "Restoran"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
 msgctxt "Symbol"
 msgid "Coffeeshop"
-msgstr ""
+msgstr "Kahve Dükkanı"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
@@ -3813,19 +3745,19 @@ msgstr ""
 #: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
 msgctxt "Symbol"
 msgid "Barber Shop - Beauty Salon"
-msgstr ""
+msgstr "Berber Dükkanı - Güzellik Salonu"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
 msgctxt "Symbol"
 msgid "Barber Shop"
-msgstr ""
+msgstr "Berber Dükkanı"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
 msgctxt "Symbol"
 msgid "Beauty Salon"
-msgstr ""
+msgstr "Güzellik Salonu"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
@@ -3891,25 +3823,25 @@ msgstr ""
 #: ../share/symbols/symbols.h:245 ../share/symbols/symbols.h:246
 msgctxt "Symbol"
 msgid "Parking"
-msgstr ""
+msgstr "Park"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
 msgctxt "Symbol"
 msgid "No Parking"
-msgstr ""
+msgstr "Park Yapılmaz"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
 msgctxt "Symbol"
 msgid "No Dogs"
-msgstr ""
+msgstr "Köpek Giremez"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:105 ../share/symbols/symbols.h:106
 msgctxt "Symbol"
 msgid "No Entry"
-msgstr ""
+msgstr "Girilmez"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:107 ../share/symbols/symbols.h:108
@@ -3925,10 +3857,9 @@ msgstr ""
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:111 ../share/symbols/symbols.h:112
-#, fuzzy
 msgctxt "Symbol"
 msgid "Right Arrow"
-msgstr "Haklar"
+msgstr "Sağ Ok"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:113 ../share/symbols/symbols.h:114
@@ -3938,10 +3869,9 @@ msgstr ""
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:115 ../share/symbols/symbols.h:116
-#, fuzzy
 msgctxt "Symbol"
 msgid "Up Arrow"
-msgstr "dar"
+msgstr "Yukarı Ok"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:117 ../share/symbols/symbols.h:118
@@ -3951,10 +3881,9 @@ msgstr ""
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:119 ../share/symbols/symbols.h:120
-#, fuzzy
 msgctxt "Symbol"
 msgid "Left Arrow"
-msgstr "dar"
+msgstr "Sol Ok"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:121 ../share/symbols/symbols.h:122
@@ -3964,10 +3893,9 @@ msgstr ""
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:123 ../share/symbols/symbols.h:124
-#, fuzzy
 msgctxt "Symbol"
 msgid "Down Arrow"
-msgstr "dar"
+msgstr "Aşağı Ok"
 
 #. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:125 ../share/symbols/symbols.h:126
@@ -4058,7 +3986,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:143
 msgctxt "Symbol"
 msgid "Process"
-msgstr ""
+msgstr "Süreç"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
@@ -4069,10 +3997,9 @@ msgstr "Çıktı"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:145
-#, fuzzy
 msgctxt "Symbol"
 msgid "Document"
-msgstr "Belgeyi kaydet"
+msgstr "Belge"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:146
@@ -4090,10 +4017,9 @@ msgstr "Doygunluk"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:148
-#, fuzzy
 msgctxt "Symbol"
 msgid "Merge"
-msgstr "İletiler"
+msgstr "Birleştir"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:149
@@ -4158,7 +4084,7 @@ msgstr "Düz renk"
 #: ../share/symbols/symbols.h:158
 msgctxt "Symbol"
 msgid "Online Storage"
-msgstr ""
+msgstr "Çevrimiçi Depolama"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
@@ -4215,7 +4141,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:167
 msgctxt "Symbol"
 msgid "Core"
-msgstr ""
+msgstr "Çekirdek"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:168
@@ -4239,7 +4165,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:171
 msgctxt "Symbol"
 msgid "Offline Storage"
-msgstr ""
+msgstr "Çevrimdışı Depolama"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:172
@@ -4257,7 +4183,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:174
 msgctxt "Symbol"
 msgid "Delay"
-msgstr ""
+msgstr "Gecikme"
 
 #. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:175
@@ -4317,7 +4243,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:184
 msgctxt "Symbol"
 msgid "Buffer"
-msgstr ""
+msgstr "Tampon"
 
 #. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:185
@@ -4353,13 +4279,13 @@ msgstr "Havaalanı"
 #: ../share/symbols/symbols.h:191 ../share/symbols/symbols.h:192
 msgctxt "Symbol"
 msgid "Amphitheatre"
-msgstr ""
+msgstr "Amfitiyatro"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:193 ../share/symbols/symbols.h:194
 msgctxt "Symbol"
 msgid "Bicycle Trail"
-msgstr ""
+msgstr "Bisiklet Parkuru"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:195 ../share/symbols/symbols.h:196
@@ -4371,7 +4297,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:197 ../share/symbols/symbols.h:198
 msgctxt "Symbol"
 msgid "Boat Tour"
-msgstr ""
+msgstr "Tekne Turu"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:199 ../share/symbols/symbols.h:200
@@ -4429,7 +4355,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:217 ../share/symbols/symbols.h:218
 msgctxt "Symbol"
 msgid "Food Service"
-msgstr ""
+msgstr "Yemek Servisi"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:219 ../share/symbols/symbols.h:220
@@ -4439,10 +4365,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:221 ../share/symbols/symbols.h:222
-#, fuzzy
 msgctxt "Symbol"
 msgid "Gas Station"
-msgstr "Doygunluğu azalt"
+msgstr "Benzin İstasyonu"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:223 ../share/symbols/symbols.h:224
@@ -4486,7 +4411,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:237 ../share/symbols/symbols.h:238
 msgctxt "Symbol"
 msgid "Marina"
-msgstr ""
+msgstr "Marina"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:239 ../share/symbols/symbols.h:240
@@ -4516,16 +4441,15 @@ msgstr "Yola Ekle"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:249 ../share/symbols/symbols.h:250
-#, fuzzy
 msgctxt "Symbol"
 msgid "Picnic Area"
-msgstr "Düz renk"
+msgstr "Piknik Alanı"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:251 ../share/symbols/symbols.h:252
 msgctxt "Symbol"
 msgid "Post Office"
-msgstr ""
+msgstr "Postane"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:253 ../share/symbols/symbols.h:254
@@ -4545,7 +4469,7 @@ msgstr "Yuvarlaklaştırılmamış"
 #: ../share/symbols/symbols.h:257 ../share/symbols/symbols.h:258
 msgctxt "Symbol"
 msgid "Restrooms"
-msgstr ""
+msgstr "Tuvaletler"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:259 ../share/symbols/symbols.h:260
@@ -4562,10 +4486,9 @@ msgstr ""
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:263 ../share/symbols/symbols.h:264
-#, fuzzy
 msgctxt "Symbol"
 msgid "Scuba Diving"
-msgstr "Bö_lüm"
+msgstr "Tüplü Dalış"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:265 ../share/symbols/symbols.h:266
@@ -4616,7 +4539,7 @@ msgstr ""
 #: ../share/symbols/symbols.h:279 ../share/symbols/symbols.h:280
 msgctxt "Symbol"
 msgid "Swimming"
-msgstr ""
+msgstr "Yüzme"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:283 ../share/symbols/symbols.h:284
@@ -4704,9 +4627,8 @@ msgstr ""
 #. 3D box
 #: ../src/box3d.cpp:250 ../src/box3d.cpp:1304
 #: ../src/ui/dialog/inkscape-preferences.cpp:407
-#, fuzzy
 msgid "3D Box"
-msgstr "Kutu"
+msgstr "3B Kutu"
 
 #: ../src/color-profile.cpp:842
 #, fuzzy, c-format
@@ -4718,10 +4640,9 @@ msgid "(invalid UTF-8 string)"
 msgstr ""
 
 #: ../src/color-profile.cpp:903
-#, fuzzy
 msgctxt "Profile name"
 msgid "None"
-msgstr "Hiçbiri"
+msgstr "Yok"
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -4802,9 +4723,8 @@ msgstr ""
 #: ../src/display/canvas-axonomgrid.cpp:368
 #: ../src/ui/dialog/inkscape-preferences.cpp:810
 #: ../src/widgets/box3d-toolbar.cpp:302
-#, fuzzy
 msgid "Angle X:"
-msgstr "Açı:"
+msgstr "X Açısı:"
 
 #: ../src/display/canvas-axonomgrid.cpp:368
 #: ../src/ui/dialog/inkscape-preferences.cpp:810
@@ -4814,9 +4734,8 @@ msgstr ""
 #: ../src/display/canvas-axonomgrid.cpp:370
 #: ../src/ui/dialog/inkscape-preferences.cpp:811
 #: ../src/widgets/box3d-toolbar.cpp:381
-#, fuzzy
 msgid "Angle Z:"
-msgstr "Açı:"
+msgstr "Z Açısı:"
 
 #: ../src/display/canvas-axonomgrid.cpp:370
 #: ../src/ui/dialog/inkscape-preferences.cpp:811
@@ -4955,9 +4874,8 @@ msgid "grid line (perpendicular)"
 msgstr "Izgara çizgi rengi"
 
 #: ../src/display/snap-indicator.cpp:88
-#, fuzzy
 msgid "guide"
-msgstr "_Rehberler"
+msgstr "kılavuz"
 
 #: ../src/display/snap-indicator.cpp:91
 #, fuzzy
@@ -5031,9 +4949,8 @@ msgid "bounding box side"
 msgstr "Sınırlandırılmış kutuları ızgaraya ayır"
 
 #: ../src/display/snap-indicator.cpp:136
-#, fuzzy
 msgid "page border"
-msgstr "Tuval kenarlık rengi"
+msgstr "sayfa kenarlığı"
 
 #: ../src/display/snap-indicator.cpp:139
 #, fuzzy
@@ -5145,9 +5062,8 @@ msgid "Path intersection"
 msgstr "_Kesişim"
 
 #: ../src/display/snap-indicator.cpp:218
-#, fuzzy
 msgid "Guide"
-msgstr "_Rehberler"
+msgstr "Kılavuz"
 
 #: ../src/display/snap-indicator.cpp:221
 #, fuzzy
@@ -5202,7 +5118,7 @@ msgstr "İsimsiz %d belgesi"
 
 #: ../src/event-log.cpp:185
 msgid "[Unchanged]"
-msgstr ""
+msgstr "[Değiştirilmemiş]"
 
 #. Edit
 #: ../src/event-log.cpp:371 ../src/event-log.cpp:374 ../src/verbs.cpp:2434
@@ -5219,14 +5135,12 @@ msgid "Dependency:"
 msgstr "Bağımlılık:"
 
 #: ../src/extension/dependency.cpp:244
-#, fuzzy
 msgid "  type: "
-msgstr "Tip:"
+msgstr "  tür: "
 
 #: ../src/extension/dependency.cpp:245
-#, fuzzy
 msgid "  location: "
-msgstr " tanımı:"
+msgstr "  konum: "
 
 #: ../src/extension/dependency.cpp:246
 msgid "  string: "
@@ -5241,9 +5155,8 @@ msgid " (No preferences)"
 msgstr " (Seçenek yok)"
 
 #: ../src/extension/effect.h:70 ../src/verbs.cpp:2208
-#, fuzzy
 msgid "Extensions"
-msgstr "Ekle_ntiler"
+msgstr "Uzantılar"
 
 #. \FIXME change this
 #. This is some filler text, needs to change before relase
@@ -5302,7 +5215,7 @@ msgstr ""
 #: ../src/extension/extension.cpp:321
 #, fuzzy
 msgid "Extension \""
-msgstr "_Eklentiler Hakkında"
+msgstr "Uzantı \""
 
 #: ../src/extension/extension.cpp:321
 msgid "\" failed to load because "
@@ -5328,9 +5241,8 @@ msgid "State:"
 msgstr "Başlangıç:"
 
 #: ../src/extension/extension.cpp:780
-#, fuzzy
 msgid "Loaded"
-msgstr "Düğüm"
+msgstr "Yüklendi"
 
 #: ../src/extension/extension.cpp:780
 #, fuzzy
@@ -5536,7 +5448,6 @@ msgid "Channel"
 msgstr "Kanal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:50
-#, fuzzy
 msgid "Layer:"
 msgstr "Katman:"
 
@@ -5569,15 +5480,13 @@ msgstr "Macenta"
 
 #: ../src/extension/internal/bitmap/channel.cpp:56
 #: ../src/extension/internal/bitmap/levelChannel.cpp:60
-#, fuzzy
 msgid "Yellow Channel"
-msgstr "Sarı"
+msgstr "Sarı Kanal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:57
 #: ../src/extension/internal/bitmap/levelChannel.cpp:61
-#, fuzzy
 msgid "Black Channel"
-msgstr "Siyah"
+msgstr "Siyah Kanal"
 
 #: ../src/extension/internal/bitmap/channel.cpp:58
 #: ../src/extension/internal/bitmap/levelChannel.cpp:62
@@ -5615,9 +5524,8 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/contrast.cpp:40
 #: ../src/extension/internal/filter/color.h:1189
-#, fuzzy
 msgid "Contrast"
-msgstr "Köşeler:"
+msgstr "Kontrast"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:42
 msgid "Adjust:"
@@ -5631,7 +5539,7 @@ msgstr ""
 #: ../src/extension/internal/filter/bumps.h:86
 #: ../src/extension/internal/filter/bumps.h:315
 msgid "Crop"
-msgstr ""
+msgstr "Kırp"
 
 #: ../src/extension/internal/bitmap/crop.cpp:68
 msgid "Top (px):"
@@ -5835,9 +5743,8 @@ msgid "Negate (take inverse) selected bitmap(s)"
 msgstr "Seçili nesneleri gruplar"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:36
-#, fuzzy
 msgid "Normalize"
-msgstr "Normal"
+msgstr "Normalleştir"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:43
 msgid ""
@@ -5969,7 +5876,6 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/bitmap/swirl.cpp:39
-#, fuzzy
 msgid "Degrees:"
 msgstr "Derece:"
 
@@ -6008,9 +5914,8 @@ msgstr ""
 "keskinleştir."
 
 #: ../src/extension/internal/bitmap/wave.cpp:38
-#, fuzzy
 msgid "Wave"
-msgstr "_Kaydet"
+msgstr "Dalga"
 
 #: ../src/extension/internal/bitmap/wave.cpp:40
 #, fuzzy
@@ -6068,15 +5973,13 @@ msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:330
 #: ../src/extension/internal/cairo-ps-out.cpp:372
-#, fuzzy
 msgid "PostScript level 3"
-msgstr "Postscript Dosyası"
+msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:331
 #: ../src/extension/internal/cairo-ps-out.cpp:373
-#, fuzzy
 msgid "PostScript level 2"
-msgstr "Postscript Dosyası"
+msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:333
 #: ../src/extension/internal/cairo-ps-out.cpp:375
@@ -6150,12 +6053,10 @@ msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:349
 #: ../share/extensions/ps_input.inx.h:2
-#, fuzzy
 msgid "PostScript (*.ps)"
-msgstr "Postscript (*.ps)"
+msgstr "PostScript (*.ps)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:350
-#, fuzzy
 msgid "PostScript File"
 msgstr "Postscript Dosyası"
 
@@ -6452,7 +6353,6 @@ msgstr "Donukluk Kanalı"
 #: ../src/extension/internal/filter/bevels.h:220
 #: ../src/extension/internal/filter/blurs.h:187
 #: ../src/extension/internal/filter/color.h:75
-#, fuzzy
 msgid "Brightness"
 msgstr "Parlaklık"
 
@@ -6524,7 +6424,7 @@ msgstr "Y aralığı:"
 #: ../src/extension/internal/filter/textures.h:74
 #, fuzzy
 msgid "Blend:"
-msgstr "Mavi"
+msgstr "Harmanla:"
 
 #: ../src/extension/internal/filter/blurs.h:192
 #: ../src/extension/internal/filter/blurs.h:339
@@ -6539,9 +6439,8 @@ msgstr "Mavi"
 #: ../src/extension/internal/filter/paint.h:705
 #: ../src/extension/internal/filter/transparency.h:63
 #: ../src/filter-enums.cpp:55
-#, fuzzy
 msgid "Darken"
-msgstr "Damlalık"
+msgstr "Karart"
 
 #: ../src/extension/internal/filter/blurs.h:193
 #: ../src/extension/internal/filter/blurs.h:340
@@ -6557,9 +6456,8 @@ msgstr "Damlalık"
 #: ../src/extension/internal/filter/paint.h:703
 #: ../src/extension/internal/filter/transparency.h:62
 #: ../src/filter-enums.cpp:54 ../src/ui/dialog/input.cpp:382
-#, fuzzy
 msgid "Screen"
-msgstr "Yeşil"
+msgstr "Ekran"
 
 #: ../src/extension/internal/filter/blurs.h:194
 #: ../src/extension/internal/filter/blurs.h:341
@@ -6592,9 +6490,8 @@ msgstr "Çoklu stiller"
 #: ../src/extension/internal/filter/paint.h:704
 #: ../src/extension/internal/filter/transparency.h:64
 #: ../src/filter-enums.cpp:56
-#, fuzzy
 msgid "Lighten"
-msgstr "Parlaklık"
+msgstr "Aydınlat"
 
 #: ../src/extension/internal/filter/blurs.h:204
 #, fuzzy
@@ -6835,21 +6732,18 @@ msgstr "Eşit yükseklik"
 
 #: ../src/extension/internal/filter/bumps.h:113
 #: ../src/extension/internal/filter/bumps.h:117
-#, fuzzy
 msgid "X location"
-msgstr " tanımı:"
+msgstr "X konumu"
 
 #: ../src/extension/internal/filter/bumps.h:114
 #: ../src/extension/internal/filter/bumps.h:118
-#, fuzzy
 msgid "Y location"
-msgstr " tanımı:"
+msgstr "Y konumu"
 
 #: ../src/extension/internal/filter/bumps.h:115
 #: ../src/extension/internal/filter/bumps.h:119
-#, fuzzy
 msgid "Z location"
-msgstr " tanımı:"
+msgstr "Z konumu"
 
 #: ../src/extension/internal/filter/bumps.h:116
 #, fuzzy
@@ -6901,7 +6795,6 @@ msgid "Wax Bump"
 msgstr "Yığın"
 
 #: ../src/extension/internal/filter/bumps.h:320
-#, fuzzy
 msgid "Background:"
 msgstr "Arkaplan:"
 
@@ -7019,7 +6912,7 @@ msgstr "Doygunluk"
 #: ../src/extension/internal/filter/transparency.h:135
 #: ../src/filter-enums.cpp:131 ../src/ui/tools/flood-tool.cpp:97
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: ../src/extension/internal/filter/color.h:175
 #, fuzzy
@@ -7146,7 +7039,7 @@ msgstr "Doğrusal"
 
 #: ../src/extension/internal/filter/color.h:506 ../src/filter-enums.cpp:114
 msgid "Gamma"
-msgstr ""
+msgstr "Gama"
 
 #: ../src/extension/internal/filter/color.h:515
 msgid "Basic component transfer structure"
@@ -7296,19 +7189,16 @@ msgid "No inversion"
 msgstr "Bu versiyondaki yenilikler"
 
 #: ../src/extension/internal/filter/color.h:984
-#, fuzzy
 msgid "Red and blue"
-msgstr "Kırmızı Kanal"
+msgstr "Kırmızı ve mavi"
 
 #: ../src/extension/internal/filter/color.h:985
-#, fuzzy
 msgid "Red and green"
-msgstr "Renk geçişleri oluşturur ve düzenler"
+msgstr "Kırmızı ve yeşil"
 
 #: ../src/extension/internal/filter/color.h:986
-#, fuzzy
 msgid "Green and blue"
-msgstr "Yeşil Kanal"
+msgstr "Yeşil ve mavi"
 
 #: ../src/extension/internal/filter/color.h:988
 #, fuzzy
@@ -7550,9 +7440,8 @@ msgstr "Çizgi:"
 
 #: ../src/extension/internal/filter/distort.h:79
 #: ../src/extension/internal/filter/textures.h:76
-#, fuzzy
 msgid "Wide"
-msgstr "_Gizle"
+msgstr "Geniş"
 
 #: ../src/extension/internal/filter/distort.h:80
 #: ../src/extension/internal/filter/textures.h:78
@@ -7562,7 +7451,7 @@ msgstr "dar"
 
 #: ../src/extension/internal/filter/distort.h:81
 msgid "No fill"
-msgstr ""
+msgstr "Doldurma"
 
 #: ../src/extension/internal/filter/distort.h:83
 #, fuzzy
@@ -7653,20 +7542,19 @@ msgstr "Yuvarlaklaştırılmamış"
 
 #: ../src/extension/internal/filter/filter-file.cpp:35
 msgid "Personal"
-msgstr ""
+msgstr "Kişisel"
 
 #: ../src/extension/internal/filter/filter-file.cpp:47
 msgid "Null external module directory name.  Filters will not be loaded."
 msgstr ""
 
 #: ../src/extension/internal/filter/image.h:49
-#, fuzzy
 msgid "Edge Detect"
-msgstr "Kenar Tespiti"
+msgstr "Kenar Algılama"
 
 #: ../src/extension/internal/filter/image.h:51
 msgid "Detect:"
-msgstr ""
+msgstr "Algılama:"
 
 #: ../src/extension/internal/filter/image.h:52
 #: ../src/ui/dialog/template-load-tab.cpp:105
@@ -7710,18 +7598,16 @@ msgid "Outer"
 msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:63
-#, fuzzy
 msgid "Open"
-msgstr "_Aç..."
+msgstr "Aç"
 
 #: ../src/extension/internal/filter/morphology.h:65
 #: ../src/libgdl/gdl-dock-placeholder.c:167 ../src/libgdl/gdl-dock.c:191
 #: ../src/ui/widget/page-sizer.cpp:249 ../src/widgets/rect-toolbar.cpp:317
 #: ../src/widgets/spray-toolbar.cpp:116 ../src/widgets/tweak-toolbar.cpp:128
 #: ../share/extensions/interp_att_g.inx.h:12
-#, fuzzy
 msgid "Width"
-msgstr "Genişlik:"
+msgstr "Genişlik"
 
 #: ../src/extension/internal/filter/morphology.h:69
 #: ../src/extension/internal/filter/morphology.h:190
@@ -7792,9 +7678,8 @@ msgid "Overlayed"
 msgstr "Metre"
 
 #: ../src/extension/internal/filter/morphology.h:184
-#, fuzzy
 msgid "Width 1"
-msgstr "Genişlik:"
+msgstr "Genişlik 1"
 
 #: ../src/extension/internal/filter/morphology.h:185
 #, fuzzy
@@ -7807,9 +7692,8 @@ msgid "Erosion 1"
 msgstr "Pozisyon:"
 
 #: ../src/extension/internal/filter/morphology.h:187
-#, fuzzy
 msgid "Width 2"
-msgstr "Genişlik:"
+msgstr "Genişlik 2"
 
 #: ../src/extension/internal/filter/morphology.h:188
 #, fuzzy
@@ -8007,9 +7891,8 @@ msgstr "Sadeleştir"
 
 #: ../src/extension/internal/filter/paint.h:338
 #: ../src/extension/internal/filter/paint.h:709
-#, fuzzy
 msgid "Erase"
-msgstr "_Yukarı Al"
+msgstr "Sil"
 
 #: ../src/extension/internal/filter/paint.h:344
 msgid "Melt"
@@ -8017,9 +7900,8 @@ msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:350
 #: ../src/extension/internal/filter/paint.h:712
-#, fuzzy
 msgid "Fill color"
-msgstr "Düz renk"
+msgstr "Dolgu rengi"
 
 #: ../src/extension/internal/filter/paint.h:351
 #: ../src/extension/internal/filter/paint.h:714
@@ -8054,9 +7936,8 @@ msgstr "Efektler"
 #: ../src/extension/internal/filter/paint.h:501
 #: ../src/extension/internal/filter/paint.h:860
 #: ../src/extension/internal/filter/paint.h:975
-#, fuzzy
 msgid "Levels"
-msgstr "Seviye"
+msgstr "Seviyeler"
 
 #: ../src/extension/internal/filter/paint.h:510
 msgid "Electro solarization effects"
@@ -8258,9 +8139,8 @@ msgid "Ink Blot"
 msgstr ""
 
 #: ../src/extension/internal/filter/textures.h:68
-#, fuzzy
 msgid "Frequency:"
-msgstr "Yuvarlaklaştırılmamış"
+msgstr "Frekans:"
 
 #: ../src/extension/internal/filter/textures.h:71
 #, fuzzy
@@ -8283,16 +8163,14 @@ msgid "Overlapping"
 msgstr "Yuvarlaklaştırılmamış"
 
 #: ../src/extension/internal/filter/textures.h:80
-#, fuzzy
 msgid "External"
-msgstr "Düzenle..."
+msgstr "Harici"
 
 #: ../src/extension/internal/filter/textures.h:81
 #: ../share/extensions/markers_strokepaint.inx.h:8
 #: ../share/extensions/restack.inx.h:4
-#, fuzzy
 msgid "Custom"
-msgstr "_Özel"
+msgstr "Özel"
 
 #: ../src/extension/internal/filter/textures.h:83
 #, fuzzy
@@ -8322,15 +8200,13 @@ msgid "Blend"
 msgstr "Mavi"
 
 #: ../src/extension/internal/filter/transparency.h:55 ../src/rdf.cpp:261
-#, fuzzy
 msgid "Source:"
-msgstr "Kaynak"
+msgstr "Kaynak:"
 
 #: ../src/extension/internal/filter/transparency.h:56
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1603
-#, fuzzy
 msgid "Background"
-msgstr "Arkaplan:"
+msgstr "Arkaplan"
 
 #: ../src/extension/internal/filter/transparency.h:59
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2853
@@ -8395,7 +8271,7 @@ msgstr "Bitmap veya SVG dosyasını döküman içine aktarır"
 #: ../src/extension/internal/gdkpixbuf-input.cpp:190
 #, c-format
 msgid "Image Import Type:"
-msgstr ""
+msgstr "Resim İçe Aktarım Türü:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:190
 #, c-format
@@ -8412,14 +8288,14 @@ msgstr ""
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:192 ../src/sp-anchor.cpp:105
 #: ../src/ui/dialog/inkscape-preferences.cpp:1498
-#, fuzzy, c-format
+#, c-format
 msgid "Link"
-msgstr "in"
+msgstr "Bağlantı"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:195
-#, fuzzy, c-format
+#, c-format
 msgid "Image DPI:"
-msgstr "Resimler"
+msgstr "Resim DPI:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:195
 #, c-format
@@ -8431,7 +8307,7 @@ msgstr ""
 #: ../src/extension/internal/gdkpixbuf-input.cpp:196
 #, fuzzy, c-format
 msgid "From file"
-msgstr "Bağlantı Ö_zellikleri"
+msgstr "Dosyadan"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:197
 #, fuzzy, c-format
@@ -8476,7 +8352,7 @@ msgstr ""
 #: ../src/extension/internal/gdkpixbuf-input.cpp:206
 #, c-format
 msgid "Don't ask again"
-msgstr ""
+msgstr "Bir daha sorma"
 
 #: ../src/extension/internal/gimpgrad.cpp:272
 msgid "GIMP Gradients"
@@ -8495,9 +8371,8 @@ msgid "Grid"
 msgstr "Izgara"
 
 #: ../src/extension/internal/grid.cpp:207
-#, fuzzy
 msgid "Line Width:"
-msgstr "Genişlik"
+msgstr "Çizgi Genişliği:"
 
 #: ../src/extension/internal/grid.cpp:208
 #, fuzzy
@@ -8569,7 +8444,7 @@ msgstr "LaTeX Çıktı"
 
 #: ../src/extension/internal/javafx-out.cpp:968
 msgid "JavaFX (*.fx)"
-msgstr ""
+msgstr "JavaFX (*.fx)"
 
 #: ../src/extension/internal/javafx-out.cpp:969
 #, fuzzy
@@ -8702,22 +8577,19 @@ msgid "rough"
 msgstr "pürüzlü"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:439
-#, fuzzy
 msgctxt "PDF input precision"
 msgid "medium"
 msgstr "orta"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:440
-#, fuzzy
 msgctxt "PDF input precision"
 msgid "fine"
 msgstr "iyi"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:441
-#, fuzzy
 msgctxt "PDF input precision"
 msgid "very fine"
-msgstr "çok iyi"
+msgstr "çok İyi"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:937
 #, fuzzy
@@ -8726,7 +8598,7 @@ msgstr "EMF Girdi"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:942
 msgid "Adobe PDF (*.pdf)"
-msgstr ""
+msgstr "Adobe PDF (*.pdf)"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:943
 msgid "Adobe Portable Document Format"
@@ -8919,7 +8791,7 @@ msgstr ""
 #: ../src/extension/prefdialog.cpp:276
 #, fuzzy
 msgid "Live preview"
-msgstr "Canlı Ön izleme"
+msgstr "Canlı Önizleme"
 
 #: ../src/extension/prefdialog.cpp:276
 msgid "Is the effect previewed live on canvas?"
@@ -9004,9 +8876,8 @@ msgid "File %s could not be saved."
 msgstr ""
 
 #: ../src/file.cpp:721 ../src/file.cpp:723
-#, fuzzy
 msgid "Document saved."
-msgstr "Hiçbir belge seçilmedi"
+msgstr "Belge kaydedildi"
 
 #. We are saving for the first time; create a unique default filename
 #: ../src/file.cpp:866 ../src/file.cpp:1433
@@ -9034,15 +8905,13 @@ msgid "No changes need to be saved."
 msgstr ""
 
 #: ../src/file.cpp:1016
-#, fuzzy
 msgid "Saving document..."
-msgstr "Belgeyi kaydet"
+msgstr "Belge kaydediliyor..."
 
 #: ../src/file.cpp:1271 ../src/ui/dialog/inkscape-preferences.cpp:1492
 #: ../src/ui/dialog/ocaldialogs.cpp:1244
-#, fuzzy
 msgid "Import"
-msgstr "İçeri _Aktar..."
+msgstr "İçeriye aktar"
 
 #: ../src/file.cpp:1321
 msgid "Select file to import"
@@ -9060,7 +8929,7 @@ msgstr "İçeri _Aktar..."
 
 #: ../src/filter-enums.cpp:22
 msgid "Color Matrix"
-msgstr ""
+msgstr "Renk Matrisi"
 
 #: ../src/filter-enums.cpp:24
 #, fuzzy
@@ -9084,9 +8953,8 @@ msgid "Flood"
 msgstr ""
 
 #: ../src/filter-enums.cpp:31 ../share/extensions/text_merge.inx.h:1
-#, fuzzy
 msgid "Merge"
-msgstr "İletiler"
+msgstr "Birleştir"
 
 #: ../src/filter-enums.cpp:34
 msgid "Specular Lighting"
@@ -9177,9 +9045,8 @@ msgid "Luminosity"
 msgstr ""
 
 #: ../src/filter-enums.cpp:78
-#, fuzzy
 msgid "Matrix"
-msgstr "İşaretle"
+msgstr "Matris"
 
 #: ../src/filter-enums.cpp:79
 #, fuzzy
@@ -9204,14 +9071,12 @@ msgstr "Varsayılan"
 
 #. New CSS
 #: ../src/filter-enums.cpp:95
-#, fuzzy
 msgid "Clear"
-msgstr "_Temizle"
+msgstr "Temizle"
 
 #: ../src/filter-enums.cpp:96
-#, fuzzy
 msgid "Copy"
-msgstr "Kop_yala"
+msgstr "Kopyala"
 
 #: ../src/filter-enums.cpp:97 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1623
 #, fuzzy
@@ -9245,7 +9110,7 @@ msgstr "Parlaklık"
 
 #: ../src/filter-enums.cpp:104
 msgid "Arithmetic"
-msgstr ""
+msgstr "Aritmetik"
 
 #: ../src/filter-enums.cpp:120 ../src/selection-chemistry.cpp:545
 #: ../src/ui/dialog/objects.cpp:1889
@@ -9551,7 +9416,7 @@ msgstr ""
 
 #: ../src/libgdl/gdl-dock-item.c:314
 msgid "Resizable"
-msgstr ""
+msgstr "Yeniden Boyutlandırılabilir"
 
 #: ../src/libgdl/gdl-dock-item.c:315
 msgid "If set, the dock item can be resized when docked in a GtkPanel widget"
@@ -9759,9 +9624,8 @@ msgid ""
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-paned.c:130 ../src/widgets/ruler.cpp:230
-#, fuzzy
 msgid "Position"
-msgstr "Pozisyon:"
+msgstr "Konum"
 
 #: ../src/libgdl/gdl-dock-paned.c:131
 msgid "Position of the divider in pixels"
@@ -10300,15 +10164,13 @@ msgstr ""
 #: ../src/live_effects/lpe-bspline.cpp:31
 #: ../src/live_effects/lpe-simplify.cpp:33
 #: ../src/live_effects/lpe-transform_2pts.cpp:43
-#, fuzzy
 msgid "Helper size:"
-msgstr "Açı"
+msgstr ""
 
 #: ../src/live_effects/lpe-bspline.cpp:31
 #: ../src/live_effects/lpe-simplify.cpp:33
-#, fuzzy
 msgid "Helper size"
-msgstr "Açı"
+msgstr ""
 
 #: ../src/live_effects/lpe-bspline.cpp:32
 msgid "Apply changes if weight = 0%"
@@ -11185,9 +11047,8 @@ msgstr "Noktaları Gizle"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:50
 #: ../share/extensions/pathalongpath.inx.h:10
-#, fuzzy
 msgid "Single"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:51
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -11342,9 +11203,8 @@ msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:268
-#, fuzzy
 msgid "Handles:"
-msgstr "Açı"
+msgstr ""
 
 #: ../src/live_effects/lpe-powerstroke.cpp:132
 msgid "CubicBezierSmooth"
@@ -11626,9 +11486,8 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-roughen.cpp:48
-#, fuzzy
 msgid "Method"
-msgstr "Metre"
+msgstr "Yöntem"
 
 #: ../src/live_effects/lpe-roughen.cpp:48
 #, fuzzy
@@ -11714,7 +11573,7 @@ msgstr ""
 #: ../share/extensions/text_extract.inx.h:8
 #: ../share/extensions/text_merge.inx.h:8
 msgid "Left"
-msgstr ""
+msgstr "Sol"
 
 #: ../src/live_effects/lpe-ruler.cpp:26 ../share/extensions/measure.inx.h:29
 #: ../share/extensions/restack.inx.h:18
@@ -11763,9 +11622,8 @@ msgstr ""
 #: ../share/extensions/interp_att_g.inx.h:9
 #: ../share/extensions/layout_nup.inx.h:3
 #: ../share/extensions/printing_marks.inx.h:11
-#, fuzzy
 msgid "Unit:"
-msgstr "Birimler:"
+msgstr "Birim:"
 
 #: ../src/live_effects/lpe-ruler.cpp:42 ../src/widgets/ruler.cpp:202
 msgid "Unit"
@@ -11865,7 +11723,7 @@ msgstr ""
 #: ../src/live_effects/lpe-simplify.cpp:30
 #, fuzzy
 msgid "Steps:"
-msgstr "Basamaklar"
+msgstr "Adımlar:"
 
 #: ../src/live_effects/lpe-simplify.cpp:30
 #, fuzzy
@@ -12145,17 +12003,16 @@ msgid "Lock length to current distance"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:34
-#, fuzzy
 msgid "Lock angle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:35
 msgid "Flip horizontal"
-msgstr ""
+msgstr "Yatay çevir"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:36
 msgid "Flip vertical"
-msgstr ""
+msgstr "Dikey çevir"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:37
 #, fuzzy
@@ -12497,7 +12354,7 @@ msgstr ""
 
 #: ../src/main.cpp:346 ../src/main.cpp:388
 msgid "VALUE"
-msgstr ""
+msgstr "DEĞER"
 
 #: ../src/main.cpp:350
 msgid ""
@@ -13212,7 +13069,7 @@ msgstr "Eşini yaratmak için <b>nesne(ler)</b> seçin."
 #: ../src/selection-chemistry.cpp:551
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "%s kopyala"
 
 #: ../src/selection-chemistry.cpp:574
 msgid "Delete all"
@@ -13670,7 +13527,7 @@ msgstr "Yükseltilmiş katman <b>%s</b>."
 #: ../src/selection-describer.cpp:165
 #, c-format
 msgid "<i>%s</i>"
-msgstr ""
+msgstr "<i>%s</i>"
 
 #: ../src/selection-describer.cpp:175
 #, c-format
@@ -13700,11 +13557,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/selection-describer.cpp:186
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> layer"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] " <b>%i</b> katmanlarında"
-msgstr[1] ""
+msgstr[0] " <b>%i</b> katman"
+msgstr[1] " <b>%i</b> katman"
 
 #: ../src/selection-describer.cpp:198
 #, fuzzy
@@ -15645,9 +15502,8 @@ msgstr ""
 
 #: ../src/ui/dialog/document-metadata.cpp:168
 #: ../src/ui/dialog/document-properties.cpp:1040
-#, fuzzy
 msgid "<b>License</b>"
-msgstr "<b>Line</b>"
+msgstr "<b>Lisans</b>"
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:118
@@ -15898,9 +15754,8 @@ msgid "Snap"
 msgstr "Yakala"
 
 #: ../src/ui/dialog/document-properties.cpp:165
-#, fuzzy
 msgid "Scripting"
-msgstr "_Betikler..."
+msgstr "Betikleme"
 
 #: ../src/ui/dialog/document-properties.cpp:329
 msgid "<b>General</b>"
@@ -16529,19 +16384,16 @@ msgid "All Executable Files"
 msgstr "Tüm Resimleri Göm"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:610
-#, fuzzy
 msgid "Show Preview"
-msgstr "Ön izleme"
+msgstr "Önizlemeyi Göster"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:748
-#, fuzzy
 msgid "No file selected"
-msgstr "Hiçbir belge seçilmedi"
+msgstr "Dosya seçilmedi"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:62
-#, fuzzy
 msgid "_Fill"
-msgstr "Doldur"
+msgstr "_Dolgu"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:63
 msgid "Stroke _paint"
@@ -16568,9 +16420,8 @@ msgid "None"
 msgstr "Hiçbiri"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:657
-#, fuzzy
 msgid "Image File"
-msgstr "Resimler"
+msgstr "Resim dosyası"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:660
 #, fuzzy
@@ -16616,9 +16467,8 @@ msgid "New transfer function type"
 msgstr "Tüm çeşitler"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1179
-#, fuzzy
 msgid "Light Source:"
-msgstr "Kaynak"
+msgstr "Işık Kaynağı:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1196
 msgid "Direction angle for the light source on the XY plane, in degrees"
@@ -16639,23 +16489,21 @@ msgstr "Konum:"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1200
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1206
-#, fuzzy
 msgid "X coordinate"
-msgstr "İmleç koordinatları"
+msgstr "X koordinatı"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1200
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1206
-#, fuzzy
 msgid "Y coordinate"
-msgstr "İmleç koordinatları"
+msgstr "Y koordinatı"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1200
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1206
 #, fuzzy
 msgid "Z coordinate"
-msgstr "İmleç koordinatları"
+msgstr "Koordinat"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1206
 #, fuzzy
@@ -16673,9 +16521,8 @@ msgstr ""
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1209
-#, fuzzy
 msgid "Cone Angle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1209
 msgid ""
@@ -16693,9 +16540,8 @@ msgid "_Duplicate"
 msgstr "Eşini Yarat"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1360
-#, fuzzy
 msgid "_Filter"
-msgstr "çizgiler"
+msgstr "_Filtre"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1387
 #, fuzzy
@@ -16708,18 +16554,16 @@ msgid "Rename filter"
 msgstr " Kaldır"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1573
-#, fuzzy
 msgid "Apply filter"
-msgstr "Katman Ekle"
+msgstr "Filtreyi uygula"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1652
 msgid "filter"
 msgstr "filtre"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1659
-#, fuzzy
 msgid "Add filter"
-msgstr "Katman Ekle"
+msgstr "Filtre ekle"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1709
 msgid "Duplicate filter"
@@ -16776,7 +16620,7 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2849
 #, fuzzy
 msgid "Coordinates:"
-msgstr "İmleç koordinatları"
+msgstr "Koordinatlar:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2849
 #, fuzzy
@@ -16790,9 +16634,8 @@ msgstr ""
 #. default width:
 #. default height:
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2850
-#, fuzzy
 msgid "Dimensions:"
-msgstr "Bö_lüm"
+msgstr "Boyutlar:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2850
 #, fuzzy
@@ -16813,9 +16656,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2857
-#, fuzzy
 msgid "Value(s):"
-msgstr "Değer"
+msgstr "Değer(ler):"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2861
 #, fuzzy
@@ -16905,7 +16747,6 @@ msgstr ""
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2877
-#, fuzzy
 msgid "Kernel:"
 msgstr "Çekirdek:"
 
@@ -17296,9 +17137,8 @@ msgid "Search in text objects"
 msgstr "Yazı nesnelerini ara"
 
 #: ../src/ui/dialog/find.cpp:79
-#, fuzzy
 msgid "_Properties"
-msgstr "%s Özellikleri"
+msgstr "_Özellikler"
 
 #: ../src/ui/dialog/find.cpp:79
 msgid "Search in object properties, styles, attributes and IDs"
@@ -17654,7 +17494,7 @@ msgstr ""
 #: ../src/ui/dialog/glyphs.cpp:69 ../src/ui/dialog/glyphs.cpp:161
 #: ../share/extensions/hershey.inx.h:22
 msgid "Cyrillic"
-msgstr ""
+msgstr "Kiril"
 
 #: ../src/ui/dialog/glyphs.cpp:70
 #, fuzzy
@@ -17663,7 +17503,7 @@ msgstr "Korunmuş"
 
 #: ../src/ui/dialog/glyphs.cpp:71 ../src/ui/dialog/glyphs.cpp:171
 msgid "Devanagari"
-msgstr ""
+msgstr "Devanagari"
 
 #: ../src/ui/dialog/glyphs.cpp:72 ../src/ui/dialog/glyphs.cpp:187
 msgid "Ethiopic"
@@ -17688,16 +17528,15 @@ msgstr "Gujarati"
 
 #: ../src/ui/dialog/glyphs.cpp:77 ../src/ui/dialog/glyphs.cpp:173
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: ../src/ui/dialog/glyphs.cpp:78
-#, fuzzy
 msgid "Han"
-msgstr "Açı"
+msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:79
 msgid "Hangul"
-msgstr ""
+msgstr "Hangul"
 
 #: ../src/ui/dialog/glyphs.cpp:80 ../src/ui/dialog/glyphs.cpp:164
 msgid "Hebrew"
@@ -17705,19 +17544,19 @@ msgstr "İbranice"
 
 #: ../src/ui/dialog/glyphs.cpp:81 ../src/ui/dialog/glyphs.cpp:252
 msgid "Hiragana"
-msgstr ""
+msgstr "Hiragana"
 
 #: ../src/ui/dialog/glyphs.cpp:82 ../src/ui/dialog/glyphs.cpp:178
 msgid "Kannada"
-msgstr ""
+msgstr "Kannada"
 
 #: ../src/ui/dialog/glyphs.cpp:83 ../src/ui/dialog/glyphs.cpp:253
 msgid "Katakana"
-msgstr ""
+msgstr "Katakana"
 
 #: ../src/ui/dialog/glyphs.cpp:84 ../src/ui/dialog/glyphs.cpp:197
 msgid "Khmer"
-msgstr ""
+msgstr "Kimerce"
 
 #: ../src/ui/dialog/glyphs.cpp:85 ../src/ui/dialog/glyphs.cpp:182
 #, fuzzy
@@ -17731,7 +17570,7 @@ msgstr "Başlangıç:"
 
 #: ../src/ui/dialog/glyphs.cpp:87 ../src/ui/dialog/glyphs.cpp:179
 msgid "Malayalam"
-msgstr ""
+msgstr "Malaya dili"
 
 #: ../src/ui/dialog/glyphs.cpp:88 ../src/ui/dialog/glyphs.cpp:198
 msgid "Mongolian"
@@ -17739,11 +17578,11 @@ msgstr "Moğolca"
 
 #: ../src/ui/dialog/glyphs.cpp:89 ../src/ui/dialog/glyphs.cpp:184
 msgid "Myanmar"
-msgstr ""
+msgstr "Myanmar"
 
 #: ../src/ui/dialog/glyphs.cpp:90 ../src/ui/dialog/glyphs.cpp:191
 msgid "Ogham"
-msgstr ""
+msgstr "Ogham"
 
 #: ../src/ui/dialog/glyphs.cpp:91
 msgid "Old Italic"
@@ -17751,63 +17590,63 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:92 ../src/ui/dialog/glyphs.cpp:175
 msgid "Oriya"
-msgstr ""
+msgstr "Oriya"
 
 #: ../src/ui/dialog/glyphs.cpp:93 ../src/ui/dialog/glyphs.cpp:192
 msgid "Runic"
-msgstr ""
+msgstr "Runik"
 
 #: ../src/ui/dialog/glyphs.cpp:94 ../src/ui/dialog/glyphs.cpp:180
 msgid "Sinhala"
-msgstr ""
+msgstr "Sinhala"
 
 #: ../src/ui/dialog/glyphs.cpp:95 ../src/ui/dialog/glyphs.cpp:166
 msgid "Syriac"
-msgstr ""
+msgstr "Süryanice"
 
 #: ../src/ui/dialog/glyphs.cpp:96 ../src/ui/dialog/glyphs.cpp:176
 msgid "Tamil"
-msgstr ""
+msgstr "Tamilce"
 
 #: ../src/ui/dialog/glyphs.cpp:97 ../src/ui/dialog/glyphs.cpp:177
 msgid "Telugu"
-msgstr ""
+msgstr "Telugu"
 
 #: ../src/ui/dialog/glyphs.cpp:98 ../src/ui/dialog/glyphs.cpp:168
 msgid "Thaana"
-msgstr ""
+msgstr "Thaana"
 
 #: ../src/ui/dialog/glyphs.cpp:99 ../src/ui/dialog/glyphs.cpp:181
 msgid "Thai"
-msgstr ""
+msgstr "Tay"
 
 #: ../src/ui/dialog/glyphs.cpp:100 ../src/ui/dialog/glyphs.cpp:183
 msgid "Tibetan"
-msgstr ""
+msgstr "Tibetçe"
 
 #: ../src/ui/dialog/glyphs.cpp:101
 msgid "Canadian Aboriginal"
-msgstr ""
+msgstr "Kanada Yerli Dili"
 
 #: ../src/ui/dialog/glyphs.cpp:102
 msgid "Yi"
-msgstr ""
+msgstr "Yi"
 
 #: ../src/ui/dialog/glyphs.cpp:103 ../src/ui/dialog/glyphs.cpp:193
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagalog"
 
 #: ../src/ui/dialog/glyphs.cpp:104 ../src/ui/dialog/glyphs.cpp:194
 msgid "Hanunoo"
-msgstr ""
+msgstr "Hanunoo"
 
 #: ../src/ui/dialog/glyphs.cpp:105 ../src/ui/dialog/glyphs.cpp:195
 msgid "Buhid"
-msgstr ""
+msgstr "Buhid"
 
 #: ../src/ui/dialog/glyphs.cpp:106 ../src/ui/dialog/glyphs.cpp:196
 msgid "Tagbanwa"
-msgstr ""
+msgstr "Tagbanwa"
 
 #: ../src/ui/dialog/glyphs.cpp:107
 msgid "Braille"
@@ -17815,19 +17654,19 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:108
 msgid "Cypriot"
-msgstr ""
+msgstr "Kıbrıs"
 
 #: ../src/ui/dialog/glyphs.cpp:109 ../src/ui/dialog/glyphs.cpp:200
 msgid "Limbu"
-msgstr ""
+msgstr "Limbu"
 
 #: ../src/ui/dialog/glyphs.cpp:110
 msgid "Osmanya"
-msgstr ""
+msgstr "Osmanya"
 
 #: ../src/ui/dialog/glyphs.cpp:111
 msgid "Shavian"
-msgstr ""
+msgstr "Shavian"
 
 #: ../src/ui/dialog/glyphs.cpp:112
 #, fuzzy
@@ -17896,19 +17735,19 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:127
 msgid "N'Ko"
-msgstr ""
+msgstr "N'Ko"
 
 #: ../src/ui/dialog/glyphs.cpp:128 ../src/ui/dialog/glyphs.cpp:278
 msgid "Kayah Li"
-msgstr ""
+msgstr "Kayah Li"
 
 #: ../src/ui/dialog/glyphs.cpp:129 ../src/ui/dialog/glyphs.cpp:208
 msgid "Lepcha"
-msgstr ""
+msgstr "Lepcha"
 
 #: ../src/ui/dialog/glyphs.cpp:130 ../src/ui/dialog/glyphs.cpp:279
 msgid "Rejang"
-msgstr ""
+msgstr "Rejang"
 
 #: ../src/ui/dialog/glyphs.cpp:131 ../src/ui/dialog/glyphs.cpp:207
 #, fuzzy
@@ -17917,27 +17756,27 @@ msgstr "Yıldız"
 
 #: ../src/ui/dialog/glyphs.cpp:132 ../src/ui/dialog/glyphs.cpp:276
 msgid "Saurashtra"
-msgstr ""
+msgstr "Saurashtra"
 
 #: ../src/ui/dialog/glyphs.cpp:133 ../src/ui/dialog/glyphs.cpp:282
 msgid "Cham"
-msgstr ""
+msgstr "Cham"
 
 #: ../src/ui/dialog/glyphs.cpp:134 ../src/ui/dialog/glyphs.cpp:209
 msgid "Ol Chiki"
-msgstr ""
+msgstr "Ol Chiki"
 
 #: ../src/ui/dialog/glyphs.cpp:135 ../src/ui/dialog/glyphs.cpp:268
 msgid "Vai"
-msgstr ""
+msgstr "Vai"
 
 #: ../src/ui/dialog/glyphs.cpp:136
 msgid "Carian"
-msgstr ""
+msgstr "Karya"
 
 #: ../src/ui/dialog/glyphs.cpp:137
 msgid "Lycian"
-msgstr ""
+msgstr "Likya Dili"
 
 #: ../src/ui/dialog/glyphs.cpp:138
 #, fuzzy
@@ -17946,7 +17785,7 @@ msgstr "orta"
 
 #: ../src/ui/dialog/glyphs.cpp:153
 msgid "Basic Latin"
-msgstr ""
+msgstr "Temel Latin"
 
 #: ../src/ui/dialog/glyphs.cpp:154
 #, fuzzy
@@ -17955,16 +17794,15 @@ msgstr "Seçimi siler"
 
 #: ../src/ui/dialog/glyphs.cpp:155
 msgid "Latin Extended-A"
-msgstr ""
+msgstr "Genişletilmiş Latin-A"
 
 #: ../src/ui/dialog/glyphs.cpp:156
 msgid "Latin Extended-B"
-msgstr ""
+msgstr "Genişletilmiş Latin-B"
 
 #: ../src/ui/dialog/glyphs.cpp:157
-#, fuzzy
 msgid "IPA Extensions"
-msgstr "Ekle_ntiler"
+msgstr "IPA Uzantıları"
 
 #: ../src/ui/dialog/glyphs.cpp:158
 msgid "Spacing Modifier Letters"
@@ -17980,15 +17818,15 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:162
 msgid "Cyrillic Supplement"
-msgstr ""
+msgstr "Kiril Tamamlayıcı"
 
 #: ../src/ui/dialog/glyphs.cpp:167
 msgid "Arabic Supplement"
-msgstr ""
+msgstr "Arapça Tamamlayıcı"
 
 #: ../src/ui/dialog/glyphs.cpp:169
 msgid "NKo"
-msgstr ""
+msgstr "NKo"
 
 #: ../src/ui/dialog/glyphs.cpp:170
 msgid "Samaritan"
@@ -17996,7 +17834,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:186
 msgid "Hangul Jamo"
-msgstr ""
+msgstr "Hangul Jamo"
 
 #: ../src/ui/dialog/glyphs.cpp:188
 msgid "Ethiopic Supplement"
@@ -18012,11 +17850,11 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:203
 msgid "Khmer Symbols"
-msgstr ""
+msgstr "Khmer Sembolleri"
 
 #: ../src/ui/dialog/glyphs.cpp:205
 msgid "Tai Tham"
-msgstr ""
+msgstr "Tai Tham"
 
 #: ../src/ui/dialog/glyphs.cpp:210
 #, fuzzy
@@ -18024,13 +17862,12 @@ msgid "Vedic Extensions"
 msgstr "Ekle_ntiler"
 
 #: ../src/ui/dialog/glyphs.cpp:211
-#, fuzzy
 msgid "Phonetic Extensions"
-msgstr "_Eklentiler Hakkında"
+msgstr "Fonetik Uzantılar"
 
 #: ../src/ui/dialog/glyphs.cpp:212
 msgid "Phonetic Extensions Supplement"
-msgstr ""
+msgstr "Fonetik Uzantı Tamamlayıcı"
 
 #: ../src/ui/dialog/glyphs.cpp:213
 msgid "Combining Diacritical Marks Supplement"
@@ -18038,11 +17875,11 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:214
 msgid "Latin Extended Additional"
-msgstr ""
+msgstr "Genişletilmiş Latin Ekleri"
 
 #: ../src/ui/dialog/glyphs.cpp:215
 msgid "Greek Extended"
-msgstr ""
+msgstr "Genişletilmiş Yunanca"
 
 #: ../src/ui/dialog/glyphs.cpp:216
 #, fuzzy
@@ -18051,11 +17888,11 @@ msgstr "Seçim"
 
 #: ../src/ui/dialog/glyphs.cpp:217
 msgid "Superscripts and Subscripts"
-msgstr ""
+msgstr "Üst simgeler ve Alt simgeler"
 
 #: ../src/ui/dialog/glyphs.cpp:218
 msgid "Currency Symbols"
-msgstr ""
+msgstr "Parasal Semboller"
 
 #: ../src/ui/dialog/glyphs.cpp:219
 msgid "Combining Diacritical Marks for Symbols"
@@ -18063,12 +17900,11 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:220
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Harfe Benzeyen Semboller"
 
 #: ../src/ui/dialog/glyphs.cpp:221
-#, fuzzy
 msgid "Number Forms"
-msgstr "Satır sayısı"
+msgstr "Sayı Biçimleri"
 
 #: ../src/ui/dialog/glyphs.cpp:222
 msgid "Arrows"
@@ -18076,7 +17912,7 @@ msgstr "Oklar"
 
 #: ../src/ui/dialog/glyphs.cpp:223
 msgid "Mathematical Operators"
-msgstr ""
+msgstr "Matematiksel İşleçler"
 
 #: ../src/ui/dialog/glyphs.cpp:224
 #, fuzzy
@@ -18090,11 +17926,11 @@ msgstr "Katkıda bulunanlar"
 
 #: ../src/ui/dialog/glyphs.cpp:226
 msgid "Optical Character Recognition"
-msgstr ""
+msgstr "Optik Karakter Tanıma"
 
 #: ../src/ui/dialog/glyphs.cpp:227
 msgid "Enclosed Alphanumerics"
-msgstr ""
+msgstr "Kapalı Alfanümerikler"
 
 #: ../src/ui/dialog/glyphs.cpp:228
 #, fuzzy
@@ -18107,7 +17943,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:230
 msgid "Geometric Shapes"
-msgstr ""
+msgstr "Geometrik Şekiller"
 
 #: ../src/ui/dialog/glyphs.cpp:231
 #, fuzzy
@@ -18116,7 +17952,7 @@ msgstr "Çeşitli ipuçları ve önemli noktalar"
 
 #: ../src/ui/dialog/glyphs.cpp:232
 msgid "Dingbats"
-msgstr ""
+msgstr "Dingbats"
 
 #: ../src/ui/dialog/glyphs.cpp:233
 #, fuzzy
@@ -18125,7 +17961,7 @@ msgstr "Çeşitli ipuçları ve önemli noktalar"
 
 #: ../src/ui/dialog/glyphs.cpp:234
 msgid "Supplemental Arrows-A"
-msgstr ""
+msgstr "Tamamlayıcı Oklar-A"
 
 #: ../src/ui/dialog/glyphs.cpp:235
 #, fuzzy
@@ -18134,7 +17970,7 @@ msgstr "Desenler"
 
 #: ../src/ui/dialog/glyphs.cpp:236
 msgid "Supplemental Arrows-B"
-msgstr ""
+msgstr "Tamamlayıcı Oklar-B"
 
 #: ../src/ui/dialog/glyphs.cpp:237
 #, fuzzy
@@ -18143,7 +17979,7 @@ msgstr "Çeşitli ipuçları ve önemli noktalar"
 
 #: ../src/ui/dialog/glyphs.cpp:238
 msgid "Supplemental Mathematical Operators"
-msgstr ""
+msgstr "Tamamlayıcı Matematiksel Operatörler"
 
 #: ../src/ui/dialog/glyphs.cpp:239
 #, fuzzy
@@ -18152,23 +17988,23 @@ msgstr "Çeşitli ipuçları ve önemli noktalar"
 
 #: ../src/ui/dialog/glyphs.cpp:241
 msgid "Latin Extended-C"
-msgstr ""
+msgstr "Genişletilmiş Latin-C"
 
 #: ../src/ui/dialog/glyphs.cpp:243
 msgid "Georgian Supplement"
-msgstr ""
+msgstr "Gürcüce Tamamlayıcı"
 
 #: ../src/ui/dialog/glyphs.cpp:245
 msgid "Ethiopic Extended"
-msgstr ""
+msgstr "Genişletilmiş Etiyopyaca"
 
 #: ../src/ui/dialog/glyphs.cpp:246
 msgid "Cyrillic Extended-A"
-msgstr ""
+msgstr "Genişletilmiş Kiril-A"
 
 #: ../src/ui/dialog/glyphs.cpp:247
 msgid "Supplemental Punctuation"
-msgstr ""
+msgstr "Tamamlayıcı Noktalama"
 
 #: ../src/ui/dialog/glyphs.cpp:248
 msgid "CJK Radicals Supplement"
@@ -18176,11 +18012,11 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:249
 msgid "Kangxi Radicals"
-msgstr ""
+msgstr "Kangxi Kökleri"
 
 #: ../src/ui/dialog/glyphs.cpp:250
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "İdeogram Tanımlama Karakterleri"
 
 #: ../src/ui/dialog/glyphs.cpp:251
 msgid "CJK Symbols and Punctuation"
@@ -18188,15 +18024,15 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:255
 msgid "Hangul Compatibility Jamo"
-msgstr ""
+msgstr "Hangul Compatibility Jamo"
 
 #: ../src/ui/dialog/glyphs.cpp:256
 msgid "Kanbun"
-msgstr ""
+msgstr "Kanbun"
 
 #: ../src/ui/dialog/glyphs.cpp:257
 msgid "Bopomofo Extended"
-msgstr ""
+msgstr "Genişletilmiş Bopomofo"
 
 #: ../src/ui/dialog/glyphs.cpp:258
 #, fuzzy
@@ -18205,7 +18041,7 @@ msgstr "Çizgi kalınlığı"
 
 #: ../src/ui/dialog/glyphs.cpp:259
 msgid "Katakana Phonetic Extensions"
-msgstr ""
+msgstr "Katakana Fonetik Uzantıları"
 
 #: ../src/ui/dialog/glyphs.cpp:260
 msgid "Enclosed CJK Letters and Months"
@@ -18213,7 +18049,7 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:261
 msgid "CJK Compatibility"
-msgstr ""
+msgstr "CJK Uyumluluğu"
 
 #: ../src/ui/dialog/glyphs.cpp:262
 msgid "CJK Unified Ideographs Extension A"
@@ -18221,31 +18057,31 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:263
 msgid "Yijing Hexagram Symbols"
-msgstr ""
+msgstr "Yijing Altıgen Sembolleri"
 
 #: ../src/ui/dialog/glyphs.cpp:264
 msgid "CJK Unified Ideographs"
-msgstr ""
+msgstr "CJK Birleşik İdeogramlar"
 
 #: ../src/ui/dialog/glyphs.cpp:265
 msgid "Yi Syllables"
-msgstr ""
+msgstr "Yi Heceleri"
 
 #: ../src/ui/dialog/glyphs.cpp:266
 msgid "Yi Radicals"
-msgstr ""
+msgstr "Yi Kökleri"
 
 #: ../src/ui/dialog/glyphs.cpp:267
 msgid "Lisu"
-msgstr ""
+msgstr "Lisu"
 
 #: ../src/ui/dialog/glyphs.cpp:269
 msgid "Cyrillic Extended-B"
-msgstr ""
+msgstr "Genişletilmiş Kiril-B"
 
 #: ../src/ui/dialog/glyphs.cpp:270
 msgid "Bamum"
-msgstr ""
+msgstr "Bamum"
 
 #: ../src/ui/dialog/glyphs.cpp:271
 msgid "Modifier Tone Letters"
@@ -18253,43 +18089,43 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:272
 msgid "Latin Extended-D"
-msgstr ""
+msgstr "Genişletilmiş Latin-D"
 
 #: ../src/ui/dialog/glyphs.cpp:274
 msgid "Common Indic Number Forms"
-msgstr ""
+msgstr "Hintçe Genel Rakam Biçimleri"
 
 #: ../src/ui/dialog/glyphs.cpp:277
 msgid "Devanagari Extended"
-msgstr ""
+msgstr "Genişletilmiş Devanagari"
 
 #: ../src/ui/dialog/glyphs.cpp:280
 msgid "Hangul Jamo Extended-A"
-msgstr ""
+msgstr "Hangul Jamo Genişletilmiş-A"
 
 #: ../src/ui/dialog/glyphs.cpp:281
 msgid "Javanese"
-msgstr ""
+msgstr "Javanese"
 
 #: ../src/ui/dialog/glyphs.cpp:283
 msgid "Myanmar Extended-A"
-msgstr ""
+msgstr "Myanmar Genişletilmiş-A"
 
 #: ../src/ui/dialog/glyphs.cpp:284
 msgid "Tai Viet"
-msgstr ""
+msgstr "Tai Viet"
 
 #: ../src/ui/dialog/glyphs.cpp:285
 msgid "Meetei Mayek"
-msgstr ""
+msgstr "Meetei Mayek"
 
 #: ../src/ui/dialog/glyphs.cpp:286
 msgid "Hangul Syllables"
-msgstr ""
+msgstr "Hangul Heceleri"
 
 #: ../src/ui/dialog/glyphs.cpp:287
 msgid "Hangul Jamo Extended-B"
-msgstr ""
+msgstr "Genişletilmiş Hangul Jamo-B"
 
 #: ../src/ui/dialog/glyphs.cpp:288
 msgid "High Surrogates"
@@ -18305,19 +18141,19 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:291
 msgid "Private Use Area"
-msgstr ""
+msgstr "Özel Kullanım Alanı"
 
 #: ../src/ui/dialog/glyphs.cpp:292
 msgid "CJK Compatibility Ideographs"
-msgstr ""
+msgstr "CJK Uyumluluk İdeogramları"
 
 #: ../src/ui/dialog/glyphs.cpp:293
 msgid "Alphabetic Presentation Forms"
-msgstr ""
+msgstr "Alfabetik Sunum Biçimleri"
 
 #: ../src/ui/dialog/glyphs.cpp:294
 msgid "Arabic Presentation Forms-A"
-msgstr ""
+msgstr "Arapça Sunum Biçimleri-A"
 
 #: ../src/ui/dialog/glyphs.cpp:295
 #, fuzzy
@@ -18335,7 +18171,7 @@ msgstr "PostScript işleçlerini kullanarak yazdır"
 
 #: ../src/ui/dialog/glyphs.cpp:298
 msgid "CJK Compatibility Forms"
-msgstr ""
+msgstr "CJK Uyumluluk Biçimleri"
 
 #: ../src/ui/dialog/glyphs.cpp:299
 msgid "Small Form Variants"
@@ -18343,24 +18179,23 @@ msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:300
 msgid "Arabic Presentation Forms-B"
-msgstr ""
+msgstr "Arapça Sunum Biçimleri-B"
 
 #: ../src/ui/dialog/glyphs.cpp:301
 msgid "Halfwidth and Fullwidth Forms"
-msgstr ""
+msgstr "Yarım genişlik ve Tam genişlik Biçimleri"
 
 #: ../src/ui/dialog/glyphs.cpp:302
 msgid "Specials"
 msgstr "Özeller"
 
 #: ../src/ui/dialog/glyphs.cpp:377
-#, fuzzy
 msgid "Script: "
 msgstr "Betik: "
 
 #: ../src/ui/dialog/glyphs.cpp:414
 msgid "Range: "
-msgstr ""
+msgstr "Aralık: "
 
 #: ../src/ui/dialog/glyphs.cpp:497
 msgid "Append"
@@ -18465,30 +18300,26 @@ msgid "Move and/or rotate the guide relative to current settings"
 msgstr ""
 
 #: ../src/ui/dialog/guides.cpp:48
-#, fuzzy
 msgctxt "Guides"
 msgid "_X:"
-msgstr "X:"
+msgstr "_X:"
 
 #: ../src/ui/dialog/guides.cpp:49
-#, fuzzy
 msgctxt "Guides"
 msgid "_Y:"
-msgstr "Y:"
+msgstr "_Y:"
 
 #: ../src/ui/dialog/guides.cpp:50 ../src/ui/dialog/object-properties.cpp:59
-#, fuzzy
 msgid "_Label:"
-msgstr "_Etiket"
+msgstr "_Etiket:"
 
 #: ../src/ui/dialog/guides.cpp:50
 msgid "Optionally give this guideline a name"
 msgstr ""
 
 #: ../src/ui/dialog/guides.cpp:51
-#, fuzzy
 msgid "_Angle:"
-msgstr "Açı:"
+msgstr "_Açı:"
 
 #: ../src/ui/dialog/guides.cpp:130
 #, fuzzy
@@ -18513,7 +18344,7 @@ msgstr "Güncel katman"
 #: ../src/ui/dialog/icon-preview.cpp:155
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d x %d"
 
 #: ../src/ui/dialog/icon-preview.cpp:167
 #, fuzzy
@@ -18523,7 +18354,7 @@ msgstr "Ölçü"
 #: ../src/ui/dialog/icon-preview.cpp:236
 #, fuzzy
 msgid "Actual Size:"
-msgstr "Çalıştır:"
+msgstr "Özgün Boyut:"
 
 #: ../src/ui/dialog/icon-preview.cpp:241
 #, fuzzy
@@ -19109,7 +18940,7 @@ msgstr "Arapça (ar)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Armenian (hy)"
-msgstr ""
+msgstr "Ermenice (hy)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Assamese (as)"
@@ -19117,23 +18948,23 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Azerbaijani (az)"
-msgstr ""
+msgstr "Azerice (az)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Basque (eu)"
-msgstr ""
+msgstr "Baskça (eu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Belarusian (be)"
-msgstr ""
+msgstr "Belarusça (be)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Bulgarian (bg)"
-msgstr ""
+msgstr "Bulgarca (bg)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Bengali (bn)"
-msgstr ""
+msgstr "Bengalce (bn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Bengali/Bangladesh (bn_BD)"
@@ -19149,7 +18980,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Catalan (ca)"
-msgstr ""
+msgstr "Katalanca (ca)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Valencian Catalan (ca@valencia)"
@@ -19197,9 +19028,8 @@ msgid "Greek (el)"
 msgstr "Yeşil Kanal"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:531
-#, fuzzy
 msgid "English (en)"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "English/Australia (en_AU)"
@@ -19228,7 +19058,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Farsi (fa)"
-msgstr ""
+msgstr "Farsça [fa)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Finnish (fi)"
@@ -19252,7 +19082,7 @@ msgstr "İbranice (he)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hindi (hi)"
-msgstr ""
+msgstr "Hintçe (hi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hungarian (hu)"
@@ -19268,7 +19098,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Irish (ga)"
-msgstr ""
+msgstr "İrlandaca (ga)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Italian (it)"
@@ -19401,7 +19231,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Serbian (sr)"
-msgstr ""
+msgstr "Sırpça (sr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Serbian in Latin script (sr@latin)"
@@ -19417,7 +19247,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Slovak (sk)"
-msgstr ""
+msgstr "Slovakça (sk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Slovenian (sl)"
@@ -19433,11 +19263,11 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Swedish (sv)"
-msgstr ""
+msgstr "İsveççe (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Tamil (ta)"
-msgstr ""
+msgstr "Tamilce (ta)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Telugu (te)"
@@ -19461,7 +19291,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:548
 msgid "Vietnamese (vi)"
-msgstr ""
+msgstr "Vietnamca (vi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:600
 msgid "Language (requires restart):"
@@ -19978,9 +19808,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:899
-#, fuzzy
 msgid "_Handle size:"
-msgstr "Açı"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:900
 msgid "Set the relative size of node handles"
@@ -20185,9 +20014,8 @@ msgid "Check Attributes and Style Properties on"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:971
-#, fuzzy
 msgid "Reading"
-msgstr "Y aralığı:"
+msgstr "Okunuyor"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:972
 msgid ""
@@ -20198,7 +20026,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:973
 #, fuzzy
 msgid "Editing"
-msgstr "_Düzen"
+msgstr "Düzenleniyor"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:974
 msgid ""
@@ -20207,9 +20035,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:975
-#, fuzzy
 msgid "Writing"
-msgstr "_Betikler..."
+msgstr "Yazılıyor"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:976
 msgid "Check attributes and style properties on writing out SVG files"
@@ -20663,9 +20490,8 @@ msgid "Autoscrolling"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1248
-#, fuzzy
 msgid "_Speed:"
-msgstr "Hız:"
+msgstr "_Hız:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1249
 msgid ""
@@ -20704,9 +20530,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1259
-#, fuzzy
 msgid "Scrolling"
-msgstr "Kaydır"
+msgstr "Kaydırma"
 
 #. Snapping options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1262
@@ -20829,10 +20654,9 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1312
-#, fuzzy
 msgctxt "Rotation angle"
 msgid "None"
-msgstr "Hiçbiri"
+msgstr "Yok"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1316
 #, fuzzy
@@ -20977,9 +20801,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1368
-#, fuzzy
 msgid "Before applying"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1370
 msgid "Do not group clipped/masked objects"
@@ -21036,9 +20859,8 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1400
 #: ../share/extensions/hershey.inx.h:27
-#, fuzzy
 msgid "Markers"
-msgstr "Damlalık"
+msgstr "İşaretleyiciler"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1403
 #, fuzzy
@@ -21052,9 +20874,8 @@ msgstr ""
 
 #. tooltip
 #: ../src/ui/dialog/inkscape-preferences.cpp:1407
-#, fuzzy
 msgid "Cleanup"
-msgstr "_Temizle"
+msgstr "Temizle"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1415
 #, fuzzy
@@ -21291,7 +21112,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:1614
 #, fuzzy
 msgid "Import ..."
-msgstr "İçeri _Aktar..."
+msgstr "İçeriye Aktar ..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1614
 msgid "Import custom keyboard shortcuts from a file"
@@ -21300,7 +21121,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:1617
 #, fuzzy
 msgid "Export ..."
-msgstr "_Dışarı Aktar..."
+msgstr "Dışarıya Aktar ..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1617
 #, fuzzy
@@ -21317,10 +21138,9 @@ msgid "Misc"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1892
-#, fuzzy
 msgctxt "Spellchecker language"
 msgid "None"
-msgstr "Hiçbiri"
+msgstr "Yok"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1913
 msgid "Set the main spell check language"
@@ -21480,9 +21300,8 @@ msgstr "Sistem"
 
 #: ../src/ui/dialog/input.cpp:360 ../src/ui/dialog/input.cpp:381
 #: ../src/ui/dialog/input.cpp:1641
-#, fuzzy
 msgid "Disabled"
-msgstr "Başlık"
+msgstr "Devre dışı"
 
 #: ../src/ui/dialog/input.cpp:361
 msgctxt "Input device"
@@ -21510,9 +21329,8 @@ msgid "Hardware"
 msgstr "Donanım"
 
 #: ../src/ui/dialog/input.cpp:732
-#, fuzzy
 msgid "Link:"
-msgstr "in"
+msgstr "Bağlantı:"
 
 #: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743
 #: ../src/ui/dialog/input.cpp:1571 ../src/ui/widget/color-scales.cpp:46
@@ -21679,9 +21497,8 @@ msgid "Lock other layers"
 msgstr "Katmanı Kilitle"
 
 #: ../src/ui/dialog/layers.cpp:730
-#, fuzzy
 msgid "Move layer"
-msgstr "Katmanı Aşağı _Al"
+msgstr "Katmanı taşı"
 
 #: ../src/ui/dialog/layers.cpp:892
 msgctxt "Layers"
@@ -22480,10 +22297,9 @@ msgid "Starting angle"
 msgstr "Yatay başlama değeri"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:46
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "End angle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:48
 #, fuzzy
@@ -22539,9 +22355,8 @@ msgid "Radius X/Y:"
 msgstr "_Yukarı Al"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:127
-#, fuzzy
 msgid "Angle X/Y:"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:150
 #, fuzzy
@@ -22590,9 +22405,8 @@ msgid "_Ignore once"
 msgstr "Yoksay"
 
 #: ../src/ui/dialog/spellcheck.cpp:75
-#, fuzzy
 msgid "_Ignore"
-msgstr "Yoksay"
+msgstr "_Yoksay"
 
 #: ../src/ui/dialog/spellcheck.cpp:76
 msgid "A_dd"
@@ -22805,9 +22619,8 @@ msgid "Set font family"
 msgstr "Yazı tipi ailesi"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:872
-#, fuzzy
 msgid "font"
-msgstr "Yazı tipi"
+msgstr "yazı tipi"
 
 #. select_font(font);
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:887
@@ -22843,7 +22656,7 @@ msgstr "Ölçekle"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:935
 #, fuzzy
 msgid "Preview Text:"
-msgstr "Ön izleme"
+msgstr "Metni Önizle:"
 
 #: ../src/ui/dialog/swatches.cpp:202 ../src/ui/tools/gradient-tool.cpp:360
 #: ../src/ui/tools/gradient-tool.cpp:458
@@ -22853,9 +22666,8 @@ msgstr "Renk geçişi sonlandırması ekle"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:257
-#, fuzzy
 msgid "Set fill"
-msgstr "Doldurmayı iptal et"
+msgstr "Dolgu ayarı"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:265
@@ -22884,9 +22696,8 @@ msgstr ""
 
 #. Fill in later
 #: ../src/ui/dialog/symbols.cpp:144 ../src/ui/dialog/symbols.cpp:145
-#, fuzzy
 msgid "Current Document"
-msgstr "Belgeyi yazdır"
+msgstr "Geçerli Belge"
 
 #: ../src/ui/dialog/symbols.cpp:212
 #, fuzzy
@@ -22968,9 +22779,8 @@ msgid "Path: "
 msgstr "Yol: "
 
 #: ../src/ui/dialog/template-widget.cpp:126
-#, fuzzy
 msgid "Description: "
-msgstr "Tanım"
+msgstr "Açıklama: "
 
 #: ../src/ui/dialog/template-widget.cpp:128
 #, fuzzy
@@ -23126,9 +22936,8 @@ msgid "The number of reduced colors"
 msgstr "Dönme sayısı"
 
 #: ../src/ui/dialog/tracedialog.cpp:586
-#, fuzzy
 msgid "_Colors:"
-msgstr "Renkler:"
+msgstr "_Renkler:"
 
 #. swap black and white
 #: ../src/ui/dialog/tracedialog.cpp:594
@@ -23237,9 +23046,8 @@ msgid "Speckles of up to this many pixels will be suppressed"
 msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:703
-#, fuzzy
 msgid "S_ize:"
-msgstr "Boyut"
+msgstr "_Boyut:"
 
 #: ../src/ui/dialog/tracedialog.cpp:708
 #, fuzzy
@@ -23312,9 +23120,8 @@ msgid "Live Preview"
 msgstr "Canlı Ön izleme"
 
 #: ../src/ui/dialog/tracedialog.cpp:788
-#, fuzzy
 msgid "_Update"
-msgstr "Tarih"
+msgstr "_Güncelle"
 
 #. I guess it's correct to call the "intermediate bitmap" a preview of the trace
 #: ../src/ui/dialog/tracedialog.cpp:796
@@ -23717,9 +23524,8 @@ msgstr "_Doldur ve Çiz"
 
 #. Select same fill color
 #: ../src/ui/interface.cpp:1674
-#, fuzzy
 msgid "Fill Color"
-msgstr "Düz renk"
+msgstr "Dolgu Rengi"
 
 #. Select same stroke color
 #: ../src/ui/interface.cpp:1681
@@ -23735,9 +23541,8 @@ msgstr "Çizgi stili"
 
 #. Select same stroke style
 #: ../src/ui/interface.cpp:1695
-#, fuzzy
 msgid "Object type"
-msgstr "Nesne"
+msgstr "Nesne türü"
 
 #. Move to layer
 #: ../src/ui/interface.cpp:1702
@@ -23805,9 +23610,8 @@ msgid "_Remove Link"
 msgstr "Bağlantıyı Kaldır"
 
 #: ../src/ui/interface.cpp:1959
-#, fuzzy
 msgid "Remove link"
-msgstr "Bağlantıyı Kaldır"
+msgstr "Bağlantıyı kaldır"
 
 #. Image properties
 #: ../src/ui/interface.cpp:1969
@@ -24739,22 +24543,19 @@ msgid "None"
 msgstr "Hiçbiri"
 
 #: ../src/ui/tools/flood-tool.cpp:103
-#, fuzzy
 msgctxt "Flood autogap"
 msgid "Small"
-msgstr "küçük"
+msgstr "Küçük"
 
 #: ../src/ui/tools/flood-tool.cpp:104
-#, fuzzy
 msgctxt "Flood autogap"
 msgid "Medium"
-msgstr "orta"
+msgstr "Orta"
 
 #: ../src/ui/tools/flood-tool.cpp:105
-#, fuzzy
 msgctxt "Flood autogap"
 msgid "Large"
-msgstr "geniş"
+msgstr "Büyük"
 
 #: ../src/ui/tools/flood-tool.cpp:415
 msgid "<b>Too much inset</b>, the result is empty."
@@ -26253,7 +26054,6 @@ msgid "List"
 msgstr "Liste"
 
 #: ../src/ui/widget/panel.cpp:136
-#, fuzzy
 msgctxt "Swatches"
 msgid "Size"
 msgstr "Boyut"
@@ -26283,16 +26083,14 @@ msgid "Large"
 msgstr "geniş"
 
 #: ../src/ui/widget/panel.cpp:144
-#, fuzzy
 msgctxt "Swatches height"
 msgid "Huge"
-msgstr "Ton"
+msgstr "Çok Büyük"
 
 #: ../src/ui/widget/panel.cpp:166
-#, fuzzy
 msgctxt "Swatches"
 msgid "Width"
-msgstr "Genişlik:"
+msgstr "Genişlik"
 
 #: ../src/ui/widget/panel.cpp:170
 #, fuzzy
@@ -26307,16 +26105,14 @@ msgid "Narrow"
 msgstr "dar"
 
 #: ../src/ui/widget/panel.cpp:172
-#, fuzzy
 msgctxt "Swatches width"
 msgid "Medium"
-msgstr "orta"
+msgstr "Orta"
 
 #: ../src/ui/widget/panel.cpp:173
-#, fuzzy
 msgctxt "Swatches width"
 msgid "Wide"
-msgstr "_Gizle"
+msgstr "Geniş"
 
 #: ../src/ui/widget/panel.cpp:174
 #, fuzzy
@@ -26342,10 +26138,9 @@ msgid "Solid"
 msgstr ""
 
 #: ../src/ui/widget/panel.cpp:210
-#, fuzzy
 msgctxt "Swatches border"
 msgid "Wide"
-msgstr "_Gizle"
+msgstr "Geniş"
 
 #. TRANSLATORS: "Wrap" indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:241
@@ -26433,10 +26228,9 @@ msgid "Nothing selected"
 msgstr "Hiçbir şey seçili değil"
 
 #: ../src/ui/widget/selected-style.cpp:184
-#, fuzzy
 msgctxt "Fill"
 msgid "<i>None</i>"
-msgstr "<i>Hiç</i>"
+msgstr "<i>Yok</i>"
 
 #: ../src/ui/widget/selected-style.cpp:186
 #, fuzzy
@@ -26446,10 +26240,9 @@ msgstr "<i>Hiç</i>"
 
 #: ../src/ui/widget/selected-style.cpp:190
 #: ../src/ui/widget/style-swatch.cpp:321
-#, fuzzy
 msgctxt "Fill and stroke"
 msgid "No fill"
-msgstr "Doldurmayı iptal et"
+msgstr "Dolgu yok"
 
 #: ../src/ui/widget/selected-style.cpp:190
 #: ../src/ui/widget/style-swatch.cpp:321
@@ -26525,9 +26318,8 @@ msgid "Different"
 msgstr "_Fark"
 
 #: ../src/ui/widget/selected-style.cpp:232
-#, fuzzy
 msgid "Different fills"
-msgstr "_Fark"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:232
 #, fuzzy
@@ -26596,9 +26388,8 @@ msgid "Multiple selected objects have the same stroke"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:254
-#, fuzzy
 msgid "Edit fill..."
-msgstr "Düzenle..."
+msgstr "Dolgu düzenle"
 
 #: ../src/ui/widget/selected-style.cpp:254
 #, fuzzy
@@ -26616,14 +26407,12 @@ msgid "Last selected color"
 msgstr "Son seçilen"
 
 #: ../src/ui/widget/selected-style.cpp:278
-#, fuzzy
 msgid "Copy color"
-msgstr "Sonlandırma Rengi"
+msgstr "Rengi kopyala"
 
 #: ../src/ui/widget/selected-style.cpp:282
-#, fuzzy
 msgid "Paste color"
-msgstr "Düz renk"
+msgstr "Renk yapıştır"
 
 #: ../src/ui/widget/selected-style.cpp:286
 #: ../src/ui/widget/selected-style.cpp:868
@@ -26683,9 +26472,8 @@ msgid "Invert stroke"
 msgstr "Bağlantıyı Kaldır"
 
 #: ../src/ui/widget/selected-style.cpp:717
-#, fuzzy
 msgid "White fill"
-msgstr "Beyaz tahta"
+msgstr "Beyaz dolgu"
 
 #: ../src/ui/widget/selected-style.cpp:729
 #, fuzzy
@@ -26702,9 +26490,8 @@ msgid "Black stroke"
 msgstr "Düz renk"
 
 #: ../src/ui/widget/selected-style.cpp:796
-#, fuzzy
 msgid "Paste fill"
-msgstr "Örüntü doldur"
+msgstr "Dolgu yapıştır"
 
 #: ../src/ui/widget/selected-style.cpp:814
 #, fuzzy
@@ -26816,7 +26603,7 @@ msgstr "R Renk Geçişi"
 #: ../src/ui/widget/style-swatch.cpp:312
 #, c-format
 msgid "Fill: %06x/%.3g"
-msgstr ""
+msgstr "Dolgu: %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:314
 #, c-format
@@ -26824,10 +26611,9 @@ msgid "Stroke: %06x/%.3g"
 msgstr "Çizgi: %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:319
-#, fuzzy
 msgctxt "Fill and stroke"
 msgid "<i>None</i>"
-msgstr "<i>Hiç</i>"
+msgstr "<i>Hiçbiri</i>"
 
 #: ../src/ui/widget/style-swatch.cpp:346
 #, fuzzy, c-format
@@ -26987,9 +26773,8 @@ msgid "Duplicated layer."
 msgstr "Eşi yaratılmış katman."
 
 #: ../src/verbs.cpp:1393
-#, fuzzy
 msgid "Delete layer"
-msgstr "Silinmiş Katman."
+msgstr "Katmanı sil"
 
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1396
@@ -26997,24 +26782,20 @@ msgid "Deleted layer."
 msgstr "Silinmiş Katman."
 
 #: ../src/verbs.cpp:1413
-#, fuzzy
 msgid "Show all layers"
-msgstr "Bütün katmanlarda seç"
+msgstr "Tüm katmanları göster"
 
 #: ../src/verbs.cpp:1418
-#, fuzzy
 msgid "Hide all layers"
-msgstr "katmanı gizle"
+msgstr "Tüm katmanları gizle"
 
 #: ../src/verbs.cpp:1423
-#, fuzzy
 msgid "Lock all layers"
-msgstr "Bütün katmanlarda seç"
+msgstr "Tüm katmanları kilitle"
 
 #: ../src/verbs.cpp:1437
-#, fuzzy
 msgid "Unlock all layers"
-msgstr "Katman kilidini aç"
+msgstr "Tüm katmanlar kilitsiz"
 
 #: ../src/verbs.cpp:1521
 #, fuzzy
@@ -27516,9 +27297,8 @@ msgid ""
 msgstr "Kopyalamak için bir<b>nesne</b> seçin."
 
 #: ../src/verbs.cpp:2500
-#, fuzzy
 msgid "_Fill Color"
-msgstr "Düz renk"
+msgstr "_Dolgu Rengi"
 
 #: ../src/verbs.cpp:2501
 #, fuzzy
@@ -29253,9 +29033,8 @@ msgstr "Çeşitli ipuçları ve önemli noktalar"
 #. "tutorial_tips"
 #. Effect -- renamed Extension
 #: ../src/verbs.cpp:2955
-#, fuzzy
 msgid "Previous Exte_nsion"
-msgstr "Önceki Eklenti"
+msgstr "_Önceki Eklenti"
 
 #: ../src/verbs.cpp:2956
 #, fuzzy
@@ -29263,9 +29042,8 @@ msgid "Repeat the last extension with the same settings"
 msgstr "Önceki etkiyi aynı ayarlar ile tekrarlar"
 
 #: ../src/verbs.cpp:2957
-#, fuzzy
 msgid "_Previous Extension Settings..."
-msgstr "Önceki Eklenti Ayarları..."
+msgstr "_Önceki Eklenti Ayarları..."
 
 #: ../src/verbs.cpp:2958
 #, fuzzy
@@ -29460,9 +29238,8 @@ msgid "Angle in Y direction"
 msgstr ""
 
 #: ../src/widgets/box3d-toolbar.cpp:342
-#, fuzzy
 msgid "Angle Y:"
-msgstr "Açı:"
+msgstr ""
 
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/box3d-toolbar.cpp:344
@@ -29521,9 +29298,8 @@ msgstr ""
 #: ../src/widgets/spray-toolbar.cpp:235 ../src/widgets/spray-toolbar.cpp:253
 #: ../src/widgets/tweak-toolbar.cpp:125 ../src/widgets/tweak-toolbar.cpp:142
 #: ../src/widgets/tweak-toolbar.cpp:350
-#, fuzzy
 msgid "(default)"
-msgstr "Varsayılan"
+msgstr "(öntanımlı)"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:427
 #: ../src/widgets/eraser-toolbar.cpp:125
@@ -29593,9 +29369,8 @@ msgid "(right edge up)"
 msgstr ""
 
 #: ../src/widgets/calligraphy-toolbar.cpp:463
-#, fuzzy
 msgid "Pen Angle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/widgets/calligraphy-toolbar.cpp:463
 #: ../share/extensions/motion.inx.h:3 ../share/extensions/restack.inx.h:5
@@ -29775,9 +29550,8 @@ msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr ""
 
 #: ../src/widgets/calligraphy-toolbar.cpp:591
-#, fuzzy
 msgid "Tilt"
-msgstr "Başlık"
+msgstr "Eğim"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:592
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
@@ -29917,14 +29691,12 @@ msgstr ""
 "seçiciyi (ok) kullanarak taşıyın veya dönüştürün."
 
 #: ../src/widgets/desktop-widget.cpp:828
-#, fuzzy
 msgid "grayscale"
-msgstr "_Ölçekle"
+msgstr "gri tonlama"
 
 #: ../src/widgets/desktop-widget.cpp:829
-#, fuzzy
 msgid ", grayscale"
-msgstr "_Ölçekle"
+msgstr ", gri tonlama"
 
 #: ../src/widgets/desktop-widget.cpp:830
 #, fuzzy
@@ -30049,14 +29821,12 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/dropper-toolbar.cpp:107
-#, fuzzy
 msgid "Assign"
-msgstr "Hizala"
+msgstr "Ata"
 
 #: ../src/widgets/ege-paint-def.cpp:87
-#, fuzzy
 msgid "remove"
-msgstr " Kaldır"
+msgstr "kaldır"
 
 #: ../src/widgets/eraser-toolbar.cpp:94
 msgid "Delete objects touched by the eraser"
@@ -30139,9 +29909,8 @@ msgid "Create a duplicate gradient"
 msgstr "Renk geçişleri oluşturur ve düzenler"
 
 #: ../src/widgets/gradient-selector.cpp:216
-#, fuzzy
 msgid "Edit gradient"
-msgstr "Dairesel renk geçişi geçiş"
+msgstr "Gradyanı düzenle"
 
 #: ../src/widgets/gradient-selector.cpp:285
 #: ../src/widgets/paint-selector.cpp:233
@@ -30194,9 +29963,8 @@ msgid "Change gradient stop offset"
 msgstr "Çizgisel artımlı geçiş"
 
 #: ../src/widgets/gradient-toolbar.cpp:1040
-#, fuzzy
 msgid "linear"
-msgstr "Lisans"
+msgstr "doğrusal"
 
 #: ../src/widgets/gradient-toolbar.cpp:1040
 msgid "Create linear gradient"
@@ -30217,9 +29985,8 @@ msgstr "Yeni:"
 
 #: ../src/widgets/gradient-toolbar.cpp:1070
 #: ../src/widgets/mesh-toolbar.cpp:407
-#, fuzzy
 msgid "fill"
-msgstr "Doldurmayı iptal et"
+msgstr "dolgu"
 
 #: ../src/widgets/gradient-toolbar.cpp:1070
 #: ../src/widgets/mesh-toolbar.cpp:407
@@ -30228,9 +29995,8 @@ msgstr "Doldurulan alanda renk geçişi yarat"
 
 #: ../src/widgets/gradient-toolbar.cpp:1074
 #: ../src/widgets/mesh-toolbar.cpp:411
-#, fuzzy
 msgid "stroke"
-msgstr "Çizgi:"
+msgstr "vuruş"
 
 #: ../src/widgets/gradient-toolbar.cpp:1074
 #: ../src/widgets/mesh-toolbar.cpp:411
@@ -30263,19 +30029,16 @@ msgid "None"
 msgstr "Hiçbiri"
 
 #: ../src/widgets/gradient-toolbar.cpp:1121
-#, fuzzy
 msgid "Reflected"
-msgstr "yansıyan"
+msgstr "Yansıyan"
 
 #: ../src/widgets/gradient-toolbar.cpp:1124
-#, fuzzy
 msgid "Direct"
-msgstr "doğrudan"
+msgstr "Doğrudan"
 
 #: ../src/widgets/gradient-toolbar.cpp:1126
-#, fuzzy
 msgid "Repeat"
-msgstr "Tekrar:"
+msgstr "Tekrarla"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-toolbar.cpp:1128
@@ -30533,9 +30296,8 @@ msgid "Number of columns in new mesh"
 msgstr "Sütun sayısı"
 
 #: ../src/widgets/mesh-toolbar.cpp:466
-#, fuzzy
 msgid "Edit Fill"
-msgstr "Düzenle..."
+msgstr "Dolgu Düzenle"
 
 #: ../src/widgets/mesh-toolbar.cpp:467
 #, fuzzy
@@ -30837,9 +30599,8 @@ msgid "Show mask(s) of selected object(s)"
 msgstr "Seçilen resim(ler)in renk haritasını döndür"
 
 #: ../src/widgets/node-toolbar.cpp:581
-#, fuzzy
 msgid "X coordinate:"
-msgstr "İmleç koordinatları"
+msgstr "X koordinatı:"
 
 #: ../src/widgets/node-toolbar.cpp:581
 #, fuzzy
@@ -30847,9 +30608,8 @@ msgid "X coordinate of selected node(s)"
 msgstr "Seçili düğümlerdeki yolları birleştirir"
 
 #: ../src/widgets/node-toolbar.cpp:599
-#, fuzzy
 msgid "Y coordinate:"
-msgstr "İmleç koordinatları"
+msgstr "Y koordinatı:"
 
 #: ../src/widgets/node-toolbar.cpp:599
 #, fuzzy
@@ -31055,14 +30815,12 @@ msgid "None"
 msgstr "Hiçbiri"
 
 #: ../src/widgets/pencil-toolbar.cpp:179
-#, fuzzy
 msgid "Triangle in"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/widgets/pencil-toolbar.cpp:180
-#, fuzzy
 msgid "Triangle out"
-msgstr "Açı:"
+msgstr ""
 
 #: ../src/widgets/pencil-toolbar.cpp:182
 msgid "From clipboard"
@@ -31146,9 +30904,8 @@ msgid "not rounded"
 msgstr "Yuvarlaklaştırılmamış"
 
 #: ../src/widgets/rect-toolbar.cpp:351
-#, fuzzy
 msgid "Horizontal radius"
-msgstr "Yatay Boşluk"
+msgstr "Yatay yarıçap"
 
 #: ../src/widgets/rect-toolbar.cpp:351
 msgid "Rx:"
@@ -31161,9 +30918,8 @@ msgstr ""
 "Dikdörtgenleri ölçeklerken, yuvarlatılmış köşelerin yarıçaplarını ölçekler"
 
 #: ../src/widgets/rect-toolbar.cpp:366
-#, fuzzy
 msgid "Vertical radius"
-msgstr "Dikey Boşluk"
+msgstr "Dikey yarıçap"
 
 #: ../src/widgets/rect-toolbar.cpp:366
 msgid "Ry:"
@@ -31204,9 +30960,8 @@ msgid "Lower limit of ruler"
 msgstr "Önceki katmana taşındı."
 
 #: ../src/widgets/ruler.cpp:220
-#, fuzzy
 msgid "Upper"
-msgstr "Damlalık"
+msgstr ""
 
 #: ../src/widgets/ruler.cpp:221
 msgid "Upper limit of ruler"
@@ -31217,9 +30972,8 @@ msgid "Position of mark on the ruler"
 msgstr ""
 
 #: ../src/widgets/ruler.cpp:240
-#, fuzzy
 msgid "Max Size"
-msgstr "Boyut"
+msgstr "Azami Boyut"
 
 #: ../src/widgets/ruler.cpp:241
 msgid "Maximum size of the ruler"
@@ -31276,13 +31030,11 @@ msgstr ""
 
 #. four spinbuttons
 #: ../src/widgets/select-toolbar.cpp:500
-#, fuzzy
 msgctxt "Select toolbar"
 msgid "X position"
-msgstr "Pozisyon:"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:500
-#, fuzzy
 msgctxt "Select toolbar"
 msgid "X:"
 msgstr "X:"
@@ -31292,13 +31044,11 @@ msgid "Horizontal coordinate of selection"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:506
-#, fuzzy
 msgctxt "Select toolbar"
 msgid "Y position"
-msgstr "Pozisyon:"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:506
-#, fuzzy
 msgctxt "Select toolbar"
 msgid "Y:"
 msgstr "Y:"
@@ -31553,9 +31303,8 @@ msgid "Spray objects in a single path"
 msgstr ""
 
 #: ../src/widgets/spray-toolbar.cpp:185 ../src/widgets/tweak-toolbar.cpp:253
-#, fuzzy
 msgid "Mode"
-msgstr "Taşı"
+msgstr "Kip"
 
 #. Population
 #: ../src/widgets/spray-toolbar.cpp:205
@@ -31587,14 +31336,12 @@ msgid "(high rotation variation)"
 msgstr "Hedefi yazdır"
 
 #: ../src/widgets/spray-toolbar.cpp:238
-#, fuzzy
 msgid "Rotation"
 msgstr "Döndürme"
 
 #: ../src/widgets/spray-toolbar.cpp:238
-#, fuzzy
 msgid "Rotation:"
-msgstr "Döndürme"
+msgstr "Döndürme:"
 
 #: ../src/widgets/spray-toolbar.cpp:240
 #, no-c-format
@@ -31615,10 +31362,9 @@ msgid "Scale"
 msgstr "Ölçekle"
 
 #: ../src/widgets/spray-toolbar.cpp:256
-#, fuzzy
 msgctxt "Spray tool"
 msgid "Scale:"
-msgstr "Ölçekle"
+msgstr "Ölçek:"
 
 #: ../src/widgets/spray-toolbar.cpp:258
 #, no-c-format
@@ -31992,9 +31738,8 @@ msgid "Text: Change orientation"
 msgstr "Tuval yönü:"
 
 #: ../src/widgets/text-toolbar.cpp:1216
-#, fuzzy
 msgid "Font Family"
-msgstr "Yazı tipi ailesi"
+msgstr "Yazı Tipi Ailesi"
 
 #: ../src/widgets/text-toolbar.cpp:1217
 msgid "Select Font Family (Alt-X to access)"
@@ -32438,9 +32183,8 @@ msgid "The force of the tweak action"
 msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:163
-#, fuzzy
 msgid "Move mode"
-msgstr "Taşı %s"
+msgstr "Taşıma kipi"
 
 #: ../src/widgets/tweak-toolbar.cpp:164
 #, fuzzy
@@ -32466,9 +32210,8 @@ msgid "Move objects in random directions"
 msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:184
-#, fuzzy
 msgid "Scale mode"
-msgstr "Düğümü yükselt"
+msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:185
 #, fuzzy
@@ -32476,9 +32219,8 @@ msgid "Shrink objects, with Shift enlarge"
 msgstr "Nesne Başlığı ayarla"
 
 #: ../src/widgets/tweak-toolbar.cpp:191
-#, fuzzy
 msgid "Rotate mode"
-msgstr "Düğümü yükselt"
+msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:192
 #, fuzzy
@@ -32502,9 +32244,8 @@ msgid "Push parts of paths in any direction"
 msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:212
-#, fuzzy
 msgid "Shrink/grow mode"
-msgstr "bitiş düğümü"
+msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:213
 #, fuzzy
@@ -32512,18 +32253,16 @@ msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
 msgstr "Seçili düğümleri düzgünleştir"
 
 #: ../src/widgets/tweak-toolbar.cpp:219
-#, fuzzy
 msgid "Attract/repel mode"
-msgstr "Özellik adı"
+msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:220
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
 msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:226
-#, fuzzy
 msgid "Roughen mode"
-msgstr "bitiş düğümü"
+msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:227
 msgid "Roughen parts of paths"
@@ -32540,9 +32279,8 @@ msgid "Paint the tool's color upon selected objects"
 msgstr "Seçili nesnelerden kaçınarak bağlayıcılar oluştur"
 
 #: ../src/widgets/tweak-toolbar.cpp:240
-#, fuzzy
 msgid "Color jitter mode"
-msgstr "Düğümü yükselt"
+msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:241
 #, fuzzy
@@ -32550,14 +32288,12 @@ msgid "Jitter the colors of selected objects"
 msgstr "Seçili nesnelerin birleşimi"
 
 #: ../src/widgets/tweak-toolbar.cpp:247
-#, fuzzy
 msgid "Blur mode"
-msgstr "bitiş düğümü"
+msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:248
-#, fuzzy
 msgid "Blur selected objects more; with Shift, blur less"
-msgstr "Seçilen nesneleri yatay döndür"
+msgstr ""
 
 #: ../src/widgets/tweak-toolbar.cpp:275
 msgid "Channels:"
@@ -32638,9 +32374,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/dimension.py:109
-#, fuzzy
 msgid "Please select an object."
-msgstr "Seçili nesnelerin eşini yarat"
+msgstr "Lütfen bir  nesne seçin."
 
 #: ../share/extensions/dimension.py:134
 msgid "Unable to process this object.  Try changing it into a path first."
@@ -32699,9 +32434,9 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.py:356
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: Layer '%s' not found!"
-msgstr "_En Üste Taşı"
+msgstr "Uyarı: Katman  '%s' bulunamadı!"
 
 #: ../share/extensions/embedimage.py:84
 msgid ""
@@ -32983,9 +32718,8 @@ msgid "Python version is: "
 msgstr "Varoaln rehberleri kaldır"
 
 #: ../share/extensions/generate_voronoi.py:94
-#, fuzzy
 msgid "Please select an object"
-msgstr "Seçili nesnelerin eşini yarat"
+msgstr "Lütfen bir  nesne seçin"
 
 #: ../share/extensions/gimp_xcf.py:39
 msgid "Inkscape must be installed and set in your path variable."
@@ -33009,14 +32743,12 @@ msgid "The sliced bitmaps have been saved as:"
 msgstr ""
 
 #: ../share/extensions/hpgl_decoder.py:42
-#, fuzzy
 msgid "Movements"
-msgstr "Renk Geçişlerini taşı"
+msgstr ""
 
 #: ../share/extensions/hpgl_decoder.py:43
-#, fuzzy
 msgid "Pen "
-msgstr "Büyük:"
+msgstr "Kalem "
 
 #. issue error if no hpgl data found
 #: ../share/extensions/hpgl_input.py:58
@@ -33148,9 +32880,9 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:94
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{0}Layer name: {1}"
-msgstr "Katman ismi:"
+msgstr "{0}Katman ismi: {1}"
 
 #: ../share/extensions/jessyInk_summary.py:102
 msgid "{0}Transition in: {1} ({2!s} s)"
@@ -33166,9 +32898,9 @@ msgid "{0}Transition out: {1} ({2!s} s)"
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:113
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{0}Transition out: {1}"
-msgstr "Canlı yol efekti yapıştır"
+msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:120
 #, python-brace-format
@@ -33206,9 +32938,8 @@ msgid "{0}\tObject \"{1}\""
 msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:179
-#, fuzzy
 msgid " will appear"
-msgstr "Sınırlandırılmış alanı doldur"
+msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:181
 msgid " will disappear"
@@ -33224,9 +32955,8 @@ msgid " in {0!s} s"
 msgstr ""
 
 #: ../share/extensions/jessyInk_transitions.py:55
-#, fuzzy
 msgid "Layer not found.\n"
-msgstr "_En Üste Taşı"
+msgstr "Katman bulunamadı.\n"
 
 #: ../share/extensions/jessyInk_transitions.py:57
 msgid "More than one layer with this name found.\n"
@@ -33532,16 +33262,14 @@ msgid "You must give a directory to export the slices."
 msgstr ""
 
 #: ../share/extensions/webslicer_export.py:69
-#, fuzzy, python-format
+#, python-format
 msgid "Can't create \"%s\"."
-msgstr ""
-"Dosya oluşturulamadı %s.\n"
-"%s"
+msgstr "\"%s\" oluşturulamadı."
 
 #: ../share/extensions/webslicer_export.py:70
-#, fuzzy, python-format
+#, python-format
 msgid "Error: %s"
-msgstr "Güncel katman"
+msgstr "Hata: %s"
 
 #: ../share/extensions/webslicer_export.py:73
 #, fuzzy, python-format
@@ -33549,9 +33277,8 @@ msgid "The directory \"%s\" does not exists."
 msgstr "%s klasörü henüz oluşturulmammış ya da bir klasör değil.\n"
 
 #: ../share/extensions/webslicer_export.py:78
-#, fuzzy
 msgid "No slicer layer found."
-msgstr "Güncel katman yok."
+msgstr ""
 
 #: ../share/extensions/webslicer_export.py:108
 #, python-format
@@ -33570,28 +33297,24 @@ msgstr ""
 
 #. vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99
 #: ../share/extensions/addnodes.inx.h:1
-#, fuzzy
 msgid "Add Nodes"
-msgstr "Düğümler"
+msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:2
-#, fuzzy
 msgid "Division method:"
-msgstr "Bö_lüm"
+msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:3
 msgid "By max. segment length"
 msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:5
-#, fuzzy
 msgid "Maximum segment length (px):"
-msgstr "Yeni üye düğümü"
+msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:6
-#, fuzzy
 msgid "Number of segments:"
-msgstr "Satır sayısı"
+msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:7
 #: ../share/extensions/convert2dashes.inx.h:2
@@ -33693,39 +33416,34 @@ msgid "Open presentation exchange files saved in Corel DRAW (UC)"
 msgstr ""
 
 #: ../share/extensions/color_HSL_adjust.inx.h:1
-#, fuzzy
 msgid "HSL Adjust"
-msgstr "Yığın"
+msgstr ""
 
 #: ../share/extensions/color_HSL_adjust.inx.h:3
-#, fuzzy
 msgid "Hue (°)"
-msgstr "Döndürme(der)"
+msgstr ""
 
 #: ../share/extensions/color_HSL_adjust.inx.h:4
-#, fuzzy
 msgid "Random hue"
-msgstr "Rastgele Ağaç"
+msgstr ""
 
 #: ../share/extensions/color_HSL_adjust.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Saturation (%)"
-msgstr "Doygunluk"
+msgstr "Doygunluk (%)"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:7
-#, fuzzy
 msgid "Random saturation"
-msgstr "Doygunluk"
+msgstr "Rasgele doygunluk"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:9
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Lightness (%)"
-msgstr "Parlaklık"
+msgstr ""
 
 #: ../share/extensions/color_HSL_adjust.inx.h:10
-#, fuzzy
 msgid "Random lightness"
-msgstr "Parlaklık"
+msgstr ""
 
 #: ../share/extensions/color_HSL_adjust.inx.h:13
 #, no-c-format
@@ -33741,39 +33459,33 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/color_blackandwhite.inx.h:1
-#, fuzzy
 msgid "Black and White"
-msgstr "Siyah"
+msgstr "Siyah ve Beyaz"
 
 #: ../share/extensions/color_blackandwhite.inx.h:2
 msgid "Threshold Color (1-255):"
 msgstr ""
 
 #: ../share/extensions/color_brighter.inx.h:1
-#, fuzzy
 msgid "Brighter"
-msgstr "Parlaklık"
+msgstr ""
 
 #: ../share/extensions/color_custom.inx.h:1
-#, fuzzy
 msgctxt "Custom color extension"
 msgid "Custom"
-msgstr "_Özel"
+msgstr "Özel"
 
 #: ../share/extensions/color_custom.inx.h:3
-#, fuzzy
 msgid "Red Function:"
-msgstr "Çözünürlük:"
+msgstr ""
 
 #: ../share/extensions/color_custom.inx.h:4
-#, fuzzy
 msgid "Green Function:"
-msgstr "Seçim"
+msgstr ""
 
 #: ../share/extensions/color_custom.inx.h:5
-#, fuzzy
 msgid "Blue Function:"
-msgstr "Seçim"
+msgstr ""
 
 #: ../share/extensions/color_custom.inx.h:6
 msgid "Input (r,g,b) Color Range:"
@@ -33792,14 +33504,12 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/color_darker.inx.h:1
-#, fuzzy
 msgid "Darker"
-msgstr "Damlalık"
+msgstr ""
 
 #: ../share/extensions/color_desaturate.inx.h:1
-#, fuzzy
 msgid "Desaturate"
-msgstr "Özellik"
+msgstr ""
 
 #: ../share/extensions/color_grayscale.inx.h:1
 #: ../share/extensions/webslicer_create_rect.inx.h:15
@@ -33836,9 +33546,8 @@ msgstr "Negatif"
 
 #: ../share/extensions/color_randomize.inx.h:1
 #: ../share/extensions/render_alphabetsoup.inx.h:4
-#, fuzzy
 msgid "Randomize"
-msgstr "Rastgeleleştir:"
+msgstr "Rastgele"
 
 #: ../share/extensions/color_randomize.inx.h:7
 msgid ""
@@ -33859,41 +33568,36 @@ msgid "Remove Red"
 msgstr "Kırmızıyı Kaldır"
 
 #: ../share/extensions/color_replace.inx.h:1
-#, fuzzy
 msgid "Replace color"
-msgstr "Rengi Değiştir..."
+msgstr ""
 
 #: ../share/extensions/color_replace.inx.h:2
 msgid "Replace color (RRGGBB hex):"
 msgstr ""
 
 #: ../share/extensions/color_replace.inx.h:3
-#, fuzzy
 msgid "Color to replace"
-msgstr "Izgara çizgi renkleri"
+msgstr ""
 
 #: ../share/extensions/color_replace.inx.h:4
 msgid "By color (RRGGBB hex):"
 msgstr ""
 
 #: ../share/extensions/color_replace.inx.h:5
-#, fuzzy
 msgid "New color"
-msgstr "Sonlandırma Rengi"
+msgstr "Yeni renk"
 
 #: ../share/extensions/color_rgbbarrel.inx.h:1
 msgid "RGB Barrel"
 msgstr ""
 
 #: ../share/extensions/convert2dashes.inx.h:1
-#, fuzzy
 msgid "Convert to Dashes"
-msgstr "_Metine Dönüştür"
+msgstr ""
 
 #: ../share/extensions/dhw_input.inx.h:1
-#, fuzzy
 msgid "DHW file input"
-msgstr "Windows Metafile Girdi"
+msgstr ""
 
 #: ../share/extensions/dhw_input.inx.h:2
 msgid "ACECAD Digimemo File (*.dhw)"
@@ -33929,24 +33633,20 @@ msgid "A diagram created with the program Dia"
 msgstr ""
 
 #: ../share/extensions/dimension.inx.h:1
-#, fuzzy
 msgid "Dimensions"
-msgstr "Bö_lüm"
+msgstr "Boyutlar"
 
 #: ../share/extensions/dimension.inx.h:2
-#, fuzzy
 msgid "X Offset:"
-msgstr "Konum:"
+msgstr ""
 
 #: ../share/extensions/dimension.inx.h:3
-#, fuzzy
 msgid "Y Offset:"
-msgstr "Konum:"
+msgstr ""
 
 #: ../share/extensions/dimension.inx.h:4
-#, fuzzy
 msgid "Bounding box type:"
-msgstr "Sınırlandırılmış kutuları ızgaraya ayır"
+msgstr ""
 
 #: ../share/extensions/dimension.inx.h:5
 #, fuzzy
@@ -33954,9 +33654,8 @@ msgid "Geometric"
 msgstr "Simetrik"
 
 #: ../share/extensions/dimension.inx.h:6
-#, fuzzy
 msgid "Visual"
-msgstr "Yolu Canlandır"
+msgstr ""
 
 #: ../share/extensions/dimension.inx.h:7 ../share/extensions/dots.inx.h:13
 #: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:42
@@ -33970,16 +33669,15 @@ msgstr "Düğüm sayısı"
 #: ../share/extensions/dots.inx.h:4
 #, fuzzy
 msgid "Dot size:"
-msgstr "Nokta Boyutu"
+msgstr "Nokta boyutu:"
 
 #: ../share/extensions/dots.inx.h:5
 msgid "Starting dot number:"
 msgstr ""
 
 #: ../share/extensions/dots.inx.h:6
-#, fuzzy
 msgid "Step:"
-msgstr "Basamaklar"
+msgstr "Adım:"
 
 #: ../share/extensions/dots.inx.h:8
 msgid ""
@@ -33993,37 +33691,32 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
-#, fuzzy
 msgid "Draw From Triangle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:2
-#, fuzzy
 msgid "Common Objects"
-msgstr "Nesneler"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:3
 msgid "Circumcircle"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
-#, fuzzy
 msgid "Circumcentre"
-msgstr "Belgeyi kaydet"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
 msgid "Incircle"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
-#, fuzzy
 msgid "Incentre"
-msgstr "Düğüme girinti ekle"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
-#, fuzzy
 msgid "Contact Triangle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Excircles"
@@ -34034,29 +33727,24 @@ msgid "Excentres"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:10
-#, fuzzy
 msgid "Extouch Triangle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:11
-#, fuzzy
 msgid "Excentral Triangle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:12
-#, fuzzy
 msgid "Orthocentre"
-msgstr "Metre"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:13
-#, fuzzy
 msgid "Orthic Triangle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:14
-#, fuzzy
 msgid "Altitudes"
-msgstr "bitiş düğümü"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
 #, fuzzy
@@ -34086,9 +33774,8 @@ msgid "Symmedian Point"
 msgstr "Dikey yazı"
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
-#, fuzzy
 msgid "Symmedial Triangle"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
 #, fuzzy
@@ -34110,9 +33797,8 @@ msgid "Custom Point Specified By:"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:26
-#, fuzzy
 msgid "Point At:"
-msgstr "Nokta"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:27
 msgid "Draw Marker At This Point"
@@ -34322,9 +34008,8 @@ msgid "ft"
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:17
-#, fuzzy
 msgid "Latin 1"
-msgstr "Başlangıç:"
+msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:18
 msgid "CP 1250"
@@ -34522,9 +34207,8 @@ msgid "Page orientation:"
 msgstr "Sayfa yönü:"
 
 #: ../share/extensions/empty_page.inx.h:4
-#, fuzzy
 msgid "Page background:"
-msgstr "Arkaplan:"
+msgstr "Sayfa arkaplanı:"
 
 #: ../share/extensions/empty_video.inx.h:1
 #, fuzzy
@@ -34532,9 +34216,8 @@ msgid "Video Screen"
 msgstr "Yeşil"
 
 #: ../share/extensions/empty_video.inx.h:2
-#, fuzzy
 msgid "Video size:"
-msgstr "Nokta Boyutu"
+msgstr "Görüntü boyutu:"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
@@ -34637,9 +34320,8 @@ msgid "Fractalize"
 msgstr ""
 
 #: ../share/extensions/fractalize.inx.h:2
-#, fuzzy
 msgid "Subdivisions:"
-msgstr "Altbölüm"
+msgstr "Alt bölümler:"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Function Plotter"
@@ -34838,23 +34520,20 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/gcodetools_area.inx.h:6
-#, fuzzy
 msgid "Fill area"
-msgstr "Sınırlandırılmış alanı doldur"
+msgstr "Alanı doldur"
 
 #: ../share/extensions/gcodetools_area.inx.h:7
-#, fuzzy
 msgid "Area fill angle"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/extensions/gcodetools_area.inx.h:8
 msgid "Area fill shift"
 msgstr ""
 
 #: ../share/extensions/gcodetools_area.inx.h:9
-#, fuzzy
 msgid "Filling method"
-msgstr "Bö_lüm"
+msgstr "Dolum yöntemi"
 
 #: ../share/extensions/gcodetools_area.inx.h:10
 msgid "Zig zag"
@@ -35432,9 +35111,8 @@ msgid "Perpendicular"
 msgstr ""
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:15
-#, fuzzy
 msgid "Tangent"
-msgstr "Macenta"
+msgstr "Tanjant"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:16
 msgid "-------------------------------------------------"
@@ -35454,9 +35132,8 @@ msgid "default"
 msgstr "öntanımlı"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:4
-#, fuzzy
 msgid "cylinder"
-msgstr "Çokgen"
+msgstr "silindir"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:5
 #, fuzzy
@@ -35536,9 +35213,8 @@ msgid "Save Background"
 msgstr "Arkaplan:"
 
 #: ../share/extensions/gimp_xcf.inx.h:6
-#, fuzzy
 msgid "File Resolution:"
-msgstr "İlişki"
+msgstr "Dosya Çözünürlüğü:"
 
 #: ../share/extensions/gimp_xcf.inx.h:8
 msgid ""
@@ -35825,9 +35501,8 @@ msgid "Custom..."
 msgstr "Özel..."
 
 #: ../share/extensions/guides_creator.inx.h:9
-#, fuzzy
 msgid "Golden ratio"
-msgstr "Dönüşümü depola:"
+msgstr "Altın oran"
 
 #: ../share/extensions/guides_creator.inx.h:10
 msgid "Rule-of-third"
@@ -35868,9 +35543,8 @@ msgid "Margins preset:"
 msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:18
-#, fuzzy
 msgid "Header margin:"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:19
 #, fuzzy
@@ -35878,35 +35552,29 @@ msgid "Footer margin:"
 msgstr "Sonlandırma Rengi"
 
 #: ../share/extensions/guides_creator.inx.h:20
-#, fuzzy
 msgid "Left margin:"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:21
-#, fuzzy
 msgid "Right margin:"
-msgstr "Sağ Açı"
+msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:22
-#, fuzzy
 msgid "Left book page"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:23
-#, fuzzy
 msgid "Right book page"
-msgstr "Sağ Açı"
+msgstr ""
 
 #: ../share/extensions/guides_creator.inx.h:24
-#, fuzzy
 msgctxt "Margin"
 msgid "None"
-msgstr "Hiçbiri"
+msgstr "Yok"
 
 #: ../share/extensions/guillotine.inx.h:1
-#, fuzzy
 msgid "Guillotine"
-msgstr "Rehber çizgisi rengi"
+msgstr "Giyotin"
 
 #: ../share/extensions/guillotine.inx.h:2
 msgid "Directory to save images to:"
@@ -35941,9 +35609,8 @@ msgid "Text:"
 msgstr "Metin:"
 
 #: ../share/extensions/hershey.inx.h:4
-#, fuzzy
 msgid "Action: "
-msgstr "İvme:"
+msgstr "Eylem: "
 
 #: ../share/extensions/hershey.inx.h:5
 #, fuzzy
@@ -36162,9 +35829,8 @@ msgstr "PDF Aktarma Ayarları"
 
 #: ../share/extensions/hpgl_output.inx.h:8
 #: ../share/extensions/plotter.inx.h:36
-#, fuzzy
 msgid "Pen number:"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:9
 #: ../share/extensions/plotter.inx.h:37
@@ -36540,9 +36206,8 @@ msgid "Other Attribute type:"
 msgstr "Özellik adı"
 
 #: ../share/extensions/interp_att_g.inx.h:6
-#, fuzzy
 msgid "Apply to:"
-msgstr "Katman Ekle"
+msgstr "Şuna uygula:"
 
 #: ../share/extensions/interp_att_g.inx.h:7
 #, fuzzy
@@ -36567,12 +36232,11 @@ msgstr "_Çevirmenler"
 #: ../share/extensions/interp_att_g.inx.h:17
 #: ../share/extensions/markers_strokepaint.inx.h:9
 msgid "Fill"
-msgstr "Doldur"
+msgstr "Dolgu"
 
 #: ../share/extensions/interp_att_g.inx.h:19
-#, fuzzy
 msgid "Other"
-msgstr "Metre"
+msgstr "Diğer"
 
 #: ../share/extensions/interp_att_g.inx.h:20
 msgid ""
@@ -36582,12 +36246,11 @@ msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:22
 msgid "Integer Number"
-msgstr ""
+msgstr "Tamsayı"
 
 #: ../share/extensions/interp_att_g.inx.h:23
-#, fuzzy
 msgid "Float Number"
-msgstr "<b>Açı:</b>"
+msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:25
 #: ../share/extensions/polyhedron_3d.inx.h:33
@@ -36601,7 +36264,7 @@ msgstr "Dönüşümü depola:"
 
 #: ../share/extensions/interp_att_g.inx.h:27
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
-msgstr ""
+msgstr "••••••••••••••••••••••••••••••••••••••••••••••••"
 
 #: ../share/extensions/interp_att_g.inx.h:28
 #, fuzzy
@@ -36728,9 +36391,8 @@ msgid "JessyInk zipped pdf or png output"
 msgstr ""
 
 #: ../share/extensions/jessyInk_export.inx.h:4
-#, fuzzy
 msgid "Resolution:"
-msgstr "İlişki"
+msgstr "Çözünürlük:"
 
 #: ../share/extensions/jessyInk_export.inx.h:5
 msgid "PDF"
@@ -36931,9 +36593,8 @@ msgid "Index mode"
 msgstr "Düğüme girinti ekle"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:35
-#, fuzzy
 msgid "Select the slide to the left:"
-msgstr "Açılacak dosyayı seçin"
+msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:36
 #, fuzzy
@@ -36949,14 +36610,12 @@ msgid "Select the slide below:"
 msgstr ""
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:39
-#, fuzzy
 msgid "Previous page:"
-msgstr "Önceki Etki"
+msgstr "Önceki sayfa:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:40
-#, fuzzy
 msgid "Next page:"
-msgstr "Sayfayı seç:"
+msgstr "Sonraki sayfa:"
 
 #: ../share/extensions/jessyInk_keyBindings.inx.h:41
 #, fuzzy
@@ -37064,14 +36723,12 @@ msgid "Uninstall/remove"
 msgstr ""
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:3
-#, fuzzy
 msgid "Remove script"
-msgstr " Kaldır"
+msgstr "Betik kaldır"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:4
-#, fuzzy
 msgid "Remove effects"
-msgstr "Yol efektini kaldır"
+msgstr "efektleri kaldır"
 
 #: ../share/extensions/jessyInk_uninstall.inx.h:5
 #, fuzzy
@@ -37185,9 +36842,8 @@ msgid "Right:"
 msgstr "Sağ:"
 
 #: ../share/extensions/layout_nup.inx.h:10
-#, fuzzy
 msgid "Page margins"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/extensions/layout_nup.inx.h:11
 #, fuzzy
@@ -37209,9 +36865,8 @@ msgid "Layout padding"
 msgstr "Yerleşim"
 
 #: ../share/extensions/layout_nup.inx.h:16
-#, fuzzy
 msgid "Layout margins"
-msgstr "Sol Açı"
+msgstr ""
 
 #: ../share/extensions/layout_nup.inx.h:17
 #: ../share/extensions/printing_marks.inx.h:2
@@ -37284,7 +36939,7 @@ msgstr ""
 #: ../share/extensions/lindenmayer.inx.h:4
 #, fuzzy
 msgid "Rules:"
-msgstr "Cetveller"
+msgstr "Kurallar:"
 
 #: ../share/extensions/lindenmayer.inx.h:6
 msgid "Step length (px):"
@@ -37296,19 +36951,17 @@ msgid "Randomize step (%):"
 msgstr "Rastgele  adım (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:9
-#, fuzzy
 msgid "Left angle:"
-msgstr "Sol Açı"
+msgstr "Sol açı:"
 
 #: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
 msgid "Right angle:"
-msgstr "Sağ Açı"
+msgstr "Sağ açı:"
 
 #: ../share/extensions/lindenmayer.inx.h:12
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize angle (%):"
-msgstr "Rastgele açı (%)"
+msgstr "Rastgele açı (%):"
 
 #: ../share/extensions/lindenmayer.inx.h:14
 msgid ""
@@ -37388,7 +37041,7 @@ msgstr ""
 
 #: ../share/extensions/markers_strokepaint.inx.h:7
 msgid "filled"
-msgstr ""
+msgstr "Dolduruldu"
 
 #: ../share/extensions/markers_strokepaint.inx.h:10
 #, fuzzy
@@ -37440,12 +37093,11 @@ msgstr ""
 
 #: ../share/extensions/measure.inx.h:11
 msgid "Angle (°):"
-msgstr ""
+msgstr "Açı (°):"
 
 #: ../share/extensions/measure.inx.h:12
-#, fuzzy
 msgid "Font size (px):"
-msgstr "Yazı boyutu [px]"
+msgstr "Yazı tipi boyutu [px]:"
 
 #: ../share/extensions/measure.inx.h:13
 #, fuzzy
@@ -37469,7 +37121,7 @@ msgstr "Hedefi yazdır"
 #: ../share/extensions/measure.inx.h:18
 msgctxt "measure extension"
 msgid "Area"
-msgstr ""
+msgstr "Alan"
 
 #: ../share/extensions/measure.inx.h:19
 #, fuzzy
@@ -37559,14 +37211,12 @@ msgid "Stylesheet"
 msgstr "Stil"
 
 #: ../share/extensions/motion.inx.h:1
-#, fuzzy
 msgid "Motion"
-msgstr "Pozisyon:"
+msgstr "Hareket"
 
 #: ../share/extensions/motion.inx.h:2
-#, fuzzy
 msgid "Magnitude:"
-msgstr "Ölçü"
+msgstr ""
 
 #: ../share/extensions/new_glyph_layer.inx.h:1
 #, fuzzy
@@ -37842,7 +37492,7 @@ msgstr ""
 
 #: ../share/extensions/plotter.inx.h:1
 msgid "Plot"
-msgstr ""
+msgstr "Çizim"
 
 #: ../share/extensions/plotter.inx.h:2
 msgid ""
@@ -37852,12 +37502,11 @@ msgstr ""
 #: ../share/extensions/plotter.inx.h:3
 #, fuzzy
 msgid "Connection Settings "
-msgstr "Sohbet odasına bağlan"
+msgstr "Bağlantı Ayarları "
 
 #: ../share/extensions/plotter.inx.h:4
-#, fuzzy
 msgid "Serial port:"
-msgstr "Dikey yazı"
+msgstr "Seri port:"
 
 #: ../share/extensions/plotter.inx.h:5
 msgid ""
@@ -38009,7 +37658,7 @@ msgstr " Kaldır"
 
 #: ../share/extensions/plt_output.inx.h:1
 msgid "AutoCAD Plot Output"
-msgstr ""
+msgstr "AutoCAD Çizim Çıktısı"
 
 #: ../share/extensions/plt_output.inx.h:3
 #, fuzzy
@@ -38027,14 +37676,12 @@ msgid "Model file"
 msgstr "Tüm çeşitler"
 
 #: ../share/extensions/polyhedron_3d.inx.h:3
-#, fuzzy
 msgid "Object:"
-msgstr "Nesne:"
+msgstr "Nesne: "
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
-#, fuzzy
 msgid "Filename:"
-msgstr "_Dosya adı"
+msgstr "Dosya adı:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
 #, fuzzy
@@ -38144,15 +37791,15 @@ msgstr "Yuvarlaklaştırılmamış"
 
 #: ../share/extensions/polyhedron_3d.inx.h:30
 msgid "X-Axis"
-msgstr ""
+msgstr "X-Ekseni"
 
 #: ../share/extensions/polyhedron_3d.inx.h:31
 msgid "Y-Axis"
-msgstr ""
+msgstr "Y-Ekseni"
 
 #: ../share/extensions/polyhedron_3d.inx.h:32
 msgid "Z-Axis"
-msgstr ""
+msgstr "Z-Ekseni"
 
 #: ../share/extensions/polyhedron_3d.inx.h:34
 #, fuzzy
@@ -38160,24 +37807,21 @@ msgid "Scaling factor:"
 msgstr "Düz renk"
 
 #: ../share/extensions/polyhedron_3d.inx.h:35
-#, fuzzy
 msgid "Fill color, Red:"
-msgstr "Düz renk"
+msgstr "Dolgu rengi,Kırmızı:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:36
-#, fuzzy
 msgid "Fill color, Green:"
-msgstr "Düz renk"
+msgstr "Dolgu rengi, Yeşil:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
-#, fuzzy
 msgid "Fill color, Blue:"
-msgstr "Düz renk"
+msgstr "Dolgu rengi, Mavi:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fill opacity (%):"
-msgstr "Matlık"
+msgstr "Dolgu opaklığı (%):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
 #, fuzzy, no-c-format
@@ -38195,19 +37839,16 @@ msgid "Shading"
 msgstr "Y aralığı:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
-#, fuzzy
 msgid "Light X:"
-msgstr "Parlaklık"
+msgstr "Işık X:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
-#, fuzzy
 msgid "Light Y:"
-msgstr "Parlaklık"
+msgstr "Işık Y:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
-#, fuzzy
 msgid "Light Z:"
-msgstr "Parlaklık"
+msgstr "Işık Z:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:48
 #, fuzzy
@@ -38224,24 +37865,21 @@ msgid "Faces"
 msgstr "Düzlük"
 
 #: ../share/extensions/polyhedron_3d.inx.h:51
-#, fuzzy
 msgid "Edges"
-msgstr "Mavi"
+msgstr "Kenarlar"
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
 #, fuzzy
 msgid "Vertices"
-msgstr "_Dikey"
+msgstr "Dikeyler"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
-#, fuzzy
 msgid "Maximum"
-msgstr "orta"
+msgstr "Azami "
 
 #: ../share/extensions/polyhedron_3d.inx.h:54
-#, fuzzy
 msgid "Minimum"
-msgstr "En küçük boyut"
+msgstr "Asgari"
 
 #: ../share/extensions/polyhedron_3d.inx.h:55
 msgid "Mean"
@@ -38266,23 +37904,20 @@ msgid "Crop Marks"
 msgstr ""
 
 #: ../share/extensions/printing_marks.inx.h:4
-#, fuzzy
 msgid "Bleed Marks"
-msgstr "Orta işaretleyicileri:"
+msgstr ""
 
 #: ../share/extensions/printing_marks.inx.h:5
 msgid "Registration Marks"
 msgstr ""
 
 #: ../share/extensions/printing_marks.inx.h:6
-#, fuzzy
 msgid "Star Target"
-msgstr "Hedef:"
+msgstr ""
 
 #: ../share/extensions/printing_marks.inx.h:7
-#, fuzzy
 msgid "Color Bars"
-msgstr "Renkler:"
+msgstr ""
 
 #: ../share/extensions/printing_marks.inx.h:8
 #, fuzzy
@@ -38300,9 +37935,8 @@ msgid "Set crop marks to:"
 msgstr "Yığın"
 
 #: ../share/extensions/printing_marks.inx.h:17
-#, fuzzy
 msgid "Canvas"
-msgstr "Camgöbeği (Siyan):"
+msgstr ""
 
 #: ../share/extensions/printing_marks.inx.h:19
 msgid "Bleed Margin"
@@ -38383,7 +38017,7 @@ msgstr ""
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:1
 msgid "QR Code"
-msgstr ""
+msgstr "QR Kodu"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:2
 msgid "See http://www.denso-wave.com/qrcode/index-e.html for details"
@@ -38441,9 +38075,8 @@ msgid "Tooth Spacing:"
 msgstr "Yatay Boşluk"
 
 #: ../share/extensions/render_gear_rack.inx.h:4
-#, fuzzy
 msgid "Contact Angle:"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/render_gear_rack.inx.h:6
 #: ../share/extensions/render_gears.inx.h:1
@@ -38484,9 +38117,8 @@ msgid "Find and Replace font"
 msgstr "Belgedeki nesneleri bulur"
 
 #: ../share/extensions/replace_font.inx.h:3
-#, fuzzy
 msgid "Find font: "
-msgstr "Katman Ekle"
+msgstr ""
 
 #: ../share/extensions/replace_font.inx.h:4
 #, fuzzy
@@ -38578,9 +38210,8 @@ msgstr ""
 #: ../share/extensions/restack.inx.h:17
 #: ../share/extensions/text_extract.inx.h:9
 #: ../share/extensions/text_merge.inx.h:9
-#, fuzzy
 msgid "Middle"
-msgstr "Başlık"
+msgstr "Orta"
 
 #: ../share/extensions/restack.inx.h:19
 #: ../share/extensions/text_extract.inx.h:12
@@ -38591,9 +38222,8 @@ msgstr "EnYk"
 #: ../share/extensions/restack.inx.h:20
 #: ../share/extensions/text_extract.inx.h:13
 #: ../share/extensions/text_merge.inx.h:13
-#, fuzzy
 msgid "Bottom"
-msgstr "Kutu"
+msgstr ""
 
 #: ../share/extensions/restack.inx.h:21
 msgid "Based on Z-Order"
@@ -38684,32 +38314,28 @@ msgid "Create groups for similar attributes"
 msgstr ""
 
 #: ../share/extensions/scour.inx.h:7
-#, fuzzy
 msgid "Embed rasters"
-msgstr "Resimleri göm"
+msgstr ""
 
 #: ../share/extensions/scour.inx.h:8
 msgid "Keep editor data"
 msgstr ""
 
 #: ../share/extensions/scour.inx.h:9
-#, fuzzy
 msgid "Remove metadata"
-msgstr "Kırmızıyı Kaldır"
+msgstr ""
 
 #: ../share/extensions/scour.inx.h:10
-#, fuzzy
 msgid "Remove comments"
-msgstr " Kaldır"
+msgstr ""
 
 #: ../share/extensions/scour.inx.h:11
 msgid "Work around renderer bugs"
 msgstr ""
 
 #: ../share/extensions/scour.inx.h:12
-#, fuzzy
 msgid "Enable viewboxing"
-msgstr "Canlı Ön izleme"
+msgstr ""
 
 #: ../share/extensions/scour.inx.h:13
 #, fuzzy
@@ -38725,14 +38351,12 @@ msgid "XML indentation (pretty-printing):"
 msgstr ""
 
 #: ../share/extensions/scour.inx.h:16
-#, fuzzy
 msgid "Space"
-msgstr "Y aralığı:"
+msgstr ""
 
 #: ../share/extensions/scour.inx.h:17
-#, fuzzy
 msgid "Tab"
-msgstr "Başlık"
+msgstr ""
 
 #: ../share/extensions/scour.inx.h:18
 #, fuzzy
@@ -38741,9 +38365,8 @@ msgid "None"
 msgstr "Hiçbiri"
 
 #: ../share/extensions/scour.inx.h:19
-#, fuzzy
 msgid "Ids"
-msgstr "_No"
+msgstr ""
 
 #: ../share/extensions/scour.inx.h:20
 msgid "Remove unused ID names for elements"
@@ -38864,24 +38487,20 @@ msgid "1 - Setup Typography Canvas"
 msgstr ""
 
 #: ../share/extensions/setup_typography_canvas.inx.h:2
-#, fuzzy
 msgid "Em-size:"
-msgstr "Boyut"
+msgstr ""
 
 #: ../share/extensions/setup_typography_canvas.inx.h:3
-#, fuzzy
 msgid "Ascender:"
-msgstr "Render"
+msgstr ""
 
 #: ../share/extensions/setup_typography_canvas.inx.h:4
-#, fuzzy
 msgid "Caps Height:"
-msgstr "Çubuk Yüksekliği:"
+msgstr ""
 
 #: ../share/extensions/setup_typography_canvas.inx.h:5
-#, fuzzy
 msgid "X-Height:"
-msgstr "Yükseklik:"
+msgstr ""
 
 #: ../share/extensions/setup_typography_canvas.inx.h:6
 #, fuzzy
@@ -38970,22 +38589,19 @@ msgid "Preserve original text"
 msgstr ""
 
 #: ../share/extensions/split.inx.h:5
-#, fuzzy
 msgctxt "split"
 msgid "Lines"
-msgstr "Lisans"
+msgstr ""
 
 #: ../share/extensions/split.inx.h:6
-#, fuzzy
 msgctxt "split"
 msgid "Words"
-msgstr "Anahtar kelimeler"
+msgstr ""
 
 #: ../share/extensions/split.inx.h:7
-#, fuzzy
 msgctxt "split"
 msgid "Letters"
-msgstr "Metre"
+msgstr ""
 
 #: ../share/extensions/split.inx.h:9
 msgid "This effect splits texts into different lines, words or letters."
@@ -38996,9 +38612,8 @@ msgid "Straighten Segments"
 msgstr ""
 
 #: ../share/extensions/straightseg.inx.h:2
-#, fuzzy
 msgid "Percent:"
-msgstr "Yüzde"
+msgstr ""
 
 #: ../share/extensions/straightseg.inx.h:3
 msgid "Behavior:"
@@ -39081,18 +38696,16 @@ msgid "Fill empty day boxes with next month's days"
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:6
-#, fuzzy
 msgid "Show week number"
-msgstr "Açı:"
+msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:7
 msgid "Week start day:"
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:8
-#, fuzzy
 msgid "Weekend:"
-msgstr "Hız:"
+msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:9
 msgid "Sunday"
@@ -39120,23 +38733,20 @@ msgid "Months per line:"
 msgstr "Santimetre"
 
 #: ../share/extensions/svgcalendar.inx.h:16
-#, fuzzy
 msgid "Month Width:"
-msgstr "Sayfa _Genişliği"
+msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:17
-#, fuzzy
 msgid "Month Margin:"
-msgstr "Sonlandırma Rengi"
+msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:18
 msgid "The options below have no influence when the above is checked."
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:20
-#, fuzzy
 msgid "Year color:"
-msgstr "Sonlandırma Rengi"
+msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:21
 #, fuzzy
@@ -39149,9 +38759,8 @@ msgid "Weekday name color:"
 msgstr "Son seçilen"
 
 #: ../share/extensions/svgcalendar.inx.h:23
-#, fuzzy
 msgid "Day color:"
-msgstr "Sonlandırma Rengi"
+msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:24
 #, fuzzy
@@ -39169,19 +38778,16 @@ msgid "Week number color:"
 msgstr "Son seçilen"
 
 #: ../share/extensions/svgcalendar.inx.h:27
-#, fuzzy
 msgid "Localization"
-msgstr "Döndürme"
+msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:28
-#, fuzzy
 msgid "Month names:"
-msgstr "isimsiz"
+msgstr "Ay isimleri:"
 
 #: ../share/extensions/svgcalendar.inx.h:29
-#, fuzzy
 msgid "Day names:"
-msgstr "Katman ismi:"
+msgstr "Gün isimleri:"
 
 #: ../share/extensions/svgcalendar.inx.h:30
 #, fuzzy
@@ -39286,9 +38892,8 @@ msgstr "_Kopar"
 
 #: ../share/extensions/text_extract.inx.h:5
 #: ../share/extensions/text_merge.inx.h:5
-#, fuzzy
 msgid "Right to left"
-msgstr "Sağ Açı"
+msgstr ""
 
 #: ../share/extensions/text_extract.inx.h:6
 #: ../share/extensions/text_merge.inx.h:6
@@ -39349,9 +38954,8 @@ msgid "UPPERCASE"
 msgstr ""
 
 #: ../share/extensions/triangle.inx.h:1
-#, fuzzy
 msgid "Triangle"
-msgstr "Açı:"
+msgstr "Üçgen"
 
 #: ../share/extensions/triangle.inx.h:2
 msgid "Side Length a (px):"
@@ -39366,19 +38970,16 @@ msgid "Side Length c (px):"
 msgstr ""
 
 #: ../share/extensions/triangle.inx.h:5
-#, fuzzy
 msgid "Angle a (deg):"
-msgstr "derece"
+msgstr ""
 
 #: ../share/extensions/triangle.inx.h:6
-#, fuzzy
 msgid "Angle b (deg):"
-msgstr "derece"
+msgstr ""
 
 #: ../share/extensions/triangle.inx.h:7
-#, fuzzy
 msgid "Angle c (deg):"
-msgstr "derece"
+msgstr ""
 
 #: ../share/extensions/triangle.inx.h:9
 msgid "From Three Sides"
@@ -39401,9 +39002,8 @@ msgid "From Side c and Angles a, b"
 msgstr ""
 
 #: ../share/extensions/voronoi2svg.inx.h:1
-#, fuzzy
 msgid "Voronoi Diagram"
-msgstr "Örüntü"
+msgstr ""
 
 #: ../share/extensions/voronoi2svg.inx.h:3
 msgid "Type of diagram:"
@@ -39578,7 +39178,7 @@ msgstr ""
 #: ../share/extensions/webslicer_create_rect.inx.h:41
 #: ../share/extensions/webslicer_export.inx.h:8
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
 #, fuzzy
@@ -39722,9 +39322,8 @@ msgid "Palette"
 msgstr "Palet"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:17
-#, fuzzy
 msgid "Palette size:"
-msgstr "Boyut yapıştır"
+msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:20
 msgid "Options for HTML export"
@@ -39768,9 +39367,8 @@ msgid "Left Floated Image"
 msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:30
-#, fuzzy
 msgid "Right Floated Image"
-msgstr "Sağ Açı"
+msgstr ""
 
 #: ../share/extensions/webslicer_create_rect.inx.h:31
 #, fuzzy
@@ -39859,9 +39457,8 @@ msgid "Wireframe Sphere"
 msgstr ""
 
 #: ../share/extensions/wireframe_sphere.inx.h:2
-#, fuzzy
 msgid "Lines of latitude:"
-msgstr "Desenin kopyaları:"
+msgstr ""
 
 #: ../share/extensions/wireframe_sphere.inx.h:3
 msgid "Lines of longitude:"
@@ -39888,3 +39485,4 @@ msgstr "Clip-art için populer bir dosya biçimi"
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
 msgstr ""
+
