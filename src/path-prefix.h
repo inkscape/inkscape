@@ -35,6 +35,7 @@
 #  define INKSCAPE_PATTERNSDIR    BR_DATADIR( "/inkscape/patterns" )
 #  define INKSCAPE_SCREENSDIR     BR_DATADIR( "/inkscape/screens" )
 #  define INKSCAPE_SYMBOLSDIR     BR_DATADIR( "/inkscape/symbols" )
+#  define INKSCAPE_THEMEDIR       BR_DATADIR( "/icons" )
 #  define INKSCAPE_TUTORIALSDIR   BR_DATADIR( "/inkscape/tutorials" )
 #  define INKSCAPE_TEMPLATESDIR   BR_DATADIR( "/inkscape/templates" )
 #  define INKSCAPE_UIDIR          BR_DATADIR( "/inkscape/ui" )
@@ -102,6 +103,7 @@
 #    define INKSCAPE_PATTERNSDIR  INKSCAPE_DATADIR "/inkscape/patterns"
 #    define INKSCAPE_SCREENSDIR   INKSCAPE_DATADIR "/inkscape/screens"
 #    define INKSCAPE_SYMBOLSDIR   INKSCAPE_DATADIR "/inkscape/symbols"
+#    define INKSCAPE_THEMEDIR     INKSCAPE_DATADIR "/icons"
 #    define INKSCAPE_TUTORIALSDIR INKSCAPE_DATADIR "/inkscape/tutorials"
 #    define INKSCAPE_TEMPLATESDIR INKSCAPE_DATADIR "/inkscape/templates"
 #    define INKSCAPE_UIDIR        INKSCAPE_DATADIR "/inkscape/ui"

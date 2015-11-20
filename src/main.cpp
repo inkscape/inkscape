@@ -1045,6 +1045,10 @@ sp_main_gui(int argc, char const **argv)
     gchar *usericondir = Inkscape::Application::profile_path("icons");
     gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), usericondir);
     gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), INKSCAPE_PIXMAPDIR);
+#ifdef INKSCAPE_THEMEDIR
+    gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), INKSCAPE_THEMEDIR);
+    gtk_icon_theme_rescan_if_needed (gtk_icon_theme_get_default());
+#endif
     g_free(usericondir);
 
     gdk_event_handler_set((GdkEventFunc)snooper, NULL, NULL);
