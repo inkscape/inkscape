@@ -247,6 +247,11 @@ if ! pkg-config --exists poppler; then
 	exit 1
 fi
 
+if [ ! -e "$LIBPREFIX/lib/libpotrace.dylib" ]; then
+	echo "Missing potrace -- please install potrace and try again." >&2
+	exit 1
+fi
+
 if ! pkg-config --exists ImageMagick; then
 	echo "Missing ImageMagick -- please install ImageMagick and try again." >&2
 	exit 1

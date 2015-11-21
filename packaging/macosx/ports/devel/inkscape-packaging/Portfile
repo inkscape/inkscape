@@ -51,7 +51,8 @@ depends_build-append        port:popt \
                             port:ImageMagick \
                             port:gtkspell2 \
                             port:aspell-dict-en \
-                            port:poppler
+                            port:poppler \
+                            port:potrace
 
 # ports for Inkscape.app
 depends_build-append        port:gnome-icon-theme \

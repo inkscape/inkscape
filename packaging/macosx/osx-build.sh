@@ -395,6 +395,7 @@ Included dependency versions (build or runtime):
 	LibWPG                $(checkversion libwpg-0.2 libwpg)
 	Libcdr                $(checkversion libcdr-0.0 libcdr)
 	Libvisio              $(checkversion libvisio-0.0 libvisio)
+	Potrace               $(checkversion potrace potrace)
 Included python modules:
 	lxml                  $(checkversion py27-lxml py27-lxml)
 	numpy                 $(checkversion py27-numpy py27-numpy)
