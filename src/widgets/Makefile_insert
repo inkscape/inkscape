@@ -58,8 +58,6 @@ ink_common_sources +=	\
 	widgets/node-toolbar.h	\
 	widgets/paint-selector.cpp	\
 	widgets/paint-selector.h	\
-	widgets/paintbucket-toolbar.cpp	\
-	widgets/paintbucket-toolbar.h	\
 	widgets/pencil-toolbar.cpp	\
 	widgets/pencil-toolbar.h	   \
 	widgets/rect-toolbar.cpp	\
@@ -108,6 +106,14 @@ ink_common_sources +=	\
 	widgets/zoom-toolbar.cpp		\
 	widgets/zoom-toolbar.h \
 	widgets/widget-sizes.h
+
+if HAVE_POTRACE
+
+ink_common_sources +=	\
+	widgets/paintbucket-toolbar.cpp	\
+	widgets/paintbucket-toolbar.h
+
+endif
 
 widgets/button.$(OBJEXT): helper/sp-marshal.h
 widgets/menu.$(OBJEXT): helper/sp-marshal.h

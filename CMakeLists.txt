@@ -100,7 +100,6 @@ include(CMakeScripts/HelperMacros.cmake) # Misc Utility Macros
 # -----------------------------------------------------------------------------
 # BAD HACKS, NEED TO INVESTIGATE MAKING THESE LESS BAD
 add_definitions(-D_FORTIFY_SOURCE=2)
-add_definitions(-DPOTRACE="potrace")
 add_definitions(-DORBIT2=1)
 add_definitions(-DHAVE_CONFIG_H)
 add_definitions(-DHAVE_CAIRO_PDF=1)  # needed for src/libnrtype/Layout-TNG.h

@@ -15,6 +15,10 @@
 #ifndef INKSCAPE_UI_DIALOG_INKSCAPE_PREFERENCES_H
 #define INKSCAPE_UI_DIALOG_INKSCAPE_PREFERENCES_H
 
+#if HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <iostream>
 #include <vector>
 #include "ui/widget/preferences-widget.h"
@@ -56,7 +60,11 @@ enum {
     PREFS_PAGE_TOOLS_TEXT,
     PREFS_PAGE_TOOLS_SPRAY,
     PREFS_PAGE_TOOLS_ERASER,
+
+#if HAVE_POTRACE
     PREFS_PAGE_TOOLS_PAINTBUCKET,
+#endif
+
     PREFS_PAGE_TOOLS_GRADIENT,
     PREFS_PAGE_TOOLS_DROPPER,
     PREFS_PAGE_TOOLS_CONNECTOR,

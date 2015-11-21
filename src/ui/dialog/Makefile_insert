@@ -106,8 +106,6 @@ ink_common_sources +=		\
 	ui/dialog/text-edit.h			\
 	ui/dialog/tile.cpp			\
 	ui/dialog/tile.h			\
-	ui/dialog/tracedialog.cpp		\
-	ui/dialog/tracedialog.h			\
 	ui/dialog/pixelartdialog.cpp		\
 	ui/dialog/pixelartdialog.h		\
 	ui/dialog/transformation.cpp		\
@@ -123,3 +121,11 @@ ink_common_sources +=		\
 	ui/dialog/lpe-fillet-chamfer-properties.cpp		\
 	ui/dialog/lpe-fillet-chamfer-properties.h		\
 	$(inkboard_dialogs)
+
+if HAVE_POTRACE
+
+ink_common_sources +=		\
+	ui/dialog/tracedialog.cpp		\
+	ui/dialog/tracedialog.h
+
+endif

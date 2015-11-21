@@ -1,5 +1,7 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
+if HAVE_POTRACE
+
 ink_common_sources +=	            \
 	trace/pool.h                        \
 	trace/trace.h                       \
@@ -14,21 +16,8 @@ ink_common_sources +=	            \
 	trace/filterset.cpp	            \
 	trace/siox.h			    \
 	trace/siox.cpp			    \
-        trace/potrace/auxiliary.h           \
-        trace/potrace/bitmap.h              \
-        trace/potrace/curve.cpp             \
-        trace/potrace/curve.h               \
-        trace/potrace/decompose.cpp         \
-        trace/potrace/decompose.h           \
-        trace/potrace/greymap.cpp           \
-        trace/potrace/greymap.h             \
-        trace/potrace/lists.h               \
-        trace/potrace/potracelib.cpp        \
-        trace/potrace/potracelib.h          \
-        trace/potrace/progress.h            \
-        trace/potrace/render.cpp            \
-        trace/potrace/render.h              \
-        trace/potrace/trace.cpp             \
-        trace/potrace/trace.h               \
+	trace/potrace/bitmap.h              \
 	trace/potrace/inkscape-potrace.cpp  \
 	trace/potrace/inkscape-potrace.h
+
+endif

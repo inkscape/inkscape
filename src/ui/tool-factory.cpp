@@ -16,7 +16,11 @@
 #include "ui/tools/connector-tool.h"
 #include "ui/tools/dropper-tool.h"
 #include "ui/tools/eraser-tool.h"
-#include "ui/tools/flood-tool.h"
+
+#if HAVE_POTRACE
+# include "ui/tools/flood-tool.h"
+#endif
+
 #include "ui/tools/gradient-tool.h"
 #include "ui/tools/lpe-tool.h"
 #include "ui/tools/measure-tool.h"
@@ -52,8 +56,10 @@ ToolBase *ToolFactory::createObject(std::string const& id)
         tool = new DropperTool;
     else if (id == "/tools/eraser")
         tool = new EraserTool;
+#if HAVE_POTRACE
     else if (id == "/tools/paintbucket")
         tool = new FloodTool;
+#endif
     else if (id == "/tools/gradient")
         tool = new GradientTool;
     else if (id == "/tools/lpetool")

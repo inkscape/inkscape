@@ -79,7 +79,11 @@
 #include "measure-toolbar.h"
 #include "node-toolbar.h"
 #include "rect-toolbar.h"
-#include "paintbucket-toolbar.h"
+
+#if HAVE_POTRACE
+# include "paintbucket-toolbar.h"
+#endif
+
 #include "pencil-toolbar.h"
 #include "select-toolbar.h"
 #include "spray-toolbar.h"
@@ -151,7 +155,9 @@ static struct {
 	{ "/tools/calligraphic", "dyna_draw_tool", SP_VERB_CONTEXT_CALLIGRAPHIC, SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS },
 	{ "/tools/lpetool",  "lpetool_tool",   SP_VERB_CONTEXT_LPETOOL, SP_VERB_CONTEXT_LPETOOL_PREFS },
 	{ "/tools/eraser",   "eraser_tool",    SP_VERB_CONTEXT_ERASER, SP_VERB_CONTEXT_ERASER_PREFS },
+#if HAVE_POTRACE
 	{ "/tools/paintbucket",    "paintbucket_tool",     SP_VERB_CONTEXT_PAINTBUCKET, SP_VERB_CONTEXT_PAINTBUCKET_PREFS },
+#endif
 	{ "/tools/text",     "text_tool",      SP_VERB_CONTEXT_TEXT, SP_VERB_CONTEXT_TEXT_PREFS },
 	{ "/tools/connector","connector_tool", SP_VERB_CONTEXT_CONNECTOR, SP_VERB_CONTEXT_CONNECTOR_PREFS },
 	{ "/tools/gradient", "gradient_tool",  SP_VERB_CONTEXT_GRADIENT, SP_VERB_CONTEXT_GRADIENT_PREFS },
@@ -212,8 +218,10 @@ static struct {
       SP_VERB_INVALID, 0, 0},
     { "/tools/mesh", "mesh_toolbox", 0, sp_mesh_toolbox_prep, "MeshToolbar",
       SP_VERB_INVALID, 0, 0},
+#if HAVE_POTRACE
     { "/tools/paintbucket",  "paintbucket_toolbox",  0, sp_paintbucket_toolbox_prep, "PaintbucketToolbar",
       SP_VERB_CONTEXT_PAINTBUCKET_PREFS, "/tools/paintbucket", N_("Style of Paint Bucket fill objects")},
+#endif
     { NULL, NULL, NULL, NULL, NULL, SP_VERB_INVALID, NULL, NULL }
 };
 
@@ -469,6 +477,7 @@ static gchar const * ui_descr =
         "    <separator />"
         "  </toolbar>"
 
+#if HAVE_POTRACE
         "  <toolbar name='PaintbucketToolbar'>"
         "    <toolitem action='ChannelsAction' />"
         "    <separator />"
@@ -481,6 +490,7 @@ static gchar const * ui_descr =
         "    <separator />"
         "    <toolitem action='PaintbucketResetAction' />"
         "  </toolbar>"
+#endif
 
         "  <toolbar name='EraserToolbar'>"
         "    <toolitem action='EraserModeAction' />"
@@ -1323,8 +1333,11 @@ void setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToolSpray' />"
         "    <toolitem action='ToolEraser' />"
 
+#if HAVE_POTRACE
         "   <!-- Fill -->"
         "    <toolitem action='ToolPaintBucket' />"
+#endif
+
         "    <toolitem action='ToolGradient' />"
 #ifdef WITH_MESH
         "    <toolitem action='ToolMesh' />"

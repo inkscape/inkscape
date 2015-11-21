@@ -11,7 +11,6 @@ set(widgets_SRC
 	  measure-toolbar.cpp
 	  mesh-toolbar.cpp
 	  node-toolbar.cpp
-	  paintbucket-toolbar.cpp
 	  pencil-toolbar.cpp
 	  rect-toolbar.cpp
 	  spiral-toolbar.cpp
@@ -67,7 +66,6 @@ set(widgets_SRC
 	  measure-toolbar.h
 	  mesh-toolbar.h
 	  node-toolbar.h
-	  paintbucket-toolbar.h
 	  pencil-toolbar.h
 	  rect-toolbar.h
 	  spiral-toolbar.h
@@ -114,3 +112,12 @@ set(widgets_SRC
 
 # add_inkscape_lib(widgets_LIB "${widgets_SRC}")
 add_inkscape_source("${widgets_SRC}")
+
+set ( widgets_paintbucket_SRC
+	  paintbucket-toolbar.cpp
+	  paintbucket-toolbar.h
+)
+
+if ("${HAVE_POTRACE}")
+	add_inkscape_source("${widgets_paintbucket_SRC}")
+endif()

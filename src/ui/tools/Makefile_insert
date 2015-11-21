@@ -8,7 +8,6 @@ ink_common_sources += \
 	ui/tools/dropper-tool.cpp ui/tools/dropper-tool.h				\
 	ui/tools/dynamic-base.cpp ui/tools/dynamic-base.h				\
 	ui/tools/eraser-tool.cpp ui/tools/eraser-tool.h					\
-	ui/tools/flood-tool.cpp ui/tools/flood-tool.h					\
 	ui/tools/freehand-base.cpp ui/tools/freehand-base.h				\
 	ui/tools/gradient-tool.cpp ui/tools/gradient-tool.h				\
 	ui/tools/lpe-tool.cpp ui/tools/lpe-tool.h						\
@@ -26,3 +25,10 @@ ink_common_sources += \
 	ui/tools/tool-base.cpp ui/tools/tool-base.h						\
 	ui/tools/tweak-tool.cpp ui/tools/tweak-tool.h					\
 	ui/tools/zoom-tool.cpp ui/tools/zoom-tool.h
+
+if HAVE_POTRACE
+
+ink_common_sources += \
+	ui/tools/flood-tool.cpp ui/tools/flood-tool.h
+
+endif

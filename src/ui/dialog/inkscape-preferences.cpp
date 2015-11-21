@@ -478,10 +478,12 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_eraser, _("Eraser"), iter_tools, PREFS_PAGE_TOOLS_ERASER);
     this->AddNewObjectsStyle(_page_eraser, "/tools/eraser");
 
+#if HAVE_POTRACE
     //Paint Bucket
     this->AddPage(_page_paintbucket, _("Paint Bucket"), iter_tools, PREFS_PAGE_TOOLS_PAINTBUCKET);
     this->AddSelcueCheckbox(_page_paintbucket, "/tools/paintbucket", false);
     this->AddNewObjectsStyle(_page_paintbucket, "/tools/paintbucket");
+#endif
 
     //Gradient
     this->AddPage(_page_gradient, _("Gradient"), iter_tools, PREFS_PAGE_TOOLS_GRADIENT);

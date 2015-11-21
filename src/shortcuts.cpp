@@ -575,7 +575,14 @@ static void read_shortcuts_file(char const *filename, bool const is_user_set) {
         }
 
         Inkscape::Verb *verb=Inkscape::Verb::getbyid(verb_name);
-        if (!verb) {
+        if (!verb
+#if !HAVE_POTRACE
+                // Squash warning about disabled features
+                && strcmp(verb_name, "ToolPaintBucket")  != 0
+                && strcmp(verb_name, "SelectionTrace")   != 0
+                && strcmp(verb_name, "PaintBucketPrefs") != 0
+#endif
+           ) {
             g_warning("Unknown verb name: %s", verb_name);
             continue;
         }
