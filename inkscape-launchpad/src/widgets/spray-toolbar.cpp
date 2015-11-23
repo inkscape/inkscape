@@ -100,7 +100,6 @@ static void sp_stb_sensitivize( GObject *tbl )
 }
 
 static void sp_spray_erase_sensitivize( GObject *tbl, bool sensitive){
-    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "rotate") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "no_overlap") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "over_no_transparent") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "over_transparent") ), sensitive );
@@ -111,6 +110,7 @@ static void sp_spray_erase_sensitivize( GObject *tbl, bool sensitive){
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "pick_center") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "picker") ), sensitive );
     gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "offset") ), sensitive );
+    gtk_action_set_sensitive( GTK_ACTION( g_object_get_data(tbl, "spray_rotation") ), sensitive );
     sp_stb_sensitivize( tbl );
 }
 
@@ -594,13 +594,15 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
     
     /* Offset */
     {
+        gchar const* labels[] = {_("(minimum offset)"), 0, 0, 0, _("(default)"), 0, 0, _("(maximum offset)")};
+        gdouble values[] = {0, 25, 50, 75, 100, 150, 200, 1000};
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayToolOffsetAction",
                                          _("Offset %"), _("Offset %:"),
                                          _("Increase to segregate objects more (value in percent)"),
                                          "/tools/spray/offset", 100,
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
-                                         0, 10000, 1, 4,
-                                         0, 0, 0,
+                                         0, 1000, 1, 4,
+                                         labels, values, G_N_ELEMENTS(labels),
                                          sp_spray_offset_value_changed, NULL, 0 , 0);
         g_object_set_data( holder, "offset", eact );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );

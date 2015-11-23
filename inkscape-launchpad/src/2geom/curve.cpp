@@ -108,7 +108,11 @@ std::vector<CurveIntersection> Curve::intersectSelf(Coord eps) const
     // Monotonic segments cannot have self-intersections.
     // Thus, we can split the curve at roots and intersect the portions.
     std::vector<Coord> splits;
+#if __cplusplus <= 199711L
     std::auto_ptr<Curve> deriv(derivative());
+#else
+    std::unique_ptr<Curve> deriv(derivative());
+#endif
     splits = deriv->roots(0, X);
     if (splits.empty()) {
         return result;

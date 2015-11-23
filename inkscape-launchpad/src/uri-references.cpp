@@ -19,7 +19,7 @@
 #include "uri.h"
 #include "uri-references.h"
 #include "extract-uri.h"
-
+#include "sp-tag-use.h"
 #include <glibmm/miscutils.h>
 #include <sigc++/functors/mem_fun.h>
 
@@ -84,7 +84,14 @@ bool URIReference::_acceptObject(SPObject *obj) const
             positions.push_back(position);
             owner = owner->parent;
         }
-        owner = ((SPUse *)owner)->get_original();
+        if (dynamic_cast<SPUse *>(owner))
+            owner = ((SPUse *)owner)->get_original();
+        else if (dynamic_cast<SPTagUse *>(owner))
+            owner = ((SPTagUse *)owner)->get_original();
+        else {
+            g_warning("cloned object with no known type\n");
+            return false;
+        }
         for (int i = positions.size() - 2; i >= 0; i--)
             owner = owner->childList(false)[positions[i]];
     }

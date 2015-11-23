@@ -1474,7 +1474,7 @@ void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
 
     std::set<SPObject*> used;
     std::vector<SPItem*> itemlist=sel->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; i++) {
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; ++i) {
         SPObject *obj = *i;
         SPStyle *style = obj->style;
         if (!style || !SP_IS_ITEM(obj)) {
@@ -1555,7 +1555,7 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
             filter = 0;
 
         std::vector<SPItem*> itemlist=sel->itemList();
-        for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; i++) {
+        for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; ++i) {
             SPItem * item = *i;
             SPStyle *style = item->style;
             g_assert(style != NULL);
@@ -1669,7 +1669,7 @@ void FilterEffectsDialog::FilterModifier::remove_filter()
         // Delete all references to this filter
         std::vector<SPItem*> x,y;
         std::vector<SPItem*> all = get_all_items(x, _desktop->currentRoot(), _desktop, false, false, true, y);
-        for(std::vector<SPItem*>::const_iterator i=all.begin(); all.end() != i; i++) {
+        for(std::vector<SPItem*>::const_iterator i=all.begin(); all.end() != i; ++i) {
             if (!SP_IS_ITEM(*i)) {
                 continue;
             }

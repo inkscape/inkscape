@@ -561,7 +561,7 @@ std::vector<SPItem*> Find::filter_fields (std::vector<SPItem*> &l, bool exact, b
     std::vector<SPItem*> out;
 
     if (check_searchin_text.get_active()) {
-        for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+        for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; ++i) {
             SPObject *obj = *i;
             SPItem *item = dynamic_cast<SPItem *>(obj);
             g_assert(item != NULL);
@@ -584,7 +584,7 @@ std::vector<SPItem*> Find::filter_fields (std::vector<SPItem*> &l, bool exact, b
         bool attrvalue = check_attributevalue.get_active();
 
         if (ids) {
-            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; ++i) {
                 SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 if (item_id_match(item, text, exact, casematch)) {
@@ -600,7 +600,7 @@ std::vector<SPItem*> Find::filter_fields (std::vector<SPItem*> &l, bool exact, b
 
 
         if (style) {
-            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; ++i) {
                 SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 g_assert(item != NULL);
@@ -617,7 +617,7 @@ std::vector<SPItem*> Find::filter_fields (std::vector<SPItem*> &l, bool exact, b
 
 
         if (attrname) {
-            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; ++i) {
                 SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 g_assert(item != NULL);
@@ -634,7 +634,7 @@ std::vector<SPItem*> Find::filter_fields (std::vector<SPItem*> &l, bool exact, b
 
 
         if (attrvalue) {
-            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; ++i) {
                 SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 g_assert(item != NULL);
@@ -651,7 +651,7 @@ std::vector<SPItem*> Find::filter_fields (std::vector<SPItem*> &l, bool exact, b
 
 
         if (font) {
-            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; i++) {
+            for(std::vector<SPItem*>::const_reverse_iterator i=in.rbegin(); in.rend() != i; ++i) {
                 SPObject *obj = *i;
                 SPItem *item = dynamic_cast<SPItem *>(obj);
                 g_assert(item != NULL);
@@ -718,7 +718,7 @@ bool Find::item_type_match (SPItem *item)
 std::vector<SPItem*> Find::filter_types (std::vector<SPItem*> &l)
 {
     std::vector<SPItem*> n;
-    for(std::vector<SPItem*>::const_reverse_iterator i=l.rbegin(); l.rend() != i; i++) {
+    for(std::vector<SPItem*>::const_reverse_iterator i=l.rbegin(); l.rend() != i; ++i) {
         SPObject *obj = *i;
         SPItem *item = dynamic_cast<SPItem *>(obj);
         g_assert(item != NULL);
@@ -762,7 +762,7 @@ std::vector<SPItem*> &Find::all_items (SPObject *r, std::vector<SPItem*> &l, boo
 std::vector<SPItem*> &Find::all_selection_items (Inkscape::Selection *s, std::vector<SPItem*> &l, SPObject *ancestor, bool hidden, bool locked)
 {
 	std::vector<SPItem*> itemlist=s->itemList();
-    for(std::vector<SPItem*>::const_reverse_iterator i=itemlist.rbegin(); itemlist.rend() != i; i++) {
+    for(std::vector<SPItem*>::const_reverse_iterator i=itemlist.rbegin(); itemlist.rend() != i; ++i) {
         SPObject *obj = *i;
         SPItem *item = dynamic_cast<SPItem *>(obj);
         g_assert(item != NULL);

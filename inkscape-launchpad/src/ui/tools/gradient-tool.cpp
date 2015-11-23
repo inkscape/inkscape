@@ -495,7 +495,7 @@ bool GradientTool::root_handler(GdkEvent* event) {
                 sp_gradient_context_add_stop_near_point(this, SP_ITEM(selection->itemList().front()), this->mousepoint_doc, event->button.time);
             } else {
             	std::vector<SPItem*>  items=selection->itemList();
-                for (std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();i++) {
+                for (std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();++i) {
                     SPItem *item = *i;
                     SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
                     Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
@@ -910,7 +910,7 @@ static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*sta
         sp_repr_css_set_property(css, "fill-opacity", "1.0");
 
         std::vector<SPItem*> itemlist = selection->itemList();
-        for (std::vector<SPItem*>::const_iterator i = itemlist.begin();i!=itemlist.end();i++) {
+        for (std::vector<SPItem*>::const_iterator i = itemlist.begin();i!=itemlist.end();++i) {
 
             //FIXME: see above
             sp_repr_css_change_recursive((*i)->getRepr(), css, "style");

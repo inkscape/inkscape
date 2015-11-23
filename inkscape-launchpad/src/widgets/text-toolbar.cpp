@@ -155,7 +155,7 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
             act->active = 0; // New family is always at top of list.
         }
 
-        std::pair<Glib::ustring,Glib::ustring> ui = fontlister->set_font_family( act->active );
+        fontlister->set_font_family( act->active );
         // active text set in sp_text_toolbox_selection_changed()
 
         SPCSSAttr *css = sp_repr_css_attr_new ();
@@ -373,7 +373,7 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     // move the x of all texts to preserve the same bbox
     Inkscape::Selection *selection = desktop->getSelection();
     std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
         if (SP_IS_TEXT(*i)) {
             SPItem *item = *i;
 
@@ -526,7 +526,7 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     Inkscape::Selection *selection = desktop->getSelection();
     bool modmade = false;
     std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
         if (SP_IS_TEXT (*i)) {
             (*i)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
             modmade = true;
@@ -871,7 +871,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     // Find out if we have flowed text now so we can use it several places
     gboolean isFlow = false;
     std::vector<SPItem*> itemlist=SP_ACTIVE_DESKTOP->getSelection()->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
         // const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
         // std::cout << "    " << id << std::endl;
         if( SP_IS_FLOWTEXT(*i)) {
@@ -1165,7 +1165,7 @@ static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*p
   SPDocument *document = desktop->getDocument();
   std::vector<SPItem*> x,y;
   std::vector<SPItem*> allList = get_all_items(x, document->getRoot(), desktop, false, false, true, y);
-  for(std::vector<SPItem*>::const_reverse_iterator i=allList.rbegin();i!=allList.rend();i++){
+  for(std::vector<SPItem*>::const_reverse_iterator i=allList.rbegin();i!=allList.rend(); ++i){
       SPItem *item = *i;
     SPStyle *style = item->style;
 

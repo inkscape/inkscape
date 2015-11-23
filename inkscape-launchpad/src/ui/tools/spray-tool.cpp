@@ -559,21 +559,27 @@ static bool fit_item(SPDesktop *desktop,
     if (!rect_sprayed.hasZeroArea()) {
         rgba2 = getPickerData(rect_sprayed.roundOutwards());
     }
-    if(pick_no_overlap){
-        if(rgba != rgba2){
+    if(pick_no_overlap) {
+        if(rgba != rgba2) {
+            if(mode != SPRAY_MODE_ERASER) {
+                return false;
+            }
+        }
+    }
+    if(!pick_center) {
+        rgba = rgba2;
+    }
+    if(!over_transparent && (SP_RGBA32_A_F(rgba) == 0 || SP_RGBA32_A_F(rgba) < 1e-6)) {
+        if(mode != SPRAY_MODE_ERASER) {
             return false;
         }
     }
-    if(!pick_center){
-        rgba = rgba2;
+    if(!over_no_transparent && SP_RGBA32_A_F(rgba) > 0) {
+        if(mode != SPRAY_MODE_ERASER) {
+            return false;
+        }
     }
-    if(!over_transparent && (SP_RGBA32_A_F(rgba) == 0 || SP_RGBA32_A_F(rgba) < 1e-6)){
-        return false;
-    }
-    if(!over_no_transparent && SP_RGBA32_A_F(rgba) > 0){
-        return false;
-    }
-    if(offset < 100 ){
+    if(offset < 100 ) {
         offset_width = ((99.0 - offset) * width_transformed)/100.0 - width_transformed;
         offset_height = ((99.0 - offset) * height_transformed)/100.0 - height_transformed;
     } else {
@@ -586,15 +592,15 @@ static bool fit_item(SPDesktop *desktop,
         return false;
     }
     std::vector<SPItem*> const items_selected(selection->itemList());
-    for (std::vector<SPItem*>::const_iterator i=items_down.begin(); i!=items_down.end(); i++) {
+    std::vector<SPItem*> items_down_erased;
+    for (std::vector<SPItem*>::const_iterator i=items_down.begin(); i!=items_down.end(); ++i) {
         SPItem *item_down = *i;
         Geom::OptRect bbox_down = item_down->documentVisualBounds();
-        width = bbox_down->width();
-        height = bbox_down->height();
         double bbox_left = bbox_down->left();
         double bbox_top = bbox_down->top();
         gchar const * item_down_sharp = g_strdup_printf("#%s", item_down->getId());
-        for (std::vector<SPItem*>::const_iterator j=items_selected.begin(); j!=items_selected.end(); j++) {
+        items_down_erased.push_back(item_down);
+        for (std::vector<SPItem*>::const_iterator j=items_selected.begin(); j!=items_selected.end(); ++j) {
             SPItem *item_selected = *j;
             gchar const * spray_origin;
             if(!item_selected->getAttribute("inkscape:spray-origin")){
@@ -606,11 +612,13 @@ static bool fit_item(SPDesktop *desktop,
                 (item_down->getAttribute("inkscape:spray-origin") && 
                 strcmp(item_down->getAttribute("inkscape:spray-origin"),spray_origin) == 0 ))
             {
-                if(mode == SPRAY_MODE_ERASER){
-                    if(strcmp(item_down_sharp, spray_origin) != 0 ){
+                if(mode == SPRAY_MODE_ERASER) {
+                    if(strcmp(item_down_sharp, spray_origin) != 0 && !selection->includes(item_down) ){
                         item_down->deleteObject();
+                        items_down_erased.pop_back();
+                        break;
                     }
-                }else if(no_overlap){
+                } else if(no_overlap) {
                     if(!(offset_width < 0 && offset_height < 0 && std::abs(bbox_left - bbox_left_main) > std::abs(offset_width) && 
                 std::abs(bbox_top - bbox_top_main) > std::abs(offset_height))){
                         if(!no_overlap && (picker || over_transparent || over_no_transparent)){
@@ -618,7 +626,7 @@ static bool fit_item(SPDesktop *desktop,
                         }
                         return false;
                     }
-                } else if(picker || over_transparent || over_no_transparent){
+                } else if(picker || over_transparent || over_no_transparent) {
                     item_down->setHidden(true);
                     item_down->updateRepr();
                 }
@@ -627,7 +635,7 @@ static bool fit_item(SPDesktop *desktop,
     }
     if(mode == SPRAY_MODE_ERASER){
         if(!no_overlap && (picker || over_transparent || over_no_transparent)){
-            showHidden(items_down);
+            showHidden(items_down_erased);
         }
         return false;
     }
@@ -995,7 +1003,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
         int i=1;
         std::vector<SPItem*> items=selection->itemList();
-        for(std::vector<SPItem*>::const_iterator it=items.begin();it!=items.end();it++){
+        for(std::vector<SPItem*>::const_iterator it=items.begin();it!=items.end(); ++it){
             SPItem *item1 = *it;
             if (i == 1) {
                 parent_item = item1;
@@ -1164,13 +1172,13 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
     {
         std::vector<SPItem*> const items(selection->itemList());
 
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i){
             SPItem *item = *i;
             g_assert(item != NULL);
             sp_object_ref(item);
         }
 
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i){
             SPItem *item = *i;
             g_assert(item != NULL);
             if (sp_spray_recursive(desktop
@@ -1214,7 +1222,7 @@ static bool sp_spray_dilate(SprayTool *tc, Geom::Point /*event_p*/, Geom::Point 
             }
         }
 
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i){
             SPItem *item = *i;
             g_assert(item != NULL);
             sp_object_unref(item);

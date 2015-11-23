@@ -373,7 +373,7 @@ void PolarArrangeTab::arrange()
 	Geom::Point realCenter = Geom::Point(cx, cy) * transformation;
 
 	int i = 0;
-	for(std::vector<SPItem*>::const_iterator it=tmp.begin();it!=tmp.end();it++)
+	for(std::vector<SPItem*>::const_iterator it=tmp.begin();it!=tmp.end(); ++it)
 	{
 		SPItem *item = *it;
 

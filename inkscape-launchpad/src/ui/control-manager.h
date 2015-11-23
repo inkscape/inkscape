@@ -74,9 +74,11 @@ public:
 
 private:
     ControlManager();
-
+#if __cplusplus <= 199711L
     std::auto_ptr<ControlManagerImpl> _impl;
-
+#else
+    std::unique_ptr<ControlManagerImpl> _impl;
+#endif
     friend class ControlManagerImpl;
 };
 

@@ -52,8 +52,11 @@ Geom::PathVector
 LPEInterpolatePoints::doEffect_path (Geom::PathVector const & path_in)
 {
     Geom::PathVector path_out;
-
+#if __cplusplus <= 199711L
     std::auto_ptr<Geom::Interpolate::Interpolator> interpolator(  Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value())) );
+#else
+    std::unique_ptr<Geom::Interpolate::Interpolator> interpolator(  Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value())) );
+#endif
 
     for(Geom::PathVector::const_iterator path_it = path_in.begin(); path_it != path_in.end(); ++path_it) {
         if (path_it->empty())

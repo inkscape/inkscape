@@ -1,7 +1,9 @@
 #ifndef SEEN_MENUS_SKELETON_H
 #define SEEN_MENUS_SKELETON_H
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #ifdef __cplusplus
 #undef N_
@@ -221,7 +223,11 @@ static char const menus_skeleton[] =
 "   <submenu name=\"" N_("_Path") "\">\n"
 "       <verb verb-id=\"ObjectToPath\" />\n"
 "       <verb verb-id=\"StrokeToPath\" />\n"
+
+#if HAVE_POTRACE
 "       <verb verb-id=\"SelectionTrace\" />\n"
+#endif
+
 "       <verb verb-id=\"SelectionPixelArt\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionUnion\" />\n"
@@ -284,7 +290,9 @@ static char const menus_skeleton[] =
 "           <verb verb-id=\"TutorialsBasic\" />\n"
 "           <verb verb-id=\"TutorialsShapes\" />\n"
 "           <verb verb-id=\"TutorialsAdvanced\" />\n"
+#if HAVE_POTRACE
 "           <verb verb-id=\"TutorialsTracing\" />\n"
+#endif
 "           <verb verb-id=\"TutorialsTracingPixelArt\" />\n"
 "           <verb verb-id=\"TutorialsCalligraphy\" />\n"
 "           <verb verb-id=\"TutorialsInterpolate\" />\n"

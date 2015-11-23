@@ -29,7 +29,6 @@
 #include "message-stack.h"
 #include <sp-path.h>
 #include <svg/path-string.h>
-#include "curve.h"
 #include "bitmap.h"
 
 using Glib::ustring;
@@ -128,7 +127,7 @@ static bool hasPoint(std::vector<Point> &points, double x, double y)
 
 
 /**
- *  Recursively descend the path_t node tree, writing paths in SVG
+ *  Recursively descend the potrace_path_t node tree, writing paths in SVG
  *  format into the output stream.  The Point vector is used to prevent
  *  redundant paths.  Returns number of paths processed.
  */
@@ -144,7 +143,7 @@ static long writePaths(PotraceTracingEngine *engine, potrace_path_t *plist,
         //g_message("node->fm:%d\n", node->fm);
         if (!curve->n)
             continue;
-        dpoint_t *pt = curve->c[curve->n - 1];
+        const potrace_dpoint_t *pt = curve->c[curve->n - 1];
         double x0 = 0.0;
         double y0 = 0.0;
         double x1 = 0.0;
@@ -192,7 +191,7 @@ static long writePaths(PotraceTracingEngine *engine, potrace_path_t *plist,
             }
         data.closePath();
 
-        for (path_t *child=node->childlist; child ; child=child->sibling)
+        for (potrace_path_t *child=node->childlist; child ; child=child->sibling)
             {
             nodeCount += writePaths(engine, child, data, points);
             }

@@ -34,7 +34,11 @@
 #include "ui/dialog/messages.h"
 #include "ui/dialog/symbols.h"
 #include "ui/dialog/tile.h"
-#include "ui/dialog/tracedialog.h"
+
+#if HAVE_POTRACE
+# include "ui/dialog/tracedialog.h"
+#endif
+
 #include "ui/dialog/pixelartdialog.h"
 #include "ui/dialog/transformation.h"
 #include "ui/dialog/undo-history.h"
@@ -124,7 +128,11 @@ DialogManager::DialogManager() {
         registerFactory("Swatches",            &create<SwatchesPanel,        FloatingBehavior>);
         registerFactory("TileDialog",          &create<ArrangeDialog,        FloatingBehavior>);
         registerFactory("Symbols",             &create<SymbolsDialog,        FloatingBehavior>);
+
+#if HAVE_POTRACE
         registerFactory("Trace",               &create<TraceDialog,          FloatingBehavior>);
+#endif
+
         registerFactory("PixelArt",            &create<PixelArtDialog,       FloatingBehavior>);
         registerFactory("Transformation",      &create<Transformation,       FloatingBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          FloatingBehavior>);
@@ -159,7 +167,11 @@ DialogManager::DialogManager() {
         registerFactory("Swatches",            &create<SwatchesPanel,        DockBehavior>);
         registerFactory("TileDialog",          &create<ArrangeDialog,        DockBehavior>);
         registerFactory("Symbols",             &create<SymbolsDialog,        DockBehavior>);
+
+#if HAVE_POTRACE
         registerFactory("Trace",               &create<TraceDialog,          DockBehavior>);
+#endif
+
         registerFactory("PixelArt",            &create<PixelArtDialog,       DockBehavior>);
         registerFactory("Transformation",      &create<Transformation,       DockBehavior>);
         registerFactory("UndoHistory",         &create<UndoHistory,          DockBehavior>);

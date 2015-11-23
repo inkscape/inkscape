@@ -164,7 +164,7 @@ void GridArrangeTab::arrange()
 
     Inkscape::Selection *selection = desktop->getSelection();
     const std::vector<SPItem*> items = selection ? selection->itemList() : std::vector<SPItem*>();
-    for(std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();i++){
+    for(std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end(); ++i){
         SPItem *item = *i;
         Geom::OptRect b = item->documentVisualBounds();
         if (!b) {
@@ -202,7 +202,7 @@ void GridArrangeTab::arrange()
 
         cnt=0;
         const std::vector<SPItem*> sizes(sorted);
-        for (std::vector<SPItem*>::const_iterator i = sizes.begin();i!=sizes.end();i++) {
+        for (std::vector<SPItem*>::const_iterator i = sizes.begin();i!=sizes.end(); ++i) {
             SPItem *item = *i;
             Geom::OptRect b = item->documentVisualBounds();
             if (b) {
@@ -301,7 +301,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
 
     cnt=0;
     std::vector<SPItem*>::iterator it = sorted.begin();
-    for (row_cnt=0; ((it != sorted.end()) && (row_cnt<NoOfRows)); row_cnt++) {
+    for (row_cnt=0; ((it != sorted.end()) && (row_cnt<NoOfRows)); ++row_cnt) {
 
              GSList *current_row = NULL;
              col_cnt = 0;

@@ -34,7 +34,6 @@ set(ui_SRC
 	tools/dropper-tool.cpp
 	tools/dynamic-base.cpp
 	tools/eraser-tool.cpp
-	tools/flood-tool.cpp
 	tools/freehand-base.cpp
 	tools/gradient-tool.cpp
 	tools/lpe-tool.cpp
@@ -107,7 +106,6 @@ set(ui_SRC
 	dialog/template-widget.cpp
 	dialog/text-edit.cpp
 	dialog/tile.cpp
-	dialog/tracedialog.cpp
 	dialog/transformation.cpp
 	dialog/undo-history.cpp
 	dialog/xml-tree.cpp
@@ -248,7 +246,6 @@ set(ui_SRC
 	dialog/template-widget.h
 	dialog/text-edit.h
 	dialog/tile.h
-	dialog/tracedialog.h
 	dialog/transformation.h
 	dialog/undo-history.h
 	dialog/xml-tree.h
@@ -276,7 +273,6 @@ set(ui_SRC
 	tools/dropper-tool.h
 	tools/dynamic-base.h
 	tools/eraser-tool.h
-	tools/flood-tool.h
 	tools/freehand-base.h
 	tools/gradient-tool.h
 	tools/lpe-tool.h
@@ -364,3 +360,14 @@ endif()
 
 # add_inkscape_lib(ui_LIB "${ui_SRC}")
 add_inkscape_source("${ui_SRC}")
+
+set ( ui_flood_and_trace_SRC
+	tools/flood-tool.h
+	tools/flood-tool.cpp
+	dialog/tracedialog.cpp
+	dialog/tracedialog.h
+)
+
+if ("${HAVE_POTRACE}")
+	add_inkscape_source("${ui_flood_and_trace_SRC}")
+endif()

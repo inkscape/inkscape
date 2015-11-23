@@ -240,6 +240,17 @@ if test "x$ac_cv_prog_cxx_openmp" != "xunsupported"; then
 	AC_DEFINE(HAVE_OPENMP, 1, [Use OpenMP])
 fi
 
+dnl ********************
+dnl Check for libpotrace
+dnl ********************
+AC_CHECK_LIB(potrace, potrace_trace, [AC_CHECK_HEADER(potracelib.h, potrace_ok=yes, potrace_ok=no)], potrace_ok=no)
+if test "x$potrace_ok" = "xyes"; then
+   LIBS="-lpotrace $LIBS"
+   AC_DEFINE(HAVE_POTRACE, 1, [Use Potrace])
+fi
+
+AM_CONDITIONAL(HAVE_POTRACE, test "x$potrace_ok" = "xyes")
+
 dnl ******************************
 dnl Check for libexif
 dnl ******************************
@@ -1192,6 +1203,7 @@ Configuration:
         Enable LittleCms:         ${enable_lcms}
         Enable DBUS:              ${with_dbus} 
         Enable Poppler-Cairo:     ${enable_poppler_cairo}
+	Enable Potrace:           ${potrace_ok}
         ImageMagick Magick++:     ${magick_ok}
         Libwpg:                   ${with_libwpg}
         Libvisio:                 ${with_libvisio}

@@ -221,7 +221,7 @@ sp_mask_create (std::vector<Inkscape::XML::Node*> &reprs, SPDocument *document, 
     const gchar *mask_id = repr->attribute("id");
     SPObject *mask_object = document->getObjectById(mask_id);
     
-    for (std::vector<Inkscape::XML::Node*>::const_iterator it = reprs.begin(); it != reprs.end(); it++) {
+    for (std::vector<Inkscape::XML::Node*>::const_iterator it = reprs.begin(); it != reprs.end(); ++it) {
         Inkscape::XML::Node *node = (*it);
         SPItem *item = SP_ITEM(mask_object->appendChildRepr(node));
         
