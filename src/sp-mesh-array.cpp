@@ -2330,6 +2330,7 @@ guint SPMeshNodeArray::color_pick( std::vector<guint> icorners, SPItem* item ) {
     pick_doc->getRoot()->invoke_hide(pick_visionkey);
     delete pick_drawing;
 
+    picked = 1; // Picking always happens
     if( picked > 0 ) built = false;
     return picked;
 }
