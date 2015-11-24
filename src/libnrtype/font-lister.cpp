@@ -6,7 +6,6 @@
 #include <gtkmm/treemodel.h>
 
 #include <libnrtype/font-instance.h>
-#include <libnrtype/TextWrapper.h>
 #include <libnrtype/one-glyph.h>
 
 #include "font-lister.h"
