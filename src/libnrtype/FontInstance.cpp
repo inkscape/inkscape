@@ -744,7 +744,7 @@ void font_instance::FindFontMetrics() {
 
         if ( theFace->units_per_EM != 0 ) {  // If zero then it's a bitmap font.
 
-            TT_OS2*  os2 = (TT_OS2*)FT_Get_Sfnt_Table( theFace, FT_SFNT_OS2 );       
+            TT_OS2*  os2 = (TT_OS2*)FT_Get_Sfnt_Table( theFace, ft_sfnt_os2 );       
             if( os2 ) {
                 _ascent  = fabs(((double)os2->sTypoAscender) / ((double)theFace->units_per_EM));
                 _descent = fabs(((double)os2->sTypoDescender)/ ((double)theFace->units_per_EM));
