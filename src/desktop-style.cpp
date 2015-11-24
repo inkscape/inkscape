@@ -500,7 +500,7 @@ objects_query_fillstroke (const std::vector<SPItem*> &objects, SPStyle *style_re
 
     SPIPaint *paint_res = isfill? &style_res->fill : &style_res->stroke;
     bool paintImpossible = true;
-    paint_res->set = TRUE;
+    paint_res->set = true;
 
     SVGICCColor* iccColor = 0;
 
@@ -1144,7 +1144,7 @@ objects_query_fontstyle (const std::vector<SPItem*> &objects, SPStyle *style_res
             different = true;  // different styles
         }
 
-        set = TRUE;
+        set = true;
         style_res->font_weight.value = style_res->font_weight.computed = style->font_weight.computed;
         style_res->font_style.value = style_res->font_style.computed = style->font_style.computed;
         style_res->font_stretch.value = style_res->font_stretch.computed = style->font_stretch.computed;
@@ -1256,6 +1256,56 @@ objects_query_fontvariants (const std::vector<SPItem*> &objects, SPStyle *style_
 }
 
 
+/**
+ * Write to style_res the average writing modes style of objects.
+ */
+int
+objects_query_writing_modes (const std::vector<SPItem*> &objects, SPStyle *style_res)
+{
+    bool different = false;
+    bool set = false;
+
+    int texts = 0;
+
+    for (std::vector<SPItem*>::const_iterator i = objects.begin(); i != objects.end(); i++) {
+        SPObject *obj = *i;
+
+        if (!isTextualItem(obj)) {
+            continue;
+        }
+
+        SPStyle *style = obj->style;
+        if (!style) {
+            continue;
+        }
+
+        texts ++;
+
+        if (set &&
+            ( ( style_res->writing_mode.computed     != style->writing_mode.computed ) ||
+              ( style_res->text_orientation.computed != style->text_orientation.computed ) ) ) {
+            different = true;  // different styles
+        }
+
+        set = true;
+        style_res->writing_mode.computed = style->writing_mode.computed;
+        style_res->text_orientation.computed = style->text_orientation.computed;
+    }
+
+    if (texts == 0 || !set)
+        return QUERY_STYLE_NOTHING;
+
+    if (texts > 1) {
+        if (different) {
+            return QUERY_STYLE_MULTIPLE_DIFFERENT;
+        } else {
+            return QUERY_STYLE_MULTIPLE_SAME;
+        }
+    } else {
+        return QUERY_STYLE_SINGLE;
+    }
+}
+
 int
 objects_query_fontfeaturesettings (const std::vector<SPItem*> &objects, SPStyle *style_res)
 {
@@ -1293,7 +1343,7 @@ objects_query_fontfeaturesettings (const std::vector<SPItem*> &objects, SPStyle 
             style_res->font_feature_settings.value = NULL;
         }
 
-        style_res->font_feature_settings.set = TRUE;
+        style_res->font_feature_settings.set = true;
         style_res->font_feature_settings.value = g_strdup(style->font_feature_settings.value);
     }
 
@@ -1449,7 +1499,7 @@ objects_query_fontfamily (const std::vector<SPItem*> &objects, SPStyle *style_re
             style_res->font_family.value = NULL;
         }
 
-        style_res->font_family.set = TRUE;
+        style_res->font_family.set = true;
         style_res->font_family.value = g_strdup(style->font_family.value);
     }
 
@@ -1508,7 +1558,7 @@ objects_query_fontspecification (const std::vector<SPItem*> &objects, SPStyle *s
                 style_res->font_specification.value = NULL;
             }
 
-            style_res->font_specification.set = TRUE;
+            style_res->font_specification.set = true;
             style_res->font_specification.value = g_strdup(style->font_specification.value);
         }
     }
@@ -1728,6 +1778,8 @@ sp_desktop_query_style_from_list (const std::vector<SPItem*> &list, SPStyle *sty
         return objects_query_fontfeaturesettings (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_FONTNUMBERS) {
         return objects_query_fontnumbers (list, style);
+    } else if (property == QUERY_STYLE_PROPERTY_WRITINGMODES) {
+        return objects_query_writing_modes (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_BASELINES) {
         return objects_query_baselines (list, style);
 

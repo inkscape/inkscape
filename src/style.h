@@ -148,6 +148,8 @@ public:
     SPIEnum writing_mode;
     /** Text orientation (CSS Writing Modes 3) */
     SPIEnum text_orientation;
+    /** Dominant baseline (svg1.1) */
+    SPIEnum dominant_baseline;
     /** Baseline shift (svg1.1 10.9.2) */
     SPIBaselineShift baseline_shift;
 

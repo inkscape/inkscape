@@ -862,7 +862,7 @@ void text_wrapper::MeasureBoxes(void)
     for (int i = 0; i < nbBox; i++) {
         boxes[i].ascent = 0;
         boxes[i].descent = 0;
-        boxes[i].leading = 0;
+        boxes[i].xheight = 0;
         boxes[i].width = 0;
 
         PangoFont *curPF = glyph_text[boxes[i].g_st].font;
@@ -870,7 +870,7 @@ void text_wrapper::MeasureBoxes(void)
             PangoFontDescription *pfd = pango_font_describe(curPF);
             font_instance *curF = f_src->Face(pfd);
             if ( curF ) {
-                curF->FontMetrics(boxes[i].ascent, boxes[i].descent, boxes[i].leading);
+                curF->FontMetrics(boxes[i].ascent, boxes[i].descent, boxes[i].xheight);
                 curF->Unref();
             }
             pango_font_description_free(pfd);

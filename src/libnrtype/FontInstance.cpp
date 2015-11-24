@@ -21,6 +21,7 @@
 #include FT_BBOX_H
 #include FT_TRUETYPE_TAGS_H
 #include FT_TRUETYPE_TABLES_H
+#include FT_GLYPH_H
 #include <pango/pangoft2.h>
 #include <2geom/pathvector.h>
 #include <2geom/path-sink.h>
@@ -183,6 +184,20 @@ font_instance::font_instance(void) :
     theFace(0)
 {
     //printf("font instance born\n");
+    _ascent  = _ascent_max  = 0.8;
+    _descent = _descent_max = 0.2;
+    _xheight = 0.5;
+
+    // Default baseline values, alphabetic is reference
+    _baselines[ SP_CSS_BASELINE_AUTO             ] =  0.0;
+    _baselines[ SP_CSS_BASELINE_ALPHABETIC       ] =  0.0;
+    _baselines[ SP_CSS_BASELINE_IDEOGRAPHIC      ] = -_descent;
+    _baselines[ SP_CSS_BASELINE_HANGING          ] =  0.8 * _ascent;
+    _baselines[ SP_CSS_BASELINE_MATHEMATICAL     ] =  0.8 * _xheight;
+    _baselines[ SP_CSS_BASELINE_CENTRAL          ] =  0.5 - _descent;
+    _baselines[ SP_CSS_BASELINE_MIDDLE           ] =  0.5 * _xheight;
+    _baselines[ SP_CSS_BASELINE_TEXT_BEFORE_EDGE ] = _ascent;
+    _baselines[ SP_CSS_BASELINE_TEXT_AFTER_EDGE  ] = -_descent;
 }
 
 font_instance::~font_instance(void)
@@ -259,6 +274,7 @@ void font_instance::InitTheFace()
         FT_Select_Charmap(theFace,ft_encoding_unicode) && FT_Select_Charmap(theFace,ft_encoding_symbol);
     }
 #endif
+    FindFontMetrics();
     }
 }
 
@@ -374,10 +390,10 @@ void font_instance::LoadGlyph(int glyph_id)
         GLYPHMETRICS metrics;
         DWORD bufferSize=GetGlyphOutline (parent->hScreenDC, glyph_id, GGO_GLYPH_INDEX | GGO_NATIVE | GGO_UNHINTED, &metrics, 0, NULL, &identity);
         double scale=1.0/parent->fontSize;
-        n_g.h_advance=metrics.gmCellIncX*scale;
-        n_g.v_advance=otm.otmTextMetrics.tmHeight*scale;
-        n_g.h_width=metrics.gmBlackBoxX*scale;
-        n_g.v_width=metrics.gmBlackBoxY*scale;
+        n_g.h_advance = metrics.gmCellIncX          * scale;
+        n_g.v_advance = otm.otmTextMetrics.tmHeight * scale;
+        n_g.h_width   = metrics.gmBlackBoxX         * scale;
+        n_g.v_width   = metrics.gmBlackBoxY         * scale;
         if ( bufferSize == GDI_ERROR) {
             // shit happened
         } else if ( bufferSize == 0) {
@@ -459,7 +475,13 @@ void font_instance::LoadGlyph(int glyph_id)
                 n_g.v_advance=((double)theFace->glyph->metrics.vertAdvance)/((double)theFace->units_per_EM);
                 n_g.v_width=((double)theFace->glyph->metrics.height)/((double)theFace->units_per_EM);
             } else {
-                n_g.v_width=n_g.v_advance=((double)theFace->height)/((double)theFace->units_per_EM);
+                // CSS3 Writing modes dictates that if vertical font metrics are missing we must
+                // synthisize them. No method is specified. The SVG 1.1 spec suggests using the em
+                // height (which is not theFace->height as that includes leading). The em height
+                // is ascender + descender (descender positive).  Note: The "Requirements for
+                // Japanese Text Layout" W3C document says that Japanese kanji should be "set
+                // solid" which implies that vertical (and horizontal) advance should be 1em.
+                n_g.v_width=n_g.v_advance= 1.0;
             }
             if ( theFace->glyph->format == ft_glyph_format_outline ) {
                 FT_Outline_Funcs ft2_outline_funcs = {
@@ -501,7 +523,7 @@ void font_instance::LoadGlyph(int glyph_id)
     }
 }
 
-bool font_instance::FontMetrics(double &ascent,double &descent,double &leading)
+bool font_instance::FontMetrics(double &ascent,double &descent,double &xheight)
 {
     if ( pFont == NULL ) {
         return false;
@@ -510,32 +532,17 @@ bool font_instance::FontMetrics(double &ascent,double &descent,double &leading)
     if ( theFace == NULL ) {
         return false;
     }
-#ifdef USE_PANGO_WIN32
-    OUTLINETEXTMETRIC otm;
-    if ( !GetOutlineTextMetrics(parent->hScreenDC,sizeof(otm),&otm) ) {
-        return false;
-    }
-    double scale=1.0/parent->fontSize;
-    ascent=fabs(otm.otmAscent*scale);
-    descent=fabs(otm.otmDescent*scale);
-    leading=fabs(otm.otmLineGap*scale);
-    //otmSubscriptSize, otmSubscriptOffset, otmSuperscriptSize, otmSuperscriptOffset, 
-#else
-    if ( theFace->units_per_EM == 0 ) {
-        return false; // bitmap font
-    }
-    ascent=fabs(((double)theFace->ascender)/((double)theFace->units_per_EM));
-    descent=fabs(((double)theFace->descender)/((double)theFace->units_per_EM));
-    leading=fabs(((double)theFace->height)/((double)theFace->units_per_EM));
-    leading-=ascent+descent;
-#endif
+
+    ascent = _ascent;
+    descent = _descent;
+    xheight = _xheight;
+
     return true;
 }
 
-bool font_instance::FontDecoration(
-    double &underline_position,     double &underline_thickness,
-    double &linethrough_position,   double &linethrough_thickness
-){
+bool font_instance::FontDecoration( double &underline_position,   double &underline_thickness,
+                                    double &linethrough_position, double &linethrough_thickness)
+{
     if ( pFont == NULL ) {
         return false;
     }
@@ -661,6 +668,179 @@ double font_instance::Advance(int glyph_id,bool vertical)
     }
     return 0;
 }
+
+// Internal function to find baselines
+void font_instance::FindFontMetrics() {
+
+    // CSS2 recommends using the OS/2 values sTypoAscender and sTypoDescender for the Typographic
+    // ascender and descender values:
+    //   http://www.w3.org/TR/CSS2/visudet.html#sTypoAscender
+    // On Windows, the typographic ascender and descender are taken from the otmMacAscent and
+    // otmMacDescent values:
+    //   http://microsoft.public.win32.programmer.gdi.narkive.com/LV6k4BDh/msdn-documentation-outlinetextmetrics-clarification
+    // The otmAscent and otmDescent values are the maxiumum ascent and maxiumum descent of all the
+    // glyphs in a font.
+    if ( theFace ) {
+
+#ifdef USE_PANGO_WIN32
+        
+        if ( GetOutlineTextMetrics(parent->hScreenDC,sizeof(otm),&otm) ) {
+            double scale=1.0/parent->fontSize;
+            _ascent      = fabs(otm.otmMacAscent  * scale);
+            _descent     = fabs(otm.otmMacDescent * scale);
+            _xheight     = fabs(otm.otmXHeight    * scale);
+            _ascent_max  = fabs(otm.otmAscent     * scale);
+            _descent_max = fabs(otm.otmDescent    * scale);
+
+            // In CSS em size is ascent + descent... which should be 1. If not,
+            // adjust so it is.
+            double em = _ascent + _descent;
+            if( em > 0 ) {
+                _ascent /= em;
+                _descent /= em;
+            }
+
+            // May not be necessary but if OS/2 table missing or not version 2 or higher,
+            // xheight might be zero.
+            if( _xheight == 0.0 ) {
+                _xheight = 0.5;
+            }
+
+            // Baselines defined relative to  alphabetic.
+            _baselines[ SP_CSS_BASELINE_IDEOGRAPHIC      ] = -_descent;      // Recommendation
+            _baselines[ SP_CSS_BASELINE_HANGING          ] = 0.8 * _ascent;  // Guess
+            _baselines[ SP_CSS_BASELINE_MATHEMATICAL     ] = 0.8 * _xheight; // Guess
+            _baselines[ SP_CSS_BASELINE_CENTRAL          ] = 0.5 - _descent; // Definition
+            _baselines[ SP_CSS_BASELINE_MIDDLE           ] = 0.5 * _xheight; // Definition
+            _baselines[ SP_CSS_BASELINE_TEXT_BEFORE_EDGE ] = _ascent;        // Definition
+            _baselines[ SP_CSS_BASELINE_TEXT_AFTER_EDGE  ] = -_descent;      // Definition
+
+
+            MAT2 identity = {{0,1},{0,0},{0,0},{0,1}};
+            GLYPHMETRICS metrics;
+            int retval;
+
+            // Better math baseline:
+            // Try center of minus sign
+            retval =  GetGlyphOutline (parent->hScreenDC, 0x2212, GGO_NATIVE | GGO_UNHINTED, &metrics, 0, NULL, &identity);
+            // If no minus sign, try hyphen
+            if( retval <= 0 )
+                retval =  GetGlyphOutline (parent->hScreenDC, '-', GGO_NATIVE | GGO_UNHINTED, &metrics, 0, NULL, &identity);
+
+            if( retval > 0 ) {
+                double math = (metrics.gmptGlyphOrigin.y + 0.5 * metrics.gmBlackBoxY) * scale;
+                _baselines[ SP_CSS_BASELINE_MATHEMATICAL ] = math;
+            }
+
+            // Find hanging baseline... assume it is at top of 'म'.
+            retval =  GetGlyphOutline (parent->hScreenDC, 0x092E, GGO_NATIVE | GGO_UNHINTED, &metrics, 0, NULL, &identity);
+            if( retval > 0 ) {
+                double hanging = metrics.gmptGlyphOrigin.y * scale;
+                _baselines[ SP_CSS_BASELINE_MATHEMATICAL ] = hanging;
+            }
+        }
+
+#else
+
+        if ( theFace->units_per_EM != 0 ) {  // If zero then it's a bitmap font.
+
+            TT_OS2*  os2 = (TT_OS2*)FT_Get_Sfnt_Table( theFace, FT_SFNT_OS2 );       
+            if( os2 ) {
+                _ascent  = fabs(((double)os2->sTypoAscender) / ((double)theFace->units_per_EM));
+                _descent = fabs(((double)os2->sTypoDescender)/ ((double)theFace->units_per_EM));
+            } else {
+                _ascent  = fabs(((double)theFace->ascender)  / ((double)theFace->units_per_EM));
+                _descent = fabs(((double)theFace->descender) / ((double)theFace->units_per_EM));
+            }
+            _ascent_max  = fabs(((double)theFace->ascender)  / ((double)theFace->units_per_EM));
+            _descent_max = fabs(((double)theFace->descender) / ((double)theFace->units_per_EM));
+
+            // In CSS em size is ascent + descent... which should be 1. If not,
+            // adjust so it is.
+            double em = _ascent + _descent;
+            if( em > 0 ) {
+                _ascent /= em;
+                _descent /= em;
+            }
+
+            // x-height
+            if( os2 && os2->version >= 0x0002 && os2->version != 0xffffu ) {
+                // Only os/2 version 2 and above have sxHeight, 0xffff marks "old Mac fonts" without table
+                _xheight = fabs(((double)os2->sxHeight) / ((double)theFace->units_per_EM));
+            } else {
+                // Measure 'x' height in font. Recommended option by XSL standard if no sxHeight.
+                FT_UInt index = FT_Get_Char_Index( theFace, 'x' );
+                if( index != 0 ) {
+                    FT_Load_Glyph( theFace, index, FT_LOAD_NO_SCALE );
+                    _xheight = (fabs)(((double)theFace->glyph->metrics.height/(double)theFace->units_per_EM));
+                } else {
+                    // No 'x' in font!
+                    _xheight = 0.5;
+                }
+            }
+
+            // Baselines defined relative to  alphabetic.
+            _baselines[ SP_CSS_BASELINE_IDEOGRAPHIC      ] = -_descent;      // Recommendation
+            _baselines[ SP_CSS_BASELINE_HANGING          ] = 0.8 * _ascent;  // Guess
+            _baselines[ SP_CSS_BASELINE_MATHEMATICAL     ] = 0.8 * _xheight; // Guess
+            _baselines[ SP_CSS_BASELINE_CENTRAL          ] = 0.5 - _descent; // Definition
+            _baselines[ SP_CSS_BASELINE_MIDDLE           ] = 0.5 * _xheight; // Definition
+            _baselines[ SP_CSS_BASELINE_TEXT_BEFORE_EDGE ] = _ascent;        // Definition
+            _baselines[ SP_CSS_BASELINE_TEXT_AFTER_EDGE  ] = -_descent;      // Definition
+
+            // Better math baseline:
+            // Try center of minus sign
+            FT_UInt index = FT_Get_Char_Index( theFace, 0x2212 ); //'−'
+            // If no minus sign, try hyphen
+            if( index == 0 )
+                index = FT_Get_Char_Index( theFace, '-' );
+
+            if( index != 0 ) {
+                FT_Load_Glyph( theFace, index, FT_LOAD_NO_SCALE );
+                FT_Glyph aglyph;
+                FT_Get_Glyph( theFace->glyph, &aglyph );
+                FT_BBox acbox;
+                FT_Glyph_Get_CBox( aglyph, FT_GLYPH_BBOX_UNSCALED, &acbox );
+                double math = (acbox.yMin + acbox.yMax)/2.0/(double)theFace->units_per_EM;
+                _baselines[ SP_CSS_BASELINE_MATHEMATICAL ] = math;
+                // std::cout << "Math baseline: - bbox: y_min: " << acbox.yMin
+                //           << "  y_max: " << acbox.yMax
+                //           << "  math: " << math << std::endl;
+            }
+
+            // Find hanging baseline... assume it is at top of 'म'.
+            index = FT_Get_Char_Index( theFace, 0x092E ); // 'म'
+            if( index != 0 ) {
+                FT_Load_Glyph( theFace, index, FT_LOAD_NO_SCALE );
+                FT_Glyph aglyph;
+                FT_Get_Glyph( theFace->glyph, &aglyph );
+                FT_BBox acbox;
+                FT_Glyph_Get_CBox( aglyph, FT_GLYPH_BBOX_UNSCALED, &acbox );
+                double hanging = (double)acbox.yMax/(double)theFace->units_per_EM;
+                _baselines[ SP_CSS_BASELINE_HANGING ] = hanging;
+                // std::cout << "Hanging baseline:  प: " << hanging << std::endl;
+            }
+        }
+#endif
+        // const gchar *family = pango_font_description_get_family(descr);
+        // std::cout << "Font: " << (family?family:"null") << std::endl;
+        // std::cout << "  ascent:      " << _ascent      << std::endl;
+        // std::cout << "  descent:     " << _descent     << std::endl;
+        // std::cout << "  x-height:    " << _xheight     << std::endl;
+        // std::cout << "  max ascent:  " << _ascent_max  << std::endl;
+        // std::cout << "  max descent: " << _descent_max << std::endl;
+        // std::cout << " Baselines:" << std::endl;
+        // std::cout << "  alphabetic:  " << _baselines[ SP_CSS_BASELINE_ALPHABETIC       ] << std::endl;
+        // std::cout << "  ideographic: " << _baselines[ SP_CSS_BASELINE_IDEOGRAPHIC      ] << std::endl;
+        // std::cout << "  hanging:     " << _baselines[ SP_CSS_BASELINE_HANGING          ] << std::endl;
+        // std::cout << "  math:        " << _baselines[ SP_CSS_BASELINE_MATHEMATICAL     ] << std::endl;
+        // std::cout << "  central:     " << _baselines[ SP_CSS_BASELINE_CENTRAL          ] << std::endl;
+        // std::cout << "  middle:      " << _baselines[ SP_CSS_BASELINE_MIDDLE           ] << std::endl;
+        // std::cout << "  text_before: " << _baselines[ SP_CSS_BASELINE_TEXT_BEFORE_EDGE ] << std::endl;
+        // std::cout << "  text_after:  " << _baselines[ SP_CSS_BASELINE_TEXT_AFTER_EDGE  ] << std::endl;
+    }
+}
+
 
 /*
  Local Variables:

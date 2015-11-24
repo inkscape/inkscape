@@ -120,7 +120,8 @@ Layout::iterator Layout::getNearestCursorPositionTo(double x, double y) const
     double best_y_range = DBL_MAX;
     double best_x_range = DBL_MAX;
     for (chunk_index = 0 ; chunk_index < _chunks.size() ; chunk_index++) {
-        LineHeight line_height = {0.0, 0.0, 0.0};
+        FontMetrics line_height;
+        line_height *= 0.0; // Set all metrics to zero.
         double chunk_width = 0.0;
         for ( ; span_index < _spans.size() && _spans[span_index].in_chunk == chunk_index ; span_index++) {
             line_height.max(_spans[span_index].line_height);
@@ -340,8 +341,8 @@ Geom::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) co
 
         double baseline_y = _characters[char_index].line(this).baseline_y + _characters[char_index].span(this).baseline_shift;
         if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
-            double span_height = _spans[_characters[char_index].in_span].line_height.ascent + _spans[_characters[char_index].in_span].line_height.descent;
-            top_left[Geom::Y] = top_left[Geom::X];
+	    double span_height = _spans[_characters[char_index].in_span].line_height.emSize();
+	    top_left[Geom::Y] = top_left[Geom::X];
             top_left[Geom::X] = baseline_y - span_height * 0.5;
             bottom_right[Geom::Y] = bottom_right[Geom::X];
             bottom_right[Geom::X] = baseline_y + span_height * 0.5;
@@ -404,7 +405,7 @@ std::vector<Geom::Point> Layout::createSelectionShape(iterator const &it_start, 
             double vertical_scale = _glyphs.back().vertical_scale;
 
             if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
-                double span_height = vertical_scale * (_spans[span_index].line_height.ascent + _spans[span_index].line_height.descent);
+	        double span_height = vertical_scale * _spans[span_index].line_height.emSize();
                 top_left[Geom::Y] = top_left[Geom::X];
                 top_left[Geom::X] = baseline_y - span_height * 0.5;
                 bottom_right[Geom::Y] = bottom_right[Geom::X];
@@ -510,17 +511,19 @@ void Layout::queryCursorShape(iterator const &it, Geom::Point &position, double 
         double vertical_scale = _glyphs.empty() ? 1.0 : _glyphs.back().vertical_scale;
 
         if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
-            height = vertical_scale * span->line_height.ascent + span->line_height.descent;
+	    // Vertical text
+	    height = vertical_scale * span->line_height.emSize();
             rotation += M_PI / 2;
             std::swap(position[Geom::X], position[Geom::Y]);
             position[Geom::X] -= vertical_scale * sin(rotation) * height * 0.5;
             position[Geom::Y] += vertical_scale * cos(rotation) * height * 0.5;
         } else {
+	    // Horizontal text
             double caret_slope_run = 0.0, caret_slope_rise = 1.0;
             if (span->font)
                 const_cast<font_instance*>(span->font)->FontSlope(caret_slope_run, caret_slope_rise);
             double caret_slope = atan2(caret_slope_run, caret_slope_rise);
-            height = vertical_scale * (span->line_height.ascent + span->line_height.descent) / cos(caret_slope);
+            height = vertical_scale * (span->line_height.emSize()) / cos(caret_slope);
             rotation += caret_slope;
             position[Geom::X] -= sin(rotation) * vertical_scale * span->line_height.descent;
             position[Geom::Y] += cos(rotation) * vertical_scale * span->line_height.descent;

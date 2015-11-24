@@ -115,7 +115,6 @@ struct NRStyle {
     float tspan_width;
     float ascender;
     float descender;
-    float line_gap;
     float underline_thickness;
     float underline_position; 
     float line_through_thickness;

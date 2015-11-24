@@ -9,7 +9,7 @@
 // this time for sp-typeset
 struct one_box {
     int g_st, g_en; ///< First and last glyph of this word.
-    double ascent, descent, leading;
+    double ascent, descent, xheight;
     double width;
     bool word_start, word_end;
 };

@@ -174,10 +174,7 @@ enum SPCSSWritingMode {
 enum SPCSSTextOrientation {
     SP_CSS_TEXT_ORIENTATION_MIXED,
     SP_CSS_TEXT_ORIENTATION_UPRIGHT,
-    SP_CSS_TEXT_ORIENTATION_SIDEWAYS_RIGHT,
-    SP_CSS_TEXT_ORIENTATION_SIDEWAYS_LEFT,
-    SP_CSS_TEXT_ORIENTATION_SIDEWAYS,
-    SP_CSS_TEXT_ORIENTATION_USE_GLYPH_ORIENTATION
+    SP_CSS_TEXT_ORIENTATION_SIDEWAYS
 };
 
 enum SPTextAnchor {
@@ -194,10 +191,24 @@ enum SPWhiteSpace {
     SP_CSS_WHITE_SPACE_PRELINE
 };
 
+// Not complete list
+enum SPCSSBaseline {
+    SP_CSS_BASELINE_AUTO,
+    SP_CSS_BASELINE_ALPHABETIC,
+    SP_CSS_BASELINE_IDEOGRAPHIC,
+    SP_CSS_BASELINE_HANGING,
+    SP_CSS_BASELINE_MATHEMATICAL,
+    SP_CSS_BASELINE_CENTRAL,
+    SP_CSS_BASELINE_MIDDLE,
+    SP_CSS_BASELINE_TEXT_BEFORE_EDGE,
+    SP_CSS_BASELINE_TEXT_AFTER_EDGE,
+    SP_CSS_BASELINE_SIZE  // Size of enum, keep last.
+};
+    
 enum SPCSSBaselineShift {
-  SP_CSS_BASELINE_SHIFT_BASELINE,
-  SP_CSS_BASELINE_SHIFT_SUB,
-  SP_CSS_BASELINE_SHIFT_SUPER
+    SP_CSS_BASELINE_SHIFT_BASELINE,
+    SP_CSS_BASELINE_SHIFT_SUB,
+    SP_CSS_BASELINE_SHIFT_SUPER
 };
 
 enum SPVisibility {
@@ -519,10 +530,20 @@ static SPStyleEnum const enum_writing_mode[] = {
 static SPStyleEnum const enum_text_orientation[] = {
     {"mixed",                 SP_CSS_TEXT_ORIENTATION_MIXED}, // Default
     {"upright",               SP_CSS_TEXT_ORIENTATION_UPRIGHT},
-    {"sideways-right",        SP_CSS_TEXT_ORIENTATION_SIDEWAYS_RIGHT},
-    {"sideways-left",         SP_CSS_TEXT_ORIENTATION_SIDEWAYS_LEFT},
     {"sideways",              SP_CSS_TEXT_ORIENTATION_SIDEWAYS},
-    {"use-glyph-orientation", SP_CSS_TEXT_ORIENTATION_USE_GLYPH_ORIENTATION},
+    {NULL, -1}
+};
+
+static SPStyleEnum const enum_baseline[] = {
+    {"auto",                  SP_CSS_BASELINE_AUTO}, // Default
+    {"alphabetic",            SP_CSS_BASELINE_ALPHABETIC},
+    {"ideographic",           SP_CSS_BASELINE_IDEOGRAPHIC},
+    {"hanging",               SP_CSS_BASELINE_HANGING},
+    {"mathematical",          SP_CSS_BASELINE_MATHEMATICAL},
+    {"central",               SP_CSS_BASELINE_CENTRAL},
+    {"middle",                SP_CSS_BASELINE_MIDDLE},
+    {"text-before-edge",      SP_CSS_BASELINE_TEXT_BEFORE_EDGE},
+    {"text-after-edge",       SP_CSS_BASELINE_TEXT_AFTER_EDGE},
     {NULL, -1}
 };
 

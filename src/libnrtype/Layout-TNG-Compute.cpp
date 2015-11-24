@@ -23,33 +23,6 @@ namespace Text {
 
 #define TRACE(_args) IFTRACE(g_print _args)
 
-// ******* enum conversion tables
-
-// These enums are probably from the SVG 1.0 era where one could interpret 'writing-mode' as setting direction.
-// SVG 1.1 makes it clear that 'direction' should be used. 'direction' has only two values 'ltr' and 'rtl'.
-// The first two values for the 'writing-mode' enum just happen to match the first two value of 'direction' so the
-// existing code worked when 'writing-mode' was changed to 'direction'.
-// static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_pango_direction[] = {
-//     {SP_CSS_WRITING_MODE_LR_TB, PANGO_DIRECTION_LTR},
-//     {SP_CSS_WRITING_MODE_RL_TB, PANGO_DIRECTION_RTL},
-//     {SP_CSS_WRITING_MODE_TB_LR, PANGO_DIRECTION_LTR}};   // this is correct
-
-// static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_my_direction[] = {
-//     {SP_CSS_WRITING_MODE_LR_TB, Layout::LEFT_TO_RIGHT},
-//     {SP_CSS_WRITING_MODE_RL_TB, Layout::RIGHT_TO_LEFT},
-//     {SP_CSS_WRITING_MODE_TB_LR, Layout::LEFT_TO_RIGHT}};   // this is correct
-
-// Proper 'direction' enums
-static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_pango_direction[] = {
-    {SP_CSS_DIRECTION_LTR, PANGO_DIRECTION_LTR},
-    {SP_CSS_DIRECTION_RTL, PANGO_DIRECTION_RTL}};
-
-static Layout::EnumConversionItem const enum_convert_spstyle_direction_to_my_direction[] = {
-    {SP_CSS_DIRECTION_LTR, Layout::LEFT_TO_RIGHT},
-    {SP_CSS_DIRECTION_RTL, Layout::RIGHT_TO_LEFT}};
-
-
-
 /** \brief private to Layout. Does the real work of text flowing.
 
 This class does a standard greedy paragraph wrapping algorithm.
@@ -140,9 +113,10 @@ class Layout::Calculator
         unsigned input_index;           /// index into Layout::_input_stream
         Glib::ustring::const_iterator input_stream_first_character;
         double font_size;
-        LineHeight line_height;         /// This is not the CSS line-height attribute!
+        FontMetrics line_height;         /// This is not the CSS line-height attribute!
         double line_height_multiplier;  /// calculated from the font-height css property
         double baseline_shift;          /// calculated from the baseline-shift css property
+        SPCSSTextOrientation text_orientation;
         unsigned text_bytes;
         unsigned char_index_in_para;    /// the index of the first character in this span in the paragraph, for looking up char_attributes
         SVGLength x, y, dx, dy, rotate;  // these are reoriented copies of the <tspan> attributes. We change span when we encounter one.
@@ -220,9 +194,8 @@ class Layout::Calculator
 
     void _buildPangoItemizationForPara(ParagraphInfo *para) const;
 
-    static void _computeFontLineHeight(font_instance *font, double font_size,
-                                       SPStyle const *style, LineHeight *line_height,
-                                       double *line_height_multiplier);
+    // Returns line_height_multiplier
+    static double _computeFontLineHeight( SPStyle const *style );
 
     unsigned _buildSpansForPara(ParagraphInfo *para) const;
 
@@ -270,7 +243,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
     bool _goToNextWrapShape();
 
     bool _findChunksForLine(ParagraphInfo const &para, UnbrokenSpanPosition *start_span_pos,
-                            std::vector<ChunkInfo> *chunk_info, LineHeight *line_height);
+                            std::vector<ChunkInfo> *chunk_info, FontMetrics *line_height);
 
     static inline PangoLogAttr const &_charAttributes(ParagraphInfo const &para,
                                                       UnbrokenSpanPosition const &span_pos)
@@ -282,7 +255,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                                UnbrokenSpanPosition const &start_span_pos,
                                ScanlineMaker::ScanRun const &scan_run,
                                std::vector<ChunkInfo> *chunk_info,
-                               LineHeight *line_height) const;
+                               FontMetrics *line_height) const;
 
     /** computes the width of a single UnbrokenSpan (pointed to by span->start.iter_span)
     and outputs its vital statistics into the other fields of \a span.
@@ -300,8 +273,11 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
         span->setZero();
 
         if (span->start.iter_span->dx._set && span->start.char_byte == 0){
-            if(para.direction == RIGHT_TO_LEFT){ span->width -= span->start.iter_span->dx.computed; }
-            else {                               span->width += span->start.iter_span->dx.computed; }
+            if(para.direction == RIGHT_TO_LEFT){
+                span->width -= span->start.iter_span->dx.computed;
+            } else {
+                span->width += span->start.iter_span->dx.computed;
+            }
         }
 
         if (span->start.iter_span->pango_item_index == -1) {
@@ -382,10 +358,22 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             double char_width = 0.0;
             while (span->end_glyph_index < (unsigned)span->end.iter_span->glyph_string->num_glyphs
                    && span->end.iter_span->glyph_string->log_clusters[span->end_glyph_index] <= (int)span->end.char_byte) {
-                if (_block_progression == LEFT_TO_RIGHT || _block_progression == RIGHT_TO_LEFT)
-                    char_width += span->start.iter_span->font_size * para.pango_items[span->end.iter_span->pango_item_index].font->Advance(span->end.iter_span->glyph_string->glyphs[span->end_glyph_index].glyph, true);
-                else
+                if (_block_progression == LEFT_TO_RIGHT || _block_progression == RIGHT_TO_LEFT) {
+                    // Vertical text
+
+                    if( text_source->style->text_orientation.computed == SP_CSS_TEXT_ORIENTATION_SIDEWAYS ||
+                        (text_source->style->text_orientation.computed == SP_CSS_TEXT_ORIENTATION_MIXED &&
+                         para.pango_items[span->end.iter_span->pango_item_index].item->analysis.gravity == 0) ) {
+                        // Sideways orientation
+                        char_width += span->start.iter_span->font_size * para.pango_items[span->end.iter_span->pango_item_index].font->Advance(span->end.iter_span->glyph_string->glyphs[span->end_glyph_index].glyph, false);
+                    } else {
+                        // Upright orientation
+                        char_width += span->start.iter_span->font_size * para.pango_items[span->end.iter_span->pango_item_index].font->Advance(span->end.iter_span->glyph_string->glyphs[span->end_glyph_index].glyph, true);
+                    }
+                } else {
+                    // Horizontal text
                     char_width += font_size_multiplier * span->end.iter_span->glyph_string->glyphs[span->end_glyph_index].geometry.width;
+                }
                 span->end_glyph_index++;
             }
             if (char_attributes.is_cursor_position)
@@ -474,7 +462,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
     are ready to output the final result to #_flow. This method takes its
     input parameters and does that.
     */
-    void _outputLine(ParagraphInfo const &para, LineHeight const &line_height, std::vector<ChunkInfo> const &chunk_info)
+    void _outputLine(ParagraphInfo const &para, FontMetrics const &line_height, std::vector<ChunkInfo> const &chunk_info)
     {
         TRACE(("Start _outputLine\n"));
         if (chunk_info.empty()) {
@@ -486,7 +474,17 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
         TRACE(("found line fit; creating output\n"));
         Layout::Line new_line;
         new_line.in_paragraph = _flow._paragraphs.size() - 1;
-        new_line.baseline_y = _scanline_maker->yCoordinate() + line_height.ascent;
+        new_line.baseline_y = _scanline_maker->yCoordinate();
+        if( !_flow._input_wrap_shapes.empty() ) {
+            // Flowed text
+            if( _block_progression == RIGHT_TO_LEFT || _block_progression == LEFT_TO_RIGHT ) {
+                // Vertical text, use em box center as baseline
+                new_line.baseline_y += 0.5 * line_height.emSize();
+            } else {
+                new_line.baseline_y += line_height.getTypoAscent();
+            }
+        }
+
         new_line.in_shape = _current_shape_index;
         _flow._lines.push_back(new_line);
 
@@ -527,17 +525,16 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                     // If <tspan> "y" attribute is set, use it (initial "y" attributes in
                     // <tspans> other than the first have already been stripped for <tspans>
                     // marked with role="line", see sp-text.cpp: SPText::_buildLayoutInput).
+                    // NOTE: for vertical text, "y" is the user-space "x" value.
                     if( it_chunk->broken_spans.front().start.iter_span->y._set ) {
 
                         // Use set "y" attribute
                         new_line.baseline_y = it_chunk->broken_spans.front().start.iter_span->y.computed;
-
                         // Save baseline
                         _flow._lines.back().baseline_y = new_line.baseline_y;
 
-                        // Save new <tspan> y coordinate
-                        _scanline_maker->setNewYCoordinate(new_line.baseline_y - line_height.ascent);
-
+                        // Set the initial y coordinate of the next line.
+                        _scanline_maker->setNewYCoordinate(new_line.baseline_y);
                     }
 
                     // Reset relative y_offset ("dy" attribute is relative but should be reset at
@@ -556,21 +553,21 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             }
             _flow._chunks.push_back(new_chunk);
 
-            double x;
+            double current_x;
             double direction_sign;
             Direction previous_direction = para.direction;
             double counter_directional_width_remaining = 0.0;
             float glyph_rotate = 0.0;
             if (para.direction == LEFT_TO_RIGHT) {
                 direction_sign = +1.0;
-                x = 0.0;
+                current_x = 0.0;
             } else {
                 direction_sign = -1.0;
                 if (para.alignment == FULL && !_flow._input_wrap_shapes.empty()){
-                    x = it_chunk->scanrun_width;
+                    current_x = it_chunk->scanrun_width;
                 }
                 else {
-                    x = it_chunk->text_width;
+                    current_x = it_chunk->text_width;
                 }
             }
 
@@ -583,7 +580,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                 if (it_span->start.char_byte == 0) {
                     // Start of an unbroken span, we might have dx, dy or rotate still to process
                     // (x and y are done per chunk)
-                    if (unbroken_span.dx._set) x += unbroken_span.dx.computed;
+                    if (unbroken_span.dx._set) current_x += unbroken_span.dx.computed;
                     if (unbroken_span.dy._set) _y_offset += unbroken_span.dy.computed;
                     if (unbroken_span.rotate._set) glyph_rotate = unbroken_span.rotate.computed * (M_PI/180);
                 }
@@ -601,6 +598,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                 new_span.in_input_stream_item = unbroken_span.input_index;
                 new_span.baseline_shift = 0.0;
                 new_span.block_progression = _block_progression;
+                new_span.text_orientation = unbroken_span.text_orientation;
                 if ((_flow._input_stream[unbroken_span.input_index]->Type() == TEXT_SOURCE) && (new_span.font = para.pango_items[unbroken_span.pango_item_index].font))
                     {
 		    new_span.font->Ref();
@@ -609,12 +607,12 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                     new_span.input_stream_first_character = Glib::ustring::const_iterator(unbroken_span.input_stream_first_character.base() + it_span->start.char_byte);
                 } else {  // a control code
                     new_span.font = NULL;
-                    new_span.font_size = new_span.line_height.ascent + new_span.line_height.descent;
+                    new_span.font_size = new_span.line_height.emSize();
                     new_span.direction = para.direction;
                 }
 
                 if (new_span.direction == para.direction) {
-                    x -= counter_directional_width_remaining;
+                    current_x -= counter_directional_width_remaining;
                     counter_directional_width_remaining = 0.0;
                 } else if (new_span.direction != previous_direction) {
                     // measure width of spans we need to switch round
@@ -630,10 +628,10 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         }
                         counter_directional_width_remaining += direction_sign * (it_following_span->width + it_following_span->whitespace_count * add_to_each_whitespace);
                     }
-                    x += counter_directional_width_remaining;
+                    current_x += counter_directional_width_remaining;
                     counter_directional_width_remaining = 0.0;    // we want to go increasingly negative
                 }
-                new_span.x_start = x;
+                new_span.x_start = current_x;
 
                 if (_flow._input_stream[unbroken_span.input_index]->Type() == TEXT_SOURCE) {
                     // the span is set up, push the glyphs and chars
@@ -673,10 +671,12 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         }
 
                         // create the Layout::Glyph
+                        PangoGlyphInfo *unbroken_span_glyph_info = &unbroken_span.glyph_string->glyphs[glyph_index];
                         Layout::Glyph new_glyph;
-                        new_glyph.glyph = unbroken_span.glyph_string->glyphs[glyph_index].glyph;
+                        new_glyph.glyph = unbroken_span_glyph_info->glyph;
                         new_glyph.in_character = _flow._characters.size();
                         new_glyph.rotation = glyph_rotate;
+                        new_glyph.orientation = ORIENTATION_UPRIGHT; // Only effects vertical text
 
                         // We may have scaled font size to fit textLength; now, if
                         // @lengthAdjust=spacingAndGlyphs, this scaling must be only horizontal,
@@ -686,30 +686,68 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         else
                             new_glyph.vertical_scale = 1.0;
 
-                        /* put something like this back in when we do glyph-rotation-horizontal/vertical
-                        if (new_span.block_progression == LEFT_TO_RIGHT || new_span.block_progression == RIGHT_TO_LEFT) {
-                            new_glyph.x += new_span.line_height.ascent;
-                            new_glyph.y -= unbroken_span.glyph_string->glyphs[glyph_index].geometry.width * font_size_multiplier * 0.5;
-                            new_glyph.width = new_span.line_height.ascent + new_span.line_height.descent;
-                        } else */
+                        // Position glyph --------------------
+                        new_glyph.x = current_x + unbroken_span_glyph_info->geometry.x_offset * font_size_multiplier;
+                        new_glyph.y =_y_offset;
+
+                        // y-coordinate is flipped between vertical and horizontal text... delta_y is common offset but applied with opposite sign
+                        double delta_y = unbroken_span_glyph_info->geometry.y_offset * font_size_multiplier + unbroken_span.baseline_shift;
+                        SPCSSBaseline dominant_baseline = _flow._blockBaseline();
 
                         if (_block_progression == LEFT_TO_RIGHT || _block_progression == RIGHT_TO_LEFT) {
-                            new_glyph.x = x + unbroken_span.glyph_string->glyphs[glyph_index].geometry.x_offset * font_size_multiplier + new_span.line_height.ascent;
-                            new_glyph.y = _y_offset -
-                                unbroken_span.baseline_shift +
-                                (unbroken_span.glyph_string->glyphs[glyph_index].geometry.y_offset -
-                                 unbroken_span.glyph_string->glyphs[glyph_index].geometry.width * 0.5) * font_size_multiplier;
-                            new_glyph.width = new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span.glyph_string->glyphs[glyph_index].glyph, true);
+                            // Vertical text
+
+                            // Default dominant baseline is determined by overall block (i.e. <text>) 'text-orientation' value.
+                            if( _flow._blockTextOrientation() != SP_CSS_TEXT_ORIENTATION_SIDEWAYS ) {
+                                if( dominant_baseline == SP_CSS_BASELINE_AUTO ) dominant_baseline = SP_CSS_BASELINE_CENTRAL;
+                            } else {
+                                if( dominant_baseline == SP_CSS_BASELINE_AUTO ) dominant_baseline = SP_CSS_BASELINE_ALPHABETIC;
+                            }
+
+                            new_glyph.y += delta_y;
+
+                            // TODO: Should also check 'glyph_orientation_vertical' if 'text-orientation' is unset...
+                            if( new_span.text_orientation == SP_CSS_TEXT_ORIENTATION_SIDEWAYS ||
+                                (new_span.text_orientation == SP_CSS_TEXT_ORIENTATION_MIXED &&
+                                 para.pango_items[unbroken_span.pango_item_index].item->analysis.gravity == 0) ) {
+
+                                // Sideways orientation (Latin characters, CJK punctuation), 90deg rotation done at output stage. zzzzzzz
+                                new_glyph.orientation = ORIENTATION_SIDEWAYS;
+
+                                new_glyph.y -= new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->GetBaselines()[ dominant_baseline ];
+                                new_glyph.width = new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span_glyph_info->glyph, false);
+
+                            } else {
+                                // Upright orientation
+
+                                new_glyph.x +=  new_span.line_height.ascent;
+
+                                // Glyph reference point is center  (shift: left edge to center glyph)
+                                new_glyph.y -= unbroken_span_glyph_info->geometry.width * 0.5 * font_size_multiplier;
+                                new_glyph.y -= new_span.font_size * (para.pango_items[unbroken_span.pango_item_index].font->GetBaselines()[ dominant_baseline ] -
+                                                                     para.pango_items[unbroken_span.pango_item_index].font->GetBaselines()[ SP_CSS_BASELINE_CENTRAL ] );
+
+                                new_glyph.width = new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span_glyph_info->glyph, true);
+                                if( new_glyph.width == 0 ) {
+                                    new_glyph.width = unbroken_span_glyph_info->geometry.width * font_size_multiplier;
+                                }
+
+                            }
                         } else {
-                            new_glyph.x = x + unbroken_span.glyph_string->glyphs[glyph_index].geometry.x_offset * font_size_multiplier;
-                            new_glyph.y = _y_offset -
-                                unbroken_span.baseline_shift +
-                                unbroken_span.glyph_string->glyphs[glyph_index].geometry.y_offset * font_size_multiplier;
-                            new_glyph.width = unbroken_span.glyph_string->glyphs[glyph_index].geometry.width * font_size_multiplier;
+                            // Horizontal text
+
+                            if( dominant_baseline == SP_CSS_BASELINE_AUTO ) dominant_baseline = SP_CSS_BASELINE_ALPHABETIC;
+
+                            new_glyph.y -= delta_y;
+                            new_glyph.y += new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->GetBaselines()[ dominant_baseline ];
+                            
+                            new_glyph.width = unbroken_span_glyph_info->geometry.width * font_size_multiplier;
                             if ((new_glyph.width == 0) && (para.pango_items[unbroken_span.pango_item_index].font))
-                                new_glyph.width = new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span.glyph_string->glyphs[glyph_index].glyph, false);
+                                new_glyph.width = new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span_glyph_info->glyph, false);
                                 // for some reason pango returns zero width for invalid glyph characters (those empty boxes), so go to freetype for the info
                         }
+
+
                         if (new_span.direction == RIGHT_TO_LEFT) {
                             // pango wanted to give us glyphs in visual order but we refused, so we need to work
                             // out where the cluster start is ourselves
@@ -718,13 +756,15 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                                 if (unbroken_span.glyph_string->glyphs[rtl_index].attr.is_cluster_start && rtl_index != glyph_index)
                                     break;
                                 if (_block_progression == LEFT_TO_RIGHT || _block_progression == RIGHT_TO_LEFT)
+                                    // Vertical text
                                     cluster_width += new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span.glyph_string->glyphs[rtl_index].glyph, true);
                                 else
+                                    // Horizontal text
                                     cluster_width += font_size_multiplier * unbroken_span.glyph_string->glyphs[rtl_index].geometry.width;
                             }
                             new_glyph.x -= cluster_width;
                         }
-                       _flow._glyphs.push_back(new_glyph);
+                        _flow._glyphs.push_back(new_glyph);
 
                         // create the Layout::Character(s)
                         double advance_width = new_glyph.width;
@@ -781,15 +821,15 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         advance_width *= direction_sign;
                         if (new_span.direction != para.direction) {
                             counter_directional_width_remaining -= advance_width;
-                            x -= advance_width;
+                            current_x -= advance_width;
                             x_in_span_last -= advance_width;
                         } else {
-                            x += advance_width;
+                            current_x += advance_width;
                             x_in_span_last += advance_width;
                         }
                     }
                 } else if (_flow._input_stream[unbroken_span.input_index]->Type() == CONTROL_CODE) {
-                    x += static_cast<InputStreamControlCode const *>(_flow._input_stream[unbroken_span.input_index])->width;
+                    current_x += static_cast<InputStreamControlCode const *>(_flow._input_stream[unbroken_span.input_index])->width;
                 }
 
                 new_span.x_end = new_span.x_start + x_in_span_last;
@@ -978,6 +1018,7 @@ void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) con
 #if PANGO_VERSION_CHECK(1,37,1)
     TRACE((" ... compiled for font features\n"));
 #endif
+
     Glib::ustring para_text;
     PangoAttrList *attributes_list;
     unsigned input_index;
@@ -999,10 +1040,10 @@ void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) con
         } else if (_flow._input_stream[input_index]->Type() == TEXT_SOURCE) {
             Layout::InputStreamTextSource *text_source = static_cast<Layout::InputStreamTextSource *>(_flow._input_stream[input_index]);
 
-			// create the font_instance
-			font_instance *font = text_source->styleGetFontInstance();
-			if (font == NULL)
-				continue;  // bad news: we'll have to ignore all this text because we know of no font to render it
+            // create the font_instance
+            font_instance *font = text_source->styleGetFontInstance();
+            if (font == NULL)
+                continue;  // bad news: we'll have to ignore all this text because we know of no font to render it
 
             PangoAttribute *attribute_font_description = pango_attr_font_desc_new(font->descr);
             attribute_font_description->start_index = para_text.bytes();
@@ -1028,25 +1069,22 @@ void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) con
 
     TRACE(("whole para: \"%s\"\n", para_text.data()));
     TRACE(("%d input sources used\n", input_index - para->first_input_index));
-
     // do the pango_itemize()
     GList *pango_items_glist = NULL;
+    para->direction = LEFT_TO_RIGHT; // CSS default
     if (_flow._input_stream[para->first_input_index]->Type() == TEXT_SOURCE) {
         Layout::InputStreamTextSource const *text_source = static_cast<Layout::InputStreamTextSource *>(_flow._input_stream[para->first_input_index]);
-        if (text_source->style->direction.set) {
-            PangoDirection pango_direction = (PangoDirection)_enum_converter(text_source->style->direction.computed, enum_convert_spstyle_direction_to_pango_direction, sizeof(enum_convert_spstyle_direction_to_pango_direction)/sizeof(enum_convert_spstyle_direction_to_pango_direction[0]));
-            pango_items_glist = pango_itemize_with_base_dir(_pango_context, pango_direction, para_text.data(), 0, para_text.bytes(), attributes_list, NULL);
-            para->direction = (Layout::Direction)_enum_converter(text_source->style->direction.computed, enum_convert_spstyle_direction_to_my_direction, sizeof(enum_convert_spstyle_direction_to_my_direction)/sizeof(enum_convert_spstyle_direction_to_my_direction[0]));
-        }
-    }
-    if (pango_items_glist == NULL) {  // no direction specified, guess it
-        pango_items_glist = pango_itemize(_pango_context, para_text.data(), 0, para_text.bytes(), attributes_list, NULL);
 
-        // I think according to the css spec this is wrong and we're never allowed to guess the directionality
-        // of a paragraph. Need to talk to an rtl speaker.
-        if (pango_items_glist == NULL || pango_items_glist->data == NULL) para->direction = LEFT_TO_RIGHT;
-        else para->direction = (((PangoItem*)pango_items_glist->data)->analysis.level & 1) ? RIGHT_TO_LEFT : LEFT_TO_RIGHT;
+        para->direction =                (text_source->style->direction.computed == SP_CSS_DIRECTION_LTR) ? LEFT_TO_RIGHT : RIGHT_TO_LEFT;
+        PangoDirection pango_direction = (text_source->style->direction.computed == SP_CSS_DIRECTION_LTR) ? PANGO_DIRECTION_LTR : PANGO_DIRECTION_RTL;
+        pango_items_glist = pango_itemize_with_base_dir(_pango_context, pango_direction, para_text.data(), 0, para_text.bytes(), attributes_list, NULL);
     }
+
+    if( pango_items_glist == NULL ) {
+        // Type wasn't TEXT_SOURCE or direction was not set.
+        pango_items_glist = pango_itemize(_pango_context, para_text.data(), 0, para_text.bytes(), attributes_list, NULL);
+    }
+
     pango_attr_list_unref(attributes_list);
 
     // convert the GList to our vector<> and make the font_instance for each PangoItem at the same time
@@ -1070,44 +1108,32 @@ void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) con
 }
 
 /**
- * Gets the ascent, descent and leading for a font and the alteration that has to be performed
- * according to the value specified by the line-height css property. The result of multiplying
- * \a line_height by \a line_height_multiplier is the inline box height as specified in css2
- * section 10.8.
+ * Finds the value of line_height_multiplier given the 'line-height' property. The result of
+ * multiplying \a l by \a line_height_multiplier is the inline box height as specified in css2
+ * section 10.8.  http://www.w3.org/TR/CSS2/visudet.html#line-height
+ *
+ * The 'computed' value of 'line-height' does not have a consistent meaning. We need to find the
+ * 'used' value and divide that by the font size.
  */
-void Layout::Calculator::_computeFontLineHeight(font_instance *font, double font_size,
-                                                SPStyle const *style, LineHeight *line_height,
-                                                double *line_height_multiplier)
+double Layout::Calculator::_computeFontLineHeight( SPStyle const *style )
 {
-    if (font == NULL) {
-        line_height->setZero();
-        *line_height_multiplier = 1.0;
-    }
-    else {
-	font->FontMetrics(line_height->ascent, line_height->descent, line_height->leading);
-    }
-    *line_height *= font_size;
-
     // yet another borked SPStyle member that we're going to have to fix ourselves
+    // We shouldn't need to climb the element tree...
     for ( ; ; ) {
         if (style->line_height.set && !style->line_height.inherit) {
             if (style->line_height.normal)
                 break;
             switch (style->line_height.unit) {
                 case SP_CSS_UNIT_NONE:
-                    *line_height_multiplier = style->line_height.computed * font_size / line_height->total();
-                    return;
+                    return style->line_height.computed;
                 case SP_CSS_UNIT_EX:
-                    *line_height_multiplier = style->line_height.value * 0.5 * font_size / line_height->total();
+                    return style->line_height.value * 0.5;
                     // 0.5 is an approximation of the x-height. Fixme.
-                    return;
                 case SP_CSS_UNIT_EM:
                 case SP_CSS_UNIT_PERCENT:
-                    *line_height_multiplier = style->line_height.value * font_size / line_height->total();
-                    return;
+                    return style->line_height.value;
                 default:  // absolute values
-                    *line_height_multiplier = style->line_height.computed / line_height->total();
-                    return;
+                    return style->line_height.computed / style->font_size.computed;
             }
             break;
         }
@@ -1115,7 +1141,7 @@ void Layout::Calculator::_computeFontLineHeight(font_instance *font, double font
         style = style->object->parent->style;
         if (style == NULL) break;
     }
-    *line_height_multiplier = LINE_HEIGHT_NORMAL * font_size / line_height->total();
+    return (LINE_HEIGHT_NORMAL);
 }
 
 bool compareGlyphWidth(const PangoGlyphInfo &a, const PangoGlyphInfo &b)
@@ -1155,7 +1181,6 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 new_span.input_index         = input_index;
                 new_span.line_height.ascent  = control_code->ascent * _flow.getTextLengthMultiplierDue();
                 new_span.line_height.descent = control_code->descent * _flow.getTextLengthMultiplierDue();
-                new_span.line_height.leading = 0.0;
                 new_span.text_bytes          = 0;
                 new_span.char_index_in_para  = char_index_in_para;
                 para->unbroken_spans.push_back(new_span);
@@ -1194,11 +1219,13 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 new_span.dy._set = false;
                 new_span.rotate._set = false;
                 if (_block_progression == TOP_TO_BOTTOM || _block_progression == BOTTOM_TO_TOP) {
+                    // Horizontal text
                     if (text_source->x.size()  > char_index_in_source) new_span.x  = text_source->x[char_index_in_source];
                     if (text_source->y.size()  > char_index_in_source) new_span.y  = text_source->y[char_index_in_source];
                     if (text_source->dx.size() > char_index_in_source) new_span.dx = text_source->dx[char_index_in_source].computed * _flow.getTextLengthMultiplierDue();
                     if (text_source->dy.size() > char_index_in_source) new_span.dy = text_source->dy[char_index_in_source].computed * _flow.getTextLengthMultiplierDue();
                 } else {
+                    // Vertical text
                     if (text_source->x.size()  > char_index_in_source) new_span.y  = text_source->x[char_index_in_source];
                     if (text_source->y.size()  > char_index_in_source) new_span.x  = text_source->y[char_index_in_source];
                     if (text_source->dx.size() > char_index_in_source) new_span.dy = text_source->dx[char_index_in_source].computed * _flow.getTextLengthMultiplierDue();
@@ -1231,7 +1258,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 }
 
                 // now we know the length, do some final calculations and add the UnbrokenSpan to the list
-                new_span.font_size = text_source->styleComputeFontSize() * _flow.getTextLengthMultiplierDue();
+                new_span.font_size = text_source->style->font_size.computed * _flow.getTextLengthMultiplierDue();
                 if (new_span.text_bytes) {
                     new_span.glyph_string = pango_glyph_string_new();
                     /* Some assertions intended to help diagnose bug #1277746. */
@@ -1240,6 +1267,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                     g_assert( span_start_byte_in_source + new_span.text_bytes <= text_source->text->bytes() );
                     g_assert( memchr(text_source->text->data() + span_start_byte_in_source, '\0', static_cast<size_t>(new_span.text_bytes))
                               == NULL );
+
                     /* Notes as of 4/29/13.  Pango_shape is not generating English language ligatures, but it is generating
                     them for Hebrew (and probably other similar languages).  In the case observed 3 unicode characters (a base
                     and 2 Mark, nonspacings) are merged into two glyphs (the base + first Mn, the 2nd Mn).  All of these map
@@ -1247,6 +1275,8 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                     characters and glyphs.  A big chunk of the conditional code which immediately follows this call
                     is there to clean up the resulting mess.
                     */
+                    
+                    // Convert characters to glyphs
                     pango_shape(text_source->text->data() + span_start_byte_in_source,
                                 new_span.text_bytes,
                                 &para->pango_items[pango_item_index].item->analysis,
@@ -1324,11 +1354,14 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                         /* glyphs[].x_offset values may be out of order within any log_clusters, apparently harmless */
                     }
                     new_span.pango_item_index = pango_item_index;
-                    _computeFontLineHeight(para->pango_items[pango_item_index].font, new_span.font_size, text_source->style, &new_span.line_height, &new_span.line_height_multiplier);
+                    new_span.line_height_multiplier = _computeFontLineHeight( text_source->style );
+                    new_span.line_height.set( para->pango_items[pango_item_index].font );
+                    new_span.line_height *= new_span.font_size;
 
                     // At some point we may want to calculate baseline_shift here (to take advantage
                     // of otm features like superscript baseline), but for now we use style baseline_shift.
                     new_span.baseline_shift = text_source->style->baseline_shift.computed;
+                    new_span.text_orientation = (SPCSSTextOrientation)text_source->style->text_orientation.computed;
 
                     // TODO: metrics for vertical text
                     TRACE(("add text span %lu \"%s\"\n", para->unbroken_spans.size(), text_source->text->raw().substr(span_start_byte_in_source, new_span.text_bytes).c_str()));
@@ -1338,11 +1371,13 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                     new_span.pango_item_index = -1;
                     font_instance *font = text_source->styleGetFontInstance();
                     if (font) {
-                        _computeFontLineHeight(font, new_span.font_size, text_source->style, &new_span.line_height, &new_span.line_height_multiplier);
+                        new_span.line_height_multiplier = _computeFontLineHeight( text_source->style );
+                        new_span.line_height.set( font );
+                        new_span.line_height *= new_span.font_size;
                         font->Unref();
                     } else {
-                        new_span.line_height.setZero();
-                        new_span.line_height_multiplier = 1.0;
+                        new_span.line_height *= 0.0;  // Set all to zero
+                        new_span.line_height_multiplier = LINE_HEIGHT_NORMAL;
                     }
                     TRACE(("add style init span %lu\n", para->unbroken_spans.size()));
                 }
@@ -1399,7 +1434,7 @@ bool Layout::Calculator::_goToNextWrapShape()
 bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
                                             UnbrokenSpanPosition *start_span_pos,
                                             std::vector<ChunkInfo> *chunk_info,
-                                            LineHeight *line_height)
+                                            FontMetrics *line_height)
 {
     // init the initial line_height
     if (start_span_pos->iter_span == para.unbroken_spans.end()) {
@@ -1408,9 +1443,9 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
             InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_flow._input_stream.front());
             font_instance *font = text_source->styleGetFontInstance();
             if (font) {
-                double font_size = text_source->styleComputeFontSize();
-                double multiplier;
-                _computeFontLineHeight(font, font_size, text_source->style, line_height, &multiplier);
+                double multiplier = _computeFontLineHeight(text_source->style);
+                line_height->set( font );
+                *line_height *= text_source->style->font_size.computed;
                 font->Unref();
                 *line_height *= multiplier;
                 _scanline_maker->setNewYCoordinate(_scanline_maker->yCoordinate() - line_height->ascent);
@@ -1422,7 +1457,6 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
             // if we're not wrapping set the line_height big and negative so we can use negative line height
             line_height->ascent = -1.0e10;
             line_height->descent = -1.0e10;
-            line_height->leading = -1.0e10;
         }
         else
             line_height->setZero();
@@ -1474,7 +1508,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
                                                UnbrokenSpanPosition const &start_span_pos,
                                                ScanlineMaker::ScanRun const &scan_run,
                                                std::vector<ChunkInfo> *chunk_info,
-                                               LineHeight *line_height) const
+                                               FontMetrics *line_height) const
 {
     ChunkInfo new_chunk;
     new_chunk.text_width = 0.0;
@@ -1511,16 +1545,17 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
         }
 
         // see if this span is too tall to fit on the current line
-        LineHeight total_height = new_span.start.iter_span->line_height;
-        total_height *= new_span.start.iter_span->line_height_multiplier;
+        FontMetrics new_span_height = new_span.start.iter_span->line_height;
+        new_span_height.computeEffective( new_span.start.iter_span->line_height_multiplier );
         /* floating point 80-bit/64-bit rounding problems require epsilon. See
            discussion http://inkscape.gristle.org/2005-03-16.txt around 22:00 */
-        if (   total_height.ascent  > line_height->ascent  + FLT_EPSILON
-               || total_height.descent > line_height->descent + FLT_EPSILON
-               || total_height.leading > line_height->leading + FLT_EPSILON) {
-            line_height->max(total_height);
-            if (!_scanline_maker->canExtendCurrentScanline(*line_height))
+        if ( new_span_height.ascent  > line_height->ascent  + FLT_EPSILON ||
+             new_span_height.descent > line_height->descent + FLT_EPSILON) {
+            // Take larger of each of the two ascents and two descents per CSS
+            line_height->max(new_span_height);
+            if (!_scanline_maker->canExtendCurrentScanline(*line_height)) {
                 return false;
+            }
         }
 
         bool span_fitted = _measureUnbrokenSpan(para, &new_span, &last_span_at_break, &last_span_at_emergency_break, new_chunk.scanrun_width - new_chunk.text_width);
@@ -1540,7 +1575,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
     TRACE(("chunk complete, used %f width (%d whitespaces, %lu brokenspans)\n", new_chunk.text_width, new_chunk.whitespace_count, new_chunk.broken_spans.size()));
     chunk_info->push_back(new_chunk);
 
-    if (scan_run.width() >= 4.0 * line_height->total() && last_span_at_break.end == start_span_pos) {
+    if (scan_run.width() >= 4.0 * line_height->emSize() && last_span_at_break.end == start_span_pos) {
         /* **non-SVG spec bit**: See bug #1191102
            If the user types a very long line with no spaces, the way the spec
            is written at the moment means that when the length of the text
@@ -1619,14 +1654,27 @@ bool Layout::Calculator::calculate()
     _flow._clearOutputObjects();
 
     _pango_context = (font_factory::Default())->fontContext;
+
     _font_factory_size_multiplier = (font_factory::Default())->fontSize;
 
+    // Reset gravity hint in case it was changed via previous use of 'text-orientation'
+    // (scripts take their natural gravity given base gravity).
+    pango_context_set_gravity_hint(_pango_context, PANGO_GRAVITY_HINT_NATURAL);
+
     _block_progression = _flow._blockProgression();
+    if( _block_progression == RIGHT_TO_LEFT || _block_progression == LEFT_TO_RIGHT ) {
+        // Vertical text, CJK
+        pango_context_set_base_gravity(_pango_context, PANGO_GRAVITY_EAST);
+    } else {
+        // Horizontal text
+        pango_context_set_base_gravity(_pango_context, PANGO_GRAVITY_AUTO);
+    }
+
     _y_offset = 0.0;
     _createFirstScanlineMaker();
 
     ParagraphInfo para;
-    LineHeight line_height; // needs to be maintained across paragraphs to be able to deal with blank paras
+    FontMetrics line_height; // needs to be maintained across paragraphs to be able to deal with blank paras
     for(para.first_input_index = 0 ; para.first_input_index < _flow._input_stream.size() ; ) {
         // jump to the next wrap shape if this is a SHAPE_BREAK control code
         if (_flow._input_stream[para.first_input_index]->Type() == CONTROL_CODE) {
@@ -1640,7 +1688,10 @@ bool Layout::Calculator::calculate()
         if (_scanline_maker == NULL)
             break;       // we're trying to flow past the last wrap shape
 
-       _buildPangoItemizationForPara(&para);
+        // Break things up into little pango units with unique direction, gravity, etc.
+        _buildPangoItemizationForPara(&para);
+
+        // Do shaping (convert characters to glyphs)
         unsigned para_end_input_index = _buildSpansForPara(&para);
 
         if (_flow._input_stream[para.first_input_index]->Type() == TEXT_SOURCE)
@@ -1679,7 +1730,7 @@ bool Layout::Calculator::calculate()
                 Layout::Span new_span;
                 if (_flow._spans.empty()) {
                     new_span.font = NULL;
-                    new_span.font_size = line_height.ascent + line_height.descent;
+                    new_span.font_size = line_height.emSize();
                     new_span.line_height = line_height;
                     new_span.x_end = 0.0;
                 } else {
@@ -1755,19 +1806,16 @@ void Layout::_calculateCursorShapeForEmpty()
     InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream.front());
 
     font_instance *font = text_source->styleGetFontInstance();
-    double font_size = text_source->styleComputeFontSize();
+    double font_size = text_source->style->font_size.computed;
     double caret_slope_run = 0.0, caret_slope_rise = 1.0;
-    LineHeight line_height;
+    FontMetrics line_height;
     if (font) {
         const_cast<font_instance*>(font)->FontSlope(caret_slope_run, caret_slope_rise);
-        font->FontMetrics(line_height.ascent, line_height.descent, line_height.leading);
+        font->FontMetrics(line_height.ascent, line_height.descent, line_height.xheight);
         line_height *= font_size;
         font->Unref();
-    } else {
-        line_height.ascent = font_size * 0.85;      // random guesses
-        line_height.descent = font_size * 0.15;
-        line_height.leading = 0.0;
     }
+
     double caret_slope = atan2(caret_slope_run, caret_slope_rise);
     _empty_cursor_shape.height = font_size / cos(caret_slope);
     _empty_cursor_shape.rotation = caret_slope;
@@ -1780,10 +1828,13 @@ void Layout::_calculateCursorShapeForEmpty()
         ShapeScanlineMaker scanline_maker(_input_wrap_shapes.front().shape, block_progression);
         std::vector<ScanlineMaker::ScanRun> scan_runs = scanline_maker.makeScanline(line_height);
         if (!scan_runs.empty()) {
-            if (block_progression == LEFT_TO_RIGHT || block_progression == RIGHT_TO_LEFT)
+            if (block_progression == LEFT_TO_RIGHT || block_progression == RIGHT_TO_LEFT) {
+                // Vertical text
                 _empty_cursor_shape.position = Geom::Point(scan_runs.front().y + font_size, scan_runs.front().x_start);
-            else
+            } else {
+                // Horizontal text
                 _empty_cursor_shape.position = Geom::Point(scan_runs.front().x_start, scan_runs.front().y + font_size);
+            }
         }
     }
 }
