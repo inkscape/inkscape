@@ -57,7 +57,7 @@ namespace Inkscape {
 namespace UI {
 namespace Tools {
 
-static void sp_mesh_drag(MeshTool &rc, Geom::Point const pt, guint state, guint32 etime);
+static void sp_mesh_end_drag(MeshTool &rc);
 
 const std::string& MeshTool::getPrefsPath() {
 	return MeshTool::prefsPath;
@@ -560,8 +560,9 @@ bool MeshTool::root_handler(GdkEvent* event) {
                 Inkscape::Rubberband::get(desktop)->move(motion_dt);
                 this->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw around</b> handles to select them"));
             } else {
-                // Create new gradient with coordinates determined by drag.
-                sp_mesh_drag(*this, motion_dt, event->motion.state, event->motion.time);
+                // Do nothing. For a linear/radial gradient we follow the drag, updating the
+                // gradient as the end node is dragged. For a mesh gradient, the gradient is always
+                // created to fill the object when the drag ends.
             }
 
             gobble_motion_events(GDK_BUTTON1_MASK);
@@ -649,7 +650,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
                 }
 
                 if (!this->within_tolerance) {
-                    // we've been dragging, either do nothing (grdrag handles that),
+                    // we've been dragging, either create a new gradient
                     // or rubberband-select if we have rubberband
                     Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
 
@@ -659,6 +660,9 @@ bool MeshTool::root_handler(GdkEvent* event) {
                             Geom::OptRect const b = r->getRectangle();
                             drag->selectRect(*b);
                         }
+                    } else {
+                        // Create a new mesh gradient
+                        sp_mesh_end_drag(*this);
                     }
                 } else if (this->item_to_select) {
                     if (over_line && line) {
@@ -922,7 +926,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
     return ret;
 }
 
-static void sp_mesh_drag(MeshTool &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/) {
+static void sp_mesh_end_drag(MeshTool &rc) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = desktop->getSelection();
     SPDocument *document = desktop->getDocument();
@@ -963,19 +967,8 @@ static void sp_mesh_drag(MeshTool &rc, Geom::Point const /*pt*/, guint /*state*/
  
             (*i)->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
-        // if (ec->_grdrag) {
-        //     ec->_grdrag->updateDraggers();
-        //     // prevent regenerating draggers by selection modified signal, which sometimes
-        //     // comes too late and thus destroys the knot which we will now grab:
-        //     ec->_grdrag->local_change = true;
-        //     // give the grab out-of-bounds values of xp/yp because we're already dragging
-        //     // and therefore are already out of tolerance
-        //     ec->_grdrag->grabKnot (SP_ITEM(selection->itemList()->data),
-        //                            type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_END : POINT_RG_R1,
-        //                            -1, // ignore number (though it is always 1)
-        //                            fill_or_stroke, 99999, 99999, etime);
-        // }
-        // We did an undoable action, but SPDocumentUndo::done will be called by the knot when released
+
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH, _("Create mesh"));
 
         // status text; we do not track coords because this branch is run once, not all the time
         // during drag
