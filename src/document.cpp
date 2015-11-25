@@ -1337,20 +1337,25 @@ SPItem *SPDocument::getItemFromListAtPointBottom(unsigned int dkey, SPGroup *gro
 /**
 Turn the SVG DOM into a flat list of nodes that can be searched from top-down.
 The list can be persisted, which improves "find at multiple points" speed.
+Returns true if upto is reached.
 */
-static void build_flat_item_list(std::deque<SPItem*> *nodes, unsigned int dkey, SPGroup *group, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
+static bool build_flat_item_list(std::deque<SPItem*> *nodes, unsigned int dkey, SPGroup *group, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
 {
+    bool found_upto = false;
     for ( SPObject *o = group->firstChild() ; o ; o = o->getNext() ) {
         if (!SP_IS_ITEM(o)) {
             continue;
         }
 
         if (upto && SP_ITEM(o) == upto) {
+            found_upto = true;
             break;
         }
 
         if (SP_IS_GROUP(o) && (SP_GROUP(o)->effectiveLayerMode(dkey) == SPGroup::LAYER || into_groups)) {
-            build_flat_item_list(nodes, dkey, SP_GROUP(o), into_groups, take_insensitive, upto);
+            found_upto = build_flat_item_list(nodes, dkey, SP_GROUP(o), into_groups, take_insensitive, upto);
+            if (found_upto)
+                break;
         } else {
             SPItem *child = SP_ITEM(o);
 
@@ -1359,6 +1364,7 @@ static void build_flat_item_list(std::deque<SPItem*> *nodes, unsigned int dkey, 
             }
         }
     }
+    return found_upto;
 }
 
 /**
