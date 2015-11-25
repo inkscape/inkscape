@@ -34,7 +34,6 @@
 
 #include "pencil-toolbar.h"
 #include "desktop.h"
-#include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
 #include "widgets/ege-select-one-action.h"
 #include "widgets/ink-action.h"
@@ -57,7 +56,6 @@
 #include "util/glib-list-iterators.h"
 
 using Inkscape::UI::UXManager;
-using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
 
