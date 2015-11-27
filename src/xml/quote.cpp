@@ -1,81 +1,77 @@
 /** \file
- * XML quoting routines.
+ * @brief XML quoting routines
+ *//*
+ * Authors:
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ * 
+ * This file is in the public domain.
  */
 
-/* Based on Lauris' repr_quote_write in repr-io.cpp.
- *
- * Copyright (C) 1999-2002 Lauris Kaplinski
- * Copyright (C) 2004 Monash University
- *
- * May be modified and/or redistributed under the terms of version 2
- * of the GNU General Public License: see the file `COPYING'.
- */
-
+#include "xml/quote.h"
 #include <cstring>
 #include <glib.h>
-#include "quote.h"
 
-
-/** \return strlen(xml_quote_strdup(\a val)) (without doing the malloc).
- *  \pre val != NULL
- */
-size_t
-xml_quoted_strlen(char const *val)
+/// Returns the length of the string after quoting the characters <code>"&amp;&lt;&gt;</code>.
+size_t xml_quoted_strlen(char const *val)
 {
-    size_t ret = 0;
-    if (val != NULL) {
-        for (; *val != '\0'; val++) {
-            switch (*val) {
-                case '"': ret += sizeof("&quot;") - 1; break;
-                case '&': ret += sizeof("&amp;") - 1; break;
-                case '<': ret += sizeof("&lt;") - 1; break;
-                case '>': ret += sizeof("&gt;") - 1; break;
-                default: ++ret; break;
-            }
+    if (!val) return 0;
+    size_t len = 0;
+
+    for (char const *valp = val; *valp; ++valp) {
+        switch (*valp) {
+        case '"':
+            len += 6; // &quot;
+            break;
+        case '&':
+            len += 5; // &amp;
+            break;
+        case '<':
+        case '>':
+            len += 4; // &lt; or &gt;
+            break;
+        default:
+            ++len;
+            break;
         }
     }
-    return ret;
+    return len;
 }
 
-/** Writes \a src (including the NUL byte) to \a dest, doing XML quoting as necessary.
- *
- *  \pre \a src != NULL.
- *  \pre \a dest must have enough space for (xml_quoted_strlen(src) + 1) bytes.
- */
-static void
-xml_quote(char *dest, char const *src)
+char *xml_quote_strdup(char const *src)
 {
-#define COPY_LIT(_lit) do {     \
-            size_t cpylen = sizeof(_lit "") - 1; \
-            memcpy(dest, _lit, cpylen);       \
-            dest += cpylen;                   \
-        } while(0)
+    size_t len = xml_quoted_strlen(src);
+    char *result = static_cast<char*>(g_malloc(len + 1));
+    char *resp = result;
 
-    for (; *src != '\0'; ++src) {
-        switch (*src) {
-            case '"': COPY_LIT("&quot;"); break;
-            case '&': COPY_LIT("&amp;"); break;
-            case '<': COPY_LIT("&lt;"); break;
-            case '>': COPY_LIT("&gt;"); break;
-            default: *dest++ = *src; break;
+    for (char const *srcp = src; *srcp; ++srcp) {
+        switch(*srcp) {
+        case '"':
+            strcpy(resp, "&quot;");
+            resp += 6;
+            break;
+        case '&':
+            strcpy(resp, "&amp;");
+            resp += 5;
+            break;
+        case '<':
+            strcpy(resp, "&lt;");
+            resp += 4;
+            break;
+        case '>':
+            strcpy(resp, "&gt;");
+            resp += 4;
+            break;
+        default:
+            *resp++ = *srcp;
+            break;
         }
     }
-    *dest = '\0';
-
-#undef COPY_LIT
+    *resp = 0;
+    return result;
 }
 
-/** \return A g_malloc'd buffer containing an XML-quoted version of \a src.
- *  \pre src != NULL.
- */
-char *
-xml_quote_strdup(char const *src)
-{
-    size_t const quoted_size = xml_quoted_strlen(src) + 1;
-    char *ret = (char *) g_malloc(quoted_size);
-    xml_quote(ret, src);
-    return ret;
-}
+// quote: ", &, <, >
+
 
 /*
   Local Variables:
