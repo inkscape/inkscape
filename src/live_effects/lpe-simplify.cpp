@@ -28,8 +28,8 @@ namespace LivePathEffect {
 LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
     : Effect(lpeobject),
       steps(_("Steps:"),_("Change number of simplify steps "), "steps", &wr, this,1),
-      threshold(_("Roughly threshold:"), _("Roughly threshold:"), "threshold", &wr, this, 0.003),
-      smooth_angles(_("Smooth angles:"), _("Max degree difference on handles to perform a smooth"), "smooth_angles", &wr, this, 20.),
+      threshold(_("Roughly threshold:"), _("Roughly threshold:"), "threshold", &wr, this, 0.002),
+      smooth_angles(_("Smooth angles:"), _("Max degree difference on handles to perform a smooth"), "smooth_angles", &wr, this, 0.),
       helper_size(_("Helper size:"), _("Helper size"), "helper_size", &wr, this, 5),
       simplify_individual_paths(_("Paths separately"), _("Simplifying paths (separately)"), "simplify_individual_paths", &wr, this, false,
                               "", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
@@ -51,7 +51,7 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
     steps.param_set_increments(1, 1);
     steps.param_set_digits(0);
 
-    smooth_angles.param_set_range(0.0, 365.0);
+    smooth_angles.param_set_range(0.0, 360.0);
     smooth_angles.param_set_increments(10, 10);
     smooth_angles.param_set_digits(2);
 
@@ -138,6 +138,7 @@ LPESimplify::doEffect(SPCurve *curve)
     if(simplify_individual_paths) {
         size = Geom::L2(Geom::bounds_fast(original_pathv)->dimensions());
     }
+    size /= sp_lpe_item->i2doc_affine().descrim();
     for (int unsigned i = 0; i < steps; i++) {
         if ( simplify_just_coalesce ) {
             pathliv->Coalesce(threshold * size);
@@ -198,12 +199,14 @@ LPESimplify::generateHelperPathAndSmooth(Geom::PathVector &result)
             Geom::Point point_at2 = curve_it1->finalPoint();
             Geom::Point point_at3 = curve_it1->finalPoint();
             Geom::Point point_at4 = curve_it1->finalPoint();
+
+            if(start == Geom::Point(0,0)) {
+                start = point_at1;
+            }
+
             if (cubic) {
                 point_at1 = (*cubic)[1];
                 point_at2 = (*cubic)[2];
-            }
-            if(start == Geom::Point(0,0)) {
-                start = point_at1;
             }
 
             if(path_it->closed() && curve_it2 == curve_endit) {
@@ -219,11 +222,11 @@ LPESimplify::generateHelperPathAndSmooth(Geom::PathVector &result)
             Geom::Ray ray2(point_at3, point_at4);
             double angle1 = Geom::rad_to_deg(ray1.angle());
             double angle2 = Geom::rad_to_deg(ray2.angle());
-            if((smooth_angles  >= angle2 - angle1) && !are_near(point_at4,point_at3) && !are_near(point_at2,point_at3)) {
+            if((smooth_angles  >= std::abs(angle2 - angle1)) && !are_near(point_at4,point_at3) && !are_near(point_at2,point_at3)) {
                 double dist = Geom::distance(point_at2,point_at3);
                 Geom::Angle angleFixed = ray2.angle();
                 angleFixed -= Geom::Angle::from_degrees(180.0);
-                point_at2 =  Geom::Point::polar(angleFixed,dist) + point_at3;
+                point_at2 =  Geom::Point::polar(angleFixed, dist) + point_at3;
             }
             nCurve->curveto(point_at1, point_at2, curve_it1->finalPoint());
             cubic = dynamic_cast<Geom::CubicBezier const *>(nCurve->last_segment());
