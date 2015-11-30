@@ -141,7 +141,7 @@ std::vector<Layout::ScanlineMaker::ScanRun> Layout::ShapeScanlineMaker::makeScan
         std::vector<ScanRun> result(1);
         result[0].x_start = line_rasterization.runs[0].st;
         result[0].x_end   = line_rasterization.runs[0].st;
-        result[0].y = _negative_block_progression ? -_current_line_height - _y : _y;
+        result[0].y = _negative_block_progression ? - _y : _y;
         return result;
     }
 
@@ -150,7 +150,7 @@ std::vector<Layout::ScanlineMaker::ScanRun> Layout::ShapeScanlineMaker::makeScan
     for (unsigned i = 0 ; i < result.size() ; i++) {
         result[i].x_start = line_decent_length_runs.runs[i].st;
         result[i].x_end   = line_decent_length_runs.runs[i].en;
-        result[i].y = _negative_block_progression ? -_current_line_height - _y : _y;
+        result[i].y = _negative_block_progression ? - _y : _y;
     }
 
     return result;
@@ -163,14 +163,14 @@ void Layout::ShapeScanlineMaker::completeLine()
 
 double Layout::ShapeScanlineMaker::yCoordinate()
 {
-    if (_negative_block_progression) return -_current_line_height - _y;
+    if (_negative_block_progression) return - _y;
     return _y;
 }
 
 void Layout::ShapeScanlineMaker::setNewYCoordinate(double new_y)
 {
     _y = (float)new_y;
-    if (_negative_block_progression) _y = -_current_line_height - _y;
+    if (_negative_block_progression) _y = - _y;
     // what will happen with the rasteriser if we move off the shape?
     // it's not an important question because <flowSpan> doesn't have a y attribute
 }

@@ -475,14 +475,18 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
         Layout::Line new_line;
         new_line.in_paragraph = _flow._paragraphs.size() - 1;
         new_line.baseline_y = _scanline_maker->yCoordinate();
-        if( !_flow._input_wrap_shapes.empty() ) {
-            // Flowed text
-            if( _block_progression == RIGHT_TO_LEFT || _block_progression == LEFT_TO_RIGHT ) {
-                // Vertical text, use em box center as baseline
-                new_line.baseline_y += 0.5 * line_height.emSize();
-            } else {
-                new_line.baseline_y += line_height.getTypoAscent();
-            }
+
+        // The y coordinate is at the beginning edge of the line box (top for horizontal text, left
+        // edge for vertical lr text, right edge for vertical rl text. We align, by default to the
+        // alphabetic baseline for horizontal text and the central baseline for vertical text.
+        if( _block_progression == RIGHT_TO_LEFT ) {
+            // Vertical text, use em box center as baseline
+            new_line.baseline_y -= 0.5 * line_height.emSize();
+        } else if ( _block_progression == LEFT_TO_RIGHT ) {
+            // Vertical text, use em box center as baseline
+            new_line.baseline_y += 0.5 * line_height.emSize();
+        } else {
+            new_line.baseline_y += line_height.getTypoAscent();
         }
 
         new_line.in_shape = _current_shape_index;
@@ -533,8 +537,19 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         // Save baseline
                         _flow._lines.back().baseline_y = new_line.baseline_y;
 
-                        // Set the initial y coordinate of the next line.
-                        _scanline_maker->setNewYCoordinate(new_line.baseline_y);
+                        double top_of_line_box = new_line.baseline_y;
+                        if( _block_progression == RIGHT_TO_LEFT ) {
+                            // Vertical text, use em box center as baseline
+                            top_of_line_box += 0.5 * line_height.emSize();
+                        } else if (_block_progression == LEFT_TO_RIGHT ) {
+                            // Vertical text, use em box center as baseline
+                            top_of_line_box -= 0.5 * line_height.emSize();
+                        } else {
+                            top_of_line_box -= line_height.getTypoAscent();
+                        }
+
+                        // Set the initial y coordinate of the next line (see above).
+                        _scanline_maker->setNewYCoordinate(top_of_line_box);
                     }
 
                     // Reset relative y_offset ("dy" attribute is relative but should be reset at
