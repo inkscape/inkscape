@@ -69,6 +69,11 @@ bool Layout::InfiniteScanlineMaker::canExtendCurrentScanline(Layout::FontMetrics
     return true;
 }
 
+void Layout::InfiniteScanlineMaker::setLineHeight(Layout::FontMetrics const &line_height)
+{
+    _current_line_height = line_height;
+}
+
 // *********************** real shapes version
 
 Layout::ShapeScanlineMaker::ShapeScanlineMaker(Shape const *shape, Layout::Direction block_progression)
@@ -179,6 +184,11 @@ bool Layout::ShapeScanlineMaker::canExtendCurrentScanline(Layout::FontMetrics co
 {
     //we actually could return true if only the leading changed, but that's too much effort for something that rarely happens
     return false;
+}
+
+void Layout::ShapeScanlineMaker::setLineHeight(Layout::FontMetrics const &line_height)
+{
+    _current_line_height = line_height.emSize();
 }
 
 }//namespace Text

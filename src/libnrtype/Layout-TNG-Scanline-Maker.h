@@ -72,6 +72,11 @@ public:
     used now, and hence is the line advance height used by completeLine().
     */
     virtual bool canExtendCurrentScanline(Layout::FontMetrics const &line_height) =0;
+
+    /** Sets current line block height. Call before completeLine() to correct for
+    actually used line height (in case some chunks with larger font-size rolled back).
+    */
+    virtual void setLineHeight(Layout::FontMetrics const &line_height) =0;
 };
 
 /** \brief private to Layout. Generates infinite scanlines for when you don't want wrapping
@@ -104,6 +109,11 @@ public:
     /** Always true, but has to save the new height */
     virtual bool canExtendCurrentScanline(Layout::FontMetrics const &line_height);
 
+    /** Sets current line block height. Call before completeLine() to correct for
+    actually used line height (in case some chunks with larger font-size rolled back).
+    */
+    virtual void setLineHeight(Layout::FontMetrics const &line_height);
+
 private:
     double _x, _y;
     Layout::FontMetrics _current_line_height;
@@ -132,6 +142,12 @@ public:
 
     /** never true */
     virtual bool canExtendCurrentScanline(Layout::FontMetrics const &line_height);
+
+    /** Sets current line block height. Call before completeLine() to correct for
+    actually used line height (in case some chunks with larger font-size rolled back).
+    */
+    virtual void setLineHeight(Layout::FontMetrics const &line_height);
+
 private:
     /** To generate scanlines for top-to-bottom text it is easiest if we
     simply rotate the given shape by a multiple of 90 degrees. This stores

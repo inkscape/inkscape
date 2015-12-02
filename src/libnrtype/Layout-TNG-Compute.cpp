@@ -243,7 +243,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
     bool _goToNextWrapShape();
 
     bool _findChunksForLine(ParagraphInfo const &para, UnbrokenSpanPosition *start_span_pos,
-                            std::vector<ChunkInfo> *chunk_info, FontMetrics *line_height);
+                            std::vector<ChunkInfo> *chunk_info, FontMetrics *line_box_height);
 
     static inline PangoLogAttr const &_charAttributes(ParagraphInfo const &para,
                                                       UnbrokenSpanPosition const &span_pos)
@@ -270,6 +270,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
     or will be unaltered if there is none. */
     bool _measureUnbrokenSpan(ParagraphInfo const &para, BrokenSpan *span, BrokenSpan *last_break_span, BrokenSpan *last_emergency_break_span, double maximum_width) const
     {
+        TRACE(("      start _measureUnbrokenSpan %g\n", maximum_width));
         span->setZero();
 
         if (span->start.iter_span->dx._set && span->start.char_byte == 0){
@@ -296,7 +297,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             if (control_code->code == ARBITRARY_GAP) {
                 if (span->width + control_code->width > maximum_width)
                     return false;
-                TRACE(("fitted control code, width = %f\n", control_code->width));
+                TRACE(("        fitted control code, width = %f\n", control_code->width));
                 span->width += control_code->width;
                 span->end.increment();
             }
@@ -335,12 +336,14 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             PangoLogAttr const &char_attributes = _charAttributes(para, span->end);
 
             if (char_attributes.is_mandatory_break && span->end != span->start) {
+                TRACE(("      is_mandatory_break  ************\n"));
                 *last_emergency_break_span = *last_break_span = *span;
-                TRACE(("span %ld end of para; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+                TRACE(("        span %ld end of para; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
                 return false;
             }
 
             if (char_attributes.is_line_break) {
+                TRACE(("        is_line_break  ************\n"));
                 // a suitable position to break at, record where we are
                 *last_emergency_break_span = *last_break_span = *span;
                 if (soft_hyphen_in_word) {
@@ -405,13 +408,14 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             span->word_spacing   = text_source->style->word_spacing.computed;
 
             if (test_width > maximum_width && !char_attributes.is_white) { // whitespaces don't matter, we can put as many as we want at eol
-                TRACE(("span %ld exceeded scanrun; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+                TRACE(("        span %ld exceeded scanrun; width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
                 return false;
             }
 
         } while (span->end.char_byte != 0);  // while we haven't wrapped to the next span
 
-        TRACE(("fitted span %ld width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+        TRACE(("        fitted span %ld width = %f chars = %d\n", span->start.iter_span - para.unbroken_spans.begin(), span->width, char_count));
+        TRACE(("      end _measureUnbrokenSpan %g\n", maximum_width));
         return true;
     }
 
@@ -464,14 +468,14 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
     */
     void _outputLine(ParagraphInfo const &para, FontMetrics const &line_height, std::vector<ChunkInfo> const &chunk_info)
     {
-        TRACE(("Start _outputLine\n"));
+        TRACE(("  Start _outputLine: ascent %f, descent %f, top of box %f\n", line_height.ascent, line_height.descent, _scanline_maker->yCoordinate() ));
         if (chunk_info.empty()) {
-            TRACE(("line too short to fit anything on it, go to next\n"));
+            TRACE(("    line too short to fit anything on it, go to next\n"));
             return;
         }
 
         // we've finished fiddling about with ascents and descents: create the output
-        TRACE(("found line fit; creating output\n"));
+        TRACE(("    found line fit; creating output\n"));
         Layout::Line new_line;
         new_line.in_paragraph = _flow._paragraphs.size() - 1;
         new_line.baseline_y = _scanline_maker->yCoordinate();
@@ -498,7 +502,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             // add the chunk to the list
             Layout::Chunk new_chunk;
             new_chunk.in_line = _flow._lines.size() - 1;
-            TRACE(("  New chunk: in_line: %d\n", new_chunk.in_line));
+            TRACE(("    New chunk: in_line: %d\n", new_chunk.in_line));
             new_chunk.left_x = _getChunkLeftWithAlignment(para, it_chunk, &add_to_each_whitespace);
 
             // we may also have y move orders to deal with here (dx, dy and rotate are done per span)
@@ -547,7 +551,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         } else {
                             top_of_line_box -= line_height.getTypoAscent();
                         }
-
+                        TRACE(("      y attribute set, next line top_of_line_box: %f\n", top_of_line_box ));
                         // Set the initial y coordinate of the next line (see above).
                         _scanline_maker->setNewYCoordinate(top_of_line_box);
                     }
@@ -853,7 +857,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
             }
             // end adding spans to the list, on to the next chunk...
         }
-        TRACE(("output done\n"));
+        TRACE(("  End _outputLine\n"));
     }
 
 /* *********************************************************************************************************/
@@ -1442,16 +1446,18 @@ bool Layout::Calculator::_goToNextWrapShape()
  * bits of information that will prove useful when we come to output the
  * line to #_flow. Returns with \a start_span_pos set to the end of the
  * text that was fitted, \a chunk_info completely filled out and
- * \a line_height set to the largest line box on the line. The return
+ * \a line_box_height set with the largest ascent and the largest
+ * descent (individually per CSS) on the line. The return
  * value is false only if we've run out of shapes to wrap inside (and
  * hence couldn't create any chunks).
  */
 bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
                                             UnbrokenSpanPosition *start_span_pos,
                                             std::vector<ChunkInfo> *chunk_info,
-                                            FontMetrics *line_height)
+                                            FontMetrics *line_box_height)
 {
-    // init the initial line_height
+    TRACE(("  begin _findChunksForLine: chunks: %lu\n", chunk_info->size()));
+    // init the initial line_box_height
     if (start_span_pos->iter_span == para.unbroken_spans.end()) {
         if (_flow._spans.empty()) {
             // empty first para: create a font for the sole purpose of measuring it
@@ -1459,42 +1465,44 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
             font_instance *font = text_source->styleGetFontInstance();
             if (font) {
                 double multiplier = _computeFontLineHeight(text_source->style);
-                line_height->set( font );
-                *line_height *= text_source->style->font_size.computed;
+                line_box_height->set( font );
+                *line_box_height *= text_source->style->font_size.computed;
                 font->Unref();
-                *line_height *= multiplier;
-                _scanline_maker->setNewYCoordinate(_scanline_maker->yCoordinate() - line_height->ascent);
+                line_box_height->computeEffective( multiplier );
+                TRACE(("    initial next line top_of_line_box: %f\n", _scanline_maker->yCoordinate() - line_box_height->ascent ));
+                _scanline_maker->setNewYCoordinate(_scanline_maker->yCoordinate() - line_box_height->ascent);
             }
         }
         // else empty subsequent para: keep the old line height
     } else {
         if (_flow._input_wrap_shapes.empty()) {
-            // if we're not wrapping set the line_height big and negative so we can use negative line height
-            line_height->ascent = -1.0e10;
-            line_height->descent = -1.0e10;
+            // if we're not wrapping set the line_box_height big and negative so we can use negative line height
+            line_box_height->ascent = -1.0e10;
+            line_box_height->descent = -1.0e10;
         }
         else
-            line_height->setZero();
+            line_box_height->setZero();
     }
+    TRACE(("    initial line_box_height: %f\n", line_box_height->emSize() ));
 
     UnbrokenSpanPosition span_pos;
     for( ; ; ) {
         std::vector<ScanlineMaker::ScanRun> scan_runs;
-        scan_runs = _scanline_maker->makeScanline(*line_height); // Only one line with "InfiniteScanlineMaker
+        scan_runs = _scanline_maker->makeScanline(*line_box_height); // Only one line with "InfiniteScanlineMaker
         while (scan_runs.empty()) {
             // Only used by ShapeScanlineMaker
             if (!_goToNextWrapShape()) return false;  // no more shapes to wrap in to
-            scan_runs = _scanline_maker->makeScanline(*line_height);
+            scan_runs = _scanline_maker->makeScanline(*line_box_height);
         }
 
-        TRACE(("finding line fit y=%f, %lu scan runs\n", scan_runs.front().y, scan_runs.size()));
+        TRACE(("    finding line fit y=%f, %lu scan runs\n", scan_runs.front().y, scan_runs.size()));
         chunk_info->clear();
         chunk_info->reserve(scan_runs.size());
         if (para.direction == RIGHT_TO_LEFT) std::reverse(scan_runs.begin(), scan_runs.end());
         unsigned scan_run_index;
         span_pos = *start_span_pos;
         for (scan_run_index = 0 ; scan_run_index < scan_runs.size() ; scan_run_index++) {
-            if (!_buildChunksInScanRun(para, span_pos, scan_runs[scan_run_index], chunk_info, line_height))
+            if (!_buildChunksInScanRun(para, span_pos, scan_runs[scan_run_index], chunk_info, line_box_height))
                 break;
             if (!chunk_info->empty() && !chunk_info->back().broken_spans.empty())
                 span_pos = chunk_info->back().broken_spans.back().end;
@@ -1502,6 +1510,8 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
         if (scan_run_index == scan_runs.size()) break;  // ie when buildChunksInScanRun() succeeded
     }
     *start_span_pos = span_pos;
+    TRACE(("    final line_box_height: %f\n", line_box_height->emSize() ));
+    TRACE(("  end _findChunksForLine: chunks: %lu\n", chunk_info->size()));
     return true;
 }
 
@@ -1525,6 +1535,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
                                                std::vector<ChunkInfo> *chunk_info,
                                                FontMetrics *line_height) const
 {
+    TRACE(("    begin _buildChunksInScanRun: chunks: %lu\n", chunk_info->size()));
     ChunkInfo new_chunk;
     new_chunk.text_width = 0.0;
     new_chunk.whitespace_count = 0;
@@ -1538,7 +1549,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
     last_span_at_emergency_break.start = start_span_pos;
     last_span_at_emergency_break.setZero();
 
-    TRACE(("trying chunk from %f to %g\n", scan_run.x_start, scan_run.x_end));
+    TRACE(("      trying chunk from %f to %g\n", scan_run.x_start, scan_run.x_end));
     BrokenSpan new_span;
     new_span.end = start_span_pos;
     while (new_span.end.iter_span != para.unbroken_spans.end()) {    // this loops once for each UnbrokenSpan
@@ -1587,7 +1598,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
         }
     }
 
-    TRACE(("chunk complete, used %f width (%d whitespaces, %lu brokenspans)\n", new_chunk.text_width, new_chunk.whitespace_count, new_chunk.broken_spans.size()));
+    TRACE(("      chunk complete, used %f width (%d whitespaces, %lu brokenspans)\n", new_chunk.text_width, new_chunk.whitespace_count, new_chunk.broken_spans.size()));
     chunk_info->push_back(new_chunk);
 
     if (scan_run.width() >= 4.0 * line_height->emSize() && last_span_at_break.end == start_span_pos) {
@@ -1625,12 +1636,25 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
                 chunk_info->back().text_width += last_span_at_break.width;
                 chunk_info->back().whitespace_count += last_span_at_break.whitespace_count;
             }
-            TRACE(("correction: fitted span %lu width = %f\n", last_span_at_break.start.iter_span - para.unbroken_spans.begin(), last_span_at_break.width));
+            TRACE(("      correction: fitted span %lu width = %f\n", last_span_at_break.start.iter_span - para.unbroken_spans.begin(), last_span_at_break.width));
         }
     }
 
+    // Recalculate line_box_height after backing out chunks
+    line_height->setZero();
+    for (std::vector<ChunkInfo>::const_iterator it_chunk = chunk_info->begin() ; it_chunk != chunk_info->end() ; it_chunk++) {
+        for (std::vector<BrokenSpan>::const_iterator it_span = it_chunk->broken_spans.begin() ; it_span != it_chunk->broken_spans.end() ; it_span++) {
+            TRACE(("      brokenspan line_height: %f\n", it_span->start.iter_span->line_height.emSize() ));
+            FontMetrics span_height = it_span->start.iter_span->line_height;
+            span_height.computeEffective( it_span->start.iter_span->line_height_multiplier );
+            line_height->max( span_height );
+        }
+    }
+    TRACE(("      line_box_height: %f\n", line_height->emSize()));
+
     if (!chunk_info->empty() && !chunk_info->back().broken_spans.empty() && chunk_info->back().broken_spans.back().ends_with_whitespace) {
         // for justification we need to discard space occupied by the single whitespace at the end of the chunk
+        TRACE(("      backing out whitespace\n"));
         chunk_info->back().broken_spans.back().ends_with_whitespace = false;
         chunk_info->back().broken_spans.back().width -= chunk_info->back().broken_spans.back().each_whitespace_width;
         chunk_info->back().broken_spans.back().whitespace_count--;
@@ -1642,9 +1666,10 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
         // for justification we need to discard line-spacing and word-spacing at end of the chunk
         chunk_info->back().broken_spans.back().width -= chunk_info->back().broken_spans.back().letter_spacing;
         chunk_info->back().text_width -= chunk_info->back().broken_spans.back().letter_spacing;
-        TRACE(("width after subtracting last letter_spacing: %f\n", chunk_info->back().broken_spans.back().width));
+        TRACE(("      width after subtracting last letter_spacing: %f\n", chunk_info->back().broken_spans.back().width));
     }
 
+    TRACE(("    end _buildChunksInScanRun: chunks: %lu\n", chunk_info->size()));
     return true;
 }
 
@@ -1664,7 +1689,7 @@ bool Layout::Calculator::calculate()
         g_warning("flow text is not of type TEXT_SOURCE. Abort.");
         return false;
     }
-    TRACE(("begin calculateFlow()\n"));
+    TRACE(("begin calculate()\n"));
 
     _flow._clearOutputObjects();
 
@@ -1689,7 +1714,7 @@ bool Layout::Calculator::calculate()
     _createFirstScanlineMaker();
 
     ParagraphInfo para;
-    FontMetrics line_height; // needs to be maintained across paragraphs to be able to deal with blank paras
+    FontMetrics line_box_height; // needs to be maintained across paragraphs to be able to deal with blank paras
     for(para.first_input_index = 0 ; para.first_input_index < _flow._input_stream.size() ; ) {
         // jump to the next wrap shape if this is a SHAPE_BREAK control code
         if (_flow._input_stream[para.first_input_index]->Type() == CONTROL_CODE) {
@@ -1729,14 +1754,17 @@ bool Layout::Calculator::calculate()
         do {   // for each line in the paragraph
             TRACE(("begin line\n"));
             std::vector<ChunkInfo> line_chunk_info;
-            if (!_findChunksForLine(para, &span_pos, &line_chunk_info, &line_height))
+            if (!_findChunksForLine(para, &span_pos, &line_chunk_info, &line_box_height))
                 break;   // out of shapes to wrap in to
 
-            _outputLine(para, line_height, line_chunk_info);
+            _outputLine(para, line_box_height, line_chunk_info);
+            _scanline_maker->setLineHeight( line_box_height );
             _scanline_maker->completeLine(); // Increments y by line height
+            TRACE(("end line\n"));
         } while (span_pos.iter_span != para.unbroken_spans.end());
 
         TRACE(("para %lu end\n\n", _flow._paragraphs.size() - 1));
+        assert (_scanline_maker != NULL );
         if (_scanline_maker != NULL) {
             bool is_empty_para = _flow._characters.empty() || _flow._characters.back().line(&_flow).in_paragraph != _flow._paragraphs.size() - 1;
             if ((is_empty_para && para_end_input_index + 1 >= _flow._input_stream.size())
@@ -1745,8 +1773,8 @@ bool Layout::Calculator::calculate()
                 Layout::Span new_span;
                 if (_flow._spans.empty()) {
                     new_span.font = NULL;
-                    new_span.font_size = line_height.emSize();
-                    new_span.line_height = line_height;
+                    new_span.font_size = line_box_height.emSize();
+                    new_span.line_height = line_box_height;
                     new_span.x_end = 0.0;
                 } else {
                     new_span = _flow._spans.back();
@@ -1856,6 +1884,7 @@ void Layout::_calculateCursorShapeForEmpty()
 
 bool Layout::calculateFlow()
 {
+    TRACE(("begin calculateFlow()\n"));
     Layout::Calculator calc = Calculator(this);
     bool result = calc.calculate();
     if (textLengthIncrement != 0) {
