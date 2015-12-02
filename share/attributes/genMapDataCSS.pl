@@ -210,6 +210,28 @@ push @{$properties{ "solid-opacity" }->{elements}}, @graphics_elements;
 $properties{ "solid-opacity" }->{default} = "1.0";
 $properties{ "solid-opacity" }->{inherit} = "no";
 
+push @{$properties{ "white-space" }->{elements}}, @container_elements;
+push @{$properties{ "white-space" }->{elements}}, @text_content_elements;
+$properties{ "white-space" }->{default} = "normal";
+$properties{ "white-space" }->{inherit} = "yes";
+
+push @{$properties{ "shape-inside" }->{elements}}, @text_content_elements;
+$properties{ "shape-inside" }->{default} = "auto";
+$properties{ "shape-inside" }->{inherit} = "no";
+
+push @{$properties{ "shape-outside" }->{elements}}, @text_content_elements;
+$properties{ "shape-outside" }->{default} = "auto";
+$properties{ "shape-outside" }->{inherit} = "no";
+
+push @{$properties{ "shape-padding" }->{elements}}, @text_content_elements;
+$properties{ "shape-padding" }->{default} = "none";
+$properties{ "shape-padding" }->{inherit} = "no";
+
+push @{$properties{ "shape-margin" }->{elements}}, @text_content_elements;
+$properties{ "shape-margin" }->{default} = "0";
+$properties{ "shape-margin" }->{inherit} = "no";
+
+
 # CSS Text Decoration
 push @{$properties{ "text-decoration-line" }->{elements}}, @container_elements;
 push @{$properties{ "text-decoration-line" }->{elements}}, @text_content_elements;

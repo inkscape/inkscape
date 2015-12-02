@@ -98,6 +98,14 @@
 
 "pointer-events" - "circle","ellipse","image","line","path","polygon","polyline","rect","text","use","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
+"shape-inside" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"shape-margin" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"shape-outside" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
+"shape-padding" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
+
 "shape-rendering" - "path","rect","circle","ellipse","line","polyline","polygon","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "solid-color" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","circle","ellipse","image","line","path","polygon","polyline","rect","text","use"
@@ -157,6 +165,8 @@
 "unicode-bidi" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
 
 "visibility" - "text","tspan","tref","altGlyph","textPath","a","circle","ellipse","image","line","path","polygon","polyline","rect","text","use","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
+"white-space" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "word-spacing" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
