@@ -2385,7 +2385,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt inkscape">
         </xsl:choose>
       </xsl:variable>
       <xsl:if test="$top_val != '' and $size_val != ''">
-        <xsl:value-of select="$top_val - $size_val" />
+        <xsl:value-of select='format-number($top_val - $size_val, "#.#")' />
       </xsl:if>
     </xsl:attribute>
   </xsl:if>
