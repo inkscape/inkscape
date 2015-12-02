@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.92.x\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-11-01 13:46+0100\n"
-"PO-Revision-Date: 2015-11-29 02:34-0500\n"
+"PO-Revision-Date: 2015-11-29 03:17-0500\n"
 "Last-Translator: Mingye Wang (Arthur2e5) <arthur200126@gmail.com>\n"
 "Language-Team: Chinese (China) @ AOSC <aosc@member.fsf.org>\n"
 "Language: zh_CN\n"
@@ -31025,7 +31025,7 @@ msgid ""
 "The second path must be exactly four nodes long."
 msgstr ""
 "该扩展要求选中两条路径。\n"
-" 第二个路径必须有正好四个节点."
+"且第二个路径必须有正好四个节点。"
 
 #: ../share/extensions/svg_and_media_zip_output.py:128
 #, python-format
