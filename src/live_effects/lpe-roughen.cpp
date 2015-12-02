@@ -91,44 +91,6 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
 
 LPERoughen::~LPERoughen() {}
 
-static void
-sp_get_better_default_size(SPItem *item, double &value)
-{
-    if (SP_IS_GROUP(item)) {
-        std::vector<SPItem*> const item_list = sp_item_group_item_list(SP_GROUP(item));
-        for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
-            SPItem *subitem = *iter;
-            sp_get_better_default_size(subitem, value);
-        }
-        if(item_list.size() > 0){
-            value /= item_list.size();
-        }
-    } else {
-        SPShape *shape = dynamic_cast<SPShape *>(item);
-        if (shape) {
-            SPCurve * c = NULL;
-            SPPath *path = dynamic_cast<SPPath *>(shape);
-            if (path) {
-                c = path->get_original_curve();
-            } else {
-                c = shape->getCurve();
-            }
-            if (c) {
-                value += Geom::length(paths_to_pw(c->get_pathvector()))/(c->get_segment_count () * 6);
-            }
-        }
-    }
-}
-
-void LPERoughen::doOnApply(SPLPEItem const* lpeitem)
-{
-    SPLPEItem * splpeitem = const_cast<SPLPEItem *>(lpeitem);
-    double initial = 0;
-    sp_get_better_default_size(SP_ITEM(splpeitem), initial);
-    displace_x.param_set_value(initial, 0);
-    displace_y.param_set_value(initial, 0);
-}
-
 void LPERoughen::doBeforeEffect(SPLPEItem const *lpeitem)
 {
     if(spray_tool_friendly && seed == 0 && SP_OBJECT(lpeitem)->getId()){
