@@ -348,6 +348,11 @@
             <exclude name="removeoverlap/test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
+            <!-- Exclude potrace related tools until Potrace is available in the devlibs-->
+            <exclude name="trace/.*"/>
+            <exclude name="ui/dialog/tracedialog.cpp"/>
+            <exclude name="ui/tools/flood-tool.cpp"/>
+            <exclude name="widgets/paintbucket-toolbar.cpp"/>
         </fileset>
         <excludeinc dir="${src}">
             <file name="extension/param"/>
