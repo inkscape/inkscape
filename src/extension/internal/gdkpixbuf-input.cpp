@@ -86,8 +86,9 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
             ir = new ImageResolution(uri);
         }
         if (ir && ir->ok()) {
-            xscale = 960.0 / floor(10.*ir->x() + .5);  // round-off to 0.1 dpi
-            yscale = 960.0 / floor(10.*ir->y() + .5);
+            xscale = 960.0 / round(10.*ir->x());  // round-off to 0.1 dpi
+            yscale = 960.0 / round(10.*ir->y());
+            // prevent crash on image with too small dpi (bug 1479193)
             if (ir->x() <= .05)
                 xscale = 960.0;
             if (ir->y() <= .05)
