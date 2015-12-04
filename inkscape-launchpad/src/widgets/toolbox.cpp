@@ -517,6 +517,8 @@ static gchar const * ui_descr =
         "    <toolitem action='TextDyAction' />"
         "    <toolitem action='TextRotationAction' />"
         "    <separator />"
+        "    <toolitem action='TextWritingModeAction' />"
+        "    <separator />"
         "    <toolitem action='TextOrientationAction' />"
         "  </toolbar>"
 

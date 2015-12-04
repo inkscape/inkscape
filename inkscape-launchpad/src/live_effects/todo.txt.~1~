@@ -1,0 +1,11 @@
+reminder list
+
+
+cleanup nodepath code that draws helper path
+
+ARCS !!!  see sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
+
+make sp_nodepath_is_over_stroke perhaps
+
+
+find dir "fixme" and fix'em!

@@ -292,6 +292,9 @@ static void ms_col_changed(GtkAdjustment *adj, GObject * /*tbl*/ )
     blocked = FALSE;
 }
 
+/**
+ * Sets mesh type: Coons, Bicubic
+ */
 static void ms_type_changed(EgeSelectOneAction *act, GtkWidget *widget)
 {
     // std::cout << "ms_type_changed" << std::endl;
@@ -311,7 +314,7 @@ static void ms_type_changed(EgeSelectOneAction *act, GtkWidget *widget)
         gradient->type_set = true;
         gradient->updateRepr();
 
-        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_GRADIENT,
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
                    _("Set mesh type"));
     }
 }

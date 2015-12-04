@@ -98,6 +98,14 @@
 
 "pointer-events" - "visiblePainted" - "yes"
 
+"shape-inside" - "auto" - "no"
+
+"shape-margin" - "0" - "no"
+
+"shape-outside" - "auto" - "no"
+
+"shape-padding" - "none" - "no"
+
 "shape-rendering" - "auto" - "yes"
 
 "solid-color" - "#000000" - "no"
@@ -157,6 +165,8 @@
 "unicode-bidi" - "normal" - "no"
 
 "visibility" - "visible" - "yes"
+
+"white-space" - "normal" - "yes"
 
 "word-spacing" - "normal" - "yes"
 

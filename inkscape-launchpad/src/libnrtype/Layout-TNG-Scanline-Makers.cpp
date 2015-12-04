@@ -19,9 +19,7 @@ namespace Text {
 
 Layout::InfiniteScanlineMaker::InfiniteScanlineMaker(double initial_x, double initial_y, Layout::Direction block_progression)
 {
-    _current_line_height.ascent = 0.0;
-    _current_line_height.descent = 0.0;
-    _current_line_height.leading = 0.0;
+    _current_line_height.setZero();
     switch (block_progression) {
         case LEFT_TO_RIGHT:
         case RIGHT_TO_LEFT:
@@ -41,7 +39,7 @@ Layout::InfiniteScanlineMaker::~InfiniteScanlineMaker()
 {
 }
 
-std::vector<Layout::ScanlineMaker::ScanRun> Layout::InfiniteScanlineMaker::makeScanline(Layout::LineHeight const &line_height)
+std::vector<Layout::ScanlineMaker::ScanRun> Layout::InfiniteScanlineMaker::makeScanline(Layout::FontMetrics const &line_height)
 {
     std::vector<ScanRun> runs(1);
     runs[0].x_start = _x;
@@ -54,12 +52,10 @@ std::vector<Layout::ScanlineMaker::ScanRun> Layout::InfiniteScanlineMaker::makeS
 void Layout::InfiniteScanlineMaker::completeLine()
 {
     if (_negative_block_progression)
-        _y -= _current_line_height.total();
+        _y -= _current_line_height.emSize();
     else
-        _y += _current_line_height.total();
-    _current_line_height.ascent = 0.0;
-    _current_line_height.descent = 0.0;
-    _current_line_height.leading = 0.0;
+        _y += _current_line_height.emSize();
+    _current_line_height.setZero();
 }
 
 void Layout::InfiniteScanlineMaker::setNewYCoordinate(double new_y)
@@ -67,10 +63,15 @@ void Layout::InfiniteScanlineMaker::setNewYCoordinate(double new_y)
     _y = new_y;
 }
 
-bool Layout::InfiniteScanlineMaker::canExtendCurrentScanline(Layout::LineHeight const &line_height)
+bool Layout::InfiniteScanlineMaker::canExtendCurrentScanline(Layout::FontMetrics const &line_height)
 {
     _current_line_height = line_height;
     return true;
+}
+
+void Layout::InfiniteScanlineMaker::setLineHeight(Layout::FontMetrics const &line_height)
+{
+    _current_line_height = line_height;
 }
 
 // *********************** real shapes version
@@ -111,29 +112,29 @@ Layout::ShapeScanlineMaker::~ShapeScanlineMaker()
         delete _rotated_shape;
 }
 
-std::vector<Layout::ScanlineMaker::ScanRun> Layout::ShapeScanlineMaker::makeScanline(Layout::LineHeight const &line_height)
+std::vector<Layout::ScanlineMaker::ScanRun> Layout::ShapeScanlineMaker::makeScanline(Layout::FontMetrics const &line_height)
 {
-    FloatLigne line_rasterization;
-    FloatLigne line_decent_length_runs;
-    float line_text_height = (float)(line_height.ascent + line_height.descent);
-
     if (_y > _bounding_box_bottom)
         return std::vector<ScanRun>();
 
     if (_y < _bounding_box_top)
         _y = _bounding_box_top;
 
+    FloatLigne line_rasterization;
+    FloatLigne line_decent_length_runs;
+    float line_text_height = (float)(line_height.emSize());
     if (line_text_height == 0.0)
         line_text_height = 0.001;     // Scan() doesn't work for zero height so this will have to do
 
-    _current_line_height = (float)line_height.total();
+    _current_line_height = (float)line_height.emSize();
 
     // I think what's going on here is that we're moving the top of the scanline to the given position...
     _rotated_shape->Scan(_rasterizer_y, _current_rasterization_point, _y, line_text_height);
     // ...then actually retreiving the scanline (which alters the first two parameters)
     _rotated_shape->Scan(_rasterizer_y, _current_rasterization_point, _y + line_text_height , &line_rasterization, true, line_text_height);
-    // sanitise the raw rasterisation, which could have weird overlaps
+    // sanitise the raw rasterisation, which could have weird overlaps 
     line_rasterization.Flatten();
+    // line_rasterization.Affiche();
     // cut out runs that cover less than 90% of the line
     line_decent_length_runs.Over(&line_rasterization, 0.9 * line_text_height);
 
@@ -145,7 +146,7 @@ std::vector<Layout::ScanlineMaker::ScanRun> Layout::ShapeScanlineMaker::makeScan
         std::vector<ScanRun> result(1);
         result[0].x_start = line_rasterization.runs[0].st;
         result[0].x_end   = line_rasterization.runs[0].st;
-        result[0].y = _negative_block_progression ? -_current_line_height - _y : _y;
+        result[0].y = _negative_block_progression ? - _y : _y;
         return result;
     }
 
@@ -154,7 +155,7 @@ std::vector<Layout::ScanlineMaker::ScanRun> Layout::ShapeScanlineMaker::makeScan
     for (unsigned i = 0 ; i < result.size() ; i++) {
         result[i].x_start = line_decent_length_runs.runs[i].st;
         result[i].x_end   = line_decent_length_runs.runs[i].en;
-        result[i].y = _negative_block_progression ? -_current_line_height - _y : _y;
+        result[i].y = _negative_block_progression ? - _y : _y;
     }
 
     return result;
@@ -167,22 +168,27 @@ void Layout::ShapeScanlineMaker::completeLine()
 
 double Layout::ShapeScanlineMaker::yCoordinate()
 {
-    if (_negative_block_progression) return -_current_line_height - _y;
+    if (_negative_block_progression) return - _y;
     return _y;
 }
 
 void Layout::ShapeScanlineMaker::setNewYCoordinate(double new_y)
 {
     _y = (float)new_y;
-    if (_negative_block_progression) _y = -_current_line_height - _y;
+    if (_negative_block_progression) _y = - _y;
     // what will happen with the rasteriser if we move off the shape?
     // it's not an important question because <flowSpan> doesn't have a y attribute
 }
 
-bool Layout::ShapeScanlineMaker::canExtendCurrentScanline(Layout::LineHeight const &/*line_height*/)
+bool Layout::ShapeScanlineMaker::canExtendCurrentScanline(Layout::FontMetrics const &/*line_height*/)
 {
     //we actually could return true if only the leading changed, but that's too much effort for something that rarely happens
     return false;
+}
+
+void Layout::ShapeScanlineMaker::setLineHeight(Layout::FontMetrics const &line_height)
+{
+    _current_line_height = line_height.emSize();
 }
 
 }//namespace Text

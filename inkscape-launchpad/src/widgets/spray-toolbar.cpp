@@ -34,7 +34,6 @@
 #include "spray-toolbar.h"
 #include "desktop.h"
 #include "inkscape.h"
-#include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
 #include "widgets/ege-select-one-action.h"
 #include "widgets/ink-action.h"
@@ -47,7 +46,6 @@
 
 #include <glibmm/i18n.h>
 
-using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
 

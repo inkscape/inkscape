@@ -737,7 +737,7 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
-static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *tbl )
+static void sp_writing_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     // quit if run by the _changed callbacks
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
@@ -752,13 +752,73 @@ static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *
     {
         case 0:
         {
-            sp_repr_css_set_property (css, "writing-mode", "lr");
+            sp_repr_css_set_property (css, "writing-mode", "lr-tb");
             break;
         }
 
         case 1:
         {
-            sp_repr_css_set_property (css, "writing-mode", "tb");
+            sp_repr_css_set_property (css, "writing-mode", "tb-rl");
+            break;
+        }
+
+            case 2:
+        {
+            sp_repr_css_set_property (css, "writing-mode", "vertical-lr");
+            break;
+        }
+}
+
+    SPStyle query(SP_ACTIVE_DOCUMENT);
+    int result_numbers =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+
+    // If querying returned nothing, update default style.
+    if (result_numbers == QUERY_STYLE_NOTHING)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->mergeStyle("/tools/text/style", css);
+    }
+
+    sp_desktop_set_style (SP_ACTIVE_DESKTOP, css, true, true);
+    if(result_numbers != QUERY_STYLE_NOTHING)
+    {
+        DocumentUndo::done(SP_ACTIVE_DESKTOP->getDocument(), SP_VERB_CONTEXT_TEXT,
+                       _("Text: Change writing mode"));
+    }
+    sp_repr_css_attr_unref (css);
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+static void sp_text_orientation_changed( EgeSelectOneAction *act, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    int mode = ege_select_one_action_get_active( act );
+
+    SPCSSAttr   *css        = sp_repr_css_attr_new ();
+    switch (mode)
+    {
+        case 0:
+        {
+            sp_repr_css_set_property (css, "text-orientation", "auto");
+            break;
+        }
+
+        case 1:
+        {
+            sp_repr_css_set_property (css, "text-orientation", "upright");
+            break;
+        }
+
+        case 2:
+        {
+            sp_repr_css_set_property (css, "text-orientation", "sideways");
             break;
         }
     }
@@ -893,13 +953,17 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     int result_style    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTSTYLE);
     int result_numbers  = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
     int result_baseline = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_BASELINES);
+    int result_wmode    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_WRITINGMODES);
 
     /*
      * If no text in selection (querying returned nothing), read the style from
      * the /tools/text preferencess (default style for new texts). Return if
      * tool bar already set to these preferences.
      */
-    if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING) {
+    if (result_family  == QUERY_STYLE_NOTHING ||
+        result_style   == QUERY_STYLE_NOTHING ||
+        result_numbers == QUERY_STYLE_NOTHING ||
+        result_wmode   == QUERY_STYLE_NOTHING ) {
         // There are no texts in selection, read from preferences.
         query.readFromPrefs("/tools/text");
 #ifdef DEBUG_TEXT
@@ -1047,13 +1111,42 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         gtk_adjustment_set_value( letterSpacingAdjustment, letterSpacing );
 
 
+        // Writing mode
+        int activeButton2 = 0;
+        if (query.writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB) activeButton2 = 0;
+        if (query.writing_mode.computed == SP_CSS_WRITING_MODE_TB_RL) activeButton2 = 1;
+        if (query.writing_mode.computed == SP_CSS_WRITING_MODE_TB_LR) activeButton2 = 2;
+
+        EgeSelectOneAction* writingModeAction =
+            EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextWritingModeAction" ) );
+        ege_select_one_action_set_active( writingModeAction, activeButton2 );
+
         // Orientation
-        int activeButton2 = (query.writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB ? 0 : 1);
+        int activeButton3 = 0;
+        if (query.text_orientation.computed == SP_CSS_TEXT_ORIENTATION_MIXED   ) activeButton3 = 0;
+        if (query.text_orientation.computed == SP_CSS_TEXT_ORIENTATION_UPRIGHT ) activeButton3 = 1;
+        if (query.text_orientation.computed == SP_CSS_TEXT_ORIENTATION_SIDEWAYS) activeButton3 = 2;
 
         EgeSelectOneAction* textOrientationAction =
             EGE_SELECT_ONE_ACTION( g_object_get_data( tbl, "TextOrientationAction" ) );
-        ege_select_one_action_set_active( textOrientationAction, activeButton2 );
+        ege_select_one_action_set_active( textOrientationAction, activeButton3 );
 
+        // Disable text orientation for horizontal text..  See above for why this nonsense
+        model = GTK_LIST_STORE( ege_select_one_action_get_model( textOrientationAction ) );
+
+        path = gtk_tree_path_new_from_string("0");
+        gtk_tree_model_get_iter( GTK_TREE_MODEL (model), &iter, path );
+        gtk_list_store_set( model, &iter, /* column */ 3, activeButton2 != 0, -1 );
+
+        path = gtk_tree_path_new_from_string("1");
+        gtk_tree_model_get_iter( GTK_TREE_MODEL (model), &iter, path );
+        gtk_list_store_set( model, &iter, /* column */ 3, activeButton2 != 0, -1 );
+
+        path = gtk_tree_path_new_from_string("2");
+        gtk_tree_model_get_iter( GTK_TREE_MODEL (model), &iter, path );
+        gtk_list_store_set( model, &iter, /* column */ 3, activeButton2 != 0, -1 );
+
+        ege_select_one_action_update_sensitive( textOrientationAction );
 
     }
 
@@ -1387,7 +1480,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_text_align_mode_changed), holder );
     }
 
-    /* Orientation (Left to Right, Top to Bottom */
+    /* Writing mode (Horizontal, Vertical-LR, Vertical-RL) */
     {
         GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
@@ -1402,14 +1495,73 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
-                            0, _("Vertical"),
-                            1, _("Vertical text"),
+                            0, _("Vertical — RL"),
+                            1, _("Vertical text — lines: right to left"),
                             2, INKSCAPE_ICON("format-text-direction-vertical"),
                             -1 );
 
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Vertical — LR"),
+                            1, _("Vertical text — lines: left to right"), // Mongolian!
+                            2, INKSCAPE_ICON("format-text-direction-vertical-lr"),
+                            -1 );
+
+        EgeSelectOneAction* act = ege_select_one_action_new( "TextWritingModeAction", // Name
+                                                             _("Writing mode"),        // Label
+                                                             _("Block progression"),   // Tooltip
+                                                             NULL,                    // Icon name
+                                                             GTK_TREE_MODEL(model) ); // Model
+
+        g_object_set( act, "short_label", "NotUsed", NULL );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "TextWritingModeAction", act );
+
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_icon_size( act, secondarySize );
+        ege_select_one_action_set_tooltip_column( act, 1  );
+
+        gint mode = prefs->getInt("/tools/text/writing_mode", 0);
+        ege_select_one_action_set_active( act, mode );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_writing_mode_changed), holder );
+    }
+
+    /* Text (glyph) orientation (Auto (mixed), Upright, Sideways) */
+    {
+        GtkListStore* model = gtk_list_store_new( 4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN );
+
+        GtkTreeIter iter;
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Auto"),
+                            1, _("Auto glyph orientation"),
+                            2, INKSCAPE_ICON("text-orientation-auto"),
+                            3, true,
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Upright"),
+                            1, _("Upright glyph orientation"),
+                            2, INKSCAPE_ICON("text-orientation-upright"),
+                            3, true,
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Sideways"),
+                            1, _("Sideways glyph orientation"),
+                            2, INKSCAPE_ICON("text-orientation-sideways"),
+                            3, true,
+                            -1 );
+
         EgeSelectOneAction* act = ege_select_one_action_new( "TextOrientationAction", // Name
-                                                             _("Orientation"),        // Label
-                                                             _("Text orientation"),   // Tooltip
+                                                             _("Text orientation"),        // Label
+                                                             _("Text (glyph) orientation in vertical text."),   // Tooltip
                                                              NULL,                    // Icon name
                                                              GTK_TREE_MODEL(model) ); // Model
 
@@ -1423,10 +1575,11 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         ege_select_one_action_set_icon_column( act, 2 );
         ege_select_one_action_set_icon_size( act, secondarySize );
         ege_select_one_action_set_tooltip_column( act, 1  );
+        ege_select_one_action_set_sensitive_column( act, 3 );
 
-        gint mode = prefs->getInt("/tools/text/orientation", 0);
+        gint mode = prefs->getInt("/tools/text/text_orientation", 0);
         ege_select_one_action_set_active( act, mode );
-        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_text_orientation_mode_changed), holder );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_text_orientation_changed), holder );
     }
 
     /* Line height */

@@ -93,26 +93,55 @@ void Layout::_clearOutputObjects()
     _path_fitted = NULL;
 }
 
-void Layout::LineHeight::max(LineHeight const &other)
+void Layout::FontMetrics::set(font_instance *font)
 {
-    if (other.ascent > ascent)  ascent  = other.ascent;
-    if (other.descent > descent) descent = other.descent;
-    if (other.leading > leading) leading = other.leading;
+    if( font != NULL ) {
+        ascent      = font->GetTypoAscent();  
+        descent     = font->GetTypoDescent();
+        xheight     = font->GetXHeight();
+        ascent_max  = font->GetMaxAscent();
+        descent_max = font->GetMaxDescent();
+    }
+}
+
+void Layout::FontMetrics::max(FontMetrics const &other)
+{
+    if (other.ascent      > ascent      ) ascent      = other.ascent;
+    if (other.descent     > descent     ) descent     = other.descent;
+    if( other.xheight     > xheight     ) xheight     = other.xheight;
+    if( other.ascent_max  > ascent_max  ) ascent_max  = other.ascent_max;
+    if( other.descent_max > descent_max ) descent_max = other.descent_max;
+}
+
+void Layout::FontMetrics::computeEffective( const double &line_height_multiplier ) {
+    double half_leading = 0.5 * (line_height_multiplier - 1.0) * emSize();
+    ascent  += half_leading;
+    descent += half_leading;
 }
 
 void Layout::_getGlyphTransformMatrix(int glyph_index, Geom::Affine *matrix) const
 {
     Span const &span = _glyphs[glyph_index].span(this);
-    double sin_rotation = sin(_glyphs[glyph_index].rotation);
-    double cos_rotation = cos(_glyphs[glyph_index].rotation);
+    double rotation = _glyphs[glyph_index].rotation;
+    if ( (span.block_progression == LEFT_TO_RIGHT || span.block_progression == RIGHT_TO_LEFT) &&
+        _glyphs[glyph_index].orientation == ORIENTATION_SIDEWAYS ) {
+        // Vertical sideways text
+        rotation += M_PI/2.0;
+    }
+    double sin_rotation = sin(rotation);
+    double cos_rotation = cos(rotation);
     (*matrix)[0] = span.font_size * cos_rotation;
     (*matrix)[1] = span.font_size * sin_rotation;
     (*matrix)[2] = span.font_size * sin_rotation;
     (*matrix)[3] = -span.font_size * cos_rotation * (_glyphs[glyph_index].vertical_scale); // unscale vertically so the specified text height is preserved if lengthAdjust=spacingAndGlyphs
     if (span.block_progression == LEFT_TO_RIGHT || span.block_progression == RIGHT_TO_LEFT) {
+        // Vertical text
+        // This effectively swaps x for y which changes handedness of coordinate system. This is a bit strange
+        // and not what one would expect but the compute code already reverses y so OK.
         (*matrix)[4] = _lines[_chunks[span.in_chunk].in_line].baseline_y + _glyphs[glyph_index].y;
         (*matrix)[5] = _chunks[span.in_chunk].left_x + _glyphs[glyph_index].x;
     } else {
+        // Horizontal text
         (*matrix)[4] = _chunks[span.in_chunk].left_x + _glyphs[glyph_index].x;
         (*matrix)[5] = _lines[_chunks[span.in_chunk].in_line].baseline_y + _glyphs[glyph_index].y;
     }
@@ -127,9 +156,9 @@ void Layout::show(DrawingGroup *in_arena, Geom::OptRect const &paintbox) const
         InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[_spans[span_index].in_input_stream_item]);
 
         text_source->style->text_decoration_data.tspan_width             =  _spans[span_index].width();
-        text_source->style->text_decoration_data.ascender                =  _spans[span_index].line_height.getAscent();
-        text_source->style->text_decoration_data.descender               =  _spans[span_index].line_height.getDescent();
-        text_source->style->text_decoration_data.line_gap                =  _spans[span_index].line_height.getLeading();
+        text_source->style->text_decoration_data.ascender                =  _spans[span_index].line_height.getTypoAscent();
+        text_source->style->text_decoration_data.descender               =  _spans[span_index].line_height.getTypoDescent();
+
         if(!span_index ||
            (_chunks[_spans[span_index].in_chunk].in_line != _chunks[_spans[span_index-1].in_chunk].in_line)){
             text_source->style->text_decoration_data.tspan_line_start = true;
@@ -170,11 +199,14 @@ void Layout::show(DrawingGroup *in_arena, Geom::OptRect const &paintbox) const
                     first_line_glyph = false;
                     phase0 =  glyph_matrix.translation()[Geom::X];
                 }
-                // save the starting coordinates for the line - these are needed for figuring out dot/dash/wave phase
+                // Save the starting coordinates for the line - these are needed for figuring out
+                // dot/dash/wave phase.
+                // Use maximum ascent and descent to ensure glpyhs that extend outside the embox
+                // are fully drawn.
                 (void) nr_text->addComponent(_spans[span_index].font, _glyphs[glyph_index].glyph, glyph_matrix,
                     _glyphs[glyph_index].width,
-                    _spans[span_index].line_height.getAscent(),
-                    _spans[span_index].line_height.getDescent(),
+                    _spans[span_index].line_height.getMaxAscent(),
+                    _spans[span_index].line_height.getMaxDescent(),
                     glyph_matrix.translation()[Geom::X] - phase0
                 );
             }
@@ -580,7 +612,7 @@ Glib::ustring Layout::dumpAsText() const
             result += Glib::ustring::compose("    font '%1' %2 %3 %4\n", sp_font_description_get_family(_spans[span_index].font->descr), _spans[span_index].font_size, style_to_text(pango_font_description_get_style(_spans[span_index].font->descr)), weight_to_text(pango_font_description_get_weight(_spans[span_index].font->descr)));
         }
         result += Glib::ustring::compose("    x_start = %1, x_end = %2\n", _spans[span_index].x_start, _spans[span_index].x_end)
-               +  Glib::ustring::compose("    line height: ascent %1, descent %2 leading %3\n", _spans[span_index].line_height.ascent, _spans[span_index].line_height.descent, _spans[span_index].line_height.leading)
+               +  Glib::ustring::compose("    line height: ascent %1, descent %2\n", _spans[span_index].line_height.ascent, _spans[span_index].line_height.descent)
                +  Glib::ustring::compose("    direction %1, block-progression %2\n", direction_to_text(_spans[span_index].direction), direction_to_text(_spans[span_index].block_progression))
                +  "    ** characters:\n";
         Glib::ustring::const_iterator iter_char = _spans[span_index].input_stream_first_character;

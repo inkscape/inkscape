@@ -113,7 +113,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     font_weight(      "font-weight",     enum_font_weight,     SP_CSS_FONT_WEIGHT_NORMAL, SP_CSS_FONT_WEIGHT_400  ),
     font_stretch(     "font-stretch",    enum_font_stretch,    SP_CSS_FONT_STRETCH_NORMAL ), 
     font_size(),
-    line_height(      "line-height",                     1.0 ),  // SPILengthOrNormal
+    line_height(      "line-height",                    1.25 ),  // SPILengthOrNormal
     font_family(      "font-family",     "sans-serif"        ),  // SPIString w/default
     font(),                                                      // SPIFont
     font_specification( "-inkscape-font-specification"       ),  // SPIString
@@ -138,6 +138,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     direction(        "direction",       enum_direction,       SP_CSS_DIRECTION_LTR       ),
     writing_mode(     "writing-mode",    enum_writing_mode,    SP_CSS_WRITING_MODE_LR_TB  ),
     text_orientation( "text-orientation",enum_text_orientation,SP_CSS_TEXT_ORIENTATION_MIXED ),
+    dominant_baseline("dominant-baseline",enum_baseline,       SP_CSS_BASELINE_AUTO       ),
     baseline_shift(),
     text_anchor(      "text-anchor",     enum_text_anchor,     SP_CSS_TEXT_ANCHOR_START   ),
     white_space(      "white-space",     enum_white_space,     SP_CSS_WHITE_SPACE_NORMAL  ),
@@ -321,6 +322,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &writing_mode );
     _properties.push_back( &direction );
     _properties.push_back( &text_orientation );
+    _properties.push_back( &dominant_baseline );
     _properties.push_back( &baseline_shift );
     _properties.push_back( &text_anchor );
     _properties.push_back( &white_space );
@@ -415,6 +417,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     _propmap.insert( std::make_pair( direction.name,             reinterpret_cast<SPIBasePtr>(&SPStyle::direction             ) ) );
     //     _propmap.insert( std::make_pair( writing_mode.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::writing_mode          ) ) );
     //     _propmap.insert( std::make_pair( text_orientation.name,      reinterpret_cast<SPIBasePtr>(&SPStyle::text_orientation      ) ) );
+    //     _propmap.insert( std::make_pair( dominant_baseline.name,     reinterpret_cast<SPIBasePtr>(&SPStyle::dominant_baseline     ) ) );
     //     _propmap.insert( std::make_pair( baseline_shift.name,        reinterpret_cast<SPIBasePtr>(&SPStyle::baseline_shift        ) ) );
     //     _propmap.insert( std::make_pair( text_anchor.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::text_anchor           ) ) );
     //     _propmap.insert( std::make_pair( white_space.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::white_space           ) ) );
@@ -796,6 +799,9 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
         case SP_PROP_SHAPE_PADDING:
             shape_padding.readIfUnset( val );
             break;
+        case SP_PROP_DOMINANT_BASELINE:
+            dominant_baseline.readIfUnset( val );
+            break;
         case SP_PROP_BASELINE_SHIFT:
             baseline_shift.readIfUnset( val );
             break;
@@ -804,9 +810,6 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
             break;
         case SP_PROP_ALIGNMENT_BASELINE:
             g_warning("Unimplemented style property SP_PROP_ALIGNMENT_BASELINE: value: %s", val);
-            break;
-        case SP_PROP_DOMINANT_BASELINE:
-            g_warning("Unimplemented style property SP_PROP_DOMINANT_BASELINE: value: %s", val);
             break;
         case SP_PROP_GLYPH_ORIENTATION_HORIZONTAL:
             g_warning("Unimplemented style property SP_PROP_ORIENTATION_HORIZONTAL: value: %s", val);

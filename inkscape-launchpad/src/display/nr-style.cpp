@@ -68,7 +68,6 @@ NRStyle::NRStyle()
     , tspan_width(0)
     , ascender(0)
     , descender(0)
-    , line_gap(0)
     , underline_thickness(0)
     , underline_position(0)
     , line_through_thickness(0)
@@ -330,7 +329,6 @@ void NRStyle::set(SPStyle *style, SPStyle *context_style)
         tspan_width            = style->text_decoration_data.tspan_width;
         ascender               = style->text_decoration_data.ascender;
         descender              = style->text_decoration_data.descender;
-        line_gap               = style->text_decoration_data.line_gap;
         underline_thickness    = style->text_decoration_data.underline_thickness;
         underline_position     = style->text_decoration_data.underline_position; 
         line_through_thickness = style->text_decoration_data.line_through_thickness;
