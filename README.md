@@ -55,6 +55,7 @@ This repository is an unofficial mirror of Inkscape, which is hosted on Launchpa
 
  - Set up a <a href="https://login.ubuntu.com/+login">UbuntuOne account</a>
  - Create a [LaunchPad account](https://launchpad.net/) linked to UbuntuOne
+ - [Link LaunchPad](https://launchpad.net/people/+me) account to SSH keys
  - Install Bazaar (`bzr`)
  - Link Bazaar to LaunchPad (`bzr launchpad-login`)
  - Confirm your email address
