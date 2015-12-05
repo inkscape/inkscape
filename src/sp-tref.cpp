@@ -92,7 +92,7 @@ void SPTRef::set(unsigned int key, const gchar* value) {
     debug("0x%p %s(%u): '%s'",this,
             sp_attribute_name(key),key,value ? value : "<no value>");
 
-    if (this->attributes.readSingleAttribute(key, value)) { // x, y, dx, dy, rotate
+    if (this->attributes.readSingleAttribute(key, value, style, &viewport)) { // x, y, dx, dy, rotate
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     } else if (key == SP_ATTR_XLINK_HREF) { // xlink:href
         if ( !value ) {

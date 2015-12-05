@@ -463,7 +463,7 @@ unsigned int sp_svg_length_read_ldd(gchar const *str, SVGLength::Unit *unit, dou
     return r;
 }
 
-std::string const SVGLength::write()
+std::string SVGLength::write() const
 {
     return sp_svg_length_write_with_units(*this);
 }

@@ -57,7 +57,7 @@ public:
     bool read(char const *str);
     void readOrUnset(char const *str, Unit u = NONE, float v = 0, float c = 0);
     bool readAbsolute(char const *str);
-    std::string const write();
+    std::string write() const;
     // To set 'v' use '='
     void set(Unit u, float v); // Sets computed value based on u and v.
     void set(Unit u, float v, float c); // Sets all three values.
