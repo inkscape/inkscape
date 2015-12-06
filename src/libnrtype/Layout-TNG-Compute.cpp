@@ -1764,7 +1764,6 @@ bool Layout::Calculator::calculate()
         } while (span_pos.iter_span != para.unbroken_spans.end());
 
         TRACE(("para %lu end\n\n", _flow._paragraphs.size() - 1));
-        assert (_scanline_maker != NULL );
         if (_scanline_maker != NULL) {
             bool is_empty_para = _flow._characters.empty() || _flow._characters.back().line(&_flow).in_paragraph != _flow._paragraphs.size() - 1;
             if ((is_empty_para && para_end_input_index + 1 >= _flow._input_stream.size())
