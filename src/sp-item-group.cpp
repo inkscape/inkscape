@@ -162,7 +162,7 @@ void SPGroup::update(SPCtx *ctx, unsigned int flags) {
     }
     childflags &= SP_OBJECT_MODIFIED_CASCADE;
     std::vector<SPObject*> l=this->childList(true, SPObject::ActionUpdate);
-    for(std::vector<SPObject*> ::const_iterator i=l.begin();i!=l.end();i++){
+    for(std::vector<SPObject*> ::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *child = *i;
 
         if (childflags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
@@ -206,7 +206,7 @@ void SPGroup::modified(guint flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     std::vector<SPObject*> l=this->childList(true);
-    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *child = *i;
 
         if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
@@ -280,7 +280,7 @@ Geom::OptRect SPGroup::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
 
     // TODO CPPIFY: replace this const_cast later
     std::vector<SPObject*> l = const_cast<SPGroup*>(this)->childList(false, SPObject::ActionBBox);
-    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *o = *i;
         SPItem *item = dynamic_cast<SPItem *>(o);
         if (item && !item->isHidden()) {
@@ -294,7 +294,7 @@ Geom::OptRect SPGroup::bbox(Geom::Affine const &transform, SPItem::BBoxType bbox
 
 void SPGroup::print(SPPrintContext *ctx) {
 	std::vector<SPObject*> l=this->childList(false);
-    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *o = *i;
         SPItem *item = dynamic_cast<SPItem *>(o);
         if (item) {
@@ -348,7 +348,7 @@ Inkscape::DrawingItem *SPGroup::show (Inkscape::Drawing &drawing, unsigned int k
 
 void SPGroup::hide (unsigned int key) {
 	std::vector<SPObject*> l=this->childList(false, SPObject::ActionShow);
-    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *o = *i;
 
         SPItem *item = dynamic_cast<SPItem *>(o);
@@ -373,7 +373,7 @@ void SPGroup::snappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape:
 
 void sp_item_group_ungroup_handle_clones(SPItem *parent, Geom::Affine const g)
 {
-    for(std::list<SPObject*>::const_iterator refd=parent->hrefList.begin();refd!=parent->hrefList.end();refd++){
+    for(std::list<SPObject*>::const_iterator refd=parent->hrefList.begin();refd!=parent->hrefList.end();++refd){
         SPItem *citem = dynamic_cast<SPItem *>(*refd);
         if (citem && !citem->cloned) {
             SPUse *useitem = dynamic_cast<SPUse *>(citem);
@@ -781,7 +781,7 @@ gint SPGroup::getItemCount() const {
 void SPGroup::_showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *ai, unsigned int key, unsigned int flags) {
     Inkscape::DrawingItem *ac = NULL;
     std::vector<SPObject*> l=this->childList(false, SPObject::ActionShow);
-    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *o = *i;
         SPItem * child = dynamic_cast<SPItem *>(o);
         if (child) {
@@ -800,7 +800,7 @@ void SPGroup::update_patheffect(bool write) {
 
     std::vector<SPItem*> const item_list = sp_item_group_item_list(this);
 
-    for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+    for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();++iter) {
         SPObject *subitem = *iter;
 
         SPLPEItem *lpeItem = dynamic_cast<SPLPEItem *>(subitem);
@@ -810,7 +810,7 @@ void SPGroup::update_patheffect(bool write) {
     }
 
     if (hasPathEffect() && pathEffectsEnabled()) {
-        for (PathEffectList::iterator it = this->path_effect_list->begin(); it != this->path_effect_list->end(); it++)
+        for (PathEffectList::iterator it = this->path_effect_list->begin(); it != this->path_effect_list->end(); ++it)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
 
@@ -828,7 +828,7 @@ sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write)
 {
     std::vector<SPItem*> const item_list = sp_item_group_item_list(group);
 
-    for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();iter++) {
+    for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();++iter) {
         SPObject *subitem = *iter;
 
         SPGroup *subGroup = dynamic_cast<SPGroup *>(subitem);

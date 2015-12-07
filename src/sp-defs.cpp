@@ -37,7 +37,7 @@ void SPDefs::update(SPCtx *ctx, guint flags) {
 
     flags &= SP_OBJECT_MODIFIED_CASCADE;
     std::vector<SPObject*> l(this->childList(true));
-    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();i++){
+    for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *child = *i;
         if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             child->updateDisplay(ctx, flags);

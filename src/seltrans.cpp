@@ -241,7 +241,7 @@ void Inkscape::SelTrans::setCenter(Geom::Point const &p)
 
     // Write the new center position into all selected items
     std::vector<SPItem*> items=_desktop->selection->itemList();
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
         SPItem *it = SP_ITEM(*iter);
         it->setCenter(p);
         // only set the value; updating repr and document_done will be done once, on ungrab
@@ -271,7 +271,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     }
 
     std::vector<SPItem*> items=_desktop->selection->itemList();
-    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+    for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
         SPItem *it = static_cast<SPItem*>(sp_object_ref(*iter, NULL));
         _items.push_back(it);
         _items_const.push_back(it);
@@ -493,7 +493,7 @@ void Inkscape::SelTrans::ungrab()
         if (_center_is_set) {
             // we were dragging center; update reprs and commit undoable action
         	std::vector<SPItem*> items=_desktop->selection->itemList();
-            for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+            for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
                 SPItem *it = *iter;
                 it->updateRepr();
             }
@@ -534,7 +534,7 @@ void Inkscape::SelTrans::stamp()
             _stamp_cache = l;
         }
 
-        for(std::vector<SPItem*>::const_iterator x=l.begin();x!=l.end();x++) {
+        for(std::vector<SPItem*>::const_iterator x=l.begin();x!=l.end(); ++x) {
             SPItem *original_item = *x;
             Inkscape::XML::Node *original_repr = original_item->getRepr();
 
@@ -712,7 +712,7 @@ void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHa
             if (state & GDK_SHIFT_MASK) {
                 // Unset the  center position for all selected items
             	std::vector<SPItem*> items=_desktop->selection->itemList();
-                for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end();iter++ ) {
+                for ( std::vector<SPItem*>::const_iterator iter=items.begin();iter!=items.end(); ++iter) {
                     SPItem *it = *iter;
                     it->unsetCenter();
                     it->updateRepr();

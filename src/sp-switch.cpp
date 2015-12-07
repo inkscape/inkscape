@@ -97,7 +97,7 @@ void SPSwitch::_reevaluate(bool /*add_to_drawing*/) {
     _releaseLastItem(_cached_item);
 
     std::vector<SPObject*> item_list = _childList(false, SPObject::ActionShow);
-    for ( std::vector<SPObject*>::const_reverse_iterator iter=item_list.rbegin();iter!=item_list.rend();iter++) {
+    for ( std::vector<SPObject*>::const_reverse_iterator iter=item_list.rbegin();iter!=item_list.rend();++iter) {
         SPObject *o = *iter;
         if ( !SP_IS_ITEM (o) ) {
             continue;
@@ -132,7 +132,7 @@ void SPSwitch::_showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem 
 
     std::vector<SPObject*> l = this->_childList(false, SPObject::ActionShow);
 
-    for ( std::vector<SPObject*>::const_reverse_iterator iter=l.rbegin();iter!=l.rend();iter++) {
+    for ( std::vector<SPObject*>::const_reverse_iterator iter=l.rbegin();iter!=l.rend();++iter) {
         SPObject *o = *iter;
 
         if (SP_IS_ITEM (o)) {

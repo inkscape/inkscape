@@ -77,7 +77,7 @@ public:
         // Constructs a linear constraint
         SnapConstraint(Geom::Point const &p, Geom::Point const &d) : _point(p), _direction(d), _radius(0), _type(LINE) {}
         // Orthogonal version
-        SnapConstraint(Geom::Point const &p, Geom::Dim2 const &d) : _point(p), _radius(0), _type(LINE) {_direction = Geom::Point(); _direction[d] = 1.;}
+        SnapConstraint(Geom::Point const &p, Geom::Dim2 const &d) : _point(p), _direction(), _radius(0), _type(LINE) {_direction[d] = 1.;}
         SnapConstraint(Geom::Line const &l) : _point(l.origin()), _direction(l.versor()), _radius(0), _type(LINE) {}
         // Constructs a circular constraint
         SnapConstraint(Geom::Point const &p, Geom::Point const &d, Geom::Coord const &r) : _point(p), _direction(d), _radius(r), _type(CIRCLE) {}
