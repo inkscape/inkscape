@@ -32,15 +32,16 @@
 
 #include "sp-star.h"
 
-SPStar::SPStar() : SPPolygon() {
-	this->sides = 5;
-	this->center = Geom::Point(0, 0);
+SPStar::SPStar() : SPPolygon() ,
+	sides(5),
+	center(0, 0),
+	flatsided(0),
+	rounded(0.0),
+	randomized(0.0)
+{
 	this->r[0] = 1.0;
 	this->r[1] = 0.001;
 	this->arg[0] = this->arg[1] = 0.0;
-	this->flatsided = 0;
-	this->rounded = 0.0;
-	this->randomized = 0.0;
 }
 
 SPStar::~SPStar() {

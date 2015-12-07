@@ -943,8 +943,12 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
     };
 
     Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize("/toolbox/small");
-
     Glib::RefPtr<Gtk::ActionGroup> mainActions;
+    if (desktop == NULL)
+    {
+        return mainActions;
+    }
+
     if ( groups.find(desktop) != groups.end() ) {
         mainActions = groups[desktop];
     }
@@ -952,10 +956,7 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
     if ( !mainActions ) {
         mainActions = Gtk::ActionGroup::create("main");
         groups[desktop] = mainActions;
-        if (desktop)
-        {
-            desktop->connectDestroy(&desktopDestructHandler);
-        }
+        desktop->connectDestroy(&desktopDestructHandler);
     }
 
     for ( guint i = 0; i < G_N_ELEMENTS(verbsToUse); i++ ) {
@@ -1558,13 +1559,12 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
 
     SPDesktop *dt = reinterpret_cast<SPDesktop*>(ptr);
     SPNamedView *nv = dt->getNamedView();
-    SPDocument *doc = nv->document;
-
-    if (dt == NULL || nv == NULL) {
-        g_warning("No desktop or namedview specified (in toggle_snap_callback)!");
+    if (nv == NULL) {
+        g_warning("No namedview specified (in toggle_snap_callback)!");
         return;
     }
 
+    SPDocument *doc = nv->document;
     Inkscape::XML::Node *repr = nv->getRepr();
 
     if (repr == NULL) {

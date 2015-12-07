@@ -128,15 +128,15 @@ sp_png_write_rgba_striped(SPDocument *doc,
                           int (* get_rows)(guchar const **rows, void **to_free, int row, int num_rows, void *data),
                           void *data)
 {
+    g_return_val_if_fail(filename != NULL, false);
+    g_return_val_if_fail(data != NULL, false);
+
     struct SPEBP *ebp = (struct SPEBP *) data;
     FILE *fp;
     png_structp png_ptr;
     png_infop info_ptr;
     png_color_8 sig_bit;
     png_uint_32 r;
-
-    g_return_val_if_fail(filename != NULL, false);
-    g_return_val_if_fail(data != NULL, false);
 
     /* open the file */
 
