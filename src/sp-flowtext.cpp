@@ -34,8 +34,10 @@
 
 #include "display/drawing-text.h"
 
-SPFlowtext::SPFlowtext() : SPItem() {
-    this->par_indent = 0;
+SPFlowtext::SPFlowtext() : SPItem(),
+    par_indent(0),
+    _optimizeScaledText(false)
+{
 }
 
 SPFlowtext::~SPFlowtext() {

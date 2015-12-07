@@ -44,7 +44,10 @@ public:
         item(NULL),
         desktop(NULL),
         parent_holder(NULL),
-        my_counter(0)
+        my_counter(0),
+        handler_id(0),
+        _click_handler_id(0),
+        _ungrab_handler_id(0)
         {}
     virtual ~KnotHolderEntity();
 

@@ -58,8 +58,11 @@ using Inkscape::DocumentUndo;
 
 static void sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write);
 
-SPGroup::SPGroup() : SPLPEItem() {
-    this->_layer_mode = SPGroup::GROUP;
+SPGroup::SPGroup() : SPLPEItem(),
+    _expanded(false),
+    _insertBottom(false),
+    _layer_mode(SPGroup::GROUP)
+{
 }
 
 SPGroup::~SPGroup() {
@@ -90,10 +93,9 @@ void SPGroup::child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref) 
         if ( item ) {
             /* TODO: this should be moved into SPItem somehow */
             SPItemView *v;
-            Inkscape::DrawingItem *ac;
 
             for (v = this->display; v != NULL; v = v->next) {
-                ac = item->invoke_show (v->arenaitem->drawing(), v->key, v->flags);
+                Inkscape::DrawingItem *ac = item->invoke_show (v->arenaitem->drawing(), v->key, v->flags);
 
                 if (ac) {
                     v->arenaitem->appendChild(ac);
@@ -105,12 +107,10 @@ void SPGroup::child_added(Inkscape::XML::Node* child, Inkscape::XML::Node* ref) 
         if ( item ) {
             /* TODO: this should be moved into SPItem somehow */
             SPItemView *v;
-            Inkscape::DrawingItem *ac;
-
             unsigned position = item->pos_in_parent();
 
             for (v = this->display; v != NULL; v = v->next) {
-                ac = item->invoke_show (v->arenaitem->drawing(), v->key, v->flags);
+                Inkscape::DrawingItem *ac = item->invoke_show (v->arenaitem->drawing(), v->key, v->flags);
 
                 if (ac) {
                     v->arenaitem->prependChild(ac);
