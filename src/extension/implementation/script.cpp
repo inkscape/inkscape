@@ -691,7 +691,7 @@ void Script::effect(Inkscape::Extension::Effect *module,
 
     std::vector<SPItem*> selected =
         desktop->getSelection()->itemList(); //desktop should not be NULL since doc was checked and desktop is a casted pointer
-    for(std::vector<SPItem*>::const_iterator x = selected.begin(); x != selected.end(); x++){
+    for(std::vector<SPItem*>::const_iterator x = selected.begin(); x != selected.end(); ++x){
         Glib::ustring selected_id;
         selected_id += "--id=";
         selected_id += (*x)->getId();

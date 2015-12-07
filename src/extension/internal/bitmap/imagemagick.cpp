@@ -79,7 +79,7 @@ ImageMagickDocCache::ImageMagickDocCache(Inkscape::UI::View::View * view) :
     _imageItems = new SPItem*[selectCount];
 
     // Loop through selected items
-    for (std::vector<SPItem*>::const_iterator i = selectedItemList.begin(); i != selectedItemList.end(); i++) {
+    for (std::vector<SPItem*>::const_iterator i = selectedItemList.begin(); i != selectedItemList.end(); ++i) {
         SPItem *item = *i;
         Inkscape::XML::Node *node = reinterpret_cast<Inkscape::XML::Node *>(item->getRepr());
         if (!strcmp(node->name(), "image") || !strcmp(node->name(), "svg:image"))

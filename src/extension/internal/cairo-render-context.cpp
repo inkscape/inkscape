@@ -1182,7 +1182,7 @@ CairoRenderContext::_createHatchPainter(SPPaintServer const *const paintserver, 
     std::vector<SPHatchPath *> children(evil->hatchPaths());
 
     for (int i = 0; i < overflow_steps; i++) {
-        for (std::vector<SPHatchPath *>::iterator iter = children.begin(); iter != children.end(); iter++) {
+        for (std::vector<SPHatchPath *>::iterator iter = children.begin(); iter != children.end(); ++iter) {
             SPHatchPath *path = *iter;
             _renderer->renderHatchPath(pattern_ctx, *path, dkey);
         }
@@ -1677,8 +1677,8 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const &font_ma
     cairo_save(_cr);
     cairo_set_font_face(_cr, font_face);
 
-    if (fc_pattern && FcPatternGetDouble(fc_pattern, FC_PIXEL_SIZE, 0, &size) != FcResultMatch)
-        size = 12.0;
+    //if (fc_pattern && FcPatternGetDouble(fc_pattern, FC_PIXEL_SIZE, 0, &size) != FcResultMatch)
+    //    size = 12.0;
 
     // set the given font matrix
     cairo_matrix_t matrix;

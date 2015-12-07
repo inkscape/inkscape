@@ -471,7 +471,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
             } else {
                 // Create a new gradient with default coordinates.
             	std::vector<SPItem*> items=selection->itemList();
-                for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+                for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();++i){
                     SPItem *item = *i;
                     SPGradientType new_type = SP_GRADIENT_TYPE_MESH;
                     Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
@@ -956,7 +956,7 @@ static void sp_mesh_end_drag(MeshTool &rc) {
         sp_repr_css_set_property(css, "fill-opacity", "1.0");
 
         std::vector<SPItem*> items=selection->itemList();
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();++i){
 
             //FIXME: see above
             sp_repr_css_change_recursive((*i)->getRepr(), css, "style");

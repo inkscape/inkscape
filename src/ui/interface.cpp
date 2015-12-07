@@ -239,7 +239,7 @@ sp_create_window(SPViewWidget *vw, bool editable)
         }
         int pos = nui_drop_target_entries;
 
-        for (std::vector<gchar*>::iterator it = types.begin() ; it != types.end() ; it++) {
+        for (std::vector<gchar*>::iterator it = types.begin() ; it != types.end() ; ++it) {
             completeDropTargets[pos].target = *it;
             completeDropTargets[pos].flags = 0;
             completeDropTargets[pos].info = IMAGE_DATA;
@@ -2070,7 +2070,7 @@ void ContextMenu::ImageEdit(void)
 #endif
 
     std::vector<SPItem*> itemlist=_desktop->selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
         Inkscape::XML::Node *ir = (*i)->getRepr();
         const gchar *href = ir->attribute("xlink:href");
         

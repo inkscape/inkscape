@@ -413,7 +413,7 @@ void NodeTool::selection_changed(Inkscape::Selection *sel) {
     std::set<ShapeRecord> shapes;
 
     std::vector<SPItem*> items=sel->itemList();
-    for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();++i){
         SPObject *obj = *i;
 
         if (SP_IS_ITEM(obj)) {
