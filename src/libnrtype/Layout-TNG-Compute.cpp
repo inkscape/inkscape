@@ -255,7 +255,8 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                                UnbrokenSpanPosition const &start_span_pos,
                                ScanlineMaker::ScanRun const &scan_run,
                                std::vector<ChunkInfo> *chunk_info,
-                               FontMetrics *line_height) const;
+                               FontMetrics *line_height,
+                               FontMetrics const *strut_height) const;
 
     /** computes the width of a single UnbrokenSpan (pointed to by span->start.iter_span)
     and outputs its vital statistics into the other fields of \a span.
@@ -1456,34 +1457,25 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
                                             std::vector<ChunkInfo> *chunk_info,
                                             FontMetrics *line_box_height)
 {
-    TRACE(("  begin _findChunksForLine: chunks: %lu\n", chunk_info->size()));
-    // init the initial line_box_height
-    if (start_span_pos->iter_span == para.unbroken_spans.end()) {
-        if (_flow._spans.empty()) {
-            // empty first para: create a font for the sole purpose of measuring it
-            InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_flow._input_stream.front());
-            font_instance *font = text_source->styleGetFontInstance();
-            if (font) {
-                double multiplier = _computeFontLineHeight(text_source->style);
-                line_box_height->set( font );
-                *line_box_height *= text_source->style->font_size.computed;
-                font->Unref();
-                line_box_height->computeEffective( multiplier );
-                TRACE(("    initial next line top_of_line_box: %f\n", _scanline_maker->yCoordinate() - line_box_height->ascent ));
-                _scanline_maker->setNewYCoordinate(_scanline_maker->yCoordinate() - line_box_height->ascent);
-            }
-        }
-        // else empty subsequent para: keep the old line height
+    TRACE(("  begin _findChunksForLine: chunks: %lu, em size: %f\n", chunk_info->size(), line_box_height->emSize() ));
+
+    // CSS 2.1 dictates that the minimum line height (i.e. the strut height) is found from the block element. This,
+    // however, is not what the browsers seem to be doing. Instead, find the height from the first text source.
+    InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_flow._input_stream.front());
+    font_instance *font = text_source->styleGetFontInstance();
+    if (font) {
+        double multiplier = _computeFontLineHeight(text_source->style);
+        line_box_height->set( font );
+        *line_box_height *= text_source->style->font_size.computed;
+        font->Unref();
+        line_box_height->computeEffective( multiplier );
     } else {
-        if (_flow._input_wrap_shapes.empty()) {
-            // if we're not wrapping set the line_box_height big and negative so we can use negative line height
-            line_box_height->ascent = -1.0e10;
-            line_box_height->descent = -1.0e10;
-        }
-        else
-            line_box_height->setZero();
+        std::cerr << "Layout::Calculator::_findChunksForLine: Font not found." << std::endl;
     }
-    TRACE(("    initial line_box_height: %f\n", line_box_height->emSize() ));
+    TRACE(("    initial line_box_height (em size): %f\n", line_box_height->emSize() ));
+
+    // Save strut height for use when recalculating line height after backing out chunks that don't fit.
+    FontMetrics strut_height = *line_box_height;
 
     UnbrokenSpanPosition span_pos;
     for( ; ; ) {
@@ -1502,7 +1494,7 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
         unsigned scan_run_index;
         span_pos = *start_span_pos;
         for (scan_run_index = 0 ; scan_run_index < scan_runs.size() ; scan_run_index++) {
-            if (!_buildChunksInScanRun(para, span_pos, scan_runs[scan_run_index], chunk_info, line_box_height))
+            if (!_buildChunksInScanRun(para, span_pos, scan_runs[scan_run_index], chunk_info, line_box_height, &strut_height))
                 break;
             if (!chunk_info->empty() && !chunk_info->back().broken_spans.empty())
                 span_pos = chunk_info->back().broken_spans.back().end;
@@ -1533,9 +1525,11 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
                                                UnbrokenSpanPosition const &start_span_pos,
                                                ScanlineMaker::ScanRun const &scan_run,
                                                std::vector<ChunkInfo> *chunk_info,
-                                               FontMetrics *line_height) const
+                                               FontMetrics *line_height,
+                                               FontMetrics const *strut_height) const
 {
-    TRACE(("    begin _buildChunksInScanRun: chunks: %lu\n", chunk_info->size()));
+    TRACE(("    begin _buildChunksInScanRun: chunks: %lu, em size: %f\n", chunk_info->size(), line_height->emSize() ));
+
     ChunkInfo new_chunk;
     new_chunk.text_width = 0.0;
     new_chunk.whitespace_count = 0;
@@ -1641,7 +1635,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
     }
 
     // Recalculate line_box_height after backing out chunks
-    line_height->setZero();
+    *line_height = *strut_height;
     for (std::vector<ChunkInfo>::const_iterator it_chunk = chunk_info->begin() ; it_chunk != chunk_info->end() ; it_chunk++) {
         for (std::vector<BrokenSpan>::const_iterator it_span = it_chunk->broken_spans.begin() ; it_span != it_chunk->broken_spans.end() ; it_span++) {
             TRACE(("      brokenspan line_height: %f\n", it_span->start.iter_span->line_height.emSize() ));
