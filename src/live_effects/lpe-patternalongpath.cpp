@@ -291,7 +291,22 @@ KnotHolderEntityWidthPatternAlongPath::knot_set(Geom::Point const &p, Geom::Poin
     if (sp_shape) {
         Geom::Path const *path_in = sp_shape->getCurveBeforeLPE()->first_path();
         Geom::Point ptA = path_in->pointAt(Geom::PathTime(0, 0.0));
-        lpe->prop_scale.param_set_value(Geom::distance(s , ptA)/(lpe->original_height/2.0));
+        Geom::Point B = path_in->pointAt(Geom::PathTime(1, 0.0));
+        Geom::Curve const *first_curve = &path_in->curveAt(Geom::PathTime(0, 0.0));
+        Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const *>(&*first_curve);
+        Geom::Ray ray(ptA, B);
+        if (cubic) {
+            ray.setPoints(ptA, (*cubic)[1]);
+        }
+        ray.setAngle(ray.angle() + Geom::deg_to_rad(90));
+        Geom::Point knot_pos = this->knot->pos * item->i2dt_affine().inverse();
+        Geom::Coord nearest_to_ray = ray.nearestTime(knot_pos);
+        if(nearest_to_ray == 0){
+            lpe->prop_scale.param_set_value(-Geom::distance(s , ptA)/(lpe->original_height/2.0));
+        } else {
+            lpe->prop_scale.param_set_value(Geom::distance(s , ptA)/(lpe->original_height/2.0));
+        }
+        
     }
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
@@ -310,10 +325,10 @@ KnotHolderEntityWidthPatternAlongPath::knot_get() const
         Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const *>(&*first_curve);
         Geom::Ray ray(ptA, B);
         if (cubic) {
-            ray.setPoints((*cubic)[1], ptA);
+            ray.setPoints(ptA, (*cubic)[1]);
         }
-        Geom::Angle first_curve_angle = ray.transformed(Geom::Rotate(Geom::deg_to_rad(90))).angle();
-        Geom::Point result_point = Geom::Point::polar(first_curve_angle, (lpe->original_height * lpe->prop_scale)/2.0) + ptA;
+        ray.setAngle(ray.angle() + Geom::deg_to_rad(90));
+        Geom::Point result_point = Geom::Point::polar(ray.angle(), (lpe->original_height/2.0) * lpe->prop_scale) + ptA;
 
         pap_helper_path.clear();
         Geom::Path hp(result_point);
