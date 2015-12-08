@@ -577,6 +577,9 @@ static gboolean checkitem_update(GtkWidget *widget, GdkEventExpose * /*event*/, 
         if (!strcmp(action->id, "ToggleGrid")) {
             ison = dt->gridsEnabled();
         }
+        else if (!strcmp(action->id, "EditGuidesToggleLock")) {
+            ison = dt->namedview->lockguides;
+        }
         else if (!strcmp(action->id, "ToggleGuides")) {
             ison = dt->namedview->getGuides();
         }

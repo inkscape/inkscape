@@ -53,6 +53,9 @@ public:
     void set_label(const char* label, bool const commit);
     char const* getLabel() const { return label; }
 
+    void set_locked(const bool locked, bool const commit);
+    bool getLocked() const { return locked; }
+
     static SPGuide *createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2);
 
     void showSPGuide(SPCanvasGroup *group, GCallback handler);
@@ -77,6 +80,7 @@ protected:
     virtual void set(unsigned int key, const char* value);
 
     char* label;
+    bool locked;
     GSList *views; // contains an object of type SPGuideline (see display/guideline.cpp for definition)
     Geom::Point normal_to_line;
     Geom::Point point_on_line;

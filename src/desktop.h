@@ -383,6 +383,8 @@ public:
     void clearWaitingCursor();
     bool isWaitingCursor() const { return waiting_cursor; };
 
+    void toggleGuidesLock();
+
     void toggleColorProfAdjust();
     bool colorProfAdjustEnabled();
 

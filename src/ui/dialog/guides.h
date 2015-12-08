@@ -79,6 +79,7 @@ private:
 
     Gtk::Label  _label_name;
     Gtk::Label  _label_descr;
+    Inkscape::UI::Widget::CheckButton _locked_toggle;
     Inkscape::UI::Widget::CheckButton _relative_toggle;
     static bool _relative_toggle_status; // remember the status of the _relative_toggle_status button across instances
     Inkscape::UI::Widget::UnitMenu _unit_menu;

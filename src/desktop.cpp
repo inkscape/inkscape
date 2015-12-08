@@ -1467,6 +1467,11 @@ void SPDesktop::toggleColorProfAdjust()
     _widget->toggleColorProfAdjust();
 }
 
+void SPDesktop::toggleGuidesLock()
+{
+    _widget->toggleGuidesLock();
+}
+
 bool SPDesktop::colorProfAdjustEnabled()
 {
     return _widget->colorProfAdjustEnabled();

@@ -25,7 +25,8 @@ struct SPCtrlPoint : public SPCanvasItem {
     guint32 rgba;
     Geom::Point pt;
     Geom::Affine affine;
-    double radius;
+    double lenght;
+    bool is_circle;
 };
 struct SPCtrlPointClass : public SPCanvasItemClass{};
 
@@ -34,7 +35,8 @@ GType sp_ctrlpoint_get_type (void);
 void sp_ctrlpoint_set_color (SPCtrlPoint *cp, guint32 rgba);
 void sp_ctrlpoint_set_coords (SPCtrlPoint *cp, const gdouble x, const gdouble y);
 void sp_ctrlpoint_set_coords (SPCtrlPoint *cp, const Geom::Point pt);
-void sp_ctrlpoint_set_radius (SPCtrlPoint *cp, const double r);
+void sp_ctrlpoint_set_lenght (SPCtrlPoint *cp, const double r);
+void sp_ctrlpoint_set_circle (SPCtrlPoint *cp, const bool circle);
 
 
 

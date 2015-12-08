@@ -42,7 +42,8 @@ sp_ctrlpoint_init (SPCtrlPoint *ctrlpoint)
     ctrlpoint->rgba = 0x0000ff7f;
     ctrlpoint->pt[Geom::X] = ctrlpoint->pt[Geom::Y] = 0.0;
     ctrlpoint->item=NULL;
-    ctrlpoint->radius = 2;
+    ctrlpoint->lenght = 4;
+    ctrlpoint->is_circle = true;
 }
 
 static void sp_ctrlpoint_destroy(SPCanvasItem *object)
@@ -75,8 +76,11 @@ sp_ctrlpoint_render (SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_new_path(buf->ct);
 
     Geom::Point pt = cp->pt * cp->affine;
-
-    cairo_arc(buf->ct, pt[Geom::X] - buf->rect.left(), pt[Geom::Y] - buf->rect.top(), cp->radius, 0.0, 2 * M_PI);
+    if( cp->is_circle ) {
+        cairo_arc(buf->ct, pt[Geom::X] - buf->rect.left(), pt[Geom::Y] - buf->rect.top(), cp->lenght/2.0, 0.0, 2 * M_PI);
+    } else {
+        cairo_rectangle(buf->ct, pt[Geom::X] - buf->rect.left() - cp->lenght/2.0, pt[Geom::Y] - buf->rect.top() - cp->lenght/2.0 , cp->lenght, cp->lenght);
+    }
     cairo_stroke(buf->ct);
 }
 
@@ -96,10 +100,10 @@ static void sp_ctrlpoint_update(SPCanvasItem *item, Geom::Affine const &affine, 
 
     Geom::Point pt = cp->pt * affine;
 
-    item->x1 = pt[Geom::X] - cp->radius;
-    item->y1 = pt[Geom::Y] - cp->radius;
-    item->x2 = pt[Geom::X] + cp->radius;
-    item->y2 = pt[Geom::Y] + cp->radius;
+    item->x1 = pt[Geom::X] - cp->lenght;
+    item->y1 = pt[Geom::Y] - cp->lenght;
+    item->x2 = pt[Geom::X] + cp->lenght;
+    item->y2 = pt[Geom::Y] + cp->lenght;
 
     item->canvas->requestRedraw((int)item->x1 - 15, (int)item->y1 - 15,
                                 (int)item->x1 + 15, (int)item->y1 + 15);
@@ -142,9 +146,15 @@ sp_ctrlpoint_set_coords (SPCtrlPoint *cp, const Geom::Point pt)
 }
 
 void
-sp_ctrlpoint_set_radius (SPCtrlPoint *cp, const double r)
+sp_ctrlpoint_set_lenght (SPCtrlPoint *cp, const double r)
 {
-    cp->radius = r;
+    cp->lenght = r;
+}
+
+void
+sp_ctrlpoint_set_circle (SPCtrlPoint *cp, const bool circle)
+{
+    cp->is_circle = circle;
 }
 
 /*

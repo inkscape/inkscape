@@ -44,6 +44,7 @@ public:
 
     unsigned int editable : 1;
     unsigned int showguides : 1;
+    unsigned int lockguides : 1;
     unsigned int showborder : 1;
     unsigned int showpageshadow : 1;
     unsigned int borderlayer : 2;
@@ -122,6 +123,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop);
 void sp_namedview_update_layers_from_document (SPDesktop *desktop);
 
 void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr);
+void sp_namedview_guides_toggle_lock(SPDocument *doc, Inkscape::XML::Node *repr);
 void sp_namedview_show_grids(SPNamedView *namedview, bool show, bool dirty_document);
 Inkscape::CanvasGrid * sp_namedview_get_first_enabled_grid(SPNamedView *namedview);
 

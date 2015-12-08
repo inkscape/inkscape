@@ -107,6 +107,7 @@ static void sp_desktop_widget_realize (GtkWidget *widget);
 static gint sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw);
 
 static void sp_dtw_color_profile_event(EgeColorProfTracker *widget, SPDesktopWidget *dtw);
+static void sp_update_guides_lock( GtkWidget *button, gpointer data );
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 static void cms_adjust_toggled( GtkWidget *button, gpointer data );
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -390,6 +391,21 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->tool_toolbox = ToolboxFactory::createToolToolbox();
     ToolboxFactory::setOrientation( dtw->tool_toolbox, GTK_ORIENTATION_VERTICAL );
     gtk_box_pack_start( GTK_BOX(dtw->hbox), dtw->tool_toolbox, FALSE, TRUE, 0 );
+    /* Lock all guides */
+#if GTK_CHECK_VERSION(3,0,0)
+    dtw->lock_and_hruler = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+#else
+    dtw->lock_and_hruler = gtk_hbox_new (FALSE, 0);
+#endif
+    // Lock guides button
+    dtw->guides_lock = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
+                                               SP_BUTTON_TYPE_TOGGLE,
+                                               NULL,
+                                               INKSCAPE_ICON("object-locked"),
+                                               _("Toggle lock of all guides in the document"));
+
+    gtk_box_pack_start (GTK_BOX (dtw->lock_and_hruler), dtw->guides_lock, FALSE, FALSE, 0);
+    g_signal_connect (G_OBJECT (dtw->guides_lock), "toggled", G_CALLBACK (sp_update_guides_lock), dtw);
 
     /* Horizontal ruler */
     GtkWidget *eventbox = gtk_event_box_new ();
@@ -399,6 +415,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     sp_ruler_set_unit(SP_RULER(dtw->hruler), pt);
     gtk_widget_set_tooltip_text (dtw->hruler_box, gettext(pt->name_plural.c_str()));
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->hruler);
+    gtk_container_add (GTK_CONTAINER (dtw->lock_and_hruler), eventbox);
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_hruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "button_release_event", G_CALLBACK (sp_dt_hruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "motion_notify_event", G_CALLBACK (sp_dt_hruler_event), dtw);
@@ -407,23 +424,25 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     GtkWidget *tbl = gtk_grid_new();
     dtw->canvas_tbl = gtk_grid_new();
     
-    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), eventbox, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), dtw->lock_and_hruler, 0, 0, 1, 1);
 #else
     GtkWidget *tbl = gtk_table_new(2, 3, FALSE);
     dtw->canvas_tbl = gtk_table_new(3, 3, FALSE);
    
     gtk_table_attach(GTK_TABLE(dtw->canvas_tbl),
-                     eventbox,
-                     1, 2,     0, 1, 
+                     dtw->lock_and_hruler,
+                     0, 2,     0, 1, 
 		     GTK_FILL, GTK_FILL, 
 		     0,        0);
 #endif
-
+    
     gtk_box_pack_start( GTK_BOX(dtw->hbox), tbl, TRUE, TRUE, 1 );
 
     /* Vertical ruler */
     eventbox = gtk_event_box_new ();
     dtw->vruler = sp_ruler_new(GTK_ORIENTATION_VERTICAL);
+
+    /* Vertical ruler */
     dtw->vruler_box = eventbox;
     sp_ruler_set_unit (SP_RULER (dtw->vruler), pt);
     gtk_widget_set_tooltip_text (dtw->vruler_box, gettext(pt->name_plural.c_str()));
@@ -445,6 +464,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     // Horizontal scrollbar
     dtw->hadj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0));
+
+
+
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->hscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, GTK_ADJUSTMENT (dtw->hadj));
@@ -1015,6 +1037,7 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
     return FALSE;
 }
 
+
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidget *dtw)
 {
@@ -1035,6 +1058,27 @@ void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidge
 {
 }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+
+void sp_update_guides_lock( GtkWidget */*button*/, gpointer data )
+{
+    SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data);
+
+    bool down = SP_BUTTON_IS_DOWN(dtw->guides_lock);
+
+    SPDocument *doc = dtw->desktop->getDocument();
+    SPNamedView *nv = dtw->desktop->getNamedView();
+    Inkscape::XML::Node *repr = nv->getRepr();
+    
+    if ( down != nv->lockguides ) {
+        nv->lockguides = down;
+        sp_namedview_guides_toggle_lock(doc, repr);
+        if (down) {
+            dtw->setMessage (Inkscape::NORMAL_MESSAGE, _("Locked all guides"));
+        } else {
+            dtw->setMessage (Inkscape::NORMAL_MESSAGE, _("Unlocked all guides"));
+        }
+    }
+}
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
@@ -1549,10 +1593,10 @@ void SPDesktopWidget::layoutWidgets()
     }
 
     if (!prefs->getBool(pref_root + "rulers/state", true)) {
-        gtk_widget_hide (dtw->hruler);
+        gtk_widget_hide (dtw->lock_and_hruler);
         gtk_widget_hide (dtw->vruler);
     } else {
-        gtk_widget_show_all (dtw->hruler);
+        gtk_widget_show_all (dtw->lock_and_hruler);
         gtk_widget_show_all (dtw->vruler);
     }
 }
@@ -1684,6 +1728,7 @@ SPDesktopWidget* SPDesktopWidget::createInstance(SPNamedView *namedview)
 
     /* Once desktop is set, we can update rulers */
     sp_desktop_widget_update_rulers (dtw);
+    sp_button_toggle_set_down( SP_BUTTON(dtw->guides_lock), namedview->lockguides );
 
     sp_view_widget_set_view (SP_VIEW_WIDGET (dtw), dtw->desktop);
 
@@ -2039,12 +2084,12 @@ void
 sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (gtk_widget_get_visible (dtw->hruler)) {
-        gtk_widget_hide (dtw->hruler);
+    if (gtk_widget_get_visible (dtw->lock_and_hruler)) {
+        gtk_widget_hide (dtw->lock_and_hruler);
         gtk_widget_hide (dtw->vruler);
         prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", false);
     } else {
-        gtk_widget_show_all (dtw->hruler);
+        gtk_widget_show_all (dtw->lock_and_hruler);
         gtk_widget_show_all (dtw->vruler);
         prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", true);
     }
@@ -2075,7 +2120,6 @@ bool sp_desktop_widget_color_prof_adj_enabled( SPDesktopWidget *dtw )
 
 void sp_desktop_widget_toggle_color_prof_adj( SPDesktopWidget *dtw )
 {
-
     if ( gtk_widget_get_sensitive( dtw->cms_adjust ) ) {
         if ( SP_BUTTON_IS_DOWN(dtw->cms_adjust) ) {
             sp_button_toggle_set_down( SP_BUTTON(dtw->cms_adjust), FALSE );
@@ -2085,6 +2129,14 @@ void sp_desktop_widget_toggle_color_prof_adj( SPDesktopWidget *dtw )
     }
 }
 
+void sp_desktop_widget_toggle_guides_lock( SPDesktopWidget *dtw )
+{
+    if ( SP_BUTTON_IS_DOWN(dtw->guides_lock) ) {
+        sp_button_toggle_set_down( SP_BUTTON(dtw->guides_lock), FALSE );
+    } else {
+        sp_button_toggle_set_down( SP_BUTTON(dtw->guides_lock), TRUE );
+    }
+}
 /* Unused
 void
 sp_spw_toggle_menubar (SPDesktopWidget *dtw, bool is_fullscreen)

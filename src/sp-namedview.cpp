@@ -51,7 +51,9 @@ using Inkscape::Util::unit_table;
 #define DEFAULTPAGECOLOR 0xffffff00
 
 static void sp_namedview_setup_guides(SPNamedView * nv);
+static void sp_namedview_lock_guides(SPNamedView * nv);
 static void sp_namedview_show_single_guide(SPGuide* guide, bool show);
+static void sp_namedview_lock_single_guide(SPGuide* guide, bool show);
 
 static gboolean sp_str_to_bool(const gchar *str);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
@@ -79,6 +81,7 @@ SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
 
     this->editable = TRUE;
     this->showguides = TRUE;
+    this->lockguides = false;
     this->grids_visible = false;
     this->showborder = TRUE;
     this->showpageshadow = TRUE;
@@ -240,6 +243,7 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "inkscape:snap-page" );
     this->readAttr( "inkscape:current-layer" );
     this->readAttr( "inkscape:connector-spacing" );
+    this->readAttr( "inkscape:lockguides" );
 
     /* Construct guideline list */
     for (SPObject *o = this->firstChild() ; o; o = o->getNext() ) {
@@ -600,6 +604,11 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     }
+    case SP_ATTR_INKSCAPE_LOCKGUIDES:
+        this->lockguides = value ? sp_str_to_bool(value) : FALSE;
+        sp_namedview_lock_guides(this);
+        this->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        break;
     default:
             SPObjectGroup::set(key, value);
             break;
@@ -676,6 +685,7 @@ void SPNamedView::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *r
                     }
 
                     sp_namedview_show_single_guide(SP_GUIDE(g), this->showguides);
+                    sp_namedview_lock_single_guide(SP_GUIDE(g), this->lockguides);
                 }
             }
         }
@@ -733,6 +743,7 @@ void SPNamedView::show(SPDesktop *desktop)
             SP_GUIDE(l->data)->sensitize(desktop->getCanvas(), TRUE);
         }
         sp_namedview_show_single_guide(SP_GUIDE(l->data), showguides);
+        sp_namedview_lock_single_guide(SP_GUIDE(l->data), lockguides);
     }
 
     views = g_slist_prepend(views, desktop);
@@ -952,6 +963,13 @@ static void sp_namedview_setup_guides(SPNamedView *nv)
     }
 }
 
+static void sp_namedview_lock_guides(SPNamedView *nv)
+{
+    for (GSList *l = nv->guides; l != NULL; l = l->next) {
+        sp_namedview_lock_single_guide(SP_GUIDE(l->data), nv->lockguides);
+    }
+}
+
 static void sp_namedview_show_single_guide(SPGuide* guide, bool show)
 {
     if (show) {
@@ -959,6 +977,11 @@ static void sp_namedview_show_single_guide(SPGuide* guide, bool show)
     } else {
         guide->hideSPGuide();
     }
+}
+
+static void sp_namedview_lock_single_guide(SPGuide* guide, bool locked)
+{
+    guide->set_locked(locked, true);
 }
 
 void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
@@ -976,6 +999,23 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
     sp_repr_set_boolean(repr, "showguides", v);
     DocumentUndo::setUndoSensitive(doc, saved);
 
+    doc->setModifiedSinceSave();
+}
+
+void sp_namedview_guides_toggle_lock(SPDocument *doc, Inkscape::XML::Node *repr)
+{
+    unsigned int v;
+    unsigned int set = sp_repr_get_boolean(repr, "inkscape:lockguides", &v);
+    if (!set) { // hide guides if not specified, for backwards compatibility
+        v = true;
+    } else {
+        v = !v;
+    }
+
+    bool saved = DocumentUndo::getUndoSensitive(doc);
+    DocumentUndo::setUndoSensitive(doc, false);
+    sp_repr_set_boolean(repr, "inkscape:lockguides", v);
+    DocumentUndo::setUndoSensitive(doc, saved);
     doc->setModifiedSinceSave();
 }
 
@@ -1077,6 +1117,7 @@ void SPNamedView::setGuides(bool v)
     g_assert(this->getRepr() != NULL);
     sp_repr_set_boolean(this->getRepr(), "showguides", v);
     sp_repr_set_boolean(this->getRepr(), "inkscape:guide-bbox", v);
+    sp_repr_set_boolean(this->getRepr(), "inkscape:locked", false);
 }
 
 bool SPNamedView::getGuides()

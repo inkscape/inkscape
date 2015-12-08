@@ -53,6 +53,7 @@ static void sp_guideline_init(SPGuideLine *gl)
 {
     gl->rgba = 0x0000ff7f;
 
+    gl->locked = false;
     gl->normal_to_line = Geom::Point(0,1);
     gl->angle = 3.14159265358979323846/2;
     gl->point_on_line = Geom::Point(0,0);
@@ -177,9 +178,16 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
 
     gl->affine = affine;
 
+    if (gl->locked) {
+      sp_ctrlpoint_set_circle(gl->origin, false);
+      sp_ctrlpoint_set_lenght(gl->origin, 6);
+    } else {
+      sp_ctrlpoint_set_circle(gl->origin, true);
+      sp_ctrlpoint_set_lenght(gl->origin, 4);
+    }
     sp_ctrlpoint_set_coords(gl->origin, gl->point_on_line);
     sp_canvas_item_request_update(SP_CANVAS_ITEM (gl->origin));
-
+    
     Geom::Point pol_transformed = gl->point_on_line*affine;
     if (gl->is_horizontal()) {
         sp_canvas_update_bbox (item, -1000000, round(pol_transformed[Geom::Y] - 16), 1000000, round(pol_transformed[Geom::Y] + 1));
@@ -189,6 +197,7 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
         //TODO: labels in angled guidelines are not showing up for some reason.
         sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);
     }
+
 }
 
 // Returns 0.0 if point is on the guideline
@@ -219,6 +228,7 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, char* label, Geom::Point p
 
     normal.normalize();
     gl->label = label;
+    gl->locked = false;
     gl->normal_to_line = normal;
     gl->angle = tan( -gl->normal_to_line[Geom::X] / gl->normal_to_line[Geom::Y]);
     sp_guideline_set_position(gl, point_on_line);
@@ -235,6 +245,12 @@ void sp_guideline_set_label(SPGuideLine *gl, const char* label)
     }
     gl->label = g_strdup(label);
 
+    sp_canvas_item_request_update(SP_CANVAS_ITEM (gl));
+}
+
+void sp_guideline_set_locked(SPGuideLine *gl, const bool locked)
+{
+    gl->locked = locked;
     sp_canvas_item_request_update(SP_CANVAS_ITEM (gl));
 }
 

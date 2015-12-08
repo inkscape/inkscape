@@ -952,6 +952,10 @@ void EditVerb::perform(SPAction *action, void *data)
     g_return_if_fail(ensure_desktop_valid(action));
     SPDesktop *dt = sp_action_get_desktop(action);
 
+    SPDocument *doc = dt->getDocument();
+
+    Inkscape::XML::Node *repr = dt->namedview->getRepr();
+
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EDIT_UNDO:
             sp_undo(dt, dt->getDocument());
@@ -1079,10 +1083,12 @@ void EditVerb::perform(SPAction *action, void *data)
         case SP_VERB_EDIT_DELETE_ALL_GUIDES:
             sp_guide_delete_all_guides(dt);
             break;
+        case SP_VERB_EDIT_GUIDES_TOGGLE_LOCK:
+            dt->toggleGuidesLock();
+            break;
         case SP_VERB_EDIT_GUIDES_AROUND_PAGE:
             sp_guide_create_guides_around_page(dt);
             break;
-
         case SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER:
             sp_selection_next_patheffect_param(dt);
             break;
@@ -2540,6 +2546,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Deselect any selected objects or nodes"), INKSCAPE_ICON("edit-select-none")),
     new EditVerb(SP_VERB_EDIT_DELETE_ALL_GUIDES, "EditRemoveAllGuides", N_("Delete All Guides"),
                  N_("Delete all the guides in the document"), NULL),
+    new EditVerb(SP_VERB_EDIT_GUIDES_TOGGLE_LOCK, "EditGuidesToggleLock", N_("Lock All Guides"), N_("Toggle lock of all guides in the document"), NULL),
     new EditVerb(SP_VERB_EDIT_GUIDES_AROUND_PAGE, "EditGuidesAroundPage", N_("Create _Guides Around the Page"),
                  N_("Create four guides aligned with the page borders"), NULL),
     new EditVerb(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER, "EditNextPathEffectParameter", N_("Next path effect parameter"),

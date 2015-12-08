@@ -43,6 +43,7 @@
 #include <2geom/angle.h>
 #include "document.h"
 #include "document-undo.h"
+#include "helper-fns.h"
 #include "verbs.h"
 
 using Inkscape::DocumentUndo;
@@ -51,6 +52,7 @@ using std::vector;
 SPGuide::SPGuide()
     : SPObject()
     , label(NULL)
+    , locked(0)
     , views(NULL)
     , normal_to_line(Geom::Point(0.,1.))
     , point_on_line(Geom::Point(0.,0.))
@@ -73,6 +75,7 @@ void SPGuide::build(SPDocument *document, Inkscape::XML::Node *repr)
 
     this->readAttr( "inkscape:color" );
     this->readAttr( "inkscape:label" );
+    this->readAttr( "inkscape:locked" );
     this->readAttr( "orientation" );
     this->readAttr( "position" );
 
@@ -112,6 +115,12 @@ void SPGuide::set(unsigned int key, const gchar *value) {
         }
 
         this->set_label(this->label, false);
+        break;
+    case SP_ATTR_INKSCAPE_LOCKED:
+        this->locked = helperfns_read_bool(value, false);
+        if (value) {
+            this->set_locked(this->locked, false);
+        }
         break;
     case SP_ATTR_ORIENTATION:
     {
@@ -339,6 +348,9 @@ double SPGuide::getDistanceFrom(Geom::Point const &pt) const
  */
 void SPGuide::moveto(Geom::Point const point_on_line, bool const commit)
 {
+    if(this->locked) {
+        return;
+    }
     for (GSList *l = views; l != NULL; l = l->next) {
         sp_guideline_set_position(SP_GUIDELINE(l->data), point_on_line);
     }
@@ -385,6 +397,9 @@ void SPGuide::moveto(Geom::Point const point_on_line, bool const commit)
  */
 void SPGuide::set_normal(Geom::Point const normal_to_line, bool const commit)
 {
+    if(this->locked) {
+        return;
+    }
     for (GSList *l = this->views; l != NULL; l = l->next) {
         sp_guideline_set_normal(SP_GUIDELINE(l->data), normal_to_line);
     }
@@ -420,6 +435,18 @@ void SPGuide::set_color(const unsigned r, const unsigned g, const unsigned b, bo
         os << "rgb(" << r << "," << g << "," << b << ")";
         //XML Tree being used directly while it shouldn't be
         getRepr()->setAttribute("inkscape:color", os.str().c_str());
+    }
+}
+
+void SPGuide::set_locked(const bool locked, bool const commit)
+{
+    this->locked = locked;
+    if (views) {
+        sp_guideline_set_locked(SP_GUIDELINE(views->data), locked);
+    }
+
+    if (commit) {
+        getRepr()->setAttribute("inkscape:locked", g_strdup(locked ? "true" : "false"));
     }
 }
 
@@ -482,6 +509,7 @@ char* SPGuide::description(bool const verbose) const
             descr = g_strconcat(oldDescr, shortcuts, NULL);
             g_free(oldDescr);
         }
+
         g_free(shortcuts);
     }
 
