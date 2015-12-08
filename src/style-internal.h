@@ -401,7 +401,7 @@ public:
           normal(true)
     {}
 
-    SPILengthOrNormal( Glib::ustring const &name, unsigned value = 0 )
+    SPILengthOrNormal( Glib::ustring const &name, float value = 0 )
         : SPILength( name, value ),
           normal(true)
     {}
