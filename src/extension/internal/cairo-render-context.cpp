@@ -130,14 +130,12 @@ CairoRenderContext::CairoRenderContext(CairoRenderer *parent) :
     _clip_mode(CLIP_MODE_MASK),
     _omittext_state(EMPTY)
 {
-    font_table = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, font_data_free);
 }
 
 CairoRenderContext::~CairoRenderContext(void)
 {
-    if(font_table != NULL) {
-        g_hash_table_remove_all(font_table);
-    }
+    for (std::map<gpointer, cairo_font_face_t *>::const_iterator iter = font_table.begin(); iter != font_table.end(); ++iter)
+        font_data_free(iter->second);
 
     if (_cr) cairo_destroy(_cr);
     if (_surface) cairo_surface_destroy(_surface);
@@ -1645,7 +1643,9 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const &font_ma
     // create a cairo_font_face from PangoFont
     double size = style->font_size.computed; /// \fixme why is this variable never used?
     gpointer fonthash = (gpointer)font;
-    cairo_font_face_t *font_face = (cairo_font_face_t *)g_hash_table_lookup(font_table, fonthash);
+    cairo_font_face_t *font_face = NULL;
+    if(font_table.find(fonthash)!=font_table.end())
+        font_face = font_table[fonthash];
 
     FcPattern *fc_pattern = NULL;
 
@@ -1660,7 +1660,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const &font_ma
 
     if(font_face == NULL) {
         font_face = cairo_win32_font_face_create_for_logfontw(&lfw);
-        g_hash_table_insert(font_table, fonthash, font_face);
+        font_table[fonthash] = font_face;
     }
 # endif
 #else
@@ -1669,7 +1669,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const &font_ma
     fc_pattern = fc_font->font_pattern;
     if(font_face == NULL) {
         font_face = cairo_ft_font_face_create_for_pattern(fc_pattern);
-        g_hash_table_insert(font_table, fonthash, font_face);
+        font_table[fonthash] = font_face;
     }
 # endif
 #endif

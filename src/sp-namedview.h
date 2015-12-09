@@ -21,6 +21,7 @@
 #include "snap.h"
 #include "document.h"
 #include "util/units.h"
+#include <vector>
 
 namespace Inkscape {
     class CanvasGrid;
@@ -59,7 +60,7 @@ public:
     int window_maximized;
 
     SnapManager snap_manager;
-    GSList * grids;
+    std::vector<Inkscape::CanvasGrid *> grids;
     bool grids_visible;
 
     Inkscape::Util::Unit const *svg_units;   // Units used for the values in SVG
@@ -76,8 +77,8 @@ public:
     guint32 pagecolor;
     guint32 pageshadow;
 
-    GSList *guides;
-    GSList *views;
+    std::vector<SPGuide *> guides;
+    std::vector<SPDesktop *> views;
 
     int viewcount;
 
@@ -86,7 +87,7 @@ public:
     void activateGuides(void* desktop, bool active);
     char const *getName() const;
     unsigned int getViewCount();
-    GSList const *getViewList() const;
+    std::vector<SPDesktop *> const getViewList() const;
     Inkscape::Util::Unit const * getDisplayUnit() const;
     Inkscape::Util::Unit const & getSVGUnit() const;
 

@@ -225,13 +225,13 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
     std::vector<Geom::Point> coords;
 
     // for all selected draggers
-    for (GList *i = drag->selected; i != NULL; i = i->next) {
-        GrDragger *dragger = (GrDragger *) i->data;
+    for (std::set<GrDragger *>::const_iterator i = drag->selected.begin(); i != drag->selected.end() ; ++i ) {
+        GrDragger *dragger = *i;
         // remember the coord of the dragger to reselect it later
         coords.push_back(dragger->point);
         // for all draggables of dragger
-        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
-            GrDraggable *d = (GrDraggable *) j->data;
+        for (std::vector<GrDraggable *>::const_iterator j = dragger->draggables.begin(); j != dragger->draggables.end(); ++j) {
+            GrDraggable *d = *j;
 
             // find the gradient
             SPGradient *gradient = getGradient(d->item, d->fill_or_stroke);
@@ -315,9 +315,9 @@ sp_gradient_context_add_stops_between_selected_stops (GradientTool *rc)
 
     if (g_slist_length(these_stops) == 0 && drag->numSelected() == 1) {
         // if a single stop is selected, add between that stop and the next one
-        GrDragger *dragger = (GrDragger *) drag->selected->data;
-        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
-            GrDraggable *d = (GrDraggable *) j->data;
+        GrDragger *dragger = *(drag->selected.begin());
+        for (std::vector<GrDraggable *>::const_iterator j = dragger->draggables.begin(); j != dragger->draggables.end(); ++j) {
+            GrDraggable *d = *j;
             if (d->point_type == POINT_RG_FOCUS) {
                 /*
                  *  There are 2 draggables at the center (start) of a radial gradient
@@ -482,9 +482,9 @@ bool GradientTool::root_handler(GdkEvent* event) {
             bool over_line = false;
             SPCtrlLine *line = NULL;
 
-            if (drag->lines) {
-                for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
-                    line = (SPCtrlLine*) l->data;
+            if (!drag->lines.empty()) {
+                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
+                    line = *l;
                     over_line |= sp_gradient_context_is_over_line (this, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
                 }
             }
@@ -588,9 +588,9 @@ bool GradientTool::root_handler(GdkEvent* event) {
 
             bool over_line = false;
 
-            if (drag->lines) {
-                for (GSList *l = drag->lines; l != NULL; l = l->next) {
-                    over_line |= sp_gradient_context_is_over_line (this, (SPItem*) l->data, Geom::Point(event->motion.x, event->motion.y));
+            if (!drag->lines.empty()) {
+                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end(); ++l) {
+                    over_line |= sp_gradient_context_is_over_line (this, (SPItem*) (*l), Geom::Point(event->motion.x, event->motion.y));
                 }
             }
 
@@ -613,12 +613,10 @@ bool GradientTool::root_handler(GdkEvent* event) {
             bool over_line = false;
             SPCtrlLine *line = NULL;
 
-            if (drag->lines) {
-                for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
-                    line = (SPCtrlLine*) l->data;
+            if (!drag->lines.empty()) {
+                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
+                    line = *l;
                     over_line = sp_gradient_context_is_over_line (this, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
-                    if (over_line)
-                        break;
                 }
             }
 
@@ -663,7 +661,7 @@ bool GradientTool::root_handler(GdkEvent* event) {
                     }
                 } else {
                     // click in an empty space; do the same as Esc
-                    if (drag->selected) {
+                    if (!drag->selected.empty()) {
                         drag->deselectAll();
                     } else {
                         selection->clear();
@@ -719,7 +717,7 @@ bool GradientTool::root_handler(GdkEvent* event) {
             break;
 
         case GDK_KEY_Escape:
-            if (drag->selected) {
+            if (!drag->selected.empty()) {
                 drag->deselectAll();
             } else {
                 Inkscape::SelectionHelper::selectNone(desktop);

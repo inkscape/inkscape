@@ -22,13 +22,12 @@
 typedef unsigned int guint32;
 extern "C" {
     typedef void (*GCallback) (void);
-    typedef struct _GSList GSList;
 }
 
 class SPDesktop;
 struct SPCanvas;
 struct SPCanvasGroup;
-
+struct SPGuideLine;
 #define SP_GUIDE(obj) (dynamic_cast<SPGuide*>((SPObject*)obj))
 #define SP_IS_GUIDE(obj) (dynamic_cast<const SPGuide*>((SPObject*)obj) != NULL)
 
@@ -80,8 +79,8 @@ protected:
     virtual void set(unsigned int key, const char* value);
 
     char* label;
+    std::vector<SPGuideLine *> views; // contains an object of type SPGuideline (see display/guideline.cpp for definition)
     bool locked;
-    GSList *views; // contains an object of type SPGuideline (see display/guideline.cpp for definition)
     Geom::Point normal_to_line;
     Geom::Point point_on_line;
 

@@ -298,11 +298,11 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
     /* Pick up all gradients with vectors */
     GSList *gl = NULL;
     if (gvs->gr) {
-        const GSList *gradients = gvs->gr->document->getResourceList("gradient");
-        for (const GSList *curr = gradients; curr; curr = curr->next) {
-            SPGradient* grad = SP_GRADIENT(curr->data);
+        std::set<SPObject *> gradients = gvs->gr->document->getResourceList("gradient");
+        for (std::set<SPObject *>::const_iterator it = gradients.begin(); it != gradients.end(); ++it) {
+            SPGradient* grad = SP_GRADIENT(*it);
             if ( grad->hasStops() && (grad->isSwatch() == gvs->swatched) ) {
-                gl = g_slist_prepend(gl, curr->data);
+                gl = g_slist_prepend(gl, *it);
             }
         }
     }

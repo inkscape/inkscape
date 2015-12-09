@@ -1479,7 +1479,7 @@ bool SPDesktop::colorProfAdjustEnabled()
 
 void SPDesktop::toggleGrids()
 {
-    if (namedview->grids) {
+    if (! namedview->grids.empty()) {
         if(gridgroup) {
             showGrids(!grids_visible);
         }
@@ -1704,12 +1704,6 @@ static void _reconstruction_start(SPDesktop * desktop)
     desktop->_reconstruction_old_layer_id = desktop->currentLayer()->getId() ? desktop->currentLayer()->getId() : "";
     desktop->layers->reset();
 
-    /*
-    GSList const * selection_objs = desktop->selection->list();
-    for (; selection_objs != NULL; selection_objs = selection_objs->next) {
-
-    }
-    */
     desktop->selection->clear();
 }
 

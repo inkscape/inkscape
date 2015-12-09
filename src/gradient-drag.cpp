@@ -142,7 +142,7 @@ static int gr_drag_style_query(SPStyle *style, int property, gpointer data)
         return QUERY_STYLE_NOTHING;
     }
 
-    if (!drag->selected) {
+    if (drag->selected.empty()) {
         return QUERY_STYLE_NOTHING;
     } else {
         int ret = QUERY_STYLE_NOTHING;
@@ -151,11 +151,10 @@ static int gr_drag_style_query(SPStyle *style, int property, gpointer data)
         cf[0] = cf[1] = cf[2] = cf[3] = 0;
 
         int count = 0;
-
-        for (GList *i = drag->selected; i != NULL; i = i->next) { // for all selected draggers
-            GrDragger *d = (GrDragger *) i->data;
-            for (GSList const* j = d->draggables; j != NULL; j = j->next) { // for all draggables of dragger
-                GrDraggable *draggable = (GrDraggable *) j->data;
+        for(std::set<GrDragger *>::const_iterator it = drag->selected.begin(); it != drag->selected.end(); ++it) { //for all selected draggers
+            GrDragger *d = *it;
+            for(std::vector<GrDraggable *>::const_iterator it2 = d->draggables.begin(); it2 != d->draggables.end(); ++it2 ) { //for all draggables of dragger
+                GrDraggable *draggable = *it2;
 
                 if (ret == QUERY_STYLE_NOTHING) {
                     ret = QUERY_STYLE_SINGLE;
@@ -209,9 +208,9 @@ Glib::ustring GrDrag::makeStopSafeColor( gchar const *str, bool &isNull )
         Glib::ustring::size_type pos = colorStr.find("url(#");
         if ( pos != Glib::ustring::npos ) {
             Glib::ustring targetName = colorStr.substr(pos + 5, colorStr.length() - 6);
-            const GSList *gradients = desktop->doc()->getResourceList("gradient");
-            for (const GSList *item = gradients; item; item = item->next) {
-                SPGradient* grad = SP_GRADIENT(item->data);
+            std::set<SPObject *> gradients = desktop->doc()->getResourceList("gradient");
+            for (std::set<SPObject *>::const_iterator it = gradients.begin(); it != gradients.end(); ++it) {
+                SPGradient* grad = SP_GRADIENT(*it);
                 if ( targetName == grad->getId() ) {
                     SPGradient *vect = grad->getVector();
                     SPStop *firstStop = (vect) ? vect->getFirstStop() : grad->getFirstStop();
@@ -239,7 +238,7 @@ Glib::ustring GrDrag::makeStopSafeColor( gchar const *str, bool &isNull )
 
 bool GrDrag::styleSet( const SPCSSAttr *css )
 {
-    if (!selected) {
+    if (selected.empty()) {
         return false;
     }
 
@@ -307,11 +306,10 @@ bool GrDrag::styleSet( const SPCSSAttr *css )
         return false;
     }
 
-    for (GList const* sel = selected; sel != NULL; sel = sel->next) { // for all selected draggers
-        GrDragger* dragger = reinterpret_cast<GrDragger*>(sel->data);
-        for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
-            GrDraggable *draggable = reinterpret_cast<GrDraggable *>(i->data);
-
+    for(std::set<GrDragger *>::const_iterator it = selected.begin(); it != selected.end(); ++it) { //for all selected draggers
+        GrDragger *d = *it;
+        for(std::vector<GrDraggable *>::const_iterator it2 = d->draggables.begin(); it2 != d->draggables.end(); ++it2 ) { //for all draggables of dragger
+            GrDraggable *draggable = *it2; 
             local_change = true;
             sp_item_gradient_stop_set_style(draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke, stop);
         }
@@ -324,17 +322,17 @@ bool GrDrag::styleSet( const SPCSSAttr *css )
 
 guint32 GrDrag::getColor()
 {
-    if (!selected) return 0;
+    if (selected.empty()) return 0;
 
     float cf[4];
     cf[0] = cf[1] = cf[2] = cf[3] = 0;
 
     int count = 0;
 
-    for (GList *i = selected; i != NULL; i = i->next) { // for all selected draggers
-        GrDragger *d = (GrDragger *) i->data;
-        for (GSList const* j = d->draggables; j != NULL; j = j->next) { // for all draggables of dragger
-            GrDraggable *draggable = (GrDraggable *) j->data;
+    for(std::set<GrDragger *>::const_iterator it = selected.begin(); it != selected.end(); ++it) { //for all selected draggers
+        GrDragger *d = *it;
+        for(std::vector<GrDraggable *>::const_iterator it2 = d->draggables.begin(); it2 != d->draggables.end(); ++it2 ) { //for all draggables of dragger
+            GrDraggable *draggable = *it2; 
 
             guint32 c = sp_item_gradient_stop_query_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
             cf[0] += SP_RGBA32_R_F (c);
@@ -580,15 +578,15 @@ bool GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
     Glib::ustring toUse = makeStopSafeColor( c, stopIsNull );
 
     // first, see if we can drop onto one of the existing draggers
-    for (GList *i = draggers; i != NULL; i = i->next) { // for all draggables of dragger
-        GrDragger *d = (GrDragger *) i->data;
+    for(std::vector<GrDragger *>::const_iterator i = draggers.begin(); i != draggers.end(); ++i) { //for all draggers
+        GrDragger *d = *i ;
 
         if (Geom::L2(p - d->point)*desktop->current_zoom() < 5) {
            SPCSSAttr *stop = sp_repr_css_attr_new ();
            sp_repr_css_set_property( stop, "stop-color", stopIsNull ? 0 : toUse.c_str() );
            sp_repr_css_set_property( stop, "stop-opacity", "1" );
-           for (GSList *j = d->draggables; j != NULL; j = j->next) { // for all draggables of dragger
-               GrDraggable *draggable = (GrDraggable *) j->data;
+           for(std::vector<GrDraggable *>::const_iterator j = d->draggables.begin(); j != d->draggables.end(); ++j) { //for all draggables of dragger
+               GrDraggable *draggable = *j;
                local_change = true;
                sp_item_gradient_stop_set_style (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke, stop);
            }
@@ -599,9 +597,9 @@ bool GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
 
     // now see if we're over line and create a new stop
     bool over_line = false;
-    if (lines) {
-        for (GSList *l = lines; (l != NULL) && (!over_line); l = l->next) {
-            SPCtrlLine *line = (SPCtrlLine*) l->data;
+    if (!lines.empty()) {
+        for (std::vector<SPCtrlLine *>::const_iterator l = lines.begin(); l != lines.end() && (!over_line); ++l) {
+            SPCtrlLine *line = *l;
             Geom::LineSegment ls(line->s, line->e);
             Geom::Point nearest = ls.pointAt(ls.nearestTime(p));
             double dist_screen = Geom::L2(p - nearest) * desktop->current_zoom();
@@ -623,7 +621,6 @@ bool GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
 
 
 GrDrag::GrDrag(SPDesktop *desktop) :
-    selected(0),
     keep_selection(false),
     local_change(false),
     desktop(desktop),
@@ -676,8 +673,8 @@ GrDrag::~GrDrag()
     this->style_set_connection.disconnect();
     this->style_query_connection.disconnect();
 
-    if (this->selected) {
-        GrDraggable *draggable = (GrDraggable *)   ((GrDragger*)this->selected->data)->draggables->data;
+    if (! this->selected.empty()) {
+        GrDraggable *draggable = (*(this->selected.begin()))->draggables[0];
         desktop->gr_item = draggable->item;
         desktop->gr_point_type = draggable->point_type;
         desktop->gr_point_i = draggable->point_i;
@@ -690,18 +687,16 @@ GrDrag::~GrDrag()
     }
 
     deselect_all();
-    for (GList *l = this->draggers; l != NULL; l = l->next) {
-        delete ((GrDragger *) l->data);
+    for (std::vector<GrDragger *>::const_iterator it = this->draggers.begin(); it != this->draggers.end(); ++it) {
+        delete (*it);
     }
-    g_list_free (this->draggers);
-    this->draggers = NULL;
-    this->selected = NULL;
+    this->draggers.clear();
+    this->selected.clear();
 
-    for (GSList *l = this->lines; l != NULL; l = l->next) {
-        sp_canvas_item_destroy(SP_CANVAS_ITEM(l->data));
+    for (std::vector<SPCtrlLine *>::const_iterator it = this->lines.begin(); it != this->lines.end(); ++it) {
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(*it));
     }
-    g_slist_free (this->lines);
-    this->lines = NULL;
+    this->lines.clear();
 }
 
 GrDraggable::GrDraggable(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke) :
@@ -751,39 +746,43 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
 
     if (state & GDK_SHIFT_MASK) {
         // with Shift; unsnap if we carry more than one draggable
-        if (dragger->draggables && dragger->draggables->next) {
+        if (dragger->draggables.size()>1) {
             // create a new dragger
             GrDragger *dr_new = new GrDragger (dragger->parent, dragger->point, NULL);
-            dragger->parent->draggers = g_list_prepend (dragger->parent->draggers, dr_new);
+            dragger->parent->draggers.insert(dragger->parent->draggers.begin(), dr_new);
             // relink to it all but the first draggable in the list
-            for (GSList const* i = dragger->draggables->next; i != NULL; i = i->next) {
-                GrDraggable *draggable = (GrDraggable *) i->data;
+            std::vector<GrDraggable *>::const_iterator i = dragger->draggables.begin();
+            for ( ++i ; i != dragger->draggables.end(); ++i ) {
+                GrDraggable *draggable = *i; 
                 dr_new->addDraggable (draggable);
             }
             dr_new->updateKnotShape();
-            g_slist_free (dragger->draggables->next);
-            dragger->draggables->next = NULL;
+            if(dragger->draggables.size()>1){
+                GrDraggable *tmp = dragger->draggables[0];
+                dragger->draggables.clear();
+                dragger->draggables.push_back(tmp);
+            }
             dragger->updateKnotShape();
             dragger->updateTip();
         }
     } else if (!(state & GDK_CONTROL_MASK)) {
         // without Shift or Ctrl; see if we need to snap to another dragger
-        for (GList *di = dragger->parent->draggers; di != NULL; di = di->next) {
-            GrDragger *d_new = (GrDragger *) di->data;
+        for (std::vector<GrDragger *>::const_iterator di = dragger->parent->draggers.begin(); di != dragger->parent->draggers.end() ; ++di) {
+            GrDragger *d_new = *di; 
             if (dragger->mayMerge(d_new) && Geom::L2 (d_new->point - p) < snap_dist) {
 
                 // Merge draggers:
-                for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
-                    GrDraggable *draggable = (GrDraggable *) i->data;
+                for (std::vector<GrDraggable *>::const_iterator i = dragger->draggables.begin(); i != dragger->draggables.end(); ++i) {
+                    GrDraggable *draggable = *i; 
                     // copy draggable to d_new:
                     GrDraggable *da_new = new GrDraggable (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
                     d_new->addDraggable (da_new);
                 }
 
                 // unlink and delete this dragger
-                dragger->parent->draggers = g_list_remove (dragger->parent->draggers, dragger);
-                d_new->parent->draggers = g_list_remove (d_new->parent->draggers, dragger);
-                d_new->parent->selected = g_list_remove (d_new->parent->selected, dragger);
+                dragger->parent->draggers.erase(std::remove(dragger->parent->draggers.begin(),dragger->parent->draggers.end(), dragger),dragger->parent->draggers.end());
+                d_new->parent->draggers.erase(std::remove(d_new->parent->draggers.begin(),d_new->parent->draggers.end(), dragger),d_new->parent->draggers.end());
+                d_new->parent->selected.erase(dragger);
                 delete dragger;
 
                 // throw out delayed snap context 
@@ -817,14 +816,14 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
         unsigned snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
         /* 0 means no snapping. */
 
-        for (GSList const* i = dragger->draggables; i != NULL; i = i->next) {
-            GrDraggable *draggable = (GrDraggable *) i->data;
+        for (std::vector<GrDraggable *>::const_iterator i = dragger->draggables.begin(); i != dragger->draggables.end(); ++i) {
+            GrDraggable *draggable = *i; 
 
             Geom::Point dr_snap(Geom::infinity(), Geom::infinity());
 
             if (draggable->point_type == POINT_LG_BEGIN || draggable->point_type == POINT_LG_END) {
-                for (GList *di = dragger->parent->draggers; di != NULL; di = di->next) {
-                    GrDragger *d_new = (GrDragger *) di->data;
+                for (std::vector<GrDragger *>::const_iterator di = dragger->parent->draggers.begin() ; di != dragger->parent->draggers.end() ; ++di) {
+                    GrDragger *d_new = *di;
                     if (d_new == dragger)
                         continue;
                     if (d_new->isA (draggable->item,
@@ -842,8 +841,8 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
                     }
                 }
             } else if (draggable->point_type == POINT_RG_R1 || draggable->point_type == POINT_RG_R2 || draggable->point_type == POINT_RG_FOCUS) {
-                for (GList *di = dragger->parent->draggers; di != NULL; di = di->next) {
-                    GrDragger *d_new = (GrDragger *) di->data;
+                for (std::vector<GrDragger *>::const_iterator di = dragger->parent->draggers.begin(); di != dragger->parent->draggers.end(); ++di) {
+                    GrDragger *d_new = *di; 
                     if (d_new == dragger)
                         continue;
                     if (d_new->isA (draggable->item,
@@ -896,7 +895,7 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
         knot->moveto(p);
     }
 
-    drag->keep_selection = (bool) g_list_find(drag->selected, dragger);
+    drag->keep_selection = (drag->selected.find(dragger)!=drag->selected.end());
     bool scale_radial = (state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK);
 
     if (drag->keep_selection) {
@@ -912,16 +911,16 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
 }
 
 
-static void gr_midpoint_limits(GrDragger *dragger, SPObject *server, Geom::Point *begin, Geom::Point *end, Geom::Point *low_lim, Geom::Point *high_lim, GSList **moving)
+static void gr_midpoint_limits(GrDragger *dragger, SPObject *server, Geom::Point *begin, Geom::Point *end, Geom::Point *low_lim, Geom::Point *high_lim, std::vector<GrDragger *> &moving)
 {
 
     GrDrag *drag = dragger->parent;
     // a midpoint dragger can (logically) only contain one GrDraggable
-    GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
+    GrDraggable *draggable = dragger->draggables[0];
 
     // get begin and end points between which dragging is allowed:
     // the draglimits are between knot(lowest_i - 1) and knot(highest_i + 1)
-    *moving = g_slist_append(*moving, dragger);
+    moving.push_back(dragger);
 
     guint lowest_i = draggable->point_i;
     guint highest_i = draggable->point_i;
@@ -932,9 +931,9 @@ static void gr_midpoint_limits(GrDragger *dragger, SPObject *server, Geom::Point
         while ( true )
         {
             d_add = drag->getDraggerFor(draggable->item, draggable->point_type, lowest_i - 1, draggable->fill_or_stroke);
-            if ( d_add && g_list_find(drag->selected, d_add) ) {
+            if ( d_add && drag->selected.find(d_add)!=drag->selected.end() ) {
                 lowest_i = lowest_i - 1;
-                *moving = g_slist_prepend(*moving, d_add);
+                moving.insert(moving.begin(),d_add);
                 lowest_dragger = d_add;
             } else {
                 break;
@@ -944,9 +943,9 @@ static void gr_midpoint_limits(GrDragger *dragger, SPObject *server, Geom::Point
         while ( true )
         {
             d_add = drag->getDraggerFor(draggable->item, draggable->point_type, highest_i + 1, draggable->fill_or_stroke);
-            if ( d_add && g_list_find(drag->selected, d_add) ) {
+            if ( d_add && drag->selected.find(d_add)!=drag->selected.end() ) {
                 highest_i = highest_i + 1;
-                *moving = g_slist_append(*moving, d_add);
+                moving.push_back(d_add);
                 highest_dragger = d_add;
             } else {
                 break;
@@ -1002,7 +1001,7 @@ static void gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &
     GrDragger *dragger = (GrDragger *) data;
     GrDrag *drag = dragger->parent;
     // a midpoint dragger can (logically) only contain one GrDraggable
-    GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
+    GrDraggable *draggable = dragger->draggables[0];
 
     // FIXME: take from prefs
     double snap_fraction = 0.1;
@@ -1013,8 +1012,8 @@ static void gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &
 
     SPObject *server = draggable->getServer();
 
-    GSList *moving = NULL;
-    gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, &moving);
+    std::vector<GrDragger *> moving;
+    gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, moving);
 
     if (state & GDK_CONTROL_MASK) {
         Geom::LineSegment ls(low_lim, high_lim);
@@ -1033,8 +1032,8 @@ static void gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &
     }
     Geom::Point displacement = p - dragger->point;
 
-    for (GSList const* i = moving; i != NULL; i = i->next) {
-        GrDragger *drg = (GrDragger*) i->data;
+    for (std::vector<GrDragger *>::const_iterator i = moving.begin(); i!= moving.end(); ++i ) {
+        GrDragger *drg = *i;
         SPKnot *drgknot = drg->knot;
         Geom::Point this_move = displacement;
         if (state & GDK_MOD1_MASK) {
@@ -1053,8 +1052,6 @@ static void gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &
         drg->fireDraggables (false);
         drg->updateDependencies(false);
     }
-
-    g_slist_free(moving);
 
     drag->keep_selection = dragger->isSelected();
 }
@@ -1085,12 +1082,11 @@ static void gr_knot_ungrabbed_handler(SPKnot *knot, unsigned int state, gpointer
         dragger->fireDraggables (true);
     }
     dragger->updateHandles( dragger->point_original, MG_NODE_NO_SCALE );
-
-    for (GList *i = dragger->parent->selected; i != NULL; i = i->next) {
-        GrDragger *d = (GrDragger *) i->data;
-        if (d == dragger)
+    
+    for (std::set<GrDragger *>::const_iterator it = dragger->parent->selected.begin(); it != dragger->parent->selected.end() ; ++it ) {
+        if (*it == dragger)
             continue;
-        d->fireDraggables (true);
+        (*it)->fireDraggables (true);
     }
 
     // make this dragger selected
@@ -1112,7 +1108,7 @@ static void gr_knot_ungrabbed_handler(SPKnot *knot, unsigned int state, gpointer
 static void gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data)
 {
     GrDragger *dragger = (GrDragger *) data;
-    GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
+    GrDraggable *draggable = dragger->draggables[0];
     if (!draggable) return;
 
     if ( (state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK ) ) {
@@ -1185,7 +1181,7 @@ static void gr_knot_doubleclicked_handler(SPKnot */*knot*/, guint /*state*/, gpo
 
     dragger->point_original = dragger->point;
 
-    if (dragger->draggables == NULL)
+    if (dragger->draggables.empty())
         return;
 
     /*
@@ -1200,8 +1196,8 @@ static void gr_knot_doubleclicked_handler(SPKnot */*knot*/, guint /*state*/, gpo
  */
 void GrDragger::fireDraggables(bool write_repr, bool scale_radial, bool merging_focus)
 {
-    for (GSList const* i = this->draggables; i != NULL; i = i->next) {
-        GrDraggable *draggable = (GrDraggable *) i->data;
+    for (std::vector<GrDraggable *>::const_iterator i = this->draggables.begin(); i != this->draggables.end(); ++i) {
+        GrDraggable *draggable = *i;
 
         // set local_change flag so that selection_changed callback does not regenerate draggers
         this->parent->local_change = true;
@@ -1221,8 +1217,8 @@ void GrDragger::fireDraggables(bool write_repr, bool scale_radial, bool merging_
  */
 bool GrDragger::isA(GrPointType point_type)
 {
-    for (GSList const* i = this->draggables; i != NULL; i = i->next) {
-        GrDraggable *draggable = reinterpret_cast<GrDraggable *>(i->data);
+    for (std::vector<GrDraggable *>::const_iterator i = this->draggables.begin(); i != this->draggables.end(); ++i) {
+        GrDraggable *draggable = *i; 
         if (draggable->point_type == point_type) {
             return true;
         }
@@ -1235,8 +1231,8 @@ bool GrDragger::isA(GrPointType point_type)
  */
 bool GrDragger::isA(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke)
 {
-    for (GSList const* i = this->draggables; i != NULL; i = i->next) {
-        GrDraggable *draggable = (GrDraggable *) i->data;
+    for (std::vector<GrDraggable *>::const_iterator i = this->draggables.begin(); i != this->draggables.end(); ++i) {
+        GrDraggable *draggable = *i; 
         if ( (draggable->point_type == point_type) && (draggable->point_i == point_i) && (draggable->item == item) && (draggable->fill_or_stroke == fill_or_stroke) ) {
             return true;
         }
@@ -1249,8 +1245,8 @@ bool GrDragger::isA(SPItem *item, GrPointType point_type, gint point_i, Inkscape
  */
 bool GrDragger::isA(SPItem *item, GrPointType point_type, Inkscape::PaintTarget fill_or_stroke)
 {
-    for (GSList const* i = this->draggables; i != NULL; i = i->next) {
-        GrDraggable *draggable = (GrDraggable *) i->data;
+    for (std::vector<GrDraggable *>::const_iterator i = this->draggables.begin(); i != this->draggables.end(); ++i) {
+        GrDraggable *draggable = *i; 
         if ( (draggable->point_type == point_type) && (draggable->item == item) && (draggable->fill_or_stroke == fill_or_stroke) ) {
             return true;
         }
@@ -1282,10 +1278,10 @@ bool GrDragger::mayMerge(GrDragger *other)
     if (this == other)
         return false;
 
-    for (GSList const* i = this->draggables; i != NULL; i = i->next) { // for all draggables of this
-        GrDraggable *da1 = (GrDraggable *) i->data;
-        for (GSList const* j = other->draggables; j != NULL; j = j->next) { // for all draggables of other
-            GrDraggable *da2 = (GrDraggable *) j->data;
+    for (std::vector<GrDraggable *>::const_iterator i = this->draggables.begin(); i != this->draggables.end(); ++i) {
+        GrDraggable *da1 = *i; 
+        for (std::vector<GrDraggable *>::const_iterator j = other->draggables.begin(); j != other->draggables.end(); ++j) {
+            GrDraggable *da2 = *j; 
             if (!da1->mayMerge(da2))
                 return false;
         }
@@ -1295,8 +1291,8 @@ bool GrDragger::mayMerge(GrDragger *other)
 
 bool GrDragger::mayMerge(GrDraggable *da2)
 {
-    for (GSList const* i = this->draggables; i != NULL; i = i->next) { // for all draggables of this
-        GrDraggable *da1 = (GrDraggable *) i->data;
+    for (std::vector<GrDraggable *>::const_iterator i = this->draggables.begin(); i != this->draggables.end(); ++i) {
+        GrDraggable *da1 = *i; 
         if (!da1->mayMerge(da2))
             return false;
     }
@@ -1339,10 +1335,10 @@ GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
     bool scale = false;
     if( scale == true ) {
 
-        for ( GList *i = drag->selected; i != NULL; i = i->next ) {
-            GrDragger *dragger = (GrDragger *) i->data;
-            for ( GSList *j = dragger->draggables; j != NULL; j = j->next ) {
-                GrDraggable *draggable = (GrDraggable *) j->data;
+        for( std::set<GrDragger *>::const_iterator it = drag->selected.begin(); it != drag->selected.end(); ++it ) {
+            GrDragger *dragger = *it;
+            for (std::vector<GrDraggable *>::const_iterator it2 = dragger->draggables.begin(); it2 != dragger->draggables.end(); ++it2 ) {
+                GrDraggable *draggable = *it2; 
 
                 // Check draggable is of type POINT_MG_CORNER (don't allow selection of POINT_MG_HANDLE)
                 if( draggable->point_type != POINT_MG_CORNER ) continue;
@@ -1360,8 +1356,8 @@ GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
 
     // Loop over all draggables in moved corner
     std::map<SPGradient*, std::vector<guint> > dragger_corners;
-    for ( GSList *j = draggables; j != NULL; j = j->next ) {
-        GrDraggable *draggable = (GrDraggable *) j->data;
+    for (std::vector<GrDraggable *>::const_iterator j = draggables.begin(); j != draggables.end(); ++j ) {
+        GrDraggable *draggable = *j; 
 
         SPItem *item           = draggable->item;
         gint    point_type     = draggable->point_type;
@@ -1417,8 +1413,8 @@ void GrDragger::updateTip()
         this->knot->tip = NULL;
     }
 
-    if (g_slist_length (this->draggables) == 1) {
-        GrDraggable *draggable = (GrDraggable *) this->draggables->data;
+    if (this->draggables.size() == 1) {
+        GrDraggable *draggable = this->draggables[0];
         char *item_desc = draggable->item->detailedDescription();
         switch (draggable->point_type) {
             case POINT_LG_MID:
@@ -1439,10 +1435,10 @@ void GrDragger::updateTip()
                 break;
         }
         g_free(item_desc);
-    } else if (g_slist_length (draggables) == 2 && isA (POINT_RG_CENTER) && isA (POINT_RG_FOCUS)) {
+    } else if (draggables.size() == 2 && isA (POINT_RG_CENTER) && isA (POINT_RG_FOCUS)) {
         this->knot->tip = g_strdup_printf ("%s", _("Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to separate focus"));
     } else {
-        int length = g_slist_length (this->draggables);
+        int length = this->draggables.size();
         this->knot->tip = g_strdup_printf (ngettext("Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to separate",
                                                     "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate",
                                                     length),
@@ -1455,9 +1451,9 @@ void GrDragger::updateTip()
  */
 void GrDragger::updateKnotShape()
 {
-    if (!draggables)
+    if (draggables.empty())
         return;
-    GrDraggable *last = (GrDraggable *) g_slist_last(draggables)->data;
+    GrDraggable *last = draggables.back();
     g_object_set (G_OBJECT (this->knot->item), "shape", gr_knot_shapes[last->point_type], NULL);
 }
 
@@ -1466,7 +1462,7 @@ void GrDragger::updateKnotShape()
  */
 void GrDragger::addDraggable(GrDraggable *draggable)
 {
-    this->draggables = g_slist_prepend (this->draggables, draggable);
+    this->draggables.insert(this->draggables.begin(), draggable);
 
     this->updateTip();
 }
@@ -1477,18 +1473,18 @@ void GrDragger::addDraggable(GrDraggable *draggable)
  */
 void GrDragger::moveThisToDraggable(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke, bool write_repr)
 {
-    GrDraggable *dr_first = reinterpret_cast<GrDraggable *>(draggables->data);
-    if (!dr_first) {
+    if (draggables.empty())
         return;
-    }
+
+    GrDraggable *dr_first = draggables[0];
 
     this->point = getGradientCoords(dr_first->item, dr_first->point_type, dr_first->point_i, dr_first->fill_or_stroke);
     this->point_original = this->point;
 
     this->knot->moveto(this->point);
 
-    for (GSList const* i = draggables; i != NULL; i = i->next) {
-        GrDraggable *da = (GrDraggable *) i->data;
+    for (std::vector<GrDraggable *>::const_iterator j = draggables.begin(); j != draggables.end(); ++j ) {
+        GrDraggable *da = *j; 
         if ( (da->item == item) &&
              (point_type == -1 || da->point_type == point_type) &&
              (point_i == -1 || da->point_i == point_i) &&
@@ -1531,8 +1527,8 @@ void GrDragger::updateMidstopDependencies(GrDraggable *draggable, bool write_rep
  */
 void GrDragger::updateDependencies(bool write_repr)
 {
-    for (GSList const* i = this->draggables; i != NULL; i = i->next) {
-        GrDraggable *draggable = (GrDraggable *) i->data;
+    for (std::vector<GrDraggable *>::const_iterator j = draggables.begin(); j != draggables.end(); ++j ) {
+        GrDraggable *draggable = *j; 
         switch (draggable->point_type) {
             case POINT_LG_BEGIN:
                 {
@@ -1590,7 +1586,7 @@ GrDragger::GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable)
   : point(p),
     point_original(p)
 {
-    this->draggables = NULL;
+    this->draggables.clear();
 
     this->parent = parent;
 
@@ -1649,12 +1645,10 @@ GrDragger::~GrDragger()
     knot_unref(this->knot);
 
     // delete all draggables
-    for (GSList const* i = this->draggables; i != NULL; i = i->next) {
-        delete ((GrDraggable *) i->data);
+    for (std::vector<GrDraggable *>::const_iterator j = this->draggables.begin(); j != this->draggables.end(); ++j ) {
+        delete (*j);
     }
-
-    g_slist_free (this->draggables);
-    this->draggables = NULL;
+    this->draggables.clear();
 }
 
 /**
@@ -1662,10 +1656,10 @@ GrDragger::~GrDragger()
  */
 GrDragger *GrDrag::getDraggerFor(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke)
 {
-    for (GList const* i = this->draggers; i != NULL; i = i->next) {
-        GrDragger *dragger = (GrDragger *) i->data;
-        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
-            GrDraggable *da2 = (GrDraggable *) j->data;
+    for (std::vector<GrDragger *>::const_iterator i = this->draggers.begin(); i != this->draggers.end(); ++i ) {
+        GrDragger *dragger = *i;
+        for (std::vector<GrDraggable *>::const_iterator j = dragger->draggables.begin(); j != dragger->draggables.end(); ++j ) {
+            GrDraggable *da2 = *j; 
             if ( (da2->item == item) &&
                  (point_type == -1 || da2->point_type == point_type) && // -1 means this does not matter
                  (point_i == -1 || da2->point_i == point_i) && // -1 means this does not matter
@@ -1716,7 +1710,7 @@ void GrDragger::deselect()
 bool
 GrDragger::isSelected()
 {
-    return g_list_find (parent->selected, this);
+    return parent->selected.find(this) != parent->selected.end();
 }
 
 /**
@@ -1724,10 +1718,9 @@ GrDragger::isSelected()
  */
 void GrDrag::deselect_all()
 {
-    while (selected) {
-        ( (GrDragger*) selected->data)->deselect();
-        selected = g_list_remove(selected, selected->data);
-    }
+    for (std::set<GrDragger *>::const_iterator it = selected.begin(); it != selected.end(); ++it )
+        (*it)->deselect();
+    selected.clear();
 }
 
 /**
@@ -1744,8 +1737,8 @@ void GrDrag::deselectAll()
  */
 void GrDrag::selectAll()
 {
-    for (GList *l = this->draggers; l != NULL; l = l->next) {
-        GrDragger *d = ((GrDragger *) l->data);
+    for (std::vector<GrDragger *>::const_iterator l = this->draggers.begin(); l != this->draggers.end(); ++l) {
+        GrDragger *d = *l; 
         setSelected (d, true, true);
     }
 }
@@ -1755,8 +1748,8 @@ void GrDrag::selectAll()
  */
 void GrDrag::selectByCoords(std::vector<Geom::Point> coords)
 {
-    for (GList *l = this->draggers; l != NULL; l = l->next) {
-        GrDragger *d = ((GrDragger *) l->data);
+    for (std::vector<GrDragger *>::const_iterator l = this->draggers.begin(); l != this->draggers.end(); ++l) {
+        GrDragger *d = *l; 
         for (guint k = 0; k < coords.size(); k++) {
             if (Geom::L2 (d->point - coords[k]) < 1e-4) {
                 setSelected (d, true, true);
@@ -1770,12 +1763,12 @@ void GrDrag::selectByCoords(std::vector<Geom::Point> coords)
  */
 void GrDrag::selectByStop(SPStop *stop, bool add_to_selection, bool override )
 {
-    for (GList *i = this->draggers; i != NULL; i = i->next) {
+    for (std::vector<GrDragger *>::const_iterator l = this->draggers.begin(); l != this->draggers.end(); ++l) {
 
-        GrDragger *dragger = (GrDragger *) i->data;
-        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
+        GrDragger *dragger = *l; 
+        for (std::vector<GrDraggable *>::const_iterator j = dragger->draggables.begin(); j != dragger->draggables.end(); ++j) {
 
-            GrDraggable *d = (GrDraggable *) j->data;
+            GrDraggable *d = *j;
             SPGradient *gradient = getGradient(d->item, d->fill_or_stroke);
             SPGradient *vector = gradient->getVector(false);
             SPStop *stop_i = sp_get_stop_i(vector, d->point_i);
@@ -1791,8 +1784,8 @@ void GrDrag::selectByStop(SPStop *stop, bool add_to_selection, bool override )
  */
 void GrDrag::selectRect(Geom::Rect const &r)
 {
-    for (GList *l = this->draggers; l != NULL; l = l->next) {
-        GrDragger *d = ((GrDragger *) l->data);
+    for (std::vector<GrDragger *>::const_iterator l = this->draggers.begin(); l != this->draggers.end(); ++l) {
+        GrDragger *d = *l;
         if (r.contains(d->point)) {
            setSelected (d, true, true);
         }
@@ -1816,20 +1809,18 @@ void GrDrag::setSelected(GrDragger *dragger, bool add_to_selection, bool overrid
     if (add_to_selection) {
         if (!dragger) return;
         if (override) {
-            if (!g_list_find(selected, dragger)) {
-                selected = g_list_prepend(selected, dragger);
-            }
+                selected.insert(dragger);
             dragger->select();
             seldragger = dragger;
         } else { // toggle
-            if (g_list_find(selected, dragger)) {
-                selected = g_list_remove(selected, dragger);
+            if(selected.find(dragger)!=selected.end()) {
+                selected.erase(dragger);
                 dragger->deselect();
-                if (selected) {
-                    seldragger = (GrDragger*) selected->data; // select the dragger that is first in the list
+                if (!selected.empty()) {
+                    seldragger = *(selected.begin()); // select the dragger that is first in the list
                 }
             } else {
-                selected = g_list_prepend(selected, dragger);
+                selected.insert(dragger);
                 dragger->select();
                 seldragger = dragger;
             }
@@ -1837,7 +1828,7 @@ void GrDrag::setSelected(GrDragger *dragger, bool add_to_selection, bool overrid
     } else {
         deselect_all();
         if (dragger) {
-            selected = g_list_prepend(selected, dragger);
+            selected.insert(dragger);
             dragger->select();
             seldragger = dragger;
         }
@@ -1853,11 +1844,11 @@ void GrDrag::setSelected(GrDragger *dragger, bool add_to_selection, bool overrid
  */
 void GrDrag::setDeselected(GrDragger *dragger)
 {
-    if (g_list_find(selected, dragger)) {
-        selected = g_list_remove(selected, dragger);
+    if (selected.find(dragger) != selected.end()) {
+        selected.erase(dragger);
         dragger->deselect();
     }
-    this->desktop->emitToolSubselectionChanged((gpointer) (selected ? selected->data : NULL ));
+    this->desktop->emitToolSubselectionChanged((gpointer) (selected.empty() ? NULL :*(selected.begin())));
 }
 
 
@@ -1873,7 +1864,7 @@ void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::Pai
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;
     sp_canvas_item_show(line);
-    this->lines = g_slist_append(this->lines, line);
+    this->lines.push_back(line);
 }
 
 
@@ -1889,7 +1880,7 @@ void GrDrag::addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point 
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;
     sp_canvas_item_show (line);
-    this->lines = g_slist_append (this->lines, line);
+    this->lines.push_back(line);
 }
 
 
@@ -1901,8 +1892,8 @@ void GrDrag::addDragger(GrDraggable *draggable)
 {
     Geom::Point p = getGradientCoords(draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
 
-    for (GList *i = this->draggers; i != NULL; i = i->next) {
-        GrDragger *dragger = (GrDragger *) i->data;
+    for (std::vector<GrDragger *>::const_iterator l = this->draggers.begin(); l != this->draggers.end(); ++l) {
+        GrDragger *dragger = *l;
         if (dragger->mayMerge (draggable) && Geom::L2 (dragger->point - p) < MERGE_DIST) {
             // distance is small, merge this draggable into dragger, no need to create new dragger
             dragger->addDraggable (draggable);
@@ -1913,7 +1904,7 @@ void GrDrag::addDragger(GrDraggable *draggable)
 
     GrDragger *new_dragger = new GrDragger(this, p, draggable);
     // fixme: draggers should be added AFTER the last one: this way tabbing through them will be from begin to end.
-    this->draggers = g_list_append (this->draggers, new_dragger);
+    this->draggers.push_back(new_dragger);
 }
 
 /**
@@ -2071,15 +2062,12 @@ void GrDrag::grabKnot(SPItem *item, GrPointType point_type, gint point_i, Inksca
  */
 void GrDrag::updateDraggers()
 {
-    while (selected) {
-        selected = g_list_remove(selected, selected->data);
-    }
+    selected.clear();
     // delete old draggers
-    for (GList const* i = this->draggers; i != NULL; i = i->next) {
-        delete static_cast<GrDragger *>(i->data);
+    for (std::vector<GrDragger *>::const_iterator l = this->draggers.begin(); l != this->draggers.end(); ++l) {
+        delete (*l);
     }
-    g_list_free(this->draggers);
-    this->draggers = NULL;
+    this->draggers.clear();
 
     g_return_if_fail(this->selection != NULL);
     std::vector<SPItem*> list = this->selection->itemList();
@@ -2127,8 +2115,8 @@ void GrDrag::updateDraggers()
  */
 bool GrDrag::mouseOver()
 {
-    for (GList const* i = this->draggers; i != NULL; i = i->next) {
-        GrDragger *d = (GrDragger *) i->data;
+    for (std::vector<GrDragger *>::const_iterator l = this->draggers.begin(); l != this->draggers.end(); ++l) {
+        GrDragger *d = *l; 
         if (d->knot && (d->knot->flags & SP_KNOT_MOUSEOVER)) {
             return true;
         }
@@ -2143,11 +2131,10 @@ bool GrDrag::mouseOver()
 void GrDrag::updateLines()
 {
     // delete old lines
-    for (GSList const *i = this->lines; i != NULL; i = i->next) {
-        sp_canvas_item_destroy(SP_CANVAS_ITEM(i->data));
+    for (std::vector<SPCtrlLine *>::const_iterator i = this->lines.begin(); i != this->lines.end(); ++i) {
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(*i));
     }
-    g_slist_free(this->lines);
-    this->lines = NULL;
+    this->lines.clear();
 
     g_return_if_fail(this->selection != NULL);
 
@@ -2313,13 +2300,11 @@ void GrDrag::updateLevels()
 
 void GrDrag::selected_reverse_vector()
 {
-    if (selected == NULL)
+    if (selected.empty())
         return;
 
-    for (GSList const* i = ( (GrDragger*) selected->data )->draggables; i != NULL; i = i->next) {
-        GrDraggable *draggable = (GrDraggable *) i->data;
-
-        sp_item_gradient_reverse_vector (draggable->item, draggable->fill_or_stroke);
+    for(std::vector<GrDraggable *>::const_iterator it = (*(selected.begin()))->draggables.begin(); it != (*(selected.begin()))->draggables.end(); ++it) {
+        sp_item_gradient_reverse_vector ((*it)->item, (*it)->fill_or_stroke);
     }
 }
 
@@ -2330,13 +2315,13 @@ void GrDrag::selected_move_nowrite(double x, double y, bool scale_radial)
 
 void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radial)
 {
-    if (selected == NULL)
+    if (selected.empty())
         return;
 
     bool did = false;
 
-    for (GList *i = selected; i != NULL; i = i->next) {
-        GrDragger *d = (GrDragger *) i->data;
+    for(std::set<GrDragger *>::const_iterator it = selected.begin(); it != selected.end(); ++it) {
+        GrDragger *d = *it;
 
         if (!d->isA(POINT_LG_MID) && !d->isA(POINT_RG_MID1) && !d->isA(POINT_RG_MID2)) {
             // if this is an endpoint,
@@ -2347,12 +2332,12 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
             if (d->isA(POINT_RG_R1) || d->isA(POINT_RG_R2) ||
                 (d->isA(POINT_RG_FOCUS) && !d->isA(POINT_RG_CENTER))) {
                 bool skip_radius_with_center = false;
-                for (GList *di = selected; di != NULL; di = di->next) {
-                    GrDragger *d_new = (GrDragger *) di->data;
-                    if (d_new->isA (((GrDraggable *) d->draggables->data)->item,
+                for(std::set<GrDragger *>::const_iterator di = selected.begin(); di != selected.end(); ++di) {
+                    GrDragger *d_new = *di;
+                    if (d_new->isA (( d->draggables[0])->item,
                                     POINT_RG_CENTER,
                                     0,
-                                    ((GrDraggable *) d->draggables->data)->fill_or_stroke)) {
+                                    (d->draggables[0])->fill_or_stroke)) {
                         // FIXME: here we take into account only the first draggable!
                         skip_radius_with_center = true;
                     }
@@ -2382,23 +2367,23 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
 
     if (!did) { // none of the end draggers are selected, so let's try to move the mids
 
-        GrDragger *dragger = (GrDragger *) selected->data;
+        GrDragger *dragger = *(selected.begin());
         // a midpoint dragger can (logically) only contain one GrDraggable
-        GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
+        GrDraggable *draggable = dragger->draggables[0];
 
         Geom::Point begin(0,0), end(0,0);
         Geom::Point low_lim(0,0), high_lim(0,0);
 
         SPObject *server = draggable->getServer();
-        GSList *moving = NULL;
-        gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, &moving);
+        std::vector<GrDragger *> moving;
+        gr_midpoint_limits(dragger, server, &begin, &end, &low_lim, &high_lim, moving);
 
         Geom::LineSegment ls(low_lim, high_lim);
         Geom::Point p = ls.pointAt(ls.nearestTime(dragger->point + Geom::Point(x,y)));
         Geom::Point displacement = p - dragger->point;
 
-        for (GSList const* i = moving; i != NULL; i = i->next) {
-            GrDragger *drg = (GrDragger*) i->data;
+        for(std::vector<GrDragger *>::const_iterator i = moving.begin(); i!= moving.end();++i) {
+            GrDragger *drg = *i;
             SPKnot *drgknot = drg->knot;
             drg->point += displacement;
             drgknot->moveto(drg->point);
@@ -2406,8 +2391,6 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
             drg->updateDependencies(true);
             did = true;
         }
-
-        g_slist_free(moving);
 
         if (write_repr && did) {
             // we did an undoable action
@@ -2432,11 +2415,11 @@ void GrDrag::selected_move_screen(double x, double y)
 GrDragger *GrDrag::select_next()
 {
     GrDragger *d = NULL;
-    if (selected == NULL || g_list_find(draggers, selected->data)->next == NULL) {
-        if (draggers)
-            d = (GrDragger *) draggers->data;
+    if (selected.empty() || (++find(draggers.begin(),draggers.end(),*(selected.begin())))==draggers.end()) {
+        if (!draggers.empty())
+            d = draggers[0];
     } else {
-        d = (GrDragger *) g_list_find(draggers, selected->data)->next->data;
+        d = *(++find(draggers.begin(),draggers.end(),*(selected.begin())));
     }
     if (d)
         setSelected (d);
@@ -2449,11 +2432,11 @@ GrDragger *GrDrag::select_next()
 GrDragger *GrDrag::select_prev()
 {
     GrDragger *d = NULL;
-    if (selected == NULL || g_list_find(draggers, selected->data)->prev == NULL) {
-        if (draggers)
-            d = (GrDragger *) g_list_last (draggers)->data;
+    if (selected.empty() || draggers[0] == (*(selected.begin()))) {
+        if (!draggers.empty())
+            d = draggers[draggers.size()-1];
     } else {
-        d = (GrDragger *) g_list_find(draggers, selected->data)->prev->data;
+        d = *(--find(draggers.begin(),draggers.end(),*(selected.begin())));
     }
     if (d)
         setSelected (d);
@@ -2464,7 +2447,7 @@ GrDragger *GrDrag::select_prev()
 // FIXME: i.m.o. an ugly function that I just made to work, but... aargh! (Johan)
 void GrDrag::deleteSelected(bool just_one)
 {
-    if (!selected) return;
+    if (selected.empty()) return;
 
     SPDocument *document = NULL;
 
@@ -2477,10 +2460,10 @@ void GrDrag::deleteSelected(bool just_one)
 
     GSList *midstoplist = NULL;  // list of stops that must be deleted (will be deleted first)
     GSList *endstoplist = NULL;  // list of stops that must be deleted
-    while (selected) {
-        GrDragger *dragger = (GrDragger*) selected->data;
-        for (GSList * drgble = dragger->draggables; drgble != NULL; drgble = drgble->next) {
-            GrDraggable *draggable = (GrDraggable*) drgble->data;
+    while (!selected.empty()) {
+        GrDragger *dragger = *(selected.begin());
+        for(std::vector<GrDraggable *>::const_iterator drgble = dragger->draggables.begin(); drgble != dragger->draggables.end(); ++drgble) {
+            GrDraggable *draggable = *drgble;
             SPGradient *gradient = getGradient(draggable->item, draggable->fill_or_stroke);
             SPGradient *vector   = sp_gradient_get_forked_vector_if_necessary (gradient, false);
 
@@ -2538,7 +2521,7 @@ void GrDrag::deleteSelected(bool just_one)
                     break;
             }
         }
-        selected = g_list_remove(selected, dragger);
+        selected.erase(dragger);
         if ( just_one ) break; // iterate once if just_one is set.
     }
     while (midstoplist) {

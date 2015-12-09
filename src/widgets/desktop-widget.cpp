@@ -1868,9 +1868,9 @@ bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/bitmapautoreload/value", true)) {
-        GSList const *imageList = (desktop->doc())->getResourceList("image");
-        for (GSList const *p = imageList; p; p = p->next) {
-            SPImage* image = SP_IMAGE(p->data);
+        std::set<SPObject *> imageList = (desktop->doc())->getResourceList("image");
+        for (std::set<SPObject *>::const_iterator it = imageList.begin(); it != imageList.end(); ++it) {
+            SPImage* image = SP_IMAGE(*it);
             sp_image_refresh_if_outdated( image );
         }
     }

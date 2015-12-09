@@ -488,18 +488,17 @@ static int getLcmsIntent( guint svgIntent )
 static SPObject* bruteFind( SPDocument* document, gchar const* name )
 {
     SPObject* result = 0;
-    const GSList * current = document->getResourceList("iccprofile");
-    while ( current && !result ) {
-        if ( IS_COLORPROFILE(current->data) ) {
-            ColorProfile* prof = COLORPROFILE(current->data);
+    std::set<SPObject *> current = document->getResourceList("iccprofile");
+    for (std::set<SPObject *>::const_iterator it = current.begin(); (!result) && (it != current.end()); ++it) {
+        if ( IS_COLORPROFILE(*it) ) {
+            ColorProfile* prof = COLORPROFILE(*it);
             if ( prof ) {
                 if ( prof->name && (strcmp(prof->name, name) == 0) ) {
-                    result = SP_OBJECT(current->data);
+                    result = SP_OBJECT(*it);
                     break;
                 }
             }
         }
-        current = g_slist_next(current);
     }
 
     return result;

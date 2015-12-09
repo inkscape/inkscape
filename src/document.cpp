@@ -81,7 +81,7 @@ using Inkscape::Util::unit_table;
 static gint sp_document_idle_handler(gpointer data);
 static gint sp_document_rerouting_handler(gpointer data);
 
-gboolean sp_document_resource_list_free(gpointer key, gpointer value, gpointer data);
+//gboolean sp_document_resource_list_free(gpointer key, gpointer value, gpointer data);
 
 static gint doc_count = 0;
 static gint doc_mem_count = 0;
@@ -105,7 +105,6 @@ SPDocument::SPDocument() :
     rerouting_handler_id(0),
     profileManager(NULL), // deferred until after other initialization
     router(new Avoid::Router(Avoid::PolyLineRouting|Avoid::OrthogonalRouting)),
-    _collection_queue(NULL),
     oldSignalsConnected(false),
     current_persp3d(NULL),
     current_persp3d_impl(NULL),
@@ -119,16 +118,9 @@ SPDocument::SPDocument() :
 
     p->serial = next_serial++;
 
-    p->iddef = g_hash_table_new(g_direct_hash, g_direct_equal);
-    p->reprdef = g_hash_table_new(g_direct_hash, g_direct_equal);
-
-    p->resources = g_hash_table_new(g_str_hash, g_str_equal);
-
     p->sensitive = false;
     p->partial = NULL;
     p->history_size = 0;
-    p->undo = NULL;
-    p->redo = NULL;
     p->seeking = false;
 
     priv = p;
@@ -177,17 +169,10 @@ SPDocument::~SPDocument() {
             root = NULL;
         }
 
-        if (priv->iddef) g_hash_table_destroy(priv->iddef);
-        if (priv->reprdef) g_hash_table_destroy(priv->reprdef);
-
         if (rdoc) Inkscape::GC::release(rdoc);
 
         /* Free resources */
-        g_hash_table_foreach_remove(priv->resources, sp_document_resource_list_free, this);
-        g_hash_table_destroy(priv->resources);
-
-        delete priv;
-        priv = NULL;
+        priv->resources.clear();
     }
 
     cr_cascade_unref(style_cascade);
@@ -295,19 +280,18 @@ void SPDocument::queueForOrphanCollection(SPObject *object) {
     g_return_if_fail(object->document == this);
 
     sp_object_ref(object, NULL);
-    _collection_queue = g_slist_prepend(_collection_queue, object);
+    _collection_queue.push_back(object);
 }
 
 void SPDocument::collectOrphans() {
-    while (_collection_queue) {
-        GSList *objects=_collection_queue;
-        _collection_queue = NULL;
-        for ( GSList *iter=objects ; iter ; iter = iter->next ) {
-            SPObject *object=reinterpret_cast<SPObject *>(iter->data);
+    while (!_collection_queue.empty()) {
+        std::vector<SPObject *> objects(_collection_queue);
+        _collection_queue.clear();
+        for (std::vector<SPObject *>::const_iterator iter = objects.begin(); iter != objects.end(); ++iter) {
+            SPObject *object = *iter;
             object->collectOrphan();
             sp_object_unref(object, NULL);
         }
-        g_slist_free(objects);
     }
 }
 
@@ -1008,11 +992,15 @@ void SPDocument::bindObjectToId(gchar const *id, SPObject *object) {
     GQuark idq = g_quark_from_string(id);
 
     if (object) {
-        g_assert(g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq)) == NULL);
-        g_hash_table_insert(priv->iddef, GINT_TO_POINTER(idq), object);
+        g_assert(priv->iddef.find(id)==priv->iddef.end());
+        priv->iddef[id] = object;
+        //g_assert(g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq)) == NULL);
+        //g_hash_table_insert(priv->iddef, GINT_TO_POINTER(idq), object);
     } else {
-        g_assert(g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq)) != NULL);
-        g_hash_table_remove(priv->iddef, GINT_TO_POINTER(idq));
+        g_assert(priv->iddef.find(id)!=priv->iddef.end());
+        priv->iddef.erase(id);
+        //g_assert(g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq)) != NULL);
+        //g_hash_table_remove(priv->iddef, GINT_TO_POINTER(idq));
     }
 
     SPDocumentPrivate::IDChangedSignalMap::iterator pos;
@@ -1047,15 +1035,16 @@ SPObject *SPDocument::getObjectById(Glib::ustring const &id) const
 SPObject *SPDocument::getObjectById(gchar const *id) const
 {
     g_return_val_if_fail(id != NULL, NULL);
-    if (!priv || !priv->iddef) {
+    if (!priv || priv->iddef.empty()) {
     	return NULL;
     }
 
     GQuark idq = g_quark_from_string(id);
-    gpointer rv = g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq));
-    if(rv != NULL)
+    std::map<std::string, SPObject *>::iterator rv = priv->iddef.find(id);
+    //gpointer rv = g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq));
+    if(rv != priv->iddef.end())
     {
-        return static_cast<SPObject*>(rv);
+        return (rv->second);
     }
     else
     {
@@ -1072,18 +1061,22 @@ sigc::connection SPDocument::connectIdChanged(gchar const *id,
 void SPDocument::bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object)
 {
     if (object) {
-        g_assert(g_hash_table_lookup(priv->reprdef, repr) == NULL);
-        g_hash_table_insert(priv->reprdef, repr, object);
+        g_assert(priv->reprdef.find(repr)==priv->reprdef.end());
+        priv->reprdef[repr] = object;
     } else {
-        g_assert(g_hash_table_lookup(priv->reprdef, repr) != NULL);
-        g_hash_table_remove(priv->reprdef, repr);
+        g_assert(priv->reprdef.find(repr)!=priv->reprdef.end());
+        priv->reprdef.erase(repr); 
     }
 }
 
 SPObject *SPDocument::getObjectByRepr(Inkscape::XML::Node *repr) const
 {
     g_return_val_if_fail(repr != NULL, NULL);
-    return static_cast<SPObject*>(g_hash_table_lookup(priv->reprdef, repr));
+    std::map<Inkscape::XML::Node *, SPObject *>::iterator rv = priv->reprdef.find(repr);
+    if(rv != priv->reprdef.end())
+        return (rv->second);
+    else
+        return NULL;
 }
 
 Glib::ustring SPDocument::getLanguage() const
@@ -1528,10 +1521,9 @@ bool SPDocument::addResource(gchar const *key, SPObject *object)
     bool result = false;
 
     if ( !object->cloned ) {
-        GSList *rlist = (GSList*)g_hash_table_lookup(priv->resources, key);
-        g_return_val_if_fail(!g_slist_find(rlist, object), false);
-        rlist = g_slist_prepend(rlist, object);
-        g_hash_table_insert(priv->resources, (gpointer) key, rlist);
+        std::set<SPObject *> rlist = priv->resources[key];
+        g_return_val_if_fail(rlist.find(object) == rlist.end(), false);
+        priv->resources[key].insert(object);
 
         GQuark q = g_quark_from_string(key);
 
@@ -1560,11 +1552,10 @@ bool SPDocument::removeResource(gchar const *key, SPObject *object)
     bool result = false;
 
     if ( !object->cloned ) {
-        GSList *rlist = (GSList*)g_hash_table_lookup(priv->resources, key);
-        g_return_val_if_fail(rlist != NULL, false);
-        g_return_val_if_fail(g_slist_find(rlist, object), false);
-        rlist = g_slist_remove(rlist, object);
-        g_hash_table_insert(priv->resources, (gpointer) key, rlist);
+        std::set<SPObject *> rlist = priv->resources[key];
+        g_return_val_if_fail(!rlist.empty(), false);
+        g_return_val_if_fail(rlist.find(object) != rlist.end(), false);
+        priv->resources[key].erase(object);
 
         GQuark q = g_quark_from_string(key);
         priv->resources_changed_signals[q].emit();
@@ -1575,12 +1566,13 @@ bool SPDocument::removeResource(gchar const *key, SPObject *object)
     return result;
 }
 
-GSList const *SPDocument::getResourceList(gchar const *key) const
+std::set<SPObject *> const SPDocument::getResourceList(gchar const *key) const
 {
-    g_return_val_if_fail(key != NULL, NULL);
-    g_return_val_if_fail(*key != '\0', NULL);
+    std::set<SPObject *> emptyset;
+    g_return_val_if_fail(key != NULL, emptyset);
+    g_return_val_if_fail(*key != '\0', emptyset);
 
-    return (GSList*)g_hash_table_lookup(this->priv->resources, key);
+    return this->priv->resources[key];
 }
 
 sigc::connection SPDocument::connectResourcesChanged(gchar const *key,
@@ -1591,13 +1583,6 @@ sigc::connection SPDocument::connectResourcesChanged(gchar const *key,
 }
 
 /* Helpers */
-
-gboolean
-sp_document_resource_list_free(gpointer /*key*/, gpointer value, gpointer /*data*/)
-{
-    g_slist_free((GSList *) value);
-    return TRUE;
-}
 
 static unsigned int count_objects_recursive(SPObject *obj, unsigned int count)
 {

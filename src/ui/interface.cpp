@@ -1116,9 +1116,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
                         unsigned int b = color.getB();
 
                         SPGradient* matches = 0;
-                        const GSList *gradients = doc->getResourceList("gradient");
-                        for (const GSList *item = gradients; item; item = item->next) {
-                            SPGradient* grad = SP_GRADIENT(item->data);
+                        std::set<SPObject *> gradients = doc->getResourceList("gradient");
+                        for (std::set<SPObject *>::const_iterator item = gradients.begin(); item != gradients.end(); ++item) {
+                            SPGradient* grad = SP_GRADIENT(*item);
                             if ( color.descr == grad->getId() ) {
                                 if ( grad->hasStops() ) {
                                     matches = grad;

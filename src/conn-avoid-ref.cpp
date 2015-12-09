@@ -139,9 +139,9 @@ void SPAvoidRef::handleSettingChange(void)
 }
 
 
-GSList *SPAvoidRef::getAttachedShapes(const unsigned int type)
+std::vector<SPItem *> SPAvoidRef::getAttachedShapes(const unsigned int type)
 {
-    GSList *list = NULL;
+    std::vector<SPItem *> list;
 
     Avoid::IntList shapes;
     GQuark shapeId = g_quark_from_string(item->getId());
@@ -157,15 +157,15 @@ GSList *SPAvoidRef::getAttachedShapes(const unsigned int type)
             continue;
         }
         SPItem *shapeItem = SP_ITEM(obj);
-        list = g_slist_prepend(list, shapeItem);
+        list.push_back(shapeItem);
     }
     return list;
 }
 
 
-GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
+std::vector<SPItem *> SPAvoidRef::getAttachedConnectors(const unsigned int type)
 {
-    GSList *list = NULL;
+    std::vector<SPItem *> list;
 
     Avoid::IntList conns;
     GQuark shapeId = g_quark_from_string(item->getId());
@@ -181,7 +181,7 @@ GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
             continue;
         }
         SPItem *connItem = SP_ITEM(obj);
-        list = g_slist_prepend(list, connItem);
+        list.push_back(connItem);
     }
     return list;
 }
@@ -331,7 +331,7 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 }
 
 
-GSList *get_avoided_items(GSList *list, SPObject *from, SPDesktop *desktop,
+std::vector<SPItem *> get_avoided_items(std::vector<SPItem *> &list, SPObject *from, SPDesktop *desktop,
         bool initialised)
 {
     for (SPObject *child = from->firstChild() ; child != NULL; child = child->next ) {
@@ -342,7 +342,7 @@ GSList *get_avoided_items(GSList *list, SPObject *from, SPDesktop *desktop,
             (!initialised || SP_ITEM(child)->avoidRef->shapeRef)
             )
         {
-            list = g_slist_prepend (list, SP_ITEM(child));
+            list.push_back(SP_ITEM(child));
         }
 
         if (SP_IS_ITEM(child) && desktop->isLayer(SP_ITEM(child))) {
@@ -376,17 +376,15 @@ void init_avoided_shape_geometry(SPDesktop *desktop)
     DocumentUndo::setUndoSensitive(document, false);
 
     bool initialised = false;
-    GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop,
+    std::vector<SPItem *> tmp;
+    std::vector<SPItem *> items = get_avoided_items(tmp, desktop->currentRoot(), desktop,
             initialised);
 
-    for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
-        SPItem *item = reinterpret_cast<SPItem *>(iter->data);
+    for (std::vector<SPItem *>::const_iterator iter = items.begin(); iter != items.end(); ++iter) {
+        SPItem *item = *iter;
         item->avoidRef->handleSettingChange();
     }
 
-    if (items) {
-        g_slist_free(items);
-    }
     DocumentUndo::setUndoSensitive(document, saved);
 }
 

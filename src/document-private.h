@@ -15,6 +15,8 @@
  */
 
 #include <map>
+#include <set>
+#include <string>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include "xml/event-fns.h"
@@ -34,14 +36,12 @@ class Event;
 }
 }
 
-typedef struct _GHashTable GHashTable;
-
 struct SPDocumentPrivate {
 	typedef std::map<GQuark, SPDocument::IDChangedSignal> IDChangedSignalMap;
 	typedef std::map<GQuark, SPDocument::ResourcesChangedSignal> ResourcesChangedSignalMap;
 
-	GHashTable *iddef;	/**< Dictionary of id -> SPObject mappings */
-	GHashTable *reprdef;   /**< Dictionary of Inkscape::XML::Node -> SPObject mappings */
+        std::map<std::string, SPObject *> iddef;
+        std::map<Inkscape::XML::Node *, SPObject *> reprdef;
 
 	unsigned long serial;
 
@@ -49,8 +49,7 @@ struct SPDocumentPrivate {
 	IDChangedSignalMap id_changed_signals;
 
 	/* Resources */
-	/* It is GHashTable of GSLists */
-	GHashTable *resources;
+        std::map<std::string, std::set<SPObject *> > resources;
 	ResourcesChangedSignalMap resources_changed_signals;
 
         sigc::signal<void> destroySignal;
@@ -65,8 +64,8 @@ struct SPDocumentPrivate {
 	bool sensitive; /* If we save actions to undo stack */
 	Inkscape::XML::Event * partial; /* partial undo log when interrupted */
 	int history_size;
-	GSList * undo; /* Undo stack of reprs */
-	GSList * redo; /* Redo stack of reprs */
+        std::vector<Inkscape::Event *> undo; /* Undo stack of reprs */
+        std::vector<Inkscape::Event *> redo; /* Redo stack of reprs */
 
 	/* Undo listener */
 	Inkscape::CompositeUndoStackObserver undoStackObservers;

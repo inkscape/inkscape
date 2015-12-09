@@ -53,7 +53,6 @@ SPGuide::SPGuide()
     : SPObject()
     , label(NULL)
     , locked(0)
-    , views(NULL)
     , normal_to_line(Geom::Point(0.,1.))
     , point_on_line(Geom::Point(0.,0.))
     , color(0x0000ff7f)
@@ -64,8 +63,8 @@ void SPGuide::setColor(guint32 c)
 {
     color = c;
 
-    for (GSList *l = this->views; l != NULL; l = l->next) {
-        sp_guideline_set_color(SP_GUIDELINE(l->data), this->color);
+    for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
+        sp_guideline_set_color(*it, this->color);
     }
 }
 
@@ -85,10 +84,10 @@ void SPGuide::build(SPDocument *document, Inkscape::XML::Node *repr)
 
 void SPGuide::release()
 {
-    while (this->views) {
-        sp_guideline_delete(SP_GUIDELINE(this->views->data));
-        this->views = g_slist_remove(this->views, this->views->data);
+    for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
+        sp_guideline_delete(*it);
     }
+    this->views.clear();
 
     if (this->document) {
         // Unregister ourselves
@@ -265,10 +264,11 @@ void sp_guide_create_guides_around_page(SPDesktop *dt)
 void sp_guide_delete_all_guides(SPDesktop *dt)
 {
     SPDocument *doc=dt->getDocument();
-    const GSList *current;
-    while ( (current = doc->getResourceList("guide")) ) {
-        SPGuide* guide = SP_GUIDE(current->data);
+    std::set<SPObject *> current = doc->getResourceList("guide");
+    while (!current.empty()){
+        SPGuide* guide = SP_GUIDE(*(current.begin()));
         sp_guide_remove(guide);
+        current = doc->getResourceList("guide");
     }
 
     DocumentUndo::done(doc, SP_VERB_NONE, _("Delete All Guides"));
@@ -281,14 +281,14 @@ void SPGuide::showSPGuide(SPCanvasGroup *group, GCallback handler)
 
     g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), this);
 
-    views = g_slist_prepend(views, item);
+    views.push_back(SP_GUIDELINE(item));
 }
 
 void SPGuide::showSPGuide()
 {
-    for (GSList *v = views; v != NULL; v = v->next) {
-        sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
-        sp_canvas_item_show(SP_CANVAS_ITEM(SP_GUIDELINE(v->data)->origin));
+    for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
+        sp_canvas_item_show(SP_CANVAS_ITEM(*it));
+        sp_canvas_item_show(SP_CANVAS_ITEM((*it)->origin));
     }
 }
 
@@ -296,11 +296,10 @@ void SPGuide::hideSPGuide(SPCanvas *canvas)
 {
     g_assert(canvas != NULL);
     g_assert(SP_IS_CANVAS(canvas));
-
-    for (GSList *l = views; l != NULL; l = l->next) {
-        if (canvas == SP_CANVAS_ITEM(l->data)->canvas) {
-            sp_guideline_delete(SP_GUIDELINE(l->data));
-            views = g_slist_remove(views, l->data);
+    for(std::vector<SPGuideLine *>::iterator it = this->views.begin(); it != this->views.end(); ++it) {
+        if (canvas == SP_CANVAS_ITEM(*it)->canvas) {
+            sp_guideline_delete(*it);
+            views.erase(it);
             return;
         }
     }
@@ -310,9 +309,9 @@ void SPGuide::hideSPGuide(SPCanvas *canvas)
 
 void SPGuide::hideSPGuide()
 {
-    for (GSList *v = views; v != NULL; v = v->next) {
-        sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
-        sp_canvas_item_hide(SP_CANVAS_ITEM(SP_GUIDELINE(v->data)->origin));
+    for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
+        sp_canvas_item_hide(SP_CANVAS_ITEM(*it));
+        sp_canvas_item_hide(SP_CANVAS_ITEM((*it)->origin));
     }
 }
 
@@ -321,9 +320,9 @@ void SPGuide::sensitize(SPCanvas *canvas, bool sensitive)
     g_assert(canvas != NULL);
     g_assert(SP_IS_CANVAS(canvas));
 
-    for (GSList *l = views; l != NULL; l = l->next) {
-        if (canvas == SP_CANVAS_ITEM(l->data)->canvas) {
-            sp_guideline_set_sensitive(SP_GUIDELINE(l->data), sensitive);
+    for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
+        if (canvas == SP_CANVAS_ITEM(*it)->canvas) {
+            sp_guideline_set_sensitive(*it, sensitive);
             return;
         }
     }
@@ -351,8 +350,8 @@ void SPGuide::moveto(Geom::Point const point_on_line, bool const commit)
     if(this->locked) {
         return;
     }
-    for (GSList *l = views; l != NULL; l = l->next) {
-        sp_guideline_set_position(SP_GUIDELINE(l->data), point_on_line);
+    for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
+        sp_guideline_set_position(*it, point_on_line);
     }
 
     /* Calling sp_repr_set_point must precede calling sp_item_notify_moveto in the commit
@@ -400,8 +399,8 @@ void SPGuide::set_normal(Geom::Point const normal_to_line, bool const commit)
     if(this->locked) {
         return;
     }
-    for (GSList *l = this->views; l != NULL; l = l->next) {
-        sp_guideline_set_normal(SP_GUIDELINE(l->data), normal_to_line);
+    for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
+        sp_guideline_set_normal(*it, normal_to_line);
     }
 
     /* Calling sp_repr_set_svg_point must precede calling sp_item_notify_moveto in the commit
@@ -426,8 +425,8 @@ void SPGuide::set_color(const unsigned r, const unsigned g, const unsigned b, bo
 {
     this->color = (r << 24) | (g << 16) | (b << 8) | 0x7f;
 
-    if (views) {
-        sp_guideline_set_color(SP_GUIDELINE(views->data), this->color);
+    if (! views.empty()) {
+        sp_guideline_set_color(views[0], this->color);
     }
 
     if (commit) {
@@ -441,8 +440,8 @@ void SPGuide::set_color(const unsigned r, const unsigned g, const unsigned b, bo
 void SPGuide::set_locked(const bool locked, bool const commit)
 {
     this->locked = locked;
-    if (views) {
-        sp_guideline_set_locked(SP_GUIDELINE(views->data), locked);
+    if ( !views.empty() ) {
+        sp_guideline_set_locked(views[0], locked);
     }
 
     if (commit) {
@@ -452,8 +451,8 @@ void SPGuide::set_locked(const bool locked, bool const commit)
 
 void SPGuide::set_label(const char* label, bool const commit)
 {
-    if (views) {
-        sp_guideline_set_label(SP_GUIDELINE(views->data), label);
+    if (!views.empty()) {
+        sp_guideline_set_label(views[0], label);
     }
 
     if (commit) {

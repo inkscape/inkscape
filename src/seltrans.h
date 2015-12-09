@@ -34,7 +34,6 @@ class  SPDesktop;
 struct SPCanvasItem;
 struct SPCtrlLine;
 struct SPSelTransHandle;
-typedef struct _GSList GSList;
 
 namespace Inkscape {
 

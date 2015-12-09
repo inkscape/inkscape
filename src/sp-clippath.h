@@ -19,7 +19,6 @@
 #define SP_IS_CLIPPATH(obj) (dynamic_cast<const SPClipPath*>((SPObject*)obj) != NULL)
 
 struct SPClipPathView;
-typedef struct _GSList GSList;
 
 #include <cstdio>
 

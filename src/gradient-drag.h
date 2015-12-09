@@ -20,6 +20,7 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <vector>
+#include <set>
 #include <glib.h>
 #include <glibmm/ustring.h>
 
@@ -86,7 +87,7 @@ struct GrDragger {
     // position of the knot before it began to drag; updated when released
     Geom::Point point_original;
 
-    GSList *draggables;
+    std::vector<GrDraggable *> draggables;
 
     void addDraggable(GrDraggable *draggable);
 
@@ -123,6 +124,7 @@ private:
     sigc::connection _ungrabbed_connection;
 };
 
+struct SPCtrlLine;
 /**
 This is the root class of the gradient dragging machinery. It holds lists of GrDraggers
 and of lines (simple canvas items). It also remembers one of the draggers as selected.
@@ -133,20 +135,21 @@ public: // FIXME: make more of this private!
     GrDrag(SPDesktop *desktop);
     virtual ~GrDrag();
 
-    bool isNonEmpty() {return (draggers != NULL);}
-    bool hasSelection() {return (selected != NULL);}
-    guint numSelected() {return (selected? g_list_length(selected) : 0);}
-    guint numDraggers() {return (draggers? g_list_length(draggers) : 0);}
+    bool isNonEmpty() {return !draggers.empty();}
+    bool hasSelection() {return !selected.empty();}
+    guint numSelected() {return selected.size();}
+    guint numDraggers() {return draggers.size();}
 
     guint singleSelectedDraggerNumDraggables() {
-        return (selected? g_slist_length(( static_cast<GrDragger *>(selected->data))->draggables) : 0);
+        return (selected.empty()? 0 : (*(selected.begin()))->draggables.size() );
     }
 
     guint singleSelectedDraggerSingleDraggableType() {
-        return (selected? (static_cast<GrDraggable*>((static_cast<GrDragger*>(selected->data))->draggables->data))->point_type : 0);}
+        return (selected.empty() ? 0 : ((*(selected.begin()))->draggables[0]->point_type)); 
+    }
 
     // especially the selection must be private, fix gradient-context to remove direct access to it
-    GList *selected; // list of GrDragger*
+    std::set<GrDragger *> selected; // list of GrDragger*
     void setSelected(GrDragger *dragger, bool add_to_selection = false, bool override = true);
     void setDeselected(GrDragger *dragger);
     void deselectAll();
@@ -178,8 +181,8 @@ public: // FIXME: make more of this private!
     std::vector<double> hor_levels;
     std::vector<double> vert_levels;
 
-    GList *draggers;
-    GSList *lines;
+    std::vector<GrDragger *> draggers;
+    std::vector<SPCtrlLine *> lines;
 
     void updateDraggers();
     void updateLines();

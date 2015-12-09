@@ -16,7 +16,6 @@
 
 #include <list>
 
-typedef struct _GSList GSList;
 class SPItem;
 
 void graphlayout(std::vector<SPItem*> const &items);

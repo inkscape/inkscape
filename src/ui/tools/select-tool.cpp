@@ -89,10 +89,6 @@ SelectTool::SelectTool()
     , button_press_shift(false)
     , button_press_ctrl(false)
     , button_press_alt(false)
-    , cycling_items(NULL)
-    , cycling_items_cmp(NULL)
-    , cycling_items_selected_before(NULL)
-    , cycling_cur_item(NULL)
     , cycling_wrap(true)
     , item(NULL)
     , grabbed(NULL)
@@ -390,16 +386,16 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
 }
 
 void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *selection, GdkEventScroll *scroll_event, bool shift_pressed) {
-    if (!this->cycling_cur_item) {
+    if (this->cycling_cur_item == this->cycling_items.end()) {
         return;
     }
 
     Inkscape::DrawingItem *arenaitem;
-    SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(cycling_cur_item->data));
+    SPItem *item = *cycling_cur_item;
     g_assert(item != NULL);
 
     // Deactivate current item
-    if (!g_list_find(this->cycling_items_selected_before, item) && selection->includes(item)) {
+    if (std::find(cycling_items_selected_before.begin(), cycling_items_selected_before.end(), item) == cycling_items_selected_before.end() && selection->includes(item)) {
         selection->remove(item);
     }
 
@@ -407,20 +403,20 @@ void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *sele
     arenaitem->setOpacity(0.3);
 
     // Find next item and activate it
-    GList *next;
+    std::vector<SPItem *>::iterator next = this->cycling_cur_item;
     if (scroll_event->direction == GDK_SCROLL_UP) {
-        next = this->cycling_cur_item->next;
-        if (next == NULL && this->cycling_wrap)
-            next = this->cycling_items;
+        next++;
+        if (next == this->cycling_items.end() && this->cycling_wrap)
+            next = this->cycling_items.begin();
     } else {
-        next = this->cycling_cur_item->prev;
-        if (next == NULL && this->cycling_wrap)
-            next = g_list_last(this->cycling_items);
+        if(next == this->cycling_items.begin())
+            next = this->cycling_items.end();
+        next--;
     }
 
-    if (next) {
+    if (next!=this->cycling_items.end()) {
         this->cycling_cur_item = next;
-        item = dynamic_cast<SPItem *>(static_cast<SPObject *>(this->cycling_cur_item->data));
+        item = *next;
         g_assert(item != NULL);
     }
 
@@ -435,8 +431,8 @@ void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *sele
 }
 
 void SelectTool::sp_select_context_reset_opacities() {
-    for (GList *l = this->cycling_items; l != NULL; l = g_list_next(l)) {
-        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l->data));
+    for (std::vector<SPItem *>::const_iterator l = this->cycling_items.begin(); l != this->cycling_items.end(); ++l ) {
+        SPItem *item = *l;
         if (item) {
             Inkscape::DrawingItem *arenaitem = item->get_arenaitem(desktop->dkey);
             arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(item->style->opacity.value));
@@ -445,14 +441,10 @@ void SelectTool::sp_select_context_reset_opacities() {
         }
     }
 
-    g_list_free(this->cycling_items);
-    g_list_free(this->cycling_items_selected_before);
-    g_list_free(this->cycling_items_cmp);
-
-    this->cycling_items = NULL;
-    this->cycling_items_selected_before = NULL;
-    this->cycling_cur_item = NULL;
-    this->cycling_items_cmp = NULL;
+    this->cycling_items.clear();
+    this->cycling_items_selected_before.clear();
+    this->cycling_cur_item = this->cycling_items.end();
+    this->cycling_items_cmp.clear();
 }
 
 bool SelectTool::root_handler(GdkEvent* event) {
@@ -819,70 +811,57 @@ bool SelectTool::root_handler(GdkEvent* event) {
                 SPItem *item = desktop->getItemAtPoint(p, true, NULL);
 
                 // Save pointer to current cycle-item so that we can find it again later, in the freshly built list
-                SPItem *tmp_cur_item = this->cycling_cur_item ? dynamic_cast<SPItem *>(static_cast<SPObject *>(this->cycling_cur_item->data)) : NULL;
-                g_list_free(this->cycling_items);
-                this->cycling_items = NULL;
-                this->cycling_cur_item = NULL;
-
+                SPItem *tmp_cur_item = this->cycling_cur_item!=this->cycling_items.end() ? (*(this->cycling_cur_item)) : NULL;
+                this->cycling_items.clear();
+                this->cycling_cur_item = this->cycling_items.end();
                 while(item != NULL) {
-                    this->cycling_items = g_list_append(this->cycling_items, item);
+                    this->cycling_items.push_back(item);
                     item = desktop->getItemAtPoint(p, true, item);
                 }
 
                 /* Compare current item list with item list during previous scroll ... */
-                GList *l1, *l2;
-                bool item_lists_differ = false;
-
-                // Note that we can do an 'or' comparison in the loop because it is safe to call g_list_next with a NULL pointer.
-                for (l1 = this->cycling_items, l2 = this->cycling_items_cmp; l1 != NULL || l2 != NULL; l1 = g_list_next(l1), l2 = g_list_next(l2)) {
-                    if ((l1 !=NULL && l2 == NULL) || (l1 == NULL && l2 != NULL) || (l1->data != l2->data)) {
-                        item_lists_differ = true;
-                        break;
-                    }
-                }
+                bool item_lists_differ = this->cycling_items != this->cycling_items_cmp;
 
                 /* If list of items under mouse pointer hasn't changed ... */
                 if (!item_lists_differ) {
                     // ... find current item in the freshly built list and continue cycling ...
                     // TODO: This wouldn't be necessary if cycling_cur_item pointed to an element of cycling_items_cmp instead
-                    this->cycling_cur_item = g_list_find(this->cycling_items, tmp_cur_item);
-                    g_assert(this->cycling_cur_item != NULL || this->cycling_items == NULL);
+                    this->cycling_cur_item = std::find(this->cycling_items.begin(), this->cycling_items.end(), tmp_cur_item);
+                    g_assert(this->cycling_cur_item != this->cycling_items.end() || this->cycling_items.empty());
                 } else {
                     // ... otherwise reset opacities for outdated items ...
                     Inkscape::DrawingItem *arenaitem;
 
-                    for(GList *l = this->cycling_items_cmp; l != NULL; l = l->next) {
-                        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l->data));
+                    for (std::vector<SPItem *>::const_iterator l = this->cycling_items_cmp.begin(); l != this->cycling_items_cmp.end(); ++l) {
+                        SPItem *item = *l;
                         if (item) {
                             arenaitem = item->get_arenaitem(desktop->dkey);
                             arenaitem->setOpacity(1.0);
                             //if (!shift_pressed && !g_list_find(this->cycling_items_selected_before, item) && selection->includes(item))
-                            if (!g_list_find(this->cycling_items_selected_before, item) && selection->includes(item)) {
+                            if (std::find(this->cycling_items_selected_before.begin(),this->cycling_items_selected_before.end(), item)==this->cycling_items_selected_before.end() && selection->includes(item)) {
                                 selection->remove(item);
                             }
                         }
                     }
 
                     // ... clear the lists ...
-                    g_list_free(this->cycling_items_cmp);
-                    g_list_free(this->cycling_items_selected_before);
 
-                    this->cycling_items_cmp = NULL;
-                    this->cycling_items_selected_before = NULL;
-                    this->cycling_cur_item = NULL;
+                    this->cycling_items_cmp.clear();
+                    this->cycling_items_selected_before.clear();
+                    this->cycling_cur_item = this->cycling_items.end();
 
                     // ... and rebuild them with the new items.
-                    this->cycling_items_cmp = g_list_copy(this->cycling_items);
+                    this->cycling_items_cmp = (this->cycling_items);
 
-                    for(GList *l = this->cycling_items; l != NULL; l = l->next) {
-                        SPItem *item = dynamic_cast<SPItem *>(static_cast<SPObject *>(l->data));
+                    for(std::vector<SPItem *>::const_iterator l = this->cycling_items.begin(); l != this->cycling_items.end(); ++l) {
+                        SPItem *item =*l;
                         if (item) {
                             arenaitem = item->get_arenaitem(desktop->dkey);
                             arenaitem->setOpacity(0.3);
 
                             if (selection->includes(item)) {
                                 // already selected items are stored separately, too
-                                this->cycling_items_selected_before = g_list_append(this->cycling_items_selected_before, item);
+                                this->cycling_items_selected_before.push_back(item);
                             }
                         } else {
                             g_assert_not_reached();
@@ -890,7 +869,8 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     }
 
                     // set the current item to the bottommost one so that the cycling step below re-starts at the top
-                    this->cycling_cur_item = g_list_last(this->cycling_items);
+                    this->cycling_cur_item = this->cycling_items.end();
+                    this->cycling_cur_item--;
                 }
 
                 this->cycling_wrap = prefs->getBool("/options/selection/cycleWrap", true);

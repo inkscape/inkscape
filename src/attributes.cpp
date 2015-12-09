@@ -536,21 +536,13 @@ static SPStyleProp const props[] = {
 unsigned
 sp_attribute_lookup(gchar const *key)
 {
-    static GHashTable *propdict = NULL;
-
-    if (!propdict) {
-        unsigned int i;
-        propdict = g_hash_table_new(g_str_hash, g_str_equal);
-        for (i = 1; i < n_attrs; i++) {
-            g_assert(props[i].code == static_cast< gint >(i) );
-            // If this g_assert fails, then the sort order of SPAttributeEnum does not match the order in props[]!
-            g_hash_table_insert(propdict,
-                                const_cast<void *>(static_cast<void const *>(props[i].name)),
-                                GINT_TO_POINTER(props[i].code));
-        }
+    for (unsigned int i = 1; i < n_attrs; i++) {
+        g_assert(props[i].code == static_cast< gint >(i) );
+        // If this g_assert fails, then the sort order of SPAttributeEnum does not match the order in props[]!
+        if(g_str_equal(const_cast<void *>(static_cast<void const *>(props[i].name)), key))
+            return GPOINTER_TO_UINT(GINT_TO_POINTER(props[i].code));
     }
-
-    return GPOINTER_TO_UINT(g_hash_table_lookup(propdict, key));
+    return SP_ATTR_INVALID;
 }
 
 unsigned char const *
