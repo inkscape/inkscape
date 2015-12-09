@@ -71,9 +71,7 @@
 
 #include "verbs.h"
 #if GTK_CHECK_VERSION(3,0,0)
-# include <gtkmm/widget.h>
 # include <gtkmm/cssprovider.h>
-# include <gtkmm/styleproperty.h>
 #endif
 #include <gtkmm/paned.h>
 #include <gtkmm/messagedialog.h>
