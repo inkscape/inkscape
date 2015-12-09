@@ -35,7 +35,6 @@
 #include "sp-item-transform.h"
 #include "macros.h"
 #include "sp-item.h"
-#include "util/glib-list-iterators.h"
 #include "ui/icon-names.h"
 #include "widgets/icon.h"
 

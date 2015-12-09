@@ -24,7 +24,6 @@
 
 #include "selection.h"
 #include "sp-object.h"
-#include "util/glib-list-iterators.h"
 
 #include "extension/effect.h"
 #include "extension/system.h"

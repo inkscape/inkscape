@@ -22,8 +22,6 @@
 #include "path-chemistry.h"
 #include "sp-item.h"
 
-#include "util/glib-list-iterators.h"
-
 #include "extension/effect.h"
 #include "extension/system.h"
 

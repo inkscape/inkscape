@@ -53,7 +53,6 @@
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "sp-lpe-item.h"
-#include "util/glib-list-iterators.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::UI::ToolboxFactory;

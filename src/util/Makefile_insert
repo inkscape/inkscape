@@ -25,7 +25,6 @@ util_libutil_a_SOURCES = \
 	util/format.h	\
 	util/forward-pointer-iterator.h \
 	util/function.h \
-	util/glib-list-iterators.h \
 	util/list.h \
 	util/list-container.h \
 	util/list-copy.h \

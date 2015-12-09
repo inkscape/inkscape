@@ -42,7 +42,6 @@
 #include "xml/node.h"
 #include "xml/attribute-record.h"
 
-#include "util/glib-list-iterators.h"
 #include "path-prefix.h"
 
 #ifdef WIN32

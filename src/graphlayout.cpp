@@ -25,7 +25,6 @@
 #include "desktop.h"
 #include "inkscape.h"
 #include "sp-namedview.h"
-#include "util/glib-list-iterators.h"
 #include "graphlayout.h"
 #include "sp-path.h"
 #include "sp-item.h"
