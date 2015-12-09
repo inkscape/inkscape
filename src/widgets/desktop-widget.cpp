@@ -70,6 +70,11 @@
 #include "widget-sizes.h"
 
 #include "verbs.h"
+#if GTK_CHECK_VERSION(3,0,0)
+# include <gtkmm/widget.h>
+# include <gtkmm/cssprovider.h>
+# include <gtkmm/styleproperty.h>
+#endif
 #include <gtkmm/paned.h>
 #include <gtkmm/messagedialog.h>
 
@@ -391,21 +396,19 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->tool_toolbox = ToolboxFactory::createToolToolbox();
     ToolboxFactory::setOrientation( dtw->tool_toolbox, GTK_ORIENTATION_VERTICAL );
     gtk_box_pack_start( GTK_BOX(dtw->hbox), dtw->tool_toolbox, FALSE, TRUE, 0 );
-    /* Lock all guides */
-#if GTK_CHECK_VERSION(3,0,0)
-    dtw->lock_and_hruler = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-#else
-    dtw->lock_and_hruler = gtk_hbox_new (FALSE, 0);
-#endif
     // Lock guides button
     dtw->guides_lock = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                                SP_BUTTON_TYPE_TOGGLE,
                                                NULL,
                                                INKSCAPE_ICON("object-locked"),
                                                _("Toggle lock of all guides in the document"));
-
-    gtk_box_pack_start (GTK_BOX (dtw->lock_and_hruler), dtw->guides_lock, FALSE, FALSE, 0);
-    g_signal_connect (G_OBJECT (dtw->guides_lock), "toggled", G_CALLBACK (sp_update_guides_lock), dtw);
+#if GTK_CHECK_VERSION(3,0,0)
+    Glib::RefPtr<Gtk::CssProvider> guides_lock_style_provider = Gtk::CssProvider::create();
+    guides_lock_style_provider->load_from_data("GtkWidget { padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; }");
+    Gtk::Widget * wnd = Glib::wrap(dtw->guides_lock);
+    Glib::RefPtr<Gtk::StyleContext> context = wnd->get_style_context();
+    context->add_provider(guides_lock_style_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+#endif
 
     /* Horizontal ruler */
     GtkWidget *eventbox = gtk_event_box_new ();
@@ -415,7 +418,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     sp_ruler_set_unit(SP_RULER(dtw->hruler), pt);
     gtk_widget_set_tooltip_text (dtw->hruler_box, gettext(pt->name_plural.c_str()));
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->hruler);
-    gtk_container_add (GTK_CONTAINER (dtw->lock_and_hruler), eventbox);
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_hruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "button_release_event", G_CALLBACK (sp_dt_hruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "motion_notify_event", G_CALLBACK (sp_dt_hruler_event), dtw);
@@ -424,18 +426,24 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     GtkWidget *tbl = gtk_grid_new();
     dtw->canvas_tbl = gtk_grid_new();
     
-    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), dtw->lock_and_hruler, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), dtw->guides_lock, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), eventbox, 1, 0, 1, 1);
 #else
     GtkWidget *tbl = gtk_table_new(2, 3, FALSE);
     dtw->canvas_tbl = gtk_table_new(3, 3, FALSE);
    
     gtk_table_attach(GTK_TABLE(dtw->canvas_tbl),
-                     dtw->lock_and_hruler,
-                     0, 2,     0, 1, 
+                     dtw->guides_lock,
+                     0, 1,     0, 1, 
 		     GTK_FILL, GTK_FILL, 
 		     0,        0);
+    gtk_table_attach(GTK_TABLE(dtw->canvas_tbl),
+                 eventbox,
+                 1, 2,     0, 1, 
+	     GTK_FILL, GTK_FILL, 
+	     0,        0);
 #endif
-    
+    g_signal_connect (G_OBJECT (dtw->guides_lock), "toggled", G_CALLBACK (sp_update_guides_lock), dtw);
     gtk_box_pack_start( GTK_BOX(dtw->hbox), tbl, TRUE, TRUE, 1 );
 
     /* Vertical ruler */
@@ -1593,10 +1601,12 @@ void SPDesktopWidget::layoutWidgets()
     }
 
     if (!prefs->getBool(pref_root + "rulers/state", true)) {
-        gtk_widget_hide (dtw->lock_and_hruler);
+        gtk_widget_hide (dtw->guides_lock);
+        gtk_widget_hide (dtw->hruler);
         gtk_widget_hide (dtw->vruler);
     } else {
-        gtk_widget_show_all (dtw->lock_and_hruler);
+        gtk_widget_show_all (dtw->guides_lock);
+        gtk_widget_show_all (dtw->hruler);
         gtk_widget_show_all (dtw->vruler);
     }
 }
@@ -2084,12 +2094,14 @@ void
 sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (gtk_widget_get_visible (dtw->lock_and_hruler)) {
-        gtk_widget_hide (dtw->lock_and_hruler);
+    if (gtk_widget_get_visible (dtw->guides_lock)) {
+        gtk_widget_hide (dtw->guides_lock);
+        gtk_widget_hide (dtw->hruler);
         gtk_widget_hide (dtw->vruler);
         prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", false);
     } else {
-        gtk_widget_show_all (dtw->lock_and_hruler);
+        gtk_widget_show_all (dtw->guides_lock);
+        gtk_widget_show_all (dtw->hruler);
         gtk_widget_show_all (dtw->vruler);
         prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", true);
     }
