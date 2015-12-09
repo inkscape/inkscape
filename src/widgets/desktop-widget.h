@@ -89,7 +89,6 @@ struct SPDesktopWidget {
     GtkWidget *hruler_box, *vruler_box; // eventboxes for setting tooltips
 
     GtkWidget *guides_lock;
-    GtkWidget *guides_lock_alignment;
     GtkWidget *sticky_zoom;
     GtkWidget *cms_adjust;
     GtkWidget *coord_status;
