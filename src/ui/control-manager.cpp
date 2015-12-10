@@ -20,7 +20,6 @@
 #include "display/sp-canvas-item.h"
 #include "display/sp-ctrlline.h"
 #include "display/sp-ctrlcurve.h"
-#include "display/sp-ctrlpoint.h"
 #include "preferences.h"
 
 using Inkscape::ControlFlags;
@@ -139,8 +138,6 @@ ControlManagerImpl::ControlManagerImpl(ControlManager &manager) :
     _typeTable[CTRL_TYPE_NODE_SMOOTH] = SP_TYPE_CTRL;
     _typeTable[CTRL_TYPE_NODE_SYMETRICAL] = SP_TYPE_CTRL;
 
-    _typeTable[CTRL_TYPE_ORIGIN] = SP_TYPE_CTRLPOINT;
-
     _typeTable[CTRL_TYPE_LINE] = SP_TYPE_CTRLLINE;
 
 
@@ -181,10 +178,6 @@ ControlManagerImpl::ControlManagerImpl(ControlManager &manager) :
         _sizeTable[CTRL_TYPE_ROTATE] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
         _sizeTable[CTRL_TYPE_SIZER] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
         _sizeTable[CTRL_TYPE_SHAPER] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
-    }
-    {
-        int sizes[] = {2, 3, 4, 7, 8, 9, 10};
-        _sizeTable[CTRL_TYPE_ORIGIN] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
     }
     {
         int sizes[] = {5, 7, 9, 10, 11, 12, 13};
@@ -258,10 +251,6 @@ SPCanvasItem *ControlManagerImpl::createControl(SPCanvasGroup *parent, ControlTy
                                       NULL);
             break;
         }
-        case CTRL_TYPE_ORIGIN:
-            item = sp_canvas_item_new(parent, SP_TYPE_CTRLPOINT,
-                                      NULL);
-            break;
         case CTRL_TYPE_INVISIPOINT:
             item = sp_canvas_item_new(parent, SP_TYPE_CTRL,
                                       "shape", SP_CTRL_SHAPE_SQUARE,
@@ -297,18 +286,11 @@ void ControlManagerImpl::updateItem(SPCanvasItem *item)
     if (item) {
         double target = _sizeTable[item->ctrlType][_size - 1];
 
-        if ((item->ctrlType == CTRL_TYPE_ORIGIN) && SP_IS_CTRLPOINT(item)) {
-            if (SP_CTRLPOINT(item)->is_circle ) {
-                sp_ctrlpoint_set_lenght(SP_CTRLPOINT(item), target );
-            } else {
-                sp_ctrlpoint_set_lenght(SP_CTRLPOINT(item), target + 2 );
-            }
-        } else {
-            if (_sizeChangers.count(item->ctrlType) && _manager.isSelected(item)) {
-                target += 2;
-            }
-            g_object_set(item, "size", target, NULL);
+        if (_sizeChangers.count(item->ctrlType) && _manager.isSelected(item)) {
+            target += 2;
         }
+        g_object_set(item, "size", target, NULL);
+
         sp_canvas_item_request_update(item);
     }
 }

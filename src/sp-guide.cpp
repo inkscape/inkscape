@@ -288,7 +288,6 @@ void SPGuide::showSPGuide()
 {
     for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
         sp_canvas_item_show(SP_CANVAS_ITEM(*it));
-        sp_canvas_item_show(SP_CANVAS_ITEM((*it)->origin));
     }
 }
 
@@ -311,7 +310,6 @@ void SPGuide::hideSPGuide()
 {
     for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
         sp_canvas_item_hide(SP_CANVAS_ITEM(*it));
-        sp_canvas_item_hide(SP_CANVAS_ITEM((*it)->origin));
     }
 }
 
