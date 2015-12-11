@@ -69,16 +69,11 @@ static void sp_guideline_destroy(SPCanvasItem *object)
 {
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_GUIDELINE (object));
-    //g_return_if_fail (SP_GUIDELINE(object)->origin != NULL);
-    //g_return_if_fail (SP_IS_CTRLPOINT(SP_GUIDELINE(object)->origin));
 
     SPGuideLine *gl = SP_GUIDELINE(object);
 
     if (gl->origin != NULL && SP_IS_KNOT(gl->origin)) {
         knot_unref(gl->origin);
-    } else {
-        // FIXME: This branch shouldn't be reached (although it seems to be harmless).
-        //g_error("Why can it be that gl->origin is not a valid SPCtrlPoint?\n");
     }
 
     if (gl->label) {
@@ -233,16 +228,7 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, char* label, Geom::Point p
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_GUIDELINE, NULL);
     SPGuideLine *gl = SP_GUIDELINE(item);
-    if ( SP_ACTIVE_DESKTOP ){
-        gl->origin = new SPKnot(SP_ACTIVE_DESKTOP, "No tip yet!! XXX");
 
-        gl->origin->setAnchor(SP_ANCHOR_CENTER);
-        gl->origin->setMode(SP_CTRL_MODE_COLOR);
-        gl->origin->setFill(0xffffff80, 0xffffffff, 0xffffff80);
-        gl->origin->moveto(point_on_line);
-        gl->origin->request_signal.connect(sigc::bind(sigc::ptr_fun(sp_guideline_origin_move), gl));
-        gl->origin->updateCtrl();
-    }
     normal.normalize();
     gl->label = label;
     gl->locked = false;
