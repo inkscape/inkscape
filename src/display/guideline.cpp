@@ -180,6 +180,15 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
 
     gl->affine = affine;
 
+    if (!gl->origin){
+        gl->origin = new SPKnot(SP_ACTIVE_DESKTOP, "No tip yet!! XXX");
+
+        gl->origin->setAnchor(SP_ANCHOR_CENTER);
+        gl->origin->setMode(SP_CTRL_MODE_COLOR);
+        gl->origin->setFill(0xffffff80, 0xffffffff, 0xffffff80);
+        gl->origin->request_signal.connect(sigc::bind(sigc::ptr_fun(sp_guideline_origin_move), gl));
+    }
+
     if (gl->locked) {
       gl->origin->setStroke(0x0000ff88, 0x0000ff88, 0x0000ff88);
       gl->origin->setShape(SP_CTRL_SHAPE_CROSS);
@@ -191,7 +200,7 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
     }
     gl->origin->moveto(gl->point_on_line);
     gl->origin->updateCtrl();
-    
+
     Geom::Point pol_transformed = gl->point_on_line*affine;
     if (gl->is_horizontal()) {
         sp_canvas_update_bbox (item, -1000000, round(pol_transformed[Geom::Y] - 16), 1000000, round(pol_transformed[Geom::Y] + 1));
@@ -224,15 +233,16 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, char* label, Geom::Point p
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_GUIDELINE, NULL);
     SPGuideLine *gl = SP_GUIDELINE(item);
-    gl->origin = new SPKnot(SP_ACTIVE_DESKTOP, "No tip yet!! XXX");
+    if ( SP_ACTIVE_DESKTOP ){
+        gl->origin = new SPKnot(SP_ACTIVE_DESKTOP, "No tip yet!! XXX");
 
-    gl->origin->setAnchor(SP_ANCHOR_CENTER);
-    gl->origin->setMode(SP_CTRL_MODE_COLOR);
-    gl->origin->setFill(0xffffff80, 0xffffffff, 0xffffff80);
-    gl->origin->moveto(point_on_line);
-    gl->origin->request_signal.connect(sigc::bind(sigc::ptr_fun(sp_guideline_origin_move), gl));
-    gl->origin->updateCtrl();
-
+        gl->origin->setAnchor(SP_ANCHOR_CENTER);
+        gl->origin->setMode(SP_CTRL_MODE_COLOR);
+        gl->origin->setFill(0xffffff80, 0xffffffff, 0xffffff80);
+        gl->origin->moveto(point_on_line);
+        gl->origin->request_signal.connect(sigc::bind(sigc::ptr_fun(sp_guideline_origin_move), gl));
+        gl->origin->updateCtrl();
+    }
     normal.normalize();
     gl->label = label;
     gl->locked = false;
