@@ -172,31 +172,32 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
     if ((SP_CANVAS_ITEM_CLASS(sp_guideline_parent_class))->update) {
         (SP_CANVAS_ITEM_CLASS(sp_guideline_parent_class))->update(item, affine, flags);
     }
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop && item->visible) {
+        if (!gl->origin) {
+            gl->origin = new SPKnot(desktop, "No tip yet!! XXX");
+
+            gl->origin->setAnchor(SP_ANCHOR_CENTER);
+            gl->origin->setMode(SP_CTRL_MODE_COLOR);
+            gl->origin->setFill(0xffffff80, 0xffffffff, 0xffffff80);
+            gl->origin->request_signal.connect(sigc::bind(sigc::ptr_fun(sp_guideline_origin_move), gl));
+        }
+
+        if (gl->locked) {
+          gl->origin->setStroke(0x0000ff88, 0x0000ff88, 0x0000ff88);
+          gl->origin->setShape(SP_CTRL_SHAPE_CROSS);
+          gl->origin->setSize(6);
+        } else {
+          gl->origin->setStroke(0xff000088, 0xff0000ff, 0xff0000ff);
+          gl->origin->setShape(SP_CTRL_SHAPE_CIRCLE);
+          gl->origin->setSize(4);
+        }
+        gl->origin->moveto(gl->point_on_line);
+        gl->origin->updateCtrl();
+    }
 
     gl->affine = affine;
-
-    if (!gl->origin){
-        gl->origin = new SPKnot(SP_ACTIVE_DESKTOP, "No tip yet!! XXX");
-
-        gl->origin->setAnchor(SP_ANCHOR_CENTER);
-        gl->origin->setMode(SP_CTRL_MODE_COLOR);
-        gl->origin->setFill(0xffffff80, 0xffffffff, 0xffffff80);
-        gl->origin->request_signal.connect(sigc::bind(sigc::ptr_fun(sp_guideline_origin_move), gl));
-    }
-
-    if (gl->locked) {
-      gl->origin->setStroke(0x0000ff88, 0x0000ff88, 0x0000ff88);
-      gl->origin->setShape(SP_CTRL_SHAPE_CROSS);
-      gl->origin->setSize(6);
-    } else {
-      gl->origin->setStroke(0xff000088, 0xff0000ff, 0xff0000ff);
-      gl->origin->setShape(SP_CTRL_SHAPE_CIRCLE);
-      gl->origin->setSize(4);
-    }
-    gl->origin->moveto(gl->point_on_line);
-    gl->origin->updateCtrl();
-
-    Geom::Point pol_transformed = gl->point_on_line*affine;
+    Geom::Point pol_transformed = gl->point_on_line * affine;
     if (gl->is_horizontal()) {
         sp_canvas_update_bbox (item, -1000000, round(pol_transformed[Geom::Y] - 16), 1000000, round(pol_transformed[Geom::Y] + 1));
     } else if (gl->is_vertical()) {
@@ -205,7 +206,6 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
         //TODO: labels in angled guidelines are not showing up for some reason.
         sp_canvas_update_bbox (item, -1000000, -1000000, 1000000, 1000000);
     }
-
 }
 
 // Returns 0.0 if point is on the guideline
