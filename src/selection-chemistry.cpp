@@ -1341,6 +1341,7 @@ void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
     bool no_more = false; // Set to true, if no more layers above
     SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
     if (next) {
+        selection->clear();
         sp_selection_change_layer_maintain_clones(items,next);
         std::vector<Inkscape::XML::Node*> temp_clip;
         sp_selection_copy_impl(items, temp_clip, dt->doc()->getReprDoc());
@@ -1384,6 +1385,7 @@ void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
     bool no_more = false; // Set to true, if no more layers below
     SPObject *next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
     if (next) {
+        selection->clear();
         sp_selection_change_layer_maintain_clones(items,next);
         std::vector<Inkscape::XML::Node*> temp_clip;
         sp_selection_copy_impl(items, temp_clip, dt->doc()->getReprDoc()); // we're in the same doc, so no need to copy defs
@@ -1424,6 +1426,7 @@ void sp_selection_to_layer(SPDesktop *dt, SPObject *moveto, bool suppressDone)
     std::vector<SPItem*> items(selection->itemList());
 
     if (moveto) {
+        selection->clear();
         sp_selection_change_layer_maintain_clones(items,moveto);
         std::vector<Inkscape::XML::Node*> temp_clip;
         sp_selection_copy_impl(items, temp_clip, dt->doc()->getReprDoc()); // we're in the same doc, so no need to copy defs
