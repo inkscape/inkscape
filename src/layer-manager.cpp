@@ -194,9 +194,10 @@ Glib::ustring LayerManager::getNextLayerName( SPObject* obj, gchar const *label)
     std::set<SPObject *> layers = _document->getResourceList("layer");
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
-        std::set<SPObject *>::iterator iter = layers.find(obj);
-        if (iter != layers.end())
+        for (std::set<SPObject *>::const_iterator iter = layers.begin(); iter != layers.end(); ++iter) { 
+            if (*iter != obj)
                 currentNames.insert( (*iter)->label() ? Glib::ustring((*iter)->label()) : Glib::ustring() );
+        }
     }
 
     // Not sure if we need to cap it, but we'll just be paranoid for the moment
