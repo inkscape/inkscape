@@ -116,7 +116,9 @@ G_END_DECLS
 void sp_canvas_item_affine_absolute(SPCanvasItem *item, Geom::Affine const &aff);
 
 void sp_canvas_item_raise(SPCanvasItem *item, int positions);
+void sp_canvas_item_raise_to_top(SPCanvasItem *item);
 void sp_canvas_item_lower(SPCanvasItem *item, int positions);
+void sp_canvas_item_lower_to_bottom(SPCanvasItem *item);
 bool sp_canvas_item_is_visible(SPCanvasItem *item);
 void sp_canvas_item_show(SPCanvasItem *item);
 void sp_canvas_item_hide(SPCanvasItem *item);

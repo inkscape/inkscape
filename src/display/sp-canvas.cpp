@@ -58,7 +58,7 @@ struct SPCanvasGroupClass {
 };
 
 /**
- * A group of Items.
+ * A group of items.
  */
 struct SPCanvasGroup {
     /**
@@ -109,8 +109,8 @@ struct SPCanvasGroup {
 
     SPCanvasItem item;
 
-    GList *items;
-    GList *last;
+    std::list<SPCanvasItem *> *items;
+
 };
 
 /**
@@ -165,13 +165,6 @@ static guint       object_signals[LAST_SIGNAL] = { 0 };
  * We make it static for encapsulation reasons since it was nowhere used.
  */
 void sp_canvas_item_construct(SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args);
-
-/**
- * Convenience function to reorder items in a group's child list.
- *
- * This puts the specified link after the "before" link.
- */
-void put_item_after(GList *link, GList *before);
 
 /**
  * Helper that returns true iff item is descendant of parent.
@@ -590,64 +583,6 @@ void sp_canvas_item_affine_absolute(SPCanvasItem *item, Geom::Affine const &affi
     item->canvas->need_repick = TRUE;
 }
 
-namespace {
-
-void put_item_after(GList *link, GList *before)
-{
-    if (link == before) {
-        return;
-    }
-
-    SPCanvasGroup *parent = SP_CANVAS_GROUP (SP_CANVAS_ITEM (link->data)->parent);
-
-    if (before == NULL) {
-        if (link == parent->items) {
-            return;
-        }
-
-        link->prev->next = link->next;
-
-        if (link->next) {
-            link->next->prev = link->prev;
-        } else {
-            parent->last = link->prev;
-        }
-
-        link->prev = before;
-        link->next = parent->items;
-        link->next->prev = link;
-        parent->items = link;
-    } else {
-        if ((link == parent->last) && (before == parent->last->prev)) {
-            return;
-        }
-
-        if (link->next) {
-            link->next->prev = link->prev;
-        }
-
-        if (link->prev) {
-            link->prev->next = link->next;
-        } else {
-            parent->items = link->next;
-            parent->items->prev = NULL;
-        }
-
-        link->prev = before;
-        link->next = before->next;
-
-        link->prev->next = link;
-
-        if (link->next) {
-            link->next->prev = link;
-        } else {
-            parent->last = link;
-        }
-    }
-}
-
-} // namespace
-
 /**
  * Raises the item in its parent's stack by the specified number of positions.
  *
@@ -668,22 +603,32 @@ void sp_canvas_item_raise(SPCanvasItem *item, int positions)
     }
 
     SPCanvasGroup *parent = SP_CANVAS_GROUP (item->parent);
-    GList *link = g_list_find (parent->items, item);
-    g_assert (link != NULL);
+    std::list<SPCanvasItem *>::iterator l = std::find(parent->items->begin(),parent->items->end(), item);
+    g_assert (l != parent->items->end());
 
-    GList *before;
-    for (before = link; positions && before; positions--)
-        before = before->next;
+    for (int i=0; i<positions && l != parent->items->end(); ++i)
+        l++;
 
-    if (!before) {
-        before = parent->last;
-    }
-
-    put_item_after (link, before);
+    parent->items->remove(item);
+    parent->items->insert(l, item);
 
     redraw_if_visible (item);
     item->canvas->need_repick = TRUE;
 }
+
+void sp_canvas_item_raise_to_top(SPCanvasItem *item) 
+{
+    g_return_if_fail (item != NULL);
+    g_return_if_fail (SP_IS_CANVAS_ITEM (item));
+    if (!item->parent)
+        return;
+    SPCanvasGroup *parent = SP_CANVAS_GROUP (item->parent);
+    parent->items->remove(item);
+    parent->items->insert(parent->items->end(),item);
+    redraw_if_visible (item);
+    item->canvas->need_repick = TRUE;
+}
+
 
 
 /**
@@ -701,26 +646,33 @@ void sp_canvas_item_lower(SPCanvasItem *item, int positions)
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
     g_return_if_fail (positions >= 1);
 
-    if (!item->parent || positions == 0) {
+    if (!item->parent || positions == 0 || item == SP_CANVAS_GROUP(item->parent)->items->front() ) {
         return;
     }
 
     SPCanvasGroup *parent = SP_CANVAS_GROUP (item->parent);
-    GList *link = g_list_find (parent->items, item);
-    g_assert (link != NULL);
+    std::list<SPCanvasItem *>::iterator l = std::find(parent->items->begin(),parent->items->end(), item);
+    g_assert (l != parent->items->end());
 
-    GList *before;
-    if (link->prev) {
-        for (before = link->prev; positions && before; positions--) {
-            before = before->prev;
-        }
-    } else {
-        before = NULL;
-    }
-
-    put_item_after (link, before);
+    for (int i=0; i<positions && l != parent->items->begin(); ++i) 
+        l--;
+    
+    parent->items->remove(item);
+    parent->items->insert(l, item);
 
     redraw_if_visible (item);
+    item->canvas->need_repick = TRUE;
+}
+void sp_canvas_item_lower_to_bottom(SPCanvasItem *item)
+{
+    g_return_if_fail (item != NULL);
+    g_return_if_fail (SP_IS_CANVAS_ITEM (item));
+    if (!item->parent)
+        return;
+    SPCanvasGroup *parent = SP_CANVAS_GROUP (item->parent);
+    parent->items->remove(item);
+    parent->items->insert(parent->items->begin(),item);
+    redraw_if_visible (item); 
     item->canvas->need_repick = TRUE;
 }
 
@@ -919,7 +871,8 @@ void sp_canvas_item_request_update(SPCanvasItem *item)
  */
 gint sp_canvas_item_order (SPCanvasItem * item)
 {
-    return g_list_index (SP_CANVAS_GROUP (item->parent)->items, item);
+    SPCanvasGroup * p = SP_CANVAS_GROUP(item->parent);
+    return std::distance(p->items->begin(), std::find(p->items->begin(), p->items->end(), item));
 }
 
 // SPCanvasGroup
@@ -936,9 +889,9 @@ static void sp_canvas_group_class_init(SPCanvasGroupClass *klass)
     item_class->viewbox_changed = SPCanvasGroup::viewboxChanged;
 }
 
-static void sp_canvas_group_init(SPCanvasGroup * /*group*/)
+static void sp_canvas_group_init(SPCanvasGroup * group)
 {
-    // Nothing here
+    group->items = new std::list<SPCanvasItem *>;
 }
 
 void SPCanvasGroup::destroy(SPCanvasItem *object)
@@ -948,13 +901,14 @@ void SPCanvasGroup::destroy(SPCanvasItem *object)
 
     SPCanvasGroup const *group = SP_CANVAS_GROUP(object);
 
-    GList *list = group->items;
-    while (list) {
-        SPCanvasItem *child = reinterpret_cast<SPCanvasItem *>(list->data);
-        list = list->next;
-
+    std::list<SPCanvasItem *> *list = group->items;
+    for (std::list<SPCanvasItem *>::iterator it = list->begin(); it != list->end(); ++it) {
+        SPCanvasItem *child = *it;
         sp_canvas_item_destroy(child);
     }
+
+    group->items->clear();
+    delete group->items;
 
     if (SP_CANVAS_ITEM_CLASS(sp_canvas_group_parent_class)->destroy) {
         (* SP_CANVAS_ITEM_CLASS(sp_canvas_group_parent_class)->destroy)(object);
@@ -966,8 +920,8 @@ void SPCanvasGroup::update(SPCanvasItem *item, Geom::Affine const &affine, unsig
     SPCanvasGroup const *group = SP_CANVAS_GROUP(item);
     Geom::OptRect bounds;
 
-    for (GList *list = group->items; list; list = list->next) {
-        SPCanvasItem *i = SP_CANVAS_ITEM(list->data);
+    for (std::list<SPCanvasItem *>::const_iterator it = group->items->begin(); it != group->items->end(); ++it) {
+        SPCanvasItem *i = *it;
 
         sp_canvas_item_invoke_update (i, affine, flags);
 
@@ -1002,9 +956,8 @@ double SPCanvasGroup::point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **ac
     *actual_item = NULL;
 
     double dist = 0.0;
-
-    for (GList *list = group->items; list; list = list->next) {
-        SPCanvasItem *child = SP_CANVAS_ITEM(list->data);
+    for (std::list<SPCanvasItem *>::const_iterator it = group->items->begin(); it != group->items->end(); ++it) {
+        SPCanvasItem *child = *it;
 
         if ((child->x1 <= x2) && (child->y1 <= y2) && (child->x2 >= x1) && (child->y2 >= y1)) {
             SPCanvasItem *point_item = NULL; // cater for incomplete item implementations
@@ -1037,8 +990,8 @@ void SPCanvasGroup::render(SPCanvasItem *item, SPCanvasBuf *buf)
 {
     SPCanvasGroup const *group = SP_CANVAS_GROUP(item);
 
-    for (GList *list = group->items; list; list = list->next) {
-        SPCanvasItem *child = SP_CANVAS_ITEM(list->data);
+    for (std::list<SPCanvasItem *>::const_iterator it = group->items->begin(); it != group->items->end(); ++it) {
+        SPCanvasItem *child = *it;
         if (child->visible) {
             if ((child->x1 < buf->rect.right()) &&
                 (child->y1 < buf->rect.bottom()) &&
@@ -1056,8 +1009,8 @@ void SPCanvasGroup::viewboxChanged(SPCanvasItem *item, Geom::IntRect const &new_
 {
     SPCanvasGroup *group = SP_CANVAS_GROUP(item);
     
-    for (GList *list = group->items; list; list = list->next) {
-        SPCanvasItem *child = SP_CANVAS_ITEM(list->data);
+    for (std::list<SPCanvasItem *>::const_iterator it = group->items->begin(); it != group->items->end(); ++it) {
+        SPCanvasItem *child = *it;
         if (child->visible) {
             if (SP_CANVAS_ITEM_GET_CLASS(child)->viewbox_changed) {
                 SP_CANVAS_ITEM_GET_CLASS(child)->viewbox_changed(child, new_area);
@@ -1071,37 +1024,21 @@ void SPCanvasGroup::add(SPCanvasItem *item)
     g_object_ref(item);
     g_object_ref_sink(item);
 
-    if (!items) {
-        items = g_list_append(items, item);
-        last = items;
-    } else {
-        last = g_list_append(last, item)->next;
-    }
+    items->push_back(item);
 
     sp_canvas_item_request_update(item);
 }
 
 void SPCanvasGroup::remove(SPCanvasItem *item)
 {
+ 
     g_return_if_fail(item != NULL);
+    items->remove(item);
 
-    for (GList *children = items; children; children = children->next) {
-        if (children->data == item) {
+    // Unparent the child
+    item->parent = NULL;
+    g_object_unref(item);
 
-            // Unparent the child
-            item->parent = NULL;
-            g_object_unref(item);
-
-            // Remove it from the list
-            if (children == last) {
-                last = children->prev;
-            }
-
-            items = g_list_remove_link(items, children);
-            g_list_free(children);
-            break;
-        }
-    }
 }
 
 static void sp_canvas_dispose            (GObject  *object);
