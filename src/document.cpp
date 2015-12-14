@@ -1039,7 +1039,7 @@ SPObject *SPDocument::getObjectById(gchar const *id) const
     	return NULL;
     }
 
-    GQuark idq = g_quark_from_string(id);
+    // GQuark idq = g_quark_from_string(id);
     std::map<std::string, SPObject *>::iterator rv = priv->iddef.find(id);
     //gpointer rv = g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq));
     if(rv != priv->iddef.end())
