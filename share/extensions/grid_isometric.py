@@ -26,6 +26,7 @@
 import inkex
 import simplestyle, sys
 from math import *
+from simpletransform import computePointInNode
 
 
 def draw_SVG_line(x1, y1, x2, y2, width, name, parent):
@@ -101,8 +102,9 @@ class Grid_Polar(inkex.Effect):
 
         #Embed grid in group
         #Put in in the centre of the current view
-        t = 'translate(' + str( self.view_center[0]- xmax/2.0) + ',' + \
-                           str( self.view_center[1]- ymax/2.0) + ')'
+        view_center = computePointInNode(list(self.view_center), self.current_layer)
+        t = 'translate(' + str( view_center[0]- xmax/2.0) + ',' + \
+                           str( view_center[1]- ymax/2.0) + ')'
         g_attribs = {inkex.addNS('label','inkscape'):'Grid_Polar:X' + \
                      str( self.options.x_divs )+':Y'+str( self.options.y_divs ),
                      'transform':t }

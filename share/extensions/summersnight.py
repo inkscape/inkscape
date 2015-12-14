@@ -24,7 +24,6 @@ import cubicsuperpath
 import inkex
 import simplepath
 import simpletransform
-import voronoi2svg
 from ffgeom import *
 
 inkex.localize()
@@ -115,7 +114,7 @@ class Project(inkex.Effect):
                 csp[0] = self.trafopoint(csp[0])
                 csp[1] = self.trafopoint(csp[1])
                 csp[2] = self.trafopoint(csp[2])
-        mat = voronoi2svg.Voronoi2svg().invertTransform(mat)
+        mat = simpletransform.invertTransform(mat)
         simpletransform.applyTransformToPath(mat, p)
         path.set('d',cubicsuperpath.formatPath(p))
 

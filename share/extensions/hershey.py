@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import hersheydata          #data file w/ Hershey font data
 import inkex
 import simplestyle
+from simpletransform import computePointInNode
 
 Debug = False
 
@@ -98,7 +99,8 @@ class Hershey( inkex.Effect ):
             w = wmax
             
         #  Translate group to center of view, approximately
-        t = 'translate(' + str( self.view_center[0] - scale*w/2) + ',' + str( self.view_center[1] ) + ')'
+        view_center = computePointInNode(list(self.view_center), self.current_layer)
+        t = 'translate(' + str( view_center[0] - scale*w/2) + ',' + str( view_center[1] ) + ')'
         if scale != 1:
             t += ' scale(' + str(scale) + ')'
         g.set( 'transform',t)

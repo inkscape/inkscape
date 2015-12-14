@@ -78,6 +78,21 @@ def parseTransform(transf,mat=[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]):
 def formatTransform(mat):
     return ("matrix(%f,%f,%f,%f,%f,%f)" % (mat[0][0], mat[1][0], mat[0][1], mat[1][1], mat[0][2], mat[1][2]))
 
+def invertTransform(mat):
+    det = mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0]
+    if det !=0:  # det is 0 only in case of 0 scaling
+        # invert the rotation/scaling part
+        a11 =  mat[1][1]/det
+        a12 = -mat[0][1]/det
+        a21 = -mat[1][0]/det
+        a22 =  mat[0][0]/det
+        # invert the translational part
+        a13 = -(a11*mat[0][2] + a12*mat[1][2])
+        a23 = -(a21*mat[0][2] + a22*mat[1][2])
+        return [[a11,a12,a13],[a21,a22,a23]]
+    else:
+        return[[0,0,-mat[0][2]],[0,0,-mat[1][2]]]
+
 def composeTransform(M1,M2):
     a11 = M1[0][0]*M2[0][0] + M1[0][1]*M2[1][0]
     a12 = M1[0][0]*M2[0][1] + M1[0][1]*M2[1][1]
@@ -235,6 +250,12 @@ def computeBBox(aList,mat=[[1,0,0],[0,1,0]]):
             
         bbox=boxunion(computeBBox(node,m),bbox)
     return bbox
+
+
+def computePointInNode(pt, node, mat=[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]):
+    if node.getparent() is not None:
+        applyTransformToPoint(invertTransform(composeParents(node, mat)), pt)
+    return pt
 
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 fileencoding=utf-8 textwidth=99

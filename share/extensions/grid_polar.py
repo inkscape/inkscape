@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex
 import simplestyle, sys
 from math import *
+from simpletransform import computePointInNode
 
 def draw_SVG_circle(r, cx, cy, width, fill, name, parent):
     style = { 'stroke': '#000000', 'stroke-width':str(width), 'fill': fill }
@@ -131,7 +132,8 @@ class Grid_Polar(inkex.Effect):
 
         # Embed grid in group
         #Put in in the centre of the current view
-        t = 'translate(' + str( self.view_center[0] ) + ',' + str( self.view_center[1] ) + ')'
+        view_center = computePointInNode(list(self.view_center), self.current_layer)
+        t = 'translate(' + str( view_center[0] ) + ',' + str( view_center[1] ) + ')'
         g_attribs = {inkex.addNS('label','inkscape'):'Grid_Polar:R' +
                                  str( self.options.r_divs )+':A'+str( self.options.a_divs ),
                      'transform':t }

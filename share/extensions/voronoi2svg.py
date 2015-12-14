@@ -171,23 +171,6 @@ class Voronoi2svg(inkex.Effect):
 
   #{{{ Transformation helpers
 
-  def invertTransform(self,mat):
-    det = mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0]
-    if det !=0: #det is 0 only in case of 0 scaling
-      #invert the rotation/scaling part
-      a11 =  mat[1][1]/det
-      a12 = -mat[0][1]/det
-      a21 = -mat[1][0]/det
-      a22 =  mat[0][0]/det
-
-      #invert the translational part
-      a13 = -(a11*mat[0][2] + a12*mat[1][2])
-      a23 = -(a21*mat[0][2] + a22*mat[1][2])
-
-      return [[a11,a12,a13],[a21,a22,a23]]
-    else:
-      return[[0,0,-mat[0][2]],[0,0,-mat[1][2]]]
-
   def getGlobalTransform(self,node):
     parent = node.getparent()
     myTrans = simpletransform.parseTransform(node.get('transform'))
@@ -239,7 +222,7 @@ class Voronoi2svg(inkex.Effect):
     trans = self.getGlobalTransform(parentGroup)
     invtrans = None
     if trans:
-      invtrans = self.invertTransform(trans)
+      invtrans = simpletransform.invertTransform(trans)
 
     #}}}
 
