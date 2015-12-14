@@ -99,6 +99,7 @@ struct ComponentTransferDiscrete : public ComponentTransfer {
     guint32 operator()(guint32 in) {
         guint32 component = (in & _mask) >> _shift;
         guint32 k = (_v.size()) * component / 255;
+        if( k == _v.size() ) --k;
         component = _v[k];
         return (in & ~_mask) | ((guint32)component << _shift);
     }
