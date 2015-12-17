@@ -245,7 +245,7 @@ void OriginalPathArrayParam::on_down_button_click()
             if (*iter == row[_model->_colObject]) {
                 std::vector<PathAndDirection*>::iterator niter = _vector.erase(iter);
                 if (niter != _vector.end()) {
-                    niter++;
+                    ++niter;
                     i++;
                 }
                 _vector.insert(niter, row[_model->_colObject]);

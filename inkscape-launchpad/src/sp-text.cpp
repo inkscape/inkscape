@@ -93,7 +93,7 @@ void SPText::release() {
 void SPText::set(unsigned int key, const gchar* value) {
     //std::cout << "SPText::set: " << sp_attribute_name( key ) << ": " << (value?value:"Null") << std::endl;
 
-    if (this->attributes.readSingleAttribute(key, value)) {
+    if (this->attributes.readSingleAttribute(key, value, style, &viewport)) {
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     } else {
         switch (key) {
@@ -181,6 +181,16 @@ void SPText::update(SPCtx *ctx, guint flags) {
                   SP_OBJECT_CHILD_MODIFIED_FLAG |
                   SP_TEXT_LAYOUT_MODIFIED_FLAG   ) )
     {
+
+        SPItemCtx const *ictx = reinterpret_cast<SPItemCtx const *>(ctx);
+
+        double const w = ictx->viewport.width();
+        double const h = ictx->viewport.height();
+        double const em = style->font_size.computed;
+        double const ex = 0.5 * em;  // fixme: get x height from pango or libnrtype.
+
+        attributes.update( em, ex, w, h );
+
         /* fixme: It is not nice to have it here, but otherwise children content changes does not work */
         /* fixme: Even now it may not work, as we are delayed */
         /* fixme: So check modification flag everywhere immediate state is used */
@@ -576,7 +586,7 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
         SPString *str = dynamic_cast<SPString *>(child);
         if (str) {
             Glib::ustring const &string = str->string;
-            // std::cout << "  Appending: " << string << std::endl;
+            // std::cout << "  Appending: >" << string << "<" << std::endl;
             layout.appendText(string, root->style, child, &optional_attrs, child_attrs_offset + length);
             length += string.length();
         } else if (!sp_repr_is_meta_element(child->getRepr())) {
@@ -671,25 +681,30 @@ void SPText::_clearFlow(Inkscape::DrawingGroup *in_arena)
  * TextTagAttributes implementation
  */
 
-void TextTagAttributes::readFrom(Inkscape::XML::Node const *node)
-{
-    readSingleAttribute(SP_ATTR_X, node->attribute("x"));
-    readSingleAttribute(SP_ATTR_Y, node->attribute("y"));
-    readSingleAttribute(SP_ATTR_DX, node->attribute("dx"));
-    readSingleAttribute(SP_ATTR_DY, node->attribute("dy"));
-    readSingleAttribute(SP_ATTR_ROTATE, node->attribute("rotate"));
-    readSingleAttribute(SP_ATTR_TEXTLENGTH, node->attribute("textLength"));
-    readSingleAttribute(SP_ATTR_LENGTHADJUST, node->attribute("lengthAdjust"));
-}
+// Not used.
+// void TextTagAttributes::readFrom(Inkscape::XML::Node const *node)
+// {
+//     readSingleAttribute(SP_ATTR_X, node->attribute("x"));
+//     readSingleAttribute(SP_ATTR_Y, node->attribute("y"));
+//     readSingleAttribute(SP_ATTR_DX, node->attribute("dx"));
+//     readSingleAttribute(SP_ATTR_DY, node->attribute("dy"));
+//     readSingleAttribute(SP_ATTR_ROTATE, node->attribute("rotate"));
+//     readSingleAttribute(SP_ATTR_TEXTLENGTH, node->attribute("textLength"));
+//     readSingleAttribute(SP_ATTR_LENGTHADJUST, node->attribute("lengthAdjust"));
+// }
 
-bool TextTagAttributes::readSingleAttribute(unsigned key, gchar const *value)
+bool TextTagAttributes::readSingleAttribute(unsigned key, gchar const *value, SPStyle const *style, Geom::Rect const *viewport)
 {
+    // std::cout << "TextTagAttributes::readSingleAttribute: key: " << key
+    //           << "  value: " << (value?value:"Null") << std::endl;
     std::vector<SVGLength> *attr_vector;
+    bool update_x = false;
+    bool update_y = false;
     switch (key) {
-        case SP_ATTR_X:      attr_vector = &attributes.x; break;
-        case SP_ATTR_Y:      attr_vector = &attributes.y; break;
-        case SP_ATTR_DX:     attr_vector = &attributes.dx; break;
-        case SP_ATTR_DY:     attr_vector = &attributes.dy; break;
+        case SP_ATTR_X:      attr_vector = &attributes.x;  update_x = true; break;
+        case SP_ATTR_Y:      attr_vector = &attributes.y;  update_y = true; break;
+        case SP_ATTR_DX:     attr_vector = &attributes.dx; update_x = true; break;
+        case SP_ATTR_DY:     attr_vector = &attributes.dy; update_y = true; break;
         case SP_ATTR_ROTATE: attr_vector = &attributes.rotate; break;
         case SP_ATTR_TEXTLENGTH:
             attributes.textLength.readOrUnset(value);
@@ -706,6 +721,19 @@ bool TextTagAttributes::readSingleAttribute(unsigned key, gchar const *value)
 
     // FIXME: sp_svg_length_list_read() amalgamates repeated separators. This prevents unset values.
     *attr_vector = sp_svg_length_list_read(value);
+
+    if( (update_x || update_y) && style != NULL && viewport != NULL ) {
+        double const w = viewport->width();
+        double const h = viewport->height();
+        double const em = style->font_size.computed;
+        double const ex = em * 0.5;
+        for(std::vector<SVGLength>::iterator it = attr_vector->begin(); it != attr_vector->end(); ++it) {
+            if( update_x )
+                it->update( em, ex, w );
+            if( update_y )
+                it->update( em, ex, h );
+        }
+    }
     return true;
 }
 
@@ -728,12 +756,26 @@ void TextTagAttributes::writeTo(Inkscape::XML::Node *node) const
     }
 }
 
+void TextTagAttributes::update( double em, double ex, double w, double h )
+{
+    for(std::vector<SVGLength>::iterator it = attributes.x.begin(); it != attributes.x.end(); ++it) {
+        it->update( em, ex, w );
+    }
+    for(std::vector<SVGLength>::iterator it = attributes.y.begin(); it != attributes.y.end(); ++it) {
+        it->update( em, ex, h );
+    }
+    for(std::vector<SVGLength>::iterator it = attributes.dx.begin(); it != attributes.dx.end(); ++it) {
+        it->update( em, ex, w );
+    }
+    for(std::vector<SVGLength>::iterator it = attributes.dy.begin(); it != attributes.dy.end(); ++it) {
+        it->update( em, ex, h );
+    }
+}
+
 void TextTagAttributes::writeSingleAttributeLength(Inkscape::XML::Node *node, gchar const *key, const SVGLength &length)
 {
     if (length._set) {
-        gchar single_value_string[32];
-        g_ascii_formatd(single_value_string, sizeof (single_value_string), "%.8g", length.computed);
-        node->setAttribute(key, single_value_string);
+        node->setAttribute(key, length.write().c_str());
     } else
         node->setAttribute(key, NULL);
 }
@@ -744,13 +786,11 @@ void TextTagAttributes::writeSingleAttributeVector(Inkscape::XML::Node *node, gc
         node->setAttribute(key, NULL);
     else {
         Glib::ustring string;
-        gchar single_value_string[32];
 
         // FIXME: this has no concept of unset values because sp_svg_length_list_read() can't read them back in
         for (std::vector<SVGLength>::const_iterator it = attr_vector.begin() ; it != attr_vector.end() ; ++it) {
-            g_ascii_formatd(single_value_string, sizeof (single_value_string), "%.8g", it->computed);
             if (!string.empty()) string += ' ';
-            string += single_value_string;
+            string += it->write();
         }
         node->setAttribute(key, string.c_str());
     }

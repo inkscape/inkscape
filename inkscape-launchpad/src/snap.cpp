@@ -69,9 +69,8 @@ SnapManager::SnapperList SnapManager::getGridSnappers() const
     SnapperList s;
 
     if (_desktop && _desktop->gridsEnabled() && snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GRID)) {
-        for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
-            Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
-            s.push_back(grid->snapper);
+        for(std::vector<Inkscape::CanvasGrid *>::const_iterator it = _named_view->grids.begin(); it != _named_view->grids.end(); ++it) {
+            s.push_back((*it)->snapper);
         }
     }
 
@@ -173,8 +172,8 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t, Geom::Point c
 
         // Cannot use getGridSnappers() because we need both the grids AND their snappers
         // Therefore we iterate through all grids manually
-        for (GSList const *l = _named_view->grids; l != NULL; l = l->next) {
-            Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
+        for (std::vector<Inkscape::CanvasGrid *>::const_iterator it = _named_view->grids.begin(); it != _named_view->grids.end(); ++it) {
+            Inkscape::CanvasGrid *grid = (*it); 
             const Inkscape::Snapper* snapper = grid->snapper;
             if (snapper && snapper->ThisSnapperMightSnap()) {
                 // To find the nearest multiple of the grid pitch for a given translation t, we

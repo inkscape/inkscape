@@ -20,7 +20,6 @@
 class  SPDesktop;
 class SPObject;
 class  SPItem;
-typedef struct _GSList GSList;
 namespace Avoid { class ShapeRef; }
 
 class SPAvoidRef {
@@ -41,8 +40,8 @@ public:
     //     Avoid::runningTo
     //     Avoid::runningFrom
     //     Avoid::runningToAndFrom
-    GSList *getAttachedShapes(const unsigned int type);
-    GSList *getAttachedConnectors(const unsigned int type);
+    std::vector<SPItem *> getAttachedShapes(const unsigned int type);
+    std::vector<SPItem *> getAttachedConnectors(const unsigned int type);
 
 private:
     SPItem *item;
@@ -55,7 +54,7 @@ private:
     sigc::connection _transformed_connection;
 };
 
-extern GSList *get_avoided_items(GSList *list, SPObject *from,
+extern std::vector<SPItem *> get_avoided_items(std::vector<SPItem *> &list, SPObject *from,
         SPDesktop *desktop, bool initialised = true);
 extern void avoid_item_move(Geom::Affine const *mp, SPItem *moved_item);
 extern void init_avoided_shape_geometry(SPDesktop *desktop);

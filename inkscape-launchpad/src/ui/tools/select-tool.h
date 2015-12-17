@@ -40,10 +40,10 @@ public:
 	bool button_press_ctrl;
 	bool button_press_alt;
 
-	GList *cycling_items;
-	GList *cycling_items_cmp;
-	GList *cycling_items_selected_before;
-	GList *cycling_cur_item;
+        std::vector<SPItem *> cycling_items;
+        std::vector<SPItem *> cycling_items_cmp;
+        std::vector<SPItem *> cycling_items_selected_before;
+        std::vector<SPItem *>::iterator cycling_cur_item;
 	bool cycling_wrap;
 
 	SPItem *item;

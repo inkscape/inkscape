@@ -511,17 +511,16 @@ void DocumentProperties::linkSelectedProfile()
 void DocumentProperties::populate_linked_profiles_box()
 {
     _LinkedProfilesListStore->clear();
-    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
-    if (current) {
-        _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+    if (! current.empty()) {
+        _emb_profiles_observer.set((*(current.begin()))->parent);
     }
-    while ( current ) {
-        SPObject* obj = SP_OBJECT(current->data);
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+        SPObject* obj = *it;
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         Gtk::TreeModel::Row row = *(_LinkedProfilesListStore->append());
         row[_LinkedProfilesListColumns.nameColumn] = prof->name;
 //        row[_LinkedProfilesListColumns.previewColumn] = "Color Preview";
-        current = g_slist_next(current);
     }
 }
 
@@ -594,10 +593,9 @@ void DocumentProperties::removeSelectedProfile(){
             return;
         }
     }
-
-    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
-    while ( current ) {
-        SPObject* obj = SP_OBJECT(current->data);
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+        SPObject* obj = *it;
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         if (!name.compare(prof->name)){
 
@@ -606,7 +604,6 @@ void DocumentProperties::removeSelectedProfile(){
             DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_COLOR_PROFILE, _("Remove linked color profile"));
             break; // removing the color profile likely invalidates part of the traversed list, stop traversing here.
         }
-        current = g_slist_next(current);
     }
 
     populate_linked_profiles_box();
@@ -722,9 +719,9 @@ void DocumentProperties::build_cms()
     _LinkedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::linked_profiles_list_button_release));
     cms_create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
 
-    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "defs" );
-    if (current) {
-        _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "defs" );
+    if (!current.empty()) {
+        _emb_profiles_observer.set((*(current.begin()))->parent);
     }
     _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_linked_profiles_box));
     onColorProfileSelectRow();
@@ -959,9 +956,9 @@ void DocumentProperties::build_scripting()
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 //TODO: review this observers code:
-    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    if (current) {
-        _scripts_observer.set(SP_OBJECT(current->data)->parent);
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    if (! current.empty()) {
+        _scripts_observer.set((*(current.begin()))->parent);
     }
     _scripts_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_script_lists));
     onEmbeddedScriptSelectRow();
@@ -1174,9 +1171,9 @@ void DocumentProperties::removeExternalScript(){
         }
     }
 
-    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    while ( current ) {
-        SPObject* obj = reinterpret_cast<SPObject *>(current->data);
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+        SPObject* obj = *it;
         if (obj) {
             SPScript* script = dynamic_cast<SPScript *>(obj);
             if (script && (name == script->xlinkhref)) {
@@ -1191,7 +1188,6 @@ void DocumentProperties::removeExternalScript(){
                 }
             }
         }
-        current = g_slist_next(current);
     }
 
     populate_script_lists();
@@ -1253,9 +1249,9 @@ void DocumentProperties::changeEmbeddedScript(){
     }
 
     bool voidscript=true;
-    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    while ( current ) {
-        SPObject* obj = SP_OBJECT(current->data);
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+        SPObject* obj = *it;
         if (id == obj->getId()){
 
             int count=0;
@@ -1279,7 +1275,6 @@ void DocumentProperties::changeEmbeddedScript(){
                 }
             }
         }
-        current = g_slist_next(current);
     }
 
     if (voidscript)
@@ -1299,9 +1294,9 @@ void DocumentProperties::editEmbeddedScript(){
     }
 
     Inkscape::XML::Document *xml_doc = SP_ACTIVE_DOCUMENT->getReprDoc();
-    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    while ( current ) {
-        SPObject* obj = SP_OBJECT(current->data);
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+        SPObject* obj = *it;
         if (id == obj->getId()){
 
             //XML Tree being used directly here while it shouldn't be.
@@ -1317,21 +1312,20 @@ void DocumentProperties::editEmbeddedScript(){
                 DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_EMBEDDED_SCRIPT, _("Edit embedded script"));
             }
         }
-        current = g_slist_next(current);
     }
 }
 
 void DocumentProperties::populate_script_lists(){
     _ExternalScriptsListStore->clear();
     _EmbeddedScriptsListStore->clear();
-    const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    if (current) {
-        SPObject *obj = reinterpret_cast<SPObject *>(current->data);
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    if (!current.empty()) {
+        SPObject *obj = *(current.begin());
         g_assert(obj != NULL);
         _scripts_observer.set(obj->parent);
     }
-    while ( current ) {
-        SPObject* obj = reinterpret_cast<SPObject *>(current->data);
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+        SPObject* obj = *it;
         SPScript* script = dynamic_cast<SPScript *>(obj);
         g_assert(script != NULL);
         if (script->xlinkhref)
@@ -1344,8 +1338,6 @@ void DocumentProperties::populate_script_lists(){
             Gtk::TreeModel::Row row = *(_EmbeddedScriptsListStore->append());
             row[_EmbeddedScriptsListColumns.idColumn] = obj->getId();
         }
-
-        current = g_slist_next(current);
     }
 }
 
@@ -1364,12 +1356,11 @@ void DocumentProperties::update_gridspage()
 
     //add tabs
     bool grids_present = false;
-    for (GSList const * l = nv->grids; l != NULL; l = l->next) {
-        Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
-        if (!grid->repr->attribute("id")) continue; // update_gridspage is called again when "id" is added
-        Glib::ustring name(grid->repr->attribute("id"));
+    for(std::vector<Inkscape::CanvasGrid *>::const_iterator it = nv->grids.begin(); it != nv->grids.end(); ++it) {
+        if (!(*it)->repr->attribute("id")) continue; // update_gridspage is called again when "id" is added
+        Glib::ustring name((*it)->repr->attribute("id"));
         const char *icon = NULL;
-        switch (grid->getGridType()) {
+        switch ((*it)->getGridType()) {
             case GRID_RECTANGULAR:
                 icon = "grid-rectangular";
                 break;
@@ -1379,7 +1370,7 @@ void DocumentProperties::update_gridspage()
             default:
                 break;
         }
-        _grids_notebook.append_page(*grid->newWidget(), _createPageTabLabel(name, icon));
+        _grids_notebook.append_page(*(*it)->newWidget(), _createPageTabLabel(name, icon));
         grids_present = true;
     }
     _grids_notebook.show_all();
@@ -1639,14 +1630,9 @@ void DocumentProperties::onRemoveGrid()
     SPDesktop *dt = getDesktop();
     SPNamedView *nv = dt->getNamedView();
     Inkscape::CanvasGrid * found_grid = NULL;
-    int i = 0;
-    for (GSList const * l = nv->grids; l != NULL; l = l->next, i++) {  // not a very nice fix, but works.
-        Inkscape::CanvasGrid * grid = (Inkscape::CanvasGrid*) l->data;
-        if (pagenum == i) {
-            found_grid = grid;
-            break; // break out of for-loop
-        }
-    }
+    if( pagenum < nv->grids.size())
+        found_grid = nv->grids[pagenum];
+
     if (found_grid) {
         // delete the grid that corresponds with the selected tab
         // when the grid is deleted from SVG, the SPNamedview handler automatically deletes the object, so found_grid becomes an invalid pointer!

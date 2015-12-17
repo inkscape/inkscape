@@ -19,7 +19,6 @@ class SPDesktop;
 class SPObject;
 class SPItem;
 class SPStyle;
-typedef struct _GSList GSList;
 namespace Inkscape {
 namespace XML {
 class Node;

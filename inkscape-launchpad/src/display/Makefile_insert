@@ -115,8 +115,6 @@ ink_common_sources += \
 	display/sp-ctrlcurve.h \
 	display/sp-ctrlline.cpp	\
 	display/sp-ctrlline.h \
-	display/sp-ctrlpoint.cpp	\
-	display/sp-ctrlpoint.h \
 	display/sp-ctrlquadr.cpp \
 	display/sp-ctrlquadr.h
 

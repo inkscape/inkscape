@@ -24,7 +24,6 @@ class Node;
 } // namespace Inkscape
 
 typedef unsigned int guint32;
-typedef struct _GSList GSList;
 
 void sp_selected_path_combine (SPDesktop *desktop);
 void sp_selected_path_break_apart (SPDesktop *desktop);

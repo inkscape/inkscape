@@ -23,7 +23,6 @@
 #include "desktop.h"
 
 #include "ui/view/view.h"
-#include "util/glib-list-iterators.h"
 
 namespace Inkscape {
 namespace Extension {

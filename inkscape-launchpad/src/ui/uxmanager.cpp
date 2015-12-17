@@ -244,12 +244,13 @@ void UXManagerImpl::delTrack( SPDesktopWidget* dtw )
 
 void UXManagerImpl::connectToDesktop( vector<GtkWidget *> const & toolboxes, SPDesktop *desktop )
 {
+    if (!desktop)
+    {
+        return;
+    }
     TrackItem &tracker = trackedBoxes[desktop];
     vector<GtkWidget*>& tracked = tracker.boxes;
-    if (desktop)
-    {
-        tracker.destroyConn = desktop->connectDestroy(&desktopDestructHandler);
-    }
+    tracker.destroyConn = desktop->connectDestroy(&desktopDestructHandler);
 
     for (vector<GtkWidget*>::const_iterator it = toolboxes.begin(); it != toolboxes.end(); ++it ) {
         GtkWidget* toolbox = *it;

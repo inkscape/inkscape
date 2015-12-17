@@ -179,9 +179,9 @@ std::vector<Glib::ustring> ResourceManagerImpl::findBrokenLinks( SPDocument *doc
     std::set<Glib::ustring> uniques;
 
     if ( doc ) {
-        GSList const *images = doc->getResourceList("image");
-        for (GSList const *it = images; it; it = it->next) {
-            Inkscape::XML::Node *ir = static_cast<SPObject *>(it->data)->getRepr();
+        std::set<SPObject *> images = doc->getResourceList("image");
+        for (std::set<SPObject *>::const_iterator it = images.begin(); it != images.end(); ++it) {
+            Inkscape::XML::Node *ir = (*it)->getRepr();
 
             gchar const *href = ir->attribute("xlink:href");
             if ( href &&  ( uniques.find(href) == uniques.end() ) ) {
@@ -305,10 +305,10 @@ bool ResourceManagerImpl::fixupBrokenLinks(SPDocument *doc)
 
         bool savedUndoState = DocumentUndo::getUndoSensitive(doc);
         DocumentUndo::setUndoSensitive(doc, true);
-
-        GSList const *images = doc->getResourceList("image");
-        for (GSList const *it = images; it; it = it->next) {
-            Inkscape::XML::Node *ir = static_cast<SPObject *>(it->data)->getRepr();
+        
+        std::set<SPObject *> images = doc->getResourceList("image");
+        for (std::set<SPObject *>::const_iterator it = images.begin(); it != images.end(); ++it) {
+            Inkscape::XML::Node *ir = (*it)->getRepr();
 
             gchar const *href = ir->attribute("xlink:href");
             if ( href ) {

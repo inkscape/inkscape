@@ -18,6 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import inkex, simplestyle, pturtle, random
+from simpletransform import computePointInNode
 
 def rtree(turtle, size, min, pt=False):
     if size < min:
@@ -61,7 +62,7 @@ class RTreeTurtle(inkex.Effect):
             'fill': 'none'}
         t = pturtle.pTurtle()
         t.pu()
-        t.setpos(self.view_center)
+        t.setpos(computePointInNode(list(self.view_center), self.current_layer))
         t.pd()
         rtree(t, self.options.size, self.options.minimum, self.options.pentoggle)
         

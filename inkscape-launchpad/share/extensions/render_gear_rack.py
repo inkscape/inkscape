@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 import inkex
 import simplestyle
+from simpletransform import computePointInNode
 from math import *
 
 
@@ -85,8 +86,9 @@ class RackGear(inkex.Effect):
 
         # Embed gear in group to make animation easier:
         #  Translate group, Rotate path.
-        t = 'translate(' + str(self.view_center[0]) + ',' + \
-            str(self.view_center[1]) + ')'
+        view_center = computePointInNode(list(self.view_center), self.current_layer)
+        t = 'translate(' + str(view_center[0]) + ',' + \
+            str(view_center[1]) + ')'
         g_attribs = {
             inkex.addNS('label', 'inkscape'): 'RackGear' + str(length),
             'transform': t}

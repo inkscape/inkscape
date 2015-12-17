@@ -844,10 +844,10 @@ ink_pattern_list_get (SPDocument *source)
         return NULL;
 
     GSList *pl = NULL;
-    GSList const *patterns = source->getResourceList("pattern");
-    for (GSList *l = const_cast<GSList *>(patterns); l != NULL; l = l->next) {
-        if (SP_PATTERN(l->data) == SP_PATTERN(l->data)->rootPattern()) {  // only if this is a root pattern
-            pl = g_slist_prepend(pl, l->data);
+    std::set<SPObject *> patterns = source->getResourceList("pattern");
+    for (std::set<SPObject *>::const_iterator it = patterns.begin(); it != patterns.end(); ++it) {
+        if (SP_PATTERN(*it) == SP_PATTERN(*it)->rootPattern()) {  // only if this is a root pattern
+            pl = g_slist_prepend(pl, *it);
         }
     }
 

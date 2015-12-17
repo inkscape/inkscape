@@ -117,6 +117,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_SNAP_PAGE_BORDER, "inkscape:snap-page"},
     {SP_ATTR_INKSCAPE_CURRENT_LAYER, "inkscape:current-layer"},
     {SP_ATTR_INKSCAPE_DOCUMENT_UNITS, "inkscape:document-units"},  // This setting sets the Display units, *not* the units used in SVG
+    {SP_ATTR_INKSCAPE_LOCKGUIDES, "inkscape:lockguides"},
     {SP_ATTR_UNITS, "units"},
     {SP_ATTR_INKSCAPE_CONNECTOR_SPACING, "inkscape:connector-spacing"},
     /* SPColorProfile */
@@ -127,6 +128,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_ORIENTATION, "orientation"},
     {SP_ATTR_POSITION, "position"},
     {SP_ATTR_INKSCAPE_COLOR, "inkscape:color"},
+    {SP_ATTR_INKSCAPE_LOCKED, "inkscape:locked"},
     /* SPImage */
     {SP_ATTR_X, "x"},
     {SP_ATTR_Y, "y"},
@@ -534,21 +536,13 @@ static SPStyleProp const props[] = {
 unsigned
 sp_attribute_lookup(gchar const *key)
 {
-    static GHashTable *propdict = NULL;
-
-    if (!propdict) {
-        unsigned int i;
-        propdict = g_hash_table_new(g_str_hash, g_str_equal);
-        for (i = 1; i < n_attrs; i++) {
-            g_assert(props[i].code == static_cast< gint >(i) );
-            // If this g_assert fails, then the sort order of SPAttributeEnum does not match the order in props[]!
-            g_hash_table_insert(propdict,
-                                const_cast<void *>(static_cast<void const *>(props[i].name)),
-                                GINT_TO_POINTER(props[i].code));
-        }
+    for (unsigned int i = 1; i < n_attrs; i++) {
+        g_assert(props[i].code == static_cast< gint >(i) );
+        // If this g_assert fails, then the sort order of SPAttributeEnum does not match the order in props[]!
+        if(g_str_equal(const_cast<void *>(static_cast<void const *>(props[i].name)), key))
+            return GPOINTER_TO_UINT(GINT_TO_POINTER(props[i].code));
     }
-
-    return GPOINTER_TO_UINT(g_hash_table_lookup(propdict, key));
+    return SP_ATTR_INVALID;
 }
 
 unsigned char const *

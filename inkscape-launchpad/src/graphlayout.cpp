@@ -25,7 +25,6 @@
 #include "desktop.h"
 #include "inkscape.h"
 #include "sp-namedview.h"
-#include "util/glib-list-iterators.h"
 #include "graphlayout.h"
 #include "sp-path.h"
 #include "sp-item.h"
@@ -106,7 +105,6 @@ void graphlayout(std::vector<SPItem*> const &items) {
         return;
     }
 
-    using Inkscape::Util::GSListIterator;
     list<SPItem *> selected;
     filterConnectors(items,selected);
     if (selected.empty()) return;
@@ -164,10 +162,11 @@ void graphlayout(std::vector<SPItem*> const &items) {
             continue;
         }
         unsigned u=i_iter->second;
-        GSList *nlist=iu->avoidRef->getAttachedConnectors(Avoid::runningFrom);
+        std::vector<SPItem *> nlist=iu->avoidRef->getAttachedConnectors(Avoid::runningFrom);
         list<SPItem *> connectors;
 
-        connectors.insert<GSListIterator<SPItem *> >(connectors.end(),nlist,NULL);
+        connectors.insert(connectors.end(), nlist.begin(), nlist.end());
+
         for (list<SPItem *>::iterator j(connectors.begin());
                 j != connectors.end();
                 ++j) {
@@ -202,9 +201,6 @@ void graphlayout(std::vector<SPItem*> const &items) {
                     }
                 }
             }
-        }
-        if(nlist) {
-            g_slist_free(nlist);
         }
     }
     const unsigned E = es.size();

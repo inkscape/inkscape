@@ -12,7 +12,6 @@
 */
 #include <utility>
 #include <2geom/transforms.h>
-#include "util/glib-list-iterators.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
 #include "libvpsc/generate-constraints.h"

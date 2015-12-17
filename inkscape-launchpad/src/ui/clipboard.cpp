@@ -682,11 +682,11 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 
     //remove already copied elements from cloned_elements
     std::vector<SPItem*>tr;
-    for(std::set<SPItem*>::iterator it = cloned_elements.begin();it!=cloned_elements.end();it++){
+    for(std::set<SPItem*>::iterator it = cloned_elements.begin();it!=cloned_elements.end();++it){
         if(std::find(sorted_items.begin(),sorted_items.end(),*it)!=sorted_items.end())
             tr.push_back(*it);
     }
-    for(std::vector<SPItem*>::iterator it = tr.begin();it!=tr.end();it++){
+    for(std::vector<SPItem*>::iterator it = tr.begin();it!=tr.end();++it){
         cloned_elements.erase(*it);
     }
 

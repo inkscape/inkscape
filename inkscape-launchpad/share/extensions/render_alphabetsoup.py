@@ -33,6 +33,7 @@ import simplestyle
 import render_alphabetsoup_config
 import bezmisc
 import simplepath
+import simpletransform
 
 inkex.localize()
 
@@ -532,6 +533,12 @@ class AlphabetSoup(inkex.Effect):
 
 			new.set('d', simplepath.formatPath(image))
 			self.current_layer.append(new)
+
+			# compensate preserved transforms of parent layer
+			if self.current_layer.getparent() is not None:
+				mat = simpletransform.composeParents(self.current_layer, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+				simpletransform.applyTransformToNode(simpletransform.invertTransform(mat), new)
+
 
 if __name__ == '__main__':
     e = AlphabetSoup()

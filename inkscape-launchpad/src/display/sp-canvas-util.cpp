@@ -67,6 +67,9 @@ void sp_canvas_item_set_i2w_affine (SPCanvasItem * item,  Geom::Affine const &i2
 void sp_canvas_item_move_to_z (SPCanvasItem * item, gint z)
 {
     g_assert (item != NULL);
+    
+    if (z == 0)
+        return sp_canvas_item_lower_to_bottom(item);
 
     gint current_z = sp_canvas_item_order (item);
 

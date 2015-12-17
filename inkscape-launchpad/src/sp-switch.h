@@ -17,7 +17,6 @@
 
 #include "sp-item-group.h"
 
-typedef struct _GSList GSList;
 
 #define SP_SWITCH(obj) (dynamic_cast<SPSwitch*>((SPObject*)obj))
 #define SP_IS_SWITCH(obj) (dynamic_cast<const SPSwitch*>((SPObject*)obj) != NULL)

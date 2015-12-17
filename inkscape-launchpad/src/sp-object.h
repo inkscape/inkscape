@@ -59,7 +59,6 @@ class SPObject;
 
 class SPCSSAttr;
 class SPStyle;
-typedef struct _GSList GSList;
 
 namespace Inkscape {
 namespace XML {

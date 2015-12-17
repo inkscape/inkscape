@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 import inkex
 import simplestyle, sys
+from simpletransform import computePointInNode
 from math import *
 
 def draw_SVG_tri( (x1, y1), (x2, y2), (x3, y3), (ox,oy), width, name, parent):
@@ -121,7 +122,7 @@ class Grid_Polar(inkex.Effect):
     def effect(self):
         
         tri = self.current_layer
-        offset = (self.view_center[0],self.view_center[1]) #the offset require to centre the triangle
+        offset = computePointInNode(list(self.view_center), self.current_layer) #the offset require to centre the triangle
         self.options.s_a = self.unittouu(str(self.options.s_a) + 'px')
         self.options.s_b = self.unittouu(str(self.options.s_b) + 'px')
         self.options.s_c = self.unittouu(str(self.options.s_c) + 'px')

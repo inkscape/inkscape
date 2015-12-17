@@ -27,6 +27,10 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
+namespace BeP {
+class KnotHolderEntityWidthBendPath;
+}
+
 //for Bend path on group : we need information concerning the group Bounding box
 class LPEBendPath : public Effect, GroupBBoxEffect {
 public:
@@ -39,12 +43,19 @@ public:
 
     virtual void resetDefaults(SPItem const* item);
 
-    PathParam  bend_path;
-private:
-    ScalarParam  prop_scale;
-    BoolParam scale_y_rel;
-    BoolParam    vertical_pattern;
+    void addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec);
 
+    virtual void addKnotHolderEntities(KnotHolder * knotholder, SPDesktop * desktop, SPItem * item);
+
+    PathParam bend_path;
+
+    friend class BeP::KnotHolderEntityWidthBendPath;
+protected:
+    double original_height;
+    ScalarParam prop_scale;
+private:
+    BoolParam scale_y_rel;
+    BoolParam vertical_pattern;
     Geom::Piecewise<Geom::D2<Geom::SBasis> > uskeleton;
     Geom::Piecewise<Geom::D2<Geom::SBasis> > n;
 

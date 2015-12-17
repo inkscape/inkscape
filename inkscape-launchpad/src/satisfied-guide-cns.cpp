@@ -10,8 +10,8 @@ void satisfied_guide_cns(SPDesktop const &desktop,
                          std::vector<SPGuideConstraint> &cns)
 {
     SPNamedView const &nv = *desktop.getNamedView();
-    for (GSList const *l = nv.guides; l != NULL; l = l->next) {
-        SPGuide &g = *SP_GUIDE(l->data);
+    for(std::vector<SPGuide *>::const_iterator it = nv.guides.begin(); it != nv.guides.end(); ++it) {
+        SPGuide &g = *(*it);
         for (unsigned int i = 0; i < snappoints.size(); ++i) {
             if (Geom::are_near(g.getDistanceFrom(snappoints[i].getPoint()), 0, 1e-2)) {
                 cns.push_back(SPGuideConstraint(&g, i));

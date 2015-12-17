@@ -59,6 +59,7 @@ from math import *
 # local library
 import inkex
 import simplestyle
+from simpletransform import computePointInNode
 
 inkex.localize()
 
@@ -129,7 +130,7 @@ class Wireframe_Sphere(inkex.Effect):
 
             #INKSCAPE GROUP TO CONTAIN EVERYTHING
             
-            centre = self.view_center   #Put in in the centre of the current view
+            centre = tuple(computePointInNode(list(self.view_center), self.current_layer))   #Put in in the centre of the current view
             grp_transform = 'translate' + str( centre ) + flip
             grp_name = 'WireframeSphere'
             grp_attribs = {inkex.addNS('label','inkscape'):grp_name,

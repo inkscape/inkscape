@@ -22,13 +22,12 @@
 typedef unsigned int guint32;
 extern "C" {
     typedef void (*GCallback) (void);
-    typedef struct _GSList GSList;
 }
 
 class SPDesktop;
 struct SPCanvas;
 struct SPCanvasGroup;
-
+struct SPGuideLine;
 #define SP_GUIDE(obj) (dynamic_cast<SPGuide*>((SPObject*)obj))
 #define SP_IS_GUIDE(obj) (dynamic_cast<const SPGuide*>((SPObject*)obj) != NULL)
 
@@ -52,6 +51,9 @@ public:
 
     void set_label(const char* label, bool const commit);
     char const* getLabel() const { return label; }
+
+    void set_locked(const bool locked, bool const commit);
+    bool getLocked() const { return locked; }
 
     static SPGuide *createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2);
 
@@ -77,7 +79,8 @@ protected:
     virtual void set(unsigned int key, const char* value);
 
     char* label;
-    GSList *views; // contains an object of type SPGuideline (see display/guideline.cpp for definition)
+    std::vector<SPGuideLine *> views; // contains an object of type SPGuideline (see display/guideline.cpp for definition)
+    bool locked;
     Geom::Point normal_to_line;
     Geom::Point point_on_line;
 

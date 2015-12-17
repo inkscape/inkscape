@@ -171,9 +171,9 @@ static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
         SPDocument *doc = desktop ? desktop->doc() : 0;
         if (doc) {
             std::string targetName(bounceTarget->def.descr);
-            const GSList *gradients = doc->getResourceList("gradient");
-            for (const GSList *item = gradients; item; item = item->next) {
-                SPGradient* grad = SP_GRADIENT(item->data);
+            std::set<SPObject *> gradients = doc->getResourceList("gradient");
+            for (std::set<SPObject *>::const_iterator item = gradients.begin(); item != gradients.end(); ++item) {
+                SPGradient* grad = SP_GRADIENT(*item);
                 if ( targetName == grad->getId() ) {
                     editGradientImpl( desktop, grad );
                     break;
@@ -192,10 +192,10 @@ void SwatchesPanelHook::convertGradient( GtkMenuItem * /*menuitem*/, gpointer us
         gint index = GPOINTER_TO_INT(userData);
         if ( doc && (index >= 0) && (static_cast<guint>(index) < popupItems.size()) ) {
             Glib::ustring targetName = popupItems[index];
+            std::set<SPObject *> gradients = doc->getResourceList("gradient");
+            for (std::set<SPObject *>::const_iterator item = gradients.begin(); item != gradients.end(); ++item) {
+                SPGradient* grad = SP_GRADIENT(*item);
 
-            const GSList *gradients = doc->getResourceList("gradient");
-            for (const GSList *item = gradients; item; item = item->next) {
-                SPGradient* grad = SP_GRADIENT(item->data);
                 if ( targetName == grad->getId() ) {
                     grad->setSwatch();
                     DocumentUndo::done(doc, SP_VERB_CONTEXT_GRADIENT,
@@ -326,10 +326,10 @@ gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, g
                     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(wdgt);
                     if ( dtw && dtw->desktop ) {
                         // Pick up all gradients with vectors
-                        const GSList *gradients = (dtw->desktop->doc())->getResourceList("gradient");
+                        std::set<SPObject *> gradients = (dtw->desktop->doc())->getResourceList("gradient");
                         gint index = 0;
-                        for (const GSList *curr = gradients; curr; curr = curr->next) {
-                            SPGradient* grad = SP_GRADIENT(curr->data);
+                        for (std::set<SPObject *>::const_iterator item = gradients.begin(); item != gradients.end(); ++item) {
+                            SPGradient* grad = SP_GRADIENT(*item);
                             if ( grad->hasStops() && !grad->isSwatch() ) {
                                 //gl = g_slist_prepend(gl, curr->data);
                                 processed = true;
@@ -923,12 +923,11 @@ static void recalcSwatchContents(SPDocument* doc,
                 std::map<ColorItem*, SPGradient*> &gradMappings)
 {
     std::vector<SPGradient*> newList;
-
-    const GSList *gradients = doc->getResourceList("gradient");
-    for (const GSList *item = gradients; item; item = item->next) {
-        SPGradient* grad = SP_GRADIENT(item->data);
+    std::set<SPObject *> gradients = doc->getResourceList("gradient");
+    for (std::set<SPObject *>::const_iterator item = gradients.begin(); item != gradients.end(); ++item) {
+        SPGradient* grad = SP_GRADIENT(*item);
         if ( grad->isSwatch() ) {
-            newList.push_back(SP_GRADIENT(item->data));
+            newList.push_back(SP_GRADIENT(*item));
         }
     }
 

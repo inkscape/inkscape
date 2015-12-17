@@ -138,23 +138,18 @@ void SPMask::update(SPCtx* ctx, unsigned int flags) {
 	
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    GSList *l = NULL;
-    for (SPObject *child = this->firstChild(); child; child = child->getNext()) {
-        sp_object_ref(child);
-        l = g_slist_prepend (l, child);
+    std::vector<SPObject *> children = this->childList(false);
+    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();child++) {
+        sp_object_ref(*child);
     }
     
-    l = g_slist_reverse (l);
     
-    while (l) {
-        SPObject *child = SP_OBJECT(l->data);
-        l = g_slist_remove(l, child);
-        
-        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-            child->updateDisplay(ctx, flags);
+    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();child++) {
+        if (flags || ((*child)->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            (*child)->updateDisplay(ctx, flags);
         }
         
-        sp_object_unref(child);
+        sp_object_unref(*child);
     }
 
     for (SPMaskView *v = this->display; v != NULL; v = v->next) {
@@ -177,23 +172,17 @@ void SPMask::modified(unsigned int flags) {
 	
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    GSList *l = NULL;
-    for (SPObject *child = this->firstChild(); child; child = child->getNext()) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    std::vector<SPObject *> children = this->childList(false);
+    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();child++) {
+        sp_object_ref(*child);
     }
     
-    l = g_slist_reverse(l);
-    
-    while (l) {
-        SPObject *child = SP_OBJECT(l->data);
-        l = g_slist_remove(l, child);
-        
-        if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-            child->emitModified(flags);
+    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();child++) {
+        if (flags || ((*child)->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            (*child)->emitModified(flags);
         }
         
-        sp_object_unref(child);
+        sp_object_unref(*child);
     }
 }
 

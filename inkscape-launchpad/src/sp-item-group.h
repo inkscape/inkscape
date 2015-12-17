@@ -25,7 +25,6 @@ namespace Inkscape {
 
 class Drawing;
 class DrawingItem;
-typedef struct _GSList GSList;
 
 } // namespace Inkscape
 

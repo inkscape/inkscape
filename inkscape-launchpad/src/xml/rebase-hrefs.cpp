@@ -220,9 +220,9 @@ void Inkscape::XML::rebase_hrefs(SPDocument *const doc, gchar const *const new_b
      *
      * Note also that Inkscape only supports fragment hrefs (href="#pattern257") for many of these
      * cases. */
-    GSList const *images = doc->getResourceList("image");
-    for (GSList const *l = images; l != NULL; l = l->next) {
-        Inkscape::XML::Node *ir = static_cast<SPObject *>(l->data)->getRepr();
+    std::set<SPObject *> images = doc->getResourceList("image");
+    for (std::set<SPObject *>::const_iterator it = images.begin(); it != images.end(); ++it) {
+        Inkscape::XML::Node *ir = (*it)->getRepr();
 
         std::string uri;
         {

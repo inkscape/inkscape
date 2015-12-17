@@ -22,6 +22,7 @@ __version__ = "0.2"
 import inkex, simplestyle
 from math import *
 from simplepath import formatPath
+import simpletransform
 
 class FoldableBox(inkex.Effect):
 
@@ -257,6 +258,12 @@ class FoldableBox(inkex.Effect):
         lower_pos += bTab
 
         g.set( 'transform', 'translate(%f,%f)' % ( (docW-left_pos)/2, (docH-lower_pos)/2 ) )
+
+        # compensate preserved transforms of parent layer
+        if self.current_layer.getparent() is not None:
+            mat = simpletransform.composeParents(self.current_layer, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+            simpletransform.applyTransformToNode(simpletransform.invertTransform(mat), g)
+
 
 if __name__ == '__main__':   #pragma: no cover
     e = FoldableBox()

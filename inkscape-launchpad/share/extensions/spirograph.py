@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import inkex, simplestyle, math
+from simpletransform import computePointInNode
 
 class Spirograph(inkex.Effect):
     def __init__(self):
@@ -81,12 +82,13 @@ class Spirograph(inkex.Effect):
 
             theta = i * scale
 
+            view_center = computePointInNode(list(self.view_center), self.current_layer)
             x = a * math.cos(theta + rotation) + \
                 self.options.penr * math.cos(ratio * theta + rotation) * flip + \
-                self.view_center[0]
+                view_center[0]
             y = a * math.sin(theta + rotation) - \
                 self.options.penr * math.sin(ratio * theta + rotation) + \
-                self.view_center[1]
+                view_center[1]
 
             dx = (-a * math.sin(theta + rotation) - \
                 ratio * self.options.penr * math.sin(ratio * theta + rotation) * flip) * scale / 3

@@ -36,46 +36,43 @@
    <path id="path1793" d="m510.36 306.93c10.237-2.5598 33.886 0 30.119 15.058-3.7633 15.062-35.764 9.4119-56.473 1.8852-1.8823-15.061 21.529-15.737 26.354-16.943z" stroke-width="1pt"/>
    <path id="path831" d="m359.24 21.363c-11.313 0-22.606 4.3206-31.275 12.99l-154.09 154.06c-8.4969 8.4967-12.762 19.543-12.931 30.631h-0.0585c0 0.0395 0.0566 0.0774 0.0585 0.11702-0.002 0.18609-0.0585 0.36977-0.0585 0.55586h0.2633c2.9491 11.221 79.15 25.523 87.651 34.025 12.839 12.839-49.233 22.268-36.395 35.107 12.839 12.839 77.59 24.843 90.43 37.682 12.839 12.839-26.238 26.51-13.399 39.349s55.967-3.2094 48.155 30.28c17.338 17.338 53.512 9.0588 77.733-8.2795 12.839-12.839-24.629-11.707-11.79-24.546s45.247-12.908 72.555-43.621c-10.992-17.095-46.981-24.375-34.142-37.214s37.8-6.3179 91.659-30.777c26.292-11.941 24.12-21.01 24.019-32.006-0.002-0.23138 0-0.43973 0-0.67288h-0.0585c-0.16-11.07-4.46-22.12-12.95-30.62l-154.07-154.06c-8.66-8.667-19.99-12.987-31.3-12.987zm-1.3165 20.04c5.0295 0.13102 9.0916 3.9651 17.056 9.1279l72.789 53.977c0.79681 0.51671 1.5557 1.0557 2.2527 1.6091 0.69703 0.55327 1.3337 1.1401 1.9309 1.7261 0.5972 0.58495 1.14 1.1721 1.6383 1.7846 0.49726 0.61244 0.94845 1.2385 1.3458 1.8724 0.39844 0.6349 0.75476 1.2798 1.0532 1.9309 0.29867 0.65226 0.53281 1.325 0.7314 1.9894 0.19976 0.66341 0.36832 1.319 0.46811 1.9894 0.0999 0.67165 0.14627 1.3452 0.14627 2.0187l-43.123-20.83-4.3006 32.562-23.727-11.117-36.629 24.458-14.014-48.331-18.051 42.275-50.408 5.032 0.55587-22.439c0-5.3897 29.057-43.122 46.751-52.105l32.386-23.259c4.7787-3.0977 8.1289-4.35 11.147-4.2714zm-66.996 220.21c22.944 5.9503 48.476 13.757 68.957 13.897l0.87768 9.2157c-17.538-1.8078-54.648-10.276-63.398-14.745l-6.4363-8.3672z" stroke-width="1pt"/>
   </g>
-  <use id="use2086" style="color:#000000" xlink:href="#path1124" transform="matrix(3.7991 0 0 3.7991 -428.74 -36.475)" height="1052.3622" fill-opacity=".11077" width="320.00000" y="0.0000000" x="0.0000000" font-family="Sans" fill="#ffffff"/>
-  <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(90)" font-size="6.9693px" y="-326.81229" x="3.6203015" font-family="Sans" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="3.6203015" style="letter-spacing:.29056" y="-326.81229">Verwenden Sie <tspan id="tspan7523" font-weight="bold">Strg+Pfeiltaste nach unten</tspan> zum Verschieben </tspan></text>
+  <use id="use2086" style="color:#000000" xlink:href="#path1124" transform="matrix(3.7991 0 0 3.7991 -428.74 -36.475)" height="1052.3622" fill-opacity=".11077" width="320.00000" y="0.0000000" x="0.0000000" font-family="sans-serif" fill="#ffffff"/>
+  <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(90)" font-size="6.9693px" y="-326.81229" x="3.6203015" font-family="sans-serif" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="3.6203015" style="letter-spacing:.29056" y="-326.81229">Verwenden Sie <tspan id="tspan7523" font-weight="bold">Strg+Pfeiltaste nach unten</tspan> zum Verschieben </tspan></text>
   <path id="path7527" opacity=".5" style="color:#000000" d="m338.53 197.82-13.108-1.2709 7.6547-10.717z" fill-rule="evenodd" transform="matrix(.61496 .045496 .061919 -.45186 112.46 321.6)"/>
  </g>
- <text id="text1920" font-family="Sans" font-size="7" transform="scale(1.1307)" y="18.25828" x="176.24451" fill="#ffffff">
-  <tspan id="tspan1668" style="letter-spacing:2.1813" fill="#ffffff" dx="0 -0.57057059 0 0 0 0 0">::TIPS AND TRICKS</tspan>
+ <text id="text1920" font-family="sans-serif" font-size="7" transform="scale(1.1307)" y="18.25828" x="176.24451" fill="#ffffff">
+  <tspan id="tspan1668" style="letter-spacing:2.1813" fill="#ffffff" dx="0 -0.57057059 0 0 0 0 0">::TIPPS UND TRICKS</tspan>
  </text>
  <rect id="d0e10" display="none" height="1e3px" width="264" y="36" x="35"/>
- <flowRoot font-family="Sans" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
+ <flowRoot font-family="sans-serif" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e10"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Dieses Tutorial wird Ihnen verschiedene Tipps und Tricks zeigen, die die Benutzer durch die Anwendung von Inkscape erlernt haben. Außerdem stellen wir Ihnen einige »versteckte« Funktionen vor, die Ihnen helfen können, schneller mit Inkscape zu arbeiten.</flowDiv>
+  <flowDiv xml:space="preserve">Dieses Tutorial wird Ihnen verschiedene Tipps und Tricks zeigen, die Benutzer bei der Verwendung von Inkscape entwickelt haben. Außerdem stellen wir Ihnen einige »versteckte« Funktionen vor, die Ihnen helfen können, schneller mit Inkscape zu arbeiten.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="100.16796599999999" x="10" font-family="Sans" fill="#000000">
-  <tspan y="100.16796599999999" x="10">Kreisförmige Anordnung mit Klonen von Kacheln</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="100.16796599999999" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="100.16796599999999" x="10">Kreisförmig anordnen mit gekachelten Klonen</tspan>
  </text>
  <rect id="d0e19" display="none" height="1e3px" width="288" y="105.37" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e19"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">It&apos;s easy to see how to use the <flowSpan font-family="Sans">Create Tile Clones</flowSpan> dialog for rectangular grids and
-patterns. But what if you need <flowSpan font-style="italic">radial</flowSpan> placement, where objects
-share a common center of rotation? It&apos;s possible too!
-</flowDiv>
+  <flowDiv xml:space="preserve">Es ist einfach zu verstehen, wie der Dialog <flowSpan font-family="sans-serif">Gekachelte Klone erzeugen</flowSpan> für rechteckige Gitter und Muster funktioniert. Aber was tun, wenn Sie eine <flowSpan font-style="italic">radiale</flowSpan> Ausrichtung benötigen, wobei die Objekte ein gemeinsames Rotationszentrum besitzen? Das ist jedoch auch möglich!</flowDiv>
  </flowRoot>
- <rect id="d0e28" display="none" height="1e3px" width="288" y="155.03" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e28" display="none" height="1e3px" width="288" y="165.78" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e28"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Wenn Ihr kreisförmiges Muster nur 3, 4, 6, 8 oder 12 Elemente benötigt, können Sie die P3-, P31M-, P3M1-, P4-, P4M-, P6- oder P6M-Symmetrien benutzen. Diese würden zum Beispiel sehr schön für Schneeflocken funktionieren. Eine allgemeinere Methode funktioniert jedoch wie folgt:</flowDiv>
+  <flowDiv xml:space="preserve">Wenn Ihr kreisförmiges Muster nur 3, 4, 6, 8 oder 12 Elemente benötigt, können Sie die P3-, P31M-, P3M1-, P4-, P4M-, P6- oder P6M-Symmetrien benutzen. Diese würden zum Beispiel sehr schön für Schneeflocken und ähnliche Dinge funktionieren. Eine allgemeinere Methode funktioniert jedoch wie folgt:</flowDiv>
  </flowRoot>
- <rect id="d0e31" display="none" height="1e3px" width="288" y="215.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e31" display="none" height="1e3px" width="288" y="226.25" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e31"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Wählen Sie die P1-Symmetrie (einfache Verschiebung) und machen Sie die Verschiebung <flowSpan font-style="italic">rückgängig,</flowSpan> indem Sie zum Reiter <flowSpan font-family="Sans">Verschieben</flowSpan> wechseln und die beiden Felder <flowSpan font-family="Sans">Pro Reihe/Y-Verschiebung</flowSpan> und <flowSpan font-family="Sans">Pro Spalte/X-Verschiebung</flowSpan> auf -100% setzen. Nun werden alle Klone genau auf das Original gestapelt. Alles, was Sie dann noch tun müssen, ist zum Reiter <flowSpan font-family="Sans">Rotation</flowSpan> zu wechseln und einen Rotationswinkel pro Spalte einzugeben, um dann das Muster mit einer Reihe und vielen Spalten zu erzeugen. Achten Sie darauf, dass die Option »Gespeicherte Größe und Position der Kachel verwenden« nicht aktiv ist. Das nachfolgende Beispiel besteht aus einer horizontalen Linie, mit 30 Spalten, wobei jede Spalte um 6° rotiert wurde:</flowDiv>
+  <flowDiv xml:space="preserve">Wählen Sie die P1-Symmetrie (einfache Verschiebung) und dann <flowSpan font-style="italic">heben Sie die Wirkung der Verschiebung auf</flowSpan>, indem Sie zum Reiter <flowSpan font-family="sans-serif">Verschiebung</flowSpan> wechseln und die beiden Felder <flowSpan font-family="sans-serif">Pro Reihe/Y-Verschiebung</flowSpan> und <flowSpan font-family="sans-serif">Pro Spalte/X-Verschiebung</flowSpan> auf -100% setzen. Nun werden alle Klone genau auf das Original gestapelt. Alles, was Sie dann noch tun müssen, ist zum Reiter <flowSpan font-family="sans-serif">Rotation</flowSpan> zu wechseln und einen Rotationswinkel pro Spalte einzugeben, um dann das Muster mit einer Reihe und mehreren Spalten zu erzeugen. Das nachfolgende Beispiel besteht aus einer horizontalen Linie, mit 30 Spalten, wobei jede Spalte um 6° rotiert wurde:</flowDiv>
  </flowRoot>
  <path id="tips-f01-de.svgpath25" stroke="#000" stroke-width="0.3" fill="none" style="color:#000000" transform="translate(10 347.8)" inkscape:tile-cx="160.25000" inkscape:tile-cy="346.50000" d="m81.5 58.9h117.5" inkscape:tile-w="117.80000" inkscape:tile-h="0.30000001"/>
  <use id="tips-f01-de.svguse55" xlink:href="#tips-f01-de.svgpath25" transform="translate(10 347.8) matrix(.99452 .10453 -.10453 .99452 6.9252 -14.337) translate(-10 -347.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#path25" y="0.0000000" x="0.0000000"/>
@@ -108,18 +105,18 @@ share a common center of rotation? It&apos;s possible too!
  <use id="tips-f01-de.svguse82" xlink:href="#tips-f01-de.svgpath25" transform="translate(10 347.8) matrix(-.97815 .20791 -.20791 -.97815 289.68 87.353) translate(-10 -347.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#path25" y="0.0000000" x="0.0000000"/>
  <use id="tips-f01-de.svguse83" xlink:href="#tips-f01-de.svgpath25" transform="translate(10 347.8) matrix(-.99452 .10453 -.10453 -.99452 285.89 102.82) translate(-10 -347.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#path25" y="0.0000000" x="0.0000000"/>
  <rect id="d0e59" display="none" height="1e3px" width="288" y="477.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e59"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Um daraus ein Ziffernblatt zu machen, müssen Sie nur den mittleren Teil ausschneiden oder mit einem weißen Kreis abdecken. (Hinweis: Um boolesche Operationen mit Klonen zu ermöglichen, müssen Sie zuerst die Klonverbindungen auftrennen)</flowDiv>
+  <flowDiv xml:space="preserve">Um daraus ein Zifferblatt zu machen, müssen Sie nur den mittleren Teil ausschneiden oder mit einem weißen Kreis abdecken. (Hinweis: Um boolesche Operationen mit Klonen zu ermöglichen, müssen Sie zuerst die Klonverbindungen auftrennen)</flowDiv>
  </flowRoot>
  <rect id="d0e62" display="none" height="1e3px" width="288" y="527.13" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e62"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Noch interessantere Effekte lassen sich erzeugen, wenn Sie sowohl Reihen als auch Spalten benutzen. Hier ist ein Muster aus 10 Spalten und 8 Reihen mit einer Rotation von 1,5° pro Reihe und 18° pro Spalte. Jede Gruppe von Linien ist dabei eine »Spalte«, deshalb sind die Gruppen um 18° zueinander verdreht. Innerhalb der Spalten sind die einzelnen Linien um je 1,5° verdreht.</flowDiv>
+  <flowDiv xml:space="preserve">Noch interessantere Effekte lassen sich erzeugen, wenn Sie sowohl Reihen als auch Spalten benutzen. Hier ist ein Muster aus 10 Spalten und 8 Reihen mit einer Rotation von 2° pro Reihe und 18° pro Spalte. Jede Gruppe von Linien ist dabei eine »Spalte«, deshalb sind die Gruppen um 18° zueinander verdreht. Innerhalb der Spalten sind die einzelnen Linien um je 2° verdreht.</flowDiv>
  </flowRoot>
  <path id="tips-f02-de.svgpath92" stroke="#000" stroke-width="0.3" fill="none" style="color:#000000" transform="translate(10 606.18)" inkscape:tile-cx="164.00000" inkscape:tile-cy="543.50000" d="m72.5 71.65h143" inkscape:tile-w="143.30000" inkscape:tile-h="0.30000001"/>
  <use id="tips-f02-de.svguse1473" xlink:href="#tips-f02-de.svgpath92" transform="translate(10 606.18) matrix(.99966 .026177 -.026177 .99966 1.9249 -3.7451) translate(-10 -606.18)" height="2150.5000" width="320.00000" inkscape:tiled-clone-of="#path92" y="0.0000000" x="0.0000000"/>
@@ -202,146 +199,127 @@ share a common center of rotation? It&apos;s possible too!
  <use id="tips-f02-de.svguse1550" xlink:href="#tips-f02-de.svgpath92" transform="translate(10 606.18) matrix(-.98769 .15643 -.15643 -.98769 297.44 119.89) translate(-10 -606.18)" height="2150.5000" width="320.00000" inkscape:tiled-clone-of="#path92" y="0.0000000" x="0.0000000"/>
  <use id="tips-f02-de.svguse1551" xlink:href="#tips-f02-de.svgpath92" transform="translate(10 606.18) matrix(-.99144 .13053 -.13053 -.99144 296.12 123.89) translate(-10 -606.18)" height="2150.5000" width="320.00000" inkscape:tiled-clone-of="#path92" y="0.0000000" x="0.0000000"/>
  <rect id="d0e75" display="none" height="1e3px" width="288" y="761.18" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e75"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">In the above examples, the line was rotated around its center. But what if you want the
-center to be outside of your shape? Just create an invisible (no fill, no stroke)
-rectangle which would cover your shape and whose center is in the point you need, group
-the shape and the rectangle together, and then use <flowSpan font-family="Sans">Create Tile Clones</flowSpan> on
-that group. This is how you can do nice “explosions” or “starbursts” by randomizing
-scale, rotation, and possibly opacity:
-</flowDiv>
+  <flowDiv xml:space="preserve">In den obigen Beispielen wurde die Linie um ihr Zentrum herum rotiert. Aber was tun, wenn Sie das Drehzentrum außerhalb Ihres Objektes liegen haben möchten? Erzeugen Sie einfach ein unsichtbares Rechteck (ohne Füllung und ohne Umrisslinie), welches Ihr Objekt umfasst, und dessen Zentrum an dem von Ihnen gewünschten Drehzentrum liegt. Dann gruppieren Sie Ihr Objekt und das Rechteck und benutzen Sie den Dialog <flowSpan font-family="sans-serif">Klone kacheln...</flowSpan> auf diese Gruppe. Auf diese Art können Sie nette »Explosionen« erzeugen, wenn Sie in die Skalierung, Rotation und Deckkraft noch ein wenig Zufall hineinbringen:</flowDiv>
  </flowRoot>
- <g id="tips-f03-de.svgg1768" inkscape:tile-w="87.999840" transform="translate(10 850.88) matrix(.63768 0 0 .63768 37.609 -470.92)" inkscape:tile-h="7.3333200" inkscape:tile-cx="158.99982" inkscape:tile-cy="859.24904">
+ <g id="tips-f03-de.svgg1768" inkscape:tile-w="87.999840" transform="translate(10 882.8) matrix(.63768 0 0 .63768 37.609 -470.92)" inkscape:tile-h="7.3333200" inkscape:tile-cx="158.99982" inkscape:tile-cy="859.24904">
   <path id="tips-f03-de.svgpath1592" style="color:#000000" d="m210.17 859.92c4.54-2.08 15.81-3.8 15.81-0.12 0 3.67-15.81 0.12-15.81 0.12z" fill-rule="evenodd"/>
   <rect id="tips-f03-de.svgrect1680" opacity="0" style="color:#000000" height="11.5" width="138" y="853.5" x="90" stroke-width=".25px"/>
  </g>
- <use id="tips-f03-de.svguse5827" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(1.5824 -.94905 .94905 1.5824 -154.03 87.071) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5828" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.15802 -.14670 .14670 .15802 105.74 85.229) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5829" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.38120 -.31038 .31038 .38120 62.112 90.793) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5830" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.91610 -.77244 .77244 .91610 -47.819 113.83) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5831" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.27118 1.0204 -1.0204 .27118 179.88 -85.712) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5832" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.054495 1.1179 -1.1179 .054495 217.51 -82.582) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5833" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(1.3012 -.34248 .34248 1.3012 -68.236 24.413) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5834" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.43783 -.057061 .057061 .43783 73.747 51.222) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5835" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.30681 .099409 -.099409 .30681 104.01 39.562) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5836" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-0.0307 .73379 -.73379 -0.0307 199.77 -22.627) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5837" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.58770 1.5039 -1.5039 .58770 173.12 -177.29) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5838" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.063589 .24175 -.24175 -.063589 166.45 48.3) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5839" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.11279 .48040 -.48040 -.11279 191.67 18.916) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5840" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.47048 .34479 -.34479 .47048 100.15 -7.1484) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5841" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.90328 1.2976 -1.2976 .90328 113.37 -172.92) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5842" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(1.6387 .41348 -.41348 1.6387 -56.943 -106.66) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5843" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(1.3754 .84138 -.84138 1.3754 12.615 -145.86) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5844" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.37243 1.258 -1.258 .37243 184.1 -126.53) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5845" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.97419 .80737 -.80737 .97419 65.759 -110.24) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5846" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.73194 1.6333 -1.6333 -.73194 366.51 -93.655) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5847" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.67313 .51862 -.51862 .67313 85.372 -46.918) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5848" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.025470 .99819 -.99819 .025470 212.32 -63.704) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5849" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.036052 .53209 -.53209 -.036052 184.98 5.8221) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5850" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.0903 .48582 -.48582 -1.0903 327.96 93.434) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5851" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.69835 .18974 -.18974 -.69835 250.68 104.41) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5852" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.058852 .81222 -.81222 .058852 193.36 -40.425) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5853" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.72687 1.5656 -1.5656 .72687 158.53 -196.59) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5854" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.93737 .98403 -.98403 -.93737 345.07 12.409) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5855" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.744 -.33229 .33229 -1.744 355.83 257.49) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5856" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.22296 1.1443 -1.1443 .22296 196.12 -99.219) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5857" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.34393 1.1531 -1.1531 -.34393 275.6 -56.783) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5858" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.18401 .80395 -.80395 -.18401 226.49 -20.573) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5859" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.65776 0.631 -0.631 -.65776 279.02 39.948) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5860" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.1784 .0080053 -.0080053 -1.1784 303.41 166.64) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5861" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.1888 .96076 -.96076 -1.1888 378.22 35.003) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5862" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.58046 -.030743 .030743 -.58046 217.32 125.98) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5863" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-0.867 .42505 -.42505 -0.867 292.24 84.688) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5864" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.70082 .10013 -.10013 -.70082 244.12 117.05) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5865" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.7631 -.22640 .22640 -1.7631 366.63 244.24) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5866" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.98245 -1.0913 1.0913 -.98245 191.52 304.35) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5867" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.11260 -.11170 .11170 -.11260 146.05 101.2) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5868" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.46512 -.23192 .23192 -.46512 185.79 145.06) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5869" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.3449 .031643 -.031643 -1.3449 328.37 176.17) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5870" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.84180 .71110 -.71110 -.84180 310.77 42.986) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5871" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.40673 -1.7162 1.7162 -.40673 63.376 346.88) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5872" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.51273 -1.1191 1.1191 -.51273 124.1 272.04) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5873" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.0098 .39705 -.39705 -1.0098 309.93 99.574) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5874" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.34237 -1.2544 1.2544 -.34237 89.992 277.74) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5875" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.3214 -.056325 .056325 -1.3214 318.34 186.59) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5876" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.081244 -1.4924 1.4924 .081244 12.785 278.19) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5877" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.73546 -.52141 .52141 -.73546 201.08 206.12) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5878" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.82671 -.39099 .39099 -.82671 223.8 195.01) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5879" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.095044 -1.2019 1.2019 .095044 33.234 236.75) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5880" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.40752 -.94837 .94837 -.40752 122.62 240.21) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5881" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.23737 -.78446 .78446 .23737 45.599 167.77) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5882" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.29723 -.33160 .33160 .29723 72.15 100.21) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5883" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.070897 -.56023 .56023 -.070897 105.71 160.34) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5884" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.0092847 -.59120 .59120 -.0092847 94.765 159.9) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5885" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.64749 -.89537 .89537 .64749 -19.949 151.6) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5886" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.20617 -.65520 .65520 .20617 59.887 152.2) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5887" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.22868 -1.0741 1.0741 -.22868 88.076 243.91) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5888" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.157 -1.3956 1.3956 -1.157 192.36 360.09) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5889" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-1.0291 -1.2779 1.2779 -1.0291 183.63 333.88) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5890" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.83814 -1.3323 1.3323 .83814 -80.094 197.65) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5891" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.097413 -1.1509 1.1509 -.097413 63.918 244.48) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5892" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(-.21499 -.73072 .73072 -.21499 112.61 195.13) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5893" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(1.6883 -.17049 .17049 1.6883 -108.8 -29.305) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5894" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.55378 -.20385 .20385 .55378 46.327 62.697) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5895" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(1.1627 -.63770 .63770 1.1627 -71.718 76.115) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5896" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(1.5217 -.57461 .57461 1.5217 -116.77 39.695) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <use id="tips-f03-de.svguse5897" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 850.88) matrix(.54625 -.90456 .90456 .54625 -6.5852 160.68) translate(-10 -850.88)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1029.690607" x="10" font-family="Sans" fill="#000000">
-  <tspan y="1029.690607" x="10">How to do slicing (multiple rectangular export areas)?</tspan>
+ <use id="tips-f03-de.svguse5827" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(1.5824 -.94905 .94905 1.5824 -154.03 87.071) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5828" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.15802 -.14670 .14670 .15802 105.74 85.229) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5829" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.38120 -.31038 .31038 .38120 62.112 90.793) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5830" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.91610 -.77244 .77244 .91610 -47.819 113.83) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5831" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.27118 1.0204 -1.0204 .27118 179.88 -85.712) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5832" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.054495 1.1179 -1.1179 .054495 217.51 -82.582) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5833" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(1.3012 -.34248 .34248 1.3012 -68.236 24.413) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5834" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.43783 -.057061 .057061 .43783 73.747 51.222) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5835" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.30681 .099409 -.099409 .30681 104.01 39.562) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5836" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-0.0307 .73379 -.73379 -0.0307 199.77 -22.627) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5837" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.58770 1.5039 -1.5039 .58770 173.12 -177.29) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5838" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.063589 .24175 -.24175 -.063589 166.45 48.3) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5839" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.11279 .48040 -.48040 -.11279 191.67 18.916) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5840" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.47048 .34479 -.34479 .47048 100.15 -7.1484) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5841" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.90328 1.2976 -1.2976 .90328 113.37 -172.92) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5842" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(1.6387 .41348 -.41348 1.6387 -56.943 -106.66) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5843" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(1.3754 .84138 -.84138 1.3754 12.615 -145.86) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5844" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.37243 1.258 -1.258 .37243 184.1 -126.53) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5845" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.97419 .80737 -.80737 .97419 65.759 -110.24) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5846" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.73194 1.6333 -1.6333 -.73194 366.51 -93.655) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5847" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.67313 .51862 -.51862 .67313 85.372 -46.918) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5848" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.025470 .99819 -.99819 .025470 212.32 -63.704) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5849" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.036052 .53209 -.53209 -.036052 184.98 5.8221) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5850" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.0903 .48582 -.48582 -1.0903 327.96 93.434) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5851" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.69835 .18974 -.18974 -.69835 250.68 104.41) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5852" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.058852 .81222 -.81222 .058852 193.36 -40.425) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5853" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.72687 1.5656 -1.5656 .72687 158.53 -196.59) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5854" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.93737 .98403 -.98403 -.93737 345.07 12.409) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5855" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.744 -.33229 .33229 -1.744 355.83 257.49) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5856" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.22296 1.1443 -1.1443 .22296 196.12 -99.219) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5857" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.34393 1.1531 -1.1531 -.34393 275.6 -56.783) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5858" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.18401 .80395 -.80395 -.18401 226.49 -20.573) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5859" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.65776 0.631 -0.631 -.65776 279.02 39.948) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5860" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.1784 .0080053 -.0080053 -1.1784 303.41 166.64) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5861" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.1888 .96076 -.96076 -1.1888 378.22 35.003) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5862" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.58046 -.030743 .030743 -.58046 217.32 125.98) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5863" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-0.867 .42505 -.42505 -0.867 292.24 84.688) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5864" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.70082 .10013 -.10013 -.70082 244.12 117.05) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5865" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.7631 -.22640 .22640 -1.7631 366.63 244.24) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5866" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.98245 -1.0913 1.0913 -.98245 191.52 304.35) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5867" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.11260 -.11170 .11170 -.11260 146.05 101.2) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5868" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.46512 -.23192 .23192 -.46512 185.79 145.06) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5869" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.3449 .031643 -.031643 -1.3449 328.37 176.17) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5870" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.84180 .71110 -.71110 -.84180 310.77 42.986) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5871" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.40673 -1.7162 1.7162 -.40673 63.376 346.88) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5872" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.51273 -1.1191 1.1191 -.51273 124.1 272.04) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5873" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.0098 .39705 -.39705 -1.0098 309.93 99.574) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5874" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.34237 -1.2544 1.2544 -.34237 89.992 277.74) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5875" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.3214 -.056325 .056325 -1.3214 318.34 186.59) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5876" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.081244 -1.4924 1.4924 .081244 12.785 278.19) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5877" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.73546 -.52141 .52141 -.73546 201.08 206.12) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5878" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.82671 -.39099 .39099 -.82671 223.8 195.01) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5879" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.095044 -1.2019 1.2019 .095044 33.234 236.75) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5880" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.40752 -.94837 .94837 -.40752 122.62 240.21) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5881" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.23737 -.78446 .78446 .23737 45.599 167.77) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5882" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.29723 -.33160 .33160 .29723 72.15 100.21) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5883" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.070897 -.56023 .56023 -.070897 105.71 160.34) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5884" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.0092847 -.59120 .59120 -.0092847 94.765 159.9) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5885" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.64749 -.89537 .89537 .64749 -19.949 151.6) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5886" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.20617 -.65520 .65520 .20617 59.887 152.2) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5887" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.22868 -1.0741 1.0741 -.22868 88.076 243.91) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5888" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.157 -1.3956 1.3956 -1.157 192.36 360.09) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5889" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-1.0291 -1.2779 1.2779 -1.0291 183.63 333.88) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5890" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.83814 -1.3323 1.3323 .83814 -80.094 197.65) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5891" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.097413 -1.1509 1.1509 -.097413 63.918 244.48) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5892" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(-.21499 -.73072 .73072 -.21499 112.61 195.13) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5893" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(1.6883 -.17049 .17049 1.6883 -108.8 -29.305) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5894" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.55378 -.20385 .20385 .55378 46.327 62.697) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5895" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(1.1627 -.63770 .63770 1.1627 -71.718 76.115) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5896" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(1.5217 -.57461 .57461 1.5217 -116.77 39.695) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <use id="tips-f03-de.svguse5897" xlink:href="#tips-f03-de.svgg1768" transform="translate(10 882.8) matrix(.54625 -.90456 .90456 .54625 -6.5852 160.68) translate(-10 -882.8)" height="1052.3622" width="744.09448" inkscape:tiled-clone-of="#g1768" y="0.0000000" x="0.0000000"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1061.610609" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="1061.610609" x="10">Wie erzeugt man Scheibchen (mehrere rechteckige Exportflächen)?</tspan>
  </text>
- <rect id="d0e97" display="none" height="1e3px" width="288" y="1034.9" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e97" display="none" height="1e3px" width="288" y="1066.8" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e97"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Create a new layer, in that layer create invisible rectangles covering parts of your
-image. Make sure your document uses the px unit (default), turn on grid and snap the
-rects to the grid so that each one spans a whole number of px units. Assign meaningful
-ids to the rects, and export each one to its own file (<flowSpan font-family="Sans">File
-&gt; Export PNG Image</flowSpan> (<flowSpan font-weight="bold">Shift+Ctrl+E</flowSpan>)). Then the rects will remember
-their export filenames. After that, it&apos;s very easy to re-export some of the rects:
-switch to the export layer, use Tab to select the one you need (or use Find by id), and
-click Export in the dialog. Or, you can write a shell script or batch file to export
-all of your areas, with a command like:
-</flowDiv>
+  <flowDiv xml:space="preserve">Erzeugen Sie eine neue Ebene, in der Sie unsichtbare Rechtecke zeichnen, die Teile Ihrer Zeichnung bedecken. Vergewissern Sie sich, dass Ihr Dokument Pixel als Einheiten benutzt (was die Standardeinstellung ist), schalten Sie das Raster an und lassen die Rechtecke am Raster einrasten. Jedes Rechteck sollte eine ganzzahlige Länge und Breite in Pixel besitzen. Geben Sie den Rechtecken sinnvolle Kennungen (IDs) und exportieren Sie jedes Rechteck in eine eigene Datei (<flowSpan font-family="sans-serif">Datei &gt; PNG-Bild exportieren</flowSpan> oder <flowSpan font-weight="bold">Umschalt+Strg+E</flowSpan>). Nun werden die Rechtecke ihre Export-Dateinamen behalten. Ab jetzt ist es sehr einfach, einzelne Rechtecke neu zu exportieren: Schalten Sie zur Export-Ebene um, benutzen Sie die <flowSpan font-weight="bold">Tabulator</flowSpan>-Taste, um das Rechteck auszuwählen, welches Sie benötigen (oder benutzen Sie die »Suche«-Funktion) und exportieren Sie es erneut. Wenn Sie den Vorgang noch weiter automatisieren wollen, können Sie ein Shellskript oder eine Batchdatei schreiben, um alle Ihre Rechtecke zu exportieren. Das Kommando dazu sieht für jedes Rechteck wie folgt aus:</flowDiv>
  </flowRoot>
- <rect id="d0e106" display="none" height="1e3px" width="288" y="1148.5" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
-  <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e106"/>
-  </flowRegion>
-  <flowDiv xml:space="preserve">inkscape -i area-id -t filename.svg
-</flowDiv>
- </flowRoot>
- <rect id="d0e109" display="none" height="1e3px" width="288" y="1166.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e109" display="none" height="1e3px" width="288" y="1255" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e109"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">for each exported area. The -t switch tells it to use the remembered filename hint,
-otherwise you can provide the export filename with the -e switch. Alternatively, you can
-use the <flowSpan font-family="Sans">Extensions &gt; Web &gt; Slicer</flowSpan> extensions, or <flowSpan font-family="Sans">Extensions &gt; Export &gt; Guillotine</flowSpan> for similar results.
-</flowDiv>
+  <flowDiv xml:space="preserve">inkscape -i ID_des_Rechtecks -t dateiname.svg</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1228.8631547999996" x="10" font-family="Sans" fill="#000000">
-  <tspan y="1228.8631547999996" x="10">Nichtlineare Verläufe</tspan>
+ <rect id="d0e112" display="none" height="1e3px" width="288" y="1272.9" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
+  <flowRegion>
+   <use y="0" x="0" xlink:href="#d0e112"/>
+  </flowRegion>
+  <flowDiv xml:space="preserve">Das Argument »-t« weist Inkscape an, den gespeicherten Dateinamen zu verwenden. Sie können aber auch einen Dateinamen für den Export angeben, wenn sie im Befehl den Parameter »-e« benutzen. Alternativ können Sie auch die Erweiterungen <flowSpan font-family="sans-serif">Erweiterungen &gt; Internet &gt; Schneider</flowSpan> oder auch <flowSpan font-family="sans-serif">Erweiterungen &gt; Exportieren &gt; Guillotine</flowSpan> verwenden, um ähnliche Ergebnisse zu erzielen.</flowDiv>
+ </flowRoot>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1356.7855428" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="1356.7855428" x="10">Nichtlineare Verläufe</tspan>
  </text>
- <rect id="d0e124" display="none" height="1e3px" width="288" y="1234.1" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e127" display="none" height="1e3px" width="288" y="1362" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e124"/>
+   <use y="0" x="0" xlink:href="#d0e127"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Die Version 1.1 von SVG unterstützt keine nichtlinearen Verläufe, das bedeutet, es lassen sich keine Verläufe erzeugen, die nichtlineare Übergänge zwischen den Farben besitzen. Sie können solche Verläufe aber annähern, indem Sie Verläufe mit <flowSpan font-style="italic">mehreren Verlaufsschritten</flowSpan> verwenden.</flowDiv>
+  <flowDiv xml:space="preserve">Die Version 1.1 von SVG unterstützt keine nichtlinearen Verläufe, das bedeutet, es lassen sich keine Verläufe erzeugen, die nichtlineare Übergänge zwischen den Farben besitzen. Sie können solche Verläufe aber annähern, indem Sie Verläufe mit <flowSpan font-style="italic">mehreren Stopps</flowSpan> (Verlaufsschritten) verwenden.</flowDiv>
  </flowRoot>
- <rect id="d0e130" display="none" height="1e3px" width="288" y="1292.9" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e133" display="none" height="1e3px" width="288" y="1421.9" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e130"/>
+   <use y="0" x="0" xlink:href="#d0e133"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Als Beispiel soll ein einfacher Verlauf mit zwei Verlaufsschritten dienen. Öffnen Sie den Farbverlaufs-Editor (zum Beispiel indem Sie auf einen der Anfasser für den Verlauf doppelklicken). Fügen Sie einen neuen Verlaufsschritt in der Mitte hinzu und ziehen Sie ihn ein wenig. Fügen Sie weitere Verlaufsschritte vor und nach dem mittleren Schritt und ziehen Sie sie auch ein wenig, sodass der Verlauf gleichmäßig wirkt. Je mehr Schritte sie hinzufügen, desto gleichmäßiger wird der entstehende Verlauf. So sieht der anfängliche Schwarz-Weiß-Verlauf mit zwei Schritten aus:</flowDiv>
+  <flowDiv xml:space="preserve">Als Beispiel soll ein einfacher Verlauf mit zwei Stopps dienen. Öffnen Sie den Farbverlaufs-Editor (zum Beispiel indem Sie auf einen der Anfasser für den Verlauf doppelklicken). Fügen Sie einen neuen Verlaufsschritt in der Mitte hinzu und ziehen Sie ihn ein wenig. Fügen Sie weitere Verlaufsschritte vor und nach dem mittleren Schritt und ziehen Sie sie auch ein wenig, sodass der Verlauf gleichmäßig wirkt. Je mehr Schritte sie hinzufügen, desto gleichmäßiger wird der entstehende Verlauf. So sieht der anfängliche Schwarz-Weiß-Verlauf mit zwei Schritten aus:</flowDiv>
  </flowRoot>
  <defs id="tips-f04-de.svgdefs3">
   <linearGradient id="tips-f04-de.svglinearGradient844" y2="-5.6264" gradientUnits="userSpaceOnUse" x2="-753.98" gradientTransform="matrix(.23728 0 0 4.2145 178.9 1.6151e-15)" y1="-71.602" x1="-753.98">
@@ -349,11 +327,11 @@ use the <flowSpan font-family="Sans">Extensions &gt; Web &gt; Slicer</flowSpan> 
    <stop id="tips-f04-de.svgstop843" stop-color="#fff" offset="1"/>
   </linearGradient>
  </defs>
- <rect id="tips-f04-de.svgrect1511" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1402.2) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-16.125" fill="url(#tips-f04-de.svglinearGradient844)"/>
- <rect id="d0e143" display="none" height="1e3px" width="288" y="1430.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="tips-f04-de.svgrect1511" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1532.5) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-16.125" fill="url(#tips-f04-de.svglinearGradient844)"/>
+ <rect id="d0e146" display="none" height="1e3px" width="288" y="1560.6" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e143"/>
+   <use y="0" x="0" xlink:href="#d0e146"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Und hier sehen Sie einige nichtlineare, mehrschrittige Verläufe (Sie können Sie im Farbverlaufs-Editor untersuchen):</flowDiv>
  </flowRoot>
@@ -438,23 +416,23 @@ use the <flowSpan font-family="Sans">Extensions &gt; Web &gt; Slicer</flowSpan> 
    <stop id="tips-f05-de.svgstop3630" stop-color="#fff" offset="1"/>
   </linearGradient>
  </defs>
- <rect id="tips-f05-de.svgrect3632" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1466.3) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-79.393" fill="url(#tips-f05-de.svglinearGradient4000)"/>
- <rect id="tips-f05-de.svgrect836" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1466.3) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-63.336" fill="url(#tips-f05-de.svglinearGradient3997)"/>
- <rect id="tips-f05-de.svgrect847" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1466.3) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-47.28" fill="url(#tips-f05-de.svglinearGradient3994)"/>
- <rect id="tips-f05-de.svgrect858" fill-opacity=".75" fill-rule="evenodd" transform="translate(10 1466.3) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-95.45" fill="url(#tips-f05-de.svglinearGradient3991)"/>
- <rect id="tips-f05-de.svgrect869" fill-opacity=".75" fill-rule="evenodd" transform="translate(10 1466.3) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-111.51" fill="url(#tips-f05-de.svglinearGradient3988)"/>
- <rect id="tips-f05-de.svgrect879" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1466.3) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-31.223" fill="url(#tips-f05-de.svglinearGradient3985)"/>
- <rect id="tips-f05-de.svgrect890" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1466.3) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-15.167" fill="url(#tips-f05-de.svglinearGradient3982)"/>
- <rect id="tips-f05-de.svgrect901" fill-opacity=".75" fill-rule="evenodd" transform="translate(10 1466.3) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-127.56" fill="url(#tips-f05-de.svglinearGradient3979)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1619.6373057999997" x="10" font-family="Sans" fill="#000000">
-  <tspan y="1619.6373057999997" x="10">Außermittige kreisförmige Verläufe</tspan>
+ <rect id="tips-f05-de.svgrect3632" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1596.7) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-79.393" fill="url(#tips-f05-de.svglinearGradient4000)"/>
+ <rect id="tips-f05-de.svgrect836" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1596.7) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-63.336" fill="url(#tips-f05-de.svglinearGradient3997)"/>
+ <rect id="tips-f05-de.svgrect847" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1596.7) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-47.28" fill="url(#tips-f05-de.svglinearGradient3994)"/>
+ <rect id="tips-f05-de.svgrect858" fill-opacity=".75" fill-rule="evenodd" transform="translate(10 1596.7) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-95.45" fill="url(#tips-f05-de.svglinearGradient3991)"/>
+ <rect id="tips-f05-de.svgrect869" fill-opacity=".75" fill-rule="evenodd" transform="translate(10 1596.7) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-111.51" fill="url(#tips-f05-de.svglinearGradient3988)"/>
+ <rect id="tips-f05-de.svgrect879" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1596.7) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-31.223" fill="url(#tips-f05-de.svglinearGradient3985)"/>
+ <rect id="tips-f05-de.svgrect890" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1596.7) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-15.167" fill="url(#tips-f05-de.svglinearGradient3982)"/>
+ <rect id="tips-f05-de.svgrect901" fill-opacity=".75" fill-rule="evenodd" transform="translate(10 1596.7) matrix(9.0277e-18 -1 -1 -5.3334e-18 0 0)" height="286.4" width="16.125" y="-305.42" x="-127.56" fill="url(#tips-f05-de.svglinearGradient3979)"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1749.9737558000002" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="1749.9737558000002" x="10">Asymmetrische radiale Verläufe</tspan>
  </text>
- <rect id="d0e162" display="none" height="1e3px" width="288" y="1624.8" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e165" display="none" height="1e3px" width="288" y="1755.2" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e162"/>
+   <use y="0" x="0" xlink:href="#d0e165"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Kreisförmige Verläufe müssen nicht immer symmetrisch sein. Sie können im Farbverlaufswerkzeug den mittleren Anfasser eines kreisförmigen Farbverlaufs zusammen mit der <flowSpan font-weight="bold">Umschalttaste</flowSpan> bewegen. Dadurch wird der X-förmige <flowSpan font-style="italic">Fokus-Anfasser</flowSpan> des Farbverlaufs von seinem Zentrum wegbewegt. Wenn Sie ihn nicht benötigen, können Sie den Fokus zurückstellen, indem Sie ihn nahe ans Zentrum ziehen.</flowDiv>
+  <flowDiv xml:space="preserve">Radiale Verläufe müssen nicht immer symmetrisch sein. Sie können im Farbverlaufswerkzeug am mittleren Anfasser eines kreisförmigen Farbverlaufs zusammen mit der <flowSpan font-weight="bold">Umschalttaste</flowSpan> ziehen. Dadurch wird der X-förmige <flowSpan font-style="italic">Fokus-Anfasser</flowSpan> des Farbverlaufs von seinem Zentrum wegbewegt. Wenn Sie ihn nicht benötigen, können Sie den Fokus zurückstellen, indem Sie ihn nahe ans Zentrum ziehen.</flowDiv>
  </flowRoot>
  <defs id="tips-f06-de.svgdefs3">
   <radialGradient id="tips-f06-de.svgradialGradient4031" gradientUnits="userSpaceOnUse" fx="164.26" fy="495.96" cx="187.87" cy="494.13" r="40.258" gradientTransform="matrix(.93031 0 0 .85381 16.079 -387.24)" inkscape:collect="always">
@@ -466,257 +444,216 @@ use the <flowSpan font-family="Sans">Extensions &gt; Web &gt; Slicer</flowSpan> 
    <stop id="tips-f06-de.svgstop1079" stop-opacity="0" offset="1"/>
   </radialGradient>
  </defs>
- <rect id="tips-f06-de.svgrect1569" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1712.9)" height="68.187" width="74.385" stroke="#000" y=".55902" x="70.82" stroke-width=".89427pt" fill="url(#tips-f06-de.svgradialGradient4034)"/>
- <rect id="tips-f06-de.svgrect1570" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1712.9)" height="68.187" width="74.385" stroke="#000" y=".55902" x="153.67" stroke-width=".89427pt" fill="url(#tips-f06-de.svgradialGradient4031)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1807.0436627999995" x="10" font-family="Sans" fill="#000000">
-  <tspan y="1807.0436627999995" x="10">An der Seitenmitte ausrichten</tspan>
+ <rect id="tips-f06-de.svgrect1569" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1833.6)" height="68.187" width="74.385" stroke="#000" y=".55902" x="70.82" stroke-width=".89427pt" fill="url(#tips-f06-de.svgradialGradient4034)"/>
+ <rect id="tips-f06-de.svgrect1570" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1833.6)" height="68.187" width="74.385" stroke="#000" y=".55902" x="153.67" stroke-width=".89427pt" fill="url(#tips-f06-de.svgradialGradient4031)"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1927.7911978000002" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="1927.7911978000002" x="10">An der Seitenmitte ausrichten</tspan>
  </text>
- <rect id="d0e187" display="none" height="1e3px" width="288" y="1812.2" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e190" display="none" height="1e3px" width="288" y="1933" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e187"/>
+   <use y="0" x="0" xlink:href="#d0e190"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">To align something to the center or side of a page, select the object or group and then
-choose <flowSpan font-family="Sans">Page</flowSpan> from the <flowSpan font-family="Sans">Relative to:</flowSpan> list in the
-Align and Distribute dialog (<flowSpan font-weight="bold">Shift+Ctrl+A</flowSpan>). 
-</flowDiv>
+  <flowDiv xml:space="preserve">Um etwas an der Seitenmitte oder am Rand einer Seite auszurichten, wählen Sie das Objekt oder die Gruppe aus und wählen Sie <flowSpan font-family="sans-serif">Seite</flowSpan>aus der mit <flowSpan font-family="sans-serif">Relativ zu:</flowSpan> bezeichneten Liste im »Ausrichten und Verteilen«-Dialog (<flowSpan font-weight="bold">Strg+Umschalt+A</flowSpan>).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1864.1988427999995" x="10" font-family="Sans" fill="#000000">
-  <tspan y="1864.1988427999995" x="10">Ein Dokument aufräumen</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1995.5863798000003" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="1995.5863798000003" x="10">Ein Dokument aufräumen</tspan>
  </text>
- <rect id="d0e205" display="none" height="1e3px" width="288" y="1869.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e208" display="none" height="1e3px" width="288" y="2000.8" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e205"/>
+   <use y="0" x="0" xlink:href="#d0e208"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Many of the no-longer-used gradients, patterns, and markers (more precisely, those which
-you edited manually) remain in the corresponding palettes and can be reused for new
-objects. However if you want to optimize your document, use the <flowSpan font-family="Sans">Clean up Document</flowSpan> command in File menu. It will remove any gradients, patterns, or markers
-which are not used by anything in the document, making the file smaller.
-</flowDiv>
+  <flowDiv xml:space="preserve">Viele der nicht mehr verwendeten Farbverläufe, Muster und Markierungen (genauer: diejenigen, welche von Ihnen verändert wurden) verbleiben in den zugehörigen Auswahldialogen und können für neue Objekte wiederverwendet werden. Wenn Sie jedoch Ihr Dokument »entrümpeln« wollen, benutzen Sie den Befehl <flowSpan font-family="sans-serif">Dokument säubern</flowSpan> aus dem »Datei«-Menü. Er wird für Sie alle Farbverläufe, Muster oder Markierungen löschen, die in Ihrem Dokument von keinem Objekt verwendet werden, wodurch Ihre Datei kleiner wird.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1962.2302487999996" x="10" font-family="Sans" fill="#000000">
-  <tspan y="1962.2302487999996" x="10">Versteckte Funktionen und der XML-Editor</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2105.9726328000006" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2105.9726328000006" x="10">Versteckte Funktionen und der XML-Editor</tspan>
  </text>
- <rect id="d0e217" display="none" height="1e3px" width="288" y="1967.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e220" display="none" height="1e3px" width="288" y="2111.2" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e217"/>
+   <use y="0" x="0" xlink:href="#d0e220"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">The XML editor (<flowSpan font-weight="bold">Shift+Ctrl+X</flowSpan>) allows you to change almost all aspects
-of the document without using an external text editor. Also, Inkscape usually supports
-more SVG features than are accessible from the GUI. The XML editor is one way to get
-access to these features (if you know SVG).
-</flowDiv>
+  <flowDiv xml:space="preserve">Der XML-Editor (<flowSpan font-weight="bold">Umschalt+Strg+X</flowSpan>) ermöglicht Ihnen, fast alles an einem Dokument zu verändern, ohne einen externen Texteditor verwenden zu müssen. Auch unterstützt Inkscape normalerweise mehr SVG-Merkmale als von der Benutzeroberfläche aus zugänglich sind. Der XML-Editor ist ein nützliches Hilfsmittel, um an diese Funktionen heranzukommen (wenn Sie sich mit SVG auskennen).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2040.6457187999995" x="10" font-family="Sans" fill="#000000">
-  <tspan y="2040.6457187999995" x="10">Maßeinheit für Lineale ändern</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2194.5476328000004" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2194.5476328000004" x="10">Maßeinheit für Lineale ändern</tspan>
  </text>
- <rect id="d0e229" display="none" height="1e3px" width="288" y="2045.8" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e232" display="none" height="1e3px" width="288" y="2199.7" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e229"/>
+   <use y="0" x="0" xlink:href="#d0e232"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">In the default template, the unit of measure used by the rulers is px (“SVG user unit”,
-in Inkscape it&apos;s equal to 0.8pt or 1/90 of the inch). This is also the unit used in
-displaying coordinates at the lower-left corner and preselected in all units menus. (You
-can always hover your mouse over a ruler to see the tooltip with the units it uses.) To
-change this, open <flowSpan font-family="Sans">Document Preferences</flowSpan>
-(<flowSpan font-weight="bold">Shift+Ctrl+D</flowSpan>) and change the <flowSpan font-family="Sans">Default units</flowSpan> on the
-<flowSpan font-family="Sans">Page</flowSpan> tab.
-</flowDiv>
+  <flowDiv xml:space="preserve">In der Standardvorlage für ein neues Dokument sind die Maßeinheiten für die Lineale immer px (»SVG-Benutzereinheit«, was in Inkscape gleich 0,8pt oder 1/90 Zoll ist). Dies ist auch die Einheit, in der die Koordinaten unten links angezeigt werden, und die als Vorauswahl in allen Menüs erscheint, die Einheiten benutzen. (Sie können immer mit dem Mauszeiger über ein Lineal fahren. Ein kleines Infofenster wird Ihnen anzeigen, welche Einheit das Lineal benutzt.) Um die Standard-Einheit zu verändern, öffnen Sie die <flowSpan font-family="sans-serif">Dokumenteneinstellungen</flowSpan> (<flowSpan font-weight="bold">Umschalt+Strg+D</flowSpan>) und ändern Sie die <flowSpan font-family="sans-serif">Standard-Einheiten</flowSpan> im Reiter <flowSpan font-family="sans-serif">Seite</flowSpan>.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2140.2476168" x="10" font-family="Sans" fill="#000000">
-  <tspan y="2140.2476168" x="10">Stempeln</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2324.5695328000006" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2324.5695328000006" x="10">Stempeln</tspan>
  </text>
- <rect id="d0e250" display="none" height="1e3px" width="288" y="2145.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e253" display="none" height="1e3px" width="288" y="2329.8" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e250"/>
+   <use y="0" x="0" xlink:href="#d0e253"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Um schnell mal eben viele Kopien eines Objekts zu erzeugen, benutzen Sie die Funktion <flowSpan font-style="italic">Stempeln</flowSpan>. Verschieben Sie einfach ein Objekt (oder skalieren oder drehen Sie es), und noch während Sie den Mausknopf gedrückt halten, drücken Sie die <flowSpan font-weight="bold">Leertaste</flowSpan>. Auf diese Art wird ein »Stempelabdruck« des aktuellen Objekts hinterlassen. Sie können stempeln, so oft Sie wollen.</flowDiv>
+  <flowDiv xml:space="preserve">Um schnell mal eben viele Kopien eines Objekts zu erzeugen, benutzen Sie die Funktion <flowSpan font-style="italic">Stempeln</flowSpan>. Verschieben Sie einfach ein Objekt (oder skalieren oder drehen Sie es), und noch während Sie die Maustaste gedrückt halten, drücken Sie die <flowSpan font-weight="bold">Leertaste</flowSpan>. Auf diese Art wird ein »Stempelabdruck« des aktuellen Objekts hinterlassen. Sie können stempeln, so oft Sie wollen.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2229.2095157999997" x="10" font-family="Sans" fill="#000000">
-  <tspan y="2229.2095157999997" x="10">Tricks mit dem Zeichenwerkzeug</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2413.5314318000005" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2413.5314318000005" x="10">Tricks mit dem Zeichenwerkzeug</tspan>
  </text>
- <rect id="d0e265" display="none" height="1e3px" width="288" y="2234.4" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e268" display="none" height="1e3px" width="288" y="2418.7" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e265"/>
+   <use y="0" x="0" xlink:href="#d0e268"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Beim Benutzen des Zeichenwerkzeugs (Bézier) können Sie das Zeichnen einer Linie auf folgende Arten beenden:</flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 2269.2)"/>
- <rect id="d0e271" display="none" height="1e3px" width="258" y="2263.2" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <circle cy="0" cx="0" r="2" transform="translate(15 2453.5)"/>
+ <rect id="d0e274" display="none" height="1e3px" width="258" y="2447.5" x="20"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e271"/>
+   <use y="0" x="0" xlink:href="#d0e274"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Drücken Sie die <flowSpan font-weight="bold">Eingabetaste</flowSpan></flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 2287.1)"/>
- <rect id="d0e277" display="none" height="1e3px" width="258" y="2281.1" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <circle cy="0" cx="0" r="2" transform="translate(15 2471.5)"/>
+ <rect id="d0e280" display="none" height="1e3px" width="258" y="2465.5" x="20"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e277"/>
+   <use y="0" x="0" xlink:href="#d0e280"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Machen Sie einen Doppelklick mit der linken Maustaste</flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 2304.9)"/>
- <rect id="d0e281" display="none" height="1e3px" width="258" y="2298.9" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <circle cy="0" cx="0" r="2" transform="translate(15 2489.2)"/>
+ <rect id="d0e284" display="none" height="1e3px" width="258" y="2483.2" x="20"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e281"/>
+   <use y="0" x="0" xlink:href="#d0e284"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Select the Pen tool from the toolbar
-</flowDiv>
+  <flowDiv xml:space="preserve">Wählen Sie erneut das Zeichenwerkzeug aus</flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 2321.1)"/>
- <rect id="d0e285" display="none" height="1e3px" width="258" y="2315.1" x="20"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <circle cy="0" cx="0" r="2" transform="translate(15 2507.1)"/>
+ <rect id="d0e288" display="none" height="1e3px" width="258" y="2501.1" x="20"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e285"/>
+   <use y="0" x="0" xlink:href="#d0e288"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Wählen Sie ein anderes Werkzeug</flowDiv>
  </flowRoot>
- <rect id="d0e289" display="none" height="1e3px" width="288" y="2333" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e292" display="none" height="1e3px" width="288" y="2519" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e289"/>
+   <use y="0" x="0" xlink:href="#d0e292"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Beachten Sie, dass der Pfad noch nicht als Objekt im Dokument existiert, solange er noch nicht beendet wurde (das heißt, solange er grün angezeigt wird, und das aktuelle Segment rot). Deshalb sollten Sie entweder die Taste <flowSpan font-weight="bold">Esc</flowSpan> (um den ganzen Pfad zu verwerfen) oder die <flowSpan font-weight="bold">Rückschritttaste</flowSpan> (um das letzte Segment des noch nicht beendeten Pfads zu verwerfen) statt der <flowSpan font-family="Sans">Rückgängig</flowSpan>-Funktion verwenden.</flowDiv>
+  <flowDiv xml:space="preserve">Beachten Sie, dass der Pfad noch nicht als Objekt im Dokument existiert, solange er noch nicht beendet wurde (das heißt, solange er grün angezeigt wird, und das aktuelle Segment rot). Deshalb sollten Sie entweder die Taste <flowSpan font-weight="bold">Esc</flowSpan> (um den ganzen Pfad zu verwerfen) oder die <flowSpan font-weight="bold">Rückschritttaste</flowSpan> (um das letzte Segment des noch nicht beendeten Pfads zu verwerfen) statt der <flowSpan font-family="sans-serif">Rückgängig</flowSpan>-Funktion verwenden.</flowDiv>
  </flowRoot>
- <rect id="d0e301" display="none" height="1e3px" width="288" y="2413" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e304" display="none" height="1e3px" width="288" y="2599.1" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e301"/>
+   <use y="0" x="0" xlink:href="#d0e304"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Um einen neuen Unterpfad zu einem existierenden Pfad hinzuzufügen, wählen Sie den Pfad aus und drücken Sie die <flowSpan font-weight="bold">Umschalttaste</flowSpan>, dann fangen Sie von einem beliebigen Punkt aus an, zu zeichnen. Wenn Sie jedoch einen bestehenden Pfad nur <flowSpan font-style="italic">weiterführen</flowSpan> möchten, ist der Tastendruck nicht notwendig; fangen Sie einfach an einem der Enden des ausgewählten Pfades mit dem Weiterzeichnen an.</flowDiv>
+  <flowDiv xml:space="preserve">Um einen neuen Unterpfad zu einem existierenden Pfad hinzuzufügen, wählen Sie den Pfad aus und drücken Sie die <flowSpan font-weight="bold">Umschalttaste</flowSpan>, dann fangen Sie von einem beliebigen Punkt aus an, zu zeichnen. Wenn Sie jedoch einen bestehenden Pfad nur <flowSpan font-style="italic">weiterführen</flowSpan> möchten, ist der Tastendruck nicht notwendig; fangen Sie einfach an einem der Endknoten des ausgewählten Pfades mit dem Weiterzeichnen an.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2505.9130535" x="10" font-family="Sans" fill="#000000">
-  <tspan y="2505.9130535" x="10">Unicode-Zeichen eingeben</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2691.9498133000006" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2691.9498133000006" x="10">Unicode-Zeichen eingeben</tspan>
  </text>
- <rect id="d0e316" display="none" height="1e3px" width="288" y="2511.1" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e319" display="none" height="1e3px" width="288" y="2697.1" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e316"/>
+   <use y="0" x="0" xlink:href="#d0e319"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">While in the Text tool, pressing <flowSpan font-weight="bold">Ctrl+U</flowSpan> toggles between Unicode and
-normal mode. In Unicode mode, each group of 4 hexadecimal digits you type becomes a
-single Unicode character, thus allowing you to enter arbitrary symbols (as long as you
-know their Unicode codepoints and the font supports them). To finish the Unicode input, 
-press <flowSpan font-weight="bold">Enter</flowSpan>. For example, <flowSpan font-weight="bold">Ctrl+U 2 0 1 4 Enter</flowSpan> inserts
-an em-dash (—). To quit the Unicode mode without inserting anything press
-<flowSpan font-weight="bold">Esc</flowSpan>.
-</flowDiv>
+  <flowDiv xml:space="preserve">Während Sie mit dem Textwerkzeug arbeiten, schaltet die Tastenkombination <flowSpan font-weight="bold">Strg+U</flowSpan> zwischen Unicode- und normalem Modus um. Im Unicode-Modus wird jede Gruppe von vier Hexadezimalzahlen, die Sie eingeben, zu einem einzelnen Unicode-Zeichen. Auf diese Weise können Sie beliebige Symbole erzeugen (wenn Sie den Unicode-Code dazu wissen und wenn die gewählte Schriftart sie enthält). Um den Unicode-Modus wieder zu verlassen, drücken Sie die <flowSpan font-weight="bold">Eingabetaste</flowSpan>. Ein Beispiel: die Tastenfolge <flowSpan font-weight="bold">Strg+U 2 0 1 4 Eingabe</flowSpan> fügt einen betonten Bindestrich (em-dash) ein (—). Um den Unicode-Modus zu verlassen, ohne irgendein Zeichen in den Text einzufügen, drücken Sie <flowSpan font-weight="bold">Esc</flowSpan>.</flowDiv>
  </flowRoot>
- <rect id="d0e331" display="none" height="1e3px" width="288" y="2592.8" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e334" display="none" height="1e3px" width="288" y="2819.9" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e331"/>
+   <use y="0" x="0" xlink:href="#d0e334"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">You can also use the <flowSpan font-family="Sans">Text &gt; Glyphs</flowSpan> dialog to search for and insert 
-glyphs into your document.
-</flowDiv>
+  <flowDiv xml:space="preserve">Sie können auch den Dialog unter <flowSpan font-family="sans-serif">Text &gt; Glyphen</flowSpan> verwenden, um bestimmte Zeichen zu suchen und in Ihr Dokument einzufügen.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2634.1434165" x="10" font-family="Sans" fill="#000000">
-  <tspan y="2634.1434165" x="10">Das Raster zum Zeichnen von Icons verwenden</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2861.2171033000004" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2861.2171033000004" x="10">Das Seitengitter zum Zeichnen von Icons verwenden</tspan>
  </text>
- <rect id="d0e343" display="none" height="1e3px" width="288" y="2639.3" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e346" display="none" height="1e3px" width="288" y="2866.4" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e343"/>
+   <use y="0" x="0" xlink:href="#d0e346"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Nehmen wir einmal an, Sie wollen ein 24×24 Pixel großes Icon erstellen. Erzeugen Sie dazu zunächst eine Leinwand der Größe 24×24 Pixel (benutzen Sie dazu die <flowSpan font-family="Sans">Dokumenteneinstellungen</flowSpan>) und setzen Sie das Raster auf 0,5 Pixel (ergibt 48×48 Rasterlinien). Wenn Sie nun gefüllte Objekte an <flowSpan font-style="italic">geradzahligen</flowSpan> Rasterlinien und gerahmte Objekte an <flowSpan font-style="italic">ungeradzahligen</flowSpan> Rasterlinien ausrichten, darauf achten, dass die Strichstärke eine gerade Pixelanzahl ist und Ihr Bild mit der Standardeinstellung von 90dpi exportieren (sodass aus einem Pixel ein Bitmap-Pixel wird), bekommen Sie ein schönes knackiges Bitmap-Bild ohne unerwünschtes Antialiasing.</flowDiv>
+  <flowDiv xml:space="preserve">Nehmen wir einmal an, Sie wollen ein 24×24 Pixel großes Icon erstellen. Erzeugen Sie dazu zunächst eine Leinwand der Größe 24×24 Pixel (benutzen Sie dazu die <flowSpan font-family="sans-serif">Dokumenteneinstellungen</flowSpan>) und setzen Sie das Gitter auf 0,5 Pixel (ergibt 48×48 Rasterlinien). Wenn Sie nun gefüllte Objekte an <flowSpan font-style="italic">geradzahligen</flowSpan> Rasterlinien und gerahmte Objekte an <flowSpan font-style="italic">ungeradzahligen</flowSpan> Rasterlinien ausrichten, darauf achten, dass die Strichstärke eine gerade Pixelanzahl ist und Ihr Bild mit der Standardeinstellung von 90dpi exportieren (sodass aus einem Pixel ein Bitmap-Pixel wird), bekommen Sie ein schönes knackiges Bitmap-Bild ohne unerwünschtes Antialiasing.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2765.7588865000002" x="10" font-family="Sans" fill="#000000">
-  <tspan y="2765.7588865000002" x="10">Objekte rotieren</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2992.8325733000006" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2992.8325733000006" x="10">Objekte drehen</tspan>
  </text>
- <rect id="d0e361" display="none" height="1e3px" width="288" y="2771" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e364" display="none" height="1e3px" width="288" y="2998" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e361"/>
+   <use y="0" x="0" xlink:href="#d0e364"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Wenn Sie mit dem Auswahlwerkzeug arbeiten, <flowSpan font-weight="bold">klicken</flowSpan> Sie einmal auf ein Objekt, um die Skalierungspfeile zu sehen. Dann <flowSpan font-weight="bold">klicken Sie nochmals</flowSpan> auf das Objekt, um die Rotations- und Verschiebungspfeile zu sehen. Wenn Sie auf die Pfeile an den Ecken klicken und sie verschieben, wird sich das Objekt um das Zentrum (welches als Fadenkreuz angezeigt wird) drehen. Wenn Sie nun noch während dem Rotieren die <flowSpan font-weight="bold">Umschalttaste</flowSpan> gedrückt halten, wird das Objekt um die gegenüberliegende Ecke gedreht. Sie können aber auch das Rotationszentrum auf eine beliebige Stelle verschieben.</flowDiv>
+  <flowDiv xml:space="preserve">Wenn Sie mit dem Auswahlwerkzeug arbeiten, <flowSpan font-weight="bold">klicken</flowSpan> Sie einmal auf ein Objekt, um die Skalierungspfeile zu sehen. Dann <flowSpan font-weight="bold">klicken Sie nochmals</flowSpan> auf das Objekt, um die Rotations- und Scherpfeile zu sehen. Wenn Sie auf die Pfeile an den Ecken klicken und sie verschieben, wird sich das Objekt um das Zentrum (welches als Fadenkreuz angezeigt wird) drehen. Wenn Sie nun noch während des Rotierens die <flowSpan font-weight="bold">Umschalttaste</flowSpan> gedrückt halten, wird das Objekt um die gegenüberliegende Ecke gedreht. Sie können aber auch das Rotationszentrum auf eine beliebige Stelle verschieben.</flowDiv>
  </flowRoot>
- <rect id="d0e373" display="none" height="1e3px" width="288" y="2874" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e376" display="none" height="1e3px" width="288" y="3101.1" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e373"/>
+   <use y="0" x="0" xlink:href="#d0e376"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Oder Sie rotieren das Objekt mit Hilfe der Tastatur durch drücken der Tasten <flowSpan font-weight="bold">[</flowSpan> und <flowSpan font-weight="bold">]</flowSpan> (um jeweils 15°) oder <flowSpan font-weight="bold">Strg+[</flowSpan> and <flowSpan font-weight="bold">Strg+]</flowSpan> (um jeweils 90°). Die gleichen <flowSpan font-weight="bold">[]</flowSpan>-Tasten zusammen mit der <flowSpan font-weight="bold">Alt</flowSpan>-Taste ermöglichen eine langsame Rotation um je einen Pixel.</flowDiv>
+  <flowDiv xml:space="preserve">Oder Sie rotieren das Objekt mit Hilfe der Tastatur durch Drücken der Tasten <flowSpan font-weight="bold">[</flowSpan> und <flowSpan font-weight="bold">]</flowSpan> (um jeweils 15°) oder <flowSpan font-weight="bold">Strg+[</flowSpan> and <flowSpan font-weight="bold">Strg+]</flowSpan> (um jeweils 90°). Die gleichen <flowSpan font-weight="bold">[]</flowSpan>-Tasten zusammen mit der <flowSpan font-weight="bold">Alt</flowSpan>-Taste ermöglichen eine langsame Rotation um je einen Pixel (leider nicht mit deutscher Tastatur).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2936.6591645000003" x="10" font-family="Sans" fill="#000000">
-  <tspan y="2936.6591645000003" x="10">Schattenwurf</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3173.841602300001" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3173.841602300001" x="10">Schattenwurf</tspan>
  </text>
- <rect id="d0e400" display="none" height="1e3px" width="288" y="2941.9" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e403" display="none" height="1e3px" width="288" y="3179" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e400"/>
+   <use y="0" x="0" xlink:href="#d0e403"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">To quickly create drop shadows for objects, use the 
-<flowSpan font-family="Sans">Filters &gt; Shadows and Glows &gt; Drop Shadow...</flowSpan> feature.
-</flowDiv>
+  <flowDiv xml:space="preserve">Um schnell mal eben einen Schatten für ein Objekt zu erstellen, verwenden Sie die Funktion Filter &gt; Schatten und Lichter &gt; Abgesetzter Schattend&gt;.</flowDiv>
  </flowRoot>
- <rect id="d0e406" display="none" height="1e3px" width="288" y="2970.2" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e408" display="none" height="1e3px" width="288" y="3218.2" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e406"/>
+   <use y="0" x="0" xlink:href="#d0e408"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">You can also easily create blurred drop shadows for objects manually with blur in the
-Fill and Stroke dialog. Select an object, duplicate it by <flowSpan font-weight="bold">Ctrl+D</flowSpan>, press 
-<flowSpan font-weight="bold">PgDown</flowSpan> to put it beneath original object, place it a little to the right 
-and lower than original object. Now open Fill And Stroke dialog and change Blur value to, 
-say, 5.0. That&apos;s it!
-</flowDiv>
+  <flowDiv xml:space="preserve">Sie können auch ganz leicht einen unscharfen Schatten für ein Objekt erstellen, indem Sie »Unschärfe« im »Füllung und Kontur«-Dialog nutzen. Wählen Sie ein Objekt, duplizieren Sie es mit <flowSpan font-weight="bold">Strg+D</flowSpan>, drücken Sie <flowSpan font-weight="bold">Bild runter</flowSpan>, um es unter das originale Objekt abzusenken, und verschieben Sie es etwas nach rechts unten vom originalen Objekt. Öffnen Sie nun den Dialog »Füllung und Kontur« und ändern Sie den Weichzeichner-Wert auf z.B. 5,0. Das war es schon!</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3043.4962475" x="10" font-family="Sans" fill="#000000">
-  <tspan y="3043.4962475" x="10">Text auf einen Pfad platzieren</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3321.7894653000008" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3321.7894653000008" x="10">Text auf einen Pfad platzieren</tspan>
  </text>
- <rect id="d0e421" display="none" height="1e3px" width="288" y="3048.7" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e423" display="none" height="1e3px" width="288" y="3327" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e421"/>
+   <use y="0" x="0" xlink:href="#d0e423"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Um Text an einer Kurve auszurichten, wählen Sie den Text und die Kurve zusammen aus und benutzen Sie das Kommando <flowSpan font-family="Sans">Text an Pfad ausrichten </flowSpan> aus dem Text-Menü. Der Text wird ab dem Anfang des Pfades ausgerichtet. Normalerweise ist es besser, für den Text einen eigenen Pfad zu erstellen, als den Text an irgendeinem Zeichnungselement auszurichten - auf diese Art haben Sie mehr Kontrolle über den Text, ohne dass Sie an Ihrer eigentlichen Zeichnung herumändern müssen.</flowDiv>
+  <flowDiv xml:space="preserve">Um Text an einem Pfad auszurichten, wählen Sie den Text und den Pfad zusammen aus und benutzen Sie den Befehl <flowSpan font-family="sans-serif">An Pfad ausrichten</flowSpan> aus dem Text-Menü. Der Text wird ab dem Anfang des Pfades ausgerichtet. Normalerweise ist es besser, für den Text einen eigenen Pfad zu erstellen, als den Text an irgendeinem Zeichnungselement auszurichten – auf diese Art haben Sie mehr Kontrolle über den Text, ohne dass Sie an Ihrer eigentlichen Zeichnung herumändern müssen.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3153.8825005000003" x="10" font-family="Sans" fill="#000000">
-  <tspan y="3153.8825005000003" x="10">Das Original auswählen</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3421.535715300001" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3421.535715300001" x="10">Das Original auswählen</tspan>
  </text>
- <rect id="d0e433" display="none" height="1e3px" width="288" y="3159.1" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e435" display="none" height="1e3px" width="288" y="3426.7" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e433"/>
+   <use y="0" x="0" xlink:href="#d0e435"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Wenn Sie Text auf einem Pfad haben, einen verbundenen Offset oder einen Klon, kann es schwierig sein, das Quellobjekt oder den Quellpfad auszuwählen, weil die Quelle direkt unterhalb oder unsichtbar oder fixiert sein könnte. In so einem Fall hilft Ihnen die Tastenkombination <flowSpan font-weight="bold">Umschalt+D</flowSpan>; wählen Sie den Text, den verbundenen Offset oder den Klon aus und drücken Sie <flowSpan font-weight="bold">Umschalt+D</flowSpan>, um den dazugehörigen Pfad, den Offset-Ursprung oder das Original des Klons auszuwählen.</flowDiv>
+  <flowDiv xml:space="preserve">Bei Text, der an einem Pfad ausgerichtet ist, einen verbundenen Versatz oder einem Klon kann es schwierig sein, das Quellobjekt oder den Quellpfad auszuwählen, weil die Quelle direkt unterhalb, unsichtbar und/oder gesperrt sein könnte. In so einem Fall hilft Ihnen die Tastenkombination <flowSpan font-weight="bold">Umschalt+D</flowSpan>. Wählen Sie den Text, den verbundenen Versatz oder den Klon aus und drücken Sie <flowSpan font-weight="bold">Umschalt+D</flowSpan>, um den dazugehörigen Pfad, das Quellobjekt des Versatzes oder das Original des Klons auszuwählen.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3262.5933315" x="10" font-family="Sans" fill="#000000">
-  <tspan y="3262.5933315" x="10">Programmfenster außerhalb des Bildschirms?</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3531.930323300001" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3531.930323300001" x="10">Programmfenster außerhalb des Bildschirms</tspan>
  </text>
- <rect id="d0e448" display="none" height="1e3px" width="288" y="3267.8" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e450" display="none" height="1e3px" width="288" y="3537.1" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e448"/>
+   <use y="0" x="0" xlink:href="#d0e450"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">When moving documents between systems with different resolutions or number of displays,
-you may find Inkscape has saved a window position that places the window out of reach on
-your screen. Simply maximise the window (which will bring it back into view, use the
-task bar), save and reload. You can avoid this altogether by unchecking the global
-option to save window geometry (<flowSpan font-family="Sans">Inkscape Preferences</flowSpan>,
-<flowSpan font-family="Sans">Interface &gt; Windows</flowSpan> section).
-</flowDiv>
+  <flowDiv xml:space="preserve">Wenn Sie Dokumente auf verschiedenen Systemen bearbeiten, die entweder unterschiedliche Auflösungen besitzen oder unterschiedlich viele Bildschirme, kann es Ihnen passieren, dass Inkscape eine Fensterposition mit abgespeichert hat, welche dazu führt, dass Sie das Fenster an Ihrem Monitor nicht mehr erreichen können. In diesem Fall maximieren Sie das Fenster einfach (das bringt das Fenster wieder in Ihren Anzeigebereich; benutzen Sie die Taskleiste dazu), speichern Sie das Dokument und öffnen Sie es erneut. Sie können dieses Verhalten auch komplett abstellen, indem Sie die globale Einstellung, die Fenstergeometrie mit abzuspeichern, abschalten (in den <flowSpan font-family="sans-serif">Inkscape-Einstellungen</flowSpan>, im Abschnitt <flowSpan font-family="sans-serif">Benutzeroberfläche &gt; Fenster</flowSpan>).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3361.7575505000004" x="10" font-family="Sans" fill="#000000">
-  <tspan y="3361.7575505000004" x="10">Transparenz, Farbverläufe und PostScript-Export</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3684.294543300001" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3684.294543300001" x="10">Transparenz, Farbverläufe und PostScript-Export</tspan>
  </text>
- <rect id="d0e463" display="none" height="1e3px" width="288" y="3367" x="10"/>
- <flowRoot font-size="8" font-family="Serif" line-height="133.00000%" fill="#000000">
+ <rect id="d0e465" display="none" height="1e3px" width="288" y="3689.5" x="10"/>
+ <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
-   <use y="0" x="0" xlink:href="#d0e463"/>
+   <use y="0" x="0" xlink:href="#d0e465"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">PostScript- oder EPS-Formate unterstützen keine <flowSpan font-style="italic">Transparenz</flowSpan>, deshalb sollten Sie auch keine Transparenz benutzen, wenn Sie etwas nach PS oder EPS exportieren wollen. Wenn Sie einfache Transparenz benutzen wollen, die etwas einfarbiges überdeckt, dann können Sie dieses Problem leicht lösen: Wählen Sie eines der transparenten Objekte aus, wechseln Sie zur Farbpipette (<flowSpan font-weight="bold">F7</flowSpan>); stellen Sie sicher, dass es den »sichtbaren Farbwert ohne Transparenz« ermittelt, und klicken Sie auf Ihr Objekt. So wird die sichtbare Farbe aktiviert. Nun weisen Sie diese Farbe wiederum Ihrem Objekt zu, aber diesmal ohne Transparenz. Wiederholen Sie diesen Schritt für alle transparenten Objekte. Wenn Ihr transparentes Objekt mehrere einfarbigen Flächen überdeckt, müssen Sie es entsprechend in einzelne Teile auftrennen und für jedes einzelne Teil wie oben beschrieben vorgehen.</flowDiv>
+  <flowDiv xml:space="preserve">PostScript- oder EPS-Formate unterstützen keine <flowSpan font-style="italic">Transparenz</flowSpan>, deshalb sollten Sie auch keine Transparenz benutzen, wenn Sie etwas nach PS oder EPS exportieren wollen. Wenn Sie Teiltransparenz benutzen wollen, die etwas einfarbiges überdeckt, dann können Sie dieses Problem leicht lösen: Wählen Sie eines der transparenten Objekte aus, wechseln Sie zur Farbpipette (<flowSpan font-weight="bold">F7</flowSpan>). Stellen Sie sicher, dass diese den »sichtbaren Farbwert ohne Transparenz« ermittelt, und klicken Sie auf Ihr Objekt. Das übernimmt die sichtbare Farbe und weist sie dem Objekt zu, aber diesmal ohne Transparenz. Wiederholen Sie diesen Schritt für alle teiltransparenten Objekte. Wenn Ihr teiltransparentes Objekt mehrere einfarbigen Flächen überdeckt, müssen Sie es entsprechend in einzelne Teile auftrennen und für jeden einzelnen Teil wie oben beschrieben vorgehen.</flowDiv>
  </flowRoot>
- <g transform="translate(0 3512.6)">
+ <g transform="translate(0 3835.1)">
   <defs id="defs3" xmlns:cc="http://creativecommons.org/ns#">
    <linearGradient id="linearGradient2465" y2="-7528.7" xlink:href="#linearGradient841" gradientUnits="userSpaceOnUse" x2="76.847" gradientTransform="matrix(2.1496 0 0 .46519 -.13015 3495.4)" y1="-7656.4" x1="76.847" inkscape:collect="always"/>
    <filter id="filter85" height="1.2" width="1.2" color-interpolation-filters="sRGB" y="-.1" x="-.1" inkscape:label="Drop shadow, custom">
@@ -746,8 +683,8 @@ option to save window geometry (<flowSpan font-family="Sans">Inkscape Preference
     <path id="path1520" d="m510.36 306.93c10.237-2.5598 33.886 0 30.119 15.058-3.7633 15.062-35.764 9.4119-56.473 1.8852-1.8823-15.061 21.529-15.737 26.354-16.943z" stroke-width="1pt"/>
     <path id="path1521" d="m359.24 21.363c-11.313 0-22.606 4.3206-31.275 12.99l-154.09 154.06c-8.4969 8.4967-12.762 19.543-12.931 30.631h-0.0585c0 0.0395 0.0566 0.0774 0.0585 0.11702-0.002 0.18609-0.0585 0.36977-0.0585 0.55586h0.2633c2.9491 11.221 79.15 25.523 87.651 34.025 12.839 12.839-49.233 22.268-36.395 35.107 12.839 12.839 77.59 24.843 90.43 37.682 12.839 12.839-26.238 26.51-13.399 39.349s55.967-3.2094 48.155 30.28c17.338 17.338 53.512 9.0588 77.733-8.2795 12.839-12.839-24.629-11.707-11.79-24.546s45.247-12.908 72.555-43.621c-10.992-17.095-46.981-24.375-34.142-37.214s37.8-6.3179 91.659-30.777c26.292-11.941 24.12-21.01 24.019-32.006-0.002-0.23138 0-0.43973 0-0.67288h-0.0585c-0.16-11.07-4.46-22.12-12.95-30.62l-154.07-154.06c-8.66-8.667-19.99-12.987-31.3-12.987zm-1.3165 20.04c5.0295 0.13102 9.0916 3.9651 17.056 9.1279l72.789 53.977c0.79681 0.51671 1.5557 1.0557 2.2527 1.6091 0.69703 0.55327 1.3337 1.1401 1.9309 1.7261 0.5972 0.58495 1.14 1.1721 1.6383 1.7846 0.49726 0.61244 0.94845 1.2385 1.3458 1.8724 0.39844 0.6349 0.75476 1.2798 1.0532 1.9309 0.29867 0.65226 0.53281 1.325 0.7314 1.9894 0.19976 0.66341 0.36832 1.319 0.46811 1.9894 0.0999 0.67165 0.14627 1.3452 0.14627 2.0187l-43.123-20.83-4.3006 32.562-23.727-11.117-36.629 24.458-14.014-48.331-18.051 42.275-50.408 5.032 0.55587-22.439c0-5.3897 29.057-43.122 46.751-52.105l32.386-23.259c4.7787-3.0977 8.1289-4.35 11.147-4.2714zm-66.996 220.21c22.944 5.9503 48.476 13.757 68.957 13.897l0.87768 9.2157c-17.538-1.8078-54.648-10.276-63.398-14.745l-6.4363-8.3672z" stroke-width="1pt"/>
    </g>
-   <use id="use1328" style="color:#000000" xlink:href="#path1508" transform="matrix(5.1767 0 0 5.1767 -102.7 -256.62)" height="1052.3622" fill-opacity=".064615" width="744.09448" y="0" x="0" font-family="Sans" fill="#ffffff"/>
-   <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(-90)" font-size="6.9693px" y="-6.5672836" x="-70.83046" font-family="Sans" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="-70.83046" style="letter-spacing:.29056" y="-6.5672836">Verwenden Sie <tspan id="tspan7523" font-weight="bold">Strg+Pfeiltaste nach oben</tspan> zum Verschieben </tspan></text>
+   <use id="use1328" style="color:#000000" xlink:href="#path1508" transform="matrix(5.1767 0 0 5.1767 -102.7 -256.62)" height="1052.3622" fill-opacity=".064615" width="744.09448" y="0" x="0" font-family="sans-serif" fill="#ffffff"/>
+   <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(-90)" font-size="6.9693px" y="-6.5672836" x="-70.83046" font-family="sans-serif" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="-70.83046" style="letter-spacing:.29056" y="-6.5672836">Verwenden Sie <tspan id="tspan7523" font-weight="bold">Strg+Pfeiltaste nach oben</tspan> zum Verschieben </tspan></text>
    <path id="path7527" opacity=".5" style="color:#000000" d="m338.53 197.82-13.108-1.2709 7.6547-10.717z" fill-rule="evenodd" transform="matrix(-.61496 -.045496 -.061919 .45186 207.79 -245.15)"/>
   </g>
  </g>

@@ -191,14 +191,12 @@ Glib::ustring LayerManager::getNextLayerName( SPObject* obj, gchar const *label)
     }
 
     std::set<Glib::ustring> currentNames;
-    GSList const *layers=_document->getResourceList("layer");
+    std::set<SPObject *> layers = _document->getResourceList("layer");
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
-        for ( GSList const *iter=layers ; iter ; iter = iter->next ) {
-            SPObject *layer=static_cast<SPObject *>(iter->data);
-            if ( layer != obj ) {
-                currentNames.insert( layer->label() ? Glib::ustring(layer->label()) : Glib::ustring() );
-            }
+        for (std::set<SPObject *>::const_iterator iter = layers.begin(); iter != layers.end(); ++iter) { 
+            if (*iter != obj)
+                currentNames.insert( (*iter)->label() ? Glib::ustring((*iter)->label()) : Glib::ustring() );
         }
     }
 
@@ -262,15 +260,16 @@ void LayerManager::_rebuild() {
     if (!_document) // http://sourceforge.net/mailarchive/forum.php?thread_name=5747bce9a7ed077c1b4fc9f0f4f8a5e0%40localhost&forum_name=inkscape-devel
         return;
 
-    GSList const *layers = _document->getResourceList("layer");
+    std::set<SPObject *> layers = _document->getResourceList("layer");
+
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
         _addOne(root);
 
         std::set<SPGroup*> layersToAdd;
 
-        for ( GSList const *iter = layers; iter; iter = iter->next ) {
-            SPObject *layer = static_cast<SPObject *>(iter->data);
+        for ( std::set<SPObject *>::const_iterator iter = layers.begin(); iter != layers.end(); ++iter ) {
+            SPObject *layer = *iter;
 //             Debug::EventTracker<DebugLayerNote> tracker(Util::format("Examining %s", layer->label()));
             bool needsAdd = false;
             std::set<SPGroup*> additional;
@@ -282,7 +281,7 @@ void LayerManager::_rebuild() {
                         SPGroup* group = SP_GROUP(curr);
                         if ( group->layerMode() == SPGroup::LAYER ) {
                             // If we have a layer-group as the one or a parent, ensure it is listed as a valid layer.
-                            needsAdd &= ( g_slist_find(const_cast<GSList *>(layers), curr) != NULL );
+                            needsAdd &= ( layers.find(curr) != layers.end() );
 							// XML Tree being used here directly while it shouldn't be...
                             if ( (!(group->getRepr())) || (!(group->getRepr()->parent())) ) {
                                 needsAdd = false;

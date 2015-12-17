@@ -87,6 +87,7 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"EditDeselect\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"EditGuidesAroundPage\" />\n"
+"       <verb verb-id=\"EditGuidesToggleLock\" check=\"yes\" />\n"
 "       <verb verb-id=\"EditRemoveAllGuides\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"DialogXMLEditor\" />\n"

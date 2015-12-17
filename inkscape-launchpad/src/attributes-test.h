@@ -490,6 +490,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"showgrid", true},
 //    {"gridtype", true},
     {"showguides", true},
+//    {"inkscape:lockguides", false}, //not sure about uncomment
     {"gridtolerance", true},
     {"guidetolerance", true},
     {"objecttolerance", true},

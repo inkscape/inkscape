@@ -200,17 +200,15 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
     desktop->namedview->updateRepr();
     bool modmade = false;
 
-    GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop);
-    for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
-        SPItem *item = reinterpret_cast<SPItem *>(iter->data);
+    std::vector<SPItem *> items;
+    items = get_avoided_items(items, desktop->currentRoot(), desktop);
+    for (std::vector<SPItem *>::const_iterator iter = items.begin(); iter != items.end(); ++iter ) {
+        SPItem *item = *iter;
         Geom::Affine m = Geom::identity();
         avoid_item_move(&m, item);
         modmade = true;
     }
 
-    if (items) {
-        g_slist_free(items);
-    }
     if(modmade) {
         DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR,
                        _("Change connector spacing"));

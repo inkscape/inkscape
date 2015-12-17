@@ -43,14 +43,18 @@ public:
     std::vector<Inkscape::DrawingItem *> items;
 };
 
-SPMarker::SPMarker() : SPGroup(), SPViewBox() {
-
-    this->markerUnits = 0;
-    this->markerUnits_set = 0;
-
-    this->orient_mode = MARKER_ORIENT_ANGLE;
-    this->orient_set = 0;
-    this->orient = 0;
+SPMarker::SPMarker() : SPGroup(), SPViewBox(),
+    markerUnits_set(0),
+    markerUnits(0),
+    refX(),
+    refY(),
+    markerWidth(),
+    markerHeight(),
+    orient_set(0),
+    orient_mode(MARKER_ORIENT_ANGLE)
+{
+    // cppcheck-suppress useInitializationList
+	orient = 0;
 }
 
 /**
@@ -442,7 +446,7 @@ const gchar *generate_marker(std::vector<Inkscape::XML::Node*> &reprs, Geom::Rec
     const gchar *mark_id = repr->attribute("id");
     SPObject *mark_object = document->getObjectById(mark_id);
 
-    for (std::vector<Inkscape::XML::Node*>::const_iterator i=reprs.begin();i!=reprs.end();i++){
+    for (std::vector<Inkscape::XML::Node*>::const_iterator i=reprs.begin();i!=reprs.end();++i){
         Inkscape::XML::Node *node = *i;
         SPItem *copy = SP_ITEM(mark_object->appendChildRepr(node));
 

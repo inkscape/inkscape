@@ -44,6 +44,7 @@ namespace Dialogs {
 
 GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop)
 : _desktop(desktop), _guide(guide),
+  _locked_toggle(_("Lo_cked"), _("Lock the movement of guides")),
   _relative_toggle(_("Rela_tive change"), _("Move and/or rotate the guide relative to current settings")),
   _spin_button_x(C_("Guides", "_X:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
   _spin_button_y(C_("Guides", "_Y:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
@@ -100,6 +101,9 @@ void GuidelinePropertiesDialog::_onOK()
         double rad_angle = Geom::deg_to_rad( deg_angle );
         normal = Geom::rot90(Geom::Point::polar(rad_angle, 1.0));
     }
+    //To allow reposition from dialog
+    _guide->set_locked(false, true);
+
     _guide->set_normal(normal, true);
 
     double const points_x = _spin_button_x.getValue("px");
@@ -113,6 +117,11 @@ void GuidelinePropertiesDialog::_onOK()
     const gchar* name = g_strdup( _label_entry.getEntry()->get_text().c_str() );
 
     _guide->set_label(name, true);
+    
+    const bool locked = _locked_toggle.get_active();
+
+    _guide->set_locked(locked, true);
+    
     g_free((gpointer) name);
 
 #if WITH_GTKMM_3_0
@@ -269,6 +278,12 @@ void GuidelinePropertiesDialog::_setup() {
     _relative_toggle.set_valign(Gtk::ALIGN_FILL);
     _relative_toggle.set_hexpand();
     _layout_table.attach(_relative_toggle, 1, 7, 2, 1);
+
+    // locked radio button
+    _locked_toggle.set_halign(Gtk::ALIGN_FILL);
+    _locked_toggle.set_valign(Gtk::ALIGN_FILL);
+    _locked_toggle.set_hexpand();
+    _layout_table.attach(_locked_toggle, 1, 8, 2, 1);
 #else
     _layout_table.attach(_spin_angle,
                          1, 3, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
@@ -276,10 +291,20 @@ void GuidelinePropertiesDialog::_setup() {
     // mode radio button
     _layout_table.attach(_relative_toggle,
                          1, 3, 7, 8, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+
+    // locked radio button
+    _layout_table.attach(_locked_toggle,
+                         1, 3, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 #endif
 
     _relative_toggle.signal_toggled().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_modeChanged));
     _relative_toggle.set_active(_relative_toggle_status);
+
+    bool global_guides_lock = _desktop->namedview->lockguides;
+    if(global_guides_lock){
+        _locked_toggle.set_sensitive(false);
+    }
+    _locked_toggle.set_active(_guide->getLocked());
 
     // don't know what this exactly does, but it results in that the dialog closes when entering a value and pressing enter (see LP bug 484187)
     g_signal_connect_swapped(G_OBJECT(_spin_button_x.getWidget()->gobj()), "activate",

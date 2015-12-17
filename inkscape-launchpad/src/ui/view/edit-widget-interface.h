@@ -116,6 +116,9 @@ struct EditWidgetInterface
     /// Toggle CMS on/off and set preference value accordingly
     virtual void toggleColorProfAdjust() = 0;
 
+    /// Toggle lock guides on/off and set namedview value accordingly
+    virtual void toggleGuidesLock() = 0;
+
     /// Is CMS on/off
     virtual bool colorProfAdjustEnabled() = 0;
 

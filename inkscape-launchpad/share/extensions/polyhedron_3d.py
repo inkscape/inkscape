@@ -55,6 +55,7 @@ from math import *
 # local library
 import inkex
 import simplestyle
+from simpletransform import computePointInNode
 
 inkex.localize()
 
@@ -467,7 +468,8 @@ class Poly_3D(inkex.Effect):
         #INKSCAPE GROUP TO CONTAIN THE POLYHEDRON
         
         #Put in in the centre of the current view
-        poly_transform = 'translate(' + str( self.view_center[0]) + ',' + str( self.view_center[1]) + ')'
+        view_center = computePointInNode(list(self.view_center), self.current_layer)
+        poly_transform = 'translate(' + str( view_center[0]) + ',' + str( view_center[1]) + ')'
         if scale != 1:
             poly_transform += ' scale(' + str(scale) + ')'
         #we will put all the rotations in the object name, so it can be repeated in 

@@ -709,7 +709,8 @@ SPIEnumBits::write( guint const flags, SPIBase const *const base) const {
         unsigned j = 1;
         for (unsigned i = 0; enums[i].key; ++i) {
             if (j & this->value ) {
-                return_string += enums[i].value + " ";
+                return_string += enums[i].key;
+                return_string += " ";
             }
             j *= 2;
         }

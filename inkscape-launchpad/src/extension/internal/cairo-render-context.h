@@ -219,7 +219,7 @@ protected:
     void _prepareRenderGraphic(void);
     void _prepareRenderText(void);
 
-    GHashTable *font_table;
+    std::map<gpointer, cairo_font_face_t *> font_table;
     static void font_data_free(gpointer data);
 
     CairoRenderState *_createState(void);

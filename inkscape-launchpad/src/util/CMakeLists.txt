@@ -24,7 +24,6 @@ set(util_SRC
 	format.h
 	forward-pointer-iterator.h
 	function.h
-	glib-list-iterators.h
 	list-container-test.h
 	list-container.h
 	list-copy.h

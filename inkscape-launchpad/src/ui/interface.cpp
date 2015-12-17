@@ -239,7 +239,7 @@ sp_create_window(SPViewWidget *vw, bool editable)
         }
         int pos = nui_drop_target_entries;
 
-        for (std::vector<gchar*>::iterator it = types.begin() ; it != types.end() ; it++) {
+        for (std::vector<gchar*>::iterator it = types.begin() ; it != types.end() ; ++it) {
             completeDropTargets[pos].target = *it;
             completeDropTargets[pos].flags = 0;
             completeDropTargets[pos].info = IMAGE_DATA;
@@ -576,6 +576,9 @@ static gboolean checkitem_update(GtkWidget *widget, GdkEventExpose * /*event*/, 
 
         if (!strcmp(action->id, "ToggleGrid")) {
             ison = dt->gridsEnabled();
+        }
+        else if (!strcmp(action->id, "EditGuidesToggleLock")) {
+            ison = dt->namedview->lockguides;
         }
         else if (!strcmp(action->id, "ToggleGuides")) {
             ison = dt->namedview->getGuides();
@@ -1113,9 +1116,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
                         unsigned int b = color.getB();
 
                         SPGradient* matches = 0;
-                        const GSList *gradients = doc->getResourceList("gradient");
-                        for (const GSList *item = gradients; item; item = item->next) {
-                            SPGradient* grad = SP_GRADIENT(item->data);
+                        std::set<SPObject *> gradients = doc->getResourceList("gradient");
+                        for (std::set<SPObject *>::const_iterator item = gradients.begin(); item != gradients.end(); ++item) {
+                            SPGradient* grad = SP_GRADIENT(*item);
                             if ( color.descr == grad->getId() ) {
                                 if ( grad->hasStops() ) {
                                     matches = grad;
@@ -2070,7 +2073,7 @@ void ContextMenu::ImageEdit(void)
 #endif
 
     std::vector<SPItem*> itemlist=_desktop->selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();i++){
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
         Inkscape::XML::Node *ir = (*i)->getRepr();
         const gchar *href = ir->attribute("xlink:href");
         

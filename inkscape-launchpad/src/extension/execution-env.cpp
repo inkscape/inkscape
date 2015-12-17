@@ -30,8 +30,6 @@
 
 #include "display/sp-canvas.h"
 
-#include "util/glib-list-iterators.h"
-
 namespace Inkscape {
 namespace Extension {
 

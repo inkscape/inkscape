@@ -24,6 +24,7 @@ Barcode module provided for outside or scripting.
 import inkex
 import sys
 from Barcode import getBarcode
+from simpletransform import computePointInNode
 
 class InsertBarcode(inkex.Effect):
     def __init__(self):
@@ -42,7 +43,7 @@ class InsertBarcode(inkex.Effect):
                         help="Text to print on barcode")
 
     def effect(self):
-        x, y = self.view_center
+        x, y = computePointInNode(list(self.view_center), self.current_layer)
         bargen = getBarcode( self.options.type,
             text=self.options.text,
             height=self.options.height,

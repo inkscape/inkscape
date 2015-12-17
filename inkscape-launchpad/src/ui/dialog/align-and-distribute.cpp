@@ -42,7 +42,6 @@
 #include "ui/icon-names.h"
 #include "ui/tools/node-tool.h"
 #include "ui/tool/multi-path-manipulator.h"
-#include "util/glib-list-iterators.h"
 #include "verbs.h"
 #include "widgets/icon.h"
 #include "sp-root.h"

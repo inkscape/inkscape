@@ -1108,7 +1108,7 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, Inkscape::XML::N
         r->stop();
     }
     std::vector<double> intersection_times;
-    for (std::vector<SPItem*>::const_iterator i=items.begin(); i!=items.end(); i++) {
+    for (std::vector<SPItem*>::const_iterator i=items.begin(); i!=items.end(); ++i) {
         SPItem *item = *i;
         if (SP_IS_SHAPE(item)) {
             calculate_intersections(desktop, item, lineseg, SP_SHAPE(item)->getCurve(), intersection_times);
@@ -1155,7 +1155,7 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, Inkscape::XML::N
 
     std::vector<Geom::Point> intersections;
     std::sort(intersection_times.begin(), intersection_times.end());
-    for (std::vector<double>::iterator iter_t = intersection_times.begin(); iter_t != intersection_times.end(); iter_t++) {
+    for (std::vector<double>::iterator iter_t = intersection_times.begin(); iter_t != intersection_times.end(); ++iter_t) {
         if(show_in_between) {
             intersections.push_back(lineseg[0].pointAt(*iter_t));
         }

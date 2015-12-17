@@ -39,7 +39,6 @@ namespace Inkscape {
     class PureTransform;
 }
 
-typedef struct _GSList GSList;
 
 /**
  * Class to coordinate snapping operations.

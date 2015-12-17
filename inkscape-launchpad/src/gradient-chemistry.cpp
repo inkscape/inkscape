@@ -1592,7 +1592,7 @@ void sp_gradient_reverse_selected_gradients(SPDesktop *desktop)
     GrDrag *drag = ev->get_drag();
 
     // First try selected dragger
-    if (drag && drag->selected) {
+    if (drag && !drag->selected.empty()) {
         drag->selected_reverse_vector();
     } else { // If no drag or no dragger selected, act on selection (both fill and stroke gradients)
         const std::vector<SPItem*> list=selection->itemList();
@@ -1612,9 +1612,9 @@ void sp_gradient_unset_swatch(SPDesktop *desktop, std::string id)
     SPDocument *doc = desktop ? desktop->doc() : 0;
 
     if (doc) {
-        const GSList *gradients = doc->getResourceList("gradient");
-        for (const GSList *item = gradients; item; item = item->next) {
-            SPGradient* grad = SP_GRADIENT(item->data);
+        const std::set<SPObject *> gradients = doc->getResourceList("gradient");
+        for (std::set<SPObject *>::const_iterator i = gradients.begin(); i != gradients.end(); ++i) {
+            SPGradient* grad = SP_GRADIENT(*i);
             if ( id == grad->getId() ) {
                 grad->setSwatch(false);
                 DocumentUndo::done(doc, SP_VERB_CONTEXT_GRADIENT,

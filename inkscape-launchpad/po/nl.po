@@ -58,8 +58,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-10-21 07:47+0200\n"
-"PO-Revision-Date: 2015-10-28 22:04+0100\n"
+"POT-Creation-Date: 2015-11-01 13:46+0100\n"
+"PO-Revision-Date: 2015-12-13 23:27+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -5944,79 +5944,79 @@ msgstr "Corel DRAW Presentation uitwisselingsbestanden (*.cmx)"
 msgid "Open presentation exchange files saved in Corel DRAW"
 msgstr "Open Presentation uitwisselingsbestanden opgeslagen met Corel DRAW"
 
-#: ../src/extension/internal/emf-inout.cpp:3584
+#: ../src/extension/internal/emf-inout.cpp:3581
 msgid "EMF Input"
 msgstr "EMF-invoer"
 
-#: ../src/extension/internal/emf-inout.cpp:3589
+#: ../src/extension/internal/emf-inout.cpp:3586
 msgid "Enhanced Metafiles (*.emf)"
 msgstr "Enhanced Metafiles (*.emf)"
 
-#: ../src/extension/internal/emf-inout.cpp:3590
+#: ../src/extension/internal/emf-inout.cpp:3587
 msgid "Enhanced Metafiles"
 msgstr "Enhanced Metafiles"
 
-#: ../src/extension/internal/emf-inout.cpp:3598
+#: ../src/extension/internal/emf-inout.cpp:3595
 msgid "EMF Output"
 msgstr "EMF-uitvoer"
 
-#: ../src/extension/internal/emf-inout.cpp:3600
+#: ../src/extension/internal/emf-inout.cpp:3597
 #: ../src/extension/internal/wmf-inout.cpp:3176
 msgid "Convert texts to paths"
 msgstr "Tekst naar paden omzetten"
 
-#: ../src/extension/internal/emf-inout.cpp:3601
+#: ../src/extension/internal/emf-inout.cpp:3598
 #: ../src/extension/internal/wmf-inout.cpp:3177
 msgid "Map Unicode to Symbol font"
 msgstr "Unicode naar lettertype Symbol mappen"
 
-#: ../src/extension/internal/emf-inout.cpp:3602
+#: ../src/extension/internal/emf-inout.cpp:3599
 #: ../src/extension/internal/wmf-inout.cpp:3178
 msgid "Map Unicode to Wingdings"
 msgstr "Unicode naar lettertype Wingdings mappen"
 
-#: ../src/extension/internal/emf-inout.cpp:3603
+#: ../src/extension/internal/emf-inout.cpp:3600
 #: ../src/extension/internal/wmf-inout.cpp:3179
 msgid "Map Unicode to Zapf Dingbats"
 msgstr "Unicode naar lettertype Zapf Dingbats mappen"
 
-#: ../src/extension/internal/emf-inout.cpp:3604
+#: ../src/extension/internal/emf-inout.cpp:3601
 #: ../src/extension/internal/wmf-inout.cpp:3180
 msgid "Use MS Unicode PUA (0xF020-0xF0FF) for converted characters"
 msgstr "MS Unicode PUA (0xF020-0xF0FF) voor omgezette karakters gebruiken"
 
-#: ../src/extension/internal/emf-inout.cpp:3605
+#: ../src/extension/internal/emf-inout.cpp:3602
 #: ../src/extension/internal/wmf-inout.cpp:3181
 msgid "Compensate for PPT font bug"
 msgstr "Compenseren voor PPT lettertypebug"
 
-#: ../src/extension/internal/emf-inout.cpp:3606
+#: ../src/extension/internal/emf-inout.cpp:3603
 #: ../src/extension/internal/wmf-inout.cpp:3182
 msgid "Convert dashed/dotted lines to single lines"
 msgstr "Streep-/puntlijnen naar enkele lijnen omzetten"
 
-#: ../src/extension/internal/emf-inout.cpp:3607
+#: ../src/extension/internal/emf-inout.cpp:3604
 #: ../src/extension/internal/wmf-inout.cpp:3183
 msgid "Convert gradients to colored polygon series"
 msgstr "Gradiënten naar polygoonseries omzetten"
 
-#: ../src/extension/internal/emf-inout.cpp:3608
+#: ../src/extension/internal/emf-inout.cpp:3605
 msgid "Use native rectangular linear gradients"
 msgstr "Standaard lineaire rechthoekige kleurverlopen gebruiken"
 
-#: ../src/extension/internal/emf-inout.cpp:3609
+#: ../src/extension/internal/emf-inout.cpp:3606
 msgid "Map all fill patterns to standard EMF hatches"
 msgstr "Alle vulpatronen naar standaard EMF-hatches mappen"
 
-#: ../src/extension/internal/emf-inout.cpp:3610
+#: ../src/extension/internal/emf-inout.cpp:3607
 msgid "Ignore image rotations"
 msgstr "Afbeeldingsrotaties negeren"
 
-#: ../src/extension/internal/emf-inout.cpp:3614
+#: ../src/extension/internal/emf-inout.cpp:3611
 msgid "Enhanced Metafile (*.emf)"
 msgstr "Enhanced Metafile (*.emf)"
 
-#: ../src/extension/internal/emf-inout.cpp:3615
+#: ../src/extension/internal/emf-inout.cpp:3612
 msgid "Enhanced Metafile"
 msgstr "Enhanced Metafile"
 
@@ -6316,7 +6316,6 @@ msgstr "Mengtype:"
 #: ../src/extension/internal/filter/textures.h:77
 #: ../src/extension/internal/filter/transparency.h:61
 #: ../src/filter-enums.cpp:52 ../src/ui/dialog/inkscape-preferences.cpp:685
-#: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
 msgid "Normal"
 msgstr "Normaal"
 
@@ -7089,7 +7088,7 @@ msgid ""
 "Create a custom tritone palette with additional glow, blend modes and hue "
 "moving"
 msgstr ""
-"Een eigen tritone palen maen met aanpasbare gloed, mengmodi en tintrotatie"
+"Een eigen tritone palet maken met aanpasbare gloed, mengmodi en tintrotatie"
 
 #: ../src/extension/internal/filter/distort.h:67
 msgid "Felt Feather"
@@ -9174,8 +9173,7 @@ msgstr ""
 "Poging tot binden aan %p van een reeds gebonden paneelobject %p (huidige "
 "meester: %p)"
 
-#: ../src/libgdl/gdl-dock-paned.c:130 ../src/ui/widget/font-variants.cpp:44
-#: ../src/widgets/ruler.cpp:230
+#: ../src/libgdl/gdl-dock-paned.c:130 ../src/widgets/ruler.cpp:230
 msgid "Position"
 msgstr "Positie"
 
@@ -11012,7 +11010,7 @@ msgid "Fixed displacement"
 msgstr "Vaste verplaatsing"
 
 #: ../src/live_effects/lpe-roughen.cpp:66
-msgid "Fixed displacement, 1/3 of segment lenght"
+msgid "Fixed displacement, 1/3 of segment length"
 msgstr "Vaste verschuiving, 1/3 segmentlengte"
 
 #: ../src/live_effects/lpe-roughen.cpp:68
@@ -11193,8 +11191,8 @@ msgid "Smooth angles:"
 msgstr "Hoeken glad maken:"
 
 #: ../src/live_effects/lpe-simplify.cpp:32
-msgid "Max degree difference on handles to preform a smooth"
-msgstr "Max verschil op handvatten om glad te maken"
+msgid "Max degree difference on handles to perform a smooth"
+msgstr "Max hoek bij handvatten om ze glad te maken"
 
 #: ../src/live_effects/lpe-simplify.cpp:34
 msgid "Paths separately"
@@ -11404,11 +11402,11 @@ msgstr "Samenvoeging voor niet-gladde knooppunten"
 msgid "Limit for miter joins"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:448
+#: ../src/live_effects/lpe-taperstroke.cpp:447
 msgid "Start point of the taper"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:452
+#: ../src/live_effects/lpe-taperstroke.cpp:451
 msgid "End point of the taper"
 msgstr ""
 
@@ -11425,11 +11423,11 @@ msgid "From original width"
 msgstr "Van originelr breedte"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-msgid "Lock lenght"
-msgstr "Lengte vergrendelen"
+msgid "Lock length"
+msgstr "Lengte vastleggen"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-msgid "Lock lenght to current distance"
+msgid "Lock length to current distance"
 msgstr "Lengte vastleggen op huidige afstand"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:34
@@ -11453,12 +11451,11 @@ msgid "End point"
 msgstr "Eindpad"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
-#, fuzzy
-msgid "Strech"
-msgstr "Kracht"
+msgid "Stretch"
+msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
-msgid "Strech the result"
+msgid "Stretch the result"
 msgstr ""
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:40
@@ -11556,29 +11553,29 @@ msgstr "Booleaanse parameter veranderen"
 msgid "Change enumeration parameter"
 msgstr "Opsommingsparameter veranderen"
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:780
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:841
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:778
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:839
 msgid ""
 "<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:784
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:845
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:782
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
 msgid ""
 "<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:788
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:849
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:786
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
 msgid ""
 "<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:792
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:853
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:790
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:851
 msgid ""
 "<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
@@ -18542,17 +18539,17 @@ msgid "Set the language for menus and number formats"
 msgstr "De taal voor menus en nummerformaten instellen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
-#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Icon size"
 msgid "Large"
 msgstr "Groot"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
-#: ../src/ui/dialog/inkscape-preferences.cpp:689
-#: ../src/ui/widget/font-variants.cpp:51
+msgctxt "Icon size"
 msgid "Small"
 msgstr "Klein"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
+msgctxt "Icon size"
 msgid "Smaller"
 msgstr "Kleiner"
 
@@ -18750,6 +18747,17 @@ msgid "Aggressive"
 msgstr "Agressief"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
+msgid "Small"
+msgstr "Klein"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
+msgid "Large"
+msgstr "Groot"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:689
+msgctxt "Window size"
 msgid "Maximized"
 msgstr "Gemaximaliseerd"
 
@@ -20608,6 +20616,7 @@ msgstr "Link:"
 
 #: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743
 #: ../src/ui/dialog/input.cpp:1571 ../src/ui/widget/color-scales.cpp:46
+#: ../share/extensions/plotter.inx.h:24
 msgid "None"
 msgstr "Geen"
 
@@ -21110,9 +21119,8 @@ msgid "Set object description"
 msgstr "Objectomschrijving instellen"
 
 #: ../src/ui/dialog/object-properties.cpp:535
-#, fuzzy
 msgid "Set image rendering option"
-msgstr "Rendermethode voor apparaat:"
+msgstr "Rendermethode instellen"
 
 #: ../src/ui/dialog/object-properties.cpp:554
 msgid "Lock object"
@@ -21131,100 +21139,88 @@ msgid "Unhide object"
 msgstr "Object weergeven"
 
 #: ../src/ui/dialog/objects.cpp:874
-#, fuzzy
 msgid "Unhide objects"
-msgstr "Object weergeven"
+msgstr "Objecten weergeven"
 
 #: ../src/ui/dialog/objects.cpp:874
-#, fuzzy
 msgid "Hide objects"
-msgstr "Object verbergen"
+msgstr "Objecten verbergen"
 
 #: ../src/ui/dialog/objects.cpp:894
-#, fuzzy
 msgid "Lock objects"
-msgstr "Object vergrendelen"
+msgstr "Objecten vergrendelen"
 
 #: ../src/ui/dialog/objects.cpp:894
-#, fuzzy
 msgid "Unlock objects"
-msgstr "Object ontgrendelen"
+msgstr "Objecten ontgrendelen"
 
 #: ../src/ui/dialog/objects.cpp:906
-#, fuzzy
 msgid "Layer to group"
-msgstr "Laag bovenaan"
+msgstr "Laag naar groep"
 
 #: ../src/ui/dialog/objects.cpp:906
-#, fuzzy
 msgid "Group to layer"
-msgstr "Groep naar symbool"
+msgstr "Groep naar laag"
 
 #: ../src/ui/dialog/objects.cpp:1104
-#, fuzzy
 msgid "Moved objects"
-msgstr "Knooppunten roteren"
+msgstr "Objecten verplaatst"
 
 #: ../src/ui/dialog/objects.cpp:1353 ../src/ui/dialog/tags.cpp:857
 #: ../src/ui/dialog/tags.cpp:864
-#, fuzzy
 msgid "Rename object"
-msgstr "Knooppunten roteren"
+msgstr "Object hernoemen"
 
 #: ../src/ui/dialog/objects.cpp:1459
-#, fuzzy
 msgid "Set object highlight color"
-msgstr "Objecttitel instellen"
+msgstr "Oplichtende kleur object instellen"
 
 #: ../src/ui/dialog/objects.cpp:1469
-#, fuzzy
 msgid "Set object opacity"
-msgstr "Objecttitel instellen"
+msgstr "Ondoorzichtigheid object instellen"
 
 #: ../src/ui/dialog/objects.cpp:1502
-#, fuzzy
 msgid "Set object blend mode"
-msgstr "Objectlabel instellen"
+msgstr "Mengmodus object instellen"
 
 #: ../src/ui/dialog/objects.cpp:1558
-#, fuzzy
 msgid "Set object blur"
-msgstr "Objectlabel instellen"
+msgstr "Objectvervaging instellen"
 
 #: ../src/ui/dialog/objects.cpp:1617
+msgctxt "Visibility"
 msgid "V"
-msgstr ""
+msgstr "Z"
 
-#. TRANSLATORS: "L" here stands for Lightness
-#: ../src/ui/dialog/objects.cpp:1618 ../src/widgets/tweak-toolbar.cpp:323
+#: ../src/ui/dialog/objects.cpp:1618
+msgctxt "Lock"
 msgid "L"
-msgstr "L"
+msgstr "V"
 
 #: ../src/ui/dialog/objects.cpp:1619
+msgctxt "Type"
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: ../src/ui/dialog/objects.cpp:1620
-#, fuzzy
+msgctxt "Clip and mask"
 msgid "CM"
-msgstr "KBS"
+msgstr "AM"
 
 # Tint-Verzadiging-Licht.
 #: ../src/ui/dialog/objects.cpp:1621
-#, fuzzy
+msgctxt "Highlight"
 msgid "HL"
-msgstr "TVL"
+msgstr "TL"
 
 #: ../src/ui/dialog/objects.cpp:1622
-#, fuzzy
 msgid "Label"
-msgstr "_Label:"
+msgstr "_Label"
 
 #. In order to get tooltips on header, we must create our own label.
 #: ../src/ui/dialog/objects.cpp:1664
-#, fuzzy
 msgid "Toggle visibility of Layer, Group, or Object."
-msgstr "Zichtbaarheid huidige laag aanpassen"
+msgstr "Zichtbaarheid laag, groep of object aanpassen."
 
 #: ../src/ui/dialog/objects.cpp:1677
 msgid "Toggle lock of Layer, Group, or Object."
@@ -21253,14 +21249,12 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/objects.cpp:1827
-#, fuzzy
 msgid "Add layer..."
-msgstr "_Nieuwe laag..."
+msgstr "Laag toevoegen..."
 
 #: ../src/ui/dialog/objects.cpp:1834
-#, fuzzy
 msgid "Remove object"
-msgstr "Lettertype verwijderen"
+msgstr "Object verwijderen"
 
 #: ../src/ui/dialog/objects.cpp:1842
 #, fuzzy
@@ -21315,16 +21309,14 @@ msgid "Down"
 msgstr "Omlaag"
 
 #: ../src/ui/dialog/objects.cpp:1916
-#, fuzzy
 msgid "Set Clip"
-msgstr "_Afsnijden instellen"
+msgstr "Afsnijden inschakelen"
 
 #. will never be implemented
 #. _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_OBJECT_SET_INVERSE_CLIPPATH, 0, "Set Inverse Clip", (int)BUTTON_SETINVCLIP ) );
 #: ../src/ui/dialog/objects.cpp:1922
-#, fuzzy
 msgid "Unset Clip"
-msgstr "_Afsnijden instellen"
+msgstr "Afsnijden uitschakelen"
 
 #. Set mask
 #: ../src/ui/dialog/objects.cpp:1926 ../src/ui/interface.cpp:1735
@@ -21332,14 +21324,12 @@ msgid "Set Mask"
 msgstr "Masker inschakelen"
 
 #: ../src/ui/dialog/objects.cpp:1927
-#, fuzzy
 msgid "Unset Mask"
-msgstr "Masker inschakelen"
+msgstr "Masker uitschakelen"
 
 #: ../src/ui/dialog/objects.cpp:1949
-#, fuzzy
 msgid "Select Highlight Color"
-msgstr "_Oplichtende kleur:"
+msgstr "Oplichtende kleur selecteren"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:715
 msgid "Clipart found"
@@ -21989,7 +21979,7 @@ msgstr "_Instellen als standaard"
 
 #: ../src/ui/dialog/text-edit.cpp:87
 #, fuzzy
-msgid "AaBbCcIiPpQq12369$ےے?.;/()"
+msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiMmPpQqWw(12369)€£$!?.;/@"
 
 #. Align buttons
@@ -22029,7 +22019,7 @@ msgstr "Ruimte tussen lijnen (percentage van lettertypegrootte)"
 msgid "Text path offset"
 msgstr "Verplaatsing tekstpad"
 
-#: ../src/ui/dialog/text-edit.cpp:598 ../src/ui/dialog/text-edit.cpp:685
+#: ../src/ui/dialog/text-edit.cpp:612 ../src/ui/dialog/text-edit.cpp:699
 #: ../src/ui/tools/text-tool.cpp:1446
 msgid "Set text style"
 msgstr "Tekststijl instellen"
@@ -24853,115 +24843,179 @@ msgid "Blur (%)"
 msgstr "Vervagen (%)"
 
 #: ../src/ui/widget/font-variants.cpp:38
+msgctxt "Font variant"
 msgid "Ligatures"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:39
+#, fuzzy
+msgctxt "Font variant"
 msgid "Common"
 msgstr "Algemeen"
 
 #: ../src/ui/widget/font-variants.cpp:40
+#, fuzzy
+msgctxt "Font variant"
 msgid "Discretionary"
 msgstr "Discretionair"
 
 #: ../src/ui/widget/font-variants.cpp:41
+#, fuzzy
+msgctxt "Font variant"
 msgid "Historical"
 msgstr "Historisch"
 
 #: ../src/ui/widget/font-variants.cpp:42
+#, fuzzy
+msgctxt "Font variant"
 msgid "Contextual"
 msgstr "Contextueel"
 
+#: ../src/ui/widget/font-variants.cpp:44
+#, fuzzy
+msgctxt "Font variant"
+msgid "Position"
+msgstr "Positie"
+
+#: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
+#, fuzzy
+msgctxt "Font variant"
+msgid "Normal"
+msgstr "Normaal"
+
 #: ../src/ui/widget/font-variants.cpp:46
+#, fuzzy
+msgctxt "Font variant"
 msgid "Subscript"
 msgstr "Subscript"
 
 #: ../src/ui/widget/font-variants.cpp:47
+#, fuzzy
+msgctxt "Font variant"
 msgid "Superscript"
 msgstr "Superscript"
 
 #: ../src/ui/widget/font-variants.cpp:49
+#, fuzzy
+msgctxt "Font variant"
 msgid "Capitals"
 msgstr "Hoofdletters"
 
+#: ../src/ui/widget/font-variants.cpp:51
+#, fuzzy
+msgctxt "Font variant"
+msgid "Small"
+msgstr "Klein"
+
 #: ../src/ui/widget/font-variants.cpp:52
+#, fuzzy
+msgctxt "Font variant"
 msgid "All small"
 msgstr "Alles klein"
 
 #: ../src/ui/widget/font-variants.cpp:53
+#, fuzzy
+msgctxt "Font variant"
 msgid "Petite"
-msgstr ""
+msgstr "Alles mini"
 
 #: ../src/ui/widget/font-variants.cpp:54
+#, fuzzy
+msgctxt "Font variant"
 msgid "All petite"
 msgstr "Alles mini"
 
 #: ../src/ui/widget/font-variants.cpp:55
+msgctxt "Font variant"
 msgid "Unicase"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:56
 #, fuzzy
+msgctxt "Font variant"
 msgid "Titling"
 msgstr "Zeilen"
 
 #: ../src/ui/widget/font-variants.cpp:58
+#, fuzzy
+msgctxt "Font variant"
 msgid "Numeric"
 msgstr "Numeriek"
 
 #: ../src/ui/widget/font-variants.cpp:59
 #, fuzzy
+msgctxt "Font variant"
 msgid "Lining"
 msgstr "Versmalling:"
 
 #: ../src/ui/widget/font-variants.cpp:60
+#, fuzzy
+msgctxt "Font variant"
 msgid "Old Style"
 msgstr "Oude stijl"
 
 #: ../src/ui/widget/font-variants.cpp:61
+#, fuzzy
+msgctxt "Font variant"
 msgid "Default Style"
 msgstr "Standaardstijl"
 
 #: ../src/ui/widget/font-variants.cpp:62
+#, fuzzy
+msgctxt "Font variant"
 msgid "Proportional"
 msgstr "Proportioneel"
 
 #: ../src/ui/widget/font-variants.cpp:63
+#, fuzzy
+msgctxt "Font variant"
 msgid "Tabular"
 msgstr "Tabulair"
 
 #: ../src/ui/widget/font-variants.cpp:64
+#, fuzzy
+msgctxt "Font variant"
 msgid "Default Width"
 msgstr "Standaardbreedte"
 
 #: ../src/ui/widget/font-variants.cpp:65
+#, fuzzy
+msgctxt "Font variant"
 msgid "Diagonal"
 msgstr "Diagonaal"
 
 # eerste voorgestelde vertaling: "Achterliggende motor"
 # deze optie is te vinden bij menu "Bestand" > "Afdrukken" > tabblad "Renderen"
 #: ../src/ui/widget/font-variants.cpp:66
+#, fuzzy
+msgctxt "Font variant"
 msgid "Stacked"
 msgstr "Op elkaar"
 
 #: ../src/ui/widget/font-variants.cpp:67
+#, fuzzy
+msgctxt "Font variant"
 msgid "Default Fractions"
 msgstr "Standaard fracties"
 
 #: ../src/ui/widget/font-variants.cpp:68
+msgctxt "Font variant"
 msgid "Ordinal"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:69
+msgctxt "Font variant"
 msgid "Slashed Zero"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:71
 #, fuzzy
+msgctxt "Font variant"
 msgid "Feature Settings"
 msgstr "Pagina-instellingen"
 
 #: ../src/ui/widget/font-variants.cpp:72
+msgctxt "Font variant"
 msgid "Selection has different Feature Settings!"
 msgstr ""
 
@@ -31185,6 +31239,8 @@ msgstr "Op de tint van het object inwerken (in verfmodi)"
 
 #. TRANSLATORS:  "H" here stands for hue
 #: ../src/widgets/tweak-toolbar.cpp:291
+#, fuzzy
+msgctxt "Hue"
 msgid "H"
 msgstr "T"
 
@@ -31194,6 +31250,8 @@ msgstr "Op de verzadiging van het object inwerken (in verfmodi)"
 
 #. TRANSLATORS: "S" here stands for Saturation
 #: ../src/widgets/tweak-toolbar.cpp:307
+#, fuzzy
+msgctxt "Saturation"
 msgid "S"
 msgstr "V"
 
@@ -31201,12 +31259,21 @@ msgstr "V"
 msgid "In color mode, act on objects' lightness"
 msgstr "Op de lichtheid van het object inwerken (in verfmodi)"
 
+#. TRANSLATORS: "L" here stands for Lightness
+#: ../src/widgets/tweak-toolbar.cpp:323
+#, fuzzy
+msgctxt "Lightness"
+msgid "L"
+msgstr "L"
+
 #: ../src/widgets/tweak-toolbar.cpp:335
 msgid "In color mode, act on objects' opacity"
 msgstr "Op de ondoorzichtigheid van het object inwerken (in verfmodi)"
 
 #. TRANSLATORS: "O" here stands for Opacity
 #: ../src/widgets/tweak-toolbar.cpp:339
+#, fuzzy
+msgctxt "Opacity"
 msgid "O"
 msgstr "O"
 
@@ -35108,7 +35175,7 @@ msgstr "Latijns, basis"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:5
-msgid "Support non-unifom scaling"
+msgid "Support non-uniform scaling"
 msgstr ""
 
 #. render images like in 0.48
@@ -36689,11 +36756,6 @@ msgstr "Hardware (RTS/CTS)"
 #: ../share/extensions/plotter.inx.h:23
 msgid "Hardware (DSR/DTR + RTS/CTS)"
 msgstr "Hardware (DSR/DTR + RTS/CTS)"
-
-#: ../share/extensions/plotter.inx.h:24
-msgctxt "Flow control"
-msgid "None"
-msgstr "Geen"
 
 #: ../share/extensions/plotter.inx.h:25
 msgid "HPGL"
@@ -38569,66 +38631,6 @@ msgstr "Een populair bestandsformaat voor clipart"
 msgid "XAML Input"
 msgstr "XAML-invoer"
 
-#~ msgid "Ignore cusp nodes"
-#~ msgstr "Hoekige knooppunten negeren"
-
-#~ msgid "Change ignoring cusp nodes"
-#~ msgstr "Veranderen van hoekige knooppunten negeren"
-
-#~ msgid ""
-#~ "The <b>feTile</b> filter primitive tiles a region with its input graphic"
-#~ msgstr ""
-#~ "Het <b>feTile</b>-filtereffect maakt klonen van een regio in de "
-#~ "bronafbeelding."
-
-#~ msgid "http://wiki.inkscape.org/wiki/index.php/FAQ"
-#~ msgstr "http://wiki.inkscape.org/wiki/index.php/FAQ"
-
-#~ msgid "Text Orientation: "
-#~ msgstr "Tekstoriëntatie: "
-
-#~ msgid "Angle [with Fixed Angle option only] (°):"
-#~ msgstr "Hoek [bij optie Vaste hoek] (°):"
-
-#~ msgctxt "measure extension"
-#~ msgid "Fixed Angle"
-#~ msgstr "Vaste hoek"
-
-#~ msgid "Initialization commands:"
-#~ msgstr "Initialisatiecommando's:"
-
-#~ msgid "Arbitrary Angle"
-#~ msgstr "Willekeurige hoek"
-
-#~ msgid "Horizontal Point:"
-#~ msgstr "Horizontaal punt:"
-
-#~ msgid "Vertical Point:"
-#~ msgstr "Verticaal punt:"
-
-#~ msgid "import via Poppler"
-#~ msgstr "via Poppler importeren"
-
-#~ msgid "Text handling:"
-#~ msgstr "Tekstafhandeling:"
-
-#~ msgid "Import text as text"
-#~ msgstr "Tekst als tekst importeren"
-
-#~ msgid "Boolops"
-#~ msgstr "Booleaanse operator"
-
-#~ msgid "Show helper paths"
-#~ msgstr "Hulppaden tonen"
-
-#, fuzzy
-#~ msgid "Start path lean"
-#~ msgstr "De controle beginnen"
-
-#, fuzzy
-#~ msgid "End path lean"
-#~ msgstr "In-uit padlengte"
-
 #~ msgid "Control handle 0 - Ctrl+Alt+Click to reset"
 #~ msgstr "Handvat 0 - Ctrl+Alt+Klikken om te resetten"
 
@@ -38679,64 +38681,6 @@ msgstr "XAML-invoer"
 
 #~ msgid "Control handle 19 - Ctrl+Alt+Click to reset"
 #~ msgstr "Handvat 19 - Ctrl+Alt+Klikken om te resetten"
-
-#, fuzzy
-#~ msgid "<b>Roughen unit</b>"
-#~ msgstr "<b>Geen opvulling</b>"
-
-#, fuzzy
-#~ msgid "Helper nodes"
-#~ msgstr "Knooppunten verwijderen"
-
-#, fuzzy
-#~ msgid "Show helper nodes"
-#~ msgstr "Item omlaag brengen"
-
-#, fuzzy
-#~ msgid "Helper handles"
-#~ msgstr "Schaalhandvat"
-
-#, fuzzy
-#~ msgid "Show helper handles"
-#~ msgstr "Handvatten tonen"
-
-#~ msgid "pySerial is not installed."
-#~ msgstr "pySerial is niet geïnstalleerd."
-
-#~ msgid "You need to install the UniConvertor software.\n"
-#~ msgstr "Je moet de UniConvertorsoftware installeren.\n"
-
-#, fuzzy
-#~ msgid "Custom Width (px.):"
-#~ msgstr "Lijnbreedte (px):"
-
-#, fuzzy
-#~ msgid "Custom Height (px.):"
-#~ msgstr "Rechts (px):"
-
-#~ msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
-#~ msgstr "PS+LaTeX: tekst in PS negeren en LaTeX-bestand maken"
-
-#~ msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
-#~ msgstr "EPS+LaTeX: tekst in EPS negeren en LaTeX-bestand maken"
-
-#~ msgid "Default _units:"
-#~ msgstr "Standaardeen_heid:"
-
-#~ msgid ""
-#~ "Always convert the text size units above into pixels (px) before saving "
-#~ "to file"
-#~ msgstr "Tekstgrootte altijd omzetten in pixels voor bewaren naar bestand"
-
-#, fuzzy
-#~ msgid "Radius "
-#~ msgstr "Straal:"
-
-#~ msgid "_Templates..."
-#~ msgstr "_Sjablonen..."
-
-#~ msgid "Use automatic scaling to size A4"
-#~ msgstr "Automatisch schalen tot A4-grootte"
 
 #~ msgctxt "Symbol"
 #~ msgid "Map Symbols"

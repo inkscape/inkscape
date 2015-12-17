@@ -38,6 +38,7 @@
 #include "preferences.h"
 
 #include <glibmm/miscutils.h>
+#include <map>
 
 using Inkscape::IO::Writer;
 using Inkscape::Util::List;
@@ -50,8 +51,8 @@ using Inkscape::XML::calc_abs_doc_base;
 using Inkscape::XML::rebase_href_attrs;
 
 Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns);
-static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map);
-static gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar *default_ns, GHashTable *prefix_map);
+static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, std::map<std::string, std::string> &prefix_map);
+static gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar *default_ns, std::map<std::string, std::string> &prefix_map);
 static void sp_repr_write_stream_root_element(Node *repr, Writer &out,
                                               bool add_whitespace, gchar const *default_ns,
                                               int inlineattrs, int indent,
@@ -486,8 +487,7 @@ Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
         return NULL;
     }
 
-    GHashTable * prefix_map;
-    prefix_map = g_hash_table_new (g_str_hash, g_str_equal);
+    std::map<std::string, std::string> prefix_map;
 
     Document *rdoc = new Inkscape::XML::SimpleDocument();
 
@@ -536,21 +536,17 @@ Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
         }
     }
 
-    g_hash_table_destroy (prefix_map);
-
     return rdoc;
 }
 
-gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar */*default_ns*/, GHashTable *prefix_map)
+gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar */*default_ns*/, std::map<std::string, std::string> &prefix_map)
 {
     const xmlChar *prefix;
     if (ns){
         if (ns->href ) {
             prefix = reinterpret_cast<const xmlChar*>( sp_xml_ns_uri_prefix(reinterpret_cast<const gchar*>(ns->href),
                                                                             reinterpret_cast<const char*>(ns->prefix)) );
-            void* p0 = reinterpret_cast<gpointer>(const_cast<xmlChar *>(prefix));
-            void* p1 = reinterpret_cast<gpointer>(const_cast<xmlChar *>(ns->href));
-            g_hash_table_insert( prefix_map, p0, p1 );
+            prefix_map[reinterpret_cast<const char*>(prefix)] = reinterpret_cast<const char*>(ns->href);
         }
         else {
             prefix = NULL;
@@ -567,7 +563,7 @@ gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *nam
     }
 }
 
-static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map)
+static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, std::map<std::string, std::string> &prefix_map)
 {
     xmlAttrPtr prop;
     xmlNodePtr child;

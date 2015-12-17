@@ -74,7 +74,7 @@ SPImage *Tracer::getSelectedSPImage()
            them as bottom-to-top so that we can discover the image and any
            SPItems above it
         */
-        for (std::vector<SPItem*>::const_iterator i=list.begin() ; list.end()!=i ; i++)
+        for (std::vector<SPItem*>::const_iterator i=list.begin() ; list.end()!=i ; ++i)
             {
             if (!SP_IS_ITEM(*i))
                 {

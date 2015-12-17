@@ -924,7 +924,7 @@ void ToolBase::enableGrDrag(bool enable) {
  */
 bool ToolBase::deleteSelectedDrag(bool just_one) {
 
-    if (_grdrag && _grdrag->selected) {
+    if (_grdrag && !_grdrag->selected.empty()) {
         _grdrag->deleteSelected(just_one);
         return TRUE;
     }
