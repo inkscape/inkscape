@@ -479,7 +479,13 @@ void DocumentProperties::linkSelectedProfile()
 	std::vector<std::pair<Glib::ustring, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
         Glib::ustring file = pairs[row].first;
         Glib::ustring name = pairs[row].second;
-
+        std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+        for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+            SPObject* obj = *it;
+            Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
+            if (!strcmp(prof->href, file.c_str()))
+                return;
+        }
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *cprofRepr = xml_doc->createElement("svg:color-profile");
         gchar* tmp = g_strdup(name.c_str());
@@ -487,6 +493,8 @@ void DocumentProperties::linkSelectedProfile()
         sanitizeName(nameStr);
         cprofRepr->setAttribute("name", nameStr.c_str());
         cprofRepr->setAttribute("xlink:href", (gchar*) file.c_str());
+        cprofRepr->setAttribute("id", (gchar*) file.c_str());
+
 
         // Checks whether there is a defs element. Creates it when needed
         Inkscape::XML::Node *defsRepr = sp_repr_lookup_name(xml_doc, "svg:defs");
@@ -598,9 +606,7 @@ void DocumentProperties::removeSelectedProfile(){
         SPObject* obj = *it;
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         if (!name.compare(prof->name)){
-
-            //XML Tree being used directly here while it shouldn't be.
-            sp_repr_unparent(obj->getRepr());
+            prof->deleteObject(true, false);
             DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_COLOR_PROFILE, _("Remove linked color profile"));
             break; // removing the color profile likely invalidates part of the traversed list, stop traversing here.
         }
