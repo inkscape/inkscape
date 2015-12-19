@@ -715,11 +715,11 @@ void LayersPanel::_doTreeMove( )
 {
     if (_dnd_source &&  _dnd_source->getRepr() ) {
         if(!_dnd_target){
-            _dnd_source->doWriteTransform(_dnd_source->getRepr(), _dnd_source->document->getRoot()->i2doc_affine().inverse() * _dnd_source->i2doc_affine());
+            _dnd_source->doWriteTransform(_dnd_source->getRepr(), _dnd_source->i2doc_affine() * _dnd_source->document->getRoot()->i2doc_affine().inverse());
         }else{
             SPItem* parent = _dnd_into ? _dnd_target : dynamic_cast<SPItem*>(_dnd_target->parent);
             if(parent){
-                Geom::Affine move = parent->i2doc_affine().inverse() * _dnd_source->i2doc_affine();
+                Geom::Affine move = _dnd_source->i2doc_affine() * parent->i2doc_affine().inverse();
                 _dnd_source->doWriteTransform(_dnd_source->getRepr(), move);
             }
         }
