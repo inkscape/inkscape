@@ -84,6 +84,7 @@ SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
     this->lockguides = false;
     this->grids_visible = false;
     this->showborder = TRUE;
+    this->pagecheckerboard = FALSE;
     this->showpageshadow = TRUE;
 
     this->guides.clear();
@@ -207,6 +208,7 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "bordercolor" );
     this->readAttr( "borderopacity" );
     this->readAttr( "pagecolor" );
+    this->readAttr( "inkscape:pagecheckerboard" );
     this->readAttr( "inkscape:pageopacity" );
     this->readAttr( "inkscape:pageshadow" );
     this->readAttr( "inkscape:zoom" );
@@ -388,6 +390,10 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             if (value) {
                 this->pagecolor = (this->pagecolor & 0xff) | sp_svg_read_color(value, this->pagecolor);
             }
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_PAGECHECKERBOARD:
+            this->pagecheckerboard = (value) ? sp_str_to_bool (value) : TRUE;
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_PAGEOPACITY:

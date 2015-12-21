@@ -74,6 +74,8 @@ void CtrlRect::init()
 {
     _has_fill = false;
     _dashed = false;
+    _checkerboard = false;
+
     _shadow = 0;
 
     _area = Geom::OptIntRect();
@@ -109,10 +111,17 @@ void CtrlRect::render(SPCanvasBuf *buf)
         cairo_rectangle(buf->ct, 0.5 + area[X].min(), 0.5 + area[Y].min(),
                                  area[X].max() - area[X].min(), area[Y].max() - area[Y].min());
 
+        if (_checkerboard) {
+            cairo_pattern_t *cb = ink_cairo_pattern_create_checkerboard();
+            cairo_set_source(buf->ct, cb);
+            cairo_pattern_destroy(cb);
+            cairo_fill_preserve(buf->ct);
+        }
         if (_has_fill) {
             ink_cairo_set_source_rgba32(buf->ct, _fill_color);
             cairo_fill_preserve(buf->ct);
         }
+
         ink_cairo_set_source_rgba32(buf->ct, _border_color);
         cairo_stroke(buf->ct);
 
@@ -294,6 +303,12 @@ void CtrlRect::setRectangle(Geom::Rect const &r)
 void CtrlRect::setDashed(bool d)
 {
     _dashed = d;
+    _requestUpdate();
+}
+
+void CtrlRect::setCheckerboard(bool d)
+{
+    _checkerboard = d;
     _requestUpdate();
 }
 

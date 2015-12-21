@@ -210,9 +210,11 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
     main = (SPCanvasGroup *) sp_canvas_item_new (root, SP_TYPE_CANVAS_GROUP, NULL);
     g_signal_connect (G_OBJECT (main), "event", G_CALLBACK (sp_desktop_root_handler), this);
 
+    /* This is the background the page sits on. */
     table = sp_canvas_item_new (main, SP_TYPE_CTRLRECT, NULL);
     SP_CTRLRECT(table)->setRectangle(Geom::Rect(Geom::Point(-80000, -80000), Geom::Point(80000, 80000)));
     SP_CTRLRECT(table)->setColor(0x00000000, true, 0x00000000);
+    SP_CTRLRECT(table)->setCheckerboard( false );
     sp_canvas_item_move_to_z (table, 0);
 
     page = sp_canvas_item_new (main, SP_TYPE_CTRLRECT, NULL);
@@ -1731,14 +1733,16 @@ static void _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
 
-        /* Show/hide page background */
-        if (nv->pagecolor | (0xff != 0xffffffff)) {
-            sp_canvas_item_show (desktop->table);
-            ((CtrlRect *) desktop->table)->setColor(0x00000000, true, nv->pagecolor | 0xff);
-            sp_canvas_item_move_to_z (desktop->table, 0);
+        /* Set page background */
+        sp_canvas_item_show (desktop->table);
+        if (nv->pagecheckerboard) {
+            ((CtrlRect *) desktop->table)->setCheckerboard( true );
+            ((CtrlRect *) desktop->table)->setColor(0x00000000, true, nv->pagecolor ); // | 0xff);
         } else {
-            sp_canvas_item_hide (desktop->table);
+            ((CtrlRect *) desktop->table)->setCheckerboard( false );
+            ((CtrlRect *) desktop->table)->setColor(0x00000000, true, nv->pagecolor | 0xff);
         }
+        sp_canvas_item_move_to_z (desktop->table, 0);
 
         /* Show/hide page border */
         if (nv->showborder) {

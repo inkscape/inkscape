@@ -46,6 +46,7 @@ public:
     unsigned int editable : 1;
     unsigned int showguides : 1;
     unsigned int lockguides : 1;
+    unsigned int pagecheckerboard : 1;
     unsigned int showborder : 1;
     unsigned int showpageshadow : 1;
     unsigned int borderlayer : 2;
