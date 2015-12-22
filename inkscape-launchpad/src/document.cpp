@@ -992,6 +992,8 @@ void SPDocument::bindObjectToId(gchar const *id, SPObject *object) {
     GQuark idq = g_quark_from_string(id);
 
     if (object) {
+        if(object->getId())
+            priv->iddef.erase(object->getId());
         g_assert(priv->iddef.find(id)==priv->iddef.end());
         priv->iddef[id] = object;
         //g_assert(g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq)) == NULL);

@@ -39,6 +39,7 @@ public:
     void setShadow(int s, guint c);
     void setRectangle(Geom::Rect const &r);
     void setDashed(bool d);
+    void setCheckerboard(bool d);
 
     void render(SPCanvasBuf *buf);
     void update(Geom::Affine const &affine, unsigned int flags);
@@ -49,6 +50,8 @@ private:
     Geom::Rect _rect;
     bool _has_fill;
     bool _dashed;
+    bool _checkerboard;
+
     Geom::OptIntRect _area;
     gint _shadow_size;
     guint32 _border_color;
