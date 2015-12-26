@@ -287,7 +287,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &color );
 
     // 'font-size'/'font' must be before properties that need to know em, ex size (SPILength,
-    // SPILenghtOrNormal)
+    // SPILengthOrNormal)
     _properties.push_back( &font_style );
     _properties.push_back( &font_variant );
     _properties.push_back( &font_weight );
@@ -383,7 +383,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     //     // 'color' must be before 'fill', 'stroke', 'text-decoration-color', ...
     //     _propmap.insert( std::make_pair( color.name,                 reinterpret_cast<SPIBasePtr>(&SPStyle::color                 ) ) );
 
-    //     // 'font-size' must be before properties that need to know em, ex size (SPILength, SPILenghtOrNormal)
+    //     // 'font-size' must be before properties that need to know em, ex size (SPILength, SPILengthOrNormal)
     //     _propmap.insert( std::make_pair( font_style.name,            reinterpret_cast<SPIBasePtr>(&SPStyle::font_style            ) ) );
     //     _propmap.insert( std::make_pair( font_variant.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::font_variant          ) ) );
     //     _propmap.insert( std::make_pair( font_weight.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::font_weight           ) ) );

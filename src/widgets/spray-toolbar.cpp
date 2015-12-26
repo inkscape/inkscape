@@ -476,8 +476,8 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
     /* Picker */
     {
         InkToggleAction* act = ink_toggle_action_new( "SprayPickColorAction",
-                                                      _("Pick color from the drawing. You can use clonetiler trace dialog for avanced effects. In clone mode original fill or stroke colors must be unset."),
-                                                      _("Pick color from the drawing. You can use clonetiler trace dialog for avanced effects. In clone mode original fill or stroke colors must be unset."),
+                                                      _("Pick color from the drawing. You can use clonetiler trace dialog for advanced effects. In clone mode original fill or stroke colors must be unset."),
+                                                      _("Pick color from the drawing. You can use clonetiler trace dialog for advanced effects. In clone mode original fill or stroke colors must be unset."),
                                                       INKSCAPE_ICON("color-picker"),
                                                       secondarySize );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/picker", false) );
@@ -502,8 +502,8 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
     /* Inverse Value Size */
     {
         InkToggleAction* act = ink_toggle_action_new( "SprayPickInverseValueAction",
-                                                      _("Inversed pick value, retaining color in advanced trace mode"),
-                                                      _("Inversed pick value, retaining color in advanced trace mode"),
+                                                      _("Inverted pick value, retaining color in advanced trace mode"),
+                                                      _("Inverted pick value, retaining color in advanced trace mode"),
                                                       INKSCAPE_ICON("object-tweak-shrink"),
                                                       secondarySize );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/spray/pick_inverse_value", false) );
