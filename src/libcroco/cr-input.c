@@ -722,6 +722,8 @@ cr_input_consume_white_spaces (CRInput * a_this, gulong * a_nb_chars)
 
         }
 
+	*a_nb_chars = (gulong) nb_consumed;
+
         if (nb_consumed && status == CR_END_OF_INPUT_ERROR) {
                 status = CR_OK;
         }

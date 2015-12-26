@@ -254,7 +254,7 @@ cr_simple_sel_compute_specificity (CRSimpleSel * a_this)
         g_return_val_if_fail (a_this, CR_BAD_PARAM_ERROR);
 
         for (cur_sel = a_this; cur_sel; cur_sel = cur_sel->next) {
-                if (cur_sel->type_mask | TYPE_SELECTOR) {
+                if (cur_sel->type_mask & TYPE_SELECTOR) {
                         c++;    /*hmmh, is this a new language ? */
                 } else if (!cur_sel->name 
                            || !cur_sel->name->stryng

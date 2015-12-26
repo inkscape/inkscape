@@ -1902,6 +1902,8 @@ cr_tknzr_seek_index (CRTknzr * a_this, enum CRSeekPos a_origin, gint a_pos)
 enum CRStatus
 cr_tknzr_consume_chars (CRTknzr * a_this, guint32 a_char, glong * a_nb_char)
 {
+	gulong consumed = *(gulong *) a_nb_char;
+	enum CRStatus status;
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && PRIVATE (a_this)->input, CR_BAD_PARAM_ERROR);
 
@@ -1912,8 +1914,10 @@ cr_tknzr_consume_chars (CRTknzr * a_this, guint32 a_char, glong * a_nb_char)
                 PRIVATE (a_this)->token_cache = NULL;
         }
 
-        return cr_input_consume_chars (PRIVATE (a_this)->input,
-                                       a_char, a_nb_char);
+        status = cr_input_consume_chars (PRIVATE (a_this)->input,
+                                         a_char, &consumed);
+	*a_nb_char = (glong) consumed;
+	return status;
 }
 
 enum CRStatus

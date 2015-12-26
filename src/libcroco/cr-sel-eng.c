@@ -139,7 +139,7 @@ lang_pseudo_class_handler (CRSelEng *const a_this,
         /* "xml:lang" needed for SVG */
         if ( (strqcmp (a_sel->content.pseudo->name->stryng->str, "lang", 4 ) &&
               (strqcmp (a_sel->content.pseudo->name->stryng->str, "xml:lang", 8 ) ) )
-            || !a_sel->content.pseudo->type == FUNCTION_PSEUDO) {
+            || a_sel->content.pseudo->type != FUNCTION_PSEUDO) {
                 cr_utils_trace_info ("This handler is for :lang only");
                 return FALSE;
         }
@@ -180,7 +180,7 @@ first_child_pseudo_class_handler (CRSelEng *const a_this,
 
         if (strcmp (a_sel->content.pseudo->name->stryng->str,
                     "first-child")
-            || !a_sel->content.pseudo->type == IDENT_PSEUDO) {
+            || a_sel->content.pseudo->type != IDENT_PSEUDO) {
                 cr_utils_trace_info ("This handler is for :first-child only");
                 return FALSE;
         }
