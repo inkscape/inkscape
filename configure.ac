@@ -698,13 +698,20 @@ AC_SUBST(IMAGEMAGICK_CFLAGS)
 dnl ******************************
 dnl   Unconditional dependencies
 dnl ******************************
+
+dnl Separate out dependencies that are known to introduce
+dnl C++-specific compiler flags
+PKG_CHECK_MODULES(INKSCAPE_CXX_DEPS,
+		  cairomm-1.0 >= 1.9.8
+		  glibmm-2.4  >= 2.28
+		  giomm-2.4
+		  sigc++-2.0  >= 2.0.12
+		  )
+
 PKG_CHECK_MODULES(INKSCAPE,
 		  bdw-gc      >= 7.1
 		  cairo       >= 1.10
-		  cairomm-1.0 >= 1.9.8
 		  glib-2.0    >= 2.28
-		  glibmm-2.4  >= 2.28
-		  giomm-2.4
 		  gsl
 		  gthread-2.0 >= 2.0
 		  libpng      >= 1.2
@@ -712,7 +719,6 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  libxslt     >= 1.0.15
 		  pango       >= 1.24
 		  pangoft2    >= 1.24
-		  sigc++-2.0  >= 2.0.12
 		  )
 
 dnl Check whether we need to use new Glib::Thread::Mutex API.
@@ -740,12 +746,16 @@ if test "x$enable_gtk3" = "xyes"; then
 	fi
 
 	PKG_CHECK_MODULES(GTK,
-			  gtkmm-3.0 >= 3.2
-			  gdkmm-3.0 >= 3.2
 			  gtk+-3.0  >= 3.2
 			  gdk-3.0   >= 3.2
 			  gdl-3.0   > 3.3.4
-			  $ink_spell_pkg,
+			  $ink_spell_pkg)
+
+	dnl Separate out dependencies that are known to introduce
+	dnl C++-specific compiler flags
+	PKG_CHECK_MODULES(GTKMM,
+			  gtkmm-3.0 >= 3.2
+			  gdkmm-3.0 >= 3.2,
 			  with_gtkmm_3_0=yes,
 			  with_gtkmm_3_0=no)
 
@@ -818,7 +828,11 @@ else
 
 	PKG_CHECK_MODULES(GTK,
 			  gtk+-2.0  >= 2.24
-			  $ink_spell_pkg
+			  $ink_spell_pkg)
+	
+	dnl Separate out dependencies that are known to introduce C++-specific
+	dnl compiler flags
+	PKG_CHECK_MODULES(GTKMM,
 			  gdkmm-2.4 >= 2.24
 			  gtkmm-2.4 >= 2.24)
 
@@ -859,7 +873,9 @@ else
 fi
 
 INKSCAPE_CFLAGS="$GTK_CFLAGS $INKSCAPE_CFLAGS"
+INKSCAPE_CXX_DEPS_CFLAGS="$GTKMM_CFLAGS $INKSCAPE_CXX_DEPS_CFLAGS"
 INKSCAPE_LIBS="$GTK_LIBS $INKSCAPE_LIBS"
+INKSCAPE_CXX_DEPS_LIBS="$GTKMM_LIBS $INKSCAPE_CXX_DEPS_LIBS"
 
 dnl Configure x11 library if Gtk+ uses it as a backend.
 dnl Note that this is only here because we directly use X11 functionality.  We
@@ -1094,7 +1110,8 @@ dnl
 
 AC_SUBST(INKSCAPE_CFLAGS)
 AC_SUBST(INKSCAPE_LIBS)
-
+AC_SUBST(INKSCAPE_CXX_DEPS_CFLAGS)
+AC_SUBST(INKSCAPE_CXX_DEPS_LIBS)
 
 dnl Check to see if we have a newer (2.32.0+) glibmm
 TMP_CPPFLAGS="$CPPFLAGS"
