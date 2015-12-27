@@ -40,6 +40,7 @@ noinst_LIBRARIES =	\
 all_libs =			\
 	$(noinst_LIBRARIES)	\
 	$(INKSCAPE_LIBS)	\
+	$(INKSCAPE_CXX_DEPS_LIBS) \
 	$(EXIF_LIBS)            \
 	$(GNOME_VFS_LIBS)	\
 	$(XFT_LIBS)		\
@@ -64,6 +65,10 @@ inkview_SOURCES =
 BUILT_SOURCES =
 # Extra files to distribute
 EXTRA_DIST =
+
+# C++-specific flags defined here
+AM_CXXFLAGS = \
+	$(INKSCAPE_CXX_DEPS_CFLAGS)
 
 AM_CPPFLAGS =	\
 	-I$(top_srcdir)/cxxtest \

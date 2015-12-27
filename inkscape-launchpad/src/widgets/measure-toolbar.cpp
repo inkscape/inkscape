@@ -210,7 +210,7 @@ sp_toggle_show_in_between( GtkToggleAction* act, gpointer data )
     if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Compute all elements."));
     } else {
-        desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Compute max lenght."));
+        desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Compute max length."));
     }
     MeasureTool *mt = get_measure_tool();
     if (mt) {

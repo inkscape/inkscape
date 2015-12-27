@@ -1588,7 +1588,7 @@ void TagVerb::perform( SPAction *action, void *data)
             id=NULL;
             do {
                 g_free(id);
-                id = g_strdup_printf("Set %d", tag_suffix++);
+                id = g_strdup_printf(_("Set %d"), tag_suffix++);
             } while (dt->doc()->getObjectById(id));
             
             doc = dt->doc()->getReprDoc();
