@@ -13,10 +13,6 @@
 # include <config.h>
 #endif
 
-#if WITH_GLIBMM_2_32
-# include <glibmm/threads.h>
-#endif
-
 #include "tags.h"
 #include <gtkmm/widget.h>
 #include <gtkmm/icontheme.h>

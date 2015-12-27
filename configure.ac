@@ -721,14 +721,6 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  pangoft2    >= 1.24
 		  )
 
-dnl Check whether we need to use new Glib::Thread::Mutex API.
-dnl TODO: Drop this test once we bump the required version of glibmm to 2.32
-PKG_CHECK_MODULES(GLIBMM_2_32, glibmm-2.4 >= 2.32, with_glibmm_2_32=yes, with_glibmm_2_32=no)
-
-if test "x$with_glibmm_2_32" = "xyes"; then
-	AC_DEFINE(WITH_GLIBMM_2_32,1,[Build with Glibmm 2.32 or higher])
-fi
-
 dnl *********************************
 dnl   Allow experimental GTK+3 build
 dnl *********************************
