@@ -959,9 +959,6 @@ dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 sp_save_LIBS=$LIBS
 LIBS="$LIBS $INKSCAPE_LIBS"
 AC_CHECK_FUNCS(bind_textdomain_codeset)
-dnl Check for gtk_window_fullscreen in gtk (>= 2.2)
-AC_CHECK_FUNCS(gtk_window_set_default_icon_from_file)
-AC_CHECK_FUNCS(gtk_window_fullscreen)
 LIBS=$sp_save_LIBS
 
 
