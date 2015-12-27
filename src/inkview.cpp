@@ -126,7 +126,6 @@ sp_svgview_main_key_press (GtkWidget */*widget*/, GdkEventKey *event, struct SPS
 	sp_svgview_goto_last(ss);
 	break;
     case GDK_KEY_F11:
-#ifdef HAVE_GTK_WINDOW_FULLSCREEN
 	if (ss->fullscreen) {
 	    gtk_window_unfullscreen (GTK_WINDOW(ss->window));
 	    ss->fullscreen = false;
@@ -134,9 +133,6 @@ sp_svgview_main_key_press (GtkWidget */*widget*/, GdkEventKey *event, struct SPS
 	    gtk_window_fullscreen (GTK_WINDOW(ss->window));
 	    ss->fullscreen = true;
 	}
-#else
-	std::cout<<"Your GTK+ does not support fullscreen mode. Upgrade to 2.2."<<std::endl;
-#endif
 	break;
     case GDK_KEY_Return:
 	sp_svgview_control_show (ss);

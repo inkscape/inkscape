@@ -19,7 +19,6 @@
 
 #include <cstring>
 #include <string>
-//#include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
 #include <glibmm/ustring.h>
 
 struct SPAction;
@@ -262,10 +261,8 @@ enum {
     SP_VERB_ZOOM_1_1,
     SP_VERB_ZOOM_1_2,
     SP_VERB_ZOOM_2_1,
-#ifdef HAVE_GTK_WINDOW_FULLSCREEN
     SP_VERB_FULLSCREEN,
     SP_VERB_FULLSCREENFOCUS,
-#endif /* HAVE_GTK_WINDOW_FULLSCREEN */
     SP_VERB_FOCUSTOGGLE,
     SP_VERB_VIEW_NEW,
     SP_VERB_VIEW_NEW_PREVIEW,
