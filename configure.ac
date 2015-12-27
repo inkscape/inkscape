@@ -729,15 +729,6 @@ if test "x$with_glibmm_2_32" = "xyes"; then
 	AC_DEFINE(WITH_GLIBMM_2_32,1,[Build with Glibmm 2.32 or higher])
 fi
 
-dnl pango with harfbuzz?
-PKG_CHECK_MODULES(HARFBUZZ, pango >= 1.31.1 harfbuzz >= 0.9.3, with_harfbuzz=yes, with_harfbuzz=no)
-
-if test "x$with_harfbuzz" = "xyes"; then
-	AC_DEFINE(WITH_HARFBUZZ,1,[Link with harfbuzz])
-	INKSCAPE_LIBS="$HARFBUZZ_LIBS $INKSCAPE_LIBS"
-	INKSCAPE_CFLAGS="$HARFBUZZ_CFLAGS $INKSCAPE_CFLAGS"
-fi
-
 dnl *********************************
 dnl   Allow experimental GTK+3 build
 dnl *********************************
@@ -1118,6 +1109,13 @@ AC_SUBST(INKSCAPE_CFLAGS)
 AC_SUBST(INKSCAPE_LIBS)
 AC_SUBST(INKSCAPE_CXX_DEPS_CFLAGS)
 AC_SUBST(INKSCAPE_CXX_DEPS_LIBS)
+
+dnl Check to see if we have a newer (2.32.0+) glibmm
+TMP_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$GTK_CFLAGS $CPPFLAGS"
+AC_CHECK_HEADERS([glibmm/threads.h])
+CPPFLAGS="$TMP_CPPFLAGS"
+
 
 dnl Define our data paths for config.h
 AC_DEFINE_DIR([INKSCAPE_DATADIR], [datadir], [Base data directory])
