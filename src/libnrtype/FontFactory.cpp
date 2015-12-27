@@ -24,6 +24,10 @@
 #include "util/unordered-containers.h"
 #include <map>
 
+#include <harfbuzz/hb.h>
+#include <harfbuzz/hb-ot.h>
+#include <harfbuzz/hb-ft.h>
+
 typedef INK_UNORDERED_MAP<PangoFontDescription*, font_instance*, font_descr_hash, font_descr_equal> FaceMapType;
 
 // need to avoid using the size field
@@ -99,7 +103,10 @@ font_factory::font_factory(void) :
     fontSize(512),
     loadedPtr(new FaceMapType())
 {
-    // std::cout << pango_version_string() << std::endl;
+    // std::cout << "FontFactory(): Pango Version (run time): "
+    //           << pango_version_string() << std::endl;
+    // std::cout << "FontFactory(): Pango Version (compile time): "
+    //           << PANGO_VERSION_STRING << std::endl;
 #ifdef USE_PANGO_WIN32
 #else
     pango_ft2_font_map_set_resolution(PANGO_FT2_FONT_MAP(fontServer),
@@ -593,13 +600,15 @@ font_instance* font_factory::FaceFromFontSpecification(char const *fontSpecifica
     return font;
 }
 
-void dump_tag( guint32 *tag, Glib::ustring prefix = "" ) {
+void dump_tag( guint32 *tag, Glib::ustring prefix = "", bool lf=true ) {
     std::cout << prefix
               << ((char)((*tag & 0xff000000)>>24))
               << ((char)((*tag & 0x00ff0000)>>16))
               << ((char)((*tag & 0x0000ff00)>>8))
-              << ((char)((*tag & 0x000000ff)>>0))
-              << std::endl;
+              << ((char)((*tag & 0x000000ff)>>0));
+    if( lf ) {
+        std::cout << std::endl;
+    }
 }
 
 Glib::ustring extract_tag( guint32 *tag ) {
@@ -677,74 +686,66 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
         }
 
         // Extract which OpenType tables are in the font. We'll make a list of all tables
-        // regardless of which script and langauge they are in.  These functions are deprecated but
-        // will eventually be replaced by newer functions (according to Behdad).
-        PangoOTInfo* info = pango_ot_info_get( res->theFace );
+        // regardless of which script and langauge they are in. This Harfbuzz code replaces
+        // an ealier Pango version as the Pango functions are depricated.
 
-        PangoOTTag* scripts = pango_ot_info_list_scripts( info, PANGO_OT_TABLE_GSUB ); 
-        // std::cout << "  scripts: " << std::endl;
-        for( unsigned i = 0; scripts[i] != 0; ++i ) {
-            // dump_tag( &scripts[i], "    " );
+        // Empty map... bitmap fonts seem to be loaded multiple times.
+        res->openTypeTables.clear();
 
-            guint script_index = -1;
-            if( pango_ot_info_find_script( info, PANGO_OT_TABLE_GSUB, scripts[i], &script_index )) {
+        hb_face_t *hb_face = hb_ft_face_create(res->theFace, NULL);
 
-                PangoOTTag* languages =
-                    pango_ot_info_list_languages( info, PANGO_OT_TABLE_GSUB, script_index, NULL);
-                // if( languages[0] != 0 )
-                //   std::cout << "      languages: " << std::endl;
+        // First time to get size of array
+        unsigned int script_count = hb_ot_layout_table_get_script_tags(hb_face, HB_OT_TAG_GSUB, 0, NULL, NULL);
+        hb_tag_t *scripts_hb = g_new(hb_tag_t, script_count + 1 );
 
-                for( unsigned j = 0; languages[j] != 0; ++j ) {
-                    // dump_tag( &languages[j], "        lang: ");
+        // Second time to fill array (this two step process was not neccessary with Pango
+        hb_ot_layout_table_get_script_tags (hb_face, HB_OT_TAG_GSUB, 0, &script_count, scripts_hb);
 
-                    guint language_index = -1;
-                    if( pango_ot_info_find_language(info, PANGO_OT_TABLE_GSUB, script_index, languages[j], &language_index, NULL)) {
+        // std::cout << "  scripts: " << script_count << std::endl;
+        for( unsigned i = 0; i < script_count; ++i ) {
+            // dump_tag( &scripts_hb[i], "    " );
+            unsigned int language_count = hb_ot_layout_script_get_language_tags(hb_face, HB_OT_TAG_GSUB, i, 0, NULL, NULL);
+            if( language_count > 0 ) {
+                hb_tag_t *languages_hb = g_new( hb_tag_t, language_count + 1 );
+                hb_ot_layout_script_get_language_tags(hb_face, HB_OT_TAG_GSUB, i, 0, &language_count, languages_hb);
 
-                        PangoOTTag* features =
-                            pango_ot_info_list_features( info, PANGO_OT_TABLE_GSUB, 0, i, j );
-                        if( features[0] != 0 )
-                            // std::cout << "          features: " << std::endl;
+                for( unsigned j = 0; j < language_count; ++j ) {
+                    // dump_tag( &languages_hb[j], "      " );
+                    unsigned int feature_count =
+                        hb_ot_layout_language_get_feature_tags(hb_face, HB_OT_TAG_GSUB, i, j, 0, NULL, NULL);
+                    hb_tag_t *features_hb = g_new( hb_tag_t, feature_count + 1 );
+                    hb_ot_layout_language_get_feature_tags(hb_face, HB_OT_TAG_GSUB, i, j, 0, &feature_count, features_hb);
 
-                        for( unsigned k = 0; features[k] != 0; ++k ) {
-                            // dump_tag( &features[k], "            feature: ");
-                            ++(res->openTypeTables[ extract_tag(&features[k])]);
-                        }
-                        g_free( features );
-                    } else {
-                        // std::cout << "      No languages defined" << std::endl;
-                        PangoOTTag* features =
-                            pango_ot_info_list_features( info, PANGO_OT_TABLE_GSUB, 0, i, PANGO_OT_DEFAULT_LANGUAGE );
-                        // if( features[0] != 0 )
-                        //   std::cout << "          default features: " << std::endl;
-
-                        for( unsigned k = 0; features[k] != 0; ++k ) {
-                            // dump_tag( &features[k], "            feature: " );
-                            ++(res->openTypeTables[ extract_tag(&features[k])]);
-                        }
-                        g_free( features );
+                    for( unsigned k = 0; k < feature_count; ++k ) {
+                        // dump_tag( &features_hb[k], "        " );
+        
+                        ++(res->openTypeTables[ extract_tag(&features_hb[k])]);
                     }
+                    g_free(features_hb);
                 }
-                g_free( languages );
-            } else {
-                // std::cout << "  No scripts defined! " << std::endl;
+                g_free(languages_hb);
+            }
+            {
+                // Even if no languages are present there is still the default.
+                unsigned int feature_count =
+                    hb_ot_layout_language_get_feature_tags(hb_face, HB_OT_TAG_GSUB, i, HB_OT_LAYOUT_DEFAULT_LANGUAGE_INDEX, 0, NULL, NULL);
+                hb_tag_t *features_hb = g_new( hb_tag_t, feature_count + 1 );
+                hb_ot_layout_language_get_feature_tags(hb_face, HB_OT_TAG_GSUB, i, HB_OT_LAYOUT_DEFAULT_LANGUAGE_INDEX, 0, &feature_count, features_hb);
+
+                for( unsigned k = 0; k < feature_count; ++k ) {
+                    // dump_tag( &features_hb[k], "      " );
+                    ++(res->openTypeTables[ extract_tag(&features_hb[k])]);
+                }
+                g_free(features_hb);
             }
         }
-        g_free( scripts );
+        g_free( scripts_hb );
+        // hb_face_destroy(hb_face);
 
-        PangoOTTag* features =
-            pango_ot_info_list_features( info, PANGO_OT_TABLE_GSUB, 0, 0, PANGO_OT_DEFAULT_LANGUAGE );
-        // if( features[0] != 0 )
-        //   std::cout << "  DFTL DFTL features: " << std::endl;
-        for( unsigned i = 0; features[i] != 0; ++i ) {
-            // dump_tag( &features[i], "            feature: " );
-            ++(res->openTypeTables[ extract_tag(&features[i])]);
-        }
         // std::map<Glib::ustring,int>::iterator it;
         // for( it = res->openTypeTables.begin(); it != res->openTypeTables.end(); ++it) {
         //     std::cout << "Table: " << it->first << "  Occurances: " << it->second << std::endl;
         // }
-        g_free( features );
-
     } else {
         // already here
         res = loadedFaces[descr];

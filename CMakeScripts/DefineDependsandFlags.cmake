@@ -21,6 +21,7 @@ if (WIN32)
 	list(APPEND INKSCAPE_LIBS "-L$ENV{DEVLIBS_PATH}/lib")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0.dll")  # FIXME
+	list(APPEND INKSCAPE_LIBS "-lharfbuzz-0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangowin32-1.0.dll")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lgthread-2.0.dll")  # FIXME
 elseif(APPLE)
@@ -33,6 +34,7 @@ elseif(APPLE)
 	endif()
 	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0")  # FIXME
+	list(APPEND INKSCAPE_LIBS "-lharfbuzz")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lfontconfig")  # FIXME
 	if(${GTK+_2.0_TARGET} MATCHES "x11")
 		# only link X11 if using X11 backend of GTK2
@@ -42,6 +44,7 @@ else()
 	list(APPEND INKSCAPE_LIBS "-ldl")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0")  # FIXME
+	list(APPEND INKSCAPE_LIBS "-lharfbuzz")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lfontconfig")  # FIXME
 	list(APPEND INKSCAPE_LIBS "-lX11")  # FIXME
 endif()

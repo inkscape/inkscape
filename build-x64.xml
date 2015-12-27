@@ -403,6 +403,7 @@
             <!-- OTHER -->
 			      ${pcc.Magick++}
 			      ${pcc.libxml-2.0}
+            ${ppc.harfbuzz}
             ${pcc.freetype2}
             ${pcc.cairo}
             ${pcc.poppler}
@@ -478,7 +479,7 @@
        <libs>
            -L${devlibs}/lib
            ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
-           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
+           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${harfbuzz} ${pcl.gthread-2.0}
            ${devlibs}/bin/libxml2-2.dll
            ${devlibs}/bin/libxslt-1.dll
            ${devlibs}/bin/libexslt-0.dll
@@ -566,7 +567,7 @@
        <libs>
            -L${devlibs}/lib
            ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
-           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
+           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${harfbuzz} ${pcl.gthread-2.0}
            ${devlibs}/bin/libxml2-2.dll
            ${devlibs}/bin/libxslt-1.dll
            ${devlibs}/bin/libexslt-0.dll
@@ -622,7 +623,7 @@
        <libs>
            -L${devlibs}/lib
            ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
-           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
+           ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${harfbuzz} ${pcl.gthread-2.0}
            ${devlibs}/bin/libxml2-2.dll
            ${devlibs}/bin/libxslt-1.dll
            ${devlibs}/bin/libexslt-0.dll

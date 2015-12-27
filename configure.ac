@@ -729,6 +729,15 @@ if test "x$with_glibmm_2_32" = "xyes"; then
 	AC_DEFINE(WITH_GLIBMM_2_32,1,[Build with Glibmm 2.32 or higher])
 fi
 
+dnl pango with harfbuzz?
+PKG_CHECK_MODULES(HARFBUZZ, pango >= 1.31.1 harfbuzz >= 0.9.3, with_harfbuzz=yes, with_harfbuzz=no)
+
+if test "x$with_harfbuzz" = "xyes"; then
+	AC_DEFINE(WITH_HARFBUZZ,1,[Link with harfbuzz])
+	INKSCAPE_LIBS="$HARFBUZZ_LIBS $INKSCAPE_LIBS"
+	INKSCAPE_CFLAGS="$HARFBUZZ_CFLAGS $INKSCAPE_CFLAGS"
+fi
+
 dnl *********************************
 dnl   Allow experimental GTK+3 build
 dnl *********************************
