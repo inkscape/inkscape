@@ -82,7 +82,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_FIT_MARGIN_LEFT, "fit-margin-left"},
     {SP_ATTR_FIT_MARGIN_RIGHT, "fit-margin-right"},
     {SP_ATTR_FIT_MARGIN_BOTTOM, "fit-margin-bottom"},
-    {SP_ATTR_INKSCAPE_PAGECHECKERBOARD, "inkscape:checkerboard"},
+    {SP_ATTR_INKSCAPE_PAGECHECKERBOARD, "inkscape:pagecheckerboard"},
     {SP_ATTR_INKSCAPE_PAGEOPACITY, "inkscape:pageopacity"},
     {SP_ATTR_INKSCAPE_PAGESHADOW, "inkscape:pageshadow"},
     {SP_ATTR_INKSCAPE_ZOOM, "inkscape:zoom"},

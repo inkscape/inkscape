@@ -116,11 +116,11 @@ DocumentProperties::DocumentProperties()
       _page_metadata2(Gtk::manage(new UI::Widget::NotebookPage(1, 1))),
     //---------------------------------------------------------------
       _rcb_antialias(_("Use antialiasing"), _("If unset, no antialiasing will be done on the drawing"), "shape-rendering", _wr, false, NULL, NULL, NULL, "crispEdges"),
-      _rcb_checkerboard(_("Checkerboard background"), _("If set, use checkerboard for background, otherwise use background color at full opacity."), "inkscape:checkerboard", _wr, false),
+      _rcb_checkerboard(_("Checkerboard background"), _("If set, use checkerboard for background, otherwise use background color at full opacity."), "inkscape:pagecheckerboard", _wr, false),
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
-      _rcp_bg(_("Back_ground color:"), _("Background color"), _("Color of the page background. Note: transparency setting ignored while editing if 'Checkerboard background' set (but used when exporting to bitmap)."), "pagecolor", "inkscape:pageopacity", _wr),
+      _rcp_bg(_("Back_ground color:"), _("Background color"), _("Color of the page background. Note: transparency setting ignored while editing if 'Checkerboard background' unset (but used when exporting to bitmap)."), "pagecolor", "inkscape:pageopacity", _wr),
       _rcp_bord(_("Border _color:"), _("Page border color"), _("Color of the page border"), "bordercolor", "borderopacity", _wr),
       _rum_deflt(_("Display _units:"), "inkscape:document-units", _wr),
       _page_sizer(_wr),
