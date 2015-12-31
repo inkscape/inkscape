@@ -28,9 +28,15 @@ void display_warning(char *msg, GC_word arg) {
 }
 
 void do_init() {
+#if WITH_GC_7_2
     GC_set_no_dls(1);
     GC_set_all_interior_pointers(1);
     GC_set_finalize_on_demand(0);
+#else
+    GC_no_dls = 1;
+    GC_all_interior_pointers = 1;
+    GC_finalize_on_demand = 0;
+#endif
 
     GC_INIT();
 
