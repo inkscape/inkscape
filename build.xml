@@ -214,6 +214,8 @@
         //#define WITH_MESH                  1
 
         #define HAVE_ASPELL                   1
+        
+        #define HAVE_POTRACE                  1
 
         #endif /* _CONFIG_H_ */
     </makefile>
@@ -348,11 +350,6 @@
             <exclude name="removeoverlap/test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.cpp"/>
             <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
-            <!-- Exclude potrace related tools until Potrace is available in the devlibs-->
-            <exclude name="trace/.*"/>
-            <exclude name="ui/dialog/tracedialog.cpp"/>
-            <exclude name="ui/tools/flood-tool.cpp"/>
-            <exclude name="widgets/paintbucket-toolbar.cpp"/>
         </fileset>
         <excludeinc dir="${src}">
             <file name="extension/param"/>
@@ -404,6 +401,7 @@
             ${pcc.cairo}
             ${pcc.poppler}
             -I${devlibs}/include/gc
+            -I${devlibs}/include/potracelib
             ${pcc.libwpg-0.2} ${pcc.libvisio-0.0} ${pcc.libcdr-0.0}
             -I${cxxtest}
             <!-- PERL -->
@@ -487,7 +485,7 @@
            ${pcl.lcms2}
            ${pcl.gsl}
            -lpng -ljpeg -ltiff -lexif -lpopt -lz
-           -lgc
+           -lgc -lpotrace
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
            -lmscms  <!-- required for color profiles -->
@@ -569,7 +567,7 @@
            ${pcl.lcms2}
            ${pcl.gsl}
            -lpng -ljpeg -ltiff -lexif -lpopt -lz
-           -lgc
+           -lgc -lpotrace
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
            -lmscms  <!-- required for color profiles -->
@@ -619,7 +617,7 @@
            ${pcl.lcms2}
            ${pcl.gsl}
            -lpng -ljpeg -ltiff -lexif -lpopt -lz
-           -lgc
+           -lgc -lpotrace
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
            -lmscms  <!-- required for color profiles -->
