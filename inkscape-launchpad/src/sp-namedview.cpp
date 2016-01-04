@@ -393,7 +393,7 @@ void SPNamedView::set(unsigned int key, const gchar* value) {
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_PAGECHECKERBOARD:
-            this->pagecheckerboard = (value) ? sp_str_to_bool (value) : TRUE;
+            this->pagecheckerboard = (value) ? sp_str_to_bool (value) : false;
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_PAGEOPACITY:

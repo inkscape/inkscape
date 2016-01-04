@@ -1500,7 +1500,6 @@ sp_desktop_widget_maximize(SPDesktopWidget *dtw)
 void
 sp_desktop_widget_fullscreen(SPDesktopWidget *dtw)
 {
-#ifdef HAVE_GTK_WINDOW_FULLSCREEN
     GtkWindow *topw = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(dtw->canvas)));
     if (GTK_IS_WINDOW(topw)) {
         if (dtw->desktop->is_fullscreen()) {
@@ -1524,7 +1523,6 @@ sp_desktop_widget_fullscreen(SPDesktopWidget *dtw)
             // widget layout is triggered by the resulting window_state_event
         }
     }
-#endif /* HAVE_GTK_WINDOW_FULLSCREEN */
 }
 
 /**

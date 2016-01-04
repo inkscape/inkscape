@@ -721,6 +721,18 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  pangoft2    >= 1.24
 		  )
 
+dnl See if we are able to use new libgc API. This test should be removed and
+dnl the version number in the INKSCAPE test above should be bumped to >= 7.2
+dnl once all supported platforms have the required library version.
+dnl See bug #1530286.
+PKG_CHECK_MODULES(GC_7_2, bdw-gc >= 7.2, with_gc_7_2=yes, with_gc_7_2=no)
+
+if test "x$with_gc_7_2" = "xyes"; then
+	AC_DEFINE(WITH_GC_7_2, 1, [Build with GC 7.2 or higher])
+else
+	AC_MSG_WARN([Using an old version of libgc. Please consider upgrading to version 7.2 or newer.])
+fi
+
 dnl *********************************
 dnl   Allow experimental GTK+3 build
 dnl *********************************
