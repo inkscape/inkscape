@@ -1292,7 +1292,7 @@ double PathManipulator::_bsplineHandlePosition(Handle *h, bool check_other)
         line_inside_nodes->moveto(n->position());
         line_inside_nodes->lineto(next_node->position());
         if(!are_near(h->position(), n->position())){
-            pos = Geom::nearest_time(Geom::Point(h->position()[X] - HANDLE_CUBIC_GAP, h->position()[Y] - HANDLE_CUBIC_GAP), *line_inside_nodes->first_segment());
+            pos = Geom::nearest_time(Geom::Point(h->position()[X] - HANDLE_CUBIC_GAP, h->position()[Y] + HANDLE_CUBIC_GAP), *line_inside_nodes->first_segment());
         }
     }
     if (pos == NO_POWER && check_other){
