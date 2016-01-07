@@ -207,7 +207,7 @@ class Effect:
             x = self.unittouu( xattr[0] + 'px' )
             y = self.unittouu( yattr[0] + 'px')
             doc_height = self.unittouu(self.getDocumentHeight())
-            if x and y and doc_height is not None:
+            if x and y:
                 self.view_center = (float(x), doc_height - float(y)) # FIXME: y-coordinate flip, eliminate it when it's gone in Inkscape
 
     def getselected(self):
@@ -321,7 +321,7 @@ class Effect:
 
         svgwidth = self.getDocumentWidth()
         viewboxstr = self.document.getroot().get('viewBox')
-        if viewboxstr and svgwidth is not None:
+        if viewboxstr:
             unitmatch = re.compile('(%s)$' % '|'.join(self.__uuconv.keys()))
             param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
 
@@ -364,22 +364,19 @@ class Effect:
         unit = re.compile('(%s)$' % '|'.join(self.__uuconv.keys()))
         param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
 
-        if string is not None:
-            p = param.match(string)
-            u = unit.search(string)    
-            if p:
-                retval = float(p.string[p.start():p.end()])
-            else:
-                retval = 0.0
-            if u:
-                try:
-                    return retval * (self.__uuconv[u.string[u.start():u.end()]] / self.__uuconv[self.getDocumentUnit()])
-                except KeyError:
-                    pass
-            else: # default assume 'px' unit
-                return retval / self.__uuconv[self.getDocumentUnit()]
+        p = param.match(string)
+        u = unit.search(string)    
+        if p:
+            retval = float(p.string[p.start():p.end()])
         else:
-            retval = None
+            retval = 0.0
+        if u:
+            try:
+                return retval * (self.__uuconv[u.string[u.start():u.end()]] / self.__uuconv[self.getDocumentUnit()])
+            except KeyError:
+                pass
+        else: # default assume 'px' unit
+            return retval / self.__uuconv[self.getDocumentUnit()]
 
         return retval
 
