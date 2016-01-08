@@ -379,8 +379,10 @@
             -DHAVE_SSL
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
             -DPOPPLER_NEW_GFXFONT <!-- poppler changed the api for 0.8.3 -->
-	    <!-- uncomment below for future devlibs, if poppler >= 0.20.0 -->
-	    <!-- -DPOPPLER_NEW_ERRORAPI --> <!-- poppler changed the error api for 0.20.0 -->
+            -DPOPPLER_NEW_GFXPATCH <!-- GfxPatch no longer uses GfxColor in >= 0.15.1 -->
+            -DPOPPLER_NEW_ERRORAPI <!-- poppler changed the error api for 0.20.0 -->
+            -DPOPPLER_EVEN_NEWER_COLOR_SPACE_API <!-- poppler changed the colorspace api for 0.26.0 -->
+            -DPOPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API <!-- poppler changed the colorspace api for 0.29.0 -->
             <!-- GTK+3 migration -->
             -DGLIBMM_DISABLE_DEPRECATED
             -DG_DISABLE_DEPRECATED
@@ -662,8 +664,8 @@
     <copy todir="${dist}" file="${devlibs}/bin/libgio-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libcairo-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpixman-1-0.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-5.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-glib-4.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-58.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-glib-8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangocairo-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpango-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangoft2-1.0-0.dll"/>
