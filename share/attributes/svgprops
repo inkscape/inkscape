@@ -90,6 +90,8 @@
 
 "format" - "altGlyph","glyphRef"
 
+"fr" - "radialGradient"
+
 "from" - "animate","animateColor","animateMotion","animateTransform"
 
 "fx" - "radialGradient"
