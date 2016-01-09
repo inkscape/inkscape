@@ -197,6 +197,8 @@
 
         /* Visio import filter */
         #define WITH_LIBVISIO                 1
+        /* Librevenge based filter */
+        #define WITH_LIBVISIO01               1
 
         /* Corel Draw import filter */
         #define WITH_LIBCDR                   1
@@ -407,7 +409,7 @@
             -I${devlibs}/include/gc
             -I${devlibs}/include/potracelib
             ${pcc.librevenge-0.0} ${pcc.librevenge-stream-0.0}
-            ${pcc.libwpg-0.2} ${pcc.libvisio-0.0} ${pcc.libcdr-0.1}
+            ${pcc.libwpg-0.2} ${pcc.libvisio-0.1} ${pcc.libcdr-0.1}
             -I${cxxtest}
             <!-- PERL -->
             <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
@@ -484,7 +486,7 @@
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.librevenge-0.0} ${pcl.librevenge-stream-0.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.1}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.1} ${pcl.libcdr-0.1}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -567,7 +569,7 @@
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.librevenge-0.0} ${pcl.librevenge-stream-0.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.1}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.1} ${pcl.libcdr-0.1}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -618,7 +620,7 @@
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.librevenge-0.0} ${pcl.librevenge-stream-0.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.1}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.1} ${pcl.libcdr-0.1}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -686,7 +688,7 @@
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.9.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.9.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libvisio-0.0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libvisio-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libcdr-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/icui18n50.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/icudata50.dll"/>
