@@ -432,12 +432,12 @@ AC_ARG_ENABLE(poppler-cairo,
 	[enable_poppler_cairo=$enableval], [enable_poppler_cairo=yes])
 
 POPPLER_CFLAGS=""
-PKG_CHECK_MODULES(POPPLER, poppler >= 0.8.3, poppler=yes, poppler=no)
+PKG_CHECK_MODULES(POPPLER, poppler >= 0.12.2, poppler=yes, poppler=no)
 
 if test "x$poppler" = "xyes"; then
 	dnl Working libpoppler
 	dnl Have to test libpoppler-glib presence
-	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.8.3, poppler_glib=yes, poppler_glib=no)
+	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.12.2, poppler_glib=yes, poppler_glib=no)
 	if test "x$poppler_glib" = "xyes"; then
 		dnl Working libpoppler-glib found
 		dnl Check whether the Cairo SVG backend is available
@@ -449,7 +449,7 @@ if test "x$poppler" = "xyes"; then
 	if test "x$enable_poppler_cairo" = "xyes"; then
 		dnl Have to test libpoppler-cairo presence for PDF preview
 		dnl AC_CHECK_HEADER(Magick++.h, magick_ok=yes, magick_ok=no)
-		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.8.3, poppler_cairo=yes, poppler_cairo=no)
+		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.12.2, poppler_cairo=yes, poppler_cairo=no)
 		if test "x$poppler_glib" = "xyes" -a "x$poppler_cairo" = "xyes" -a \
 			"x$cairo_svg" = "xno"
 		then
@@ -476,27 +476,10 @@ if test "x$popplernewerror" = "xyes"; then
 	AC_DEFINE(POPPLER_NEW_ERRORAPI, 1, [Use new error API from Poppler >= 0.20.0])
 fi
 
-
 ink_svd_CPPFLAGS=$CPPFLAGS
 ink_svd_LIBS=$LIBS
 CPPFLAGS="$CPPFLAGS $POPPLER_CFLAGS"
 LIBS="$LIBS $POPPLER_LIBS"
-
-AC_MSG_CHECKING(for new color space API in Poppler)
-popplercolor="no"
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <GfxState.h>]],
-[[
-  typedef GfxColorSpace *(*parse_p)(Object *, Gfx *);
-  parse_p p = &GfxColorSpace::parse;
-]])],
-[popplercolor=yes])
-
-if test "x$popplercolor" = "xyes"; then
-	AC_DEFINE(POPPLER_NEW_COLOR_SPACE_API, 1, [Use color space API from Poppler >= 0.12.2])
-	AC_MSG_RESULT(yes)
-else
-	AC_MSG_RESULT(no)
-fi
 
 PKG_CHECK_MODULES(POPPLER_EVEN_NEWER_COLOR_SPACE_API, poppler >= 0.26.0, popplernewercolorspaceapi=yes, popplernewercolorspaceapi=no)
 if test "x$popplernewercolorspaceapi" = "xyes"; then

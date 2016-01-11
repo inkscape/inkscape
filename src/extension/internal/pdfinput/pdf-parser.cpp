@@ -927,10 +927,8 @@ void PdfParser::opSetExtGState(Object args[], int /*numArgs*/)
 	    blendingColorSpace = GfxColorSpace::parse(NULL, &obj5, NULL, NULL);
 #elif defined(POPPLER_EVEN_NEWER_COLOR_SPACE_API)
 	    blendingColorSpace = GfxColorSpace::parse(&obj5, NULL, NULL);
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-	    blendingColorSpace = GfxColorSpace::parse(&obj5, NULL);
 #else
-	    blendingColorSpace = GfxColorSpace::parse(&obj5);
+	    blendingColorSpace = GfxColorSpace::parse(&obj5, NULL);
 #endif
 	  }
 	  obj5.free();
@@ -1173,17 +1171,11 @@ void PdfParser::opSetFillColorSpace(Object args[], int /*numArgs*/)
   } else {
     colorSpace = GfxColorSpace::parse(&obj, NULL, NULL);
   }
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
+#else
   if (obj.isNull()) {
     colorSpace = GfxColorSpace::parse(&args[0], NULL);
   } else {
     colorSpace = GfxColorSpace::parse(&obj, NULL);
-  }
-#else
-  if (obj.isNull()) {
-    colorSpace = GfxColorSpace::parse(&args[0]);
-  } else {
-    colorSpace = GfxColorSpace::parse(&obj);
   }
 #endif
   obj.free();
@@ -1222,17 +1214,11 @@ void PdfParser::opSetStrokeColorSpace(Object args[], int /*numArgs*/)
   } else {
     colorSpace = GfxColorSpace::parse(&obj, NULL, NULL);
   }
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
+#else
   if (obj.isNull()) {
     colorSpace = GfxColorSpace::parse(&args[0], NULL);
   } else {
     colorSpace = GfxColorSpace::parse(&obj, NULL);
-  }
-#else
-  if (obj.isNull()) {
-    colorSpace = GfxColorSpace::parse(&args[0]);
-  } else {
-    colorSpace = GfxColorSpace::parse(&obj);
   }
 #endif
   obj.free();
@@ -1322,15 +1308,9 @@ void PdfParser::opSetFillColorN(Object args[], int numArgs) {
       state->setFillPattern(pattern);
       builder->updateStyle(state);
     }
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-    if (args[numArgs-1].isName() &&
-	(pattern = res->lookupPattern(args[numArgs-1].getName(), NULL))) {
-      state->setFillPattern(pattern);
-      builder->updateStyle(state);
-    }
 #else
     if (args[numArgs-1].isName() &&
-	(pattern = res->lookupPattern(args[numArgs-1].getName()))) {
+	(pattern = res->lookupPattern(args[numArgs-1].getName(), NULL))) {
       state->setFillPattern(pattern);
       builder->updateStyle(state);
     }
@@ -1388,15 +1368,9 @@ void PdfParser::opSetStrokeColorN(Object args[], int numArgs) {
       state->setStrokePattern(pattern);
       builder->updateStyle(state);
     }
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-    if (args[numArgs-1].isName() &&
-	(pattern = res->lookupPattern(args[numArgs-1].getName(), NULL))) {
-      state->setStrokePattern(pattern);
-      builder->updateStyle(state);
-    }
 #else
     if (args[numArgs-1].isName() &&
-	(pattern = res->lookupPattern(args[numArgs-1].getName()))) {
+	(pattern = res->lookupPattern(args[numArgs-1].getName(), NULL))) {
       state->setStrokePattern(pattern);
       builder->updateStyle(state);
     }
@@ -1847,12 +1821,8 @@ void PdfParser::opShFill(Object args[], int /*numArgs*/)
   if (!(shading = res->lookupShading(args[0].getName(), NULL, NULL))) {
     return;
   }
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-  if (!(shading = res->lookupShading(args[0].getName(), NULL))) {
-    return;
-  }
 #else
-  if (!(shading = res->lookupShading(args[0].getName()))) {
+  if (!(shading = res->lookupShading(args[0].getName(), NULL))) {
     return;
   }
 #endif
@@ -2923,10 +2893,8 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
             colorSpace = GfxColorSpace::parse(NULL, &obj1, NULL, NULL);
 #elif defined(POPPLER_EVEN_NEWER_COLOR_SPACE_API)
             colorSpace = GfxColorSpace::parse(&obj1, NULL, NULL);
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-            colorSpace = GfxColorSpace::parse(&obj1, NULL);
 #else
-            colorSpace = GfxColorSpace::parse(&obj1);
+            colorSpace = GfxColorSpace::parse(&obj1, NULL);
 #endif
         } else if (csMode == streamCSDeviceGray) {
             colorSpace = new GfxDeviceGrayColorSpace();
@@ -3029,10 +2997,8 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
             GfxColorSpace *maskColorSpace = GfxColorSpace::parse(NULL, &obj1, NULL, NULL);
 #elif defined(POPPLER_EVEN_NEWER_COLOR_SPACE_API)
             GfxColorSpace *maskColorSpace = GfxColorSpace::parse(&obj1, NULL, NULL);
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-            GfxColorSpace *maskColorSpace = GfxColorSpace::parse(&obj1, NULL);
 #else
-            GfxColorSpace *maskColorSpace = GfxColorSpace::parse(&obj1);
+            GfxColorSpace *maskColorSpace = GfxColorSpace::parse(&obj1, NULL);
 #endif
             obj1.free();
             if (!maskColorSpace || maskColorSpace->getMode() != csDeviceGray) {
@@ -3233,10 +3199,8 @@ void PdfParser::doForm(Object *str) {
 	blendingColorSpace = GfxColorSpace::parse(NULL, &obj3, NULL, NULL);
 #elif defined(POPPLER_EVEN_NEWER_COLOR_SPACE_API)
 	blendingColorSpace = GfxColorSpace::parse(&obj3, NULL, NULL);
-#elif defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-	blendingColorSpace = GfxColorSpace::parse(&obj3, NULL);
 #else
-	blendingColorSpace = GfxColorSpace::parse(&obj3);
+	blendingColorSpace = GfxColorSpace::parse(&obj3, NULL);
 #endif
       }
       obj3.free();
