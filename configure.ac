@@ -432,12 +432,12 @@ AC_ARG_ENABLE(poppler-cairo,
 	[enable_poppler_cairo=$enableval], [enable_poppler_cairo=yes])
 
 POPPLER_CFLAGS=""
-PKG_CHECK_MODULES(POPPLER, poppler >= 0.12.2, poppler=yes, poppler=no)
+PKG_CHECK_MODULES(POPPLER, poppler >= 0.15.1, poppler=yes, poppler=no)
 
 if test "x$poppler" = "xyes"; then
 	dnl Working libpoppler
 	dnl Have to test libpoppler-glib presence
-	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.12.2, poppler_glib=yes, poppler_glib=no)
+	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.15.1, poppler_glib=yes, poppler_glib=no)
 	if test "x$poppler_glib" = "xyes"; then
 		dnl Working libpoppler-glib found
 		dnl Check whether the Cairo SVG backend is available
@@ -449,7 +449,7 @@ if test "x$poppler" = "xyes"; then
 	if test "x$enable_poppler_cairo" = "xyes"; then
 		dnl Have to test libpoppler-cairo presence for PDF preview
 		dnl AC_CHECK_HEADER(Magick++.h, magick_ok=yes, magick_ok=no)
-		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.12.2, poppler_cairo=yes, poppler_cairo=no)
+		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.15.1, poppler_cairo=yes, poppler_cairo=no)
 		if test "x$poppler_glib" = "xyes" -a "x$poppler_cairo" = "xyes" -a \
 			"x$cairo_svg" = "xno"
 		then
@@ -489,24 +489,6 @@ fi
 PKG_CHECK_MODULES(POPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API, poppler >= 0.29.0, popplernewernewcolorspaceapi=yes, popplernewernewcolorspaceapi=no)
 if test "x$popplernewernewcolorspaceapi" = "xyes"; then
 	AC_DEFINE(POPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API, 1, [Use even newer new color space API from Poppler >= 0.29.0])
-fi
-
-# Poppler's b604a008 commit changes this
-AC_MSG_CHECKING([whether GfxPatch in Poppler no longer uses GfxColor])
-popplergfxcolor="no"
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-		  [[#include <GfxState.h>]],
-[[
-  GfxPatch::ColorValue color = {c: {0}};
-  GfxPatch patch;
-  patch.color[0][0] = color;
-]])
-], [popplergfxcolor=yes])
-if test "x$popplergfxcolor" = "xyes"; then
-	AC_DEFINE(POPPLER_NEW_GFXPATCH, 1, [GfxPatch no longer uses GfxColor in >= 0.15.1])
-	AC_MSG_RESULT(yes)
-else
-	AC_MSG_RESULT(no)
 fi
 
 CPPFLAGS=$ink_svd_CPPFLAGS
