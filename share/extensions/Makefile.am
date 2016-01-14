@@ -4,7 +4,6 @@ SUBDIRS = \
 	Barcode \
 	ink2canvas \
 	Poly3DObjects \
-	scour \
 	test \
 	xaml2svg
 

@@ -42,8 +42,5 @@ install(FILES ${_FILES} DESTINATION ${SHARE_INSTALL}/inkscape/extensions/Poly3DO
 file(GLOB _FILES "ink2canvas/*.py")
 install(FILES ${_FILES} DESTINATION ${SHARE_INSTALL}/inkscape/extensions/ink2canvas)
 
-file(GLOB _FILES "scour/*.py")
-install(FILES ${_FILES} DESTINATION ${SHARE_INSTALL}/inkscape/extensions/scour)
-
 file(GLOB _FILES "xaml2svg/*.xsl")
 install(FILES ${_FILES} DESTINATION ${SHARE_INSTALL}/inkscape/extensions/xaml2svg)
