@@ -145,11 +145,87 @@ endif(ENABLE_NLS)
 
 
 # -----------------------------------------------------------------------------
+# Man pages
+# -----------------------------------------------------------------------------
+
+find_program(POD2MAN pod2man)
+if(NOT POD2MAN)
+    message(STATUS "Could not find pod2man - man pages disabled")
+endif()
+
+macro(pod2man PODFILE RELEASE SECTION CENTER)
+    string(REPLACE "." ";" PODFILE_LIST ${PODFILE})
+    list(GET PODFILE_LIST 0 NAME)
+    list(GET PODFILE_LIST 1 LANG)
+    if(${LANG} STREQUAL "pod")
+        set(LANG "")
+    endif()
+
+    set(PODFILE_FULL "${CMAKE_CURRENT_SOURCE_DIR}/${PODFILE}")
+    if(NOT EXISTS ${PODFILE_FULL})
+        message(FATAL ERROR "Could not find pod file ${PODFILE_FULL} to generate man page")
+    endif(NOT EXISTS ${PODFILE_FULL})
+
+    if(POD2MAN)
+        if(LANG)
+            set(MANPAGE_TARGET "man-${NAME}-${LANG}")
+            set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.${LANG}.${SECTION}")
+        else()
+            set(MANPAGE_TARGET "man-${NAME}")
+            set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.${SECTION}")
+        endif()
+        add_custom_command(
+            OUTPUT ${MANFILE_FULL}
+            COMMAND ${POD2MAN} --utf8 --section="${SECTION}" --center="${CENTER}"
+                --release="${RELEASE}" --name="${NAME}" "${PODFILE_FULL}" "${MANFILE_FULL}"
+        )
+        add_custom_target(${MANPAGE_TARGET} ALL
+            DEPENDS ${MANFILE_FULL}
+        )
+        install(
+            FILES ${MANFILE_FULL}
+            DESTINATION ${CMAKE_INSTALL_MANDIR}/man${SECTION}
+        )
+    endif()
+endmacro(pod2man PODFILE NAME SECTION CENTER)
+
+function(JOIN OUTPUT GLUE)
+    set(_TMP_RESULT "")
+    set(_GLUE "") # effective glue is empty at the beginning
+    foreach(arg ${ARGN})
+        # Skip empty lines
+        if(NOT arg STREQUAL "\n")
+            set(_TMP_RESULT "${_TMP_RESULT}${_GLUE}${arg}")
+            set(_GLUE "${GLUE}")
+        endif()
+    endforeach()
+    set(${OUTPUT} "${_TMP_RESULT}" PARENT_SCOPE)
+endfunction()
+
+# Load AUTHORS file contents into $INKSCAPE_AUTHORS
+FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS content)
+STRING(REGEX REPLACE "^([^\n#]+)\n" "\\1;\n" content_list "${content}")
+JOIN(INKSCAPE_AUTHORS "," "${content_list}")
+
+foreach(podinfile
+        inkscape.pod.in
+        inkscape.de.pod.in
+        inkscape.el.pod.in
+        inkscape.fr.pod.in
+        inkscape.ja.pod.in
+        inkscape.sk.pod.in
+        inkscape.zh_TW.pod.in)
+    # FIXME: Once automake is eliminated, output to inkscape.pod instead of inkscape.pod.cmake
+    configure_file(${podinfile} ${podinfile}.cmake)
+    pod2man(${podinfile}.cmake ${INKSCAPE_VERSION} 1 "INKSCAPE Manual Pages")
+endforeach()
+
+# -----------------------------------------------------------------------------
 # Installation
 # -----------------------------------------------------------------------------
 
 if(UNIX)
-	# TODO: man, locale
+	# TODO: locale
 
 	install(
                 PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape ${EXECUTABLE_OUTPUT_PATH}/inkview
@@ -160,6 +236,13 @@ if(UNIX)
 		FILES ${CMAKE_BINARY_DIR}/inkscape.desktop
 		DESTINATION ${SHARE_INSTALL}/applications
 	)
+
+	if(POD2MAN)
+		install(
+			FILES ${CMAKE_CURRENT_BINARY_DIR}/inkscape.1
+			DESTINATION ${SHARE_INSTALL}/man/man1
+		)
+	endif()
 
   # this should probably be done no matter what the platform is, just set SHARE_INSTALL first
   add_subdirectory(share) 
