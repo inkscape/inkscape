@@ -157,6 +157,7 @@ macro(pod2man PODFILE RELEASE SECTION CENTER)
     string(REPLACE "." ";" PODFILE_LIST ${PODFILE})
     list(GET PODFILE_LIST 0 NAME)
     list(GET PODFILE_LIST 1 LANG)
+    string(TOUPPER ${NAME} NAME_UPCASE)
     if(${LANG} STREQUAL "pod")
         set(LANG "")
     endif()
@@ -177,7 +178,7 @@ macro(pod2man PODFILE RELEASE SECTION CENTER)
         add_custom_command(
             OUTPUT ${MANFILE_FULL}
             COMMAND ${POD2MAN} --utf8 --section="${SECTION}" --center="${CENTER}"
-                --release="${RELEASE}" --name="${NAME}" "${PODFILE_FULL}" "${MANFILE_FULL}"
+                --release="${RELEASE}" --name="${NAME_UPCASE}" "${PODFILE_FULL}" "${MANFILE_FULL}"
         )
         add_custom_target(${MANPAGE_TARGET} ALL
             DEPENDS ${MANFILE_FULL}
@@ -217,7 +218,7 @@ foreach(podinfile
         inkscape.zh_TW.pod.in)
     # FIXME: Once automake is eliminated, output to inkscape.pod instead of inkscape.pod.cmake
     configure_file(${podinfile} ${podinfile}.cmake)
-    pod2man(${podinfile}.cmake ${INKSCAPE_VERSION} 1 "INKSCAPE Manual Pages")
+    pod2man(${podinfile}.cmake ${INKSCAPE_VERSION} 1 "Inkscape Commands Manual")
 endforeach()
 
 # -----------------------------------------------------------------------------
