@@ -170,15 +170,22 @@ macro(pod2man PODFILE RELEASE SECTION CENTER)
     if(POD2MAN)
         if(LANG)
             set(MANPAGE_TARGET "man-${NAME}-${LANG}")
+            set(MANFILE_TEMP "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.${LANG}.tmp")
             set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.${LANG}.${SECTION}")
         else()
             set(MANPAGE_TARGET "man-${NAME}")
+            set(MANFILE_TEMP "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.tmp")
             set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.${SECTION}")
         endif()
         add_custom_command(
-            OUTPUT ${MANFILE_FULL}
+            OUTPUT ${MANFILE_TEMP}
             COMMAND ${POD2MAN} --utf8 --section="${SECTION}" --center="${CENTER}"
-                --release="${RELEASE}" --name="${NAME_UPCASE}" "${PODFILE_FULL}" "${MANFILE_FULL}"
+                --release="${RELEASE}" --name="${NAME_UPCASE}" "${PODFILE_FULL}" "${MANFILE_TEMP}"
+        )
+        add_custom_command(
+            OUTPUT ${MANFILE_FULL}
+            COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/fix-roff-punct "${MANFILE_TEMP}" > ${MANFILE_FULL}
+	    DEPENDS ${MANFILE_TEMP}
         )
         add_custom_target(${MANPAGE_TARGET} ALL
             DEPENDS ${MANFILE_FULL}
