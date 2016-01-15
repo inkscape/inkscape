@@ -153,7 +153,8 @@ if(NOT POD2MAN)
     message(STATUS "Could not find pod2man - man pages disabled")
 endif()
 
-macro(pod2man PODFILE RELEASE SECTION CENTER)
+macro(pod2man PODFILE_FULL RELEASE SECTION CENTER)
+    get_filename_component(PODFILE ${PODFILE_FULL} NAME)
     string(REPLACE "." ";" PODFILE_LIST ${PODFILE})
     list(GET PODFILE_LIST 0 NAME)
     list(GET PODFILE_LIST 1 LANG)
@@ -162,7 +163,6 @@ macro(pod2man PODFILE RELEASE SECTION CENTER)
         set(LANG "")
     endif()
 
-    set(PODFILE_FULL "${CMAKE_CURRENT_SOURCE_DIR}/${PODFILE}")
     if(NOT EXISTS ${PODFILE_FULL})
         message(FATAL ERROR "Could not find pod file ${PODFILE_FULL} to generate man page")
     endif(NOT EXISTS ${PODFILE_FULL})
@@ -170,12 +170,12 @@ macro(pod2man PODFILE RELEASE SECTION CENTER)
     if(POD2MAN)
         if(LANG)
             set(MANPAGE_TARGET "man-${NAME}-${LANG}")
-            set(MANFILE_TEMP "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.${LANG}.tmp")
-            set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.${LANG}.${SECTION}")
+            set(MANFILE_TEMP "${CMAKE_CURRENT_BINARY_DIR}/man/${NAME}.${LANG}.tmp")
+            set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/man/${NAME}.${LANG}.${SECTION}")
         else()
             set(MANPAGE_TARGET "man-${NAME}")
-            set(MANFILE_TEMP "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.tmp")
-            set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.${SECTION}")
+            set(MANFILE_TEMP "${CMAKE_CURRENT_BINARY_DIR}/man/${NAME}.tmp")
+            set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/man/${NAME}.${SECTION}")
         endif()
         add_custom_command(
             OUTPUT ${MANFILE_TEMP}
@@ -215,17 +215,17 @@ FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS content)
 STRING(REGEX REPLACE "^([^\n#]+)\n" "\\1;\n" content_list "${content}")
 JOIN(INKSCAPE_AUTHORS "," "${content_list}")
 
-foreach(podinfile
-        inkscape.pod.in
-        inkscape.de.pod.in
-        inkscape.el.pod.in
-        inkscape.fr.pod.in
-        inkscape.ja.pod.in
-        inkscape.sk.pod.in
-        inkscape.zh_TW.pod.in)
-    # FIXME: Once automake is eliminated, output to inkscape.pod instead of inkscape.pod.cmake
-    configure_file(${podinfile} ${podinfile}.cmake)
-    pod2man(${podinfile}.cmake ${INKSCAPE_VERSION} 1 "Inkscape Commands Manual")
+foreach(podfile
+        man/inkscape.pod
+        man/inkscape.de.pod
+        man/inkscape.el.pod
+        man/inkscape.fr.pod
+        man/inkscape.ja.pod
+        man/inkscape.sk.pod
+        man/inkscape.zh_TW.pod)
+    set(POD_IN ${CMAKE_CURRENT_BINARY_DIR}/${podfile}.in)
+    configure_file(${POD_IN} ${podfile})
+    pod2man(${podfile} ${INKSCAPE_VERSION} 1 "Inkscape Commands Manual")
 endforeach()
 
 # -----------------------------------------------------------------------------
