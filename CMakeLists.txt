@@ -223,9 +223,10 @@ foreach(podfile
         man/inkscape.ja.pod
         man/inkscape.sk.pod
         man/inkscape.zh_TW.pod)
-    set(POD_IN ${CMAKE_CURRENT_BINARY_DIR}/${podfile}.in)
-    configure_file(${POD_IN} ${podfile})
-    pod2man(${podfile} ${INKSCAPE_VERSION} 1 "Inkscape Commands Manual")
+    set(POD_IN ${CMAKE_CURRENT_SOURCE_DIR}/${podfile}.in)
+    set(POD_OUT ${CMAKE_CURRENT_BINARY_DIR}/${podfile})
+    configure_file(${POD_IN} ${POD_OUT})
+    pod2man(${POD_OUT} ${INKSCAPE_VERSION} 1 "Inkscape Commands Manual")
 endforeach()
 
 # -----------------------------------------------------------------------------
