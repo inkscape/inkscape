@@ -582,10 +582,10 @@ making Open Source more visually stimulating to larger audiences.
 
 =head1 COPYRIGHT AND LICENSE
 
-B<Copyright (C)> 1999-2015 by Authors.
+B<Copyright (C)> 1999-2016 by Authors.
 
 B<Inkscape> is free software; you can redistribute it and/or modify it
-under the terms of the GPL.
+under the terms of the GPL version 2 or later.
 
 
 =for comment
