@@ -19,8 +19,9 @@ set(PROJECT_NAME inkscape)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
 if(COMMAND cmake_policy)
-	cmake_policy(SET CMP0003 NEW)
-	cmake_policy(SET CMP0005 NEW) # propper define quoting
+	cmake_policy(SET CMP0003 NEW) # don't be prolific with library paths
+	cmake_policy(SET CMP0005 NEW) # proper define quoting
+	cmake_policy(SET CMP0009 NEW) # don't follow symbolic links when using GLOB
 endif()
 
 # workaround for omission in cmake 2.8.4's GNU.cmake, fixed in 2.8.5
