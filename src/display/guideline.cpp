@@ -218,12 +218,13 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, char* label, Geom::Point p
     gl->angle = tan( -gl->normal_to_line[Geom::X] / gl->normal_to_line[Geom::Y]);
     sp_guideline_set_position(gl, point_on_line);
 
-    gl->origin = (SPCtrl *)sp_canvas_item_new(parent, SP_TYPE_CTRL, NULL);
-    g_object_set(G_OBJECT(gl->origin), "anchor", SP_ANCHOR_CENTER,
-                                       "mode", SP_CTRL_MODE_COLOR,
-                                       "filled", FALSE,
-                                       "stroked", TRUE,
-                                       "stroke_color", 0x01000000, NULL);
+    gl->origin = (SPCtrl *) sp_canvas_item_new(parent, SP_TYPE_CTRL, 
+                                               "anchor", SP_ANCHOR_CENTER,
+                                               "mode", SP_CTRL_MODE_COLOR,
+                                               "filled", FALSE,
+                                               "stroked", TRUE,
+                                               "stroke_color", 0x01000000, NULL);
+    gl->origin->pickable = false;
 
     return item;
 }
