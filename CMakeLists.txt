@@ -119,7 +119,7 @@ add_definitions(-DHAVE_TR1_UNORDERED_SET) # XXX make an option!
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
-# make dist target
+# Dist Target
 # -----------------------------------------------------------------------------
 set(INKSCAPE_DIST_PREFIX "${PROJECT_NAME}-${INKSCAPE_VERSION}")
 add_custom_target(dist
@@ -127,11 +127,8 @@ add_custom_target(dist
 			"${CMAKE_BINARY_DIR}/${INKSCAPE_DIST_PREFIX}.tar.bz2"
 		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
-#  svn export --force -q "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/${INKSCAPE_DIST_PREFIX}" 
-#  COMMAND tar -czf "${CMAKE_BINARY_DIR}/${INKSCAPE_DIST_PREFIX}.tar.gz" -C "${CMAKE_BINARY_DIR}" --exclude=".hidden" ${INKSCAPE_DIST_PREFIX}
-
 # -----------------------------------------------------------------------------
-# make unistall target
+# Uninstall Target
 # -----------------------------------------------------------------------------
 configure_file(
 		"${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
