@@ -29,6 +29,8 @@ if(CMAKE_COMPILER_IS_GNUCC)
 	endif()
 endif()
 
+include(CMakeScripts/HelperFunctions.cmake)
+
 #
 # Set platform defaults (originally copied from darktable)
 #
@@ -47,7 +49,6 @@ if(APPLE)
 	endif()
 
 	# detect current GTK+ backend
-	include(${CMAKE_SOURCE_DIR}/CMakeScripts/HelperFunctions.cmake)
 	pkg_check_variable(gtk+-2.0 target)
 	message("GTK2 backend: ${GTK+_2.0_TARGET}")
 
@@ -195,19 +196,6 @@ macro(pod2man PODFILE_FULL RELEASE SECTION CENTER)
         )
     endif()
 endmacro(pod2man PODFILE NAME SECTION CENTER)
-
-function(JOIN OUTPUT GLUE)
-    set(_TMP_RESULT "")
-    set(_GLUE "") # effective glue is empty at the beginning
-    foreach(arg ${ARGN})
-        # Skip empty lines
-        if(NOT arg STREQUAL "\n")
-            set(_TMP_RESULT "${_TMP_RESULT}${_GLUE}${arg}")
-            set(_GLUE "${GLUE}")
-        endif()
-    endforeach()
-    set(${OUTPUT} "${_TMP_RESULT}" PARENT_SCOPE)
-endfunction()
 
 # Load AUTHORS file contents into $INKSCAPE_AUTHORS
 FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS content)
