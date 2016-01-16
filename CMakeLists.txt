@@ -7,6 +7,16 @@
 # ideasman42
 
 cmake_minimum_required(VERSION 2.8.0)
+
+message("------------------------------")
+message("Building Makefile for Inkscape")
+message("------------------------------")
+message("Source Dir: ${CMAKE_CURRENT_SOURCE_DIR}")
+message("Binary Dir: ${CMAKE_CURRENT_BINARY_DIR}")
+
+# -----------------------------------------------------------------------------
+# CMake Configuration
+# -----------------------------------------------------------------------------
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeScripts/Modules")
 
 # avoid having empty buildtype
@@ -31,9 +41,9 @@ endif()
 
 include(CMakeScripts/HelperFunctions.cmake)
 
-#
+# -----------------------------------------------------------------------------
 # Set platform defaults (originally copied from darktable)
-#
+# -----------------------------------------------------------------------------
 if(APPLE)
 	message("-- Mac OS X build detected, setting default features")
 	# prefer macports and/or user-installed libraries over system ones
@@ -54,9 +64,9 @@ if(APPLE)
 
 endif(APPLE)
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Redirect output files
-
+# -----------------------------------------------------------------------------
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "" FORCE )
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE )
 
@@ -108,8 +118,9 @@ add_definitions(-DHAVE_TR1_UNORDERED_SET) # XXX make an option!
 # end badness
 # -----------------------------------------------------------------------------
 
-
+# -----------------------------------------------------------------------------
 # make dist target
+# -----------------------------------------------------------------------------
 set(INKSCAPE_DIST_PREFIX "${PROJECT_NAME}-${INKSCAPE_VERSION}")
 add_custom_target(dist
 		COMMAND bzr export --root=${INKSCAPE_DIST_PREFIX}
@@ -119,7 +130,9 @@ add_custom_target(dist
 #  svn export --force -q "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}/${INKSCAPE_DIST_PREFIX}" 
 #  COMMAND tar -czf "${CMAKE_BINARY_DIR}/${INKSCAPE_DIST_PREFIX}.tar.gz" -C "${CMAKE_BINARY_DIR}" --exclude=".hidden" ${INKSCAPE_DIST_PREFIX}
 
+# -----------------------------------------------------------------------------
 # make unistall target
+# -----------------------------------------------------------------------------
 configure_file(
 		"${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
 		"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
@@ -137,7 +150,6 @@ add_custom_target(uninstall
 # -----------------------------------------------------------------------------
 # Subdirs (on only 1 atm), but a lot happens here
 # -----------------------------------------------------------------------------
-
 add_subdirectory(src)
 if(ENABLE_NLS)
   add_subdirectory(po)
@@ -171,7 +183,6 @@ endforeach()
 # -----------------------------------------------------------------------------
 # Installation
 # -----------------------------------------------------------------------------
-
 if(UNIX)
 	# TODO: locale
 
