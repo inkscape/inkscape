@@ -289,7 +289,7 @@ void SPGuide::showSPGuide()
     for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
         sp_canvas_item_show(SP_CANVAS_ITEM(*it));
         if((*it)->origin) {
-          (*it)->origin->show();
+          sp_canvas_item_show(SP_CANVAS_ITEM((*it)->origin));
         }  else {
             //reposition to same place to show knots
             sp_guideline_set_position(*it, point_on_line);
@@ -317,7 +317,7 @@ void SPGuide::hideSPGuide()
     for(std::vector<SPGuideLine *>::const_iterator it = this->views.begin(); it != this->views.end(); ++it) {
         sp_canvas_item_hide(SP_CANVAS_ITEM(*it));
         if ((*it)->origin) {
-            (*it)->origin->hide();
+            sp_canvas_item_hide(SP_CANVAS_ITEM((*it)->origin));
         }
     }
 }

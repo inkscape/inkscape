@@ -17,18 +17,10 @@
 #include <2geom/coord.h>
 #include <2geom/transforms.h>
 #include "sp-canvas-util.h"
-#include "knot.h"
 #include "guideline.h"
 #include "display/cairo-utils.h"
-
-#include "inkscape.h" // for inkscape_active_desktop()
-#include "desktop.h"
-#include "sp-namedview.h"
 #include "display/sp-canvas.h"
 #include "display/sodipodi-ctrl.h"
-#include "ui/control-manager.h"
-
-using Inkscape::ControlManager;
 
 static void sp_guideline_destroy(SPCanvasItem *object);
 
@@ -37,7 +29,6 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf);
 
 static double sp_guideline_point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
-static gboolean sp_guideline_origin_move(SPKnot *knot, Geom::Point *position, guint state, SPGuideLine *data);
 static void sp_guideline_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba);
 
 G_DEFINE_TYPE(SPGuideLine, sp_guideline, SP_TYPE_CANVAS_ITEM);
@@ -72,8 +63,8 @@ static void sp_guideline_destroy(SPCanvasItem *object)
 
     SPGuideLine *gl = SP_GUIDELINE(object);
 
-    if (gl->origin != NULL && SP_IS_KNOT(gl->origin)) {
-        knot_unref(gl->origin);
+    if (gl->origin) {
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(gl->origin));
     }
 
     if (gl->label) {
@@ -172,28 +163,19 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
     if ((SP_CANVAS_ITEM_CLASS(sp_guideline_parent_class))->update) {
         (SP_CANVAS_ITEM_CLASS(sp_guideline_parent_class))->update(item, affine, flags);
     }
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop && item->visible) {
-        if (!gl->origin) {
-            gl->origin = new SPKnot(desktop, "No tip yet!! XXX");
 
-            gl->origin->setAnchor(SP_ANCHOR_CENTER);
-            gl->origin->setMode(SP_CTRL_MODE_COLOR);
-            gl->origin->setFill(0xffffff80, 0xffffffff, 0xffffff80);
-            gl->origin->request_signal.connect(sigc::bind(sigc::ptr_fun(sp_guideline_origin_move), gl));
-        }
-
+    if (item->visible) {
         if (gl->locked) {
-          gl->origin->setStroke(0x0000ff88, 0x0000ff88, 0x0000ff88);
-          gl->origin->setShape(SP_CTRL_SHAPE_CROSS);
-          gl->origin->setSize(6);
+            g_object_set(G_OBJECT(gl->origin), "stroke_color", 0x0000ff88,
+                                               "shape", SP_CTRL_SHAPE_CROSS,
+                                               "size", 6., NULL);
         } else {
-          gl->origin->setStroke(0xff000088, 0xff0000ff, 0xff0000ff);
-          gl->origin->setShape(SP_CTRL_SHAPE_CIRCLE);
-          gl->origin->setSize(4);
+            g_object_set(G_OBJECT(gl->origin), "stroke_color", 0xff000088,
+                                               "shape", SP_CTRL_SHAPE_CIRCLE,
+                                               "size", 4., NULL);
         }
         gl->origin->moveto(gl->point_on_line);
-        gl->origin->updateCtrl();
+        sp_canvas_item_request_update(SP_CANVAS_ITEM(gl->origin));
     }
 
     gl->affine = affine;
@@ -236,16 +218,14 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, char* label, Geom::Point p
     gl->angle = tan( -gl->normal_to_line[Geom::X] / gl->normal_to_line[Geom::Y]);
     sp_guideline_set_position(gl, point_on_line);
 
-    return item;
-}
+    gl->origin = (SPCtrl *)sp_canvas_item_new(parent, SP_TYPE_CTRL, NULL);
+    g_object_set(G_OBJECT(gl->origin), "anchor", SP_ANCHOR_CENTER,
+                                       "mode", SP_CTRL_MODE_COLOR,
+                                       "filled", FALSE,
+                                       "stroked", TRUE,
+                                       "stroke_color", 0x01000000, NULL);
 
-static gboolean sp_guideline_origin_move(SPKnot *knot, Geom::Point *position, guint state, SPGuideLine *gl)
-{
-    if(gl->locked) {
-        return true;
-    }
-    sp_guideline_set_position(gl, *position);
-    return false;
+    return item;
 }
 
 void sp_guideline_set_label(SPGuideLine *gl, const char* label)
@@ -281,6 +261,7 @@ void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line)
 void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba)
 {
     gl->rgba = rgba;
+    g_object_set(G_OBJECT(gl->origin), "stroke_color", rgba, NULL);
     sp_canvas_item_request_update(SP_CANVAS_ITEM(gl));
 }
 
