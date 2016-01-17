@@ -1,11 +1,3 @@
-# CMake TODO
-# - Remove hard coded defines (see below)
-# - Test on MinGW
-# √ Test on OSX
-# - Add configurable options for Python/Perl, see configure --help
-#
-# ideasman42
-
 cmake_minimum_required(VERSION 2.8.0)
 
 message("------------------------------")
@@ -181,8 +173,6 @@ endforeach()
 # Installation
 # -----------------------------------------------------------------------------
 if(UNIX)
-	# TODO: locale
-
 	install(
                 PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape ${EXECUTABLE_OUTPUT_PATH}/inkview
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
@@ -204,7 +194,7 @@ if(UNIX)
   add_subdirectory(share) 
 
 else()
-	# TODO, WIN32/APPLE
+	# TODO, WIN32, APPLE/OSX, MinGW
 endif()
 
 #-----------------------------------------------------------------------------

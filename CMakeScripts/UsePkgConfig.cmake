@@ -33,7 +33,7 @@ MACRO(PKGCONFIG_FOUND _package _found)
   # reset the variable at the beginning
   SET(${_found})
 
-# if pkg-config has been found
+  # if pkg-config has been found
   IF(PKGCONFIG_EXECUTABLE)
 
     EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS ${_package} --print-errors --exists RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
@@ -50,7 +50,7 @@ MACRO(PKGCONFIG_FOUND _package _found)
 ENDMACRO(PKGCONFIG_FOUND _found)
 
 MACRO(PKGCONFIG _package _include_DIR _link_DIR _link_FLAGS _cflags)
-# reset the variables at the beginning
+  # reset the variables at the beginning
   SET(${_include_DIR})
   SET(${_link_DIR})
   SET(${_link_FLAGS})
@@ -81,14 +81,14 @@ MACRO(PKGCONFIG _package _include_DIR _link_DIR _link_FLAGS _cflags)
 ENDMACRO(PKGCONFIG _include_DIR _link_DIR _link_FLAGS _cflags)
 
 MACRO(PKGCONFIG_VERSION _package _version)
-# reset the variables at the beginning
+  # reset the variables at the beginning
   SET(${_version})
 
-# if pkg-config has been found
+  # if pkg-config has been found
   IF(PKGCONFIG_EXECUTABLE)
     EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --print-errors ${_package} --exists RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
 
-# and if the package of interest also exists for pkg-config, then get the information
+    # and if the package of interest also exists for pkg-config, then get the information
     IF(NOT _return_VALUE)
       EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --print-errors ${_package} --modversion OUTPUT_VARIABLE ${_version} )
     ENDIF(NOT _return_VALUE)
@@ -100,14 +100,14 @@ ENDMACRO(PKGCONFIG_VERSION _package _version)
 MARK_AS_ADVANCED(PKGCONFIG_EXECUTABLE)
 
 MACRO(PKGCONFIG_DEFINITION _package _definition)
-# reset the variables at the beginning
+  # reset the variables at the beginning
   SET(${_definition})
 
-# if pkg-config has been found
+  # if pkg-config has been found
   IF(PKGCONFIG_EXECUTABLE)
     EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --print-errors ${_package} --exists RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
 
-# and if the package of interest also exists for pkg-config, then get the information
+    # and if the package of interest also exists for pkg-config, then get the information
     IF(NOT _return_VALUE)
       EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --print-errors ${_package} --cflags-only-other OUTPUT_VARIABLE ${_definition} )
     ENDIF(NOT _return_VALUE)
