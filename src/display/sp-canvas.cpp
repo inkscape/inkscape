@@ -606,11 +606,11 @@ void sp_canvas_item_raise(SPCanvasItem *item, int positions)
     std::list<SPCanvasItem *>::iterator l = std::find(parent->items.begin(),parent->items.end(), item);
     g_assert (l != parent->items.end());
 
-    for (int i=0; i<positions && l != parent->items.end(); ++i)
+    for (int i=0; i<=positions && l != parent->items.end(); ++i)
         l++;
 
     parent->items.remove(item);
-    parent->items.insert(++l, item);
+    parent->items.insert(l, item);
 
     redraw_if_visible (item);
     item->canvas->need_repick = TRUE;
