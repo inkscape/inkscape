@@ -191,6 +191,18 @@ else()
     # TODO, WIN32, APPLE/OSX, MinGW
 endif()
 
+# -----------------------------------------------------------------------------
+# Clean
+# -----------------------------------------------------------------------------
+add_custom_target(clean-cmake-files
+    COMMAND "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_SOURCE_DIR}/CMakeScripts/CleanAll.cmake"
+)
+
+add_custom_target(clean-all
+    COMMAND ${CMAKE_BUILD_TOOL} clean
+    COMMAND "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_SOURCE_DIR}/CMakeScripts/CleanAll.cmake"
+)
+
 #-----------------------------------------------------------------------------
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
