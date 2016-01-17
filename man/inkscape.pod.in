@@ -114,10 +114,10 @@ entire document page.  The point (0,0) is the lower-left corner.
 
 In PNG, PDF, PS, and EPS export, exported area is the page. This is the
 default for PNG, PDF, and PS, so you don't need to specify this unless
-you are using --export-id to export a specific object. In EPS, however,
+you are using L<--export-id> to export a specific object. In EPS, however,
 this is not the default; moreover, for EPS, the specification of the
 format does not allow its bounding box to extend beyond its content.
-This means that when --export-area-page is used with EPS export, the
+This means that when L<--export-area-page> is used with EPS export, the
 page bounding box will be trimmed inwards to the bounding box of the
 content if it is smaller.
 
@@ -125,10 +125,10 @@ content if it is smaller.
 
 In PNG, PDF, PS, and EPS export, exported area is the drawing (not
 page), i.e. the bounding box of all objects of the document (or of the
-exported object if --export-id is used).  With this option, the exported
+exported object if L<--export-id> is used).  With this option, the exported
 image will display all the visible objects of the document without
 margins or cropping. This is the default export area for EPS. For PNG,
-it can be used in combination with --export-use-hints.
+it can be used in combination with L<--export-use-hints>.
 
 =item B<--export-area-snap>
 
@@ -136,8 +136,8 @@ For PNG export, snap the export area outwards to the nearest integer SVG
 user unit (px) values. If you are using the default export resolution of
 96 dpi and your graphics are pixel-snapped to minimize antialiasing,
 this switch allows you to preserve this alignment even if you are
-exporting some object's bounding box (with --export-id
-or --export-area-drawing) which is itself not pixel-aligned.
+exporting some object's bounding box (with L<--export-id>
+or L<--export-area-drawing>) which is itself not pixel-aligned.
 
 =item B<-b> I<COLOR>, B<--export-background>=I<COLOR>
 
@@ -150,10 +150,10 @@ used (stored in the pagecolor= attribute of sodipodi:namedview).
 
 The resolution used for PNG export.  It is also used for fallback
 rasterization of filtered objects when exporting to PS, EPS, or PDF
-(unless you specify --export-ignore-filters to suppress
+(unless you specify L<--export-ignore-filters> to suppress
 rasterization). The default is 96 dpi, which corresponds to 1 SVG user
 unit (px, also called "user unit") exporting to 1 bitmap pixel.  This
-value overrides the DPI hint if used with --export-use-hints.
+value overrides the DPI hint if used with L<--export-use-hints>.
 
 =item B<-e> I<FILENAME>, B<--export-png>=I<FILENAME>
 
@@ -173,23 +173,23 @@ set).
 =item B<-h> I<HEIGHT>, B<--export-height>=I<HEIGHT>
 
 The height of generated bitmap in pixels.  This value overrides the
---export-dpi setting (or the DPI hint if used with --export-use-hints).
+L<--export-dpi> setting (or the DPI hint if used with L<--export-use-hints>).
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
 For PNG, PS, EPS, PDF and plain SVG export, the id attribute value of
 the object that you want to export from the document; all other objects
 are not exported.  By default the exported area is the bounding box of
-the object; you can override this using --export-area (PNG only)
-or --export-area-page.
+the object; you can override this using L<--export-area> (PNG only)
+or L<--export-area-page>.
 
 =item B<-j>, B<--export-id-only>
 
-For PNG and plain SVG, only export the object whose id is given
-in --export-id. All other objects are hidden and won't show in export
-even if they overlay the exported object.  Without --export-id, this option
-is ignored. For PDF export, this is the default, so this option has no
-effect.
+For PNG and plain SVG, only export the object whose id is given in
+L<--export-id>. All other objects are hidden and won't show in export
+even if they overlay the exported object.  Without L<--export-id>, this
+option is ignored. For PDF export, this is the default, so this option
+has no effect.
 
 =item B<-l>, B<--export-plain-svg>=I<FILENAME>
 
@@ -206,7 +206,7 @@ configuration as the original Inkscape installation.
 
 Lists all the verbs that are available in Inkscape by ID.  This ID can
 be used in defining keymaps or menus.  It can also be used with
-the --verb command line option.
+the L<--verb> command line option.
 
 =item B<--verb>=I<VERB-ID>, B<--select>=I<OBJECT-ID>
 
@@ -215,14 +215,14 @@ Inkscape from the command line.  They both can occur as many times as
 needed on the command line and are executed in order on every document
 that is specified.
 
-The --verb command will execute a specific verb as if it was called from
+The L<--verb> command will execute a specific verb as if it was called from
 a menu or button.  Dialogs will appear if that is part of the verb.  To
-get a list of the verb IDs available, use the --verb-list command line
+get a list of the verb IDs available, use the L<--verb-list> command line
 option.
 
-The --select command will cause objects that have the ID specified to be
+The L<--select> command will cause objects that have the ID specified to be
 selected.  This allows various verbs to act upon them.  To remove all
-the selections use --verb=EditDeselect.  The object IDs available are
+the selections use C<--verb=EditDeselect>.  The object IDs available are
 dependent on the document specified to load.
 
 =item B<-p> I<PRINTER>, B<--print>=I<PRINTER>
@@ -232,25 +232,25 @@ Alternatively, use `| COMMAND' to specify a different command to pipe
 to, or use `> FILENAME' to write the PostScript output to a file instead
 of printing.  Remember to do appropriate quoting for your shell, e.g.
 
-inkscape --print='| ps2pdf - mydoc.pdf' mydoc.svg
+C<inkscape --print='| ps2pdf - mydoc.pdf' mydoc.svg>
 
 =item B<-t>, B<--export-use-hints>
 
 Use export filename and DPI hints stored in the exported object (only
-with --export-id).  These hints are set automatically when you export
+with L<--export-id>).  These hints are set automatically when you export
 selection from within Inkscape.  So, for example, if you export a shape
 with id="path231" as /home/me/shape.png at 300 dpi from document.svg
 using Inkscape GUI, and save the document, then later you will be able
 to reexport that shape to the same file with the same resolution simply
 with
 
-    inkscape -i path231 -t document.svg
+C<inkscape -i path231 -t document.svg>
 
-If you use --export-dpi, --export-width, or --export-height with this
-option, then the DPI hint will be ignored and the value from the command
-line will be used.  If you use --export-png with this option, then the
-filename hint will be ignored and the filename from the command line
-will be used.
+If you use L<--export-dpi>, L<--export-width>, or L<--export-height>
+with this option, then the DPI hint will be ignored and the value from
+the command line will be used.  If you use L<--export-png> with this
+option, then the filename hint will be ignored and the filename from the
+command line will be used.
 
 =item B<-w> I<WIDTH>, B<--export-width>=I<WIDTH>
 
@@ -274,10 +274,10 @@ used.
 Export document(s) to PostScript format. Note that PostScript does not
 support transparency, so any transparent objects in the original SVG
 will be automatically rasterized. Used fonts are subset and
-embedded. The default export area is page; you can set it to drawing
-by --export-area-drawing. You can specify --export-id to export a single
-object (all other are hidden); in that case export area is that object's
-bounding box, but can be set to page by --export-area-page.
+embedded. The default export area is page; you can set it to drawing by
+L<--export-area-drawing>. You can specify L<--export-id> to export a
+single object (all other are hidden); in that case export area is that
+object's bounding box, but can be set to page by L<--export-area-page>.
 
 =item B<-E> I<FILENAME>, B<--export-eps>=I<FILENAME>
 
@@ -285,17 +285,18 @@ Export document(s) to Encapsulated PostScript format. Note that
 PostScript does not support transparency, so any transparent objects in
 the original SVG will be automatically rasterized. Used fonts are subset
 and embedded. The default export area is drawing; you can set it to
-page, however see --export-area-page for applicable limitation. You can
-specify --export-id to export a single object (all other are hidden).
+page, however see L<--export-area-page> for applicable limitation. You
+can specify L<--export-id> to export a single object (all other are
+hidden).
 
 =item B<-A> I<FILENAME>, B<--export-pdf>=I<FILENAME>
 
 Export document(s) to PDF format. This format preserves the transparency
 in the original SVG. Used fonts are subset and embedded.  The default
-export area is page; you can set it to drawing
-by --export-area-drawing. You can specify --export-id to export a single
-object (all other are hidden); in that case export area is that object's
-bounding box, but can be set to page by --export-area-page.
+export area is page; you can set it to drawing by
+L<--export-area-drawing>. You can specify L<--export-id> to export a
+single object (all other are hidden); in that case export area is that
+object's bounding box, but can be set to page by L<--export-area-page>.
 
 =item B<--export-pdf-version>=I<PDF-VERSION>
 
@@ -326,7 +327,7 @@ PDF and SVG export).
 
 Export filtered objects (e.g. those with blur) as vectors, ignoring the
 filters (for PS, EPS, and PDF export).  By default, all filtered objects
-are rasterized at --export-dpi (default 96 dpi), preserving the
+are rasterized at L<--export-dpi> (default 96 dpi), preserving the
 appearance.
 
 =item B<-I>, B<--query-id>
@@ -338,22 +339,22 @@ objects), not the page or viewbox
 =item B<-X>, B<--query-x>
 
 Query the X coordinate of the drawing or, if specified, of the object
-with --query-id. The returned value is in px (SVG user units).
+with L<--query-id>. The returned value is in px (SVG user units).
 
 =item B<-Y>, B<--query-y>
 
 Query the Y coordinate of the drawing or, if specified, of the object
-with --query-id. The returned value is in px (SVG user units).
+with L<--query-id>. The returned value is in px (SVG user units).
 
 =item B<-W>, B<--query-width>
 
 Query the width of the drawing or, if specified, of the object with
---query-id. The returned value is in px (SVG user units).
+L<--query-id>. The returned value is in px (SVG user units).
 
 =item B<-H>, B<--query-height>
 
 Query the height of the drawing or, if specified, of the object
-with --query-id. The returned value is in px (SVG user units).
+with L<--query-id>. The returned value is in px (SVG user units).
 
 =item B<-S>, B<--query-all>
 
@@ -370,14 +371,16 @@ uses: it adds no new capabilities but allows you to improve the speed
 and memory requirements of any script that repeatedly calls Inkscape to
 perform command line tasks (such as export or conversions). Each command
 in shell mode must be a complete valid Inkscape command line but without
-the Inkscape program name, for example "file.svg --export-pdf=file.pdf".
+the Inkscape program name, for example:
+
+C<file.svg --export-pdf=file.pdf>.
 
 =item B<--vacuum-defs>
 
 Remove all unused items from the <lt>defs<gt> section of the SVG file.
-If this option is invoked in conjunction with --export-plain-svg, only
-the exported file will be affected.  If it is used alone, the specified
-file will be modified in place.
+If this option is invoked in conjunction with L<--export-plain-svg>,
+only the exported file will be affected.  If it is used alone, the
+specified file will be modified in place.
 
 =item B<-z>, B<--without-gui>
 
@@ -427,55 +430,55 @@ it can be used for doing SVG processing on the command line as well.
 
 Open an SVG file in the GUI:
 
-    inkscape filename.svg
+    C<inkscape filename.svg>
 
 Print an SVG file from the command line:
 
-    inkscape filename.svg -p '| lpr'
+    C<inkscape filename.svg -p '| lpr'>
 
 Export an SVG file into PNG with the default resolution of 96 dpi (one
 SVG user unit translates to one bitmap pixel):
 
-    inkscape filename.svg --export-png=filename.png
+    C<inkscape filename.svg --export-png=filename.png>
 
 Same, but force the PNG file to be 600x400 pixels:
 
-    inkscape filename.svg --export-png=filename.png -w600 -h400
+    C<inkscape filename.svg --export-png=filename.png -w600 -h400>
 
 Same, but export the drawing (bounding box of all objects), not the
 page:
 
-    inkscape filename.svg --export-png=filename.png --export-area-drawing
+    C<inkscape filename.svg --export-png=filename.png --export-area-drawing>
 
 Export to PNG the object with id="text1555", using the output filename
 and the resolution that were used for that object last time when it was
 exported from the GUI:
 
-    inkscape filename.svg --export-id=text1555 --export-use-hints
+    C<inkscape filename.svg --export-id=text1555 --export-use-hints>
 
 Same, but use the default 96 dpi resolution, specify the filename, and
 snap the exported area outwards to the nearest whole SVG user unit
 values (to preserve pixel-alignment of objects and thus minimize
 aliasing):
 
-    inkscape filename.svg --export-id=text1555 --export-png=text.png --export-area-snap
+    C<inkscape filename.svg --export-id=text1555 --export-png=text.png --export-area-snap>
 
 Convert an Inkscape SVG document to plain SVG:
 
-    inkscape filename1.svg --export-plain-svg=filename2.svg
+    C<inkscape filename1.svg --export-plain-svg=filename2.svg>
 
 Convert an SVG document to EPS, converting all texts to paths:
 
-    inkscape filename.svg --export-eps=filename.eps --export-text-to-path
+    C<inkscape filename.svg --export-eps=filename.eps --export-text-to-path>
 
 Query the width of the object with id="text1555":
 
-    inkscape filename.svg --query-width --query-id text1555
+    C<inkscape filename.svg --query-width --query-id text1555>
 
 Duplicate the object with id="path1555", rotate the duplicate 90
 degrees, save SVG, and quit:
 
-    inkscape filename.svg --select=path1555 --verb=EditDuplicate --verb=ObjectRotate90 --verb=FileSave --verb=FileClose
+    C<inkscape filename.svg --select=path1555 --verb=EditDuplicate --verb=ObjectRotate90 --verb=FileSave --verb=FileClose>
 
 
 =head1 ENVIRONMENT
@@ -502,22 +505,22 @@ with the matching icon name.  (For example, to load the "fill_none" icon
 from a file, the bounding box seen for SVG id "fill_none" is rendered as
 the icon, whether it comes from I<fill_none.svg> or I<icons.svg>.)
 
-
-
 =head1 OTHER INFO
 
 The canonical place to find B<Inkscape> info is at
-http://www.inkscape.org/.  The website has news, documentation,
+L<http://www.inkscape.org/>.  The website has news, documentation,
 tutorials, examples, mailing list archives, the latest released version
 of the program, bugs and feature requests databases, forums, and more.
 
 =head1 SEE ALSO
 
-potrace, cairo, rsvg(1), batik, ghostscript, pstoedit.
+L<potrace>, L<cairo>, L<rsvg(1)>, L<batik>, L<ghostscript>, L<pstoedit>.
 
-SVG compliance test suite:  http://www.w3.org/Graphics/SVG/Test/
+SVG compliance test suite:
+L<http://www.w3.org/Graphics/SVG/Test/>
 
-SVG validator:  http://jiggles.w3.org/svgvalidator/
+SVG validator:
+L<http://jiggles.w3.org/svgvalidator/>
 
 I<Scalable Vector Graphics (SVG) 1.1 Specification>
 I<W3C Recommendation 14 January 2003>
@@ -552,7 +555,7 @@ width, angle, and force of action of several tools, including the
 Calligraphic pen.
 
 Inkscape includes a GUI front-end to the Potrace bitmap tracing engine
-(http://potrace.sf.net) which is embedded into Inkscape.
+(L<http://potrace.sf.net>) which is embedded into Inkscape.
 
 Inkscape can use external scripts (stdin-to-stdout filters) that are
 represented by commands in the Extensions menu. A script can have a GUI
@@ -591,7 +594,7 @@ program Gill, the GNOME Illustrator application, created by Raph Levien.
 The stated objective for Gill was to eventually support all of SVG.
 Raph implemented the PostScript bezier imaging model, including stroking
 and filling, line cap style, line join style, text, etc.  Raph's Gill
-page is at http://www.levien.com/svg/.  Work on Gill appears to have
+page is at L<http://www.levien.com/svg/>.  Work on Gill appears to have
 slowed or ceased in 2000.
 
 The next incarnation of the codebase was to become the highly popular
