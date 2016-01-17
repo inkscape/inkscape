@@ -162,7 +162,8 @@ foreach(podfile
         man/inkscape.fr.pod
         man/inkscape.ja.pod
         man/inkscape.sk.pod
-        man/inkscape.zh_TW.pod)
+        man/inkscape.zh_TW.pod
+	man/inkview.pod)
     set(POD_IN ${CMAKE_CURRENT_SOURCE_DIR}/${podfile}.in)
     set(POD_OUT ${CMAKE_CURRENT_BINARY_DIR}/${podfile})
     configure_file(${POD_IN} ${POD_OUT})
