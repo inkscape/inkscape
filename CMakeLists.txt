@@ -26,9 +26,9 @@ cmake_policy(SET CMP0009 NEW) # don't follow symbolic links when using GLOB
 
 # workaround for omission in cmake 2.8.4's GNU.cmake, fixed in 2.8.5
 if(CMAKE_COMPILER_IS_GNUCC)
-	if(NOT DARWIN)
-		set(CMAKE_INCLUDE_SYSTEM_FLAG_C "-isystem ")
-	endif()
+    if(NOT DARWIN)
+	set(CMAKE_INCLUDE_SYSTEM_FLAG_C "-isystem ")
+    endif()
 endif()
 
 include(CMakeScripts/HelperFunctions.cmake)
@@ -37,22 +37,22 @@ include(CMakeScripts/HelperFunctions.cmake)
 # Set platform defaults (originally copied from darktable)
 # -----------------------------------------------------------------------------
 if(APPLE)
-	message("-- Mac OS X build detected, setting default features")
-	# prefer macports and/or user-installed libraries over system ones
-	#LIST(APPEND CMAKE_PREFIX_PATH /opt/local /usr/local)
-	set(CMAKE_FIND_FRAMEWORK "LAST")
+    message("-- Mac OS X build detected, setting default features")
+    # prefer macports and/or user-installed libraries over system ones
+    #LIST(APPEND CMAKE_PREFIX_PATH /opt/local /usr/local)
+    set(CMAKE_FIND_FRAMEWORK "LAST")
 
-	# test and display relevant env variables
-	if(DEFINED ENV{CMAKE_PREFIX_PATH})
-		message("CMAKE_PREFIX_PATH: $ENV{CMAKE_PREFIX_PATH}")
-	endif()
-	if(DEFINED ENV{GTKMM_BASEPATH})
-		message("GTKMM_BASEPATH: $ENV{GTKMM_BASEPATH}")
-	endif()
+    # test and display relevant env variables
+    if(DEFINED ENV{CMAKE_PREFIX_PATH})
+	message("CMAKE_PREFIX_PATH: $ENV{CMAKE_PREFIX_PATH}")
+    endif()
+    if(DEFINED ENV{GTKMM_BASEPATH})
+	message("GTKMM_BASEPATH: $ENV{GTKMM_BASEPATH}")
+    endif()
 
-	# detect current GTK+ backend
-	pkg_check_variable(gtk+-2.0 target)
-	message("GTK2 backend: ${GTK+_2.0_TARGET}")
+    # detect current GTK+ backend
+    pkg_check_variable(gtk+-2.0 target)
+    message("GTK2 backend: ${GTK+_2.0_TARGET}")
 
 endif(APPLE)
 
@@ -66,10 +66,10 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE )
 # Test Harness
 # -----------------------------------------------------------------------------
 set(GMOCK_DIR "${CMAKE_SOURCE_DIR}/gtest/gmock-1.7.0"
-  CACHE PATH "The path to the GoogleMock test framework.")
+    CACHE PATH "The path to the GoogleMock test framework.")
 
 if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
-	set(GMOCK_PRESENT ON)
+    set(GMOCK_PRESENT ON)
 endif()
 
 # -----------------------------------------------------------------------------
@@ -115,25 +115,25 @@ add_definitions(-DHAVE_TR1_UNORDERED_SET) # XXX make an option!
 # -----------------------------------------------------------------------------
 set(INKSCAPE_DIST_PREFIX "${PROJECT_NAME}-${INKSCAPE_VERSION}")
 add_custom_target(dist
-		COMMAND bzr export --root=${INKSCAPE_DIST_PREFIX}
-			"${CMAKE_BINARY_DIR}/${INKSCAPE_DIST_PREFIX}.tar.bz2"
-		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+    COMMAND bzr export --root=${INKSCAPE_DIST_PREFIX}
+    "${CMAKE_BINARY_DIR}/${INKSCAPE_DIST_PREFIX}.tar.bz2"
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 # -----------------------------------------------------------------------------
 # Uninstall Target
 # -----------------------------------------------------------------------------
 configure_file(
-		"${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-		"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-		IMMEDIATE @ONLY)
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+    IMMEDIATE @ONLY)
 
 configure_file(
-		"${CMAKE_CURRENT_SOURCE_DIR}/inkscape.desktop.in"
-		"${CMAKE_BINARY_DIR}/inkscape.desktop"
-		IMMEDIATE @ONLY)
+    "${CMAKE_CURRENT_SOURCE_DIR}/inkscape.desktop.in"
+    "${CMAKE_BINARY_DIR}/inkscape.desktop"
+    IMMEDIATE @ONLY)
 
 add_custom_target(uninstall
-		"${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+    "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 
 # -----------------------------------------------------------------------------
@@ -141,7 +141,7 @@ add_custom_target(uninstall
 # -----------------------------------------------------------------------------
 add_subdirectory(src)
 if(ENABLE_NLS)
-  add_subdirectory(po)
+    add_subdirectory(po)
 endif(ENABLE_NLS)
 
 
@@ -151,9 +151,9 @@ endif(ENABLE_NLS)
 include("CMakeScripts/Pod2man.cmake")
 
 # Load AUTHORS file contents into $INKSCAPE_AUTHORS
-FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS content)
-STRING(REGEX REPLACE "^([^\n#]+)\n" "\\1;\n" content_list "${content}")
-JOIN(INKSCAPE_AUTHORS "," "${content_list}")
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/AUTHORS content)
+string(REGEX REPLACE "^([^\n#]+)\n" "\\1;\n" content_list "${content}")
+join(INKSCAPE_AUTHORS "," "${content_list}")
 
 foreach(podfile
         man/inkscape.pod
@@ -173,35 +173,35 @@ endforeach()
 # Installation
 # -----------------------------------------------------------------------------
 if(UNIX)
-	install(
-                PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape ${EXECUTABLE_OUTPUT_PATH}/inkview
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+    install(
+        PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape ${EXECUTABLE_OUTPUT_PATH}/inkview
+	DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 	)
 
-	install(
-		FILES ${CMAKE_BINARY_DIR}/inkscape.desktop
-		DESTINATION ${SHARE_INSTALL}/applications
+    install(
+	FILES ${CMAKE_BINARY_DIR}/inkscape.desktop
+	DESTINATION ${SHARE_INSTALL}/applications
 	)
 
-	if(POD2MAN)
-		install(
-			FILES ${CMAKE_CURRENT_BINARY_DIR}/inkscape.1
-			DESTINATION ${SHARE_INSTALL}/man/man1
-		)
-	endif()
+    if(POD2MAN)
+	install(
+	    FILES ${CMAKE_CURRENT_BINARY_DIR}/inkscape.1
+	    DESTINATION ${SHARE_INSTALL}/man/man1
+	    )
+    endif()
 
-  # this should probably be done no matter what the platform is, just set SHARE_INSTALL first
-  add_subdirectory(share) 
+    # this should probably be done no matter what the platform is, just set SHARE_INSTALL first
+    add_subdirectory(share) 
 
 else()
-	# TODO, WIN32, APPLE/OSX, MinGW
+    # TODO, WIN32, APPLE/OSX, MinGW
 endif()
 
 #-----------------------------------------------------------------------------
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 
-if (WITH_GTEST)
-	enable_testing()
-	add_subdirectory(test EXCLUDE_FROM_ALL)
+if(WITH_GTEST)
+    enable_testing()
+    add_subdirectory(test EXCLUDE_FROM_ALL)
 endif()
