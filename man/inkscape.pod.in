@@ -232,7 +232,7 @@ Alternatively, use `| COMMAND' to specify a different command to pipe
 to, or use `> FILENAME' to write the PostScript output to a file instead
 of printing.  Remember to do appropriate quoting for your shell, e.g.
 
-C<inkscape --print='| ps2pdf - mydoc.pdf' mydoc.svg>
+    inkscape --print='| ps2pdf - mydoc.pdf' mydoc.svg
 
 =item B<-t>, B<--export-use-hints>
 
@@ -244,7 +244,7 @@ using Inkscape GUI, and save the document, then later you will be able
 to reexport that shape to the same file with the same resolution simply
 with
 
-C<inkscape -i path231 -t document.svg>
+    inkscape -i path231 -t document.svg
 
 If you use L<--export-dpi>, L<--export-width>, or L<--export-height>
 with this option, then the DPI hint will be ignored and the value from
@@ -373,7 +373,7 @@ perform command line tasks (such as export or conversions). Each command
 in shell mode must be a complete valid Inkscape command line but without
 the Inkscape program name, for example:
 
-C<file.svg --export-pdf=file.pdf>.
+    file.svg --export-pdf=file.pdf
 
 =item B<--vacuum-defs>
 
@@ -430,55 +430,55 @@ it can be used for doing SVG processing on the command line as well.
 
 Open an SVG file in the GUI:
 
-    C<inkscape filename.svg>
+    inkscape filename.svg
 
 Print an SVG file from the command line:
 
-    C<inkscape filename.svg -p '| lpr'>
+    inkscape filename.svg -p '| lpr'
 
 Export an SVG file into PNG with the default resolution of 96 dpi (one
 SVG user unit translates to one bitmap pixel):
 
-    C<inkscape filename.svg --export-png=filename.png>
+    inkscape filename.svg --export-png=filename.png
 
 Same, but force the PNG file to be 600x400 pixels:
 
-    C<inkscape filename.svg --export-png=filename.png -w600 -h400>
+    inkscape filename.svg --export-png=filename.png -w600 -h400
 
 Same, but export the drawing (bounding box of all objects), not the
 page:
 
-    C<inkscape filename.svg --export-png=filename.png --export-area-drawing>
+    inkscape filename.svg --export-png=filename.png --export-area-drawing
 
 Export to PNG the object with id="text1555", using the output filename
 and the resolution that were used for that object last time when it was
 exported from the GUI:
 
-    C<inkscape filename.svg --export-id=text1555 --export-use-hints>
+    inkscape filename.svg --export-id=text1555 --export-use-hints
 
 Same, but use the default 96 dpi resolution, specify the filename, and
 snap the exported area outwards to the nearest whole SVG user unit
 values (to preserve pixel-alignment of objects and thus minimize
 aliasing):
 
-    C<inkscape filename.svg --export-id=text1555 --export-png=text.png --export-area-snap>
+    inkscape filename.svg --export-id=text1555 --export-png=text.png --export-area-snap
 
 Convert an Inkscape SVG document to plain SVG:
 
-    C<inkscape filename1.svg --export-plain-svg=filename2.svg>
+    inkscape filename1.svg --export-plain-svg=filename2.svg
 
 Convert an SVG document to EPS, converting all texts to paths:
 
-    C<inkscape filename.svg --export-eps=filename.eps --export-text-to-path>
+    inkscape filename.svg --export-eps=filename.eps --export-text-to-path
 
 Query the width of the object with id="text1555":
 
-    C<inkscape filename.svg --query-width --query-id text1555>
+    inkscape filename.svg --query-width --query-id text1555
 
 Duplicate the object with id="path1555", rotate the duplicate 90
 degrees, save SVG, and quit:
 
-    C<inkscape filename.svg --select=path1555 --verb=EditDuplicate --verb=ObjectRotate90 --verb=FileSave --verb=FileClose>
+    inkscape filename.svg --select=path1555 --verb=EditDuplicate --verb=ObjectRotate90 --verb=FileSave --verb=FileClose
 
 
 =head1 ENVIRONMENT
@@ -494,7 +494,7 @@ user profile.
 =head1 THEMES
 
 To load different icons sets instead of the default
-B<${SHARE_INSTALL}>/share/inkscape/icons/icons.svg file, the directory
+B<${CMAKE_PREFIX_PATH}/${SHARE_INSTALL}>/inkscape/icons/icons.svg file, the directory
 B<$HOME>/.config/inkscape/icons/ is used.  Icons are loaded by name
 (e.g. I<fill_none.svg>), or if not found, then from I<icons.svg>.  If
 the icon is not loaded from either of those locations, it falls back to
@@ -570,10 +570,10 @@ doc/keys.html, or use the Keys and Mouse command in Help menu.
 
 =head1 BUGS
 
-Many bugs are known; please refer to the website (inkscape.org) for
-reviewing the reported ones and to report newly found issues.  See also
-the Known Issues section in the Release Notes for your version (file
-`NEWS').
+Many bugs are known; please refer to the website
+(L<http://www.inkscape.org>) for reviewing the reported ones and to
+report newly found issues.  See also the Known Issues section in the
+Release Notes for your version (file `NEWS').
 
 =head1 AUTHORS
 
