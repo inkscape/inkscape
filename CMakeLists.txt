@@ -181,15 +181,8 @@ if(UNIX)
 
     install(
 	FILES ${CMAKE_BINARY_DIR}/inkscape.desktop
-	DESTINATION ${SHARE_INSTALL}/applications
+	DESTINATION ${CMAKE_INSTALL_PREFIX}/${SHARE_INSTALL}/applications
 	)
-
-    if(POD2MAN)
-	install(
-	    FILES ${CMAKE_CURRENT_BINARY_DIR}/inkscape.1
-	    DESTINATION ${SHARE_INSTALL}/man/man1
-	    )
-    endif()
 
     # this should probably be done no matter what the platform is, just set SHARE_INSTALL first
     add_subdirectory(share) 
