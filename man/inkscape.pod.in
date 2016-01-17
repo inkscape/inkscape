@@ -73,9 +73,9 @@ B<Inkscape> is a GUI editor for B<Scalable Vector Graphics (SVG)> format
 drawing files, with capabilities similar to B<Adobe Illustrator>,
 B<CorelDraw>, B<Xara Xtreme>, etc. Inkscape features include versatile
 shapes, bezier paths, freehand drawing, multi-line text, text on path,
-alpha blending, arbitrary affine transforms, gradient and pattern fills, node
-editing, many export and import formats including PNG and PDF, grouping, 
-layers, live clones, and a lot more.  The interface is
+alpha blending, arbitrary affine transforms, gradient and pattern fills,
+node editing, many export and import formats including PNG and PDF,
+grouping, layers, live clones, and a lot more.  The interface is
 designed to be comfortable and efficient for skilled users, while
 remaining conformant to B<GNOME> standards so that users familiar with
 other GNOME applications can learn its interface rapidly.
@@ -84,9 +84,8 @@ B<SVG> is a W3C standard XML format for 2D vector drawing. It allows
 defining objects in the drawing using points, paths, and primitive
 shapes.  Colors, fonts, stroke width, and so forth are specified as
 `style' attributes to these objects.  The intent is that since SVG is a
-standard, and since its files are text/xml, it will be
-possible to use SVG files in a sizeable number of programs and for a
-wide range of uses.
+standard, and since its files are text/xml, it will be possible to use
+SVG files in a sizeable number of programs and for a wide range of uses.
 
 B<Inkscape> uses SVG as its native document format, and has the goal of
 becoming the most fully compliant drawing program for SVG files
@@ -107,170 +106,196 @@ Show Inkscape version and build date.
 
 =item B<-a> I<x0:y0:x1:y1>, B<--export-area>=I<x0:y0:x1:y1>
 
-In PNG export, set the exported area in SVG user units (anonymous length units normally used
-in Inkscape SVG).  The default is to export the entire document page.  The point (0,0)
-is the lower-left corner.
+In PNG export, set the exported area in SVG user units (anonymous length
+units normally used in Inkscape SVG).  The default is to export the
+entire document page.  The point (0,0) is the lower-left corner.
 
 =item B<-C>, B<--export-area-page>
 
-In PNG, PDF, PS, and EPS export, exported area is the page. This is the default
-for PNG, PDF, and PS, so you don't need to specify this unless you are using --export-id 
-to export a specific object. In EPS, however, this is not the default; moreover, for EPS, 
-the specification of the format does not allow its bounding box to extend beyond its content. 
-This means that when --export-area-page is used with EPS export, the page bounding box 
-will be trimmed inwards to the bounding box of the content if it is smaller.
+In PNG, PDF, PS, and EPS export, exported area is the page. This is the
+default for PNG, PDF, and PS, so you don't need to specify this unless
+you are using --export-id to export a specific object. In EPS, however,
+this is not the default; moreover, for EPS, the specification of the
+format does not allow its bounding box to extend beyond its content.
+This means that when --export-area-page is used with EPS export, the
+page bounding box will be trimmed inwards to the bounding box of the
+content if it is smaller.
 
 =item B<-D>, B<--export-area-drawing>
 
-In PNG, PDF, PS, and EPS export, exported area is the drawing (not page), i.e. the bounding box
-of all objects of the document (or of the exported object if --export-id is used). 
-With this option, the exported image will
-display all the visible objects of the document without margins or cropping. This is the default
-export area for EPS. For PNG, it can be used in combination with --export-use-hints.
+In PNG, PDF, PS, and EPS export, exported area is the drawing (not
+page), i.e. the bounding box of all objects of the document (or of the
+exported object if --export-id is used).  With this option, the exported
+image will display all the visible objects of the document without
+margins or cropping. This is the default export area for EPS. For PNG,
+it can be used in combination with --export-use-hints.
 
 =item B<--export-area-snap>
 
-For PNG export, snap the export area outwards to the nearest integer SVG user unit (px) values. If you are using the 
-default export resolution of 96 dpi and your graphics are pixel-snapped to minimize antialiasing, this switch 
-allows you to preserve this alignment even if you are exporting some object's bounding 
-box (with --export-id or --export-area-drawing) which is itself not pixel-aligned.
+For PNG export, snap the export area outwards to the nearest integer SVG
+user unit (px) values. If you are using the default export resolution of
+96 dpi and your graphics are pixel-snapped to minimize antialiasing,
+this switch allows you to preserve this alignment even if you are
+exporting some object's bounding box (with --export-id
+or --export-area-drawing) which is itself not pixel-aligned.
 
 =item B<-b> I<COLOR>, B<--export-background>=I<COLOR>
 
-Background color of exported PNG.
-This may be any SVG supported color string, for example "#ff007f" or "rgb(255, 0, 128)".
-If not set,
-then the page color set in Inkscape in the Document Options dialog will be used (stored in the pagecolor= attribute of sodipodi:namedview).
+Background color of exported PNG.  This may be any SVG supported color
+string, for example "#ff007f" or "rgb(255, 0, 128)".  If not set, then
+the page color set in Inkscape in the Document Options dialog will be
+used (stored in the pagecolor= attribute of sodipodi:namedview).
 
 =item B<-d> I<DPI>, B<--export-dpi>=I<DPI>
 
-The resolution used for PNG export.
-It is also used for fallback rasterization of filtered objects
-when exporting to PS, EPS, or PDF (unless you specify --export-ignore-filters to suppress
-rasterization). The default is 96 dpi, which corresponds to 1 SVG user unit 
-(px, also called "user unit") exporting to 1 bitmap pixel.
-This value overrides the DPI hint if used with --export-use-hints.
+The resolution used for PNG export.  It is also used for fallback
+rasterization of filtered objects when exporting to PS, EPS, or PDF
+(unless you specify --export-ignore-filters to suppress
+rasterization). The default is 96 dpi, which corresponds to 1 SVG user
+unit (px, also called "user unit") exporting to 1 bitmap pixel.  This
+value overrides the DPI hint if used with --export-use-hints.
 
 =item B<-e> I<FILENAME>, B<--export-png>=I<FILENAME>
 
-Specify the filename for PNG export.
-If it already exists, the file will be overwritten without asking.
+Specify the filename for PNG export.  If it already exists, the file
+will be overwritten without asking.
 
 =item B<-f> I<FILENAME>, B<--file>=I<FILENAME>
 
-Open specified document(s).
-Option string may be omitted, i.e. you can list the filenames without -f.
+Open specified document(s).  Option string may be omitted, i.e. you can
+list the filenames without -f.
 
 =item B<-g>, B<--with-gui>
 
-Try to use the GUI (on Unix, use the X server even if $DISPLAY is not set).
+Try to use the GUI (on Unix, use the X server even if $DISPLAY is not
+set).
 
 =item B<-h> I<HEIGHT>, B<--export-height>=I<HEIGHT>
 
-The height of generated bitmap in pixels.
-This value overrides the --export-dpi setting (or the DPI hint if used with --export-use-hints). 
+The height of generated bitmap in pixels.  This value overrides the
+--export-dpi setting (or the DPI hint if used with --export-use-hints).
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-For PNG, PS, EPS, PDF and plain SVG export, the id attribute value of the object that you want 
-to export from the document; all other objects are not exported.  By
-default the exported area is the bounding box of the object; you can override this using
---export-area (PNG only) or --export-area-page.
+For PNG, PS, EPS, PDF and plain SVG export, the id attribute value of
+the object that you want to export from the document; all other objects
+are not exported.  By default the exported area is the bounding box of
+the object; you can override this using --export-area (PNG only)
+or --export-area-page.
 
 =item B<-j>, B<--export-id-only>
 
-For PNG and plain SVG, only export the object whose id is given in --export-id. All other objects are hidden and won't 
-show in export even if they overlay the exported object. 
-Without --export-id, this option is ignored. For PDF export, this is the default, so this option has no effect.
+For PNG and plain SVG, only export the object whose id is given
+in --export-id. All other objects are hidden and won't show in export
+even if they overlay the exported object.  Without --export-id, this option
+is ignored. For PDF export, this is the default, so this option has no
+effect.
 
 =item B<-l>, B<--export-plain-svg>=I<FILENAME>
 
-Export document(s) to plain SVG format, without sodipodi: or inkscape: namespaces and without RDF metadata.
+Export document(s) to plain SVG format, without sodipodi: or inkscape:
+namespaces and without RDF metadata.
 
 =item B<-x>, B<--extension-directory>
 
-Lists the current extension directory that Inkscape is configured to use and
-then exits.  This is used for external extension to use the same configuration
-as the original Inkscape installation.
+Lists the current extension directory that Inkscape is configured to use
+and then exits.  This is used for external extension to use the same
+configuration as the original Inkscape installation.
 
 =item B<--verb-list>
 
-Lists all the verbs that are available in Inkscape by ID.  This ID can be
-used in defining keymaps or menus.  It can also be used with the --verb
-command line option.
+Lists all the verbs that are available in Inkscape by ID.  This ID can
+be used in defining keymaps or menus.  It can also be used with
+the --verb command line option.
 
 =item B<--verb>=I<VERB-ID>, B<--select>=I<OBJECT-ID>
 
 These two options work together to provide some basic scripting for
 Inkscape from the command line.  They both can occur as many times as
-needed on the command line and are executed in order on every document that
-is specified.
+needed on the command line and are executed in order on every document
+that is specified.
 
-The --verb command will execute a specific verb as if it
-was called from a menu or button.  Dialogs will appear if that is part
-of the verb.  To get a list of the verb IDs available, use the --verb-list
-command line option.
+The --verb command will execute a specific verb as if it was called from
+a menu or button.  Dialogs will appear if that is part of the verb.  To
+get a list of the verb IDs available, use the --verb-list command line
+option.
 
-The --select command will cause objects that have the ID
-specified to be selected.  This allows various verbs to act upon them.  To
-remove all the selections use --verb=EditDeselect.  The object IDs
-available are dependent on the document specified to load.
+The --select command will cause objects that have the ID specified to be
+selected.  This allows various verbs to act upon them.  To remove all
+the selections use --verb=EditDeselect.  The object IDs available are
+dependent on the document specified to load.
 
 =item B<-p> I<PRINTER>, B<--print>=I<PRINTER>
 
 Print document(s) to the specified printer using `lpr -P PRINTER'.
-Alternatively, use `| COMMAND' to specify a different command to pipe to,
-or use `> FILENAME' to write the PostScript output to a file instead of printing.
-Remember to do appropriate quoting for your shell, e.g.
+Alternatively, use `| COMMAND' to specify a different command to pipe
+to, or use `> FILENAME' to write the PostScript output to a file instead
+of printing.  Remember to do appropriate quoting for your shell, e.g.
 
 inkscape --print='| ps2pdf - mydoc.pdf' mydoc.svg
 
 =item B<-t>, B<--export-use-hints>
 
-Use export filename and DPI hints stored in the exported object (only with --export-id).
-These hints are set automatically when you export selection from within Inkscape.
-So, for example, if you export a shape with id="path231" as /home/me/shape.png at 300 dpi from document.svg using Inkscape GUI, and save the document,
-then later you will be able to reexport that shape to the same file with the same resolution simply with 
+Use export filename and DPI hints stored in the exported object (only
+with --export-id).  These hints are set automatically when you export
+selection from within Inkscape.  So, for example, if you export a shape
+with id="path231" as /home/me/shape.png at 300 dpi from document.svg
+using Inkscape GUI, and save the document, then later you will be able
+to reexport that shape to the same file with the same resolution simply
+with
 
-inkscape -i path231 -t document.svg
+    inkscape -i path231 -t document.svg
 
-If you use --export-dpi, --export-width, or --export-height with this option,
-then the DPI hint will be ignored and the value from the command line will be used.
-If you use --export-png with this option,
-then the filename hint will be ignored and the filename from the command line will be used. 
+If you use --export-dpi, --export-width, or --export-height with this
+option, then the DPI hint will be ignored and the value from the command
+line will be used.  If you use --export-png with this option, then the
+filename hint will be ignored and the filename from the command line
+will be used.
 
 =item B<-w> I<WIDTH>, B<--export-width>=I<WIDTH>
 
-The width of generated bitmap in pixels.
-This value overrides the --export-dpi setting (or the DPI hint if used with --export-use-hints). 
+The width of generated bitmap in pixels.  This value overrides
+the --export-dpi setting (or the DPI hint if used
+with --export-use-hints).
 
 =item B<-y> I<VALUE>, B<--export-background-opacity>=I<VALUE>
 
-Opacity of the background of exported PNG.
-This may be a value either between 0.0 and 1.0 (0.0 meaning full transparency, 1.0 full opacity)
-or greater than 1 up to 255 (255 meaning full opacity).
-If not set and the -b option is not used,
-then the page opacity set in Inkscape in the Document Options dialog will be used (stored in the inkscape:pageopacity= attribute of sodipodi:namedview).
-If not set but the -b option is used,
-then the value of 255 (full opacity) will be used. 
+Opacity of the background of exported PNG.  This may be a value either
+between 0.0 and 1.0 (0.0 meaning full transparency, 1.0 full opacity) or
+greater than 1 up to 255 (255 meaning full opacity).  If not set and
+the -b option is not used, then the page opacity set in Inkscape in the
+Document Options dialog will be used (stored in the
+inkscape:pageopacity= attribute of sodipodi:namedview).  If not set but
+the -b option is used, then the value of 255 (full opacity) will be
+used.
 
 =item B<-P> I<FILENAME>, B<--export-ps>=I<FILENAME>
 
-Export document(s) to PostScript format. Note that PostScript does not support transparency, so any transparent objects in the original SVG will be automatically rasterized. Used fonts are subset and embedded. The default export area is page; you can set it to drawing by --export-area-drawing. You can 
-specify --export-id to export a single object (all other are hidden); in that case 
-export area is that object's bounding box, but can be set to page by --export-area-page.
+Export document(s) to PostScript format. Note that PostScript does not
+support transparency, so any transparent objects in the original SVG
+will be automatically rasterized. Used fonts are subset and
+embedded. The default export area is page; you can set it to drawing
+by --export-area-drawing. You can specify --export-id to export a single
+object (all other are hidden); in that case export area is that object's
+bounding box, but can be set to page by --export-area-page.
 
 =item B<-E> I<FILENAME>, B<--export-eps>=I<FILENAME>
 
-Export document(s) to Encapsulated PostScript format. Note that PostScript does not support transparency, so any transparent objects in the original SVG will be automatically rasterized. Used fonts are subset and embedded. The default export area is drawing; you can set it to page, however see --export-area-page for applicable limitation. You can specify --export-id to export a single object (all other are hidden).
+Export document(s) to Encapsulated PostScript format. Note that
+PostScript does not support transparency, so any transparent objects in
+the original SVG will be automatically rasterized. Used fonts are subset
+and embedded. The default export area is drawing; you can set it to
+page, however see --export-area-page for applicable limitation. You can
+specify --export-id to export a single object (all other are hidden).
 
 =item B<-A> I<FILENAME>, B<--export-pdf>=I<FILENAME>
 
-Export document(s) to PDF format. This format preserves the 
-transparency in the original SVG. Used fonts are subset and embedded. 
-The default export area is page; you can set it to drawing by --export-area-drawing. You can 
-specify --export-id to export a single object (all other are hidden); in that case 
-export area is that object's bounding box, but can be set to page by --export-area-page.
+Export document(s) to PDF format. This format preserves the transparency
+in the original SVG. Used fonts are subset and embedded.  The default
+export area is page; you can set it to drawing
+by --export-area-drawing. You can specify --export-id to export a single
+object (all other are hidden); in that case export area is that object's
+bounding box, but can be set to page by --export-area-page.
 
 =item B<--export-pdf-version>=I<PDF-VERSION>
 
@@ -281,45 +306,54 @@ e.g. "1.4". The default pdf export version is "1.4".
 
 =item B<--export-latex>
 
-(for PS, EPS, and PDF export)
-Used for creating images for LaTeX documents, where the image's text is typeset by LaTeX.
-When exporting to PDF/PS/EPS format, this option splits the output into a PDF/PS/EPS file 
-(e.g. as specified by --export-pdf) and a LaTeX file. Text will not be output in 
-the PDF/PS/EPS file, but instead will appear in the LaTeX file. This LaTeX file 
-includes the PDF/PS/EPS. Inputting (\input{image.tex}) the LaTeX file in your LaTeX
-document will show the image and all text will be typeset by LaTeX. See the
-resulting LaTeX file for more information.
-Also see GNUPlot's `epslatex' output terminal.
+(for PS, EPS, and PDF export) Used for creating images for LaTeX
+documents, where the image's text is typeset by LaTeX.  When exporting
+to PDF/PS/EPS format, this option splits the output into a PDF/PS/EPS
+file (e.g. as specified by --export-pdf) and a LaTeX file. Text will not
+be output in the PDF/PS/EPS file, but instead will appear in the LaTeX
+file. This LaTeX file includes the PDF/PS/EPS. Inputting
+(\input{image.tex}) the LaTeX file in your LaTeX document will show the
+image and all text will be typeset by LaTeX. See the resulting LaTeX
+file for more information.  Also see GNUPlot's `epslatex' output
+terminal.
 
 =item B<-T>, B<--export-text-to-path>
 
-Convert text objects to paths on export, where applicable (for PS, EPS, PDF and SVG export).
+Convert text objects to paths on export, where applicable (for PS, EPS,
+PDF and SVG export).
 
 =item B<--export-ignore-filters>
 
-Export filtered objects (e.g. those with blur) as vectors, ignoring the filters (for PS, EPS, and PDF export). 
-By default, all filtered objects are rasterized at --export-dpi (default 96 dpi), preserving the appearance.
+Export filtered objects (e.g. those with blur) as vectors, ignoring the
+filters (for PS, EPS, and PDF export).  By default, all filtered objects
+are rasterized at --export-dpi (default 96 dpi), preserving the
+appearance.
 
 =item B<-I>, B<--query-id>
 
-Set the ID of the object whose dimensions are queried. If not set, query options will 
-return the dimensions of the drawing (i.e. all document objects), not the page or viewbox
+Set the ID of the object whose dimensions are queried. If not set, query
+options will return the dimensions of the drawing (i.e. all document
+objects), not the page or viewbox
 
 =item B<-X>, B<--query-x>
 
-Query the X coordinate of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Query the X coordinate of the drawing or, if specified, of the object
+with --query-id. The returned value is in px (SVG user units).
 
 =item B<-Y>, B<--query-y>
 
-Query the Y coordinate of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Query the Y coordinate of the drawing or, if specified, of the object
+with --query-id. The returned value is in px (SVG user units).
 
 =item B<-W>, B<--query-width>
 
-Query the width of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Query the width of the drawing or, if specified, of the object with
+--query-id. The returned value is in px (SVG user units).
 
 =item B<-H>, B<--query-height>
 
-Query the height of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Query the height of the drawing or, if specified, of the object
+with --query-id. The returned value is in px (SVG user units).
 
 =item B<-S>, B<--query-all>
 
@@ -328,30 +362,33 @@ IDs defined, along with their x, y, width, and height values.
 
 =item B<--shell>
 
-With this parameter, Inkscape will enter an interactive command line shell mode. In this
-mode, you type in commands at the prompt and Inkscape executes them, without you having
-to run a new copy of Inkscape for each command. This feature is mostly useful for
-scripting and server uses: it adds no new capabilities but allows you to improve the
-speed and memory requirements of any script that repeatedly calls Inkscape to perform
-command line tasks (such as export or conversions). Each command in shell mode must be a
-complete valid Inkscape command line but without the Inkscape program name, for example
-"file.svg --export-pdf=file.pdf".
+With this parameter, Inkscape will enter an interactive command line
+shell mode. In this mode, you type in commands at the prompt and
+Inkscape executes them, without you having to run a new copy of Inkscape
+for each command. This feature is mostly useful for scripting and server
+uses: it adds no new capabilities but allows you to improve the speed
+and memory requirements of any script that repeatedly calls Inkscape to
+perform command line tasks (such as export or conversions). Each command
+in shell mode must be a complete valid Inkscape command line but without
+the Inkscape program name, for example "file.svg --export-pdf=file.pdf".
 
 =item B<--vacuum-defs>
 
-Remove all unused items from the <lt>defs<gt> section of the SVG file.  If this
-option is invoked in conjunction with --export-plain-svg, only the exported file
-will be affected.  If it is used alone, the specified file will be modified in place.
+Remove all unused items from the <lt>defs<gt> section of the SVG file.
+If this option is invoked in conjunction with --export-plain-svg, only
+the exported file will be affected.  If it is used alone, the specified
+file will be modified in place.
 
 =item B<-z>, B<--without-gui>
 
-Do not open the GUI (on Unix, do not use X server); only process the files from console.
-This is assumed for -p, -e, -l, and --vacuum-defs options. 
+Do not open the GUI (on Unix, do not use X server); only process the
+files from console.  This is assumed for -p, -e, -l, and --vacuum-defs
+options.
 
 =item B<--g-fatal-warnings>
 
-This standard GTK option forces any warnings, usually harmless, to cause Inkscape to
-abort (useful for debugging).
+This standard GTK option forces any warnings, usually harmless, to cause
+Inkscape to abort (useful for debugging).
 
 =item B<--usage>
 
@@ -361,9 +398,11 @@ Display a brief usage message.
 
 =head1 CONFIGURATION
 
-The main configuration file is located in ~/.config/inkscape/preferences.xml; it stores
-a variety of customization settings that you can change in Inkscape (mostly in the
-Inkscape Preferences dialog).  Also in the subdirectories there, you can place your own:
+The main configuration file is located in
+~/.config/inkscape/preferences.xml; it stores a variety of customization
+settings that you can change in Inkscape (mostly in the Inkscape
+Preferences dialog).  Also in the subdirectories there, you can place
+your own:
 
 B<$HOME>/.config/inkscape/extensions/ - extension effects.
 
@@ -394,7 +433,8 @@ Print an SVG file from the command line:
 
     inkscape filename.svg -p '| lpr'
 
-Export an SVG file into PNG with the default resolution of 96 dpi (one SVG user unit translates to one bitmap pixel):
+Export an SVG file into PNG with the default resolution of 96 dpi (one
+SVG user unit translates to one bitmap pixel):
 
     inkscape filename.svg --export-png=filename.png
 
@@ -402,18 +442,21 @@ Same, but force the PNG file to be 600x400 pixels:
 
     inkscape filename.svg --export-png=filename.png -w600 -h400
 
-Same, but export the drawing (bounding box of all objects), not the page:
+Same, but export the drawing (bounding box of all objects), not the
+page:
 
     inkscape filename.svg --export-png=filename.png --export-area-drawing
 
-Export to PNG the object with id="text1555", using the output filename and 
-the resolution that were used for that object last time when it was exported from the GUI:
+Export to PNG the object with id="text1555", using the output filename
+and the resolution that were used for that object last time when it was
+exported from the GUI:
 
     inkscape filename.svg --export-id=text1555 --export-use-hints
 
-Same, but use the default 96 dpi resolution, specify the filename, 
-and snap the exported area outwards to the nearest whole SVG user unit values 
-(to preserve pixel-alignment of objects and thus minimize aliasing):
+Same, but use the default 96 dpi resolution, specify the filename, and
+snap the exported area outwards to the nearest whole SVG user unit
+values (to preserve pixel-alignment of objects and thus minimize
+aliasing):
 
     inkscape filename.svg --export-id=text1555 --export-png=text.png --export-area-snap
 
@@ -429,7 +472,8 @@ Query the width of the object with id="text1555":
 
     inkscape filename.svg --query-width --query-id text1555
 
-Duplicate the object with id="path1555", rotate the duplicate 90 degrees, save SVG, and quit:
+Duplicate the object with id="path1555", rotate the duplicate 90
+degrees, save SVG, and quit:
 
     inkscape filename.svg --select=path1555 --verb=EditDuplicate --verb=ObjectRotate90 --verb=FileSave --verb=FileClose
 
@@ -447,16 +491,16 @@ user profile.
 =head1 THEMES
 
 To load different icons sets instead of the default
-B<$PREFIX>/share/inkscape/icons/icons.svg file, the directory
+B<${SHARE_INSTALL}>/share/inkscape/icons/icons.svg file, the directory
 B<$HOME>/.config/inkscape/icons/ is used.  Icons are loaded by name
-(e.g. I<fill_none.svg>), or if not found, then from I<icons.svg>.  If the
-icon is not loaded from either of those locations, it falls back to the
-default system location.
+(e.g. I<fill_none.svg>), or if not found, then from I<icons.svg>.  If
+the icon is not loaded from either of those locations, it falls back to
+the default system location.
 
-The needed icons are loaded from SVG files by searching for the SVG id with
-the matching icon name.  (For example, to load the "fill_none" icon from
-a file, the bounding box seen for SVG id "fill_none" is rendered as the
-icon, whether it comes from I<fill_none.svg> or I<icons.svg>.)
+The needed icons are loaded from SVG files by searching for the SVG id
+with the matching icon name.  (For example, to load the "fill_none" icon
+from a file, the bounding box seen for SVG id "fill_none" is rendered as
+the icon, whether it comes from I<fill_none.svg> or I<icons.svg>.)
 
 
 
@@ -464,9 +508,8 @@ icon, whether it comes from I<fill_none.svg> or I<icons.svg>.)
 
 The canonical place to find B<Inkscape> info is at
 http://www.inkscape.org/.  The website has news, documentation,
-tutorials, examples, mailing list archives, the latest released
-version of the program, bugs and feature requests databases, forums,
-and more.
+tutorials, examples, mailing list archives, the latest released version
+of the program, bugs and feature requests databases, forums, and more.
 
 =head1 SEE ALSO
 
@@ -497,33 +540,37 @@ L<http://www.w3.org/TR/DOM-Level-2-Core/>
 
 To learn Inkscape's GUI operation, read the tutorials in Help > Tutorials.
 
-Apart from SVG, Inkscape can import (File > Import) most bitmap formats 
-(PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PS and EPS (requires Ghostscript), PDF 
-and AI format (AI version 9.0 or newer).
+Apart from SVG, Inkscape can import (File > Import) most bitmap formats
+(PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PS and EPS
+(requires Ghostscript), PDF and AI format (AI version 9.0 or newer).
 
-Inkscape exports 32-bit PNG images (File > Export PNG Image) as well as AI, PS, EPS, PDF, DXF, 
-and several other formats via File > Save as.
+Inkscape exports 32-bit PNG images (File > Export PNG Image) as well as
+AI, PS, EPS, PDF, DXF, and several other formats via File > Save as.
 
-Inkscape can use the pressure and tilt of a graphic tablet pen for width, angle,
-and force of action of several tools, including the Calligraphic pen.
+Inkscape can use the pressure and tilt of a graphic tablet pen for
+width, angle, and force of action of several tools, including the
+Calligraphic pen.
 
 Inkscape includes a GUI front-end to the Potrace bitmap tracing engine
 (http://potrace.sf.net) which is embedded into Inkscape.
 
-Inkscape can use external scripts (stdin-to-stdout filters) that are represented by
-commands in the Extensions menu. A script can have a GUI dialog for setting various
-parameters and can get the IDs of the selected objects on which to act via the command
-line. Inkscape comes with an assortment of effects written in Python.
+Inkscape can use external scripts (stdin-to-stdout filters) that are
+represented by commands in the Extensions menu. A script can have a GUI
+dialog for setting various parameters and can get the IDs of the
+selected objects on which to act via the command line. Inkscape comes
+with an assortment of effects written in Python.
 
 =head1 KEYBINDINGS
 
-To get a complete list of keyboard and mouse shortcuts, view doc/keys.html, or use the Keys and Mouse command in Help menu.
+To get a complete list of keyboard and mouse shortcuts, view
+doc/keys.html, or use the Keys and Mouse command in Help menu.
 
 =head1 BUGS
 
-Many bugs are known; please refer to the website (inkscape.org) for reviewing the reported ones and to
-report newly found issues.  See also the Known Issues section in the Release Notes for
-your version (file `NEWS').
+Many bugs are known; please refer to the website (inkscape.org) for
+reviewing the reported ones and to report newly found issues.  See also
+the Known Issues section in the Release Notes for your version (file
+`NEWS').
 
 =head1 AUTHORS
 
@@ -540,25 +587,25 @@ E<lt>bryce@bryceharrington.orgE<gt>.
 =head1 HISTORY
 
 The codebase that would become Inkscape began life in 1999 as the
-program Gill, the GNOME Illustrator application, created by Raph
-Levien.  The stated objective for Gill was to eventually support all of
-SVG.  Raph implemented the PostScript bezier imaging model, including
-stroking and filling, line cap style, line join style, text, etc.
-Raph's Gill page is at http://www.levien.com/svg/.  Work on Gill appears
-to have slowed or ceased in 2000.
+program Gill, the GNOME Illustrator application, created by Raph Levien.
+The stated objective for Gill was to eventually support all of SVG.
+Raph implemented the PostScript bezier imaging model, including stroking
+and filling, line cap style, line join style, text, etc.  Raph's Gill
+page is at http://www.levien.com/svg/.  Work on Gill appears to have
+slowed or ceased in 2000.
 
 The next incarnation of the codebase was to become the highly popular
-program Sodipodi, led by Lauris Kaplinski.  The codebase was turned
-into a powerful illustration program over the course of several
-year's work, adding several new features, multi-lingual support, porting
-to Windows and other operating systems, and eliminating dependencies.
+program Sodipodi, led by Lauris Kaplinski.  The codebase was turned into
+a powerful illustration program over the course of several year's work,
+adding several new features, multi-lingual support, porting to Windows
+and other operating systems, and eliminating dependencies.
 
 Inkscape was formed in 2003 by four active Sodipodi developers, Bryce
 Harrington, MenTaLguY, Nathan Hurst, and Ted Gould, wanting to take a
-different direction with the codebase in terms of focus on
-SVG compliance, interface look-and-feel, and a desire to open
-development opportunities to more participants.  The project progressed
-rapidly, gaining a number of very active contributors and features.
+different direction with the codebase in terms of focus on SVG
+compliance, interface look-and-feel, and a desire to open development
+opportunities to more participants.  The project progressed rapidly,
+gaining a number of very active contributors and features.
 
 Much work in the early days of the project focused on code stabilization
 and internationalization.  The original renderer inherited from Sodipodi
