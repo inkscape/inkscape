@@ -494,7 +494,7 @@ user profile.
 =head1 THEMES
 
 To load different icons sets instead of the default
-B<${CMAKE_PREFIX_PATH}/${SHARE_INSTALL}>/inkscape/icons/icons.svg file, the directory
+B<${CMAKE_INSTALL_PREFIX}/${SHARE_INSTALL}>/inkscape/icons/icons.svg file, the directory
 B<$HOME>/.config/inkscape/icons/ is used.  Icons are loaded by name
 (e.g. I<fill_none.svg>), or if not found, then from I<icons.svg>.  If
 the icon is not loaded from either of those locations, it falls back to
@@ -514,7 +514,7 @@ of the program, bugs and feature requests databases, forums, and more.
 
 =head1 SEE ALSO
 
-L<potrace>, L<cairo>, L<rsvg(1)>, L<batik>, L<ghostscript>, L<pstoedit>.
+L<potrace>, L<cairo>, L<rsvg>, L<batik>, L<ghostscript>, L<pstoedit>.
 
 SVG compliance test suite:
 L<http://www.w3.org/Graphics/SVG/Test/>

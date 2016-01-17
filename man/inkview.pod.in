@@ -29,7 +29,7 @@ files supplied on the command line in the given order.
 
 You can use the command
 
-    inkview ${SHARE_INSTALL}/share/inkscape/examples/*.svg*
+    inkview B<${CMAKE_INSTALL_PREFIX}/${SHARE_INSTALL}>/inkscape/examples/*.svg*
 
 to browse through the examples included in the inkscape package.
 
@@ -44,7 +44,7 @@ There are no options yet.
 
 =head1 SEE ALSO
 
-L<inkscape(1)> and the inkview related part of the inkscape wiki:
+L<inkscape> and the inkview related part of the inkscape wiki:
 
 L<http://wiki.inkscape.org/wiki/index.php/Inkview>
 
