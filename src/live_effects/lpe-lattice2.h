@@ -63,6 +63,7 @@ private:
 
     BoolParam horizontal_mirror;
     BoolParam vertical_mirror;
+    BoolParam live_update;
     PointParam grid_point_0;
     PointParam grid_point_1;
     PointParam grid_point_2;

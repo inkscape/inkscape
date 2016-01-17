@@ -25,9 +25,11 @@ namespace LivePathEffect {
 
 PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                        Effect* effect, const gchar *htip, Geom::Point default_value)
+                        Effect* effect, const gchar *htip, Geom::Point default_value,
+                        bool live_update )
     :   Parameter(label, tip, key, wr, effect), 
         defvalue(default_value),
+        liveupdate(live_update),
         knoth(NULL)
 {
     knot_shape = SP_KNOT_SHAPE_DIAMOND;
@@ -46,6 +48,12 @@ void
 PointParam::param_set_default()
 {
     param_setValue(defvalue,true);
+}
+
+void
+PointParam::param_set_liveupdate( bool live_update)
+{
+    liveupdate = live_update;
 }
 
 Geom::Point 
@@ -70,7 +78,7 @@ PointParam::param_setValue(Geom::Point newpoint, bool write)
         param_write_to_repr(str);
         g_free(str);
     }
-    if(knoth){
+    if(knoth && liveupdate){
         knoth->update_knots();
     }
 }
@@ -166,9 +174,9 @@ PointParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &or
             s = A;
         }
     }
-    pparam->param_setValue(s, true);
+    pparam->param_setValue(s, this->pparam->liveupdate);
     SPLPEItem * splpeitem = dynamic_cast<SPLPEItem *>(item);
-    if(splpeitem){
+    if(splpeitem && this->pparam->liveupdate){
         sp_lpe_item_update_patheffect(splpeitem, false, false);
     }
 }

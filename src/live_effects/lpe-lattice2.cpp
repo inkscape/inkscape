@@ -46,6 +46,7 @@ LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     horizontal_mirror(_("Mirror movements in horizontal"), _("Mirror movements in horizontal"), "horizontal_mirror", &wr, this, false),
     vertical_mirror(_("Mirror movements in vertical"), _("Mirror movements in vertical"), "vertical_mirror", &wr, this, false),
+    live_update(_("Update while moving knots (maybe slow)"), _("Update while moving knots (maybe slow)"), "live_update", &wr, this, true),
     grid_point_0(_("Control 0:"), _("Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint0", &wr, this),
     grid_point_1(_("Control 1:"), _("Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint1", &wr, this),
     grid_point_2(_("Control 2:"), _("Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "gridpoint2", &wr, this),
@@ -76,6 +77,7 @@ LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter(&horizontal_mirror);
     registerParameter(&vertical_mirror);
+    registerParameter(&live_update);
     registerParameter(&grid_point_0);
     registerParameter(&grid_point_1);
     registerParameter(&grid_point_2);
@@ -248,7 +250,7 @@ LPELattice2::newWidget()
             }
             Glib::ustring * tip = param->param_getTooltip();
             if (widg) {
-                if (param->param_key == "horizontal_mirror" || param->param_key == "vertical_mirror") {
+                if (param->param_key == "horizontal_mirror" || param->param_key == "vertical_mirror" || param->param_key == "live_update") {
                     vbox->pack_start(*widg, true, true, 2);
                 } else {
                     vbox_expander->pack_start(*widg, true, true, 2);
@@ -300,8 +302,8 @@ LPELattice2::vertical(PointParam &param_one, PointParam &param_two, Geom::Line v
     }
     A[Geom::X] = nearest[Geom::X] - distance_middle;
     B[Geom::X] = nearest[Geom::X] + distance_middle;
-    param_one.param_setValue(A, true);
-    param_two.param_setValue(B, true);
+    param_one.param_setValue(A, live_update);
+    param_two.param_setValue(B, live_update);
 }
 
 void
@@ -321,8 +323,8 @@ LPELattice2::horizontal(PointParam &param_one, PointParam &param_two, Geom::Line
     }
     A[Geom::Y] = nearest[Geom::Y] - distance_middle;
     B[Geom::Y] = nearest[Geom::Y] + distance_middle;
-    param_one.param_setValue(A, true);
-    param_two.param_setValue(B, true);
+    param_one.param_setValue(A, live_update);
+    param_two.param_setValue(B, live_update);
 }
 
 void
@@ -464,6 +466,31 @@ LPELattice2::setDefaults()
     grid_point_28x30.param_update_default(gp28x30);
     grid_point_29x31.param_update_default(gp29x31);
     grid_point_32x33x34x35.param_update_default(gp32x33x34x35);
+    grid_point_0.param_set_liveupdate(live_update);
+    grid_point_1.param_set_liveupdate(live_update);
+    grid_point_2.param_set_liveupdate(live_update);
+    grid_point_3.param_set_liveupdate(live_update);
+    grid_point_4.param_set_liveupdate(live_update);
+    grid_point_5.param_set_liveupdate(live_update);
+    grid_point_6.param_set_liveupdate(live_update);
+    grid_point_7.param_set_liveupdate(live_update);
+    grid_point_8x9.param_set_liveupdate(live_update);
+    grid_point_10x11.param_set_liveupdate(live_update);
+    grid_point_12.param_set_liveupdate(live_update);
+    grid_point_13.param_set_liveupdate(live_update);
+    grid_point_14.param_set_liveupdate(live_update);
+    grid_point_15.param_set_liveupdate(live_update);
+    grid_point_16.param_set_liveupdate(live_update);
+    grid_point_17.param_set_liveupdate(live_update);
+    grid_point_18.param_set_liveupdate(live_update);
+    grid_point_19.param_set_liveupdate(live_update);
+    grid_point_20x21.param_set_liveupdate(live_update);
+    grid_point_22x23.param_set_liveupdate(live_update);
+    grid_point_24x26.param_set_liveupdate(live_update);
+    grid_point_25x27.param_set_liveupdate(live_update);
+    grid_point_28x30.param_set_liveupdate(live_update);
+    grid_point_29x31.param_set_liveupdate(live_update);
+    grid_point_32x33x34x35.param_set_liveupdate(live_update);
 }
 
 void
