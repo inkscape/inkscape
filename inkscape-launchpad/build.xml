@@ -197,10 +197,14 @@
 
         /* Visio import filter */
         #define WITH_LIBVISIO                 1
+        /* Librevenge based filter */
+        #define WITH_LIBVISIO01               1
 
         /* Corel Draw import filter */
         #define WITH_LIBCDR                   1
-
+        /* Librevenge based filter */
+        #define WITH_LIBCDR01                 1
+		
         /* Do we support SVG Fonts? */
         #define ENABLE_SVG_FONTS              1
 
@@ -379,8 +383,10 @@
             -DHAVE_SSL
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
             -DPOPPLER_NEW_GFXFONT <!-- poppler changed the api for 0.8.3 -->
-	    <!-- uncomment below for future devlibs, if poppler >= 0.20.0 -->
-	    <!-- -DPOPPLER_NEW_ERRORAPI --> <!-- poppler changed the error api for 0.20.0 -->
+            -DPOPPLER_NEW_GFXPATCH <!-- GfxPatch no longer uses GfxColor in >= 0.15.1 -->
+            -DPOPPLER_NEW_ERRORAPI <!-- poppler changed the error api for 0.20.0 -->
+            -DPOPPLER_EVEN_NEWER_COLOR_SPACE_API <!-- poppler changed the colorspace api for 0.26.0 -->
+            -DPOPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API <!-- poppler changed the colorspace api for 0.29.0 -->
             <!-- GTK+3 migration -->
             -DGLIBMM_DISABLE_DEPRECATED
             -DG_DISABLE_DEPRECATED
@@ -402,7 +408,8 @@
             ${pcc.poppler}
             -I${devlibs}/include/gc
             -I${devlibs}/include/potracelib
-            ${pcc.libwpg-0.2} ${pcc.libvisio-0.0} ${pcc.libcdr-0.0}
+            ${pcc.librevenge-0.0} ${pcc.librevenge-stream-0.0}
+            ${pcc.libwpg-0.2} ${pcc.libvisio-0.1} ${pcc.libcdr-0.1}
             -I${cxxtest}
             <!-- PERL -->
             <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
@@ -478,7 +485,8 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
+           ${pcl.librevenge-0.0} ${pcl.librevenge-stream-0.0}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.1} ${pcl.libcdr-0.1}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -560,7 +568,8 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
+           ${pcl.librevenge-0.0} ${pcl.librevenge-stream-0.0}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.1} ${pcl.libcdr-0.1}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -610,7 +619,8 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
+           ${pcl.librevenge-0.0} ${pcl.librevenge-stream-0.0}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.1} ${pcl.libcdr-0.1}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -662,8 +672,8 @@
     <copy todir="${dist}" file="${devlibs}/bin/libgio-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libcairo-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpixman-1-0.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-5.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-glib-4.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-58.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-glib-8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangocairo-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpango-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangoft2-1.0-0.dll"/>
@@ -673,11 +683,13 @@
     <copy todir="${dist}" file="${devlibs}/bin/libxslt.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexslt.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexpat-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/librevenge-0.0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/librevenge-stream-0.0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.9.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.9.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libvisio-0.0.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libcdr-0.0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libvisio-0.1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libcdr-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/icui18n50.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/icudata50.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/icuuc50.dll"/>

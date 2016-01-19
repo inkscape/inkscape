@@ -1583,6 +1583,10 @@ void ObjectsPanel::_blurChangedIter(const Gtk::TreeIter& iter, double blur)
             }
 
             if (radius != 0) {
+                // The modify function expects radius to be in display pixels.
+                Geom::Affine i2d (item->i2dt_affine());
+                double expansion = i2d.descrim();
+                radius *= expansion;
                 SPFilter *filter = modify_filter_gaussian_blur_from_item(_document, item, radius);
                 sp_style_set_property_url(item, "filter", filter, false);
             } else if (item->style->filter.set && item->style->getFilter()) {

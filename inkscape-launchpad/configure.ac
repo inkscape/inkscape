@@ -432,12 +432,12 @@ AC_ARG_ENABLE(poppler-cairo,
 	[enable_poppler_cairo=$enableval], [enable_poppler_cairo=yes])
 
 POPPLER_CFLAGS=""
-PKG_CHECK_MODULES(POPPLER, poppler >= 0.8.3, poppler=yes, poppler=no)
+PKG_CHECK_MODULES(POPPLER, poppler >= 0.20.0, poppler=yes, poppler=no)
 
 if test "x$poppler" = "xyes"; then
 	dnl Working libpoppler
 	dnl Have to test libpoppler-glib presence
-	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.8.3, poppler_glib=yes, poppler_glib=no)
+	PKG_CHECK_MODULES(POPPLER_GLIB, poppler-glib >= 0.20.0, poppler_glib=yes, poppler_glib=no)
 	if test "x$poppler_glib" = "xyes"; then
 		dnl Working libpoppler-glib found
 		dnl Check whether the Cairo SVG backend is available
@@ -449,7 +449,7 @@ if test "x$poppler" = "xyes"; then
 	if test "x$enable_poppler_cairo" = "xyes"; then
 		dnl Have to test libpoppler-cairo presence for PDF preview
 		dnl AC_CHECK_HEADER(Magick++.h, magick_ok=yes, magick_ok=no)
-		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.8.3, poppler_cairo=yes, poppler_cairo=no)
+		PKG_CHECK_MODULES(POPPLER_CAIRO, poppler-cairo >= 0.20.0, poppler_cairo=yes, poppler_cairo=no)
 		if test "x$poppler_glib" = "xyes" -a "x$poppler_cairo" = "xyes" -a \
 			"x$cairo_svg" = "xno"
 		then
@@ -471,32 +471,10 @@ fi
 AC_SUBST(POPPLER_CFLAGS)
 AC_SUBST(POPPLER_LIBS)
 
-PKG_CHECK_MODULES(POPPLER_NEWERRORAPI, poppler >= 0.20.0, popplernewerror=yes, popplernewerror=no)
-if test "x$popplernewerror" = "xyes"; then
-	AC_DEFINE(POPPLER_NEW_ERRORAPI, 1, [Use new error API from Poppler >= 0.20.0])
-fi
-
-
 ink_svd_CPPFLAGS=$CPPFLAGS
 ink_svd_LIBS=$LIBS
 CPPFLAGS="$CPPFLAGS $POPPLER_CFLAGS"
 LIBS="$LIBS $POPPLER_LIBS"
-
-AC_MSG_CHECKING(for new color space API in Poppler)
-popplercolor="no"
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <GfxState.h>]],
-[[
-  typedef GfxColorSpace *(*parse_p)(Object *, Gfx *);
-  parse_p p = &GfxColorSpace::parse;
-]])],
-[popplercolor=yes])
-
-if test "x$popplercolor" = "xyes"; then
-	AC_DEFINE(POPPLER_NEW_COLOR_SPACE_API, 1, [Use color space API from Poppler >= 0.12.2])
-	AC_MSG_RESULT(yes)
-else
-	AC_MSG_RESULT(no)
-fi
 
 PKG_CHECK_MODULES(POPPLER_EVEN_NEWER_COLOR_SPACE_API, poppler >= 0.26.0, popplernewercolorspaceapi=yes, popplernewercolorspaceapi=no)
 if test "x$popplernewercolorspaceapi" = "xyes"; then
@@ -506,24 +484,6 @@ fi
 PKG_CHECK_MODULES(POPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API, poppler >= 0.29.0, popplernewernewcolorspaceapi=yes, popplernewernewcolorspaceapi=no)
 if test "x$popplernewernewcolorspaceapi" = "xyes"; then
 	AC_DEFINE(POPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API, 1, [Use even newer new color space API from Poppler >= 0.29.0])
-fi
-
-# Poppler's b604a008 commit changes this
-AC_MSG_CHECKING([whether GfxPatch in Poppler no longer uses GfxColor])
-popplergfxcolor="no"
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
-		  [[#include <GfxState.h>]],
-[[
-  GfxPatch::ColorValue color = {c: {0}};
-  GfxPatch patch;
-  patch.color[0][0] = color;
-]])
-], [popplergfxcolor=yes])
-if test "x$popplergfxcolor" = "xyes"; then
-	AC_DEFINE(POPPLER_NEW_GFXPATCH, 1, [GfxPatch no longer uses GfxColor in >= 0.15.1])
-	AC_MSG_RESULT(yes)
-else
-	AC_MSG_RESULT(no)
 fi
 
 CPPFLAGS=$ink_svd_CPPFLAGS
@@ -709,7 +669,7 @@ PKG_CHECK_MODULES(INKSCAPE_CXX_DEPS,
 		  )
 
 PKG_CHECK_MODULES(INKSCAPE,
-		  bdw-gc      >= 7.1
+		  bdw-gc      >= 7.2
 		  cairo       >= 1.10
 		  glib-2.0    >= 2.28
 		  gsl
@@ -720,18 +680,6 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  pango       >= 1.24
 		  pangoft2    >= 1.24
 		  )
-
-dnl See if we are able to use new libgc API. This test should be removed and
-dnl the version number in the INKSCAPE test above should be bumped to >= 7.2
-dnl once all supported platforms have the required library version.
-dnl See bug #1530286.
-PKG_CHECK_MODULES(GC_7_2, bdw-gc >= 7.2, with_gc_7_2=yes, with_gc_7_2=no)
-
-if test "x$with_gc_7_2" = "xyes"; then
-	AC_DEFINE(WITH_GC_7_2, 1, [Build with GC 7.2 or higher])
-else
-	AC_MSG_WARN([Using an old version of libgc. Please consider upgrading to version 7.2 or newer.])
-fi
 
 dnl *********************************
 dnl   Allow experimental GTK+3 build
@@ -1160,7 +1108,6 @@ share/extensions/Makefile
 share/extensions/alphabet_soup/Makefile
 share/extensions/Barcode/Makefile
 share/extensions/Poly3DObjects/Makefile
-share/extensions/scour/Makefile
 share/extensions/test/Makefile
 share/extensions/xaml2svg/Makefile
 share/extensions/ink2canvas/Makefile

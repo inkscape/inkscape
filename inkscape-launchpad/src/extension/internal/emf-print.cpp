@@ -1955,7 +1955,7 @@ unsigned int PrintEmf::print_pathv(Geom::PathVector const &pathv, const Geom::Af
 unsigned int PrintEmf::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom::Point const &p,
                             SPStyle const *const style)
 {
-    if (!et) {
+    if (!et || !text) {
         return 0;
     }
 

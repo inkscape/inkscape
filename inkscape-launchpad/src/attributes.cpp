@@ -294,6 +294,7 @@ static SPStyleProp const props[] = {
     /* SPRadialGradient */
     {SP_ATTR_FX, "fx"},
     {SP_ATTR_FY, "fy"},
+    {SP_ATTR_FR, "fr"},
     /* SPMeshPatch */
     {SP_ATTR_TENSOR, "tensor"},
     //{SP_ATTR_TYPE, "type"},

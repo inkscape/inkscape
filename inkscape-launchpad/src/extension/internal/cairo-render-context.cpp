@@ -1245,11 +1245,12 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
         Geom::Point c (rg->cx.computed, rg->cy.computed);
         Geom::Point f (rg->fx.computed, rg->fy.computed);
         double r = rg->r.computed;
+        double fr = rg->fr.computed;
         if (pbox && SP_GRADIENT(rg)->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX)
             apply_bbox2user = true;
 
         // create radial gradient pattern
-        pattern = cairo_pattern_create_radial(f[Geom::X], f[Geom::Y], 0, c[Geom::X], c[Geom::Y], r);
+        pattern = cairo_pattern_create_radial(f[Geom::X], f[Geom::Y], fr, c[Geom::X], c[Geom::Y], r);
 
         // add stops
         for (gint i = 0; unsigned(i) < rg->vector.stops.size(); i++) {

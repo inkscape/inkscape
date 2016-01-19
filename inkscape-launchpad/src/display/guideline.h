@@ -16,17 +16,18 @@
 
 #include <2geom/point.h>
 #include "sp-canvas-item.h"
-#include "knot.h"
 
 #define SP_TYPE_GUIDELINE (sp_guideline_get_type())
 #define SP_GUIDELINE(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_GUIDELINE, SPGuideLine))
 #define SP_IS_GUIDELINE(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_GUIDELINE))
 
+struct SPCtrl;
+
 struct SPGuideLine {
     SPCanvasItem item;
     Geom::Affine affine;
 
-    SPKnot *origin; // unlike 'item', this is only held locally
+    SPCtrl *origin; // unlike 'item', this is only held locally
 
     guint32 rgba;
 

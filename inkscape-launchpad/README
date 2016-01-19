@@ -24,16 +24,21 @@ processes.
 Basic Installation
 ==================
 
-Inkscape uses the standard procedure for compilation and installation: 
+Inkscape version 0.92 and newer can be build using cmake:
 
-  ./configure
+  mkdir build
+  cd build
+  cmake ..
   make
   make install
 
-If a "./configure" file is not present, you can create it by running
-the "./autogen.sh" command, which calls in turn a number of other
-programs such as automake and autoconf.  See INSTALL for more
-details. 
+We also still include autoconf in 0.92 as an alternate build system, in
+case anything goes haywire with the new cmake scripts:
+
+  ./autogen.sh   # Optional, use if configure doesn't exist
+  ./configure
+  make
+  make install
 
 For platform specific instructions please read the README file that
 is associated with that platform (e.g. for Mac OS X read README.osx)

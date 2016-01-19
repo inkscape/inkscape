@@ -25,6 +25,7 @@ public:
     SVGLength r;
     SVGLength fx;
     SVGLength fy;
+    SVGLength fr; // Focus radius. Added in SVG 2
 
     virtual cairo_pattern_t* pattern_new(cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 

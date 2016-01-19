@@ -296,6 +296,7 @@ enum SPAttributeEnum {
     /* SPRadialGradient */
     SP_ATTR_FX,
     SP_ATTR_FY,
+    SP_ATTR_FR,
     /* SPMeshPatch */
     SP_ATTR_TENSOR,
     //SP_ATTR_TYPE,

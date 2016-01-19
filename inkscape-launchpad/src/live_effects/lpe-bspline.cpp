@@ -20,8 +20,8 @@ namespace LivePathEffect {
 
 const double HANDLE_CUBIC_GAP = 0.001;
 const double NO_POWER = 0.0;
-const double DEFAULT_START_POWER = 0.333334;
-const double DEFAULT_END_POWER = 0.666667;
+const double DEFAULT_START_POWER = 1.0/3.0;
+const double DEFAULT_END_POWER = 2.0/3.0;
 Geom::PathVector hp;
 void sp_bspline_drawHandle(Geom::Point p, double helper_size);
 

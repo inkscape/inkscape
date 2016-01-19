@@ -1120,9 +1120,9 @@ ink_cairo_pattern_create_checkerboard()
 
     cairo_t *ct = cairo_create(s);
     cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
-    cairo_set_source_rgb(ct, 0.75, 0.75, 0.75);
+    cairo_set_source_rgb(ct, 0.77, 0.77, 0.77);
     cairo_paint(ct);
-    cairo_set_source_rgb(ct, 0.5, 0.5, 0.5);
+    cairo_set_source_rgb(ct, 0.69, 0.69, 0.69);
     cairo_rectangle(ct, 0, 0, w, h);
     cairo_rectangle(ct, w, h, w, h);
     cairo_fill(ct);

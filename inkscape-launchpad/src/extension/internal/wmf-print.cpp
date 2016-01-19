@@ -1325,7 +1325,7 @@ unsigned int PrintWmf::print_pathv(Geom::PathVector const &pathv, const Geom::Af
 unsigned int PrintWmf::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom::Point const &p,
                             SPStyle const *const style)
 {
-    if (!wt) {
+    if (!wt || !text) {
         return 0;
     }
 
@@ -1368,6 +1368,9 @@ unsigned int PrintWmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
     // else down into latin1, which is all WMF can handle.  If the language isn't English expect terrible results.
     char *latin1_text = U_Utf16leToLatin1(unicode_text, 0, NULL);
     free(unicode_text);
+
+    // in some cases a UTF string may reduce to NO latin1 characters, which returns NULL
+    if(!latin1_text){ return 0; }
 
     //PPT gets funky with text within +-1 degree of a multiple of 90, but only for SOME fonts.Snap those to the central value
     //Some funky ones:  Arial, Times New Roman

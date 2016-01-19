@@ -42,6 +42,7 @@
 #include "selection-chemistry.h"
 #include "snap.h"
 #include "sp-path.h"
+#include "sp-use.h"
 #include "sp-namedview.h"
 #include "live_effects/lpe-powerstroke.h"
 #include "style.h"
@@ -271,7 +272,11 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
 static void spdc_apply_bend_shape(gchar const *svgd, FreehandBase *dc, SPItem *item)
 {
     using namespace Inkscape::LivePathEffect;
-    if(!SP_LPE_ITEM(item)->hasPathEffectOfType(BEND_PATH)){
+    SPUse *use = dynamic_cast<SPUse *>(item);
+    if ( use ) {
+        return;
+    }
+    if(!SP_IS_LPE_ITEM(item) || !SP_LPE_ITEM(item)->hasPathEffectOfType(BEND_PATH)){
         Effect::createAndApply(BEND_PATH, dc->desktop->doc(), item);
     }
     Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();

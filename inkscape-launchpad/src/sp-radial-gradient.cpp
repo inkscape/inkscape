@@ -16,6 +16,7 @@ SPRadialGradient::SPRadialGradient() : SPGradient() {
     this->r.unset(SVGLength::PERCENT, 0.5, 0.5);
     this->fx.unset(SVGLength::PERCENT, 0.5, 0.5);
     this->fy.unset(SVGLength::PERCENT, 0.5, 0.5);
+    this->fr.unset(SVGLength::PERCENT, 0.5, 0.5);
 }
 
 SPRadialGradient::~SPRadialGradient() {
@@ -32,6 +33,7 @@ void SPRadialGradient::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "r" );
     this->readAttr( "fx" );
     this->readAttr( "fy" );
+    this->readAttr( "fr" );
 }
 
 /**
@@ -89,6 +91,13 @@ void SPRadialGradient::set(unsigned key, gchar const *value) {
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
+        case SP_ATTR_FR:
+            if (!this->fr.read(value)) {
+                this->fr.unset(SVGLength::PERCENT, 0.5, 0.5);
+            }
+            this->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+
         default:
             SPGradient::set(key, value);
             break;
@@ -123,6 +132,10 @@ Inkscape::XML::Node* SPRadialGradient::write(Inkscape::XML::Document *xml_doc, I
     	sp_repr_set_svg_double(repr, "fy", this->fy.computed);
     }
 
+    if ((flags & SP_OBJECT_WRITE_ALL) || this->fr._set) {
+    	sp_repr_set_svg_double(repr, "fr", this->fr.computed);
+    }
+
     SPGradient::write(xml_doc, repr, flags);
 
     return repr;
@@ -135,6 +148,7 @@ cairo_pattern_t* SPRadialGradient::pattern_new(cairo_t *ct, Geom::OptRect const 
     Geom::Point center(this->cx.computed, this->cy.computed);
 
     double radius = this->r.computed;
+    double focusr = this->fr.computed;
     double scale = 1.0;
     double tolerance = cairo_get_tolerance(ct);
 
@@ -159,8 +173,10 @@ cairo_pattern_t* SPRadialGradient::pattern_new(cairo_t *ct, Geom::OptRect const 
     Geom::Point d(focus - center);
     Geom::Point d_user(d.length(), 0);
     Geom::Point r_user(radius, 0);
+    Geom::Point fr_user(focusr, 0);
     d_user *= gs2user.withoutTranslation();
     r_user *= gs2user.withoutTranslation();
+    fr_user *= gs2user.withoutTranslation();
 
     double dx = d_user.x(), dy = d_user.y();
     cairo_user_to_device_distance(ct, &dx, &dy);
@@ -181,7 +197,7 @@ cairo_pattern_t* SPRadialGradient::pattern_new(cairo_t *ct, Geom::OptRect const 
     }
 
     cairo_pattern_t *cp = cairo_pattern_create_radial(
-        scale * d.x() + center.x(), scale * d.y() + center.y(), 0,
+        scale * d.x() + center.x(), scale * d.y() + center.y(), focusr,
         center.x(), center.y(), radius);
 
     sp_gradient_pattern_common_setup(cp, this, bbox, opacity);
