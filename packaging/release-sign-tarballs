@@ -1,0 +1,109 @@
+#!/bin/bash
+
+SIGNER="bryce@bryceharrington.org"
+VERSION="0.92"
+PKG_NAME="inkscape"
+
+#                       Locate Dependencies
+#------------------------------------------------------------------------------
+
+MD5SUM=`which md5sum || which gmd5sum`
+SHA1SUM=`which sha1sum || which gsha1sum`
+SHA256SUM=`which sha256sum || which gsha256sum`
+
+# Choose which make program to use (could be gmake)
+MAKE=${MAKE:="make"}
+
+# Set the default make tarball creation command
+MAKE_DIST_CMD=distcheck
+
+# Choose which grep program to use (on Solaris, must be gnu grep)
+if [ "x$GREP" = "x" ] ; then
+    if [ -x /usr/gnu/bin/grep ] ; then
+	GREP=/usr/gnu/bin/grep
+    else
+	GREP=grep
+    fi
+fi
+
+# Find path for GnuPG v2
+if [ "x$GPG" = "x" ] ; then
+    if [ -x /usr/bin/gpg2 ] ; then
+	GPG=/usr/bin/gpg2
+    else
+	GPG=gpg
+    fi
+fi
+
+#                       Function: sign_or_fail
+#------------------------------------------------------------------------------
+#
+# Sign the given file, if any
+# Output the name of the signature generated to stdout (all other output to
+# stderr)
+# Return 0 on success, 1 on fail
+#
+sign_or_fail() {
+    if [ -n "$1" ]; then
+	sig=$1.sig
+	rm -f $sig
+
+	[ -n ${SIGNER} ] && signer="-u $SIGNER"
+
+	echo "$GPG $signer --detach-sign $1" 1>&2
+	$GPG $signer --detach-sign $1 1>&2
+	if [ $? -ne 0 ]; then
+	    echo "Error: failed to sign $1." >&2
+	    return 1
+	fi
+	echo $sig
+    fi
+    return 0
+}
+
+
+sign_packages() {
+    targz="${PKG_NAME}-${VERSION}.tar.gz"
+    tarbz2="${PKG_NAME}-${VERSION}.tar.bz2"
+    tarxz="${PKG_NAME}-${VERSION}.tar.xz"
+    zip="${PKG_NAME}-${VERSION}.zip"
+
+    # The tar.gz is always required
+    gpgsignerr=0
+    siggz="$(sign_or_fail ${targz})"
+    gpgsignerr=$((${gpgsignerr} + $?))
+
+    if [ -e "${tarbz2}" ]; then
+	sigbz2="$(sign_or_fail ${tarbz2})"
+	gpgsignerr=$((${gpgsignerr} + $?))
+    fi
+    if [ -e "${tarxz}" ]; then
+	sigxz="$(sign_or_fail ${tarxz})"
+	gpgsignerr=$((${gpgsignerr} + $?))
+    fi
+    if [ -e "${zip}" ]; then
+	sigzip="$(sign_or_fail ${zip})"
+	gpgsignerr=$((${gpgsignerr} + $?))
+    fi
+
+    if [ ${gpgsignerr} -ne 0 ]; then
+	echo "Error: unable to sign at least one of the tarballs."
+	return 1
+    fi
+
+    return 0;
+}
+
+generate_announce() {
+}
+
+process() {
+    sign_packages
+    generate_announce > "$tar_name.announce"
+    echo "Info: [ANNOUNCE] template generated in \"$tar_name.announce\" file."
+    echo "      Please pgp sign and send it."
+
+    return 0
+}
+
+process
