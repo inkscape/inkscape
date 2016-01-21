@@ -37,6 +37,65 @@ if [ "x$GPG" = "x" ] ; then
     fi
 fi
 
+#------------------------------------------------------------------------------
+
+check_local_changes() {
+    # TODO
+    return 1
+}
+
+#------------------------------------------------------------------------------
+#                       Function: make_dist
+#
+# Create the package distribution
+# Return 0 on success, 1 on fail
+make_dist() {
+    if [ ! -d .bzr ]; then
+	echo "Error: There is no bzr repository here: $(pwd)"
+	return 1
+    fi
+
+    # Change to an out-of-source build directory
+    config_indicator=CMakeCache.txt
+    status_file=$(find . -name ${config_indicator} -type f)
+    if [ $? -ne 0 ]; then
+	echo "Error: Failed to locate ${config_indicator}."
+	echo "Has the module been configured?"
+	return 1
+    fi
+    configNum=$(echo "$status_file" | wc -l | sed 's:^ *::')
+    if [ x"$configNum" = x0 ]; then
+	echo "Error: Failed to locate ${config_indicator}, has the module been configured?"
+	return 1
+    elif [ x"$configNum" != x1 ]; then
+	echo "Error: More than one ${config_indicator} file was found."
+	echo "Please cleanup previously failed attempts at distcheck."
+    fi
+
+    build_dir=$(dirname ${status_file})
+    cd ${build_dir}
+    if [ $? -ne 0 ]; then
+	echo "Error: Failed to cd to build directory ${build_dir}."
+	return 1
+    fi
+
+    check_local_changes
+    if [ $? -ne 0 ]; then
+	cd ${top_src}
+	return 1
+    fi
+
+    echo "Info: running 'make $MAKE_DIST_CMD' to create tarballs:"
+    ${MAKE} ${MAKE_DIST_CMD} > /dev/null
+    if [ $? -ne 0 ]; then
+	echo "Error: '${MAKE} ${MAKEFLAGS} ${MAKE_DIST_CMD}' failed."
+	cd $top_src
+	return 1
+    fi
+
+    return 0
+}
+
 #                       Function: sign_or_fail
 #------------------------------------------------------------------------------
 #
@@ -138,6 +197,9 @@ RELEASE
 }
 
 process() {
+    top_src=$(pwd)
+
+    make_dist
     sign_packages
     generate_announce > "$tar_name.announce"
     echo "Info: [ANNOUNCE] template generated in \"$tar_name.announce\" file."
