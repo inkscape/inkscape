@@ -5,6 +5,7 @@ VERSION="0.92"
 PKG_NAME="inkscape"
 LIST_TO="inkscape-announce@lists.sf.net"
 LIST_CC="inkscape-devel@lists.sf.net"
+VCS_SYSTEM="bzr"
 
 #                       Locate Dependencies
 #------------------------------------------------------------------------------
@@ -39,6 +40,26 @@ fi
 
 #------------------------------------------------------------------------------
 
+usage() {
+    basename="`expr "//$0" : '.*/\([^/]*\)'`"
+    cat <<HELP
+
+Usage: $basename [options] path...                                                      
+
+Where "path" is a relative path to a ${VCS_SYSTEM} module, including '.'.                         
+
+Options:
+  (none)
+
+Environment variables:
+  MAKE:        The name of the make command [make]
+  MAKEFLAGS:   Options to pass to all \$(MAKE) invocations []
+
+HELP
+}
+
+#------------------------------------------------------------------------------
+
 check_local_changes() {
     # TODO
     return 1
@@ -50,8 +71,11 @@ check_local_changes() {
 # Create the package distribution
 # Return 0 on success, 1 on fail
 make_dist() {
-    if [ ! -d .bzr ]; then
+    if [ $VCS_SYSTEM = "bzr" ] && [ ! -d .bzr ]; then
 	echo "Error: There is no bzr repository here: $(pwd)"
+	return 1
+    else
+	echo "Error: Unrecognized version control '$VCS_SYSTEM'."
 	return 1
     fi
 
@@ -86,7 +110,7 @@ make_dist() {
     fi
 
     echo "Info: running 'make $MAKE_DIST_CMD' to create tarballs:"
-    ${MAKE} ${MAKE_DIST_CMD} > /dev/null
+    ${MAKE} ${MAKEFLAGS} ${MAKE_DIST_CMD} > /dev/null
     if [ $? -ne 0 ]; then
 	echo "Error: '${MAKE} ${MAKEFLAGS} ${MAKE_DIST_CMD}' failed."
 	cd $top_src
