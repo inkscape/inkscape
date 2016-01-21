@@ -3,6 +3,8 @@
 SIGNER="bryce@bryceharrington.org"
 VERSION="0.92"
 PKG_NAME="inkscape"
+LIST_TO="inkscape-announce@lists.sf.net"
+LIST_CC="inkscape-devel@lists.sf.net"
 
 #                       Locate Dependencies
 #------------------------------------------------------------------------------
@@ -67,34 +69,72 @@ sign_packages() {
     tarbz2="${PKG_NAME}-${VERSION}.tar.bz2"
     tarxz="${PKG_NAME}-${VERSION}.tar.xz"
     zip="${PKG_NAME}-${VERSION}.zip"
+    signatures=""
 
-    # The tar.gz is always required
-    gpgsignerr=0
-    siggz="$(sign_or_fail ${targz})"
-    gpgsignerr=$((${gpgsignerr} + $?))
+    for tarball in $targz $tarxz $tarbz2 $zip; do
+	if [ -e "${tarball}" ]; then
+	    sig="$(sign_or_fail ${tarball})"
+	    gpgsignerr=$((${gpgsignerr} + $?))
+	    sig_url="http://inkscape.org/.../$sig"
+	    signatures="$signatures
+https://inkscape.org/en/download/source/
+MD5:  `$MD5SUM $tarball`
+SHA1: `$SHA1SUM $tarball`
+SHA256: `$SHA256SUM $tarball`
+$sig_url
 
-    if [ -e "${tarbz2}" ]; then
-	sigbz2="$(sign_or_fail ${tarbz2})"
-	gpgsignerr=$((${gpgsignerr} + $?))
-    fi
-    if [ -e "${tarxz}" ]; then
-	sigxz="$(sign_or_fail ${tarxz})"
-	gpgsignerr=$((${gpgsignerr} + $?))
-    fi
-    if [ -e "${zip}" ]; then
-	sigzip="$(sign_or_fail ${zip})"
-	gpgsignerr=$((${gpgsignerr} + $?))
-    fi
+"
+	fi
+    done
 
     if [ ${gpgsignerr} -ne 0 ]; then
 	echo "Error: unable to sign at least one of the tarballs."
 	return 1
+    elif [ -z "$siggz" ]; then
+	# The tar.gz is always required
+	echo "Error: Unable to sign the tar.gz file."
+	return 2
     fi
 
     return 0;
 }
 
 generate_announce() {
+    # TODO: Once converted to git, enable display of shortlog
+    #tag_previous=`git describe --abbrev=0 HEAD^ 2>/dev/null`
+    #tag_range="FIXME..FIXME"
+    #`git log --no-merges "$tag_range" | git shortlog`
+
+    tag_name="$tar_name"
+
+    cat <<RELEASE
+Subject: [ANNOUNCE] $PKG_NAME $VERSION
+To: $LIST_TO
+Cc: $LIST_CC
+
+The Inkscape community proudly announces the release of Inkscape $VERSION.
+
+    https://inkscape.org/en/download/
+
+Inkscape is a drawing and painting tool similar to Illustrator,
+CorelDraw, and Xara X, but with features, new tools, and interface style
+of its own. It emphasizes the W3C standard Scalable Vector Graphics
+(SVG) file format, but reads and writes a wealth of other formats
+including PDF, so it is an easy complement to your other graphics and
+desktop tools. Best of all, Inkscape is created *by* the community *for*
+the community: Inkscape is 100% Open Source and freely available to
+everyone in the world.
+
+<INSERT DETAILS ABOUT THE RELEASE HERE>
+
+The above barely scratches the surface of what's included in this
+release.  For the full scoop, please see our detailed Release Notes:
+
+    http://wiki.inkscape.org/wiki/index.php/Release_notes/$VERSION
+
+git tag: $tag_name
+$signatures
+RELEASE
 }
 
 process() {
