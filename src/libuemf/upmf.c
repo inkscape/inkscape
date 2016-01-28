@@ -21,11 +21,11 @@
 
 /*
 File:      upmf.c
-Version:   0.0.11
-Date:      28-MAY-2015
+Version:   0.0.12
+Date:      26-JAN-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -4125,7 +4125,6 @@ U_PSEUDO_OBJ *U_PMR_DRAWCURVE_set(uint32_t PenID, U_FLOAT Tension, uint32_t Offs
     \brief  Create and set a U_PMR_DRAWDRIVERSTRING PseudoObject
     \return Pointer to PseudoObject, NULL on error
     \param  FontID      U_PMF_FONT object in the EMF+ object table (0-63, inclusive)
-    \param  Tension     Controls splines, 0 is straight line, >0 is curved
     \param  BrushID     U_PSEUDO_OBJ containing a U_PMF_ARGB or a U_PMF_4NUM. Color or U_PMF_BRUSH object in the EMF+ object table (0-63, inclusive)
     \param  DSOFlags    DriverStringOptions flags
     \param  HasMatrix   If 1 record contains a TransformMatrix field, if 0 it does not.
@@ -4137,7 +4136,7 @@ U_PSEUDO_OBJ *U_PMR_DRAWCURVE_set(uint32_t PenID, U_FLOAT Tension, uint32_t Offs
 
     EMF+ manual 2.3.4.6, Microsoft name: EmfPlusDrawDriverString Record, Index 0x36
 */
-U_PSEUDO_OBJ *U_PMR_DRAWDRIVERSTRING_set(uint32_t FontID, U_FLOAT Tension, const U_PSEUDO_OBJ *BrushID, 
+U_PSEUDO_OBJ *U_PMR_DRAWDRIVERSTRING_set(uint32_t FontID, const U_PSEUDO_OBJ *BrushID, 
       uint32_t DSOFlags, uint32_t HasMatrix, uint32_t GlyphCount,
       const uint16_t *Glyphs, const U_PSEUDO_OBJ *Points, const U_PSEUDO_OBJ *Tm){
    int btype;
@@ -4163,7 +4162,6 @@ U_PSEUDO_OBJ *U_PMR_DRAWDRIVERSTRING_set(uint32_t FontID, U_FLOAT Tension, const
    U_PSEUDO_OBJ *ph = U_PMR_CMN_HDR_set(U_PMR_DRAWDRIVERSTRING,utmp16,Size);
    const U_SERIAL_DESC List[] = {
       {ph->Data,ph->Used, 1, U_XE},
-      {&Tension,                       4,                          1,        U_LE},
       {BrushID->Data,                  BrushID->Used,              1,        U_XE},
       {&DSOFlags,                      4,                          1,        U_LE},
       {&HasMatrix,                     4,                          1,        U_LE},
@@ -7469,7 +7467,6 @@ int U_PMR_DRAWCURVE_get(const char *contents, U_PMF_CMN_HDR *Header,
     \param  Header      Common header
     \param  FontID      U_PMF_FONT object in the EMF+ object table (0-63, inclusive)
     \param  btype       Set: BrushID is an U_PFM_ARGB; Clear: index of U_PMF_BRUSH object in EMF+ object table.
-    \param  Tension     Controls splines, 0 is straight line, >0 is curved
     \param  BrushID     Color or index of  U_PMF_BRUSH object in the EMF+ object table, depends on Flags bit0
     \param  DSOFlags    DriverStringOptions flags
     \param  HasMatrix   If 1 record contains a TransformMatrix field, if 0 it does not.
@@ -7482,9 +7479,9 @@ int U_PMR_DRAWCURVE_get(const char *contents, U_PMF_CMN_HDR *Header,
 */
 int U_PMR_DRAWDRIVERSTRING_get(const char *contents, U_PMF_CMN_HDR *Header,
       uint32_t *FontID, int *btype,
-      U_FLOAT *Tension, uint32_t *BrushID, uint32_t *DSOFlags, uint32_t *HasMatrix, uint32_t *Elements,
+      uint32_t *BrushID, uint32_t *DSOFlags, uint32_t *HasMatrix, uint32_t *Elements,
       uint16_t **Glyphs, U_PMF_POINTF **Points, U_PMF_TRANSFORMMATRIX **Matrix){
-   if(!contents || !FontID || !btype || !Tension || !BrushID || 
+   if(!contents || !FontID || !btype || !BrushID || 
       !DSOFlags || !HasMatrix || !Elements || !Glyphs || !Points || !Matrix){ return(0); }
 
    const char *blimit = contents;
@@ -7496,7 +7493,6 @@ int U_PMR_DRAWDRIVERSTRING_get(const char *contents, U_PMF_CMN_HDR *Header,
 
    *btype  = (lclHeader.Flags & U_PPF_B ? 1 : 0 );
    *FontID = (lclHeader.Flags >> U_FF_SHFT_OID8) & U_FF_MASK_OID8;
-   U_PMF_SERIAL_get(&contents, Tension,   4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, BrushID,   4, 1, (*btype ? U_XE : U_LE)); /* color is not byte swapped, ID integer is */
    U_PMF_SERIAL_get(&contents, DSOFlags,  4, 1, U_LE);
    U_PMF_SERIAL_get(&contents, HasMatrix, 4, 1, U_LE);

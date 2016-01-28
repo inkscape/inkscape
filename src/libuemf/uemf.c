@@ -16,11 +16,11 @@
 
 /*
 File:      uemf.c
-Version:   0.0.30
-Date:      20-MAR-2015
+Version:   0.0.31
+Date:      26-JAN-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus

@@ -36,11 +36,11 @@
 
 /*
 File:      uwmf.h
-Version:   0.0.12
-Date:      28-APR-2015
+Version:   0.0.13
+Date:      26-JAN-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UWMF_
@@ -643,7 +643,8 @@ enum U_WMR_TYPES{
 #define U_SIZE_REGION                                20         /**< X   22   20 is minums the variable part */
 #define U_SIZE_BITMAP16                              10         /**< +   10 */
 #define U_SIZE_BITMAPCOREHEADER                      12         /**< +   12 */
-#define U_SIZE_BITMAPINFOHEADER                      40         /**< +   40 */
+// also defined in uemf.h, avoid redefining.  Same value in both places, of course.
+// # define U_SIZE_BITMAPINFOHEADER                      40         /**< +   40 */
 #define U_SIZE_BITMAPV4HEADER                       108         /**< ?  108 not tested */
 #define U_SIZE_BITMAPV5HEADER                       124         /**< ?  124 not tested */
 #define U_SIZE_WLOGBRUSH                              8         /**< +    8 */

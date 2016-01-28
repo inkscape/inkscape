@@ -6,11 +6,11 @@
 
 /*
 File:      uemf_print.c
-Version:   0.0.20
-Date:      21-MAY-2015
+Version:   0.0.21
+Date:      26-JAN-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -1884,15 +1884,21 @@ void U_EMRPAINTRGN_print(const char *contents){
 */
 void U_EMREXTSELECTCLIPRGN_print(const char *contents){
    PU_EMREXTSELECTCLIPRGN pEmr = (PU_EMREXTSELECTCLIPRGN) (contents);
-   if(pEmr->emr.nSize < sizeof(U_EMREXTSELECTCLIPRGN)){
+   if(pEmr->emr.nSize < U_SIZE_EMREXTSELECTCLIPRGN){
       printf("   record corruption HERE\n");
       return;
    }
    const char *blimit = contents + pEmr->emr.nSize;
    printf("   cbRgnData:      %u\n",pEmr->cbRgnData);
    printf("   iMode:          %u\n",pEmr->iMode);
-   const char *minptr = MAKE_MIN_PTR(((const char *) &pEmr->RgnData + pEmr->cbRgnData),blimit);
-   printf("   RegionData: "); rgndata_print(pEmr->RgnData, minptr); printf("\n");
+   if(pEmr->iMode == U_RGN_COPY && !pEmr->cbRgnData){
+      printf("   RegionData: none (Clip region becomes NULL)\n");
+   }
+   else {
+      const char *minptr = MAKE_MIN_PTR(((const char *) &pEmr->RgnData + pEmr->cbRgnData),blimit);
+      printf("   RegionData: "); rgndata_print(pEmr->RgnData, minptr); printf("\n");
+   }
+
 } 
 
 // U_EMRBITBLT               76

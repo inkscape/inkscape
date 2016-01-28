@@ -27,11 +27,11 @@
 
 /*
 File:      upmf.h
-Version:   0.0.4
-Date:      17-MAR-2015
+Version:   0.0.5
+Date:      26-JAN-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UPMF_
@@ -2289,7 +2289,6 @@ typedef struct {
 */
 typedef struct {
     U_PMF_CMN_HDR         Header;           //!< Common header
-    U_FLOAT               Tension;          //!< Controls splines, 0 is straight line, >0 is curved
     uint32_t              BrushID;          //!< Color or index to Brush object, depends on Flags bit0
     uint32_t              DSOFlags;         //!< DriverStringOptions flags
     uint32_t              HasMatrix;        //!< If 1 record contains a TransformMatrix field, if 0 it does not.
@@ -2987,7 +2986,7 @@ U_PSEUDO_OBJ *U_PMR_DRAWARC_set(uint32_t PenID, U_FLOAT Start, U_FLOAT Sweep, co
 U_PSEUDO_OBJ *U_PMR_DRAWBEZIERS_set(uint32_t PenID, const U_PSEUDO_OBJ *Points);
 U_PSEUDO_OBJ *U_PMR_DRAWCLOSEDCURVE_set(uint32_t PenID, U_FLOAT Tension, const U_PSEUDO_OBJ *Points);
 U_PSEUDO_OBJ *U_PMR_DRAWCURVE_set(uint32_t PenID, U_FLOAT Tension,uint32_t Offset, uint32_t NSegs, const U_PSEUDO_OBJ *Points);
-U_PSEUDO_OBJ *U_PMR_DRAWDRIVERSTRING_set(uint32_t FontID, U_FLOAT Tension, const U_PSEUDO_OBJ *BrushID, 
+U_PSEUDO_OBJ *U_PMR_DRAWDRIVERSTRING_set(uint32_t FontID, const U_PSEUDO_OBJ *BrushID, 
       uint32_t DSOFlags, uint32_t HasMatrix, uint32_t GlyphCount,
       const uint16_t *Glyphs, const U_PSEUDO_OBJ *Points, const U_PSEUDO_OBJ *Tm);
 U_PSEUDO_OBJ *U_PMR_DRAWELLIPSE_set(uint32_t PenID, const U_PSEUDO_OBJ *Rect);
@@ -3125,7 +3124,7 @@ int U_PMR_DRAWARC_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *Pen
 int U_PMR_DRAWBEZIERS_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *PenID, int *ctype, int *RelAbs, uint32_t *Elements,  U_PMF_POINTF **Points);
 int U_PMR_DRAWCLOSEDCURVE_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *PenID, int *ctype, int *RelAbs, U_FLOAT *Tension, uint32_t *Elements, U_PMF_POINTF **Points);
 int U_PMR_DRAWCURVE_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *PenID, int *ctype, U_FLOAT *Tension, uint32_t *Offset, uint32_t *NSegs, uint32_t *Elements, U_PMF_POINTF **Points);
-int U_PMR_DRAWDRIVERSTRING_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *FontID, int *btype, U_FLOAT *Tension, uint32_t *BrushID, uint32_t *DSOFlags, uint32_t *HasMatrix, uint32_t *Elements, uint16_t **Glyphs, U_PMF_POINTF **Points, U_PMF_TRANSFORMMATRIX **Matrix);
+int U_PMR_DRAWDRIVERSTRING_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *FontID, int *btype, uint32_t *BrushID, uint32_t *DSOFlags, uint32_t *HasMatrix, uint32_t *Elements, uint16_t **Glyphs, U_PMF_POINTF **Points, U_PMF_TRANSFORMMATRIX **Matrix);
 int U_PMR_DRAWELLIPSE_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *PenID, int *ctype, U_PMF_RECTF *Rect);
 int U_PMR_DRAWIMAGE_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *ImgID, int *ctype, uint32_t *ImgAttrID, int32_t *SrcUnit, U_PMF_RECTF *SrcRect, U_PMF_RECTF *DstRect);
 int U_PMR_DRAWIMAGEPOINTS_get(const char *contents, U_PMF_CMN_HDR *Header, uint32_t *ImgID, int *ctype, int *etype, int *RelAbs, uint32_t *ImgAttrID, int32_t *SrcUnit, U_PMF_RECTF *SrcRect, uint32_t *Elements, U_PMF_POINTF **Points);

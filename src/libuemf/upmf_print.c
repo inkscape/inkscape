@@ -6,11 +6,11 @@
 
 /*
 File:      upmf_print.c
-Version:   0.0.7
-Date:      21-MAY-2015
+Version:   0.0.8
+Date:      26-JAN-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 /* compiler options:
@@ -2379,19 +2379,19 @@ int U_PMR_DRAWDRIVERSTRING_print(const char *contents){
    unsigned int           i;
    uint32_t               FontID;
    int                    btype;
-   U_FLOAT                Tension;
    uint32_t               BrushID, DSOFlags, HasMatrix, Elements;
    uint16_t              *Glyphs;
+   uint16_t              *GlyphsIter;
    U_PMF_POINTF          *Points;
    U_PMF_TRANSFORMMATRIX *Matrix;
    int status = U_PMR_DRAWDRIVERSTRING_get(contents, NULL, &FontID, &btype,
-      &Tension, &BrushID, &DSOFlags, &HasMatrix, &Elements,&Glyphs, &Points, &Matrix);
+       &BrushID, &DSOFlags, &HasMatrix, &Elements,&Glyphs, &Points, &Matrix);
    if(status){
-      printf("   +  FontID:%u btype:%d Tension:%f BrushID:%u DSOFlags:%X Elements:%u\n", FontID,btype,Tension, BrushID, DSOFlags, Elements);
+      printf("   +  FontID:%u btype:%d BrushID:%u DSOFlags:%X Elements:%u\n", FontID,btype, BrushID, DSOFlags, Elements);
 
       printf("   +  Glyphs:");
       if(*Glyphs){
-         for(i=0; i<Elements;i++, Glyphs++){ printf(" %u",*Glyphs); }
+         for(GlyphsIter=Glyphs, i=0; i<Elements;i++, GlyphsIter++){ printf(" %u",*GlyphsIter); }
          free(Glyphs);
       }
       else {
