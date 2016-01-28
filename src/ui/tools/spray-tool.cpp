@@ -936,7 +936,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Geom::Point center = item->getCenter();
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 SPCSSAttr *css = sp_repr_css_attr_new();
-                if(no_overlap || picker || !over_transparent || !over_no_transparent){
+                if(mode == SPRAY_MODE_ERASER || no_overlap || picker || !over_transparent || !over_no_transparent){
                     if(!fit_item(desktop
                                  , item
                                  , a
@@ -1072,7 +1072,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Geom::Point center=item->getCenter();
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint());
                 SPCSSAttr *css = sp_repr_css_attr_new();
-                if(no_overlap || picker || !over_transparent || !over_no_transparent){
+                if(mode == SPRAY_MODE_ERASER || no_overlap || picker || !over_transparent || !over_no_transparent){
                     if(!fit_item(desktop
                                  , item
                                  , a
