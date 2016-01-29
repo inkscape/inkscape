@@ -99,6 +99,14 @@ Gtk::Widget *LPEFilletChamfer::newWidget()
     vbox->set_border_width(5);
     vbox->set_homogeneous(false);
     vbox->set_spacing(2);
+    Gtk::HBox *advertaising = Gtk::manage(new Gtk::HBox(true, 0));
+    Gtk::Button *advert = Gtk::manage(new Gtk::Button(Glib::ustring(_("IMPORTANT! New version soon..."))));
+    advertaising->pack_start(*advert, true, true, 2);
+    vbox->pack_start(*advertaising, true, true, 2);
+    Gtk::HBox *advertaising2 = Gtk::manage(new Gtk::HBox(true, 0));
+    Gtk::Button *advert2 = Gtk::manage(new Gtk::Button(Glib::ustring(_("Not compatible. Convert works to paths."))));
+    advertaising2->pack_start(*advert2, true, true, 2);
+    vbox->pack_start(*advertaising2, true, true, 2);
     std::vector<Parameter *>::iterator it = param_vector.begin();
     while (it != param_vector.end()) {
         if ((*it)->widget_is_visible) {
