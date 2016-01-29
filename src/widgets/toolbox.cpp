@@ -1467,8 +1467,11 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
                 gtk_table_attach( GTK_TABLE(holder), swatch_, 1, 2, 0, 1, (GtkAttachOptions)(GTK_SHRINK | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), AUX_BETWEEN_BUTTON_GROUPS, AUX_SPACING );
 #endif
             }
-
-            gtk_widget_show_now( holder );
+            if(i==0){
+                gtk_widget_show_all( holder );
+            } else {
+                gtk_widget_show_now( holder );
+            }
             sp_set_font_size_smaller( holder );
 
             gtk_size_group_add_widget( grouper, holder );
