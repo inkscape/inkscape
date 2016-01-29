@@ -104,7 +104,7 @@ Gtk::Widget *LPEFilletChamfer::newWidget()
     advertaising->pack_start(*advert, true, true, 2);
     vbox->pack_start(*advertaising, true, true, 2);
     Gtk::HBox *advertaising2 = Gtk::manage(new Gtk::HBox(true, 0));
-    Gtk::Button *advert2 = Gtk::manage(new Gtk::Button(Glib::ustring(_("Not compatible. Convert works to paths."))));
+    Gtk::Button *advert2 = Gtk::manage(new Gtk::Button(Glib::ustring(_("Not compatible. Convert to path after."))));
     advertaising2->pack_start(*advert2, true, true, 2);
     vbox->pack_start(*advertaising2, true, true, 2);
     std::vector<Parameter *>::iterator it = param_vector.begin();
