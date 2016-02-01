@@ -102,7 +102,7 @@ static void sp_spray_init( GObject *tbl){
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int mode = prefs->getInt("/tools/spray/mode", 0);
     bool show = true;
-    if(mode == 3){
+    if(mode == 3 || mode == 2){
         show = false;
     }
     gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "no_overlap") ), show );
@@ -115,11 +115,14 @@ static void sp_spray_init( GObject *tbl){
     gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "pick_center") ), show );
     gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "picker") ), show );
     gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "offset") ), show );
-    gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "spray_rotation") ), show );
     gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "pick_fill") ), show );
     gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "pick_stroke") ), show );
     gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "pick_inverse_value") ), show );
     gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "pick_center") ), show );
+    if(mode == 2){
+        show = true;
+    }
+    gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "spray_rotation") ), show );
     sp_stb_update_widgets( tbl );
 }
 
@@ -362,7 +365,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Spray with clones"),
-                            1, _("Spray clones of the initial selection"),
+                            1, _("Spray clones of the initial selection. Unset paint on fill or strokes to apply color picker changes"),
                             2, INKSCAPE_ICON("spray-mode-clone"),
                             -1 );
         
