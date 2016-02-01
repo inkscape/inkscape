@@ -365,7 +365,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Spray with clones"),
-                            1, _("Spray clones of the initial selection. Unset paint on fill or strokes to apply color picker changes"),
+                            1, _("Spray clones of the initial selection"),
                             2, INKSCAPE_ICON("spray-mode-clone"),
                             -1 );
         
