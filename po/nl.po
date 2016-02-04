@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-12-27 14:26+0100\n"
-"PO-Revision-Date: 2016-01-25 22:11+0100\n"
+"PO-Revision-Date: 2016-02-04 22:35+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -11747,8 +11747,8 @@ msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
-"Geëxporteerde oppervlakte in SVG-eenheden (standaard de volledige pagina; "
-"0,0 is de hoek linksonder)"
+"Geëxporteerde oppervlakte in SVG-gebruikerseenheden (standaard de volledige "
+"pagina; 0,0 is de hoek linksonder)"
 
 #: ../src/main.cpp:331
 msgid "x0:y0:x1:y1"
@@ -11778,7 +11778,7 @@ msgid ""
 "user units)"
 msgstr ""
 "De grootte van het te exporteren bitmapgebied naar boven afronden op een "
-"geheel getal (in SVG-eenheden)"
+"geheel getal (in SVG-gebruikerseenheden)"
 
 #: ../src/main.cpp:355
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
@@ -14454,7 +14454,8 @@ msgid ""
 "For each clone/sprayed item, pick a value from the drawing in its location "
 "and apply it"
 msgstr ""
-"Voor elke kloon/verstoven item een waarde van de afbeelding op die locatie kiezen en toepassen"
+"Voor elke kloon/verstoven item een waarde van de afbeelding op die locatie "
+"kiezen en toepassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:811
 msgid "1. Pick from the drawing:"
@@ -14590,9 +14591,8 @@ msgstr ""
 "geselecteerde eigenschap op dat punt"
 
 #: ../src/ui/dialog/clonetiler.cpp:1011
-#, fuzzy
 msgid "Apply to tiled clones:"
-msgstr "Verwijder getegelde klonen"
+msgstr "Op getegelde klonen toepassen"
 
 #: ../src/ui/dialog/clonetiler.cpp:1052
 msgid "How many rows in the tiling"
@@ -14828,7 +14828,6 @@ msgid "If unset, no antialiasing will be done on the drawing"
 msgstr "Indien aangevinkt, wordt geen anti-aliasing op de tekening toegepast"
 
 #: ../src/ui/dialog/document-properties.cpp:119
-#, fuzzy
 msgid "Checkerboard background"
 msgstr "Dambord"
 
@@ -14837,6 +14836,8 @@ msgid ""
 "If set, use checkerboard for background, otherwise use background color at "
 "full opacity."
 msgstr ""
+"Indien aangevinkt wordt een damportpatroon gebruikt, zoniet de "
+"achtergrondkleur bij volledige ondoorzichtigheid."
 
 #: ../src/ui/dialog/document-properties.cpp:120
 msgid "Show page _border"
@@ -14867,13 +14868,12 @@ msgid "Back_ground color:"
 msgstr "_Achtergrondkleur:"
 
 #: ../src/ui/dialog/document-properties.cpp:123
-#, fuzzy
 msgid ""
 "Color of the page background. Note: transparency setting ignored while "
 "editing if 'Checkerboard background' set (but used when exporting to bitmap)."
 msgstr ""
 "Kleur van de achtergrond. Nota: transparantie-instelling wordt genegeerd "
-"tijdens het bewerken, maar gebruikt voor export van de bitmap."
+"tijdens het bewerken met dambordachergrond (maar gebruikt voor bitmapexport)."
 
 #: ../src/ui/dialog/document-properties.cpp:124
 msgid "Border _color:"
@@ -15082,14 +15082,12 @@ msgid "<b>Page Size</b>"
 msgstr "<b>Paginagrootte</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:336
-#, fuzzy
 msgid "<b>Background</b>"
-msgstr "Achtergrond"
+msgstr "<b>Achtergrond</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:339
-#, fuzzy
 msgid "<b>Border</b>"
-msgstr "<b>Grondtal:</b>"
+msgstr "<b>Rand</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:342
 msgid "<b>Display</b>"
@@ -17540,9 +17538,8 @@ msgid "_Set spacing:"
 msgstr "_Tussenafstand:"
 
 #: ../src/ui/dialog/guides.cpp:47
-#, fuzzy
 msgid "Lo_cked"
-msgstr "Vergrendeld"
+msgstr "Ver_grendeld"
 
 #: ../src/ui/dialog/guides.cpp:47
 msgid "Lock the movement of guides"
@@ -21953,33 +21950,28 @@ msgstr "Onbenoemde symbolen"
 
 #: ../src/ui/dialog/tags.cpp:274 ../src/ui/dialog/tags.cpp:573
 #: ../src/ui/dialog/tags.cpp:687
-#, fuzzy
 msgid "Remove from selection set"
-msgstr "Van selectie verwijderen"
+msgstr "Van selectieset verwijderen"
 
 #: ../src/ui/dialog/tags.cpp:431
 msgid "Items"
-msgstr ""
+msgstr "Items"
 
 #: ../src/ui/dialog/tags.cpp:670
-#, fuzzy
 msgid "Add selection to set"
-msgstr "Selectie boven alle andere objecten plaatsen"
+msgstr "Selectie aan set toevoegen"
 
 #: ../src/ui/dialog/tags.cpp:828
-#, fuzzy
 msgid "Moved sets"
-msgstr "Knooppunten verplaatsen"
+msgstr "Sets verplaatst"
 
 #: ../src/ui/dialog/tags.cpp:998
-#, fuzzy
 msgid "Add a new selection set"
-msgstr "Selectie één niveau omhoog halen"
+msgstr "Een nieuwe selectieset toevoegen"
 
 #: ../src/ui/dialog/tags.cpp:1007
-#, fuzzy
 msgid "Remove Item/Set"
-msgstr "Effecten verwijderen"
+msgstr "Item/set verwijderen"
 
 #: ../src/ui/dialog/template-widget.cpp:37
 msgid "More info"
@@ -22006,18 +21998,16 @@ msgid "By: "
 msgstr "Door: "
 
 #: ../src/ui/dialog/text-edit.cpp:72
-#, fuzzy
 msgid "_Variants"
-msgstr "Variatie"
+msgstr "_Varianten"
 
 #: ../src/ui/dialog/text-edit.cpp:73
 msgid "Set as _default"
 msgstr "_Instellen als standaard"
 
 #: ../src/ui/dialog/text-edit.cpp:87
-#, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
-msgstr "AaBbCcIiMmPpQqWw(12369)€£$!?.;/@"
+msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
 #. Align buttons
 #: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1432
@@ -24924,82 +24914,69 @@ msgstr "Vervagen (%)"
 #: ../src/ui/widget/font-variants.cpp:38
 msgctxt "Font variant"
 msgid "Ligatures"
-msgstr ""
+msgstr "Verbindingen"
 
 #: ../src/ui/widget/font-variants.cpp:39
-#, fuzzy
 msgctxt "Font variant"
 msgid "Common"
 msgstr "Algemeen"
 
 #: ../src/ui/widget/font-variants.cpp:40
-#, fuzzy
 msgctxt "Font variant"
 msgid "Discretionary"
 msgstr "Discretionair"
 
 #: ../src/ui/widget/font-variants.cpp:41
-#, fuzzy
 msgctxt "Font variant"
 msgid "Historical"
 msgstr "Historisch"
 
 #: ../src/ui/widget/font-variants.cpp:42
-#, fuzzy
 msgctxt "Font variant"
 msgid "Contextual"
 msgstr "Contextueel"
 
 #: ../src/ui/widget/font-variants.cpp:44
-#, fuzzy
 msgctxt "Font variant"
 msgid "Position"
 msgstr "Positie"
 
 #: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
-#, fuzzy
 msgctxt "Font variant"
 msgid "Normal"
 msgstr "Normaal"
 
 #: ../src/ui/widget/font-variants.cpp:46
-#, fuzzy
 msgctxt "Font variant"
 msgid "Subscript"
 msgstr "Subscript"
 
 #: ../src/ui/widget/font-variants.cpp:47
-#, fuzzy
 msgctxt "Font variant"
 msgid "Superscript"
 msgstr "Superscript"
 
 #: ../src/ui/widget/font-variants.cpp:49
-#, fuzzy
 msgctxt "Font variant"
 msgid "Capitals"
 msgstr "Hoofdletters"
 
 #: ../src/ui/widget/font-variants.cpp:51
-#, fuzzy
 msgctxt "Font variant"
 msgid "Small"
 msgstr "Klein"
 
 #: ../src/ui/widget/font-variants.cpp:52
-#, fuzzy
 msgctxt "Font variant"
 msgid "All small"
 msgstr "Alles klein"
 
 #: ../src/ui/widget/font-variants.cpp:53
-#, fuzzy
 msgctxt "Font variant"
 msgid "Petite"
-msgstr "Alles mini"
+msgstr "Mini"
 
 #: ../src/ui/widget/font-variants.cpp:54
-#, fuzzy
 msgctxt "Font variant"
 msgid "All petite"
 msgstr "Alles mini"
@@ -25007,58 +24984,49 @@ msgstr "Alles mini"
 #: ../src/ui/widget/font-variants.cpp:55
 msgctxt "Font variant"
 msgid "Unicase"
-msgstr ""
+msgstr "Unicase"
 
 #: ../src/ui/widget/font-variants.cpp:56
-#, fuzzy
 msgctxt "Font variant"
 msgid "Titling"
-msgstr "Zeilen"
+msgstr "Titling"
 
 #: ../src/ui/widget/font-variants.cpp:58
-#, fuzzy
 msgctxt "Font variant"
 msgid "Numeric"
 msgstr "Numeriek"
 
 #: ../src/ui/widget/font-variants.cpp:59
-#, fuzzy
 msgctxt "Font variant"
 msgid "Lining"
-msgstr "Versmalling:"
+msgstr "Uitlijnen"
 
 #: ../src/ui/widget/font-variants.cpp:60
-#, fuzzy
 msgctxt "Font variant"
 msgid "Old Style"
 msgstr "Oude stijl"
 
 #: ../src/ui/widget/font-variants.cpp:61
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Style"
 msgstr "Standaardstijl"
 
 #: ../src/ui/widget/font-variants.cpp:62
-#, fuzzy
 msgctxt "Font variant"
 msgid "Proportional"
 msgstr "Proportioneel"
 
 #: ../src/ui/widget/font-variants.cpp:63
-#, fuzzy
 msgctxt "Font variant"
 msgid "Tabular"
 msgstr "Tabulair"
 
 #: ../src/ui/widget/font-variants.cpp:64
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Width"
 msgstr "Standaardbreedte"
 
 #: ../src/ui/widget/font-variants.cpp:65
-#, fuzzy
 msgctxt "Font variant"
 msgid "Diagonal"
 msgstr "Diagonaal"
@@ -25066,84 +25034,79 @@ msgstr "Diagonaal"
 # eerste voorgestelde vertaling: "Achterliggende motor"
 # deze optie is te vinden bij menu "Bestand" > "Afdrukken" > tabblad "Renderen"
 #: ../src/ui/widget/font-variants.cpp:66
-#, fuzzy
 msgctxt "Font variant"
 msgid "Stacked"
-msgstr "Op elkaar"
+msgstr "Gestapelde"
 
 #: ../src/ui/widget/font-variants.cpp:67
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Fractions"
-msgstr "Standaard fracties"
+msgstr "Standaard breuken"
 
 #: ../src/ui/widget/font-variants.cpp:68
 msgctxt "Font variant"
 msgid "Ordinal"
-msgstr ""
+msgstr "Rangtelwoord"
 
 #: ../src/ui/widget/font-variants.cpp:69
 msgctxt "Font variant"
 msgid "Slashed Zero"
-msgstr ""
+msgstr "Doorgehaalde nul"
 
 #: ../src/ui/widget/font-variants.cpp:71
-#, fuzzy
 msgctxt "Font variant"
 msgid "Feature Settings"
-msgstr "Pagina-instellingen"
+msgstr "Feature-instellingen"
 
 #: ../src/ui/widget/font-variants.cpp:72
 msgctxt "Font variant"
 msgid "Selection has different Feature Settings!"
-msgstr ""
+msgstr "Selectie heeft verschillende Feature-instellingen!"
 
 #: ../src/ui/widget/font-variants.cpp:85
 msgid "Common ligatures. On by default. OpenType tables: 'liga', 'clig'"
-msgstr ""
+msgstr "Standaard verbindingen. Standaard aan. OpenType: 'liga', 'clig'"
 
 #: ../src/ui/widget/font-variants.cpp:87
 msgid "Discretionary ligatures. Off by default. OpenType table: 'dlig'"
-msgstr ""
+msgstr "Discretionaire verbindingen. Standaard uit. OpenType: 'dlig'"
 
 #: ../src/ui/widget/font-variants.cpp:89
 msgid "Historical ligatures. Off by default. OpenType table: 'hlig'"
-msgstr ""
+msgstr "Historische verbindingen. Standaard uit. OpenType: 'hlig'"
 
 #: ../src/ui/widget/font-variants.cpp:91
 msgid "Contextual forms. On by default. OpenType table: 'calt'"
-msgstr ""
+msgstr "Contextuele vormen. Standaard aan. OpenType: 'calt'"
 
 #. Position ----------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:112
-#, fuzzy
 msgid "Normal position."
-msgstr "X-Positie"
+msgstr "Normale Positie."
 
 #: ../src/ui/widget/font-variants.cpp:113
 msgid "Subscript. OpenType table: 'subs'"
-msgstr ""
+msgstr "Subscript. OpenType: 'subs'"
 
 #: ../src/ui/widget/font-variants.cpp:114
 msgid "Superscript. OpenType table: 'sups'"
-msgstr ""
+msgstr "Superscript. OpenType: 'sups'"
 
 #. Caps ----------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:138
-#, fuzzy
 msgid "Normal capitalization."
-msgstr "Lokalisatie"
+msgstr "Normale kapitalisatie."
 
 #: ../src/ui/widget/font-variants.cpp:139
 msgid "Small-caps (lowercase). OpenType table: 'smcp'"
-msgstr ""
+msgstr "Kleine hoofdletters (onderkast). OpenType: 'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:140
 msgid ""
 "All small-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'smcp'"
-msgstr ""
+msgstr "Alle onderkast (hoofdletters en onderkast). OpenType: 'c2sc' en 'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:141
 msgid "Petite-caps (lowercase). OpenType table: 'pcap'"
@@ -25169,43 +25132,40 @@ msgstr ""
 #. Numeric ------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:180
-#, fuzzy
 msgid "Normal style."
-msgstr "Normale verplaatsing:"
+msgstr "Standaardstijl."
 
 #: ../src/ui/widget/font-variants.cpp:181
 msgid "Lining numerals. OpenType table: 'lnum'"
-msgstr ""
+msgstr "Cijfers uitlijnen. OpenType: 'lnum'"
 
 #: ../src/ui/widget/font-variants.cpp:182
 msgid "Old style numerals. OpenType table: 'onum'"
-msgstr ""
+msgstr "Cijfers volgens oude stijl. OpenType: 'onum'"
 
 #: ../src/ui/widget/font-variants.cpp:183
-#, fuzzy
 msgid "Normal widths."
-msgstr "Normaal licht"
+msgstr "Normale gewichten."
 
 #: ../src/ui/widget/font-variants.cpp:184
 msgid "Proportional width numerals. OpenType table: 'pnum'"
-msgstr ""
+msgstr "Cijfers met proportionele breedte. OpenType: 'pnum'"
 
 #: ../src/ui/widget/font-variants.cpp:185
 msgid "Same width numerals. OpenType table: 'tnum'"
-msgstr ""
+msgstr "Cijfers met identieke breedte. OpenType: 'tnum'"
 
 #: ../src/ui/widget/font-variants.cpp:186
-#, fuzzy
 msgid "Normal fractions."
-msgstr "Standaard fracties"
+msgstr "Standaard breuken."
 
 #: ../src/ui/widget/font-variants.cpp:187
 msgid "Diagonal fractions. OpenType table: 'frac'"
-msgstr ""
+msgstr "Diagonale breuken. OpenType: 'frac'"
 
 #: ../src/ui/widget/font-variants.cpp:188
 msgid "Stacked fractions. OpenType table: 'afrc'"
-msgstr ""
+msgstr "Gestapelde breuken. OpenType: 'afrc'"
 
 #: ../src/ui/widget/font-variants.cpp:189
 msgid "Ordinals (raised 'th', etc.). OpenType table: 'ordn'"
@@ -25310,9 +25270,8 @@ msgid "Bottom margin"
 msgstr "Ondermarge"
 
 #: ../src/ui/widget/page-sizer.cpp:244
-#, fuzzy
 msgid "Scale _x:"
-msgstr "Schaal:"
+msgstr "Schaal _x:"
 
 #: ../src/ui/widget/page-sizer.cpp:244
 #, fuzzy
@@ -25320,9 +25279,8 @@ msgid "Scale X"
 msgstr "Schalen"
 
 #: ../src/ui/widget/page-sizer.cpp:245
-#, fuzzy
 msgid "Scale _y:"
-msgstr "Schaal:"
+msgstr "Schaal _y:"
 
 #: ../src/ui/widget/page-sizer.cpp:245
 #, fuzzy
@@ -25368,11 +25326,13 @@ msgid ""
 "scaling in Inkscape. To set a non-uniform scaling, set the 'viewBox' "
 "directly."
 msgstr ""
+"Alhoewel SVG niet-uniforme schalen toelaat, is het aangeraden om enkel "
+"uniforme schalen in Inkscape te gebruiken. Om een niet-uniforme schaal in te "
+"stellen, stel de 'viewBox' direct in."
 
 #: ../src/ui/widget/page-sizer.cpp:483
-#, fuzzy
 msgid "_Viewbox..."
-msgstr "Beel_d"
+msgstr "_Viewbox..."
 
 # XXX Waar wordt dit gebruikt?
 #: ../src/ui/widget/page-sizer.cpp:590
@@ -25381,17 +25341,16 @@ msgstr "Paginagrootte instellen"
 
 #: ../src/ui/widget/page-sizer.cpp:836
 msgid "User units per "
-msgstr ""
+msgstr "gebruikerseenheden per "
 
 # XXX Waar wordt dit gebruikt?
 #: ../src/ui/widget/page-sizer.cpp:932
-#, fuzzy
 msgid "Set page scale"
-msgstr "Paginagrootte instellen"
+msgstr "Paginaschaal instellen"
 
 #: ../src/ui/widget/page-sizer.cpp:958
 msgid "Set 'viewBox'"
-msgstr ""
+msgstr "'Viewbox' instellen"
 
 #: ../src/ui/widget/panel.cpp:113
 msgid "List"
@@ -26117,14 +26076,13 @@ msgid "Flip vertically"
 msgstr "Verticaal spiegelen"
 
 #: ../src/verbs.cpp:1591
-#, fuzzy, c-format
+#, c-format
 msgid "Set %d"
-msgstr "Breedte instellen:"
+msgstr "%d instellen"
 
 #: ../src/verbs.cpp:1600 ../src/verbs.cpp:2730
-#, fuzzy
 msgid "Create new selection set"
-msgstr "Nieuw item maken"
+msgstr "Nieuwe selectieset maken"
 
 #. TRANSLATORS: If you have translated the tutorial-basic.en.svgz file to your language,
 #. then translate this string as "tutorial-basic.LANG.svgz" (where LANG is your language
@@ -29675,9 +29633,8 @@ msgid "Pick colors for selected corner nodes from underneath mesh."
 msgstr ""
 
 #: ../src/widgets/mesh-toolbar.cpp:563
-#, fuzzy
 msgid "Pick Color"
-msgstr "Vulkleur"
+msgstr "Kleur nemen"
 
 #: ../src/widgets/node-toolbar.cpp:341
 msgid "Insert node"
@@ -30622,14 +30579,17 @@ msgstr ""
 #: ../src/widgets/spray-toolbar.cpp:467
 msgid "Use the pressure of the input device to alter the scale of new items"
 msgstr ""
-"De op het invoerapparaat uitgeoefende druk gebruiken om de schaal van nieuwe items te "
-"variëren"
+"De op het invoerapparaat uitgeoefende druk gebruiken om de schaal van nieuwe "
+"items te variëren"
 
 #: ../src/widgets/spray-toolbar.cpp:479 ../src/widgets/spray-toolbar.cpp:480
 msgid ""
 "Pick color from the drawing. You can use clonetiler trace dialog for "
 "advanced effects. In clone mode original fill or stroke colors must be unset."
-msgstr "Kies de kleur van de afbeelding. Je kan Overtrekken in de dialoog Tegels met klonen gebruiken voor geavanceerde effecten. In de originele kloonmodus mag vul- of lijnkleur niet opgegeven zijn."
+msgstr ""
+"Kies de kleur van de afbeelding. Je kan Overtrekken in de dialoog Tegels met "
+"klonen gebruiken voor geavanceerde effecten. In de originele kloonmodus mag "
+"vul- of lijnkleur niet opgegeven zijn."
 
 #: ../src/widgets/spray-toolbar.cpp:492 ../src/widgets/spray-toolbar.cpp:493
 msgid "Pick from center instead average area."
@@ -31082,18 +31042,16 @@ msgid "Horizontal"
 msgstr "Horizontaal"
 
 #: ../src/widgets/text-toolbar.cpp:1498
-#, fuzzy
 msgid "Vertical — RL"
-msgstr "Verticaal"
+msgstr "Verticaal — RL"
 
 #: ../src/widgets/text-toolbar.cpp:1499
 msgid "Vertical text — lines: right to left"
 msgstr ""
 
 #: ../src/widgets/text-toolbar.cpp:1505
-#, fuzzy
 msgid "Vertical — LR"
-msgstr "Verticaal"
+msgstr "Verticaal — LR"
 
 #: ../src/widgets/text-toolbar.cpp:1506
 msgid "Vertical text — lines: left to right"
@@ -31101,9 +31059,8 @@ msgstr ""
 
 #. Name
 #: ../src/widgets/text-toolbar.cpp:1511
-#, fuzzy
 msgid "Writing mode"
-msgstr "Tekenmodus"
+msgstr "Schrijfmodus"
 
 #. Label
 #: ../src/widgets/text-toolbar.cpp:1512
@@ -31583,7 +31540,6 @@ msgstr "Op de tint van het object inwerken (in verfmodi)"
 
 #. TRANSLATORS:  "H" here stands for hue
 #: ../src/widgets/tweak-toolbar.cpp:291
-#, fuzzy
 msgctxt "Hue"
 msgid "H"
 msgstr "T"
@@ -31594,7 +31550,6 @@ msgstr "Op de verzadiging van het object inwerken (in verfmodi)"
 
 #. TRANSLATORS: "S" here stands for Saturation
 #: ../src/widgets/tweak-toolbar.cpp:307
-#, fuzzy
 msgctxt "Saturation"
 msgid "S"
 msgstr "V"
@@ -31605,7 +31560,6 @@ msgstr "Op de lichtheid van het object inwerken (in verfmodi)"
 
 #. TRANSLATORS: "L" here stands for Lightness
 #: ../src/widgets/tweak-toolbar.cpp:323
-#, fuzzy
 msgctxt "Lightness"
 msgid "L"
 msgstr "L"
@@ -31616,7 +31570,6 @@ msgstr "Op de ondoorzichtigheid van het object inwerken (in verfmodi)"
 
 #. TRANSLATORS: "O" here stands for Opacity
 #: ../src/widgets/tweak-toolbar.cpp:339
-#, fuzzy
 msgctxt "Opacity"
 msgid "O"
 msgstr "O"
@@ -33687,9 +33640,8 @@ msgid "Page orientation:"
 msgstr "Paginaoriëntatie"
 
 #: ../share/extensions/empty_page.inx.h:4
-#, fuzzy
 msgid "Page background:"
-msgstr "Achtergrond bewaren"
+msgstr "Pagina-achtergrond:"
 
 #: ../share/extensions/empty_video.inx.h:1
 msgid "Video Screen"
@@ -36565,24 +36517,21 @@ msgid "Measurement Type: "
 msgstr "Type meting: "
 
 #: ../share/extensions/measure.inx.h:4
-#, fuzzy
 msgid "Text Presets"
 msgstr "Tekstvoorkeuren"
 
 #: ../share/extensions/measure.inx.h:6
-#, fuzzy
 msgid "Text on Path"
 msgstr "Tekst op pad"
 
 #: ../share/extensions/measure.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Offset (%)"
-msgstr "Afstand (px):"
+msgstr "Afstand (%)"
 
 #: ../share/extensions/measure.inx.h:9
-#, fuzzy
 msgid "Text anchor:"
-msgstr "Tekstanker"
+msgstr "Tekstanker:"
 
 #: ../share/extensions/measure.inx.h:10
 #, fuzzy
@@ -36590,9 +36539,8 @@ msgid "Fixed Text"
 msgstr "Ingekaderde tekst"
 
 #: ../share/extensions/measure.inx.h:11
-#, fuzzy
 msgid "Angle (°):"
-msgstr "X-hoek:"
+msgstr "Hoek (°):"
 
 #: ../share/extensions/measure.inx.h:12
 msgid "Font size (px):"
@@ -36621,19 +36569,16 @@ msgid "Center of Mass"
 msgstr "Massacentrum"
 
 #: ../share/extensions/measure.inx.h:21
-#, fuzzy
 msgid "Text on Path, Start"
-msgstr "Tekst op pad"
+msgstr "Tekst op pad, begin"
 
 #: ../share/extensions/measure.inx.h:22
-#, fuzzy
 msgid "Text on Path, Middle"
-msgstr "Tekst op pad"
+msgstr "Tekst op pad, midden"
 
 #: ../share/extensions/measure.inx.h:23
-#, fuzzy
 msgid "Text on Path, End"
-msgstr "Tekst op pad"
+msgstr "Tekst op pad, einde"
 
 #: ../share/extensions/measure.inx.h:24
 msgid "Fixed Text, Start of Path"
@@ -36649,14 +36594,12 @@ msgid "Fixed Text, Center of Mass"
 msgstr "Massacentrum"
 
 #: ../share/extensions/measure.inx.h:28
-#, fuzzy
 msgid "Center"
-msgstr "Centimeter"
+msgstr "Midden"
 
 #: ../share/extensions/measure.inx.h:30
-#, fuzzy
 msgid "Start of Path"
-msgstr "Startpad:"
+msgstr "Begin van pad"
 
 #: ../share/extensions/measure.inx.h:31
 #, fuzzy
@@ -36664,7 +36607,6 @@ msgid "Center of BBox"
 msgstr "Massacentrum"
 
 #: ../share/extensions/measure.inx.h:32
-#, fuzzy
 msgid "Center of Mass"
 msgstr "Massacentrum"
 
@@ -37630,9 +37572,8 @@ msgid "Restack"
 msgstr "Herstapelen"
 
 #: ../share/extensions/restack.inx.h:2
-#, fuzzy
 msgid "Based on Position"
-msgstr "Positie"
+msgstr "Gebaseerd op positie"
 
 #: ../share/extensions/restack.inx.h:3
 #, fuzzy
@@ -37640,14 +37581,12 @@ msgid "Presets"
 msgstr "Aanwezigheid"
 
 #: ../share/extensions/restack.inx.h:6
-#, fuzzy
 msgid "Horizontal:"
-msgstr "_Horizontaal:"
+msgstr "Horizontaal:"
 
 #: ../share/extensions/restack.inx.h:7
-#, fuzzy
 msgid "Vertical:"
-msgstr "_Verticaal:"
+msgstr "Verticaal:"
 
 #: ../share/extensions/restack.inx.h:8
 #, fuzzy
