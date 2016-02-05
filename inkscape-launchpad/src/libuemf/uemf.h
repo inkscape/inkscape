@@ -95,11 +95,11 @@ these WMF enumerations is by referencing the following table:
 
 /*
 File:      uemf.h
-Version:   0.0.32
-Date:      28-APR-2015
+Version:   0.0.33
+Date:      27-JAN-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifndef _UEMF_
@@ -426,6 +426,7 @@ typedef struct {
     uint32_t            biClrImportant;     //!< Number of bmciColors needed (0 means all).
 } U_BITMAPINFOHEADER,
   *PU_BITMAPINFOHEADER;                     //!< WMF manual 2.2.2.3
+#define U_SIZE_BITMAPINFOHEADER        (sizeof(U_BITMAPINFOHEADER))
 
 /** WMF manual 2.2.2.6
   \brief For U_CIEXYZTRIPLE (all) fields
@@ -1678,6 +1679,7 @@ typedef struct {
     U_FNTAXES           Values[1];          //!< Optional. Array of font axes for opentype font
 } U_DESIGNVECTOR,
   *PU_DESIGNVECTOR;                         //!< EMF manual 2.2.3
+#define U_SIZE_DESIGNVECTOR   (sizeof(uint32_t) + sizeof(U_NUM_FNTAXES))
 
 /** 
   \brief For U_EMR_COMMENT_MULTIFORMATS record, where an array of these is used
@@ -1901,6 +1903,7 @@ typedef struct {
     U_LOGPLTNTRY        palPalEntry[1];     //!< PC_Entry Enumeration
 } U_LOGPALETTE,
   *PU_LOGPALETTE;                           //!< EMF manual 2.2.17
+#define U_SIZE_LOGPALETTE   (2*sizeof(uint16_t))
 
 // Microsoft name: LogPaletteEntry Object, EMF manual 2.2.18, defined above, before 2.2.17
 
@@ -1970,6 +1973,7 @@ typedef struct {
     U_RECTL             rclBounds;          //!< Region bounds
 } U_RGNDATAHEADER,
   *PU_RGNDATAHEADER;                        //!< EMF manual 2.2.25
+#define U_SIZE_RGNDATAHEADER        (sizeof(U_RGNDATAHEADER))
 
 /**
   \brief For U_EMRFILLRGN RgnData field(s)
@@ -1982,6 +1986,7 @@ typedef struct {
     U_RECTL             Buffer[1];          //!< Array of U_RECTL elements
 } U_RGNDATA,
   *PU_RGNDATA;                              //!< EMF manual 2.2.24
+#define U_SIZE_RGNDATA        U_SIZE_RGNDATAHEADER
 
 // Microsoft name: RegionDataHeader Object.  EMF manual 2.2.25, defined above, before 2.2.24
 // Microsoft name: TriVertex Object.  EMF manual 2.2.26, defined above, before 2.2.7
@@ -2017,6 +2022,7 @@ typedef struct {
     U_STYLEENTRY        elpStyleEntry[1];   //!< Array of StyleEntry (For user specified dot/dash patterns)
 } U_EXTLOGPEN,
   *PU_EXTLOGPEN;                            //!< EMF manual 2.2.20
+#define U_SIZE_EXTLOGPEN   (sizeof(U_EXTLOGPEN) - sizeof(U_STYLEENTRY)) // there may not be any style entries
 
 /**
   \brief For U_EMR_* OffBmi* fields
@@ -2030,6 +2036,7 @@ typedef struct {
     U_RGBQUAD           bmiColors[1];       //!< Color table.  24 bit images do not use color table values.
 } U_BITMAPINFO,
   *PU_BITMAPINFO;                           //!< WMF Manual 2.2.2.9
+#define U_SIZE_BITMAPINFO        U_SIZE_BITMAPINFOHEADER
 
 /**
   \brief U_EMRALPHABLEND Blend field
@@ -2056,6 +2063,7 @@ typedef struct {
     uint32_t            dParm[1];           //!< Data in record
 } U_ENHMETARECORD,
   *PU_ENHMETARECORD;                        //!< General form of an EMF record.
+#define U_SIZE_ENHMETARECORD        (2*sizeof(uint32_t))
 
 /** First two fields of all EMF records,
     First two fields of all EMF+ records (1 or more within an EMF comment)
@@ -2171,7 +2179,7 @@ typedef struct {
   U_EMRPOLYPOLYGON,                         //!< EMF manual 2.3.5.28 
   *PU_EMRPOLYPOLYLINE,                      //!< EMF manual 2.3.5.30 
   *PU_EMRPOLYPOLYGON;                       //!< EMF manual 2.3.5.28 
-#define U_SIZE_EMRPOLYPOLYLINE   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_NUM_POLYCOUNTS)  + sizeof(U_POLYCOUNTS))
+#define U_SIZE_EMRPOLYPOLYLINE   (sizeof(U_EMR) + sizeof(U_RECTL) + sizeof(U_NUM_POLYCOUNTS)  + sizeof(U_NUM_POINTL))
 #define U_SIZE_EMRPOLYPOLYGON     U_SIZE_EMRPOLYPOLYLINE
 
 /* Index  9,11 (numbers interleave with next one) */
@@ -2535,10 +2543,10 @@ typedef struct {
 typedef struct {
     U_EMR               emr;                //!< U_EMR
     uint32_t            ihPal;              //!< Index to place object in EMF object table (this entry must not yet exist)
-    U_LOGPALETTE        lgpl;               //!< Palette properties
+    U_LOGPALETTE        lgpl;               //!< Palette properties (variable size)
 } U_EMRCREATEPALETTE,
   *PU_EMRCREATEPALETTE;                     //!< EMF manual 2.3.7.6           
-#define U_SIZE_EMRCREATEPALETTE        (sizeof(U_EMRCREATEPALETTE))
+#define U_SIZE_EMRCREATEPALETTE        (sizeof(U_EMR) + sizeof(uint32_t) + U_SIZE_LOGPALETTE)
 
 /* Index  50 */
 /** EMF manual 2.3.8.8           
@@ -3029,7 +3037,7 @@ typedef struct {
                                             //!< Record may include optional DIB bitmap
 } U_EMREXTCREATEPEN,
   *PU_EMREXTCREATEPEN;                      //!< EMF manual 2.3.7.9
-#define U_SIZE_EMREXTCREATEPEN   (sizeof(U_EMREXTCREATEPEN))
+#define U_SIZE_EMREXTCREATEPEN   (sizeof(U_EMREXTCREATEPEN) - sizeof(U_EXTLOGPEN) + U_SIZE_EXTLOGPEN)
 
 /* Index  96.97  */
 /** EMF manual 2.3.5.32          
@@ -3084,7 +3092,7 @@ typedef struct {
     U_DATA              Data[1];            //!< OpenGL data
 } U_EMRGLSRECORD,
   *PU_EMRGLSRECORD;                         //!< EMF manual 2.3.9.2           
-#define U_SIZE_EMRGLSRECORD   (sizeof(U_EMRGLSRECORD))
+#define U_SIZE_EMRGLSRECORD   (sizeof(U_EMR) + sizeof(U_CBDATA))
 
 /* Index  103 */
 /** EMF manual 2.3.9.1           
@@ -3167,7 +3175,7 @@ typedef struct {
     uint16_t            Driver[1];          //!< Driver name in uint16_t characters, null terminated
 } U_EMRNAMEDESCAPE,
   *PU_EMRNAMEDESCAPE;                       //!< EMF manual 2.3.6.3
-#define U_SIZE_EMRNAMEDESCAPE   (sizeof(U_EMRNAMEDESCAPE))
+#define U_SIZE_EMRNAMEDESCAPE   (sizeof(U_EMR) + 2*sizeof(U_CBDATA))
 
 /* Index  111-113 (not implemented ) 
   EMF manual 2.3.8.1           

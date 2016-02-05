@@ -11,6 +11,11 @@ Graphics_in_files = inkscape.desktop.in
 Graphics_DATA = $(Graphics_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
+appdatadir = $(datadir)/appdata
+appdata_in_files = inkscape.appdata.xml.in
+appdata_DATA = $(appdata_in_files:.xml.in=.xml)
+@INTLTOOL_XML_RULE@
+
 ## dist-hook:
 ##	mkdir $(distdir)/samples
 ##	cp $(srcdir)/samples/*svg $(distdir)/samples
@@ -38,6 +43,7 @@ EXTRA_DIST = \
 	intltool-merge.in	\
 	intltool-update.in	\
 	$(Graphics_in_files)	\
+	$(appdata_in_files)	\
 	po/check-markup \
 	utf8-to-roff \
 	inkscape.1		\
@@ -573,7 +579,8 @@ EXTRA_DIST = \
 # that .tar.gz users don't need a full perl distribution to get a man
 # page.
 
-DISTCLEANFILES = inkscape.desktop \
+DISTCLEANFILES = inkscape.appdata.xml \
+                 inkscape.desktop \
                  intltool-extract \
                  intltool-merge \
                  intltool-update

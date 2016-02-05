@@ -42,7 +42,11 @@
 #include "ui/tools/connector-tool.h"
 #include "ui/tools/dropper-tool.h"
 #include "ui/tools/eraser-tool.h"
+
+#if HAVE_POTRACE
 #include "ui/tools/flood-tool.h"
+#endif
+
 #include "ui/tools/gradient-tool.h"
 #include "ui/tools/lpe-tool.h"
 #include "ui/tools/measure-tool.h"
@@ -83,7 +87,9 @@ static char const *const tool_names[] = {
     "/tools/measure",
     "/tools/dropper",
     "/tools/connector",
+#if HAVE_POTRACE
     "/tools/paintbucket",
+#endif
     "/tools/eraser",
     "/tools/lpetool",
     NULL
@@ -111,7 +117,9 @@ static char const *const tool_msg[] = {
     N_("<b>Drag</b> to measure the dimensions of objects."),
     N_("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"),
     N_("<b>Click and drag</b> between shapes to create a connector."),
+#if HAVE_POTRACE
     N_("<b>Click</b> to paint a bounded area, <b>Shift+click</b> to union the new fill with the current selection, <b>Ctrl+click</b> to change the clicked object's fill and stroke to the current setting."),
+#endif
     N_("<b>Drag</b> to erase."),
     N_("Choose a subtool from the toolbar"),
 };

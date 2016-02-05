@@ -15,11 +15,11 @@
 
 /*
 File:      uemf_safe.c
-Version:   0.0.4
-Date:      23-APR-2015
+Version:   0.0.5
+Date:      26-JAN-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -740,6 +740,8 @@ int U_EMREXTSELECTCLIPRGN_safe(const char *record){
    if(!core5_safe(record, U_SIZE_EMREXTSELECTCLIPRGN))return(0);
    PU_EMREXTSELECTCLIPRGN pEmr = (PU_EMREXTSELECTCLIPRGN)(record);
    int cbRgnData = pEmr->cbRgnData;
+   /* data size can be 0 with COPY mode, it means clear the clip region. */
+   if(pEmr->iMode == U_RGN_COPY && !cbRgnData)return(1);
    const char *blimit = record + pEmr->emr.nSize;
    if(IS_MEM_UNSAFE(pEmr->RgnData, cbRgnData, blimit))return(0);
    return(rgndata_safe(pEmr->RgnData, cbRgnData));

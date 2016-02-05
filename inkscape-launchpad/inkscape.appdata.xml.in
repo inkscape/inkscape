@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Richard Hughes <richard@hughsie.com> -->
+<component type="desktop">
+  <id>inkscape.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <translation type="gettext">inkscape</translation>
+  <_name>Inkscape</_name>
+  <_summary>Vector Graphics Editor</_summary>
+  <description>
+    <_p>
+      An Open Source vector graphics editor, with capabilities similar to
+      Illustrator, CorelDraw, or Xara X, using the W3C standard Scalable Vector
+      Graphics (SVG) file format.
+    </_p>
+    <_p>
+      Inkscape supports many advanced SVG features (markers, clones, alpha blending,
+      etc.) and great care is taken in designing a streamlined interface.
+      It is very easy to edit nodes, perform complex path operations, trace
+      bitmaps and much more.
+      We also aim to maintain a thriving user and developer community by using
+      open, community-oriented development.
+    </_p>
+  </description>
+  <url type="homepage">http://inkscape.org/</url>
+  <url type="bugtracker">https://inkscape.org/en/contribute/report-bugs/</url>
+  <url type="donation">https://inkscape.org/en/support-us/donate/</url>
+  <url type="help">https://inkscape.org/en/learn/books/</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/inkscape/a.png</image>
+      <_caption>Main application window</_caption>
+    </screenshot>
+  </screenshots>
+  <update_contact><!-- upstream-contact_at_email.com --></update_contact>
+</component>

@@ -164,6 +164,7 @@ static void freehand_simplify_lpe(InkToggleAction* itact, GObject *dataKludge) {
     gint simplify = gtk_toggle_action_get_active( GTK_TOGGLE_ACTION(itact) );
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt(freehand_tool_name(dataKludge) + "/simplify", simplify);
+    gtk_action_set_visible( GTK_ACTION( g_object_get_data(dataKludge, "flatten_simplify") ), simplify );
 }
 
 /**
@@ -363,7 +364,7 @@ private:
 void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     sp_add_freehand_mode_toggle(mainActions, holder, true);
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     EgeAdjustmentAction* eact = 0;
 
     /* Tolerance */
@@ -420,6 +421,10 @@ void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                           Inkscape::ICON_SIZE_SMALL_TOOLBAR );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_simplify_flatten), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+        g_object_set_data( holder, "flatten_simplify", inky );
+        if (!prefs->getInt("/tools/freehand/pencil/simplify", 0)) {
+            gtk_action_set_visible( GTK_ACTION( g_object_get_data(holder, "flatten_simplify") ), false );
+        }
     }
 
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );

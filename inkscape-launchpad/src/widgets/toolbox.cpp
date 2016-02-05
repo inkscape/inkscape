@@ -1467,8 +1467,11 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
                 gtk_table_attach( GTK_TABLE(holder), swatch_, 1, 2, 0, 1, (GtkAttachOptions)(GTK_SHRINK | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), AUX_BETWEEN_BUTTON_GROUPS, AUX_SPACING );
 #endif
             }
-
-            gtk_widget_show_all( holder );
+            if(i==0){
+                gtk_widget_show_all( holder );
+            } else {
+                gtk_widget_show_now( holder );
+            }
             sp_set_font_size_smaller( holder );
 
             gtk_size_group_add_widget( grouper, holder );
@@ -1489,7 +1492,7 @@ void update_aux_toolbox(SPDesktop * /*desktop*/, ToolBase *eventcontext, GtkWidg
     for (int i = 0 ; aux_toolboxes[i].type_name ; i++ ) {
         GtkWidget *sub_toolbox = GTK_WIDGET(g_object_get_data(G_OBJECT(toolbox), aux_toolboxes[i].data_name));
         if (tname && !strcmp(tname, aux_toolboxes[i].type_name)) {
-            gtk_widget_show_all(sub_toolbox);
+            gtk_widget_show_now(sub_toolbox);
             g_object_set_data(G_OBJECT(toolbox), "shows", sub_toolbox);
         } else {
             gtk_widget_hide(sub_toolbox);

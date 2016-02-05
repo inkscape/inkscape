@@ -400,8 +400,6 @@ if(WITH_IMAGE_MAGICK)
     endif()
 endif()
 
-include(${CMAKE_CURRENT_LIST_DIR}/IncludeJava.cmake)
-
 set(ENABLE_NLS OFF)
 if(WITH_NLS)
     find_package(Gettext)

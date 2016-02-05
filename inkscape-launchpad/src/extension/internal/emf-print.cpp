@@ -792,9 +792,9 @@ void PrintEmf::destroy_pen()
     }
 }
 
-/* Return a Path consisting of just the corner points of the single path in a a PathVector.  If the
+/* Return a Path consisting of just the corner points of the single path in a PathVector.  If the
 PathVector has more than one path, or that one path is open, or any of its segments are curved, then the
-returned PathVector is .  If the input path is already just straight lines and vertices the output will be the
+returned PathVector is an empty path.  If the input path is already just straight lines and vertices the output will be the
 same as the sole path in the input. */
 
 Geom::Path PrintEmf::pathv_to_simple_polygon(Geom::PathVector const &pathv, int *vertices)
@@ -808,6 +808,7 @@ Geom::Path PrintEmf::pathv_to_simple_polygon(Geom::PathVector const &pathv, int 
     Geom::PathVector pv = pathv_to_linear_and_cubic_beziers(pathv);
     Geom::PathVector::const_iterator pit  = pv.begin();
     Geom::PathVector::const_iterator pit2 = pv.begin();
+    int first_seg=1;
     ++pit2;
     *vertices = 0;
     if(pit->end_closed() != pit->end_default())return(bad); // path must be closed
@@ -833,9 +834,17 @@ Geom::Path PrintEmf::pathv_to_simple_polygon(Geom::PathVector const &pathv, int 
             output.start( P1 );
             output.close( pit->closed() );
         }
-        *vertices += 1;
-        Geom::LineSegment ls(P1_trail, P1);
-        output.append(ls);
+        if(!Geom::are_near(P1, P1_trail, 1e-5)){ // possible for P1 to start on the end point
+           Geom::LineSegment ls(P1_trail, P1);
+           output.append(ls);
+           if(first_seg){
+              *vertices += 2;
+              first_seg=0;
+           }
+           else {
+              *vertices += 1;
+           }
+        }
         P1_trail = P1;
         P1 = P1_lead;
     }    
@@ -850,7 +859,6 @@ Geom::Path PrintEmf::pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect,
 {
     Geom::Point P1_trail;
     Geom::Point P1;
-    Geom::Point P1_lead;
     Geom::Point v1,v2;
     int vertices;
     Geom::Path pR = pathv_to_simple_polygon(pathv, &vertices);
@@ -860,7 +868,7 @@ Geom::Path PrintEmf::pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect,
         /* Get the ends of the LAST line segment.
            Find minimum rotation to align rectangle with X,Y axes.  (Very degenerate if it is rotated 45 degrees.) */
         *angle = 10.0;  /* must be > than the actual angle in radians. */
-        for(Geom::Path::iterator cit  = pR.begin(); cit != pR.end_open(); ++cit){
+        for(Geom::Path::iterator cit  = pR.begin();; ++cit){
             P1_trail = cit->initialPoint();
             P1       = cit->finalPoint();
             v1 = unit_vector(P1 - P1_trail);
@@ -868,21 +876,23 @@ Geom::Path PrintEmf::pathv_to_rect(Geom::PathVector const &pathv, bool *is_rect,
                 double ang = asin(v1[Geom::Y]);  // because component is rotation by ang of {1,0| vector
                 if(fabs(ang) < fabs(*angle))*angle = -ang; // y increases down, flips sign on angle
             }
+            if(cit == pR.end_open())break;
         }
         
         /*  For increased numerical stability, snap the angle to the nearest 1/100th of a degree. */
         double convert = 36000.0/ (2.0 * M_PI);
         *angle = round(*angle * convert)/convert;
 
-        for(Geom::Path::iterator cit  = pR.begin(); cit != pR.end_open();++cit) {
-            P1_lead = cit->finalPoint();
+        // at this stage v1 holds the last vector in the path, whichever direction it points.
+        for(Geom::Path::iterator cit  = pR.begin(); ;++cit) {
+            v2 = v1;
+            P1_trail = cit->initialPoint();
+            P1       = cit->finalPoint();
             v1 = unit_vector(P1      - P1_trail);
-            v2 = unit_vector(P1_lead - P1      );
             // P1 is center of a turn that is not 90 degrees.  Limit comes from cos(89.9) = .001745
             if(!Geom::are_near(dot(v1,v2), 0.0, 2e-3))break;
-            P1_trail = P1;
-            P1 = P1_lead;
             vertex_count++;
+            if(cit == pR.end_open())break;
         }
         if(vertex_count == 4){
             *is_rect=true;
@@ -903,13 +913,11 @@ int PrintEmf::vector_rect_alignment(double angle, Geom::Point vtest){
     int stat = 0;
     Geom::Point v1 = Geom::unit_vector(vtest);                 // unit vector to test alignment
     Geom::Point v2 = Geom::Point(1,0) * Geom::Rotate(-angle);  // unit horizontal side (sign change because Y increases DOWN)
+    Geom::Point v3 = Geom::Point(0,1) * Geom::Rotate(-angle);  // unit horizontal side (sign change because Y increases DOWN)
     if(     Geom::are_near(dot(v1,v2), 1.0, 1e-5)){ stat = 1; }
     else if(Geom::are_near(dot(v1,v2),-1.0, 1e-5)){ stat = 2; }
-    if(!stat){
-        v2 = Geom::Point(0,1) * Geom::Rotate(-angle);    // unit vertical side
-        if(     Geom::are_near(dot(v1,v2), 1.0, 1e-5)){ stat = 3; }
-        else if(Geom::are_near(dot(v1,v2),-1.0, 1e-5)){ stat = 4; }
-    }
+    else if(Geom::are_near(dot(v1,v3), 1.0, 1e-5)){ stat = 3; }
+    else if(Geom::are_near(dot(v1,v3),-1.0, 1e-5)){ stat = 4; }
     return(stat);
 }
 
@@ -924,8 +932,9 @@ int PrintEmf::vector_rect_alignment(double angle, Geom::Point vtest){
 */
 Geom::Point PrintEmf::get_pathrect_corner(Geom::Path pathRect, double angle, int corner){
     Geom::Point center(0,0);
-    for(Geom::Path::iterator cit = pathRect.begin(); cit != pathRect.end_open(); ++cit) {
+    for(Geom::Path::iterator cit = pathRect.begin(); ; ++cit) {
         center += cit->initialPoint()/4.0;
+        if(cit == pathRect.end_open())break;
     }
 
     int LR; // 1 if Left, 0 if Right
@@ -952,11 +961,12 @@ Geom::Point PrintEmf::get_pathrect_corner(Geom::Path pathRect, double angle, int
     Geom::Point v1 = Geom::Point(1,0) * Geom::Rotate(-angle);  // unit horizontal side (sign change because Y increases DOWN)
     Geom::Point v2 = Geom::Point(0,1) * Geom::Rotate(-angle);  // unit vertical side (sign change because Y increases DOWN)
     Geom::Point P1;
-    for(Geom::Path::iterator cit = pathRect.begin(); cit != pathRect.end_open(); ++cit) {
+    for(Geom::Path::iterator cit = pathRect.begin(); ; ++cit) {
         P1 = cit->initialPoint();
 
         if (   ( LR == (dot(P1 - center,v1) > 0 ? 0 : 1) )
             && ( UL == (dot(P1 - center,v2) > 0 ? 1 : 0) ) ) break;
+        if(cit == pathRect.end_open())break;
     }
     return(P1);
 }
@@ -1279,6 +1289,7 @@ unsigned int PrintEmf::fill(
                          outLR = Geom::Point(wRect,doff_range*hRect); 
                          gMode = U_GRADIENT_FILL_RECT_V;
                      }
+
                      doff_base  = doff_range;
                      rcb.left   = round(outUL[X]); // use explicit round for better stability
                      rcb.top    = round(outUL[Y]);
