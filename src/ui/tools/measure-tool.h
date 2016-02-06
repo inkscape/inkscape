@@ -16,6 +16,7 @@
 #include "ui/tools/tool-base.h"
 #include <2geom/point.h>
 #include "display/canvas-text.h"
+#include "display/canvas-temporary-item.h"
 #include "ui/control-manager.h"
 #include <boost/optional.hpp>
 
@@ -68,6 +69,7 @@ private:
     gint dimension_offset;
     Geom::Point start_p;
     Geom::Point end_p;
+    std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
     sigc::connection _knot_start_moved_connection;
     sigc::connection _knot_start_ungrabbed_connection;
     sigc::connection _knot_end_moved_connection;

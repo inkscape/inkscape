@@ -71,8 +71,6 @@ namespace Inkscape {
 namespace UI {
 namespace Tools {
 
-std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
-
 const std::string& MeasureTool::getPrefsPath()
 {
     return MeasureTool::prefsPath;
@@ -272,7 +270,7 @@ void setMeasureItem(Geom::PathVector pathv, bool is_curve, bool markers, guint32
  * @param angle the angle of the arc segment to draw.
  * @param measure_rpr the container of the curve if converted to items.
  */
-void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom::Point const &end, Geom::Point const &anchor, double angle, Inkscape::XML::Node *measure_repr = NULL)
+void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom::Point const &end, Geom::Point const &anchor, double angle, std::vector<Inkscape::Display::TemporaryItem*> &measure_tmp_items, Inkscape::XML::Node *measure_repr = NULL)
 {
     // Given that we have a point on the arc's edge and the angle of the arc, we need to get the two endpoints.
 
@@ -1244,7 +1242,7 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, Inkscape::XML::N
                           * Geom::Affine(Geom::Translate(start_p)));
         }
         setMeasureCanvasControlLine(start_p, anchorEnd, to_item, CTLINE_SECONDARY, measure_repr);
-        createAngleDisplayCurve(desktop, start_p, end_p, angleDisplayPt, angle, measure_repr);
+        createAngleDisplayCurve(desktop, start_p, end_p, angleDisplayPt, angle, measure_tmp_items, measure_repr);
     }
 
     if (intersections.size() > 2) {
