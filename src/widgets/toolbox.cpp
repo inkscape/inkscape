@@ -375,6 +375,7 @@ static gchar const * ui_descr =
         "    <toolitem action='MeasureOnlyVisible' />"
         "    <toolitem action='MeasureAllLayers' />"
         "    <toolitem action='MeasureReverse' />"
+        "    <toolitem action='MeasureToPhantom' />"
         "    <toolitem action='MeasureToGuides' />"
         "    <toolitem action='MeasureMarkDimension' />"
         "    <toolitem action='MeasureToItem' />"

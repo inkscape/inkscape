@@ -242,6 +242,14 @@ sp_to_guides(void){
 }
 
 static void 
+sp_to_phantom(void){
+    MeasureTool *mt = get_measure_tool();
+    if (mt) {
+        mt->toPhantom();
+    }
+}
+
+static void 
 sp_to_item(void){
     MeasureTool *mt = get_measure_tool();
     if (mt) {
@@ -379,6 +387,16 @@ void sp_measure_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, G
                                           INKSCAPE_ICON("draw-geometry-mirror"),
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_reverse_knots), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+    }
+    /* phantom measure */
+    {
+        InkAction* act = ink_action_new( "MeasureToPhantom",
+                                          _("Phantom measure"),
+                                          _("Phantom measure"),
+                                          INKSCAPE_ICON("selection-make-bitmap-copy"),
+                                          secondarySize );
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_to_phantom), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
     /* to guides */
