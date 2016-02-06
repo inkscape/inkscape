@@ -592,7 +592,6 @@ bool MeasureTool::root_handler(GdkEvent* event)
             // motion notify coordinates as given (no snapping back to origin)
             within_tolerance = false;
             if(event->motion.time == 0 || !last_end  || Geom::LInfty( motion_w - *last_end ) > (tolerance/4.0)) {
-                Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point const motion_dt(desktop->w2d(motion_w));
                 end_p = motion_dt;
 
