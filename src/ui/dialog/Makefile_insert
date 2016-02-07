@@ -65,7 +65,7 @@ ink_common_sources +=		\
 	ui/dialog/knot-properties.h		\
 	ui/dialog/layer-properties.cpp		\
 	ui/dialog/layer-properties.h		\
-    ui/dialog/layers.cpp			\
+	ui/dialog/layers.cpp			\
 	ui/dialog/layers.h			\
 	ui/dialog/livepatheffect-add.cpp	\
 	ui/dialog/livepatheffect-add.h	\
