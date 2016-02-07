@@ -165,16 +165,16 @@ sp_toggle_ignore_1st_and_last( GtkToggleAction* act, gpointer data )
 }
 
 static void 
-sp_toggle_only_visible( GtkToggleAction* act, gpointer data )
+sp_toggle_show_hidden( GtkToggleAction* act, gpointer data )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean active = gtk_toggle_action_get_active(act);
-    prefs->setBool("/tools/measure/only_visible", active);
+    prefs->setBool("/tools/measure/show_hidden", active);
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
     if ( active ) {
-        desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Show only visible crossings."));
-    } else {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Show all crossings."));
+    } else {
+        desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Show visible crossings."));
     }
     MeasureTool *mt = get_measure_tool();
     if (mt) {
@@ -348,13 +348,13 @@ void sp_measure_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, G
     }
     /* only visible */
     {
-        InkToggleAction* act = ink_toggle_action_new( "MeasureOnlyVisible",
-                                                      _("Only visible intersections"),
-                                                      _("Only visible intersections"),
-                                                      INKSCAPE_ICON("zoom"),
+        InkToggleAction* act = ink_toggle_action_new( "MeasureShowHidden",
+                                                      _("Show hidden intersections"),
+                                                      _("Show hidden intersections"),
+                                                      INKSCAPE_ICON("object-hidden"),
                                                       secondarySize );
-        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/measure/only_visible", true) );
-        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_only_visible), desktop) ;
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/measure/show_hidden", true) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toggle_show_hidden), desktop) ;
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
         /* measure imbetweens */

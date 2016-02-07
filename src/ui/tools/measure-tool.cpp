@@ -532,10 +532,10 @@ static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom:
 
     // Reconstruct and store the points of intersection
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool only_visible = prefs->getBool("/tools/measure/only_visible", false);
+    bool show_hidden = prefs->getBool("/tools/measure/show_hidden", true);
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     for (Geom::Crossings::const_iterator m = cs[0].begin(); m != cs[0].end(); ++m) {
-        if(only_visible) {
+        if (!show_hidden) {
             double eps = 0.0001;
             if (((*m).ta > eps &&
              item == desktop->getItemAtPoint(desktop->d2w(desktop->dt2doc(lineseg[0].pointAt((*m).ta - eps))), true, NULL)) ||
