@@ -11,6 +11,11 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include "ui/tools/tool-base.h"
@@ -59,8 +64,8 @@ public:
     void setLabelText(const char *value, Geom::Point pos, double fontsize, Geom::Coord angle, guint32 background , Inkscape::XML::Node *measure_repr = NULL, CanvasTextAnchorPositionEnum text_anchor = TEXT_ANCHOR_CENTER );
     void knotStartMovedHandler(SPKnot */*knot*/, Geom::Point const &ppointer, guint state);
     void knotEndMovedHandler(SPKnot */*knot*/, Geom::Point const &ppointer, guint state);
+    void knotClickHandler(SPKnot *knot, guint state);
     void knotUngrabbedHandler(SPKnot */*knot*/,  unsigned int /*state*/);
-
 private:
     SPCanvasItem* grabbed;
     boost::optional<Geom::Point> explicitBase;
@@ -74,7 +79,9 @@ private:
     std::vector<Inkscape::Display::TemporaryItem*> measure_phantom_items;
     sigc::connection _knot_start_moved_connection;
     sigc::connection _knot_start_ungrabbed_connection;
+    sigc::connection _knot_start_click_connection;
     sigc::connection _knot_end_moved_connection;
+    sigc::connection _knot_end_click_connection;
     sigc::connection _knot_end_ungrabbed_connection;
 };
 

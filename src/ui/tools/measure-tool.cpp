@@ -10,8 +10,11 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
-
+#include <gtkmm.h>
 #include <gdk/gdkkeysyms.h>
 #include <boost/none_t.hpp>
 #include "util/units.h"
@@ -32,6 +35,7 @@
 #include <2geom/crossing.h>
 #include <2geom/angle.h>
 #include <2geom/transforms.h>
+#include "ui/dialog/knot-properties.h"
 #include "sp-namedview.h"
 #include "sp-shape.h"
 #include "sp-text.h"
@@ -48,11 +52,11 @@
 #include "document-undo.h"
 #include "viewbox.h"
 #include "snap.h"
+#include "knot.h"
 #include "text-editing.h"
 #include "pixmaps/cursor-measure.xpm"
 #include "preferences.h"
 #include "inkscape.h"
-#include "knot.h"
 #include "enums.h"
 #include "knot-enums.h"
 #include "desktop-style.h"
@@ -338,13 +342,13 @@ MeasureTool::MeasureTool()
     end_p = readMeasurePoint(false);
     dimension_offset = 35;
     // create the knots
-    this->knot_start = new SPKnot(desktop, N_("Measure start"));
+    this->knot_start = new SPKnot(desktop, N_("Measure start, <b>Shift+Click</b> for position dialog"));
     this->knot_start->setMode(SP_KNOT_MODE_XOR);
     this->knot_start->setFill(MT_KNOT_COLOR_NORMAL, MT_KNOT_COLOR_MOUSEOVER, MT_KNOT_COLOR_MOUSEOVER);
     this->knot_start->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
     this->knot_start->setShape(SP_KNOT_SHAPE_CIRCLE);
     this->knot_start->updateCtrl();
-    this->knot_end = new SPKnot(desktop, N_("Measure end"));
+    this->knot_end = new SPKnot(desktop, N_("Measure end, <b>Shift+Click</b> for position dialog"));
     this->knot_end->setMode(SP_KNOT_MODE_XOR);
     this->knot_end->setFill(MT_KNOT_COLOR_NORMAL, MT_KNOT_COLOR_MOUSEOVER, MT_KNOT_COLOR_MOUSEOVER);
     this->knot_end->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
@@ -365,8 +369,10 @@ MeasureTool::MeasureTool()
     }
 
     this->_knot_start_moved_connection = this->knot_start->moved_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotStartMovedHandler));
+    this->_knot_start_click_connection = this->knot_start->click_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotClickHandler));
     this->_knot_start_ungrabbed_connection = this->knot_start->ungrabbed_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotUngrabbedHandler));
     this->_knot_end_moved_connection = this->knot_end->moved_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotEndMovedHandler));
+    this->_knot_end_click_connection = this->knot_end->click_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotClickHandler));
     this->_knot_end_ungrabbed_connection = this->knot_end->ungrabbed_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotUngrabbedHandler));
 
 }
@@ -442,6 +448,16 @@ void MeasureTool::reverseKnots()
     start_p = end;
     end_p = start;
     this->showCanvasItems();
+}
+
+void MeasureTool::knotClickHandler(SPKnot *knot, guint state)
+{
+    if (state & GDK_SHIFT_MASK) {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Glib::ustring const unit_name =  prefs->getString("/tools/measure/unit");
+        Inkscape::UI::Dialogs::KnotPropertiesDialog::showDialog(desktop, knot, unit_name);
+    }
 }
 
 void MeasureTool::knotStartMovedHandler(SPKnot */*knot*/, Geom::Point const &ppointer, guint state)
