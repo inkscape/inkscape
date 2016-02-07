@@ -1131,63 +1131,50 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
     }
 
     std::vector<SPItem*> items;
-    Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
-    r->setMode(RUBBERBAND_MODE_TOUCHPATH);
-    if(!show_in_between) {
-        r->start(desktop,start_p);
-        r->move(end_p);
-        items = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints(), all_layers, 2);
-        r->stop();
-        r->setMode(RUBBERBAND_MODE_TOUCHPATH);
-        r->start(desktop,end_p);
-        r->move(start_p);
-        std::vector<SPItem*> items_reverse = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints(), all_layers, 2);
-        r->stop();
-        if(items_reverse.size() == 2 && items_reverse[1] != items[0] && items_reverse[1] != items[1]) {
-            items.push_back(items_reverse[1]);
-        }
-        if(items_reverse.size() >= 1 && items_reverse[0] != items[1]) {
-            items.push_back(items_reverse[0]);
-        }
-    } else {
-        r->start(desktop,start_p);
-        r->move(end_p);
-        items = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints(), all_layers);
-        r->stop();
+    SPDocument *doc = desktop->getDocument();
+    Geom::Rect rect(start_p, end_p);
+    items = doc->getItemsPartiallyInBox(desktop->dkey, rect, true);
+    Inkscape::LayerModel *layer_model = NULL;
+    SPObject *current_layer = NULL;
+    if(desktop){
+        layer_model = desktop->layers;
+        current_layer = desktop->currentLayer();
     }
     std::vector<double> intersection_times;
     for (std::vector<SPItem*>::const_iterator i=items.begin(); i!=items.end(); ++i) {
         SPItem *item = *i;
-        if (SP_IS_SHAPE(item)) {
-            calculate_intersections(desktop, item, lineseg, SP_SHAPE(item)->getCurve(), intersection_times);
-        } else {
-            if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
-                Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin();
-                do {
-                    Inkscape::Text::Layout::iterator iter_next = iter;
-                    iter_next.nextGlyph(); // iter_next is one glyph ahead from iter
-                    if (iter == iter_next) {
-                        break;
-                    }
+        if(all_layers || (layer_model && layer_model->layerForObject(item) == current_layer)){
+            if (SP_IS_SHAPE(item)) {
+                calculate_intersections(desktop, item, lineseg, SP_SHAPE(item)->getCurve(), intersection_times);
+            } else {
+                if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+                    Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin();
+                    do {
+                        Inkscape::Text::Layout::iterator iter_next = iter;
+                        iter_next.nextGlyph(); // iter_next is one glyph ahead from iter
+                        if (iter == iter_next) {
+                            break;
+                        }
 
-                    // get path from iter to iter_next:
-                    SPCurve *curve = te_get_layout(item)->convertToCurves(iter, iter_next);
-                    iter = iter_next; // shift to next glyph
-                    if (!curve) {
-                        continue; // error converting this glyph
-                    }
-                    if (curve->is_empty()) { // whitespace glyph?
-                        curve->unref();
-                        continue;
-                    }
+                        // get path from iter to iter_next:
+                        SPCurve *curve = te_get_layout(item)->convertToCurves(iter, iter_next);
+                        iter = iter_next; // shift to next glyph
+                        if (!curve) {
+                            continue; // error converting this glyph
+                        }
+                        if (curve->is_empty()) { // whitespace glyph?
+                            curve->unref();
+                            continue;
+                        }
 
-                    curve->transform(item->i2doc_affine());
+                        curve->transform(item->i2doc_affine());
 
-                    calculate_intersections(desktop, item, lineseg, curve, intersection_times);
-                    if (iter == te_get_layout(item)->end()) {
-                        break;
-                    }
-                } while (true);
+                        calculate_intersections(desktop, item, lineseg, curve, intersection_times);
+                        if (iter == te_get_layout(item)->end()) {
+                            break;
+                        }
+                    } while (true);
+                }
             }
         }
     }
@@ -1204,13 +1191,15 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
     std::vector<Geom::Point> intersections;
     std::sort(intersection_times.begin(), intersection_times.end());
     for (std::vector<double>::iterator iter_t = intersection_times.begin(); iter_t != intersection_times.end(); ++iter_t) {
-        if(show_in_between) {
-            intersections.push_back(lineseg[0].pointAt(*iter_t));
-        }
+        intersections.push_back(lineseg[0].pointAt(*iter_t));
     }
+
     if(!show_in_between && intersection_times.size() > 1) {
-        intersections.push_back(lineseg[0].pointAt(intersection_times[0]));
-        intersections.push_back(lineseg[0].pointAt(intersection_times[intersection_times.size()-1]));
+        Geom::Point start = lineseg[0].pointAt(intersection_times[0]);
+        Geom::Point end = lineseg[0].pointAt(intersection_times[intersection_times.size()-1]);
+        intersections.clear();
+        intersections.push_back(start);
+        intersections.push_back(end);
     }
     if (!prefs->getBool("/tools/measure/ignore_1st_and_last", true)) {
         intersections.insert(intersections.begin(),lineseg[0].pointAt(0));
