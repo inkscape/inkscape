@@ -275,7 +275,7 @@ void setMeasureItem(Geom::PathVector pathv, bool is_curve, bool markers, guint32
  * @param angle the angle of the arc segment to draw.
  * @param measure_rpr the container of the curve if converted to items.
  */
-void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom::Point const &end, Geom::Point const &anchor, double angle, bool to_phantom, std::vector<Inkscape::Display::TemporaryItem*> &measure_phantom_items , std::vector<Inkscape::Display::TemporaryItem*> &measure_tmp_items , Inkscape::XML::Node *measure_repr = NULL)
+void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom::Point const &end, Geom::Point const &anchor, double angle, bool to_phantom, std::vector<SPCanvasItem *> &measure_phantom_items , std::vector<SPCanvasItem *> &measure_tmp_items , Inkscape::XML::Node *measure_repr = NULL)
 {
     // Given that we have a point on the arc's edge and the angle of the arc, we need to get the two endpoints.
 
@@ -313,10 +313,12 @@ void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom
         SPCtrlCurve *curve = ControlManager::getManager().createControlCurve(desktop->getTempGroup(), p1, p2, p3, p4, CTLINE_SECONDARY);
         if(to_phantom){
             curve->rgba = 0x8888887f;
-            measure_phantom_items.push_back(desktop->add_temporary_canvasitem(SP_CANVAS_ITEM(curve), 0, true));
+            measure_phantom_items.push_back(SP_CANVAS_ITEM(curve));
         } else {
-            measure_tmp_items.push_back(desktop->add_temporary_canvasitem(SP_CANVAS_ITEM(curve), 0, true));
+            measure_tmp_items.push_back(SP_CANVAS_ITEM(curve));
         }
+        sp_canvas_item_move_to_z(SP_CANVAS_ITEM(curve), 0);
+        sp_canvas_item_show(SP_CANVAS_ITEM(curve));
         if(measure_repr) {
             Geom::PathVector pathv;
             Geom::Path path;
@@ -331,7 +333,7 @@ void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom
     }
 }
 
-} // namespace
+}  // namespace
 
 MeasureTool::MeasureTool()
     : ToolBase(cursor_measure_xpm, 4, 4)
@@ -388,11 +390,11 @@ MeasureTool::~MeasureTool()
     knot_unref(this->knot_start);
     knot_unref(this->knot_end);
     for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
-        desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
+        sp_canvas_item_destroy(measure_tmp_items[idx]);
     }
     measure_tmp_items.clear();
     for (size_t idx = 0; idx < measure_phantom_items.size(); ++idx) {
-        desktop->remove_temporary_canvasitem(measure_phantom_items[idx]);
+        sp_canvas_item_destroy(measure_phantom_items[idx]);
     }
     measure_phantom_items.clear();
 }
@@ -510,7 +512,7 @@ void MeasureTool::knotUngrabbedHandler(SPKnot */*knot*/,  unsigned int state)
 }
 
 
-
+//todo: we need this function?
 void MeasureTool::finish()
 {
     this->enableGrDrag(false);
@@ -763,11 +765,11 @@ void MeasureTool::toPhantom()
     }
     SPDocument *doc = desktop->getDocument();
     for (size_t idx = 0; idx < measure_phantom_items.size(); ++idx) {
-        desktop->remove_temporary_canvasitem(measure_phantom_items[idx]);
+        sp_canvas_item_destroy(measure_phantom_items[idx]);
     }
     measure_phantom_items.clear();
     for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
-        desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
+        sp_canvas_item_destroy(measure_tmp_items[idx]);
     }
     measure_tmp_items.clear();
     showCanvasItems(false, false, true);
@@ -1024,7 +1026,7 @@ void MeasureTool::reset()
     this->knot_start->hide();
     this->knot_end->hide();
     for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
-        desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
+        sp_canvas_item_destroy(measure_tmp_items[idx]);
     }
     measure_tmp_items.clear();
 }
@@ -1052,10 +1054,13 @@ void MeasureTool::setMeasureCanvasText(bool is_angle, double precision, double a
     canvas_tooltip->anchor_position = text_anchor;
     if(to_phantom){
         canvas_tooltip->rgba_background = 0x4444447f;
-        measure_phantom_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0, false));
+        measure_phantom_items.push_back(SP_CANVAS_ITEM(canvas_tooltip));
+        sp_canvas_item_show(SP_CANVAS_ITEM(canvas_tooltip));
     } else {
-        measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0, false));
+        measure_tmp_items.push_back(SP_CANVAS_ITEM(canvas_tooltip));
+        sp_canvas_item_show(SP_CANVAS_ITEM(canvas_tooltip));
     }
+
     if(to_item) {
         setLabelText(measure_str, position, fontsize, 0, background, measure_repr);
     }
@@ -1080,10 +1085,12 @@ void MeasureTool::setMeasureCanvasItem(Geom::Point position, bool to_item, bool 
 
     SP_CTRL(canvasitem)->moveto(position);
     if(to_phantom){
-        measure_phantom_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
+        measure_phantom_items.push_back(canvasitem);
     } else {
-        measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
+        measure_tmp_items.push_back(canvasitem);
     }
+    sp_canvas_item_show(canvasitem);
+    sp_canvas_item_move_to_z(canvasitem, 0);
     
     if(to_item) {
         setPoint(position, measure_repr);
@@ -1102,10 +1109,12 @@ void MeasureTool::setMeasureCanvasControlLine(Geom::Point start, Geom::Point end
                                    ctrl_line_type);
         control_line->rgba = color;
         if(to_phantom){
-            measure_phantom_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+            measure_phantom_items.push_back(SP_CANVAS_ITEM(control_line));
         } else {
-            measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+            measure_tmp_items.push_back(SP_CANVAS_ITEM(control_line));
         }
+        sp_canvas_item_move_to_z(SP_CANVAS_ITEM(control_line), 0);
+        sp_canvas_item_show(SP_CANVAS_ITEM(control_line));
         if(to_item) {
             setLine(start,
                     end,
@@ -1123,11 +1132,14 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
     }
     writeMeasurePoint(start_p, true);
     writeMeasurePoint(end_p, false);
-    //clear previous temporary canvas items, we'll draw new ones
+    //clear previous canvas items, we'll draw new ones
     for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
-        desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
+        sp_canvas_item_destroy(measure_tmp_items[idx]);
     }
     measure_tmp_items.clear();
+    //TODO:Calculate the measure area for current lenght and origin
+    // and use canvas->requestRedraw. In the calculation need a gap for outside text
+    // maybe this remove the trash lines on measure use
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool show_in_between = prefs->getBool("/tools/measure/show_in_between", true);
     bool all_layers = prefs->getBool("/tools/measure/all_layers", true);
