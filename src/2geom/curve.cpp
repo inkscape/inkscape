@@ -69,14 +69,14 @@ int Curve::winding(Point const &p) const
         // skip endpoint roots when they are local maxima on the Y axis
         // this follows the convention used in other winding routines,
         // i.e. that the bottommost coordinate is not part of the shape
-        bool ingore_0 = unitTangentAt(0)[Y] <= 0;
+        bool ignore_0 = unitTangentAt(0)[Y] <= 0;
         bool ignore_1 = unitTangentAt(1)[Y] >= 0;
 
         int wind = 0;
         for (std::size_t i = 0; i < ts.size(); ++i) {
             Coord t = ts[i];
             //std::cout << t << std::endl;
-            if ((t == 0 && ingore_0) || (t == 1 && ignore_1)) continue;
+            if ((t == 0 && ignore_0) || (t == 1 && ignore_1)) continue;
             if (valueAt(t, X) > p[X]) { // root is ray intersection
                 Point tangent = unitTangentAt(t);
                 if (tangent[Y] > 0) {
@@ -108,11 +108,7 @@ std::vector<CurveIntersection> Curve::intersectSelf(Coord eps) const
     // Monotonic segments cannot have self-intersections.
     // Thus, we can split the curve at roots and intersect the portions.
     std::vector<Coord> splits;
-#if __cplusplus <= 199711L
     std::auto_ptr<Curve> deriv(derivative());
-#else
-    std::unique_ptr<Curve> deriv(derivative());
-#endif
     splits = deriv->roots(0, X);
     if (splits.empty()) {
         return result;

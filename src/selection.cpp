@@ -374,7 +374,7 @@ SPItem *Selection::_sizeistItem(bool sml, Selection::CompareSize compare) {
 
     for ( std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i) {
         Geom::OptRect obox = SP_ITEM(*i)->desktopPreferredBounds();
-        if (!obox || obox.isEmpty()) continue;
+        if (!obox || obox.empty()) continue;
         Geom::Rect bbox = *obox;
 
         gdouble size = compare == 2 ? bbox.area() :

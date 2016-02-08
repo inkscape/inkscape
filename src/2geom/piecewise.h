@@ -222,7 +222,7 @@ class Piecewise {
     inline void setDomain(Interval dom) {
         if(empty()) return;
         /* dom can not be empty
-        if(dom.isEmpty()) {
+        if(dom.empty()) {
             cuts.clear(); segs.clear();
             return;
         }*/

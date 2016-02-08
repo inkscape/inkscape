@@ -5,8 +5,9 @@
  *  Authors:
  *   Nathan Hurst <njh@mail.csse.monash.edu.au>
  *   Michael Sloan <mgsloan@gmail.com>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
- * Copyright (C) 2006-2007 authors
+ * Copyright (C) 2006-2015 authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -38,14 +39,6 @@
 #include <2geom/interval.h>
 #include <2geom/math-utils.h>
 
-//#define USE_SBASIS_OF
-
-#ifdef USE_SBASIS_OF
-
-#include "linear-of.h"
-
-#else
-
 namespace Geom {
 
 class SBasis;
@@ -54,26 +47,31 @@ class SBasis;
  * @brief Function that interpolates linearly between two values.
  * @ingroup Fragments
  */
-class Linear {
+class Linear
+    : boost::additive< Linear
+    , boost::arithmetic< Linear, Coord
+    , boost::equality_comparable< Linear
+      > > >
+{
 public:
-    double a[2];
+    Coord a[2];
     Linear() {a[0]=0; a[1]=0;}
-    Linear(double aa, double b) {a[0] = aa; a[1] = b;}
-    Linear(double aa) {a[0] = aa; a[1] = aa;}
+    Linear(Coord aa, Coord b) {a[0] = aa; a[1] = b;}
+    Linear(Coord aa) {a[0] = aa; a[1] = aa;}
 
-    double operator[](unsigned i) const {
+    Coord operator[](unsigned i) const {
         assert(i < 2);
         return a[i];
     }
-    double &operator[](unsigned i) {
+    Coord &operator[](unsigned i) {
         assert(i < 2);
         return a[i];
     }
 
     //IMPL: FragmentConcept
-    typedef double output_type;
-    bool isZero(double eps=EPSILON) const { return are_near(a[0], 0., eps) && are_near(a[1], 0., eps); }
-    bool isConstant(double eps=EPSILON) const { return are_near(a[0], a[1], eps); }
+    typedef Coord output_type;
+    bool isZero(Coord eps=EPSILON) const { return are_near(a[0], 0., eps) && are_near(a[1], 0., eps); }
+    bool isConstant(Coord eps=EPSILON) const { return are_near(a[0], a[1], eps); }
     bool isFinite() const { return IS_FINITE(a[0]) && IS_FINITE(a[1]); }
 
     Coord at0() const { return a[0]; }
@@ -81,10 +79,10 @@ public:
     Coord at1() const { return a[1]; }
     Coord &at1() { return a[1]; }
 
-    double valueAt(double t) const { return lerp(t, a[0], a[1]); }
-    double operator()(double t) const { return valueAt(t); }
+    Coord valueAt(Coord t) const { return lerp(t, a[0], a[1]); }
+    Coord operator()(Coord t) const { return valueAt(t); }
 
-    // not very useful, but required for ShapeConcept
+    // not very useful, but required for FragmentConcept
     std::vector<Coord> valueAndDerivatives(Coord t, unsigned n) {
         std::vector<Coord> result(n+1, 0.0);
         result[0] = valueAt(t);
@@ -107,6 +105,44 @@ public:
     double hat() const {
         return (a[1] + a[0])/2;
     }
+
+    // addition of other Linears
+    Linear &operator+=(Linear const &other) {
+        a[0] += other.a[0];
+        a[1] += other.a[1];
+        return *this;
+    }
+    Linear &operator-=(Linear const &other) {
+        a[0] -= other.a[0];
+        a[1] -= other.a[1];
+        return *this;
+    }
+
+    // 
+    Linear &operator+=(Coord x) {
+        a[0] += x; a[1] += x;
+        return *this;
+    }
+    Linear &operator-=(Coord x) {
+        a[0] -= x; a[1] -= x;
+        return *this;
+    }
+    Linear &operator*=(Coord x) {
+        a[0] *= x; a[1] *= x;
+        return *this;
+    }
+    Linear &operator/=(Coord x) {
+        a[0] /= x; a[1] /= x;
+        return *this;
+    }
+    Linear operator-() const {
+        Linear ret(-a[0], -a[1]);
+        return ret;
+    }
+
+    bool operator==(Linear const &other) const {
+        return a[0] == other.a[0] && a[1] == other.a[1];
+    }
 };
 
 inline Linear reverse(Linear const &a) { return Linear(a[1], a[0]); }
@@ -115,64 +151,7 @@ inline Linear portion(Linear const &a, Coord from, Coord to) {
     return result;
 }
 
-//IMPL: AddableConcept
-inline Linear operator+(Linear const & a, Linear const & b) {
-    return Linear(a[0] + b[0], a[1] + b[1]);
-}
-inline Linear operator-(Linear const & a, Linear const & b) {
-    return Linear(a[0] - b[0], a[1] - b[1]);
-}
-inline Linear& operator+=(Linear & a, Linear const & b) {
-    a[0] += b[0]; a[1] += b[1];
-    return a;
-}
-inline Linear& operator-=(Linear & a, Linear const & b) {
-    a[0] -= b[0]; a[1] -= b[1];
-    return a;
-}
-//IMPL: OffsetableConcept
-inline Linear operator+(Linear const & a, double b) {
-    return Linear(a[0] + b, a[1] + b);
-}
-inline Linear operator-(Linear const & a, double b) {
-    return Linear(a[0] - b, a[1] - b);
-}
-inline Linear& operator+=(Linear & a, double b) {
-    a[0] += b; a[1] += b;
-    return a;
-}
-inline Linear& operator-=(Linear & a, double b) {
-    a[0] -= b; a[1] -= b;
-    return a;
-}
-//IMPL: boost::EqualityComparableConcept
-inline bool operator==(Linear const & a, Linear const & b) {
-    return a[0] == b[0] && a[1] == b[1];
-}
-inline bool operator!=(Linear const & a, Linear const & b) {
-    return a[0] != b[0] || a[1] != b[1];
-}
-//IMPL: ScalableConcept
-inline Linear operator-(Linear const &a) {
-    return Linear(-a[0], -a[1]);
-}
-inline Linear operator*(Linear const & a, double b) {
-    return Linear(a[0]*b, a[1]*b);
-}
-inline Linear operator/(Linear const & a, double b) {
-    return Linear(a[0]/b, a[1]/b);
-}
-inline Linear operator*=(Linear & a, double b) {
-    a[0] *= b; a[1] *= b;
-    return a;
-}
-inline Linear operator/=(Linear & a, double b) {
-    a[0] /= b; a[1] /= b;
-    return a;
-}
-
-}
-#endif
+} // end namespace Geom
 
 #endif //LIB2GEOM_SEEN_LINEAR_H
 

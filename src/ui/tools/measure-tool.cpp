@@ -747,9 +747,9 @@ void MeasureTool::toGuides()
         }
     }
     setGuide(start,0,"");
-    setGuide(start,Geom::deg_to_rad(90),_("Start"));
+    setGuide(start,Geom::rad_from_deg(90),_("Start"));
     setGuide(end,0,_("End"));
-    setGuide(end,Geom::deg_to_rad(90),"");
+    setGuide(end,Geom::rad_from_deg(90),"");
     showCanvasItems(true);
     doc->ensureUpToDate();
     DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MEASURE,_("Add guides from measure tool"));
@@ -808,9 +808,9 @@ void MeasureTool::toMarkDimension()
     Geom::Point start = start_p + Geom::Point::polar(ray.angle(), 5);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     dimension_offset = prefs->getDouble("/tools/measure/offset", 5.0);
-    start = start + Geom::Point::polar(ray.angle() + Geom::deg_to_rad(90), -dimension_offset);
+    start = start + Geom::Point::polar(ray.angle() + Geom::rad_from_deg(90), -dimension_offset);
     Geom::Point end = end_p + Geom::Point::polar(ray.angle(), -5);
-    end = end+ Geom::Point::polar(ray.angle() + Geom::deg_to_rad(90), -dimension_offset);
+    end = end+ Geom::Point::polar(ray.angle() + Geom::rad_from_deg(90), -dimension_offset);
     guint32 color = 0x000000ff;
     setLine(start, end, true, color);
     Glib::ustring unit_name = prefs->getString("/tools/measure/unit");
@@ -827,7 +827,7 @@ void MeasureTool::toMarkDimension()
     totallengthval = Inkscape::Util::Quantity::convert(totallengthval, "px", unit_name);
     double scale = prefs->getDouble("/tools/measure/scale", 100.0) / 100.0;
     gchar *totallength_str = g_strdup_printf(precision_str.str().c_str(), totallengthval * scale, unit_name.c_str());
-    setLabelText(totallength_str, middle, fontsize, Geom::deg_to_rad(180) - ray.angle(), color);
+    setLabelText(totallength_str, middle, fontsize, Geom::rad_from_deg(180) - ray.angle(), color);
     g_free(totallength_str);
     doc->ensureUpToDate();
     DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MEASURE,_("Add global measure line"));
@@ -967,7 +967,7 @@ void MeasureTool::setLabelText(const char *value, Geom::Point pos, double fontsi
     if (!measure_repr && bbox) {
         Geom::Point center = bbox->midpoint();
         text_item->transform *= Geom::Translate(center).inverse();
-        pos += Geom::Point::polar(angle+ Geom::deg_to_rad(90), -bbox->height());
+        pos += Geom::Point::polar(angle+ Geom::rad_from_deg(90), -bbox->height());
     }
     if(measure_repr) {
         /* Create <group> */
@@ -1244,7 +1244,7 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
                                  start_p, end_p,
                                  fontsize);
     {
-        setMeasureCanvasText(true, precision, Geom::rad_to_deg(angle), fontsize, unit_name, angleDisplayPt, 0x337f337f, TEXT_ANCHOR_CENTER, to_item, to_phantom, measure_repr);
+        setMeasureCanvasText(true, precision, Geom::deg_from_rad(angle), fontsize, unit_name, angleDisplayPt, 0x337f337f, TEXT_ANCHOR_CENTER, to_item, to_phantom, measure_repr);
     }
 
     {
@@ -1277,9 +1277,9 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
                 cross_number= g_strdup_printf(_("Crossing %u"), idx + 1);
             }
             if (!prefs->getBool("/tools/measure/ignore_1st_and_last", true) && idx == 0) {
-                setGuide(desktop->doc2dt(intersections[idx]), angle + Geom::deg_to_rad(90), "");
+                setGuide(desktop->doc2dt(intersections[idx]), angle + Geom::rad_from_deg(90), "");
             } else {
-                setGuide(desktop->doc2dt(intersections[idx]), angle + Geom::deg_to_rad(90), cross_number);
+                setGuide(desktop->doc2dt(intersections[idx]), angle + Geom::rad_from_deg(90), cross_number);
             }
             g_free(cross_number);
         }

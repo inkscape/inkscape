@@ -98,6 +98,24 @@ bool PathInterval::contains(PathTime const &pos) const {
     }
 }
 
+PathInterval::size_type PathInterval::curveCount() const
+{
+    if (isDegenerate()) return 0;
+    if (_cross_start) {
+        if (_reverse) {
+            return _path_size - _to.curve_index + _from.curve_index + 1;
+        } else {
+            return _path_size - _from.curve_index + _to.curve_index + 1;
+        }
+    } else {
+        if (_reverse) {
+            return _from.curve_index - _to.curve_index + 1;
+        } else {
+            return _to.curve_index - _from.curve_index + 1;
+        }
+    }
+}
+
 PathTime PathInterval::inside(Coord min_dist) const
 {
     // If there is some node further than min_dist (in time coord) from the ends,
@@ -220,25 +238,25 @@ PathInterval PathInterval::from_direction(PathTime const &from, PathTime const &
 
 
 Path::Path(Rect const &r)
-    : _curves(new Sequence())
+    : _data(new PathData())
     , _closing_seg(new ClosingSegment(r.corner(3), r.corner(0)))
     , _closed(true)
     , _exception_on_stitch(true)
 {
     for (unsigned i = 0; i < 3; ++i) {
-        _curves->push_back(new LineSegment(r.corner(i), r.corner(i+1)));
+        _data->curves.push_back(new LineSegment(r.corner(i), r.corner(i+1)));
     }
-    _curves->push_back(_closing_seg);
+    _data->curves.push_back(_closing_seg);
 }
 
 Path::Path(ConvexHull const &ch)
-    : _curves(new Sequence())
+    : _data(new PathData())
     , _closing_seg(new ClosingSegment(Point(), Point()))
     , _closed(true)
     , _exception_on_stitch(true)
 {
     if (ch.empty()) {
-        _curves->push_back(_closing_seg);
+        _data->curves.push_back(_closing_seg);
         return;
     }
 
@@ -248,52 +266,52 @@ Path::Path(ConvexHull const &ch)
     Point last = ch.front();
 
     for (std::size_t i = 1; i < ch.size(); ++i) {
-        _curves->push_back(new LineSegment(last, ch[i]));
+        _data->curves.push_back(new LineSegment(last, ch[i]));
         last = ch[i];
     }
 
-    _curves->push_back(_closing_seg);
+    _data->curves.push_back(_closing_seg);
     _closed = true;
 }
 
 Path::Path(Circle const &c)
-    : _curves(new Sequence())
+    : _data(new PathData())
     , _closing_seg(NULL)
     , _closed(true)
     , _exception_on_stitch(true)
 {
     Point p1 = c.pointAt(0);
     Point p2 = c.pointAt(M_PI);
-    _curves->push_back(new EllipticalArc(p1, c.radius(), c.radius(), 0, false, true, p2));
-    _curves->push_back(new EllipticalArc(p2, c.radius(), c.radius(), 0, false, true, p1));
+    _data->curves.push_back(new EllipticalArc(p1, c.radius(), c.radius(), 0, false, true, p2));
+    _data->curves.push_back(new EllipticalArc(p2, c.radius(), c.radius(), 0, false, true, p1));
     _closing_seg = new ClosingSegment(p1, p1);
-    _curves->push_back(_closing_seg);
+    _data->curves.push_back(_closing_seg);
 }
 
 Path::Path(Ellipse const &e)
-    : _curves(new Sequence())
+    : _data(new PathData())
     , _closing_seg(NULL)
     , _closed(true)
     , _exception_on_stitch(true)
 {
     Point p1 = e.pointAt(0);
     Point p2 = e.pointAt(M_PI);
-    _curves->push_back(new EllipticalArc(p1, e.rays(), e.rotationAngle(), false, true, p2));
-    _curves->push_back(new EllipticalArc(p2, e.rays(), e.rotationAngle(), false, true, p1));
+    _data->curves.push_back(new EllipticalArc(p1, e.rays(), e.rotationAngle(), false, true, p2));
+    _data->curves.push_back(new EllipticalArc(p2, e.rays(), e.rotationAngle(), false, true, p1));
     _closing_seg = new ClosingSegment(p1, p1);
-    _curves->push_back(_closing_seg);
+    _data->curves.push_back(_closing_seg);
 }
 
 void Path::close(bool c)
 {
     if (c == _closed) return;
-    if (c && _curves->size() >= 2) {
+    if (c && _data->curves.size() >= 2) {
         // when closing, if last segment is linear and ends at initial point,
         // replace it with the closing segment
-        Sequence::iterator last = _curves->end() - 2;
+        Sequence::iterator last = _data->curves.end() - 2;
         if (last->isLineSegment() && last->finalPoint() == initialPoint()) {
             _closing_seg->setInitial(last->initialPoint());
-            _curves->erase(last);
+            _data->curves.erase(last);
         }
     }
     _closed = c;
@@ -302,27 +320,35 @@ void Path::close(bool c)
 void Path::clear()
 {
     _unshare();
-    _curves->pop_back().release();
-    _curves->clear();
+    _data->curves.pop_back().release();
+    _data->curves.clear();
     _closing_seg->setInitial(Point(0, 0));
     _closing_seg->setFinal(Point(0, 0));
-    _curves->push_back(_closing_seg);
+    _data->curves.push_back(_closing_seg);
     _closed = false;
 }
 
 OptRect Path::boundsFast() const
 {
     OptRect bounds;
-    if (empty())
+    if (empty()) {
         return bounds;
+    }
+    // if the path is not empty, we look for cached bounds
+    if (_data->fast_bounds) {
+        return _data->fast_bounds;
+    }
+
     bounds = front().boundsFast();
     const_iterator iter = begin();
-    // the closing path segment can be ignored, because it will always lie within the bbox of the rest of the path
+    // the closing path segment can be ignored, because it will always
+    // lie within the bbox of the rest of the path
     if (iter != end()) {
         for (++iter; iter != end(); ++iter) {
             bounds.unionWith(iter->boundsFast());
         }
     }
+    _data->fast_bounds = bounds;
     return bounds;
 }
 
@@ -377,11 +403,11 @@ bool Path::operator==(Path const &other) const
         return true;
     if (_closed != other._closed)
         return false;
-    return *_curves == *other._curves;
+    return _data->curves == other._data->curves;
 }
 
 void Path::start(Point const &p) {
-    if (_curves->size() > 1) {
+    if (_data->curves.size() > 1) {
         clear();
     }
     _closing_seg->setInitial(p);
@@ -442,86 +468,106 @@ std::vector<PathTime> Path::roots(Coord v, Dim2 d) const
 // Instead of O(N^2), this takes O(N + X), where X is the number of overlaps
 // between the bounding boxes of curves.
 
-struct CurveSweepTraits {
-    struct Bound {
-        Rect r;
-        std::size_t index;
-        int which;
-    };
-    typedef std::less<Coord> Compare;
-    inline static Coord entry_value(Bound const &b) { return b.r[X].min(); }
-    inline static Coord exit_value(Bound const &b) { return b.r[X].max(); }
-};
-
-class CurveSweeper
-    : public Sweeper<Curve const *, CurveSweepTraits>
+struct CurveIntersectionSweepSet
 {
 public:
-    CurveSweeper(Path const &a, Path const &b, std::vector<PathIntersection> &result, Coord prec)
+    struct CurveRecord {
+        boost::intrusive::list_member_hook<> _hook;
+        Curve const *curve;
+        Rect bounds;
+        std::size_t index;
+        unsigned which;
+
+        CurveRecord(Curve const *pc, std::size_t idx, unsigned w)
+            : curve(pc)
+            , bounds(curve->boundsFast())
+            , index(idx)
+            , which(w)
+        {}
+    };
+
+    typedef std::vector<CurveRecord>::const_iterator ItemIterator;
+
+    CurveIntersectionSweepSet(std::vector<PathIntersection> &result,
+                              Path const &a, Path const &b, Coord precision)
         : _result(result)
-        , _precision(prec)
+        , _precision(precision)
+        , _sweep_dir(X)
     {
-        for (std::size_t i = 0; i < a.size(); ++i) {
-            Bound bound;
-            bound.r = a[i].boundsFast();
-            bound.index = i;
-            bound.which = 0;
-            insert(bound, &a[i]);
+        std::size_t asz = a.size(), bsz = b.size();
+        _records.reserve(asz + bsz);
+
+        for (std::size_t i = 0; i < asz; ++i) {
+            _records.push_back(CurveRecord(&a[i], i, 0));
         }
-        for (std::size_t i = 0; i < b.size(); ++i) {
-            Bound bound;
-            bound.r = b[i].boundsFast();
-            bound.index = i;
-            bound.which = 1;
-            insert(bound, &b[i]);
+        for (std::size_t i = 0; i < bsz; ++i) {
+            _records.push_back(CurveRecord(&b[i], i, 1));
+        }
+
+        OptRect abb = a.boundsFast() | b.boundsFast();
+        if (abb && abb->height() > abb->width()) {
+            _sweep_dir = Y;
         }
     }
 
-protected:
-    void _enter(Record const &record) {
-        int which = record.bound.which;
+    std::vector<CurveRecord> const &items() { return _records; }
+    Interval itemBounds(ItemIterator ii) {
+        return ii->bounds[_sweep_dir];
+    }
 
-        for (RecordList::iterator i = _active_items.begin(); i != _active_items.end(); ++i) {
-            // do not intersect in the same path
-            if (i->bound.which == which) continue;
-            // do not intersect if boxes do not overlap in Y
-            if (!record.bound.r[Y].intersects(i->bound.r[Y])) continue;
+    void addActiveItem(ItemIterator ii) {
+        unsigned w = ii->which;
+        unsigned ow = (w+1) % 2;
 
-            std::vector<CurveIntersection> cx;
-            int ia = record.bound.index;
-            int ib = i->bound.index;
+        _active[w].push_back(const_cast<CurveRecord&>(*ii));
 
-            if (which == 0) {
-                cx = record.item->intersect(*i->item, _precision);
-            } else {
-                cx = i->item->intersect(*record.item, _precision);
-                std::swap(ia, ib);
-            }
-
-            for (std::size_t ci = 0; ci < cx.size(); ++ci) {
-                PathTime a(ia, cx[ci].first), b(ib, cx[ci].second);
-                PathIntersection px(a, b, cx[ci].point());
-                _result.push_back(px);
+        for (ActiveCurveList::iterator i = _active[ow].begin(); i != _active[ow].end(); ++i) {
+            if (!ii->bounds.intersects(i->bounds)) continue;
+            std::vector<CurveIntersection> cx = ii->curve->intersect(*i->curve, _precision);
+            for (std::size_t k = 0; k < cx.size(); ++k) {
+                PathTime tw(ii->index, cx[k].first), tow(i->index, cx[k].second);
+                _result.push_back(PathIntersection(
+                    w == 0 ? tw : tow,
+                    w == 0 ? tow : tw,
+                    cx[k].point()));
             }
         }
+    }
+    void removeActiveItem(ItemIterator ii) {
+        ActiveCurveList &acl = _active[ii->which];
+        acl.erase(acl.iterator_to(*ii));
     }
 
 private:
+    typedef boost::intrusive::list
+        < CurveRecord
+        , boost::intrusive::member_hook
+            < CurveRecord
+            , boost::intrusive::list_member_hook<>
+            , &CurveRecord::_hook
+            >
+        > ActiveCurveList;
+
+    std::vector<CurveRecord> _records;
     std::vector<PathIntersection> &_result;
+    ActiveCurveList _active[2];
     Coord _precision;
+    Dim2 _sweep_dir;
 };
 
 std::vector<PathIntersection> Path::intersect(Path const &other, Coord precision) const
 {
     std::vector<PathIntersection> result;
 
-    CurveSweeper sweeper(*this, other, result, precision);
+    CurveIntersectionSweepSet cisset(result, *this, other, precision);
+    Sweeper<CurveIntersectionSweepSet> sweeper(cisset);
     sweeper.process();
 
     // preprocessing to remove duplicate intersections at endpoints
+    std::size_t asz = size(), bsz = other.size();
     for (std::size_t i = 0; i < result.size(); ++i) {
-        result[i].first.normalizeForward(size());
-        result[i].second.normalizeForward(other.size());
+        result[i].first.normalizeForward(asz);
+        result[i].second.normalizeForward(bsz);
     }
     std::sort(result.begin(), result.end());
     result.erase(std::unique(result.begin(), result.end()), result.end());
@@ -672,7 +718,7 @@ PathTime Path::nearestTime(Point const &p, Coord *dist) const
     Coord mindist = std::numeric_limits<Coord>::max();
     PathTime ret;
 
-    if (_curves->size() == 1) {
+    if (_data->curves.size() == 1) {
         // naked moveto
         ret.curve_index = 0;
         ret.t = 0;
@@ -699,6 +745,16 @@ PathTime Path::nearestTime(Point const &p, Coord *dist) const
     }
 
     return ret;
+}
+
+std::vector<Point> Path::nodes() const
+{
+    std::vector<Point> result;
+    size_type path_size = size_closed();
+    for (size_type i = 0; i < path_size; ++i) {
+        result.push_back(_data->curves[i].initialPoint());
+    }
+    return result;
 }
 
 void Path::appendPortionTo(Path &ret, double from, double to) const
@@ -797,16 +853,16 @@ Path Path::reversed() const
     Path ret(finalPoint());
     if (empty()) return ret;
 
-    ret._curves->pop_back(); // this also deletes the closing segment from ret
+    ret._data->curves.pop_back(); // this also deletes the closing segment from ret
 
-    RIter iter(_includesClosingSegment() ? _curves->end() : _curves->end() - 1);
-    RIter rend(_curves->begin());
+    RIter iter(_includesClosingSegment() ? _data->curves.end() : _data->curves.end() - 1);
+    RIter rend(_data->curves.begin());
 
     if (_closed) {
         // when the path is closed, there are two cases:
         if (front().isLineSegment()) {
             // 1. initial segment is linear: it becomes the new closing segment.
-            rend = RIter(_curves->begin() + 1);
+            rend = RIter(_data->curves.begin() + 1);
             ret._closing_seg = new ClosingSegment(front().finalPoint(), front().initialPoint());
         } else {
             // 2. initial segment is not linear: the closing segment becomes degenerate.
@@ -820,9 +876,9 @@ Path Path::reversed() const
     }
 
     for (; iter != rend; ++iter) {
-        ret._curves->push_back(iter->reverse());
+        ret._data->curves.push_back(iter->reverse());
     }
-    ret._curves->push_back(ret._closing_seg);
+    ret._data->curves.push_back(ret._closing_seg);
     ret._closed = _closed;
     return ret;
 }
@@ -896,10 +952,10 @@ void Path::replace(iterator first, iterator last, Path const &path)
 void Path::snapEnds(Coord precision)
 {
     if (!_closed) return;
-    if (_curves->size() > 1 && are_near(_closing_seg->length(precision), 0, precision)) {
+    if (_data->curves.size() > 1 && are_near(_closing_seg->length(precision), 0, precision)) {
         _unshare();
         _closing_seg->setInitial(_closing_seg->finalPoint());
-        (_curves->end() - 1)->setFinal(_closing_seg->finalPoint());
+        (_data->curves.end() - 1)->setFinal(_closing_seg->finalPoint());
     }
 }
 
@@ -908,7 +964,7 @@ void Path::snapEnds(Coord precision)
 void Path::do_update(Sequence::iterator first, Sequence::iterator last, Sequence &source)
 {
     // TODO: handle cases where first > last in closed paths?
-    bool last_beyond_closing_segment = (last == _curves->end());
+    bool last_beyond_closing_segment = (last == _data->curves.end());
 
     // special case:
     // if do_update replaces the closing segment, we have to regenerate it
@@ -916,7 +972,7 @@ void Path::do_update(Sequence::iterator first, Sequence::iterator last, Sequence
         if (first == last) return; // nothing to do
 
         // only removing some segments
-        if ((!_closed && first == _curves->begin()) || (!_closed && last == _curves->end() - 1) || last_beyond_closing_segment) {
+        if ((!_closed && first == _data->curves.begin()) || (!_closed && last == _data->curves.end() - 1) || last_beyond_closing_segment) {
             // just adjust the closing segment
             // do nothing
         } else if (first->initialPoint() != (last - 1)->finalPoint()) {
@@ -927,17 +983,17 @@ void Path::do_update(Sequence::iterator first, Sequence::iterator last, Sequence
         }
     } else {
         // replacing
-        if (first == _curves->begin() && last == _curves->end()) {
+        if (first == _data->curves.begin() && last == _data->curves.end()) {
             // special case: replacing everything should work the same in open and closed curves
-            _curves->erase(_curves->begin(), _curves->end() - 1);
+            _data->curves.erase(_data->curves.begin(), _data->curves.end() - 1);
             _closing_seg->setFinal(source.front().initialPoint());
             _closing_seg->setInitial(source.back().finalPoint());
-            _curves->transfer(_curves->begin(), source.begin(), source.end(), source);
+            _data->curves.transfer(_data->curves.begin(), source.begin(), source.end(), source);
             return;
         }
 
         // stitch in front
-        if (!_closed && first == _curves->begin()) {
+        if (!_closed && first == _data->curves.begin()) {
             // not necessary to stitch in front
         } else if (first->initialPoint() != source.front().initialPoint()) {
             if (_exception_on_stitch) {
@@ -947,7 +1003,7 @@ void Path::do_update(Sequence::iterator first, Sequence::iterator last, Sequence
         }
 
         // stitch at the end
-        if ((!_closed && last == _curves->end() - 1) || last_beyond_closing_segment) {
+        if ((!_closed && last == _data->curves.end() - 1) || last_beyond_closing_segment) {
             // repurpose the closing segment as the stitch segment
             // do nothing
         } else if (source.back().finalPoint() != (last - 1)->finalPoint()) {
@@ -962,8 +1018,8 @@ void Path::do_update(Sequence::iterator first, Sequence::iterator last, Sequence
     if (last_beyond_closing_segment) {
         --last;
     }
-    _curves->erase(first, last);
-    _curves->transfer(first, source.begin(), source.end(), source);
+    _data->curves.erase(first, last);
+    _data->curves.transfer(first, source.begin(), source.end(), source);
 
     // adjust closing segment
     if (size_open() == 0) {
@@ -978,7 +1034,7 @@ void Path::do_update(Sequence::iterator first, Sequence::iterator last, Sequence
 
 void Path::do_append(Curve *c)
 {
-    if (&_curves->front() == _closing_seg) {
+    if (&_data->curves.front() == _closing_seg) {
         _closing_seg->setFinal(c->initialPoint());
     } else {
         // if we can't freely move the closing segment, we check whether
@@ -994,20 +1050,20 @@ void Path::do_append(Curve *c)
             return;
         }
     }
-    _curves->insert(_curves->end() - 1, c);
+    _data->curves.insert(_data->curves.end() - 1, c);
     _closing_seg->setInitial(c->finalPoint());
 }
 
 void Path::checkContinuity() const
 {
-    Sequence::const_iterator i = _curves->begin(), j = _curves->begin();
+    Sequence::const_iterator i = _data->curves.begin(), j = _data->curves.begin();
     ++j;
-    for (; j != _curves->end(); ++i, ++j) {
+    for (; j != _data->curves.end(); ++i, ++j) {
         if (i->finalPoint() != j->initialPoint()) {
             THROW_CONTINUITYERROR();
         }
     }
-    if (_curves->front().initialPoint() != _curves->back().finalPoint()) {
+    if (_data->curves.front().initialPoint() != _data->curves.back().finalPoint()) {
         THROW_CONTINUITYERROR();
     }
 }
@@ -1038,6 +1094,16 @@ Piecewise<D2<SBasis> > paths_to_pw(PathVector const &paths)
         ret.concat(paths[i].toPwSb());
     }
     return ret;
+}
+
+bool are_near(Path const &a, Path const &b, Coord precision)
+{
+    if (a.size() != b.size()) return false;
+
+    for (unsigned i = 0; i < a.size(); ++i) {
+        if (!a[i].isNear(b[i], precision)) return false;
+    }
+    return true;
 }
 
 std::ostream &operator<<(std::ostream &out, Path const &path)

@@ -46,7 +46,7 @@ LPETransform2Pts::LPETransform2Pts(LivePathEffectObject *lpeobject) :
     point_b(Geom::Point()),
     pathvector(),
     append_path(false),
-    previous_angle(Geom::deg_to_rad(0)),
+    previous_angle(Geom::rad_from_deg(0)),
     previous_start(Geom::Point()),
     previous_lenght(-1)
 {
@@ -151,10 +151,10 @@ LPETransform2Pts::doBeforeEffect (SPLPEItem const* lpeitem)
     }
     if(lock_lenght && !lock_angle && previous_lenght != -1) {
         Geom::Ray transformed((Geom::Point)start,(Geom::Point)end);
-        if(previous_start == start || previous_angle == Geom::deg_to_rad(0)) {
+        if(previous_start == start || previous_angle == Geom::rad_from_deg(0)) {
             previous_angle = transformed.angle();
         }
-    } else if(lock_angle && !lock_lenght && previous_angle != Geom::deg_to_rad(0)) {
+    } else if(lock_angle && !lock_lenght && previous_angle != Geom::rad_from_deg(0)) {
         if(previous_start == start){
             previous_lenght = Geom::distance((Geom::Point)start, (Geom::Point)end);
         }
@@ -406,7 +406,7 @@ LPETransform2Pts::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const 
         trans = (Geom::Point)end - helper.initialPoint();
     }
     if(offset != 0){
-        trans = Geom::Point::polar(transformed.angle() + Geom::deg_to_rad(-90),offset) + trans;
+        trans = Geom::Point::polar(transformed.angle() + Geom::rad_from_deg(-90),offset) + trans;
     }
     m *= Geom::Translate(trans);
 

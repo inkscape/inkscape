@@ -359,6 +359,8 @@ public:
         Affine m = rotationToZero(other_dimension(d));
         return m;
     }
+
+    Affine transformTo(Line const &other) const;
     /// @}
 
     std::vector<ShapeIntersection> intersect(Line const &other) const;

@@ -235,6 +235,20 @@ Coord Line::timeAt(Point const &p) const
     }
 }
 
+/** @brief Create a transformation that maps one line to another.
+ * This will return a transformation \f$A\f$ such that
+ * \f$L_1(t) \cdot A = L_2(t)\f$, where \f$L_1\f$ is this line
+ * and \f$L_2\f$ is the line passed as the parameter. The returned
+ * transformation will preserve angles. */
+Affine Line::transformTo(Line const &other) const
+{
+    Affine result = Translate(-_initial);
+    result *= Rotate(angle_between(versor(), other.versor()));
+    result *= Scale(other.versor().length() / versor().length());
+    result *= Translate(other._initial);
+    return result;
+}
+
 std::vector<ShapeIntersection> Line::intersect(Line const &other) const
 {
     std::vector<ShapeIntersection> result;

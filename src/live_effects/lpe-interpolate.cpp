@@ -16,7 +16,6 @@
 
 #include <2geom/path.h>
 #include <2geom/sbasis-to-bezier.h>
-#include <2geom/d2-sbasis.h>
 #include <2geom/piecewise.h>
 #include <2geom/sbasis-geometric.h>
 

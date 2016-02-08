@@ -220,8 +220,8 @@ LPESimplify::generateHelperPathAndSmooth(Geom::PathVector &result)
             }
             Geom::Ray ray1(point_at2, point_at3);
             Geom::Ray ray2(point_at3, point_at4);
-            double angle1 = Geom::rad_to_deg(ray1.angle());
-            double angle2 = Geom::rad_to_deg(ray2.angle());
+            double angle1 = Geom::deg_from_rad(ray1.angle());
+            double angle2 = Geom::deg_from_rad(ray2.angle());
             if((smooth_angles  >= std::abs(angle2 - angle1)) && !are_near(point_at4,point_at3) && !are_near(point_at2,point_at3)) {
                 double dist = Geom::distance(point_at2,point_at3);
                 Geom::Angle angleFixed = ray2.angle();

@@ -48,7 +48,6 @@ set(2geom_SRC
 	toposweep.cpp
 	transforms.cpp
 	utils.cpp
-	viewbox.cpp
 
 
 	# -------

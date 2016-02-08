@@ -84,7 +84,7 @@ static void sp_svg_write_curve(Inkscape::SVG::PathString & str, Geom::Curve cons
     }
     else if(Geom::EllipticalArc const *elliptical_arc = dynamic_cast<Geom::EllipticalArc const *>(c)) {
         str.arcTo( elliptical_arc->ray(Geom::X), elliptical_arc->ray(Geom::Y),
-                   Geom::rad_to_deg(elliptical_arc->rotationAngle()),
+                   Geom::deg_from_rad(elliptical_arc->rotationAngle()),
                    elliptical_arc->largeArc(), elliptical_arc->sweep(),
                    elliptical_arc->finalPoint() );
     } else { 

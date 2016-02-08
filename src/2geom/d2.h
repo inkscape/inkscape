@@ -1,8 +1,12 @@
 /**
  * \file
- * \brief   Lifts one dimensional objects into 2d 
+ * \brief Lifts one dimensional objects into 2D
  *//*
- * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
+ * Authors:
+ *   Michael Sloan <mgsloan@gmail.com>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *
+ * Copyright 2007-2015 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -461,12 +465,6 @@ inline std::ostream &operator<< (std::ostream &out_file, const Geom::D2<T> &in_d
     return out_file;
 }
 
-} //end namespace Geom
-
-#include <2geom/d2-sbasis.h>
-
-namespace Geom {
-
 //Some D2 Fragment implementation which requires rect:
 template <typename T>
 OptRect bounds_fast(const D2<T> &a) {
@@ -483,6 +481,73 @@ OptRect bounds_local(const D2<T> &a, const OptInterval &t) {
     BOOST_CONCEPT_ASSERT((FragmentConcept<T>));
     return OptRect(bounds_local(a[X], t), bounds_local(a[Y], t));
 }
+
+
+
+// SBasis-specific declarations
+
+inline D2<SBasis> compose(D2<SBasis> const & a, SBasis const & b) {
+    return D2<SBasis>(compose(a[X], b), compose(a[Y], b));
+}
+
+SBasis L2(D2<SBasis> const & a, unsigned k);
+double L2(D2<double> const & a);
+
+D2<SBasis> multiply(Linear const & a, D2<SBasis> const & b);
+inline D2<SBasis> operator*(Linear const & a, D2<SBasis> const & b) { return multiply(a, b); }
+D2<SBasis> multiply(SBasis const & a, D2<SBasis> const & b);
+inline D2<SBasis> operator*(SBasis const & a, D2<SBasis> const & b) { return multiply(a, b); }
+D2<SBasis> truncate(D2<SBasis> const & a, unsigned terms);
+
+unsigned sbasis_size(D2<SBasis> const & a);
+double tail_error(D2<SBasis> const & a, unsigned tail);
+
+//Piecewise<D2<SBasis> > specific declarations
+
+Piecewise<D2<SBasis> > sectionize(D2<Piecewise<SBasis> > const &a);
+D2<Piecewise<SBasis> > make_cuts_independent(Piecewise<D2<SBasis> > const &a);
+Piecewise<D2<SBasis> > rot90(Piecewise<D2<SBasis> > const &a);
+Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > const &b);
+Piecewise<SBasis> dot(Piecewise<D2<SBasis> > const &a, Point const &b);
+Piecewise<SBasis> cross(Piecewise<D2<SBasis> > const &a, Piecewise<D2<SBasis> > const &b);
+
+Piecewise<D2<SBasis> > operator*(Piecewise<D2<SBasis> > const &a, Affine const &m);
+
+Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f, double tol=0, bool closed=false);
+
+std::vector<Piecewise<D2<SBasis> > > fuse_nearby_ends(std::vector<Piecewise<D2<SBasis> > > const &f, double tol=0);
+
+std::vector<Geom::Piecewise<Geom::D2<Geom::SBasis> > > split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbin, double tol = .0001);
+
+Point unitTangentAt(D2<SBasis> const & a, Coord t, unsigned n = 3);
+
+//bounds specializations with order
+inline OptRect bounds_fast(D2<SBasis> const & s, unsigned order=0) {
+    OptRect retval;
+    OptInterval xint = bounds_fast(s[X], order);
+    if (xint) {
+        OptInterval yint = bounds_fast(s[Y], order);
+        if (yint) {
+            retval = Rect(*xint, *yint);
+        }
+    }
+    return retval;
+}
+inline OptRect bounds_local(D2<SBasis> const & s, OptInterval i, unsigned order=0) {
+    OptRect retval;
+    OptInterval xint = bounds_local(s[X], i, order);
+    OptInterval yint = bounds_local(s[Y], i, order);
+    if (xint && yint) {
+        retval = Rect(*xint, *yint);
+    }
+    return retval;
+}
+
+std::vector<Interval> level_set( D2<SBasis> const &f, Rect region);
+std::vector<Interval> level_set( D2<SBasis> const &f, Point p, double tol);
+std::vector<std::vector<Interval> > level_sets( D2<SBasis> const &f, std::vector<Rect> regions);
+std::vector<std::vector<Interval> > level_sets( D2<SBasis> const &f, std::vector<Point> pts, double tol);
+
 
 } // end namespace Geom
 

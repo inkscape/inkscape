@@ -104,7 +104,7 @@ public:
     // implementation of virtual methods goes here
     virtual Point initialPoint() const { return inner.at0(); }
     virtual Point finalPoint() const { return inner.at1(); }
-    virtual bool isDegenerate() const { return inner.isConstant(0); }
+    virtual bool isDegenerate() const;
     virtual bool isLineSegment() const { return size() == 2; }
     virtual void setInitial(Point const &v) { setPoint(0, v); }
     virtual void setFinal(Point const &v) { setPoint(order(), v); }
@@ -166,6 +166,7 @@ public:
     }
     virtual Coord valueAt(Coord t, Dim2 d) const { return inner[d].valueAt(t); }
     virtual D2<SBasis> toSBasis() const {return inner.toSBasis(); }
+    virtual bool isNear(Curve const &c, Coord precision) const;
     virtual bool operator==(Curve const &c) const;
     virtual void feed(PathSink &sink, bool) const;
 };
@@ -244,6 +245,10 @@ public:
                    BezierCurveN(sx.second, sy.second));
     }
 
+    virtual bool isDegenerate() const {
+        return BezierCurve::isDegenerate();
+    }
+
     virtual bool isLineSegment() const {
         return size() == 2;
     }
@@ -273,6 +278,9 @@ public:
     virtual std::vector<CurveIntersection> intersect(Curve const &other, Coord eps = EPSILON) const {
         // call super. this is implemented only to allow specializations
         return BezierCurve::intersect(other, eps);
+    }
+    virtual int winding(Point const &p) const {
+        return Curve::winding(p);
     }
     virtual void feed(PathSink &sink, bool moveto_initial) const {
         // call super. this is implemented only to allow specializations
@@ -304,10 +312,14 @@ Curve *BezierCurveN<degree>::derivative() const {
 }
 
 // optimized specializations
+template <> inline bool BezierCurveN<1>::isDegenerate() const {
+    return inner[X][0] == inner[X][1] && inner[Y][0] == inner[Y][1];
+}
 template <> inline bool BezierCurveN<1>::isLineSegment() const { return true; }
 template <> Curve *BezierCurveN<1>::derivative() const;
 template <> Coord BezierCurveN<1>::nearestTime(Point const &, Coord, Coord) const;
 template <> std::vector<CurveIntersection> BezierCurveN<1>::intersect(Curve const &, Coord) const;
+template <> int BezierCurveN<1>::winding(Point const &) const;
 template <> void BezierCurveN<1>::feed(PathSink &sink, bool moveto_initial) const;
 template <> void BezierCurveN<2>::feed(PathSink &sink, bool moveto_initial) const;
 template <> void BezierCurveN<3>::feed(PathSink &sink, bool moveto_initial) const;

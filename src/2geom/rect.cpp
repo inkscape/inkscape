@@ -30,8 +30,55 @@
  */
 
 #include <2geom/rect.h>
+#include <2geom/transforms.h>
 
 namespace Geom {
+
+Point align_factors(Align g) {
+    Point p;
+    switch (g) {
+    case ALIGN_XMIN_YMIN:
+        p[X] = 0.0;
+        p[Y] = 0.0;
+        break;
+    case ALIGN_XMID_YMIN:
+        p[X] = 0.5;
+        p[Y] = 0.0;
+        break;
+    case ALIGN_XMAX_YMIN:
+        p[X] = 1.0;
+        p[Y] = 0.0;
+        break;
+    case ALIGN_XMIN_YMID:
+        p[X] = 0.0;
+        p[Y] = 0.5;
+        break;
+    case ALIGN_XMID_YMID:
+        p[X] = 0.5;
+        p[Y] = 0.5;
+        break;
+    case ALIGN_XMAX_YMID:
+        p[X] = 1.0;
+        p[Y] = 0.5;
+        break;
+    case ALIGN_XMIN_YMAX:
+        p[X] = 0.0;
+        p[Y] = 1.0;
+        break;
+    case ALIGN_XMID_YMAX:
+        p[X] = 0.5;
+        p[Y] = 1.0;
+        break;
+    case ALIGN_XMAX_YMAX:
+        p[X] = 1.0;
+        p[Y] = 1.0;
+        break;
+    default:
+        break;
+    }
+    return p;
+}
+
 
 /** @brief Transform the rectangle by an affine.
  * The result of the transformation might not be axis-aligned. The return value
@@ -47,6 +94,37 @@ Rect &Rect::operator*=(Affine const &m) {
     f[X].setMin(minx); f[X].setMax(maxx);
     f[Y].setMin(miny); f[Y].setMax(maxy);
     return *this;
+}
+
+Affine Rect::transformTo(Rect const &viewport, Aspect const &aspect) const
+{
+    // 1. translate viewbox to origin
+    Geom::Affine total = Translate(-min());
+
+    // 2. compute scale
+    Geom::Point vdims = viewport.dimensions();
+    Geom::Point dims = dimensions();
+    Geom::Scale scale(vdims[X] / dims[X], vdims[Y] / dims[Y]);
+
+    if (aspect.align == ALIGN_NONE) {
+        // apply non-uniform scale
+        total *= scale * Translate(viewport.min());
+    } else {
+        double uscale = 0;
+        if (aspect.expansion == EXPANSION_MEET) {
+            uscale = std::min(scale[X], scale[Y]);
+        } else {
+            uscale = std::max(scale[X], scale[Y]);
+        }
+        scale = Scale(uscale);
+
+        // compute offset for align
+        Geom::Point offset = vdims - dims * scale;
+        offset *= Scale(align_factors(aspect.align));
+        total *= scale * Translate(viewport.min() + offset);
+    }
+
+    return total;
 }
 
 Coord distanceSq(Point const &p, Rect const &rect)

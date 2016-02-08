@@ -60,15 +60,6 @@ public:
         _pt[X] = x;
         _pt[Y] = y;
     }
-    IntPoint(IntPoint const &p) {
-        _pt[X] = p._pt[X];
-        _pt[Y] = p._pt[Y];
-    }
-    IntPoint &operator=(IntPoint const &p) {
-        _pt[X] = p._pt[X];
-        _pt[Y] = p._pt[Y];
-        return *this;
-    }
     /// @}
 
     /// @name Access the coordinates of a point
@@ -92,6 +83,10 @@ public:
 
     /// @name Vector-like arithmetic operations
     /// @{
+    IntPoint operator-() const {
+        IntPoint ret(-_pt[X], -_pt[Y]);
+        return ret;
+    }
     IntPoint &operator+=(IntPoint const &o) {
         _pt[X] += o._pt[X];
         _pt[Y] += o._pt[Y];

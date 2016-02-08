@@ -379,7 +379,7 @@ SPGradient *sp_gradient_reset_to_userspace(SPGradient *gr, SPItem *item)
 
         if (angle != 0.0) {
 
-            Geom::Line grl(center, Geom::deg_to_rad(angle));
+            Geom::Line grl(center, Geom::rad_from_deg(angle));
             Geom::LineSegment bbl1(bbox->corner(0), bbox->corner(1));
             Geom::LineSegment bbl2(bbox->corner(1), bbox->corner(2));
             Geom::LineSegment bbl3(bbox->corner(2), bbox->corner(3));

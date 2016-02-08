@@ -200,7 +200,7 @@ void Filter::area_enlarge(Geom::IntRect &bbox, Inkscape::DrawingItem const *item
 
     Geom::Rect item_bbox;
     Geom::OptRect maybe_bbox = item->itemBounds();
-    if (maybe_bbox.isEmpty()) {
+    if (maybe_bbox.empty()) {
         // Code below needs a bounding box
         return;
     }

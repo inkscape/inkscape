@@ -120,8 +120,6 @@
 	2geom/transforms.h \
 	2geom/utils.cpp \
 	2geom/utils.h \
-	2geom/viewbox.cpp \
-	2geom/viewbox.h \
 	2geom/numeric/fitting-model.h \
 	2geom/numeric/fitting-tool.h \
 	2geom/numeric/linear_system.h \

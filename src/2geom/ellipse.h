@@ -171,6 +171,9 @@ public:
     LineSegment axis(Dim2 d) const;
     LineSegment semiaxis(Dim2 d, int sign = 1) const;
 
+    /// Get the tight-fitting bounding box of the ellipse.
+    Rect boundsExact() const;
+
     /// Get the coefficients of the ellipse's implicit equation.
     std::vector<double> coefficients() const;
     void coefficients(Coord &A, Coord &B, Coord &C, Coord &D, Coord &E, Coord &F) const;

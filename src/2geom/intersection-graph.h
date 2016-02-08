@@ -58,23 +58,29 @@ public:
 
     /// Returns the number of intersections used when computing Boolean operations.
     std::size_t size() const;
-    std::vector<Point> intersectionPoints() const;
+    std::vector<Point> intersectionPoints(bool defective = false) const;
+    std::vector<Point> windingPoints() const {
+        return _winding_points;
+    }
+    void fragments(PathVector &in, PathVector &out) const;
+    bool valid() const { return _graph_valid; }
 
 private:
     enum InOutFlag {
-        POINT_INSIDE,
-        POINT_OUTSIDE
+        INSIDE,
+        OUTSIDE,
+        BOTH
     };
 
     struct IntersectionVertex {
         boost::intrusive::list_member_hook<> _hook;
+        boost::intrusive::list_member_hook<> _proc_hook;
         PathVectorTime pos;
         Point p; // guarantees that endpoints are exact
         IntersectionVertex *neighbor;
-        bool entry; // going in +t direction enters the other path
-        InOutFlag previous;
-        InOutFlag next;
-        bool processed; // TODO: use intrusive unprocessed list instead
+        InOutFlag next_edge;
+        unsigned which;
+        bool defective;
     };
 
     typedef boost::intrusive::list
@@ -86,27 +92,50 @@ private:
             >
         > IntersectionList;
 
+    typedef boost::intrusive::list
+        < IntersectionVertex
+        , boost::intrusive::member_hook
+            < IntersectionVertex
+            , boost::intrusive::list_member_hook<>
+            , &IntersectionVertex::_proc_hook
+            >
+        > UnprocessedList;
+
     struct PathData {
         IntersectionList xlist;
-        unsigned removed_in;
-        unsigned removed_out;
+        std::size_t path_index;
+        int which;
+        InOutFlag status;
 
-        PathData()
-            : removed_in(0)
-            , removed_out(0)
+        PathData(int w, std::size_t pi)
+            : path_index(pi)
+            , which(w)
+            , status(BOTH)
         {}
     };
 
     struct IntersectionVertexLess;
+    typedef IntersectionList::iterator ILIter;
+    typedef IntersectionList::const_iterator CILIter;
 
     PathVector _getResult(bool enter_a, bool enter_b);
-    void _handleNonintersectingPaths(PathVector &result, int which, bool inside);
-    bool _findUnprocessed(IntersectionList::iterator &result);
+    void _handleNonintersectingPaths(PathVector &result, unsigned which, bool inside);
+    void _prepareArguments();
+    bool _prepareIntersectionLists(Coord precision);
+    void _assignEdgeWindingParities(Coord precision);
+    void _assignComponentStatusFromDegenerateIntersections();
+    void _removeDegenerateIntersections();
+    void _verify();
 
-    PathVector _a, _b;
+    ILIter _getNeighbor(ILIter iter);
+    PathData &_getPathData(ILIter iter);
+
+    PathVector _pv[2];
     boost::ptr_vector<IntersectionVertex> _xs;
-    boost::ptr_vector<PathData> _apaths;
-    boost::ptr_vector<PathData> _bpaths;
+    boost::ptr_vector<PathData> _components[2];
+    UnprocessedList _ulist;
+    bool _graph_valid;
+    std::vector<Point> _winding_points;
 
     friend std::ostream &operator<<(std::ostream &, PathIntersectionGraph const &);
 };

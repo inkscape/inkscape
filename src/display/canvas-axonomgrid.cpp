@@ -172,9 +172,9 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     angle_deg[Z] = prefs->getDouble("/options/grids/axonom/angle_z", 30.0);
     angle_deg[Y] = 0;
 
-    angle_rad[X] = Geom::deg_to_rad(angle_deg[X]);
+    angle_rad[X] = Geom::rad_from_deg(angle_deg[X]);
     tan_angle[X] = tan(angle_rad[X]);
-    angle_rad[Z] = Geom::deg_to_rad(angle_deg[Z]);
+    angle_rad[Z] = Geom::rad_from_deg(angle_deg[Z]);
     tan_angle[Z] = tan(angle_rad[Z]);
 
     snapper = new CanvasAxonomGridSnapper(this, &namedview->snap_manager, 0);
@@ -272,7 +272,7 @@ CanvasAxonomGrid::readRepr()
         angle_deg[X] = g_ascii_strtod(value, NULL);
         if (angle_deg[X] < 0.) angle_deg[X] = 0.;
         if (angle_deg[X] > 89.0) angle_deg[X] = 89.0;
-        angle_rad[X] = Geom::deg_to_rad(angle_deg[X]);
+        angle_rad[X] = Geom::rad_from_deg(angle_deg[X]);
         tan_angle[X] = tan(angle_rad[X]);
     }
 
@@ -280,7 +280,7 @@ CanvasAxonomGrid::readRepr()
         angle_deg[Z] = g_ascii_strtod(value, NULL);
         if (angle_deg[Z] < 0.) angle_deg[Z] = 0.;
         if (angle_deg[Z] > 89.0) angle_deg[Z] = 89.0;
-        angle_rad[Z] = Geom::deg_to_rad(angle_deg[Z]);
+        angle_rad[Z] = Geom::rad_from_deg(angle_deg[Z]);
         tan_angle[Z] = tan(angle_rad[Z]);
     }
 

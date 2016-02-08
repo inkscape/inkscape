@@ -383,10 +383,10 @@ private:
 
 /** @brief Given an angle in degrees, return radians
  * @relates Angle */
-inline Coord deg_to_rad(Coord deg) { return deg*M_PI/180.0;}
+inline Coord rad_from_deg(Coord deg) { return deg*M_PI/180.0;}
 /** @brief Given an angle in radians, return degrees
  * @relates Angle */
-inline Coord rad_to_deg(Coord rad) { return rad*180.0/M_PI;}
+inline Coord deg_from_rad(Coord rad) { return rad*180.0/M_PI;}
 
 } // end namespace Geom
 

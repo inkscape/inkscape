@@ -47,6 +47,43 @@
 
 namespace Geom {
 
+/** Values for the <align> parameter of preserveAspectRatio.
+ * See: http://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute */
+enum Align {
+    ALIGN_NONE,
+    ALIGN_XMIN_YMIN,
+    ALIGN_XMID_YMIN,
+    ALIGN_XMAX_YMIN,
+    ALIGN_XMIN_YMID,
+    ALIGN_XMID_YMID,
+    ALIGN_XMAX_YMID,
+    ALIGN_XMIN_YMAX,
+    ALIGN_XMID_YMAX,
+    ALIGN_XMAX_YMAX
+};
+
+/** Values for the <meetOrSlice> parameter of preserveAspectRatio.
+ * See: http://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute */
+enum Expansion {
+    EXPANSION_MEET,
+    EXPANSION_SLICE
+};
+
+/// Convert an align specification to coordinate fractions.
+Point align_factors(Align align);
+
+/** @brief Structure that specifies placement of within a viewport.
+ * Use this to create transformations that preserve aspect. */
+struct Aspect {
+    Align align;
+    Expansion expansion;
+    bool deferred; ///< for SVG compatibility
+
+    Aspect(Align a = ALIGN_NONE, Expansion ex = EXPANSION_MEET)
+        : align(a), expansion(ex), deferred(false)
+    {}
+};
+
 /**
  * @brief Axis aligned, non-empty rectangle.
  * @ingroup Primitives
@@ -113,6 +150,16 @@ public:
     }
     /// @}
 
+    /// @name SVG viewbox functionality.
+    /// @{
+    /** @brief Transform contents to viewport.
+     * Computes an affine that transforms the contents of this rectangle
+     * to the specified viewport. The aspect parameter specifies how to
+     * to the transformation (whether the aspect ratio of content
+     * should be kept and where it should be placed in the viewport). */
+    Affine transformTo(Rect const &viewport, Aspect const &aspect = Aspect()) const;
+    /// @}
+
     /// @name Operators
     /// @{
     Rect &operator*=(Affine const &m);
@@ -145,8 +192,14 @@ public:
     OptRect(OptIntRect const &r) : Base() {
         if (r) *this = Rect(*r);
     }
-    // actually, the only reason we have this class, instead of typedefing
-    // to GenericOptRect<Coord>, are the above constructors
+
+    Affine transformTo(Rect const &viewport, Aspect const &aspect = Aspect()) {
+        Affine ret = Affine::identity();
+        if (empty()) return ret;
+        ret = (*this)->transformTo(viewport, aspect);
+        return ret;
+    }
+
     bool operator==(OptRect const &other) const {
         return Base::operator==(other);
     }
