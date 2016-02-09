@@ -71,7 +71,6 @@ set(2geom_SRC
 	crossing.h
 	curve.h
 	curves.h
-	d2-sbasis.h
 	d2.h
 	ellipse.h
 	elliptical-arc.h
