@@ -4,21 +4,21 @@
 # Simos Xenitellis <simos@hellug.gr>, 2001.
 # Spyros Blanas <cid_e@users.sourceforge.net>, 2006, 2011.
 # George Boukeas <boukeas@gmail.com>, 2011.
-# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011-2015.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011-2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: greek translation of inkscape-0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-09-10 11:16+0200\n"
-"PO-Revision-Date: 2015-09-10 11:39+0100\n"
+"PO-Revision-Date: 2016-02-04 11:41+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: team@gnome.gr\n"
+"Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,1797,-1,-1\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -5956,30 +5956,26 @@ msgstr "Postscript αρχεία 2"
 #: ../src/extension/internal/cairo-ps-out.cpp:333
 #: ../src/extension/internal/cairo-ps-out.cpp:375
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
-#, fuzzy
 msgid "Text output options:"
-msgstr "Προσανατολισμός κειμένου"
+msgstr "Επιλογές εξόδου κειμένου:"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:334
 #: ../src/extension/internal/cairo-ps-out.cpp:376
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
-#, fuzzy
 msgid "Embed fonts"
-msgstr "Ενσωμάτωση εικονογραφιών"
+msgstr "Ενσωμάτωση γραμματοσειρών"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:377
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
-#, fuzzy
 msgid "Convert text to paths"
 msgstr "Μετατροπή κειμένου σε μονοπάτια"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:336
 #: ../src/extension/internal/cairo-ps-out.cpp:378
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
-#, fuzzy
 msgid "Omit text in PDF and create LaTeX file"
-msgstr "PDF+LaTeX: παράλειψη κειμένου σε PDF και δημιουργία αρχείου LaTeX"
+msgstr "Παράλειψη κειμένου σε PDF και δημιουργία αρχείου LaTeX"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:338
 #: ../src/extension/internal/cairo-ps-out.cpp:380
@@ -6875,52 +6871,49 @@ msgid "Replace RGB by any color"
 msgstr "Αντικατάσταση RGB από οποιοδήποτε χρώμα"
 
 #: ../src/extension/internal/filter/color.h:254
-#, fuzzy
 msgid "Color Blindness"
-msgstr "Χρώμα γραμμών οδηγού"
+msgstr "Αχρωματοψία"
 
 #
 #: ../src/extension/internal/filter/color.h:258
-#, fuzzy
 msgid "Blindness type:"
-msgstr "Τύπος ανάμειξης:"
+msgstr "Τύπος τυφλότητας:"
 
 #: ../src/extension/internal/filter/color.h:259
 msgid "Rod monochromacy (atypical achromatopsia)"
-msgstr ""
+msgstr "Μονοχρωματικότητα ραβδίων (άτυπη αχρωματοψία)"
 
 #: ../src/extension/internal/filter/color.h:260
 msgid "Cone monochromacy (typical achromatopsia)"
-msgstr ""
+msgstr "Μονοχρωματικότητα κωνίων (τυπική αχρωματοψία)"
 
 #: ../src/extension/internal/filter/color.h:261
 msgid "Green weak (deuteranomaly)"
-msgstr ""
+msgstr "Ασθενές πράσινο (δευτερανωμαλία)"
 
 #: ../src/extension/internal/filter/color.h:262
 msgid "Green blind (deuteranopia)"
-msgstr ""
+msgstr "Τυφλότητα στο πράσινο (δευτερανωπία)"
 
 #: ../src/extension/internal/filter/color.h:263
 msgid "Red weak (protanomaly)"
-msgstr ""
+msgstr "Ασθενές κόκκινο (πρωτανωμαλία)"
 
 #: ../src/extension/internal/filter/color.h:264
 msgid "Red blind (protanopia)"
-msgstr ""
+msgstr "Τυφλότητα στο κόκκινο (πρωτανωπία)"
 
 #: ../src/extension/internal/filter/color.h:265
 msgid "Blue weak (tritanomaly)"
-msgstr ""
+msgstr "Ασθενές γαλάζιο (τριτανωμαλία)"
 
 #: ../src/extension/internal/filter/color.h:266
 msgid "Blue blind (tritanopia)"
-msgstr ""
+msgstr "Τυφλότητα στο γαλάζιο (τριτανωπία)"
 
 #: ../src/extension/internal/filter/color.h:286
-#, fuzzy
 msgid "Simulate color blindness"
-msgstr "Προσομοίωση τεχνοτροπίας ελαιογραφίας"
+msgstr "Προσομοίωση αχρωματοψίας"
 
 #: ../src/extension/internal/filter/color.h:329
 msgid "Color Shift"
@@ -8509,7 +8502,7 @@ msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:134
 msgid "Poppler/Cairo import"
-msgstr ""
+msgstr "Εισαγωγή Poppler/Cairo"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:135
 msgid ""
@@ -8517,11 +8510,14 @@ msgid ""
 "glyphs where each glyph is a path. Images are stored internally. Meshes "
 "cause entire document to be rendered as a raster image."
 msgstr ""
+"Εισαγωγή μέσω εξωτερικής βιβλιοθήκης. Το κείμενο αποτελείται από ομάδες που "
+"περιέχουν κλωνοποιημένες γλυφές, όπου κάθε γλυφή είναι ένα μονοπάτι. Οι "
+"εικόνες αποθηκεύονται εσωτερικά. Τα πλέγματα προκαλούν την απόδοση ολόκληρου "
+"του εγγράφου ως εικόνας εικονογραφίας."
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:136
-#, fuzzy
 msgid "Internal import"
-msgstr "Σειριακή θύρα:"
+msgstr "Εσωτερική εισαγωγή"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:137
 msgid ""
@@ -8529,6 +8525,10 @@ msgid ""
 "white space is missing. Meshes are converted to tiles, the number depends on "
 "the precision set below."
 msgstr ""
+"Εισαγωγή μέσω εσωτερικής (παραγόμενης από Poppler) βιβλιοθήκης. Το κείμενο "
+"αποθηκεύεται ως κείμενο, αλλά λείπει ο κενός χώρος. Τα πλέγματα "
+"μετατρέπονται σε πλακίδια, ο αριθμός τους εξαρτάται από την ακρίβεια που "
+"ορίζεται παρακάτω."
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:148
 msgid "rough"
@@ -9949,7 +9949,7 @@ msgstr "VonKoch"
 
 #: ../src/live_effects/effect.cpp:125
 msgid "Knot"
-msgstr "Κόμβος"
+msgstr "Κόμπος"
 
 #: ../src/live_effects/effect.cpp:126
 msgid "Construct grid"
@@ -10044,9 +10044,8 @@ msgid "Interpolate points"
 msgstr "Παρεμβολή σημείων"
 
 #: ../src/live_effects/effect.cpp:154
-#, fuzzy
 msgid "Transform by 2 points"
-msgstr "Μετασχηματισμός διαβαθμίσεων"
+msgstr "Μετασχηματισμός κατά 2 σημεία"
 
 #: ../src/live_effects/effect.cpp:361
 msgid "Is visible?"
@@ -10224,11 +10223,11 @@ msgstr "Μέγεθος βοηθού"
 
 #: ../src/live_effects/lpe-bspline.cpp:30
 msgid "Apply changes if weight = 0%"
-msgstr ""
+msgstr "Εφαρμογή των αλλαγών αν το πάχος = 0%"
 
 #: ../src/live_effects/lpe-bspline.cpp:31
 msgid "Apply changes if weight > 0%"
-msgstr ""
+msgstr "Εφαρμογή των αλλαγών αν το πάχος > 0%"
 
 #: ../src/live_effects/lpe-bspline.cpp:32
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:56
@@ -10236,14 +10235,12 @@ msgid "Change only selected nodes"
 msgstr "Αλλαγή μόνο των επιλεγμένων κόμβων"
 
 #: ../src/live_effects/lpe-bspline.cpp:33
-#, fuzzy
 msgid "Change weight %:"
-msgstr "Αλλαγή πάχους:"
+msgstr "Αλλαγή πάχους %:"
 
 #: ../src/live_effects/lpe-bspline.cpp:33
-#, fuzzy
 msgid "Change weight percent of the effect"
-msgstr "Αλλαγή πάχους του εφέ"
+msgstr "Αλλαγή ποσοστού πάχους του εφέ"
 
 #: ../src/live_effects/lpe-bspline.cpp:95
 msgid "Default weight"
@@ -10462,11 +10459,11 @@ msgstr "Σημείο συαρμογής"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:54
 msgid "Hide knots"
-msgstr "Απόκρυψη δεσμών"
+msgstr "Απόκρυψη κόμπων"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:55
 msgid "Ignore 0 radius knots"
-msgstr "Παράβλεψη δεσμών μηδενικής ακτίνας"
+msgstr "Παράβλεψη κόμπων μηδενικής ακτίνας"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:57
 msgid "Flexible radius size (%)"
@@ -10474,7 +10471,7 @@ msgstr "Εύκαμπτο μέγεθος ακτίνας (%)"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:58
 msgid "Use knots distance instead radius"
-msgstr "Χρήση της απόστασης δεσμών αντί για ακτίνα"
+msgstr "Χρήση της απόστασης κόμπων αντί για ακτίνα"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
 msgid "Method:"
@@ -10637,9 +10634,8 @@ msgid "Miter"
 msgstr "Μυτερός"
 
 #: ../src/live_effects/lpe-jointype.cpp:34
-#, fuzzy
 msgid "Miter Clip"
-msgstr "Όριο μύτης:"
+msgstr "Μυτερό απόκομμα"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
 #: ../src/live_effects/lpe-jointype.cpp:35
@@ -10768,262 +10764,277 @@ msgstr "Σύρσιμο για επιλογή μιας διασταύρωσης, 
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:665
 msgid "Change knot crossing"
-msgstr "Αλλαγή διασταύρωσης κόμβου"
+msgstr "Αλλαγή διασταύρωσης κόμπου"
 
 #: ../src/live_effects/lpe-lattice2.cpp:47
 #: ../src/live_effects/lpe-perspective-envelope.cpp:43
-#, fuzzy
 msgid "Mirror movements in horizontal"
-msgstr "Μετακίνηση κόμβων οριζοντίως"
+msgstr "Μετακινήσεις καθρέπτη οριζόντια"
 
 #: ../src/live_effects/lpe-lattice2.cpp:48
 #: ../src/live_effects/lpe-perspective-envelope.cpp:44
-#, fuzzy
 msgid "Mirror movements in vertical"
-msgstr "Μετακίνηση κόμβων καθέτως"
+msgstr "Μετακινήσεις καθρέπτη κάθετα"
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
-#, fuzzy
 msgid "Control 0:"
-msgstr "Λαβή ελέγχου 0:"
+msgstr "Χειριστήριο 0:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 0 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
-#, fuzzy
 msgid "Control 1:"
-msgstr "Λαβή ελέγχου 1:"
+msgstr "Χειριστήριο 1:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 1 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
-#, fuzzy
 msgid "Control 2:"
-msgstr "Λαβή ελέγχου 2:"
+msgstr "Χειριστήριο 2:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 2 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
-#, fuzzy
 msgid "Control 3:"
-msgstr "Λαβή ελέγχου 3:"
+msgstr "Χειριστήριο 3:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 3 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
-#, fuzzy
 msgid "Control 4:"
-msgstr "Λαβή ελέγχου 4:"
+msgstr "Χειριστήριο 4:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 4 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
-#, fuzzy
 msgid "Control 5:"
-msgstr "Λαβή ελέγχου 5:"
+msgstr "Χειριστήριο 5:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 5 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
-#, fuzzy
 msgid "Control 6:"
-msgstr "Λαβή ελέγχου 6:"
+msgstr "Χειριστήριο 6:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 6 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
-#, fuzzy
 msgid "Control 7:"
-msgstr "Λαβή ελέγχου 7:"
+msgstr "Χειριστήριο 7:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 7 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
-#, fuzzy
 msgid "Control 8x9:"
-msgstr "Λαβή ελέγχου 8x9:"
+msgstr "Χειριστήριο 8x9:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 8x9 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
-#, fuzzy
 msgid "Control 10x11:"
-msgstr "Λαβή ελέγχου 10x11:"
+msgstr "Χειριστήριο 10x11:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
-#, fuzzy
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Λαβή ελέγχου 10x11 - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Χειριστήριο 10x11 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: "
+"μετακίνηση κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
-#, fuzzy
 msgid "Control 12:"
-msgstr "Λαβή ελέγχου 12:"
+msgstr "Χειριστήριο 12:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
 msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 12 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
-#, fuzzy
 msgid "Control 13:"
-msgstr "Λαβή ελέγχου 13:"
+msgstr "Χειριστήριο 13:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 13 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
-#, fuzzy
 msgid "Control 14:"
-msgstr "Λαβή ελέγχου 14:"
+msgstr "Χειριστήριο 14:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 14 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
-#, fuzzy
 msgid "Control 15:"
-msgstr "Λαβή ελέγχου 15:"
+msgstr "Χειριστήριο 15:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 15 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
-#, fuzzy
 msgid "Control 16:"
-msgstr "Λαβή ελέγχου 16:"
+msgstr "Χειριστήριο 16:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 16 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
-#, fuzzy
 msgid "Control 17:"
-msgstr "Λαβή ελέγχου 17:"
+msgstr "Χειριστήριο 17:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
 msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 17 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
-#, fuzzy
 msgid "Control 18:"
-msgstr "Λαβή ελέγχου 18:"
+msgstr "Χειριστήριο 18:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
 msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 18 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
-#, fuzzy
 msgid "Control 19:"
-msgstr "Λαβή ελέγχου 19:"
+msgstr "Χειριστήριο 19:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
 msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
+"Χειριστήριο 19 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-#, fuzzy
 msgid "Control 20x21:"
-msgstr "Λαβή ελέγχου 20x21:"
+msgstr "Χειριστήριο 20x21:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-#, fuzzy
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Λαβή ελέγχου 20x21 - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Χειριστήριο 20x21 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: "
+"μετακίνηση κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-#, fuzzy
 msgid "Control 22x23:"
-msgstr "Λαβή ελέγχου 22x23:"
+msgstr "Χειριστήριο 22x23:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-#, fuzzy
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Λαβή ελέγχου 22x23 - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Χειριστήριο 22x23 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: "
+"μετακίνηση κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-#, fuzzy
 msgid "Control 24x26:"
-msgstr "Λαβή ελέγχου 24x26:"
+msgstr "Χειριστήριο 24x26:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-#, fuzzy
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Λαβή ελέγχου 24x26 - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Χειριστήριο 24x26 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: "
+"μετακίνηση κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-#, fuzzy
 msgid "Control 25x27:"
-msgstr "Λαβή ελέγχου 25x27:"
+msgstr "Χειριστήριο 25x27:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-#, fuzzy
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Λαβή ελέγχου 25x27 - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Χειριστήριο 25x27 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: "
+"μετακίνηση κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-#, fuzzy
 msgid "Control 28x30:"
-msgstr "Λαβή ελέγχου 28x30:"
+msgstr "Χειριστήριο 28x30:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-#, fuzzy
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Λαβή ελέγχου 28x30 - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Χειριστήριο 28x30 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: "
+"μετακίνηση κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
-#, fuzzy
 msgid "Control 29x31:"
-msgstr "Λαβή ελέγχου 29x31:"
+msgstr "Χειριστήριο 29x31:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
-#, fuzzy
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Λαβή ελέγχου 29x31 - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Χειριστήριο 29x31 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: "
+"μετακίνηση κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
-#, fuzzy
 msgid "Control 32x33x34x35:"
-msgstr "Λαβή ελέγχου 32x33x34x35:"
+msgstr "Χειριστήριο 32x33x34x35:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
-#, fuzzy
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
-msgstr "Λαβή ελέγχου 32x33x34x35 - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Χειριστήριο 32x33x34x35 - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: "
+"μετακίνηση κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:236
 msgid "Reset grid"
@@ -11031,14 +11042,12 @@ msgstr "Επαναφορά πλέγματος"
 
 #: ../src/live_effects/lpe-lattice2.cpp:268
 #: ../src/live_effects/lpe-lattice2.cpp:283
-#, fuzzy
 msgid "Show Points"
-msgstr "Σημεία ταξινόμησης"
+msgstr "Εμφάνιση σημείων"
 
 #: ../src/live_effects/lpe-lattice2.cpp:281
-#, fuzzy
 msgid "Hide Points"
-msgstr "Απόκρυψη δεσμών"
+msgstr "Απόκρυψη σημείων"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:50
 #: ../share/extensions/pathalongpath.inx.h:10
@@ -11048,7 +11057,7 @@ msgstr "Μονό"
 #: ../src/live_effects/lpe-patternalongpath.cpp:51
 #: ../share/extensions/pathalongpath.inx.h:11
 msgid "Single, stretched"
-msgstr "Μονό, εφελκυσμός"
+msgstr "Μονό, τεντωμένο"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:12
@@ -11171,27 +11180,30 @@ msgid "Top Left"
 msgstr "Πάνω αριστερά"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:46
-#, fuzzy
 msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Πάνω αριστερά - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Πάνω αριστερά - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
 msgid "Top Right"
 msgstr "Πάνω δεξιά"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
-#, fuzzy
 msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Πάνω δεξιά - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Πάνω δεξιά - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση κατά "
+"μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Down Left"
 msgstr "Κάτω αριστερά"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
-#, fuzzy
 msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Κάτω αριστερά - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Κάτω αριστερά - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση "
+"κατά μήκος των αξόνων"
 
 # #-#-#-#-#  galeon.master.el.po (galeon 1.0)  #-#-#-#-#
 #
@@ -11202,9 +11214,10 @@ msgid "Down Right"
 msgstr "Κάτω δεξιά"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
-#, fuzzy
 msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Κάτω δεξιά - Ctrl+Alt+πάτημα για επαναφορά"
+msgstr ""
+"Κάτω δεξιά - <b>Ctrl+Alt+πάτημα</b>: επαναφορά, <b>Ctrl</b>: μετακίνηση κατά "
+"μήκος των αξόνων"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:268
 msgid "Handles:"
@@ -11695,13 +11708,12 @@ msgid "Roughly threshold:"
 msgstr "Χοντρικό κατώφλι:"
 
 #: ../src/live_effects/lpe-simplify.cpp:32
-#, fuzzy
 msgid "Smooth angles:"
-msgstr "Εξομάλυνση:"
+msgstr "Εξομάλυνση :γωνιών:"
 
 #: ../src/live_effects/lpe-simplify.cpp:32
 msgid "Max degree difference on handles to preform a smooth"
-msgstr ""
+msgstr "Μέγιστος βαθμός διαφοράς στις λαβές για εκτέλεση εξομάλυνσης"
 
 #: ../src/live_effects/lpe-simplify.cpp:34
 msgid "Paths separately"
@@ -11945,59 +11957,48 @@ msgstr "Τελικό σημείο της λέπτυνσης"
 # #-#-#-#-#  libgnomeprintui.master.el.po (el)  #-#-#-#-#
 #
 #: ../src/live_effects/lpe-transform_2pts.cpp:30
-#, fuzzy
 msgid "Elastic"
-msgstr "Πλαστελίνη"
+msgstr "Ελαστικό"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:30
-#, fuzzy
 msgid "Elastic transform mode"
-msgstr "Επιλογή και μετασχηματισμός αντικειμένων"
+msgstr "Κατάσταση ελαστικού μετασχηματισμού"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:31
-#, fuzzy
 msgid "From original width"
-msgstr "Κλωνοποίηση αρχικού μονοπατιού"
+msgstr "Από αρχικό πλάτος"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:32
-#, fuzzy
 msgid "Lock lenght"
-msgstr "Κλείδωμα στρώσης"
+msgstr "Κλείδωμα μήκους"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:32
-#, fuzzy
 msgid "Lock lenght to current distance"
-msgstr "Κλείδωμα ή ξεκλείδωμα τρέχουσας στρώσης"
+msgstr "Κλείδωμα μήκους στην τρέχουσα απόσταση"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-#, fuzzy
 msgid "Lock angle"
-msgstr "Γωνία κώνου"
+msgstr "Κλείδωμα γωνίας"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:34
-#, fuzzy
 msgid "Start point"
-msgstr "Σημεία ταξινόμησης"
+msgstr "Σημείο έναρξης"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:35
-#, fuzzy
 msgid "End point"
-msgstr "Τέλος μονοπατιού:"
+msgstr "Σημείο λήξης"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:36
-#, fuzzy
 msgid "First Knot"
-msgstr "Πρώτες βοήθειες"
+msgstr "Πρώτος κόμπος"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:37
-#, fuzzy
 msgid "Last Knot"
-msgstr "Κόμβος"
+msgstr "Τελευταίος κόμπος"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:38
-#, fuzzy
 msgid "Rotation helper size"
-msgstr "Κέντρα περιστροφής"
+msgstr "Περιστροφή μεγέθους βοηθού"
 
 # #-#-#-#-#  gtkhtml.master.el.po (gtkhtml.HEAD)  #-#-#-#-#
 #
@@ -13821,11 +13822,11 @@ msgid "Use <b>Shift+D</b> to look up frame"
 msgstr "Χρήση <b>Shift+D</b> για αναζήτηση πλαισίου"
 
 #: ../src/selection-describer.cpp:236
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%1$i</b> objects selected of type %2$s"
 msgid_plural "<b>%1$i</b> objects selected of types %2$s"
-msgstr[0] "<b>%i</b> επιλεγμένα αντικείμενα του τύπου %s"
-msgstr[1] "<b>%i</b> επιλεγμένα αντικείμενα των τύπων %s"
+msgstr[0] "<b>%1$i</b> επιλεγμένα αντικείμενα του τύπου %2$s"
+msgstr[1] "<b>%1$i</b> επιλεγμένα αντικείμενα των τύπων %2$s"
 
 #: ../src/selection-describer.cpp:246
 #, c-format
@@ -20278,9 +20279,8 @@ msgid "Armenian (hy)"
 msgstr "Αρμένικα (hy)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
-#, fuzzy
 msgid "Assamese (as)"
-msgstr "Γιαπωνέζικα (ja)"
+msgstr "Ασαμικά (as)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Azerbaijani (az)"
@@ -20300,16 +20300,15 @@ msgstr "Βουλγαρικά (bg)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Bengali (bn)"
-msgstr "Bengali (bn)"
+msgstr "Μπενγκάλι (bn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Bengali/Bangladesh (bn_BD)"
 msgstr "Μπεγκάλι/Μπανγκλαντές (bn_BD)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
-#, fuzzy
 msgid "Bodo (brx)"
-msgstr "Βρετονικά (br)"
+msgstr "Μπόντο (brx)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Breton (br)"
@@ -20347,7 +20346,7 @@ msgstr "Δανέζικα (da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Dogri (doi)"
-msgstr ""
+msgstr "Ντόγκρι (doi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Dutch (nl)"
@@ -20410,9 +20409,8 @@ msgid "Galician (gl)"
 msgstr "Γαλικία (gl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:533
-#, fuzzy
 msgid "Gujarati (gu)"
-msgstr "Γκουαρατί"
+msgstr "Γκουαράτι (gu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hebrew (he)"
@@ -20420,7 +20418,7 @@ msgstr "Εβραϊκά (he)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hindi (hi)"
-msgstr ""
+msgstr "Χίντι (hi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid "Hungarian (hu)"
@@ -20428,7 +20426,7 @@ msgstr "Ουγγρικά (hu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Icelandic (is)"
-msgstr ""
+msgstr "Ισλανδικά (is)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Indonesian (id)"
@@ -20447,17 +20445,16 @@ msgid "Japanese (ja)"
 msgstr "Γιαπωνέζικα (ja)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
-#, fuzzy
 msgid "Kannada (kn)"
-msgstr "Kannada"
+msgstr "Κανάντα (kn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Kashmiri in Peso-Arabic script (ks@aran)"
-msgstr ""
+msgstr "Κασμιρικά με περσοαραβική γραφή (ks@aran)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Kashmiri in Devanagari script (ks@deva)"
-msgstr ""
+msgstr "Κασμιρικά με γραφή ντεβάνγκαρι (ks@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Khmer (km)"
@@ -20465,17 +20462,15 @@ msgstr "Χμερ (km)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Kinyarwanda (rw)"
-msgstr "Kinyarwanda (rw)"
+msgstr "Κινιαρουάντα (rw)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
-#, fuzzy
 msgid "Konkani (kok)"
-msgstr "Κορεάτικα (ko)"
+msgstr "Κονκανικά (kok)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
-#, fuzzy
 msgid "Konkani in Latin script (kok@latin)"
-msgstr "Σερβικά σε λατινική γραφή (sr@latin)"
+msgstr "Κονκανικά με λατινική γραφή (kok@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid "Korean (ko)"
@@ -20495,24 +20490,23 @@ msgstr "Μακεδονικά (mk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Maithili (mai)"
-msgstr ""
+msgstr "Μαιτίλι (mai)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
-#, fuzzy
 msgid "Malayalam (ml)"
-msgstr "Μαλαγιάλαμ"
+msgstr "Μαγιαλαμικά (ml)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Manipuri (mni)"
-msgstr ""
+msgstr "Μανιπουρικά (mni)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Manipuri in Bengali script (mni@beng)"
-msgstr ""
+msgstr "Μανιπουρικά με γραφή Βεγγάλης (mni@beng)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Marathi (mr)"
-msgstr ""
+msgstr "Μαραθικά (mr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Mongolian (mn)"
@@ -20532,7 +20526,7 @@ msgstr "Νορβηγικά Nynorsk (nn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid "Odia (or)"
-msgstr ""
+msgstr "Όντια (or)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:542
 msgid "Panjabi (pa)"
@@ -20562,17 +20556,15 @@ msgstr "Ρωσικά (ru)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Sanskrit (sa)"
-msgstr ""
+msgstr "Σανσκριτικά (sa)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
-#, fuzzy
 msgid "Santali (sat)"
-msgstr "Ιταλικά (it)"
+msgstr "Σανταλικά (sat)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
-#, fuzzy
 msgid "Santali in Devanagari script (sat@deva)"
-msgstr "Σερβικά σε λατινική γραφή (sr@latin)"
+msgstr "Σανταλικά με γραφή ντεβαναγκάρι (sat@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:544
 msgid "Serbian (sr)"
@@ -20584,12 +20576,11 @@ msgstr "Σερβικά σε λατινική γραφή (sr@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Sindhi (sd)"
-msgstr ""
+msgstr "Σίντι (sd)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
-#, fuzzy
 msgid "Sindhi in Devanagari script (sd@deva)"
-msgstr "Σερβικά σε λατινική γραφή (sr@latin)"
+msgstr "Σίντι με γραφή ντεβαναγκάρι (sd@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Slovak (sk)"
@@ -20612,9 +20603,8 @@ msgid "Swedish (sv)"
 msgstr "Σουηδικά (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
-#, fuzzy
 msgid "Tamil (ta)"
-msgstr "Ταμίλ"
+msgstr "Ταμίλ (ta)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Telugu (te)"
@@ -20634,7 +20624,7 @@ msgstr "Ουκρανικά (uk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:547
 msgid "Urdu (ur)"
-msgstr ""
+msgstr "Ούρντου (ur)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:548
 msgid "Vietnamese (vi)"
@@ -21980,9 +21970,8 @@ msgstr "Κύλιση"
 
 #. Snapping options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1264
-#, fuzzy
 msgid "Snap indicator"
-msgstr "Ενεργοποίηση προσκόλλησης δείκτη"
+msgstr "Δείκτης προσκόλλησης"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1266
 msgid "Enable snap indicator"
@@ -21994,17 +21983,19 @@ msgstr "Μετά την αρπαγή, ένα εικονίδιο σχεδιάζε
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Snap indicator persistence (in seconds):"
-msgstr ""
+msgstr "Διατήρηση δείκτη προσκόλλησης (σε δευτερόλεπτα):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid ""
 "Controls how long the snap indicator message will be shown, before it "
 "disappears"
 msgstr ""
+"Ελέγχει πόσο θα εμφανίζεται το μήνυμα δείκτη προσκόλλησης, πριν να "
+"εξαφανιστεί"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1276
 msgid "What should snap"
-msgstr ""
+msgstr "Τι πρέπει να προσκολληθεί"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1278
 msgid "Only snap the node closest to the pointer"
@@ -22035,7 +22026,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "Snap the mouse pointer when dragging a constrained knot"
 msgstr ""
-"Αρπαγή του δείκτη του ποντικιού, όταν σύρεται ένας περιορισμένος κόμβος"
+"Αρπαγή του δείκτη του ποντικιού, όταν σύρεται ένας περιορισμένος κόμπος"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1288
 msgid ""
@@ -22043,19 +22034,17 @@ msgid ""
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
 msgstr ""
-"Όταν σύρεται ένας κόμβος κατά μήκος της γραμμής περιορισμού, τότε αρπαγή της "
-"θέσης του δείκτη του ποντικιού αντί για αρπαγή της προβολής του κόμβου στη "
+"Όταν σύρεται ένας κόμπος κατά μήκος της γραμμής περιορισμού, τότε αρπαγή της "
+"θέσης του δείκτη του ποντικιού αντί για αρπαγή της προβολής του κόμπου στη "
 "γραμμή περιορισμού"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1290
-#, fuzzy
 msgid "Delayed snap"
-msgstr "Προσκόλληση πάντα"
+msgstr "Καθυστερημένη προσκόλληση"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1293
-#, fuzzy
 msgid "Delay (in seconds):"
-msgstr "_Καθυστέρηση (σε ms):"
+msgstr "Καθυστέρηση (σε δευτερόλεπτα):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1294
 msgid ""
@@ -22613,14 +22602,13 @@ msgid "Bitmaps"
 msgstr "Ψηφιογραφίες"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1538
-#, fuzzy
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added separately to "
 msgstr ""
 "Επιλέξτε ένα αρχείο προκαθορισμένων συντομεύσεων που θα χρησιμοποιήσετε. "
 "Οποιεσδήποτε προσαρμοσμένες συντομεύσεις δημιουργείτε θα προστεθούν "
-"ξεχωριστά "
+"ξεχωριστά στο "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1541
 msgid "Shortcut file:"
@@ -23098,9 +23086,8 @@ msgid "Lock other layers"
 msgstr "Κλείδωμα των άλλων στρώσεων"
 
 #: ../src/ui/dialog/layers.cpp:730
-#, fuzzy
 msgid "Move layer"
-msgstr "Μετακινημένη στρώση"
+msgstr "Μετακίνηση στρώσης"
 
 # #-#-#-#-#  gnome-icon-theme.master.el.po (el)  #-#-#-#-#
 # 48x48/emblems/emblem-new.icon.in.h:1
@@ -23264,16 +23251,15 @@ msgstr "Προσεγγιστική ακτίνα"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:206
 msgid "Knot distance"
-msgstr "Απόσταση κόμβου"
+msgstr "Απόσταση κόμπου"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:213
 msgid "Position (%):"
 msgstr "Θέση (%):"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:216
-#, fuzzy
 msgid "%1:"
-msgstr "k1:"
+msgstr "%1:"
 
 #: ../src/ui/dialog/lpe-powerstroke-properties.cpp:122
 msgid "Modify Node Position"
@@ -23491,9 +23477,8 @@ msgid "Set object description"
 msgstr "Ορισμός περιγραφής αντικειμένου"
 
 #: ../src/ui/dialog/object-properties.cpp:535
-#, fuzzy
 msgid "Set image rendering option"
-msgstr "Συσκευή απόδοσης στόχου:"
+msgstr "Ορισμός επιλογής απόδοσης εικόνας"
 
 #: ../src/ui/dialog/object-properties.cpp:554
 msgid "Lock object"
@@ -23562,31 +23547,28 @@ msgstr "Ορισμός θόλωσης αντικειμένου"
 
 #: ../src/ui/dialog/objects.cpp:1617
 msgid "V"
-msgstr ""
+msgstr "Ορατότητα"
 
 #. TRANSLATORS: "L" here stands for Lightness
 #: ../src/ui/dialog/objects.cpp:1618 ../src/widgets/tweak-toolbar.cpp:323
 msgid "L"
-msgstr "L"
+msgstr "Φωτεινότητα"
 
 #: ../src/ui/dialog/objects.cpp:1619
 msgid "T"
-msgstr ""
+msgstr "Τύπος"
 
 #: ../src/ui/dialog/objects.cpp:1620
-#, fuzzy
 msgid "CM"
-msgstr "CMS"
+msgstr "Περικοπή και μάσκα"
 
 #: ../src/ui/dialog/objects.cpp:1621
-#, fuzzy
 msgid "HL"
-msgstr "HSL"
+msgstr "Επισήμανση"
 
 #: ../src/ui/dialog/objects.cpp:1622
-#, fuzzy
 msgid "Label"
-msgstr "_Ετικέτα:"
+msgstr "Ετικέτα"
 
 # #-#-#-#-#  libgnomeui.master.el.po (el)  #-#-#-#-#
 # #-#-#-#-#  memory.el.po (abiword 1.0)  #-#-#-#-#
@@ -23598,35 +23580,40 @@ msgstr "_Ετικέτα:"
 #
 #. In order to get tooltips on header, we must create our own label.
 #: ../src/ui/dialog/objects.cpp:1664
-#, fuzzy
 msgid "Toggle visibility of Layer, Group, or Object."
-msgstr "Εναλλαγή ορατότητας της τρέχουσας στρώσης"
+msgstr "Εναλλαγή ορατότητας της στρώσης, ομάδας, ή αντικειμένου."
 
 #: ../src/ui/dialog/objects.cpp:1677
 msgid "Toggle lock of Layer, Group, or Object."
-msgstr ""
+msgstr "Εναλλαγή κλειδώματος της στρώσης, ομάδας, ή αντικειμένου."
 
 #: ../src/ui/dialog/objects.cpp:1689
 msgid ""
 "Type: Layer, Group, or Object. Clicking on Layer or Group icon, toggles "
 "between the two types."
 msgstr ""
+"Τύπος: στρώση, ομάδα, ή αντικείμενο. Πάτημα στο εικονίδιο στρώσης ή ομάδας, "
+"εναλλάσσει τους δύο τύπους."
 
 #: ../src/ui/dialog/objects.cpp:1708
 msgid "Is object clipped and/or masked?"
-msgstr ""
+msgstr "Είναι το αντικείμενο περικομμένο και/ή καλυμμένο;"
 
 #: ../src/ui/dialog/objects.cpp:1719
 msgid ""
 "Highlight color of outline in Node tool. Click to set. If alpha is zero, use "
 "inherited color."
 msgstr ""
+"Τονισμός χρώματος περιγράμματος στο εργαλείο κόμβου. Πατήστε για να ορίσετε. "
+"Αν το άλφα είναι μηδέν, χρησιμοποιήστε το κληρονομημένο χρώμα."
 
 #: ../src/ui/dialog/objects.cpp:1730
 msgid ""
 "Layer/Group/Object label (inkscape:label). Double-click to set. Default "
 "value is object 'id'."
 msgstr ""
+"Ετικέτα στρώσης/ομάδας/αντικειμένου (Inkscape: ετικέτα). Διπλοπατήστε για να "
+"ορίσετε. Προεπιλεγμένη τιμή είναι 'id' αντικειμένου."
 
 #: ../src/ui/dialog/objects.cpp:1827
 msgid "Add layer..."
@@ -23649,33 +23636,28 @@ msgid "Collapse All"
 msgstr "Σύμπτυξη όλων"
 
 #: ../src/ui/dialog/objects.cpp:1888
-#, fuzzy
 msgid "Rename"
-msgstr "_Μετονομασία"
+msgstr "Μετονομασία"
 
 #: ../src/ui/dialog/objects.cpp:1894
 msgid "Solo"
-msgstr ""
+msgstr "Εμφάνιση μόνο αυτού του επιπέδου"
 
 #: ../src/ui/dialog/objects.cpp:1895
-#, fuzzy
 msgid "Show All"
-msgstr "Εμφάνιση:"
+msgstr "Εμφάνιση όλων"
 
 #: ../src/ui/dialog/objects.cpp:1896
-#, fuzzy
 msgid "Hide All"
-msgstr "Επανεμφάνιση όλων"
+msgstr "Απόκρυψη όλων"
 
 #: ../src/ui/dialog/objects.cpp:1900
-#, fuzzy
 msgid "Lock Others"
-msgstr "Κλείδωμα των άλλων στρώσεων"
+msgstr "Κλείδωμα των άλλων"
 
 #: ../src/ui/dialog/objects.cpp:1901
-#, fuzzy
 msgid "Lock All"
-msgstr "Ξεκλείδωμα όλων"
+msgstr "Κλείδωμα όλων"
 
 #. LockAndHide
 #: ../src/ui/dialog/objects.cpp:1902 ../src/verbs.cpp:2968
@@ -23687,26 +23669,22 @@ msgstr "Ξεκλείδωμα όλων"
 # #-#-#-#-#  balsa.master.el.po (balsa 2.0.13)  #-#-#-#-#
 #
 #: ../src/ui/dialog/objects.cpp:1906
-#, fuzzy
 msgid "Up"
 msgstr "Επάνω"
 
 #: ../src/ui/dialog/objects.cpp:1907
-#, fuzzy
 msgid "Down"
-msgstr "Κάτω αριστερά"
+msgstr "Κάτω"
 
 #: ../src/ui/dialog/objects.cpp:1916
-#, fuzzy
 msgid "Set Clip"
-msgstr "Ορισμός περι_κοπής"
+msgstr "Ορισμός περικοπής"
 
 #. will never be implemented
 #. _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_OBJECT_SET_INVERSE_CLIPPATH, 0, "Set Inverse Clip", (int)BUTTON_SETINVCLIP ) );
 #: ../src/ui/dialog/objects.cpp:1922
-#, fuzzy
 msgid "Unset Clip"
-msgstr "Ορισμός περι_κοπής"
+msgstr "Αναίρεση περικοπής"
 
 #. Set mask
 #: ../src/ui/dialog/objects.cpp:1926 ../src/ui/interface.cpp:1739
@@ -23714,9 +23692,8 @@ msgid "Set Mask"
 msgstr "Ορισμός μάσκας"
 
 #: ../src/ui/dialog/objects.cpp:1927
-#, fuzzy
 msgid "Unset Mask"
-msgstr "Ορισμός μάσκας"
+msgstr "Αναίρεση μάσκας"
 
 #: ../src/ui/dialog/objects.cpp:1949
 msgid "Select Highlight Color"
@@ -24435,18 +24412,16 @@ msgid "By: "
 msgstr "Κατά: "
 
 #: ../src/ui/dialog/text-edit.cpp:72
-#, fuzzy
 msgid "_Variants"
-msgstr "Παραλλαγή"
+msgstr "Παραλλα_γές"
 
 #: ../src/ui/dialog/text-edit.cpp:73
 msgid "Set as _default"
 msgstr "Ορισμός ως προ_επιλογή"
 
 #: ../src/ui/dialog/text-edit.cpp:87
-#, fuzzy
 msgid "AaBbCcIiPpQq12369$ےے?.;/()"
-msgstr "ΑαΒβΓγλμΞξΣςAaBbCcIiPpQq12369$€¢?.;/()"
+msgstr "AaBbCcIiPpQq12369$ےے;.·/()"
 
 #. Align buttons
 #: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1339
@@ -25470,10 +25445,11 @@ msgid "Drag curve"
 msgstr "Μεταφορά καμπύλης"
 
 #: ../src/ui/tool/curve-drag-point.cpp:192
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Shift</b>: drag to open or move BSpline handles"
-msgstr "<b>Shift</b>: μετακίνηση λαβής"
+msgstr ""
+"<b>Shift</b>: μετακίνηση για άνοιγμα ή μετακίνηση λαβών εύκαμπτης καμπύλης "
+"βάσης"
 
 #: ../src/ui/tool/curve-drag-point.cpp:196
 msgctxt "Path segment tip"
@@ -25486,14 +25462,14 @@ msgid "<b>Ctrl+Alt</b>: click to insert a node"
 msgstr "<b>Ctrl+Alt</b>: πάτημα για εισαγωγή κόμβου"
 
 #: ../src/ui/tool/curve-drag-point.cpp:204
-#, fuzzy
 msgctxt "Path segment tip"
 msgid ""
 "<b>BSpline segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>τμήμα Μπεζιέ</b>: σύρσιμο για σχηματοποίηση του τμήματος, διπλό πάτημα "
-"για εισαγωγή κόμβου, πάτημα για επιλογή (περισσότερα: Shift, Ctrl+Alt)"
+"<b>Τμήμα εύκαμπτης καμπύλης βάσης</b>: σύρσιμο για σχηματοποίηση του "
+"τμήματος, διπλό πάτημα για εισαγωγή κόμβου, πάτημα για επιλογή (περισσότερα: "
+"Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:209
 msgctxt "Path segment tip"
@@ -25705,14 +25681,14 @@ msgstr ""
 "<b>Λαβές αυτόματων κόμβων</b>: σύρσιμο για μετατροπή σε ομαλό κόμβο (%s)"
 
 #: ../src/ui/tool/node.cpp:554
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>BSpline node handle</b>: Shift to drag, double click to reset (%s). %g "
 "power"
 msgstr ""
-"<b>λαβή κόμβου BSpline</b>: Shift για μετακίνηση, διπλοπάτημα για επαναφορά "
-"(%s)"
+"<b>Χειρισμός κόμβου εύκαμπτης καμπύλης βάσης</b>: Shift για μεταφοά, διπλό "
+"πάτημα για επαναφορά (%s). ισχύς %g "
 
 #: ../src/ui/tool/node.cpp:574
 #, c-format
@@ -25756,14 +25732,14 @@ msgstr ""
 "Alt)"
 
 #: ../src/ui/tool/node.cpp:1451
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid ""
 "<b>BSpline node</b>: drag to shape the path (more: Shift, Ctrl, Alt). %g "
 "power"
 msgstr ""
-"<b>κόμβος BSpline</b>: %g πάχος, μετακίνηση για διαμόρφωση του μονοπατιού "
-"(περισσότερα: Shift, Ctrl, Alt)"
+"<b>Κόμβος εύκαμπτης καμπύλης βάσης</b>: μεταφορά για σχηματοποίηση του "
+"μονοπατιού (περισσότερα: Shift, Ctrl, Alt). δύναμη %g"
 
 #: ../src/ui/tool/node.cpp:1454
 #, c-format
@@ -25786,14 +25762,15 @@ msgstr ""
 "αυτού του κόμβου (περισσότερα: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1461
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid ""
 "<b>BSpline node</b>: drag to shape the path, click to select only this node "
 "(more: Shift, Ctrl, Alt). %g power"
 msgstr ""
-"<b>κόμβος BSpline</b>: σύρσιμο για διαμόρφωση του μονοπατιού, πάτημα για "
-"επιλογή μόνο αυτού του κόμβου (περισσότερα: Shift, Ctrl, Alt)"
+"<b>Κόμβος εύκαμπτης καμπύλης βάσης</b>: σύρσιμο για διαμόρφωση του "
+"μονοπατιού, πάτημα για επιλογή μόνο αυτού του κόμβου (περισσότερα: Shift, "
+"Ctrl, Alt). δύναμη %g"
 
 #: ../src/ui/tool/node.cpp:1474
 #, c-format
@@ -27401,230 +27378,216 @@ msgstr "Θόλωση (%)"
 
 #: ../src/ui/widget/font-variants.cpp:38
 msgid "Ligatures"
-msgstr ""
+msgstr "Συμπλέγματα"
 
 #: ../src/ui/widget/font-variants.cpp:39
-#, fuzzy
 msgid "Common"
-msgstr "κοινά"
+msgstr "Κοινά"
 
 #: ../src/ui/widget/font-variants.cpp:40
-#, fuzzy
 msgid "Discretionary"
-msgstr "Κατεύθυνση"
+msgstr "Διακριτικά"
 
 #: ../src/ui/widget/font-variants.cpp:41
-#, fuzzy
 msgid "Historical"
-msgstr "Μαθήματα"
+msgstr "Ιστορικά"
 
 #: ../src/ui/widget/font-variants.cpp:42
-#, fuzzy
 msgid "Contextual"
-msgstr "Περιεχόμενο"
+msgstr "Συμφραζόμενα"
 
 #: ../src/ui/widget/font-variants.cpp:46
-#, fuzzy
 msgid "Subscript"
-msgstr "Σενάριο"
+msgstr "Δείκτης"
 
 #: ../src/ui/widget/font-variants.cpp:47
-#, fuzzy
 msgid "Superscript"
-msgstr "Εναλλαγή εκθέτη"
+msgstr "Εκθέτης"
 
 #: ../src/ui/widget/font-variants.cpp:49
-#, fuzzy
 msgid "Capitals"
-msgstr "Νοσοκομείο"
+msgstr "Κεφαλαία"
 
 #: ../src/ui/widget/font-variants.cpp:52
-#, fuzzy
 msgid "All small"
-msgstr "Όλα τα σχήματα"
+msgstr "Όλα μικρά"
 
 #: ../src/ui/widget/font-variants.cpp:53
 msgid "Petite"
-msgstr ""
+msgstr "Petite (Πολύ μικρά κεφαλαία)"
 
 #: ../src/ui/widget/font-variants.cpp:54
-#, fuzzy
 msgid "All petite"
-msgstr "Όλα ανενεργά"
+msgstr "Όλα petite (πολύ μικρά κεφαλαία)"
 
 #: ../src/ui/widget/font-variants.cpp:55
-#, fuzzy
 msgid "Unicase"
-msgstr "Picas"
+msgstr "Unicase (ενιαία κεφαλαιοποίηση)"
 
 #: ../src/ui/widget/font-variants.cpp:56
-#, fuzzy
 msgid "Titling"
-msgstr "Ιστιοπλοΐα"
+msgstr "Τίτλοι"
 
 #: ../src/ui/widget/font-variants.cpp:58
 msgid "Numeric"
-msgstr ""
+msgstr "Αριθμητικά"
 
 #: ../src/ui/widget/font-variants.cpp:59
-#, fuzzy
 msgid "Lining"
-msgstr "Λέπτυνση:"
+msgstr "Ισοϋψή"
 
 #: ../src/ui/widget/font-variants.cpp:60
-#, fuzzy
 msgid "Old Style"
-msgstr "Τεχνοτροπία"
+msgstr "Παλιά τεχνοτροπία"
 
 #: ../src/ui/widget/font-variants.cpp:61
-#, fuzzy
 msgid "Default Style"
-msgstr "Προεπιλεγμένος τίτλος"
+msgstr "Προεπιλεγμένη τεχνοτροπία"
 
 #: ../src/ui/widget/font-variants.cpp:62
-#, fuzzy
 msgid "Proportional"
-msgstr "Αναλογία στηλοθετών:"
+msgstr "Αναλογική"
 
 #: ../src/ui/widget/font-variants.cpp:63
 msgid "Tabular"
-msgstr ""
+msgstr "Πινακοειδής"
 
 #: ../src/ui/widget/font-variants.cpp:64
-#, fuzzy
 msgid "Default Width"
-msgstr "Προεπιλεγμένος τίτλος"
+msgstr "Προεπιλεγμένο πλάτος"
 
 #: ../src/ui/widget/font-variants.cpp:65
-#, fuzzy
 msgid "Diagonal"
-msgstr "Διαγώνιοι οδηγοί"
+msgstr "Διαγώνια"
 
 #: ../src/ui/widget/font-variants.cpp:66
-#, fuzzy
 msgid "Stacked"
-msgstr "Υποστηρικτικός"
+msgstr "Στοιβαγμένα"
 
 #: ../src/ui/widget/font-variants.cpp:67
-#, fuzzy
 msgid "Default Fractions"
-msgstr "Προεπιλεγμένες ρυθμίσεις πλέγματος"
+msgstr "Προεπιλεγμένα κλάσματα"
 
 #: ../src/ui/widget/font-variants.cpp:68
 msgid "Ordinal"
-msgstr ""
+msgstr "Τακτικά αριθμητικά"
 
 #: ../src/ui/widget/font-variants.cpp:69
 msgid "Slashed Zero"
-msgstr ""
+msgstr "Μηδέν με διαγράμμιση"
 
 #
 #: ../src/ui/widget/font-variants.cpp:71
-#, fuzzy
 msgid "Feature Settings"
-msgstr "Ρυθμίσεις σελίδας"
+msgstr "Ρυθμίσεις γνωρισμάτων"
 
 #: ../src/ui/widget/font-variants.cpp:72
 msgid "Selection has different Feature Settings!"
-msgstr ""
+msgstr "Η επιλογή έχει διαφορετικές ρυθμίσεις γνωρίσματος!"
 
 #: ../src/ui/widget/font-variants.cpp:85
 msgid "Common ligatures. On by default. OpenType tables: 'liga', 'clig'"
 msgstr ""
+"Κοινά συμπλέγματα. Ενεργά από προεπιλογή. Πίνακες OpenType: 'liga', 'clig'"
 
 #: ../src/ui/widget/font-variants.cpp:87
 msgid "Discretionary ligatures. Off by default. OpenType table: 'dlig'"
 msgstr ""
+"Διακριτικά συμπλέγματα. Ανενεργά από προεπιλογή. Πίνακας OpenType: 'dlig'"
 
 #: ../src/ui/widget/font-variants.cpp:89
 msgid "Historical ligatures. Off by default. OpenType table: 'hlig'"
 msgstr ""
+"Ιστορικά συμπλέγματα. Ανενεργά από προεπιλογή. Πίνακας OpenType: 'hlig'"
 
 #: ../src/ui/widget/font-variants.cpp:91
 msgid "Contextual forms. On by default. OpenType table: 'calt'"
-msgstr ""
+msgstr "Μορφές συμφραζομένων. Ενεργές από προεπιλογή. Πίνακας OpenType: 'calt'"
 
 #. Position ----------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:112
-#, fuzzy
 msgid "Normal position."
-msgstr "Θέση X"
+msgstr "Κανονική θέση."
 
 #: ../src/ui/widget/font-variants.cpp:113
 msgid "Subscript. OpenType table: 'subs'"
-msgstr ""
+msgstr "Δείκτης. Πίνακας OpenType: 'subs'"
 
 #: ../src/ui/widget/font-variants.cpp:114
 msgid "Superscript. OpenType table: 'sups'"
-msgstr ""
+msgstr "Εκθέτης. Πίνακας OpenType: 'sups'"
 
 #. Caps ----------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:138
-#, fuzzy
 msgid "Normal capitalization."
-msgstr "Τοπικοποίηση"
+msgstr "Κανονική κεφαλαιοποίηση."
 
 #: ../src/ui/widget/font-variants.cpp:139
 msgid "Small-caps (lowercase). OpenType table: 'smcp'"
-msgstr ""
+msgstr "Μικρά κεφαλαία (πεζά). Πίνακας OpenType: 'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:140
 msgid ""
 "All small-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'smcp'"
 msgstr ""
+"Όλα μικρά κεφαλαία (κεφαλαία και πεζά). Πίνακες OpenType: 'c2sc' και 'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:141
 msgid "Petite-caps (lowercase). OpenType table: 'pcap'"
-msgstr ""
+msgstr "Πολύ μικρά κεφαλαία (Petite-caps) (πεζά). Πίνακας OpenType: 'pcap'"
 
 #: ../src/ui/widget/font-variants.cpp:142
 msgid ""
 "All petite-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'pcap'"
 msgstr ""
+"Όλα πολύ μικρά κεφαλαία (petite-caps)(κεφαλαία και πεζά). Πίνακες OpenType: "
+"'c2sc' και 'pcap'"
 
 #: ../src/ui/widget/font-variants.cpp:143
 msgid ""
 "Unicase (small caps for uppercase, normal for lowercase). OpenType table: "
 "'unic'"
 msgstr ""
+"Unicase (ενιαία κεφαλαιοποίηση) (μικρά κεφαλαία για κεφαλαία, κανονικά για "
+"πεζά). Πίνακας OpenType: 'unic'"
 
 #: ../src/ui/widget/font-variants.cpp:144
 msgid ""
 "Titling caps (lighter-weight uppercase for use in titles). OpenType table: "
 "'titl'"
 msgstr ""
+"Κεφαλαία τίτλων (κεφαλαία μικρότερου πάχους για χρήση σε τίτλους). Πίνακας "
+"OpenType: 'titl'"
 
 #
 #. Numeric ------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:180
-#, fuzzy
 msgid "Normal style."
-msgstr "Κανονική αντιστάθμιση:"
+msgstr "Κανονική τεχνοτροπία."
 
 #: ../src/ui/widget/font-variants.cpp:181
 msgid "Lining numerals. OpenType table: 'lnum'"
-msgstr ""
+msgstr "Ισοϋψείς αριθμοί. Πίνακας OpenType: 'lnum'"
 
 #: ../src/ui/widget/font-variants.cpp:182
 msgid "Old style numerals. OpenType table: 'onum'"
-msgstr ""
+msgstr "Αριθμοί παλιάς τεχνοτροπίας. Πίνακας OpenType: 'onum'"
 
 #
 #: ../src/ui/widget/font-variants.cpp:183
-#, fuzzy
 msgid "Normal widths."
-msgstr "Κανονικό φως"
+msgstr "Κανονικά πλάτη."
 
 #: ../src/ui/widget/font-variants.cpp:184
 msgid "Proportional width numerals. OpenType table: 'pnum'"
-msgstr ""
+msgstr "Αριθμοί αναλογικού πλάτους. Πίνακας OpenType: 'pnum'"
 
 #: ../src/ui/widget/font-variants.cpp:185
 msgid "Same width numerals. OpenType table: 'tnum'"
-msgstr ""
+msgstr "Αριθμοί ίδιου πλάτους. Πίνακας OpenType: 'tnum'"
 
 # #-#-#-#-#  libgnomeui.master.el.po (el)  #-#-#-#-#
 # #-#-#-#-#  memory.el.po (abiword 1.0)  #-#-#-#-#
@@ -27645,31 +27608,31 @@ msgstr ""
 # #-#-#-#-#  anjuta-extras.master.el.po (anjuta.HEAD)  #-#-#-#-#
 #
 #: ../src/ui/widget/font-variants.cpp:186
-#, fuzzy
 msgid "Normal fractions."
-msgstr "Παράβλεψη περιστροφών εικόνας"
+msgstr "Κανονικά κλάσματα."
 
 #: ../src/ui/widget/font-variants.cpp:187
 msgid "Diagonal fractions. OpenType table: 'frac'"
-msgstr ""
+msgstr "Διαγώνια κλάσματα. Πίνακας OpenType: 'frac'"
 
 #: ../src/ui/widget/font-variants.cpp:188
 msgid "Stacked fractions. OpenType table: 'afrc'"
-msgstr ""
+msgstr "Κατακόρυφα κλάσματα. Πίνακας OpenType: 'afrc'"
 
 #: ../src/ui/widget/font-variants.cpp:189
 msgid "Ordinals (raised 'th', etc.). OpenType table: 'ordn'"
-msgstr ""
+msgstr "Τακτικοί (υψωμένα 'ος', κλπ.). Πίνακας OpenType: 'ordn'"
 
 #: ../src/ui/widget/font-variants.cpp:190
 msgid "Slashed zeros. OpenType table: 'zero'"
-msgstr ""
+msgstr "Μηδενικά με διαγράμμιση. Πίνακας OpenType: 'zero'"
 
 #. Feature settings ---------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:240
 msgid "Feature settings in CSS form. No sanity checking is performed."
 msgstr ""
+"Ρυθμίσεις γνωρίσματος σε μορφή CSS. Δεν εκτελείται έλεγχος ακεραιότητας."
 
 #: ../src/ui/widget/layer-selector.cpp:118
 msgid "Toggle current layer visibility"
@@ -27696,9 +27659,8 @@ msgid "MetadataLicence|Other"
 msgstr "Άλλη"
 
 #: ../src/ui/widget/licensor.cpp:72
-#, fuzzy
 msgid "Document license updated"
-msgstr "Καθαρισμός εγγράφου"
+msgstr "Ενημερωμένη άδεια εγγράφου"
 
 #: ../src/ui/widget/object-composite-settings.cpp:47
 #: ../src/ui/widget/selected-style.cpp:1119
@@ -27763,28 +27725,24 @@ msgid "Bottom margin"
 msgstr "Κάτω περιθώριο"
 
 #: ../src/ui/widget/page-sizer.cpp:244
-#, fuzzy
 msgid "Scale _x:"
-msgstr "Κλίμακα:"
+msgstr "Κλίμακα _x:"
 
 # #-#-#-#-#  anjuta.master.el.po (anjuta.HEAD)  #-#-#-#-#
 #
 #: ../src/ui/widget/page-sizer.cpp:244
-#, fuzzy
 msgid "Scale X"
-msgstr "Κλίμακα"
+msgstr "Κλίμακα Χ"
 
 #: ../src/ui/widget/page-sizer.cpp:245
-#, fuzzy
 msgid "Scale _y:"
-msgstr "Κλίμακα:"
+msgstr "Κλίμακα _y:"
 
 # #-#-#-#-#  anjuta.master.el.po (anjuta.HEAD)  #-#-#-#-#
 #
 #: ../src/ui/widget/page-sizer.cpp:245
-#, fuzzy
 msgid "Scale Y"
-msgstr "Κλίμακα"
+msgstr "Κλίμακα Υ"
 
 #: ../src/ui/widget/page-sizer.cpp:323
 msgid "Orientation:"
@@ -27831,6 +27789,9 @@ msgid ""
 "scaling in Inkscape. To set a non-uniform scaling, set the 'viewBox' "
 "directly."
 msgstr ""
+"Αν και το SVG επιτρέπει ανομοιόμορφη κλιμάκωση, συνιστάται η χρήση μόνο "
+"ομοιόμορφης κλιμάκωσης στο Inkscape. Για να ορίσετε μια ανομοιόμορφη "
+"κλιμάκωση, ορίστε άμεσα το 'πλαίσιο προβολής (viewBox)'."
 
 # #-#-#-#-#  ekiga.master.el.po (ekiga.HEAD)  #-#-#-#-#
 #
@@ -27863,9 +27824,8 @@ msgstr ""
 # #-#-#-#-#  anjuta-extras.master.el.po (anjuta.HEAD)  #-#-#-#-#
 #
 #: ../src/ui/widget/page-sizer.cpp:483
-#, fuzzy
 msgid "_Viewbox..."
-msgstr "_Προβολή"
+msgstr "_Πλαίσιο προβολής..."
 
 #: ../src/ui/widget/page-sizer.cpp:590
 msgid "Set page size"
@@ -27873,16 +27833,15 @@ msgstr "Ορισμός μεγέθους σελίδας"
 
 #: ../src/ui/widget/page-sizer.cpp:836
 msgid "User units per "
-msgstr ""
+msgstr "Μονάδες χρήστη ανά"
 
 #: ../src/ui/widget/page-sizer.cpp:932
-#, fuzzy
 msgid "Set page scale"
-msgstr "Ορισμός μεγέθους σελίδας"
+msgstr "Ορισμός κλίμακας σελίδας"
 
 #: ../src/ui/widget/page-sizer.cpp:958
 msgid "Set 'viewBox'"
-msgstr ""
+msgstr "Ορισμός 'πλαισίου προβολής (viewBox)'"
 
 # #-#-#-#-#  balsa.master.el.po (balsa 2.0.13)  #-#-#-#-#
 #
@@ -29077,9 +29036,8 @@ msgid "Quit Inkscape"
 msgstr "Έξοδος από το Inkscape"
 
 #: ../src/verbs.cpp:2430
-#, fuzzy
 msgid "New from _Template..."
-msgstr "Δημιουργία από πρότυπο"
+msgstr "Δημιουργία από _πρότυπο..."
 
 #: ../src/verbs.cpp:2431
 msgid "Create new project from template"
@@ -32382,9 +32340,8 @@ msgid "The units to be used for the measurements"
 msgstr "Οι μονάδες για τις μετρήσεις"
 
 #: ../src/widgets/mesh-toolbar.cpp:313
-#, fuzzy
 msgid "Set mesh type"
-msgstr "Ορισμός τεχνοτροπίας κειμένου"
+msgstr "Ορισμός τύπου πλέγματος"
 
 #: ../src/widgets/mesh-toolbar.cpp:336
 msgid "normal"
@@ -32455,24 +32412,26 @@ msgstr "Προβολή πλευράς και λαβών τανυστή"
 
 #: ../src/widgets/mesh-toolbar.cpp:465
 msgid "WARNING: Mesh SVG Syntax Subject to Change"
-msgstr ""
+msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Η σύνταξη SVG πλέγματος υπόκειται σε αλλαγές "
 
 #: ../src/widgets/mesh-toolbar.cpp:475
 msgctxt "Type"
 msgid "Coons"
-msgstr ""
+msgstr "Coons"
 
 #: ../src/widgets/mesh-toolbar.cpp:478
 msgid "Bicubic"
-msgstr ""
+msgstr "Δικυβικό"
 
 #: ../src/widgets/mesh-toolbar.cpp:480
 msgid "Coons"
-msgstr ""
+msgstr "Coons"
 
 #: ../src/widgets/mesh-toolbar.cpp:481
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
+"Coons: χωρίς εξομάλυνση. Δικυβικό: εξομάλυνση κατά μήκος των ορίων του "
+"τμήματος."
 
 #: ../src/widgets/mesh-toolbar.cpp:483 ../src/widgets/pencil-toolbar.cpp:377
 msgid "Smoothing:"
@@ -32902,9 +32861,8 @@ msgid "From clipboard"
 msgstr "Από το πρόχειρο"
 
 #: ../src/widgets/pencil-toolbar.cpp:183
-#, fuzzy
 msgid "Bend from clipboard"
-msgstr "Από το πρόχειρο"
+msgstr "Καμπύλη από το πρόχειρο"
 
 #: ../src/widgets/pencil-toolbar.cpp:184
 msgid "Last applied"
@@ -32944,11 +32902,11 @@ msgstr ""
 
 #: ../src/widgets/pencil-toolbar.cpp:409 ../src/widgets/pencil-toolbar.cpp:410
 msgid "LPE based interactive simplify"
-msgstr ""
+msgstr "Διαδραστική απλοποίηση με βάση το LPE"
 
 #: ../src/widgets/pencil-toolbar.cpp:420 ../src/widgets/pencil-toolbar.cpp:421
 msgid "LPE simplify flatten"
-msgstr ""
+msgstr "Ισοπέδωση απλοποίησης LPE"
 
 #: ../src/widgets/rect-toolbar.cpp:125
 msgid "Change rectangle"
@@ -34543,21 +34501,19 @@ msgid "Need at least 2 paths selected"
 msgstr "Απαιτούνται τουλάχιστον 2 επιλεγμένα μονοπάτια"
 
 #: ../share/extensions/funcplot.py:48
-#, fuzzy
 msgid ""
 "x-interval cannot be zero. Please modify 'Start X value' or 'End X value'"
 msgstr ""
-"το διάστημα x δεν μπορεί να είναι μηδέν. Παρακαλούμε τροποποιήστε το 'αρχή "
-"Χ' ή 'τέλος Χ'"
+"Το διάστημα x δεν μπορεί να είναι μηδέν. Παρακαλούμε τροποποιήστε το 'αρχική "
+"τιμή Χ' ή 'τέλική τιμή Χ'"
 
 #: ../share/extensions/funcplot.py:60
-#, fuzzy
 msgid ""
 "y-interval cannot be zero. Please modify 'Y value of rectangle's top' or 'Y "
 "value of rectangle's bottom'"
 msgstr ""
-"το διάστημα y δεν μπορεί να είναι μηδέν. Παρακαλούμε τροποποιήστε το 'Υ "
-"πάνω' ή 'Υ κάτω'"
+"Το διάστημα y δεν μπορεί να είναι μηδέν. Παρακαλούμε τροποποιήστε το 'τιμή Υ "
+"της κορυφής του ορθογωνίου' ή 'τιμή Υ του πυθμένα του ορθογωνίου'"
 
 #: ../share/extensions/funcplot.py:315
 msgid "Please select a rectangle"
@@ -34848,11 +34804,10 @@ msgid "Please select an object"
 msgstr "Παρακαλούμε επιλέξτε ένα αντικείμενο"
 
 #: ../share/extensions/gimp_xcf.py:39
-#, fuzzy
 msgid "Inkscape must be installed and set in your path variable."
 msgstr ""
-"Το Gimp πρέπει να εγκατασταθεί και να ρυθμιστεί στη μεταβλητή του μονοπατιού "
-"σας."
+"Το Inkscape πρέπει να εγκατασταθεί και να ρυθμιστεί στη μεταβλητή του "
+"μονοπατιού σας."
 
 #: ../share/extensions/gimp_xcf.py:43
 msgid "Gimp must be installed and set in your path variable."
@@ -34877,9 +34832,8 @@ msgid "Movements"
 msgstr "Μετακινήσεις"
 
 #: ../share/extensions/hpgl_decoder.py:44
-#, fuzzy
 msgid "Pen "
-msgstr "Γραφίδα #"
+msgstr "Γραφίδα "
 
 #. issue error if no hpgl data found
 #: ../share/extensions/hpgl_input.py:58
@@ -35284,6 +35238,13 @@ msgid ""
 "\\[Program files]\\inkscape\\python\\Lib\\\n"
 "3. Restart Inkscape."
 msgstr ""
+"Το pySerial δεν είναι εγκατεστημένο.\n"
+"\n"
+"1. Μεταφορτώστε το pySerial εδώ (όχι το \".exe\"!): http://pypi.python.org/"
+"pypi/pyserial\n"
+"2. Εξάγετε τον \"σειριακό\" υποφάκελο από το zip στον παρακάτω φάκελο: C:"
+"\\[Program files]\\inkscape\\python\\Lib\\\n"
+"3. Επανεκκινήστε το Inkscape."
 
 #: ../share/extensions/plotter.py:200
 msgid ""
@@ -35438,7 +35399,7 @@ msgid ""
 "For Windows: download it from\n"
 "http://sk1project.org/modules.php?name=Products&product=uniconvertor\n"
 "and install into your Inkscape's Python location\n"
-msgstr ""
+msgstr "Πρέπει να εγκαταστήσετε το λογισμικό UniConvertor.\n"
 
 #: ../share/extensions/voronoi2svg.py:215
 msgid "Please select objects!"
@@ -35488,9 +35449,8 @@ msgid "The directory \"%s\" does not exists."
 msgstr "Ο κατάλογος \"%s\" δεν υπάρχει."
 
 #: ../share/extensions/webslicer_export.py:78
-#, fuzzy
 msgid "No slicer layer found."
-msgstr "Χωρίς τρέχουσα στρώση."
+msgstr "Δεν βρέθηκε στρώση τεμαχισμού."
 
 #: ../share/extensions/webslicer_export.py:108
 #, python-format
@@ -38334,6 +38294,10 @@ msgid ""
 "each pen, name the layers \"Pen 1\", \"Pen 2\", etc., and put your drawings "
 "in the corresponding layers. This overrules the pen number option above."
 msgstr ""
+"Αν θέλετε να χρησιμοποιήσετε πολλαπλές γραφίδες στον σχεδιογράφο γραφίδας "
+"σας, δημιουργήστε μια στρώση για κάθε γραφίδα, ονομάστε τις στρώσεις "
+"\"Γραφίδα 1\", \"Γραφίδα 2\", κλπ. και βάλτε τα σχέδιά σας στις αντίστοιχες "
+"στρώσεις. Αυτό ακυρώνει την παραπάνω επιλογή αριθμού γραφίδων."
 
 #: ../share/extensions/hpgl_output.inx.h:23
 #: ../share/extensions/plotter.inx.h:53
@@ -38430,96 +38394,86 @@ msgid "Export an HP Graphics Language file"
 msgstr "Εξαγωγή ενός αρχείου γλώσσας γραφικών HP"
 
 #: ../share/extensions/image_attributes.inx.h:1
-#, fuzzy
 msgid "Set Image Attributes"
-msgstr "Ορισμός γνωρισμάτων"
+msgstr "Ορισμός γνωρισμάτων εικόνας"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:3
-#, fuzzy
 msgid "Basic"
-msgstr "Βασικά Λατινικά"
+msgstr "Βασικά"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:5
 msgid "Support non-unifom scaling"
-msgstr ""
+msgstr "Υποστήριξη ανομοιόμορφης κλίμακας"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:7
 msgid "Render images blocky"
-msgstr ""
+msgstr "Απόδοση οδοντωτών εικόνων"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:9
 msgid ""
 "Render all bitmap images like in older Inskcape versions. Available options:"
 msgstr ""
+"Απόδοση όλων των ψηφιογραφικών εικόνων όπως στις πιο παλιές εκδόσεις του "
+"Inskcape. Διαθέσιμες επιλογές:"
 
 #. image aspect ratio
 #: ../share/extensions/image_attributes.inx.h:11
-#, fuzzy
 msgid "Image Aspect Ratio"
-msgstr "Απλοποίηση εικόνας"
+msgstr "Λόγος διαστάσεων εικόνας"
 
 #. image aspect ratio
 #: ../share/extensions/image_attributes.inx.h:13
 msgid "preserveAspectRatio attribute:"
-msgstr ""
+msgstr "Γνώρισμα διατήρηση αναλογίας διαστάσεων:"
 
 #. image aspect ratio
 #: ../share/extensions/image_attributes.inx.h:15
 msgid "meetOrSlice:"
-msgstr ""
+msgstr "Πλήρης ή κομμένη προβολή (meetOrSlice) "
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:17
-#, fuzzy
 msgid "Scope:"
-msgstr "Εμβέλεια"
+msgstr "Εμβέλεια:"
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:19
-#, fuzzy
 msgid "Unset"
-msgstr "Συρρίκνωση"
+msgstr "Αναίρεση"
 
 #: ../share/extensions/image_attributes.inx.h:20
-#, fuzzy
 msgid "Change only selected image(s)"
-msgstr "Αλλαγή μόνο των επιλεγμένων κόμβων"
+msgstr "Αλλαγή μόνο των επιλεγμένων εικόνων"
 
 #: ../share/extensions/image_attributes.inx.h:21
-#, fuzzy
 msgid "Change all images in selection"
-msgstr "Δεν βρέθηκε έλλειψη στην επιλογή"
+msgstr "Αλλαγή όλων των εικόνων στην επιλογή"
 
 #: ../share/extensions/image_attributes.inx.h:22
-#, fuzzy
 msgid "Change all images in document"
-msgstr "Έλεγχος ορθογραφίας κειμένου στο έγγραφο."
+msgstr "Αλλαγή όλων των εικόνων  στο έγγραφο."
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:24
-#, fuzzy
 msgid "Image Rendering Quality"
-msgstr "Απόδοση εικόνας:"
+msgstr "Ποιότητα απόδοσης εικόνας"
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:26
-#, fuzzy
 msgid "Image rendering attribute:"
-msgstr "Κατάσταση απόδοσης εικόνας:"
+msgstr "Γνώρισμα απόδοσης εικόνας:"
 
 #: ../share/extensions/image_attributes.inx.h:27
-#, fuzzy
 msgid "Apply attribute to parent group of selection"
-msgstr "Εφαρμογή μετασχηματισμού στην επιλογή"
+msgstr "Εφαρμογή γνωρίσματος στη γονική ομάδα επιλογής"
 
 #: ../share/extensions/image_attributes.inx.h:28
-#, fuzzy
 msgid "Apply attribute to SVG root"
-msgstr "Γνωρίσματα για ορισμό:"
+msgstr "Εφαρμογή γνωρίσματος στο ριζικό SVG"
 
 #: ../share/extensions/ink2canvas.inx.h:1
 msgid "Convert to html5 canvas"
@@ -39943,9 +39897,8 @@ msgid "The Baud rate of your serial connection (Default: 9600)"
 msgstr "Η ταχύτητα Baud της σειριακής σας σύνδεσης (Προεπιλογή:9600)"
 
 #: ../share/extensions/plotter.inx.h:8
-#, fuzzy
 msgid "Serial byte size:"
-msgstr "Μέγεθος παλέτας:"
+msgstr "Μέγεθος σειριακής ψηφιολέξης:"
 
 #: ../share/extensions/plotter.inx.h:10
 #, no-c-format
@@ -39953,11 +39906,13 @@ msgid ""
 "The Byte size of your serial connection, 99% of all plotters use the default "
 "setting (Default: 8 Bits)"
 msgstr ""
+"Το μέγεθος ψηφιολέξεων της σειριακής σας σύνδεσης, το 99% όλων των "
+"σχεδιογράφων χρησιμοποιούν την προεπιλεγμένη ρύθμιση (Προεπιλογή: 8 δυαδικά "
+"ψηφία)"
 
 #: ../share/extensions/plotter.inx.h:11
-#, fuzzy
 msgid "Serial stop bits:"
-msgstr "Σειριακή θύρα:"
+msgstr "Σειριακά δυαδικά ψηφία διακοπής:"
 
 #: ../share/extensions/plotter.inx.h:13
 #, no-c-format
@@ -39965,11 +39920,13 @@ msgid ""
 "The Stop bits of your serial connection, 99% of all plotters use the default "
 "setting (Default: 1 Bit)"
 msgstr ""
+"Τα δυαδικά ψηφία διακοπής της σειριακής σας σύνδεσης, το 99% όλων των "
+"σχεδιογράφων χρησιμοποιούν την προεπιλεγμένη ρύθμιση (Προεπιλογή: 1 δυαδικό "
+"ψηφίο)"
 
 #: ../share/extensions/plotter.inx.h:14
-#, fuzzy
 msgid "Serial parity:"
-msgstr "Σειριακή θύρα:"
+msgstr "Σειριακή ισότητα:"
 
 #: ../share/extensions/plotter.inx.h:16
 #, no-c-format
@@ -39977,11 +39934,12 @@ msgid ""
 "The Parity of your serial connection, 99% of all plotters use the default "
 "setting (Default: None)"
 msgstr ""
+"Η ισοτιμία της σειριακής σας σύνδεσης, 99& όλων των σχεδιογράφων "
+"χρησιμοποιούν την προεπιλεγμένη ρύθμιση (Προεπιλογή: Καμία)"
 
 #: ../share/extensions/plotter.inx.h:17
-#, fuzzy
 msgid "Serial flow control:"
-msgstr "Έλεγχος ροής:"
+msgstr "Έλεγχος σειριακής ροής:"
 
 #: ../share/extensions/plotter.inx.h:18
 msgid ""
@@ -40001,13 +39959,15 @@ msgstr "Η γλώσσα εντολών που θα χρησιμοποιηθεί 
 
 #: ../share/extensions/plotter.inx.h:21
 msgid "Initialization commands:"
-msgstr ""
+msgstr "Εντολές αρχικοποίησης"
 
 #: ../share/extensions/plotter.inx.h:22
 msgid ""
 "Commands that will be sent to the plotter before the main data stream, only "
 "use this if you know what you are doing! (Default: Empty)"
 msgstr ""
+"Οι εντολές που θα αποσταλούν στον σχεδιογράφο πριν την κύρια ροή δεδομένων, "
+"χρησιμοποιήστε το μόνο αν ξέρετε τι κάνετε! (Προεπιλογή: κενό)"
 
 #: ../share/extensions/plotter.inx.h:23
 msgid "Software (XON/XOFF)"
@@ -40050,9 +40010,8 @@ msgid "DMPL"
 msgstr "DMPL"
 
 #: ../share/extensions/plotter.inx.h:29
-#, fuzzy
 msgid "KNK Plotter (HPGL variant)"
-msgstr "KNK Zing (παραλλαγή του HPGL)"
+msgstr "Σχεδιογράφος KNK (παραλλαγή του HPGL)"
 
 #: ../share/extensions/plotter.inx.h:30
 msgid ""
