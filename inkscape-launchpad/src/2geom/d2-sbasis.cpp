@@ -1,7 +1,41 @@
+/**
+ * \file
+ * \brief Some two-dimensional SBasis operations
+ *//*
+ * Authors:
+ *   MenTaLguy <mental@rydia.net>
+ *   Jean-François Barraud <jf.barraud@gmail.com>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
+ *   
+ * Copyright 2007-2012 Authors
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it either under the terms of the GNU Lesser General Public
+ * License version 2.1 as published by the Free Software Foundation
+ * (the "LGPL") or, at your option, under the terms of the Mozilla
+ * Public License Version 1.1 (the "MPL"). If you do not alter this
+ * notice, a recipient may use your version of this file under either
+ * the MPL or the LGPL.
+ *
+ * You should have received a copy of the LGPL along with this library
+ * in the file COPYING-LGPL-2.1; if not, output to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the MPL along with this library
+ * in the file COPYING-MPL-1.1
+ *
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
+ * OF ANY KIND, either express or implied. See the LGPL or the MPL for
+ * the specific language governing rights and limitations.
+ *
+ */
+
 #include <2geom/d2.h>
-/* One would think that we would include d2-sbasis.h, however,
- * you cannot actually include it in anything - only d2 may import it.
- * This is due to the trickinesses of template submatching. */
+#include <2geom/piecewise.h>
 
 namespace Geom {
 

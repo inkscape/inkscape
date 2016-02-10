@@ -291,8 +291,6 @@ public:
     /// @}
 
     /** @brief Check whether this interval is empty. */
-    bool isEmpty() { return !*this; };
-    /// Alias of isEmpty() for STL similarity.
     bool empty() { return !*this; }
 
     /** @brief Union with another interval, gracefully handling empty ones. */

@@ -92,47 +92,58 @@ namespace Geom
  * @ingroup Curves
  */
 
+
+/** @brief Compute bounds of an elliptical arc.
+ * The bounds computation works as follows. The extreme X and Y points
+ * are either the endpoints or local minima / maxima of the ellipse.
+ * We already have endpoints, and we can find the local extremes
+ * by computing a partial derivative with respect to the angle
+ * and equating that to zero:
+ * \f{align*}{
+     x &= r_x \cos \varphi \cos \theta - r_y \sin \varphi \sin \theta + c_x \\ 
+     \frac{\partial x}{\partial \theta} &= -r_x \cos \varphi \sin \theta - r_y \sin \varphi \cos \theta = 0 \\ 
+     \frac{\sin \theta}{\cos \theta} &= \tan\theta = -\frac{r_y \sin \varphi}{r_x \cos \varphi} \\ 
+     \theta &= \tan^{-1} \frac{-r_y \sin \varphi}{r_x \cos \varphi}
+   \f}
+ * The local extremes correspond to two angles separated by \f$\pi\f$.
+ * Once we compute these angles, we check whether they belong to the arc,
+ * and if they do, we evaluate the ellipse at these angles.
+ * The bounding box of the arc is equal to the bounding box of the endpoints
+ * and the local extrema that belong to the arc.
+ */
 Rect EllipticalArc::boundsExact() const
 {
     if (isChord()) {
         return chord().boundsExact();
     }
 
-    using std::swap;
+    Coord coord[2][4] = {
+        { _initial_point[X], _final_point[X], 0, 0 },
+        { _initial_point[Y], _final_point[Y], 0, 0 }
+    };
+    int ncoord[2] = { 2, 2 };
 
-    // TODO: simplify / document what is going on here.
-    double extremes[4];
+    Angle extremes[2][2];
     double sinrot, cosrot;
     sincos(rotationAngle(), sinrot, cosrot);
 
-    extremes[0] = std::atan2( -ray(Y) * sinrot, ray(X) * cosrot );
-    extremes[1] = extremes[0] + M_PI;
-    if ( extremes[0] < 0 ) extremes[0] += 2*M_PI;
-    extremes[2] = std::atan2( ray(Y) * cosrot, ray(X) * sinrot );
-    extremes[3] = extremes[2] + M_PI;
-    if ( extremes[2] < 0 ) extremes[2] += 2*M_PI;
+    extremes[X][0] = std::atan2( -ray(Y) * sinrot, ray(X) * cosrot );
+    extremes[X][1] = extremes[X][0] + M_PI;
+    extremes[Y][0] = std::atan2( ray(Y) * cosrot, ray(X) * sinrot );
+    extremes[Y][1] = extremes[Y][0] + M_PI;
 
-
-    double arc_extremes[4];
-    arc_extremes[0] = initialPoint()[X];
-    arc_extremes[1] = finalPoint()[X];
-    if ( arc_extremes[0] < arc_extremes[1] )
-        swap(arc_extremes[0], arc_extremes[1]);
-    arc_extremes[2] = initialPoint()[Y];
-    arc_extremes[3] = finalPoint()[Y];
-    if ( arc_extremes[2] < arc_extremes[3] )
-        swap(arc_extremes[2], arc_extremes[3]);
-
-    if ( !are_near(initialPoint(), finalPoint()) ) {
-        for (unsigned i = 0; i < 4; ++i) {
-            if (containsAngle(extremes[i])) {
-                arc_extremes[i] = valueAtAngle(extremes[i], (i >> 1) ? Y : X);
+    for (unsigned d = 0; d < 2; ++d) {
+        for (unsigned i = 0; i < 2; ++i) {
+            if (containsAngle(extremes[d][i])) {
+                coord[d][ncoord[d]++] = valueAtAngle(extremes[d][i], d ? Y : X);
             }
         }
     }
 
-    return Rect( Point(arc_extremes[1], arc_extremes[3]) ,
-                 Point(arc_extremes[0], arc_extremes[2]) );
+    Interval xival = Interval::from_range(coord[X], coord[X] + ncoord[X]);
+    Interval yival = Interval::from_range(coord[Y], coord[Y] + ncoord[Y]);
+    Rect result(xival, yival);
+    return result;
 }
 
 
@@ -149,116 +160,14 @@ Coord EllipticalArc::valueAtAngle(Coord t, Dim2 d) const
 
 std::vector<Coord> EllipticalArc::roots(Coord v, Dim2 d) const
 {
-    if (isChord()) {
-        return chord().roots(v, d);
-    }
-
     std::vector<Coord> sol;
-    Interval unit_interval(0, 1);
 
-    if ( are_near(ray(X), 0) && are_near(ray(Y), 0) ) {
-        if ( center(d) == v )
-            sol.push_back(0);
+    if (isChord()) {
+        sol = chord().roots(v, d);
         return sol;
     }
 
-    static const char* msg[2][2] =
-    {
-        { "d == X; ray(X) == 0; "
-          "s = (v - center(X)) / ( -ray(Y) * std::sin(_rot_angle) ); "
-          "s should be contained in [-1,1]",
-          "d == X; ray(Y) == 0; "
-          "s = (v - center(X)) / ( ray(X) * std::cos(_rot_angle) ); "
-          "s should be contained in [-1,1]"
-        },
-        { "d == Y; ray(X) == 0; "
-          "s = (v - center(X)) / ( ray(Y) * std::cos(_rot_angle) ); "
-          "s should be contained in [-1,1]",
-          "d == Y; ray(Y) == 0; "
-          "s = (v - center(X)) / ( ray(X) * std::sin(_rot_angle) ); "
-          "s should be contained in [-1,1]"
-        },
-    };
-
-    for ( unsigned int dim = 0; dim < 2; ++dim )
-    {
-        if (ray((Dim2) dim) == 0)
-        {
-            if ( initialPoint()[d] == v && finalPoint()[d] == v )
-            {
-                THROW_INFINITESOLUTIONS(0);
-            }
-            if ( (initialPoint()[d] < finalPoint()[d])
-                 && (initialPoint()[d] > v || finalPoint()[d] < v) )
-            {
-                return sol;
-            }
-            if ( (initialPoint()[d] > finalPoint()[d])
-                 && (finalPoint()[d] > v || initialPoint()[d] < v) )
-            {
-                return sol;
-            }
-            double ray_prj = 0.0;
-            switch(d)
-            {
-                case X:
-                    switch(dim)
-                    {
-                        case X: ray_prj = -ray(Y) * std::sin(rotationAngle());
-                                break;
-                        case Y: ray_prj = ray(X) * std::cos(rotationAngle());
-                                break;
-                    }
-                    break;
-                case Y:
-                    switch(dim)
-                    {
-                        case X: ray_prj = ray(Y) * std::cos(rotationAngle());
-                                break;
-                        case Y: ray_prj = ray(X) * std::sin(rotationAngle());
-                                break;
-                    }
-                    break;
-            }
-
-            double s = (v - center(d)) / ray_prj;
-            if ( s < -1 || s > 1 )
-            {
-                THROW_LOGICALERROR(msg[d][dim]);
-            }
-            switch(dim)
-            {
-                case X:
-                    s = std::asin(s); // return a value in [-PI/2,PI/2]
-                    if ( logical_xor( sweep(), are_near(initialAngle(), M_PI/2) )  )
-                    {
-                        if ( s < 0 ) s += 2*M_PI;
-                    }
-                    else
-                    {
-                        s = M_PI - s;
-                        if (!(s < 2*M_PI) ) s -= 2*M_PI;
-                    }
-                    break;
-                case Y:
-                    s = std::acos(s); // return a value in [0,PI]
-                    if ( logical_xor( sweep(), are_near(initialAngle(), 0) ) )
-                    {
-                        s = 2*M_PI - s;
-                        if ( !(s < 2*M_PI) ) s -= 2*M_PI;
-                    }
-                    break;
-            }
-
-            //std::cerr << "s = " << rad_to_deg(s);
-            s = timeAtAngle(s);
-            //std::cerr << " -> t: " << s << std::endl;
-            if (unit_interval.contains(s)) {
-                sol.push_back(s);
-            }
-            return sol;
-        }
-    }
+    Interval unit_interval(0, 1);
 
     double rotx, roty;
     if (d == X) {
@@ -278,10 +187,10 @@ std::vector<Coord> EllipticalArc::roots(Coord v, Dim2 d) const
     //std::cerr << "b = " << b << std::endl;
     //std::cerr << "c = " << c << std::endl;
 
-    if ( are_near(a,0) )
+    if (a == 0)
     {
         sol.push_back(M_PI);
-        if ( !are_near(b,0) )
+        if (b != 0)
         {
             double s = 2 * std::atan(-c/(2*b));
             if ( s < 0 ) s += 2*M_PI;
@@ -292,8 +201,7 @@ std::vector<Coord> EllipticalArc::roots(Coord v, Dim2 d) const
     {
         double delta = b * b - a * c;
         //std::cerr << "delta = " << delta << std::endl;
-        if ( are_near(delta, 0) )
-        {
+        if (delta == 0) {
             double s = 2 * std::atan(-b/a);
             if ( s < 0 ) s += 2*M_PI;
             sol.push_back(s);
@@ -312,7 +220,7 @@ std::vector<Coord> EllipticalArc::roots(Coord v, Dim2 d) const
 
     std::vector<double> arc_sol;
     for (unsigned int i = 0; i < sol.size(); ++i ) {
-        //std::cerr << "s = " << rad_to_deg(sol[i]);
+        //std::cerr << "s = " << deg_from_rad(sol[i]);
         sol[i] = timeAtAngle(sol[i]);
         //std::cerr << " -> t: " << sol[i] << std::endl;
         if (unit_interval.contains(sol[i])) {
@@ -354,11 +262,7 @@ EllipticalArc::pointAndDerivatives(Coord t, unsigned int n) const
     std::vector<Point> result;
     result.reserve(nn);
     double angle = angleAt(t);
-#if __cplusplus <= 199711L
     std::auto_ptr<EllipticalArc> ea( static_cast<EllipticalArc*>(duplicate()) );
-#else
-    std::unique_ptr<EllipticalArc> ea( static_cast<EllipticalArc*>(duplicate()) );
-#endif
     ea->_ellipse.setCenter(0, 0);
     unsigned int m = std::min(nn, 4u);
     for ( unsigned int i = 0; i < m; ++i )
@@ -890,12 +794,129 @@ bool EllipticalArc::operator==(Curve const &c) const
     return true;
 }
 
+bool EllipticalArc::isNear(Curve const &c, Coord precision) const
+{
+    EllipticalArc const *other = dynamic_cast<EllipticalArc const *>(&c);
+    if (!other) {
+        if (isChord()) {
+            return c.isNear(chord(), precision);
+        }
+        return false;
+    }
+
+    if (!are_near(_initial_point, other->_initial_point, precision)) return false;
+    if (!are_near(_final_point, other->_final_point, precision)) return false;
+    if (isChord() && other->isChord()) return true;
+
+    if (sweep() != other->sweep()) return false;
+    if (!are_near(_ellipse, other->_ellipse, precision)) return false;
+    return true;
+}
+
 void EllipticalArc::feed(PathSink &sink, bool moveto_initial) const
 {
     if (moveto_initial) {
         sink.moveTo(_initial_point);
     }
     sink.arcTo(ray(X), ray(Y), rotationAngle(), _large_arc, sweep(), _final_point);
+}
+
+int EllipticalArc::winding(Point const &p) const
+{
+    using std::swap;
+
+    double sinrot, cosrot;
+    sincos(rotationAngle(), sinrot, cosrot);
+
+    Angle ymin_a = std::atan2( ray(Y) * cosrot, ray(X) * sinrot );
+    Angle ymax_a = ymin_a + M_PI;
+
+    Point ymin = pointAtAngle(ymin_a);
+    Point ymax = pointAtAngle(ymax_a);
+    if (ymin[Y] > ymax[Y]) {
+        swap(ymin, ymax);
+        swap(ymin_a, ymax_a);
+    }
+
+    Interval yspan(ymin[Y], ymax[Y]);
+    if (!yspan.lowerContains(p[Y])) return 0;
+
+    bool left = cross(ymax - ymin, p - ymin) > 0;
+    bool inside = _ellipse.contains(p);
+    bool includes_ymin = _angles.contains(ymin_a);
+    bool includes_ymax = _angles.contains(ymax_a);
+
+    AngleInterval rarc(ymin_a, ymax_a, true),
+                  larc(ymax_a, ymin_a, true);
+
+    // we'll compute the result for an arc in the direction of increasing angles
+    // and then negate if necessary
+    Angle ia = initialAngle(), fa = finalAngle();
+    Point ip = _initial_point, fp = _final_point;
+    if (!sweep()) {
+        swap(ia, fa);
+        swap(ip, fp);
+    }
+
+    bool initial_left = larc.contains(ia);
+    bool initial_right = !initial_left; //rarc.contains(ia);
+    bool final_right = rarc.contains(fa);
+    bool final_left = !final_right;//larc.contains(fa);
+
+    int result = 0;
+    if (inside || left) {
+        if (includes_ymin && final_right) {
+            Interval ival(ymin[Y], fp[Y]);
+            if (ival.lowerContains(p[Y])) {
+                ++result;
+            }
+        }
+        if (initial_right && final_right && !largeArc()) {
+            Interval ival(ip[Y], fp[Y]);
+            if (ival.lowerContains(p[Y])) {
+                ++result;
+            }
+        }
+        if (initial_right && includes_ymax) {
+            Interval ival(ip[Y], ymax[Y]);
+            if (ival.lowerContains(p[Y])) {
+                ++result;
+            }
+        }
+        if (!initial_right && !final_right && includes_ymin && includes_ymax) {
+            Interval ival(ymax[Y], ymin[Y]);
+            if (ival.lowerContains(p[Y])) {
+                ++result;
+            }
+        }
+    }
+    if (left && !inside) {
+        if (includes_ymin && initial_left) {
+            Interval ival(ymin[Y], ip[Y]);
+            if (ival.lowerContains(p[Y])) {
+                --result;
+            }
+        }
+        if (initial_left && final_left && !largeArc()) {
+            Interval ival(ip[Y], fp[Y]);
+            if (ival.lowerContains(p[Y])) {
+                --result;
+            }
+        }
+        if (final_left && includes_ymax) {
+            Interval ival(fp[Y], ymax[Y]);
+            if (ival.lowerContains(p[Y])) {
+                --result;
+            }
+        }
+        if (!initial_left && !final_left && includes_ymin && includes_ymax) {
+            Interval ival(ymax[Y], ymin[Y]);
+            if (ival.lowerContains(p[Y])) {
+                --result;
+            }
+        }
+    }
+    return sweep() ? result : -result;
 }
 
 std::ostream &operator<<(std::ostream &out, EllipticalArc const &ea)

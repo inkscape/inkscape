@@ -495,7 +495,7 @@ bool NodeTool::root_handler(GdkEvent* event) {
 
         // We will show a pre-snap indication for when the user adds a node through double-clicking
         // Adding a node will only work when a path has been selected; if that's not the case then snapping is useless
-        if (not this->desktop->selection->isEmpty()) {
+        if (!this->desktop->selection->isEmpty()) {
             if (!(event->motion.state & GDK_SHIFT_MASK)) {
                 m.setup(this->desktop);
                 Inkscape::SnapCandidatePoint scp(motion_dt, Inkscape::SNAPSOURCE_OTHER_HANDLE);
@@ -678,7 +678,7 @@ void NodeTool::update_tip(GdkEvent *event) {
                 }
             }
             g_assert(positions.size() == 2);
-            const double angle = Geom::rad_to_deg(Geom::Line(positions[0], positions[1]).angle());
+            const double angle = Geom::deg_from_rad(Geom::Line(positions[0], positions[1]).angle());
             nodestring = g_strdup_printf("<b>%u of %u</b> nodes selected, angle: %.2f°.", sz, total, angle);
         }
         else {

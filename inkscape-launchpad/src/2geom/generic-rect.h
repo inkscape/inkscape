@@ -393,7 +393,7 @@ public:
     /// @name Check other rectangles and points for inclusion.
     /// @{
     /** @brief Check for emptiness. */
-    inline bool isEmpty() const { return !*this; };
+    inline bool empty() const { return !*this; };
     /** @brief Check whether the rectangles have any common points.
      * Empty rectangles will not intersect with any other rectangle. */
     bool intersects(CRect const &r) const { return r.intersects(*this); }

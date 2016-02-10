@@ -1195,7 +1195,7 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::P
     }
 
     // Update the status text
-    double degrees = mod360symm(Geom::rad_to_deg(radians));
+    double degrees = mod360symm(Geom::deg_from_rad(radians));
     _message_context.setF(Inkscape::IMMEDIATE_MESSAGE,
                           // TRANSLATORS: don't modify the first ";"
                           // (it will NOT be displayed as ";" - only the second one will be)
@@ -1271,7 +1271,7 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
     pt = _point * Geom::Translate(-_origin) * _relative_affine * Geom::Translate(_origin);
 
     // Update the status text
-    double degrees = mod360symm(Geom::rad_to_deg(radians));
+    double degrees = mod360symm(Geom::deg_from_rad(radians));
     _message_context.setF(Inkscape::IMMEDIATE_MESSAGE,
                           // TRANSLATORS: don't modify the first ";"
                           // (it will NOT be displayed as ";" - only the second one will be)

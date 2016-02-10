@@ -119,7 +119,7 @@ sp_svg_transform_read(gchar const *str, Geom::Affine *transform)
             if (n_args != 1 && n_args != 3) {
                 return false;
             }
-            Geom::Rotate const rot(Geom::deg_to_rad(args[0]));
+            Geom::Rotate const rot(Geom::rad_from_deg(args[0]));
             if (n_args == 3) {
                 a = ( Geom::Translate(-args[1], -args[2])
                       * rot

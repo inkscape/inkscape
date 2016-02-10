@@ -61,6 +61,8 @@ ink_common_sources +=		\
 	ui/dialog/inkscape-preferences.h	\
 	ui/dialog/input.cpp			\
 	ui/dialog/input.h			\
+	ui/dialog/knot-properties.cpp		\
+	ui/dialog/knot-properties.h		\
 	ui/dialog/layer-properties.cpp		\
 	ui/dialog/layer-properties.h		\
 	ui/dialog/layers.cpp			\

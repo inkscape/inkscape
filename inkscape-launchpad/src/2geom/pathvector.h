@@ -272,6 +272,8 @@ public:
     boost::optional<PathVectorTime> nearestTime(Point const &p, Coord *dist = NULL) const;
     std::vector<PathVectorTime> allNearestTimes(Point const &p, Coord *dist = NULL) const;
 
+    std::vector<Point> nodes() const;
+
 private:
     PathVectorTime _factorTime(Coord t) const;
 

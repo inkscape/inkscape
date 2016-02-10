@@ -333,6 +333,9 @@ public:
      * @return True if the curves are identical, false otherwise */
     virtual bool operator==(Curve const &c) const = 0;
 
+    /** @brief Test whether two curves are approximately the same. */
+    virtual bool isNear(Curve const &c, Coord precision) const = 0;
+
     /** @brief Feed the curve to a PathSink */
     virtual void feed(PathSink &sink, bool moveto_initial) const;
     /// @}

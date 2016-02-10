@@ -142,6 +142,24 @@ LineSegment Ellipse::semiaxis(Dim2 d, int sign) const
     return ls;
 }
 
+Rect Ellipse::boundsExact() const
+{
+    Angle extremes[2][2];
+    double sinrot, cosrot;
+    sincos(_angle, sinrot, cosrot);
+
+    extremes[X][0] = std::atan2( -ray(Y) * sinrot, ray(X) * cosrot );
+    extremes[X][1] = extremes[X][0] + M_PI;
+    extremes[Y][0] = std::atan2( ray(Y) * cosrot, ray(X) * sinrot );
+    extremes[Y][1] = extremes[Y][0] + M_PI;
+
+    Rect result;
+    for (unsigned d = 0; d < 2; ++d) {
+        result[d] = Interval(valueAt(extremes[d][0], d ? Y : X),
+                             valueAt(extremes[d][1], d ? Y : X));
+    }
+    return result;
+}
 
 std::vector<double> Ellipse::coefficients() const
 {
@@ -396,45 +414,39 @@ std::vector<ShapeIntersection> Ellipse::intersect(Line const &line) const
     coefficients(A, B, C, D, E, F);
     Affine iuct = inverseUnitCircleTransform();
 
-    if (line.isHorizontal()) {
-        // substitute y into the ellipse equation and solve
-        Coord y = line.initialPoint()[Y];
-        std::vector<Coord> xs = solve_quadratic(A, B*y + D, C*y*y + E*y + F);
-        for (unsigned i = 0; i < xs.size(); ++i) {
-            Point p(xs[i], y);
-            result.push_back(ShapeIntersection(atan2(p * iuct), line.timeAt(p), p));
-        }
-        return result;
-    }
-    if (line.isVertical()) {
-        // substitute y into the ellipse equation and solve
-        Coord x = line.initialPoint()[X];
-        std::vector<Coord> ys = solve_quadratic(C, B*x + E, A*x*x + D*x + F);
-        for (unsigned i = 0; i < ys.size(); ++i) {
-            Point p(x, ys[i]);
-            result.push_back(ShapeIntersection(atan2(p * iuct), line.timeAt(p), p));
-        }
-        return result;
-    }
-
     // generic case
     Coord a, b, c;
     line.coefficients(a, b, c);
+    Point lv = line.versor();
 
-    // y = -a/b x - C/B
-    // TODO: when is it better to substitute X?
-    Coord q = -a/b;
-    Coord r = -c/b;
+    if (fabs(lv[X]) > fabs(lv[Y])) {
+        // y = -a/b x - c/b
+        Coord q = -a/b;
+        Coord r = -c/b;
 
-    // substitute that into the ellipse equation, making it quadratic in x
-    Coord I = A + B*q + C*q*q;          // x^2 terms
-    Coord J = B*r + C*2*q*r + D + E*q;  // x^1 terms
-    Coord K = C*r*r + E*r + F;          // x^0 terms
-    std::vector<Coord> xs = solve_quadratic(I, J, K);
+        // substitute that into the ellipse equation, making it quadratic in x
+        Coord I = A + B*q + C*q*q;          // x^2 terms
+        Coord J = B*r + C*2*q*r + D + E*q;  // x^1 terms
+        Coord K = C*r*r + E*r + F;          // x^0 terms
+        std::vector<Coord> xs = solve_quadratic(I, J, K);
 
-    for (unsigned i = 0; i < xs.size(); ++i) {
-        Point p(xs[i], q*xs[i] + r);
-        result.push_back(ShapeIntersection(atan2(p * iuct), line.timeAt(p), p));
+        for (unsigned i = 0; i < xs.size(); ++i) {
+            Point p(xs[i], q*xs[i] + r);
+            result.push_back(ShapeIntersection(atan2(p * iuct), line.timeAt(p), p));
+        }
+    } else {
+        Coord q = -b/a;
+        Coord r = -c/a;
+
+        Coord I = A*q*q + B*q + C;
+        Coord J = A*2*q*r + B*r + D*q + E;
+        Coord K = A*r*r + D*r + F;
+        std::vector<Coord> xs = solve_quadratic(I, J, K);
+
+        for (unsigned i = 0; i < xs.size(); ++i) {
+            Point p(q*xs[i] + r, xs[i]);
+            result.push_back(ShapeIntersection(atan2(p * iuct), line.timeAt(p), p));
+        }
     }
     return result;
 }

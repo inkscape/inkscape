@@ -150,7 +150,7 @@ void SVGPathWriter::arcTo(double rx, double ry, double angle,
     _setCommand('A');
     _current_pars.push_back(rx);
     _current_pars.push_back(ry);
-    _current_pars.push_back(rad_to_deg(angle));
+    _current_pars.push_back(deg_from_rad(angle));
     _current_pars.push_back(large_arc ? 1. : 0.);
     _current_pars.push_back(sweep ? 1. : 0.);
     _current_pars.push_back(p[X]);

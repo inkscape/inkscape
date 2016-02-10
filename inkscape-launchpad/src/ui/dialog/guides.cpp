@@ -98,7 +98,7 @@ void GuidelinePropertiesDialog::_onOK()
     } else if ( deg_angle == 0. || deg_angle == 180. || deg_angle == -180.) {
         normal = Geom::Point(0.,1.);
     } else {
-        double rad_angle = Geom::deg_to_rad( deg_angle );
+        double rad_angle = Geom::rad_from_deg( deg_angle );
         normal = Geom::rot90(Geom::Point::polar(rad_angle, 1.0));
     }
     //To allow reposition from dialog
@@ -326,7 +326,7 @@ void GuidelinePropertiesDialog::_setup() {
     } else if (_guide->isHorizontal()) {
         _oldangle = 0;
     } else {
-        _oldangle = Geom::rad_to_deg( std::atan2( - _guide->getNormal()[Geom::X], _guide->getNormal()[Geom::Y] ) );
+        _oldangle = Geom::deg_from_rad( std::atan2( - _guide->getNormal()[Geom::X], _guide->getNormal()[Geom::Y] ) );
     }
 
     {

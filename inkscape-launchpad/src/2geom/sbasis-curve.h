@@ -37,6 +37,7 @@
 #define LIB2GEOM_SEEN_SBASIS_CURVE_H
 
 #include <2geom/curve.h>
+#include <2geom/exception.h>
 #include <2geom/nearest-time.h>
 #include <2geom/sbasis-geometric.h>
 #include <2geom/transforms.h>
@@ -130,6 +131,10 @@ public:
         SBasisCurve const *other = dynamic_cast<SBasisCurve const *>(&c);
         if (!other) return false;
         return inner == other->inner;
+    }
+    virtual bool isNear(Curve const &/*c*/, Coord /*eps*/) const {
+        THROW_NOTIMPLEMENTED();
+        return false;
     }
     virtual int degreesOfFreedom() const {
         return inner[0].degreesOfFreedom() + inner[1].degreesOfFreedom();

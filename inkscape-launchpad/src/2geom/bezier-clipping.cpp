@@ -788,7 +788,7 @@ void iterate<intersection_point_tag> (std::vector<Interval>& domsA,
 #endif
         dom = clip<intersection_point_tag>(*C1, *C2, precision);
 
-        if (dom.isEmpty())
+        if (dom.empty())
         {
 #if VERBOSE
             std::cerr << "dom: empty" << std::endl;
@@ -937,7 +937,7 @@ void iterate<collinear_normal_tag> (std::vector<Interval>& domsA,
 #endif
         dom = clip<collinear_normal_tag>(*C1, *C2, precision);
 
-        if (dom.isEmpty()) {
+        if (dom.empty()) {
 #if VERBOSE
             std::cerr << "dom: empty" << std::endl;
 #endif

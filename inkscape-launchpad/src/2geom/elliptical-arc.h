@@ -215,7 +215,7 @@ public:
     /// Get the angular interval of the arc.
     AngleInterval angularInterval() const { return _angles; }
 
-    /// Evaluate the arc in the curve domain, i.e. \f$[0, 1]\$.
+    /// Evaluate the arc in the curve domain, i.e. \f$[0, 1]\f$.
     virtual Point pointAt(Coord t) const;
 
     /// Evaluate a single coordinate on the arc in the curve domain.
@@ -300,7 +300,9 @@ public:
     virtual Curve *portion(double f, double t) const;
     virtual Curve *reverse() const;
     virtual bool operator==(Curve const &c) const;
+    virtual bool isNear(Curve const &other, Coord precision) const;
     virtual void feed(PathSink &sink, bool moveto_initial) const;
+    virtual int winding(Point const &p) const;
 
 private:
     void _updateCenterAndAngles();

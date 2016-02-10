@@ -392,7 +392,7 @@ void FilletChamferPointArrayParam::updateCanvasIndicators()
         Geom::PathVector pathv = sp_svg_read_pathv(svgd);
         Geom::Affine aff = Geom::Affine();
         aff *= Geom::Scale(helper_size);
-        aff *= Geom::Rotate(ray1.angle() - deg_to_rad(270));
+        aff *= Geom::Rotate(ray1.angle() - rad_from_deg(270));
         aff *= Geom::Translate(last_pwd2[i].valueAt(Xvalue));
         pathv *= aff;
         hp.push_back(pathv[0]);

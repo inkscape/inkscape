@@ -150,6 +150,9 @@ class Effect:
         self.OptionParser.add_option("--id",
                         action="append", type="string", dest="ids", default=[], 
                         help="id attribute of object to manipulate")
+        self.OptionParser.add_option("--selected-nodes",
+                        action="append", type="string", dest="selected_nodes", default=[], 
+                        help="id:subpath:position of selected nodes, if any")#TODO write a parser for this
 
     def effect(self):
         pass

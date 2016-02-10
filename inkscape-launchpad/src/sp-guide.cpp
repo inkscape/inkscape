@@ -501,7 +501,7 @@ char* SPGuide::description(bool const verbose) const
             descr = g_strdup_printf(_("horizontal, at %s"), position_string_y->str);
         } else {
             double const radians = this->angle();
-            double const degrees = Geom::rad_to_deg(radians);
+            double const degrees = Geom::deg_from_rad(radians);
             int const degrees_int = (int) round(degrees);
             descr = g_strdup_printf(_("at %d degrees, through (%s,%s)"), 
                                     degrees_int, position_string_x->str, position_string_y->str);

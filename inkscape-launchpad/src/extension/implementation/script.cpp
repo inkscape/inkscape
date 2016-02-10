@@ -41,6 +41,11 @@
 #include "ui/view/view.h"
 #include "xml/node.h"
 #include "xml/attribute-record.h"
+#include "ui/tools/node-tool.h"
+#include "ui/tool/multi-path-manipulator.h"
+#include "ui/tool/path-manipulator.h"
+#include "ui/tool/control-point-selection.h"
+
 
 #include "path-prefix.h"
 
@@ -309,9 +314,9 @@ bool Script::load(Inkscape::Extension::Extension *module)
                     const gchar *interpretstr = child_repr->attribute("interpreter");
                     if (interpretstr != NULL) {
                         std::string interpString = resolveInterpreterExecutable(interpretstr);
-                        command.insert(command.end(), interpString);
+                        command.push_back(interpString);
                     }
-                    command.insert(command.end(), solve_reldir(child_repr));
+                    command.push_back(solve_reldir(child_repr));
                 }
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "helper_extension")) {
                     helper_extension = child_repr->firstChild()->content();
@@ -694,8 +699,51 @@ void Script::effect(Inkscape::Extension::Effect *module,
         Glib::ustring selected_id;
         selected_id += "--id=";
         selected_id += (*x)->getId();
-        params.insert(params.begin(), selected_id);
+        params.push_front(selected_id);
     }
+
+    {//add selected nodes
+    Inkscape::UI::Tools::NodeTool *tool = 0;
+    if (SP_ACTIVE_DESKTOP ) {
+        Inkscape::UI::Tools::ToolBase *ec = SP_ACTIVE_DESKTOP->event_context;
+        if (INK_IS_NODE_TOOL(ec)) {
+            tool = static_cast<Inkscape::UI::Tools::NodeTool*>(ec);
+        }
+    }
+    
+    if(tool){
+        Inkscape::UI::ControlPointSelection *cps = tool->_selected_nodes;
+        for (Inkscape::UI::ControlPointSelection::iterator i = cps->begin(); i != cps->end(); ++i) {
+            Inkscape::UI::Node *node = dynamic_cast<Inkscape::UI::Node*>(*i);
+            if (node) { 
+                std::string id = node->nodeList().subpathList().pm().item()->getId(); 
+
+                int sp = 0;
+                bool found_sp = false;
+                for(Inkscape::UI::SubpathList::iterator i = node->nodeList().subpathList().begin(); i != node->nodeList().subpathList().end(); ++i,++sp){
+                    if(&**i == &(node->nodeList())){
+                        found_sp = true;
+                        break;
+                    }
+                }
+                int nl=0;
+                bool found_nl = false;
+                for (Inkscape::UI::NodeList::iterator j = node->nodeList().begin(); j != node->nodeList().end(); ++j, ++nl){
+                    if(&*j==node){
+                        found_nl = true;
+                        break;
+                    }
+                }
+                std::ostringstream ss;
+                ss<< "--selected-nodes=" << id << ":" << sp << ":" << nl;
+                Glib::ustring selected = ss.str();
+
+                if(found_nl && found_sp)params.push_front(selected);
+                else g_warning("Something went wrong while trying to pass selected nodes to extension. Please report a bug.");
+            }
+        }
+    }
+    }//end add selected nodes
 
     file_listener fileout;
     int data_read = execute(command, params, dc->_filename, fileout);
@@ -1012,6 +1060,8 @@ int Script::execute (const std::list<std::string> &in_command,
             argv.push_back(Glib::build_filename(buildargs));
         }
     }
+
+    //for(int i=0;i<argv.size(); ++i){printf("%s ",argv[i].c_str());}printf("\n");
 
     int stdout_pipe, stderr_pipe;
 

@@ -199,7 +199,7 @@ KnotHolderEntityWidthBendPath::knot_set(Geom::Point const &p, Geom::Point const&
     if (cubic) {
         ray.setPoints(ptA, (*cubic)[1]);
     }
-    ray.setAngle(ray.angle() + Geom::deg_to_rad(90));
+    ray.setAngle(ray.angle() + Geom::rad_from_deg(90));
     Geom::Point knot_pos = this->knot->pos * item->i2dt_affine().inverse();
     Geom::Coord nearest_to_ray = ray.nearestTime(knot_pos);
     if(nearest_to_ray == 0){
@@ -225,7 +225,7 @@ KnotHolderEntityWidthBendPath::knot_get() const
     if (cubic) {
         ray.setPoints(ptA,(*cubic)[1]);
     }
-    ray.setAngle(ray.angle() + Geom::deg_to_rad(90));
+    ray.setAngle(ray.angle() + Geom::rad_from_deg(90));
     Geom::Point result_point = Geom::Point::polar(ray.angle(), (lpe->original_height/2.0) * lpe->prop_scale) + ptA;
 
     bp_helper_path.clear();

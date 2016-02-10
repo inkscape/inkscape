@@ -119,7 +119,7 @@ struct CrossingOrder {
                    (ix == b.a ? b.ta : b.tb);
         else
             return (ix == a.a ? a.ta : a.tb) >
-                   (ix == a.a ? a.ta : a.tb);
+                   (ix == b.a ? b.ta : b.tb);
     }
 };
 

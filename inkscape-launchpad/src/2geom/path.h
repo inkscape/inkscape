@@ -55,6 +55,11 @@ namespace PathInternal {
 
 typedef boost::ptr_vector<Curve> Sequence;
 
+struct PathData {
+    Sequence curves;
+    OptRect fast_bounds;
+};
+
 template <typename P>
 class BaseIterator
     : public boost::random_access_iterator_helper
@@ -221,6 +226,7 @@ public:
     }
 
     size_type pathSize() const { return _path_size; }
+    size_type curveCount() const;
 
 private:
     PathTime _from, _to;
@@ -316,6 +322,7 @@ class Path
     : boost::equality_comparable< Path >
 {
 public:
+    typedef PathInternal::PathData PathData;
     typedef PathInternal::Sequence Sequence;
     typedef PathInternal::BaseIterator<Path> iterator;
     typedef PathInternal::BaseIterator<Path const> const_iterator;
@@ -342,31 +349,31 @@ public:
 
     /// Construct an empty path starting at the specified point.
     explicit Path(Point const &p = Point())
-        : _curves(new Sequence())
+        : _data(new PathData())
         , _closing_seg(new ClosingSegment(p, p))
         , _closed(false)
         , _exception_on_stitch(true)
     {
-        _curves->push_back(_closing_seg);
+        _data->curves.push_back(_closing_seg);
     }
 
     /// Construct a path containing a range of curves.
     template <typename Iter>
     Path(Iter first, Iter last, bool closed = false, bool stitch = false)
-        : _curves(new Sequence())
+        : _data(new PathData())
         , _closed(closed)
         , _exception_on_stitch(!stitch)
     {
         for (Iter i = first; i != last; ++i) {
-            _curves->push_back(i->duplicate());
+            _data->curves.push_back(i->duplicate());
         }
-        if (!_curves->empty()) {
-            _closing_seg = new ClosingSegment(_curves->back().finalPoint(),
-                                              _curves->front().initialPoint());
+        if (!_data->curves.empty()) {
+            _closing_seg = new ClosingSegment(_data->curves.back().finalPoint(),
+                                              _data->curves.front().initialPoint());
         } else {
             _closing_seg = new ClosingSegment();
         }
-        _curves->push_back(_closing_seg);
+        _data->curves.push_back(_closing_seg);
     }
 
     /// Create a path from a rectangle.
@@ -386,7 +393,7 @@ public:
      * @todo Add noexcept specifiers for C++11 */
     void swap(Path &other) throw() {
         using std::swap;
-        swap(other._curves, _curves);
+        swap(other._data, _data);
         swap(other._closing_seg, _closing_seg);
         swap(other._closed, _closed);
         swap(other._exception_on_stitch, _exception_on_stitch);
@@ -396,26 +403,26 @@ public:
     friend inline void swap(Path &a, Path &b) throw() { a.swap(b); }
 
     /** @brief Access a curve by index */
-    Curve const &operator[](size_type i) const { return (*_curves)[i]; }
+    Curve const &operator[](size_type i) const { return _data->curves[i]; }
     /** @brief Access a curve by index */
-    Curve const &at(size_type i) const { return _curves->at(i); }
+    Curve const &at(size_type i) const { return _data->curves.at(i); }
 
     /** @brief Access the first curve in the path.
      * Since the curve always contains at least a degenerate closing segment,
      * it is always safe to use this method. */
-    Curve const &front() const { return _curves->front(); }
+    Curve const &front() const { return _data->curves.front(); }
     /// Alias for front().
-    Curve const &initialCurve() const { return _curves->front(); }
+    Curve const &initialCurve() const { return _data->curves.front(); }
     /** @brief Access the last curve in the path. */
     Curve const &back() const { return back_default(); }
     Curve const &back_open() const {
-        if (empty()) return _curves->back();
-        return (*_curves)[_curves->size() - 2];
+        if (empty()) return _data->curves.back();
+        return _data->curves[_data->curves.size() - 2];
     }
     Curve const &back_closed() const {
         return _closing_seg->isDegenerate()
-            ? (*_curves)[_curves->size() - 2]
-            : (*_curves)[_curves->size() - 1];
+            ? _data->curves[_data->curves.size() - 2]
+            : _data->curves[_data->curves.size() - 1];
     }
     Curve const &back_default() const {
         return _includesClosingSegment()
@@ -436,13 +443,13 @@ public:
     iterator end_closed() { return iterator(*this, size_closed()); }
 
     /// Size without the closing segment, even if the path is closed.
-    size_type size_open() const { return _curves->size() - 1; }
+    size_type size_open() const { return _data->curves.size() - 1; }
 
     /** @brief Size with the closing segment, if it makes a difference.
      * If the closing segment is degenerate, i.e. its initial and final points
      * are exactly equal, then it is not included in this size. */
     size_type size_closed() const {
-        return _closing_seg->isDegenerate() ? _curves->size() - 1 : _curves->size();
+        return _closing_seg->isDegenerate() ? _data->curves.size() - 1 : _data->curves.size();
     }
 
     /// Natural size of the path.
@@ -452,7 +459,7 @@ public:
     /// Natural size of the path.
     size_type size() const { return size_default(); }
 
-    size_type max_size() const { return _curves->max_size() - 1; }
+    size_type max_size() const { return _data->curves.max_size() - 1; }
 
     /** @brief Check whether path is empty.
      * The path is empty if it contains only the closing segment, which according
@@ -460,7 +467,7 @@ public:
      * containers, two empty paths are not necessarily identical, because the
      * degenerate closing segment may be at a different point, affecting the operation
      * of methods such as appendNew(). */
-    bool empty() const { return (_curves->size() == 1); }
+    bool empty() const { return (_data->curves.size() == 1); }
 
     /// Check whether the path is closed.
     bool closed() const { return _closed; }
@@ -497,8 +504,8 @@ public:
     Path &operator*=(T const &tr) {
         BOOST_CONCEPT_ASSERT((TransformConcept<T>));
         _unshare();
-        for (std::size_t i = 0; i < _curves->size(); ++i) {
-            (*_curves)[i] *= tr;
+        for (std::size_t i = 0; i < _data->curves.size(); ++i) {
+            _data->curves[i] *= tr;
         }
         return *this;
     }
@@ -569,6 +576,8 @@ public:
 
     PathTime nearestTime(Point const &p, Coord *dist = NULL) const;
     std::vector<Coord> nearestTimePerCurve(Point const &p) const;
+
+    std::vector<Point> nodes() const;
 
     void appendPortionTo(Path &p, Coord f, Coord t) const;
 
@@ -662,13 +671,13 @@ public:
     void setInitial(Point const &p) {
         _unshare();
         _closed = false;
-        _curves->front().setInitial(p);
+        _data->curves.front().setInitial(p);
         _closing_seg->setFinal(p);
     }
     void setFinal(Point const &p) {
         _unshare();
         _closed = false;
-        (*_curves)[size_open() - 1].setFinal(p);
+        _data->curves[size_open() - 1].setFinal(p);
         _closing_seg->setInitial(p);
     }
 
@@ -804,10 +813,10 @@ public:
 
 private:
     static Sequence::iterator seq_iter(iterator const &iter) {
-        return iter.path->_curves->begin() + iter.index;
+        return iter.path->_data->curves.begin() + iter.index;
     }
     static Sequence::const_iterator seq_iter(const_iterator const &iter) {
-        return iter.path->_curves->begin() + iter.index;
+        return iter.path->_data->curves.begin() + iter.index;
     }
 
     // whether the closing segment is part of the path
@@ -815,10 +824,13 @@ private:
         return _closed && !_closing_seg->isDegenerate();
     }
     void _unshare() {
-        if (!_curves.unique()) {
-            _curves.reset(new Sequence(*_curves));
-            _closing_seg = static_cast<ClosingSegment*>(&_curves->back());
+        // Called before every mutation.
+        // Ensure we have our own copy of curve data and reset cached values
+        if (!_data.unique()) {
+            _data.reset(new PathData(*_data));
+            _closing_seg = static_cast<ClosingSegment*>(&_data->curves.back());
         }
+        _data->fast_bounds = OptRect();
     }
     PathTime _factorTime(Coord t) const;
 
@@ -828,7 +840,7 @@ private:
     // n.b. takes ownership of curve object
     void do_append(Curve *curve);
 
-    boost::shared_ptr<Sequence> _curves;
+    boost::shared_ptr<PathData> _data;
     ClosingSegment *_closing_seg;
     bool _closed;
     bool _exception_on_stitch;
@@ -840,6 +852,8 @@ inline Coord nearest_time(Point const &p, Path const &c) {
     PathTime pt = c.nearestTime(p);
     return pt.curve_index + pt.t;
 }
+
+bool are_near(Path const &a, Path const &b, Coord precision = EPSILON);
 
 std::ostream &operator<<(std::ostream &out, Path const &path);
 
