@@ -419,7 +419,7 @@ static void redraw_if_visible(SPCanvasItem *item)
         int y1 = (int)(item->y2);
 
         if (x0 !=0 || x1 !=0 || y0 !=0 || y1 !=0) {
-            item->canvas->requestRedraw((int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
+            item->canvas->requestRedraw((int)(item->x1 - 1), (int)(item->y1 -1), (int)(item->x2 + 1), (int)(item->y2 + 1));
         }
     }
 }
