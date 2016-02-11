@@ -93,7 +93,7 @@ void SPRadialGradient::set(unsigned key, gchar const *value) {
 
         case SP_ATTR_FR:
             if (!this->fr.read(value)) {
-                this->fr.unset(SVGLength::PERCENT, 0.5, 0.5);
+                this->fr.unset(SVGLength::PERCENT, 0.0, 0.0);
             }
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
