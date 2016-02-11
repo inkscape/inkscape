@@ -68,7 +68,7 @@ public:
     void knotUngrabbedHandler(SPKnot */*knot*/,  unsigned int /*state*/);
 private:
     SPCanvasItem* grabbed;
-    boost::optional<Geom::Point> explicitBase;
+    boost::optional<Geom::Point> explicit_base;
     boost::optional<Geom::Point> last_end;
     SPKnot *knot_start;
     SPKnot *knot_end;

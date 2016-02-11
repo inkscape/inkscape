@@ -335,6 +335,8 @@ void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom
 
 }  // namespace
 
+boost::optional<Geom::Point> explicit_base_tmp = boost::none;
+
 MeasureTool::MeasureTool()
     : ToolBase(cursor_measure_xpm, 4, 4)
     , grabbed(NULL)
@@ -369,7 +371,6 @@ MeasureTool::MeasureTool()
         writeMeasurePoint(start_p, true);
         writeMeasurePoint(end_p, false);
     }
-
     this->_knot_start_moved_connection = this->knot_start->moved_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotStartMovedHandler));
     this->_knot_start_click_connection = this->knot_start->click_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotClickHandler));
     this->_knot_start_ungrabbed_connection = this->knot_start->ungrabbed_signal.connect(sigc::mem_fun(*this, &MeasureTool::knotUngrabbedHandler));
@@ -458,6 +459,7 @@ void MeasureTool::knotClickHandler(SPKnot *knot, guint state)
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         Glib::ustring const unit_name =  prefs->getString("/tools/measure/unit");
+        explicit_base = explicit_base_tmp;
         Inkscape::UI::Dialogs::KnotPropertiesDialog::showDialog(desktop, knot, unit_name);
     }
 }
@@ -560,7 +562,8 @@ bool MeasureTool::root_handler(GdkEvent* event)
         this->knot_start->hide();
         this->knot_end->hide();
         Geom::Point const button_w(event->button.x, event->button.y);
-        explicitBase = boost::none;
+        explicit_base = boost::none;
+        explicit_base_tmp = boost::none;
         last_end = boost::none;
         start_p = desktop->w2d(button_w);
 
@@ -585,7 +588,8 @@ bool MeasureTool::root_handler(GdkEvent* event)
     }
     case GDK_KEY_PRESS: {
         if ((event->key.keyval == GDK_KEY_Shift_L) || (event->key.keyval == GDK_KEY_Shift_R)) {
-            explicitBase = end_p;
+            explicit_base_tmp = explicit_base;
+            explicit_base = end_p;
         }
         break;
     }
@@ -741,9 +745,9 @@ void MeasureTool::toGuides()
         return;
     }
     setGuide(start,ray.angle(), _("Measure"));
-    if(explicitBase) {
-        explicitBase = *explicitBase * SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
-        ray.setPoints(start, *explicitBase);
+    if(explicit_base) {
+        explicit_base = *explicit_base * SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
+        ray.setPoints(start, *explicit_base);
         if(ray.angle() != 0) {
             setGuide(start,ray.angle(), _("Base"));
         }
@@ -1153,8 +1157,8 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
     double angle = atan2(end_p - start_p);
     double baseAngle = 0;
 
-    if (explicitBase) {
-        baseAngle = atan2(explicitBase.get() - start_p);
+    if (explicit_base) {
+        baseAngle = atan2(explicit_base.get() - start_p);
         angle -= baseAngle;
     }
 
@@ -1304,7 +1308,7 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
         double length = std::abs((end_p - start_p).length());
         Geom::Point anchorEnd = start_p;
         anchorEnd[Geom::X] += length;
-        if (explicitBase) {
+        if (explicit_base) {
             anchorEnd *= (Geom::Affine(Geom::Translate(-start_p))
                           * Geom::Affine(Geom::Rotate(baseAngle))
                           * Geom::Affine(Geom::Translate(start_p)));
