@@ -142,7 +142,9 @@ SPDesktop *sp_file_new(const std::string &templ)
     }
     
     // Set viewBox if it doesn't exist
-    if (!doc->getRoot()->viewBox_set) {
+    if (!doc->getRoot()->viewBox_set
+    && (doc->getRoot()->width.unit != SVGLength::PERCENT)
+    && (doc->getRoot()->height.unit != SVGLength::PERCENT)) {
         DocumentUndo::setUndoSensitive(doc, false);
         doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
         DocumentUndo::setUndoSensitive(doc, true);
@@ -289,7 +291,9 @@ bool sp_file_open(const Glib::ustring &uri,
 
     if (doc) {
         // Set viewBox if it doesn't exist
-        if (!doc->getRoot()->viewBox_set) {
+        if (!doc->getRoot()->viewBox_set
+        && (doc->getRoot()->width.unit != SVGLength::PERCENT)
+        && (doc->getRoot()->height.unit != SVGLength::PERCENT)) {
             DocumentUndo::setUndoSensitive(doc, false);
             doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
             DocumentUndo::setUndoSensitive(doc, true);
