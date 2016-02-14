@@ -22,6 +22,7 @@
 
 #include <string>
 #include <cstring>
+#include <glibmm/regex.h>
 
 #include <libcdr/libcdr.h>
 
@@ -281,7 +282,12 @@ SPDocument *CdrInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
           }
      }
 
-     SPDocument * doc = SPDocument::createNewDocFromMem(tmpSVGOutput[page_num-1].cstr(), strlen(tmpSVGOutput[page_num-1].cstr()), TRUE);
+     // remove consecutive closepath commands (see bug 1492153)
+     Glib::RefPtr<Glib::Regex> regex = Glib::Regex::create("(Z(?:[\n\s]+Z)+)(?=[^<]+\")");
+     Glib::ustring outString1 = Glib::ustring(tmpSVGOutput[page_num-1].cstr());
+     Glib::ustring outString2 = regex->replace(outString1, 0, "Z", Glib::REGEX_MATCH_NEWLINE_ANY);
+
+     SPDocument * doc = SPDocument::createNewDocFromMem(outString2.c_str(), outString2.bytes(), TRUE);
 
      // Set viewBox if it doesn't exist
      if (doc && !doc->getRoot()->viewBox_set) {
