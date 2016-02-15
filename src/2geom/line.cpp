@@ -103,7 +103,7 @@ void Line::setCoefficients (Coord a, Coord b, Coord c)
 
 void Line::coefficients(Coord &a, Coord &b, Coord &c) const
 {
-    Point v = versor().cw();
+    Point v = vector().cw();
     a = v[X];
     b = v[Y];
     c = cross(_initial, _final);
@@ -139,7 +139,7 @@ std::vector<Coord> Line::roots(Coord v, Dim2 d) const {
 Coord Line::root(Coord v, Dim2 d) const
 {
     assert(d == X || d == Y);
-    Point vs = versor();
+    Point vs = vector();
     if (vs[d] != 0) {
         return (v - _initial[d]) / vs[d];
     } else {
@@ -149,7 +149,7 @@ Coord Line::root(Coord v, Dim2 d) const
 
 boost::optional<LineSegment> Line::clip(Rect const &r) const
 {
-    Point v = versor();
+    Point v = vector();
     // handle horizontal and vertical lines first,
     // since the root-based code below will break for them
     for (unsigned i = 0; i < 2; ++i) {
@@ -221,7 +221,7 @@ boost::optional<LineSegment> Line::clip(Rect const &r) const
  * @see timeAtProjection */
 Coord Line::timeAt(Point const &p) const
 {
-    Point v = versor();
+    Point v = vector();
     // degenerate case
     if (v[X] == 0 && v[Y] == 0) {
         return 0;
@@ -243,8 +243,8 @@ Coord Line::timeAt(Point const &p) const
 Affine Line::transformTo(Line const &other) const
 {
     Affine result = Translate(-_initial);
-    result *= Rotate(angle_between(versor(), other.versor()));
-    result *= Scale(other.versor().length() / versor().length());
+    result *= Rotate(angle_between(vector(), other.vector()));
+    result *= Scale(other.vector().length() / vector().length());
     result *= Translate(other._initial);
     return result;
 }
@@ -253,8 +253,8 @@ std::vector<ShapeIntersection> Line::intersect(Line const &other) const
 {
     std::vector<ShapeIntersection> result;
 
-    Point v1 = versor();
-    Point v2 = other.versor();
+    Point v1 = vector();
+    Point v2 = other.vector();
     Coord cp = cross(v1, v2);
     if (cp == 0) return result;
 
@@ -333,8 +333,8 @@ OptCrossing intersection_impl(Ray const& r1, Line const& l2, unsigned int i)
     using std::swap;
 
     OptCrossing crossing =
-        intersection_impl(r1.versor(), r1.origin(),
-                          l2.versor(), l2.origin() );
+        intersection_impl(r1.vector(), r1.origin(),
+                          l2.vector(), l2.origin() );
 
     if (crossing) {
         if (crossing->ta < 0) {
@@ -363,7 +363,7 @@ OptCrossing intersection_impl( LineSegment const& ls1,
     OptCrossing crossing =
         intersection_impl(ls1.finalPoint() - ls1.initialPoint(),
                           ls1.initialPoint(),
-                          l2.versor(),
+                          l2.vector(),
                           l2.origin() );
 
     if (crossing) {
@@ -396,7 +396,7 @@ OptCrossing intersection_impl( LineSegment const& ls1,
     OptCrossing crossing =
         intersection_impl( direction,
                            ls1.initialPoint(),
-                           r2.versor(),
+                           r2.vector(),
                            r2.origin() );
 
     if (crossing) {
@@ -414,7 +414,7 @@ OptCrossing intersection_impl( LineSegment const& ls1,
     }
 
     if ( are_near(r2.origin(), ls1) ) {
-        bool eqvs = (dot(direction, r2.versor()) > 0);
+        bool eqvs = (dot(direction, r2.vector()) > 0);
         if ( are_near(ls1.initialPoint(), r2.origin()) && !eqvs)  {
             crossing->ta = crossing->tb = 0;
             return crossing;
@@ -445,8 +445,8 @@ OptCrossing intersection_impl( LineSegment const& ls1,
 OptCrossing intersection(Line const& l1, Line const& l2)
 {
     OptCrossing c = detail::intersection_impl(
-        l1.versor(), l1.origin(),
-        l2.versor(), l2.origin());
+        l1.vector(), l1.origin(),
+        l2.vector(), l2.origin());
 
     if (!c && distance(l1.origin(), l2) == 0) {
         THROW_INFINITESOLUTIONS();
@@ -457,8 +457,8 @@ OptCrossing intersection(Line const& l1, Line const& l2)
 OptCrossing intersection(Ray const& r1, Ray const& r2)
 {
     OptCrossing crossing =
-    detail::intersection_impl( r1.versor(), r1.origin(),
-                               r2.versor(), r2.origin() );
+    detail::intersection_impl( r1.vector(), r1.origin(),
+                               r2.vector(), r2.origin() );
 
     if (crossing)
     {
@@ -477,7 +477,7 @@ OptCrossing intersection(Ray const& r1, Ray const& r2)
     if ( are_near(r1.origin(), r2) || are_near(r2.origin(), r1) )
     {
         if ( are_near(r1.origin(), r2.origin())
-             && !are_near(r1.versor(), r2.versor()) )
+             && !are_near(r1.vector(), r2.vector()) )
         {
             crossing->ta = crossing->tb = 0;
             return crossing;
@@ -582,7 +582,7 @@ Line make_angle_bisector_line(Line const& l1, Line const& l2)
     }
     Point O = l1.pointAt(crossing->ta);
     Point A = l1.pointAt(crossing->ta + 1);
-    double angle = angle_between(l1.versor(), l2.versor());
+    double angle = angle_between(l1.vector(), l2.vector());
     Point B = (angle > 0) ? l2.pointAt(crossing->tb + 1)
         : l2.pointAt(crossing->tb - 1);
 

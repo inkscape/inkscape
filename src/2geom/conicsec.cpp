@@ -114,8 +114,8 @@ double RatQuad::lambda() const {
 RatQuad RatQuad::fromPointsTangents(Point P0, Point dP0,
                        Point P,
                        Point P2, Point dP2) {
-  Line Line0 = Line::from_origin_and_versor(P0, dP0);
-  Line Line2 = Line::from_origin_and_versor(P2, dP2);
+  Line Line0 = Line::from_origin_and_vector(P0, dP0);
+  Line Line2 = Line::from_origin_and_vector(P2, dP2);
   try {
     OptCrossing oc = intersection(Line0, Line2);
     if(!oc) // what to do?
@@ -276,8 +276,8 @@ std::vector<Point> decompose_degenerate(xAx const & C1, xAx const & C2, xAx cons
             n1 = Point(b-d, 1);
         }
 
-        Line L0 = Line::from_origin_and_versor(B0, rot90(n0));
-        Line L1 = Line::from_origin_and_versor(B0, rot90(n1));
+        Line L0 = Line::from_origin_and_vector(B0, rot90(n0));
+        Line L1 = Line::from_origin_and_vector(B0, rot90(n1));
 
         std::vector<double> rts = C1.roots(L0);
         for(unsigned i = 0; i < rts.size(); i++) {
@@ -327,12 +327,12 @@ std::vector<Point> decompose_degenerate(xAx const & C1, xAx const & C2, xAx cons
          */
         assert(L2sq(g) != 0);
 
-        Line Lx = Line::from_origin_and_versor(trial_pt, g); // a line along the gradient
+        Line Lx = Line::from_origin_and_vector(trial_pt, g); // a line along the gradient
         std::vector<double> rts = xC0.roots(Lx);
         for(unsigned i = 0; i < rts.size(); i++) {
             Point P0 = Lx.pointAt(rts[i]);
             //std::cout << P0 << "\n";
-            Line L = Line::from_origin_and_versor(P0, rot90(g));
+            Line L = Line::from_origin_and_vector(P0, rot90(g));
             std::vector<double> cnrts;
             // It's very likely that at least one of the conics is degenerate, this will hopefully pick the more generate of the two.
             if(fabs(C1.hessian().det()) > fabs(C2.hessian().det()))
@@ -515,7 +515,7 @@ xAx xAx::operator*(double const &b) const {
       if(L2sq(dA) <= 1e-10) { // perhaps a single point?
           return boost::optional<RatQuad> ();
       }
-      LineSegment ls = intersection(Line::from_origin_and_versor(A, dA), bnd);
+      LineSegment ls = intersection(Line::from_origin_and_vector(A, dA), bnd);
       return RatQuad::fromPointsTangents(A, dA, ls.pointAt(0.5), ls[1], dA);
   }
   else if(crs.size() >= 2 && crs.size() < 4) {

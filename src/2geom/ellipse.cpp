@@ -417,7 +417,7 @@ std::vector<ShapeIntersection> Ellipse::intersect(Line const &line) const
     // generic case
     Coord a, b, c;
     line.coefficients(a, b, c);
-    Point lv = line.versor();
+    Point lv = line.vector();
 
     if (fabs(lv[X]) > fabs(lv[Y])) {
         // y = -a/b x - c/b

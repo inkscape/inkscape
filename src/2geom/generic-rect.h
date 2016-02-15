@@ -41,6 +41,7 @@
 #define LIB2GEOM_SEEN_GENERIC_RECT_H
 
 #include <limits>
+#include <iostream>
 #include <boost/optional.hpp>
 #include <2geom/coord.h>
 
@@ -513,13 +514,11 @@ inline bool GenericRect<C>::contains(OptCRect const &r) const {
     return !r || contains(*r);
 }
 
-#ifdef _GLIBCXX_IOSTREAM
 template <typename C>
 inline std::ostream &operator<<(std::ostream &out, GenericRect<C> const &r) {
-    out << "X: " << r[X] << "  Y: " << r[Y];
+    out << "Rect " << r[X] << " x " << r[Y];
     return out;
 }
-#endif
 
 } // end namespace Geom
 

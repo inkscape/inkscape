@@ -98,7 +98,7 @@ public:
     /// Create a line by extending a ray.
     explicit Line(Ray const &r)
         : _initial(r.origin())
-        , _final(r.origin() + r.versor())
+        , _final(r.origin() + r.vector())
     {}
 
     /// Create a line normal to a vector at a specified distance from origin.
@@ -111,7 +111,7 @@ public:
      * Note that each line direction has two possible unit vectors.
      * @param o Point through which the line will pass
      * @param v Unit vector of the line's direction */
-    static Line from_origin_and_versor(Point const &o, Point const &v) {
+    static Line from_origin_and_vector(Point const &o, Point const &v) {
         Line l(o, o + v);
         return l;
     }
@@ -126,9 +126,12 @@ public:
 
     /// Get the line's origin point.
     Point origin() const { return _initial; }
-    /** @brief Get the line's direction vector.
-     * Note that the retrieved vector is not normalized to unit length. */
-    Point versor() const { return _final - _initial; }
+    /** @brief Get the line's raw direction vector.
+     * The retrieved vector is normalized to unit length. */
+    Point vector() const { return _final - _initial; }
+    /** @brief Get the line's normalized direction vector.
+     * The retrieved vector is normalized to unit length. */
+    Point versor() const { return (_final - _initial).normalized(); }
     /// Angle the line makes with the X axis, in mathematical convention.
     Coord angle() const {
         Point d = _final - _initial;
@@ -147,7 +150,7 @@ public:
     }
     /** @brief Set the speed of the line.
      * Origin remains unchanged. */
-    void setVersor(Point const &v) {
+    void setVector(Point const &v) {
         _final = _initial + v;
     }
 
@@ -239,7 +242,7 @@ public:
      * @return Time value corresponding to a point closest to @c p. */
     Coord timeAtProjection(Point const& p) const {
         if ( isDegenerate() ) return 0;
-        Point v = versor();
+        Point v = vector();
         return dot(p - _initial, v) / dot(v, v);
     }
 
@@ -284,22 +287,22 @@ public:
     boost::optional<LineSegment> clip(Rect const &r) const;
 
     /** @brief Create a ray starting at the specified time value.
-     * The created ray will go in the direction of the line's versor (in the direction
+     * The created ray will go in the direction of the line's vector (in the direction
      * of increasing time values).
      * @param t Time value where the ray should start
-     * @return Ray starting at t and going in the direction of the versor */
+     * @return Ray starting at t and going in the direction of the vector */
     Ray ray(Coord t) {
         Ray result;
         result.setOrigin(pointAt(t));
-        result.setVersor(versor());
+        result.setVector(vector());
         return result;
     }
 
     /** @brief Create a derivative of the line.
      * The new line will always be degenerate. Its origin will be equal to this
-     * line's versor. */
+     * line's vector. */
     Line derivative() const {
-        Point v = versor();
+        Point v = vector();
         Line result(v, v);
         return result;
     }
@@ -314,7 +317,7 @@ public:
      * If Y grows upwards, then this is the left normal. If Y grows downwards,
      * then this is the right normal. */
     Point normal() const {
-        return rot90(versor()).normalized();
+        return rot90(vector()).normalized();
     }
 
     // what does this do?
@@ -326,7 +329,7 @@ public:
 
     /// Compute an affine matrix representing a reflection about the line.
     Affine reflection() const {
-        Point v = versor().normalized();
+        Point v = versor();
         Coord x2 = v[X]*v[X], y2 = v[Y]*v[Y], xy = v[X]*v[Y];
         Affine m(x2-y2, 2.*xy,
                  2.*xy, y2-x2,
@@ -344,7 +347,7 @@ public:
      * lower precision than e.g. a shear transform.
      * @param d Which coordinate of points on the line should be zero after the transformation */
     Affine rotationToZero(Dim2 d) const {
-        Point v = versor();
+        Point v = vector();
         if (d == X) {
             std::swap(v[X], v[Y]);
         } else {
@@ -421,7 +424,7 @@ bool are_near(Point const &p, Line const &line, double eps = EPSILON)
 inline
 bool are_parallel(Line const &l1, Line const &l2, double eps = EPSILON)
 {
-    return are_near(cross(l1.versor(), l2.versor()), 0, eps);
+    return are_near(cross(l1.vector(), l2.vector()), 0, eps);
 }
 
 /** @brief Test whether two lines are approximately the same.
@@ -442,7 +445,7 @@ bool are_same(Line const &l1, Line const &l2, double eps = EPSILON)
 inline
 bool are_orthogonal(Line const &l1, Line const &l2, double eps = EPSILON)
 {
-    return are_near(dot(l1.versor(), l2.versor()), 0, eps);
+    return are_near(dot(l1.vector(), l2.vector()), 0, eps);
 }
 
 // evaluate the angle between l1 and l2 rotating l1 in cw direction
@@ -451,7 +454,7 @@ bool are_orthogonal(Line const &l1, Line const &l2, double eps = EPSILON)
 inline
 double angle_between(Line const& l1, Line const& l2)
 {
-    double angle = angle_between(l1.versor(), l2.versor());
+    double angle = angle_between(l1.vector(), l2.vector());
     if (angle < 0) angle += M_PI;
     if (angle == M_PI) angle = 0;
     return angle;
@@ -474,7 +477,7 @@ bool are_near(Point const &p, LineSegment const &seg, double eps = EPSILON)
 inline
 Line make_orthogonal_line(Point const &p, Line const &line)
 {
-    Point d = line.versor().cw();
+    Point d = line.vector().cw();
     Line l(p, p + d);
     return l;
 }
