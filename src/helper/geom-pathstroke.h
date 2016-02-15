@@ -21,6 +21,9 @@ enum LineJoinType {
     JOIN_MITER,
     JOIN_MITER_CLIP,
     JOIN_EXTRAPOLATE,
+    JOIN_EXTRAPOLATE1,
+    JOIN_EXTRAPOLATE2,
+    JOIN_EXTRAPOLATE3,
 };
 
 enum LineCapType {
