@@ -108,7 +108,8 @@ SPDocument::SPDocument() :
     oldSignalsConnected(false),
     current_persp3d(NULL),
     current_persp3d_impl(NULL),
-    _parent_document(NULL)
+    _parent_document(NULL),
+    _node_cache_valid(false)
 {
     // Penalise libavoid for choosing paths with needless extra segments.
     // This results in much better looking orthogonal connector paths.
@@ -130,6 +131,7 @@ SPDocument::SPDocument() :
 
     // XXX only for testing!
     priv->undoStackObservers.add(p->console_output_undo_observer);
+    _node_cache = std::deque<SPItem*>();
 }
 
 SPDocument::~SPDocument() {
@@ -986,6 +988,7 @@ void SPDocument::_emitModified() {
     static guint const flags = SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG;
     root->emitModified(0);
     priv->modified_signal.emit(flags);
+    _node_cache_valid=false;
 }
 
 void SPDocument::bindObjectToId(gchar const *id, SPObject *object) {
@@ -1334,7 +1337,7 @@ Turn the SVG DOM into a flat list of nodes that can be searched from top-down.
 The list can be persisted, which improves "find at multiple points" speed.
 Returns true if upto is reached.
 */
-static bool build_flat_item_list(std::deque<SPItem*> *nodes, unsigned int dkey, SPGroup *group, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
+bool SPDocument::build_flat_item_list(unsigned int dkey, SPGroup *group, gboolean into_groups, bool take_insensitive, SPItem *upto)
 {
     bool found_upto = false;
     for ( SPObject *o = group->firstChild() ; o ; o = o->getNext() ) {
@@ -1348,14 +1351,14 @@ static bool build_flat_item_list(std::deque<SPItem*> *nodes, unsigned int dkey, 
         }
 
         if (SP_IS_GROUP(o) && (SP_GROUP(o)->effectiveLayerMode(dkey) == SPGroup::LAYER || into_groups)) {
-            found_upto = build_flat_item_list(nodes, dkey, SP_GROUP(o), into_groups, take_insensitive, upto);
+            found_upto = build_flat_item_list(dkey, SP_GROUP(o), into_groups, take_insensitive, upto);
             if (found_upto)
                 break;
         } else {
             SPItem *child = SP_ITEM(o);
 
             if (take_insensitive || child->isVisibleAndUnlocked(dkey)) {
-                nodes->push_front(child);
+                _node_cache.push_front(child);
             }
         }
     }
@@ -1378,8 +1381,8 @@ static SPItem *find_item_at_point(std::deque<SPItem*> *nodes, unsigned int dkey,
 
     SPItem *seen = NULL;
     SPItem *child;
-    for (unsigned long i = 0; i < nodes->size(); ++i) {
-        child = nodes->at(i);
+    for (std::deque<SPItem*>::const_iterator i = nodes->begin(); i != nodes->end(); ++i) {
+        child = *i;
         Inkscape::DrawingItem *arenaitem = child->get_arenaitem(dkey);
 
         if (arenaitem && arenaitem->pick(p, delta, 1) != NULL) {
@@ -1451,7 +1454,7 @@ std::vector<SPItem*> SPDocument::getItemsPartiallyInBox(unsigned int dkey, Geom:
     return find_items_in_area(x, SP_GROUP(this->root), dkey, box, overlaps, false, into_groups);
 }
 
-std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points, bool all_layers, size_t limit) const
+std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points, bool all_layers, size_t limit) 
 {
     std::vector<SPItem*> items;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1463,8 +1466,11 @@ std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vecto
     prefs->setDouble("/options/cursortolerance/value", 0.25);
 
     // Cache a flattened SVG DOM to speed up selection.
-    std::deque<SPItem*> nodes;
-    build_flat_item_list(&nodes, key, SP_GROUP(this->root), true, false, NULL);
+    if(!_node_cache_valid){
+        _node_cache.clear();
+        build_flat_item_list(key, SP_GROUP(this->root), true, false, NULL);
+        _node_cache_valid=true;
+    }
     SPObject *current_layer = SP_ACTIVE_DESKTOP->currentLayer();
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::LayerModel *layer_model = NULL;
@@ -1473,7 +1479,7 @@ std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vecto
     }
     size_t item_counter = 0;
     for(int i = points.size()-1;i>=0; i--) {
-        SPItem *item = find_item_at_point(&nodes, key, points[i]);
+        SPItem *item = find_item_at_point(&_node_cache, key, points[i]);
         if (item && items.end()==find(items.begin(),items.end(), item))
             if(all_layers || (layer_model && layer_model->layerForObject(item) == current_layer)){
                 items.push_back(item);
@@ -1493,15 +1499,18 @@ std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vecto
 }
 
 SPItem *SPDocument::getItemAtPoint( unsigned const key, Geom::Point const &p,
-                                    bool const into_groups, SPItem *upto) const
+                                    bool const into_groups, SPItem *upto) 
 {
     g_return_val_if_fail(this->priv != NULL, NULL);
 
     // Build a flattened SVG DOM for find_item_at_point.
-    std::deque<SPItem*> nodes;
-    build_flat_item_list(&nodes, key, SP_GROUP(this->root), into_groups, false, upto);
-
-    return find_item_at_point(&nodes, key, p);
+    if(!_node_cache_valid){
+        _node_cache.clear();
+        build_flat_item_list(key, SP_GROUP(this->root), into_groups, false, upto);
+        if(!upto)
+            _node_cache_valid = true;
+    }
+    return find_item_at_point(&_node_cache, key, p);
 }
 
 SPItem *SPDocument::getGroupAtPoint(unsigned int key, Geom::Point const &p) const
