@@ -1335,34 +1335,24 @@ SPItem *SPDocument::getItemFromListAtPointBottom(unsigned int dkey, SPGroup *gro
 /**
 Turn the SVG DOM into a flat list of nodes that can be searched from top-down.
 The list can be persisted, which improves "find at multiple points" speed.
-Returns true if upto is reached.
 */
-bool SPDocument::build_flat_item_list(unsigned int dkey, SPGroup *group, gboolean into_groups, bool take_insensitive, SPItem *upto)
+void SPDocument::build_flat_item_list(unsigned int dkey, SPGroup *group, gboolean into_groups) const
 {
-    bool found_upto = false;
     for ( SPObject *o = group->firstChild() ; o ; o = o->getNext() ) {
         if (!SP_IS_ITEM(o)) {
             continue;
         }
 
-        if (upto && SP_ITEM(o) == upto) {
-            found_upto = true;
-            break;
-        }
-
         if (SP_IS_GROUP(o) && (SP_GROUP(o)->effectiveLayerMode(dkey) == SPGroup::LAYER || into_groups)) {
-            found_upto = build_flat_item_list(dkey, SP_GROUP(o), into_groups, take_insensitive, upto);
-            if (found_upto)
-                break;
+            build_flat_item_list(dkey, SP_GROUP(o), into_groups);
         } else {
             SPItem *child = SP_ITEM(o);
 
-            if (take_insensitive || child->isVisibleAndUnlocked(dkey)) {
+            if (child->isVisibleAndUnlocked(dkey)) {
                 _node_cache.push_front(child);
             }
         }
     }
-    return found_upto;
 }
 
 /**
@@ -1374,15 +1364,21 @@ upwards in z-order and returns what it has found so far (i.e. the found item is
 guaranteed to be lower than upto). Requires a list of nodes built by
 build_flat_item_list.
  */
-static SPItem *find_item_at_point(std::deque<SPItem*> *nodes, unsigned int dkey, Geom::Point const &p)
+static SPItem *find_item_at_point(std::deque<SPItem*> *nodes, unsigned int dkey, Geom::Point const &p, SPItem* upto=NULL)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble delta = prefs->getDouble("/options/cursortolerance/value", 1.0);
 
     SPItem *seen = NULL;
     SPItem *child;
+    bool seen_upto = (!upto);
     for (std::deque<SPItem*>::const_iterator i = nodes->begin(); i != nodes->end(); ++i) {
         child = *i;
+        if (!seen_upto){
+            if(child == upto)
+                seen_upto = true;
+            continue;
+        }
         Inkscape::DrawingItem *arenaitem = child->get_arenaitem(dkey);
 
         if (arenaitem && arenaitem->pick(p, delta, 1) != NULL) {
@@ -1454,7 +1450,7 @@ std::vector<SPItem*> SPDocument::getItemsPartiallyInBox(unsigned int dkey, Geom:
     return find_items_in_area(x, SP_GROUP(this->root), dkey, box, overlaps, false, into_groups);
 }
 
-std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points, bool all_layers, size_t limit) 
+std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points, bool all_layers, size_t limit) const 
 {
     std::vector<SPItem*> items;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1468,7 +1464,7 @@ std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vecto
     // Cache a flattened SVG DOM to speed up selection.
     if(!_node_cache_valid){
         _node_cache.clear();
-        build_flat_item_list(key, SP_GROUP(this->root), true, false, NULL);
+        build_flat_item_list(key, SP_GROUP(this->root), true);
         _node_cache_valid=true;
     }
     SPObject *current_layer = SP_ACTIVE_DESKTOP->currentLayer();
@@ -1499,18 +1495,26 @@ std::vector<SPItem*> SPDocument::getItemsAtPoints(unsigned const key, std::vecto
 }
 
 SPItem *SPDocument::getItemAtPoint( unsigned const key, Geom::Point const &p,
-                                    bool const into_groups, SPItem *upto) 
+                                    bool const into_groups, SPItem *upto) const 
 {
     g_return_val_if_fail(this->priv != NULL, NULL);
 
     // Build a flattened SVG DOM for find_item_at_point.
-    if(!_node_cache_valid){
+    std::deque<SPItem*> bak(_node_cache);
+    if(!into_groups){
         _node_cache.clear();
-        build_flat_item_list(key, SP_GROUP(this->root), into_groups, false, upto);
-        if(!upto)
-            _node_cache_valid = true;
+        build_flat_item_list(key, SP_GROUP(this->root), into_groups);
     }
-    return find_item_at_point(&_node_cache, key, p);
+    if(!_node_cache_valid && into_groups){
+        _node_cache.clear();
+        build_flat_item_list(key, SP_GROUP(this->root), true);
+        _node_cache_valid=true;
+    }
+    
+    SPItem *res = find_item_at_point(&_node_cache, key, p, upto);
+    if(!into_groups)
+        _node_cache = bak;
+    return res;
 }
 
 SPItem *SPDocument::getGroupAtPoint(unsigned int key, Geom::Point const &p) const

@@ -263,8 +263,8 @@ public:
     const std::set<SPObject *> getResourceList(char const *key) const;
     std::vector<SPItem*> getItemsInBox(unsigned int dkey, Geom::Rect const &box, bool into_groups = false) const;
     std::vector<SPItem*> getItemsPartiallyInBox(unsigned int dkey, Geom::Rect const &box, bool into_groups = false) const;
-    SPItem *getItemAtPoint(unsigned int key, Geom::Point const &p, bool into_groups, SPItem *upto = NULL) ;
-    std::vector<SPItem*> getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points, bool all_layers = true, size_t limit = 0) ;
+    SPItem *getItemAtPoint(unsigned int key, Geom::Point const &p, bool into_groups, SPItem *upto = NULL) const;
+    std::vector<SPItem*> getItemsAtPoints(unsigned const key, std::vector<Geom::Point> points, bool all_layers = true, size_t limit = 0) const ;
     SPItem *getGroupAtPoint(unsigned int key,  Geom::Point const &p) const;
 
     void changeUriAndHrefs(char const *uri);
@@ -278,9 +278,9 @@ private:
     void do_change_uri(char const *const filename, bool const rebase);
     void setupViewport(SPItemCtx *ctx);
     void importDefsNode(SPDocument *source, Inkscape::XML::Node *defs, Inkscape::XML::Node *target_defs);
-    bool build_flat_item_list(unsigned int dkey, SPGroup *group, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL);
-    std::deque<SPItem*> _node_cache;
-    bool _node_cache_valid;
+    void build_flat_item_list(unsigned int dkey, SPGroup *group, gboolean into_groups) const;
+    mutable std::deque<SPItem*> _node_cache;
+    mutable bool _node_cache_valid;
 };
 
 /*
