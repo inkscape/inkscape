@@ -205,11 +205,11 @@ void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb)
         xprime[i] = sb[X][0][1] - sb[X][0][0];
         yprime[i] = sb[Y][0][1] - sb[Y][0][0];
     }
-    if (sb[X].size() > 0) {
+    if (sb[X].size() > 1) {
         xprime[0] += sb[X][1][0];
         xprime[1] -= sb[X][1][1];
     }
-    if (sb[Y].size() > 0) {
+    if (sb[Y].size() > 1) {
         yprime[0] += sb[Y][1][0];
         yprime[1] -= sb[Y][1][1];
     }
