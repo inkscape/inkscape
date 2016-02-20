@@ -1528,6 +1528,17 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
     uint16_t         tbkMode  = U_TRANSPARENT;          // holds proposed change to bkMode, if text is involved saving these to the DC must wait until the text is written
     U_COLORREF       tbkColor = U_RGB(255, 255, 255);   // holds proposed change to bkColor
 
+    // code for end user debugging
+    int  wDbgRecord=0;
+    int  wDbgComment=0;
+    int  wDbgFinal=0;
+    char const* wDbgString = getenv( "INKSCAPE_DBG_WMF" );
+    if ( wDbgString != NULL ) {
+        if(strstr(wDbgString,"RECORD")){  wDbgRecord  = 1; }
+        if(strstr(wDbgString,"COMMENT")){ wDbgComment = 1; }
+        if(strstr(wDbgString,"FINAL")){   wDbgFinal   = 1; }
+    }
+
     /* initialize the tsp for text reassembly */
     tsp.string     = NULL;
     tsp.ori        = 0.0;  /* degrees */
@@ -1692,8 +1703,11 @@ int Wmf::myMetaFileProc(const char *contents, unsigned int length, PWMF_CALLBACK
         file_status = 0;
         break;
     }
-//  Uncomment the following to track down toxic records
-// std::cout << "record type: " << (int) iType << " name " << U_wmr_names(iType) << " length: " << nSize << " offset: " << off <<std::endl;
+//  At run time define environment variable INKSCAPE_DBG_WMF to include string RECORD.
+//  Users may employ this to track down toxic records
+    if(wDbgRecord){
+       std::cout << "record type: " << iType  << " name " << U_wmr_names(iType) << " length: " << nSize << " offset: " << off <<std::endl;
+    }
 
     SVGOStringStream tmp_path;
     SVGOStringStream tmp_str;
@@ -3034,8 +3048,11 @@ std::cout << "BEFORE DRAW"
             dbg_str << "<!-- U_WMR_??? -->\n";
             break;
     }  //end of switch
-// When testing, uncomment the following to place a comment for each processed WMR record in the SVG
-//    d->outsvg += dbg_str.str().c_str();
+//  At run time define environment variable INKSCAPE_DBG_WMF to include string COMMENT.
+//  Users may employ this to to place a comment for each processed WMR record in the SVG
+    if(wDbgComment){
+       d->outsvg += dbg_str.str().c_str();
+    }
     d->path   += tmp_path.str().c_str();
     if(!nSize){ // There was some problem with the processing of this record, it is not safe to continue
         file_status = 0;
@@ -3043,8 +3060,11 @@ std::cout << "BEFORE DRAW"
     } 
 
     }  //end of while on OK
-// When testing, uncomment the following to show the final SVG derived from the WMF
-// std::cout << d->outsvg << std::endl;
+//  At run time define environment variable INKSCAPE_DBG_WMF to include string FINAL
+//  Users may employ this to to show the final SVG derived from the WMF
+    if(wDbgFinal){
+       std::cout << d->outsvg << std::endl;
+    }
     (void) U_wmr_properties(U_WMR_INVALID);  // force the release of the lookup table memory, returned value is irrelevant
 
     return(file_status);

@@ -1592,7 +1592,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "TextLineHeightAction",               /* name */
             _("Line Height"),                     /* label */
             _("Line:"),                           /* short label */
-            _("Spacing between lines (times font size)"),      /* tooltip */
+            _("Spacing between baselines (times font size)"),      /* tooltip */
             "/tools/text/lineheight",             /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
