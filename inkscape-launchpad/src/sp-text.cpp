@@ -367,8 +367,11 @@ gchar* SPText::description() const {
 
     char *n = xml_quote_strdup( style->font_family.value );
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
     Inkscape::Util::Quantity q = Inkscape::Util::Quantity(style->font_size.computed, "px");
-    GString *xs = g_string_new(q.string(SP_ACTIVE_DESKTOP->getNamedView()->display_units).c_str());
+    q.quantity *= this->i2doc_affine().descrim();
+    GString *xs = g_string_new(q.string(sp_style_get_css_unit_string(unit)).c_str());
 
     char const *trunc = "";
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) this);

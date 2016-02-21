@@ -144,7 +144,7 @@ bool Circle::contains(Circle const &other) const
 bool Circle::intersects(Line const &l) const
 {
     // http://mathworld.wolfram.com/Circle-LineIntersection.html
-    Coord dr = l.versor().length();
+    Coord dr = l.vector().length();
     Coord r = _radius;
     Coord D = cross(l.initialPoint(), l.finalPoint());
     Coord delta = r*r * dr*dr - D*D;
@@ -163,9 +163,9 @@ bool Circle::intersects(Circle const &other) const
 std::vector<ShapeIntersection> Circle::intersect(Line const &l) const
 {
     // http://mathworld.wolfram.com/Circle-LineIntersection.html
-    Coord dr = l.versor().length();
-    Coord dx = l.versor().x();
-    Coord dy = l.versor().y();
+    Coord dr = l.vector().length();
+    Coord dx = l.vector().x();
+    Coord dy = l.vector().y();
     Coord D = cross(l.initialPoint() - _center, l.finalPoint() - _center);
     Coord delta = _radius*_radius * dr*dr - D*D;
 

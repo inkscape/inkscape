@@ -111,12 +111,6 @@ namespace Geom {
 
 namespace {
 
-inline int StrLength(const char* string) {
-  size_t length = strlen(string);
-  ASSERT(length == static_cast<size_t>(static_cast<int>(length)));
-  return static_cast<int>(length);
-}
-
 template <typename T>
 class Vector {
  public:
@@ -1733,8 +1727,6 @@ enum FastDtoaMode {
   FAST_DTOA_PRECISION
 };
 
-static const int kFastDtoaMaximalLength = 17;
-
 bool FastDtoa(double d,
               FastDtoaMode mode,
               int requested_digits,
@@ -2350,7 +2342,6 @@ bool FastFixedDtoa(double v,
   return true;
 }
 
-static const int kMaxExactDoubleIntegerDecimalDigits = 15;
 static const int kMaxUint64DecimalDigits = 19;
 
 static const int kMaxDecimalPower = 309;

@@ -33,6 +33,9 @@ static const Util::EnumData<unsigned> JoinTypeData[] = {
     {JOIN_MITER,       N_("Miter"),      "miter"},
     {JOIN_MITER_CLIP,  N_("Miter Clip"), "miter-clip"},
     {JOIN_EXTRAPOLATE, N_("Extrapolated arc"), "extrp_arc"},
+    {JOIN_EXTRAPOLATE1, N_("Extrapolated arc Alt1"), "extrp_arc1"},
+    {JOIN_EXTRAPOLATE2, N_("Extrapolated arc Alt2"), "extrp_arc2"},
+    {JOIN_EXTRAPOLATE3, N_("Extrapolated arc Alt3"), "extrp_arc3"},
 };
 
 static const Util::EnumData<unsigned> CapTypeData[] = {

@@ -52,10 +52,10 @@ public:
     {}
 
     std::vector<Item> const &items() { return _items; }
-    Interval itemBounds(ItemIterator ii) { return Interval(); }
+    Interval itemBounds(ItemIterator /*ii*/) { return Interval(); }
 
-    void addActiveItem(ItemIterator ii) {}
-    void removeActiveItem(ItemIterator ii) {}
+    void addActiveItem(ItemIterator /*ii*/) {}
+    void removeActiveItem(ItemIterator /*ii*/) {}
 
 private:
     std::vector<Item> const &_items;
@@ -104,9 +104,9 @@ public:
     }
 
     /** @brief Process entry and exit events.
-     * This will iterate over all inserted items, calling the virtual protected
-     * functions _enter() and _leave() according to the order of the boundaries
-     * of each item. */
+     * This will iterate over all inserted items, calling the methods
+     * addActiveItem and removeActiveItem on the SweepSet passed at construction
+     * according to the order of the boundaries of each item. */
     void process() {
         if (_set.items().empty()) return;
 

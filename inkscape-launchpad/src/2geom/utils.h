@@ -68,7 +68,7 @@ struct NullIterator
     NullIterator() {}
 
     template <typename T>
-    void operator=(T const &v) {}
+    void operator=(T const &) {}
 };
 
 /** @brief Get the next iterator in the container with wrap-around.

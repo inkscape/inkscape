@@ -154,40 +154,6 @@ if test "$GCC" = "yes"; then
   # C++-specific flags are defined further below.  Look for CXXFLAGS...
 fi
 
-# Detect a working version of unordered containers.
-# First try looking for native support (C++11 feature)
-AC_MSG_CHECKING([native support for unordered_set])
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <unordered_set>]],
-[[
-  std::unordered_set<int> i, j;
-  i = j;
-]])],
-[native_unordered_set_works=yes], [native_unordered_set_works=no])
-
-if test "x$native_unordered_set_works" = "xyes"; then
-	AC_MSG_RESULT([ok])
-	AC_DEFINE(HAVE_NATIVE_UNORDERED_SET, 1, [Has working native unordered_set])
-else
-	AC_MSG_RESULT([not working])
-fi
-
-AC_MSG_CHECKING([TR1 unordered_set usability])
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <tr1/unordered_set>]],
-[[
-  std::tr1::unordered_set<int> i, j;
-  i = j;
-]])],
-[tr1_unordered_set_works=yes], [tr1_unordered_set_works=no])
-
-if test "x$tr1_unordered_set_works" = "xyes"; then
-	AC_MSG_RESULT([ok])
-	AC_DEFINE(HAVE_TR1_UNORDERED_SET, 1, [Has working standard TR1 unordered_set])
-else
-	AC_MSG_RESULT([not working])
-fi
-
-AC_CHECK_HEADER([boost/unordered_set.hpp], [AC_DEFINE(HAVE_BOOST_UNORDERED_SET, 1, [Boost unordered_set (Boost >= 1.36)])], [])
-
 # Test whether GCC emits a spurious warning when using boost::optional
 # If yes, turn off strict aliasing warnings to reduce noise
 # and allow the legitimate warnings to stand out
@@ -680,6 +646,68 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  pango       >= 1.24
 		  pangoft2    >= 1.24
 		  )
+
+# test whether depenencies require C++11
+AC_MSG_CHECKING([whether C++11 mode is required])
+CXXFLAGS_SAVE="$CXXFLAGS"
+CXXFLAGS="$INKSCAPE_CXX_DEPS_CFLAGS $CXXFLAGS"
+cxx11_required=unknown
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+#include <glibmm.h>
+int main() {}
+])], [cxx11_required=no], [cxx11_required=unknown])
+if test "x$cxx11_required" = "xunknown"; then
+  CXXFLAGS="-std=c++11 $CXXFLAGS"
+  AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+  #include <glibmm.h>
+  int main() {}
+  ])], [cxx11_required=yes], [cxx11_required=unknown])
+fi
+CXXFLAGS="$CXXFLAGS_SAVE"
+if test "x$cxx11_required" = "xunknown"; then
+  AC_MSG_RESULT([unknown])
+  AC_MSG_ERROR([cannot detect whether C++11 is required])
+fi
+if test "x$cxx11_required" = "xyes"; then
+  AC_MSG_RESULT([yes])
+  CXXFLAGS="-std=c++11 $CXXFLAGS"
+else
+  AC_MSG_RESULT([no])
+fi
+
+# Detect a working version of unordered containers.
+# First try looking for native support (C++11 feature)
+AC_MSG_CHECKING([native support for unordered_set])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <unordered_set>]],
+[[
+  std::unordered_set<int> i, j;
+  i = j;
+]])],
+[native_unordered_set_works=yes], [native_unordered_set_works=no])
+
+if test "x$native_unordered_set_works" = "xyes"; then
+	AC_MSG_RESULT([ok])
+	AC_DEFINE(HAVE_NATIVE_UNORDERED_SET, 1, [Has working native unordered_set])
+else
+	AC_MSG_RESULT([not working])
+fi
+
+AC_MSG_CHECKING([TR1 unordered_set usability])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <tr1/unordered_set>]],
+[[
+  std::tr1::unordered_set<int> i, j;
+  i = j;
+]])],
+[tr1_unordered_set_works=yes], [tr1_unordered_set_works=no])
+
+if test "x$tr1_unordered_set_works" = "xyes"; then
+	AC_MSG_RESULT([ok])
+	AC_DEFINE(HAVE_TR1_UNORDERED_SET, 1, [Has working standard TR1 unordered_set])
+else
+	AC_MSG_RESULT([not working])
+fi
+
+AC_CHECK_HEADER([boost/unordered_set.hpp], [AC_DEFINE(HAVE_BOOST_UNORDERED_SET, 1, [Boost unordered_set (Boost >= 1.36)])], [])
 
 dnl *********************************
 dnl   Allow experimental GTK+3 build

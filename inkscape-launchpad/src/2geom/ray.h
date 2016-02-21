@@ -53,61 +53,62 @@ namespace Geom
 class Ray {
 private:
     Point _origin;
-    Point _versor;
+    Point _vector;
 
 public:
-    Ray() : _origin(0,0), _versor(1,0) {}
+    Ray() : _origin(0,0), _vector(1,0) {}
     Ray(Point const& origin, Coord angle)
         : _origin(origin)
     {
-        sincos(angle, _versor[Y], _versor[X]);
+        sincos(angle, _vector[Y], _vector[X]);
     }
     Ray(Point const& A, Point const& B) {
         setPoints(A, B);
     }
     Point origin() const { return _origin; }
-    Point versor() const { return _versor; }
+    Point vector() const { return _vector; }
+    Point versor() const { return _vector.normalized(); }
     void setOrigin(Point const &o) { _origin = o; }
-    void setVersor(Point const& v) { _versor = v; }
-    Coord angle() const { return std::atan2(_versor[Y], _versor[X]); }
-    void setAngle(Coord a) { sincos(a, _versor[Y], _versor[X]); }
+    void setVector(Point const& v) { _vector = v; }
+    Coord angle() const { return std::atan2(_vector[Y], _vector[X]); }
+    void setAngle(Coord a) { sincos(a, _vector[Y], _vector[X]); }
     void setPoints(Point const &a, Point const &b) {
         _origin = a;
-        _versor = b - a;
-        if (are_near(_versor, Point(0,0)) )
-            _versor = Point(0,0);
+        _vector = b - a;
+        if (are_near(_vector, Point(0,0)) )
+            _vector = Point(0,0);
         else
-            _versor.normalize();
+            _vector.normalize();
     }
     bool isDegenerate() const {
-        return ( _versor[X] == 0 && _versor[Y] == 0 );
+        return ( _vector[X] == 0 && _vector[Y] == 0 );
     }
     Point pointAt(Coord t) const {
-        return _origin + _versor * t;
+        return _origin + _vector * t;
     }
     Coord valueAt(Coord t, Dim2 d) const {
-        return _origin[d] + _versor[d] * t;
+        return _origin[d] + _vector[d] * t;
     }
     std::vector<Coord> roots(Coord v, Dim2 d) const {
         std::vector<Coord> result;
-        if ( _versor[d] != 0 ) {
-            double t = (v - _origin[d]) / _versor[d];
+        if ( _vector[d] != 0 ) {
+            double t = (v - _origin[d]) / _vector[d];
             if (t >= 0)	result.push_back(t);
-        } else if (_versor[(d+1)%2] == v) {
+        } else if (_vector[(d+1)%2] == v) {
             THROW_INFINITESOLUTIONS();
         }
         return result;
     }
     Coord nearestTime(Point const& point) const {
         if ( isDegenerate() ) return 0;
-        double t = dot(point - _origin, _versor);
+        double t = dot(point - _origin, _vector);
         if (t < 0) t = 0;
         return t;
     }
     Ray reverse() const {
         Ray result;
         result.setOrigin(_origin);
-        result.setVersor(-_versor);
+        result.setVector(-_vector);
         return result;
     }
     Curve *portion(Coord f, Coord t) const {
@@ -117,7 +118,7 @@ public:
         return LineSegment(pointAt(f), pointAt(t));
     }
     Ray transformed(Affine const& m) const {
-        return Ray(_origin * m, (_origin + _versor) * m);
+        return Ray(_origin * m, (_origin + _vector) * m);
     }
 }; // end class Ray
 
@@ -134,7 +135,7 @@ bool are_near(Point const& _point, Ray const& _ray, double eps = EPSILON) {
 
 inline
 bool are_same(Ray const& r1, Ray const& r2, double eps = EPSILON) {
-	return are_near(r1.versor(), r2.versor(), eps)
+	return are_near(r1.vector(), r2.vector(), eps)
 			&& are_near(r1.origin(), r2.origin(), eps);
 }
 
@@ -142,7 +143,7 @@ bool are_same(Ray const& r1, Ray const& r2, double eps = EPSILON) {
 // the returned value is an angle in the interval [0, 2PI[
 inline
 double angle_between(Ray const& r1, Ray const& r2, bool cw = true) {
-	double angle = angle_between(r1.versor(), r2.versor());
+	double angle = angle_between(r1.vector(), r2.vector());
 	if (angle < 0) angle += 2*M_PI;
 	if (!cw) angle = 2*M_PI - angle;
 	return angle;
@@ -170,7 +171,7 @@ Ray make_angle_bisector_ray(Ray const& r1, Ray const& r2, bool cw = true)
         THROW_RANGEERROR("passed rays do not have the same origin");
     }
 
-    Ray bisector(r1.origin(), r1.origin() +  r1.versor() * Rotate(angle_between(r1, r2) / 2.0));
+    Ray bisector(r1.origin(), r1.origin() +  r1.vector() * Rotate(angle_between(r1, r2) / 2.0));
     
     return (cw ? bisector : bisector.reverse());
 }
