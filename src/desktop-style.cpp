@@ -1267,7 +1267,7 @@ objects_query_writing_modes (const std::vector<SPItem*> &objects, SPStyle *style
 
     int texts = 0;
 
-    for (std::vector<SPItem*>::const_iterator i = objects.begin(); i != objects.end(); i++) {
+    for (std::vector<SPItem*>::const_iterator i = objects.begin(); i != objects.end(); ++i) {
         SPObject *obj = *i;
 
         if (!isTextualItem(obj)) {

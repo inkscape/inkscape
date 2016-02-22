@@ -269,15 +269,14 @@ VanishingPoint::selectedBoxes(Inkscape::Selection *sel) {
     return sel_boxes;
 }
 
-VPDragger::VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp)
+VPDragger::VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp) :
+    parent(parent),
+    knot(NULL),
+    point(p),
+    point_original(p),
+    dragging_started(false),
+    vps()
 {
-    this->parent = parent;
-
-    this->point = p;
-    this->point_original = p;
-
-    this->dragging_started = false;
-
     if (vp.is_finite()) {
         // create the knot
         this->knot = new SPKnot(SP_ACTIVE_DESKTOP, NULL);
