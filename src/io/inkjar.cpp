@@ -103,14 +103,19 @@ bool JarFile::init_inflation()
 
 bool JarFile::open()
 {
-    if ((_file = fopen(_filename, "r")) == NULL) {
-	fprintf(stderr, "open failed.\n");
-	return false;
+    if (_file != NULL) {
+        fclose(_file);
     }
-    if (!init_inflation())
-	return false;
-
-    return true;
+    if ((_file = fopen(_filename, "r")) == NULL) {
+        fprintf(stderr, "open failed.\n");
+        return false;
+    }
+    if (!init_inflation()) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 bool JarFile::close()
