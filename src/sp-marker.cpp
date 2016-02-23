@@ -394,7 +394,8 @@ sp_marker_show_instance ( SPMarker *marker, Inkscape::DrawingItem *parent,
         if (marker->orient_mode == MARKER_ORIENT_AUTO) {
             m = base;
         } else if (marker->orient_mode == MARKER_ORIENT_AUTO_START_REVERSE) {
-            m = Geom::Rotate::from_degrees( 180.0 ) * base;
+            // m = Geom::Rotate::from_degrees( 180.0 ) * base;
+            // Rotating is done at rendering time if necessary
             m = base;
         } else {
             /* fixme: Orient units (Lauris) */
