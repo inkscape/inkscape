@@ -458,7 +458,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
             SPCtrlCurve *line = NULL;
 
             if (! drag->lines.empty()) {
-                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); l++) {
+                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
                     line = (SPCtrlCurve*) (*l);
                     over_line |= sp_mesh_context_is_over_line (this, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
                 }
@@ -594,7 +594,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
             bool over_line = false;
 
             if (!drag->lines.empty()) {
-                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() ; l++) {
+                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() ; ++l) {
                     over_line |= sp_mesh_context_is_over_line (this, (SPItem*)(*l), Geom::Point(event->motion.x, event->motion.y));
                 }
             }
@@ -625,7 +625,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
             SPCtrlLine *line = NULL;
 
             if (!drag->lines.empty()) {
-                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); l++) {
+                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
                     line = (SPCtrlLine*)(*l);
                     over_line = sp_mesh_context_is_over_line (this, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
 

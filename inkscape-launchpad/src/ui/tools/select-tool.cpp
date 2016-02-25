@@ -405,13 +405,15 @@ void SelectTool::sp_select_context_cycle_through_items(Inkscape::Selection *sele
     // Find next item and activate it
     std::vector<SPItem *>::iterator next = this->cycling_cur_item;
     if (scroll_event->direction == GDK_SCROLL_UP) {
-        next++;
-        if (next == this->cycling_items.end() && this->cycling_wrap)
+        ++next;
+        if (next == this->cycling_items.end() && this->cycling_wrap) {
             next = this->cycling_items.begin();
+        }
     } else {
-        if(next == this->cycling_items.begin())
+        if(next == this->cycling_items.begin()) {
             next = this->cycling_items.end();
-        next--;
+        }
+        --next;
     }
 
     if (next!=this->cycling_items.end()) {

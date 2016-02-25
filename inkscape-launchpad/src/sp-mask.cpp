@@ -139,12 +139,12 @@ void SPMask::update(SPCtx* ctx, unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     std::vector<SPObject *> children = this->childList(false);
-    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();child++) {
+    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();++child) {
         sp_object_ref(*child);
     }
     
     
-    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();child++) {
+    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();++child) {
         if (flags || ((*child)->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             (*child)->updateDisplay(ctx, flags);
         }
@@ -173,11 +173,11 @@ void SPMask::modified(unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     std::vector<SPObject *> children = this->childList(false);
-    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();child++) {
+    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();++child) {
         sp_object_ref(*child);
     }
     
-    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();child++) {
+    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();++child) {
         if (flags || ((*child)->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             (*child)->emitModified(flags);
         }

@@ -46,6 +46,7 @@ public:
     inline VanishingPoint &operator=(VanishingPoint const &rhs) {
         _persp = rhs._persp;
         _axis = rhs._axis;
+        my_counter = rhs.my_counter;
         return *this;
     }
     inline bool operator==(VanishingPoint const &rhs) const {

@@ -641,7 +641,6 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(IntermSnapResults &isr,
     bool strict_snapping = _snapmanager->snapprefs.getStrictSnapping();
 
     // Find all intersections of the constrained path with the snap target candidates
-    std::vector<Geom::Point> intersections;
     for (std::vector<SnapCandidatePath >::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); ++k) {
         if (k->path_vector && _allowSourceToSnapToTarget(p.getSourceType(), (*k).target_type, strict_snapping)) {
             // Do the intersection math

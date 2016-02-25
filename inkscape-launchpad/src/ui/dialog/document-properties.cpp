@@ -448,13 +448,13 @@ void DocumentProperties::populate_available_profiles(){
  */
 static void sanitizeName( Glib::ustring& str )
 {
-    if (str.size() > 1) {
+    if (str.size() > 0) {
         char val = str.at(0);
         if (((val < 'A') || (val > 'Z'))
             && ((val < 'a') || (val > 'z'))
             && (val != '_')
             && (val != ':')) {
-            str.replace(0, 1, "-");
+          str.insert(0, "_");
         }
         for (Glib::ustring::size_type i = 1; i < str.size(); i++) {
             char val = str.at(i);
