@@ -30,10 +30,6 @@
 # include "config.h"
 #endif
 
-#ifdef HAVE_GETOPT_H
-#include <getopt.h>
-#endif
-
 #include <cstring>
 #include <sys/stat.h>
 #include <locale.h>
@@ -179,17 +175,22 @@ main (int argc, const char **argv)
         num_parsed_options = 0;
 
     // the list of arguments is in the net line
-    while ((option = getopt(argc, (char* const* )argv, "t:")) != -1)
-    {
-        switch(option) {
-	    case 't': // for timer
-                // fprintf(stderr, "set timer arg %s\n", optarg );
-	        ss.timer = atoi(optarg);
-	        num_parsed_options += 2; // 2 because of flag + option
+    for (int i = 1; i < argc; i++) {
+        if ((argv[i][0] == '-')) {
+            if (!strcmp(argv[i], "--")) {
                 break;
-            case '?':
-            default:
-		usage();
+            }
+            else if ((!strcmp(argv[i], "-t"))) {
+                if (i + 1 >= argc) {
+                    usage();
+                }
+                ss.timer = atoi(argv[i+1]);
+                num_parsed_options = i+1;
+                i++;
+            }
+            else {
+                usage();
+            }
         }
     }
 
