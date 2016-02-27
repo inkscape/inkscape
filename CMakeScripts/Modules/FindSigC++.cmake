@@ -13,7 +13,6 @@
 #  For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 #
 
-
 if (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
   # in cache already
   set(SIGC++_FOUND TRUE)
@@ -103,4 +102,25 @@ else (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
 
 endif (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
 
+# Try to add -std=c++11 if needed - see:
+# https://bugs.launchpad.net/inkscape/+bug/1488079
+
+macro (sigcpp_compile extra_cppflags)
+    try_compile(SIGCPP_COMPILES_FINE "${CMAKE_BINARY_DIR}/sigcpp-bindir"
+        SOURCES "${CMAKE_SOURCE_DIR}/CMakeScripts/Modules/sigcpp_test.cpp"
+        COMPILE_DEFINITIONS ${_SIGC++_CFLAGS} ${extra_cppflags}
+        LINK_LIBRARIES ${SIGC++_LIBRARIES})
+endmacro()
+
+
+sigcpp_compile("")
+if (NOT "${SIGCPP_COMPILES_FINE}")
+    set (cppflag "-std=c++11")
+    sigcpp_compile("${cppflag}")
+    if ("${SIGCPP_COMPILES_FINE}")
+        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${cppflag}")
+    else()
+        message(FATAL_ERROR "Could not compile against SIGC++")
+    endif()
+endif()
 

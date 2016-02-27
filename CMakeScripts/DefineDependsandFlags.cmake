@@ -411,6 +411,7 @@ if(WITH_NLS)
     endif(GETTEXT_FOUND)
 endif(WITH_NLS)
 
+find_package(SigC++ REQUIRED)
 
 # end Dependencies
 
