@@ -163,7 +163,9 @@ void miter_join_internal(join_data jd, bool clip)
     if (p.isFinite()) {
         // check size of miter
         Point point_on_path = incoming.finalPoint() + rot90(tang1)*width;
-        satisfied = distance(p, point_on_path) <= miter * 2.0 * width;
+        // SVG defines miter length as distance between inner intersection and outer intersection,
+        // which is twice the distance from p to point_on_path but width is half stroke width.
+        satisfied = distance(p, point_on_path) <= miter * width; 
         if (satisfied) {
             // miter OK, check to see if we can do a relocation
             if (inc_ls) {
@@ -175,7 +177,7 @@ void miter_join_internal(join_data jd, bool clip)
             // std::cout << "  Clipping ------------ " << std::endl;
             // miter needs clipping, find two points
             Point bisector_versor = Line(point_on_path, p).versor();
-            Point point_limit = point_on_path + miter * 2.0 * width * bisector_versor;
+            Point point_limit = point_on_path + miter * width * bisector_versor;
             // std::cout << "     bisector_versor: " << bisector_versor << std::endl;
             // std::cout << "     point_limit: " << point_limit << std::endl;
             Point p1 = intersection_point(incoming.finalPoint(), tang1, point_limit, bisector_versor.cw());
