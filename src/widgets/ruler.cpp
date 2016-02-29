@@ -1114,7 +1114,7 @@ sp_ruler_get_position (SPRuler *ruler)
 
 static gboolean
 sp_ruler_motion_notify (GtkWidget      *widget,
-		        GdkEventMotion *event)
+                        GdkEventMotion *event)
 {
   SPRuler *ruler = SP_RULER(widget);
 
@@ -1307,7 +1307,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
         if (ideal_length > ++length)
             length = ideal_length;
 
-	if (lower < upper)
+        if (lower < upper)
           {
             start = floor (lower / subd_incr) * subd_incr;
             end   = ceil  (upper / subd_incr) * subd_incr;
@@ -1373,16 +1373,16 @@ sp_ruler_draw_ticks (SPRuler *ruler)
                     pango_layout_get_extents (layout, &logical_rect, NULL);
 
 #if GTK_CHECK_VERSION(3,0,0)
-		    cairo_move_to (cr,
+                    cairo_move_to (cr,
                                    pos + 2,
                                    border.top + PANGO_PIXELS (logical_rect.y - digit_offset));
 #else
-		    cairo_move_to (cr,
+                    cairo_move_to (cr,
                                    pos + 2,
                                    ythickness + PANGO_PIXELS (logical_rect.y - digit_offset));
 #endif
 
-		    pango_cairo_show_layout(cr, layout);
+                    pango_cairo_show_layout(cr, layout);
                   }
                 else
                   {
@@ -1395,15 +1395,15 @@ sp_ruler_draw_ticks (SPRuler *ruler)
                         pango_layout_get_extents (layout, NULL, &logical_rect);
 
 #if GTK_CHECK_VERSION(3,0,0)
-			cairo_move_to (cr,
+                        cairo_move_to (cr,
                                        border.left + 1,
                                        pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset));
 #else
-			cairo_move_to (cr,
+                        cairo_move_to (cr,
                                        xthickness + 1,
                                        pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset));
 #endif
-			pango_cairo_show_layout (cr, layout);
+                        pango_cairo_show_layout (cr, layout);
                       }
                   }
               }
@@ -1433,7 +1433,7 @@ sp_ruler_get_pos_rect (SPRuler *ruler,
   gint              ythickness;
   gdouble           upper, lower;
   gdouble           increment;
-  GdkRectangle      rect = { 0, };
+  GdkRectangle      rect = { 0, 0, 0, 0 };
 
   if (! gtk_widget_is_drawable (widget))
     return rect;
