@@ -656,7 +656,7 @@ void sp_canvas_item_lower(SPCanvasItem *item, int positions)
     g_assert (l != parent->items.end());
 
     for (int i=0; i<positions && l != parent->items.begin(); ++i) 
-        ++l;
+        --l;
     
     parent->items.remove(item);
     parent->items.insert(l, item);
