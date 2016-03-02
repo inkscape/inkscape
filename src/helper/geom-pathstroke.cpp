@@ -557,7 +557,7 @@ void extrapolate_join_internal(join_data jd, int alternative)
     Geom::Line bisector_chord =  make_bisector_line(chord);
 
     Geom::Line limit_line;
-    double miter_limit = 2.0 * width * miter;
+    double miter_limit = width * miter;
     bool clipped = false;
 
     if (are_parallel(bisector_chord, ortho)) {
