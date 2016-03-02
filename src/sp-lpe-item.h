@@ -69,7 +69,7 @@ public:
 
     virtual void update_patheffect(bool write);
 
-    bool performPathEffect(SPCurve *curve);
+    bool performPathEffect(SPCurve *curve, bool clip_paths = true);
 
     bool pathEffectsEnabled() const;
     bool hasPathEffect() const;
@@ -93,7 +93,7 @@ public:
     void addPathEffect(LivePathEffectObject * new_lpeobj);
     void apply_to_mask(SPItem * item);
     void apply_to_clippath(SPItem * item);
-    void apply_to_clip_or_mask_group(SPItem * group, SPItem * item);
+    void apply_to_clip_or_mask(SPItem * clip_mask, SPItem * item);
     bool forkPathEffectsIfNecessary(unsigned int nr_of_allowed_users = 1);
 
     void editNextParamOncanvas(SPDesktop *dt);

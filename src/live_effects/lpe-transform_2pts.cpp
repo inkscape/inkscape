@@ -78,6 +78,7 @@ LPETransform2Pts::LPETransform2Pts(LivePathEffectObject *lpeobject) :
     strech.param_set_range(0, 999.0);
     strech.param_set_increments(0.01, 0.01);
     strech.param_set_digits(4);
+    apply_to_clippath_and_mask = true;
 }
 
 LPETransform2Pts::~LPETransform2Pts()
@@ -167,8 +168,6 @@ LPETransform2Pts::doBeforeEffect (SPLPEItem const* lpeitem)
     previous_angle = transformed.angle();
     previous_lenght = Geom::distance((Geom::Point)start, (Geom::Point)end);
     previous_start = start;
-    splpeitem->apply_to_clippath(splpeitem);
-    splpeitem->apply_to_mask(splpeitem);
 }
 
 void

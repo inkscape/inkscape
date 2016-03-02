@@ -209,7 +209,7 @@ Inkscape::XML::Node* SPLPEItem::write(Inkscape::XML::Document *xml_doc, Inkscape
 /**
  * returns true when LPE was successful.
  */
-bool SPLPEItem::performPathEffect(SPCurve *curve) {
+bool SPLPEItem::performPathEffect(SPCurve *curve, bool clip_paths) {
     if (!this) {
         return false;
     }
@@ -217,7 +217,7 @@ bool SPLPEItem::performPathEffect(SPCurve *curve) {
     if (!curve) {
         return false;
     }
-
+    bool apply_to_clippath_and_mask = false;
     if (this->hasPathEffect() && this->pathEffectsEnabled()) {
         for (PathEffectList::iterator it = this->path_effect_list->begin(); it != this->path_effect_list->end(); ++it)
         {
@@ -239,35 +239,42 @@ bool SPLPEItem::performPathEffect(SPCurve *curve) {
             }
 
             if (lpe->isVisible()) {
+                if(lpe->apply_to_clippath_and_mask){
+                    apply_to_clippath_and_mask = true;
+                }
                 if (lpe->acceptsNumClicks() > 0 && !lpe->isReady()) {
                     // if the effect expects mouse input before being applied and the input is not finished
                     // yet, we don't alter the path
                     return false;
                 }
-
-                // Groups have their doBeforeEffect called elsewhere
-                if (!SP_IS_GROUP(this)) {
-                    lpe->doBeforeEffect_impl(this);
-                }
-
-                try {
-                    lpe->doEffect(curve);
-                }
-                catch (std::exception & e) {
-                    g_warning("Exception during LPE %s execution. \n %s", lpe->getName().c_str(), e.what());
-                    if (SP_ACTIVE_DESKTOP && SP_ACTIVE_DESKTOP->messageStack()) {
-                        SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
-                                        _("An exception occurred during execution of the Path Effect.") );
+                if (clip_paths || lpe->apply_to_clippath_and_mask) {
+                    // Groups have their doBeforeEffect called elsewhere
+                    if (!SP_IS_GROUP(this)) {
+                        lpe->doBeforeEffect_impl(this);
                     }
-                    return false;
-                }
-                if (!SP_IS_GROUP(this)) {
-                    lpe->doAfterEffect(this);
+
+                    try {
+                            lpe->doEffect(curve);
+                    }
+                    catch (std::exception & e) {
+                        g_warning("Exception during LPE %s execution. \n %s", lpe->getName().c_str(), e.what());
+                        if (SP_ACTIVE_DESKTOP && SP_ACTIVE_DESKTOP->messageStack()) {
+                            SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+                                            _("An exception occurred during execution of the Path Effect.") );
+                        }
+                        return false;
+                    }
+                    if (!SP_IS_GROUP(this)) {
+                        lpe->doAfterEffect(this);
+                    }
                 }
             }
         }
     }
-
+    if(apply_to_clippath_and_mask && clip_paths){
+        this->apply_to_clippath((SPItem *)this);
+        this->apply_to_mask((SPItem *)this);
+    }
     return true;
 }
 
@@ -641,43 +648,7 @@ SPLPEItem::apply_to_clippath(SPItem *item)
     SPClipPath *clipPath = item->clip_ref->getObject();
     if(clipPath) {
         SPObject * clip_data = clipPath->firstChild();
-        SPCurve * clip_curve = NULL;
-
-        if (SP_IS_PATH(clip_data)) {
-            clip_curve = SP_PATH(clip_data)->get_original_curve();
-        } else if(SP_IS_SHAPE(clip_data)) {
-            clip_curve = SP_SHAPE(clip_data)->getCurve();
-        } else if(SP_IS_GROUP(clip_data)) {
-            apply_to_clip_or_mask_group(SP_ITEM(clip_data), item);
-            return;
-        }
-        if(clip_curve) {
-            bool success = false;
-            if(SP_IS_GROUP(this)){
-                clip_curve->transform(i2anc_affine(SP_GROUP(item), SP_GROUP(this)));
-                success = this->performPathEffect(clip_curve);
-                clip_curve->transform(i2anc_affine(SP_GROUP(item), SP_GROUP(this)).inverse());
-            } else {
-                success = this->performPathEffect(clip_curve);
-            }
-            Inkscape::XML::Node *reprClip = clip_data->getRepr();
-            if (success) {
-                gchar *str = sp_svg_write_path(clip_curve->get_pathvector());
-                reprClip->setAttribute("d", str);
-                g_free(str);
-            } else {
-                // LPE was unsuccesfull. Read the old 'd'-attribute.
-                if (gchar const * value = reprClip->attribute("d")) {
-                    Geom::PathVector pv = sp_svg_read_pathv(value);
-                    SPCurve *oldcurve = new SPCurve(pv);
-                    if (oldcurve) {
-                        SP_SHAPE(clip_data)->setCurve(oldcurve, TRUE);
-                        oldcurve->unref();
-                    }
-                }
-            }
-            clip_curve->unref();
-        }
+        apply_to_clip_or_mask(SP_ITEM(clip_data), item);
     }
     if(SP_IS_GROUP(item)){
     	std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(item));
@@ -694,42 +665,7 @@ SPLPEItem::apply_to_mask(SPItem *item)
     SPMask *mask = item->mask_ref->getObject();
     if(mask) {
         SPObject *mask_data = mask->firstChild();
-        SPCurve * mask_curve = NULL;
-        if (SP_IS_PATH(mask_data)) {
-            mask_curve = SP_PATH(mask_data)->get_original_curve();
-        } else if(SP_IS_SHAPE(mask_data)) {
-            mask_curve = SP_SHAPE(mask_data)->getCurve();
-        } else if(SP_IS_GROUP(mask_data)) {
-            apply_to_clip_or_mask_group(SP_ITEM(mask_data), item);
-            return;
-        }
-        if(mask_curve) {
-            bool success = false;
-            if(SP_IS_GROUP(this)){
-                mask_curve->transform(i2anc_affine(SP_GROUP(item), SP_GROUP(this)));
-                success = this->performPathEffect(mask_curve);
-                mask_curve->transform(i2anc_affine(SP_GROUP(item), SP_GROUP(this)).inverse());
-            } else {
-                success = this->performPathEffect(mask_curve);
-            }
-            Inkscape::XML::Node *reprmask = mask_data->getRepr();
-            if (success) {
-                gchar *str = sp_svg_write_path(mask_curve->get_pathvector());
-                reprmask->setAttribute("d", str);
-                g_free(str);
-            } else {
-                // LPE was unsuccesfull. Read the old 'd'-attribute.
-                if (gchar const * value = reprmask->attribute("d")) {
-                    Geom::PathVector pv = sp_svg_read_pathv(value);
-                    SPCurve *oldcurve = new SPCurve(pv);
-                    if (oldcurve) {
-                        SP_SHAPE(mask_data)->setCurve(oldcurve, TRUE);
-                        oldcurve->unref();
-                    }
-                }
-            }
-            mask_curve->unref();
-        }
+        apply_to_clip_or_mask(SP_ITEM(mask_data), item);
     }
     if(SP_IS_GROUP(item)){
     	std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(item));
@@ -741,51 +677,57 @@ SPLPEItem::apply_to_mask(SPItem *item)
 }
 
 void
-SPLPEItem::apply_to_clip_or_mask_group(SPItem *group, SPItem *item)
+SPLPEItem::apply_to_clip_or_mask(SPItem *clip_mask, SPItem *item)
 {
-    if (!SP_IS_GROUP(group)) {
-        return;
-    }
-    std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(group));
-    for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();++iter) {
-        SPObject *subitem = *iter;
-        if (SP_IS_GROUP(subitem)) {
-            apply_to_clip_or_mask_group(SP_ITEM(subitem), item);
-        } else if (SP_IS_SHAPE(subitem)) {
-            SPCurve * c = NULL;
+    if (SP_IS_GROUP(clip_mask)) {
+        std::vector<SPItem*> item_list = sp_item_group_item_list(SP_GROUP(clip_mask));
+        for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();++iter) {
+            SPItem *subitem = *iter;
+            apply_to_clip_or_mask(subitem, item);
+        }
+    } else if (SP_IS_SHAPE(clip_mask)) {
+        SPCurve * c = NULL;
 
-            if (SP_IS_PATH(subitem)) {
-                c = SP_PATH(subitem)->get_original_curve();
-            } else {
-                c = SP_SHAPE(subitem)->getCurve();
-            }
-            if (c) {
-                bool success = false;
-                if(SP_IS_GROUP(group)){
+        if (SP_IS_PATH(clip_mask)) {
+            c = SP_PATH(clip_mask)->get_original_curve();
+        } else {
+            c = SP_SHAPE(clip_mask)->getCurve();
+        }
+        if (c) {
+            bool success = false;
+            try {
+                if(SP_IS_GROUP(this)){
                     c->transform(i2anc_affine(SP_GROUP(item), SP_GROUP(this)));
-                    success = this->performPathEffect(c);
+                    success = this->performPathEffect(c, false);
                     c->transform(i2anc_affine(SP_GROUP(item), SP_GROUP(this)).inverse());
                 } else {
-                    success = this->performPathEffect(c);
+                    success = this->performPathEffect(c, false);
                 }
-                Inkscape::XML::Node *repr = subitem->getRepr();
-                if (success) {
-                    gchar *str = sp_svg_write_path(c->get_pathvector());
-                    repr->setAttribute("d", str);
-                    g_free(str);
-                } else {
-                    // LPE was unsuccesfull. Read the old 'd'-attribute.
-                    if (gchar const * value = repr->attribute("d")) {
-                        Geom::PathVector pv = sp_svg_read_pathv(value);
-                        SPCurve *oldcurve = new SPCurve(pv);
-                        if (oldcurve) {
-                            SP_SHAPE(subitem)->setCurve(oldcurve, TRUE);
-                            oldcurve->unref();
-                        }
+            } catch (std::exception & e) {
+                g_warning("Exception during LPE execution. \n %s", e.what());
+                if (SP_ACTIVE_DESKTOP && SP_ACTIVE_DESKTOP->messageStack()) {
+                    SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+                                    _("An exception occurred during execution of the Path Effect.") );
+                }
+                success = false;
+            }
+            Inkscape::XML::Node *repr = clip_mask->getRepr();
+            if (success) {
+                gchar *str = sp_svg_write_path(c->get_pathvector());
+                repr->setAttribute("d", str);
+                g_free(str);
+            } else {
+                // LPE was unsuccesfull. Read the old 'd'-attribute.
+                if (gchar const * value = repr->attribute("d")) {
+                    Geom::PathVector pv = sp_svg_read_pathv(value);
+                    SPCurve *oldcurve = new SPCurve(pv);
+                    if (oldcurve) {
+                        SP_SHAPE(clip_mask)->setCurve(oldcurve, TRUE);
+                        oldcurve->unref();
                     }
                 }
-                c->unref();
             }
+            c->unref();
         }
     }
 }

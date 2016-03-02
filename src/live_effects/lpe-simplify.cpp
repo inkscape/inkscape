@@ -60,6 +60,7 @@ LPESimplify::LPESimplify(LivePathEffectObject *lpeobject)
     helper_size.param_set_digits(2);
 
     radius_helper_nodes = 6.0;
+    apply_to_clippath_and_mask = true;
 }
 
 LPESimplify::~LPESimplify() {}
@@ -71,10 +72,7 @@ LPESimplify::doBeforeEffect (SPLPEItem const* lpeitem)
         hp.clear();
     }
     bbox = SP_ITEM(lpeitem)->visualBounds();
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
     radius_helper_nodes = helper_size;
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 Gtk::Widget *

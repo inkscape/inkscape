@@ -356,7 +356,8 @@ Effect::createAndApply(EffectType type, SPDocument *doc, SPItem *item)
 }
 
 Effect::Effect(LivePathEffectObject *lpeobject)
-    : _provides_knotholder_entities(false),
+    : apply_to_clippath_and_mask(false),
+      _provides_knotholder_entities(false),
       oncanvasedit_it(0),
       is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
       show_orig_path(false),

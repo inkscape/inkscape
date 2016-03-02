@@ -121,6 +121,7 @@ public:
     inline bool isVisible() const { return is_visible; }
 
     void editNextParamOncanvas(SPItem * item, SPDesktop * desktop);
+    bool apply_to_clippath_and_mask;
 
 protected:
     Effect(LivePathEffectObject *lpeobject);
@@ -144,6 +145,7 @@ protected:
 
     std::vector<Parameter *> param_vector;
     bool _provides_knotholder_entities;
+
     int oncanvasedit_it;
     BoolParam is_visible;
 

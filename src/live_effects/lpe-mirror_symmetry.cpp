@@ -33,21 +33,13 @@ LPEMirrorSymmetry::LPEMirrorSymmetry(LivePathEffectObject *lpeobject) :
     reflection_line(_("Reflection line:"), _("Line which serves as 'mirror' for the reflection"), "reflection_line", &wr, this, "M0,0 L100,100")
 {
     show_orig_path = true;
-
+    apply_to_clippath_and_mask = true;
     registerParameter( dynamic_cast<Parameter *>(&discard_orig_path) );
     registerParameter( dynamic_cast<Parameter *>(&reflection_line) );
 }
 
 LPEMirrorSymmetry::~LPEMirrorSymmetry()
 {
-}
-
-void
-LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
-{
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 void

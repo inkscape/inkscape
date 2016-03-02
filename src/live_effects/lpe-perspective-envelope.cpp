@@ -56,6 +56,7 @@ LPEPerspectiveEnvelope::LPEPerspectiveEnvelope(LivePathEffectObject *lpeobject) 
     registerParameter(&up_right_point);
     registerParameter(&down_left_point);
     registerParameter(&down_right_point);
+    apply_to_clippath_and_mask = true;
 }
 
 LPEPerspectiveEnvelope::~LPEPerspectiveEnvelope()
@@ -371,9 +372,6 @@ LPEPerspectiveEnvelope::doBeforeEffect (SPLPEItem const* lpeitem)
         horizontal(up_left_point, down_left_point,horiz);
         horizontal(up_right_point, down_right_point,horiz);
     }
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
     setDefaults();
 }
 

@@ -31,7 +31,7 @@ LPEOffset::LPEOffset(LivePathEffectObject *lpeobject) :
     offset_pt(_("Offset"), _("Handle to control the distance of the offset from the curve"), "offset_pt", &wr, this)
 {
     show_orig_path = true;
-
+    apply_to_clippath_and_mask = true;
     registerParameter(dynamic_cast<Parameter *>(&offset_pt));
 }
 
@@ -55,14 +55,6 @@ static void append_half_circle(Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
     EllipticalArc cap(center + dir, r, r, angle_between(Point(1,0), dir), false, false, center - dir);
     Piecewise<D2<SBasis> > cap_pwd2(cap.toSBasis());
     pwd2.continuousConcat(cap_pwd2);
-}
-
-void
-LPEOffset::doBeforeEffect (SPLPEItem const* lpeitem)
-{
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >

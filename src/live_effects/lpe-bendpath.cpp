@@ -81,6 +81,7 @@ LPEBendPath::LPEBendPath(LivePathEffectObject *lpeobject) :
     prop_scale.param_set_increments(0.01, 0.10);
 
     _provides_knotholder_entities = true;
+    apply_to_clippath_and_mask = true;
     concatenate_before_pwd2 = true;
 }
 
@@ -95,10 +96,6 @@ LPEBendPath::doBeforeEffect (SPLPEItem const* lpeitem)
     // get the item bounding box
     original_bbox(lpeitem);
     original_height = boundingbox_Y.max() - boundingbox_Y.min();
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >

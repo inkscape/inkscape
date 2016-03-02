@@ -78,7 +78,7 @@ LPELattice::LPELattice(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&grid_point14) );
     registerParameter( dynamic_cast<Parameter *>(&grid_point15) );
 
-    
+    apply_to_clippath_and_mask = true;
 }
 
 LPELattice::~LPELattice()
@@ -176,9 +176,6 @@ void
 LPELattice::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem);
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 void
