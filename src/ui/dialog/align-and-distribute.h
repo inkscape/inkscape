@@ -149,6 +149,7 @@ bool operator< (const BBoxSort &a, const BBoxSort &b);
 class Action {
 public :
 
+    enum AlignTarget { LAST=0, FIRST, BIGGEST, SMALLEST, PAGE, DRAWING, SELECTION };
     Action(const Glib::ustring &id,
            const Glib::ustring &tiptext,
            guint row, guint column,
@@ -183,7 +184,6 @@ public :
        double sx0, sx1, sy0, sy1;
        int verb_id;
     };
-    enum AlignTarget { LAST=0, FIRST, BIGGEST, SMALLEST, PAGE, DRAWING, SELECTION };
     ActionAlign(const Glib::ustring &id,
                 const Glib::ustring &tiptext,
                 guint row, guint column,
