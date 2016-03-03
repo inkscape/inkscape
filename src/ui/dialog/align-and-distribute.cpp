@@ -741,7 +741,6 @@ private :
         if (!selection) return;
 
         std::vector<SPItem*> selected(selection->itemList());
-        if (selected.empty()) return;
 
         //Check 2 or more selected objects
         if (selected.size() < 2) return;
@@ -794,7 +793,51 @@ private :
                                     _("Distribute text baselines"));
             }
 
-        } else {
+        } else { //align
+            Geom::Point ref_point;
+            SPItem *focus = NULL;
+            Geom::OptRect b = Geom::OptRect();
+
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+            switch (AlignTarget(prefs->getInt("/dialogs/align/align-to", 6)))
+            {
+                case LAST:
+                    focus = SP_ITEM(*selected.begin());
+                    break;
+                case FIRST:
+                    focus = SP_ITEM(*--(selected.end()));
+                    break;
+                case BIGGEST:
+                    focus = selection->largestItem(Selection::AREA);
+                    break;
+                case SMALLEST:
+                    focus = selection->smallestItem(Selection::AREA);
+                    break;
+                case PAGE:
+                    b = desktop->getDocument()->preferredBounds();
+                    break;
+                case DRAWING:
+                    b = desktop->getDocument()->getRoot()->desktopPreferredBounds();
+                    break;
+                case SELECTION:
+                    b = selection->preferredBounds();
+                    break;
+                default:
+                    g_assert_not_reached ();
+                    break;
+            };  
+
+            if(focus) {
+                if (SP_IS_TEXT (focus) || SP_IS_FLOWTEXT (focus)) {
+                    ref_point = *(te_get_layout(focus)->baselineAnchorPoint())*(focus->i2dt_affine());
+                } else {
+                    ref_point = focus->desktopPreferredBounds()->min();
+                }
+            } else {
+                ref_point = b->min();
+            }
+
             for (std::vector<SPItem*>::iterator it(selected.begin());
                  it != selected.end();
                  ++it)
@@ -806,7 +849,7 @@ private :
                     if (pt) {
                         Geom::Point base = *pt * (item)->i2dt_affine();
                         Geom::Point t(0.0, 0.0);
-                        t[_orientation] = b_min[_orientation] - base[_orientation];
+                        t[_orientation] = ref_point[_orientation] - base[_orientation];
                         sp_item_move_rel(item, Geom::Translate(t));
                         changed = true;
                     }
