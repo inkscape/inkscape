@@ -58,6 +58,7 @@ private:
 	void accumulate();
 	void fit_and_split(bool release);
 	void draw_temporary_box();
+	bool nowidth;
 };
 
 }

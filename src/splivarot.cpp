@@ -105,6 +105,13 @@ sp_selected_path_cut(Inkscape::Selection *selection, SPDesktop *desktop)
 {
     sp_selected_path_boolop(selection, desktop, bool_op_cut, SP_VERB_SELECTION_CUT, _("Division"));
 }
+
+void
+sp_selected_path_cut_skip_undo(Inkscape::Selection *selection, SPDesktop *desktop)
+{
+    sp_selected_path_boolop(selection, desktop, bool_op_cut, SP_VERB_NONE, _("Division"));
+}
+
 void
 sp_selected_path_slice(Inkscape::Selection *selection, SPDesktop *desktop)
 {
