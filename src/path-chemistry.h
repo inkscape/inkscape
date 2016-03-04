@@ -25,8 +25,8 @@ class Node;
 
 typedef unsigned int guint32;
 
-void sp_selected_path_combine (SPDesktop *desktop);
-void sp_selected_path_break_apart (SPDesktop *desktop);
+void sp_selected_path_combine (SPDesktop *desktop, bool skip_undo = false);
+void sp_selected_path_break_apart (SPDesktop *desktop, bool skip_undo = false);
 // interactive=true only has an effect if desktop != NULL, i.e. if a GUI is available
 void sp_selected_path_to_curves (Inkscape::Selection *selection, SPDesktop *desktop, bool interactive = true);
 void sp_selected_to_lpeitems(SPDesktop *desktop);

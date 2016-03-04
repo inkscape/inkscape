@@ -702,49 +702,57 @@ void EraserTool::set_to_accumulated() {
                     for (std::vector<SPItem*>::const_iterator i = toWorkOn.begin(); i != toWorkOn.end(); ++i){
                         SPItem *item = *i;
                         SPUse *use = dynamic_cast<SPUse *>(item);
-                        if (SP_IS_GROUP(item) || use ) {
-                            continue;
-                        }
-                        Geom::OptRect bbox = item->desktopVisualBounds();
-                        if (bbox && bbox->intersects(*eraserBbox)) {
-                            Inkscape::XML::Node* dup = this->repr->duplicate(xml_doc);
-                            this->repr->parent()->appendChild(dup);
-                            Inkscape::GC::release(dup); // parent takes over
-                            selection->set(dup);
-                            if (!this->nowidth) {
-                                sp_selected_path_union(selection, desktop);
-                            }
-                            selection->add(item);
-                            if(item->style->fill_rule.value == SP_WIND_RULE_EVENODD){
-                                SPCSSAttr *css = sp_repr_css_attr_new();
-                                sp_repr_css_set_property(css, "fill-rule", "evenodd");
-                                sp_desktop_set_style(desktop, css);
-                                sp_repr_css_attr_unref(css);
-                                css = 0;
-                            }
-                            if (this->nowidth) {
-                                sp_selected_path_cut_skip_undo(selection, desktop);
-                            } else {
-                                sp_selected_path_diff_skip_undo(selection, desktop);
-                            }
-                            workDone = true; // TODO set this only if something was cut.
-                            bool break_apart = prefs->getBool("/tools/eraser/break_apart", false);
-                            if(!break_apart){
-                                sp_selected_path_combine(desktop);
-                            } else {
-                                if(!this->nowidth){
-                                    sp_selected_path_break_apart(desktop);
-                                }
-                            }
-                            if ( !selection->isEmpty() ) {
-                                // If the item was not completely erased, track the new remainder.
-                                std::vector<SPItem*> nowSel(selection->itemList());
-                                for (std::vector<SPItem*>::const_iterator i2 = nowSel.begin();i2!=nowSel.end();++i2) {
-                                    remainingItems.push_back(*i2);
-                                }
-                            }
+                        if (SP_IS_PATH(item) && SP_PATH(item)->nodesInPath () == 2){
+                            sp_object_ref( *i, 0 );
+                            SPItem *item = *i;
+                            item->deleteObject(true);
+                            sp_object_unref(item);
+                            workDone = true;
+                            workDone = true;
+                        } else if (SP_IS_GROUP(item) || use ) {
+                            /*Do nothing*/
                         } else {
-                            remainingItems.push_back(item);
+                            Geom::OptRect bbox = item->desktopVisualBounds();
+                            if (bbox && bbox->intersects(*eraserBbox)) {
+                                Inkscape::XML::Node* dup = this->repr->duplicate(xml_doc);
+                                this->repr->parent()->appendChild(dup);
+                                Inkscape::GC::release(dup); // parent takes over
+                                selection->set(dup);
+                                if (!this->nowidth) {
+                                    sp_selected_path_union_skip_undo(selection, desktop);
+                                }
+                                selection->add(item);
+                                if(item->style->fill_rule.value == SP_WIND_RULE_EVENODD){
+                                    SPCSSAttr *css = sp_repr_css_attr_new();
+                                    sp_repr_css_set_property(css, "fill-rule", "evenodd");
+                                    sp_desktop_set_style(desktop, css);
+                                    sp_repr_css_attr_unref(css);
+                                    css = 0;
+                                }
+                                if (this->nowidth) {
+                                    sp_selected_path_cut_skip_undo(selection, desktop);
+                                } else {
+                                    sp_selected_path_diff_skip_undo(selection, desktop);
+                                }
+                                workDone = true; // TODO set this only if something was cut.
+                                bool break_apart = prefs->getBool("/tools/eraser/break_apart", false);
+                                if(!break_apart){
+                                    sp_selected_path_combine(desktop, true);
+                                } else {
+                                    if(!this->nowidth){
+                                        sp_selected_path_break_apart(desktop, true);
+                                    }
+                                }
+                                if ( !selection->isEmpty() ) {
+                                    // If the item was not completely erased, track the new remainder.
+                                    std::vector<SPItem*> nowSel(selection->itemList());
+                                    for (std::vector<SPItem*>::const_iterator i2 = nowSel.begin();i2!=nowSel.end();++i2) {
+                                        remainingItems.push_back(*i2);
+                                    }
+                                }
+                            } else {
+                                remainingItems.push_back(item);
+                            }
                         }
                     }
                 } else {
@@ -773,7 +781,6 @@ void EraserTool::set_to_accumulated() {
                     }
                 }
             }
-
             // Remove the eraser stroke itself:
             sp_repr_unparent( this->repr );
             this->repr = 0;
