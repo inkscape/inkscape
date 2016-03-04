@@ -74,12 +74,15 @@ static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     }
     GtkAction *split = GTK_ACTION( g_object_get_data(tbl, "split") );
     GtkAction *mass = GTK_ACTION( g_object_get_data(tbl, "mass") );
+    GtkAction *width = GTK_ACTION( g_object_get_data(tbl, "width") );
     if(eraserMode == TRUE){
         gtk_action_set_visible( split, TRUE );
         gtk_action_set_visible( mass, TRUE );
+        gtk_action_set_visible( width, TRUE );
     } else {
         gtk_action_set_visible( split, FALSE );
         gtk_action_set_visible( mass, FALSE );
+        gtk_action_set_visible( width, FALSE );
     }
     // only take action if run by the attr_changed listener
     if (!g_object_get_data( tbl, "freeze" )) {
@@ -157,6 +160,7 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                                               sp_erc_width_value_changed, NULL /*unit tracker*/, 1, 0);
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        g_object_set_data( holder, "width", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
     {
@@ -190,12 +194,15 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     }
     GtkAction *split = GTK_ACTION( g_object_get_data(holder, "split") );
     GtkAction *mass = GTK_ACTION( g_object_get_data(holder, "mass") );
+    GtkAction *width = GTK_ACTION( g_object_get_data(holder, "width") );
     if(eraserMode == TRUE){
         gtk_action_set_visible( split, TRUE );
         gtk_action_set_visible( mass, TRUE );
+        gtk_action_set_visible( width, TRUE );
     } else {
         gtk_action_set_visible( split, FALSE );
         gtk_action_set_visible( mass, FALSE );
+        gtk_action_set_visible( width, FALSE );
     }
 
 }

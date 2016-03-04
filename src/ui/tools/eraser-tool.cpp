@@ -449,6 +449,7 @@ bool EraserTool::root_handler(GdkEvent* event) {
                 ret = TRUE;
             }
             if ( !eraserMode ) {
+                this->accumulated->reset();
                 Inkscape::Rubberband::get(desktop)->move(motion_dt);
             }
         }
