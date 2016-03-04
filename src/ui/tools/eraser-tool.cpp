@@ -682,7 +682,18 @@ void EraserTool::set_to_accumulated() {
                 }
                 toWorkOn.erase(std::remove(toWorkOn.begin(), toWorkOn.end(), acid), toWorkOn.end());
             } else {
-                toWorkOn = selection->itemList();
+                if ( !eraserMode ) {
+                    Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
+                    std::vector<SPItem*> touched;
+                    touched = desktop->getDocument()->getItemsAtPoints(desktop->dkey, r->getPoints());
+                    for (std::vector<SPItem*>::const_iterator i = touched.begin();i!=touched.end();++i) {
+                        if(selection->includes(*i)){
+                            toWorkOn.push_back((*i));
+                        }
+                    }
+                } else {
+                    toWorkOn = selection->itemList();
+                }
                 wasSelection = true;
             }
 
