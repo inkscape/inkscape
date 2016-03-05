@@ -268,7 +268,7 @@
     <cxxtestpart command="${python} ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/svg/test-svg.cpp">
         <fileset dir="${src}/svg">
-            <include name="css-ostringstream-test.h"/>
+            <!--<include name="css-ostringstream-test.h"/>-->
             <include name="stringstream-test.h"/>
             <include name="svg-affine-test.h"/>
             <include name="svg-color-test.h"/>
