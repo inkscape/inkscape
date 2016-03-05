@@ -793,9 +793,11 @@
 
     <copy todir="${dist}">
         <fileset dir="share">
-            <exclude name=".*\.am"/>
-            <exclude name=".*\.in"/>
-            <exclude name=".*\.sh"/>
+            <exclude name="\.am$"/>
+            <exclude name="\.in$"/>
+            <exclude name="\.sh$"/>
+            <exclude name="CMakeLists.txt"/>
+            <exclude name="i18n.py"/>
             <exclude name="icons/hicolor/index.theme"/>
         </fileset>
     </copy>
@@ -805,8 +807,8 @@
     <copy todir="${dist}/share/glib-2.0"> <fileset dir="${devlibs}/share/glib-2.0/schemas"/> </copy>
     <copy todir="${dist}/lib">
         <fileset dir="${devlibs}/lib/gdk-pixbuf-2.0">
-            <exclude name=".*\.la"/>
-            <exclude name=".*\.dll\.a"/>
+            <exclude name="\.la$"/>
+            <exclude name="\.a$"/>
         </fileset>
     </copy>
 
@@ -814,7 +816,11 @@
     <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/poppler"/> </copy>
 
     <!-- Locales for libraries (few should be needed) -->
-    <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/locale"/> </copy>
+    <copy todir="${dist}/share">
+        <fileset dir="${devlibs}/share/locale">
+            <include name="gtk30.mo"/>
+        </fileset>
+    </copy>
 
     <!-- Aspell dictionaries -->
     <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/aspell-0.60"/> </copy>

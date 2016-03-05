@@ -766,21 +766,29 @@
             <exclude name="gtk-3.0/.*"/>
         </fileset>
     </copy>
-    <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/gtk-2.0"/> </copy>
+    <copy todir="${dist}/lib"> 
+        <fileset dir="${devlibs}/lib/gtk-2.0">
+            <exclude name="\.la$"/>
+            <exclude name="\.a$"/>
+            <exclude name="include/"/>
+        </fileset>
+    </copy>
     <!-- <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/glib-2.0"/> </copy> -->
     <copy todir="${dist}">
         <fileset dir="share">
-            <exclude name=".*\.am"/>
-            <exclude name=".*\.in"/>
-            <exclude name=".*\.sh"/>
+            <exclude name="\.am$"/>
+            <exclude name="\.in$"/>
+            <exclude name="\.sh$"/>
+            <exclude name="CMakeLists.txt"/>
+            <exclude name="i18n.py"/>
         </fileset>
     </copy>
     <delete dir="${dist}/share/icons/hicolor"/> <!-- Quick fix for the following problem: having the hicolor folder there with empty index file bugs booting inkscape... -->
     <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/themes"/> </copy>
     <copy todir="${dist}/lib">
         <fileset dir="${devlibs}/lib/gdk-pixbuf-2.0">
-            <exclude name=".*\.la"/>
-            <exclude name=".*\.dll\.a"/>
+            <exclude name="\.la$"/>
+            <exclude name="\.a$"/>
         </fileset>
     </copy>
 
@@ -788,7 +796,11 @@
     <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/poppler"/> </copy>
 
     <!-- Locales for libraries (few should be needed) -->
-    <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/locale"/> </copy>
+    <copy todir="${dist}/share">
+        <fileset dir="${devlibs}/share/locale">
+            <include name="gtk20.mo"/>
+        </fileset>
+    </copy>
 
     <!-- Aspell dictionaries -->
     <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/aspell-0.60"/> </copy>

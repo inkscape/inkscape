@@ -720,7 +720,7 @@
     <!-- MSGFMT files -->
     <copy todir="${dist}">
         <fileset dir="${build}/locale">
-          <exclude name=".*\.am"/>
+          <exclude name="\.am$"/>
         </fileset>
     </copy>
 
@@ -735,9 +735,9 @@
     <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/glib-2.0"/> </copy>
     <copy todir="${dist}">
         <fileset dir="share">
-          <exclude name=".*\.am"/>
-          <exclude name=".*\.in"/>
-          <exclude name=".*\.sh"/>
+          <exclude name="\.am$"/>
+          <exclude name="\.in$"/>
+          <exclude name="\.sh$"/>
         </fileset>
     </copy>
     <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/locale"/> </copy>
