@@ -881,8 +881,7 @@ objects_query_strokecap (const std::vector<SPItem*> &objects, SPStyle *style_res
         return QUERY_STYLE_NOTHING;
     }
 
-    int cap = -1;
-    gdouble prev_cap = -1;
+    int prev_cap = -1;
     bool same_cap = true;
     int n_stroked = 0;
 
@@ -905,11 +904,9 @@ objects_query_strokecap (const std::vector<SPItem*> &objects, SPStyle *style_res
         if (prev_cap != -1 && style->stroke_linecap.value != prev_cap)
             same_cap = false;
         prev_cap = style->stroke_linecap.value;
-
-        cap = style->stroke_linecap.value;
     }
 
-    style_res->stroke_linecap.value = cap;
+    style_res->stroke_linecap.value = prev_cap;
     style_res->stroke_linecap.set = true;
 
     if (n_stroked == 0) {
@@ -935,8 +932,7 @@ objects_query_strokejoin (const std::vector<SPItem*> &objects, SPStyle *style_re
         return QUERY_STYLE_NOTHING;
     }
 
-    int join = -1;
-    gdouble prev_join = -1;
+    int prev_join = -1;
     bool same_join = true;
     int n_stroked = 0;
 
@@ -960,11 +956,9 @@ objects_query_strokejoin (const std::vector<SPItem*> &objects, SPStyle *style_re
             same_join = false;
         }
         prev_join = style->stroke_linejoin.value;
-
-        join = style->stroke_linejoin.value;
     }
 
-    style_res->stroke_linejoin.value = join;
+    style_res->stroke_linejoin.value = prev_join;
     style_res->stroke_linejoin.set = true;
 
     if (n_stroked == 0) {
@@ -973,6 +967,62 @@ objects_query_strokejoin (const std::vector<SPItem*> &objects, SPStyle *style_re
         return QUERY_STYLE_SINGLE;
     } else {
         if (same_join)
+            return QUERY_STYLE_MULTIPLE_SAME;
+        else
+            return QUERY_STYLE_MULTIPLE_DIFFERENT;
+    }
+}
+
+/**
+ * Write to style_res the paint order of a list of objects.
+ */
+int
+objects_query_paintorder (const std::vector<SPItem*> &objects, SPStyle *style_res)
+{
+    if (objects.empty()) {
+        /* No objects, set empty */
+        return QUERY_STYLE_NOTHING;
+    }
+
+    std::string prev_order;
+    bool same_order = true;
+    int n_order = 0;
+
+    for (std::vector<SPItem*>::const_iterator i = objects.begin(); i != objects.end(); ++i) {
+        SPObject *obj = *i;
+        if (!dynamic_cast<SPItem *>(obj)) {
+            continue;
+        }
+        SPStyle *style = obj->style;
+        if (!style) {
+            continue;
+        }
+
+        if ( style->stroke.isNone() ) {
+            continue;
+        }
+
+        n_order ++;
+
+        if (!prev_order.empty() && prev_order.compare( style->paint_order.value ) != 0) {
+            same_order = false;
+        }
+        if (style->paint_order.set) {
+            prev_order = style->paint_order.value;
+        }
+    }
+
+    
+    g_free( style_res->paint_order.value );
+    style_res->paint_order.value= g_strdup( prev_order.c_str() );
+    style_res->paint_order.set = true;
+
+    if (n_order == 0) {
+        return QUERY_STYLE_NOTHING;
+    } else if (n_order == 1) {
+        return QUERY_STYLE_SINGLE;
+    } else {
+        if (same_order)
             return QUERY_STYLE_MULTIPLE_SAME;
         else
             return QUERY_STYLE_MULTIPLE_DIFFERENT;
@@ -1763,6 +1813,8 @@ sp_desktop_query_style_from_list (const std::vector<SPItem*> &list, SPStyle *sty
     } else if (property == QUERY_STYLE_PROPERTY_STROKEJOIN) {
         return objects_query_strokejoin (list, style);
 
+    } else if (property == QUERY_STYLE_PROPERTY_PAINTORDER) {
+        return objects_query_paintorder (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_MASTEROPACITY) {
         return objects_query_opacity (list, style);
 
@@ -1829,6 +1881,9 @@ sp_desktop_query_style_all (SPDesktop *desktop, SPStyle *query)
         int result_strokemiterlimit = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_STROKEMITERLIMIT);
         int result_strokecap = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_STROKECAP);
         int result_strokejoin = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_STROKEJOIN);
+
+        int result_paintorder = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_PAINTORDER);
+
         int result_opacity = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
         int result_blur = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_BLUR);
 
@@ -1842,6 +1897,7 @@ sp_desktop_query_style_all (SPDesktop *desktop, SPStyle *query)
                 result_strokemiterlimit != QUERY_STYLE_NOTHING ||
                 result_strokecap != QUERY_STYLE_NOTHING ||
                 result_strokejoin != QUERY_STYLE_NOTHING ||
+                result_paintorder != QUERY_STYLE_NOTHING ||
                 result_blur != QUERY_STYLE_NOTHING);
 }
 

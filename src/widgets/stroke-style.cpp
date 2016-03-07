@@ -381,6 +381,46 @@ StrokeStyle::StrokeStyle() :
 
     hb->pack_start(*endMarkerCombo, true, true, 0);
 
+    i++;
+
+    /* Paint order */
+    // TRANSLATORS: Paint order determines the order the 'fill', 'stroke', and 'markers are painted.
+    spw_label(table, _("Order:"), 0, i, NULL);
+
+    hb = spw_hbox(table, 4, 1, i);
+
+    Gtk::RadioButtonGroup paintOrderGrp;
+
+    paintOrderFSM = makeRadioButton(paintOrderGrp, INKSCAPE_ICON("paint-order-fsm"),
+                                    hb, STROKE_STYLE_BUTTON_ORDER, "normal");
+    paintOrderFSM->set_tooltip_text(_("Fill, Stroke, Markers")); 
+
+    paintOrderSFM = makeRadioButton(paintOrderGrp, INKSCAPE_ICON("paint-order-sfm"),
+                                    hb, STROKE_STYLE_BUTTON_ORDER, "stroke fill markers");
+    paintOrderSFM->set_tooltip_text(_("Stroke, Fill, Markers")); 
+
+    paintOrderFMS = makeRadioButton(paintOrderGrp, INKSCAPE_ICON("paint-order-fms"),
+                                    hb, STROKE_STYLE_BUTTON_ORDER, "fill markers stroke");
+    paintOrderFMS->set_tooltip_text(_("Fill, Markers, Stroke")); 
+
+    i++;
+
+    hb = spw_hbox(table, 4, 1, i);
+
+    paintOrderMFS = makeRadioButton(paintOrderGrp, INKSCAPE_ICON("paint-order-mfs"),
+                                    hb, STROKE_STYLE_BUTTON_ORDER, "markers fill stroke");
+    paintOrderMFS->set_tooltip_text(_("Markers, Fill, Stroke")); 
+
+    paintOrderSMF = makeRadioButton(paintOrderGrp, INKSCAPE_ICON("paint-order-smf"),
+                                    hb, STROKE_STYLE_BUTTON_ORDER, "stroke markers fill");
+    paintOrderSMF->set_tooltip_text(_("Stroke, Markers, Fill")); 
+
+    paintOrderMSF = makeRadioButton(paintOrderGrp, INKSCAPE_ICON("paint-order-msf"),
+                                    hb, STROKE_STYLE_BUTTON_ORDER, "markers stroke fill");
+    paintOrderMSF->set_tooltip_text(_("Markers, Stroke, Fill")); 
+
+    i++;
+
     setDesktop(desktop);
     updateLine();
 
@@ -802,6 +842,43 @@ StrokeStyle::setCapType (unsigned const captype)
 }
 
 /**
+ * Sets the cap type for a line, and updates the stroke style widget's buttons
+ */
+void
+StrokeStyle::setPaintOrder (gchar const *paint_order)
+{
+    Gtk::RadioButton *tb = paintOrderFSM;
+
+    SPIPaintOrder temp;
+    temp.read( paint_order );
+
+    if (temp.layer[0] != SP_CSS_PAINT_ORDER_NORMAL) {
+
+        if (temp.layer[0] == SP_CSS_PAINT_ORDER_FILL) {
+            if (temp.layer[1] == SP_CSS_PAINT_ORDER_STROKE) {
+                tb = paintOrderFSM;
+            } else {
+                tb = paintOrderFMS;
+            }
+        } else if (temp.layer[0] == SP_CSS_PAINT_ORDER_STROKE) {
+            if (temp.layer[1] == SP_CSS_PAINT_ORDER_FILL) {
+                tb = paintOrderSFM;
+            } else {
+                tb = paintOrderSMF;
+            }
+        } else {
+            if (temp.layer[1] == SP_CSS_PAINT_ORDER_STROKE) {
+                tb = paintOrderMSF;
+            } else {
+                tb = paintOrderMFS;
+            }
+        }
+
+    }
+    setPaintOrderButtons(tb);
+}
+
+/**
  * Callback for when stroke style widget is updated, including markers, cap type,
  * join type, etc.
  */
@@ -825,6 +902,9 @@ StrokeStyle::updateLine()
     int result_ml = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_STROKEMITERLIMIT);
     int result_cap = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_STROKECAP);
     int result_join = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_STROKEJOIN);
+
+    int result_order = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_PAINTORDER);
+
     SPIPaint &targPaint = (kind == FILL) ? query.fill : query.stroke;
 
     if (!sel || sel->isEmpty()) {
@@ -900,6 +980,13 @@ StrokeStyle::updateLine()
         setCapType (query.stroke_linecap.value);
     } else {
         setCapButtons(NULL);
+    }
+
+    if (result_order != QUERY_STYLE_MULTIPLE_DIFFERENT &&
+        result_order != QUERY_STYLE_NOTHING ) {
+        setPaintOrder (query.paint_order.value);
+    } else {
+        setPaintOrder (NULL);
     }
 
     if (!sel || sel->isEmpty())
@@ -1109,6 +1196,11 @@ void StrokeStyle::buttonToggledCB(StrokeStyleButton *tb, StrokeStyle *spw)
                 sp_repr_css_set_property(css, "stroke-linecap", tb->get_stroke_style());
                 sp_desktop_set_style (spw->desktop, css);
                 spw->setCapButtons(tb);
+                break;
+            case STROKE_STYLE_BUTTON_ORDER:
+                sp_repr_css_set_property(css, "paint-order", tb->get_stroke_style());
+                sp_desktop_set_style (spw->desktop, css);
+                //spw->setPaintButtons(tb);
         }
 
         sp_repr_css_attr_unref(css);
@@ -1139,6 +1231,21 @@ StrokeStyle::setCapButtons(Gtk::ToggleButton *active)
     capButt->set_active(active == capButt);
     capRound->set_active(active == capRound);
     capSquare->set_active(active == capSquare);
+}
+
+
+/**
+ * Updates the paint order style toggle buttons
+ */
+void
+StrokeStyle::setPaintOrderButtons(Gtk::ToggleButton *active)
+{
+    paintOrderFSM->set_active(active == paintOrderFSM);
+    paintOrderSFM->set_active(active == paintOrderSFM);
+    paintOrderFMS->set_active(active == paintOrderFMS);
+    paintOrderMFS->set_active(active == paintOrderMFS);
+    paintOrderSMF->set_active(active == paintOrderSMF);
+    paintOrderMSF->set_active(active == paintOrderMSF);
 }
 
 
