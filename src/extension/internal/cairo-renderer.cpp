@@ -194,7 +194,20 @@ static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx)
         return;
     }
 
-    ctx->renderPathVector(pathv, style, pbox);
+    if (style->paint_order.layer[0] == SP_CSS_PAINT_ORDER_NORMAL ||
+        (style->paint_order.layer[0] == SP_CSS_PAINT_ORDER_FILL &&
+         style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_STROKE)) {
+        ctx->renderPathVector(pathv, style, pbox, CairoRenderContext::STROKE_OVER_FILL);
+    } else if (style->paint_order.layer[0] == SP_CSS_PAINT_ORDER_STROKE &&
+               style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_FILL ) {
+        ctx->renderPathVector(pathv, style, pbox, CairoRenderContext::FILL_OVER_STROKE);
+    } else if (style->paint_order.layer[0] == SP_CSS_PAINT_ORDER_STROKE &&
+               style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_MARKER ) {
+        ctx->renderPathVector(pathv, style, pbox, CairoRenderContext::STROKE_ONLY);
+    } else if (style->paint_order.layer[0] == SP_CSS_PAINT_ORDER_FILL &&
+               style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_MARKER ) {
+        ctx->renderPathVector(pathv, style, pbox, CairoRenderContext::FILL_ONLY);
+    }
 
     // START marker
     for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
@@ -287,6 +300,21 @@ static void sp_shape_render(SPShape *shape, CairoRenderContext *ctx)
             sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
         }
     }
+
+    if (style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_FILL &&
+        style->paint_order.layer[2] == SP_CSS_PAINT_ORDER_STROKE) {
+        ctx->renderPathVector(pathv, style, pbox, CairoRenderContext::STROKE_OVER_FILL);
+    } else if (style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_STROKE &&
+               style->paint_order.layer[2] == SP_CSS_PAINT_ORDER_FILL ) {
+        ctx->renderPathVector(pathv, style, pbox, CairoRenderContext::FILL_OVER_STROKE);
+    } else if (style->paint_order.layer[2] == SP_CSS_PAINT_ORDER_STROKE &&
+               style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_MARKER ) {
+        ctx->renderPathVector(pathv, style, pbox, CairoRenderContext::STROKE_ONLY);
+    } else if (style->paint_order.layer[2] == SP_CSS_PAINT_ORDER_FILL &&
+               style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_MARKER ) {
+        ctx->renderPathVector(pathv, style, pbox, CairoRenderContext::FILL_ONLY);
+    }
+
 }
 
 static void sp_group_render(SPGroup *group, CairoRenderContext *ctx)

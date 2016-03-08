@@ -148,7 +148,14 @@ public:
     void addClippingRect(double x, double y, double width, double height);
 
     /* Rendering methods */
-    bool renderPathVector(Geom::PathVector const &pathv, SPStyle const *style, Geom::OptRect const &pbox);
+    enum CairoPaintOrder {
+        STROKE_OVER_FILL,
+        FILL_OVER_STROKE,
+        FILL_ONLY,
+        STROKE_ONLY
+    };
+
+    bool renderPathVector(Geom::PathVector const &pathv, SPStyle const *style, Geom::OptRect const &pbox, CairoPaintOrder order = STROKE_OVER_FILL);
     bool renderImage(Inkscape::Pixbuf *pb,
                      Geom::Affine const &image_transform, SPStyle const *style);
     bool renderGlyphtext(PangoFont *font, Geom::Affine const &font_matrix,
