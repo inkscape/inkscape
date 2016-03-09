@@ -179,8 +179,10 @@ public:
     }
 
     void closePath() {
-        _path.close();
-        flush();
+        if (_in_path) {
+            _path.close();
+            flush();
+        }
     }
 
     void flush() {

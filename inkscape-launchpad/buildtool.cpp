@@ -120,733 +120,523 @@ namespace buildtool
 //########################################################################
 
 /**
- * This is the T-Rex regular expression library, which we
- * gratefully acknowledge.  It's clean code and small size allow
- * us to embed it in BuildTool without adding a dependency
+ * This is the SLRE (Super Light Regular Expression library)
+ * SLRE is an ISO C library that implements a subset of Perl
+ * regular expression syntax.
+ *
+ * See https://github.com/cesanta/slre for details
+ *
+ * It's clean code and small size allow us to
+ * embed it in BuildTool without adding a dependency
  *
  */    
 
-//begin trex.h
+//begin slre.h
 
-#ifndef _TREX_H_
-#define _TREX_H_
-/***************************************************************
-    T-Rex a tiny regular expression library
+/*
+ * Copyright (c) 2004-2013 Sergey Lyubka <valenok@gmail.com>
+ * Copyright (c) 2013 Cesanta Software Limited
+ * All rights reserved
+ *
+ * This library is dual-licensed: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation. For the terms of this
+ * license, see <http://www.gnu.org/licenses/>.
+ *
+ * You are free to use this library under the terms of the GNU General
+ * Public License, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * Alternatively, you can license this library under a commercial
+ * license, as set out in <http://cesanta.com/products.html>.
+ */
 
-    Copyright (C) 2003-2006 Alberto Demichelis
+/*
+ * This is a regular expression library that implements a subset of Perl RE.
+ * Please refer to README.md for a detailed reference.
+ */
 
-    This software is provided 'as-is', without any express 
-    or implied warranty. In no event will the authors be held 
-    liable for any damages arising from the use of this software.
+#ifndef SLRE_HEADER_DEFINED
+#define SLRE_HEADER_DEFINED
 
-    Permission is granted to anyone to use this software for 
-    any purpose, including commercial applications, and to alter
-    it and redistribute it freely, subject to the following restrictions:
-
-        1. The origin of this software must not be misrepresented;
-        you must not claim that you wrote the original software.
-        If you use this software in a product, an acknowledgment
-        in the product documentation would be appreciated but
-        is not required.
-
-        2. Altered source versions must be plainly marked as such,
-        and must not be misrepresented as being the original software.
-
-        3. This notice may not be removed or altered from any
-        source distribution.
-
-****************************************************************/
-
-#ifdef _UNICODE
-#define TRexChar unsigned short
-#define MAX_CHAR 0xFFFF
-#define _TREXC(c) L##c 
-#define trex_strlen wcslen
-#define trex_printf wprintf
-#else
-#define TRexChar char
-#define MAX_CHAR 0xFF
-#define _TREXC(c) (c) 
-#define trex_strlen strlen
-#define trex_printf printf
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#ifndef TREX_API
-#define TREX_API extern
+struct slre_cap {
+  const char *ptr;
+  int len;
+};
+
+
+int slre_match(const char *regexp, const char *buf, int buf_len,
+               struct slre_cap *caps, int num_caps, int flags);
+
+/* Possible flags for slre_match() */
+enum { SLRE_IGNORE_CASE = 1 };
+
+
+/* slre_match() failure codes */
+#define SLRE_NO_MATCH               -1
+#define SLRE_UNEXPECTED_QUANTIFIER  -2
+#define SLRE_UNBALANCED_BRACKETS    -3
+#define SLRE_INTERNAL_ERROR         -4
+#define SLRE_INVALID_CHARACTER_SET  -5
+#define SLRE_INVALID_METACHARACTER  -6
+#define SLRE_CAPS_ARRAY_TOO_SMALL   -7
+#define SLRE_TOO_MANY_BRANCHES      -8
+#define SLRE_TOO_MANY_BRACKETS      -9
+
+#ifdef __cplusplus
+}
 #endif
 
-#define TRex_True 1
-#define TRex_False 0
+#endif  /* SLRE_HEADER_DEFINED */
 
-typedef unsigned int TRexBool;
-typedef struct TRex TRex;
+//end slre.h
 
-typedef struct {
-    const TRexChar *begin;
-    int len;
-} TRexMatch;
+//start slre.c
 
-TREX_API TRex *trex_compile(const TRexChar *pattern,const TRexChar **error);
-TREX_API void trex_free(TRex *exp);
-TREX_API TRexBool trex_match(TRex* exp,const TRexChar* text);
-TREX_API TRexBool trex_search(TRex* exp,const TRexChar* text, const TRexChar** out_begin, const TRexChar** out_end);
-TREX_API TRexBool trex_searchrange(TRex* exp,const TRexChar* text_begin,const TRexChar* text_end,const TRexChar** out_begin, const TRexChar** out_end);
-TREX_API int trex_getsubexpcount(TRex* exp);
-TREX_API TRexBool trex_getsubexp(TRex* exp, int n, TRexMatch *subexp);
-
-#endif
-
-//end trex.h
-
-//start trex.c
-
+/*
+ * Copyright (c) 2004-2013 Sergey Lyubka <valenok@gmail.com>
+ * Copyright (c) 2013 Cesanta Software Limited
+ * All rights reserved
+ *
+ * This library is dual-licensed: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation. For the terms of this
+ * license, see <http://www.gnu.org/licenses/>.
+ *
+ * You are free to use this library under the terms of the GNU General
+ * Public License, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * Alternatively, you can license this library under a commercial
+ * license, as set out in <http://cesanta.com/products.html>.
+ */
 
 #include <stdio.h>
-#include <string>
-
-/* see copyright notice in trex.h */
-#include <string.h>
-#include <stdlib.h>
 #include <ctype.h>
-#include <setjmp.h>
-//#include "trex.h"
+#include <string.h>
 
-#ifdef _UNICODE
-#define scisprint iswprint
-#define scstrlen wcslen
-#define scprintf wprintf
-#define _SC(x) L(x)
+//#include "slre.h"
+
+#define MAX_BRANCHES 100
+#define MAX_BRACKETS 100
+#define FAIL_IF(condition, error_code) if (condition) return (error_code)
+
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(ar) (sizeof(ar) / sizeof((ar)[0]))
+#endif
+
+#ifdef SLRE_DEBUG
+#define DBG(x) printf x
 #else
-#define scisprint isprint
-#define scstrlen strlen
-#define scprintf printf
-#define _SC(x) (x)
+#define DBG(x)
 #endif
 
-#ifdef _DEBUG
-#include <stdio.h>
-
-static const TRexChar *g_nnames[] =
-{
-    _SC("NONE"),_SC("OP_GREEDY"),    _SC("OP_OR"),
-    _SC("OP_EXPR"),_SC("OP_NOCAPEXPR"),_SC("OP_DOT"),    _SC("OP_CLASS"),
-    _SC("OP_CCLASS"),_SC("OP_NCLASS"),_SC("OP_RANGE"),_SC("OP_CHAR"),
-    _SC("OP_EOL"),_SC("OP_BOL"),_SC("OP_WB")
+struct bracket_pair {
+  const char *ptr;  /* Points to the first char after '(' in regex  */
+  int len;          /* Length of the text between '(' and ')'       */
+  int branches;     /* Index in the branches array for this pair    */
+  int num_branches; /* Number of '|' in this bracket pair           */
 };
 
-#endif
-#define OP_GREEDY        (MAX_CHAR+1) // * + ? {n}
-#define OP_OR            (MAX_CHAR+2)
-#define OP_EXPR            (MAX_CHAR+3) //parentesis ()
-#define OP_NOCAPEXPR    (MAX_CHAR+4) //parentesis (?:)
-#define OP_DOT            (MAX_CHAR+5)
-#define OP_CLASS        (MAX_CHAR+6)
-#define OP_CCLASS        (MAX_CHAR+7)
-#define OP_NCLASS        (MAX_CHAR+8) //negates class the [^
-#define OP_RANGE        (MAX_CHAR+9)
-#define OP_CHAR            (MAX_CHAR+10)
-#define OP_EOL            (MAX_CHAR+11)
-#define OP_BOL            (MAX_CHAR+12)
-#define OP_WB            (MAX_CHAR+13)
-
-#define TREX_SYMBOL_ANY_CHAR ('.')
-#define TREX_SYMBOL_GREEDY_ONE_OR_MORE ('+')
-#define TREX_SYMBOL_GREEDY_ZERO_OR_MORE ('*')
-#define TREX_SYMBOL_GREEDY_ZERO_OR_ONE ('?')
-#define TREX_SYMBOL_BRANCH ('|')
-#define TREX_SYMBOL_END_OF_STRING ('$')
-#define TREX_SYMBOL_BEGINNING_OF_STRING ('^')
-#define TREX_SYMBOL_ESCAPE_CHAR ('\\')
-
-
-typedef int TRexNodeType;
-
-typedef struct tagTRexNode{
-    TRexNodeType type;
-    int left;
-    int right;
-    int next;
-}TRexNode;
-
-struct TRex{
-    const TRexChar *_eol;
-    const TRexChar *_bol;
-    const TRexChar *_p;
-    int _first;
-    int _op;
-    TRexNode *_nodes;
-    int _nallocated;
-    int _nsize;
-    int _nsubexpr;
-    TRexMatch *_matches;
-    int _currsubexp;
-    void *_jmpbuf;
-    const TRexChar **_error;
+struct branch {
+  int bracket_index;    /* index for 'struct bracket_pair brackets' */
+                        /* array defined below                      */
+  const char *schlong;  /* points to the '|' character in the regex */
 };
 
-static int trex_list(TRex *exp);
+struct regex_info {
+  /*
+   * Describes all bracket pairs in the regular expression.
+   * First entry is always present, and grabs the whole regex.
+   */
+  struct bracket_pair brackets[MAX_BRACKETS];
+  int num_brackets;
 
-static int trex_newnode(TRex *exp, TRexNodeType type)
-{
-    TRexNode n;
-    int newid;
-    n.type = type;
-    n.next = n.right = n.left = -1;
-    if(type == OP_EXPR)
-        n.right = exp->_nsubexpr++;
-    if(exp->_nallocated < (exp->_nsize + 1)) {
-        //int oldsize = exp->_nallocated;
-        exp->_nallocated *= 2;
-        exp->_nodes = (TRexNode *)realloc(exp->_nodes, exp->_nallocated * sizeof(TRexNode));
-    }
-    exp->_nodes[exp->_nsize++] = n;
-    newid = exp->_nsize - 1;
-    return (int)newid;
+  /*
+   * Describes alternations ('|' operators) in the regular expression.
+   * Each branch falls into a specific branch pair.
+   */
+  struct branch branches[MAX_BRANCHES];
+  int num_branches;
+
+  /* Array of captures provided by the user */
+  struct slre_cap *caps;
+  int num_caps;
+
+  /* E.g. SLRE_IGNORE_CASE. See enum below */
+  int flags;
+};
+
+static int is_metacharacter(const unsigned char *s) {
+  static const char *metacharacters = "^$().[]*+?|\\Ssdbfnrtv";
+  return strchr(metacharacters, *s) != NULL;
 }
 
-static void trex_error(TRex *exp,const TRexChar *error)
-{
-    if(exp->_error) *exp->_error = error;
-    longjmp(*((jmp_buf*)exp->_jmpbuf),-1);
+static int op_len(const char *re) {
+  return re[0] == '\\' && re[1] == 'x' ? 4 : re[0] == '\\' ? 2 : 1;
 }
 
-static void trex_expect(TRex *exp, int n){
-    if((*exp->_p) != n) 
-        trex_error(exp, _SC("expected paren"));
-    exp->_p++;
+static int set_len(const char *re, int re_len) {
+  int len = 0;
+
+  while (len < re_len && re[len] != ']') {
+    len += op_len(re + len);
+  }
+
+  return len <= re_len ? len + 1 : -1;
 }
 
-static TRexChar trex_escapechar(TRex *exp)
-{
-    if(*exp->_p == TREX_SYMBOL_ESCAPE_CHAR){
-        exp->_p++;
-        switch(*exp->_p) {
-        case 'v': exp->_p++; return '\v';
-        case 'n': exp->_p++; return '\n';
-        case 't': exp->_p++; return '\t';
-        case 'r': exp->_p++; return '\r';
-        case 'f': exp->_p++; return '\f';
-        default: return (*exp->_p++);
-        }
-    } else if(!scisprint(*exp->_p)) trex_error(exp,_SC("letter expected"));
-    return (*exp->_p++);
+static int get_op_len(const char *re, int re_len) {
+  return re[0] == '[' ? set_len(re + 1, re_len - 1) + 1 : op_len(re);
 }
 
-static int trex_charclass(TRex *exp,int classid)
-{
-    int n = trex_newnode(exp,OP_CCLASS);
-    exp->_nodes[n].left = classid;
-    return n;
+static int is_quantifier(const char *re) {
+  return re[0] == '*' || re[0] == '+' || re[0] == '?';
 }
 
-static int trex_charnode(TRex *exp,TRexBool isclass)
-{
-    TRexChar t;
-    if(*exp->_p == TREX_SYMBOL_ESCAPE_CHAR) {
-        exp->_p++;
-        switch(*exp->_p) {
-            case 'n': exp->_p++; return trex_newnode(exp,'\n');
-            case 't': exp->_p++; return trex_newnode(exp,'\t');
-            case 'r': exp->_p++; return trex_newnode(exp,'\r');
-            case 'f': exp->_p++; return trex_newnode(exp,'\f');
-            case 'v': exp->_p++; return trex_newnode(exp,'\v');
-            case 'a': case 'A': case 'w': case 'W': case 's': case 'S': 
-            case 'd': case 'D': case 'x': case 'X': case 'c': case 'C': 
-            case 'p': case 'P': case 'l': case 'u': 
-                {
-                t = *exp->_p; exp->_p++; 
-                return trex_charclass(exp,t);
-                }
-            case 'b': 
-            case 'B':
-                if(!isclass) {
-                    int node = trex_newnode(exp,OP_WB);
-                    exp->_nodes[node].left = *exp->_p;
-                    exp->_p++; 
-                    return node;
-                } //else default
-            default: 
-                t = *exp->_p; exp->_p++; 
-                return trex_newnode(exp,t);
-        }
-    }
-    else if(!scisprint(*exp->_p)) {
-        
-        trex_error(exp,_SC("letter expected"));
-    }
-    t = *exp->_p; exp->_p++; 
-    return trex_newnode(exp,t);
-}
-static int trex_class(TRex *exp)
-{
-    int ret = -1;
-    int first = -1,chain;
-    if(*exp->_p == TREX_SYMBOL_BEGINNING_OF_STRING){
-        ret = trex_newnode(exp,OP_NCLASS);
-        exp->_p++;
-    }else ret = trex_newnode(exp,OP_CLASS);
-    
-    if(*exp->_p == ']') trex_error(exp,_SC("empty class"));
-    chain = ret;
-    while(*exp->_p != ']' && exp->_p != exp->_eol) {
-        if(*exp->_p == '-' && first != -1){ 
-            int r,t;
-            if(*exp->_p++ == ']') trex_error(exp,_SC("unfinished range"));
-            r = trex_newnode(exp,OP_RANGE);
-            if(first>*exp->_p) trex_error(exp,_SC("invalid range"));
-            if(exp->_nodes[first].type == OP_CCLASS) trex_error(exp,_SC("cannot use character classes in ranges"));
-            exp->_nodes[r].left = exp->_nodes[first].type;
-            t = trex_escapechar(exp);
-            exp->_nodes[r].right = t;
-            exp->_nodes[chain].next = r;
-            chain = r;
-            first = -1;
-        }
-        else{
-            if(first!=-1){
-                int c = first;
-                exp->_nodes[chain].next = c;
-                chain = c;
-                first = trex_charnode(exp,TRex_True);
-            }
-            else{
-                first = trex_charnode(exp,TRex_True);
-            }
-        }
-    }
-    if(first!=-1){
-        int c = first;
-        exp->_nodes[chain].next = c;
-        chain = c;
-        first = -1;
-    }
-    /* hack? */
-    exp->_nodes[ret].left = exp->_nodes[ret].next;
-    exp->_nodes[ret].next = -1;
-    return ret;
+static int toi(int x) {
+  return isdigit(x) ? x - '0' : x - 'W';
 }
 
-static int trex_parsenumber(TRex *exp)
-{
-    int ret = *exp->_p-'0';
-    int positions = 10;
-    exp->_p++;
-    while(isdigit(*exp->_p)) {
-        ret = ret*10+(*exp->_p++-'0');
-        if(positions==1000000000) trex_error(exp,_SC("overflow in numeric constant"));
-        positions *= 10;
-    };
-    return ret;
+static int hextoi(const unsigned char *s) {
+  return (toi(tolower(s[0])) << 4) | toi(tolower(s[1]));
 }
 
-static int trex_element(TRex *exp)
-{
-    int ret = -1;
-    switch(*exp->_p)
-    {
-    case '(': {
-        int expr,newn;
-        exp->_p++;
+static int match_op(const unsigned char *re, const unsigned char *s,
+                    struct regex_info *info) {
+  int result = 0;
+  switch (*re) {
+    case '\\':
+      /* Metacharacters */
+      switch (re[1]) {
+        case 'S': FAIL_IF(isspace(*s), SLRE_NO_MATCH); result++; break;
+        case 's': FAIL_IF(!isspace(*s), SLRE_NO_MATCH); result++; break;
+        case 'd': FAIL_IF(!isdigit(*s), SLRE_NO_MATCH); result++; break;
+        case 'b': FAIL_IF(*s != '\b', SLRE_NO_MATCH); result++; break;
+        case 'f': FAIL_IF(*s != '\f', SLRE_NO_MATCH); result++; break;
+        case 'n': FAIL_IF(*s != '\n', SLRE_NO_MATCH); result++; break;
+        case 'r': FAIL_IF(*s != '\r', SLRE_NO_MATCH); result++; break;
+        case 't': FAIL_IF(*s != '\t', SLRE_NO_MATCH); result++; break;
+        case 'v': FAIL_IF(*s != '\v', SLRE_NO_MATCH); result++; break;
 
+        case 'x':
+          /* Match byte, \xHH where HH is hexadecimal byte representaion */
+          FAIL_IF(hextoi(re + 2) != *s, SLRE_NO_MATCH);
+          result++;
+          break;
 
-        if(*exp->_p =='?') {
-            exp->_p++;
-            trex_expect(exp,':');
-            expr = trex_newnode(exp,OP_NOCAPEXPR);
-        }
-        else
-            expr = trex_newnode(exp,OP_EXPR);
-        newn = trex_list(exp);
-        exp->_nodes[expr].left = newn;
-        ret = expr;
-        trex_expect(exp,')');
-              }
-              break;
-    case '[':
-        exp->_p++;
-        ret = trex_class(exp);
-        trex_expect(exp,']');
-        break;
-    case TREX_SYMBOL_END_OF_STRING: exp->_p++; ret = trex_newnode(exp,OP_EOL);break;
-    case TREX_SYMBOL_ANY_CHAR: exp->_p++; ret = trex_newnode(exp,OP_DOT);break;
+        default:
+          /* Valid metacharacter check is done in bar() */
+          FAIL_IF(re[1] != s[0], SLRE_NO_MATCH);
+          result++;
+          break;
+      }
+      break;
+
+    case '|': FAIL_IF(1, SLRE_INTERNAL_ERROR); break;
+    case '$': FAIL_IF(1, SLRE_NO_MATCH); break;
+    case '.': result++; break;
+
     default:
-        ret = trex_charnode(exp,TRex_False);
-        break;
-    }
+      if (info->flags & SLRE_IGNORE_CASE) {
+        FAIL_IF(tolower(*re) != tolower(*s), SLRE_NO_MATCH);
+      } else {
+        FAIL_IF(*re != *s, SLRE_NO_MATCH);
+      }
+      result++;
+      break;
+  }
 
-    {
-        int op;
-        TRexBool isgreedy = TRex_False;
-        unsigned short p0 = 0, p1 = 0;
-        switch(*exp->_p){
-            case TREX_SYMBOL_GREEDY_ZERO_OR_MORE: p0 = 0; p1 = 0xFFFF; exp->_p++; isgreedy = TRex_True; break;
-            case TREX_SYMBOL_GREEDY_ONE_OR_MORE: p0 = 1; p1 = 0xFFFF; exp->_p++; isgreedy = TRex_True; break;
-            case TREX_SYMBOL_GREEDY_ZERO_OR_ONE: p0 = 0; p1 = 1; exp->_p++; isgreedy = TRex_True; break;
-            case '{':
-                exp->_p++;
-                if(!isdigit(*exp->_p)) trex_error(exp,_SC("number expected"));
-                p0 = (unsigned short)trex_parsenumber(exp);
-                /*******************************/
-                switch(*exp->_p) {
-            case '}':
-                p1 = p0; exp->_p++;
-                break;
-            case ',':
-                exp->_p++;
-                p1 = 0xFFFF;
-                if(isdigit(*exp->_p)){
-                    p1 = (unsigned short)trex_parsenumber(exp);
-                }
-                trex_expect(exp,'}');
-                break;
-            default:
-                trex_error(exp,_SC(", or } expected"));
-        }
-        /*******************************/
-        isgreedy = TRex_True; 
-        break;
-
-        }
-        if(isgreedy) {
-            int nnode = trex_newnode(exp,OP_GREEDY);
-            op = OP_GREEDY;
-            exp->_nodes[nnode].left = ret;
-            exp->_nodes[nnode].right = ((p0)<<16)|p1;
-            ret = nnode;
-        }
-    }
-    if((*exp->_p != TREX_SYMBOL_BRANCH) && (*exp->_p != ')') && (*exp->_p != TREX_SYMBOL_GREEDY_ZERO_OR_MORE) && (*exp->_p != TREX_SYMBOL_GREEDY_ONE_OR_MORE) && (*exp->_p != '\0')) {
-        int nnode = trex_element(exp);
-        exp->_nodes[ret].next = nnode;
-    }
-
-    return ret;
+  return result;
 }
 
-static int trex_list(TRex *exp)
-{
-    int ret=-1,e;
-    if(*exp->_p == TREX_SYMBOL_BEGINNING_OF_STRING) {
-        exp->_p++;
-        ret = trex_newnode(exp,OP_BOL);
-    }
-    e = trex_element(exp);
-    if(ret != -1) {
-        exp->_nodes[ret].next = e;
-    }
-    else ret = e;
+static int match_set(const char *re, int re_len, const char *s,
+                     struct regex_info *info) {
+  int len = 0, result = -1, invert = re[0] == '^';
 
-    if(*exp->_p == TREX_SYMBOL_BRANCH) {
-        int temp,tright;
-        exp->_p++;
-        temp = trex_newnode(exp,OP_OR);
-        exp->_nodes[temp].left = ret;
-        tright = trex_list(exp);
-        exp->_nodes[temp].right = tright;
-        ret = temp;
+  if (invert) re++, re_len--;
+
+  while (len <= re_len && re[len] != ']' && result <= 0) {
+    /* Support character range */
+    if (re[len] != '-' && re[len + 1] == '-' && re[len + 2] != ']' &&
+        re[len + 2] != '\0') {
+      result = info->flags &  SLRE_IGNORE_CASE ?
+        tolower(*s) >= tolower(re[len]) && tolower(*s) <= tolower(re[len + 2]) :
+        *s >= re[len] && *s <= re[len + 2];
+      len += 3;
+    } else {
+      result = match_op((unsigned char *) re + len, (unsigned char *) s, info);
+      len += op_len(re + len);
     }
-    return ret;
+  }
+  return (!invert && result > 0) || (invert && result <= 0) ? 1 : -1;
 }
 
-static TRexBool trex_matchcclass(int cclass,TRexChar c)
-{
-    switch(cclass) {
-    case 'a': return isalpha(c)?TRex_True:TRex_False;
-    case 'A': return !isalpha(c)?TRex_True:TRex_False;
-    case 'w': return (isalnum(c) || c == '_')?TRex_True:TRex_False;
-    case 'W': return (!isalnum(c) && c != '_')?TRex_True:TRex_False;
-    case 's': return isspace(c)?TRex_True:TRex_False;
-    case 'S': return !isspace(c)?TRex_True:TRex_False;
-    case 'd': return isdigit(c)?TRex_True:TRex_False;
-    case 'D': return !isdigit(c)?TRex_True:TRex_False;
-    case 'x': return isxdigit(c)?TRex_True:TRex_False;
-    case 'X': return !isxdigit(c)?TRex_True:TRex_False;
-    case 'c': return iscntrl(c)?TRex_True:TRex_False;
-    case 'C': return !iscntrl(c)?TRex_True:TRex_False;
-    case 'p': return ispunct(c)?TRex_True:TRex_False;
-    case 'P': return !ispunct(c)?TRex_True:TRex_False;
-    case 'l': return islower(c)?TRex_True:TRex_False;
-    case 'u': return isupper(c)?TRex_True:TRex_False;
-    }
-    return TRex_False; /*cannot happen*/
-}
+static int doh(const char *s, int s_len, struct regex_info *info, int bi);
 
-static TRexBool trex_matchclass(TRex* exp,TRexNode *node,TRexChar c)
-{
-    do {
-        switch(node->type) {
-            case OP_RANGE:
-                if(c >= node->left && c <= node->right) return TRex_True;
-                break;
-            case OP_CCLASS:
-                if(trex_matchcclass(node->left,c)) return TRex_True;
-                break;
-            default:
-                if(c == node->type)return TRex_True;
-        }
-    } while((node->next != -1) && (node = &exp->_nodes[node->next]));
-    return TRex_False;
-}
+static int bar(const char *re, int re_len, const char *s, int s_len,
+               struct regex_info *info, int bi) {
+  /* i is offset in re, j is offset in s, bi is brackets index */
+  int i, j, n, step;
 
-static const TRexChar *trex_matchnode(TRex* exp,TRexNode *node,const TRexChar *str,TRexNode *next)
-{
-    
-    TRexNodeType type = node->type;
-    switch(type) {
-    case OP_GREEDY: {
-        //TRexNode *greedystop = (node->next != -1) ? &exp->_nodes[node->next] : NULL;
-        TRexNode *greedystop = NULL;
-        int p0 = (node->right >> 16)&0x0000FFFF, p1 = node->right&0x0000FFFF, nmaches = 0;
-        const TRexChar *s=str, *good = str;
+  for (i = j = 0; i < re_len && j <= s_len; i += step) {
 
-        if(node->next != -1) {
-            greedystop = &exp->_nodes[node->next];
-        }
-        else {
-            greedystop = next;
+    /* Handle quantifiers. Get the length of the chunk. */
+    step = re[i] == '(' ? info->brackets[bi + 1].len + 2 :
+      get_op_len(re + i, re_len - i);
+
+    DBG(("%s [%.*s] [%.*s] re_len=%d step=%d i=%d j=%d\n", __func__,
+         re_len - i, re + i, s_len - j, s + j, re_len, step, i, j));
+
+    FAIL_IF(is_quantifier(&re[i]), SLRE_UNEXPECTED_QUANTIFIER);
+    FAIL_IF(step <= 0, SLRE_INVALID_CHARACTER_SET);
+
+    if (i + step < re_len && is_quantifier(re + i + step)) {
+      DBG(("QUANTIFIER: [%.*s]%c [%.*s]\n", step, re + i,
+           re[i + step], s_len - j, s + j));
+      if (re[i + step] == '?') {
+        int result = bar(re + i, step, s + j, s_len - j, info, bi);
+        j += result > 0 ? result : 0;
+        i++;
+      } else if (re[i + step] == '+' || re[i + step] == '*') {
+        int j2 = j, nj = j, n1, n2 = -1, ni, non_greedy = 0;
+
+        /* Points to the regexp code after the quantifier */
+        ni = i + step + 1;
+        if (ni < re_len && re[ni] == '?') {
+          non_greedy = 1;
+          ni++;
         }
 
-        while((nmaches == 0xFFFF || nmaches < p1)) {
+        do {
+          if ((n1 = bar(re + i, step, s + j2, s_len - j2, info, bi)) > 0) {
+            j2 += n1;
+          }
+          if (re[i + step] == '+' && n1 < 0) break;
 
-            const TRexChar *stop;
-            if(!(s = trex_matchnode(exp,&exp->_nodes[node->left],s,greedystop)))
-                break;
-            nmaches++;
-            good=s;
-            if(greedystop) {
-                //checks that 0 matches satisfy the expression(if so skips)
-                //if not would always stop(for instance if is a '?')
-                if(greedystop->type != OP_GREEDY ||
-                (greedystop->type == OP_GREEDY && ((greedystop->right >> 16)&0x0000FFFF) != 0))
-                {
-                    TRexNode *gnext = NULL;
-                    if(greedystop->next != -1) {
-                        gnext = &exp->_nodes[greedystop->next];
-                    }else if(next && next->next != -1){
-                        gnext = &exp->_nodes[next->next];
-                    }
-                    stop = trex_matchnode(exp,greedystop,s,gnext);
-                    if(stop) {
-                        //if satisfied stop it
-                        if(p0 == p1 && p0 == nmaches) break;
-                        else if(nmaches >= p0 && p1 == 0xFFFF) break;
-                        else if(nmaches >= p0 && nmaches <= p1) break;
-                    }
-                }
-            }
-            
-            if(s >= exp->_eol)
-                break;
+          if (ni >= re_len) {
+            /* After quantifier, there is nothing */
+            nj = j2;
+          } else if ((n2 = bar(re + ni, re_len - ni, s + j2,
+                               s_len - j2, info, bi)) >= 0) {
+            /* Regex after quantifier matched */
+            nj = j2 + n2;
+          }
+          if (nj > j && non_greedy) break;
+        } while (n1 > 0);
+
+        /*
+         * Even if we found one or more pattern, this branch will be executed,
+         * changing the next captures.
+         */
+        if (n1 < 0 && n2 < 0 && re[i + step] == '*' &&
+            (n2 = bar(re + ni, re_len - ni, s + j, s_len - j, info, bi)) > 0) {
+          nj = j + n2;
         }
-        if(p0 == p1 && p0 == nmaches) return good;
-        else if(nmaches >= p0 && p1 == 0xFFFF) return good;
-        else if(nmaches >= p0 && nmaches <= p1) return good;
-        return NULL;
-    }
-    case OP_OR: {
-            const TRexChar *asd = str;
-            TRexNode *temp=&exp->_nodes[node->left];
-            while( (asd = trex_matchnode(exp,temp,asd,NULL)) ) {
-                if(temp->next != -1)
-                    temp = &exp->_nodes[temp->next];
-                else
-                    return asd;
-            }
-            asd = str;
-            temp = &exp->_nodes[node->right];
-            while( (asd = trex_matchnode(exp,temp,asd,NULL)) ) {
-                if(temp->next != -1)
-                    temp = &exp->_nodes[temp->next];
-                else
-                    return asd;
-            }
-            return NULL;
-            break;
-    }
-    case OP_EXPR:
-    case OP_NOCAPEXPR:{
-            TRexNode *n = &exp->_nodes[node->left];
-            const TRexChar *cur = str;
-            int capture = -1;
-            if(node->type != OP_NOCAPEXPR && node->right == exp->_currsubexp) {
-                capture = exp->_currsubexp;
-                exp->_matches[capture].begin = cur;
-                exp->_currsubexp++;
-            }
-            
-            do {
-                TRexNode *subnext = NULL;
-                if(n->next != -1) {
-                    subnext = &exp->_nodes[n->next];
-                }else {
-                    subnext = next;
-                }
-                if(!(cur = trex_matchnode(exp,n,cur,subnext))) {
-                    if(capture != -1){
-                        exp->_matches[capture].begin = 0;
-                        exp->_matches[capture].len = 0;
-                    }
-                    return NULL;
-                }
-            } while((n->next != -1) && (n = &exp->_nodes[n->next]));
 
-            if(capture != -1) 
-                exp->_matches[capture].len = cur - exp->_matches[capture].begin;
-            return cur;
-    }                 
-    case OP_WB:
-        if((str == exp->_bol && !isspace(*str))
-         || (str == exp->_eol && !isspace(*(str-1)))
-         || (!isspace(*str) && isspace(*(str+1)))
-         || (isspace(*str) && !isspace(*(str+1))) ) {
-            return (node->left == 'b')?str:NULL;
+        DBG(("STAR/PLUS END: %d %d %d %d %d\n", j, nj, re_len - ni, n1, n2));
+        FAIL_IF(re[i + step] == '+' && nj == j, SLRE_NO_MATCH);
+
+        /* If while loop body above was not executed for the * quantifier,  */
+        /* make sure the rest of the regex matches                          */
+        FAIL_IF(nj == j && ni < re_len && n2 < 0, SLRE_NO_MATCH);
+
+        /* Returning here cause we've matched the rest of RE already */
+        return nj;
+      }
+      continue;
+    }
+
+    if (re[i] == '[') {
+      n = match_set(re + i + 1, re_len - (i + 2), s + j, info);
+      DBG(("SET %.*s [%.*s] -> %d\n", step, re + i, s_len - j, s + j, n));
+      FAIL_IF(n <= 0, SLRE_NO_MATCH);
+      j += n;
+    } else if (re[i] == '(') {
+      n = SLRE_NO_MATCH;
+      bi++;
+      FAIL_IF(bi >= info->num_brackets, SLRE_INTERNAL_ERROR);
+      DBG(("CAPTURING [%.*s] [%.*s] [%s]\n",
+           step, re + i, s_len - j, s + j, re + i + step));
+
+      if (re_len - (i + step) <= 0) {
+        /* Nothing follows brackets */
+        n = doh(s + j, s_len - j, info, bi);
+      } else {
+        int j2;
+        for (j2 = 0; j2 <= s_len - j; j2++) {
+          if ((n = doh(s + j, s_len - (j + j2), info, bi)) >= 0 &&
+              bar(re + i + step, re_len - (i + step),
+                  s + j + n, s_len - (j + n), info, bi) >= 0) break;
         }
-        return (node->left == 'b')?NULL:str;
-    case OP_BOL:
-        if(str == exp->_bol) return str;
-        return NULL;
-    case OP_EOL:
-        if(str == exp->_eol) return str;
-        return NULL;
-    case OP_DOT:{
-        *str++;
-                }
-        return str;
-    case OP_NCLASS:
-    case OP_CLASS:
-        if(trex_matchclass(exp,&exp->_nodes[node->left],*str)?(type == OP_CLASS?TRex_True:TRex_False):(type == OP_NCLASS?TRex_True:TRex_False)) {
-            *str++;
-            return str;
-        }
-        return NULL;
-    case OP_CCLASS:
-        if(trex_matchcclass(node->left,*str)) {
-            *str++;
-            return str;
-        }
-        return NULL;
-    default: /* char */
-        if(*str != node->type) return NULL;
-        *str++;
-        return str;
+      }
+
+      DBG(("CAPTURED [%.*s] [%.*s]:%d\n", step, re + i, s_len - j, s + j, n));
+      FAIL_IF(n < 0, n);
+      if (info->caps != NULL && n > 0) {
+        info->caps[bi - 1].ptr = s + j;
+        info->caps[bi - 1].len = n;
+      }
+      j += n;
+    } else if (re[i] == '^') {
+      FAIL_IF(j != 0, SLRE_NO_MATCH);
+    } else if (re[i] == '$') {
+      FAIL_IF(j != s_len, SLRE_NO_MATCH);
+    } else {
+      FAIL_IF(j >= s_len, SLRE_NO_MATCH);
+      n = match_op((unsigned char *) (re + i), (unsigned char *) (s + j), info);
+      FAIL_IF(n <= 0, n);
+      j += n;
     }
-    return NULL;
+  }
+
+  return j;
 }
 
-/* public api */
-TRex *trex_compile(const TRexChar *pattern,const TRexChar **error)
-{
-    TRex *exp = (TRex *)malloc(sizeof(TRex));
-    exp->_eol = exp->_bol = NULL;
-    exp->_p = pattern;
-    exp->_nallocated = (int)scstrlen(pattern) * sizeof(TRexChar);
-    exp->_nodes = (TRexNode *)malloc(exp->_nallocated * sizeof(TRexNode));
-    exp->_nsize = 0;
-    exp->_matches = 0;
-    exp->_nsubexpr = 0;
-    exp->_first = trex_newnode(exp,OP_EXPR);
-    exp->_error = error;
-    exp->_jmpbuf = malloc(sizeof(jmp_buf));
-    if(setjmp(*((jmp_buf*)exp->_jmpbuf)) == 0) {
-        int res = trex_list(exp);
-        exp->_nodes[exp->_first].left = res;
-        if(*exp->_p!='\0')
-            trex_error(exp,_SC("unexpected character"));
-#ifdef _DEBUG
-        {
-            int nsize,i;
-            TRexNode *t;
-            nsize = exp->_nsize;
-            t = &exp->_nodes[0];
-            scprintf(_SC("\n"));
-            for(i = 0;i < nsize; i++) {
-                if(exp->_nodes[i].type>MAX_CHAR)
-                    scprintf(_SC("[%02d] %10s "),i,g_nnames[exp->_nodes[i].type-MAX_CHAR]);
-                else
-                    scprintf(_SC("[%02d] %10c "),i,exp->_nodes[i].type);
-                scprintf(_SC("left %02d right %02d next %02d\n"),exp->_nodes[i].left,exp->_nodes[i].right,exp->_nodes[i].next);
-            }
-            scprintf(_SC("\n"));
-        }
-#endif
-        exp->_matches = (TRexMatch *) malloc(exp->_nsubexpr * sizeof(TRexMatch));
-        memset(exp->_matches,0,exp->_nsubexpr * sizeof(TRexMatch));
+/* Process branch points */
+static int doh(const char *s, int s_len, struct regex_info *info, int bi) {
+  const struct bracket_pair *b = &info->brackets[bi];
+  int i = 0, len, result;
+  const char *p;
+
+  do {
+    p = i == 0 ? b->ptr : info->branches[b->branches + i - 1].schlong + 1;
+    len = b->num_branches == 0 ? b->len :
+      i == b->num_branches ? (int) (b->ptr + b->len - p) :
+      (int) (info->branches[b->branches + i].schlong - p);
+    DBG(("%s %d %d [%.*s] [%.*s]\n", __func__, bi, i, len, p, s_len, s));
+    result = bar(p, len, s, s_len, info, bi);
+    DBG(("%s <- %d\n", __func__, result));
+  } while (result <= 0 && i++ < b->num_branches);  /* At least 1 iteration */
+
+  return result;
+}
+
+static int baz(const char *s, int s_len, struct regex_info *info) {
+  int i, result = -1, is_anchored = info->brackets[0].ptr[0] == '^';
+
+  for (i = 0; i <= s_len; i++) {
+    result = doh(s + i, s_len - i, info, 0);
+    if (result >= 0) {
+      result += i;
+      break;
     }
-    else{
-        trex_free(exp);
-        return NULL;
+    if (is_anchored) break;
+  }
+
+  return result;
+}
+
+static void setup_branch_points(struct regex_info *info) {
+  int i, j;
+  struct branch tmp;
+
+  /* First, sort branches. Must be stable, no qsort. Use bubble algo. */
+  for (i = 0; i < info->num_branches; i++) {
+    for (j = i + 1; j < info->num_branches; j++) {
+      if (info->branches[i].bracket_index > info->branches[j].bracket_index) {
+        tmp = info->branches[i];
+        info->branches[i] = info->branches[j];
+        info->branches[j] = tmp;
+      }
     }
-    return exp;
-}
+  }
 
-void trex_free(TRex *exp)
-{
-    if(exp)    {
-        if(exp->_nodes) free(exp->_nodes);
-        if(exp->_jmpbuf) free(exp->_jmpbuf);
-        if(exp->_matches) free(exp->_matches);
-        free(exp);
+  /*
+   * For each bracket, set their branch points. This way, for every bracket
+   * (i.e. every chunk of regex) we know all branch points before matching.
+   */
+  for (i = j = 0; i < info->num_brackets; i++) {
+    info->brackets[i].num_branches = 0;
+    info->brackets[i].branches = j;
+    while (j < info->num_branches && info->branches[j].bracket_index == i) {
+      info->brackets[i].num_branches++;
+      j++;
     }
+  }
 }
 
-TRexBool trex_match(TRex* exp,const TRexChar* text)
-{
-    const TRexChar* res = NULL;
-    exp->_bol = text;
-    exp->_eol = text + scstrlen(text);
-    exp->_currsubexp = 0;
-    res = trex_matchnode(exp,exp->_nodes,text,NULL);
-    if(res == NULL || res != exp->_eol)
-        return TRex_False;
-    return TRex_True;
+static int foo(const char *re, int re_len, const char *s, int s_len,
+               struct regex_info *info) {
+  int i, step, depth = 0;
+
+  /* First bracket captures everything */
+  info->brackets[0].ptr = re;
+  info->brackets[0].len = re_len;
+  info->num_brackets = 1;
+
+  /* Make a single pass over regex string, memorize brackets and branches */
+  for (i = 0; i < re_len; i += step) {
+    step = get_op_len(re + i, re_len - i);
+
+    if (re[i] == '|') {
+      FAIL_IF(info->num_branches >= (int) ARRAY_SIZE(info->branches),
+              SLRE_TOO_MANY_BRANCHES);
+      info->branches[info->num_branches].bracket_index =
+        info->brackets[info->num_brackets - 1].len == -1 ?
+        info->num_brackets - 1 : depth;
+      info->branches[info->num_branches].schlong = &re[i];
+      info->num_branches++;
+    } else if (re[i] == '\\') {
+      FAIL_IF(i >= re_len - 1, SLRE_INVALID_METACHARACTER);
+      if (re[i + 1] == 'x') {
+        /* Hex digit specification must follow */
+        FAIL_IF(re[i + 1] == 'x' && i >= re_len - 3,
+                SLRE_INVALID_METACHARACTER);
+        FAIL_IF(re[i + 1] ==  'x' && !(isxdigit(re[i + 2]) &&
+                isxdigit(re[i + 3])), SLRE_INVALID_METACHARACTER);
+      } else {
+        FAIL_IF(!is_metacharacter((unsigned char *) re + i + 1),
+                SLRE_INVALID_METACHARACTER);
+      }
+    } else if (re[i] == '(') {
+      FAIL_IF(info->num_brackets >= (int) ARRAY_SIZE(info->brackets),
+              SLRE_TOO_MANY_BRACKETS);
+      depth++;  /* Order is important here. Depth increments first. */
+      info->brackets[info->num_brackets].ptr = re + i + 1;
+      info->brackets[info->num_brackets].len = -1;
+      info->num_brackets++;
+      FAIL_IF(info->num_caps > 0 && info->num_brackets - 1 > info->num_caps,
+              SLRE_CAPS_ARRAY_TOO_SMALL);
+    } else if (re[i] == ')') {
+      int ind = info->brackets[info->num_brackets - 1].len == -1 ?
+        info->num_brackets - 1 : depth;
+      info->brackets[ind].len = (int) (&re[i] - info->brackets[ind].ptr);
+      DBG(("SETTING BRACKET %d [%.*s]\n",
+           ind, info->brackets[ind].len, info->brackets[ind].ptr));
+      depth--;
+      FAIL_IF(depth < 0, SLRE_UNBALANCED_BRACKETS);
+      FAIL_IF(i > 0 && re[i - 1] == '(', SLRE_NO_MATCH);
+    }
+  }
+
+  FAIL_IF(depth != 0, SLRE_UNBALANCED_BRACKETS);
+  setup_branch_points(info);
+
+  return baz(s, s_len, info);
 }
 
-TRexBool trex_searchrange(TRex* exp,const TRexChar* text_begin,const TRexChar* text_end,const TRexChar** out_begin, const TRexChar** out_end)
-{
-    const TRexChar *cur = NULL;
-    int node = exp->_first;
-    if(text_begin >= text_end) return TRex_False;
-    exp->_bol = text_begin;
-    exp->_eol = text_end;
-    do {
-        cur = text_begin;
-        while(node != -1) {
-            exp->_currsubexp = 0;
-            cur = trex_matchnode(exp,&exp->_nodes[node],cur,NULL);
-            if(!cur)
-                break;
-            node = exp->_nodes[node].next;
-        }
-        *text_begin++;
-    } while(cur == NULL && text_begin != text_end);
+int slre_match(const char *regexp, const char *s, int s_len,
+               struct slre_cap *caps, int num_caps, int flags) {
+  struct regex_info info;
 
-    if(cur == NULL)
-        return TRex_False;
+  /* Initialize info structure */
+  info.flags = flags;
+  info.num_brackets = info.num_branches = 0;
+  info.num_caps = num_caps;
+  info.caps = caps;
 
-    --text_begin;
-
-    if(out_begin) *out_begin = text_begin;
-    if(out_end) *out_end = cur;
-    return TRex_True;
+  DBG(("========================> [%s] [%.*s]\n", regexp, s_len, s));
+  return foo(regexp, (int) strlen(regexp), s, s_len, &info);
 }
 
-TRexBool trex_search(TRex* exp,const TRexChar* text, const TRexChar** out_begin, const TRexChar** out_end)
-{
-    return trex_searchrange(exp,text,text + scstrlen(text),out_begin,out_end);
-}
-
-int trex_getsubexpcount(TRex* exp)
-{
-    return exp->_nsubexpr;
-}
-
-TRexBool trex_getsubexp(TRex* exp, int n, TRexMatch *subexp)
-{
-    if( n<0 || n >= exp->_nsubexpr) return TRex_False;
-    *subexp = exp->_matches[n];
-    return TRex_True;
-}
-
+//end slre.c
 
 //########################################################################
 //########################################################################
@@ -3861,30 +3651,35 @@ String MakeBase::resolve(const String &otherPath)
  */
 bool MakeBase::regexMatch(const String &str, const String &pattern)
 {
-    const TRexChar *terror = NULL;
-    const TRexChar *cpat = pattern.c_str();
-    TRex *expr = trex_compile(cpat, &terror);
-    if (!expr)
-        {
-        if (!terror)
-            terror = "undefined";
-        error("compilation error [%s]!\n", terror);
-        return false;
-        } 
-
+    int res = slre_match(pattern.c_str(), str.c_str(), str.length(), NULL, 0, SLRE_IGNORE_CASE);
+    
     bool ret = true;
-
-    const TRexChar *cstr = str.c_str();
-    if (trex_match(expr, cstr))
-        {
-        ret = true;
-        }
-    else
+    if (res < 0)
         {
         ret = false;
+        
+        // error cases
+        if (res < -1)
+            {
+            String err;
+            switch(res)
+                {
+                    case SLRE_UNEXPECTED_QUANTIFIER:
+                        err = "unexpected quantifier"; break;
+                    case SLRE_UNBALANCED_BRACKETS:
+                        err = "unbalanced brackets"; break;
+                    case SLRE_INTERNAL_ERROR:
+                        err = "internal error"; break;
+                    case SLRE_INVALID_CHARACTER_SET:
+                        err = "invald character set"; break;
+                    case SLRE_INVALID_METACHARACTER:
+                        err = "invalid meta character"; break;
+                    default:
+                        err = "unknown error"; break;
+                }
+            error("regex failure (%s) while parsing [%s]!\n", err.c_str(), pattern.c_str());
+            }
         }
-
-    trex_free(expr);
 
     return ret;
 }

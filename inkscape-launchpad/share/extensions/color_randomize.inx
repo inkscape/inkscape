@@ -8,11 +8,15 @@
 	<param name="tab" type="notebook">
         <page name="Options" _gui-text="Options">
 	        <param name="hue" type="boolean" _gui-text="Hue">true</param>
+	        <param name="hue_range" type="int" appearance="full" min="0" max="100" indent="0" _gui-text="Hue range (%)">100</param>
 	        <param name="saturation" type="boolean" _gui-text="Saturation">true</param>
+	        <param name="saturation_range" type="int" appearance="full" min="0" max="100" indent="0" _gui-text="Saturation range (%)">100</param>
 	        <param name="lightness" type="boolean" _gui-text="Lightness">true</param>
+	        <param name="lightness_range" type="int" appearance="full" min="0" max="100" indent="0" _gui-text="Lightness range (%)">100</param>
+
         </page>
         <page name="Help" _gui-text="Help">
-            <_param name="instructions" type="description" xml:space="preserve">Converts to HSL, randomizes hue and/or saturation and/or lightness and converts it back to RGB.</_param>
+            <_param name="instructions" type="description" xml:space="preserve">Converts to HSL, randomizes hue and/or saturation and/or lightness and converts it back to RGB. Lower the range values to limit the distance between the original color and the randomized one.</_param>
         </page>
     </param>    
 	<effect>

@@ -103,6 +103,7 @@ LPELattice2::LPELattice2(LivePathEffectObject *lpeobject) :
     registerParameter(&grid_point_28x30);
     registerParameter(&grid_point_29x31);
     registerParameter(&grid_point_32x33x34x35);
+    apply_to_clippath_and_mask = true;
 }
 
 LPELattice2::~LPELattice2()
@@ -358,9 +359,6 @@ LPELattice2::doBeforeEffect (SPLPEItem const* lpeitem)
         horizontal(grid_point_17, grid_point_19,horiz);
         horizontal(grid_point_20x21, grid_point_22x23,horiz);
     }
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 void

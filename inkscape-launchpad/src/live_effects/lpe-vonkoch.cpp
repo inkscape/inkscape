@@ -64,7 +64,7 @@ LPEVonKoch::LPEVonKoch(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&drawall) );
     registerParameter( dynamic_cast<Parameter *>(&maxComplexity) );
     //registerParameter( dynamic_cast<Parameter *>(&draw_boxes) );
-
+    apply_to_clippath_and_mask = true;
     nbgenerations.param_make_integer();
     nbgenerations.param_set_range(0, Geom::infinity());
     maxComplexity.param_make_integer();
@@ -262,9 +262,6 @@ LPEVonKoch::doBeforeEffect (SPLPEItem const* lpeitem)
         tmp_pathv.push_back(tmp_path);
         ref_path.set_new_value(tmp_pathv,true);
     }
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 

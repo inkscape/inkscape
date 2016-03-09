@@ -87,6 +87,7 @@ LPERoughen::LPERoughen(LivePathEffectObject *lpeobject)
     segments.param_set_increments(1, 1);
     segments.param_set_digits(0);
     seed = 0;
+    apply_to_clippath_and_mask = true;
 }
 
 LPERoughen::~LPERoughen() {}
@@ -102,9 +103,6 @@ void LPERoughen::doBeforeEffect(SPLPEItem const *lpeitem)
     displace_y.resetRandomizer();
     global_randomize.resetRandomizer();
     srand(1);
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 Gtk::Widget *LPERoughen::newWidget()

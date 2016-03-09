@@ -61,6 +61,7 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
 {
     show_orig_path = true;
     _provides_knotholder_entities = true;
+    apply_to_clippath_and_mask = true;
 
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter(&copiesTo360);
@@ -111,10 +112,6 @@ LPECopyRotate::doBeforeEffect (SPLPEItem const* lpeitem)
     if(copiesTo360 ){
         rot_pos = origin;
     }
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
-
 }
 
 

@@ -127,7 +127,8 @@ private:
     /** List of valid types for the stroke-style radio-button widget */
     enum StrokeStyleButtonType {
         STROKE_STYLE_BUTTON_JOIN, ///< A button to set the line-join style
-        STROKE_STYLE_BUTTON_CAP   ///< A button to set the line-cap style
+        STROKE_STYLE_BUTTON_CAP,  ///< A button to set the line-cap style
+        STROKE_STYLE_BUTTON_ORDER ///< A button to set the paint-order style
     };
     
     /**
@@ -158,8 +159,10 @@ private:
     void setDashSelectorFromStyle(SPDashSelector *dsel, SPStyle *style);
     void setJoinType (unsigned const jointype);
     void setCapType (unsigned const captype);
+    void setPaintOrder (gchar const *paint_order);
     void setJoinButtons(Gtk::ToggleButton *active);
     void setCapButtons(Gtk::ToggleButton *active);
+    void setPaintOrderButtons(Gtk::ToggleButton *active);
     void scaleLine();
     void setScaledDash(SPCSSAttr *css, int ndash, double *dash, double offset, double scale);
     void setMarkerColor(SPObject *marker, int loc, SPItem *item);
@@ -204,6 +207,12 @@ private:
     StrokeStyleButton *capButt;
     StrokeStyleButton *capRound;
     StrokeStyleButton *capSquare;
+    StrokeStyleButton *paintOrderFSM;
+    StrokeStyleButton *paintOrderSFM;
+    StrokeStyleButton *paintOrderFMS;
+    StrokeStyleButton *paintOrderMFS;
+    StrokeStyleButton *paintOrderSMF;
+    StrokeStyleButton *paintOrderMSF;
     SPDashSelector *dashSelector;
 
     gboolean update;

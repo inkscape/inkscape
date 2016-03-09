@@ -42,6 +42,7 @@ LPEEnvelope::LPEEnvelope(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&bend_path3) );
     registerParameter( dynamic_cast<Parameter *>(&bend_path4) );
     concatenate_before_pwd2 = true;
+    apply_to_clippath_and_mask = true;
 }
 
 LPEEnvelope::~LPEEnvelope()
@@ -54,9 +55,6 @@ LPEEnvelope::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     // get the item bounding box
     original_bbox(lpeitem);
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >

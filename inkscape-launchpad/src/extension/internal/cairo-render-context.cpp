@@ -1453,8 +1453,11 @@ CairoRenderContext::_prepareRenderText()
     }
 }
 
+/*  We need CairoPaintOrder as markers are rendered in a separate step and may be rendered
+ *  inbetween fill and stroke.
+ */
 bool
-CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, Geom::OptRect const &pbox)
+CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, Geom::OptRect const &pbox, CairoPaintOrder order)
 {
     g_assert( _is_valid );
 
@@ -1476,9 +1479,10 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
         return true;
     }
 
-    bool no_fill = style->fill.isNone() || style->fill_opacity.value == 0;
+    bool no_fill = style->fill.isNone() || style->fill_opacity.value == 0 ||
+        order == STROKE_ONLY;
     bool no_stroke = style->stroke.isNone() || style->stroke_width.computed < 1e-9 ||
-                    style->stroke_opacity.value == 0;
+                    style->stroke_opacity.value == 0 || order == FILL_ONLY;
 
     if (no_fill && no_stroke)
         return true;
@@ -1492,14 +1496,17 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
         pushLayer();
 
     if (!no_fill) {
-        _setFillStyle(style, pbox);
-        setPathVector(pathv);
-
         if (style->fill_rule.computed == SP_WIND_RULE_EVENODD) {
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_EVEN_ODD);
         } else {
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
         }
+    }
+
+    setPathVector(pathv);
+
+    if (!no_fill && (order == STROKE_OVER_FILL || order == FILL_ONLY)) {
+        _setFillStyle(style, pbox);
 
         if (no_stroke)
             cairo_fill(_cr);
@@ -1509,10 +1516,17 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
 
     if (!no_stroke) {
         _setStrokeStyle(style, pbox);
-        if (no_fill)
-            setPathVector(pathv);
 
-        cairo_stroke(_cr);
+        if (no_fill || order == STROKE_OVER_FILL)
+            cairo_stroke(_cr);
+        else
+            cairo_stroke_preserve(_cr);
+    }
+
+    if (!no_fill && order == FILL_OVER_STROKE) {
+        _setFillStyle(style, pbox);
+
+            cairo_fill(_cr);
     }
 
     if (need_layer)
@@ -1642,7 +1656,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const &font_ma
         return true;
 
     // create a cairo_font_face from PangoFont
-    double size = style->font_size.computed; /// \fixme why is this variable never used?
+    // double size = style->font_size.computed; /// \fixme why is this variable never used?
     gpointer fonthash = (gpointer)font;
     cairo_font_face_t *font_face = NULL;
     if(font_table.find(fonthash)!=font_table.end())
@@ -1699,30 +1713,72 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const &font_ma
             _showGlyphs(_cr, font, glyphtext, TRUE);
         }
     } else {
-        bool fill = false, stroke = false, have_path = false;
+
+        bool fill = false;
         if (style->fill.isColor() || style->fill.isPaintserver()) {
             fill = true;
         }
 
+        bool stroke = false;
         if (style->stroke.isColor() || style->stroke.isPaintserver()) {
             stroke = true;
         }
-        if (fill) {
+
+        // Text never has markers
+        bool stroke_over_fill = true;
+        if ( (style->paint_order.layer[0] == SP_CSS_PAINT_ORDER_STROKE &&
+              style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_FILL)   ||
+
+             (style->paint_order.layer[0] == SP_CSS_PAINT_ORDER_STROKE &&
+              style->paint_order.layer[2] == SP_CSS_PAINT_ORDER_FILL)   ||
+
+             (style->paint_order.layer[1] == SP_CSS_PAINT_ORDER_STROKE &&
+              style->paint_order.layer[2] == SP_CSS_PAINT_ORDER_FILL) ) {
+            stroke_over_fill = false;
+        }
+
+        bool have_path = false;
+        if (fill && stroke_over_fill) {
             _setFillStyle(style, Geom::OptRect());
             if (_is_texttopath) {
                 _showGlyphs(_cr, font, glyphtext, true);
-                have_path = true;
-                if (stroke) cairo_fill_preserve(_cr);
-                else cairo_fill(_cr);
+                if (stroke) {
+                    cairo_fill_preserve(_cr);
+                    have_path = true;
+                } else {
+                    cairo_fill(_cr);
+                }
             } else {
                 _showGlyphs(_cr, font, glyphtext, false);
             }
         }
+
         if (stroke) {
             _setStrokeStyle(style, Geom::OptRect());
-            if (!have_path) _showGlyphs(_cr, font, glyphtext, true);
-            cairo_stroke(_cr);
+            if (!have_path) {
+                _showGlyphs(_cr, font, glyphtext, true);
+            }
+            if (fill && _is_texttopath && !stroke_over_fill) {
+                cairo_stroke_preserve(_cr);
+                have_path = true;
+            } else {
+                cairo_stroke(_cr);
+            }
         }
+
+        if (fill && !stroke_over_fill) {
+            _setFillStyle(style, Geom::OptRect());
+            if (_is_texttopath) {
+                if (!have_path) {
+                    // Could happen if both 'stroke' and 'stroke_over_fill' are false
+                    _showGlyphs(_cr, font, glyphtext, true);
+                }
+                cairo_fill(_cr);
+            } else {
+                _showGlyphs(_cr, font, glyphtext, false);
+            }
+        }
+            
     }
 
     cairo_restore(_cr);

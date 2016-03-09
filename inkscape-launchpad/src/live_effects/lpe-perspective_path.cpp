@@ -64,6 +64,7 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
 
     concatenate_before_pwd2 = true; // don't split the path into its subpaths
     _provides_knotholder_entities = true;
+    apply_to_clippath_and_mask = true;
 }
 
 LPEPerspectivePath::~LPEPerspectivePath()
@@ -100,8 +101,6 @@ LPEPerspectivePath::doBeforeEffect (SPLPEItem const* lpeitem)
     Geom::Affine doc2d = Geom::Scale(1, -1) * Geom::Translate(0, item->document->getHeight().value("px"));
     pmat = pmat * doc2d;
     pmat.copy_tmat(tmat);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 void LPEPerspectivePath::refresh(Gtk::Entry* perspective) {

@@ -41,8 +41,9 @@
 
 #define GTK_PARAM_READWRITE G_PARAM_READWRITE|G_PARAM_STATIC_NAME|G_PARAM_STATIC_NICK|G_PARAM_STATIC_BLURB
 
-#define DEFAULT_RULER_FONT_SCALE  PANGO_SCALE_X_SMALL
-#define MINIMUM_INCR              5
+#define DEFAULT_RULER_FONT_SCALE    PANGO_SCALE_X_SMALL
+#define MINIMUM_INCR                5
+#define IMMEDIATE_REDRAW_THRESHOLD  20
 
 using Inkscape::Util::unit_table;
 
@@ -71,11 +72,11 @@ typedef struct
 
   GdkWindow       *input_window;
   cairo_surface_t *backing_store;
+  gboolean         backing_store_valid;
+  GdkRectangle     last_pos_rect;
+  guint            pos_redraw_idle_id;
   PangoLayout     *layout;
   gdouble          font_scale;
-  
-  gint             xsrc;
-  gint             ysrc;
 
   GList           *track_widgets;
 } SPRulerPrivate;
@@ -132,18 +133,22 @@ static void          sp_ruler_style_updated        (GtkWidget      *widget);
 static void          sp_ruler_size_request         (GtkWidget      *widget,
                                                     GtkRequisition *requisition);
 static void          sp_ruler_style_set            (GtkWidget      *widget,
-		                                    GtkStyle       *prev_style);
+                                                    GtkStyle       *prev_style);
 #endif
 
 static gboolean      sp_ruler_motion_notify        (GtkWidget      *widget,
                                                     GdkEventMotion *event);
 static gboolean      sp_ruler_draw                 (GtkWidget      *widget,
-		                                    cairo_t        *cr);
+                                                    cairo_t        *cr);
 #if !GTK_CHECK_VERSION(3,0,0)
 static gboolean      sp_ruler_expose               (GtkWidget      *widget,
                                                     GdkEventExpose *event);
 #endif
 static void          sp_ruler_draw_ticks           (SPRuler        *ruler);
+static GdkRectangle  sp_ruler_get_pos_rect         (SPRuler        *ruler,
+                                                    gdouble         position);
+static gboolean      sp_ruler_idle_queue_pos_redraw(gpointer        data);
+static void          sp_ruler_queue_pos_redraw     (SPRuler        *ruler);
 static void          sp_ruler_draw_pos             (SPRuler        *ruler,
                                                     cairo_t        *cr);
 static void          sp_ruler_make_pixmap          (SPRuler        *ruler);
@@ -260,14 +265,23 @@ sp_ruler_init (SPRuler *ruler)
 
   gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
-  priv->orientation   = GTK_ORIENTATION_HORIZONTAL;
-  priv->unit          = unit_table.getUnit("px");
-  priv->lower         = 0;
-  priv->upper         = 0;
-  priv->position      = 0;
-  priv->max_size      = 0;
-  priv->backing_store = NULL;
-  priv->font_scale    = DEFAULT_RULER_FONT_SCALE;
+  priv->orientation          = GTK_ORIENTATION_HORIZONTAL;
+  priv->unit                 = unit_table.getUnit("px");
+  priv->lower                = 0;
+  priv->upper                = 0;
+  priv->position             = 0;
+  priv->max_size             = 0;
+
+  priv->backing_store        = NULL;
+  priv->backing_store_valid  = FALSE;
+
+  priv->last_pos_rect.x      = 0;
+  priv->last_pos_rect.y      = 0;
+  priv->last_pos_rect.width  = 0;
+  priv->last_pos_rect.height = 0;
+  priv->pos_redraw_idle_id   = 0;
+
+  priv->font_scale           = DEFAULT_RULER_FONT_SCALE;
 
 #if GTK_CHECK_VERSION(3,0,0)
   #if GTK_CHECK_VERSION(3,8,0)
@@ -298,6 +312,12 @@ sp_ruler_dispose (GObject *object)
 
   while (priv->track_widgets)
     sp_ruler_remove_track_widget (ruler, GTK_WIDGET(priv->track_widgets->data));
+
+  if (priv->pos_redraw_idle_id)
+    {
+      g_source_remove (priv->pos_redraw_idle_id);
+      priv->pos_redraw_idle_id = 0;
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -343,6 +363,7 @@ sp_ruler_set_range (SPRuler *ruler,
     }
   g_object_thaw_notify (G_OBJECT (ruler));
 
+  priv->backing_store_valid = FALSE;
   gtk_widget_queue_draw (GTK_WIDGET (ruler));
 }
 
@@ -513,7 +534,9 @@ sp_ruler_unrealize(GtkWidget *widget)
       cairo_surface_destroy (priv->backing_store);
       priv->backing_store = NULL;
     }
-  
+
+  priv->backing_store_valid = FALSE;
+
   if (priv->layout)
     {
       g_object_unref (priv->layout);
@@ -689,7 +712,6 @@ sp_ruler_expose (GtkWidget *widget,
     cairo_clip (cr);
 
     gtk_widget_get_allocation (widget, &allocation);
-    cairo_translate (cr, allocation.x, allocation.y);
 
     gboolean result = sp_ruler_draw (widget, cr);
 
@@ -733,6 +755,8 @@ sp_ruler_make_pixmap (SPRuler *ruler)
                                        CAIRO_CONTENT_COLOR,
                                        allocation.width,
                                        allocation.height);
+
+  priv->backing_store_valid = FALSE;
 }
 
 static void
@@ -743,118 +767,22 @@ sp_ruler_draw_pos (SPRuler *ruler,
 
 #if GTK_CHECK_VERSION(3,0,0)
   GtkStyleContext *context = gtk_widget_get_style_context (widget);
-  GtkBorder        border;
   GdkRGBA          color;
 #else
   GtkStyle        *style   = gtk_widget_get_style (widget);
   GtkStateType     state   = gtk_widget_get_state (widget);
-  gint             xthickness;
-  gint             ythickness;
 #endif
   
   SPRulerPrivate  *priv    = SP_RULER_GET_PRIVATE (ruler);
-  GtkAllocation    allocation;
-  gint             x, y;
-  gint             width, height;
-  gint             bs_width, bs_height;
+  GdkRectangle      pos_rect;
 
   if (! gtk_widget_is_drawable (widget))
       return;
 
-  gtk_widget_get_allocation(widget, &allocation);
+  pos_rect = sp_ruler_get_pos_rect (ruler, sp_ruler_get_position (ruler));
 
-#if GTK_CHECK_VERSION(3,0,0)
-  gtk_style_context_get_border (context, static_cast<GtkStateFlags>(0), &border);
-#else
-  xthickness = style->xthickness;
-  ythickness = style->ythickness;
-#endif
-
-  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+  if ((pos_rect.width > 0) && (pos_rect.height > 0))
     {
-      width  = allocation.width;
-#if GTK_CHECK_VERSION(3,0,0)
-      height = allocation.height - (border.top + border.bottom);
-#else
-      height = allocation.height - ythickness * 2;
-#endif
-
-      bs_width = height / 2 + 2;
-      bs_width |= 1;  /* make sure it's odd */
-      bs_height = bs_width / 2 + 1;
-    }
-  else
-    {
-#if GTK_CHECK_VERSION(3,0,0)
-      width  = allocation.width - (border.left + border.right);
-#else
-      width  = allocation.width - xthickness * 2;
-#endif
-      height = allocation.height;
-
-      bs_height = width / 2 + 2;
-      bs_height |= 1;  /* make sure it's odd */
-      bs_width = bs_height / 2 + 1;
-    }
-
-  if ((bs_width > 0) && (bs_height > 0))
-    {
-      gdouble lower;
-      gdouble upper;
-      gdouble position;
-      gdouble increment;
-
-      if (! cr)
-        {
-          cr = gdk_cairo_create (gtk_widget_get_window (widget));
-          cairo_translate (cr, allocation.x, allocation.y);
-          cairo_rectangle (cr, allocation.x, allocation.y, allocation.width, allocation.height);
-          cairo_clip (cr);
-
-          cairo_translate (cr, allocation.x, allocation.y);
-           
-          /* If a backing store exists, restore the ruler */
-          if (priv->backing_store)
-            {
-              cairo_set_source_surface (cr, priv->backing_store, 0, 0);
-              cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
-              cairo_fill (cr);
-            }
-        }
-      else
-        {
-          cairo_reference (cr);
-        }
-
-      position = sp_ruler_get_position (ruler);
-
-      sp_ruler_get_range (ruler, &lower, &upper, NULL);
-
-      if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
-        {
-          increment = (gdouble) width / (upper - lower);
-
-#if GTK_CHECK_VERSION(3,0,0)
-          x = ROUND ((position - lower) * increment) + (border.left - bs_width) / 2 - 1;
-          y = (height + bs_height) / 2 + border.top;
-#else
-          x = ROUND ((position - lower) * increment) + (xthickness - bs_width) / 2 - 1;
-          y = (height + bs_height) / 2 + ythickness;
-#endif
-        }
-      else
-        {
-          increment = (gdouble) height / (upper - lower);
-
-#if GTK_CHECK_VERSION(3,0,0)
-          x = (width + bs_width) / 2 + border.left;
-          y = ROUND ((position - lower) * increment) + (border.top - bs_height) / 2 - 1;
-#else
-          x = (width + bs_width) / 2 + xthickness;
-          y = ROUND ((position - lower) * increment) + (ythickness - bs_height) / 2 - 1;
-#endif
-        }
-
 #if GTK_CHECK_VERSION(3,0,0)
       gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
                                    &color);
@@ -863,26 +791,28 @@ sp_ruler_draw_pos (SPRuler *ruler,
       gdk_cairo_set_source_color (cr, &style->fg[state]);
 #endif
 
-      cairo_move_to (cr, x, y);
+      cairo_move_to (cr, pos_rect.x, pos_rect.y);
 
       if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
         {
-          cairo_line_to (cr, x + bs_width / 2.0, y + bs_height);
-          cairo_line_to (cr, x + bs_width,       y);
+          cairo_line_to (cr, pos_rect.x + pos_rect.width / 2.0,
+                             pos_rect.y + pos_rect.height);
+          cairo_line_to (cr, pos_rect.x + pos_rect.width,
+                             pos_rect.y);
         }
       else
         {
-          cairo_line_to (cr, x + bs_width, y + bs_height / 2.0);
-          cairo_line_to (cr, x,            y + bs_height);
+          cairo_line_to (cr, pos_rect.x + pos_rect.width,
+
+                             pos_rect.y + pos_rect.height / 2.0);
+          cairo_line_to (cr, pos_rect.x,
+                             pos_rect.y + pos_rect.height);
         }
 
       cairo_fill (cr);
-
-      cairo_destroy (cr);
-
-      priv->xsrc = x;
-      priv->ysrc = y;
     }
+
+  priv->last_pos_rect = pos_rect;
 }
 
 /**
@@ -1096,6 +1026,7 @@ sp_ruler_set_unit (SPRuler  *ruler,
       priv->unit = unit;
       g_object_notify(G_OBJECT(ruler), "unit");
 
+      priv->backing_store_valid = FALSE;
       gtk_widget_queue_draw (GTK_WIDGET (ruler));
     }
 }
@@ -1131,10 +1062,39 @@ sp_ruler_set_position (SPRuler *ruler,
 
     if (priv->position != position)
     {
-        priv->position = position;
-        g_object_notify (G_OBJECT (ruler), "position");
+      GdkRectangle rect;
+      gint xdiff, ydiff;
 
-        sp_ruler_draw_pos (ruler, NULL);
+      priv->position = position;
+      g_object_notify (G_OBJECT (ruler), "position");
+
+      rect = sp_ruler_get_pos_rect (ruler, priv->position);
+
+      xdiff = rect.x - priv->last_pos_rect.x;
+      ydiff = rect.y - priv->last_pos_rect.y;
+
+      /*
+       * If the position has changed far enough, queue a redraw immediately.
+       * Otherwise, we only queue a redraw in a low priority idle handler, to
+       * allow for other things (like updating the canvas) to run.
+       *
+       * TODO: This might not be necessary any more in GTK3 with the frame
+       *       clock. Investigate this more after the port to GTK3.
+       */
+      if (priv->last_pos_rect.width  != 0 &&
+          priv->last_pos_rect.height != 0 &&
+          (ABS (xdiff) > IMMEDIATE_REDRAW_THRESHOLD ||
+           ABS (ydiff) > IMMEDIATE_REDRAW_THRESHOLD))
+        {
+          sp_ruler_queue_pos_redraw (ruler);
+        }
+      else if (! priv->pos_redraw_idle_id)
+        {
+          priv->pos_redraw_idle_id =
+            g_idle_add_full (G_PRIORITY_LOW,
+                             sp_ruler_idle_queue_pos_redraw,
+                             ruler, NULL);
+        }
     }
 }
 
@@ -1154,7 +1114,7 @@ sp_ruler_get_position (SPRuler *ruler)
 
 static gboolean
 sp_ruler_motion_notify (GtkWidget      *widget,
-		        GdkEventMotion *event)
+                        GdkEventMotion *event)
 {
   SPRuler *ruler = SP_RULER(widget);
 
@@ -1347,7 +1307,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
         if (ideal_length > ++length)
             length = ideal_length;
 
-	if (lower < upper)
+        if (lower < upper)
           {
             start = floor (lower / subd_incr) * subd_incr;
             end   = ceil  (upper / subd_incr) * subd_incr;
@@ -1413,16 +1373,16 @@ sp_ruler_draw_ticks (SPRuler *ruler)
                     pango_layout_get_extents (layout, &logical_rect, NULL);
 
 #if GTK_CHECK_VERSION(3,0,0)
-		    cairo_move_to (cr,
+                    cairo_move_to (cr,
                                    pos + 2,
                                    border.top + PANGO_PIXELS (logical_rect.y - digit_offset));
 #else
-		    cairo_move_to (cr,
+                    cairo_move_to (cr,
                                    pos + 2,
                                    ythickness + PANGO_PIXELS (logical_rect.y - digit_offset));
 #endif
 
-		    pango_cairo_show_layout(cr, layout);
+                    pango_cairo_show_layout(cr, layout);
                   }
                 else
                   {
@@ -1435,15 +1395,15 @@ sp_ruler_draw_ticks (SPRuler *ruler)
                         pango_layout_get_extents (layout, NULL, &logical_rect);
 
 #if GTK_CHECK_VERSION(3,0,0)
-			cairo_move_to (cr,
+                        cairo_move_to (cr,
                                        border.left + 1,
                                        pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset));
 #else
-			cairo_move_to (cr,
+                        cairo_move_to (cr,
                                        xthickness + 1,
                                        pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset));
 #endif
-			pango_cairo_show_layout (cr, layout);
+                        pango_cairo_show_layout (cr, layout);
                       }
                   }
               }
@@ -1454,8 +1414,116 @@ sp_ruler_draw_ticks (SPRuler *ruler)
 
     cairo_fill (cr);
 
+  priv->backing_store_valid = TRUE;
+
 out:
     cairo_destroy (cr);
+}
+
+static GdkRectangle
+sp_ruler_get_pos_rect (SPRuler *ruler,
+                       gdouble  position)
+{
+  GtkWidget        *widget = GTK_WIDGET (ruler);
+  GtkStyle         *style  = gtk_widget_get_style (widget);
+  SPRulerPrivate   *priv   = SP_RULER_GET_PRIVATE (ruler);
+  GtkAllocation     allocation;
+  gint              width, height;
+  gint              xthickness;
+  gint              ythickness;
+  gdouble           upper, lower;
+  gdouble           increment;
+  GdkRectangle      rect = { 0, 0, 0, 0 };
+
+  if (! gtk_widget_is_drawable (widget))
+    return rect;
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  xthickness = style->xthickness;
+  ythickness = style->ythickness;
+
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      width  = allocation.width;
+      height = allocation.height - ythickness * 2;
+
+      rect.width = height / 2 + 2;
+      rect.width |= 1;  /* make sure it's odd */
+      rect.height = rect.width / 2 + 1;
+    }
+  else
+    {
+      width  = allocation.width - xthickness * 2;
+      height = allocation.height;
+
+      rect.height = width / 2 + 2;
+      rect.height |= 1;  /* make sure it's odd */
+      rect.width = rect.height / 2 + 1;
+    }
+
+  sp_ruler_get_range (ruler, &lower, &upper, NULL);
+
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      increment = (gdouble) width / (upper - lower);
+
+      rect.x = ROUND ((position - lower) * increment) + (xthickness - rect.width) / 2 - 1;
+      rect.y = (height + rect.height) / 2 + ythickness;
+    }
+  else
+    {
+      increment = (gdouble) height / (upper - lower);
+
+      rect.x = (width + rect.width) / 2 + xthickness;
+      rect.y = ROUND ((position - lower) * increment) + (ythickness - rect.height) / 2 - 1;
+    }
+
+  rect.x += allocation.x;
+  rect.y += allocation.y;
+
+  return rect;
+}
+
+static gboolean
+sp_ruler_idle_queue_pos_redraw (gpointer data)
+{
+  SPRuler        *ruler = (SPRuler *)data;
+  SPRulerPrivate *priv  = SP_RULER_GET_PRIVATE (ruler);
+
+  sp_ruler_queue_pos_redraw (ruler);
+
+  gboolean ret = g_source_remove(priv->pos_redraw_idle_id);
+  priv->pos_redraw_idle_id = 0;
+
+  return ret;
+}
+
+static void
+sp_ruler_queue_pos_redraw (SPRuler *ruler)
+{
+  SPRulerPrivate    *priv = SP_RULER_GET_PRIVATE (ruler);
+  const GdkRectangle rect = sp_ruler_get_pos_rect (ruler, priv->position);
+
+  gtk_widget_queue_draw_area (GTK_WIDGET(ruler),
+                              rect.x,
+                              rect.y,
+                              rect.width,
+                              rect.height);
+
+  if (priv->last_pos_rect.width != 0 || priv->last_pos_rect.height != 0)
+    {
+      gtk_widget_queue_draw_area (GTK_WIDGET(ruler),
+                                  priv->last_pos_rect.x,
+                                  priv->last_pos_rect.y,
+                                  priv->last_pos_rect.width,
+                                  priv->last_pos_rect.height);
+
+      priv->last_pos_rect.x      = 0;
+      priv->last_pos_rect.y      = 0;
+      priv->last_pos_rect.width  = 0;
+      priv->last_pos_rect.height = 0;
+    }
 }
 
 static PangoLayout*

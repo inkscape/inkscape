@@ -61,8 +61,18 @@ HELP
 #------------------------------------------------------------------------------
 
 check_local_changes() {
-    # TODO
-    return 1
+    lines=$(bzr diff | wc -l)
+    if [ $lines -gt 0 ]; then
+        echo ""
+        echo "Uncommitted changes found. Did you forget to commit? Aborting."
+        echo ""
+        echo "You can clone the module in another directory"
+        echo "and run ./configure. No need to build if testing was finished."
+        echo ""
+        return 1
+    fi
+
+    return 0
 }
 
 #------------------------------------------------------------------------------

@@ -206,6 +206,15 @@ void InkscapePreferences::AddDotSizeSpinbutton(DialogPage &p, Glib::ustring cons
                        false );
 }
 
+void InkscapePreferences::AddBaseSimplifySpinbutton(DialogPage &p, Glib::ustring const &prefs_path, double def_value)
+{
+    PrefSpinButton* sb = Gtk::manage( new PrefSpinButton);
+    sb->init ( prefs_path + "/base-simplify", 0.0, 100.0, 1.0, 10.0, def_value, false, false);
+    p.add_line( false, _("Base simplify:"), *sb, _("on dinamic LPE simplify"),
+                       _("Base simplify of dinamic LPE based simplify"),
+                       false );
+}
+
 
 static void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatch *swatch)
 {
@@ -425,6 +434,7 @@ void InkscapePreferences::initPageTools()
     this->AddSelcueCheckbox(_page_pencil, "/tools/freehand/pencil", true);
     this->AddNewObjectsStyle(_page_pencil, "/tools/freehand/pencil");
     this->AddDotSizeSpinbutton(_page_pencil, "/tools/freehand/pencil", 3.0);
+    this->AddBaseSimplifySpinbutton(_page_pencil, "/tools/freehand/pencil", 25.0);
     _page_pencil.add_group_header( _("Sketch mode"));
     _page_pencil.add_line( true, "", _pencil_average_all_sketches, "",
                             _("If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch"));

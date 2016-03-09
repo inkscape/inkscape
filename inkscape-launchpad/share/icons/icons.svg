@@ -4308,4 +4308,88 @@ http://www.inkscape.org/</dc:description>
 <rect style="color:#000000;fill:none" id="rect17937-7" width="15.721" height="15.721" x="284.9688" y="535.6099" />
 <path style="color:#000000;solid-opacity:1;fill:#000000;stroke-width:1.3" d="m 290.1793,536.2979 c -0.7351,-0.02 -1.3963,0.2336 -1.8416,0.7418 -0.4453,0.5079 -0.6453,1.1819 -0.7277,1.8733 -0.165,1.3827 0.089,2.9888 0.3519,4.5721 0.2625,1.5832 0.5439,3.1441 0.5465,4.1601 0,0.5079 -0.082,0.854 -0.1453,0.9691 -0.064,0.115 -0.041,0.1361 -0.3174,0.1282 -0.6247,-0.018 -0.8383,-0.2559 -1.06,-0.7845 -0.2217,-0.5286 -0.3197,-1.3858 -0.2995,-2.2749 0.041,-1.7782 0.1181,-2.1383 0.1181,-2.1383 l -1.3819,-0.012 c 0,0 -0.034,0.44 -0.081,2.4977 -0.023,1.0288 -0.041,1.7085 0.3488,2.6369 0.3896,0.9284 1.2262,1.6826 2.3192,1.7143 0.6352,0.018 1.2607,-0.3347 1.5691,-0.8922 0.3084,-0.5575 0.3684,-1.1856 0.3668,-1.8493 0,-1.3269 -0.3139,-2.9046 -0.5719,-4.461 -0.258,-1.5566 -0.4523,-3.0895 -0.3384,-4.044 0.057,-0.4774 0.1784,-0.773 0.3189,-0.9332 0.1403,-0.1602 0.3293,-0.2738 0.7905,-0.2615 0.4549,0.012 0.691,0.1248 0.822,0.2393 0.131,0.1144 0.2075,0.2532 0.262,0.5316 0.109,0.5566 -0.012,1.5867 -0.2126,2.6612 -0.2001,1.0747 -0.4614,2.1843 -0.4372,3.2167 0.012,0.5163 0.098,1.0527 0.4133,1.5075 0.3153,0.4549 0.8398,0.7126 1.3954,0.7452 0.4606,0.027 0.881,-0.051 1.2367,-0.2735 0.3557,-0.2231 0.6121,-0.5902 0.7531,-0.9588 0.282,-0.7375 0.2377,-1.4817 0.2126,-2.157 -0.025,-0.6754 -0.041,-1.301 0.021,-1.5725 0.031,-0.1358 0.056,-0.155 0.057,-0.1555 6e-4,-6e-4 0.022,-0.034 0.2006,-0.029 0.218,0 0.2382,0.043 0.271,0.074 0.033,0.031 0.092,0.1224 0.1947,0.323 0.1022,0.2006 0.2482,0.5079 0.5375,0.7743 0.2893,0.2664 0.7035,0.4386 1.1723,0.4614 1.6094,-0.2758 2.284,-1.0042 3.4062,-0.084 l 0,-1.6613 c -1.4875,-0.7361 -2.2939,-0.161 -3.3448,0.1059 -0.2401,-0.012 -0.2878,-0.059 -0.3309,-0.099 -0.043,-0.04 -0.1003,-0.1294 -0.1991,-0.3231 -0.099,-0.1938 -0.2357,-0.493 -0.5181,-0.7606 -0.2825,-0.2676 -0.6959,-0.4362 -1.1528,-0.4495 -0.4137,-0.012 -0.8221,0.1078 -1.1305,0.388 -0.3084,0.2805 -0.4715,0.6683 -0.5524,1.0255 -0.162,0.7142 -0.091,1.4129 -0.067,2.0545 0.024,0.6418 -0.01,1.2067 -0.093,1.4289 -0.043,0.1112 -0.066,0.1378 -0.1273,0.176 -0.061,0.038 -0.1963,0.09 -0.4716,0.074 -0.2756,-0.016 -0.3064,-0.07 -0.3429,-0.1231 -0.037,-0.053 -0.098,-0.2166 -0.1048,-0.535 -0.015,-0.6367 0.2002,-1.72 0.4073,-2.8321 0.2071,-1.1119 0.4237,-2.265 0.2096,-3.3586 -0.1071,-0.5468 -0.3582,-1.0977 -0.792,-1.4767 -0.434,-0.379 -1.0001,-0.5617 -1.6605,-0.5794 z" id="path14318-5-3" inkscape:connector-curvature="0" sodipodi:nodetypes="cccccccccccccccccccccsccccccccccccsccccccccccccccccccccc" />
 </g>
+ <g id="paint-order-fsm" inkscape:label="#paint-order-fsm">
+  <rect style="fill:none" height="24" width="24" y="420" x="944"/>
+  <rect style="fill:#4776a7" height="14" width="14" y="430" x="954"/>
+  <path style="fill:#99b6d4" d="m949.5 444v-18.5h18.5v9h-9.5v9.5z"/>
+  <path d="m949.5 444v-18.5h18.5m0 9h-9.5v9.5" style="stroke:#000000;fill:none"/>
+  <rect id="rect7708" style="fill:#ffffff" height="2" width="2" y="429" x="953"/>
+  <use id="use7710" xlink:href="#rect7708" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use id="use7712" xlink:href="#use7710" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7712" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use id="use7716" xlink:href="#rect7708" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use id="use7718" xlink:href="#use7716" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7718" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <circle cx="954" style="stroke:#000000;fill:#cddbeb" r="9.5" cy="430"/>
+ </g>
+ <g id="paint-order-sfm" inkscape:label="#paint-order-sfm" transform="translate(32)">
+  <rect style="fill:none" height="24" width="24" y="420" x="944"/>
+  <path d="m949.5 444v-18.5h18.5v9h-9.5v9.5z" style="fill:#99b6d4"/>
+  <path style="stroke:#000000;fill:none" d="m949.5 444v-18.5h18.5m0 9h-9.5v9.5"/>
+  <rect style="fill:#ffffff" height="2" width="2" y="429" x="953"/>
+  <use xlink:href="#rect7708" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7710" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7712" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#rect7708" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7716" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7718" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <rect style="fill:#4776a7" height="14" width="14" y="430" x="954"/>
+  <circle cy="430" cx="954" r="9.5" style="stroke:#000000;fill:#cddbeb"/>
+ </g>
+ <g id="paint-order-fms" inkscape:label="#paint-order-fsm" transform="translate(64)">
+  <rect style="fill:none" height="24" width="24" y="420" x="944"/>
+  <rect style="fill:#4776a7" height="14" width="14" y="430" x="954"/>
+  <circle cy="430" cx="954" r="9.5" style="stroke:#000000;fill:#cddbeb"/>
+  <path d="m949.5 444v-18.5h18.5v9h-9.5v9.5z" style="fill:#99b6d4"/>
+  <path style="stroke:#000000;fill:none" d="m949.5 444v-18.5h18.5m0 9h-9.5v9.5"/>
+  <rect style="fill:#ffffff" height="2" width="2" y="429" x="953"/>
+  <use xlink:href="#rect7708" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7710" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7712" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#rect7708" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7716" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7718" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+ </g>
+ <g id="paint-order-mfs" inkscape:label="#paint-order-mfs" transform="translate(0,32)">
+  <circle cy="430" cx="954" r="9.5" style="stroke:#000000;fill:#cddbeb"/>
+  <rect style="fill:none" height="24" width="24" y="420" x="944"/>
+  <rect style="fill:#4776a7" height="14" width="14" y="430" x="954"/>
+  <path d="m949.5 444v-18.5h18.5v9h-9.5v9.5z" style="fill:#99b6d4"/>
+  <path style="stroke:#000000;fill:none" d="m949.5 444v-18.5h18.5m0 9h-9.5v9.5"/>
+  <rect style="fill:#ffffff" height="2" width="2" y="429" x="953"/>
+  <use xlink:href="#rect7708" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7710" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7712" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#rect7708" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7716" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7718" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+ </g>
+ <g id="paint-order-smf" inkscape-label="#paint-order-smf" transform="translate(32,32)">
+  <rect style="fill:none" height="24" width="24" y="420" x="944"/>
+  <path d="m949.5 444v-18.5h18.5v9h-9.5v9.5z" style="fill:#99b6d4"/>
+  <path style="stroke:#000000;fill:none" d="m949.5 444v-18.5h18.5m0 9h-9.5v9.5"/>
+  <rect style="fill:#ffffff" height="2" width="2" y="429" x="953"/>
+  <use xlink:href="#rect7708" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7710" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7712" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#rect7708" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7716" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7718" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <circle cy="430" cx="954" r="9.5" style="stroke:#000000;fill:#cddbeb"/>
+  <rect style="fill:#4776a7" height="14" width="14" y="430" x="954"/>
+ </g>
+ <g id="paint-order-msf" inkscape:label="#paint-order-msf" transform="translate(64,32)">
+  <circle cy="430" cx="954" r="9.5" style="stroke:#000000;fill:#cddbeb"/>
+  <rect style="fill:none" height="24" width="24" y="420" x="944"/>
+  <path d="m949.5 444v-18.5h18.5v9h-9.5v9.5z" style="fill:#99b6d4"/>
+  <path style="stroke:#000000;fill:none" d="m949.5 444v-18.5h18.5m0 9h-9.5v9.5"/>
+  <rect style="fill:#ffffff" height="2" width="2" y="429" x="953"/>
+  <use xlink:href="#rect7708" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7710" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7712" transform="translate(4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#rect7708" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7716" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <use xlink:href="#use7718" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
+  <rect style="fill:#4776a7" height="14" width="14" y="430" x="954"/>
+ </g>
 </svg>

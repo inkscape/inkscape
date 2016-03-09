@@ -1,0 +1,103 @@
+<!--
+   nicechart.inx
+   
+   Copyright 2011-2016
+   
+   Christoph Sterz 
+   Florian Weber
+   Maren Hachmann
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+-->
+
+<inkscape-extension>
+  <_name>NiceCharts</_name>
+  <id>org.inkscape.filter.nicechart</id>
+  <dependency type="executable" location="extensions">nicechart.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="input_sections" type="notebook">
+    <page name="data_settings" _gui-text="Data">
+      <param name="input_type" type="notebook">
+        <page name="file" _gui-text="Data from file">
+          <_param name="desc" type="description">Enter the full path to a CSV file:</_param>
+          <param name="filename" type="string" _gui-text="File:"></param>
+          <param name="delimiter" type="string" _gui-text="Delimiter:">;</param>
+          <param name="col_key" type="int" _gui-text="Column that contains the keys:" min="0" max="10000">0</param>
+          <param name="col_val" type="int" _gui-text="Column that contains the values:" min="0" max="10000">1</param>
+          <param name="encoding" type="string" _gui-text="File encoding (e.g. utf-8):">utf-8</param>
+          <param name="headings" type="boolean" _gui-text="First line contains headings">false</param>
+        </page>
+        <page name="direct_input" _gui-text="Direct input">
+          <_param name="desc" type="description">Type in comma separated values:</_param>
+          <_param name="desc" type="description">(format like this: apples:3,bananas:5)</_param>
+          <param name="what" type="string" _gui-text="Data:">apples:3,bananas:5,oranges:10,pears:4</param>
+        </page>
+      </param>
+    </page>
+    <page name="description_settings" _gui-text="Labels">
+      <param type="string" name="font" _gui-text="Font:">sans-serif</param>
+      <param type="int" name="font-size" _gui-text="Font size:" min="0" max="10000">10</param>
+      <param type="string" name="font-color" _gui-text="Font color:">#000000</param>
+    </page>
+    <page name="chart_settings" _gui-text="Charts">
+      <param type="boolean" name="rotate" _gui-text="Draw horizontally">false</param>
+      <param name="bar-height" type="int" _gui-text="Bar length:" min="0" max="100000">100</param>
+      <param name="bar-width" type="int" _gui-text="Bar width:" min="0" max="100000">10</param>
+      <param name="pie-radius" type="int" _gui-text="Pie radius:" min="0" max="100000">100</param>
+      <param name="bar-offset" type="int" _gui-text="Bar offset:" min="0" max="100000">5</param>
+      <param name="stroke-width" type="float" min="0.1" max="100000.0" precision="2" _gui-text="Stroke width:">1</param>
+      <param name="text-offset" type="int" _gui-text="Offset between chart and labels:" min="0" max="100000">5</param>
+      <param name="heading-offset" type="int" _gui-text="Offset between chart and chart title:" min="-100000" max="100000">50</param>
+      <param name="segment-overlap" type="boolean" _gui-text="Work around aliasing effects (creates overlapping segments)">false</param>
+
+      <param name="colors" type="enum" _gui-text="Color scheme:">
+        <_item value="default">Default</_item>
+        <_item value="blue">Blue</_item>
+        <_item value="gray">Gray</_item>
+        <_item value="contrast">Contrast</_item>
+        <_item value="sap">SAP</_item>
+      </param>
+
+      <param type="string" name="colors_override" _gui-text="Custom colors:"></param>       
+      
+      <param type="boolean" name="reverse_colors" _gui-text="Reverse color scheme">false</param>
+      <param type="boolean" name="blur" _gui-text="Drop shadow">false</param>
+    </page>
+    <page name="value_settings" _gui-text="Values">
+      <param type="boolean" name="show_values" _gui-text="Show values">false</param>
+<!--  <param type="string" name="font" _gui-text="Font:">sans-serif</param>
+      <param type="int" name="font-size" _gui-text="Font size:" min="0" max="10000">10</param>
+      <param type="description" name="desc">Font color:</param>
+      <param type="string" name="font-color" _gui-text="Font color:">#000000</param>
+-->
+    </page>
+  </param>
+  <param name="type" type="enum" _gui-text="Chart type:">
+    <_item value="bar">Bar chart</_item>
+    <_item value="pie">Pie chart</_item>
+    <_item value="pie_abs">Pie chart (percentage)</_item>
+    <_item value="stbar">Stacked bar chart</_item>
+  </param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+       <submenu _name="Render"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">nicechart.py</command>
+  </script>
+</inkscape-extension>
