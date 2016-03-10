@@ -393,10 +393,10 @@ static bool parseNum( char*& str, int& val ) {
 }
 
 
-void _loadPaletteFile( gchar const *filename, gboolean user/*=FALSE*/ )
+void _loadPaletteFile( gchar const *filename, gchar const *path, gboolean user/*=FALSE*/ )
 {
     char block[1024];
-    FILE *f = Inkscape::IO::fopen_utf8name( filename, "r" );
+    FILE *f = Inkscape::IO::fopen_utf8name(path, "r" );
     if ( f ) {
         char* result = fgets( block, sizeof(block), f );
         if ( result ) {
@@ -405,6 +405,7 @@ void _loadPaletteFile( gchar const *filename, gboolean user/*=FALSE*/ )
                 bool hasErr = false;
 
                 SwatchPage *onceMore = new SwatchPage();
+                onceMore->_name = filename;
 
                 do {
                     result = fgets( block, sizeof(block), f );
@@ -521,7 +522,7 @@ compare_swatch_names(SwatchPage const *a, SwatchPage const *b) {
 static void loadEmUp()
 {
     static bool beenHere = false;
-    gboolean userPalete = true;
+    gboolean userPalette = true;
     if ( !beenHere ) {
         beenHere = true;
 
@@ -549,7 +550,7 @@ static void loadEmUp()
                           if ( !g_str_has_suffix(lower, "~") ) {
                             gchar* full = g_build_filename(dirname, filename, NULL);
                             if ( !Inkscape::IO::file_test( full, G_FILE_TEST_IS_DIR ) ) {
-                                _loadPaletteFile(full, userPalete);
+                                _loadPaletteFile(filename, full, userPalette);
                             }
                             g_free(full);
                           }
@@ -563,7 +564,7 @@ static void loadEmUp()
             // toss the dirname
             g_free(dirname);
             sources.pop_front();
-            userPalete = false;
+            userPalette = false;
         }
     }
 
