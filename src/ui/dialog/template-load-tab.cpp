@@ -35,10 +35,11 @@
 namespace Inkscape {
 namespace UI {
 
-TemplateLoadTab::TemplateLoadTab()
+TemplateLoadTab::TemplateLoadTab(NewFromTemplate* parent)
     : _current_keyword("")
     , _keywords_combo(true)
     , _current_search_type(ALL)
+    , _parent_widget(parent)
 {
     set_border_width(10);
 
@@ -94,7 +95,8 @@ void TemplateLoadTab::_displayTemplateInfo()
     if (templateSelectionRef->get_selected()) {
         _current_template = (*templateSelectionRef->get_selected())[_columns.textValue];
 
-       _info_widget->display(_tdata[_current_template]);
+        _info_widget->display(_tdata[_current_template]);
+        _parent_widget->setCreateButtonSensitive(true);
     }
      
 }
@@ -148,11 +150,10 @@ void TemplateLoadTab::_keywordSelected()
 
 void TemplateLoadTab::_refreshTemplatesList()
 {
-     _tlist_store->clear();
-    
+    _tlist_store->clear();
+
     switch (_current_search_type){
     case ALL :{
-            
         for (std::map<Glib::ustring, TemplateData>::iterator it = _tdata.begin() ; it != _tdata.end() ; ++it) {
             Gtk::TreeModel::iterator iter = _tlist_store->append();
             Gtk::TreeModel::Row row = *iter;
@@ -160,7 +161,7 @@ void TemplateLoadTab::_refreshTemplatesList()
         }
         break;
     }
-    
+
     case LIST_KEYWORD: {
         for (std::map<Glib::ustring, TemplateData>::iterator it = _tdata.begin() ; it != _tdata.end() ; ++it) {
             if (it->second.keywords.count(_current_keyword.lowercase()) != 0){
@@ -171,10 +172,10 @@ void TemplateLoadTab::_refreshTemplatesList()
         }
         break;
     }
-    
+
     case USER_SPECIFIED : {
         for (std::map<Glib::ustring, TemplateData>::iterator it = _tdata.begin() ; it != _tdata.end() ; ++it) {
-            if (it->second.keywords.count(_current_keyword.lowercase()) != 0 || 
+            if (it->second.keywords.count(_current_keyword.lowercase()) != 0 ||
                 it->second.display_name.lowercase().find(_current_keyword.lowercase()) != Glib::ustring::npos ||
                 it->second.author.lowercase().find(_current_keyword.lowercase()) != Glib::ustring::npos ||
                 it->second.short_description.lowercase().find(_current_keyword.lowercase()) != Glib::ustring::npos ||
@@ -187,6 +188,27 @@ void TemplateLoadTab::_refreshTemplatesList()
         }
         break;
     }
+    }
+
+    // reselect item
+    Gtk::TreeIter* item_to_select = NULL;
+    for (Gtk::TreeModel::Children::iterator it = _tlist_store->children().begin(); it != _tlist_store->children().end(); ++it) {
+        Gtk::TreeModel::Row row = *it;
+        if (_current_template == row[_columns.textValue]) {
+            item_to_select = new Gtk::TreeIter(it);
+            break;
+        }
+    }
+    if (_tlist_store->children().size() == 1) {
+        item_to_select = new Gtk::TreeIter(_tlist_store->children().begin());
+    }
+    if (item_to_select) {
+        _tlist_view.get_selection()->select(*item_to_select);
+        delete item_to_select;
+    } else {
+        _current_template = "";
+        _info_widget->clear();
+        _parent_widget->setCreateButtonSensitive(false);
     }
 } 
 

@@ -28,6 +28,7 @@ namespace Inkscape {
 namespace UI {
 
 class TemplateWidget;
+class NewFromTemplate;
     
 class TemplateLoadTab : public Gtk::HBox
 {
@@ -47,7 +48,7 @@ public:
         Inkscape::Extension::Effect *tpl_effect;
     };
     
-    TemplateLoadTab();
+    TemplateLoadTab(NewFromTemplate* parent);
     virtual ~TemplateLoadTab();
     virtual void createTemplate();
 
@@ -95,6 +96,7 @@ private:
     };
     
     SearchType _current_search_type;
+    NewFromTemplate* _parent_widget;
     
     void _getDataFromNode(Inkscape::XML::Node *, TemplateData &);
     void _getProceduralTemplates();

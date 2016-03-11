@@ -56,6 +56,7 @@ TemplateWidget::TemplateWidget()
     
     _more_info_button.signal_clicked().connect(
     sigc::mem_fun(*this, &TemplateWidget::_displayTemplateDetails));
+    _more_info_button.set_sensitive(false);
 }
 
 
@@ -85,14 +86,12 @@ void TemplateWidget::create()
 
 void TemplateWidget::display(TemplateLoadTab::TemplateData data)
 {
+    clear();
     _current_template = data;
 
     _template_name_label.set_text(_current_template.display_name);
     _short_description_label.set_text(_current_template.short_description);
-        
-    _preview_render.hide();
-    _preview_image.hide();
-    
+
     std::string imagePath = Glib::build_filename(Glib::path_get_dirname(_current_template.path),  _current_template.preview_name);
     if (data.preview_name != ""){
         _preview_image.set(imagePath);
@@ -103,17 +102,26 @@ void TemplateWidget::display(TemplateLoadTab::TemplateData data)
         _preview_render.showImage(gPath);
         _preview_render.show();
     }
-    
-    if (_effect_prefs != NULL){
-        remove (*_effect_prefs);
-        _effect_prefs = NULL;
-    }
+
     if (data.is_procedural){
         _effect_prefs = data.tpl_effect->get_imp()->prefs_effect(data.tpl_effect, SP_ACTIVE_DESKTOP, NULL, NULL); 
         pack_start(*_effect_prefs);
     }
+    _more_info_button.set_sensitive(true);
 }
 
+void TemplateWidget::clear()
+{
+    _template_name_label.set_text("");
+    _short_description_label.set_text("");
+    _preview_render.hide();
+    _preview_image.hide();
+    if (_effect_prefs != NULL){
+        remove (*_effect_prefs);
+        _effect_prefs = NULL;
+    }
+    _more_info_button.set_sensitive(false);
+}
 
 void TemplateWidget::_displayTemplateDetails()
 {    

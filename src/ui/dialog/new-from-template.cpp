@@ -29,10 +29,12 @@ NewFromTemplate::NewFromTemplate()
     set_title(_("New From Template"));
     resize(400, 400);
 
+    _main_widget = new TemplateLoadTab(this);
+
 #if WITH_GTKMM_3_0
-    get_content_area()->pack_start(_main_widget);
+    get_content_area()->pack_start(*_main_widget);
 #else
-    get_vbox()->pack_start(_main_widget);
+    get_vbox()->pack_start(*_main_widget);
 #endif
    
     Gtk::Alignment *align;
@@ -49,14 +51,24 @@ NewFromTemplate::NewFromTemplate()
     
     _create_template_button.signal_clicked().connect(
     sigc::mem_fun(*this, &NewFromTemplate::_createFromTemplate));
+    _create_template_button.set_sensitive(false);
    
     show_all();
 }
 
+NewFromTemplate::~NewFromTemplate()
+{
+    delete _main_widget;
+}
+
+void NewFromTemplate::setCreateButtonSensitive(bool value)
+{
+    _create_template_button.set_sensitive(value);
+}
 
 void NewFromTemplate::_createFromTemplate()
 {
-    _main_widget.createTemplate();
+    _main_widget->createTemplate();
     _onClose();
 }
 

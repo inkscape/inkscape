@@ -28,6 +28,7 @@ public:
     TemplateWidget ();
     void create();
     void display(TemplateLoadTab::TemplateData);
+    void clear();
     
 private:
     TemplateLoadTab::TemplateData _current_template;

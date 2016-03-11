@@ -27,11 +27,13 @@ class NewFromTemplate : public Gtk::Dialog
 friend class TemplateLoadTab;
 public:
     static void load_new_from_template();
-    
+    void setCreateButtonSensitive(bool value);
+    virtual ~NewFromTemplate();
+
 private:
     NewFromTemplate();
     Gtk::Button _create_template_button;
-    TemplateLoadTab _main_widget;
+    TemplateLoadTab* _main_widget;
     
     void _createFromTemplate();
     void _onClose();
