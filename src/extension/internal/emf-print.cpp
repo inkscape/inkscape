@@ -253,7 +253,7 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 
         char *oldlocale = g_strdup(setlocale(LC_NUMERIC, NULL));
         setlocale(LC_NUMERIC, "C");
-        snprintf(buff, sizeof(buff) - 1, "Drawing=%.1lfx%.1lfpx, %.1lfx%.1lfmm", _width, _height, Inkscape::Util::Quantity::convert(dwInchesX, "in", "mm"), Inkscape::Util::Quantity::convert(dwInchesY, "in", "mm"));
+        snprintf(buff, sizeof(buff) - 1, "Drawing=%.1fx%.1fpx, %.1fx%.1fmm", _width, _height, Inkscape::Util::Quantity::convert(dwInchesX, "in", "mm"), Inkscape::Util::Quantity::convert(dwInchesY, "in", "mm"));
         setlocale(LC_NUMERIC, oldlocale);
         g_free(oldlocale);
         rec = textcomment_set(buff);
