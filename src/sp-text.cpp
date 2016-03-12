@@ -302,15 +302,6 @@ Inkscape::XML::Node *SPText::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     this->attributes.writeTo(repr);
     this->rebuildLayout();  // copied from update(), see LP Bug 1339305
 
-    // deprecated attribute, but keep it around for backwards compatibility
-    if (this->style->line_height.set && !this->style->line_height.inherit && !this->style->line_height.normal && this->style->line_height.unit == SP_CSS_UNIT_PERCENT) {
-        Inkscape::SVGOStringStream os;
-        os << (this->style->line_height.value * 100.0) << "%";
-        this->getRepr()->setAttribute("sodipodi:linespacing", os.str().c_str());
-    } else {
-        this->getRepr()->setAttribute("sodipodi:linespacing", NULL);
-    }
-
     // SVG 2 Auto-wrapped text
     if( this->width.computed > 0.0 ) {
         sp_repr_set_svg_double(repr, "width", this->width.computed);

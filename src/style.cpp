@@ -113,7 +113,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     font_weight(      "font-weight",     enum_font_weight,     SP_CSS_FONT_WEIGHT_NORMAL, SP_CSS_FONT_WEIGHT_400  ),
     font_stretch(     "font-stretch",    enum_font_stretch,    SP_CSS_FONT_STRETCH_NORMAL ), 
     font_size(),
-    line_height(      "line-height",                    1.25 ),  // SPILengthOrNormal
+    line_height(      "line-height",                    125  ),  // SPILengthOrNormal
     font_family(      "font-family",     "sans-serif"        ),  // SPIString w/default
     font(),                                                      // SPIFont
     font_specification( "-inkscape-font-specification"       ),  // SPIString
@@ -1957,7 +1957,7 @@ sp_css_attr_scale(SPCSSAttr *css, double ex)
     sp_css_attr_scale_property_single(css, "kerning", ex);
     sp_css_attr_scale_property_single(css, "letter-spacing", ex);
     sp_css_attr_scale_property_single(css, "word-spacing", ex);
-    sp_css_attr_scale_property_single(css, "line-height", ex, true);
+    //sp_css_attr_scale_property_single(css, "line-height", ex, true);
 
     return css;
 }

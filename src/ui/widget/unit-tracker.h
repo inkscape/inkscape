@@ -42,6 +42,7 @@ public:
     Inkscape::Util::Unit const * getActiveUnit() const;
 
     void addUnit(Inkscape::Util::Unit const *u);
+    void prependUnit(Inkscape::Util::Unit const *u);
     void addAdjustment(GtkAdjustment *adj);
     void setFullVal(GtkAdjustment *adj, gdouble val);
 

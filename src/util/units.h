@@ -75,6 +75,11 @@ public:
     
     /** Get SVG unit code. */
     int svgUnit() const;
+
+    /** Convert value from this unit **/
+    double convert(double from_dist, Unit const *to) const;
+    double convert(double from_dist, Glib::ustring const &to) const;
+    double convert(double from_dist, char const *to) const;
 };
 
 class Quantity
@@ -147,6 +152,9 @@ public:
     
     /** Retrieve a given unit based on its SVGLength unit */
     Unit const *getUnit(SVGLength::Unit u) const;
+
+    /** Retrieve a given unit based on its SP_CSS_UNIT */
+    Unit const *getUnit(unsigned int u) const;
     
     /** Retrieve a quantity based on its string identifier */
     Quantity parseQuantity(Glib::ustring const &q) const;

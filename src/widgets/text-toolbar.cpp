@@ -54,12 +54,17 @@
 #include "ui/icon-names.h"
 #include "ui/tools/text-tool.h"
 #include "ui/tools/tool-base.h"
+#include "ui/widget/unit-tracker.h"
+#include "util/units.h"
 #include "verbs.h"
 #include "xml/repr.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
+using Inkscape::UI::Widget::UnitTracker;
+using Inkscape::Util::Unit;
+using Inkscape::Util::unit_table;
 
 //#define DEBUG_TEXT
 
@@ -504,8 +509,14 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 
 static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
-    // quit if run by the _changed callbacks
-    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
+
+    if ( !tracker || tracker->isUpdating() || g_object_get_data(tbl, "freeze")) {
+        /*
+         * When only units are being changed, don't treat changes
+         * to adjuster values as object changes.
+         * or quit if run by the _changed callbacks
+         */
         return;
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
@@ -514,7 +525,18 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     // Set css line height.
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    osfs << gtk_adjustment_get_value(adj)*100 << "%";
+
+    gdouble value = gtk_adjustment_get_value(adj);
+
+    Unit const *unit = tracker->getActiveUnit();
+
+    // Value can only be in px or percent or naked pc (e.g. 0.7 for 70%)
+    if (unit->abbr != "%") {
+        value = unit->convert(value, "px");
+        unit = unit_table.getUnit("px");
+    }
+
+    osfs << value << unit->abbr;
     sp_repr_css_set_property (css, "line-height", osfs.str().c_str());
 
     // Apply line-height to selected objects.
@@ -1073,21 +1095,31 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
         // Line height (spacing)
         double height;
+
+        Unit const *lh_unit;
+        UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
+
         if (query.line_height.normal) {
-            height = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
+            lh_unit = unit_table.getUnit("%");
+            height = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL * 100;
+        } else if (query.line_height.unit == SP_CSS_UNIT_PERCENT) {
+            lh_unit = unit_table.getUnit("%");
+            height = query.line_height.value * 100;
         } else {
-            if (query.line_height.unit == SP_CSS_UNIT_PERCENT) {
-                height = query.line_height.value;
-            } else {
-                height = query.line_height.computed;
-            }
+            lh_unit = tracker->getActiveUnit();
+            // Can get unit like this: unit_table.getUnit(query.line_height.unit);
+            height = Inkscape::Util::Quantity::convert(query.line_height.computed, "px", lh_unit);
         }
+
+        // Set before value is set
+        tracker->setActiveUnit(lh_unit);
 
         GtkAction* lineHeightAction = GTK_ACTION( g_object_get_data( tbl, "TextLineHeightAction" ) );
         GtkAdjustment *lineHeightAdjustment =
             ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( lineHeightAction ));
         gtk_adjustment_set_value( lineHeightAdjustment, height );
 
+        height = gtk_adjustment_get_value( lineHeightAdjustment );
 
         // Word spacing
         double wordSpacing;
@@ -1289,6 +1321,15 @@ static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*p
 }
 
 static void text_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
+
+static void destroy_tracker( GObject* obj, gpointer /*user_data*/ )
+{
+    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(obj, "tracker"));
+    if ( tracker ) {
+        delete tracker;
+        g_object_set_data( obj, "tracker", 0 );
+    }
+}
 
 // Define all the "widgets" in the toolbar.
 void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -1588,22 +1629,29 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gchar const* labels[] = {_("Smaller spacing"), 0, 0, 0, 0, C_("Text tool", "Normal"), 0, 0, 0, 0, 0, _("Larger spacing")};
         gdouble values[] = { 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1,2, 1.3, 1.4, 1.5, 2.0};
 
+        // Add the units menu.
+        UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
+        tracker->prependUnit(unit_table.getUnit("%"));
+
+        g_object_set_data( holder, "tracker", tracker );
+        g_signal_connect( holder, "destroy", G_CALLBACK(destroy_tracker), holder );
+
         EgeAdjustmentAction *eact = create_adjustment_action(
             "TextLineHeightAction",               /* name */
             _("Line Height"),                     /* label */
             _("Line:"),                           /* short label */
-            _("Spacing between baselines (times font size)"),      /* tooltip */
+            _("Spacing between baselines"),       /* tooltip */
             "/tools/text/lineheight",             /* preferences path */
-            0.0,                                  /* default */
+            125,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
             holder,                               /* dataKludge */
             FALSE,                                /* set alt-x keyboard shortcut? */
             NULL,                                 /* altx_mark */
-            0.0, 10.0, 0.01, 0.10,                /* lower, upper, step (arrow up/down), page up/down */
+            0.0, 1e6, 1.0, 10.0,                /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_lineheight_value_changed,     /* callback */
-            NULL,                                 /* unit tracker */
-            0.1,                                  /* step (used?) */
+            tracker,                              /* unit tracker */
+            1.0,                                  /* step (used?) */
             2,                                    /* digits to show */
             1.0                                   /* factor (multiplies default) */
             );
@@ -1611,6 +1659,11 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextLineHeightAction", eact );
         g_object_set( G_OBJECT(eact), "iconId", "text_line_spacing", NULL );
+
+        GtkAction* act = tracker->createAction( "TextLineHeightUnitAction", _("Units"), ("") );
+        gtk_action_group_add_action( mainActions, act );
+        g_object_set_data( holder, "TextLineHeightUnitAction", act );
+
     }
 
     /* Word spacing */
