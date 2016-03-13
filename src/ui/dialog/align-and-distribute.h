@@ -18,6 +18,7 @@
 #include <list>
 #include "ui/widget/panel.h"
 #include "ui/widget/frame.h"
+
 #include <gtkmm/frame.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/label.h>
@@ -35,6 +36,9 @@ class SPItem;
 
 namespace Inkscape {
 namespace UI {
+namespace Tools{
+class NodeTool;
+}
 namespace Dialog {
 
 class Action;
@@ -68,6 +72,7 @@ public:
 protected:
 
     void on_ref_change();
+    void on_node_ref_change();
     void on_selgrp_toggled();
     void addDistributeButton(const Glib::ustring &id, const Glib::ustring tiptext, 
                                       guint row, guint col, bool onInterSpace, 
@@ -114,15 +119,19 @@ protected:
     Gtk::HBox _anchorBox;
     Gtk::HBox _selgrpBox;
     Gtk::VBox _alignBox;
+    Gtk::VBox _alignBoxNode;
     Gtk::HBox _alignTableBox;
     Gtk::HBox _distributeTableBox;
     Gtk::HBox _rearrangeTableBox;
     Gtk::HBox _removeOverlapTableBox;
     Gtk::HBox _nodesTableBox;
     Gtk::Label _anchorLabel;
+    Gtk::Label _anchorLabelNode;
     Gtk::Label _selgrpLabel;
     Gtk::CheckButton _selgrp;
     Gtk::ComboBoxText _combo;
+    Gtk::HBox _anchorBoxNode;
+    Gtk::ComboBoxText _comboNode;
 
     SPDesktop *_desktop;
     DesktopTracker _deskTrack;
@@ -150,6 +159,7 @@ class Action {
 public :
 
     enum AlignTarget { LAST=0, FIRST, BIGGEST, SMALLEST, PAGE, DRAWING, SELECTION };
+    enum AlignTargetNode { LAST_NODE=0, FIRST_NODE, MID_NODE, MIN_NODE, MAX_NODE };
     Action(const Glib::ustring &id,
            const Glib::ustring &tiptext,
            guint row, guint column,
@@ -213,6 +223,7 @@ private :
     }
 
     static void do_action(SPDesktop *desktop, int index);
+    static void do_node_action(Inkscape::UI::Tools::NodeTool *nt, int index);
 
     guint _index;
     AlignAndDistribute &_dialog;
