@@ -216,7 +216,6 @@ static char const preferences_skeleton[] =
 "    <group id=\"input\" />\n"
 "    <group id=\"colorpickerwindow\" />\n"
 "    <group id=\"undo-history\" />\n"
-"    <group id=\"filtereffects\" />\n"
 "    <group id=\"transparency\"\n"
 "       on-focus=\"1.0\"\n"
 "       on-blur=\"0.50\"\n"

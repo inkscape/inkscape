@@ -48,6 +48,7 @@
 ./man/inkscape.zh_TW.1
 ./man/inkscape.zh_TW.pod
 ./man/inkscape.zh_TW.tmp
+./inkscape.appdata.xml
 ./inkscape.spec
 ./inkview.1
 ./install
