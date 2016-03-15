@@ -1004,10 +1004,10 @@ objects_query_paintorder (const std::vector<SPItem*> &objects, SPStyle *style_re
 
         n_order ++;
 
-        if (!prev_order.empty() && prev_order.compare( style->paint_order.value ) != 0) {
-            same_order = false;
-        }
         if (style->paint_order.set) {
+            if (!prev_order.empty() && prev_order.compare( style->paint_order.value ) != 0) {
+                same_order = false;
+            }
             prev_order = style->paint_order.value;
         }
     }
