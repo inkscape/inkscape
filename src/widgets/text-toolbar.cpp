@@ -1106,9 +1106,11 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             lh_unit = unit_table.getUnit("%");
             height = query.line_height.value * 100;
         } else {
-            lh_unit = tracker->getActiveUnit();
-            // Can get unit like this: unit_table.getUnit(query.line_height.unit);
-            height = Inkscape::Util::Quantity::convert(query.line_height.computed, "px", lh_unit);
+            //Unit const *active = tracker->getActiveUnit();
+            // This allows us to show the unit stored to the user, but right now
+            // it's always px (because Tav said other units are broken/2016)
+            lh_unit = unit_table.getUnit(query.line_height.unit);
+            height = query.line_height.computed;
         }
 
         // Set before value is set
