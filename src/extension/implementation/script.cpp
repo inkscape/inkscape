@@ -152,7 +152,7 @@ Script::Script() :
 }
 
 /**
- *   brief     Destructor
+ *   \brief     Destructor
  */
 Script::~Script()
 {
@@ -280,9 +280,9 @@ bool Script::check_existence(const std::string &command)
 
 /**
     \return   none
-    \brief    This function 'loads' an extention, basically it determines
-              the full command for the extention and stores that.
-    \param    module  The extention to be loaded.
+    \brief    This function 'loads' an extension, basically it determines
+              the full command for the extension and stores that.
+    \param    module  The extension to be loaded.
 
     The most difficult part about this function is finding the actual
     command through all of the Reprs.  Basically it is hidden down a
@@ -292,7 +292,7 @@ bool Script::check_existence(const std::string &command)
 
     At that point all of the loops are exited, and there is an
     if statement to make sure they didn't exit because of not finding
-    the command.  If that's the case, the extention doesn't get loaded
+    the command.  If that's the case, the extension doesn't get loaded
     and should error out at a higher level.
 */
 
@@ -545,17 +545,17 @@ SPDocument *Script::open(Inkscape::Extension::Input *module,
 
 /**
     \return   none
-    \brief    This function uses an extention to save a document.  It first
+    \brief    This function uses an extension to save a document.  It first
               creates an SVG file of the document, and then runs it through
               the script.
-    \param    module    Extention to be used
+    \param    module    Extension to be used
     \param    doc       Document to be saved
     \param    filename  The name to save the final file as
     \return   false in case of any failure writing the file, otherwise true
 
     Well, at some point people need to save - it is really what makes
     the entire application useful.  And, it is possible that someone
-    would want to use an extetion for this, so we need a function to
+    would want to use an extension for this, so we need a function to
     do that eh?
 
     First things first, the document is saved to a temporary file that
@@ -563,7 +563,7 @@ SPDocument *Script::open(Inkscape::Extension::Input *module,
     ink_ext_ as a prefix.  Don't worry, this file gets deleted at the
     end of the function.
 
-    After we have the SVG file, then extention_execute is called with
+    After we have the SVG file, then Script::execute is called with
     the temporary file name and the final output filename.  This should
     put the output of the script into the final output file.  We then
     delete the temporary file.

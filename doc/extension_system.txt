@@ -321,7 +321,7 @@ Inkscape, such as in the case of compiled-in printing modules.  Most
 users will never need to write this type of extension, they are pretty
 much for Inkscape core developers only.
 
-=== Writeing Your Extension ===
+=== Writing Your Extension ===
 
 This section provides some guidance and examples for implementing
 different kinds of Extensions.
@@ -334,7 +334,7 @@ different kinds of Extensions.
 
 === Creating an INX File ===
 
-Every extension must have a corrosponding *.inx file.  This is an XML
+Every extension must have a corresponding *.inx file.  This is an XML
 file that provides Inkscape with information about the module and allows
 it to load the info without needing to access the module itself.  The
 *.inx file contains enough info for Inkscape to set up menu items and
@@ -342,7 +342,7 @@ know what kinds of functionality to expect from the extension.
 
 === Packaging Your Extension ===
 
-=== Contributing Your Extensino to the Inkscape Community ===
+=== Contributing Your Extension to the Inkscape Community ===
 
 Once your extension is complete, you may wish to share it with the
 community.  There are of course no hard and fast rules for how to share
