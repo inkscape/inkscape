@@ -6,10 +6,11 @@ branding_DATA =  \
 	README \
 	inkscape.svg \
 	inkscape-flat.svg \
+	inkscape-text.svg \
 	sodipodi.svg \
-	euphoriascript-regular.ttf \
-	tux.svg \
-	draw-freely.svg 
+	LinLibertine_DR.otf \
+	EuphoriaScript-Regular.otf \
+	tux.svg 
 
 icons_DATA = \
 	inkscape.svg
