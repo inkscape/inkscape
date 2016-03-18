@@ -819,8 +819,8 @@ void TextTagAttributes::setFirstXY(Geom::Point &point)
         attributes.x.resize(1, zero_length);
     if (attributes.y.empty())
         attributes.y.resize(1, zero_length);
-    attributes.x[0].computed = point[Geom::X];
-    attributes.y[0].computed = point[Geom::Y];
+    attributes.x[0] = point[Geom::X];
+    attributes.y[0] = point[Geom::Y];
 }
 
 void TextTagAttributes::mergeInto(Inkscape::Text::Layout::OptionalTextTagAttrs *output, Inkscape::Text::Layout::OptionalTextTagAttrs const &parent_attrs, unsigned parent_attrs_offset, bool copy_xy, bool copy_dxdyrotate) const
