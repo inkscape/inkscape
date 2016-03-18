@@ -1492,7 +1492,6 @@ void PathManipulator::_getGeometry()
 void PathManipulator::_setGeometry()
 {
     using namespace Inkscape::LivePathEffect;
-    if (empty()) return;
 
     if (!_lpe_key.empty()) {
         // copied from nodepath.cpp
@@ -1505,6 +1504,7 @@ void PathManipulator::_setGeometry()
             LIVEPATHEFFECT(_path)->requestModified(SP_OBJECT_MODIFIED_FLAG);
         }
     } else {
+        if (empty()) return;
         //XML Tree being used here directly while it shouldn't be.
         if (_path->getRepr()->attribute("inkscape:original-d"))
             _path->set_original_curve(_spcurve, false, false);

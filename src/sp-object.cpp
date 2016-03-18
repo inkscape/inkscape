@@ -958,16 +958,15 @@ void SPObject::readAttr(gchar const *key)
     //g_assert(object != NULL);
     //g_assert(SP_IS_OBJECT(object));
     g_assert(key != NULL);
-
     //XML Tree being used here.
-    g_assert(this->getRepr() != NULL);
+    if (this->getRepr() != NULL ) {
+        unsigned int keyid = sp_attribute_lookup(key);
+        if (keyid != SP_ATTR_INVALID) {
+            /* Retrieve the 'key' attribute from the object's XML representation */
+            gchar const *value = this->getRepr()->attribute(key);
 
-    unsigned int keyid = sp_attribute_lookup(key);
-    if (keyid != SP_ATTR_INVALID) {
-        /* Retrieve the 'key' attribute from the object's XML representation */
-        gchar const *value = getRepr()->attribute(key);
-
-        setKeyValue(keyid, value);
+            setKeyValue(keyid, value);
+        }
     }
 }
 

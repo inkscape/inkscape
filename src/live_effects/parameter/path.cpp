@@ -294,7 +294,12 @@ void
 PathParam::set_new_value (Geom::PathVector const &newpath, bool write_to_svg)
 {
     remove_link();
-    _pathvector = newpath;
+    if (newpath.empty()) {
+        param_set_and_write_default();
+        return;
+    } else {
+        _pathvector = newpath;
+    }
     must_recalculate_pwd2 = true;
 
     if (write_to_svg) {
