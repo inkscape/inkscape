@@ -22,24 +22,22 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 namespace CR {
-  // we need a separate namespace to avoid clashes with LPEPerpBisector
-  class KnotHolderEntityStartingAngle;
-  class KnotHolderEntityRotationAngle;
+// we need a separate namespace to avoid clashes with LPEPerpBisector
+class KnotHolderEntityStartingAngle;
+class KnotHolderEntityRotationAngle;
 }
 
 class LPECopyRotate : public Effect, GroupBBoxEffect {
 public:
     LPECopyRotate(LivePathEffectObject *lpeobject);
     virtual ~LPECopyRotate();
-
     virtual void doOnApply (SPLPEItem const* lpeitem);
-
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
-
     virtual void doBeforeEffect (SPLPEItem const* lpeitem);
-
+    virtual void setFusion(Geom::PathVector &path_in, Geom::Path divider, double sizeDivider);
+    virtual void split(Geom::PathVector &path_in, Geom::Path const &divider);
     virtual void resetDefaults(SPItem const* item);
-
+    virtual void transform_multiply(Geom::Affine const& postmul, bool set);
     /* the knotholder entity classes must be declared friends */
     friend class CR::KnotHolderEntityStartingAngle;
     friend class CR::KnotHolderEntityRotationAngle;
@@ -53,16 +51,14 @@ private:
     ScalarParam starting_angle;
     ScalarParam rotation_angle;
     ScalarParam num_copies;
-    BoolParam copiesTo360;
-
+    BoolParam copies_to_360;
+    BoolParam fuse_paths;
     Geom::Point A;
     Geom::Point B;
     Geom::Point dir;
-
     Geom::Point start_pos;
     Geom::Point rot_pos;
     double dist_angle_handle;
-
     LPECopyRotate(const LPECopyRotate&);
     LPECopyRotate& operator=(const LPECopyRotate&);
 };

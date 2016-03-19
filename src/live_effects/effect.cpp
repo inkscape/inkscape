@@ -110,7 +110,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {PATH_LENGTH,           N_("Path length"),             "path_length"},
     {PERP_BISECTOR,         N_("Perpendicular bisector"),  "perp_bisector"},
     {PERSPECTIVE_PATH,      N_("Perspective path"),        "perspective_path"},
-    {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
     {RECURSIVE_SKELETON,    N_("Recursive skeleton"),      "recursive_skeleton"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
     {TEXT_LABEL,            N_("Text label"),              "text_label"},
@@ -145,6 +144,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {BSPLINE,               N_("BSpline"),                 "bspline"},
     {JOIN_TYPE,             N_("Join type"),               "join_type"},
     {TAPER_STROKE,          N_("Taper stroke"),            "taper_stroke"},
+    {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
 /* Ponyscape -> Inkscape 0.92*/
     {ATTACH_PATH,           N_("Attach path"),             "attach_path"},
     {FILL_BETWEEN_STROKES,  N_("Fill between strokes"),    "fill_between_strokes"},
