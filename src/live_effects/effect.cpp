@@ -467,6 +467,10 @@ void Effect::doBeforeEffect_impl(SPLPEItem const* lpeitem)
         pathvector_before_effect = sp_curve->get_pathvector();
     }
     doBeforeEffect(lpeitem);
+    if (apply_to_clippath_and_mask && SP_IS_GROUP(sp_lpe_item)) {
+        sp_lpe_item->apply_to_clippath(sp_lpe_item);
+        sp_lpe_item->apply_to_mask(sp_lpe_item);
+    }
 }
 
 /**

@@ -209,7 +209,7 @@ Inkscape::XML::Node* SPLPEItem::write(Inkscape::XML::Document *xml_doc, Inkscape
 /**
  * returns true when LPE was successful.
  */
-bool SPLPEItem::performPathEffect(SPCurve *curve, bool clip_paths) {
+bool SPLPEItem::performPathEffect(SPCurve *curve, bool is_clip_or_mask) {
     if (!this) {
         return false;
     }
@@ -217,7 +217,6 @@ bool SPLPEItem::performPathEffect(SPCurve *curve, bool clip_paths) {
     if (!curve) {
         return false;
     }
-    bool apply_to_clippath_and_mask = false;
     if (this->hasPathEffect() && this->pathEffectsEnabled()) {
         for (PathEffectList::iterator it = this->path_effect_list->begin(); it != this->path_effect_list->end(); ++it)
         {
@@ -237,17 +236,13 @@ bool SPLPEItem::performPathEffect(SPCurve *curve, bool clip_paths) {
                 g_warning("SPLPEItem::performPathEffect - lpeobj with invalid lpe in the stack!");
                 return false;
             }
-
             if (lpe->isVisible()) {
-                if(lpe->apply_to_clippath_and_mask){
-                    apply_to_clippath_and_mask = true;
-                }
                 if (lpe->acceptsNumClicks() > 0 && !lpe->isReady()) {
                     // if the effect expects mouse input before being applied and the input is not finished
                     // yet, we don't alter the path
                     return false;
                 }
-                if (clip_paths || lpe->apply_to_clippath_and_mask) {
+                if (!is_clip_or_mask || (is_clip_or_mask && lpe->apply_to_clippath_and_mask)) {
                     // Groups have their doBeforeEffect called elsewhere
                     if (!SP_IS_GROUP(this)) {
                         lpe->doBeforeEffect_impl(this);
@@ -270,10 +265,10 @@ bool SPLPEItem::performPathEffect(SPCurve *curve, bool clip_paths) {
                 }
             }
         }
-    }
-    if(apply_to_clippath_and_mask && clip_paths){
-        this->apply_to_clippath((SPItem *)this);
-        this->apply_to_mask((SPItem *)this);
+        if(!SP_IS_GROUP(this) && !is_clip_or_mask){
+            this->apply_to_clippath(this);
+            this->apply_to_mask(this);
+        }
     }
     return true;
 }
@@ -698,10 +693,10 @@ SPLPEItem::apply_to_clip_or_mask(SPItem *clip_mask, SPItem *item)
             try {
                 if(SP_IS_GROUP(this)){
                     c->transform(i2anc_affine(SP_GROUP(item), SP_GROUP(this)));
-                    success = this->performPathEffect(c, false);
+                    success = this->performPathEffect(c, true);
                     c->transform(i2anc_affine(SP_GROUP(item), SP_GROUP(this)).inverse());
                 } else {
-                    success = this->performPathEffect(c, false);
+                    success = this->performPathEffect(c, true);
                 }
             } catch (std::exception & e) {
                 g_warning("Exception during LPE execution. \n %s", e.what());
