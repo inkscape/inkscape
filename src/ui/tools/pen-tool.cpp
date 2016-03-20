@@ -1223,12 +1223,11 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
                 if(MOD__SHIFT_ONLY(event)) {
                     // All this is needed to stop the last control
                     // point dispeating and stop making an n-1 shape.
-                    Geom::Point const event_w(0, 0);
-                    Geom::Point event_dt(desktop->w2d(event_w));
+                    Geom::Point const p(0, 0);
                     if(this->red_curve->is_empty()) {
-                        this->red_curve->moveto(event_w);
+                        this->red_curve->moveto(p);
                     }
-                    this->_finishSegment(event_w, 0);
+                    this->_finishSegment(p, 0);
                     this->_finish(true);
                 } else {
                   this->_finish(false);
@@ -1795,12 +1794,12 @@ void PenTool::_setSubsequentPoint(Geom::Point const p, bool statusbar, guint sta
 
     if (statusbar) {
         gchar *message = is_curve ?
-            _("<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path" ):
-            _("<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path");
+            _("<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> or <b>Shift+Enter</b> to finish the path" ):
+            _("<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> or <b>Shift+Enter</b> to finish the path");
         if(this->spiro || this->bspline){
             message = is_curve ?
-            _("<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> make a cusp node, <b>Enter</b> to finish the path" ):
-            _("<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> make a cusp node, <b>Enter</b> to finish the path");        
+            _("<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> make a cusp node, <b>Enter</b> or <b>Shift+Enter</b> to finish the path" ):
+            _("<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> make a cusp node, <b>Enter</b> or <b>Shift+Enter</b> to finish the path");        
         }
         this->_setAngleDistanceStatusMessage(p, 0, message);
     }
