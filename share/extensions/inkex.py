@@ -48,6 +48,7 @@ u'xlink'    :u'http://www.w3.org/1999/xlink',
 u'xml'      :u'http://www.w3.org/XML/1998/namespace'
 }
 
+
 def localize():
     domain = 'inkscape'
     if sys.platform.startswith('win'):
@@ -55,32 +56,34 @@ def localize():
         current_locale, encoding = locale.getdefaultlocale()
         os.environ['LANG'] = current_locale
         try:
-            localdir = os.environ['INKSCAPE_LOCALEDIR'];
+            localdir = os.environ['INKSCAPE_LOCALEDIR']
             trans = gettext.translation(domain, localdir, [current_locale], fallback=True)
         except KeyError:
             trans = gettext.translation(domain, fallback=True)
     elif sys.platform.startswith('darwin'):
         try:
-            localdir = os.environ['INKSCAPE_LOCALEDIR'];
+            localdir = os.environ['INKSCAPE_LOCALEDIR']
             trans = gettext.translation(domain, localdir, fallback=True)
         except KeyError:
             try:
-                localdir = os.environ['PACKAGE_LOCALE_DIR'];
+                localdir = os.environ['PACKAGE_LOCALE_DIR']
                 trans = gettext.translation(domain, localdir, fallback=True)
             except KeyError:
                 trans = gettext.translation(domain, fallback=True)
     else:
         try:
-            localdir = os.environ['PACKAGE_LOCALE_DIR'];
+            localdir = os.environ['PACKAGE_LOCALE_DIR']
             trans = gettext.translation(domain, localdir, fallback=True)
         except KeyError:
             trans = gettext.translation(domain, fallback=True)
     #sys.stderr.write(str(localdir) + "\n")
     trans.install()
 
+
 def debug(what):
     sys.stderr.write(str(what) + "\n")
     return what
+
 
 def errormsg(msg):
     """Intended for end-user-visible error messages.
@@ -101,6 +104,7 @@ def errormsg(msg):
     else:
         sys.stderr.write((unicode(msg, "utf-8", errors='replace') + "\n").encode("UTF-8"))
 
+
 def are_near_relative(a, b, eps):
     if (a-b <= a*eps) and (a-b >= -a*eps):
         return True
@@ -113,9 +117,13 @@ try:
     from lxml import etree
 except Exception, e:
     localize()
-    errormsg(_("The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from http://cheeseshop.python.org/pypi/lxml/, or install it through your package manager by a command like: sudo apt-get install python-lxml\n\nTechnical details:\n%s" % (e,)))
+    errormsg(_("The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension."
+               "Please download and install the latest version from http://cheeseshop.python.org/pypi/lxml/, "
+               "or install it through your package manager by a command like: sudo apt-get install "
+               "python-lxml\n\nTechnical details:\n%s" % (e,)))
     sys.exit()
-    
+
+
 def check_inkbool(option, opt, value):
     if str(value).capitalize() == 'True':
         return True
@@ -124,35 +132,40 @@ def check_inkbool(option, opt, value):
     else:
         raise optparse.OptionValueError("option %s: invalid inkbool value: %s" % (opt, value))
 
+
 def addNS(tag, ns=None):
     val = tag
-    if ns!=None and len(ns)>0 and NSS.has_key(ns) and len(tag)>0 and tag[0]!='{':
+    if ns is not None and len(ns) > 0 and NSS.has_key(ns) and len(tag) > 0 and tag[0] != '{':
         val = "{%s}%s" % (NSS[ns], tag)
     return val
+
 
 class InkOption(optparse.Option):
     TYPES = optparse.Option.TYPES + ("inkbool",)
     TYPE_CHECKER = copy.copy(optparse.Option.TYPE_CHECKER)
     TYPE_CHECKER["inkbool"] = check_inkbool
 
+
 class Effect:
     """A class for creating Inkscape SVG Effects"""
 
     def __init__(self, *args, **kwargs):
-        self.document=None
-        self.original_document=None
-        self.ctx=None
-        self.selected={}
-        self.doc_ids={}
-        self.options=None
-        self.args=None
-        self.OptionParser = optparse.OptionParser(usage="usage: %prog [options] SVGfile",option_class=InkOption)
+        self.document = None
+        self.original_document = None
+        self.ctx = None
+        self.selected = {}
+        self.doc_ids = {}
+        self.options = None
+        self.args = None
+        self.OptionParser = optparse.OptionParser(usage="usage: %prog [options] SVGfile",
+                                                  option_class=InkOption)
         self.OptionParser.add_option("--id",
                         action="append", type="string", dest="ids", default=[], 
                         help="id attribute of object to manipulate")
         self.OptionParser.add_option("--selected-nodes",
                         action="append", type="string", dest="selected_nodes", default=[], 
-                        help="id:subpath:position of selected nodes, if any")#TODO write a parser for this
+                        help="id:subpath:position of selected nodes, if any")
+        # TODO write a parser for this
 
     def effect(self):
         pass
@@ -165,7 +178,7 @@ class Effect:
         """Parse document in specified file or on stdin"""
 
         # First try to open the file from the function argument
-        if filename != None:
+        if filename is not None:
             try:
                 stream = open(filename, 'r')
             except Exception:
@@ -174,7 +187,7 @@ class Effect:
 
         # If it wasn't specified, try to open the file specified as
         # an object member
-        elif self.svg_file != None:
+        elif self.svg_file is not None:
             try:
                 stream = open(self.svg_file, 'r')
             except Exception:
@@ -207,11 +220,12 @@ class Effect:
         xattr = self.document.xpath('//sodipodi:namedview/@inkscape:cx', namespaces=NSS)
         yattr = self.document.xpath('//sodipodi:namedview/@inkscape:cy', namespaces=NSS)
         if xattr and yattr:
-            x = self.unittouu( xattr[0] + 'px' )
-            y = self.unittouu( yattr[0] + 'px')
+            x = self.unittouu(xattr[0] + 'px')
+            y = self.unittouu(yattr[0] + 'px')
             doc_height = self.unittouu(self.getDocumentHeight())
             if x and y:
-                self.view_center = (float(x), doc_height - float(y)) # FIXME: y-coordinate flip, eliminate it when it's gone in Inkscape
+                self.view_center = (float(x), doc_height - float(y))
+                # FIXME: y-coordinate flip, eliminate it when it's gone in Inkscape
 
     def getselected(self):
         """Collect selected nodes"""
@@ -224,16 +238,15 @@ class Effect:
         path = '//*[@id="%s"]' % id
         el_list = self.document.xpath(path, namespaces=NSS)
         if el_list:
-          return el_list[0]
+            return el_list[0]
         else:
-          return None
+            return None
 
     def getParentNode(self, node):
         for parent in self.document.getiterator():
             if node in parent.getchildren():
                 return parent
                 break
-
 
     def getdocids(self):
         docIdNodes = self.document.xpath('//@id', namespaces=NSS)
@@ -250,7 +263,7 @@ class Effect:
           }
         guide = etree.SubElement(
                   self.getNamedView(),
-                  addNS('guide','sodipodi'), atts )
+                  addNS('guide','sodipodi'), atts)
         return guide
 
     def output(self):
@@ -271,7 +284,7 @@ class Effect:
         self.effect()
         if output: self.output()
 
-    def uniqueId(self, old_id, make_new_id = True):
+    def uniqueId(self, old_id, make_new_id=True):
         new_id = old_id
         if make_new_id:
             while new_id in self.doc_ids:
@@ -287,7 +300,7 @@ class Effect:
             retval = None
         return retval
 
-    #a dictionary of unit to user unit conversion factors
+    # a dictionary of unit to user unit conversion factors
     __uuconv = {'in':96.0, 'pt':1.33333333333, 'px':1.0, 'mm':3.77952755913, 'cm':37.7952755913,
                 'm':3779.52755913, 'km':3779527.55913, 'pc':16.0, 'yd':3456.0 , 'ft':1152.0}
 
@@ -315,12 +328,12 @@ class Effect:
             else:
                 return '0'
 
-    # Function returns the unit used for the values in SVG.
-    # For lack of an attribute in SVG that explicitly defines what units are used for SVG coordinates,
-    # try to calculate the unit from the SVG width and SVG viewbox.
-    # Defaults to 'px' units.
     def getDocumentUnit(self):
-        svgunit = 'px' #default to pixels
+        """Function returns the unit used for the values in SVG.
+        For lack of an attribute in SVG that explicitly defines what units are used for SVG coordinates,
+        Try to calculate the unit from the SVG width and SVG viewbox.
+        Defaults to 'px' units."""
+        svgunit = 'px'  # default to pixels
 
         svgwidth = self.getDocumentWidth()
         viewboxstr = self.document.getroot().get('viewBox')
@@ -331,9 +344,9 @@ class Effect:
             p = param.match(svgwidth)
             u = unitmatch.search(svgwidth)
 
-            width = 100 #default
-            viewboxwidth = 100 #default
-            svgwidthunit = 'px' #default assume 'px' unit
+            width = 100  # default
+            viewboxwidth = 100  # default
+            svgwidthunit = 'px'  # default assume 'px' unit
             if p:
                 width = float(p.string[p.start():p.end()])
             else:
@@ -347,23 +360,22 @@ class Effect:
                     viewboxnumbers.append(float(t))
                 except ValueError:
                     pass
-            if len(viewboxnumbers) == 4:  #check for correct number of numbers
+            if len(viewboxnumbers) == 4:  # check for correct number of numbers
                 viewboxwidth = viewboxnumbers[2]
 
             svgunitfactor = self.__uuconv[svgwidthunit] * width / viewboxwidth
 
             # try to find the svgunitfactor in the list of units known. If we don't find something, ...
-            eps = 0.01 #allow 1% error in factor
+            eps = 0.01  # allow 1% error in factor
             for key in self.__uuconv:
                 if are_near_relative(self.__uuconv[key], svgunitfactor, eps):
-                    #found match!
-                    svgunit = key;
+                    # found match!
+                    svgunit = key
 
         return svgunit
 
-
     def unittouu(self, string):
-        '''Returns userunits given a string representation of units in another system'''
+        """Returns userunits given a string representation of units in another system"""
         unit = re.compile('(%s)$' % '|'.join(self.__uuconv.keys()))
         param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
 
@@ -378,7 +390,7 @@ class Effect:
                 return retval * (self.__uuconv[u.string[u.start():u.end()]] / self.__uuconv[self.getDocumentUnit()])
             except KeyError:
                 pass
-        else: # default assume 'px' unit
+        else:  # default assume 'px' unit
             return retval / self.__uuconv[self.getDocumentUnit()]
 
         return retval
@@ -387,7 +399,7 @@ class Effect:
         return val / (self.__uuconv[unit] / self.__uuconv[self.getDocumentUnit()])
 
     def addDocumentUnit(self, value):
-        ''' Add document unit when no unit is specified in the string '''
+        """Add document unit when no unit is specified in the string """
         try:
             float(value)
             return value + self.getDocumentUnit()
