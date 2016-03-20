@@ -71,8 +71,8 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     origin(_("Origin"), _("Origin of the rotation"), "origin", &wr, this, "Adjust the origin of the rotation"),
     starting_angle(_("Starting:"), _("Angle of the first copy"), "starting_angle", &wr, this, 0.0),
-    rotation_angle(_("Rotation angle:"), _("Angle between two successive copies"), "rotation_angle", &wr, this, 30.0),
-    num_copies(_("Number of copies:"), _("Number of copies of the original path"), "num_copies", &wr, this, 5),
+    rotation_angle(_("Rotation angle:"), _("Angle between two successive copies"), "rotation_angle", &wr, this, 60.0),
+    num_copies(_("Number of copies:"), _("Number of copies of the original path"), "num_copies", &wr, this, 6),
     copies_to_360(_("360º Copies"), _("No rotation angle, fixed to 360º"), "copies_to_360", &wr, this, true),
     fuse_paths(_("Fuse paths"), _("Fuse paths by helper line, use fill-rule: evenodd for best result"), "fuse_paths", &wr, this, false),
     dist_angle_handle(100.0)
@@ -199,9 +199,10 @@ LPECopyRotate::split(Geom::PathVector &path_on, Geom::Path const &divider)
             time_start = time_end;
         }
     }
-    position = pointSideOfLine(divider[0].finalPoint(), divider[1].finalPoint(), original.finalPoint());
+    Geom::Point side_checker = original.pointAt(original.size() - 0.001);
+    position = pointSideOfLine(divider[0].finalPoint(), divider[1].finalPoint(), side_checker);
     if (rotation_angle != 180) {
-        position = pointInTriangle(original.finalPoint(), divider.initialPoint(), divider[0].finalPoint(), divider[1].finalPoint());
+        position = pointInTriangle(side_checker, divider.initialPoint(), divider[0].finalPoint(), divider[1].finalPoint());
     }
     if (cs.size() > 0 && position == 1) {
         Geom::Path portion_original = original.portion(time_start, original.size());
