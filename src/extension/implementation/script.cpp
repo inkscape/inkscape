@@ -1119,7 +1119,45 @@ int Script::execute (const std::list<std::string> &in_command,
 }
 
 
+void Script::file_listener::init(int fd, Glib::RefPtr<Glib::MainLoop> main) {
+    _channel = Glib::IOChannel::create_from_fd(fd);
+    _channel->set_encoding();
+    _conn = main->get_context()->signal_io().connect(sigc::mem_fun(*this, &file_listener::read), _channel, Glib::IO_IN | Glib::IO_HUP | Glib::IO_ERR);
+    _main_loop = main;
 
+    return;
+}
+
+bool Script::file_listener::read(Glib::IOCondition condition) {
+    if (condition != Glib::IO_IN) {
+        _main_loop->quit();
+        return false;
+    }
+
+    Glib::IOStatus status;
+    Glib::ustring out;
+    status = _channel->read_line(out);
+    _string += out;
+
+    if (status != Glib::IO_STATUS_NORMAL) {
+        _main_loop->quit();
+        _dead = true;
+        return false;
+    }
+
+    return true;
+}
+
+bool Script::file_listener::toFile(const Glib::ustring &name) {
+    try {
+        Glib::RefPtr<Glib::IOChannel> stdout_file = Glib::IOChannel::create_from_file(name, "w");
+        stdout_file->set_encoding();
+        stdout_file->write(_string);
+    } catch (Glib::FileError &e) {
+        return false;
+    }
+    return true;
+}
 
 }  // namespace Implementation
 }  // namespace Extension
