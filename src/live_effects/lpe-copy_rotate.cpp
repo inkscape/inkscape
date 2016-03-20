@@ -74,7 +74,7 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     rotation_angle(_("Rotation angle:"), _("Angle between two successive copies"), "rotation_angle", &wr, this, 30.0),
     num_copies(_("Number of copies:"), _("Number of copies of the original path"), "num_copies", &wr, this, 5),
     copies_to_360(_("360º Copies"), _("No rotation angle, fixed to 360º"), "copies_to_360", &wr, this, true),
-    fuse_paths(_("Fuse paths"), _("Fuse paths by helper line -Use fill rule: evenodd for best result-"), "fuse_paths", &wr, this, false),
+    fuse_paths(_("Fuse paths"), _("Fuse paths by helper line, use fill-rule: evenodd for best result"), "fuse_paths", &wr, this, false),
     dist_angle_handle(100.0)
 {
     show_orig_path = true;
@@ -143,6 +143,7 @@ LPECopyRotate::doBeforeEffect (SPLPEItem const* lpeitem)
         num_copies.param_set_increments(2,2);
         if ((int)num_copies%2 !=0) {
             num_copies.param_set_value(num_copies+1);
+            rotation_angle.param_set_value(360.0/(double)num_copies);
         }
     } else {
         num_copies.param_set_increments(1,1);
@@ -181,6 +182,9 @@ LPECopyRotate::split(Geom::PathVector &path_on, Geom::Path const &divider)
     std::sort(crossed.begin(), crossed.end());
     for (unsigned int i = 0; i < crossed.size(); i++) {
         double time_end = crossed[i];
+        if(time_start == time_end){
+            continue;
+        }
         Geom::Path portion_original = original.portion(time_start,time_end);
         if (!portion_original.empty()) {
             Geom::Point side_checker = portion_original.pointAt(0.001);
