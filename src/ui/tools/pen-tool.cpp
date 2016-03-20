@@ -1220,7 +1220,19 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
         case GDK_KEY_KP_Enter:
             if (this->npoints != 0) {
                 this->ea = NULL; // unset end anchor if set (otherwise crashes)
-                this->_finish(false);
+                if(MOD__SHIFT_ONLY(event)) {
+                    // All this is needed to stop the last control
+                    // point dispeating and stop making an n-1 shape.
+                    Geom::Point const event_w(0, 0);
+                    Geom::Point event_dt(desktop->w2d(event_w));
+                    if(this->red_curve->is_empty()) {
+                        this->red_curve->moveto(event_w);
+                    }
+                    this->_finishSegment(event_w, 0);
+                    this->_finish(true);
+                } else {
+                  this->_finish(false);
+                }
                 ret = true;
             }
             break;
