@@ -182,12 +182,12 @@ LPECopyRotate::split(Geom::PathVector &path_on, Geom::Path const &divider)
     std::sort(crossed.begin(), crossed.end());
     for (unsigned int i = 0; i < crossed.size(); i++) {
         double time_end = crossed[i];
-        if(time_start == time_end){
+        if (time_start == time_end || time_end - time_start < Geom::EPSILON) {
             continue;
         }
         Geom::Path portion_original = original.portion(time_start,time_end);
         if (!portion_original.empty()) {
-            Geom::Point side_checker = portion_original.pointAt(0.001);
+            Geom::Point side_checker = portion_original.pointAt(0.0001);
             position = pointSideOfLine(divider[0].finalPoint(),  divider[1].finalPoint(), side_checker);
             if (rotation_angle != 180) {
                 position = pointInTriangle(side_checker, divider.initialPoint(), divider[0].finalPoint(), divider[1].finalPoint());
@@ -199,10 +199,9 @@ LPECopyRotate::split(Geom::PathVector &path_on, Geom::Path const &divider)
             time_start = time_end;
         }
     }
-    Geom::Point side_checker = original.pointAt(original.size() - 0.001);
-    position = pointSideOfLine(divider[0].finalPoint(), divider[1].finalPoint(), side_checker);
+    position = pointSideOfLine(divider[0].finalPoint(), divider[1].finalPoint(), original.finalPoint());
     if (rotation_angle != 180) {
-        position = pointInTriangle(side_checker, divider.initialPoint(), divider[0].finalPoint(), divider[1].finalPoint());
+        position = pointInTriangle(original.finalPoint(), divider.initialPoint(), divider[0].finalPoint(), divider[1].finalPoint());
     }
     if (cs.size() > 0 && position == 1) {
         Geom::Path portion_original = original.portion(time_start, original.size());
@@ -274,7 +273,6 @@ LPECopyRotate::setFusion(Geom::PathVector &path_on, Geom::Path divider, double s
                     tmp_path_helper[tmp_path_helper.size()-1] = tmp_path_helper[tmp_path_helper.size()-1].reversed();
                     tmp_append.setInitial(tmp_path_helper[tmp_path_helper.size()-1].finalPoint());
                     tmp_path_helper[tmp_path_helper.size()-1].append(tmp_append);
-                    tmp_path_helper[tmp_path_helper.size()-1] = tmp_path_helper[tmp_path_helper.size()-1].reversed();
                 } else if (Geom::are_near(tmp_path_helper[tmp_path_helper.size()-1].finalPoint(), append_path.initialPoint())) {
                     Geom::Path tmp_append = append_path;
                     tmp_append.setInitial(tmp_path_helper[tmp_path_helper.size()-1].finalPoint());
@@ -284,7 +282,6 @@ LPECopyRotate::setFusion(Geom::PathVector &path_on, Geom::Path divider, double s
                     tmp_path_helper[tmp_path_helper.size()-1] = tmp_path_helper[tmp_path_helper.size()-1].reversed();
                     tmp_append.setInitial(tmp_path_helper[tmp_path_helper.size()-1].finalPoint());
                     tmp_path_helper[tmp_path_helper.size()-1].append(tmp_append);
-                    tmp_path_helper[tmp_path_helper.size()-1] = tmp_path_helper[tmp_path_helper.size()-1].reversed();
                 } else if (Geom::are_near(tmp_path_helper[0].finalPoint(), append_path.finalPoint())) {
                     Geom::Path tmp_append = append_path.reversed();
                     tmp_append.setInitial(tmp_path_helper[0].finalPoint());
@@ -294,7 +291,6 @@ LPECopyRotate::setFusion(Geom::PathVector &path_on, Geom::Path divider, double s
                     tmp_path_helper[0] = tmp_path_helper[0].reversed();
                     tmp_append.setInitial(tmp_path_helper[0].finalPoint());
                     tmp_path_helper[0].append(tmp_append);
-                    tmp_path_helper[0] = tmp_path_helper[0].reversed();
                 } else {
                     tmp_path_helper.push_back(append_path);
                 }
