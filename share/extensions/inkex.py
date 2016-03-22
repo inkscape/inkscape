@@ -106,10 +106,7 @@ def errormsg(msg):
 
 
 def are_near_relative(a, b, eps):
-    if (a-b <= a*eps) and (a-b >= -a*eps):
-        return True
-    else:
-        return False
+    return (a-b <= a*eps) and (a-b >= -a*eps)
 
 
 # third party library
@@ -246,7 +243,6 @@ class Effect:
         for parent in self.document.getiterator():
             if node in parent.getchildren():
                 return parent
-                break
 
     def getdocids(self):
         docIdNodes = self.document.xpath('//@id', namespaces=NSS)
