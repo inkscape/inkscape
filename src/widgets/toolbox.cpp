@@ -55,6 +55,7 @@
 #include "ui/tools-switch.h"
 #include "../ui/icon-names.h"
 #include "../ui/widget/style-swatch.h"
+#include "../ui/widget/unit-tracker.h"
 #include "../verbs.h"
 #include "../widgets/button.h"
 #include "../widgets/spinbutton-events.h"
@@ -1122,6 +1123,10 @@ EgeAdjustmentAction * create_adjustment_action( gchar const *name,
         // but we don't have an Entry
         g_object_set_data( dataKludge, prefs->getEntry(path).getEntryName().data(), adj );
     }
+
+    if (unit_tracker) {
+        unit_tracker->addAdjustment(adj);
+    } 
 
     // Using a cast just to make sure we pass in the right kind of function pointer
     g_object_set( G_OBJECT(act), "tool-post", static_cast<EgeWidgetFixup>(sp_set_font_size_smaller), NULL );
