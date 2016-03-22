@@ -49,20 +49,6 @@
     <factor>37.79527559055119</factor>
     <description>Centimeters (10 mm/cm)</description>
 </unit>
-<unit type="LINEAR" pri="n">
-    <name>meter</name>
-    <plural>meters</plural>
-    <abbr>m</abbr>
-    <factor>3779.527559055119</factor>
-    <description>Meters (100 cm/m)</description>
-</unit>
-<unit type="LINEAR" pri="n">
-    <name>foot</name>
-    <plural>feet</plural>
-    <abbr>ft</abbr>
-    <factor>1152</factor>
-    <description>Feet (12 in/ft)</description>
-</unit>
 <unit type="RADIAL" pri="y">
     <name>degree</name>
     <plural>degrees</plural>

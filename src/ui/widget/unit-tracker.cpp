@@ -12,7 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "style-internal.h"
 #include "unit-tracker.h"
 #include "widgets/ege-select-one-action.h"
 
@@ -120,15 +119,6 @@ void UnitTracker::addUnit(Inkscape::Util::Unit const *u)
     GtkTreeIter iter;
     gtk_list_store_append(_store, &iter);
     gtk_list_store_set(_store, &iter, COLUMN_STRING, u ? u->abbr.c_str() : "NULL", -1);
-}
-
-void UnitTracker::prependUnit(Inkscape::Util::Unit const *u)
-{
-    GtkTreeIter iter;
-    gtk_list_store_prepend(_store, &iter);
-    gtk_list_store_set(_store, &iter, COLUMN_STRING, u ? u->abbr.c_str() : "NULL", -1);
-    /* Re-shuffle our default selection here (_active gets out of sync) */
-    setActiveUnit(_activeUnit);
 }
 
 void UnitTracker::setFullVal(GtkAdjustment *adj, gdouble val)
