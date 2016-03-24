@@ -44,14 +44,6 @@ public:
 
 } // namespace CR
 
-int 
-pointSideOfLine(Geom::Point const &A, Geom::Point const &B, Geom::Point const &X)
-{
-    //http://stackoverflow.com/questions/1560492/how-to-tell-whether-a-point-is-to-the-right-or-left-side-of-a-line
-    double pos =  (B[Geom::X]-A[Geom::X])*(X[Geom::Y]-A[Geom::Y]) - (B[Geom::Y]-A[Geom::Y])*(X[Geom::X]-A[Geom::X]);
-    return (pos < 0) ? -1 : (pos > 0);
-}
-
 bool 
 pointInTriangle(Geom::Point const &p, Geom::Point const &p1, Geom::Point const &p2, Geom::Point const &p3)
 {
@@ -188,7 +180,7 @@ LPECopyRotate::split(Geom::PathVector &path_on, Geom::Path const &divider)
         Geom::Path portion_original = original.portion(time_start,time_end);
         if (!portion_original.empty()) {
             Geom::Point side_checker = portion_original.pointAt(0.0001);
-            position = pointSideOfLine(divider[0].finalPoint(),  divider[1].finalPoint(), side_checker);
+            position = Geom::sgn(Geom::cross(divider[1].finalPoint() - divider[0].finalPoint(), side_checker - divider[0].finalPoint()));
             if (rotation_angle != 180) {
                 position = pointInTriangle(side_checker, divider.initialPoint(), divider[0].finalPoint(), divider[1].finalPoint());
             }
@@ -199,7 +191,7 @@ LPECopyRotate::split(Geom::PathVector &path_on, Geom::Path const &divider)
             time_start = time_end;
         }
     }
-    position = pointSideOfLine(divider[0].finalPoint(), divider[1].finalPoint(), original.finalPoint());
+    position = Geom::sgn(Geom::cross(divider[1].finalPoint() - divider[0].finalPoint(), original.finalPoint() - divider[0].finalPoint()));
     if (rotation_angle != 180) {
         position = pointInTriangle(original.finalPoint(), divider.initialPoint(), divider[0].finalPoint(), divider[1].finalPoint());
     }
@@ -246,13 +238,13 @@ LPECopyRotate::setFusion(Geom::PathVector &path_on, Geom::Path divider, double s
             if (i%2 != 0) {
                 Geom::Point A = (Geom::Point)origin;
                 Geom::Point B = origin + dir * Geom::Rotate(-Geom::rad_from_deg((rotation_angle*i)+starting_angle)) * size_divider;
-                Geom::Affine m1(1.0, 0.0, 0.0, 1.0, A[0], A[1]);
+                Geom::Translate m1(A[0], A[1]);
                 double hyp = Geom::distance(A, B);
                 double c = (B[0] - A[0]) / hyp; // cos(alpha)
                 double s = (B[1] - A[1]) / hyp; // sin(alpha)
 
                 Geom::Affine m2(c, -s, s, c, 0.0, 0.0);
-                Geom::Affine sca(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);
+                Geom::Scale sca(1.0, -1.0);
 
                 Geom::Affine tmp_m = m1.inverse() * m2;
                 m = tmp_m;
