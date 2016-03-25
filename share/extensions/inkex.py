@@ -112,12 +112,12 @@ def are_near_relative(a, b, eps):
 # third party library
 try:
     from lxml import etree
-except Exception, e:
+except ImportError as e:
     localize()
     errormsg(_("The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension."
                "Please download and install the latest version from http://cheeseshop.python.org/pypi/lxml/, "
                "or install it through your package manager by a command like: sudo apt-get install "
-               "python-lxml\n\nTechnical details:\n%s" % (e,)))
+               "python-lxml\n\nTechnical details:\n%s" % (e, )))
     sys.exit()
 
 
@@ -178,7 +178,7 @@ class Effect:
         if filename is not None:
             try:
                 stream = open(filename, 'r')
-            except Exception:
+            except IOError:
                 errormsg(_("Unable to open specified file: %s") % filename)
                 sys.exit()
 
@@ -187,7 +187,7 @@ class Effect:
         elif self.svg_file is not None:
             try:
                 stream = open(self.svg_file, 'r')
-            except Exception:
+            except IOError:
                 errormsg(_("Unable to open object member file: %s") % self.svg_file)
                 sys.exit()
 
