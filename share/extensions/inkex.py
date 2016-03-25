@@ -165,6 +165,9 @@ class Effect:
         # TODO write a parser for this
 
     def effect(self):
+        """Apply some effects on the document. Extensions subclassing Effect
+        must override this function and define the transformations
+        in it."""
         pass
 
     def getoptions(self,args=sys.argv[1:]):
@@ -315,6 +318,10 @@ class Effect:
 
     # Fault tolerance for lazily defined SVG
     def getDocumentHeight(self):
+        """Returns a string corresponding to the height of the document, as
+        defined in the SVG file. If it is not defined, returns the height
+        as defined by the viewBox attribute. If viewBox is not defined,
+        returns the string '0'."""
         height = self.document.getroot().get('height')
         if height:
             return height
@@ -326,9 +333,10 @@ class Effect:
                 return '0'
 
     def getDocumentUnit(self):
-        """Function returns the unit used for the values in SVG.
-        For lack of an attribute in SVG that explicitly defines what units are used for SVG coordinates,
-        Try to calculate the unit from the SVG width and SVG viewbox.
+        """Returns the unit used for in the SVG document.
+        In the case the SVG document lacks an attribute that explicitly
+        defines what units are used for SVG coordinates, it tries to calculate
+        the unit from the SVG width and viewBox attributes.
         Defaults to 'px' units."""
         svgunit = 'px'  # default to pixels
 
