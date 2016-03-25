@@ -35,7 +35,7 @@ import re
 import sys
 from math import *
 
-#a dictionary of all of the xmlns prefixes in a standard inkscape doc
+# a dictionary of all of the xmlns prefixes in a standard inkscape doc
 NSS = {
 u'sodipodi' :u'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
 u'cc'       :u'http://creativecommons.org/ns#',
@@ -100,9 +100,9 @@ def errormsg(msg):
          inkex.errormsg(_("This extension requires two selected paths."))
     """
     if isinstance(msg, unicode):
-        sys.stderr.write(msg.encode("UTF-8") + "\n")
+        sys.stderr.write(msg.encode("utf-8") + "\n")
     else:
-        sys.stderr.write((unicode(msg, "utf-8", errors='replace') + "\n").encode("UTF-8"))
+        sys.stderr.write((unicode(msg, "utf-8", errors='replace') + "\n").encode("utf-8"))
 
 
 def are_near_relative(a, b, eps):
@@ -205,7 +205,7 @@ class Effect:
     def getposinlayer(self):
         #defaults
         self.current_layer = self.document.getroot()
-        self.view_center = (0.0,0.0)
+        self.view_center = (0.0, 0.0)
 
         layerattr = self.document.xpath('//sodipodi:namedview/@inkscape:current-layer', namespaces=NSS)
         if layerattr:
@@ -278,7 +278,8 @@ class Effect:
         self.getselected()
         self.getdocids()
         self.effect()
-        if output: self.output()
+        if output:
+            self.output()
 
     def uniqueId(self, old_id, make_new_id=True):
         new_id = old_id
@@ -297,8 +298,8 @@ class Effect:
         return retval
 
     # a dictionary of unit to user unit conversion factors
-    __uuconv = {'in':96.0, 'pt':1.33333333333, 'px':1.0, 'mm':3.77952755913, 'cm':37.7952755913,
-                'm':3779.52755913, 'km':3779527.55913, 'pc':16.0, 'yd':3456.0 , 'ft':1152.0}
+    __uuconv = {'in': 96.0, 'pt': 1.33333333333, 'px': 1.0, 'mm': 3.77952755913, 'cm': 37.7952755913,
+                'm': 3779.52755913, 'km': 3779527.55913, 'pc': 16.0, 'yd': 3456.0, 'ft': 1152.0}
 
     # Fault tolerance for lazily defined SVG
     def getDocumentWidth(self):
