@@ -1412,6 +1412,10 @@ gimp_color_wheel_set_color (GimpColorWheel *wheel,
 
   priv = wheel->priv;
 
+  if(h == 0.0 && s == 0.0) {
+    h = priv->h;
+  }
+
   priv->h = h;
   priv->s = s;
   priv->v = v;

@@ -245,10 +245,10 @@ void ColorWheelSelector::_wheelChanged(GimpColorWheel *wheel, ColorWheelSelector
     guint32 mid = color.toRGBA32(0x7f);
     guint32 end = color.toRGBA32(0xff);
 
+    wheelSelector->_updating = true;
     wheelSelector->_slider->setColors(start, mid, end);
     wheelSelector->_color.preserveICC();
 
-    wheelSelector->_updating = true;
     wheelSelector->_color.setHeld(gimp_color_wheel_is_adjusting(wheel));
     wheelSelector->_color.setColor(color);
     wheelSelector->_updating = false;
