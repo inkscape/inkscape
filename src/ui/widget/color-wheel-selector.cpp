@@ -246,21 +246,23 @@ void ColorWheelSelector::_wheelChanged(GimpColorWheel *wheel, ColorWheelSelector
     guint32 end = color.toRGBA32(0xff);
 
     wheelSelector->_slider->setColors(start, mid, end);
-
     wheelSelector->_color.preserveICC();
 
+    wheelSelector->_updating = true;
     wheelSelector->_color.setHeld(gimp_color_wheel_is_adjusting(wheel));
     wheelSelector->_color.setColor(color);
+    wheelSelector->_updating = false;
 }
 
 void ColorWheelSelector::_updateDisplay()
 {
+    if(_updating) { return; }
+
 #ifdef DUMP_CHANGE_INFO
     g_message("ColorWheelSelector::_colorChanged( this=%p, %f, %f, %f,   %f)", this, _color.color().v.c[0],
               _color.color().v.c[1], _color.color().v.c[2], alpha);
 #endif
 
-    bool oldval = _updating;
     _updating = true;
     {
         float hsv[3] = { 0, 0, 0 };
@@ -276,7 +278,7 @@ void ColorWheelSelector::_updateDisplay()
 
     ColorScales::setScaled(_alpha_adjustment->gobj(), _color.alpha());
 
-    _updating = oldval;
+    _updating = false;
 }
 
 

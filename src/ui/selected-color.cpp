@@ -139,7 +139,6 @@ void SelectedColor::setHeld(bool held) {
 
     if (released) {
         signal_released.emit();
-        signal_changed.emit();
     }
     _updating = false;
 }
