@@ -1900,8 +1900,9 @@ sp_css_attr_scale_property_single(SPCSSAttr *css, gchar const *property,
         if (w == units) {// nothing converted, non-numeric value
             return;
         }
-        if (only_with_units && (units == NULL || *units == '\0' || *units == '%')) {
+        if (only_with_units && (units == NULL || *units == '\0' || *units == '%' || *units == 'e')) {
             // only_with_units, but no units found, so do nothing.
+            // 'e' matches 'em' or 'ex'
             return;
         }
         Inkscape::CSSOStringStream os;
