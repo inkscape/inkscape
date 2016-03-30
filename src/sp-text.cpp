@@ -645,6 +645,13 @@ void SPText::_adjustFontsizeRecursive(SPItem *item, double ex, bool is_root)
         style->font_size.computed *= ex;
         style->letter_spacing.computed *= ex;
         style->word_spacing.computed *= ex;
+        if (style->line_height.unit != SP_CSS_UNIT_NONE &&
+            style->line_height.unit != SP_CSS_UNIT_PERCENT &&
+            style->line_height.unit != SP_CSS_UNIT_EM &&
+            style->line_height.unit != SP_CSS_UNIT_EX) {
+            // No unit on 'line-height' property has special behavior.
+            style->line_height.computed *= ex;
+        }
         item->updateRepr();
     }
 

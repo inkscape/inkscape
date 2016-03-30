@@ -1073,7 +1073,12 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
         texts ++;
         SPItem *item = dynamic_cast<SPItem *>(obj);
         g_assert(item != NULL);
-        double dummy = style->font_size.computed * Geom::Affine(item->i2dt_affine()).descrim();
+
+        // Quick way of getting document scale. Should be same as:
+        // item->document->getDocumentScale().Affine().descrim()
+        double doc_scale = Geom::Affine(item->i2dt_affine()).descrim();
+        
+        double dummy = style->font_size.computed * doc_scale; 
         if (!IS_NAN(dummy)) {
             size += dummy; /// \todo FIXME: we assume non-% units here
         } else {
@@ -1085,7 +1090,7 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
                 letterspacing_normal = true;
             }
         } else {
-            letterspacing += style->letter_spacing.computed * Geom::Affine(item->i2dt_affine()).descrim(); /// \todo FIXME: we assume non-% units here
+            letterspacing += style->letter_spacing.computed * doc_scale;; /// \todo FIXME: we assume non-% units here
             letterspacing_normal = false;
         }
 
@@ -1094,7 +1099,7 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
                 wordspacing_normal = true;
             }
         } else {
-            wordspacing += style->word_spacing.computed * Geom::Affine(item->i2dt_affine()).descrim(); /// \todo FIXME: we assume non-% units here
+            wordspacing += style->word_spacing.computed * doc_scale; /// \todo FIXME: we assume non-% units here
             wordspacing_normal = false;
         }
 
@@ -1119,14 +1124,15 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
             lineheight_unit_current = style->line_height.unit;
             lineheight_unit_proportional = true;
             lineheight_normal = false;
+            lineheight += lineheight_current;
         } else {
             // Always 'px' internally
             lineheight_current = style->line_height.computed;
             lineheight_unit_current = style->line_height.unit;
             lineheight_unit_absolute = true;
             lineheight_normal = false;
+            lineheight += lineheight_current * doc_scale;
         }
-        lineheight += lineheight_current;
 
         if ((size_prev != 0 && style->font_size.computed != size_prev) ||
             (letterspacing_prev != 0 && style->letter_spacing.computed != letterspacing_prev) ||

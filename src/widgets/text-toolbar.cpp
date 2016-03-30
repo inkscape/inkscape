@@ -638,7 +638,8 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         int count = 0;
         for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
             if (SP_IS_TEXT (*i)) {
-                font_size += (*i)->style->font_size.computed;
+                double doc_scale = Geom::Affine((*i)->i2dt_affine()).descrim();
+                font_size += (*i)->style->font_size.computed * doc_scale;
                 ++count;
             }
         }
@@ -662,7 +663,8 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         int count = 0;
         for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
             if (SP_IS_TEXT (*i)) {
-                font_size += (*i)->style->font_size.computed;
+                double doc_scale = Geom::Affine((*i)->i2dt_affine()).descrim();
+                font_size += (*i)->style->font_size.computed * doc_scale;
                 ++count;
             }
         }
@@ -671,12 +673,13 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         } else {
             font_size = 20;
         }
-        line_height *= font_size;
+
         if (old_unit == SP_CSS_UNIT_PERCENT) {
             line_height /= 100.0;
         } else if (old_unit == SP_CSS_UNIT_EX) {
             line_height /= 2.0;
         }
+        line_height *= font_size;
         line_height = Quantity::convert(line_height, "px", unit);
     } else {
         // Convert between different absolute units (only used in GUI)
@@ -1252,7 +1255,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         double height;
         int line_height_unit = -1;
         if (query.line_height.normal) {
-            std::cout << "   normal" << std::endl;
             height = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
             line_height_unit = SP_CSS_UNIT_NONE;
         } else {
