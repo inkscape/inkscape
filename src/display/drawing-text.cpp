@@ -100,14 +100,16 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
     above and below the max/min y positions of the letters to place the text decorations.*/
 
     Geom::Rect b;
-    if(_drawable){
-       Geom::OptRect tiltb = bounds_exact(*_font->PathVector(_glyph));
-       Geom::Rect bigbox(Geom::Point(tiltb->left(),-_dsc*scale_bigbox*1.1),Geom::Point(tiltb->right(),_asc*scale_bigbox*1.1));
-       b = bigbox * ctx.ctm;
+    if (_drawable) {
+        Geom::OptRect tiltb = bounds_exact(*_font->PathVector(_glyph));
+        if (tiltb) {
+            Geom::Rect bigbox(Geom::Point(tiltb->left(),-_dsc*scale_bigbox*1.1),Geom::Point(tiltb->right(),_asc*scale_bigbox*1.1));
+            b = bigbox * ctx.ctm;
+        }
     }
-    else { // Fallback, spaces mostly
-       Geom::Rect bigbox(Geom::Point(0.0, -_dsc*scale_bigbox*1.1),Geom::Point(_width*scale_bigbox, _asc*scale_bigbox*1.1));
-       b = bigbox * ctx.ctm;
+    if (b.hasZeroArea()) { // Fallback, spaces mostly
+        Geom::Rect bigbox(Geom::Point(0.0, -_dsc*scale_bigbox*1.1),Geom::Point(_width*scale_bigbox, _asc*scale_bigbox*1.1));
+        b = bigbox * ctx.ctm;
     }
 
     /*
