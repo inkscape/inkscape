@@ -8025,7 +8025,7 @@ public:
 
 
         String outbuf, errbuf;
-        std::cout << "DEBUG command = " << cmd << std::endl;
+        // std::cout << "DEBUG command = " << cmd << std::endl;
         if (!executeCommand(cmd.c_str(), "", outbuf, errbuf))
             {
             error("LINK problem: %s", errbuf.c_str());
