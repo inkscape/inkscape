@@ -211,3 +211,44 @@ if(WITH_GTEST)
     enable_testing()
     add_subdirectory(test EXCLUDE_FROM_ALL)
 endif()
+
+# ----------------------------------------------------------------------
+# Information Summary
+# ----------------------------------------------------------------------
+message("------------------------------------------------------------------------")
+message("Configuration Summary")
+message("------------------------------------------------------------------------")
+# project info
+message("PROJECT_NAME:            ${PROJECT_NAME}")
+message("INKSCAPE_VERSION:        ${INKSCAPE_VERSION}")
+message("INKSCAPE_DIST_PREFIX:    ${INKSCAPE_DIST_PREFIX}")
+message("")
+
+# cmake info
+message("CMAKE_BINARY_DIR:        ${CMAKE_BINARY_DIR}")
+message("CMAKE_SYSTEM_NAME:       ${CMAKE_SYSTEM_NAME}")
+message("CMAKE_SYSTEM_VERSION:    ${CMAKE_SYSTEM_VERSION}")
+message("CMAKE_SYSTEM_PROCESSOR:  ${CMAKE_SYSTEM_PROCESSOR}")
+message("CMAKE_C_COMPILER:        ${CMAKE_C_COMPILER}")
+message("CMAKE_CXX_COMPILER:      ${CMAKE_CXX_COMPILER}")
+message("CMAKE_BUILD_TYPE:        ${CMAKE_BUILD_TYPE}")
+message("")
+
+# dependency info
+message("ENABLE_LCMS:             ${ENABLE_LCMS}")
+message("ENABLE_POPPLER:          ${ENABLE_POPPLER}")
+message("ENABLE_POPPLER_CAIRO:    ${ENABLE_POPPLER_CAIRO}")
+message("GMOCK_PRESENT:           ${GMOCK_PRESENT}")
+message("WITH_DBUS:               ${WITH_DBUS}")
+message("WITH_GNOME_VFS:          ${WITH_GNOME_VFS}")
+message("WITH_GTEST:              ${WITH_GTEST}")
+message("WITH_GTK3_EXPERIMENTAL:  ${WITH_GTK3_EXPERIMENTAL}")
+message("WITH_GTKSPELL:           ${WITH_GTKSPELL}")
+message("WITH_IMAGE_MAGICK:       ${WITH_IMAGE_MAGICK}")
+message("WITH_LIBCDR:             ${WITH_LIBCDR}")
+message("WITH_LIBVISIO:           ${WITH_LIBVISIO}")
+message("WITH_LIBWPG:             ${WITH_LIBWPG}")
+message("WITH_NLS:                ${WITH_NLS}")
+message("WITH_OPENMP:             ${WITH_OPENMP}")
+message("WITH_PROFILING:          ${WITH_PROFILING}")
+message("------------------------------------------------------------------------")
