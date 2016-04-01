@@ -37,10 +37,11 @@ SwatchSelector::SwatchSelector() :
     color_selector->show();
     pack_start(*color_selector);
 
-    _selected_color.signal_grabbed.connect(sigc::mem_fun(this, &SwatchSelector::_grabbedCb));
-    _selected_color.signal_dragged.connect(sigc::mem_fun(this, &SwatchSelector::_draggedCb));
-    _selected_color.signal_released.connect(sigc::mem_fun(this, &SwatchSelector::_releasedCb));
-    _selected_color.signal_changed.connect(sigc::mem_fun(this, &SwatchSelector::_changedCb));
+    //_selected_color.signal_grabbed.connect(sigc::mem_fun(this, &SwatchSelector::_grabbedCb));
+    _selected_color.signal_dragged.connect(sigc::mem_fun(this, &SwatchSelector::_changedCb));
+    _selected_color.signal_released.connect(sigc::mem_fun(this, &SwatchSelector::_changedCb));
+    // signal_changed doesn't get called if updating shape with colour.
+    //_selected_color.signal_changed.connect(sigc::mem_fun(this, &SwatchSelector::_changedCb));
 }
 
 SwatchSelector::~SwatchSelector()
@@ -51,45 +52,6 @@ SwatchSelector::~SwatchSelector()
 SPGradientSelector *SwatchSelector::getGradientSelector()
 {
     return _gsel;
-}
-
-void SwatchSelector::_grabbedCb()
-{
-}
-
-void SwatchSelector::_draggedCb()
-{
-   // if (data) {
-        //SwatchSelector *swsel = reinterpret_cast<SwatchSelector*>(data);
-
-        // TODO might have to block cycles
-
-        // Copied from gradient-vector.cpp, but does not appear to cause visible changes:
-        /*
-        if (swsel->_gsel) {
-            SPGradient *gradient = swsel->_gsel->getVector();
-            SPGradient *ngr = sp_gradient_ensure_vector_normalized(gradient);
-            if (ngr != gradient) {
-                // Our master gradient has changed
-                // TODO replace with proper - sp_gradient_vector_widget_load_gradient(GTK_WIDGET(swsel->_gsel), ngr);
-            }
-
-            sp_gradient_ensure_vector(ngr);
-
-
-            SPStop* stop = ngr->getFirstStop();
-            if (stop) {
-                swsel->_csel->base->getColorAlpha(stop->specified_color, &stop->opacity);
-                stop->currentColor = false;
-                // TODO push refresh
-            }
-        }
-        */
-  //  }
-}
-
-void SwatchSelector::_releasedCb()
-{
 }
 
 void SwatchSelector::_changedCb()
