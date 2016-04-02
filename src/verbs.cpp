@@ -952,10 +952,6 @@ void EditVerb::perform(SPAction *action, void *data)
     g_return_if_fail(ensure_desktop_valid(action));
     SPDesktop *dt = sp_action_get_desktop(action);
 
-    SPDocument *doc = dt->getDocument();
-
-    Inkscape::XML::Node *repr = dt->namedview->getRepr();
-
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EDIT_UNDO:
             sp_undo(dt, dt->getDocument());
