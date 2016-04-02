@@ -360,6 +360,7 @@ static void
 sp_canvas_item_init(SPCanvasItem *item)
 {
     item->xform = Geom::Affine(Geom::identity());
+    item->ctrlResize = 0;
     item->ctrlType = Inkscape::CTRL_TYPE_UNKNOWN;
     item->ctrlFlags = Inkscape::CTRL_FLAG_NORMAL;
 

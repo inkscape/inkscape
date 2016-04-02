@@ -26,9 +26,6 @@ using Inkscape::ControlManager;
 #define FILL_COLOR_NORMAL 0xffffff7f
 #define FILL_COLOR_MOUSEOVER 0xff0000ff
 
-#define NODE_SIZE_NORMAL 7.0
-#define NODE_SIZE_MOUSEOVER 10.0
-
 /**
  * Creates an anchor object and initializes it.
  */
@@ -81,18 +78,19 @@ SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, Geom::Point w, bool acti
 
     if ( activate && ( Geom::LInfty( w - anchor->dc->getDesktop().d2w(anchor->dp) ) <= (ctrl->box.width() / 2.0) ) ) {
         if (!anchor->active) {
-            g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_MOUSEOVER,
-                                       "size", NODE_SIZE_MOUSEOVER, NULL);
+            ControlManager::getManager().setControlResize(anchor->ctrl, 4);
+            g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_MOUSEOVER, NULL);
             anchor->active = TRUE;
         }
         return anchor;
     }
 
     if (anchor->active) {
-        g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_NORMAL,
-                                   "size", NODE_SIZE_NORMAL, NULL);
+        ControlManager::getManager().setControlResize(anchor->ctrl, 0);
+        g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_NORMAL, NULL);
         anchor->active = FALSE;
     }
+
     return NULL;
 }
 
