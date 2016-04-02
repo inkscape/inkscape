@@ -759,7 +759,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
 void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
 {
     SPUse *use=dynamic_cast<SPUse *>(item);
-    if(use){
+    if (use && use->get_original()) {
         if(cloned_elements.insert(use->get_original()).second)
             _copyUsedDefs(use->get_original());
     }
