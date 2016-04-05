@@ -471,8 +471,13 @@ void Path::SubContractOutline(int off, int num_pd,
 			// test de nullité du segment
 			if (IsNulCurve (descr_cmd, curD, curX))
 			{
-				stTgt = dest->descr_cmd.size() ? Geom::Point(1, 0) : Geom::Point(-1, 0); // reverse direction
-				enTgt = stTgt;
+                if (descr_cmd.size() == 2) {  // single point, see LP Bug 1006666
+                    stTgt = dest->descr_cmd.size() ? Geom::Point(1, 0) : Geom::Point(-1, 0); // reverse direction
+                    enTgt = stTgt;
+                } else {
+                    curP++;
+                    continue;
+                }
 			}
 			stNor=stTgt.cw();
 			enNor=enTgt.cw();
