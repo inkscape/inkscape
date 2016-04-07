@@ -120,10 +120,22 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
     label->set_selectable(true);
     label->show();
 
+    Gtk::Label *link = new Gtk::Label();
+    const gchar *website_link =
+        "<a href=\"https://www.inkscape.org\"> https://www.inkscape.org</a>";
+
+    link->set_markup(website_link);
+    link->set_alignment(Gtk::ALIGN_END);
+    link->set_padding(5,5);
+    link->set_selectable(true);
+    link->show();
+
 #if WITH_GTKMM_3_0
     get_content_area()->pack_start(*manage(label), false, false);
+    get_content_area()->pack_start(*manage(link), false, false);
 #else
     get_vbox()->pack_start(*manage(label), false, false);
+    get_vbox()->pack_start(*manage(link), false, false);
 #endif
 
     Gtk::Requisition requisition;
