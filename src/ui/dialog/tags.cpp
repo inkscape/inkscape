@@ -935,7 +935,17 @@ TagsPanel::TagsPanel() :
     _tree.set_headers_visible(false);
     _tree.set_reorderable(true);
     _tree.enable_model_drag_dest (Gdk::ACTION_MOVE);
-    
+
+    // This string is constructed to use already translated strings.
+    // The tooltip applies to the whole tree area. It would be better
+    // if the tooltip was split into parts and only applied to the
+    // icons but doing that is quite complicated.
+    Glib::ustring tooltip_string = "'+': ";
+    tooltip_string += (_("Add selection to set"));
+    tooltip_string += "; '×': ";
+    tooltip_string += (_("Remove from selection set"));
+    _tree.set_tooltip_text( tooltip_string );
+
     Inkscape::UI::Widget::AddToIcon * addRenderer = manage( new Inkscape::UI::Widget::AddToIcon());
     int addColNum = _tree.append_column("type", *addRenderer) - 1;
     Gtk::TreeViewColumn *col = _tree.get_column(addColNum);
