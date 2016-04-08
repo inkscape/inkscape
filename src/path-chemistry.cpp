@@ -1,4 +1,4 @@
-/*
+    /*
  * Here are handlers for modifying selections, specific to paths
  *
  * Authors:
@@ -217,7 +217,6 @@ sp_selected_path_break_apart(SPDesktop *desktop, bool skip_undo)
         if (curve == NULL) {
             continue;
         }
-
         did = true;
 
         Inkscape::XML::Node *parent = item->getRepr()->parent();
@@ -228,16 +227,10 @@ sp_selected_path_break_apart(SPDesktop *desktop, bool skip_undo)
         gchar *style = g_strdup(item->getRepr()->attribute("style"));
         // XML Tree being used directly here while it shouldn't be...
         gchar *path_effect = g_strdup(item->getRepr()->attribute("inkscape:path-effect"));
-
-        Geom::PathVector apv = curve->get_pathvector() * path->transform;
-
-        curve->unref();
-
+        Geom::Affine transform = path->transform;
         // it's going to resurrect as one of the pieces, so we delete without advertisement
         item->deleteObject(false);
 
-        curve = new SPCurve(apv);
-        g_assert(curve != NULL);
 
         GSList *list = curve->split();
 
@@ -258,7 +251,8 @@ sp_selected_path_break_apart(SPDesktop *desktop, bool skip_undo)
             else
                 repr->setAttribute("d", str);
             g_free(str);
-
+            repr->setAttribute("transform", sp_svg_transform_write(transform));
+            
             // add the new repr to the parent
             parent->appendChild(repr);
 
