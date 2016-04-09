@@ -1300,7 +1300,11 @@ Geom::Scale ClipboardManagerImpl::_getScale(SPDesktop *desktop, Geom::Point cons
  */
 Glib::ustring ClipboardManagerImpl::_getBestTarget()
 {
+#if WITH_GTKMM_3_0
+    std::vector<Glib::ustring> targets = _clipboard->wait_for_targets();
+#else
     std::list<Glib::ustring> targets = _clipboard->wait_for_targets();
+#endif
 
     // clipboard target debugging snippet
     /*
