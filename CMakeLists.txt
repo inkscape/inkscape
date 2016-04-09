@@ -70,6 +70,8 @@ set(GMOCK_DIR "${CMAKE_SOURCE_DIR}/gtest/gmock-1.7.0"
 
 if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
     set(GMOCK_PRESENT ON)
+else()
+    message("No gmock/gtest found! Perhaps you wish to run 'bash download-gtest.bash' to download it.")
 endif()
 
 # -----------------------------------------------------------------------------
