@@ -231,6 +231,30 @@ int Unit::svgUnit() const
     return 0;
 }
 
+double Unit::convert(double from_dist, Unit const *to) const
+{
+    // Percentage
+    if (to->type == UNIT_TYPE_DIMENSIONLESS) {
+        return from_dist * to->factor;
+    }   
+      
+    // Incompatible units
+    if (type != to->type) {
+        return -1; 
+    }   
+      
+    // Compatible units
+    return from_dist * factor / to->factor;
+}
+double Unit::convert(double from_dist, Glib::ustring const &to) const
+{
+    return convert(from_dist, unit_table.getUnit(to));
+} 
+double Unit::convert(double from_dist, char const *to) const
+{
+    return convert(from_dist, unit_table.getUnit(to));
+}
+
 
 
 Unit UnitTable::_empty_unit;
@@ -505,18 +529,7 @@ Glib::ustring Quantity::string() const {
 
 double Quantity::convert(double from_dist, Unit const *from, Unit const *to)
 {
-    // Percentage
-    if (to->type == UNIT_TYPE_DIMENSIONLESS) {
-        return from_dist * to->factor;
-    }
-    
-    // Incompatible units
-    if (from->type != to->type) {
-        return -1;
-    }
-    
-    // Compatible units
-    return from_dist * from->factor / to->factor;
+    return from->convert(from_dist, to);
 }
 double Quantity::convert(double from_dist, Glib::ustring const &from, Unit const *to)
 {

@@ -18,6 +18,12 @@
         <_item value="Automatic from seeds">Automatic from selected objects</_item>
       </param>
       <param name="show-clip-box" type="boolean" _gui-text="Show the bounding box"></param>
+      <_param name="Delaunay Options" type="description" appearance="header">Options for Delaunay Triangulation</_param>
+      <param name="delaunay-fill-options"  _gui-text="Triangles color" type="optiongroup">
+        <_option value="delaunay-no-fill">Default (Stroke black and no fill)</_option>
+        <_option value="delaunay-fill">Triangles with item color</_option>
+        <_option value="delaunay-fill-random">Triangles with item color (random on apply)</_option>
+      </param>
     </page>
     <page name="help" _gui-text="Help">
       <_param name="help_text" type="description">Select a set of objects. Their centroids will be used as the sites of the Voronoi diagram. Text objects are not handled.</_param>

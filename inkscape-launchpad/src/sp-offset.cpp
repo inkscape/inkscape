@@ -83,7 +83,9 @@ static void sp_offset_source_modified (SPObject *iSource, guint flags, SPItem *i
 // fast is not mathematically correct, because computing the offset of a single
 // cubic bezier patch is not trivial; in particular, there are problems with holes
 // reappearing in offset when the radius becomes too large
-static bool   use_slow_but_correct_offset_method=true;
+//TODO: need fix for bug: #384688 with fix released in r.14156
+//but reverted because bug #1507049 seems has more priority.
+static bool   use_slow_but_correct_offset_method = false;
 
 SPOffset::SPOffset() : SPShape() {
     this->rad = 1.0;

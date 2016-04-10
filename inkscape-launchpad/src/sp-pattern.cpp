@@ -390,10 +390,11 @@ const gchar *SPPattern::produce(const std::vector<Inkscape::XML::Node *> &reprs,
     repr->setAttribute("patternUnits", "userSpaceOnUse");
     sp_repr_set_svg_double(repr, "width", bounds.dimensions()[Geom::X]);
     sp_repr_set_svg_double(repr, "height", bounds.dimensions()[Geom::Y]);
-
-    Glib::ustring t = sp_svg_transform_write(transform);
-    repr->setAttribute("patternTransform", t);
-
+    //TODO: Maybe is better handle it in sp_svg_transform_write
+    if(transform != Geom::Affine()){ 
+        Glib::ustring t = sp_svg_transform_write(transform);
+        repr->setAttribute("patternTransform", t);
+    }
     defsrepr->appendChild(repr);
     const gchar *pat_id = repr->attribute("id");
     SPObject *pat_object = document->getObjectById(pat_id);

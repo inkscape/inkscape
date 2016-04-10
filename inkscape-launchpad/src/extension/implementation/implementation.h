@@ -18,7 +18,7 @@
 #include <2geom/forward.h>
 
 namespace Gtk {
-	class Widget;
+    class Widget;
 }
 
 class SPDocument;
@@ -33,7 +33,7 @@ class View;
 } // namespace UI
 
 namespace XML {
-	class Node;
+    class Node;
 } // namespace XML
 
 namespace Extension {
@@ -51,18 +51,18 @@ namespace Implementation {
  */
 class ImplementationDocumentCache {
 
-	/**
+    /**
          * The document that this instance is working on.
          */
-	Inkscape::UI::View::View * _view;
+    Inkscape::UI::View::View * _view;
 public:
-	ImplementationDocumentCache (Inkscape::UI::View::View * view) :
-			_view(view)
-	{
-		return;
-	};
-	virtual ~ImplementationDocumentCache ( ) { return; };
-	Inkscape::UI::View::View const * view ( ) { return _view; };
+    ImplementationDocumentCache (Inkscape::UI::View::View * view) :
+            _view(view)
+    {
+        return;
+    };
+    virtual ~ImplementationDocumentCache ( ) { return; };
+    Inkscape::UI::View::View const * view ( ) { return _view; };
 };
 
 /**
@@ -116,7 +116,7 @@ public:
     // ----- Effect functions -----
     /** Find out information about the file. */
     virtual Gtk::Widget * prefs_effect(Inkscape::Extension::Effect *module,
-	                               Inkscape::UI::View::View *view,
+                                       Inkscape::UI::View::View *view,
                                        sigc::signal<void> *changeSignal,
                                        ImplementationDocumentCache *docCache);
     virtual void effect(Inkscape::Extension::Effect * /*module*/,

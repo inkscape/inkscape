@@ -1,7 +1,7 @@
 /*
  * This is where the implementation of the DBus based document API lives.
  * All the methods in here (except in the helper section) are 
- * designed to be called remotly via DBus. application-interface.cpp
+ * designed to be called remotely via DBus. application-interface.cpp
  * has the methods used to connect to the bus and get a document instance.
  *
  * Documentation for these methods is in document-interface.xml

@@ -63,6 +63,8 @@ public:
 
     bool setControlType(SPCanvasItem *item, ControlType type);
 
+    bool setControlResize(SPCanvasItem *item, int ctrlResize);
+
     bool isActive(SPCanvasItem *item) const;
     void setActive(SPCanvasItem *item, bool active);
 

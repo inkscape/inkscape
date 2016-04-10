@@ -78,6 +78,7 @@ SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, Geom::Point w, bool acti
 
     if ( activate && ( Geom::LInfty( w - anchor->dc->getDesktop().d2w(anchor->dp) ) <= (ctrl->box.width() / 2.0) ) ) {
         if (!anchor->active) {
+            ControlManager::getManager().setControlResize(anchor->ctrl, 4);
             g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_MOUSEOVER, NULL);
             anchor->active = TRUE;
         }
@@ -85,9 +86,11 @@ SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, Geom::Point w, bool acti
     }
 
     if (anchor->active) {
+        ControlManager::getManager().setControlResize(anchor->ctrl, 0);
         g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_NORMAL, NULL);
         anchor->active = FALSE;
     }
+
     return NULL;
 }
 

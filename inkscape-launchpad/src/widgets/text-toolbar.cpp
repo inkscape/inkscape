@@ -54,12 +54,18 @@
 #include "ui/icon-names.h"
 #include "ui/tools/text-tool.h"
 #include "ui/tools/tool-base.h"
+#include "ui/widget/unit-tracker.h"
+#include "util/units.h"
 #include "verbs.h"
 #include "xml/repr.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
+using Inkscape::Util::Unit;
+using Inkscape::Util::Quantity;
+using Inkscape::Util::unit_table;
+using Inkscape::UI::Widget::UnitTracker;
 
 //#define DEBUG_TEXT
 
@@ -510,25 +516,48 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    // At the moment this handles only numerical values (i.e. no percent).
+
+    // Get user selected unit and save as preference
+    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
+    Unit const *unit = tracker->getActiveUnit();
+    g_return_if_fail(unit != NULL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+
+    // This nonsense is to get SP_CSS_UNIT_xx value corresponding to unit so
+    // we can save it (allows us to adjust line height value when unit changes).
+    SPILength temp_length;
+    Inkscape::CSSOStringStream temp_stream;
+    temp_stream << 1 << unit->abbr;
+    temp_length.read(temp_stream.str().c_str());
+    prefs->setInt("/tools/text/lineheight/display_unit", temp_length.unit);
+    g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(temp_length.unit));
+
+
     // Set css line height.
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    osfs << gtk_adjustment_get_value(adj)*100 << "%";
+    // We should handle unitless values as well as 'em' and 'ex'
+    if ((unit->abbr) == "em" || unit->abbr == "ex" || unit->abbr == "%") {
+        osfs << gtk_adjustment_get_value(adj) << unit->abbr;
+    } else {
+        // Inside SVG file, always use "px" for absolute units.
+        osfs << Quantity::convert(gtk_adjustment_get_value(adj), unit, "px") << "px";
+    }
     sp_repr_css_set_property (css, "line-height", osfs.str().c_str());
+
 
     // Apply line-height to selected objects.
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     sp_desktop_set_style (desktop, css, true, false);
 
 
-    // Until deprecated sodipodi:linespacing purged:
+    // Only need to save for undo if a text item has been changed.
     Inkscape::Selection *selection = desktop->getSelection();
     bool modmade = false;
     std::vector<SPItem*> itemlist=selection->itemList();
     for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
         if (SP_IS_TEXT (*i)) {
-            (*i)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
             modmade = true;
         }
     }
@@ -553,6 +582,156 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
+
+
+static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    // Get old saved unit
+    int old_unit = GPOINTER_TO_INT( g_object_get_data(tbl, "lineheight_unit"));
+
+    // Get user selected unit and save as preference
+    UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
+    Unit const *unit = tracker->getActiveUnit();
+    g_return_if_fail(unit != NULL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    // This nonsense is to get SP_CSS_UNIT_xx value corresponding to unit.
+    SPILength temp_length;
+    Inkscape::CSSOStringStream temp_stream;
+    temp_stream << 1 << unit->abbr;
+    temp_length.read(temp_stream.str().c_str());
+    prefs->setInt("/tools/text/lineheight/display_unit", temp_length.unit);
+    g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(temp_length.unit));
+
+    // Read current line height value
+    EgeAdjustmentAction *line_height_act =
+        reinterpret_cast<EgeAdjustmentAction *>(g_object_get_data(tbl, "TextLineHeightAction"));
+    GtkAdjustment *line_height_adj = ege_adjustment_action_get_adjustment( line_height_act );
+    double line_height = gtk_adjustment_get_value(line_height_adj);
+
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    Inkscape::Selection *selection = desktop->getSelection();
+    std::vector<SPItem*> itemlist=selection->itemList();
+
+    // Convert between units
+    if        ((unit->abbr) == "em" && old_unit == SP_CSS_UNIT_EX) {
+        line_height *= 0.5;
+    } else if ((unit->abbr) == "ex" && old_unit == SP_CSS_UNIT_EM) {
+        line_height *= 2.0;
+    } else if ((unit->abbr) == "em" && old_unit == SP_CSS_UNIT_PERCENT) {
+        line_height /= 100.0;
+    } else if ((unit->abbr) == "%"  && old_unit == SP_CSS_UNIT_EM) {
+        line_height *= 100;
+    } else if ((unit->abbr) == "ex" && old_unit == SP_CSS_UNIT_PERCENT) {
+        line_height /= 50.0;
+    } else if ((unit->abbr) == "%"  && old_unit == SP_CSS_UNIT_EX) {
+        line_height *= 50;
+    } else if ((unit->abbr) == "%" || (unit->abbr) == "em" || (unit->abbr) == "ex") {
+        // Convert absolute to relative... for the moment use average font-size
+        double font_size = 0;
+        int count = 0;
+        for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+            if (SP_IS_TEXT (*i)) {
+                double doc_scale = Geom::Affine((*i)->i2dt_affine()).descrim();
+                font_size += (*i)->style->font_size.computed * doc_scale;
+                ++count;
+            }
+        }
+        if (count > 0) {
+            font_size /= count;
+        } else {
+            font_size = 20;
+        }
+        line_height = Quantity::convert(line_height, sp_style_get_css_unit_string(old_unit), "px");
+        if (font_size > 0) {
+            line_height /= font_size;
+        }
+        if ((unit->abbr) == "%") {
+            line_height *= 100;
+        } else if ((unit->abbr) == "ex") {
+            line_height *= 2;
+        }
+    } else if (old_unit==SP_CSS_UNIT_PERCENT || old_unit==SP_CSS_UNIT_EM || old_unit==SP_CSS_UNIT_EX) {
+        // Convert relative to absolute... for the moment use average font-size
+        double font_size = 0;
+        int count = 0;
+        for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+            if (SP_IS_TEXT (*i)) {
+                double doc_scale = Geom::Affine((*i)->i2dt_affine()).descrim();
+                font_size += (*i)->style->font_size.computed * doc_scale;
+                ++count;
+            }
+        }
+        if (count > 0) {
+            font_size /= count;
+        } else {
+            font_size = 20;
+        }
+
+        if (old_unit == SP_CSS_UNIT_PERCENT) {
+            line_height /= 100.0;
+        } else if (old_unit == SP_CSS_UNIT_EX) {
+            line_height /= 2.0;
+        }
+        line_height *= font_size;
+        line_height = Quantity::convert(line_height, "px", unit);
+    } else {
+        // Convert between different absolute units (only used in GUI)
+        line_height = Quantity::convert(line_height, sp_style_get_css_unit_string(old_unit), unit);
+    }
+
+    // Set css line height.
+    SPCSSAttr *css = sp_repr_css_attr_new ();
+    Inkscape::CSSOStringStream osfs;
+    // We should handle unitless values as well as 'em' and 'ex'
+    if ((unit->abbr) == "em" || unit->abbr == "ex" || unit->abbr == "%") {
+        osfs << line_height << unit->abbr;
+    } else {
+        osfs << Quantity::convert(line_height, unit, "px") << "px";
+    }
+    sp_repr_css_set_property (css, "line-height", osfs.str().c_str());
+
+    // Update GUI with line_height value.
+    gtk_adjustment_set_value(line_height_adj, line_height);
+
+    // Apply line-height to selected objects.
+    sp_desktop_set_style (desktop, css, true, false);
+
+    // Only need to save for undo if a text item has been changed.
+    bool modmade = false;
+    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+        if (SP_IS_TEXT (*i)) {
+            modmade = true;
+        }
+    }
+
+    // Save for undo
+    if(modmade) {
+        DocumentUndo::maybeDone(SP_ACTIVE_DESKTOP->getDocument(), "ttb:line-height", SP_VERB_NONE,
+                             _("Text: Change line-height unit"));
+    }
+
+    // If no selected objects, set default.
+    SPStyle query(SP_ACTIVE_DOCUMENT);
+    int result_numbers =
+        sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    if (result_numbers == QUERY_STYLE_NOTHING)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->mergeStyle("/tools/text/style", css);
+    }
+
+    sp_repr_css_attr_unref (css);
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
 
 static void sp_text_wordspacing_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
@@ -1064,6 +1243,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         {
             activeButton = 3;
         } else {
+            // This should take 'direction' into account
             if (query.text_anchor.computed == SP_CSS_TEXT_ANCHOR_START)  activeButton = 0;
             if (query.text_anchor.computed == SP_CSS_TEXT_ANCHOR_MIDDLE) activeButton = 1;
             if (query.text_anchor.computed == SP_CSS_TEXT_ANCHOR_END)    activeButton = 2;
@@ -1071,16 +1251,46 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         ege_select_one_action_set_active( textAlignAction, activeButton );
 
 
-        // Line height (spacing)
+        // Line height (spacing) and line height unit
         double height;
+        int line_height_unit = -1;
         if (query.line_height.normal) {
             height = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
+            line_height_unit = SP_CSS_UNIT_NONE;
         } else {
-            if (query.line_height.unit == SP_CSS_UNIT_PERCENT) {
-                height = query.line_height.value;
-            } else {
-                height = query.line_height.computed;
-            }
+            height = query.line_height.value;
+            line_height_unit = query.line_height.unit;
+        }
+
+        switch (line_height_unit) {
+            case SP_CSS_UNIT_NONE:
+                // tracker can't show no unit... use 'em'
+                line_height_unit = SP_CSS_UNIT_EM;
+            case SP_CSS_UNIT_EM:
+            case SP_CSS_UNIT_EX:
+                break;
+            case SP_CSS_UNIT_PERCENT:
+                height *= 100.0;  // Inkscape store % as fraction in .value
+                break;
+            case SP_CSS_UNIT_PX:
+                // If unit is set to 'px', use the preferred display unit (if absolute).
+                line_height_unit =
+                    prefs->getInt("/tools/text/lineheight/display_unit", SP_CSS_UNIT_PT);
+                if (line_height_unit != SP_CSS_UNIT_EM &&
+                    line_height_unit != SP_CSS_UNIT_EX &&
+                    line_height_unit != SP_CSS_UNIT_PERCENT) {
+                    height =
+                        Quantity::convert(height, "px", sp_style_get_css_unit_string(line_height_unit));
+                } else {
+                    line_height_unit = SP_CSS_UNIT_PX;
+                }
+                break;
+            default:
+                // If unit has been set by an external program to something other than 'px', use
+                // that unit.  But height is average of computed values (px) so we need to convert
+                // back.
+                height =
+                    Quantity::convert(height, "px", sp_style_get_css_unit_string(line_height_unit));
         }
 
         GtkAction* lineHeightAction = GTK_ACTION( g_object_get_data( tbl, "TextLineHeightAction" ) );
@@ -1088,7 +1298,11 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             ege_adjustment_action_get_adjustment(EGE_ADJUSTMENT_ACTION( lineHeightAction ));
         gtk_adjustment_set_value( lineHeightAdjustment, height );
 
-
+        UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
+        tracker->setActiveUnitByAbbr(sp_style_get_css_unit_string(line_height_unit));
+        // Save unit so we can do convertions between new/old units.
+        g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(line_height_unit));
+        
         // Word spacing
         double wordSpacing;
         if (query.word_spacing.normal) wordSpacing = 0.0;
@@ -1231,7 +1445,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 #endif
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-
 }
 
 static void sp_text_toolbox_selection_modified(Inkscape::Selection *selection, guint /*flags*/, GObject *tbl)
@@ -1582,6 +1795,15 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_text_orientation_changed), holder );
     }
 
+    /* Line height unit tracker */
+    UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
+    tracker->addUnit(unit_table.getUnit("%"));
+    tracker->addUnit(unit_table.getUnit("em"));
+    tracker->addUnit(unit_table.getUnit("ex"));
+    // tracker->addUnit(unit_table.getUnit("None"));
+    tracker->setActiveUnit(unit_table.getUnit("%"));
+    g_object_set_data( holder, "tracker", tracker );
+
     /* Line height */
     {
         // Drop down menu
@@ -1599,18 +1821,26 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             holder,                               /* dataKludge */
             FALSE,                                /* set alt-x keyboard shortcut? */
             NULL,                                 /* altx_mark */
-            0.0, 10.0, 0.01, 0.10,                /* lower, upper, step (arrow up/down), page up/down */
+            0.0, 1000.0, 1.0, 10.0,               /* lower, upper, step (arrow up/down), page up/down */
             labels, values, G_N_ELEMENTS(labels), /* drop down menu */
             sp_text_lineheight_value_changed,     /* callback */
-            NULL,                                 /* unit tracker */
+            NULL, // tracker,                     /* unit tracker */
             0.1,                                  /* step (used?) */
             2,                                    /* digits to show */
             1.0                                   /* factor (multiplies default) */
             );
+        //tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextLineHeightAction", eact );
         g_object_set( G_OBJECT(eact), "iconId", "text_line_spacing", NULL );
+    }
+
+    /* Line height units */
+    {
+        GtkAction* act = tracker->createAction( "TextLineHeightUnitsAction", _("Units"), ("") );
+        gtk_action_group_add_action( mainActions, act );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_text_lineheight_unit_changed), holder );
     }
 
     /* Word spacing */

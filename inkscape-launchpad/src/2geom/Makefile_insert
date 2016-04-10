@@ -45,7 +45,6 @@
 	2geom/curves.h \
 	2geom/d2.h \
 	2geom/d2-sbasis.cpp \
-	2geom/d2-sbasis.h \
 	2geom/ellipse.cpp \
 	2geom/ellipse.h \
 	2geom/elliptical-arc.cpp \

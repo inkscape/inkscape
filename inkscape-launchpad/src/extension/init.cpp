@@ -1,6 +1,6 @@
 /*
  * This is what gets executed to initialize all of the modules.  For
- * the internal modules this invovles executing their initialization
+ * the internal modules this involves executing their initialization
  * functions, for external ones it involves reading their .spmodule
  * files and bringing them into Sodipodi.
  *

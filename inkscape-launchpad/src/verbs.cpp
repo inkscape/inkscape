@@ -952,10 +952,6 @@ void EditVerb::perform(SPAction *action, void *data)
     g_return_if_fail(ensure_desktop_valid(action));
     SPDesktop *dt = sp_action_get_desktop(action);
 
-    SPDocument *doc = dt->getDocument();
-
-    Inkscape::XML::Node *repr = dt->namedview->getRepr();
-
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EDIT_UNDO:
             sp_undo(dt, dt->getDocument());
@@ -2949,7 +2945,7 @@ Verb *Verb::_base_verbs[] = {
     new DialogVerb(SP_VERB_DIALOG_TAGS, "DialogTags", N_("Selection se_ts..."),
                    N_("View Tags"), INKSCAPE_ICON("edit-select-all-layers")),
     new DialogVerb(SP_VERB_DIALOG_LIVE_PATH_EFFECT, "DialogLivePathEffect", N_("Path E_ffects ..."),
-                   N_("Manage, edit, and apply path effects"), NULL),
+                   N_("Manage, edit, and apply path effects"), INKSCAPE_ICON("dialog-path-effects")),
     new DialogVerb(SP_VERB_DIALOG_FILTER_EFFECTS, "DialogFilterEffects", N_("Filter _Editor..."),
                    N_("Manage, edit, and apply SVG filters"), INKSCAPE_ICON("dialog-filters")),
     new DialogVerb(SP_VERB_DIALOG_SVG_FONTS, "DialogSVGFonts", N_("SVG Font Editor..."),

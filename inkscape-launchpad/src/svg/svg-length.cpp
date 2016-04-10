@@ -411,14 +411,6 @@ So after the number, the string does not necessarily have a \0 or a unit, it mig
                     *computed = Inkscape::Util::Quantity::convert(v, "in", "px");
                 }
                 break;
-            case UVAL('f','t'):
-                if (unit) {
-                    *unit = SVGLength::FOOT;
-                }
-                if (computed) {
-                    *computed = Inkscape::Util::Quantity::convert(v, "ft", "px");
-                }
-                break;
             case UVAL('e','m'):
                 if (unit) {
                     *unit = SVGLength::EM;
@@ -495,12 +487,6 @@ void SVGLength::set(SVGLength::Unit u, float v)
         case INCH:
             hack = "pt";
             break;
-        case FOOT:
-            hack = "pt";
-            break;
-        case MITRE:
-            hack = "m";
-            break;
         default:
             break;
     }
@@ -572,8 +558,6 @@ gchar const *sp_svg_length_get_css_units(SVGLength::Unit unit)
         case SVGLength::MM: return "mm";
         case SVGLength::CM: return "cm";
         case SVGLength::INCH: return "in";
-        case SVGLength::FOOT: return "";  // Not in SVG/CSS specification.
-        case SVGLength::MITRE: return ""; // Not in SVG/CSS specification.
         case SVGLength::EM: return "em";
         case SVGLength::EX: return "ex";
         case SVGLength::PERCENT: return "%";
@@ -590,10 +574,6 @@ std::string sp_svg_length_write_with_units(SVGLength const &length)
     Inkscape::SVGOStringStream os;
     if (length.unit == SVGLength::PERCENT) {
         os << 100*length.value << sp_svg_length_get_css_units(length.unit);
-    } else if (length.unit == SVGLength::FOOT) {
-        os << 12*length.value << sp_svg_length_get_css_units(SVGLength::INCH);
-    } else if (length.unit == SVGLength::MITRE) {
-        os << 100*length.value << sp_svg_length_get_css_units(SVGLength::CM);
     } else {
         os << length.value << sp_svg_length_get_css_units(length.unit);
     }

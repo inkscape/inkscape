@@ -12,6 +12,7 @@
 #ifndef SEEN_UI_TOOL_CONTROL_POINT_SELECTION_H
 #define SEEN_UI_TOOL_CONTROL_POINT_SELECTION_H
 
+#include <list>
 #include <memory>
 #include <boost/optional.hpp>
 #include <stddef.h>
@@ -140,6 +141,8 @@ private:
     double _rotationRadius(Geom::Point const &);
 
     set_type _points;
+    //the purpose of this list is to keep track of first and last selected
+    std::list<SelectableControlPoint *> _points_list;
     set_type _all_points;
     INK_UNORDERED_MAP<SelectableControlPoint *, Geom::Point> _original_positions;
     INK_UNORDERED_MAP<SelectableControlPoint *, Geom::Affine> _last_trans;

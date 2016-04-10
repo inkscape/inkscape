@@ -468,12 +468,8 @@ ZoomCorrRuler::on_draw(const Cairo::RefPtr<Cairo::Context>& cr) {
     Glib::ustring abbr = prefs->getString("/options/zoomcorrection/unit");
     if (abbr == "cm") {
         draw_marks(cr, 0.1, 10);
-    } else if (abbr == "ft") {
-        draw_marks(cr, 1/12.0, 12);
     } else if (abbr == "in") {
         draw_marks(cr, 0.25, 4);
-    } else if (abbr == "m") {
-        draw_marks(cr, 1/10.0, 10);
     } else if (abbr == "mm") {
         draw_marks(cr, 10, 10);
     } else if (abbr == "pc") {

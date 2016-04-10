@@ -1004,10 +1004,10 @@ objects_query_paintorder (const std::vector<SPItem*> &objects, SPStyle *style_re
 
         n_order ++;
 
-        if (!prev_order.empty() && prev_order.compare( style->paint_order.value ) != 0) {
-            same_order = false;
-        }
         if (style->paint_order.set) {
+            if (!prev_order.empty() && prev_order.compare( style->paint_order.value ) != 0) {
+                same_order = false;
+            }
             prev_order = style->paint_order.value;
         }
     }
@@ -1036,19 +1036,24 @@ int
 objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_res)
 {
     bool different = false;
+    bool different_lineheight = false;
+    bool different_lineheight_unit = false;
 
     double size = 0;
     double letterspacing = 0;
     double wordspacing = 0;
-    double linespacing = 0;
+    double lineheight = 0;
     bool letterspacing_normal = false;
     bool wordspacing_normal = false;
-    bool linespacing_normal = false;
+    bool lineheight_normal = false;
+    bool lineheight_unit_proportional = false;
+    bool lineheight_unit_absolute = false;
 
     double size_prev = 0;
     double letterspacing_prev = 0;
     double wordspacing_prev = 0;
-    double linespacing_prev = 0;
+    double lineheight_prev = 0;
+    int  lineheight_unit_prev = -1;
 
     int texts = 0;
     int no_size = 0;
@@ -1068,7 +1073,12 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
         texts ++;
         SPItem *item = dynamic_cast<SPItem *>(obj);
         g_assert(item != NULL);
-        double dummy = style->font_size.computed * Geom::Affine(item->i2dt_affine()).descrim();
+
+        // Quick way of getting document scale. Should be same as:
+        // item->document->getDocumentScale().Affine().descrim()
+        double doc_scale = Geom::Affine(item->i2dt_affine()).descrim();
+        
+        double dummy = style->font_size.computed * doc_scale; 
         if (!IS_NAN(dummy)) {
             size += dummy; /// \todo FIXME: we assume non-% units here
         } else {
@@ -1080,7 +1090,7 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
                 letterspacing_normal = true;
             }
         } else {
-            letterspacing += style->letter_spacing.computed * Geom::Affine(item->i2dt_affine()).descrim(); /// \todo FIXME: we assume non-% units here
+            letterspacing += style->letter_spacing.computed * doc_scale;; /// \todo FIXME: we assume non-% units here
             letterspacing_normal = false;
         }
 
@@ -1089,35 +1099,60 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
                 wordspacing_normal = true;
             }
         } else {
-            wordspacing += style->word_spacing.computed * Geom::Affine(item->i2dt_affine()).descrim(); /// \todo FIXME: we assume non-% units here
+            wordspacing += style->word_spacing.computed * doc_scale; /// \todo FIXME: we assume non-% units here
             wordspacing_normal = false;
         }
 
-        double linespacing_current;
+        // If all line spacing units the same, use that (average line spacing).
+        // Else if all line spacings absolute, use 'px' (average line spacing).
+        // Else if all line spacings proportional, use % (average line spacing).
+        // Else use default.
+        double lineheight_current;
+        int    lineheight_unit_current;
         if (style->line_height.normal) {
-            linespacing_current = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
-            if (!different && (linespacing_prev == 0 || linespacing_prev == linespacing_current))
-                linespacing_normal = true;
-        } else if (style->line_height.unit == SP_CSS_UNIT_PERCENT || style->font_size.computed == 0) {
-            linespacing_current = style->line_height.value;
-            linespacing_normal = false;
+            lineheight_current = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
+            lineheight_unit_current = SP_CSS_UNIT_NONE;
+            if (!different_lineheight &&
+                (lineheight_prev == 0 || lineheight_prev == lineheight_current))
+                lineheight_normal = true;
+        } else if (style->line_height.unit == SP_CSS_UNIT_NONE ||
+                   style->line_height.unit == SP_CSS_UNIT_PERCENT ||
+                   style->line_height.unit == SP_CSS_UNIT_EM ||
+                   style->line_height.unit == SP_CSS_UNIT_EX ||
+                   style->font_size.computed == 0) {
+            lineheight_current = style->line_height.value;
+            lineheight_unit_current = style->line_height.unit;
+            lineheight_unit_proportional = true;
+            lineheight_normal = false;
+            lineheight += lineheight_current;
         } else {
-            linespacing_current = style->line_height.computed;
-            linespacing_normal = false;
+            // Always 'px' internally
+            lineheight_current = style->line_height.computed;
+            lineheight_unit_current = style->line_height.unit;
+            lineheight_unit_absolute = true;
+            lineheight_normal = false;
+            lineheight += lineheight_current * doc_scale;
         }
-        linespacing += linespacing_current;
 
         if ((size_prev != 0 && style->font_size.computed != size_prev) ||
             (letterspacing_prev != 0 && style->letter_spacing.computed != letterspacing_prev) ||
-            (wordspacing_prev != 0 && style->word_spacing.computed != wordspacing_prev) ||
-            (linespacing_prev != 0 && linespacing_current != linespacing_prev)) {
+            (wordspacing_prev != 0 && style->word_spacing.computed != wordspacing_prev)) {
             different = true;
+        }
+
+        if (lineheight_prev != 0 && lineheight_current != lineheight_prev) {
+            different_lineheight = true;
+        }
+
+        if (lineheight_unit_prev != -1 && lineheight_unit_current != lineheight_unit_prev) {
+            different_lineheight_unit = true;
         }
 
         size_prev = style->font_size.computed;
         letterspacing_prev = style->letter_spacing.computed;
         wordspacing_prev = style->word_spacing.computed;
-        linespacing_prev = linespacing_current;
+        lineheight_prev = lineheight_current;
+        lineheight_unit_prev = lineheight_unit_current;
 
         // FIXME: we must detect MULTIPLE_DIFFERENT for these too
         style_res->text_anchor.computed = style->text_anchor.computed;
@@ -1133,7 +1168,7 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
         }
         letterspacing /= texts;
         wordspacing /= texts;
-        linespacing /= texts;
+        lineheight /= texts;
     }
 
     style_res->font_size.computed = size;
@@ -1145,13 +1180,36 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
     style_res->word_spacing.normal = wordspacing_normal;
     style_res->word_spacing.computed = wordspacing;
 
-    style_res->line_height.normal = linespacing_normal;
-    style_res->line_height.computed = linespacing;
-    style_res->line_height.value = linespacing;
-    style_res->line_height.unit = SP_CSS_UNIT_PERCENT;
+    style_res->line_height.normal = lineheight_normal;
+    style_res->line_height.computed = lineheight;
+    style_res->line_height.value = lineheight;
+    if (different_lineheight_unit) {
+        if (lineheight_unit_absolute && !lineheight_unit_proportional) {
+            // Mixture of absolute units
+            style_res->line_height.unit = SP_CSS_UNIT_PX;
+        } else {
+            // Mixture of relative units
+            style_res->line_height.unit = SP_CSS_UNIT_PERCENT;
+        }
+        if (lineheight_unit_absolute && lineheight_unit_proportional) {
+            // Mixed types of units, fallback to default
+            style_res->line_height.computed = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL * 100.0;
+            style_res->line_height.value    = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL * 100.0;
+        }
+    } else {
+        // Same units.
+        if (lineheight_unit_prev != -1) {
+            style_res->line_height.unit = lineheight_unit_prev;
+        } else {
+            // No text object... use default.
+            style_res->line_height.unit = SP_CSS_UNIT_NONE;
+            style_res->line_height.computed = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
+            style_res->line_height.value    = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
+        }
+    }
 
     if (texts > 1) {
-        if (different) {
+        if (different || different_lineheight) {
             return QUERY_STYLE_MULTIPLE_AVERAGED;
         } else {
             return QUERY_STYLE_MULTIPLE_SAME;

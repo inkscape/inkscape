@@ -197,6 +197,8 @@ void sbasis_to_cubic_bezier (std::vector<Point> & bz, D2<SBasis> const& sb)
     }
 
     sbasis_to_bezier(bz, sb, 4);  // zeroth-order estimate
+    if ((sb[X].size() < 3) && (sb[Y].size() < 3))
+        return;  // cubic bezier estimate is exact
     Geom::ConvexHull bezhull(bz);
 
 //  calculate first derivatives of x and y wrt t

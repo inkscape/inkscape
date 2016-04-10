@@ -192,8 +192,7 @@ Output::prefs (void)
 
     delete dialog;
 
-    if (response == Gtk::RESPONSE_OK) return true;
-    return false;
+    return (response == Gtk::RESPONSE_OK);
 }
 
 /**

@@ -395,6 +395,8 @@ class Edge(object):
         else:
             # set formula of line, with y fixed to 1
             newedge.b = 1.0
+            if dy <= 0:
+                dy = 0.01
             newedge.a = dx/dy
             newedge.c /= dy
 

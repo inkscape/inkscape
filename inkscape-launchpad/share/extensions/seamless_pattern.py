@@ -24,8 +24,8 @@ class C(inkex.Effect):
     self.document = etree.parse(os.path.join(path, "seamless_pattern.svg"))
     root = self.document.getroot()
     root.set("id", "SVGRoot")
-    root.set("width",  str(width) + 'px')
-    root.set("height", str(height) + 'px')
+    root.set("width",  str(width))
+    root.set("height", str(height))
     root.set("viewBox", "0 0 " + str(width) + " " + str(height) )
 
     xpathStr = '//svg:rect[@id="clipPathRect"]'
@@ -42,12 +42,11 @@ class C(inkex.Effect):
         else:
             designZoneData[0].set("patternTransform", "scale(" + str(10.0/factor) + "," + str(10.0) + ")")
 
-    xpathStr = '//svg:g[@id="designTop"] | //svg:g[@id="designBottom"] | //svg:g[@id="transparencyPreview"]'
+    xpathStr = '//svg:g[@id="designTop"] | //svg:g[@id="designBottom"]'
     designZone = root.xpath(xpathStr, namespaces=inkex.NSS)
     if designZone != []:
         designZone[0].set("transform", "scale(" + str(width/100.0) + "," + str(height/100.0) + ")")
         designZone[1].set("transform", "scale(" + str(width /100.0) + "," + str(height/100.0) + ")")
-        designZone[2].set("transform", "scale(" + str(width /100.0) + "," + str(height/100.0) + ")")
 
     xpathStr = '//svg:g[@id="designTop"]/child::*'
     designZoneData = root.xpath(xpathStr, namespaces=inkex.NSS)

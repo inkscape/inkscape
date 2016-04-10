@@ -645,6 +645,13 @@ void SPText::_adjustFontsizeRecursive(SPItem *item, double ex, bool is_root)
         style->font_size.computed *= ex;
         style->letter_spacing.computed *= ex;
         style->word_spacing.computed *= ex;
+        if (style->line_height.unit != SP_CSS_UNIT_NONE &&
+            style->line_height.unit != SP_CSS_UNIT_PERCENT &&
+            style->line_height.unit != SP_CSS_UNIT_EM &&
+            style->line_height.unit != SP_CSS_UNIT_EX) {
+            // No unit on 'line-height' property has special behavior.
+            style->line_height.computed *= ex;
+        }
         item->updateRepr();
     }
 
@@ -828,8 +835,8 @@ void TextTagAttributes::setFirstXY(Geom::Point &point)
         attributes.x.resize(1, zero_length);
     if (attributes.y.empty())
         attributes.y.resize(1, zero_length);
-    attributes.x[0].computed = point[Geom::X];
-    attributes.y[0].computed = point[Geom::Y];
+    attributes.x[0] = point[Geom::X];
+    attributes.y[0] = point[Geom::Y];
 }
 
 void TextTagAttributes::mergeInto(Inkscape::Text::Layout::OptionalTextTagAttrs *output, Inkscape::Text::Layout::OptionalTextTagAttrs const &parent_attrs, unsigned parent_attrs_offset, bool copy_xy, bool copy_dxdyrotate) const

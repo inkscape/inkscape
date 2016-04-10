@@ -14,11 +14,13 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 '''
 
 import inkex
 import sys
+import locale
+
 
 class NewGlyphLayer(inkex.Effect):
 	def __init__(self):
@@ -27,10 +29,13 @@ class NewGlyphLayer(inkex.Effect):
 						action="store", type="string",
 						dest="unicodechars", default='',
 						help="Unicode chars")
+		self.encoding = sys.stdin.encoding
+		if self.encoding == 'cp0' or self.encoding is None:
+			self.encoding = locale.getpreferredencoding()
 
 	def effect(self):
 		# Get all the options
-		unicode_chars = self.options.unicodechars
+		unicode_chars = self.options.unicodechars.decode(self.encoding)
 
 		#TODO: remove duplicate chars
 
@@ -40,7 +45,7 @@ class NewGlyphLayer(inkex.Effect):
 		for char in unicode_chars:
 			# Create a new layer.
 			layer = inkex.etree.SubElement(svg, 'g')
-			layer.set(inkex.addNS('label', 'inkscape'), 'GlyphLayer-'+char)
+			layer.set(inkex.addNS('label', 'inkscape'), u'GlyphLayer-'+char)
 			layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
 			layer.set('style', 'display:none') #initially not visible
 

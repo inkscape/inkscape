@@ -62,6 +62,7 @@ struct SPCanvasItem {
     Geom::Rect bounds;
     Geom::Affine xform;
 
+    int ctrlResize;
     Inkscape::ControlType ctrlType;
     Inkscape::ControlFlags ctrlFlags;
 

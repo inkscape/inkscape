@@ -19,6 +19,8 @@
 #include "ui/tool/transform-handle-set.h"
 #include "ui/tool/node.h"
 
+
+
 #include <gdk/gdkkeysyms.h>
 
 namespace Inkscape {
@@ -82,6 +84,7 @@ std::pair<ControlPointSelection::iterator, bool> ControlPointSelection::insert(c
     }
 
     found = _points.insert(x).first;
+    _points_list.push_back(x);
 
     x->updateState();
     _pointChanged(x, true);
@@ -97,6 +100,7 @@ std::pair<ControlPointSelection::iterator, bool> ControlPointSelection::insert(c
 void ControlPointSelection::erase(iterator pos)
 {
     SelectableControlPoint *erased = *pos;
+    _points_list.remove(*pos);
     _points.erase(pos);
     erased->updateState();
     _pointChanged(erased, false);
@@ -219,8 +223,11 @@ void ControlPointSelection::transform(Geom::Affine const &m)
 /** Align control points on the specified axis. */
 void ControlPointSelection::align(Geom::Dim2 axis)
 {
+    enum AlignTargetNode { LAST_NODE=0, FIRST_NODE, MID_NODE, MIN_NODE, MAX_NODE };
     if (empty()) return;
     Geom::Dim2 d = static_cast<Geom::Dim2>((axis + 1) % 2);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
 
     Geom::OptInterval bound;
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
@@ -229,7 +236,27 @@ void ControlPointSelection::align(Geom::Dim2 axis)
 
     if (!bound) { return; }
 
-    double new_coord = bound->middle();
+    double new_coord;
+    switch (AlignTargetNode(prefs->getInt("/dialogs/align/align-nodes-to", 2))){
+        case FIRST_NODE:
+            new_coord=(_points_list.front())->position()[d];
+            break;
+        case LAST_NODE:
+            new_coord=(_points_list.back())->position()[d];
+            break;
+        case MID_NODE:
+            new_coord=bound->middle();
+            break;
+        case MIN_NODE:
+            new_coord=bound->min();
+            break;
+        case MAX_NODE:
+            new_coord=bound->max();
+            break;
+        default:
+            return;
+    }
+
     for (iterator i = _points.begin(); i != _points.end(); ++i) {
         Geom::Point pos = (*i)->position();
         pos[d] = new_coord;

@@ -1786,7 +1786,7 @@ void ContextMenu::MakeItemMenu (void)
     /* Group */
     mi = Gtk::manage(new Gtk::MenuItem(_("_Group"), 1));
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ActivateGroup));
-    if (_desktop->selection->isEmpty() || _desktop->selection->single()) {
+    if (_desktop->selection->isEmpty()) {
         mi->set_sensitive(FALSE);
     } else {
         mi->set_sensitive(TRUE);

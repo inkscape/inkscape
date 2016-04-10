@@ -1198,8 +1198,7 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
                             curve->unref();
                             continue;
                         }
-
-                        curve->transform(item->i2doc_affine());
+                        curve->transform(item->transform);
 
                         calculate_intersections(desktop, item, lineseg, curve, intersection_times);
                         if (iter == te_get_layout(item)->end()) {

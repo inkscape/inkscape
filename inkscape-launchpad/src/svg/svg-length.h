@@ -27,8 +27,6 @@ public:
         MM,
         CM,
         INCH,
-        FOOT,
-        MITRE,
         EM,
         EX,
         PERCENT,

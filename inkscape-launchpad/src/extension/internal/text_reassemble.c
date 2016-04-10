@@ -67,11 +67,11 @@ Optional compiler switches for development:
 
 
 File:      text_reassemble.c
-Version:   0.0.17
-Date:      21-MAY-2015
+Version:   0.0.18
+Date:      11-MAR-2016
 Author:    David Mathog, Biology Division, Caltech
 email:     mathog@caltech.edu
-Copyright: 2015 David Mathog and California Institute of Technology (Caltech)
+Copyright: 2016 David Mathog and California Institute of Technology (Caltech)
 */
 
 #ifdef __cplusplus
@@ -223,7 +223,7 @@ char *TR_construct_fontspec(const TCHUNK_SPECS *tsp, const char *fontname){
    int   newlen = 128 + strlen(fontname); /* too big, but not by much */
    char *newfs  = NULL;
    newfs = (char *) malloc(newlen);
-   sprintf(newfs,"%s:slant=%d:weight=%d:size=%lf:width=%d",fontname,tsp->italics,tsp->weight,tsp->fs,(tsp->co ? 75 : tsp->condensed));
+   sprintf(newfs,"%s:slant=%d:weight=%d:size=%f:width=%d",fontname,tsp->italics,tsp->weight,tsp->fs,(tsp->co ? 75 : tsp->condensed));
    return(newfs);
 }
 
@@ -804,7 +804,7 @@ int ftinfo_load_fontname(FT_INFO *fti, const char *fontspec){
    int fb;
    if(FcPatternGetBool(    fpat, FC_OUTLINE,     0, &fb)== FcResultMatch){  printf("outline:     %d\n",fb);fflush(stdout); }
    if(FcPatternGetBool(    fpat, FC_SCALABLE,    0, &fb)== FcResultMatch){  printf("scalable:    %d\n",fb);fflush(stdout); }
-   if(FcPatternGetDouble(  fpat, FC_DPI,         0, &fd)== FcResultMatch){  printf("DPI:         %lf\n",fd);fflush(stdout); }
+   if(FcPatternGetDouble(  fpat, FC_DPI,         0, &fd)== FcResultMatch){  printf("DPI:         %f\n",fd);fflush(stdout); }
    if(FcPatternGetInteger( fpat, FC_FONTVERSION, 0, &fb)== FcResultMatch){  printf("fontversion: %d\n",fb);fflush(stdout); }
    if(FcPatternGetString(  fpat, FC_FULLNAME    ,     0,  (FcChar8 **)&fs)== FcResultMatch){  printf("FULLNAME    :    %s\n",fs);fflush(stdout); }
    if(FcPatternGetString(  fpat, FC_FAMILY      ,     0,  (FcChar8 **)&fs)== FcResultMatch){  printf("FAMILY      :    %s\n",fs);fflush(stdout); }
@@ -831,7 +831,7 @@ void ftinfo_dump(const FT_INFO *fti){
    printf("fti  used:   %d\n",fti->used);
    for(i=0; i< fti->used; i++){
       fsp = &(fti->fonts[i]);
-      printf("fti font: %6d space: %6d used: %6d spcadv %8lf fsize %8lf \n",i,fsp->space,fsp->used,fsp->spcadv,fsp->fsize);
+      printf("fti font: %6d space: %6d used: %6d spcadv %8f fsize %8f \n",i,fsp->space,fsp->used,fsp->spcadv,fsp->fsize);
       printf("    file:   %s\n",fsp->file);
       printf("    fspc:   %s\n",fsp->fontspec);
       for(j=0;j<fsp->used;j++){
@@ -1123,18 +1123,18 @@ void cxinfo_dump(const TR_INFO *tri){
       printf("cxi  phase1: %d\n",cxi->phase1);
       printf("cxi  lines:  %d\n",cxi->lines);
       printf("cxi  paras:  %d\n",cxi->paras);
-      printf("cxi  xy:     %lf , %lf\n",tri->x,tri->y);
+      printf("cxi  xy:     %f , %f\n",tri->x,tri->y);
 
       for(i=0;i<cxi->used;i++){
          csp = &(cxi->cx[i]);
          bsp = &(bri->rects[csp->rt_cidx]);
          printf("cxi  cx[%d] type:%d rt_tidx:%d kids_used:%d kids_space:%d\n",i, csp->type, csp->rt_cidx, csp->kids.used, csp->kids.space);
-         printf("cxi  cx[%d] br (LL,UR) (%lf,%lf),(%lf,%lf)\n",i,bsp->xll,bsp->yll,bsp->xur,bsp->yur);
+         printf("cxi  cx[%d] br (LL,UR) (%f,%f),(%f,%f)\n",i,bsp->xll,bsp->yll,bsp->xur,bsp->yur);
          for(j=0;j<csp->kids.used;j++){
             k = csp->kids.members[j];
             bsp = &(bri->rects[k]);
             if(csp->type == TR_TEXT || csp->type == TR_LINE){
-                printf("cxi  cx[%d] member:%3d tp_idx:%3d ldir:%d rt_tidx:%3d br (LL,UR) (%8.3lf,%8.3lf),(%8.3lf,%8.3lf) xy (%8.3lf,%8.3lf) kern (%8.3lf,%8.3lf) text:<%s> decor:%5.5x\n",
+                printf("cxi  cx[%d] member:%3d tp_idx:%3d ldir:%d rt_tidx:%3d br (LL,UR) (%8.3f,%8.3f),(%8.3f,%8.3f) xy (%8.3f,%8.3f) kern (%8.3f,%8.3f) text:<%s> decor:%5.5x\n",
                   i, j, k, tpi->chunks[k].ldir, tpi->chunks[k].rt_tidx, 
                   bsp->xll,bsp->yll,bsp->xur,bsp->yur, 
                   tpi->chunks[k].x, tpi->chunks[k].y,
@@ -1311,7 +1311,7 @@ int brinfo_merge(BR_INFO *bri, int dst, int src){
    bri->rects[dst].xur = TEREMAX(bri->rects[dst].xur, bri->rects[src].xur);
    bri->rects[dst].yur = TEREMIN(bri->rects[dst].yur, bri->rects[src].yur); /* MIN because Y is positive DOWN */
 /*
-printf("bri_Merge into rect:%d (LL,UR) dst:(%lf,%lf),(%lf,%lf) src:(%lf,%lf),(%lf,%lf)\n",dst,
+printf("bri_Merge into rect:%d (LL,UR) dst:(%f,%f),(%f,%f) src:(%f,%f),(%f,%f)\n",dst,
 (bri->rects[dst].xll),
 (bri->rects[dst].yll),
 (bri->rects[dst].xur),
@@ -1374,7 +1374,7 @@ int brinfo_overlap(const BR_INFO *bri, int dst, int src, RT_PAD *rp_dst, RT_PAD 
       }
    }
 /*
-printf("Overlap status:%d\nOverlap trects (LL,UR) dst:(%lf,%lf),(%lf,%lf) src:(%lf,%lf),(%lf,%lf)\n",
+printf("Overlap status:%d\nOverlap trects (LL,UR) dst:(%f,%f),(%f,%f) src:(%f,%f),(%f,%f)\n",
 status,
 (br_dst->xll - rp_dst->left ),
 (br_dst->yll - rp_dst->down ),
@@ -1384,7 +1384,7 @@ status,
 (br_src->yll - rp_src->down ),
 (br_src->xur + rp_src->right),
 (br_src->yur + rp_src->up   ));
-printf("Overlap brects (LL,UR) dst:(%lf,%lf),(%lf,%lf) src:(%lf,%lf),(%lf,%lf)\n",
+printf("Overlap brects (LL,UR) dst:(%f,%f),(%f,%f) src:(%f,%f),(%f,%f)\n",
 (br_dst->xll),
 (br_dst->yll),
 (br_dst->xur),
@@ -1393,7 +1393,7 @@ printf("Overlap brects (LL,UR) dst:(%lf,%lf),(%lf,%lf) src:(%lf,%lf),(%lf,%lf)\n
 (br_src->yll),
 (br_src->xur),
 (br_src->yur));
-printf("Overlap rprect (LL,UR) dst:(%lf,%lf),(%lf,%lf) src:(%lf,%lf),(%lf,%lf)\n",
+printf("Overlap rprect (LL,UR) dst:(%f,%f),(%f,%f) src:(%f,%f),(%f,%f)\n",
 (rp_dst->left),
 (rp_dst->down),
 (rp_dst->right),
@@ -1481,7 +1481,7 @@ enum tr_classes brinfo_pp_alignment(const BR_INFO *bri, int dst, int src, double
       newtype = TR_PARA_UJ;
    }
 /*
-printf("pp_align newtype:%d brects (LL,UR) dst:(%lf,%lf),(%lf,%lf) src:(%lf,%lf),(%lf,%lf)\n",
+printf("pp_align newtype:%d brects (LL,UR) dst:(%f,%f),(%f,%f) src:(%f,%f),(%f,%f)\n",
 newtype,
 (br_dst->xll),
 (br_dst->yll),
@@ -1779,7 +1779,7 @@ int trinfo_load_textrec(TR_INFO *tri, const TCHUNK_SPECS *tsp, double escapement
    tpi->chunks[current].y = x * sin(escapement) + y * cos(escapement);
 
 /*  Careful!  face bbox does NOT scale with FT_Set_Char_Size 
-printf("Face idx:%d bbox: xMax/Min:%ld,%ld yMax/Min:%ld,%ld UpEM:%d asc/des:%d,%d height:%d size:%lf\n",
+printf("Face idx:%d bbox: xMax/Min:%ld,%ld yMax/Min:%ld,%ld UpEM:%d asc/des:%d,%d height:%d size:%f\n",
                  idx, 
                  fsp->face->bbox.xMax,fsp->face->bbox.xMin,
                  fsp->face->bbox.yMax,fsp->face->bbox.yMin,
@@ -1955,7 +1955,7 @@ void TR_layout_2_svg(TR_INFO *tri){
     /* put rectangles down for each text string - debugging!!!  This will not work properly for any Narrow fonts */
    esc  = tri->esc;
    esc *= 2.0 * M_PI / 360.0;                             /* degrees to radians and change direction of rotation */
-   sprintf(stransform,"transform=\"matrix(%lf,%lf,%lf,%lf,%lf,%lf)\"\n",cos(esc),-sin(esc),sin(esc),cos(esc), 1.25*x,1.25*y);
+   sprintf(stransform,"transform=\"matrix(%f,%f,%f,%f,%f,%f)\"\n",cos(esc),-sin(esc),sin(esc),cos(esc), 1.25*x,1.25*y);
    for(i=cxi->phase1; i<cxi->used;i++){                   /* over all complex members from phase2 == TR_PARA_* complexes */
       csp = &(cxi->cx[i]);
       for(j=0; j<csp->kids.used; j++){                    /* over all members of these complexes, which are phase1 complexes  */
@@ -1968,11 +1968,11 @@ void TR_layout_2_svg(TR_INFO *tri){
 #if DBG_TR_PARA
                TRPRINT(tri, "<rect\n");
                TRPRINT(tri, "style=\"color:#0000FF;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:none;stroke:#000000;stroke-width:0.8;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero\"\n");
-                  sprintf(obuf,"width=\"%lf\"\n", 1.25*(bri->rects[csp->rt_cidx].xur - bri->rects[csp->rt_cidx].xll));
+                  sprintf(obuf,"width=\"%f\"\n", 1.25*(bri->rects[csp->rt_cidx].xur - bri->rects[csp->rt_cidx].xll));
                TRPRINT(tri, obuf);
-                  sprintf(obuf,"height=\"%lf\"\n",1.25*(bri->rects[csp->rt_cidx].yll - bri->rects[csp->rt_cidx].yur));
+                  sprintf(obuf,"height=\"%f\"\n",1.25*(bri->rects[csp->rt_cidx].yll - bri->rects[csp->rt_cidx].yur));
                TRPRINT(tri, obuf);
-                  sprintf(obuf,"x=\"%lf\" y=\"%lf\"\n",1.25*(bri->rects[csp->rt_cidx].xll),1.25*(bri->rects[csp->rt_cidx].yur));
+                  sprintf(obuf,"x=\"%f\" y=\"%f\"\n",1.25*(bri->rects[csp->rt_cidx].xll),1.25*(bri->rects[csp->rt_cidx].yur));
                TRPRINT(tri, obuf);
                TRPRINT(tri, stransform);
                TRPRINT(tri, "/>\n");
@@ -1983,23 +1983,23 @@ void TR_layout_2_svg(TR_INFO *tri){
             newy = 1.25*(bri->rects[tsp->rt_tidx].yur);
             TRPRINT(tri, "<rect\n");
             TRPRINT(tri, "style=\"color:#000000;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:none;stroke:#00FF00;stroke-width:0.3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero\"\n");
-               sprintf(obuf,"width=\"%lf\"\n", 1.25*(bri->rects[tsp->rt_tidx].xur - bri->rects[tsp->rt_tidx].xll));
+               sprintf(obuf,"width=\"%f\"\n", 1.25*(bri->rects[tsp->rt_tidx].xur - bri->rects[tsp->rt_tidx].xll));
             TRPRINT(tri, obuf);
-               sprintf(obuf,"height=\"%lf\"\n",1.25*(bri->rects[tsp->rt_tidx].yll - bri->rects[tsp->rt_tidx].yur));
+               sprintf(obuf,"height=\"%f\"\n",1.25*(bri->rects[tsp->rt_tidx].yll - bri->rects[tsp->rt_tidx].yur));
             TRPRINT(tri, obuf);
-               sprintf(obuf,"x=\"%lf\" y=\"%lf\"\n",1.25*(bri->rects[tsp->rt_tidx].xll),newy);
+               sprintf(obuf,"x=\"%f\" y=\"%f\"\n",1.25*(bri->rects[tsp->rt_tidx].xll),newy);
             TRPRINT(tri, obuf);
             TRPRINT(tri, stransform);
             TRPRINT(tri, "/>\n");
 
             newy = 1.25*(bri->rects[tsp->rt_tidx].yll - tsp->boff);
-               sprintf(obuf,"<text x=\"%lf\" y=\"%lf\"\n",newx, newy );
+               sprintf(obuf,"<text x=\"%f\" y=\"%f\"\n",newx, newy );
             TRPRINT(tri, obuf);
                sprintf(obuf,"xml:space=\"preserve\"\n");
             TRPRINT(tri, obuf);
             TRPRINT(tri, stransform);
             TRPRINT(tri, "style=\"fill:#FF0000;");    
-               sprintf(obuf,"font-size:%lfpx;",tsp->fs*1.25);  /*IMPORTANT, if the FS is given in pt it looks like crap in browsers.  As if px != 1.25 pt, maybe 96 dpi not 90?*/
+               sprintf(obuf,"font-size:%fpx;",tsp->fs*1.25);  /*IMPORTANT, if the FS is given in pt it looks like crap in browsers.  As if px != 1.25 pt, maybe 96 dpi not 90?*/
             TRPRINT(tri, obuf);
                sprintf(obuf,"font-style:%s;",(tsp->italics ? "italic" : "normal"));
             TRPRINT(tri, obuf);
@@ -2025,7 +2025,7 @@ void TR_layout_2_svg(TR_INFO *tri){
    if(tri->usebk){
       esc  = tri->esc;
       esc *= 2.0 * M_PI / 360.0;                             /* degrees to radians and change direction of rotation */
-      sprintf(stransform,"transform=\"matrix(%lf,%lf,%lf,%lf,%lf,%lf)\"\n",cos(esc),-sin(esc),sin(esc),cos(esc), 1.25*x,1.25*y);
+      sprintf(stransform,"transform=\"matrix(%f,%f,%f,%f,%f,%f)\"\n",cos(esc),-sin(esc),sin(esc),cos(esc), 1.25*x,1.25*y);
 
       for(i=cxi->phase1; i<cxi->used;i++){                   /* over all complex members from phase2 == TR_PARA_* complexes */
          TRPRINT(tri, "<g>\n");                              /* group backgrounds for each <text> object in the SVG */
@@ -2037,11 +2037,11 @@ void TR_layout_2_svg(TR_INFO *tri){
                TRPRINT(tri, "<rect\n");
                   sprintf(obuf,"style=\"color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#%2.2X%2.2X%2.2X;;stroke:none;;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero\"\n",tri->bkcolor.Red,tri->bkcolor.Green,tri->bkcolor.Blue);    
                TRPRINT(tri, obuf);
-                  sprintf(obuf,"width=\"%lf\"\n", 1.25*(bri->rects[cline_sp->rt_cidx].xur - bri->rects[cline_sp->rt_cidx].xll));
+                  sprintf(obuf,"width=\"%f\"\n", 1.25*(bri->rects[cline_sp->rt_cidx].xur - bri->rects[cline_sp->rt_cidx].xll));
                TRPRINT(tri, obuf);
-                  sprintf(obuf,"height=\"%lf\"\n",1.25*(bri->rects[cline_sp->rt_cidx].yll - bri->rects[cline_sp->rt_cidx].yur));
+                  sprintf(obuf,"height=\"%f\"\n",1.25*(bri->rects[cline_sp->rt_cidx].yll - bri->rects[cline_sp->rt_cidx].yur));
                TRPRINT(tri, obuf);
-                  sprintf(obuf,"x=\"%lf\" y=\"%lf\"\n",1.25*(bri->rects[cline_sp->rt_cidx].xll),1.25*(bri->rects[cline_sp->rt_cidx].yur));
+                  sprintf(obuf,"x=\"%f\" y=\"%f\"\n",1.25*(bri->rects[cline_sp->rt_cidx].xll),1.25*(bri->rects[cline_sp->rt_cidx].yur));
                TRPRINT(tri, obuf);
                TRPRINT(tri, stransform);
                TRPRINT(tri, "/>\n");
@@ -2056,11 +2056,11 @@ void TR_layout_2_svg(TR_INFO *tri){
                     TRPRINT(tri, "<rect\n");
                         sprintf(obuf,"style=\"color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#%2.2X%2.2X%2.2X;;stroke:none;;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero\"\n",tri->bkcolor.Red,tri->bkcolor.Green,tri->bkcolor.Blue);    
                      TRPRINT(tri, obuf);
-                        sprintf(obuf,"width=\"%lf\"\n", 1.25*(bri->rects[csp->rt_cidx].xur - bri->rects[csp->rt_cidx].xll));
+                        sprintf(obuf,"width=\"%f\"\n", 1.25*(bri->rects[csp->rt_cidx].xur - bri->rects[csp->rt_cidx].xll));
                      TRPRINT(tri, obuf);
-                        sprintf(obuf,"height=\"%lf\"\n",1.25*(bri->rects[csp->rt_cidx].yll - bri->rects[csp->rt_cidx].yur));
+                        sprintf(obuf,"height=\"%f\"\n",1.25*(bri->rects[csp->rt_cidx].yll - bri->rects[csp->rt_cidx].yur));
                      TRPRINT(tri, obuf);
-                        sprintf(obuf,"x=\"%lf\" y=\"%lf\"\n",1.25*(bri->rects[csp->rt_cidx].xll),1.25*(bri->rects[csp->rt_cidx].yur));
+                        sprintf(obuf,"x=\"%f\" y=\"%f\"\n",1.25*(bri->rects[csp->rt_cidx].xll),1.25*(bri->rects[csp->rt_cidx].yur));
                      TRPRINT(tri, obuf);
                      TRPRINT(tri, stransform);
                      TRPRINT(tri, "/>\n");
@@ -2072,11 +2072,11 @@ void TR_layout_2_svg(TR_INFO *tri){
                   TRPRINT(tri, "<rect\n");
                      sprintf(obuf,"style=\"color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:#%2.2X%2.2X%2.2X;;stroke:none;;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;clip-rule:nonzero\"\n",tri->bkcolor.Red,tri->bkcolor.Green,tri->bkcolor.Blue);    
                   TRPRINT(tri, obuf);
-                     sprintf(obuf,"width=\"%lf\"\n", 1.25*(bri->rects[tsp->rt_tidx].xur - bri->rects[tsp->rt_tidx].xll));
+                     sprintf(obuf,"width=\"%f\"\n", 1.25*(bri->rects[tsp->rt_tidx].xur - bri->rects[tsp->rt_tidx].xll));
                   TRPRINT(tri, obuf);
-                     sprintf(obuf,"height=\"%lf\"\n",1.25*(bri->rects[tsp->rt_tidx].yll - bri->rects[tsp->rt_tidx].yur));
+                     sprintf(obuf,"height=\"%f\"\n",1.25*(bri->rects[tsp->rt_tidx].yll - bri->rects[tsp->rt_tidx].yur));
                   TRPRINT(tri, obuf);
-                     sprintf(obuf,"x=\"%lf\" y=\"%lf\"\n",newx,newy);
+                     sprintf(obuf,"x=\"%f\" y=\"%f\"\n",newx,newy);
                   TRPRINT(tri, obuf);
                   TRPRINT(tri, stransform);
                   TRPRINT(tri, "/>\n");
@@ -2135,7 +2135,7 @@ void TR_layout_2_svg(TR_INFO *tri){
                   TRPRINT(tri, "<text\n");
                   TRPRINT(tri, "xml:space=\"preserve\"\n");
                   TRPRINT(tri, "style=\"");
-                     sprintf(obuf,"font-size:%lfpx;",tsp->fs*1.25);  /*IMPORTANT, if the FS is given in pt it looks like crap in browsers.  As if px != 1.25 pt, maybe 96 dpi not 90?*/
+                     sprintf(obuf,"font-size:%fpx;",tsp->fs*1.25);  /*IMPORTANT, if the FS is given in pt it looks like crap in browsers.  As if px != 1.25 pt, maybe 96 dpi not 90?*/
                   TRPRINT(tri, obuf);
                      sprintf(obuf,"font-style:%s;",(tsp->italics ? "italic" : "normal"));
                   TRPRINT(tri, obuf);
@@ -2146,7 +2146,7 @@ void TR_layout_2_svg(TR_INFO *tri){
                   TRPRINT(tri, obuf);
                   if(tsp->vadvance){ lineheight = tsp->vadvance *100.0; }
                   else {             lineheight = 125.0;                }
-                     sprintf(obuf,"line-height:%lf%%;",lineheight);
+                     sprintf(obuf,"line-height:%f%%;",lineheight);
                   TRPRINT(tri, obuf);
                   TRPRINT(tri, "letter-spacing:0px;");
                   TRPRINT(tri, "word-spacing:0px;");
@@ -2174,14 +2174,14 @@ void TR_layout_2_svg(TR_INFO *tri){
                   }
                   TRPRINT(tri, obuf);
                   TRPRINT(tri, "\"\n");  /* End of style specification */
-                     sprintf(obuf,"transform=\"matrix(%lf,%lf,%lf,%lf,%lf,%lf)\"\n",cos(esc),-sin(esc),sin(esc),cos(esc),1.25*x,1.25*y);
+                     sprintf(obuf,"transform=\"matrix(%f,%f,%f,%f,%f,%f)\"\n",cos(esc),-sin(esc),sin(esc),cos(esc),1.25*x,1.25*y);
                   TRPRINT(tri, obuf);
                      tmpx = 1.25*((ldir == LDIR_RL ? bri->rects[kdx].xur : bri->rects[kdx].xll) + recenter);
-                     sprintf(obuf,"x=\"%lf\" y=\"%lf\"\n>",tmpx,1.25*(bri->rects[kdx].yll - tsp->boff));
+                     sprintf(obuf,"x=\"%f\" y=\"%f\"\n>",tmpx,1.25*(bri->rects[kdx].yll - tsp->boff));
                   TRPRINT(tri, obuf);
                }
                tmpx = 1.25*((ldir == LDIR_RL ? bri->rects[kdx].xur : bri->rects[kdx].xll) + recenter);
-                  sprintf(obuf,"<tspan sodipodi:role=\"line\"\nx=\"%lf\" y=\"%lf\"\n>",tmpx,1.25*(bri->rects[kdx].yll - tsp->boff));
+                  sprintf(obuf,"<tspan sodipodi:role=\"line\"\nx=\"%f\" y=\"%f\"\n>",tmpx,1.25*(bri->rects[kdx].yll - tsp->boff));
                TRPRINT(tri, obuf);
             }
            TRPRINT(tri, "<tspan\n");
@@ -2192,11 +2192,11 @@ void TR_layout_2_svg(TR_INFO *tri){
             dx = 1.25 * tsp->xkern;
             dy = 1.25 * tsp->ykern;
 
-            sprintf(obuf,"dx=\"%lf\" dy=\"%lf\" ",dx, dy);
+            sprintf(obuf,"dx=\"%f\" dy=\"%f\" ",dx, dy);
             TRPRINT(tri, obuf);
                sprintf(obuf,"style=\"fill:#%2.2X%2.2X%2.2X;",tsp->color.Red,tsp->color.Green,tsp->color.Blue);    
             TRPRINT(tri, obuf);
-               sprintf(obuf,"font-size:%lfpx;",tsp->fs*1.25);  /*IMPORTANT, if the FS is given in pt it looks like crap in browsers.  As if px != 1.25 pt, maybe 96 dpi not 90?*/
+               sprintf(obuf,"font-size:%fpx;",tsp->fs*1.25);  /*IMPORTANT, if the FS is given in pt it looks like crap in browsers.  As if px != 1.25 pt, maybe 96 dpi not 90?*/
             TRPRINT(tri, obuf);
                sprintf(obuf,"font-style:%s;",(tsp->italics ? "italic" : "normal"));
             TRPRINT(tri, obuf);

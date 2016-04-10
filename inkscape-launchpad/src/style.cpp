@@ -1510,7 +1510,8 @@ gchar const *
 sp_style_get_css_unit_string(int unit)
 {
     // specify px by default, see inkscape bug 1221626, mozilla bug 234789
-
+    // This is a problematic fix as some properties (e.g. 'line-height') have
+    // different behaviour if there is no unit.
     switch (unit) {
 
         case SP_CSS_UNIT_NONE: return "px";
@@ -1899,8 +1900,9 @@ sp_css_attr_scale_property_single(SPCSSAttr *css, gchar const *property,
         if (w == units) {// nothing converted, non-numeric value
             return;
         }
-        if (only_with_units && (units == NULL || *units == '\0' || *units == '%')) {
+        if (only_with_units && (units == NULL || *units == '\0' || *units == '%' || *units == 'e')) {
             // only_with_units, but no units found, so do nothing.
+            // 'e' matches 'em' or 'ex'
             return;
         }
         Inkscape::CSSOStringStream os;

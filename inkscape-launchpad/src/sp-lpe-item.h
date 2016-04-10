@@ -69,7 +69,7 @@ public:
 
     virtual void update_patheffect(bool write);
 
-    bool performPathEffect(SPCurve *curve, bool clip_paths = true);
+    bool performPathEffect(SPCurve *curve, bool is_clip_or_mask = false);
 
     bool pathEffectsEnabled() const;
     bool hasPathEffect() const;
