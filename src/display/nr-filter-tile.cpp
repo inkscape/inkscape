@@ -126,11 +126,8 @@ void FilterTile::render_cairo(FilterSlot &slot)
 
 void FilterTile::area_enlarge(Geom::IntRect &area, Geom::Affine const &trans)
 {
-    // We need to enlarge enough to get tile source... we don't the area of the source tile in this
-    // function so we guess. This is VERY inefficient.
-    Geom::Point enlarge(200, 200);
-    enlarge *= trans;
-    area.expandBy( enlarge[Geom::X] < 100 ? 100: enlarge[Geom::X] );
+    // Set to infinite rectangle so we get tile source. It will be clipped later.
+    area = Geom::IntRect::infinite();
 }
 
 double FilterTile::complexity(Geom::Affine const &)
