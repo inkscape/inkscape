@@ -1446,7 +1446,8 @@ void SPDesktop::disableInteraction()
 
 void SPDesktop::setWaitingCursor()
 {
-    GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
+    GdkDisplay *display = gdk_display_get_default();
+    GdkCursor  *waiting = gdk_cursor_new_for_display(display, GDK_WATCH);
     gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(getCanvas())), waiting);
 #if GTK_CHECK_VERSION(3,0,0)
     g_object_unref(waiting);
