@@ -103,7 +103,8 @@ void SPSVGView::doRescale(bool event)
 
 void SPSVGView::mouseover()
 {
-    GdkCursor *cursor = gdk_cursor_new(GDK_HAND2);
+    GdkDisplay *display = gdk_display_get_default();
+    GdkCursor  *cursor  = gdk_cursor_new_for_display(display, GDK_HAND2);
     GdkWindow *window = gtk_widget_get_window (GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas));
     gdk_window_set_cursor(window, cursor);
 #if GTK_CHECK_VERSION(3,0,0)
