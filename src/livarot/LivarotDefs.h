@@ -13,7 +13,7 @@
 # include "config.h"
 #endif
 
-#include <cstdint>
+#include <stdint.h>
 
 // error codes (mostly obsolete)
 enum
