@@ -259,9 +259,16 @@ LPEPatternAlongPath::transform_multiply(Geom::Affine const& postmul, bool set)
     // overriding the Effect class default method, disabling transform forwarding to the parameters.
 
     // only take translations into account
+    // Check if proportional stroke-width scaling is on
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool transform_stroke = prefs ? prefs->getBool("/options/transform/stroke", true) : true;
+    if (transform_stroke && !scale_y_rel) {
+        prop_scale.param_set_value(prop_scale * ((postmul.expansionX() + postmul.expansionY()) / 2));
+    } 	
     if (postmul.isTranslation()) {
         pattern.param_transform_multiply(postmul, set);
     }
+    sp_lpe_item_update_patheffect (sp_lpe_item, false, true);
 }
 
 void
