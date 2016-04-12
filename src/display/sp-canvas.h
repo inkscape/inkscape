@@ -11,9 +11,11 @@
  *   Raph Levien <raph@gimp.org>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 2002 Lauris Kaplinski
+ * Copyright (C) 2016 Google
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

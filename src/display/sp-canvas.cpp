@@ -8,9 +8,11 @@
  *   fred
  *   bbyak
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 2002-2006 authors
+ * Copyright (C) 2016 Google
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
