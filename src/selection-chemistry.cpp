@@ -1126,7 +1126,7 @@ void
 sp_undo(SPDesktop *desktop, SPDocument *)
 {
     // No re/undo while dragging, too dangerous.
-    if(desktop->getCanvas()->is_dragging) return;
+    if(desktop->getCanvas()->_is_dragging) return;
 
     if (!DocumentUndo::undo(desktop->getDocument())) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to undo."));
@@ -1137,7 +1137,7 @@ void
 sp_redo(SPDesktop *desktop, SPDocument *)
 {
     // No re/undo while dragging, too dangerous.
-    if(desktop->getCanvas()->is_dragging) return;
+    if(desktop->getCanvas()->_is_dragging) return;
 
     if (!DocumentUndo::redo(desktop->getDocument())) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to redo."));

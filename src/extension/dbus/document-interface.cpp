@@ -1052,7 +1052,7 @@ void document_interface_pause_updates(DocumentInterface *doc_interface, GError *
     SPDesktop *desk = doc_interface->target.getDesktop();
     g_return_if_fail(ensure_desktop_valid(desk, error));
     doc_interface->updates = FALSE;
-    desk->canvas->drawing_disabled = 1;
+    desk->canvas->_drawing_disabled = 1;
 }
 
 void document_interface_resume_updates(DocumentInterface *doc_interface, GError ** error)
@@ -1060,7 +1060,7 @@ void document_interface_resume_updates(DocumentInterface *doc_interface, GError 
     SPDesktop *desk = doc_interface->target.getDesktop();
     g_return_if_fail(ensure_desktop_valid(desk, error));
     doc_interface->updates = TRUE;
-    desk->canvas->drawing_disabled = 0;
+    desk->canvas->_drawing_disabled = 0;
     //FIXME: use better verb than rect.
     Inkscape::DocumentUndo::done(doc_interface->target.getDocument(),  SP_VERB_CONTEXT_RECT, "Multiple actions");
 }

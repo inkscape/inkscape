@@ -564,7 +564,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     /* Canvas */
     dtw->canvas = SP_CANVAS(SPCanvas::createAA());
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    dtw->canvas->enable_cms_display_adj = prefs->getBool("/options/displayprofile/enable");
+    dtw->canvas->_enable_cms_display_adj = prefs->getBool("/options/displayprofile/enable");
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     gtk_widget_set_can_focus (GTK_WIDGET (dtw->canvas), TRUE);
 
@@ -746,8 +746,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
         Glib::ustring id = Inkscape::CMSSystem::getDisplayId( 0, 0 );
 
         bool enabled = false;
-        dtw->canvas->cms_key = id;
-        enabled = !dtw->canvas->cms_key.empty();
+        dtw->canvas->_cms_key = id;
+        enabled = !dtw->canvas->_cms_key.empty();
         cms_adjust_set_sensitive( dtw, enabled );
     }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -1035,7 +1035,7 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
         // current item on the canvas, because item events and all mouse events are caught
         // and passed on by the canvas acetate (I think). --bb
         if ((event->type == GDK_KEY_PRESS || event->type == GDK_KEY_RELEASE)
-                && !dtw->canvas->current_item) {
+                && !dtw->canvas->_current_item) {
             return sp_desktop_root_handler (NULL, event, dtw->desktop);
         }
     }
@@ -1054,9 +1054,9 @@ void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidge
     gint monitor = gdk_screen_get_monitor_at_window(screen, window);
     Glib::ustring id = Inkscape::CMSSystem::getDisplayId( screenNum, monitor );
     bool enabled = false;
-    dtw->canvas->cms_key = id;
+    dtw->canvas->_cms_key = id;
     dtw->requestCanvasUpdate();
-    enabled = !dtw->canvas->cms_key.empty();
+    enabled = !dtw->canvas->_cms_key.empty();
     cms_adjust_set_sensitive( dtw, enabled );
 }
 #else
@@ -1092,8 +1092,8 @@ void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data);
 
     bool down = SP_BUTTON_IS_DOWN(dtw->cms_adjust);
-    if ( down != dtw->canvas->enable_cms_display_adj ) {
-        dtw->canvas->enable_cms_display_adj = down;
+    if ( down != dtw->canvas->_enable_cms_display_adj ) {
+        dtw->canvas->_enable_cms_display_adj = down;
         dtw->requestCanvasUpdate();
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool("/options/displayprofile/enable", down);

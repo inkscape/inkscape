@@ -1018,7 +1018,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
         {
             int destX = 0;
             int destY = 0;
-            gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
+            gtk_widget_translate_coordinates( widget, GTK_WIDGET(desktop->canvas), x, y, &destX, &destY );
             Geom::Point where( sp_canvas_window_to_world( desktop->canvas, Geom::Point( destX, destY ) ) );
             Geom::Point const button_dt(desktop->w2d(where));
             Geom::Point const button_doc(desktop->dt2doc(button_dt));
@@ -1141,7 +1141,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             if ( worked ) {
                 int destX = 0;
                 int destY = 0;
-                gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
+                gtk_widget_translate_coordinates( widget, GTK_WIDGET(desktop->canvas), x, y, &destX, &destY );
                 Geom::Point where( sp_canvas_window_to_world( desktop->canvas, Geom::Point( destX, destY ) ) );
                 Geom::Point const button_dt(desktop->w2d(where));
                 Geom::Point const button_doc(desktop->dt2doc(button_dt));

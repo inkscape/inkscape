@@ -128,7 +128,7 @@ ExecutionEnv::createWorkingDialog (void) {
     }
 
     SPDesktop *desktop = (SPDesktop *)_doc;
-    GtkWidget *toplevel = gtk_widget_get_toplevel(&(desktop->canvas->widget));
+    GtkWidget *toplevel = gtk_widget_get_toplevel(GTK_WIDGET(desktop->canvas));
     if (!toplevel || !gtk_widget_is_toplevel (toplevel))
         return;
     Gtk::Window *window = Glib::wrap(GTK_WINDOW(toplevel), false);

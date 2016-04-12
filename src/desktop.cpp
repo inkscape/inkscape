@@ -501,7 +501,7 @@ void SPDesktop::redrawDesktop() {
 
 void SPDesktop::_setDisplayMode(Inkscape::RenderMode mode) {
     SP_CANVAS_ARENA (drawing)->drawing.setRenderMode(mode);
-    canvas->rendermode = mode;
+    canvas->_rendermode = mode;
     _display_mode = mode;
     redrawDesktop();
     _widget->setTitle( this->getDocument()->getName() );
@@ -522,7 +522,7 @@ void SPDesktop::_setDisplayColorMode(Inkscape::ColorMode mode) {
     }
 
     SP_CANVAS_ARENA (drawing)->drawing.setColorMode(mode);
-    canvas->colorrendermode = mode;
+    canvas->_colorrendermode = mode;
     _display_color_mode = mode;
     redrawDesktop();
     _widget->setTitle( this->getDocument()->getName() );
