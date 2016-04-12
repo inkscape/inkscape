@@ -26,7 +26,7 @@
 
 #include <cairomm/refptr.h>
 
-#if GTK_CHECK_VERSION(3,6,0)
+#if GTK_CHECK_VERSION(3,0,0)
 # include <gtkmm/searchentry.h>
 #endif
 
@@ -336,7 +336,7 @@ public:
     Gtk::Label* label;
 };
 
-#if !GTK_CHECK_VERSION(3,6,0)
+#if !GTK_CHECK_VERSION(3,0,0)
 /**
  * A Gtk::Entry with search & clear icons
  */
@@ -460,7 +460,7 @@ private:
     Glib::ustring filename_image;
     Glib::ustring filename_thumbnail;
 
-#if GTK_CHECK_VERSION(3,6,0)
+#if GTK_CHECK_VERSION(3,0,0)
     Gtk::SearchEntry *entry_search;
 #else
     SearchEntry *entry_search;

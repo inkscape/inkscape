@@ -239,7 +239,7 @@ static
 gboolean eek_preview_draw(GtkWidget *widget,
                           cairo_t   *cr)
 {
-    GtkStyle          *style   = gtk_widget_get_style(widget);
+
     EekPreview        *preview = EEK_PREVIEW(widget);
     EekPreviewPrivate *priv    = EEK_PREVIEW_GET_PRIVATE(preview);
 
@@ -284,7 +284,8 @@ gboolean eek_preview_draw(GtkWidget *widget,
                           0, 0,
                           allocation.width, allocation.height);
 #else
-    GdkWindow* window = gtk_widget_get_window(widget);
+    GtkStyle *style = gtk_widget_get_style(widget);
+    GdkWindow *window = gtk_widget_get_window(widget);
         
     gtk_paint_flat_box( style,
                         window,

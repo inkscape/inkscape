@@ -100,7 +100,7 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 	gtk_widget_set_style (vw->canvas, style);
 #endif
 
-#if GTK_CHECK_VERSION(3,8,0)
+#if GTK_CHECK_VERSION(3,0,0)
 	gtk_container_add (GTK_CONTAINER (vw->sw), vw->canvas);
 #else
 	gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (vw->sw), vw->canvas);

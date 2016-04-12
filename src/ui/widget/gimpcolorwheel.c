@@ -1246,7 +1246,7 @@ paint_triangle (GimpColorWheel *wheel,
 #endif
 }
 
-#if GTK_CHECK_VERSION(3,2,0)
+#if GTK_CHECK_VERSION(3,0,0)
 static gboolean
 gimp_color_wheel_draw (GtkWidget *widget,
                        cairo_t   *cr)
