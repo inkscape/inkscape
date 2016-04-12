@@ -572,10 +572,18 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     sp_ruler_add_track_widget (SP_RULER(dtw->vruler), GTK_WIDGET(dtw->canvas));
 
 #if GTK_CHECK_VERSION(3,0,0)
-    GdkRGBA white = {1,1,1,1};
-    gtk_widget_override_background_color(GTK_WIDGET(dtw->canvas),
-                                         GTK_STATE_FLAG_NORMAL,
-					 &white);
+    GtkCssProvider  *css_provider  = gtk_css_provider_new();
+    GtkStyleContext *style_context = gtk_widget_get_style_context(GTK_WIDGET(dtw->canvas));
+
+    gtk_css_provider_load_from_data(css_provider,
+                                    "SPCanvas {\n"
+                                    " background-color: white;\n"
+                                    "}\n",
+                                    -1, NULL);
+
+    gtk_style_context_add_provider(style_context,
+                                   GTK_STYLE_PROVIDER(css_provider),
+                                   GTK_STYLE_PROVIDER_PRIORITY_USER);
 #else
     GtkStyle *style = gtk_style_copy(gtk_widget_get_style(GTK_WIDGET(dtw->canvas)));
     style->bg[GTK_STATE_NORMAL] = style->white;
