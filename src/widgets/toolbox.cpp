@@ -127,7 +127,8 @@ Inkscape::IconSize ToolboxFactory::prefToSize( Glib::ustring const &path, int ba
     static Inkscape::IconSize sizeChoices[] = {
         Inkscape::ICON_SIZE_LARGE_TOOLBAR,
         Inkscape::ICON_SIZE_SMALL_TOOLBAR,
-        Inkscape::ICON_SIZE_MENU
+        Inkscape::ICON_SIZE_MENU,
+        Inkscape::ICON_SIZE_DIALOG
     };
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int index = prefs->getIntLimited( path, base, 0, G_N_ELEMENTS(sizeChoices) );
