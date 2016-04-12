@@ -222,11 +222,11 @@ if("${WITH_GTK3_EXPERIMENTAL}")
     pkg_check_modules(
         GTK
         REQUIRED
-        gtkmm-3.0>=3.2
-        gdkmm-3.0>=3.2
-        gtk+-3.0>=3.2
-        gdk-3.0>=3.2
-        gdl-3.0>=3.3.5
+        gtkmm-3.0>=3.8
+        gdkmm-3.0>=3.8
+        gtk+-3.0>=3.8
+        gdk-3.0>=3.8
+        gdl-3.0>=3.4
         )
     message("Using EXPERIMENTAL Gtkmm 3 build")
     set(WITH_GTKMM_3_0 1)

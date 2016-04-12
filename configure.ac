@@ -726,22 +726,22 @@ if test "x$enable_gtk3" = "xyes"; then
 	fi
 
 	PKG_CHECK_MODULES(GTK,
-			  gtk+-3.0  >= 3.2
-			  gdk-3.0   >= 3.2
-			  gdl-3.0   > 3.3.4
+			  gtk+-3.0  >= 3.8
+			  gdk-3.0   >= 3.8
+			  gdl-3.0   > 3.4
 			  $ink_spell_pkg)
 
 	dnl Separate out dependencies that are known to introduce
 	dnl C++-specific compiler flags
 	PKG_CHECK_MODULES(GTKMM,
-			  gtkmm-3.0 >= 3.2
-			  gdkmm-3.0 >= 3.2,
+			  gtkmm-3.0 >= 3.8
+			  gdkmm-3.0 >= 3.8,
 			  with_gtkmm_3_0=yes,
 			  with_gtkmm_3_0=no)
 
 	if test "x$with_gtkmm_3_0" = "xyes"; then
 		AC_MSG_RESULT([Using EXPERIMENTAL Gtkmm 3 build])
-		AC_DEFINE(WITH_GTKMM_3_0,1,[Build with Gtkmm 3.0.x or higher])
+		AC_DEFINE(WITH_GTKMM_3_0,1,[Build with Gtkmm 3.x])
 		
 		AC_MSG_RESULT([Using external GDL])
 		AC_DEFINE(WITH_EXT_GDL,1,[Build with external GDL])
