@@ -937,7 +937,6 @@ void sp_canvas_class_init(SPCanvasClass *klass)
 static void sp_canvas_init(SPCanvas *canvas)
 {
     gtk_widget_set_has_window (GTK_WIDGET (canvas), TRUE);
-    gtk_widget_set_double_buffered (GTK_WIDGET (canvas), FALSE);
     gtk_widget_set_can_focus (GTK_WIDGET (canvas), TRUE);
 
     canvas->_pick_event.type = GDK_LEAVE_NOTIFY;
@@ -1569,11 +1568,7 @@ void SPCanvas::paintSingleBuffer(Geom::IntRect const &paint_rect, Geom::IntRect 
 
 #if GTK_CHECK_VERSION(3,0,0)
     GtkStyleContext *context = gtk_widget_get_style_context(widget);
-    GdkRGBA color;
-    gtk_style_context_get_background_color(context,
-                                           gtk_widget_get_state_flags(widget),
-                                           &color);
-    gdk_cairo_set_source_rgba(buf.ct, &color);
+    gtk_render_background(context, buf.ct, 0, 0, paint_rect.width(), paint_rect.height());
 #else
     GtkStyle *style = gtk_widget_get_style (widget);
     gdk_cairo_set_source_color(buf.ct, &style->bg[GTK_STATE_NORMAL]);
