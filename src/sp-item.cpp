@@ -568,6 +568,7 @@ void SPItem::clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
             clip->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
+    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 void SPItem::mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
