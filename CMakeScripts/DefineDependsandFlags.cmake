@@ -2,6 +2,7 @@
 set(INKSCAPE_LIBS "")
 set(INKSCAPE_INCS "")
 set(INKSCAPE_INCS_SYS "")
+set(INKSCAPE_CXX_FLAGS "")
 
 list(APPEND INKSCAPE_INCS ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/src
@@ -14,39 +15,28 @@ list(APPEND INKSCAPE_INCS ${PROJECT_SOURCE_DIR}
 # Files we include
 # ----------------------------------------------------------------------------
 
-find_package(GSL REQUIRED)
-list(APPEND INKSCAPE_INCS_SYS ${GSL_INCLUDE_DIRS})
-list(APPEND INKSCAPE_LIBS ${GSL_LIBRARIES})
 if(WIN32)
-    list(APPEND INKSCAPE_LIBS "-L$ENV{DEVLIBS_PATH}/lib")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0.dll")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0.dll")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lpangowin32-1.0.dll")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lgthread-2.0.dll")  # FIXME
-elseif(APPLE)
-    if(DEFINED ENV{CMAKE_PREFIX_PATH})
-	# Adding the library search path explicitly seems not required
-	# if MacPorts is installed in default prefix ('/opt/local') - 
-	# Cmake then can rely on the hard-coded paths in its modules.
-	# Only prepend search path if $CMAKE_PREFIX_PATH is defined:
-	list(APPEND INKSCAPE_LIBS "-L$ENV{CMAKE_PREFIX_PATH}/lib")  # FIXME
-    endif()
-    list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lfontconfig")  # FIXME
-    if(${GTK+_2.0_TARGET} MATCHES "x11")
-	# only link X11 if using X11 backend of GTK2
-	list(APPEND INKSCAPE_LIBS "-lX11")  # FIXME
-    endif()
-else()
-    list(APPEND INKSCAPE_LIBS "-ldl")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lfontconfig")  # FIXME
-    list(APPEND INKSCAPE_LIBS "-lX11")  # FIXME
+    link_directories($ENV{DEVLIBS_PATH}/lib)
 endif()
 
-list(APPEND INKSCAPE_LIBS "-lgslcblas")  # FIXME
+pkg_check_modules(INKSCAPE_DEP REQUIRED pangocairo pangoft2 fontconfig gthread-2.0 gsl)
+list(APPEND INKSCAPE_LIBS ${INKSCAPE_DEP_LDFLAGS})
+list(APPEND INKSCAPE_INCS_SYS ${INKSCAPE_DEP_INCLUDE_DIRS})
+list(APPEND INKSCAPE_LIBS ${INKSCAPE_DEP_LIBRARIES})
+add_definitions(${INKSCAPE_DEP_CFLAGS_OTHER})
+
+if(APPLE AND DEFINED ENV{CMAKE_PREFIX_PATH})
+    list(APPEND INKSCAPE_LIBS "-L$ENV{CMAKE_PREFIX_PATH}/lib")
+endif()
+if(APPLE)
+    if(${GTK+_2.0_TARGET} MATCHES "x11")
+    pkg_check_modules(x11 REQUIRED x11)
+    list(APPEND INKSCAPE_LIBS ${x11_LDFLAGS})
+    endif()
+else()
+    pkg_check_modules(x11 REQUIRED x11)
+    list(APPEND INKSCAPE_LIBS ${x11_LDFLAGS})
+endif()
 
 if(WITH_GNOME_VFS)
     find_package(GnomeVFS2)
@@ -229,6 +219,7 @@ if("${WITH_GTK3_EXPERIMENTAL}")
         gdl-3.0>=3.4
         )
     message("Using EXPERIMENTAL Gtkmm 3 build")
+    list(APPEND INKSCAPE_CXX_FLAGS ${GTK_CFLAGS_OTHER})
     set(WITH_GTKMM_3_0 1)
     message("Using external GDL")
     set(WITH_EXT_GDL 1)
@@ -269,52 +260,28 @@ if("${WITH_GTK3_EXPERIMENTAL}")
         ${GTKSPELL3_LIBRARIES}
     )
 else()
-    find_package(GTK2 COMPONENTS gtk gtkmm REQUIRED)
+    pkg_check_modules(GTK REQUIRED
+                     gtkmm-2.4>=2.24
+                     gdkmm-2.4
+                     gtk+-2.0
+                     gdk-2.0
+                     )
+    list(APPEND INKSCAPE_CXX_FLAGS ${GTK_CFLAGS_OTHER})
+    pkg_check_modules(GTKSPELL2 gtkspell-2.0)
+    if("${GTKSPELL3_FOUND}")
+        message("Using GtkSpell3 3.0")
+        add_definitions(${GTK_CFLAGS_OTHER})
+        set (WITH_GTKSPELL 1)
+    endif()
     list(APPEND INKSCAPE_INCS_SYS
-        ${GTK2_GDK_INCLUDE_DIR}
-        ${GTK2_GDKMM_INCLUDE_DIR}
-        ${GTK2_GDK_PIXBUF_INCLUDE_DIR}
-        ${GTK2_GDKCONFIG_INCLUDE_DIR}
-        ${GTK2_GDKMMCONFIG_INCLUDE_DIR}
-        ${GTK2_GLIB_INCLUDE_DIR}
-        ${GTK2_GLIBCONFIG_INCLUDE_DIR}
-        ${GTK2_GLIBMM_INCLUDE_DIR}
-        ${GTK2_GLIBMMCONFIG_INCLUDE_DIR}
-        ${GTK2_GTK_INCLUDE_DIR}
-        ${GTK2_GTKMM_INCLUDE_DIR}
-        ${GTK2_GTKMMCONFIG_INCLUDE_DIR}
-        ${GTK2_ATK_INCLUDE_DIR}
-        ${GTK2_ATKMM_INCLUDE_DIR}
-        ${GTK2_PANGO_INCLUDE_DIR}
-        ${GTK2_PANGOMM_INCLUDE_DIR}
-        ${GTK2_PANGOMMCONFIG_INCLUDE_DIR}
-        ${GTK2_CAIRO_INCLUDE_DIR}
-        ${GTK2_CAIROMM_INCLUDE_DIR}
-        ${GTK2_CAIROMMCONFIG_INCLUDE_DIR} # <-- not in cmake 2.8.4
-        ${GTK2_GIOMM_INCLUDE_DIR}
-        ${GTK2_GIOMMCONFIG_INCLUDE_DIR}
-        ${GTK2_SIGC++_INCLUDE_DIR}
-        ${GTK2_SIGC++CONFIG_INCLUDE_DIR}
-	)
+        ${GTK_INCLUDE_DIRS}
+        ${GTKSPELL_INCLUDE_DIRS}
+        )
 
     list(APPEND INKSCAPE_LIBS
-        ${GTK2_GDK_LIBRARY}
-        ${GTK2_GDKMM_LIBRARY}
-        ${GTK2_GDK_PIXBUF_LIBRARY}
-        ${GTK2_GLIB_LIBRARY}
-        ${GTK2_GLIBMM_LIBRARY}
-        ${GTK2_GTK_LIBRARY}
-        ${GTK2_GTKMM_LIBRARY}
-        ${GTK2_ATK_LIBRARY}
-        ${GTK2_ATKMM_LIBRARY}
-        ${GTK2_PANGO_LIBRARY}
-        ${GTK2_PANGOMM_LIBRARY}
-        ${GTK2_CAIRO_LIBRARY}
-        ${GTK2_CAIROMM_LIBRARY}
-        ${GTK2_GIOMM_LIBRARY}
-        ${GTK2_SIGC++_LIBRARY}
-        ${GTK2_GOBJECT_LIBRARY}
-	)
+        ${GTK_LIBRARIES}
+        ${GTKSPELL_LIBRARIES}
+        )
 endif()
 
 find_package(Freetype REQUIRED)
@@ -362,7 +329,7 @@ if(WITH_OPENMP)
     find_package(OpenMP)
     if(OPENMP_FOUND)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+	list(APPEND INKSCAPE_CXX_FLAGS  ${OpenMP_CXX_FLAGS})
 	if(APPLE AND ${CMAKE_GENERATOR} MATCHES "Xcode")
 	    set(CMAKE_XCODE_ATTRIBUTE_ENABLE_OPENMP_SUPPORT "YES")
 	endif()
@@ -383,19 +350,15 @@ list(APPEND INKSCAPE_INCS_SYS ${ZLIB_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${ZLIB_LIBRARIES})
 
 if(WITH_IMAGE_MAGICK)
-    find_package(ImageMagick COMPONENTS MagickCore Magick++)
+    pkg_check_modules(ImageMagick ImageMagick MagickCore Magick++ )
     if(ImageMagick_FOUND)
-	# the component-specific paths apparently fail to get detected correctly
-	# on some linux distros (or with older Cmake versions).
-	# Use variables which list all include dirs and libraries instead:
-	list(APPEND INKSCAPE_INCS_SYS ${ImageMagick_INCLUDE_DIRS})
-	list(APPEND INKSCAPE_LIBS ${ImageMagick_LIBRARIES})
-	# TODO: Cmake's ImageMagick module misses required defines for newer
-	# versions of ImageMagick. See also:
-	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776832
-	#add_definitions(-DMAGICKCORE_HDRI_ENABLE=0)  # FIXME (version check?)
-	#add_definitions(-DMAGICKCORE_QUANTUM_DEPTH=16)  # FIXME (version check?)
-    else()
+
+        list(APPEND INKSCAPE_LIBS ${ImageMagick_LDFLAGS})
+        add_definitions(${ImageMagick_CFLAGS_OTHER})
+
+        list(APPEND INKSCAPE_INCS_SYS ${ImageMagick_INCLUDE_DIRS})
+        list(APPEND INKSCAPE_LIBS ${ImageMagick_LIBRARIES})
+        else()
 	set(WITH_IMAGE_MAGICK OFF)  # enable 'Extensions > Raster'
     endif()
 endif()
@@ -411,8 +374,15 @@ if(WITH_NLS)
     endif(GETTEXT_FOUND)
 endif(WITH_NLS)
 
-find_package(SigC++ REQUIRED)
+pkg_check_modules(SIGC++ REQUIRED sigc++-2.0 )
+list(APPEND INKSCAPE_LIBS ${SIGC++_LDFLAGS})
 
+list(APPEND INKSCAPE_CXX_FLAGS ${SIGC++_CFLAGS_OTHER})
+
+list(REMOVE_DUPLICATES INKSCAPE_CXX_FLAGS)
+foreach(flag ${INKSCAPE_CXX_FLAGS})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" CACHE STRING "" FORCE)
+endforeach()
 # end Dependencies
 
 list(REMOVE_DUPLICATES INKSCAPE_LIBS)
