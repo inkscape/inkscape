@@ -1,11 +1,19 @@
 #include "widgets/icon.h"
 #include "icon-size.h"
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
+
 
 #include "widgets/ink-action.h"
 
 #include "widgets/button.h"
+
+#include <gtk/gtk.h>
+
+#if GTK_CHECK_VERSION(3,0,0)
+    // Fork of gtk-imagemenuitem to continue support
+    #include "widgets/imagemenuitem.h"
+
+#endif
 
 static void ink_action_finalize( GObject* obj );
 static void ink_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
@@ -158,7 +166,12 @@ static GtkWidget* ink_action_create_menu_item( GtkAction* action )
         gchar* label = 0;
         g_object_get( G_OBJECT(act), "label", &label, NULL );
 
+#if GTK_CHECK_VERSION(3,0,0)
+        item = image_menu_item_new_with_mnemonic( label );
+#else
         item = gtk_image_menu_item_new_with_mnemonic( label );
+#endif
+
         GtkWidget* child = sp_icon_new( Inkscape::ICON_SIZE_MENU, act->private_data->iconId );
         // TODO this work-around is until SPIcon will live properly inside of a popup menu
         if ( SP_IS_ICON(child) ) {
@@ -172,7 +185,12 @@ static GtkWidget* ink_action_create_menu_item( GtkAction* action )
             }
         }
         gtk_widget_show_all( child );
+
+#if GTK_CHECK_VERSION(3,0,0)
+        image_menu_item_set_image( IMAGE_MENU_ITEM(item), child );
+#else
         gtk_image_menu_item_set_image( GTK_IMAGE_MENU_ITEM(item), child );
+#endif
 
         g_free( label );
         label = 0;
