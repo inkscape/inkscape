@@ -5,3 +5,12 @@ foreach(language ${LANGUAGES})
   set(pofile ${CMAKE_CURRENT_SOURCE_DIR}/${language}.po)
   GETTEXT_PROCESS_PO_FILES(${language} ALL INSTALL_DESTINATION "share/locale/" PO_FILES ${pofile})
 endforeach(language)
+
+
+#translates inkscape.desktop
+add_custom_target(inkscape_desktop DEPENDS ${CMAKE_BINARY_DIR}/inkscape.desktop)
+add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/inkscape.desktop 
+DEPENDS ${LANGUAGES}
+COMMAND ${GETTEXT_MSGFMT_EXECUTABLE} --desktop --template ${CMAKE_SOURCE_DIR}/inkscape.desktop.template -d ${CMAKE_CURRENT_SOURCE_DIR} -o ${CMAKE_BINARY_DIR}/inkscape.desktop.template.in --keyword=Name --keyword=GenericName --keyword=X-GNOME-FullName --keyword=Comment --keyword=Keywords
+COMMAND ${CMAKE_COMMAND} -DINKSCAPE_SOURCE_DIR=${CMAKE_SOURCE_DIR} -DINKSCAPE_BINARY_DIR=${CMAKE_BINARY_DIR} -P ${CMAKE_SOURCE_DIR}/CMakeScripts/inkscape-desktop.cmake)
+add_dependencies(inkscape inkscape_desktop)
