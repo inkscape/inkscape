@@ -700,38 +700,37 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->coord_status);
     gtk_widget_set_tooltip_text (eventbox, _("Cursor coordinates"));
     GtkWidget *label_x = gtk_label_new(_("X:"));
-    gtk_misc_set_alignment (GTK_MISC(label_x), 0.0, 0.5);
-
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_grid_attach(GTK_GRID(dtw->coord_status), 
-            label_x, 1, 0, 1, 1);
-#else
-    gtk_table_attach(GTK_TABLE(dtw->coord_status),  label_x, 1,2, 0,1, GTK_FILL, GTK_FILL, 0, 0);
-#endif
-
     GtkWidget *label_y = gtk_label_new(_("Y:"));
-    gtk_misc_set_alignment (GTK_MISC(label_y), 0.0, 0.5);
 
 #if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(label_x, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_y, GTK_ALIGN_START);
+    gtk_grid_attach(GTK_GRID(dtw->coord_status), label_x, 1, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(dtw->coord_status), label_y, 1, 1, 1, 1);
 #else
+    gtk_misc_set_alignment (GTK_MISC(label_x), 0.0, 0.5);
+    gtk_misc_set_alignment (GTK_MISC(label_y), 0.0, 0.5);
+    gtk_table_attach(GTK_TABLE(dtw->coord_status),  label_x, 1,2, 0,1, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach(GTK_TABLE(dtw->coord_status),  label_y, 1,2, 1,2, GTK_FILL, GTK_FILL, 0, 0);
 #endif
 
     dtw->coord_status_x = gtk_label_new(NULL);
-    gtk_label_set_markup( GTK_LABEL(dtw->coord_status_x), "<tt>   0.00 </tt>" );
-    gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_x), 1.0, 0.5);
     dtw->coord_status_y = gtk_label_new(NULL);
+    gtk_label_set_markup( GTK_LABEL(dtw->coord_status_x), "<tt>   0.00 </tt>" );
     gtk_label_set_markup( GTK_LABEL(dtw->coord_status_y), "<tt>   0.00 </tt>" );
-    gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_y), 1.0, 0.5);
+
     GtkWidget* label_z = gtk_label_new(_("Z:"));
 
 #if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(dtw->coord_status_x, GTK_ALIGN_END);
+    gtk_widget_set_halign(dtw->coord_status_y, GTK_ALIGN_END);
     gtk_grid_attach(GTK_GRID(dtw->coord_status), dtw->coord_status_x, 2, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(dtw->coord_status), dtw->coord_status_y, 2, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(dtw->coord_status), label_z, 3, 0, 1, 2);
     gtk_grid_attach(GTK_GRID(dtw->coord_status), dtw->zoom_status, 4, 0, 1, 2);
 #else
+    gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_x), 1.0, 0.5);
+    gtk_misc_set_alignment (GTK_MISC(dtw->coord_status_y), 1.0, 0.5);
     gtk_table_attach(GTK_TABLE(dtw->coord_status), dtw->coord_status_x, 2,3, 0,1, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach(GTK_TABLE(dtw->coord_status), dtw->coord_status_y, 2,3, 1,2, GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach(GTK_TABLE(dtw->coord_status),  label_z, 3,4, 0,2, GTK_FILL, GTK_FILL, 0, 0);
@@ -764,7 +763,13 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->select_status_eventbox = gtk_event_box_new ();
     dtw->select_status = gtk_label_new (NULL);
     gtk_label_set_ellipsize (GTK_LABEL(dtw->select_status), PANGO_ELLIPSIZE_END);
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(dtw->select_status, GTK_ALIGN_START);
+#else
     gtk_misc_set_alignment (GTK_MISC (dtw->select_status), 0.0, 0.5);
+#endif
+
     gtk_widget_set_size_request (dtw->select_status, 1, -1);
     // display the initial welcome message in the statusbar
     gtk_label_set_markup (GTK_LABEL (dtw->select_status), _("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
