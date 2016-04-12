@@ -210,7 +210,7 @@ set(TRY_GTKSPELL 1)
 # use patched version until GTK2_CAIROMMCONFIG_INCLUDE_DIR is added
 if("${WITH_GTK3_EXPERIMENTAL}")
     pkg_check_modules(
-        GTK
+        GTK3
         REQUIRED
         gtkmm-3.0>=3.8
         gdkmm-3.0>=3.8
@@ -219,7 +219,7 @@ if("${WITH_GTK3_EXPERIMENTAL}")
         gdl-3.0>=3.4
         )
     message("Using EXPERIMENTAL Gtkmm 3 build")
-    list(APPEND INKSCAPE_CXX_FLAGS ${GTK_CFLAGS_OTHER})
+    list(APPEND INKSCAPE_CXX_FLAGS ${GTK3_CFLAGS_OTHER})
     set(WITH_GTKMM_3_0 1)
     message("Using external GDL")
     set(WITH_EXT_GDL 1)
@@ -251,12 +251,12 @@ if("${WITH_GTK3_EXPERIMENTAL}")
         set (WITH_GTKSPELL 1)
     endif()
     list(APPEND INKSCAPE_INCS_SYS
-        ${GTK_INCLUDE_DIRS}
+        ${GTK3_INCLUDE_DIRS}
         ${GTKSPELL3_INCLUDE_DIRS}
     )
 
     list(APPEND INKSCAPE_LIBS
-        ${GTK_LIBRARIES}
+        ${GTK3_LIBRARIES}
         ${GTKSPELL3_LIBRARIES}
     )
 else()
