@@ -155,9 +155,8 @@ public:
      */
     static gint handle_scroll(GtkWidget *widget, GdkEventScroll *event);
     static gint handle_motion(GtkWidget *widget, GdkEventMotion *event);
-#if GTK_CHECK_VERSION(3,0,0)
     static gboolean handle_draw(GtkWidget *widget, cairo_t *cr);
-#else
+#if !GTK_CHECK_VERSION(3,0,0)
     static gboolean handle_expose(GtkWidget *widget, GdkEventExpose *event);
 #endif
     static gint handle_key_event(GtkWidget *widget, GdkEventKey *event);
@@ -180,9 +179,8 @@ public:
     int _y0;
 
     /* Area that needs redrawing, stored as a microtile array */
-    int    _tLeft, _tTop, _tRight, _tBottom;
-    int    _tile_w, _tile_h;
-    uint8_t *_tiles;
+    cairo_surface_t *_backing_store;
+    cairo_region_t *_dirty_region;
 
     /** Last known modifier state, for deferred repick when a button is down. */
     int _state;
