@@ -865,7 +865,13 @@ static GtkWidget* create_tool_item( GtkAction* action )
                 gtk_box_pack_start( GTK_BOX(hb), icon, FALSE, FALSE, 0 );
             } else {
                 GtkWidget* lbl = gtk_label_new( g_value_get_string( &value ) ? g_value_get_string( &value ) : "wwww" );
+
+#if GTK_CHECK_VERSION(3,0,0)
+                gtk_widget_set_halign(lbl, GTK_ALIGN_END);
+#else
                 gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
+#endif
+
                 gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
             }
         }
