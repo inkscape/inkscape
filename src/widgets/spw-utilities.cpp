@@ -84,12 +84,23 @@ spw_label_old(GtkWidget *table, const gchar *label_text, int col, int row)
 
   label_widget = gtk_label_new (label_text);
   g_assert(label_widget != NULL);
+
+#if GTK_CHECK_VERSION(3,0,0)
+  gtk_widget_set_halign(label_widget, GTK_ALIGN_END);
+#else
   gtk_misc_set_alignment (GTK_MISC (label_widget), 1.0, 0.5);
+#endif
+
   gtk_widget_show (label_widget);
 
 #if GTK_CHECK_VERSION(3,0,0)
+  gtk_widget_set_margin_start(label_widget, 4);
+  gtk_widget_set_margin_end(label_widget, 4);
+#if GTK_CHECK_VERSION(3,12,0)
+#else
   gtk_widget_set_margin_left(label_widget, 4);
   gtk_widget_set_margin_right(label_widget, 4);
+#endif
   gtk_widget_set_hexpand(label_widget, TRUE);
   gtk_widget_set_halign(label_widget, GTK_ALIGN_FILL);
   gtk_widget_set_valign(label_widget, GTK_ALIGN_CENTER);
@@ -166,7 +177,13 @@ spw_checkbutton(GtkWidget * dialog, GtkWidget * table,
   g_assert(table  != NULL);
 
   GtkWidget *l = gtk_label_new (label);
+
+#if GTK_CHECK_VERSION(3,0,0)
+  gtk_widget_set_halign(l, GTK_ALIGN_END);
+#else
   gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
+#endif
+
   gtk_widget_show (l);
 
 #if GTK_CHECK_VERSION(3,0,0)
