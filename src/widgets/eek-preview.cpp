@@ -496,14 +496,11 @@ gboolean eek_preview_draw(GtkWidget *widget,
                 otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
             }
 #if GTK_CHECK_VERSION(3,0,0)
-            gtk_paint_diamond( style,
-                               cr,
-                               gtk_widget_get_state (widget),
-                               GTK_SHADOW_ETCHED_OUT,
-                               widget,
-                               NULL,
-                               otherArea.x, otherArea.y,
-                               otherArea.width, otherArea.height );
+            // This should be a diamond too?
+            gtk_render_check(context,
+                             cr,
+                             otherArea.x, otherArea.y,
+                             otherArea.width, otherArea.height );
 #else
             gtk_paint_diamond( style,
                                window,
@@ -550,7 +547,11 @@ static gboolean eek_preview_enter_cb( GtkWidget* widget, GdkEventCrossing* event
         EekPreviewPrivate *priv    = EEK_PREVIEW_GET_PRIVATE(preview);
 
         priv->within = TRUE;
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_set_state_flags( widget, priv->hot ? GTK_STATE_FLAG_ACTIVE : GTK_STATE_FLAG_PRELIGHT, false );
+#else
         gtk_widget_set_state( widget, priv->hot ? GTK_STATE_ACTIVE : GTK_STATE_PRELIGHT );
+#endif
     }
 
     return FALSE;
@@ -563,7 +564,11 @@ static gboolean eek_preview_leave_cb( GtkWidget* widget, GdkEventCrossing* event
         EekPreviewPrivate *priv    = EEK_PREVIEW_GET_PRIVATE(preview);
 
         priv->within = FALSE;
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_set_state_flags( widget, GTK_STATE_FLAG_NORMAL, false );
+#else
         gtk_widget_set_state( widget, GTK_STATE_NORMAL );
+#endif
     }
 
     return FALSE;
@@ -588,7 +593,11 @@ static gboolean eek_preview_button_press_cb( GtkWidget* widget, GdkEventButton* 
 
             if ( priv->within )
             {
+#if GTK_CHECK_VERSION(3,0,0)
+                gtk_widget_set_state_flags( widget, GTK_STATE_FLAG_ACTIVE, false );
+#else
                 gtk_widget_set_state( widget, GTK_STATE_ACTIVE );
+#endif
             }
         }
     }
@@ -603,7 +612,11 @@ static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton
         EekPreviewPrivate *priv    = EEK_PREVIEW_GET_PRIVATE(preview);
 
         priv->hot = FALSE;
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_set_state_flags( widget, GTK_STATE_FLAG_NORMAL, false );
+#else
         gtk_widget_set_state( widget, GTK_STATE_NORMAL );
+#endif
 
         if ( priv->within &&
             (event->button == PRIME_BUTTON_MAGIC_NUMBER || 

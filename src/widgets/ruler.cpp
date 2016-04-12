@@ -286,7 +286,7 @@ sp_ruler_init (SPRuler *ruler)
 #if GTK_CHECK_VERSION(3,0,0)
   const gchar *str = 
     "SPRuler {\n"
-    "  background-color: @theme_bg_color;\n"
+    "  background-color: @bg_color;\n"
     "}\n";
   GtkCssProvider *css = gtk_css_provider_new ();
   gtk_css_provider_load_from_data (css, str, -1, NULL);
@@ -1418,7 +1418,6 @@ sp_ruler_get_pos_rect (SPRuler *ruler,
                        gdouble  position)
 {
   GtkWidget        *widget = GTK_WIDGET (ruler);
-  GtkStyle         *style  = gtk_widget_get_style (widget);
   SPRulerPrivate   *priv   = SP_RULER_GET_PRIVATE (ruler);
   GtkAllocation     allocation;
   gint              width, height;
@@ -1433,8 +1432,19 @@ sp_ruler_get_pos_rect (SPRuler *ruler,
 
   gtk_widget_get_allocation (widget, &allocation);
 
+#if GTK_CHECK_VERSION(3,0,0)
+  GtkStyleContext *context = gtk_widget_get_style_context (widget);
+  GtkBorder padding;
+
+  gtk_style_context_get_border(context, static_cast<GtkStateFlags>(0), &padding);
+
+  xthickness = padding.left + padding.right;
+  ythickness = padding.top + padding.bottom;
+#else
+  GtkStyle *style  = gtk_widget_get_style (widget);
   xthickness = style->xthickness;
   ythickness = style->ythickness;
+#endif
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
