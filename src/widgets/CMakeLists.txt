@@ -110,6 +110,11 @@ set(widgets_SRC
 	widget-sizes.h
 )
 
+if(${WITH_GTK3_EXPERIMENTAL})
+    set(image_menu_item_SRC image-menu-item.h image-menu-item.c)
+    add_inkscape_source("${image_menu_item_SRC}")
+endif()
+
 # add_inkscape_lib(widgets_LIB "${widgets_SRC}")
 add_inkscape_source("${widgets_SRC}")
 
@@ -121,3 +126,6 @@ set ( widgets_paintbucket_SRC
 if ("${HAVE_POTRACE}")
 	add_inkscape_source("${widgets_paintbucket_SRC}")
 endif()
+
+
+

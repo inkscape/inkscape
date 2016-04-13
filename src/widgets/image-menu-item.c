@@ -25,7 +25,7 @@
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
-#include "widgets/imagemenuitem.h"
+#include "widgets/image-menu-item.h"
 
 /**
  * SECTION:gtkimagemenuitem

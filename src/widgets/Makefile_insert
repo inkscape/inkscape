@@ -2,8 +2,8 @@
 
 if WITH_GTKMM_3_0
 ink_common_sources +=               \
-        widgets/imagemenuitem.c     \
-        widgets/imagemenuitem.h
+        widgets/image-menu-item.c     \
+        widgets/image-menu-item.h
 endif
 
 ink_common_sources +=	\

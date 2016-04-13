@@ -80,7 +80,7 @@
 #include "ui/dialog/layer-properties.h"
 
 #if GTK_CHECK_VERSION(3,0,0)
-    #include "widgets/imagemenuitem.h"
+    #include "widgets/image-menu-item.h"
 #endif
 
 #include <gdk/gdkkeysyms.h>

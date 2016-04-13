@@ -11,7 +11,7 @@
 
 #if GTK_CHECK_VERSION(3,0,0)
     // Fork of gtk-imagemenuitem to continue support
-    #include "widgets/imagemenuitem.h"
+    #include "widgets/image-menu-item.h"
 
 #endif
 
