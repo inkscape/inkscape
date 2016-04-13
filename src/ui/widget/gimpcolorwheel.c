@@ -303,7 +303,9 @@ gimp_color_wheel_realize (GtkWidget *widget)
   priv->window = gdk_window_new (parent_window, &attr, attr_mask);
   gdk_window_set_user_data (priv->window, wheel);
 
+#if !GTK_CHECK_VERSION(3,0,0)
   gtk_widget_style_attach (widget);
+#endif
 }
 
 static void
