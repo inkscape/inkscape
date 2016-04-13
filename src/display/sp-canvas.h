@@ -15,7 +15,7 @@
  *
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 2002 Lauris Kaplinski
- * Copyright (C) 2016 Google
+ * Copyright (C) 2016 Google Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -182,7 +182,7 @@ public:
 
     /* Area that needs redrawing, stored as a microtile array */
     cairo_surface_t *_backing_store;
-    cairo_region_t *_dirty_region;
+    cairo_region_t *_clean_region;
 
     /** Last known modifier state, for deferred repick when a button is down. */
     int _state;
@@ -208,7 +208,6 @@ public:
     int _close_enough;
 
     unsigned int _need_update : 1;
-    unsigned int _need_redraw : 1;
     unsigned int _need_repick : 1;
 
     int _forced_redraw_count;
