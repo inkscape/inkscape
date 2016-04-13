@@ -1745,7 +1745,7 @@ static void _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
             }
             // place in the z-order stack
             if (nv->borderlayer == SP_BORDER_LAYER_BOTTOM) {
-                 sp_canvas_item_move_to_z (desktop->page_border, 2);
+                 sp_canvas_item_move_to_z (desktop->page_border, 1);
             } else {
                 int order = sp_canvas_item_order (desktop->page_border);
                 int morder = sp_canvas_item_order (desktop->drawing);
