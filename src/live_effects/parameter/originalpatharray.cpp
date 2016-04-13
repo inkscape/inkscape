@@ -144,7 +144,7 @@ Gtk::Widget* OriginalPathArrayParam::param_newWidget()
     
     
     { // Paste path to link button
-        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
+        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon("gtk-stock", Inkscape::ICON_SIZE_BUTTON) );
         Gtk::Button *pButton = Gtk::manage(new Gtk::Button());
         pButton->set_relief(Gtk::RELIEF_NONE);
         pIcon->show();
@@ -156,7 +156,7 @@ Gtk::Widget* OriginalPathArrayParam::param_newWidget()
     }
     
     { // Remove linked path
-        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_REMOVE, Inkscape::ICON_SIZE_BUTTON) );
+        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon("gtk-remove", Inkscape::ICON_SIZE_BUTTON) );
         Gtk::Button *pButton = Gtk::manage(new Gtk::Button());
         pButton->set_relief(Gtk::RELIEF_NONE);
         pIcon->show();
@@ -168,7 +168,7 @@ Gtk::Widget* OriginalPathArrayParam::param_newWidget()
     }
     
     { // Move Down
-        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_GO_DOWN, Inkscape::ICON_SIZE_BUTTON) );
+        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon( "gtk-go-down", Inkscape::ICON_SIZE_BUTTON) );
         Gtk::Button *pButton = Gtk::manage(new Gtk::Button());
         pButton->set_relief(Gtk::RELIEF_NONE);
         pIcon->show();
@@ -180,7 +180,7 @@ Gtk::Widget* OriginalPathArrayParam::param_newWidget()
     }
     
     { // Move Down
-        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_GO_UP, Inkscape::ICON_SIZE_BUTTON) );
+        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon( "gtk-go-up", Inkscape::ICON_SIZE_BUTTON) );
         Gtk::Button *pButton = Gtk::manage(new Gtk::Button());
         pButton->set_relief(Gtk::RELIEF_NONE);
         pIcon->show();
