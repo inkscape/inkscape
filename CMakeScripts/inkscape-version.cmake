@@ -17,4 +17,4 @@ if(EXISTS ${INKSCAPE_SOURCE_DIR}/.bzr/)
 endif()
 message("revision is " ${INKSCAPE_REVISION})
 
-configure_file(${INKSCAPE_BINARY_DIR}/src/inkscape-version.cpp.in ${INKSCAPE_BINARY_DIR}/src/inkscape-version.cpp)
+configure_file(${INKSCAPE_SOURCE_DIR}/src/inkscape-version.cpp.in ${INKSCAPE_BINARY_DIR}/src/inkscape-version.cpp)
