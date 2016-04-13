@@ -280,7 +280,13 @@ gboolean IconImpl::draw(GtkWidget *widget, cairo_t* cr)
         GtkAllocation allocation;
 	GtkRequisition requisition;
 	gtk_widget_get_allocation(widget, &allocation);
+
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_get_preferred_size(widget, &requisition, NULL);
+#else
 	gtk_widget_get_requisition(widget, &requisition);
+#endif
+
         int x = floor(allocation.x + ((allocation.width - requisition.width) * 0.5));
         int y = floor(allocation.y + ((allocation.height - requisition.height) * 0.5));
         int width = gdk_pixbuf_get_width(image);
