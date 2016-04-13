@@ -1154,7 +1154,7 @@ void SPCanvas::handle_size_allocate(GtkWidget *widget, GtkAllocation *allocation
     Geom::IntRect new_area = Geom::IntRect::from_xywh(canvas->_x0, canvas->_y0,
         allocation->width, allocation->height);
 
-    // resize backing store; the clean region does not change
+    // resize backing store
     cairo_surface_t *new_backing_store = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
         allocation->width, allocation->height);
     if (canvas->_backing_store) {
@@ -1167,9 +1167,12 @@ void SPCanvas::handle_size_allocate(GtkWidget *widget, GtkAllocation *allocation
     }
     canvas->_backing_store = new_backing_store;
 
+    // Clip the clean region to the new allocation
+    cairo_rectangle_int_t crect = { canvas->_x0, canvas->_y0, allocation->width, allocation->height };
+    cairo_region_intersect_rectangle(canvas->_clean_region, &crect);
+
     gtk_widget_set_allocation (widget, allocation);
 
-    // Schedule redraw of new region
     if (SP_CANVAS_ITEM_GET_CLASS (canvas->_root)->viewbox_changed)
         SP_CANVAS_ITEM_GET_CLASS (canvas->_root)->viewbox_changed (canvas->_root, new_area);
 
@@ -1178,6 +1181,7 @@ void SPCanvas::handle_size_allocate(GtkWidget *widget, GtkAllocation *allocation
                                 allocation->x, allocation->y,
                                 allocation->width, allocation->height);
     }
+    // Schedule redraw of any newly exposed regions
     canvas->addIdle();
 }
 
@@ -1818,8 +1822,6 @@ gboolean SPCanvas::handle_draw(GtkWidget *widget, cairo_t *cr) {
     cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
     cairo_paint(cr);
     cairo_restore(cr);
-    /*cairo_set_source(cr, canvas->_background);
-    cairo_paint(cr);*/
 
     // Draw the clean portion
     if (!cairo_region_is_empty(draw_region)) {
