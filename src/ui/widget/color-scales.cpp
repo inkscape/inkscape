@@ -92,7 +92,13 @@ void ColorScales::_initUI(SPColorScalesMode mode)
     for (i = 0; i < static_cast<gint>(G_N_ELEMENTS(_a)); i++) {
         /* Label */
         _l[i] = gtk_label_new("");
+
+#if GTK_CHECK_VERSION(3,0,0)
+	gtk_widget_set_halign(_l[i], GTK_ALIGN_END);
+#else
         gtk_misc_set_alignment(GTK_MISC(_l[i]), 1.0, 0.5);
+#endif
+
         gtk_widget_show(_l[i]);
 
 #if GTK_CHECK_VERSION(3, 0, 0)
