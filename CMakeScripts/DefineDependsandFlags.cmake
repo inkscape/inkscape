@@ -247,9 +247,12 @@ if("${WITH_GTK3_EXPERIMENTAL}")
     pkg_check_modules(GTKSPELL3 gtkspell3-3.0)
 
     if("${GTKSPELL3_FOUND}")
-        message("Using GtkSpell3 3.0")
+        message("Using GtkSpell3")
         set (WITH_GTKSPELL 1)
+    else()
+        unset(WITH_GTKSPELL)
     endif()
+
     list(APPEND INKSCAPE_INCS_SYS
         ${GTK3_INCLUDE_DIRS}
         ${GTKSPELL3_INCLUDE_DIRS}
@@ -268,19 +271,21 @@ else()
                      )
     list(APPEND INKSCAPE_CXX_FLAGS ${GTK_CFLAGS_OTHER})
     pkg_check_modules(GTKSPELL2 gtkspell-2.0)
-    if("${GTKSPELL3_FOUND}")
-        message("Using GtkSpell3 3.0")
-        add_definitions(${GTK_CFLAGS_OTHER})
+    if("${GTKSPELL2_FOUND}")
+        message("Using GtkSpell 2")
+        add_definitions(${GTKSPELL2_CFLAGS_OTHER})
         set (WITH_GTKSPELL 1)
+    else()
+        unset(WITH_GTKSPELL)
     endif()
     list(APPEND INKSCAPE_INCS_SYS
         ${GTK_INCLUDE_DIRS}
-        ${GTKSPELL_INCLUDE_DIRS}
+        ${GTKSPELL2_INCLUDE_DIRS}
         )
 
     list(APPEND INKSCAPE_LIBS
         ${GTK_LIBRARIES}
-        ${GTKSPELL_LIBRARIES}
+        ${GTKSPELL2_LIBRARIES}
         )
 endif()
 
@@ -298,17 +303,6 @@ if(ASPELL_FOUND)
     list(APPEND INKSCAPE_LIBS     ${ASPELL_LIBRARIES})
     add_definitions(${ASPELL_DEFINITIONS})
     set(HAVE_ASPELL TRUE)
-endif()
-
-if("${TRY_GTKSPELL}" AND "${WITH_GTKSPELL}")
-    find_package(GtkSpell)
-    if(GTKSPELL_FOUND)
-	list(APPEND INKSCAPE_INCS_SYS ${GTKSPELL_INCLUDE_DIR})
-	list(APPEND INKSCAPE_LIBS     ${GTKSPELL_LIBRARIES})
-	add_definitions(${GTKSPELL_DEFINITIONS})
-    else()
-	set(WITH_GTKSPELL OFF)
-    endif()
 endif()
 
 #find_package(OpenSSL)
