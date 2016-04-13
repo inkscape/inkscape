@@ -250,7 +250,8 @@ sp_canvas_arena_event (SPCanvasItem *item, GdkEvent *event)
                 arena->c = Geom::Point(event->crossing.x, event->crossing.y);
 
                 /* fixme: Not sure abut this, but seems the right thing (Lauris) */
-                arena->drawing.update(Geom::IntRect::infinite(), arena->ctx, DrawingItem::STATE_PICK, 0);
+                arena->drawing.update(Geom::IntRect::infinite(), arena->ctx,
+                    DrawingItem::STATE_PICK | DrawingItem::STATE_BBOX, 0);
                 arena->active = arena->drawing.pick(arena->c, arena->drawing.delta, arena->sticky);
                 ret = sp_canvas_arena_send_event (arena, event);
             }
@@ -269,7 +270,8 @@ sp_canvas_arena_event (SPCanvasItem *item, GdkEvent *event)
             arena->c = Geom::Point(event->motion.x, event->motion.y);
 
             /* fixme: Not sure abut this, but seems the right thing (Lauris) */
-            arena->drawing.update(Geom::IntRect::infinite(), arena->ctx, DrawingItem::STATE_PICK);
+            arena->drawing.update(Geom::IntRect::infinite(), arena->ctx,
+                DrawingItem::STATE_PICK | DrawingItem::STATE_BBOX);
             new_arena = arena->drawing.pick(arena->c, arena->drawing.delta, arena->sticky);
             if (new_arena != arena->active) {
                 GdkEventCrossing ec;
