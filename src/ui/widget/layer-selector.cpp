@@ -32,7 +32,6 @@
 #include "util/reverse-list.h"
 #include "verbs.h"
 #include "widgets/icon.h"
-#include "widgets/shrink-wrap-button.h"
 #include "xml/node-event-vector.h"
 #include "widgets/gradient-vector.h"
 
@@ -114,7 +113,6 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
     );
 
     _visibility_toggle.set_relief(Gtk::RELIEF_NONE);
-    shrink_wrap_button(_visibility_toggle);
     _visibility_toggle.set_tooltip_text(_("Toggle current layer visibility"));
     pack_start(_visibility_toggle, Gtk::PACK_EXPAND_PADDING);
 
@@ -135,7 +133,6 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
     );
 
     _lock_toggle.set_relief(Gtk::RELIEF_NONE);
-    shrink_wrap_button(_lock_toggle);
     _lock_toggle.set_tooltip_text(_("Lock or unlock current layer"));
     pack_start(_lock_toggle, Gtk::PACK_EXPAND_PADDING);
 

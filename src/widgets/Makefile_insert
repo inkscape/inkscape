@@ -72,8 +72,6 @@ ink_common_sources +=	\
 	widgets/ruler.h			\
 	widgets/select-toolbar.cpp	\
 	widgets/select-toolbar.h	\
-	widgets/shrink-wrap-button.cpp	\
-	widgets/shrink-wrap-button.h	\
 	widgets/spray-toolbar.cpp		\
 	widgets/spray-toolbar.h		\
 	widgets/spiral-toolbar.cpp		\

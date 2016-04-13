@@ -38,7 +38,6 @@ set(widgets_SRC
 	paint-selector.cpp
 	ruler.cpp
 	select-toolbar.cpp
-	shrink-wrap-button.cpp
 	sp-attribute-widget.cpp
 	sp-color-selector.cpp
 	sp-widget.cpp
@@ -94,7 +93,6 @@ set(widgets_SRC
 	paint-selector.h
 	ruler.h
 	select-toolbar.h
-	shrink-wrap-button.h
 	sp-attribute-widget.h
 	sp-color-selector.h
 	sp-widget.h
