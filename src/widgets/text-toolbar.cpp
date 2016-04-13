@@ -1562,6 +1562,23 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         g_object_set_data( holder, "TextFontFamilyAction", act );
 
         // Change style of drop-down from menu to list
+#if GTK_CHECK_VERSION(3,0,0)
+        GtkCssProvider *css_provider = gtk_css_provider_new();
+        gtk_css_provider_load_from_data(css_provider,
+                                        "#TextFontFamilyAction_combobox {\n"
+                                        "  -GtkComboBox-appears-as-list: true;\n"
+                                        "}\n"
+                                        "combobox window.popup scrolledwindow treeview separator {\n"
+                                        "  -GtkWidget-wide-separators:  true;\n"
+                                        "  -GtkWidget-separator-height: 6;\n"
+                                        "}\n",
+                                        -1, NULL);
+
+        GdkScreen *screen = gdk_screen_get_default();
+        gtk_style_context_add_provider_for_screen(screen,
+                                                  GTK_STYLE_PROVIDER(css_provider),
+                                                  GTK_STYLE_PROVIDER_PRIORITY_USER);
+#else
         gtk_rc_parse_string (
             "style \"dropdown-as-list-style\"\n"
             "{\n"
@@ -1574,6 +1591,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "    GtkWidget::separator-height = 6\n"
             "}\n"
             "widget \"*gtk-combobox-popup-window.GtkScrolledWindow.GtkTreeView\" style \"fontfamily-separator-style\"");
+#endif
     }
 
     /* Font size */
