@@ -1536,8 +1536,6 @@ int SPCanvas::handle_motion(GtkWidget *widget, GdkEventMotion *event)
 
 void SPCanvas::paintSingleBuffer(Geom::IntRect const &paint_rect, Geom::IntRect const &canvas_rect, int /*sw*/)
 {
-    GtkWidget *widget = GTK_WIDGET (this);
-
     SPCanvasBuf buf;
     buf.buf = NULL;
     buf.buf_rowstride = 0;
