@@ -1798,8 +1798,14 @@ void SPCanvas::endForcedFullRedraws()
 gboolean SPCanvas::handle_draw(GtkWidget *widget, cairo_t *cr) {
     SPCanvas *canvas = SP_CANVAS(widget);
 
+    // Blit from the backing store, without regard for the clean region.
+    // This is necessary because GTK clears the widget for us, which causes
+    // severe flicker while drawing if we don't blit the old contents.
+    cairo_set_source_surface(cr, canvas->_backing_store, 0, 0);
+    cairo_paint(cr);
+
     cairo_rectangle_list_t *rects = cairo_copy_clip_rectangle_list(cr);
-    cairo_region_t *draw_region = cairo_region_create();
+    cairo_region_t *dirty_region = cairo_region_create();
 
     for (int i = 0; i < rects->num_rectangles; i++) {
         cairo_rectangle_t rectangle = rects->rectangles[i];
@@ -1807,44 +1813,16 @@ gboolean SPCanvas::handle_draw(GtkWidget *widget, cairo_t *cr) {
                                               rectangle.width, rectangle.height);
         Geom::IntRect ir = dr.roundOutwards();
         cairo_rectangle_int_t irect = { ir.left(), ir.top(), ir.width(), ir.height() };
-        cairo_region_union_rectangle(draw_region, &irect);
+        cairo_region_union_rectangle(dirty_region, &irect);
     }
     cairo_rectangle_list_destroy(rects);
-
-    cairo_region_t *draw_dirty = cairo_region_copy(draw_region);
-    cairo_region_subtract(draw_dirty, canvas->_clean_region);
-    cairo_region_intersect(draw_region, canvas->_clean_region);
-
-    // Draw the background
-    cairo_save(cr);
-    cairo_translate(cr, -canvas->_x0, -canvas->_y0);
-    cairo_set_source(cr, canvas->_background);
-    cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
-    cairo_paint(cr);
-    cairo_restore(cr);
-
-    // Draw the clean portion
-    if (!cairo_region_is_empty(draw_region)) {
-        cairo_region_translate(draw_region, -canvas->_x0, -canvas->_y0);
-        cairo_save(cr);
-        int n_rects = cairo_region_num_rectangles(draw_region);
-        for (int i = 0; i < n_rects; ++i) {
-            cairo_rectangle_int_t crect;
-            cairo_region_get_rectangle(draw_region, i, &crect);
-            cairo_rectangle(cr, crect.x, crect.y, crect.width, crect.height);
-        }
-        cairo_clip(cr);
-        cairo_set_source_surface(cr, canvas->_backing_store, 0, 0);
-        cairo_paint(cr);
-        cairo_restore(cr);
-    }
+    cairo_region_subtract(dirty_region, canvas->_clean_region);
 
     // Render the dirty portion in the background
-    if (!cairo_region_is_empty(draw_dirty)) {
+    if (!cairo_region_is_empty(dirty_region)) {
         canvas->addIdle();
     }
-    cairo_region_destroy(draw_region);
-    cairo_region_destroy(draw_dirty);
+    cairo_region_destroy(dirty_region);
 
 	return TRUE;
 }
