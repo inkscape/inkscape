@@ -27,6 +27,7 @@
 #include "helper/sp-marshal.h"
 #include <2geom/rect.h>
 #include <2geom/affine.h>
+#include "display/cairo-utils.h"
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-group.h"
 #include "preferences.h"
@@ -37,6 +38,7 @@
 #include "display/cairo-utils.h"
 #include "debug/gdk-event-latency-tracker.h"
 #include "desktop.h"
+#include "color.h"
 
 using Inkscape::Debug::GdkEventLatencyTracker;
 
@@ -959,6 +961,8 @@ static void sp_canvas_init(SPCanvas *canvas)
 
     canvas->_backing_store = NULL;
     canvas->_clean_region = cairo_region_create();
+    canvas->_background = cairo_pattern_create_rgb(1, 1, 1);
+    canvas->_background_is_checkerboard = false;
 
     canvas->_forced_redraw_count = 0;
     canvas->_forced_redraw_limit = -1;
@@ -972,10 +976,7 @@ static void sp_canvas_init(SPCanvas *canvas)
 void SPCanvas::shutdownTransients()
 {
     // Reset the clean region
-    if (_clean_region && !cairo_region_is_empty(_clean_region)) {
-        cairo_region_destroy(_clean_region);
-        _clean_region = cairo_region_create();
-    }
+    dirtyAll();
 
     if (_grabbed_item) {
         _grabbed_item = NULL;
@@ -1005,6 +1006,10 @@ void SPCanvas::dispose(GObject *object)
     if (canvas->_clean_region) {
         cairo_region_destroy(canvas->_clean_region);
         canvas->_clean_region = NULL;
+    }
+    if (canvas->_background) {
+        cairo_pattern_destroy(canvas->_background);
+        canvas->_background = NULL;
     }
 
     canvas->shutdownTransients();
@@ -1529,9 +1534,6 @@ void SPCanvas::paintSingleBuffer(Geom::IntRect const &paint_rect, Geom::IntRect 
 {
     GtkWidget *widget = GTK_WIDGET (this);
 
-    // Mark the region clean
-    markRect(paint_rect, 0);
-
     SPCanvasBuf buf;
     buf.buf = NULL;
     buf.buf_rowstride = 0;
@@ -1543,7 +1545,6 @@ void SPCanvas::paintSingleBuffer(Geom::IntRect const &paint_rect, Geom::IntRect 
     // create temporary surface
     cairo_surface_t *imgs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, paint_rect.width(), paint_rect.height());
     buf.ct = cairo_create(imgs);
-    //cairo_translate(buf.ct, -x0, -y0);
 
     // fix coordinates, clip all drawing to the tile and clear the background
     //cairo_translate(buf.ct, paint_rect.left() - canvas->x0, paint_rect.top() - canvas->y0);
@@ -1553,18 +1554,12 @@ void SPCanvas::paintSingleBuffer(Geom::IntRect const &paint_rect, Geom::IntRect 
     //cairo_stroke_preserve(buf.ct);
     //cairo_clip(buf.ct);
 
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkStyleContext *context = gtk_widget_get_style_context(widget);
-    gtk_render_background(context, buf.ct, 0, 0, paint_rect.width(), paint_rect.height());
-#else
-    GtkStyle *style = gtk_widget_get_style (widget);
-    gdk_cairo_set_source_color(buf.ct, &style->bg[GTK_STATE_NORMAL]);
-#endif
-
+    cairo_save(buf.ct);
+    cairo_translate(buf.ct, -paint_rect.left(), -paint_rect.top());
+    cairo_set_source(buf.ct, _background);
     cairo_set_operator(buf.ct, CAIRO_OPERATOR_SOURCE);
-    //cairo_rectangle(buf.ct, 0, 0, paint_rect.width(), paint_rec.height());
     cairo_paint(buf.ct);
-    cairo_set_operator(buf.ct, CAIRO_OPERATOR_OVER);
+    cairo_restore(buf.ct);
 
     if (_root->visible) {
         SP_CANVAS_ITEM_GET_CLASS(_root)->render(_root, &buf);
@@ -1608,8 +1603,8 @@ void SPCanvas::paintSingleBuffer(Geom::IntRect const &paint_rect, Geom::IntRect 
     cairo_destroy(xct);
     cairo_surface_destroy(imgs);
 
-    cairo_rectangle_int_t crect = { paint_rect.left(), paint_rect.right(), paint_rect.width(), paint_rect.height() };
-    cairo_region_union_rectangle(_clean_region, &crect);
+    // Mark the painted rectangle clean
+    markRect(paint_rect, 0);
 
     gtk_widget_queue_draw_area(GTK_WIDGET(this), paint_rect.left() -_x0, paint_rect.top() - _y0,
         paint_rect.width(), paint_rect.height());
@@ -1816,6 +1811,16 @@ gboolean SPCanvas::handle_draw(GtkWidget *widget, cairo_t *cr) {
     cairo_region_subtract(draw_dirty, canvas->_clean_region);
     cairo_region_intersect(draw_region, canvas->_clean_region);
 
+    // Draw the background
+    cairo_save(cr);
+    cairo_translate(cr, -canvas->_x0, -canvas->_y0);
+    cairo_set_source(cr, canvas->_background);
+    cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+    cairo_paint(cr);
+    cairo_restore(cr);
+    /*cairo_set_source(cr, canvas->_background);
+    cairo_paint(cr);*/
+
     // Draw the clean portion
     if (!cairo_region_is_empty(draw_region)) {
         cairo_region_translate(draw_region, -canvas->_x0, -canvas->_y0);
@@ -2007,6 +2012,7 @@ void SPCanvas::scrollTo(double cx, double cy, unsigned int clear, bool is_scroll
 
     gtk_widget_get_allocation(&_widget, &allocation);
 
+    // adjust backing store contents
     assert(_backing_store);
     cairo_surface_t *new_backing_store = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
         allocation.width, allocation.height);
@@ -2021,8 +2027,7 @@ void SPCanvas::scrollTo(double cx, double cy, unsigned int clear, bool is_scroll
     _backing_store = new_backing_store;
 
     if (clear) {
-        cairo_region_destroy(_clean_region);
-        _clean_region = cairo_region_create();
+        dirtyAll();
     } else {
         cairo_rectangle_int_t crect = { _x0, _y0, allocation.width, allocation.height };
         cairo_region_intersect_rectangle(_clean_region, &crect);
@@ -2067,6 +2072,35 @@ void SPCanvas::requestRedraw(int x0, int y0, int x1, int y1)
 
     Geom::IntRect bbox(x0, y0, x1, y1);
     dirtyRect(bbox);
+    addIdle();
+}
+
+void SPCanvas::setBackgroundColor(guint32 rgba) {
+    double new_r = SP_RGBA32_R_F(rgba);
+    double new_g = SP_RGBA32_G_F(rgba);
+    double new_b = SP_RGBA32_B_F(rgba);
+    if (!_background_is_checkerboard) {
+        double old_r, old_g, old_b;
+        cairo_pattern_get_rgba(_background, &old_r, &old_g, &old_b, NULL);
+        if (new_r == old_r && new_g == old_g && new_b == old_b) return;
+    }
+    if (_background) {
+        cairo_pattern_destroy(_background);
+    }
+    _background = cairo_pattern_create_rgb(new_r, new_g, new_b);
+    _background_is_checkerboard = false;
+    dirtyAll();
+    addIdle();
+}
+
+void SPCanvas::setBackgroundCheckerboard() {
+    if (_background_is_checkerboard) return;
+    if (_background) {
+        cairo_pattern_destroy(_background);
+    }
+    _background = ink_cairo_pattern_create_checkerboard();
+    _background_is_checkerboard = true;
+    dirtyAll();
     addIdle();
 }
 
@@ -2173,6 +2207,13 @@ inline int sp_canvas_tile_ceil(int x)
 
 void SPCanvas::dirtyRect(Geom::IntRect const &area) {
     markRect(area, 1);
+}
+
+void SPCanvas::dirtyAll() {
+    if (_clean_region && !cairo_region_is_empty(_clean_region)) {
+        cairo_region_destroy(_clean_region);
+        _clean_region = cairo_region_create();
+    }
 }
 
 void SPCanvas::markRect(Geom::IntRect const &area, uint8_t val)

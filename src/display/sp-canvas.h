@@ -87,6 +87,9 @@ struct SPCanvas {
     Geom::IntRect getViewboxIntegers() const;
     SPCanvasGroup *getRoot();
 
+    void setBackgroundColor(guint32 rgba);
+    void setBackgroundCheckerboard();
+
     /// Returns new canvas as widget.
     static GtkWidget *createAA();
 
@@ -105,7 +108,8 @@ private:
 
     /// Marks the specified area as dirty (requiring redraw)
     void dirtyRect(Geom::IntRect const &area);
-    /// Marks specific canvas rectangle as clean (val == 0) or dirty (otherwise)
+    /// Marks the whole widget for redraw
+    void dirtyAll();
     void markRect(Geom::IntRect const &area, uint8_t val);
 
     /// Invokes update, paint, and repick on canvas.
@@ -177,14 +181,18 @@ public:
     bool _is_dragging;
     double _dx0;
     double _dy0;
-    int _x0;
-    int _y0;
+    int _x0; ///< World coordinate of the leftmost pixels
+    int _y0; ///< World coordinate of the topmost pixels
 
-    /* Area that needs redrawing, stored as a microtile array */
+    /// Image surface storing the contents of the widget
     cairo_surface_t *_backing_store;
+    /// Area of the widget that has up-to-date content
     cairo_region_t *_clean_region;
+    /// Widget background, defaults to white
+    cairo_pattern_t *_background;
+    bool _background_is_checkerboard;
 
-    /** Last known modifier state, for deferred repick when a button is down. */
+    /// Last known modifier state, for deferred repick when a button is down.
     int _state;
 
     /** The item containing the mouse pointer, or NULL if none. */
