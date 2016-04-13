@@ -392,9 +392,16 @@ static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action )
         GtkToolButton* button = GTK_TOOL_BUTTON(item);
         if ( act->private_data->iconId ) {
             GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
+
+#if GTK_CHECK_VERSION(3,0,0)
+	    gtk_widget_set_hexpand(child, FALSE);
+	    gtk_widget_set_vexpand(child, FALSE);
+	    gtk_tool_button_set_icon_widget(button, child);
+#else
             GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
             gtk_container_add( GTK_CONTAINER(align), child );
             gtk_tool_button_set_icon_widget( button, align );
+#endif
         } else {
             gchar *label = 0;
             g_object_get( G_OBJECT(action), "short_label", &label, NULL );
@@ -423,10 +430,18 @@ static void ink_toggle_action_update_icon( InkToggleAction* action )
                     GtkToolButton* button = GTK_TOOL_BUTTON(proxies->data);
 
                     GtkWidget* child = sp_icon_new( action->private_data->iconSize, action->private_data->iconId );
+
+#if GTK_CHECK_VERSION(3,0,0)
+		    gtk_widget_set_hexpand(child, FALSE);
+		    gtk_widget_set_vexpand(child, FALSE);
+		    gtk_widget_show_all(child);
+		    gtk_tool_button_set_icon_widget(button, child);
+#else
                     GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
                     gtk_container_add( GTK_CONTAINER(align), child );
                     gtk_widget_show_all( align );
                     gtk_tool_button_set_icon_widget( button, align );
+#endif
                 }
             }
 
@@ -595,9 +610,16 @@ static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action )
             GtkToolButton* button = GTK_TOOL_BUTTON(item);
 
             GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
+
+#if GTK_CHECK_VERSION(3,0,0)
+	    gtk_widget_set_hexpand(child, FALSE);
+	    gtk_widget_set_vexpand(child, FALSE);
+            gtk_tool_button_set_icon_widget(button, child);
+#else
             GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
             gtk_container_add( GTK_CONTAINER(align), child );
             gtk_tool_button_set_icon_widget( button, align );
+#endif
         } else {
             // For now trigger a warning but don't do anything else
             GtkToolButton* button = GTK_TOOL_BUTTON(item);
