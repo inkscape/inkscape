@@ -255,12 +255,26 @@ sp_set_font_size_recursive (GtkWidget *w, gpointer font)
 {
 	guint size = GPOINTER_TO_UINT (font);
 
+#if GTK_CHECK_VERSION(3,0,0)
+        GtkCssProvider *css_provider = gtk_css_provider_new();
+
+        const double pt_size = size / static_cast<double>(PANGO_SCALE);
+        std::ostringstream css_data;
+        css_data << "GtkWidget {\n"
+                 << "  font-size: " << pt_size << "pt;\n"
+                 << "}\n";
+
+        gtk_css_provider_load_from_data(css_provider,
+                                        css_data.str().c_str(),
+                                        -1, NULL);
+
+        GtkStyleContext *style_context = gtk_widget_get_style_context(w);
+        gtk_style_context_add_provider(style_context,
+                                       GTK_STYLE_PROVIDER(css_provider),
+                                       GTK_STYLE_PROVIDER_PRIORITY_USER);
+#else
 	PangoFontDescription* pan = pango_font_description_new ();
 	pango_font_description_set_size (pan, size);
-
-#if GTK_CHECK_VERSION(3,0,0)
-	gtk_widget_override_font (w, pan);
-#else
 	gtk_widget_modify_font (w, pan);
 #endif
 
@@ -268,7 +282,11 @@ sp_set_font_size_recursive (GtkWidget *w, gpointer font)
 		gtk_container_foreach (GTK_CONTAINER(w), (GtkCallback) sp_set_font_size_recursive, font);
 	}
 
+#if GTK_CHECK_VERSION(3,0,0)
+        g_object_unref(css_provider);
+#else
 	pango_font_description_free (pan);
+#endif
 }
 
 void
