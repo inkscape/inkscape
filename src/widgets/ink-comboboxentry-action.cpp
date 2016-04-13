@@ -371,9 +371,16 @@ GtkWidget* create_tool_item( GtkAction* action )
     g_free( combobox_name );
 
     {
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_set_halign(comboBoxEntry, GTK_ALIGN_START);
+        gtk_widget_set_hexpand(comboBoxEntry, FALSE);
+        gtk_widget_set_vexpand(comboBoxEntry, FALSE);
+        gtk_container_add(GTK_CONTAINER(item), comboBoxEntry);
+#else
         GtkWidget *align = gtk_alignment_new(0, 0.5, 0, 0);
         gtk_container_add( GTK_CONTAINER(align), comboBoxEntry );
         gtk_container_add( GTK_CONTAINER(item), align );
+#endif
     }
 
     ink_comboboxentry_action->combobox = GTK_COMBO_BOX (comboBoxEntry);
@@ -956,3 +963,14 @@ gboolean keypress_cb( GtkWidget * /*widget*/, GdkEventKey *event, gpointer data 
 
     return wasConsumed;
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
