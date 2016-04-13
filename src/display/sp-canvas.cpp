@@ -1544,19 +1544,10 @@ void SPCanvas::paintSingleBuffer(Geom::IntRect const &paint_rect, Geom::IntRect 
     buf.rect = paint_rect;
     buf.visible_rect = canvas_rect;
     buf.is_empty = true;
-    //buf.ct = gdk_cairo_create(widget->window);
 
     // create temporary surface
     cairo_surface_t *imgs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, paint_rect.width(), paint_rect.height());
     buf.ct = cairo_create(imgs);
-
-    // fix coordinates, clip all drawing to the tile and clear the background
-    //cairo_translate(buf.ct, paint_rect.left() - canvas->x0, paint_rect.top() - canvas->y0);
-    //cairo_rectangle(buf.ct, 0, 0, paint_rect.width(), paint_rect.height());
-    //cairo_set_line_width(buf.ct, 3);
-    //cairo_set_source_rgba(buf.ct, 1.0, 0.0, 0.0, 0.1);
-    //cairo_stroke_preserve(buf.ct);
-    //cairo_clip(buf.ct);
 
     cairo_save(buf.ct);
     cairo_translate(buf.ct, -paint_rect.left(), -paint_rect.top());
@@ -1984,11 +1975,6 @@ void SPCanvas::scrollTo(double cx, double cy, unsigned int clear, bool is_scroll
 
     Geom::IntRect old_area = getViewboxIntegers();
     Geom::IntRect new_area = old_area + Geom::IntPoint(dx, dy);
-    
-    _dx0 = cx; // here the 'd' stands for double, not delta!
-    _dy0 = cy;
-    _x0 = ix;
-    _y0 = iy;
 
     gtk_widget_get_allocation(&_widget, &allocation);
 
@@ -1997,15 +1983,26 @@ void SPCanvas::scrollTo(double cx, double cy, unsigned int clear, bool is_scroll
     cairo_surface_t *new_backing_store = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
         allocation.width, allocation.height);
     cairo_t *cr = cairo_create(new_backing_store);
-    cairo_set_source_rgb(cr, 1, 1, 1);
     cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+    // Paint the background
+    cairo_translate(cr, -ix, -iy);
+    cairo_set_source(cr, _background);
     cairo_paint(cr);
-    cairo_set_source_surface(cr, _backing_store, -dx, -dy);
+    // Copy the old backing store contents
+    cairo_set_source_surface(cr, _backing_store, _x0, _y0);
+    cairo_rectangle(cr, _x0, _y0, allocation.width, allocation.height);
+    cairo_clip(cr);
     cairo_paint(cr);
     cairo_destroy(cr);
     cairo_surface_destroy(_backing_store);
     _backing_store = new_backing_store;
 
+    _dx0 = cx; // here the 'd' stands for double, not delta!
+    _dy0 = cy;
+    _x0 = ix;
+    _y0 = iy;
+
+    // Adjust the clean region
     if (clear) {
         dirtyAll();
     } else {
