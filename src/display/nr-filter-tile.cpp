@@ -32,18 +32,6 @@ FilterTile::~FilterTile()
 
 void FilterTile::render_cairo(FilterSlot &slot)
 {
-    // FIX ME!
-    static bool tile_warning = false;
-    if (!tile_warning) {
-        g_warning("Renderer for feTile has non-optimal implementation, expect slowness and bugs.");
-        tile_warning = true;
-    }
-
-    // Fixing isn't so easy as the Inkscape renderer breaks the canvas into "rendering" tiles for
-    // faster rendering. (The "rendering" tiles are not the same as the tiles in this primitive.)
-    // Only if the the feTile tile source falls inside the current "rendering" tile will the tile
-    // image be available.
-
     // This input source contains only the "rendering" tile.
     cairo_surface_t *in = slot.getcairo(_input);
 
