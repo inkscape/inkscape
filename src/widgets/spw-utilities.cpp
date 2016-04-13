@@ -94,9 +94,9 @@ spw_label_old(GtkWidget *table, const gchar *label_text, int col, int row)
   gtk_widget_show (label_widget);
 
 #if GTK_CHECK_VERSION(3,0,0)
+#if GTK_CHECK_VERSION(3,12,0)
   gtk_widget_set_margin_start(label_widget, 4);
   gtk_widget_set_margin_end(label_widget, 4);
-#if GTK_CHECK_VERSION(3,12,0)
 #else
   gtk_widget_set_margin_left(label_widget, 4);
   gtk_widget_set_margin_right(label_widget, 4);
