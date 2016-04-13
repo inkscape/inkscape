@@ -210,7 +210,11 @@ void ColorNotebook::_initUI()
 
     /* Create RGBA entry and color preview */
     _rgbal = gtk_label_new_with_mnemonic(_("RGBA_:"));
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(_rgbal, GTK_ALIGN_END);
+#else
     gtk_misc_set_alignment(GTK_MISC(_rgbal), 1.0, 0.5);
+#endif
     gtk_box_pack_start(GTK_BOX(rgbabox), _rgbal, TRUE, TRUE, 2);
 
     ColorEntry *rgba_entry = Gtk::manage(new ColorEntry(_selected_color));
