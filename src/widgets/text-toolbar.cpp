@@ -508,6 +508,10 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
+static bool is_relative( Unit const *unit ) {
+    return (unit->abbr == "" || unit->abbr == "em" || unit->abbr == "ex" || unit->abbr == "%");
+}
+   
 static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
     // quit if run by the _changed callbacks
@@ -524,21 +528,22 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
 
-    // This nonsense is to get SP_CSS_UNIT_xx value corresponding to unit so
-    // we can save it (allows us to adjust line height value when unit changes).
-    SPILength temp_length;
-    Inkscape::CSSOStringStream temp_stream;
-    temp_stream << 1 << unit->abbr;
-    temp_length.read(temp_stream.str().c_str());
-    prefs->setInt("/tools/text/lineheight/display_unit", temp_length.unit);
-    g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(temp_length.unit));
-
+    // Only save if not relative unit
+    if ( !is_relative(unit) ) {
+        // This nonsense is to get SP_CSS_UNIT_xx value corresponding to unit so
+        // we can save it (allows us to adjust line height value when unit changes).
+        SPILength temp_length;
+        Inkscape::CSSOStringStream temp_stream;
+        temp_stream << 1 << unit->abbr;
+        temp_length.read(temp_stream.str().c_str());
+        prefs->setInt("/tools/text/lineheight/display_unit", temp_length.unit);
+        g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(temp_length.unit));
+    }
 
     // Set css line height.
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    // We should handle unitless values as well as 'em' and 'ex'
-    if ((unit->abbr) == "em" || unit->abbr == "ex" || unit->abbr == "%") {
+    if ( is_relative(unit) ) {
         osfs << gtk_adjustment_get_value(adj) << unit->abbr;
     } else {
         // Inside SVG file, always use "px" for absolute units.
@@ -601,13 +606,16 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
     g_return_if_fail(unit != NULL);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    // This nonsense is to get SP_CSS_UNIT_xx value corresponding to unit.
-    SPILength temp_length;
-    Inkscape::CSSOStringStream temp_stream;
-    temp_stream << 1 << unit->abbr;
-    temp_length.read(temp_stream.str().c_str());
-    prefs->setInt("/tools/text/lineheight/display_unit", temp_length.unit);
-    g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(temp_length.unit));
+    // Only save if not relative unit
+    if ( !is_relative(unit) ) {
+        // This nonsense is to get SP_CSS_UNIT_xx value corresponding to unit.
+        SPILength temp_length;
+        Inkscape::CSSOStringStream temp_stream;
+        temp_stream << 1 << unit->abbr;
+        temp_length.read(temp_stream.str().c_str());
+        prefs->setInt("/tools/text/lineheight/display_unit", temp_length.unit);
+        g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(temp_length.unit));
+    }
 
     // Read current line height value
     EgeAdjustmentAction *line_height_act =
@@ -620,19 +628,19 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
     std::vector<SPItem*> itemlist=selection->itemList();
 
     // Convert between units
-    if        ((unit->abbr) == "em" && old_unit == SP_CSS_UNIT_EX) {
+    if        ((unit->abbr == "" || unit->abbr == "em") && old_unit == SP_CSS_UNIT_EX) {
         line_height *= 0.5;
-    } else if ((unit->abbr) == "ex" && old_unit == SP_CSS_UNIT_EM) {
+    } else if ((unit->abbr) == "ex" && (old_unit == SP_CSS_UNIT_EM || old_unit == SP_CSS_UNIT_NONE) ) {
         line_height *= 2.0;
-    } else if ((unit->abbr) == "em" && old_unit == SP_CSS_UNIT_PERCENT) {
+    } else if ((unit->abbr == "" || unit->abbr == "em") && old_unit == SP_CSS_UNIT_PERCENT) {
         line_height /= 100.0;
-    } else if ((unit->abbr) == "%"  && old_unit == SP_CSS_UNIT_EM) {
+    } else if ((unit->abbr) == "%"  && (old_unit == SP_CSS_UNIT_EM || old_unit == SP_CSS_UNIT_NONE) ) {
         line_height *= 100;
     } else if ((unit->abbr) == "ex" && old_unit == SP_CSS_UNIT_PERCENT) {
         line_height /= 50.0;
     } else if ((unit->abbr) == "%"  && old_unit == SP_CSS_UNIT_EX) {
         line_height *= 50;
-    } else if ((unit->abbr) == "%" || (unit->abbr) == "em" || (unit->abbr) == "ex") {
+    } else if (is_relative(unit)) {
         // Convert absolute to relative... for the moment use average font-size
         double font_size = 0;
         int count = 0;
@@ -648,7 +656,10 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         } else {
             font_size = 20;
         }
+
+        if (old_unit == SP_CSS_UNIT_NONE) old_unit = SP_CSS_UNIT_EM;
         line_height = Quantity::convert(line_height, sp_style_get_css_unit_string(old_unit), "px");
+
         if (font_size > 0) {
             line_height /= font_size;
         }
@@ -657,7 +668,8 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         } else if ((unit->abbr) == "ex") {
             line_height *= 2;
         }
-    } else if (old_unit==SP_CSS_UNIT_PERCENT || old_unit==SP_CSS_UNIT_EM || old_unit==SP_CSS_UNIT_EX) {
+    } else if (old_unit==SP_CSS_UNIT_NONE || old_unit==SP_CSS_UNIT_PERCENT ||
+               old_unit==SP_CSS_UNIT_EM   || old_unit==SP_CSS_UNIT_EX) {
         // Convert relative to absolute... for the moment use average font-size
         double font_size = 0;
         int count = 0;
@@ -689,8 +701,7 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
     // Set css line height.
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    // We should handle unitless values as well as 'em' and 'ex'
-    if ((unit->abbr) == "em" || unit->abbr == "ex" || unit->abbr == "%") {
+    if ( is_relative(unit) ) {
         osfs << line_height << unit->abbr;
     } else {
         osfs << Quantity::convert(line_height, unit, "px") << "px";
@@ -1264,8 +1275,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
         switch (line_height_unit) {
             case SP_CSS_UNIT_NONE:
-                // tracker can't show no unit... use 'em'
-                line_height_unit = SP_CSS_UNIT_EM;
             case SP_CSS_UNIT_EM:
             case SP_CSS_UNIT_EX:
                 break;
@@ -1276,7 +1285,9 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
                 // If unit is set to 'px', use the preferred display unit (if absolute).
                 line_height_unit =
                     prefs->getInt("/tools/text/lineheight/display_unit", SP_CSS_UNIT_PT);
-                if (line_height_unit != SP_CSS_UNIT_EM &&
+                // But not if prefered unit is relative
+                if (line_height_unit != SP_CSS_UNIT_NONE &&
+                    line_height_unit != SP_CSS_UNIT_EM &&
                     line_height_unit != SP_CSS_UNIT_EX &&
                     line_height_unit != SP_CSS_UNIT_PERCENT) {
                     height =
@@ -1299,7 +1310,13 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         gtk_adjustment_set_value( lineHeightAdjustment, height );
 
         UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
-        tracker->setActiveUnitByAbbr(sp_style_get_css_unit_string(line_height_unit));
+        if( line_height_unit == SP_CSS_UNIT_NONE ) {
+            // Function 'sp_style_get_css_unit_string' returns 'px' for unit none.
+            // We need to avoid this.
+            tracker->setActiveUnitByAbbr("");
+        } else {
+            tracker->setActiveUnitByAbbr(sp_style_get_css_unit_string(line_height_unit));
+        }
         // Save unit so we can do convertions between new/old units.
         g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(line_height_unit));
         
@@ -1797,10 +1814,10 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
 
     /* Line height unit tracker */
     UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
+    tracker->prependUnit(unit_table.getUnit("")); // No unit
     tracker->addUnit(unit_table.getUnit("%"));
     tracker->addUnit(unit_table.getUnit("em"));
     tracker->addUnit(unit_table.getUnit("ex"));
-    // tracker->addUnit(unit_table.getUnit("None"));
     tracker->setActiveUnit(unit_table.getUnit("%"));
     g_object_set_data( holder, "tracker", tracker );
 
