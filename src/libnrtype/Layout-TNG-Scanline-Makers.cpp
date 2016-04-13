@@ -11,6 +11,7 @@
 #include "Layout-TNG-Scanline-Maker.h"
 #include "livarot/Shape.h"
 #include "livarot/float-line.h"
+#include <limits>
 
 namespace Inkscape {
 namespace Text {
@@ -43,7 +44,7 @@ std::vector<Layout::ScanlineMaker::ScanRun> Layout::InfiniteScanlineMaker::makeS
 {
     std::vector<ScanRun> runs(1);
     runs[0].x_start = _x;
-    runs[0].x_end = FLT_MAX;   // we could use DBL_MAX, but this just seems safer
+    runs[0].x_end = std::numeric_limits<float>::max();   // we could use DBL_MAX, but this just seems safer
     runs[0].y = _y;
     _current_line_height = line_height;
     return runs;

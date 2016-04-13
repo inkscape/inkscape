@@ -14,6 +14,7 @@
 #include "svg/svg-length.h"
 #include "sp-object.h"
 #include "Layout-TNG-Scanline-Maker.h"
+#include <limits>
 
 namespace Inkscape {
 namespace Text {
@@ -1569,8 +1570,8 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
         new_span_height.computeEffective( new_span.start.iter_span->line_height_multiplier );
         /* floating point 80-bit/64-bit rounding problems require epsilon. See
            discussion http://inkscape.gristle.org/2005-03-16.txt around 22:00 */
-        if ( new_span_height.ascent  > line_height->ascent  + FLT_EPSILON ||
-             new_span_height.descent > line_height->descent + FLT_EPSILON) {
+        if ( new_span_height.ascent  > line_height->ascent  + std::numeric_limits<float>::epsilon() ||
+             new_span_height.descent > line_height->descent + std::numeric_limits<float>::epsilon() ) {
             // Take larger of each of the two ascents and two descents per CSS
             line_height->max(new_span_height);
             if (!_scanline_maker->canExtendCurrentScanline(*line_height)) {
