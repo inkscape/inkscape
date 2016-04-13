@@ -46,6 +46,7 @@
 #include "widgets/desktop-widget.h"
 #include "desktop.h"
 #include "dir-util.h"
+#include "display/drawing.h"
 #include "display/drawing-item.h"
 #include "document-private.h"
 #include "document-undo.h"
@@ -1316,6 +1317,7 @@ SPItem *SPDocument::getItemFromListAtPointBottom(unsigned int dkey, SPGroup *gro
         if ( SP_IS_ITEM(o) ) {
             SPItem *item = SP_ITEM(o);
             Inkscape::DrawingItem *arenaitem = item->get_arenaitem(dkey);
+            arenaitem->drawing().update();
             if (arenaitem && arenaitem->pick(p, delta, 1) != NULL
                 && (take_insensitive || item->isVisibleAndUnlocked(dkey))) {
                 if (find(list.begin(),list.end(),item)!=list.end() ) {
@@ -1380,10 +1382,12 @@ static SPItem *find_item_at_point(std::deque<SPItem*> *nodes, unsigned int dkey,
             continue;
         }
         Inkscape::DrawingItem *arenaitem = child->get_arenaitem(dkey);
-
-        if (arenaitem && arenaitem->pick(p, delta, 1) != NULL) {
-            seen = child;
-            break;
+        if (arenaitem) {
+            arenaitem->drawing().update();
+            if (arenaitem->pick(p, delta, 1) != NULL) {
+                seen = child;
+                break;
+            }
         }
     }
 
@@ -1413,6 +1417,7 @@ static SPItem *find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Poin
         if (SP_IS_GROUP(o) && SP_GROUP(o)->effectiveLayerMode(dkey) != SPGroup::LAYER ) {
             SPItem *child = SP_ITEM(o);
             Inkscape::DrawingItem *arenaitem = child->get_arenaitem(dkey);
+            arenaitem->drawing().update();
 
             // seen remembers the last (topmost) of groups pickable at this point
             if (arenaitem && arenaitem->pick(p, delta, 1) != NULL) {
