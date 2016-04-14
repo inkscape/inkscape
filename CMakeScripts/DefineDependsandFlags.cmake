@@ -368,6 +368,9 @@ if(WITH_NLS)
     endif(GETTEXT_FOUND)
 endif(WITH_NLS)
 
+#sets c++11 for newer sigc++ if required when pkg-config does not detect it
+find_package(SigC++ REQUIRED)
+
 pkg_check_modules(SIGC++ REQUIRED sigc++-2.0 )
 list(APPEND INKSCAPE_LIBS ${SIGC++_LDFLAGS})
 
