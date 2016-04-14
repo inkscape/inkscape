@@ -175,6 +175,9 @@
 <linearGradient xlink:href="#linearGradient5740" gradientTransform="translate(41.00246,10.00003)" gradientUnits="userSpaceOnUse" y2="293" x2="76.13622" y1="293" x1="70" id="linearGradient14343" inkscape:collect="always" />
 <linearGradient xlink:href="#linearGradient5734" gradientUnits="userSpaceOnUse" y2="307.8311" x2="80.62299" y1="311.4508" x1="83.82937" id="linearGradient14389" inkscape:collect="always" />
 <linearGradient xlink:href="#linearGradient5740" y2="76.98393" x2="690" y1="67.59227" x1="705.2217" gradientTransform="matrix(1.124999,0,0,1.125,-85.22497,-7.125909)" gradientUnits="userSpaceOnUse" id="linearGradient18352" inkscape:collect="always" />
+<linearGradient inkscape:collect="always" xlink:href="#linearGradient5704" id="linearGradient7927" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.124777,0,0,1.399469,339.507,-41.54364)" x1="15.15684" y1="214.0084" x2="22.04275" y2="218.3974" />
+<linearGradient inkscape:collect="always" xlink:href="#linearGradient24464" id="linearGradient7931" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.87731,0,0,0.991952,344.0693,46.88201)" x1="19.08596" y1="219.6944" x2="16.10928" y2="214.3821" />
+<linearGradient inkscape:collect="always" xlink:href="#linearGradient24464" id="linearGradient7929" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.165669,0,0,1.655559,338.7499,-97.1359)" x1="17.48326" y1="215.0097" x2="20.98923" y2="218.8156" />
 <linearGradient xlink:href="#linearGradient800" y2="174.9393" x2="974.4352" y1="172.4419" x1="974.4352" gradientTransform="matrix(0.7,0,0,1,311.2,8.5)" gradientUnits="userSpaceOnUse" id="linearGradient5644" inkscape:collect="always" />
 <linearGradient xlink:href="#linearGradient5704" gradientUnits="userSpaceOnUse" y2="185" x2="992.7362" y1="181.5609" x1="994.1533" id="linearGradient5658" inkscape:collect="always" />
 <linearGradient xlink:href="#BlackTransparent" gradientTransform="translate(0.0706497,-0.23015)" gradientUnits="userSpaceOnUse" y2="179.1932" x2="990.5735" y1="185.1891" x1="989.8774" id="linearGradient5669" inkscape:collect="always" />
@@ -4205,5 +4208,16 @@ http://www.inkscape.org/</dc:description>
   <use xlink:href="#use7716" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
   <use xlink:href="#use7718" transform="translate(0,4)" height="100%" width="100%" y="0" x="0"/>
   <rect style="fill:#4776a7" height="14" width="14" y="430" x="954"/>
+ </g>
+ <g transform="translate(-163.3209,111.663)" id="object-ungroup-pop-selection" inkscape:label="#object-ungroup-pop-selection">
+ <g id="g6068-8">
+  <rect style="color:#000000;fill:none;stroke:url(#linearGradient7927);stroke-width:1;stroke-linejoin:round;stroke-miterlimit:0" id="rect9496-1" width="9" height="7" x="356" y="259" />
+  <rect style="color:#000000;fill:url(#linearGradient7929);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient7931);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0" id="rect9498-0" width="7" height="5" x="357" y="260" />
+  </g>
+  <use xlink:href="#rect10765" height="1250" width="1250" id="use8598-1" y="0" x="0" transform="translate(4.959,-0.03898)" />
+  <use xlink:href="#rect10765" height="1250" width="1250" id="use8601-8" y="0" x="0" transform="translate(13.959,-0.0389847)" />
+  <rect y="261" x="367" height="2" width="2" id="use8605-4" style="color:#000000;fill:#000000;fill-rule:evenodd;stroke-width:1" />
+  <use xlink:href="#use8598-1" height="1250" width="1250" transform="translate(5.073548e-8,9)" id="use9484-9" y="0" x="0" />
+  <use xlink:href="#g10421" height="1250" width="1250" id="use10425-1" y="0" x="0" transform="translate(-0.0348992,-0.0284392)" />
  </g>
 </svg>
