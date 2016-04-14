@@ -126,7 +126,7 @@ struct SPCanvasClass {
 
 namespace {
 
-gint const UPDATE_PRIORITY = G_PRIORITY_DEFAULT_IDLE;
+gint const UPDATE_PRIORITY = G_PRIORITY_HIGH_IDLE;
 
 GdkWindow *getWindow(SPCanvas *canvas)
 {
