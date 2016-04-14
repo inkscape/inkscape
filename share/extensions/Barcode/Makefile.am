@@ -12,6 +12,7 @@ barcode_DATA = \
 	Ean13.py \
 	Ean8.py \
 	Ean5.py \
+	Ean2.py \
 	__init__.py \
 	Rm4scc.py \
 	Upca.py \

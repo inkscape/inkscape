@@ -5,9 +5,10 @@
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <dependency type="executable" location="extensions">render_barcode.py</dependency>
   <param name="type" type="enum" _gui-text="Barcode Type:">
-    <item value="Ean5">EAN5</item>
+    <item value="Ean2">EAN2 Extension</item>
+    <item value="Ean5">EAN5 Extension</item>
+    <item value="Ean13">EAN13 +Extensions</item>
     <item value="Ean8">EAN8</item>
-    <item value="Ean13">EAN13</item>
     <item value="Upca">UPC-A</item>
     <item value="Upce">UPC-E</item>
     <item value="Code25i">Code25 Interleaved 2 of 5</item>

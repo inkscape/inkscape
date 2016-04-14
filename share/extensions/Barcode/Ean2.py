@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2007 Martin Owens
+# Copyright (C) 2016 Martin Owens
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,23 +13,26 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110, USA.
 #
 """
-Python barcode renderer for UPCA barcodes. Designed for use with Inkscape.
+Python barcode renderer for EAN2 barcodes. Designed for use with Inkscape.
 """
 
 from .BaseEan import EanBarcode
 
-class Upca(EanBarcode):
-    """Provides a renderer for EAN12 aka UPC-A Barcodes"""
-    name = 'upca'
-    font_size = 10
-    lengths = [11]
-    checks = [12]
+FAMS = ['00', '01', '10', '11']
+START = '01011'
 
-    def _encode(self, n):
-        """Encode for a UPC-A Barcode"""
-        self.text = self.space(n[0:1], 3, n[1:6], 4, n[6:11], 3, n[11:])
-        return self.enclose(self.encode_left(n[0:6]), self.encode_right(n[6:12]))
+class Ean2(EanBarcode):
+    """Provide an Ean5 barcode generator"""
+    length = 2
+    name = 'ean5'
+
+    def _encode(self, number):
+        if len(number) != 2:
+            number = ([0, 0] + number)[-2:]
+        self.text = ' '.join(self.space(number))
+        family = ((number[0] * 10) + number[1]) % 4
+        return START + '01'.join(self.encode_interleaved(family, number, FAMS))
 

@@ -11,10 +11,10 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 #
 """
 Inkscape's general barcode extension. Run from within inkscape or use the
@@ -27,6 +27,9 @@ from Barcode import getBarcode
 from simpletransform import computePointInNode
 
 class InsertBarcode(inkex.Effect):
+    """
+    Raw barcode Effect class, see Barcode base class.
+    """
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-l", "--height",
@@ -43,29 +46,44 @@ class InsertBarcode(inkex.Effect):
                         help="Text to print on barcode")
 
     def effect(self):
-        x, y = computePointInNode(list(self.view_center), self.current_layer)
-        bargen = getBarcode( self.options.type,
+        (pos_x, pos_y) = computePointInNode(
+                list(self.view_center), self.current_layer)
+
+        barcode = getBarcode(self.options.type,
             text=self.options.text,
             height=self.options.height,
             document=self.document,
-            x=x, y=y,
+            x=pos_x, y=pos_y,
             scale=self.unittouu('1px'),
-        )
+        ).generate()
+        if barcode is not None:
+            self.current_layer.append(barcode)
+        else:
+            sys.stderr.write("No barcode was generated\n")
+
+def test_barcode():
+    """Run from command line"""
+    for (kind, text) in (
+        ('Ean2', '55'),
+        ('Ean5', '54321'),
+        ('Ean8', '0123456'),
+        ('Ean13', '123456789101'),
+        ('Ean13', '12345678910155'),
+        ('Ean13', '12345678910154321'),
+        ('Code128', 'Martin is Great'),
+        ('Code25i', '3242322'),
+        ('Code39', '4443322888'),
+        ('Code93', '3332222'),
+        ('Rm4scc', 'ROYAL POINT'),
+        ('Upca', '12345678911'),
+        ('Upce', '123456'),
+      ):
+        print "RENDER TEST: %s" % kind
+        bargen = getBarcode(kind, text=text)
         if bargen is not None:
             barcode = bargen.generate()
             if barcode is not None:
-                self.current_layer.append(barcode)
-            else:
-                sys.stderr.write("No barcode was generated\n")
-        else:
-            sys.stderr.write("Unable to make barcode with: " + str(self.options) + "\n")
-
-def test_barcode():
-    bargen = getBarcode("Ean13", text="123456789101")
-    if bargen is not None:
-        barcode = bargen.generate()
-    if barcode:
-        print inkex.etree.tostring(barcode, pretty_print=True)
+                print inkex.etree.tostring(barcode, pretty_print=True)
 
 
 if __name__ == '__main__':
@@ -73,6 +91,5 @@ if __name__ == '__main__':
         # Debug mode without inkex
         test_barcode()
         exit(0)
-    e = InsertBarcode()
-    e.affect()
+    InsertBarcode().affect()
 

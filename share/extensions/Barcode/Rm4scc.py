@@ -66,10 +66,11 @@ check = ['ZUVWXY','501234','B6789A','HCDEFG','NIJKLM','TOPQRS']
 (BAR_TRACK, BAR_DOWN, BAR_UP, BAR_FULL, BAR_NONE, WHITE_SPACE) = range(6)
 
 class Rm4scc(Barcode):
+    default_height = 18
+
     def encode(self, text):
         result = ''
 
-        self.height = 18
         text = text.upper()
         text.replace('(', '')
         text.replace(')', '')
@@ -80,10 +81,8 @@ class Rm4scc(Barcode):
         for char in text:
             if map.has_key(char):
                 result = result + map[char]
-            
                 i = i + 1
 
-        self.inclabel = text
         return result;
 
     # given a string of data, return the check character
@@ -117,7 +116,7 @@ class Rm4scc(Barcode):
         checkchar = check[total_upper][total_lower]
         return checkchar
 
-    def getStyle(self, index):
+    def get_style(self, index):
         """Royal Mail Barcodes use a completely different style"""
         result = { 'width' : 2, 'write' : True, 'top' : 0 }
         if index == BAR_TRACK: # Track Bar
