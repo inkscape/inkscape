@@ -106,10 +106,12 @@ endif (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
 # https://bugs.launchpad.net/inkscape/+bug/1488079
 
 macro (sigcpp_compile extra_cppflags)
+    set(sigcpp_compile_output "")
     try_compile(SIGCPP_COMPILES_FINE "${CMAKE_BINARY_DIR}/sigcpp-bindir"
         SOURCES "${CMAKE_SOURCE_DIR}/CMakeScripts/Modules/sigcpp_test.cpp"
         COMPILE_DEFINITIONS ${_SIGC++_CFLAGS} ${extra_cppflags}
-        LINK_LIBRARIES ${SIGC++_LIBRARIES})
+        LINK_LIBRARIES ${SIGC++_LIBRARIES}
+        OUTPUT_VARIABLE sigcpp_compile_output)
 endmacro()
 
 
@@ -120,7 +122,7 @@ if (NOT "${SIGCPP_COMPILES_FINE}")
     if ("${SIGCPP_COMPILES_FINE}")
         set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${cppflag}")
     else()
-        message(FATAL_ERROR "Could not compile against SIGC++")
+        message(FATAL_ERROR "Could not compile against SIGC++ - output is <<${sigcpp_compile_output}>>")
     endif()
 endif()
 

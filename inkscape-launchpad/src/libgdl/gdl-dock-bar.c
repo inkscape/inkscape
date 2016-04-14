@@ -314,7 +314,7 @@ gdl_dock_bar_add_item (GdlDockBar  *dockbar,
         } else if (pixbuf_icon) {
             image = gtk_image_new_from_pixbuf (pixbuf_icon);
         } else {
-            image = gtk_image_new_from_stock (GTK_STOCK_NEW,
+            image = gtk_image_new_from_stock ("gtk-new",
                                               GTK_ICON_SIZE_SMALL_TOOLBAR);
         }
         gtk_box_pack_start (GTK_BOX (box), image, TRUE, TRUE, 0);

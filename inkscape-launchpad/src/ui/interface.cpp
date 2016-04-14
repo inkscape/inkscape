@@ -79,6 +79,10 @@
 #include "message-stack.h"
 #include "ui/dialog/layer-properties.h"
 
+#if GTK_CHECK_VERSION(3,0,0)
+    #include "widgets/image-menu-item.h"
+#endif
+
 #include <gdk/gdkkeysyms.h>
 
 #include <glibmm/miscutils.h>
@@ -413,7 +417,11 @@ sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
 
     icon = sp_icon_new( Inkscape::ICON_SIZE_MENU, icon_name );
     gtk_widget_show(icon);
+#if GTK_CHECK_VERSION(3,0,0)
+    image_menu_item_set_image((ImageMenuItem *) item, icon);
+#else
     gtk_image_menu_item_set_image((GtkImageMenuItem *) item, icon);
+#endif
 } // end of sp_ui_menu_add_icon
 
 void
@@ -467,7 +475,11 @@ static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb
         if (radio) {
             item = gtk_radio_menu_item_new_with_mnemonic(group, action->name);
         } else {
+#if GTK_CHECK_VERSION(3,0,0)
+            item = image_menu_item_new_with_mnemonic(action->name);
+#else
             item = gtk_image_menu_item_new_with_mnemonic(action->name);
+#endif
         }
 
         gtk_label_set_markup_with_mnemonic( GTK_LABEL(gtk_bin_get_child(GTK_BIN (item))), action->name);
@@ -1018,7 +1030,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
         {
             int destX = 0;
             int destY = 0;
-            gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
+            gtk_widget_translate_coordinates( widget, GTK_WIDGET(desktop->canvas), x, y, &destX, &destY );
             Geom::Point where( sp_canvas_window_to_world( desktop->canvas, Geom::Point( destX, destY ) ) );
             Geom::Point const button_dt(desktop->w2d(where));
             Geom::Point const button_doc(desktop->dt2doc(button_dt));
@@ -1141,7 +1153,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             if ( worked ) {
                 int destX = 0;
                 int destY = 0;
-                gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
+                gtk_widget_translate_coordinates( widget, GTK_WIDGET(desktop->canvas), x, y, &destX, &destY );
                 Geom::Point where( sp_canvas_window_to_world( desktop->canvas, Geom::Point( destX, destY ) ) );
                 Geom::Point const button_dt(desktop->w2d(where));
                 Geom::Point const button_doc(desktop->dt2doc(button_dt));
@@ -1511,6 +1523,12 @@ ContextMenu::ContextMenu(SPDesktop *desktop, SPItem *item) :
             MIParent.signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::LeaveGroup));
             MIParent.show();
             append(MIParent);
+
+            /* Pop selection out of group */
+            Gtk::MenuItem* miu = Gtk::manage(new Gtk::MenuItem(_("_Pop selection out of group"), 1));
+            miu->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ActivateUngroupPopSelection));
+            miu->show();
+            append(*miu);
         }
     }
 }
@@ -1908,6 +1926,12 @@ void ContextMenu::ActivateUngroup(void)
     sp_item_group_ungroup(static_cast<SPGroup*>(_item), children);
     _desktop->selection->setList(children);
 }
+ 
+void ContextMenu::ActivateUngroupPopSelection(void)
+{
+    sp_selection_ungroup_pop_selection(_desktop->selection, _desktop);
+}
+
 
 void ContextMenu::MakeAnchorMenu(void)
 {

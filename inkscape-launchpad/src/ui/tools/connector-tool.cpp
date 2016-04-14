@@ -247,7 +247,7 @@ void ConnectorTool::setup() {
 
     // Make sure we see all enter events for canvas items,
     // even if a mouse button is depressed.
-    this->desktop->canvas->gen_all_enter_events = true;
+    this->desktop->canvas->_gen_all_enter_events = true;
 }
 
 void ConnectorTool::set(const Inkscape::Preferences::Entry& val) {
@@ -276,7 +276,7 @@ void ConnectorTool::finish() {
     this->cc_clear_active_conn();
 
     // Restore the default event generating behaviour.
-    this->desktop->canvas->gen_all_enter_events = false;
+    this->desktop->canvas->_gen_all_enter_events = false;
 }
 
 //-----------------------------------------------------------------------------

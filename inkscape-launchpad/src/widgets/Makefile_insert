@@ -1,5 +1,11 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
+if WITH_GTKMM_3_0
+ink_common_sources +=               \
+        widgets/image-menu-item.c     \
+        widgets/image-menu-item.h
+endif
+
 ink_common_sources +=	\
 	widgets/arc-toolbar.cpp		\
 	widgets/arc-toolbar.h		\
@@ -66,8 +72,6 @@ ink_common_sources +=	\
 	widgets/ruler.h			\
 	widgets/select-toolbar.cpp	\
 	widgets/select-toolbar.h	\
-	widgets/shrink-wrap-button.cpp	\
-	widgets/shrink-wrap-button.h	\
 	widgets/spray-toolbar.cpp		\
 	widgets/spray-toolbar.h		\
 	widgets/spiral-toolbar.cpp		\

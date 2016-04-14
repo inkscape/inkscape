@@ -76,6 +76,7 @@ void sp_selection_untile(SPDesktop *desktop);
 
 void sp_selection_group(Inkscape::Selection *selection, SPDesktop *desktop);
 void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selection_ungroup_pop_selection(Inkscape::Selection *selection, SPDesktop *desktop);
 
 void sp_selection_raise(Inkscape::Selection *selection, SPDesktop *desktop);
 void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *desktop);

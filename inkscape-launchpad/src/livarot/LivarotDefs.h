@@ -9,21 +9,11 @@
 #ifndef my_defs
 #define my_defs
 
-#if defined(WIN32) || defined(__WIN32__)
-# include <inttypes.h>
-#endif
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
 
-#ifdef HAVE_INTTYPES_H
-# include <inttypes.h>
-#else
-# ifdef HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-#endif
+#include <stdint.h>
 
 // error codes (mostly obsolete)
 enum

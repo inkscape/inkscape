@@ -274,6 +274,7 @@ Glib::RefPtr<Gdk::Pixbuf> Tracer::sioxProcessImage(SPImage *img, Glib::RefPtr<Gd
             for (aIter = arenaItems.begin() ; aIter!=arenaItems.end() ; ++aIter)
                 {
                 Inkscape::DrawingItem *arenaItem = *aIter;
+                arenaItem->drawing().update();
                 if (arenaItem->pick(point, 1.0f, 1))
                     {
                     weHaveAHit = true;

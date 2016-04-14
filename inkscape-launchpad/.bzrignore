@@ -259,3 +259,6 @@ bin/
 lib/
 include/
 
+.project
+.cproject
+.settings

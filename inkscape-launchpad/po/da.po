@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-02-14 00:09+0100\n"
-"PO-Revision-Date: 2016-03-11 00:00+0200\n"
+"PO-Revision-Date: 2016-04-08 00:00+0200\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -5048,10 +5048,9 @@ msgstr "[Uændret]"
 msgid "_Undo"
 msgstr "Fo_rtryd"
 
-# omgør/gentag
 #: ../src/event-log.cpp:381 ../src/event-log.cpp:385 ../src/verbs.cpp:2463
 msgid "_Redo"
-msgstr "Ann_uller fortryd"
+msgstr "_Omgør"
 
 #: ../src/extension/dependency.cpp:243
 msgid "Dependency:"
@@ -27094,7 +27093,7 @@ msgstr "Fortryd sidste handling"
 
 #: ../src/verbs.cpp:2464
 msgid "Do again the last undone action"
-msgstr "Annullér fortryd"
+msgstr "Udfør den sidste handling igen"
 
 #: ../src/verbs.cpp:2465
 msgid "Cu_t"
@@ -27719,10 +27718,9 @@ msgstr "Eksportér markering til punktbillede og indsæt i dokumentet"
 msgid "_Combine"
 msgstr "_Kombinér"
 
-# scootergrisen: måske Kombinér
 #: ../src/verbs.cpp:2636
 msgid "Combine several paths into one"
-msgstr "Kombiner flere stier til en"
+msgstr "Kombinér flere stier til en"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
@@ -32881,7 +32879,6 @@ msgid ""
 "or image/x-icon"
 msgstr ""
 
-# scootergrisen: kildesprog: forslå at lave til link så "." efter ".net/" ikke bliver del af URL'en
 #: ../share/extensions/export_gimp_palette.py:16
 msgid ""
 "The export_gpl.py module requires PyXML.  Please download the latest version "
@@ -40253,6 +40250,5 @@ msgid "A popular graphics file format for clipart"
 msgstr "Et populært grafik-filformat til clipart"
 
 #: ../share/extensions/xaml2svg.inx.h:1
-#, fuzzy
 msgid "XAML Input"
-msgstr "DXF inddata"
+msgstr "XAML-inddata"

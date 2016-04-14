@@ -84,12 +84,23 @@ spw_label_old(GtkWidget *table, const gchar *label_text, int col, int row)
 
   label_widget = gtk_label_new (label_text);
   g_assert(label_widget != NULL);
+
+#if GTK_CHECK_VERSION(3,0,0)
+  gtk_widget_set_halign(label_widget, GTK_ALIGN_END);
+#else
   gtk_misc_set_alignment (GTK_MISC (label_widget), 1.0, 0.5);
+#endif
+
   gtk_widget_show (label_widget);
 
 #if GTK_CHECK_VERSION(3,0,0)
+#if GTK_CHECK_VERSION(3,12,0)
+  gtk_widget_set_margin_start(label_widget, 4);
+  gtk_widget_set_margin_end(label_widget, 4);
+#else
   gtk_widget_set_margin_left(label_widget, 4);
   gtk_widget_set_margin_right(label_widget, 4);
+#endif
   gtk_widget_set_hexpand(label_widget, TRUE);
   gtk_widget_set_halign(label_widget, GTK_ALIGN_FILL);
   gtk_widget_set_valign(label_widget, GTK_ALIGN_CENTER);
@@ -166,7 +177,13 @@ spw_checkbutton(GtkWidget * dialog, GtkWidget * table,
   g_assert(table  != NULL);
 
   GtkWidget *l = gtk_label_new (label);
+
+#if GTK_CHECK_VERSION(3,0,0)
+  gtk_widget_set_halign(l, GTK_ALIGN_END);
+#else
   gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
+#endif
+
   gtk_widget_show (l);
 
 #if GTK_CHECK_VERSION(3,0,0)
@@ -238,12 +255,26 @@ sp_set_font_size_recursive (GtkWidget *w, gpointer font)
 {
 	guint size = GPOINTER_TO_UINT (font);
 
+#if GTK_CHECK_VERSION(3,0,0)
+        GtkCssProvider *css_provider = gtk_css_provider_new();
+
+        const double pt_size = size / static_cast<double>(PANGO_SCALE);
+        std::ostringstream css_data;
+        css_data << "GtkWidget {\n"
+                 << "  font-size: " << pt_size << "pt;\n"
+                 << "}\n";
+
+        gtk_css_provider_load_from_data(css_provider,
+                                        css_data.str().c_str(),
+                                        -1, NULL);
+
+        GtkStyleContext *style_context = gtk_widget_get_style_context(w);
+        gtk_style_context_add_provider(style_context,
+                                       GTK_STYLE_PROVIDER(css_provider),
+                                       GTK_STYLE_PROVIDER_PRIORITY_USER);
+#else
 	PangoFontDescription* pan = pango_font_description_new ();
 	pango_font_description_set_size (pan, size);
-
-#if GTK_CHECK_VERSION(3,0,0)
-	gtk_widget_override_font (w, pan);
-#else
 	gtk_widget_modify_font (w, pan);
 #endif
 
@@ -251,7 +282,11 @@ sp_set_font_size_recursive (GtkWidget *w, gpointer font)
 		gtk_container_foreach (GTK_CONTAINER(w), (GtkCallback) sp_set_font_size_recursive, font);
 	}
 
+#if GTK_CHECK_VERSION(3,0,0)
+        g_object_unref(css_provider);
+#else
 	pango_font_description_free (pan);
+#endif
 }
 
 void

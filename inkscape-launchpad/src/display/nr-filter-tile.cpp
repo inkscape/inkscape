@@ -32,18 +32,6 @@ FilterTile::~FilterTile()
 
 void FilterTile::render_cairo(FilterSlot &slot)
 {
-    // FIX ME!
-    static bool tile_warning = false;
-    if (!tile_warning) {
-        g_warning("Renderer for feTile has non-optimal implementation, expect slowness and bugs.");
-        tile_warning = true;
-    }
-
-    // Fixing isn't so easy as the Inkscape renderer breaks the canvas into "rendering" tiles for
-    // faster rendering. (The "rendering" tiles are not the same as the tiles in this primitive.)
-    // Only if the the feTile tile source falls inside the current "rendering" tile will the tile
-    // image be available.
-
     // This input source contains only the "rendering" tile.
     cairo_surface_t *in = slot.getcairo(_input);
 
@@ -126,11 +114,8 @@ void FilterTile::render_cairo(FilterSlot &slot)
 
 void FilterTile::area_enlarge(Geom::IntRect &area, Geom::Affine const &trans)
 {
-    // We need to enlarge enough to get tile source... we don't the area of the source tile in this
-    // function so we guess. This is VERY inefficient.
-    Geom::Point enlarge(200, 200);
-    enlarge *= trans;
-    area.expandBy( enlarge[Geom::X] < 100 ? 100: enlarge[Geom::X] );
+    // Set to infinite rectangle so we get tile source. It will be clipped later.
+    area = Geom::IntRect::infinite();
 }
 
 double FilterTile::complexity(Geom::Affine const &)

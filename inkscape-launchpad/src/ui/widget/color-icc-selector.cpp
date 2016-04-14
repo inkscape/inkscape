@@ -377,7 +377,6 @@ void ColorICCSelector::init()
                      (gpointer)_impl);
     gtk_widget_set_sensitive(_impl->_fixupBtn, FALSE);
     gtk_widget_set_tooltip_text(_impl->_fixupBtn, _("Fix RGB fallback to match icc-color() value."));
-    // gtk_misc_set_alignment( GTK_MISC (_impl->_fixupBtn), 1.0, 0.5 );
     gtk_widget_show(_impl->_fixupBtn);
 
     attachToGridOrTable(t, _impl->_fixupBtn, 0, row, 1, 1);
@@ -431,7 +430,13 @@ void ColorICCSelector::init()
 #endif
 
         _impl->_compUI[i]._label = gtk_label_new_with_mnemonic(labelStr.c_str());
+
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_set_halign(_impl->_compUI[i]._label, GTK_ALIGN_END);
+#else
         gtk_misc_set_alignment(GTK_MISC(_impl->_compUI[i]._label), 1.0, 0.5);
+#endif
+
         gtk_widget_show(_impl->_compUI[i]._label);
         gtk_widget_set_no_show_all(_impl->_compUI[i]._label, TRUE);
 
@@ -489,7 +494,13 @@ void ColorICCSelector::init()
 
     // Label
     _impl->_label = gtk_label_new_with_mnemonic(_("_A:"));
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(_impl->_label, GTK_ALIGN_END);
+#else
     gtk_misc_set_alignment(GTK_MISC(_impl->_label), 1.0, 0.5);
+#endif
+
     gtk_widget_show(_impl->_label);
 
     attachToGridOrTable(t, _impl->_label, 0, row, 1, 1);

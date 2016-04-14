@@ -257,6 +257,14 @@ gboolean IconImpl::draw(GtkWidget *widget, cairo_t* cr)
         image = gtk_render_icon_pixbuf(gtk_widget_get_style_context(widget), 
                                        source, 
                                        (GtkIconSize)-1);
+
+        // gtk_render_icon_pixbuf deprecated, replaced by:
+        // GtkIconTheme *icon_theme = gtk_icon_theme_get_default();
+        // image = gtk_icon_theme_load_icon (icon_theme,
+        //                                   name,
+        //                                   32,
+        //                                   0,
+        //                                   NULL);
 #else
         image = gtk_style_render_icon(gtk_widget_get_style(widget), source, 
 			gtk_widget_get_direction(widget),
@@ -272,7 +280,13 @@ gboolean IconImpl::draw(GtkWidget *widget, cairo_t* cr)
         GtkAllocation allocation;
 	GtkRequisition requisition;
 	gtk_widget_get_allocation(widget, &allocation);
+
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_get_preferred_size(widget, &requisition, NULL);
+#else
 	gtk_widget_get_requisition(widget, &requisition);
+#endif
+
         int x = floor(allocation.x + ((allocation.width - requisition.width) * 0.5));
         int y = floor(allocation.y + ((allocation.height - requisition.height) * 0.5));
         int width = gdk_pixbuf_get_width(image);

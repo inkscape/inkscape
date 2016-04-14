@@ -13,53 +13,48 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 #
 """
 Generate barcodes for Code25-interleaved 2 of 5, for Inkscape.
 """
 
-from Base import Barcode
-import sys
+from .Base import Barcode
 
 # 1 means thick, 0 means thin
-encoding = {
-    '0' : '00110',
-    '1' : '10001',
-    '2' : '01001',
-    '3' : '11000', 
-    '4' : '00101',
-    '5' : '10100',
-    '6' : '01100',
-    '7' : '00011',
-    '8' : '10010',
-    '9' : '01010',
+ENCODE = {
+    '0': '00110',
+    '1': '10001',
+    '2': '01001',
+    '3': '11000',
+    '4': '00101',
+    '5': '10100',
+    '6': '01100',
+    '7': '00011',
+    '8': '10010',
+    '9': '01010',
 }
 
-# Start and stop code are already encoded into white (0) and black(1) bars
-start_code = '1010'
-stop_code = '1101'
 
 class Code25i(Barcode):
-    # Convert a text into string binary of black and white markers
+    """Convert a text into string binary of black and white markers"""
+    # Start and stop code are already encoded into white (0) and black(1) bars
     def encode(self, number):
-        self.label = number
-
         if not number.isdigit():
-            sys.stderr.write("CODE25 can only encode numbers.\n")
-            return
+            return self.error(number, "CODE25 can only encode numbers.")
 
-        # Number of figures to encode must be even, a 0 is added to the left in case it's odd.
-        if len(number) % 2 > 0 :
+        # Number of figures to encode must be even,
+        # a 0 is added to the left in case it's odd.
+        if len(number) % 2 > 0:
             number = '0' + number
 
         # Number is encoded by pairs of 2 figures
-        size = len(number) / 2;
-        encoded = start_code;
+        size = len(number) / 2
+        encoded = '1010'
         for i in range(size):
             # First in the pair is encoded in black (1), second in white (0)
-            black =  encoding[number[i*2]]
-            white = encoding[number[i*2+1]]
+            black = ENCODE[number[i*2]]
+            white = ENCODE[number[i*2+1]]
             for j in range(5):
                 if black[j] == '1':
                     encoded += '11'
@@ -69,9 +64,5 @@ class Code25i(Barcode):
                     encoded += '00'
                 else:
                     encoded += '0'
-
-        encoded += stop_code
-
-        self.inclabel = number
-        return encoded;
+        return encoded + '1101'
 

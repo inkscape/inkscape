@@ -15,24 +15,25 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 #
 """
 Python barcode renderer for EAN13 barcodes. Designed for use with Inkscape.
 """
 
-from BaseEan import EanBarcode
+from .BaseEan import EanBarcode
 
 class Ean13(EanBarcode):
     """Provide an Ean13 barcode generator"""
     name = 'ean13'
-    lengths = [ 12 ]
-    checks  = [ 13 ]
+    extras = {2: 'Ean2', 5: 'Ean5'}
+    checks = [13]
+    lengths = [12]
 
     def _encode(self, n):
         """Encode an ean13 barcode"""
-        self.label = self.space(n[0:1], 4, n[1:7], 5, n[7:], 7)
+        self.text = self.space(n[0:1], 4, n[1:7], 5, n[7:], 7)
         return self.enclose(
-            self.encode_interleaved(n[0], n[1:7]), self.encode_right(n[7:]) )
+            self.encode_interleaved(n[0], n[1:7]), self.encode_right(n[7:]))
 
 

@@ -443,11 +443,6 @@ endif()
 # a custom target that is always built
 add_custom_target(
 		inkscape_version ALL
-		DEPENDS ${CMAKE_BINARY_DIR}/src/inkscape-version.cpp)
-
-# creates inkscape-version.cpp using cmake script
-add_custom_command(
-		OUTPUT ${CMAKE_BINARY_DIR}/src/inkscape-version.cpp
 		COMMAND ${CMAKE_COMMAND}
 		-DINKSCAPE_SOURCE_DIR=${CMAKE_SOURCE_DIR}
 		-DINKSCAPE_BINARY_DIR=${CMAKE_BINARY_DIR}

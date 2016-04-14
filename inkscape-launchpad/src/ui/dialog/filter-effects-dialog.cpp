@@ -1364,6 +1364,7 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     _list.append_column("#", _columns.count);
     _list.get_column(2)->set_sizing(Gtk::TREE_VIEW_COLUMN_AUTOSIZE);
     _list.get_column(2)->set_expand(false);
+    _list.get_column(2)->set_reorderable(true);
 
     sw->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     _list.get_column(1)->set_resizable(true);
@@ -1868,7 +1869,7 @@ void FilterEffectsDialog::PrimitiveList::update()
 
     if(f) {
         bool active_found = false;
-        _dialog._primitive_box.set_sensitive(true);
+        _dialog._primitive_box->set_sensitive(true);
         _dialog.update_filter_general_settings_view();
         for(SPObject *prim_obj = f->children;
                 prim_obj && SP_IS_FILTER_PRIMITIVE(prim_obj);
@@ -1913,7 +1914,7 @@ void FilterEffectsDialog::PrimitiveList::update()
         }
     }
     else {
-        _dialog._primitive_box.set_sensitive(false);
+        _dialog._primitive_box->set_sensitive(false);
         set_size_request(-1, -1);
     }
 }
@@ -2760,8 +2761,10 @@ FilterEffectsDialog::FilterEffectsDialog()
     // Initialize widget hierarchy
 #if WITH_GTKMM_3_0
     Gtk::Paned* hpaned = Gtk::manage(new Gtk::Paned);
+    _primitive_box = Gtk::manage(new Gtk::Paned);
 #else
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
+    _primitive_box = Gtk::manage(new Gtk::VPaned);
 #endif
 
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
@@ -2769,25 +2772,40 @@ FilterEffectsDialog::FilterEffectsDialog()
     Gtk::HBox* infobox = Gtk::manage(new Gtk::HBox(/*homogeneous:*/false, /*spacing:*/4));
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
     Gtk::VBox* vb_prims = Gtk::manage(new Gtk::VBox);
+    Gtk::VBox* vb_desc = Gtk::manage(new Gtk::VBox);
+    
+    Gtk::VBox* prim_vbox_p = Gtk::manage(new Gtk::VBox);
+    Gtk::VBox* prim_vbox_i = Gtk::manage(new Gtk::VBox);
 
+    _primitive_box->pack1(*prim_vbox_p);
+    _primitive_box->pack2(*prim_vbox_i);
+    
     _getContents()->add(*hpaned);
     hpaned->pack1(_filter_modifier);
-    hpaned->pack2(_primitive_box);
-    _primitive_box.pack_start(*sw_prims);
-    _primitive_box.pack_start(*sw_infobox, false, false);
+    hpaned->pack2(*_primitive_box);
+    prim_vbox_p->pack_start(*sw_prims, true, true);
+    prim_vbox_i->pack_start(*vb_prims, true, true);
+    
     sw_prims->add(_primitive_list);
-    sw_infobox->add(*vb_prims);
-    infobox->pack_start(_infobox_icon, false, false);
-    infobox->pack_start(_infobox_desc, false, false);
+    sw_infobox->add(*infobox);
+    
+    _infobox_icon.set_alignment(0, 0);
+    _infobox_desc.set_alignment(0, 0);
+    _infobox_desc.set_justify(Gtk::JUSTIFY_LEFT);
     _infobox_desc.set_line_wrap(true);
-    _infobox_desc.set_size_request(250, -1);
-
-    vb_prims->pack_start(*hb_prims);
-    vb_prims->pack_start(*infobox);
+    _infobox_desc.set_size_request(200, -1);
+    
+    infobox->pack_start(_infobox_icon, false, false);
+    vb_desc->pack_start(_infobox_desc, true, true);
+    infobox->pack_start(*vb_desc, true, true);
+    
+    vb_prims->pack_start(*hb_prims, false, false);
+    vb_prims->pack_start(*sw_infobox, true, true);
 
     hb_prims->pack_start(_add_primitive, false, false);
-    hb_prims->pack_start(_add_primitive_type, false, false);
-    _getContents()->pack_start(_settings_tabs, false, false);
+    
+    hb_prims->pack_start(_add_primitive_type, true, true);
+    _getContents()->pack_start(_settings_tabs, true, true);
     _settings_tabs.append_page(_settings_tab1, _("Effect parameters"));
     _settings_tabs.append_page(_settings_tab2, _("Filter General Settings"));
 
@@ -2801,7 +2819,7 @@ FilterEffectsDialog::FilterEffectsDialog()
 
     sw_prims->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     sw_prims->set_shadow_type(Gtk::SHADOW_IN);
-    sw_infobox->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER);
+    sw_infobox->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     
 //    al_settings->set_padding(0, 0, 12, 0);
 //    fr_settings->set_shadow_type(Gtk::SHADOW_NONE);
@@ -3026,7 +3044,8 @@ void FilterEffectsDialog::update_primitive_infobox()
             g_assert(false);
             break;
     }
-    _infobox_icon.set_pixel_size(96);
+    //_infobox_icon.set_pixel_size(96);
+    _infobox_icon.set_pixel_size(64);
 }
 
 void FilterEffectsDialog::duplicate_primitive()

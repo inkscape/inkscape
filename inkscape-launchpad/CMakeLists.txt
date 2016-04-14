@@ -59,8 +59,8 @@ endif(APPLE)
 # -----------------------------------------------------------------------------
 # Redirect output files
 # -----------------------------------------------------------------------------
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "" FORCE )
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" FORCE )
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "" )
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" )
 
 # -----------------------------------------------------------------------------
 # Test Harness
@@ -71,7 +71,7 @@ set(GMOCK_DIR "${CMAKE_SOURCE_DIR}/gtest/gmock-1.7.0"
 if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
     set(GMOCK_PRESENT ON)
 else()
-    message("No gmock/gtest found! Perhaps you wish to run 'bash download-gtest.bash' to download it.")
+    message("No gmock/gtest found! Perhaps you wish to run 'bash download-gtest.sh' to download it.")
 endif()
 
 # -----------------------------------------------------------------------------
@@ -127,11 +127,6 @@ add_custom_target(dist
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-    IMMEDIATE @ONLY)
-
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/inkscape.desktop.in"
-    "${CMAKE_BINARY_DIR}/inkscape.desktop"
     IMMEDIATE @ONLY)
 
 add_custom_target(uninstall

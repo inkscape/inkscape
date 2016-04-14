@@ -818,9 +818,14 @@ GtkWidget* create_tool_item( GtkAction* action )
             gtk_box_pack_start( GTK_BOX(holder), normal, FALSE, FALSE, 0 );
 
             {
+#if GTK_CHECK_VERSION(3,0,0)
+                gtk_widget_set_halign(holder, GTK_ALIGN_START);
+                gtk_container_add(GTK_CONTAINER(item), holder);
+#else
                 GtkWidget *align = gtk_alignment_new(0, 0.5, 0, 0);
                 gtk_container_add( GTK_CONTAINER(align), holder);
                 gtk_container_add( GTK_CONTAINER(item), align );
+#endif
             }
         }
 
@@ -855,10 +860,14 @@ void resync_active( EgeSelectOneAction* act, gint active, gboolean override )
                 GList* children = gtk_container_get_children( GTK_CONTAINER(proxies->data) );
                 if ( children && children->data ) {
                     gpointer combodata = g_object_get_data( G_OBJECT(children->data), "ege-combo-box" );
+
+#if !GTK_CHECK_VERSION(3,0,0)
                     if (!combodata && GTK_IS_ALIGNMENT(children->data)) {
                         GList *other = gtk_container_get_children( GTK_CONTAINER(children->data) );
                          combodata = g_object_get_data( G_OBJECT(other->data), "ege-combo-box" );
                     }
+#endif
+
                     if ( GTK_IS_COMBO_BOX(combodata) ) {
                         GtkComboBox* combo = GTK_COMBO_BOX(combodata);
                         if ((active == -1) && (gtk_combo_box_get_has_entry(combo))) {
@@ -915,10 +924,14 @@ void resync_sensitive( EgeSelectOneAction* act )
             GList* children = gtk_container_get_children( GTK_CONTAINER(proxies->data) );
             if ( children && children->data ) {
                 gpointer combodata = g_object_get_data( G_OBJECT(children->data), "ege-combo-box" );
+
+#if !GTK_CHECK_VERSION(3,0,0)
                 if (!combodata && GTK_IS_ALIGNMENT(children->data)) {
                     GList *other = gtk_container_get_children( GTK_CONTAINER(children->data) );
                     combodata = g_object_get_data( G_OBJECT(other->data), "ege-combo-box" );
                 }
+#endif
+
                 if ( GTK_IS_COMBO_BOX(combodata) ) {
                     /* Not implemented */
                 } else if ( GTK_IS_BOX(children->data) ) {

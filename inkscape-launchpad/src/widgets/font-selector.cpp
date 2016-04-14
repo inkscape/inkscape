@@ -159,9 +159,24 @@ static void sp_font_selector_init(SPFontSelector *fsel)
 
         /* Muck with style, see text-toolbar.cpp */
         gtk_widget_set_name( GTK_WIDGET(fsel->family_treeview), "font_selector_family" );
+
+#if GTK_CHECK_VERSION(3,0,0)
+        GtkCssProvider *css_provider = gtk_css_provider_new();
+        gtk_css_provider_load_from_data(css_provider,
+                                        "#font_selector_family {\n"
+                                        "  -GtkWidget-wide-separators:  true;\n"
+                                        "  -GtkWidget-separator-height: 6;\n"
+                                        "}\n",
+                                        -1, NULL);
+
+        GdkScreen *screen = gdk_screen_get_default();
+        gtk_style_context_add_provider_for_screen(screen,
+                                                  GTK_STYLE_PROVIDER(css_provider),
+                                                  GTK_STYLE_PROVIDER_PRIORITY_USER);
+#else
         gtk_rc_parse_string (
             "widget \"*font_selector_family\" style \"fontfamily-separator-style\"");
-        
+#endif        
 
         Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
         Glib::RefPtr<Gtk::ListStore> store = fontlister->get_font_list();

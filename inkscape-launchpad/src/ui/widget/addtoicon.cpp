@@ -48,7 +48,6 @@ AddToIcon::AddToIcon() :
 //    
 //    _property_pixbuf_add = Gtk::Widget::
 
-    //property_stock_id() = GTK_STOCK_ADD;
     set_pixbuf();
 }
 

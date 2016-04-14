@@ -34,6 +34,18 @@
 #include <Magick++.h>
 #endif
 
+#define noIMAGE_RESOLUTION_DEBUG
+
+#ifdef IMAGE_RESOLUTION_DEBUG
+# define debug(f, a...) { g_print("%s(%d) %s:", \
+                                  __FILE__,__LINE__,__FUNCTION__); \
+                          g_print(f, ## a); \
+                          g_print("\n"); \
+                        }
+#else
+# define debug(f, a...) /* */
+#endif
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
@@ -118,16 +130,37 @@ void ImageResolution::readpng(char const *fn) {
     png_read_info(png_ptr, info_ptr);
 
     png_uint_32 res_x, res_y;
+#ifdef PNG_INCH_CONVERSIONS_SUPPORTED
+    debug("PNG_INCH_CONVERSIONS_SUPPORTED");
+    res_x = png_get_x_pixels_per_inch(png_ptr, info_ptr);
+    res_y = png_get_y_pixels_per_inch(png_ptr, info_ptr);
+    if (res_x != 0 && res_y != 0) {
+        ok_ = true;
+        x_ = res_x * 1.0;  // FIXME: implicit conversion of png_uint_32 to double ok?
+        y_ = res_y * 1.0;  // FIXME: implicit conversion of png_uint_32 to double ok?
+    }
+#else
+    debug("PNG_RESOLUTION_METER");
     int unit_type;
+    // FIXME: png_get_pHYs() fails to return expected values
+    // with clang (based on LLVM 3.2svn) from Xcode 4.6.3 (OS X 10.7.5)
     png_get_pHYs(png_ptr, info_ptr, &res_x, &res_y, &unit_type);
-
-    png_destroy_read_struct(&png_ptr, &info_ptr, 0);
-    fclose(fp);
 
     if (unit_type == PNG_RESOLUTION_METER) {
         ok_ = true;
         x_ = res_x * 2.54 / 100;
         y_ = res_y * 2.54 / 100;
+    }
+#endif
+
+    png_destroy_read_struct(&png_ptr, &info_ptr, 0);
+    fclose(fp);
+
+    if (ok_) {
+        debug("xdpi: %f", x_);
+        debug("ydpi: %f", y_);
+    } else {
+        debug("FAILED");
     }
 }
 #else
@@ -206,6 +239,13 @@ void ImageResolution::readexif(char const *fn) {
         ok_ = true;
     }
     exif_data_free(ed);
+    
+    if (ok_) {
+        debug("xdpi: %f", x_);
+        debug("ydpi: %f", y_);
+    } else {
+        debug("FAILED");
+    }
 }
 
 #else
@@ -256,6 +296,13 @@ void ImageResolution::readexiv(char const *fn) {
         }
     }
     ok_ = havex && havey;
+    
+    if (ok_) {
+        debug("xdpi: %f", x_);
+        debug("ydpi: %f", y_);
+    } else {
+        debug("FAILED");
+    }
 }
 
 #else
@@ -312,6 +359,7 @@ void ImageResolution::readjfif(char const *fn) {
     jpeg_stdio_src(&cinfo, ifd);
     jpeg_read_header(&cinfo, TRUE);
     
+    debug("cinfo.[XY]_density");
     if (cinfo.saw_JFIF_marker) { // JFIF APP0 marker was seen
         if ( cinfo.density_unit == 1 ) { // dots/inch
             x_ = cinfo.X_density;
@@ -331,6 +379,13 @@ void ImageResolution::readjfif(char const *fn) {
     }
     jpeg_destroy_decompress(&cinfo);
     fclose(ifd);
+    
+    if (ok_) {
+        debug("xdpi: %f", x_);
+        debug("ydpi: %f", y_);
+    } else {
+        debug("FAILED");
+    }
 }
 
 #else
@@ -344,16 +399,17 @@ void ImageResolution::readjfif(char const *) {
 #ifdef WITH_IMAGE_MAGICK
 void ImageResolution::readmagick(char const *fn) {
     Magick::Image image;
+    debug("Trying image.read");
     try {
         image.read(fn);
     } catch (Magick::Error & err) {
-        g_warning("ImageMagick error: %s", err.what());
+        debug("ImageMagick error: %s", err.what());
         return;
-    } catch (...) {
-        g_warning("ImageResolution::readmagick: Unknown error");
+    } catch (std::exception & err) {
+        debug("ImageResolution::readmagick: %s", err.what());
         return;
     }
-
+    debug("image.[xy]Resolution");
     std::string const type = image.magick();
     x_ = image.xResolution();
     y_ = image.yResolution();
@@ -366,6 +422,14 @@ void ImageResolution::readmagick(char const *fn) {
     
     if (x_ != 0 && y_ != 0) {
         ok_ = true;
+    }
+
+    if (ok_) {
+        debug("xdpi: %f", x_);
+        debug("ydpi: %f", y_);
+    } else {
+        debug("FAILED");
+        debug("Using default Inkscape import resolution");
     }
 }
 

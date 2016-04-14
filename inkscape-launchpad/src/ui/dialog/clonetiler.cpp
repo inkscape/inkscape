@@ -1061,7 +1061,11 @@ CloneTiler::CloneTiler () :
                 {
                     GtkWidget *l = gtk_label_new ("");
                     gtk_label_set_markup (GTK_LABEL(l), "&#215;");
+#if GTK_CHECK_VERSION(3,0,0)
+                    gtk_widget_set_halign(l, GTK_ALIGN_END);
+#else
                     gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
+#endif
                     gtk_box_pack_start (GTK_BOX (hb), l, TRUE, TRUE, 0);
                 }
 
@@ -1135,7 +1139,11 @@ CloneTiler::CloneTiler () :
                 {
                     GtkWidget *l = gtk_label_new ("");
                     gtk_label_set_markup (GTK_LABEL(l), "&#215;");
+#if GTK_CHECK_VERSION(3,0,0)
+                    gtk_widget_set_halign(l, GTK_ALIGN_END);
+#else
                     gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
+#endif
                     gtk_box_pack_start (GTK_BOX (hb), l, TRUE, TRUE, 0);
                 }
 
@@ -2777,7 +2785,12 @@ GtkWidget * CloneTiler::clonetiler_spinbox(const char *tip, const char *attr, do
     {
         GtkWidget *l = gtk_label_new ("");
         gtk_label_set_markup (GTK_LABEL(l), suffix);
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_set_halign(l, GTK_ALIGN_END);
+        gtk_widget_set_valign(l, GTK_ALIGN_START);
+#else
         gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0);
+#endif
         gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
     }
 
@@ -2853,14 +2866,13 @@ void CloneTiler::clonetiler_reset(GtkWidget */*widget*/, GtkWidget *dlg)
 
 void CloneTiler::clonetiler_table_attach(GtkWidget *table, GtkWidget *widget, float align, int row, int col)
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(widget, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(widget, GTK_ALIGN_START);
+    gtk_grid_attach(GTK_GRID(table), widget, col, row, 1, 1);
+#else
     GtkWidget *a = gtk_alignment_new (align, 0, 0, 0);
     gtk_container_add(GTK_CONTAINER(a), widget);
-
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_halign(table, GTK_ALIGN_FILL);
-    gtk_widget_set_valign(table, GTK_ALIGN_CENTER);
-    gtk_grid_attach(GTK_GRID(table), a, col, row, 1, 1);
-#else
     gtk_table_attach ( GTK_TABLE (table), a, col, col + 1, row, row + 1, GTK_FILL, (GtkAttachOptions)0, 0, 0 );
 #endif
 }

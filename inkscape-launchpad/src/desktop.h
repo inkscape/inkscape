@@ -174,7 +174,6 @@ public:
     SPCanvasGroup *sketch;
     SPCanvasGroup *controls;
     SPCanvasGroup *tempgroup;   ///< contains temporary canvas items
-    SPCanvasItem  *table;       ///< outside-of-page background
     SPCanvasItem  *page;        ///< page background
     SPCanvasItem  *page_border; ///< page border
     SPCSSAttr     *current;     ///< current style

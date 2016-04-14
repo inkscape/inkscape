@@ -60,8 +60,8 @@ unsigned combine_motion_events(SPCanvas *canvas, GdkEventMotion &event, gint mas
     }
     GdkEvent *event_next;
     gint i = 0;
-    event.x -= canvas->x0;
-    event.y -= canvas->y0;
+    event.x -= canvas->_x0;
+    event.y -= canvas->_y0;
 
     event_next = gdk_event_get();
     // while the next event is also a motion notify
@@ -92,8 +92,8 @@ unsigned combine_motion_events(SPCanvas *canvas, GdkEventMotion &event, gint mas
     if (event_next) {
         gdk_event_put(event_next);
     }
-    event.x += canvas->x0;
-    event.y += canvas->y0;
+    event.x += canvas->_x0;
+    event.y += canvas->_y0;
 
     return i;
 }

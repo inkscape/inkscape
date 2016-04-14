@@ -1150,6 +1150,9 @@ void SelectionVerb::perform(SPAction *action, void *data)
         case SP_VERB_SELECTION_UNGROUP:
             sp_selection_ungroup(selection, dt);
             break;
+        case SP_VERB_SELECTION_UNGROUP_POP_SELECTION:
+            sp_selection_ungroup_pop_selection(selection, dt);
+            break;
         default:
             handled = false;
             break;
@@ -2559,6 +2562,8 @@ Verb *Verb::_base_verbs[] = {
                       N_("Group selected objects"), INKSCAPE_ICON("object-group")),
     new SelectionVerb(SP_VERB_SELECTION_UNGROUP, "SelectionUnGroup", N_("_Ungroup"),
                       N_("Ungroup selected groups"), INKSCAPE_ICON("object-ungroup")),
+    new SelectionVerb(SP_VERB_SELECTION_UNGROUP_POP_SELECTION, "SelectionUnGroupPopSelection", N_("_Pop selected objects out of group"),
+                      N_("Pop selected objects out of group"), INKSCAPE_ICON("object-ungroup-pop-selection")),
 
     new SelectionVerb(SP_VERB_SELECTION_TEXTTOPATH, "SelectionTextToPath", N_("_Put on Path"),
                       N_("Put text on path"), INKSCAPE_ICON("text-put-on-path")),

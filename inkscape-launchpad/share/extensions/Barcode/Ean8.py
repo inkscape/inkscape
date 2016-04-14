@@ -13,22 +13,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 #
 """
 Python barcode renderer for EAN8 barcodes. Designed for use with Inkscape.
 """
 
-from BaseEan import EanBarcode
+from .BaseEan import EanBarcode
 
 class Ean8(EanBarcode):
     """Provide an EAN8 barcode generator"""
-    name    = 'ean8'
-    lengths = [ 7 ]
-    checks  = [ 8 ]
+    name = 'ean8'
+    checks = [8]
+    lengths = [7]
 
     def _encode(self, n):
         """Encode an ean8 barcode"""
-        self.label = self.space(n[:4], 3, n[4:])
-        return self.enclose( self.encode_left(n[:4]), self.encode_right(n[4:]) )
+        self.text = self.space(n[:4], 3, n[4:])
+        return self.enclose(self.encode_left(n[:4]), self.encode_right(n[4:]))
 

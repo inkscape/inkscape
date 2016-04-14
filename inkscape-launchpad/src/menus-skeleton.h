@@ -188,6 +188,7 @@ static char const menus_skeleton[] =
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionGroup\" />\n"
 "       <verb verb-id=\"SelectionUnGroup\" />\n"
+"       <verb verb-id=\"SelectionUnGroupPopSelection\" />\n"
 "       <separator/>\n"
 "       <submenu name=\"" N_("Cli_p") "\">\n"
 "           <verb verb-id=\"ObjectSetClipPath\" />\n"

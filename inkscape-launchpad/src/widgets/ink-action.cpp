@@ -1,11 +1,19 @@
 #include "widgets/icon.h"
 #include "icon-size.h"
 #include <glib/gi18n.h>
-#include <gtk/gtk.h>
+
 
 #include "widgets/ink-action.h"
 
 #include "widgets/button.h"
+
+#include <gtk/gtk.h>
+
+#if GTK_CHECK_VERSION(3,0,0)
+    // Fork of gtk-imagemenuitem to continue support
+    #include "widgets/image-menu-item.h"
+
+#endif
 
 static void ink_action_finalize( GObject* obj );
 static void ink_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
@@ -158,7 +166,12 @@ static GtkWidget* ink_action_create_menu_item( GtkAction* action )
         gchar* label = 0;
         g_object_get( G_OBJECT(act), "label", &label, NULL );
 
+#if GTK_CHECK_VERSION(3,0,0)
+        item = image_menu_item_new_with_mnemonic( label );
+#else
         item = gtk_image_menu_item_new_with_mnemonic( label );
+#endif
+
         GtkWidget* child = sp_icon_new( Inkscape::ICON_SIZE_MENU, act->private_data->iconId );
         // TODO this work-around is until SPIcon will live properly inside of a popup menu
         if ( SP_IS_ICON(child) ) {
@@ -172,7 +185,12 @@ static GtkWidget* ink_action_create_menu_item( GtkAction* action )
             }
         }
         gtk_widget_show_all( child );
+
+#if GTK_CHECK_VERSION(3,0,0)
+        image_menu_item_set_image( IMAGE_MENU_ITEM(item), child );
+#else
         gtk_image_menu_item_set_image( GTK_IMAGE_MENU_ITEM(item), child );
+#endif
 
         g_free( label );
         label = 0;
@@ -374,9 +392,16 @@ static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action )
         GtkToolButton* button = GTK_TOOL_BUTTON(item);
         if ( act->private_data->iconId ) {
             GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
+
+#if GTK_CHECK_VERSION(3,0,0)
+	    gtk_widget_set_hexpand(child, FALSE);
+	    gtk_widget_set_vexpand(child, FALSE);
+	    gtk_tool_button_set_icon_widget(button, child);
+#else
             GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
             gtk_container_add( GTK_CONTAINER(align), child );
             gtk_tool_button_set_icon_widget( button, align );
+#endif
         } else {
             gchar *label = 0;
             g_object_get( G_OBJECT(action), "short_label", &label, NULL );
@@ -405,10 +430,18 @@ static void ink_toggle_action_update_icon( InkToggleAction* action )
                     GtkToolButton* button = GTK_TOOL_BUTTON(proxies->data);
 
                     GtkWidget* child = sp_icon_new( action->private_data->iconSize, action->private_data->iconId );
+
+#if GTK_CHECK_VERSION(3,0,0)
+		    gtk_widget_set_hexpand(child, FALSE);
+		    gtk_widget_set_vexpand(child, FALSE);
+		    gtk_widget_show_all(child);
+		    gtk_tool_button_set_icon_widget(button, child);
+#else
                     GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
                     gtk_container_add( GTK_CONTAINER(align), child );
                     gtk_widget_show_all( align );
                     gtk_tool_button_set_icon_widget( button, align );
+#endif
                 }
             }
 
@@ -577,9 +610,16 @@ static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action )
             GtkToolButton* button = GTK_TOOL_BUTTON(item);
 
             GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
+
+#if GTK_CHECK_VERSION(3,0,0)
+	    gtk_widget_set_hexpand(child, FALSE);
+	    gtk_widget_set_vexpand(child, FALSE);
+            gtk_tool_button_set_icon_widget(button, child);
+#else
             GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
             gtk_container_add( GTK_CONTAINER(align), child );
             gtk_tool_button_set_icon_widget( button, align );
+#endif
         } else {
             // For now trigger a warning but don't do anything else
             GtkToolButton* button = GTK_TOOL_BUTTON(item);
