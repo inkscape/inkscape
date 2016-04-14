@@ -791,6 +791,38 @@ static gint clone_depth_descending(gconstpointer a, gconstpointer b) {
         return -1;
     }
 }
+ 
+void sp_selection_ungroup_pop_selection(Inkscape::Selection *selection, SPDesktop *desktop)
+{
+    if (selection->isEmpty()) {
+        selection_display_message(desktop, Inkscape::WARNING_MESSAGE, _("<b>No objects selected</b> to pop out of group."));
+        return;
+    }
+    std::vector<SPItem*>  selection_list = selection->itemList();
+
+    std::vector<SPItem*>::const_iterator item = selection_list.begin(); // leaving this because it will be useful for
+                                                                        // future implementation of complex pop ungrouping
+    SPItem *obj = *item;
+    SPItem *parent_group = static_cast<SPItem*>(obj->parent);
+    if (!SP_IS_GROUP(parent_group) || SP_IS_LAYER(parent_group)) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Selection <b>not in a group</b>."));
+        return;
+    }
+    if (parent_group->firstChild()->getNext() == NULL) {
+        std::vector<SPItem*> children;
+        sp_item_group_ungroup(static_cast<SPGroup*>(parent_group), children, false);
+    }
+    else {
+        sp_selection_to_next_layer(desktop, 1); // suppress done
+    }
+
+    parent_group->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    
+    DocumentUndo::done(selection->layers()->getDocument(), SP_VERB_SELECTION_UNGROUP_POP_SELECTION,
+                       _("Pop selection from group"));
+    
+}
+
 
 void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop)
 {

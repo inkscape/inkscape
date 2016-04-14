@@ -1523,6 +1523,12 @@ ContextMenu::ContextMenu(SPDesktop *desktop, SPItem *item) :
             MIParent.signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::LeaveGroup));
             MIParent.show();
             append(MIParent);
+
+            /* Pop selection out of group */
+            Gtk::MenuItem* miu = Gtk::manage(new Gtk::MenuItem(_("_Pop selection out of group"), 1));
+            miu->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ActivateUngroupPopSelection));
+            miu->show();
+            append(*miu);
         }
     }
 }
@@ -1920,6 +1926,12 @@ void ContextMenu::ActivateUngroup(void)
     sp_item_group_ungroup(static_cast<SPGroup*>(_item), children);
     _desktop->selection->setList(children);
 }
+ 
+void ContextMenu::ActivateUngroupPopSelection(void)
+{
+    sp_selection_ungroup_pop_selection(_desktop->selection, _desktop);
+}
+
 
 void ContextMenu::MakeAnchorMenu(void)
 {

@@ -194,6 +194,7 @@ class ContextMenu : public Gtk::Menu
         /**
          * callback, is executed on clicking the anchor "Group" and "Ungroup" menu entry
          */
+        void ActivateUngroupPopSelection(void);
         void ActivateUngroup(void);
         void ActivateGroup(void);
         
