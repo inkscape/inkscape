@@ -7,7 +7,8 @@ set(CMAKE_CTEST_COMMAND ctest -V)
 add_subdirectory(${GMOCK_DIR} ${CMAKE_BINARY_DIR}/gmock)
 
 include_directories(SYSTEM ${GMOCK_DIR}/gtest/include
-                           ${GMOCK_DIR}/include)
+                           ${GMOCK_DIR}/include
+                           ${CMAKE_SOURCE_DIR}/gtest/gtest/include)
 
 set_source_files_properties(
 		${CMAKE_BINARY_DIR}/src/inkscape-version.cpp
