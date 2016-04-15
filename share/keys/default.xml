@@ -297,8 +297,7 @@ override) the bindings in the main default.xml.
   
   <bind key="z" modifiers="Ctrl" action="EditUndo" display="true" />
   <bind key="Z" modifiers="Ctrl" action="EditUndo" />
-  <bind key="y" modifiers="Ctrl,Shift" action="EditUndo" />
-  <bind key="Y" modifiers="Ctrl,Shift" action="EditUndo" />
+  <!--Do not put in Ctrl,Shift+Y, already used-->
 
   <bind key="z" modifiers="Ctrl,Shift" action="EditRedo" display="true" />
   <bind key="Z" modifiers="Ctrl,Shift" action="EditRedo" />
@@ -383,6 +382,9 @@ override) the bindings in the main default.xml.
   <bind key="Escape" action="EditDeselect" /> 
 
   <bind key="7" action="EditNextPathEffectParameter" display="true" />
+
+  <bind key="r" modifiers="Ctrl,Shift" action="FitCanvasToSelectionOrDrawing" display="true" />
+  <bind key="R" modifiers="Ctrl,Shift" action="FitCanvasToSelectionOrDrawing" display="true" />
 
   <!-- Objects/selection -->
 
