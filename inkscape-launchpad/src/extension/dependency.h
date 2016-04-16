@@ -58,6 +58,7 @@ public:
     Dependency  (Inkscape::XML::Node * in_repr);
     virtual ~Dependency (void);
     bool check  (void) const;
+    const gchar* get_name();
     Glib::ustring &get_help (void) const;
     Glib::ustring &get_link (void) const;
 

@@ -39,6 +39,7 @@
 #include "io/sys.h"
 #include "inkscape.h"
 #include "document-undo.h"
+#include "loader.h"
 
 
 namespace Inkscape {
@@ -426,7 +427,7 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
     enum {
         MODULE_EXTENSION,
         MODULE_XSLT,
-        /* MODULE_PLUGIN, */
+        MODULE_PLUGIN,
         MODULE_UNKNOWN_IMP
     } module_implementation_type = MODULE_UNKNOWN_IMP;
     enum {
@@ -465,10 +466,8 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
             module_implementation_type = MODULE_EXTENSION;
         } else if (!strcmp(element_name, INKSCAPE_EXTENSION_NS "xslt")) {
             module_implementation_type = MODULE_XSLT;
-#if 0
-        } else if (!strcmp(element_name, "plugin")) {
+        } else if (!strcmp(element_name,  INKSCAPE_EXTENSION_NS "plugin")) {
             module_implementation_type = MODULE_PLUGIN;
-#endif
         }
 
         //Inkscape::XML::Node *old_repr = child_repr;
@@ -489,13 +488,12 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
                 imp = static_cast<Implementation::Implementation *>(xslt);
                 break;
             }
-#if 0
             case MODULE_PLUGIN: {
-                Implementation::Plugin *plugin = new Implementation::Plugin();
-                imp = static_cast<Implementation::Implementation *>(plugin);
+                Inkscape::Extension::Loader loader = Inkscape::Extension::Loader();
+                loader.set_base_directory ( Inkscape::Application::profile_path("extensions"));
+                imp = loader.load_implementation(doc);
                 break;
             }
-#endif
             default: {
                 imp = NULL;
                 break;
@@ -528,6 +526,7 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
             break;
         }
         default: {
+            module = new Extension(repr, imp);
             break;
         }
     }

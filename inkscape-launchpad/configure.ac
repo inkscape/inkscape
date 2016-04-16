@@ -638,6 +638,7 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  bdw-gc      >= 7.2
 		  cairo       >= 1.10
 		  glib-2.0    >= 2.28
+          gmodule-2.0
 		  gsl
 		  gthread-2.0 >= 2.0
 		  libpng      >= 1.2

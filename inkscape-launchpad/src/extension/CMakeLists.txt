@@ -14,6 +14,7 @@ set(extension_SRC
 	print.cpp
 	system.cpp
 	timer.cpp
+    loader.cpp
 
 	implementation/implementation.cpp
 	implementation/xslt.cpp
@@ -90,6 +91,7 @@ set(extension_SRC
 	print.h
 	system.h
 	timer.h
+    loader.h
 
 	implementation/implementation.h
 	implementation/script.h
@@ -244,21 +246,10 @@ if(WITH_IMAGE_MAGICK)
 endif()
 
 if(WITH_DBUS)
-	list(APPEND extension_SRC
-		dbus/application-interface.cpp
-		dbus/dbus-init.cpp
-		dbus/document-interface.cpp
-
-		# ------
-		# Header
-		dbus/application-interface.h
-		dbus/dbus-init.h
-		dbus/document-interface.h
-		dbus/wrapper/inkscape-dbus-wrapper.h
-	)
-
-	include_directories(dbus)
+        add_subdirectory(dbus)
 endif()
 
 # add_inkscape_lib(extension_LIB "${extension_SRC}")
 add_inkscape_source("${extension_SRC}")
+
+add_subdirectory( plugins )

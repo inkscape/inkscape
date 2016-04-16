@@ -86,7 +86,6 @@ option(WITH_OPENMP "Compile with OpenMP support" ON)
 
 option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
 
-option(WITH_GTKSPELL "Compile with support for GTK spelling widget" ON)
 option(ENABLE_POPPLER "Compile with support of libpoppler" ON)
 option(ENABLE_POPPLER_CAIRO "Compile with support of libpoppler-cairo for rendering PDF preview (depends on ENABLE_POPPLER)" ON)
 option(WITH_IMAGE_MAGICK "Compile with support of ImageMagick for raster extensions and image import resolution" ON)
@@ -108,6 +107,9 @@ add_definitions(-DORBIT2=1)
 add_definitions(-DHAVE_CONFIG_H)
 add_definitions(-DHAVE_CAIRO_PDF=1)  # needed for src/libnrtype/Layout-TNG.h
 add_definitions(-DHAVE_TR1_UNORDERED_SET) # XXX make an option!
+if(NOT WIN32)
+    add_definitions(-fPIC)
+endif()
 #
 # end badness
 # -----------------------------------------------------------------------------
@@ -208,6 +210,14 @@ if(WITH_GTEST)
     enable_testing()
     add_subdirectory(test EXCLUDE_FROM_ALL)
 endif()
+
+# Canonicalize the flags to speed up recompilation using ccache/etc.
+# This should be the last thing we do:
+include(CMakeScripts/CanonicalizeFlagsVar.cmake)
+canonicalize_flags_var("${CMAKE_CXX_FLAGS}" _new_cxx)
+set(CMAKE_CXX_FLAGS "${_new_cxx}" CACHE STRING "" FORCE)
+# message(FATAL_ERROR "CMAKE_CXX_FLAGS = <${CMAKE_CXX_FLAGS}>")
+
 
 # ----------------------------------------------------------------------
 # Information Summary

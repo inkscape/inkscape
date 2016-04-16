@@ -3005,7 +3005,7 @@ Verb *Verb::_base_verbs[] = {
                        N_("Fit the page to the current selection"), NULL),
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_DRAWING, "FitCanvasToDrawing", N_("Fit Page to Drawing"),
                        N_("Fit the page to the drawing"), NULL),
-    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Page to Selection or Drawing"),
+    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("_Resize Page to Selection"),
                        N_("Fit the page to the current selection or the drawing if there is no selection"), NULL),
     // LockAndHide
     new LockAndHideVerb(SP_VERB_UNLOCK_ALL, "UnlockAll", N_("Unlock All"),

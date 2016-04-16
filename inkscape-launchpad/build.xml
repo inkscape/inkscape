@@ -400,6 +400,7 @@
             -I${devlibs}/include
             <!-- GTK / GTKMM -->
             ${pcc.gtkmm-2.4}
+            ${pcc.gmodule-2.0}
             <!-- OTHER -->
 			${pcc.Magick++}
 			${pcc.libxml-2.0}
@@ -480,6 +481,7 @@
        <libs>
            -L${devlibs}/lib
            ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
+           ${pcl.gmodule-2.0}
            ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
@@ -564,6 +566,7 @@
            -L${devlibs}/lib
            ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
            ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
+		   ${pcl.gmodule-2.0}
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
@@ -615,6 +618,7 @@
            -L${devlibs}/lib
            ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 
            ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
+           ${pcl.gmodule-2.0}
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
