@@ -208,6 +208,14 @@ if(WITH_GTEST)
     add_subdirectory(test EXCLUDE_FROM_ALL)
 endif()
 
+# Canonicalize the flags to speed up recompilation using ccache/etc.
+# This should be the last thing we do:
+include(CMakeScripts/CanonicalizeFlagsVar.cmake)
+canonicalize_flags_var("${CMAKE_CXX_FLAGS}" _new_cxx)
+set(CMAKE_CXX_FLAGS "${_new_cxx}" CACHE STRING "" FORCE)
+# message(FATAL_ERROR "CMAKE_CXX_FLAGS = <${CMAKE_CXX_FLAGS}>")
+
+
 # ----------------------------------------------------------------------
 # Information Summary
 # ----------------------------------------------------------------------
