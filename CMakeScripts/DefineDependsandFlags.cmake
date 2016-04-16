@@ -239,7 +239,7 @@ if("${WITH_GTK3_EXPERIMENTAL}")
     pkg_check_modules(GDL_3_6 gdl-3.0>=3.6)
 
     if("${GDL_3_6_FOUND}")
-        message("Using Gdl 3.6 or higher")
+        message("Using GDL 3.6 or higher")
         set (WITH_GDL_3_6 1)
     endif()
 
@@ -247,7 +247,7 @@ if("${WITH_GTK3_EXPERIMENTAL}")
     pkg_check_modules(GTKSPELL3 gtkspell3-3.0)
 
     if("${GTKSPELL3_FOUND}")
-        message("Using GtkSpell3")
+        message("Using GtkSpell 3")
         set (WITH_GTKSPELL 1)
     else()
         unset(WITH_GTKSPELL)
