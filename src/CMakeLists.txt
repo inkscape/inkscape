@@ -526,6 +526,10 @@ endif()
 
 add_dependencies(inkscape inkscape_version)
 
+if(WITH_DBUS)
+    add_dependencies(inkscape inkscape_dbus)
+endif()
+
 if (NOT "${WITH_EXT_GDL}")
     list (APPEND INKSCAPE_LIBS "gdl_LIB")
 endif()
