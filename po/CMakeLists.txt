@@ -6,6 +6,7 @@ foreach(language ${LANGUAGES})
   GETTEXT_PROCESS_PO_FILES(${language} ALL INSTALL_DESTINATION "share/locale/" PO_FILES ${pofile})
 endforeach(language)
 
+if(NOT WIN32)
 
 #translates inkscape.desktop
 add_custom_target(inkscape_desktop DEPENDS ${CMAKE_BINARY_DIR}/inkscape.desktop)
@@ -25,3 +26,5 @@ else()
 endif()
 
 add_dependencies(inkscape inkscape_desktop)
+
+endif()

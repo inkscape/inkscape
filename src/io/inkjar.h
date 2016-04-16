@@ -18,13 +18,7 @@
 # include <zlib.h>
 #endif
 
-#ifdef HAVE_INTTYPES_H
-# include <inttypes.h>
-#else
-# ifdef HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-#endif
+#include <stdint.h>
 
 #include <glib.h>
 #include <cstdio>

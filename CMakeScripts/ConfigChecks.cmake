@@ -3,6 +3,7 @@
 # Set all HAVE_XXX variables, to correctly set all defines in config.h
 #SET(CMAKE_REQUIRED_INCLUDES ${INK_INCLUDES})
 include(CheckIncludeFiles)
+include(CheckIncludeFileCXX)
 include(CheckFunctionExists)
 include(CheckStructHasMember)
 # usage: CHECK_INCLUDE_FILES (<header> <RESULT_VARIABLE> )
@@ -12,7 +13,7 @@ include(CheckStructHasMember)
 set(CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} ${INKSCAPE_LIBS})
 set(CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES} ${INKSCAPE_INCS_SYS})
 
-CHECK_INCLUDE_FILES(boost/concept_check.hpp HAVE_BOOST_CONCEPT_CHECK_HPP)
+CHECK_INCLUDE_FILE_CXX(boost/concept_check.hpp HAVE_BOOST_CONCEPT_CHECK_HPP)
 CHECK_INCLUDE_FILES(cairo-pdf.h HAVE_CAIRO_PDF)
 CHECK_FUNCTION_EXISTS(floor HAVE_FLOOR)
 CHECK_FUNCTION_EXISTS(fpsetmask HAVE_FPSETMASK)

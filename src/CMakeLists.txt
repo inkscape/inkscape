@@ -506,14 +506,14 @@ set(inkscape_SRC
 #add_inkscape_lib(sp_LIB "${sp_SRC}")
 #add_inkscape_lib(inkscape_LIB "${inkscape_SRC}")
 
-# Build everything except main and inkview.c in a CMake "object" library.
-# An object library is just a bunch of .o files. Linking them with main.c or inkview.c
-# we get the inkscape and inkview executables respectively.
-add_library(inkscape_base OBJECT ${inkscape_SRC} ${sp_SRC})
+# Build everything except main and inkview.c in a shared library.
+add_library(inkscape_base SHARED ${inkscape_SRC} ${sp_SRC})
 
 # make executables for inkscape and inkview
-add_executable(inkscape ${main_SRC} $<TARGET_OBJECTS:inkscape_base>)
-add_executable(inkview inkview.cpp $<TARGET_OBJECTS:inkscape_base>)
+add_executable(inkscape ${main_SRC} )
+add_executable(inkview inkview.cpp )
+
+
 
 if(UNIX)
 # message after building.
@@ -528,10 +528,6 @@ add_dependencies(inkscape inkscape_version)
 
 if(WITH_DBUS)
     add_dependencies(inkscape inkscape_dbus)
-endif()
-
-if (NOT "${WITH_EXT_GDL}")
-    list (APPEND INKSCAPE_LIBS "gdl_LIB")
 endif()
 
 set(INKSCAPE_TARGET_LIBS
@@ -556,5 +552,16 @@ set(INKSCAPE_TARGET_LIBS
         ${INKSCAPE_LIBS}
 )
 
-target_link_libraries(inkscape ${INKSCAPE_TARGET_LIBS})
-target_link_libraries(inkview ${INKSCAPE_TARGET_LIBS})
+if (NOT "${WITH_EXT_GDL}")
+    # Insert it at the beginning of the list as the windows build fails otherwise
+    list (INSERT INKSCAPE_TARGET_LIBS 0 "gdl_LIB")
+endif()
+
+
+# Link the inkscape_base library against all external dependencies
+target_link_libraries(inkscape_base ${INKSCAPE_TARGET_LIBS})
+
+# Link inkscape and inkview against inkscape_base
+target_link_libraries(inkscape inkscape_base )
+target_link_libraries(inkview inkscape_base)
+

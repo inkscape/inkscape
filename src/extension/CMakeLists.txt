@@ -14,6 +14,7 @@ set(extension_SRC
 	print.cpp
 	system.cpp
 	timer.cpp
+    loader.cpp
 
 	implementation/implementation.cpp
 	implementation/xslt.cpp
@@ -90,6 +91,7 @@ set(extension_SRC
 	print.h
 	system.h
 	timer.h
+    loader.h
 
 	implementation/implementation.h
 	implementation/script.h
@@ -249,3 +251,5 @@ endif()
 
 # add_inkscape_lib(extension_LIB "${extension_SRC}")
 add_inkscape_source("${extension_SRC}")
+
+add_subdirectory( plugins )

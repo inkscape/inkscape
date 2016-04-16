@@ -13,6 +13,8 @@ ink_common_sources +=	\
     extension/execution-env.h \
     extension/init.cpp	\
     extension/init.h	\
+	extension/loader.h \
+	extension/loader.cpp \
     extension/param/parameter.h \
     extension/param/parameter.cpp \
     extension/param/notebook.h \

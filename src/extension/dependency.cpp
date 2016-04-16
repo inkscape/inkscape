@@ -235,6 +235,18 @@ bool Dependency::check (void) const
 }
 
 /**
+    \brief   Accessor to the name attribute.
+    \return  A string containing the name of the dependency.
+
+    Returns the name of the dependency as found in the configuration file.
+ 
+*/
+const gchar* Dependency::get_name()
+{
+    return _string;
+}
+
+/**
     \brief   Print out a dependency to a string.
 */
 std::ostream &
