@@ -343,6 +343,7 @@
             <exclude name="svg/test-svg-main.cpp"/>
             <exclude name="util/list-container-test.cpp"/>
             <exclude name="widgets/test-widgets.cpp"/>
+            <exclude name="widgets/image-menu-item.c"/>
             <exclude name="xml/quote-test.cpp"/>
             <exclude name="xml/repr-action-test.cpp"/>
             <exclude name="xml/test-xml.cpp"/>
