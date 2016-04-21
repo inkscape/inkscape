@@ -1287,9 +1287,9 @@ void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom,
         if(to_guides) {
             gchar *cross_number;
             if (!prefs->getBool("/tools/measure/ignore_1st_and_last", true)) {
-                cross_number= g_strdup_printf(_("Crossing %u"), idx);
+                cross_number= g_strdup_printf(_("Crossing %lu"), static_cast<unsigned long>(idx));
             } else {
-                cross_number= g_strdup_printf(_("Crossing %u"), idx + 1);
+                cross_number= g_strdup_printf(_("Crossing %lu"), static_cast<unsigned long>(idx + 1));
             }
             if (!prefs->getBool("/tools/measure/ignore_1st_and_last", true) && idx == 0) {
                 setGuide(desktop->doc2dt(intersections[idx]), angle + Geom::rad_from_deg(90), "");

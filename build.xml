@@ -328,7 +328,7 @@
             <exclude name="extension/dbus/.*"/>
             <exclude name="extension/dxf2svg/.*"/>
             <exclude name="extension/implementation/plugin.cpp"/>
-            <exclude name="extension/plugin/.*"/>
+            <exclude name="extension/plugins/.*"/>
             <exclude name="extract-uri-test.cpp"/>
             <exclude name="helper/units-test.cpp"/>
             <!-- exclude name="inkview.cpp"/-->

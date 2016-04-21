@@ -491,7 +491,7 @@ std::vector<double> FilletChamferPointArrayParam::get_times(int index, Geom::Pat
     curve_it1 = subpaths[positions.first][positions.second].duplicate();
     Coord it1_length = (*curve_it1).length(tolerance);
     double time_it1, time_it2, time_it1_B, intpart;
-    if(_vector.size() <= index){
+    if (static_cast<int>(_vector.size()) <= index){
         std::vector<double> out;
         out.push_back(0);
         out.push_back(1);
