@@ -29,6 +29,7 @@
 #include <gtkmm/sizegroup.h>
 
 #include <gtkmm/paned.h>
+#include <gtkmm/scrolledwindow.h>
 
 namespace Inkscape {
 namespace UI {
@@ -279,6 +280,7 @@ private:
     // Primitives Info Box  
     Gtk::Label _infobox_desc;
     Gtk::Image _infobox_icon;
+    Gtk::ScrolledWindow* _sw_infobox;
 
     // View/add primitives
 #if WITH_GTKMM_3_0

@@ -59,6 +59,8 @@ CHECK_INCLUDE_FILES(sys/types.h HAVE_SYS_TYPES_H)
 CHECK_INCLUDE_FILES(unistd.h HAVE_UNISTD_H)
 CHECK_INCLUDE_FILES(zlib.h HAVE_ZLIB_H)
 
+CHECK_INCLUDE_FILE_CXX(unordered_set HAVE_NATIVE_UNORDERED_SET)
+
 # Enable pango defines, necessary for compilation on Win32, how about Linux?
 # yes but needs to be done a better way
 if(HAVE_CAIRO_PDF)

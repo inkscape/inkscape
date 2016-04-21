@@ -23,8 +23,9 @@ add_executable(unittest
 	src/attributes-test.cpp
 	src/color-profile-test.cpp
 	src/dir-util-test.cpp
-    $<TARGET_OBJECTS:inkscape_base>
 )
+
+target_link_libraries(unittest inkscape_base)
 
 add_dependencies(unittest inkscape_version)
 

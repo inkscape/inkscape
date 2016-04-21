@@ -342,7 +342,9 @@ unclump (std::vector<SPItem*> &items)
         std::list<SPItem*> nei;
 
         std::list<SPItem*> rest;
-        for(int i=0;i<items.size();i++)rest.push_front(items[items.size()-i-1]);
+        for (int i=0; i < static_cast<int>(items.size()); i++) {
+            rest.push_front(items[items.size() - i - 1]);
+        }
         rest.remove(item);
 
         while (!rest.empty()) {
@@ -352,7 +354,9 @@ unclump (std::vector<SPItem*> &items)
                 rest.remove(closest);
                 std::vector<SPItem*> new_rest = unclump_remove_behind (item, closest, rest);
                 rest.clear();
-                for(int i=0;i<new_rest.size();i++)rest.push_front(new_rest[new_rest.size()-i-1]);
+                for (int i=0; i < static_cast<int>(new_rest.size()); i++) {
+                    rest.push_front(new_rest[new_rest.size() - i - 1]);
+                }
             } else {
                 break;
             }

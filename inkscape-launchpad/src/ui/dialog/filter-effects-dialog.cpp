@@ -2767,8 +2767,8 @@ FilterEffectsDialog::FilterEffectsDialog()
     _primitive_box = Gtk::manage(new Gtk::VPaned);
 #endif
 
+    _sw_infobox = Gtk::manage(new Gtk::ScrolledWindow);
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
-    Gtk::ScrolledWindow* sw_infobox = Gtk::manage(new Gtk::ScrolledWindow);
     Gtk::HBox* infobox = Gtk::manage(new Gtk::HBox(/*homogeneous:*/false, /*spacing:*/4));
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
     Gtk::VBox* vb_prims = Gtk::manage(new Gtk::VBox);
@@ -2777,17 +2777,17 @@ FilterEffectsDialog::FilterEffectsDialog()
     Gtk::VBox* prim_vbox_p = Gtk::manage(new Gtk::VBox);
     Gtk::VBox* prim_vbox_i = Gtk::manage(new Gtk::VBox);
 
-    _primitive_box->pack1(*prim_vbox_p);
-    _primitive_box->pack2(*prim_vbox_i);
+    sw_prims->add(_primitive_list);
     
-    _getContents()->add(*hpaned);
-    hpaned->pack1(_filter_modifier);
-    hpaned->pack2(*_primitive_box);
     prim_vbox_p->pack_start(*sw_prims, true, true);
     prim_vbox_i->pack_start(*vb_prims, true, true);
     
-    sw_prims->add(_primitive_list);
-    sw_infobox->add(*infobox);
+    _primitive_box->pack1(*prim_vbox_p);
+    _primitive_box->pack2(*prim_vbox_i, false, false);
+    
+    hpaned->pack1(_filter_modifier);
+    hpaned->pack2(*_primitive_box);
+    _getContents()->add(*hpaned);
     
     _infobox_icon.set_alignment(0, 0);
     _infobox_desc.set_alignment(0, 0);
@@ -2795,20 +2795,27 @@ FilterEffectsDialog::FilterEffectsDialog()
     _infobox_desc.set_line_wrap(true);
     _infobox_desc.set_size_request(200, -1);
     
-    infobox->pack_start(_infobox_icon, false, false);
     vb_desc->pack_start(_infobox_desc, true, true);
+    
+    infobox->pack_start(_infobox_icon, false, false);
     infobox->pack_start(*vb_desc, true, true);
     
-    vb_prims->pack_start(*hb_prims, false, false);
-    vb_prims->pack_start(*sw_infobox, true, true);
-
-    hb_prims->pack_start(_add_primitive, false, false);
+    //_sw_infobox->set_size_request(-1, -1);
+    _sw_infobox->set_size_request(200, -1);
+    _sw_infobox->add(*infobox);
     
+    //vb_prims->set_size_request(-1, 50);
+    vb_prims->pack_start(*hb_prims, false, false);
+    vb_prims->pack_start(*_sw_infobox, true, true);
+    
+    hb_prims->pack_start(_add_primitive, false, false);    
     hb_prims->pack_start(_add_primitive_type, true, true);
-    _getContents()->pack_start(_settings_tabs, true, true);
+    _getContents()->pack_start(_settings_tabs, false, false);
     _settings_tabs.append_page(_settings_tab1, _("Effect parameters"));
     _settings_tabs.append_page(_settings_tab2, _("Filter General Settings"));
 
+    
+    
     _primitive_list.signal_primitive_changed().connect(
         sigc::mem_fun(*this, &FilterEffectsDialog::update_settings_view));
     _filter_modifier.signal_filter_changed().connect(
@@ -2819,7 +2826,7 @@ FilterEffectsDialog::FilterEffectsDialog()
 
     sw_prims->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     sw_prims->set_shadow_type(Gtk::SHADOW_IN);
-    sw_infobox->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    _sw_infobox->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     
 //    al_settings->set_padding(0, 0, 12, 0);
 //    fr_settings->set_shadow_type(Gtk::SHADOW_NONE);
@@ -2969,11 +2976,9 @@ void FilterEffectsDialog::update_primitive_infobox()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/showfiltersinfobox/value", true)){
-        _infobox_icon.show();
-        _infobox_desc.show();
+        _sw_infobox->show();
     } else {
-        _infobox_icon.hide();
-        _infobox_desc.hide();
+        _sw_infobox->hide();
     }
     switch(_add_primitive_type.get_active_data()->id){
         case(NR_FILTER_BLEND):
@@ -3157,11 +3162,9 @@ void FilterEffectsDialog::update_settings_view()
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/showfiltersinfobox/value", true)){
-        _infobox_icon.show();
-        _infobox_desc.show();
+        _sw_infobox->show();
     } else {
-        _infobox_icon.hide();
-        _infobox_desc.hide();
+        _sw_infobox->hide();
     }
 
     SPFilterPrimitive* prim = _primitive_list.get_selected();

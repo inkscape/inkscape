@@ -59,7 +59,7 @@ Implementation::Implementation *Loader::load_implementation(Inkscape::XML::Docum
                 if( !success ){
                     // Could not load dependency, we abort
                     const char *res = g_module_error();
-                    g_warning("Unable to load dependency %s of plugin %s.\nDetails: %s\n", dep.get_name(), res);
+                    g_warning("Unable to load dependency %s of plugin %s.\nDetails: %s\n", dep.get_name(), "<todo>", res);
                     return NULL;
                 }
             } 
