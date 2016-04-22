@@ -118,14 +118,14 @@ unsigned DrawingImage::_renderItem(DrawingContext &dc, Geom::IntRect const &/*ar
             //      http://www.w3.org/TR/css4-images/#the-image-rendering
             //      style.h/style.cpp
             switch (_style->image_rendering.computed) {
-                case SP_CSS_COLOR_RENDERING_AUTO:
+                case SP_CSS_IMAGE_RENDERING_AUTO:
                     // Do nothing
                     break;
-                case SP_CSS_COLOR_RENDERING_OPTIMIZEQUALITY:
+                case SP_CSS_IMAGE_RENDERING_OPTIMIZEQUALITY:
                     // In recent Cairo, BEST used Lanczos3, which is prohibitively slow
                     dc.patternSetFilter( CAIRO_FILTER_GOOD );
                     break;
-                case SP_CSS_COLOR_RENDERING_OPTIMIZESPEED:
+                case SP_CSS_IMAGE_RENDERING_OPTIMIZESPEED:
                 default:
                     dc.patternSetFilter( CAIRO_FILTER_NEAREST );
                     break;
