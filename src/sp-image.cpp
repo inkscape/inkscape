@@ -137,7 +137,6 @@ void SPImage::build(SPDocument *document, Inkscape::XML::Node *repr) {
     SPItem::build(document, repr);
 
     this->readAttr( "xlink:href" );
-    this->readAttr( "href" );
     this->readAttr( "x" );
     this->readAttr( "y" );
     this->readAttr( "width" );
@@ -180,7 +179,6 @@ void SPImage::release() {
 void SPImage::set(unsigned int key, const gchar* value) {
     switch (key) {
         case SP_ATTR_XLINK_HREF:
-        case SP_ATTR_HREF:
             g_free (this->href);
             this->href = (value) ? g_strdup (value) : NULL;
             this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);

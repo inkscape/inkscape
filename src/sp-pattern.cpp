@@ -75,7 +75,6 @@ void SPPattern::build(SPDocument *doc, Inkscape::XML::Node *repr)
     this->readAttr("viewBox");
     this->readAttr("preserveAspectRatio");
     this->readAttr("xlink:href");
-    this->readAttr("href");
 
     /* Register ourselves */
     doc->addResource("pattern", this);
@@ -183,7 +182,6 @@ void SPPattern::set(unsigned int key, const gchar *value)
             break;
 
         case SP_ATTR_XLINK_HREF:
-        case SP_ATTR_HREF:
             if (value && this->href == value) {
                 /* Href unchanged, do nothing. */
             }

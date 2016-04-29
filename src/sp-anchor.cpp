@@ -38,7 +38,6 @@ void SPAnchor::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "xlink:show" );
     this->readAttr( "xlink:actuate" );
     this->readAttr( "xlink:href" );
-    this->readAttr( "xlink" );
     this->readAttr( "target" );
 }
 
@@ -54,7 +53,6 @@ void SPAnchor::release() {
 void SPAnchor::set(unsigned int key, const gchar* value) {
     switch (key) {
 	case SP_ATTR_XLINK_HREF:
-	case SP_ATTR_HREF:
             g_free(this->href);
             this->href = g_strdup(value);
             this->requestModified(SP_OBJECT_MODIFIED_FLAG);

@@ -67,7 +67,6 @@ void SPTRef::build(SPDocument *document, Inkscape::XML::Node *repr) {
     SPItem::build(document, repr);
 
     this->readAttr( "xlink:href" );
-    this->readAttr( "href" );
     this->readAttr( "x" );
     this->readAttr( "y" );
     this->readAttr( "dx" );
@@ -95,7 +94,7 @@ void SPTRef::set(unsigned int key, const gchar* value) {
 
     if (this->attributes.readSingleAttribute(key, value, style, &viewport)) { // x, y, dx, dy, rotate
         this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    } else if (key == SP_ATTR_XLINK_HREF || key == SP_ATTR_HREF ) { // xlink:href
+    } else if (key == SP_ATTR_XLINK_HREF) { // xlink:href
         if ( !value ) {
             // No value
             g_free(this->href);

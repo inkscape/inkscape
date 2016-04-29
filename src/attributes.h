@@ -44,7 +44,6 @@ enum SPAttributeEnum {
     SP_ATTR_INKSCAPE_SPRAY_ORIGIN,
     /* SPAnchor */
     SP_ATTR_XLINK_HREF,
-    SP_ATTR_HREF,  // SVG2 allows href without xlink
     SP_ATTR_XLINK_TYPE,
     SP_ATTR_XLINK_ROLE,
     SP_ATTR_XLINK_ARCROLE,
