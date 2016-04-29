@@ -55,6 +55,7 @@ SPTagUse::build(SPDocument *document, Inkscape::XML::Node *repr)
 {
     SPObject::build(document, repr);
     readAttr( "xlink:href" );
+    readAttr( "href" );
 
     // We don't need to create child here:
     // reading xlink:href will attach ref, and that will cause the changed signal to be emitted,
@@ -85,7 +86,9 @@ SPTagUse::set(unsigned key, gchar const *value)
 {
 
     switch (key) {
-        case SP_ATTR_XLINK_HREF: {
+        case SP_ATTR_XLINK_HREF:
+        case SP_ATTR_HREF:
+        {
             if ( value && href && ( strcmp(value, href) == 0 ) ) {
                 /* No change, do nothing. */
             } else {

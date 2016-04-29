@@ -28,6 +28,7 @@ void SPScript::build(SPDocument* doc, Inkscape::XML::Node* repr) {
 
     //Read values of key attributes from XML nodes into object.
     this->readAttr( "xlink:href" );
+    this->readAttr( "href" );
 
     doc->addResource("script", this);
 }
@@ -58,6 +59,7 @@ void SPScript::modified(unsigned int /*flags*/) {
 void SPScript::set(unsigned int key, const gchar* value) {
     switch (key) {
 	case SP_ATTR_XLINK_HREF:
+	case SP_ATTR_HREF:
             if (this->xlinkhref) {
             	g_free(this->xlinkhref);
             }

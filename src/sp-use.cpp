@@ -82,6 +82,7 @@ void SPUse::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "width" );
     this->readAttr( "height" );
     this->readAttr( "xlink:href" );
+    this->readAttr( "href" );
 
     // We don't need to create child here:
     // reading xlink:href will attach ref, and that will cause the changed signal to be emitted,
@@ -128,7 +129,9 @@ void SPUse::set(unsigned int key, const gchar* value) {
             this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
-        case SP_ATTR_XLINK_HREF: {
+        case SP_ATTR_XLINK_HREF:
+        case SP_ATTR_HREF:
+        {
             if ( value && this->href && ( strcmp(value, this->href) == 0 ) ) {
                 /* No change, do nothing. */
             } else {

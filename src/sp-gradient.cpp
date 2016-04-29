@@ -287,6 +287,7 @@ void SPGradient::build(SPDocument *document, Inkscape::XML::Node *repr)
     this->readAttr( "gradientTransform" );
     this->readAttr( "spreadMethod" );
     this->readAttr( "xlink:href" );
+    this->readAttr( "href" );
     this->readAttr( "osb:paint" );
 
     // Register ourselves
@@ -375,6 +376,7 @@ void SPGradient::set(unsigned key, gchar const *value)
             break;
 
         case SP_ATTR_XLINK_HREF:
+        case SP_ATTR_HREF:
             if (value) {
                 try {
                     this->ref->attach(Inkscape::URI(value));

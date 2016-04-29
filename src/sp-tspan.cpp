@@ -245,6 +245,7 @@ void SPTextPath::build(SPDocument *doc, Inkscape::XML::Node *repr) {
     this->readAttr( "rotate" );
     this->readAttr( "startOffset" );
     this->readAttr( "xlink:href" );
+    this->readAttr( "href" );
 
     bool  no_content = true;
 
@@ -283,6 +284,7 @@ void SPTextPath::set(unsigned int key, const gchar* value) {
     } else {
         switch (key) {
             case SP_ATTR_XLINK_HREF:
+            case SP_ATTR_HREF:
                 this->sourcePath->link((char*)value);
                 break;
             case SP_ATTR_STARTOFFSET:
