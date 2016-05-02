@@ -571,7 +571,8 @@ target_link_libraries(inkview inkscape_base)
 install(
     TARGETS inkscape_base inkscape inkview 
   RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
+  LIBRARY DESTINATION lib/inkscape
+  ARCHIVE DESTINATION lib/inkscape
   )
 
   

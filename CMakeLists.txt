@@ -19,7 +19,7 @@ project(inkscape)
 set(INKSCAPE_VERSION 0.91+devel)
 set(PROJECT_NAME inkscape)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
-SET(CMAKE_INSTALL_RPATH "$ORIGIN/../lib/")
+SET(CMAKE_INSTALL_RPATH "$ORIGIN/../lib/inkscape")
 
 
 cmake_policy(SET CMP0003 NEW) # don't be prolific with library paths
