@@ -31,7 +31,7 @@ public:
      * 
      * @param dir is the path where the plugin should be loaded from.
      */
-    void set_base_directory(const gchar *dir) {
+    void set_base_directory(std::string dir) {
         _baseDirectory = dir;
     }
 
@@ -51,7 +51,7 @@ public:
     Implementation::Implementation *load_implementation(Inkscape::XML::Document *doc);
 
 private:
-    const gchar *_baseDirectory; /**< The base directory to load a plugin from */
+    std::string _baseDirectory; /**< The base directory to load a plugin from */
 
 
 };

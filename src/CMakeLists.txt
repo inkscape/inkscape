@@ -558,6 +558,8 @@ if (NOT "${WITH_EXT_GDL}")
 endif()
 
 
+
+
 # Link the inkscape_base library against all external dependencies
 target_link_libraries(inkscape_base ${INKSCAPE_TARGET_LIBS})
 
@@ -565,3 +567,11 @@ target_link_libraries(inkscape_base ${INKSCAPE_TARGET_LIBS})
 target_link_libraries(inkscape inkscape_base )
 target_link_libraries(inkview inkscape_base)
 
+#Define the installation
+install(
+    TARGETS inkscape_base inkscape inkview 
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  )
+
+  

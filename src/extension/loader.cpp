@@ -74,7 +74,7 @@ Implementation::Implementation *Loader::load_implementation(Inkscape::XML::Docum
                     _getInkscapeVersion GetInkscapeVersion = NULL;
                     
                     // build the path where to look for the plugin
-                    gchar *path = g_build_filename(_baseDirectory, name, (char *) NULL);
+                    gchar *path = g_build_filename(_baseDirectory.c_str(), name, (char *) NULL);
                     module = g_module_open(path, G_MODULE_BIND_LOCAL);
                     g_free(path);
                     

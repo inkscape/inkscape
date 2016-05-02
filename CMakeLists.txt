@@ -19,6 +19,8 @@ project(inkscape)
 set(INKSCAPE_VERSION 0.91+devel)
 set(PROJECT_NAME inkscape)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+SET(CMAKE_INSTALL_RPATH "$ORIGIN/../lib/")
+
 
 cmake_policy(SET CMP0003 NEW) # don't be prolific with library paths
 cmake_policy(SET CMP0005 NEW) # proper define quoting
@@ -173,10 +175,7 @@ endforeach()
 # Installation
 # -----------------------------------------------------------------------------
 if(UNIX)
-    install(
-        PROGRAMS ${EXECUTABLE_OUTPUT_PATH}/inkscape ${EXECUTABLE_OUTPUT_PATH}/inkview
-	DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-	)
+    #The install directive for the binaries and libraries are found in src/CMakeList.txt
 
     install(
 	FILES ${CMAKE_BINARY_DIR}/inkscape.desktop
@@ -188,6 +187,7 @@ if(UNIX)
 
 else()
     # TODO, WIN32, APPLE/OSX, MinGW
+
 endif()
 
 # -----------------------------------------------------------------------------
