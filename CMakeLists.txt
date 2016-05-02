@@ -19,7 +19,12 @@ project(inkscape)
 set(INKSCAPE_VERSION 0.91+devel)
 set(PROJECT_NAME inkscape)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
-SET(CMAKE_INSTALL_RPATH "$ORIGIN/../lib/inkscape")
+if(APPLE)
+    SET(CMAKE_MACOSX_RPATH TRUE)
+    SET(CMAKE_INSTALL_RPATH "@loader_path/../lib/inkscape")
+else()
+    SET(CMAKE_INSTALL_RPATH "$ORIGIN/../lib/inkscape")
+endif()
 
 
 cmake_policy(SET CMP0003 NEW) # don't be prolific with library paths
