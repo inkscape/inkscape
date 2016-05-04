@@ -106,11 +106,13 @@ static void sp_button_get_preferred_width(GtkWidget *widget, gint *minimal_width
 
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
     GtkBorder padding;
+    GtkBorder border;
 
-    gtk_style_context_get_border(context, static_cast<GtkStateFlags>(0), &padding);
+    gtk_style_context_get_padding(context, GTK_STATE_FLAG_NORMAL, &padding);
+    gtk_style_context_get_border( context, GTK_STATE_FLAG_NORMAL, &border );
 
-    *minimal_width += 2 + 2 * MAX(2, padding.left + padding.right);
-    *natural_width += 2 + 2 * MAX(2, padding.left + padding.right);
+    *minimal_width += MAX(2, padding.left + padding.right + border.left + border.right);
+    *natural_width += MAX(2, padding.left + padding.right + border.left + border.right);
 }
 
 static void sp_button_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
@@ -126,11 +128,13 @@ static void sp_button_get_preferred_height(GtkWidget *widget, gint *minimal_heig
 
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
     GtkBorder padding;
+    GtkBorder border;
 
-    gtk_style_context_get_border(context, static_cast<GtkStateFlags>(0), &padding);
+    gtk_style_context_get_padding(context, GTK_STATE_FLAG_NORMAL, &padding);
+    gtk_style_context_get_border( context, GTK_STATE_FLAG_NORMAL, &border );
 
-    *minimal_height += 2 + 2 * MAX(2, padding.top + padding.bottom);
-    *natural_height += 2 + 2 * MAX(2, padding.top + padding.bottom);
+    *minimal_height += MAX(2, padding.top + padding.bottom + border.top + border.bottom);
+    *natural_height += MAX(2, padding.top + padding.bottom + border.top + border.bottom);
 }
 #else
 static void sp_button_size_request(GtkWidget *widget, GtkRequisition *requisition)
