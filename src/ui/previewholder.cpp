@@ -340,6 +340,12 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
     width = itemCount;
     height = 1;
 
+#if GTK_CHECK_VERSION(3,16,0)
+    // Disable overlay scrolling as the scrollbar covers up swatches.
+    // For some reason this also makes the height 55px.
+    ((Gtk::ScrolledWindow *)_scroller)->set_overlay_scrolling(false);
+#endif
+
     if ( _anchor == SP_ANCHOR_SOUTH || _anchor == SP_ANCHOR_NORTH ) {
         Gtk::Requisition req;
 #if GTK_CHECK_VERSION(3,0,0)

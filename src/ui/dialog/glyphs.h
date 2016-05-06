@@ -27,8 +27,6 @@ class font_instance;
 namespace Inkscape {
 namespace UI {
 
-class PreviewHolder;
-
 namespace Dialog {
 
 class GlyphColumns;
