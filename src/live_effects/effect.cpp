@@ -112,6 +112,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {RECURSIVE_SKELETON,    N_("Recursive skeleton"),      "recursive_skeleton"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
     {TEXT_LABEL,            N_("Text label"),              "text_label"},
+    {FILLET_CHAMFER,        N_("Fillet/Chamfer"),          "fillet-chamfer"},
 #endif
 /* 0.46 */
     {BEND_PATH,             N_("Bend"),                    "bend_path"},
@@ -135,7 +136,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {SIMPLIFY,              N_("Simplify"),                "simplify"},
     {LATTICE2,              N_("Lattice Deformation 2"),   "lattice2"},
     {PERSPECTIVE_ENVELOPE,  N_("Perspective/Envelope"),    "perspective-envelope"},
-    {FILLET_CHAMFER,        N_("Fillet/Chamfer"),          "fillet-chamfer"},
     {INTERPOLATE_POINTS,    N_("Interpolate points"),      "interpolate_points"},
     {TRANSFORM_2PTS,        N_("Transform by 2 points"),   "transform_2pts"},
     {SHOW_HANDLES,          N_("Show handles"),            "show_handles"},
