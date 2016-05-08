@@ -1,0 +1,55 @@
+
+/* GTK3 WIDGET STYLING */
+
+/*
+ * Keep in order of:
+ *   General -> Specific
+ *   Order of default appearance
+ *     Top -> Bottom (e.g. Selector Tool, Node Tool, ...)
+ *     Left -> Right
+ *
+ * We need a standardized naming scheme.
+ */
+
+/* Lightest to darkest based on linear rgb */
+@define-color bg_color0  #ffffff; /* White */
+@define-color bg_color05 #f8f8f8; /* Slightly off white */
+@define-color bg_color1  #f0f0f0;
+@define-color bg_color2  #e0e0e0;
+@define-color bg_color3  #d0d0d0;
+@define-color bg_color4  #bbbbbb; /* 50% Gray */
+@define-color bg_color5  #a5a5a5;
+@define-color bg_color6  #898989;
+@define-color bg_color7  #636363;
+@define-color bg_color8  #000000; /* Black */
+
+GtkWidget {
+/*    font-size: 12pt; */
+}
+
+SPRuler {
+    background-color: @bg_color05;
+}
+
+SPCanvas {
+    background-color: @bg_color0;
+}
+
+combobox window.popup scrolledwindow treeview separator {
+    -GtkWidget-wide-separators:  true;
+    -GtkWidget-separator-height: 6;
+}
+
+#font_selector_family {
+    -GtkWidget-wide-separators:  true;
+    -GtkWidget-separator-height: 6;
+}
+
+#TextFontFamilyAction_combobox {
+    -GtkComboBox-appears-as-list: true;
+}
+
+#guides_lock {
+    padding: 0;
+}
+

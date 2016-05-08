@@ -282,21 +282,6 @@ sp_ruler_init (SPRuler *ruler)
   priv->pos_redraw_idle_id   = 0;
 
   priv->font_scale           = DEFAULT_RULER_FONT_SCALE;
-
-#if GTK_CHECK_VERSION(3,0,0)
-  // Hard code off-white for the moment. Where is @bg_color defined?
-  const gchar *str = 
-    "SPRuler {\n"
-//    "  background-color: @bg_color;\n"
-      "  background-color: #f8f8f8;\n"
-    "}\n";
-  GtkCssProvider *css = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (css, str, -1, NULL);
-  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (ruler)),
-                                  GTK_STYLE_PROVIDER (css),
-                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-  g_object_unref (css);
-#endif
 }
 
 static void
