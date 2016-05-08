@@ -104,7 +104,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {EXTRUDE,               N_("Extrude"),                 "extrude"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
     {LINE_SEGMENT,          N_("Line Segment"),            "line_segment"},
-    {MIRROR_SYMMETRY,       N_("Mirror symmetry"),         "mirror_symmetry"},
     {OFFSET,                N_("Offset"),                  "offset"},
     {PARALLEL,              N_("Parallel"),                "parallel"},
     {PATH_LENGTH,           N_("Path length"),             "path_length"},
@@ -144,6 +143,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {BSPLINE,               N_("BSpline"),                 "bspline"},
     {JOIN_TYPE,             N_("Join type"),               "join_type"},
     {TAPER_STROKE,          N_("Taper stroke"),            "taper_stroke"},
+    {MIRROR_SYMMETRY,       N_("Mirror symmetry"),         "mirror_symmetry"},
     {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
 /* Ponyscape -> Inkscape 0.92*/
     {ATTACH_PATH,           N_("Attach path"),             "attach_path"},
