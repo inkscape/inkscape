@@ -168,6 +168,10 @@ sp_ruler_class_init (SPRulerClass *klass)
   GObjectClass   *object_class  = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class  = GTK_WIDGET_CLASS (klass);
 
+#if GTK_CHECK_VERSION(3,20,0)
+  gtk_widget_class_set_css_name (widget_class, "ruler-widget");
+#endif
+
   object_class->dispose              = sp_ruler_dispose;
   object_class->set_property         = sp_ruler_set_property;
   object_class->get_property         = sp_ruler_get_property;

@@ -9,6 +9,8 @@
  *     Left -> Right
  *
  * We need a standardized naming scheme.
+ *
+ * As of Gtk 3.20, you cannot use widget names.
  */
 
 /* Lightest to darkest based on linear rgb */
@@ -27,7 +29,13 @@ GtkWidget {
 /*    font-size: 12pt; */
 }
 
+/* Gtk  <= 3.18 */
 SPRuler {
+    background-color: @bg_color05;
+}
+
+/* Gtk  > 3.18 */
+ruler-widget {
     background-color: @bg_color05;
 }
 
