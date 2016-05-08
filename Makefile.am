@@ -38,6 +38,9 @@ man_MANS = \
 EXTRA_DIST = \
 	acinclude.m4 \
 	autogen.sh   \
+	GPL2.txt \
+	GPL3.txt \
+	LGPL2.1.txt \
 	fix-roff-punct	\
 	intltool-extract.in	\
 	intltool-merge.in	\
