@@ -1159,8 +1159,11 @@ void SPCanvas::handle_size_allocate(GtkWidget *widget, GtkAllocation *allocation
         allocation->width, allocation->height);
     if (canvas->_backing_store) {
         cairo_t *cr = cairo_create(new_backing_store);
-        cairo_set_source_surface(cr, canvas->_backing_store, 0, 0);
+        cairo_translate(cr, -canvas->_x0, -canvas->_y0);
         cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+        cairo_set_source(cr, canvas->_background);
+        cairo_paint(cr);
+        cairo_set_source_surface(cr, canvas->_backing_store, canvas->_x0, canvas->_y0);
         cairo_paint(cr);
         cairo_destroy(cr);
         cairo_surface_destroy(canvas->_backing_store);

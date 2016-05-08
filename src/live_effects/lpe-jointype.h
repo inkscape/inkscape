@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2014 Authors
  *
- * Released under GNU GPL v2, read the file COPYING for more information
+ * Released under GNU GPL v2+, read the file COPYING for more information
  */
 
 #ifndef INKSCAPE_LPE_JOINTYPE_H
