@@ -148,6 +148,7 @@ src/live_effects/lpe-interpolate_points.cpp
 src/live_effects/lpe-jointype.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-lattice2.cpp
+src/live_effects/lpe-mirror_symmetry.cpp
 src/live_effects/lpe-patternalongpath.cpp
 src/live_effects/lpe-perspective-envelope.cpp
 src/live_effects/lpe-powerstroke.cpp
