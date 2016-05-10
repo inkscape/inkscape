@@ -43,6 +43,7 @@
 #include "snap.h"
 #include "sp-path.h"
 #include "sp-use.h"
+#include "sp-item-group.h"
 #include "sp-namedview.h"
 #include "live_effects/lpe-powerstroke.h"
 #include "style.h"
@@ -432,7 +433,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 if(cm->paste(SP_ACTIVE_DESKTOP,true) == true){
                     gchar const *svgd = item->getRepr()->attribute("d");
                     bend_item = dc->selection->singleItem();
-                    if(bend_item){
+                    if(bend_item && (SP_IS_SHAPE(bend_item) || SP_IS_GROUP(bend_item))){
                         bend_item->moveTo(item,false);
                         bend_item->transform.setTranslation(Geom::Point());
                         spdc_apply_bend_shape(svgd, dc, bend_item);
@@ -440,9 +441,11 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
 
                         shape = BEND_CLIPBOARD;
                     } else {
+                        bend_item = NULL;
                         shape = NONE;
                     }
                 } else {
+                    bend_item = NULL;
                     shape = NONE;
                 }
                 break;
