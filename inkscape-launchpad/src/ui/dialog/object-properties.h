@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * Copyright (C) 2012 Kris De Gussem <Kris.DeGussem@gmail.com>
- * c++version based on former C-version (GPL v2) with authors:
+ * c++version based on former C-version (GPL v2+) with authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>

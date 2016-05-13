@@ -21,8 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import sys, copy, simplestyle, inkex
 import random
 
-color_props_fill = ('fill', 'stop-color', 'flood-color', 'lighting-color')
+color_props_fill = ('fill', 'stop-color',  'flood-color', 'lighting-color')
 color_props_stroke = ('stroke',)
+opacity_props = ('opacity',) #'stop-opacity', 'fill-opacity', 'stroke-opacity' don't work with clones
 color_props = color_props_fill + color_props_stroke
 
 
@@ -63,13 +64,14 @@ class ColorEffect(inkex.Effect):
         #
         # The processing here is just something simple that should usually work,
         # without trying too hard to get everything right.
-        # (Won't work for the pathalogical case that someone escapes a property
+        # (Won't work for the pathological case that someone escapes a property
         # name, probably does the wrong thing if colon or semicolon is used inside
         # a comment or string value.)
         style = node.get('style') # fixme: this will break for presentation attributes!
         if style:
             #inkex.debug('old style:'+style)
             declarations = style.split(';')
+            opacity_in_style = False
             for i,decl in enumerate(declarations):
                 parts = decl.split(':', 2)
                 if len(parts) == 2:
@@ -80,16 +82,25 @@ class ColorEffect(inkex.Effect):
                         new_val = self.process_prop(val)
                         if new_val != val:
                             declarations[i] = prop + ':' + new_val
+                    elif prop in opacity_props:
+                        opacity_in_style = True
+                        val = val.strip()
+                        new_val = self.process_prop(val)
+                        if new_val != val:
+                            declarations[i] = prop + ':' + new_val
+            if not opacity_in_style:
+                new_val = self.process_prop("1")
+                declarations.append('opacity' + ':' + new_val)
             #inkex.debug('new style:'+';'.join(declarations))
             node.set('style', ';'.join(declarations))
 
-  def process_prop(self,col):
-    #debug('got:'+col)
+  def process_prop(self, col):
+    #inkex.debug('got:'+col+str(type(col)))
     if simplestyle.isColor(col):
       c=simplestyle.parseColor(col)
-      col='#'+self.colmod(c[0],c[1],c[2])
-      #debug('made:'+col)
-    if col.startswith('url(#'):
+      col='#'+self.colmod(c[0], c[1], c[2])
+      #inkex.debug('made:'+col)
+    elif col.startswith('url(#'):
       id = col[len('url(#'):col.find(')')]
       newid = '%s-%d' % (id, int(random.random() * 1000))
       #inkex.debug('ID:' + id )
@@ -97,6 +108,11 @@ class ColorEffect(inkex.Effect):
       for node in self.document.xpath(path, namespaces=inkex.NSS):
         self.process_gradient(node, newid)
       col = 'url(#%s)' % newid
+    # what remains should be opacity
+    else:
+      col = self.opacmod(col)
+      
+    #inkex.debug('col:'+str(col))
     return col
 
   def process_gradient(self, node, newid):
@@ -128,6 +144,9 @@ class ColorEffect(inkex.Effect):
  
   def colmod(self,r,g,b):
     pass
+  
+  def opacmod(self, opacity):
+    return opacity
 
   def rgb_to_hsl(self,r, g, b):
     rgb_max = max (max (r, g), b)
@@ -188,4 +207,5 @@ class ColorEffect(inkex.Effect):
         rgb[2] = self.hue_2_rgb (v1, v2, h*6 - 2.0)
     return rgb
 
+  
 # vi: set autoindent shiftwidth=2 tabstop=8 expandtab softtabstop=2 :

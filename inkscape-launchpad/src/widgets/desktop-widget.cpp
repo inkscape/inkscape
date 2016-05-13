@@ -404,6 +404,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     Glib::RefPtr<Gtk::CssProvider> guides_lock_style_provider = Gtk::CssProvider::create();
     guides_lock_style_provider->load_from_data("GtkWidget { padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; }");
     Gtk::Widget * wnd = Glib::wrap(dtw->guides_lock);
+    wnd->set_name("guides_lock");
     Glib::RefPtr<Gtk::StyleContext> context = wnd->get_style_context();
     context->add_provider(guides_lock_style_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 #endif

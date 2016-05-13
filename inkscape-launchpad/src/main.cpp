@@ -52,6 +52,11 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
+#if GTK_CHECK_VERSION(3,0,0)
+#include <gtkmm/cssprovider.h>
+#include <gdkmm/screen.h>
+#endif
+
 #include "inkgc/gc-core.h"
 
 #ifdef AND
@@ -1050,6 +1055,35 @@ sp_main_gui(int argc, char const **argv)
     gtk_icon_theme_rescan_if_needed (gtk_icon_theme_get_default());
 #endif
     g_free(usericondir);
+
+
+#if GTK_CHECK_VERSION(3,0,0)
+    // Add style sheet (GTK3)
+    Glib::RefPtr<Gdk::Screen> screen = Gdk::Screen::get_default();
+
+    Glib::ustring inkscape_style = INKSCAPE_UIDIR;
+    inkscape_style += "/style.css";
+    // std::cout << "CSS Stylesheet Inkscape: " << inkscape_style << std::endl;
+    Glib::RefPtr<Gtk::CssProvider> provider = Gtk::CssProvider::create();
+    try {
+        provider->load_from_path (inkscape_style);
+    }
+    catch (const Gtk::CssProviderError& ex)
+    {
+        std::cerr << "CSSProviderError::load_from_path(): failed to load: " << inkscape_style << "\n  (" << ex.what() << ")" << std::endl;
+    }
+    Gtk::StyleContext::add_provider_for_screen (screen, provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    Glib::ustring user_style = Inkscape::Application::profile_path("ui/style.css");
+    // std::cout << "CSS Stylesheet User: " << user_style << std::endl;
+    Glib::RefPtr<Gtk::CssProvider> provider2 = Gtk::CssProvider::create();
+    try {
+        provider2->load_from_path (user_style);
+    }
+    catch (const Gtk::CssProviderError& ex)
+    {}
+    Gtk::StyleContext::add_provider_for_screen (screen, provider2, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+#endif
 
     gdk_event_handler_set((GdkEventFunc)snooper, NULL, NULL);
     Inkscape::Debug::log_display_config();

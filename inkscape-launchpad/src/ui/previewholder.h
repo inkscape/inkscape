@@ -3,6 +3,7 @@
 #define SEEN_PREVIEW_HOLDER_H
 /*
  * A simple interface for previewing representations.
+ * Used by Swatches
  *
  * Authors:
  *   Jon A. Cruz

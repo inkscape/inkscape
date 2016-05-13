@@ -1,5 +1,5 @@
 /** \file
- * SPIcon: Generic icon widget
+ * SVGPreview: Preview cache
  */
 /*
  * Authors:

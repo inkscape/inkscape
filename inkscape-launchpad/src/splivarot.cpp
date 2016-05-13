@@ -862,7 +862,7 @@ void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Affine 
     if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
         tr = stroke_scale * tr;
     }
-
+    
     // total marker transform
     tr = marker_item->transform * marker->c2p * tr * transform;
 
@@ -1153,7 +1153,9 @@ sp_selected_path_outline(SPDesktop *desktop)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>stroked path(s)</b> to convert stroke to path."));
         return;
     }
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool scale_stroke = prefs->getBool("/options/transform/stroke", true);
+    prefs->setBool("/options/transform/stroke", true);
     bool did = false;
     std::vector<SPItem*> il(selection->itemList());
     for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
@@ -1503,7 +1505,7 @@ sp_selected_path_outline(SPDesktop *desktop)
         delete res;
         delete orig;
     }
-
+    prefs->setBool("/options/transform/stroke", scale_stroke);
     if (did) {
         DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_OUTLINE, 
                            _("Convert stroke to path"));

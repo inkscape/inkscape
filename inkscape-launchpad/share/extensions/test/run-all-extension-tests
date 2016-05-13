@@ -35,24 +35,32 @@ has_py_coverage=false
 py_cover_files=$( $MKTEMP )
 failed_tests=$( $MKTEMP )
 
-if coverage.py -e >/dev/null 2>/dev/null; then
+if coverage.py erase >/dev/null 2>/dev/null; then
   has_py_coverage=true
   cover_py_cmd=coverage.py
 else
-  if coverage -e >/dev/null 2>/dev/null; then
+  if coverage erase >/dev/null 2>/dev/null; then
     has_py_coverage=true
     cover_py_cmd=coverage
+    else
+      if python-coverage erase >/dev/null 2>/dev/null; then
+        has_py_coverage=true
+        cover_py_cmd=python-coverage
+      fi
   fi
 fi
 
+if $has_py_coverage; then
+    echo -e "\nRunning tests with coverage"
+fi
 #if $has_py_coverage; then
 #  $cover_py_cmd -e
 #fi
 
 function run_py_test() {
-  echo -e "\n>> Testing $1"
+  echo -e "\n>>>>>> Testing $1 <<<<<<\n"
   if $has_py_coverage; then
-    if ! $cover_py_cmd -x "$1.test.py"; then
+    if ! $cover_py_cmd run -a "$1.test.py"; then
       echo "$1" >> $failed_tests
     fi
     echo "../$1.py" >> $py_cover_files
@@ -77,7 +85,7 @@ else
     SED_EXTENDED='sed -E' # BSD sed (e.g. on Mac OS X)
 fi
 
-echo "sed regex command: $SED_EXTENDED"
+echo -e "sed regex command: $SED_EXTENDED\n"
 
 # ---------------------------------------------------------------------
 
@@ -89,7 +97,7 @@ done
 
 if $has_py_coverage; then
   echo -e "\n>> Coverage Report:"
-  cat $py_cover_files | xargs $cover_py_cmd -r
+  cat $py_cover_files | xargs $cover_py_cmd report
 fi
 
 fail=false

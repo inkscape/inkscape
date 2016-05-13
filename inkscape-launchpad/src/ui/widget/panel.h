@@ -64,7 +64,11 @@ namespace Widget {
  * @see UI::Dialog::DesktopTracker to handle desktop change, selection change and selected object modifications.
  * @see UI::Dialog::DialogManager manages the dialogs within inkscape.
  */
+#if WITH_GTKMM_3_0
+class Panel : public Gtk::Box {
+#else
 class Panel : public Gtk::VBox {
+#endif
 
 public:
     static void prep();

@@ -168,6 +168,10 @@ sp_ruler_class_init (SPRulerClass *klass)
   GObjectClass   *object_class  = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class  = GTK_WIDGET_CLASS (klass);
 
+#if GTK_CHECK_VERSION(3,20,0)
+  gtk_widget_class_set_css_name (widget_class, "ruler-widget");
+#endif
+
   object_class->dispose              = sp_ruler_dispose;
   object_class->set_property         = sp_ruler_set_property;
   object_class->get_property         = sp_ruler_get_property;
@@ -282,19 +286,6 @@ sp_ruler_init (SPRuler *ruler)
   priv->pos_redraw_idle_id   = 0;
 
   priv->font_scale           = DEFAULT_RULER_FONT_SCALE;
-
-#if GTK_CHECK_VERSION(3,0,0)
-  const gchar *str = 
-    "SPRuler {\n"
-    "  background-color: @bg_color;\n"
-    "}\n";
-  GtkCssProvider *css = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (css, str, -1, NULL);
-  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (ruler)),
-                                  GTK_STYLE_PROVIDER (css),
-                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-  g_object_unref (css);
-#endif
 }
 
 static void
