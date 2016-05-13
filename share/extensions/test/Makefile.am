@@ -6,6 +6,7 @@
 EXTRA_DIST = \
 		addnodes.test.py \
 		chardataeffect.test.py \
+		color_randomize_test.py \
 		coloreffect.test.py \
 		create_test_from_template.sh \
 		dots.test.py \
