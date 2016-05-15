@@ -435,7 +435,7 @@
     <copy file="${build}/inkscape.dbg" todir="${dist}/bin"/>
     <copy file="AUTHORS"               todir="${dist}"/>
     <copy file="COPYING"               todir="${dist}"/>
-    <copy file="COPYING.LIB"           todir="${dist}"/>
+    <copy file="LGPL2.1.txt"           todir="${dist}"/>
     <copy file="NEWS"                  todir="${dist}"/>
     <copy file="README"                todir="${dist}"/>
     <copy file="TRANSLATORS"           todir="${dist}"/>

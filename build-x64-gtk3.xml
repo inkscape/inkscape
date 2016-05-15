@@ -685,7 +685,7 @@
     <!-- Create the distribution directory -->
     <copy todir="${dist}" file="AUTHORS"/>
     <copy todir="${dist}" file="COPYING"/>
-    <copy todir="${dist}" file="COPYING.LIB"/>
+    <copy todir="${dist}" file="LGPL2.1.txt"/>
     <copy todir="${dist}" file="NEWS"/>
     <copy todir="${dist}" file="README"/>
     <copy todir="${dist}" file="TRANSLATORS"/>
