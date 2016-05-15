@@ -56,6 +56,7 @@ Dock::Dock(Gtk::Orientation orientation)
 #endif
       _scrolled_window (Gtk::manage(new Gtk::ScrolledWindow))
 {
+    _scrolled_window->set_name("Dock");
 #if WITH_GDL_3_6
     gtk_orientable_set_orientation(GTK_ORIENTABLE(_gdl_dock_bar),
                                    static_cast<GtkOrientation>(orientation));

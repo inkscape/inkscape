@@ -346,6 +346,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     /* Main table */
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(dtw->vbox, "DesktopMainTable");
 #else
     dtw->vbox = gtk_vbox_new (FALSE, 0);
 #endif
@@ -353,6 +354,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->statusbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(dtw->statusbar, "DesktopStatusBar");
 #else
     dtw->statusbar = gtk_hbox_new (FALSE, 0);
 #endif
@@ -364,7 +366,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
         dtw->panels = new SwatchesPanel("/embedded/swatches" /*false*/);
         dtw->panels->setOrientation(SP_ANCHOR_SOUTH);
-
+        dtw->panels->set_name("SwatchesPanel");
 #if GTK_CHECK_VERSION(3,0,0)
         dtw->panels->set_vexpand(false);
 #endif
@@ -374,6 +376,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(dtw->hbox, "DesktopHbox");
 #else
     dtw->hbox = gtk_hbox_new(FALSE, 0);
 #endif
@@ -404,7 +407,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     Glib::RefPtr<Gtk::CssProvider> guides_lock_style_provider = Gtk::CssProvider::create();
     guides_lock_style_provider->load_from_data("GtkWidget { padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; }");
     Gtk::Widget * wnd = Glib::wrap(dtw->guides_lock);
-    wnd->set_name("guides_lock");
+    wnd->set_name("LockGuides");
     Glib::RefPtr<Gtk::StyleContext> context = wnd->get_style_context();
     context->add_provider(guides_lock_style_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 #endif
@@ -412,6 +415,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     /* Horizontal ruler */
     GtkWidget *eventbox = gtk_event_box_new ();
     dtw->hruler = sp_ruler_new(GTK_ORIENTATION_HORIZONTAL);
+    gtk_widget_set_name(dtw->hruler, "HorizontalRuler");
     dtw->hruler_box = eventbox;
     Inkscape::Util::Unit const *pt = unit_table.getUnit("pt");
     sp_ruler_set_unit(SP_RULER(dtw->hruler), pt);
@@ -422,13 +426,15 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (eventbox), "motion_notify_event", G_CALLBACK (sp_dt_hruler_event), dtw);
 
 #if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *tbl = gtk_grid_new();
+    GtkWidget *tbl_wrapper = gtk_grid_new(); // Is this widget really needed?
+    gtk_widget_set_name(tbl_wrapper, "CanvasTableWrapper");
     dtw->canvas_tbl = gtk_grid_new();
+    gtk_widget_set_name(dtw->canvas_tbl, "CanvasTable");
     
     gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), dtw->guides_lock, 0, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), eventbox, 1, 0, 1, 1);
 #else
-    GtkWidget *tbl = gtk_table_new(2, 3, FALSE);
+    GtkWidget *tbl_wrapper = gtk_table_new(2, 3, FALSE);
     dtw->canvas_tbl = gtk_table_new(3, 3, FALSE);
    
     gtk_table_attach(GTK_TABLE(dtw->canvas_tbl),
@@ -443,11 +449,12 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 	     0,        0);
 #endif
     g_signal_connect (G_OBJECT (dtw->guides_lock), "toggled", G_CALLBACK (sp_update_guides_lock), dtw);
-    gtk_box_pack_start( GTK_BOX(dtw->hbox), tbl, TRUE, TRUE, 1 );
+    gtk_box_pack_start( GTK_BOX(dtw->hbox), tbl_wrapper, TRUE, TRUE, 1 );
 
     /* Vertical ruler */
     eventbox = gtk_event_box_new ();
     dtw->vruler = sp_ruler_new(GTK_ORIENTATION_VERTICAL);
+    gtk_widget_set_name(dtw->vruler, "VerticalRuler");
 
     /* Vertical ruler */
     dtw->vruler_box = eventbox;
@@ -477,6 +484,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->hscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, GTK_ADJUSTMENT (dtw->hadj));
+    gtk_widget_set_name(dtw->hscrollbar, "HorizontalScrollbar");
     gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), dtw->hscrollbar, 1, 2, 1, 1);
     dtw->vscrollbar_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 #else
@@ -493,6 +501,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
                                                  NULL,
                                                  INKSCAPE_ICON("zoom-original"),
                                                  _("Zoom drawing if window size changes"));
+    gtk_widget_set_name(dtw->sticky_zoom, "StickyZoom");
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dtw->sticky_zoom), prefs->getBool("/options/stickyzoom/value"));
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->sticky_zoom, FALSE, FALSE, 0);
     g_signal_connect (G_OBJECT (dtw->sticky_zoom), "toggled", G_CALLBACK (sp_dtw_sticky_zoom_toggled), dtw);
@@ -502,6 +511,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->vscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, GTK_ADJUSTMENT(dtw->vadj));
+    gtk_widget_set_name(dtw->vscrollbar, "VerticalScrollbar");
 #else
     dtw->vscrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (dtw->vadj));
 #endif
@@ -529,6 +539,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
                                                NULL,
                                                INKSCAPE_ICON("color-management"),
                                                tip );
+    gtk_widget_set_name(dtw->cms_adjust, "CMS_Adjust");
+
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     {
         Glib::ustring current = prefs->getString("/options/displayprofile/uri");
@@ -608,9 +620,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     if (create_dock) {
         dtw->dock = new Inkscape::UI::Widget::Dock();
-
 #if WITH_GTKMM_3_0
         Gtk::Paned *paned = new Gtk::Paned();
+        paned->set_name("Canvas_and_Dock");
 #else
         Gtk::HPaned *paned = new Gtk::HPaned();
 #endif
@@ -627,9 +639,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if GTK_CHECK_VERSION(3,0,0)
         gtk_widget_set_hexpand(GTK_WIDGET(paned->gobj()), TRUE);
         gtk_widget_set_vexpand(GTK_WIDGET(paned->gobj()), TRUE);
-        gtk_grid_attach(GTK_GRID(tbl), GTK_WIDGET (paned->gobj()), 1, 1, 1, 1);
+        gtk_grid_attach(GTK_GRID(tbl_wrapper), GTK_WIDGET (paned->gobj()), 1, 1, 1, 1);
 #else
-        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (paned->gobj()), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+        gtk_table_attach (GTK_TABLE (tbl_wrapper), GTK_WIDGET (paned->gobj()), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 #endif
 
@@ -637,9 +649,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if GTK_CHECK_VERSION(3,0,0)
         gtk_widget_set_hexpand(GTK_WIDGET(dtw->canvas_tbl), TRUE);
         gtk_widget_set_vexpand(GTK_WIDGET(dtw->canvas_tbl), TRUE);
-        gtk_grid_attach(GTK_GRID(tbl), GTK_WIDGET (dtw->canvas_tbl), 1, 1, 1, 1);
+        gtk_grid_attach(GTK_GRID(tbl_wrapper), GTK_WIDGET (dtw->canvas_tbl), 1, 1, 1, 1);
 #else
-        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (dtw->canvas_tbl), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+        gtk_table_attach (GTK_TABLE (tbl_wrapper), GTK_WIDGET (dtw->canvas_tbl), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 #endif
     }
@@ -661,10 +673,12 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (dtw->vadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
 
     GtkWidget *statusbar_tail=gtk_statusbar_new();
+    gtk_widget_set_name(statusbar_tail, "StatusBarTail");
     gtk_box_pack_end (GTK_BOX (dtw->statusbar), statusbar_tail, FALSE, FALSE, 0);
 
     // zoom status spinbutton
     dtw->zoom_status = gtk_spin_button_new_with_range (log(SP_DESKTOP_ZOOM_MIN)/log(2), log(SP_DESKTOP_ZOOM_MAX)/log(2), 0.1);
+    gtk_widget_set_name(dtw->zoom_status, "ZoomStatus");
     gtk_widget_set_tooltip_text (dtw->zoom_status, _("Zoom"));
     gtk_widget_set_size_request (dtw->zoom_status, STATUS_ZOOM_WIDTH, -1);
     gtk_entry_set_width_chars (GTK_ENTRY (dtw->zoom_status), 6);
@@ -681,6 +695,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     // cursor coordinates
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->coord_status = gtk_grid_new();
+    gtk_widget_set_name(dtw->coord_status, "CoordinateStatus");
     gtk_grid_set_row_spacing(GTK_GRID(dtw->coord_status), 0);
     gtk_grid_set_column_spacing(GTK_GRID(dtw->coord_status), 2);
     GtkWidget* sep = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
@@ -721,6 +736,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_label_set_markup( GTK_LABEL(dtw->coord_status_y), "<tt>   0.00 </tt>" );
 
     GtkWidget* label_z = gtk_label_new(_("Z:"));
+    gtk_widget_set_name(label_z, "ZLabel");
 
 #if GTK_CHECK_VERSION(3,0,0)
     gtk_widget_set_halign(dtw->coord_status_x, GTK_ALIGN_END);
@@ -762,6 +778,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect( G_OBJECT(dtw->_tracker), "changed", G_CALLBACK(sp_dtw_color_profile_event), dtw );
 
     dtw->select_status_eventbox = gtk_event_box_new ();
+    gtk_widget_set_name(dtw->select_status_eventbox, "SelectStatusEventBox");
     dtw->select_status = gtk_label_new (NULL);
     gtk_label_set_ellipsize (GTK_LABEL(dtw->select_status), PANGO_ELLIPSIZE_END);
 
@@ -1453,6 +1470,7 @@ bool SPDesktopWidget::showInfoDialog( Glib::ustring const &message )
                 GTK_MESSAGE_INFO,
                 GTK_BUTTONS_OK,
                 "%s", message.c_str());
+        gtk_widget_set_name(dialog, "InfoDialog");
         gtk_window_set_title( GTK_WINDOW(dialog), _("Note:")); // probably want to take this as a parameter.
         gtk_dialog_run(GTK_DIALOG(dialog));
         gtk_widget_destroy(dialog);
@@ -1765,6 +1783,7 @@ SPDesktopWidget* SPDesktopWidget::createInstance(SPNamedView *namedview)
     dtw->layer_selector->setDesktop(dtw->desktop);
 
     dtw->menubar = sp_ui_main_menubar (dtw->desktop);
+    gtk_widget_set_name(dtw->menubar, "MenuBar");
     gtk_widget_show_all (dtw->menubar);
     gtk_box_pack_start (GTK_BOX (dtw->vbox), dtw->menubar, FALSE, FALSE, 0);
 

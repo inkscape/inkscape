@@ -999,6 +999,7 @@ static GtkWidget* toolboxNewCommon( GtkWidget* tb, BarId id, GtkPositionType /*h
     gtk_widget_set_sensitive(tb, FALSE);
 
     GtkWidget *hb = gtk_event_box_new(); // A simple, neutral container.
+    gtk_widget_set_name(hb, "ToolboxCommon");
 
     gtk_container_add(GTK_CONTAINER(hb), tb);
     gtk_widget_show(GTK_WIDGET(tb));
@@ -1016,6 +1017,7 @@ GtkWidget *ToolboxFactory::createToolToolbox()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(tb, "ToolToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
 #else
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
@@ -1028,6 +1030,7 @@ GtkWidget *ToolboxFactory::createAuxToolbox()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(tb, "AuxToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
 #else
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
@@ -1044,6 +1047,7 @@ GtkWidget *ToolboxFactory::createCommandsToolbox()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(tb, "CommandsToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
 #else
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
@@ -1056,6 +1060,7 @@ GtkWidget *ToolboxFactory::createSnapToolbox()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(tb, "SnapToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
 #else
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
