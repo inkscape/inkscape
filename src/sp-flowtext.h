@@ -49,6 +49,11 @@ public:
 
     bool _optimizeScaledText;
 
+	/** Converts the text object to its component curves */
+	SPCurve *getNormalizedBpath() const {
+		return layout.convertToCurves();
+	}
+
     /** Optimize scaled flow text on next set_transform. */
     void optimizeScaledText()
         {_optimizeScaledText = true;}

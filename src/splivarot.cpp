@@ -1776,10 +1776,13 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
         SPItem *item = *l;
         SPCurve *curve = NULL;
 
-        if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
+        if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item) && !SP_IS_FLOWTEXT(item))
             continue;
         else if (SP_IS_SHAPE(item)) {
             curve = SP_SHAPE(item)->getCurve();
+        }
+        else if (SP_IS_FLOWTEXT(item)) {
+            curve = SP_FLOWTEXT(item)->getNormalizedBpath();
         }
         else { // Item must be SP_TEXT
             curve = SP_TEXT(item)->getNormalizedBpath();
