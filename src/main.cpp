@@ -1068,10 +1068,12 @@ sp_main_gui(int argc, char const **argv)
     try {
         provider->load_from_path (inkscape_style);
     }
+#if GTK_CHECK_VERSION(3,16,0)
     catch (const Gtk::CssProviderError& ex)
     {
         std::cerr << "CSSProviderError::load_from_path(): failed to load: " << inkscape_style << "\n  (" << ex.what() << ")" << std::endl;
     }
+#endif
     Gtk::StyleContext::add_provider_for_screen (screen, provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
     Glib::ustring user_style = Inkscape::Application::profile_path("ui/style.css");
@@ -1080,8 +1082,10 @@ sp_main_gui(int argc, char const **argv)
     try {
         provider2->load_from_path (user_style);
     }
+#if GTK_CHECK_VERSION(3,16,0)
     catch (const Gtk::CssProviderError& ex)
     {}
+#endif
     Gtk::StyleContext::add_provider_for_screen (screen, provider2, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 #endif
 
