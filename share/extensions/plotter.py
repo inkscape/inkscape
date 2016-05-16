@@ -144,10 +144,12 @@ class Plot(inkex.Effect):
         try:
             import serial
         except ImportError, e:
-            inkex.errormsg(_("pySerial is not installed."
-                + "\n\n1. Download pySerial here (not the \".exe\"!): http://pypi.python.org/pypi/pyserial"
-                + "\n2. Extract the \"serial\" subfolder from the zip to the following folder: C:\\[Program files]\\inkscape\\python\\Lib\\"
-                + "\n3. Restart Inkscape."))
+            inkex.errormsg(_("pySerial is not installed. Please follow these steps:")
+                + "\n\n" + _("1. Download and extract (unzip) this file to your local harddisk:")
+                + "\n"   +   "   https://pypi.python.org/packages/source/p/pyserial/pyserial-2.7.tar.gz"
+                + "\n"   + _("2. Copy the \"serial\" folder (Can be found inside the just extracted folder)")
+                + "\n"   + _("   into the following Inkscape folder: C:\\<Program files>\\inkscape\\python\\Lib\\")
+                + "\n"   + _("3. Close and restart Inkscape."))
             return
         # init serial framework
         mySerial = serial.Serial()
