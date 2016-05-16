@@ -210,8 +210,8 @@ void InkscapePreferences::AddBaseSimplifySpinbutton(DialogPage &p, Glib::ustring
 {
     PrefSpinButton* sb = Gtk::manage( new PrefSpinButton);
     sb->init ( prefs_path + "/base-simplify", 0.0, 100.0, 1.0, 10.0, def_value, false, false);
-    p.add_line( false, _("Base simplify:"), *sb, _("on dinamic LPE simplify"),
-                       _("Base simplify of dinamic LPE based simplify"),
+    p.add_line( false, _("Base simplify:"), *sb, _("on dynamic LPE simplify"),
+                       _("Base simplify of dynamic LPE based simplify"),
                        false );
 }
 

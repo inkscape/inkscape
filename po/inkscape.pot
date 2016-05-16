@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-13 22:07+0200\n"
+"POT-Creation-Date: 2016-05-16 16:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10298,7 +10298,7 @@ msgid "Fuse original and the reflection into a single path"
 msgstr ""
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:75
-msgid "Oposite fuse"
+msgid "Opposite fuse"
 msgstr ""
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:75
@@ -11695,7 +11695,7 @@ msgstr ""
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:876 ../src/main.cpp:1318
+#: ../src/main.cpp:876 ../src/main.cpp:1322
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -17128,11 +17128,11 @@ msgid "Base simplify:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
-msgid "on dinamic LPE simplify"
+msgid "on dynamic LPE simplify"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:214
-msgid "Base simplify of dinamic LPE based simplify"
+msgid "Base simplify of dynamic LPE based simplify"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:229
@@ -27872,12 +27872,8 @@ msgstr ""
 msgid "Increase to make the eraser drag behind, as if slowed by inertia"
 msgstr ""
 
-#: ../src/widgets/eraser-toolbar.cpp:186
-msgid "Break appart cutted items"
-msgstr ""
-
-#: ../src/widgets/eraser-toolbar.cpp:187
-msgid "Break appart cutted itemss"
+#: ../src/widgets/eraser-toolbar.cpp:186 ../src/widgets/eraser-toolbar.cpp:187
+msgid "Break apart cut items"
 msgstr ""
 
 #: ../src/widgets/fill-style.cpp:356
