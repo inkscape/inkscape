@@ -59,7 +59,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-12-27 14:26+0100\n"
-"PO-Revision-Date: 2016-02-04 22:35+0100\n"
+"PO-Revision-Date: 2016-05-17 23:14+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -87,7 +87,7 @@ msgstr "Scalable Vector Graphics-afbeeldingen maken en bewerken"
 
 #: ../inkscape.desktop.in.h:5
 msgid "image;editor;vector;drawing;"
-msgstr ""
+msgstr "image;editor;vector;drawing;"
 
 #: ../inkscape.desktop.in.h:6
 msgid "New Drawing"
@@ -8756,7 +8756,7 @@ msgstr "<b>Tensor</b> meshgradiënt"
 
 #: ../src/gradient-drag.cpp:565
 msgid "Added patch row or column"
-msgstr ""
+msgstr "Patchrij of -kolom toegevoegd"
 
 #: ../src/gradient-drag.cpp:798
 msgid "Merge gradient handles"
@@ -9645,7 +9645,6 @@ msgstr ""
 
 #: ../src/live_effects/lpe-bendpath.cpp:181
 #: ../src/live_effects/lpe-patternalongpath.cpp:278
-#, fuzzy
 msgid "Change the width"
 msgstr "Lijndikte aanpassen"
 
@@ -22962,10 +22961,9 @@ msgid "Drag curve"
 msgstr "Kromme verslepen"
 
 #: ../src/ui/tool/curve-drag-point.cpp:192
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Shift</b>: drag to open or move BSpline handles"
-msgstr "Knooppunthandvatten verschuiven"
+msgstr "<b>Shift</b>: sleep om BSpline handvatten te openen of verplaatsen"
 
 #: ../src/ui/tool/curve-drag-point.cpp:196
 msgctxt "Path segment tip"
@@ -22978,15 +22976,13 @@ msgid "<b>Ctrl+Alt</b>: click to insert a node"
 msgstr "<b>Ctrl+Alt</b>: klik om knooppunt in te voegen"
 
 #: ../src/ui/tool/curve-drag-point.cpp:204
-#, fuzzy
 msgctxt "Path segment tip"
 msgid ""
 "<b>BSpline segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>Beziersegment</b>: sleep om het segment te vervormen, dubbelklik om een "
-"knooppunt in te voegen, klik om te selecteren (toetscombinaties: Shift, Ctrl"
-"+Alt)"
+"<b>BSpline segment</b>: sleep om het segment te vervormen, dubbelklik om een "
+"knooppunt in te voegen, klik om te selecteren (meer: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:209
 msgctxt "Path segment tip"
@@ -22995,8 +22991,8 @@ msgid ""
 "insert node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
 "<b>Recht segment</b>: sleep om te converteren naar een Beziersegment, "
-"dubbelklik om een knooppunt in te voegen, klik om te selecteren "
-"(toetscombinaties: Shift, Ctrl+Alt)"
+"dubbelklik om een knooppunt in te voegen, klik om te selecteren (meer: "
+"Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:213
 msgctxt "Path segment tip"
@@ -23005,8 +23001,7 @@ msgid ""
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
 "<b>Beziersegment</b>: sleep om het segment te vervormen, dubbelklik om een "
-"knooppunt in te voegen, klik om te selecteren (toetscombinaties: Shift, Ctrl"
-"+Alt)"
+"knooppunt in te voegen, klik om te selecteren (meer: Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:315
 msgid "Retract handles"
@@ -23118,10 +23113,9 @@ msgid "more: Shift, Ctrl, Alt"
 msgstr "meer: Shift, Ctrl, Alt"
 
 #: ../src/ui/tool/node.cpp:496
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Ctrl"
-msgstr "meer: Ctrl, Alt"
+msgstr "meer: Ctrl"
 
 #: ../src/ui/tool/node.cpp:498
 msgctxt "Path handle tip"
@@ -23170,6 +23164,8 @@ msgstr ""
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: Move handle by his actual steps in BSpline Live Effect"
 msgstr ""
+"<b>Ctrl</b>: handvat met dit aantal stappen verplaaten in het BSpline Live "
+"Effect"
 
 #: ../src/ui/tool/node.cpp:532
 #, c-format
@@ -23184,10 +23180,9 @@ msgid "<b>Shift</b>: rotate both handles by the same angle"
 msgstr "<b>Shift</b>: beide handvatten met dezelfde hoek roteren"
 
 #: ../src/ui/tool/node.cpp:540
-#, fuzzy
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: move handle"
-msgstr "Knooppunthandvatten verschuiven"
+msgstr "<b>Shift</b>: handvat verschuiven"
 
 #: ../src/ui/tool/node.cpp:547 ../src/ui/tool/node.cpp:551
 #, c-format
@@ -23198,14 +23193,14 @@ msgstr ""
 "knooppunt (%s)"
 
 #: ../src/ui/tool/node.cpp:554
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>BSpline node handle</b>: Shift to drag, double click to reset (%s). %g "
 "power"
 msgstr ""
-"<b>Automatischknooppunthandvat</b>: sleep om om te zetten naar een glad "
-"knooppunt (%s)"
+"<b>BSpline knooppunthandvat</b>: Shift om te verslepen, dubbelklik om te "
+"resetten (%s). %g kracht"
 
 #: ../src/ui/tool/node.cpp:574
 #, c-format
@@ -23245,17 +23240,17 @@ msgstr "<b>Alt</b>: knooppunten boetseren"
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
-msgstr ""
-"<b>%s</b>: sleep om het pad te vervormen (toetscombinatie: Shift, Ctrl, Alt)"
+msgstr "<b>%s</b>: sleep om het pad te vervormen (meer: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1451
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid ""
 "<b>BSpline node</b>: drag to shape the path (more: Shift, Ctrl, Alt). %g "
 "power"
 msgstr ""
-"<b>%s</b>: sleep om het pad te vervormen (toetscombinatie: Shift, Ctrl, Alt)"
+"<b>BSpline knooppunt</b>: sleep om het pad te vervormen (meer: Shift, Ctrl, "
+"Alt). %g kracht"
 
 #: ../src/ui/tool/node.cpp:1454
 #, c-format
@@ -23265,7 +23260,7 @@ msgid ""
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
 "<b>%s</b>: sleep om het pad te vervormen, klik om te schakelen tussen "
-"schalings- en rotatiehandvatten (toetscombinaties: Shift, Ctrl, Alt)"
+"schalings- en rotatiehandvatten (meer: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1458
 #, c-format
@@ -23275,17 +23270,17 @@ msgid ""
 "Shift, Ctrl, Alt)"
 msgstr ""
 "<b>%s</b>: sleep om het pad te vervormen, klik om enkel dit knooppunt te "
-"selecteren (toetscombinaties: Shift, Ctrl, Alt)"
+"selecteren (meer: Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1461
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid ""
 "<b>BSpline node</b>: drag to shape the path, click to select only this node "
 "(more: Shift, Ctrl, Alt). %g power"
 msgstr ""
-"<b>%s</b>: sleep om het pad te vervormen, klik om enkel dit knooppunt te "
-"selecteren (toetscombinaties: Shift, Ctrl, Alt)"
+"<b>BSpline knooppunt</b>: sleep om het pad te vervormen, klik om enkel dit "
+"knooppunt te selecteren (meer: Shift, Ctrl, Alt). %g kracht"
 
 #: ../src/ui/tool/node.cpp:1474
 #, c-format
@@ -23961,14 +23956,12 @@ msgstr "Kies een gereedschap van de gereedschappenbalk."
 
 #. create the knots
 #: ../src/ui/tools/measure-tool.cpp:338
-#, fuzzy
 msgid "Measure start"
-msgstr "Pad opmeten"
+msgstr "Begin meetlat"
 
 #: ../src/ui/tools/measure-tool.cpp:344
-#, fuzzy
 msgid "Measure end"
-msgstr "Meetlat"
+msgstr "Einde meetlat"
 
 #: ../src/ui/tools/measure-tool.cpp:719 ../share/extensions/measure.inx.h:2
 msgid "Measure"
@@ -23976,25 +23969,24 @@ msgstr "Meetlat"
 
 #: ../src/ui/tools/measure-tool.cpp:724
 msgid "Base"
-msgstr ""
+msgstr "Basis"
 
 #: ../src/ui/tools/measure-tool.cpp:733
 msgid "Add guides from measure tool"
-msgstr ""
+msgstr "Hulplijnen van meetlat toevoegen"
 
 #: ../src/ui/tools/measure-tool.cpp:753
-#, fuzzy
 msgid "Convert measure to items"
-msgstr "Omlijning omzetten naar pad"
+msgstr "Meting omzetten naar items"
 
 #: ../src/ui/tools/measure-tool.cpp:791
 msgid "Add global measure line"
-msgstr ""
+msgstr "Globale meetlijn toevoegen"
 
 #: ../src/ui/tools/measure-tool.cpp:1221 ../src/ui/tools/measure-tool.cpp:1223
-#, fuzzy, c-format
+#, c-format
 msgid "Crossing %d"
-msgstr "Kruisingstekens"
+msgstr "Kruisingv %d"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
 #: ../src/ui/tools/mesh-tool.cpp:122 ../src/ui/tools/mesh-tool.cpp:133
@@ -24060,9 +24052,8 @@ msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
 msgstr "<b>Shift</b>: mesh rond het beginpunt tekenen"
 
 #: ../src/ui/tools/mesh-tool.cpp:971
-#, fuzzy
 msgid "Create mesh"
-msgstr "Standaardmesh maken"
+msgstr "Mesh maken"
 
 #: ../src/ui/tools/node-tool.cpp:653
 msgctxt "Node tool tip"
@@ -24115,7 +24106,7 @@ msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 "Sleep om te bewerken objecten te selecteren, klik om dit object te bewerken "
-"(toetscombinatie: Shift)"
+"(meer: Shift)"
 
 #: ../src/ui/tools/node-tool.cpp:719
 msgctxt "Node tool tip"
@@ -24143,11 +24134,12 @@ msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>Klik</b> of <b>klik en sleep</b> om een pad te sluiten."
 
 #: ../src/ui/tools/pen-tool.cpp:642
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to close and finish the path. Shift"
 "+Click make a cusp node"
-msgstr "<b>Klik</b> of <b>klik en sleep</b> om een pad te sluiten."
+msgstr ""
+"<b>Klik</b> of <b>klik en sleep</b> om een pad te sluiten en af te werken. "
+"Shift+klik om een hoekig knooppunt te maken."
 
 #: ../src/ui/tools/pen-tool.cpp:654
 msgid ""
@@ -24156,12 +24148,12 @@ msgstr ""
 "<b>Klik</b> of <b>klik en sleep</b> om vanaf daar het pad voort te zetten."
 
 #: ../src/ui/tools/pen-tool.cpp:656
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point. "
 "Shift+Click make a cusp node"
 msgstr ""
-"<b>Klik</b> of <b>klik en sleep</b> om vanaf daar het pad voort te zetten."
+"<b>Klik</b> of <b>klik en sleep</b> om vanaf dit punt het pad voort te "
+"zetten. Shift+klik om een hoekig knooppunt te maken."
 
 #: ../src/ui/tools/pen-tool.cpp:1786
 #, c-format
@@ -24182,22 +24174,22 @@ msgstr ""
 "stappen te draaien, <b>Enter</b> om het pad af te maken"
 
 #: ../src/ui/tools/pen-tool.cpp:1790
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</"
 "b> make a cusp node, <b>Enter</b> to finish the path"
 msgstr ""
-"<b>Segment curve</b>: hoek %3.2f&#176;, afstand %s; gebruik <b>Ctrl</b> om "
-"in stappen te draaien, <b>Enter</b> om het pad af te maken"
+"<b>Segment curve</b>: hoek %3.2f&#176;, afstand %s; gebruik <b>Shit+Klik</b> "
+"om een hoekig knooppunt te maken, <b>Enter</b> om het pad af te maken"
 
 #: ../src/ui/tools/pen-tool.cpp:1791
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> "
 "make a cusp node, <b>Enter</b> to finish the path"
 msgstr ""
-"<b>Segment lijn</b>: hoek %3.2f&#176;, afstand %s; gebruik <b>Ctrl</b> om in "
-"stappen te draaien, <b>Enter</b> om het pad af te maken"
+"<b>Segment lijn</b>: hoek %3.2f&#176;, afstand %s; gebruik <b>Shit+Klik</b> "
+"om een hoekig knooppunt te maken, <b>Enter</b> om het pad af te maken"
 
 #: ../src/ui/tools/pen-tool.cpp:1808
 #, c-format
@@ -25586,19 +25578,16 @@ msgid "Radial gradient stroke"
 msgstr "Radiaal lijnkleurverloop"
 
 #: ../src/ui/widget/selected-style.cpp:218
-#, fuzzy
 msgid "<b>M</b>"
-msgstr "<b>L</b>"
+msgstr "<b>M</b>"
 
 #: ../src/ui/widget/selected-style.cpp:221
-#, fuzzy
 msgid "Mesh gradient fill"
-msgstr "Lineair vulkleurverloop"
+msgstr "Vulling meshgradiënt"
 
 #: ../src/ui/widget/selected-style.cpp:221
-#, fuzzy
 msgid "Mesh gradient stroke"
-msgstr "Lineair lijnkleurverloop"
+msgstr "Lijn meshgradiënt"
 
 #: ../src/ui/widget/selected-style.cpp:229
 msgid "Different"
@@ -26277,7 +26266,7 @@ msgstr "Inkscape afsluiten"
 #: ../src/verbs.cpp:2459
 #, fuzzy
 msgid "New from _Template..."
-msgstr "Nieuw van sjabloon"
+msgstr "Nieuw van sjabloon..."
 
 #: ../src/verbs.cpp:2460
 msgid "Create new project from template"
@@ -26646,14 +26635,12 @@ msgid "Delete all the guides in the document"
 msgstr "Alle hulplijnen uit het document verwijderen"
 
 #: ../src/verbs.cpp:2549
-#, fuzzy
 msgid "Lock All Guides"
-msgstr "Alles vergrendelen"
+msgstr "Alle hulplijnen vergrendelen"
 
 #: ../src/verbs.cpp:2549 ../src/widgets/desktop-widget.cpp:402
-#, fuzzy
 msgid "Toggle lock of all guides in the document"
-msgstr "Alle hulplijnen uit het document verwijderen"
+msgstr "Alle hulplijnen in het document ver- of ontgrendelen"
 
 #: ../src/verbs.cpp:2550
 msgid "Create _Guides Around the Page"
@@ -27205,11 +27192,8 @@ msgid "Create Cl_ip Group"
 msgstr "_Klonen"
 
 #: ../src/verbs.cpp:2723
-#, fuzzy
 msgid "Creates a clip group using the selected objects as a base"
-msgstr ""
-"Een kloon (een aan het origineel gekoppelde kopie) maken van het "
-"geselecteerde object"
+msgstr "Een afsnijgroep op basis van de geselecteerde objecten maken"
 
 #: ../src/verbs.cpp:2725
 msgid "Edit clipping path"
@@ -28053,19 +28037,16 @@ msgid "Object_s..."
 msgstr "Objecten tonen"
 
 #: ../src/verbs.cpp:2952
-#, fuzzy
 msgid "View Objects"
 msgstr "Objecten tonen"
 
 #: ../src/verbs.cpp:2953
-#, fuzzy
 msgid "Selection se_ts..."
-msgstr "Selectie"
+msgstr ""
 
 #: ../src/verbs.cpp:2954
-#, fuzzy
 msgid "View Tags"
-msgstr "Informatie over de aanwezige lagen tonen"
+msgstr "Tags tonen"
 
 #: ../src/verbs.cpp:2955
 msgid "Path E_ffects ..."
@@ -28914,14 +28895,12 @@ msgid "%s%s - Inkscape"
 msgstr "%s%s - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:1082
-#, fuzzy
 msgid "Locked all guides"
-msgstr "Alle lagen vergrendelen"
+msgstr "Alle hulplijnen vergrendeld"
 
 #: ../src/widgets/desktop-widget.cpp:1084
-#, fuzzy
 msgid "Unlocked all guides"
-msgstr "Alle lagen ontgrendelen"
+msgstr "Alle hulplijnen ontgrendeld"
 
 #: ../src/widgets/desktop-widget.cpp:1101
 msgid "Color-managed display is <b>enabled</b> in this window"
@@ -29378,39 +29357,35 @@ msgstr "Padeffectenvenster openen (om parameters numeriek aan te passen)"
 
 #: ../src/widgets/measure-toolbar.cpp:157
 msgid "Start and end measures inactive."
-msgstr ""
+msgstr "Begin en einde meting inactief."
 
 #: ../src/widgets/measure-toolbar.cpp:159
 msgid "Start and end measures active."
-msgstr ""
+msgstr "Begin en einde meting actief."
 
 #: ../src/widgets/measure-toolbar.cpp:175
 msgid "Show only visible crossings."
-msgstr ""
+msgstr "Alleen zichtbare kruisings tonen."
 
 #: ../src/widgets/measure-toolbar.cpp:177
-#, fuzzy
 msgid "Show all crossings."
-msgstr "Alle lagen tonen"
+msgstr "Alle kruisings tonen."
 
 #: ../src/widgets/measure-toolbar.cpp:193
 msgid "Use all layers in the measure."
-msgstr ""
+msgstr "Alle lagen in de meetlat gebruiken."
 
 #: ../src/widgets/measure-toolbar.cpp:195
-#, fuzzy
 msgid "Use current layer in the measure."
-msgstr "Huidige laag boven alle andere plaatsen"
+msgstr "Huidige laag in de meetlat gebruiken."
 
 #: ../src/widgets/measure-toolbar.cpp:211
-#, fuzzy
 msgid "Compute all elements."
-msgstr "tutorial-elements.nl.svg"
+msgstr "Alle elementen berekenen."
 
 #: ../src/widgets/measure-toolbar.cpp:213
-#, fuzzy
 msgid "Compute max length."
-msgstr "In-uit padlengte"
+msgstr "Max lengte berekenen."
 
 #: ../src/widgets/measure-toolbar.cpp:266 ../src/widgets/text-toolbar.cpp:1361
 msgid "Font Size"
@@ -29438,7 +29413,6 @@ msgid "Decimal precision of measure"
 msgstr "Decimale precisie van meetlat"
 
 #: ../src/widgets/measure-toolbar.cpp:307
-#, fuzzy
 msgid "Scale %"
 msgstr "Schaal %"
 
@@ -29483,9 +29457,8 @@ msgstr "Meting omkeren"
 
 #: ../src/widgets/measure-toolbar.cpp:387
 #: ../src/widgets/measure-toolbar.cpp:388
-#, fuzzy
 msgid "To guides"
-msgstr "_Hulplijnen weergeven"
+msgstr "Naar hulplijnen"
 
 #: ../src/widgets/measure-toolbar.cpp:397
 #: ../src/widgets/measure-toolbar.cpp:398
@@ -29570,12 +29543,12 @@ msgstr "Zijde- en tensorhandvatten tonen"
 
 #: ../src/widgets/mesh-toolbar.cpp:509
 msgid "WARNING: Mesh SVG Syntax Subject to Change"
-msgstr ""
+msgstr "WAARSCHUWING: mesh SVG syntax onderhevig aan veranderingen"
 
 #: ../src/widgets/mesh-toolbar.cpp:519
 msgctxt "Type"
 msgid "Coons"
-msgstr ""
+msgstr "Coons"
 
 #: ../src/widgets/mesh-toolbar.cpp:522
 msgid "Bicubic"
@@ -29583,54 +29556,51 @@ msgstr "Bicubisch"
 
 #: ../src/widgets/mesh-toolbar.cpp:524
 msgid "Coons"
-msgstr ""
+msgstr "Coons"
 
 #: ../src/widgets/mesh-toolbar.cpp:525
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
-msgstr ""
+msgstr "Coons: geen afvlakking. Bicubisch: afvlakking langs patchranden."
 
 #: ../src/widgets/mesh-toolbar.cpp:527 ../src/widgets/pencil-toolbar.cpp:374
 msgid "Smoothing:"
 msgstr "Afvlakking:"
 
 #: ../src/widgets/mesh-toolbar.cpp:537
-#, fuzzy
 msgid "Toggle Sides"
-msgstr "Superscript"
+msgstr "Zijden aanpassen"
 
 #: ../src/widgets/mesh-toolbar.cpp:538
 msgid "Toggle selected sides between Beziers and lines."
-msgstr ""
+msgstr "Zijden veranderen tussen Beziers en lijnen."
 
 #: ../src/widgets/mesh-toolbar.cpp:541
-#, fuzzy
 msgid "Toggle side:"
-msgstr "_Focus modus aan/uitzetten"
+msgstr "Zijde aanpassen:"
 
 #: ../src/widgets/mesh-toolbar.cpp:548
-#, fuzzy
 msgid "Make elliptical"
-msgstr "Cursief maken"
+msgstr "Elliptisch maken"
 
 #: ../src/widgets/mesh-toolbar.cpp:549
 msgid ""
 "Make selected sides elliptical by changing length of handles. Works best if "
 "handles already approximate ellipse."
 msgstr ""
+"Geselecteerde zijden elliptisch maken door het aanpassen van de "
+"handvatlengte. Werkt het beste indien de handvatten reeds ellipsen benaderen."
 
 #: ../src/widgets/mesh-toolbar.cpp:552
-#, fuzzy
 msgid "Make elliptical:"
-msgstr "Cursief maken"
+msgstr "Elliptisch maken:"
 
 #: ../src/widgets/mesh-toolbar.cpp:559
-#, fuzzy
 msgid "Pick colors:"
-msgstr "Kleur punten"
+msgstr "Kleuren kiezen:"
 
 #: ../src/widgets/mesh-toolbar.cpp:560
 msgid "Pick colors for selected corner nodes from underneath mesh."
-msgstr ""
+msgstr "Kleuren van geselecteerde hoekknooppunten onder mesh kiezen."
 
 #: ../src/widgets/mesh-toolbar.cpp:563
 msgid "Pick Color"
@@ -31047,7 +31017,7 @@ msgstr "Verticaal — RL"
 
 #: ../src/widgets/text-toolbar.cpp:1499
 msgid "Vertical text — lines: right to left"
-msgstr ""
+msgstr "Verticale tekst — lijnen: rechts naar links"
 
 #: ../src/widgets/text-toolbar.cpp:1505
 msgid "Vertical — LR"
@@ -31055,7 +31025,7 @@ msgstr "Verticaal — LR"
 
 #: ../src/widgets/text-toolbar.cpp:1506
 msgid "Vertical text — lines: left to right"
-msgstr ""
+msgstr "Verticale tekst — lijnen: links naar rechts"
 
 #. Name
 #: ../src/widgets/text-toolbar.cpp:1511
@@ -33614,9 +33584,8 @@ msgid "SVG Unit:"
 msgstr "SVG-eenheid:"
 
 #: ../share/extensions/empty_generic.inx.h:5
-#, fuzzy
 msgid "Canvas background:"
-msgstr "Achtergrond bewaren"
+msgstr "Canvasachtergrond:"
 
 #: ../share/extensions/empty_generic.inx.h:6
 #: ../share/extensions/empty_page.inx.h:5
@@ -35401,9 +35370,8 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:28
 #: ../share/extensions/plotter.inx.h:56
-#, fuzzy
 msgid "Precut"
-msgstr "Voorsnijden gebruiken"
+msgstr "Voorsnijden"
 
 #: ../share/extensions/hpgl_output.inx.h:29
 #: ../share/extensions/plotter.inx.h:57
@@ -35459,15 +35427,13 @@ msgid "Export an HP Graphics Language file"
 msgstr "Naar een HP Graphics Language bestand exporteren"
 
 #: ../share/extensions/image_attributes.inx.h:1
-#, fuzzy
 msgid "Set Image Attributes"
-msgstr "Attributen instellen"
+msgstr "Afbeeldingsattributen instellen"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:3
-#, fuzzy
 msgid "Basic"
-msgstr "Latijns, basis"
+msgstr "Basis"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:5
@@ -35503,9 +35469,8 @@ msgstr ""
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:17
-#, fuzzy
 msgid "Scope:"
-msgstr "Bereik"
+msgstr "Bereik:"
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:19
@@ -35514,41 +35479,34 @@ msgid "Unset"
 msgstr "Vergroten"
 
 #: ../share/extensions/image_attributes.inx.h:20
-#, fuzzy
 msgid "Change only selected image(s)"
-msgstr "Alleen geselecteerde knooppunten veranderen"
+msgstr "Alleen geselecteerde afbeelding(en) aanpassen"
 
 #: ../share/extensions/image_attributes.inx.h:21
-#, fuzzy
 msgid "Change all images in selection"
-msgstr "Kon geen ellips in selectie vinden"
+msgstr "Alle afbeeldingen in selectie aanpassen"
 
 #: ../share/extensions/image_attributes.inx.h:22
-#, fuzzy
 msgid "Change all images in document"
-msgstr "De spelling van de tekst in het document controleren"
+msgstr "Alle afbeeldingen in het document aanpassen"
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:24
-#, fuzzy
 msgid "Image Rendering Quality"
-msgstr "Renderen van afbeelding:"
+msgstr "Kwaliteit renderen van afbeelding:"
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:26
-#, fuzzy
 msgid "Image rendering attribute:"
-msgstr "Rendermodus afbeelding:"
+msgstr "Renderattribuut afbeelding:"
 
 #: ../share/extensions/image_attributes.inx.h:27
-#, fuzzy
 msgid "Apply attribute to parent group of selection"
-msgstr "Transformatie toepassen op selectie"
+msgstr "attribuut toepassen op oudergroep of selectie"
 
 #: ../share/extensions/image_attributes.inx.h:28
-#, fuzzy
 msgid "Apply attribute to SVG root"
-msgstr "Te veranderen attribuut:"
+msgstr "Attribuut toepassen op SVG-root"
 
 #: ../share/extensions/ink2canvas.inx.h:1
 msgid "Convert to html5 canvas"
@@ -35640,9 +35598,8 @@ msgstr "Stijl interpoleren"
 
 #: ../share/extensions/interp.inx.h:7
 #: ../share/extensions/interp_att_g.inx.h:10
-#, fuzzy
 msgid "Use Z-order"
-msgstr "Verhoogde rand"
+msgstr "Z-orde gebruiken"
 
 #: ../share/extensions/interp.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:11
@@ -36602,9 +36559,8 @@ msgid "Start of Path"
 msgstr "Begin van pad"
 
 #: ../share/extensions/measure.inx.h:31
-#, fuzzy
 msgid "Center of BBox"
-msgstr "Massacentrum"
+msgstr "Middelpunt van omvattend vak"
 
 #: ../share/extensions/measure.inx.h:32
 msgid "Center of Mass"
@@ -36980,6 +36936,8 @@ msgid ""
 "The Byte size of your serial connection, 99% of all plotters use the default "
 "setting (Default: 8 Bits)"
 msgstr ""
+"Bytegrootte van de seriële verbinding, 99% van de plotters gebruiken de "
+"standaardwaarde (8 bits)"
 
 #: ../share/extensions/plotter.inx.h:11
 msgid "Serial stop bits:"
@@ -36991,6 +36949,8 @@ msgid ""
 "The Stop bits of your serial connection, 99% of all plotters use the default "
 "setting (Default: 1 Bit)"
 msgstr ""
+"Stopbits van de seriële verbinding, 99% van de plotters gebruiken de "
+"standaardwaarde (1 bit)"
 
 #: ../share/extensions/plotter.inx.h:14
 msgid "Serial parity:"
@@ -37002,6 +36962,8 @@ msgid ""
 "The Parity of your serial connection, 99% of all plotters use the default "
 "setting (Default: None)"
 msgstr ""
+"Pariteit van de seriële verbinding, 99% van de plotters gebruiken de "
+"standaardwaarde (geen)"
 
 #: ../share/extensions/plotter.inx.h:17
 msgid "Serial flow control:"
@@ -37641,9 +37603,8 @@ msgid "Bottom"
 msgstr "Onderaan"
 
 #: ../share/extensions/restack.inx.h:21
-#, fuzzy
 msgid "Based on Z-Order"
-msgstr "Verhoogde rand"
+msgstr "Gebaseerd op Z-orde"
 
 #: ../share/extensions/restack.inx.h:22
 #, fuzzy
@@ -37651,13 +37612,12 @@ msgid "Restack Mode"
 msgstr "Herstapelen"
 
 #: ../share/extensions/restack.inx.h:23
-#, fuzzy
 msgid "Reverse Z-Order"
-msgstr "Kleurverloop omdraaien"
+msgstr "Z-orde omkeren"
 
 #: ../share/extensions/restack.inx.h:24
 msgid "Shuffle Z-Order"
-msgstr ""
+msgstr "Z-orde shuffelen"
 
 #: ../share/extensions/restack.inx.h:26
 msgid ""
