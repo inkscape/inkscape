@@ -493,7 +493,7 @@ struct poptOption options[] = {
      POPT_ARG_NONE, &sp_vacuum_defs, SP_ARG_VACUUM_DEFS,
      N_("Remove unused definitions from the defs section(s) of the document"),
      NULL},
-     
+
 #ifdef WITH_DBUS
     {"dbus-listen", 0,
      POPT_ARG_NONE, &sp_dbus_listen, SP_ARG_DBUS_LISTEN,
@@ -551,7 +551,7 @@ static void _win32_set_inkscape_env(gchar const *exe)
     gchar *perl = g_build_filename(exe, "python", NULL);
     gchar *pythonlib = g_build_filename(exe, "python", "Lib", NULL);
     gchar *pythondll = g_build_filename(exe, "python", "DLLs", NULL);
-    
+
     // Python 2.x needs short paths in PYTHONPATH.
     // Otherwise it doesn't work when Inkscape is installed in Unicode directories.
     // g_win32_locale_filename_from_utf8 is the GLib wrapper for GetShortPathName.
@@ -602,14 +602,14 @@ static void _win32_set_inkscape_env(gchar const *exe)
     g_free(perl);
     g_free(pythonlib);
     g_free(pythondll);
-    
+
     g_free(python_s);
     g_free(pythonlib_s);
     g_free(pythondll_s);
 
     g_free(new_path);
     g_free(new_pythonpath);
-    
+
     g_free(localepath);
 }
 #endif
@@ -619,7 +619,7 @@ static void set_extensions_env()
     gchar const *pythonpath = g_getenv("PYTHONPATH");
     gchar *extdir;
     gchar *new_pythonpath;
-    
+
 #ifdef WIN32
     extdir = g_win32_locale_filename_from_utf8(INKSCAPE_EXTENSIONDIR);
 #else
@@ -905,7 +905,7 @@ static int sp_common_main( int argc, char const **argv, GSList **flDest )
         if ( sp_global_printer )
             sp_global_printer_utf8 = g_strdup( sp_global_printer );
     }
-    
+
 #ifdef WITH_DBUS
     // Before initializing extensions, we must set the DBus bus name if required
     if (sp_dbus_name != NULL) {
@@ -1064,40 +1064,56 @@ sp_main_gui(int argc, char const **argv)
     Glib::ustring inkscape_style = INKSCAPE_UIDIR;
     inkscape_style += "/style.css";
     // std::cout << "CSS Stylesheet Inkscape: " << inkscape_style << std::endl;
-    Glib::RefPtr<Gtk::CssProvider> provider = Gtk::CssProvider::create();
 
-    // From 3.16, throws an error which we must catch.
-    try {
-        provider->load_from_path (inkscape_style);
-    }
+    if (g_file_test (inkscape_style.c_str(), G_FILE_TEST_EXISTS)) {
+      Glib::RefPtr<Gtk::CssProvider> provider = Gtk::CssProvider::create();
+
+      // From 3.16, throws an error which we must catch.
+      try {
+          provider->load_from_path (inkscape_style);
+      }
 #if GTK_CHECK_VERSION(3,16,0)
-    // Gtk::CssProviderError not defined until 3.16.
-    catch (const Gtk::CssProviderError& ex)
-    {
-        std::cerr << "CSSProviderError::load_from_path(): failed to load: " << inkscape_style << "\n  (" << ex.what() << ")" << std::endl;
-    }
+      // Gtk::CssProviderError not defined until 3.16.
+      catch (const Gtk::CssProviderError& ex)
+      {
+          std::cerr << "CSSProviderError::load_from_path(): failed to load: " << inkscape_style
+                    << "\n  (" << ex.what() << ")" << std::endl;
+      }
 #else
-    catch (...)
-    {}
+      catch (...)
+      {}
 #endif
-    provider->load_from_path (inkscape_style);
 
-    Gtk::StyleContext::add_provider_for_screen (screen, provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+      Gtk::StyleContext::add_provider_for_screen (screen, provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    } else {
+        std::cerr << "sp_main_gui: Cannot find default style file:\n  (" << inkscape_style
+                  << ")" << std::endl;
+    }
 
     Glib::ustring user_style = Inkscape::Application::profile_path("ui/style.css");
     // std::cout << "CSS Stylesheet User: " << user_style << std::endl;
-    Glib::RefPtr<Gtk::CssProvider> provider2 = Gtk::CssProvider::create();
 
-    // From 3.16, throws an error which we must catch.
-    try {
-        provider2->load_from_path (user_style);
+    if (g_file_test (user_style.c_str(), G_FILE_TEST_EXISTS)) {
+      Glib::RefPtr<Gtk::CssProvider> provider2 = Gtk::CssProvider::create();
+
+      // From 3.16, throws an error which we must catch.
+      try {
+          provider2->load_from_path (user_style);
+      }
+#if GTK_CHECK_VERSION(3,16,0)
+      // Gtk::CssProviderError not defined until 3.16.
+      catch (const Gtk::CssProviderError& ex)
+      {
+        std::cerr << "CSSProviderError::load_from_path(): failed to load: " << user_style
+                  << "\n  (" << ex.what() << ")" << std::endl;
+      }
+#else
+      catch (...)
+      {}
+#endif
+
+      Gtk::StyleContext::add_provider_for_screen (screen, provider2, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
-    catch (...)
-    {}
-    provider2->load_from_path (user_style);
-
-    Gtk::StyleContext::add_provider_for_screen (screen, provider2, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
 #endif
 
     gdk_event_handler_set((GdkEventFunc)snooper, NULL, NULL);
@@ -1183,7 +1199,7 @@ static int sp_process_file_list(GSList *fl)
             if (sp_vacuum_defs) {
                 doc->vacuumDocument();
             }
-            
+
             // Execute command-line actions (selections and verbs) using our local models
             bool has_performed_actions = Inkscape::CmdLineAction::doList(INKSCAPE.active_action_context());
 
@@ -1694,9 +1710,9 @@ static int sp_do_export_png(SPDocument *doc)
         g_print("Background RRGGBBAA: %08x\n", bgcolor);
 
         g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area[Geom::X][0], area[Geom::Y][0], area[Geom::X][1], area[Geom::Y][1], width, height, dpi);
-        
+
         reverse(items.begin(),items.end());
-        
+
         if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
             if( sp_export_png_file(doc, path.c_str(), area, width, height, dpi,
               dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : std::vector<SPItem*>()) == 1 ) {
@@ -1866,7 +1882,7 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
 }
 
 /**
- *  Export a document to EMF or WMF 
+ *  Export a document to EMF or WMF
  *
  *  \param doc Document to export.
  *  \param uri URI to export to.
