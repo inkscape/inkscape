@@ -672,10 +672,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (dtw->hadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
     g_signal_connect (G_OBJECT (dtw->vadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
 
-    GtkWidget *statusbar_tail=gtk_statusbar_new();
-    gtk_widget_set_name(statusbar_tail, "StatusBarTail");
-    gtk_box_pack_end (GTK_BOX (dtw->statusbar), statusbar_tail, FALSE, FALSE, 0);
-
     // zoom status spinbutton
     dtw->zoom_status = gtk_spin_button_new_with_range (log(SP_DESKTOP_ZOOM_MIN)/log(2), log(SP_DESKTOP_ZOOM_MAX)/log(2), 0.1);
     gtk_widget_set_name(dtw->zoom_status, "ZoomStatus");
@@ -712,9 +708,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
                     GTK_FILL, GTK_FILL, 0, 0);
 #endif
 
-    eventbox = gtk_event_box_new ();
-    gtk_container_add (GTK_CONTAINER (eventbox), dtw->coord_status);
-    gtk_widget_set_tooltip_text (eventbox, _("Cursor coordinates"));
+    gtk_widget_set_tooltip_text (dtw->coord_status, _("Cursor coordinates"));
     GtkWidget *label_x = gtk_label_new(_("X:"));
     GtkWidget *label_y = gtk_label_new(_("Y:"));
 
@@ -755,7 +749,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #endif
 
     sp_set_font_size_smaller (dtw->coord_status);
-    gtk_box_pack_end (GTK_BOX (statusbar_tail), eventbox, FALSE, FALSE, 1);
+
+    gtk_box_pack_end (GTK_BOX (dtw->statusbar), dtw->coord_status, FALSE, FALSE, 0);
 
     dtw->layer_selector = new Inkscape::Widgets::LayerSelector(NULL);
     // FIXME: need to unreference on container destruction to avoid leak
@@ -793,15 +788,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_label_set_markup (GTK_LABEL (dtw->select_status), _("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
     // space label 2 pixels from left edge
     gtk_container_add (GTK_CONTAINER (dtw->select_status_eventbox), dtw->select_status);
-
-// WHAT DOES THE FOLLOWING GTK_BOX DO?
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_box_pack_start(GTK_BOX(dtw->statusbar), 
-                       gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0), 
-                       FALSE, FALSE, 2);
-#else
-    gtk_box_pack_start (GTK_BOX (dtw->statusbar), gtk_hbox_new(FALSE, 0), FALSE, FALSE, 2);
-#endif
 
     gtk_box_pack_start (GTK_BOX (dtw->statusbar), dtw->select_status_eventbox, TRUE, TRUE, 0);
 
