@@ -1411,6 +1411,7 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
             // converted to GtkActions and UIManager
 
             GtkWidget* kludge = gtk_toolbar_new();
+            gtk_widget_set_name( kludge, "Kludge" );
             g_object_set_data( G_OBJECT(kludge), "dtw", desktop->canvas);
             g_object_set_data( G_OBJECT(kludge), "desktop", desktop);
             dataHolders[aux_toolboxes[i].type_name] = kludge;
@@ -1423,7 +1424,7 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
             } else {
                 sub_toolbox = aux_toolboxes[i].create_func(desktop);
             }
-
+            gtk_widget_set_name( sub_toolbox, "SubToolBox" );
             gtk_size_group_add_widget( grouper, sub_toolbox );
 
             gtk_container_add(GTK_CONTAINER(toolbox), sub_toolbox);
@@ -1441,6 +1442,7 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
 #if GTK_CHECK_VERSION(3,0,0)
             GtkWidget* holder = gtk_grid_new();
+            gtk_widget_set_name( holder, "ToolbarHolder" );
             gtk_grid_attach( GTK_GRID(holder), kludge, 2, 0, 1, 1);
 #else
             GtkWidget* holder = gtk_table_new( 1, 3, FALSE );

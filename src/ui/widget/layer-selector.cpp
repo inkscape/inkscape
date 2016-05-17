@@ -45,6 +45,7 @@ public:
     AlternateIcons(Inkscape::IconSize size, gchar const *a, gchar const *b)
     : _a(NULL), _b(NULL)
     {
+        set_name("AlternateIcons");
         if (a) {
             _a = Gtk::manage(sp_icon_get_icon(a, size));
             _a->set_no_show_all(true);
@@ -94,6 +95,7 @@ private:
 LayerSelector::LayerSelector(SPDesktop *desktop)
 : _desktop(NULL), _layer(NULL)
 {
+    set_name("LayerSelector");
     AlternateIcons *label;
 
     label = Gtk::manage(new AlternateIcons(Inkscape::ICON_SIZE_DECORATION,

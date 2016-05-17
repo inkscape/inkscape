@@ -793,6 +793,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_label_set_markup (GTK_LABEL (dtw->select_status), _("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
     // space label 2 pixels from left edge
     gtk_container_add (GTK_CONTAINER (dtw->select_status_eventbox), dtw->select_status);
+
+// WHAT DOES THE FOLLOWING GTK_BOX DO?
 #if GTK_CHECK_VERSION(3,0,0)
     gtk_box_pack_start(GTK_BOX(dtw->statusbar), 
                        gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0), 
@@ -800,6 +802,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #else
     gtk_box_pack_start (GTK_BOX (dtw->statusbar), gtk_hbox_new(FALSE, 0), FALSE, FALSE, 2);
 #endif
+
     gtk_box_pack_start (GTK_BOX (dtw->statusbar), dtw->select_status_eventbox, TRUE, TRUE, 0);
 
     gtk_widget_show_all (dtw->vbox);
