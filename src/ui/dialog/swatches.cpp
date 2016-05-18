@@ -594,6 +594,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
     _currentDesktop(0),
     _currentDocument(0)
 {
+    set_name( "SwatchesPanel" );
     Gtk::RadioMenuItem* hotItem = 0;
     _holder = new PreviewHolder();
     _clear = new ColorItem( ege::PaintDef::CLEAR );

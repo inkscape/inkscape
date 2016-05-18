@@ -366,7 +366,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
         dtw->panels = new SwatchesPanel("/embedded/swatches" /*false*/);
         dtw->panels->setOrientation(SP_ANCHOR_SOUTH);
-        dtw->panels->set_name("SwatchesPanel");
 #if GTK_CHECK_VERSION(3,0,0)
         dtw->panels->set_vexpand(false);
 #endif
@@ -727,6 +726,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_grid_set_row_spacing(GTK_GRID(dtw->coord_status), 0);
     gtk_grid_set_column_spacing(GTK_GRID(dtw->coord_status), 2);
     GtkWidget* sep = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
+    gtk_widget_set_name(sep, "CoordinateSeparator");
     gtk_grid_attach(GTK_GRID(dtw->coord_status), 
 		    GTK_WIDGET(sep),
 		    0, 0, 1, 2);
