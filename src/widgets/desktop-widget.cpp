@@ -249,7 +249,7 @@ SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
         gdk_window_process_updates(gtk_widget_get_window(GTK_WIDGET(sb)), TRUE);
     }
 
-    gtk_widget_set_tooltip_text (this->select_status_eventbox, gtk_label_get_text (sb));
+    gtk_widget_set_tooltip_text (this->select_status, gtk_label_get_text (sb));
 }
 
 Geom::Point
@@ -479,9 +479,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     // Horizontal scrollbar
     dtw->hadj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0));
 
-
-
-
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->hscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, GTK_ADJUSTMENT (dtw->hadj));
     gtk_widget_set_name(dtw->hscrollbar, "HorizontalScrollbar");
@@ -656,10 +653,19 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #endif
     }
 
+    // connect scrollbar signals
+    g_signal_connect (G_OBJECT (dtw->hadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
+    g_signal_connect (G_OBJECT (dtw->vadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
+
+
+    // --------------- Status Tool Bar ------------------//
+
+    // Selected Style (Fill/Stroke/Opacity)
     dtw->selected_style = new Inkscape::UI::Widget::SelectedStyle(true);
     GtkHBox *ss_ = dtw->selected_style->gobj();
     gtk_box_pack_start (GTK_BOX (dtw->statusbar), GTK_WIDGET(ss_), FALSE, FALSE, 0);
 
+    // Separator
     gtk_box_pack_start(GTK_BOX(dtw->statusbar), 
 #if GTK_CHECK_VERSION(3,0,0)
 		    gtk_separator_new(GTK_ORIENTATION_VERTICAL), 
@@ -668,11 +674,37 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #endif
 		    FALSE, FALSE, 0);
 
-    // connect scrollbar signals
-    g_signal_connect (G_OBJECT (dtw->hadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
-    g_signal_connect (G_OBJECT (dtw->vadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
+    // Layer Selector
+    dtw->layer_selector = new Inkscape::Widgets::LayerSelector(NULL);
+    // FIXME: need to unreference on container destruction to avoid leak
+    dtw->layer_selector->reference();
+    //dtw->layer_selector->set_size_request(-1, SP_ICON_SIZE_BUTTON);
+    gtk_box_pack_start(GTK_BOX(dtw->statusbar), GTK_WIDGET(dtw->layer_selector->gobj()), FALSE, FALSE, 1);
 
-    // zoom status spinbutton
+    // Select Status
+    dtw->select_status = gtk_label_new (NULL);
+    gtk_widget_set_name( dtw->select_status, "SelectStatus");
+    gtk_label_set_ellipsize (GTK_LABEL(dtw->select_status), PANGO_ELLIPSIZE_END);
+#if GTK_CHECK_VERSION(3,10,0)
+    gtk_label_set_line_wrap (GTK_LABEL(dtw->select_status), true);
+    gtk_label_set_lines (GTK_LABEL(dtw->select_status), 2);
+#endif
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(dtw->select_status, GTK_ALIGN_START);
+#else
+    gtk_misc_set_alignment (GTK_MISC (dtw->select_status), 0.0, 0.5);
+#endif
+
+    gtk_widget_set_size_request (dtw->select_status, 1, -1);
+
+    // Display the initial welcome message in the statusbar
+    gtk_label_set_markup (GTK_LABEL (dtw->select_status), _("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
+
+    gtk_box_pack_start (GTK_BOX (dtw->statusbar), dtw->select_status, TRUE, TRUE, 0);
+
+
+    // Zoom status spinbutton
     dtw->zoom_status = gtk_spin_button_new_with_range (log(SP_DESKTOP_ZOOM_MIN)/log(2), log(SP_DESKTOP_ZOOM_MAX)/log(2), 0.1);
     gtk_widget_set_name(dtw->zoom_status, "ZoomStatus");
     gtk_widget_set_tooltip_text (dtw->zoom_status, _("Zoom"));
@@ -688,10 +720,10 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->zoom_update = g_signal_connect (G_OBJECT (dtw->zoom_status), "value_changed", G_CALLBACK (sp_dtw_zoom_value_changed), dtw);
     dtw->zoom_update = g_signal_connect (G_OBJECT (dtw->zoom_status), "populate_popup", G_CALLBACK (sp_dtw_zoom_populate_popup), dtw);
 
-    // cursor coordinates
+    // Cursor coordinates
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->coord_status = gtk_grid_new();
-    gtk_widget_set_name(dtw->coord_status, "CoordinateStatus");
+    gtk_widget_set_name(dtw->coord_status, "CoordinateAndZStatus");
     gtk_grid_set_row_spacing(GTK_GRID(dtw->coord_status), 0);
     gtk_grid_set_column_spacing(GTK_GRID(dtw->coord_status), 2);
     GtkWidget* sep = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
@@ -752,12 +784,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     gtk_box_pack_end (GTK_BOX (dtw->statusbar), dtw->coord_status, FALSE, FALSE, 0);
 
-    dtw->layer_selector = new Inkscape::Widgets::LayerSelector(NULL);
-    // FIXME: need to unreference on container destruction to avoid leak
-    dtw->layer_selector->reference();
-    //dtw->layer_selector->set_size_request(-1, SP_ICON_SIZE_BUTTON);
-    gtk_box_pack_start(GTK_BOX(dtw->statusbar), GTK_WIDGET(dtw->layer_selector->gobj()), FALSE, FALSE, 1);
-
+    // --------------- Color Management ---------------- //
     dtw->_tracker = ege_color_prof_tracker_new(GTK_WIDGET(dtw->layer_selector->gobj()));
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
@@ -772,25 +799,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     g_signal_connect( G_OBJECT(dtw->_tracker), "changed", G_CALLBACK(sp_dtw_color_profile_event), dtw );
 
-    dtw->select_status_eventbox = gtk_event_box_new ();
-    gtk_widget_set_name(dtw->select_status_eventbox, "SelectStatusEventBox");
-    dtw->select_status = gtk_label_new (NULL);
-    gtk_label_set_ellipsize (GTK_LABEL(dtw->select_status), PANGO_ELLIPSIZE_END);
-
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_halign(dtw->select_status, GTK_ALIGN_START);
-#else
-    gtk_misc_set_alignment (GTK_MISC (dtw->select_status), 0.0, 0.5);
-#endif
-
-    gtk_widget_set_size_request (dtw->select_status, 1, -1);
-    // display the initial welcome message in the statusbar
-    gtk_label_set_markup (GTK_LABEL (dtw->select_status), _("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
-    // space label 2 pixels from left edge
-    gtk_container_add (GTK_CONTAINER (dtw->select_status_eventbox), dtw->select_status);
-
-    gtk_box_pack_start (GTK_BOX (dtw->statusbar), dtw->select_status_eventbox, TRUE, TRUE, 0);
-
+    // ------------------ Finish Up -------------------- //
     gtk_widget_show_all (dtw->vbox);
 
     gtk_widget_grab_focus (GTK_WIDGET(dtw->canvas));

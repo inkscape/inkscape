@@ -41,13 +41,9 @@
 @define-color bg_color7  #636363;
 @define-color bg_color8  #000000; /* Black */
 
-/* Gtk  <= 3.18 */
-GtkWidget {
-/*    font-size: 12pt; */
-}
-
-/* Gtk  >= 3.19.2 */
-widget {
+/* 'GtkWidget' for Gtk  <= 3.18   */
+/* 'widget'    for Gtk  <= 3.19.2 */   
+GtkWidget, widget {
 /*    font-size: 12pt; */
 }
 
@@ -96,7 +92,7 @@ combobox window.popup scrolledwindow treeview separator {
     -GtkComboBox-appears-as-list: true;
 }
 
-#guides_lock {
+#LockGuides {
     padding: 0;
 }
 
