@@ -63,9 +63,9 @@ void PureTransform::snap(::SnapManager *sm, std::vector<Inkscape::SnapCandidateP
             (*j).setSourceNum(0);
             first_free_snap = false;
         }
+
         Inkscape::SnappedPoint snapped_point = snap(sm, *j, (*i).getPoint(), bbox); // Calls the snap() method of the derived classes
 
-        // std::cout << "dist = " << snapped_point.getSnapDistance() << std::endl;
         snapped_point.setPointerDistance(Geom::L2(pointer - (*i).getPoint()));
 
         /*Find the transformation that describes where the snapped point has
@@ -85,16 +85,22 @@ void PureTransform::snap(::SnapManager *sm, std::vector<Inkscape::SnapCandidateP
                 // We might still need to apply a constraint though, if we tried a constrained snap. And
                 // in case of a free snap we might have use for the transformed point, so let's return that
                 // point, whether it's constrained or not
-                if (best_snapped_point.isOtherSnapBetter(snapped_point, true) || points.size() == 1) {
-                    // .. so we must keep track of the best non-snapped constrained point
+
+                if (best_snapped_point.isOtherSnapBetter(snapped_point, true) ) {
+                    // .. so we must keep track of the best non-snapped constrained point.. but what
+                    // is the best? There is no best, or is there? We cannot compare on snapped distance
+                    // because neither has snapped, and both have their snapped distance set to infinity.
+                    // There might be a difference in "constrainedness" though, 1D vs 2D snapping
                     store_best_snap = true;
                 }
             }
         }
 
-        if (store_best_snap) {
+        if (store_best_snap || i == points.begin()) {
             best_original_point = (*i);
-            best_snapped_point = snapped_point;
+            best_snapped_point = snapped_point; // Can be a point that didn't snap, but then at least we
+            // return something meaningful; we might have use for the transformation. The default
+            // snapped_point, as initialized before this loop, is not very meaningful at all.
         }
 
         ++j;
@@ -119,7 +125,7 @@ Geom::Point PureTranslate::getTransformedPoint(SnapCandidatePoint const &p) cons
     return p.getPoint() + _vector;
 }
 
-void PureTranslate::storeTransform(SnapCandidatePoint const original_point, SnappedPoint const snapped_point) {
+void PureTranslate::storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point) {
     /* Consider the case in which a box is almost aligned with a grid in both
      * horizontal and vertical directions. The distance to the intersection of
      * the grid lines will always be larger then the distance to a single grid
@@ -156,7 +162,7 @@ Geom::Point PureScale::getTransformedPoint(SnapCandidatePoint const &p) const {
     return (p.getPoint() - _origin) * _scale + _origin;
 }
 
-void PureScale::storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point) {
+void PureScale::storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point) {
     _scale_snapped = Geom::Scale(Geom::infinity(), Geom::infinity());
     // If this point *i is horizontally or vertically aligned with
     // the origin of the scaling, then it will scale purely in X or Y
@@ -174,6 +180,14 @@ void PureScale::storeTransform(SnapCandidatePoint const original_point, SnappedP
             // we might have left result[1-index] = Geom::infinity() if scaling didn't occur in the other direction
         }
     }
+
+    if (_scale_snapped == Geom::Scale(Geom::infinity(), Geom::infinity())) {
+        // This point must have been at the origin, so we cannot possibly snap; it won't scale (i.e. won't move while dragging)
+        snapped_point.setSnapDistance(Geom::infinity());
+        snapped_point.setSecondSnapDistance(Geom::infinity());
+        return;
+    }
+
     if (_uniform) {
         // Lock the scaling the be uniform, but keep the sign such that we don't change which quadrant we have dragged into
         if (fabs(_scale_snapped[0]) < fabs(_scale_snapped[1])) {
@@ -253,16 +267,16 @@ SnappedPoint PureStretchConstrained::snap(::SnapManager *sm, SnapCandidatePoint 
     return sm->constrainedSnap(p, dedicated_constraint, bbox_to_snap);
 }
 
-void PureStretchConstrained::storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point) {
+void PureStretchConstrained::storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point) {
     Geom::Point const a = snapped_point.getPoint() - _origin; // vector to snapped point
     Geom::Point const b = original_point.getPoint() - _origin; // vector to original point (not the transformed point!)
 
     _stretch_snapped = Geom::Scale(Geom::infinity(), Geom::infinity());
-    if (fabs(b[_direction]) > 1e-6) { // if STRETCHING will occur for this point
+    if (fabs(b[_direction]) > 1e-4) { // if STRETCHING will occur for this point
         _stretch_snapped[_direction] = a[_direction] / b[_direction];
         _stretch_snapped[1-_direction] = _uniform ? _stretch_snapped[_direction] : 1;
     } else { // STRETCHING might occur for this point, but only when the stretching is uniform
-        if (_uniform && fabs(b[1-_direction]) > 1e-6) {
+        if (_uniform && fabs(b[1-_direction]) > 1e-4) {
            _stretch_snapped[1-_direction] = a[1-_direction] / b[1-_direction];
            _stretch_snapped[_direction] = _stretch_snapped[1-_direction];
         }
@@ -304,7 +318,7 @@ SnappedPoint PureSkewConstrained::snap(::SnapManager *sm, SnapCandidatePoint con
     return sm->constrainedSnap(p, Inkscape::Snapper::SnapConstraint(constraint_vector), bbox_to_snap);
 }
 
-void PureSkewConstrained::storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point) {
+void PureSkewConstrained::storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point) {
     Geom::Point const b = original_point.getPoint() - _origin; // vector to original point (not the transformed point!)
     _skew_snapped = (snapped_point.getPoint()[_direction] - (original_point.getPoint())[_direction]) / b[1 - _direction]; // skew factor
 
@@ -335,7 +349,7 @@ SnappedPoint PureRotateConstrained::snap(::SnapManager *sm, SnapCandidatePoint c
     return sm->constrainedSnap(p, dedicated_constraint, bbox_to_snap);
 }
 
-void PureRotateConstrained::storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point) {
+void PureRotateConstrained::storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point) {
     Geom::Point const a = snapped_point.getPoint() - _origin; // vector to snapped point
     Geom::Point const b = (original_point.getPoint() - _origin); // vector to original point (not the transformed point!)
     // a is vector to snapped point; b is vector to original point; now lets calculate angle between a and b

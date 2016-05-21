@@ -26,7 +26,7 @@ class PureTransform {
 protected:
     virtual SnappedPoint snap(::SnapManager *sm, SnapCandidatePoint const &p, Geom::Point pt_orig, Geom::OptRect const &bbox_to_snap) const = 0;
     virtual Geom::Point getTransformedPoint(SnapCandidatePoint const &p) const = 0;
-    virtual void storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point) = 0;
+    virtual void storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point) = 0;
 
 public:
     //PureTransform();
@@ -48,7 +48,7 @@ protected:
 
     virtual SnappedPoint snap(::SnapManager *sm, SnapCandidatePoint const &p, Geom::Point pt_orig, Geom::OptRect const &bbox_to_snap) const;
     virtual Geom::Point getTransformedPoint(SnapCandidatePoint const &p) const;
-    virtual void storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point);
+    virtual void storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point);
 
 public:
 //    PureTranslate();                        // Default constructor
@@ -90,7 +90,7 @@ protected:
 
     virtual SnappedPoint snap(::SnapManager *sm, SnapCandidatePoint const &p, Geom::Point pt_orig, Geom::OptRect const &bbox_to_snap) const;
     virtual Geom::Point getTransformedPoint(SnapCandidatePoint const &p) const;
-    virtual void storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point);
+    virtual void storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point);
 
 public:
 //    PureScale();                    // Default constructor
@@ -135,7 +135,7 @@ protected:
 
     virtual SnappedPoint snap(::SnapManager *sm, SnapCandidatePoint const &p, Geom::Point pt_orig, Geom::OptRect const &bbox_to_snap) const;
     virtual Geom::Point getTransformedPoint(SnapCandidatePoint const &p) const;
-    virtual void storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point);
+    virtual void storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point);
 
 public:
     virtual ~PureStretchConstrained() {};
@@ -172,7 +172,7 @@ protected:
 
     virtual SnappedPoint snap(::SnapManager *sm, SnapCandidatePoint const &p, Geom::Point pt_orig, Geom::OptRect const &bbox_to_snap) const;
     Geom::Point getTransformedPoint(SnapCandidatePoint const &p) const;
-    virtual void storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point);
+    virtual void storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point);
 
 public:
     virtual ~PureSkewConstrained() {};
@@ -203,7 +203,7 @@ protected:
 
     virtual SnappedPoint snap(::SnapManager *sm, SnapCandidatePoint const &p, Geom::Point pt_orig, Geom::OptRect const &bbox_to_snap) const;
     virtual Geom::Point getTransformedPoint(SnapCandidatePoint const &p) const;
-    virtual void storeTransform(SnapCandidatePoint const original_point, SnappedPoint snapped_point);
+    virtual void storeTransform(SnapCandidatePoint const &original_point, SnappedPoint &snapped_point);
 
 public:
 //    PureRotate();                        // Default constructor
