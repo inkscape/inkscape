@@ -298,8 +298,8 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
     /* Pick up all gradients with vectors */
     GSList *gl = NULL;
     if (gvs->gr) {
-        std::set<SPObject *> gradients = gvs->gr->document->getResourceList("gradient");
-        for (std::set<SPObject *>::const_iterator it = gradients.begin(); it != gradients.end(); ++it) {
+        std::vector<SPObject *> gradients = gvs->gr->document->getResourceList("gradient");
+        for (std::vector<SPObject *>::const_iterator it = gradients.begin(); it != gradients.end(); ++it) {
             SPGradient* grad = SP_GRADIENT(*it);
             if ( grad->hasStops() && (grad->isSwatch() == gvs->swatched) ) {
                 gl = g_slist_prepend(gl, *it);

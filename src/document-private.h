@@ -49,7 +49,7 @@ struct SPDocumentPrivate {
 	IDChangedSignalMap id_changed_signals;
 
 	/* Resources */
-        std::map<std::string, std::set<SPObject *> > resources;
+        std::map<std::string, std::vector<SPObject *> > resources;
 	ResourcesChangedSignalMap resources_changed_signals;
 
         sigc::signal<void> destroySignal;

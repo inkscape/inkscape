@@ -1541,9 +1541,9 @@ bool SPDocument::addResource(gchar const *key, SPObject *object)
     bool result = false;
 
     if ( !object->cloned ) {
-        std::set<SPObject *> rlist = priv->resources[key];
-        g_return_val_if_fail(rlist.find(object) == rlist.end(), false);
-        priv->resources[key].insert(object);
+        std::vector<SPObject *> rlist = priv->resources[key];
+        g_return_val_if_fail(std::find(rlist.begin(),rlist.end(),object) == rlist.end(), false);
+        priv->resources[key].insert(priv->resources[key].begin(),object);
 
         GQuark q = g_quark_from_string(key);
 
@@ -1572,10 +1572,11 @@ bool SPDocument::removeResource(gchar const *key, SPObject *object)
     bool result = false;
 
     if ( !object->cloned ) {
-        std::set<SPObject *> rlist = priv->resources[key];
+        std::vector<SPObject *> rlist = priv->resources[key];
         g_return_val_if_fail(!rlist.empty(), false);
-        g_return_val_if_fail(rlist.find(object) != rlist.end(), false);
-        priv->resources[key].erase(object);
+        std::vector<SPObject*>::iterator it = std::find(priv->resources[key].begin(),priv->resources[key].end(),object);
+        g_return_val_if_fail(it != rlist.end(), false);
+        priv->resources[key].erase(it);
 
         GQuark q = g_quark_from_string(key);
         priv->resources_changed_signals[q].emit();
@@ -1586,9 +1587,9 @@ bool SPDocument::removeResource(gchar const *key, SPObject *object)
     return result;
 }
 
-std::set<SPObject *> const SPDocument::getResourceList(gchar const *key) const
+std::vector<SPObject *> const SPDocument::getResourceList(gchar const *key) const
 {
-    std::set<SPObject *> emptyset;
+    std::vector<SPObject *> emptyset;
     g_return_val_if_fail(key != NULL, emptyset);
     g_return_val_if_fail(*key != '\0', emptyset);
 

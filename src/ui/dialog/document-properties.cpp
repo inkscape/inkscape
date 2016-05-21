@@ -492,8 +492,8 @@ void DocumentProperties::linkSelectedProfile()
 	std::vector<std::pair<Glib::ustring, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
         Glib::ustring file = pairs[row].first;
         Glib::ustring name = pairs[row].second;
-        std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
-        for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+        std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+        for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
             SPObject* obj = *it;
             Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
             if (!strcmp(prof->href, file.c_str()))
@@ -532,11 +532,11 @@ void DocumentProperties::linkSelectedProfile()
 void DocumentProperties::populate_linked_profiles_box()
 {
     _LinkedProfilesListStore->clear();
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
     if (! current.empty()) {
         _emb_profiles_observer.set((*(current.begin()))->parent);
     }
-    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         Gtk::TreeModel::Row row = *(_LinkedProfilesListStore->append());
@@ -614,8 +614,8 @@ void DocumentProperties::removeSelectedProfile(){
             return;
         }
     }
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
-    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         if (!name.compare(prof->name)){
@@ -738,7 +738,7 @@ void DocumentProperties::build_cms()
     _LinkedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::linked_profiles_list_button_release));
     cms_create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
 
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "defs" );
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "defs" );
     if (!current.empty()) {
         _emb_profiles_observer.set((*(current.begin()))->parent);
     }
@@ -975,7 +975,7 @@ void DocumentProperties::build_scripting()
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 //TODO: review this observers code:
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     if (! current.empty()) {
         _scripts_observer.set((*(current.begin()))->parent);
     }
@@ -1190,8 +1190,8 @@ void DocumentProperties::removeExternalScript(){
         }
     }
 
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         if (obj) {
             SPScript* script = dynamic_cast<SPScript *>(obj);
@@ -1268,8 +1268,8 @@ void DocumentProperties::changeEmbeddedScript(){
     }
 
     bool voidscript=true;
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         if (id == obj->getId()){
 
@@ -1313,8 +1313,8 @@ void DocumentProperties::editEmbeddedScript(){
     }
 
     Inkscape::XML::Document *xml_doc = SP_ACTIVE_DOCUMENT->getReprDoc();
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         if (id == obj->getId()){
 
@@ -1337,13 +1337,13 @@ void DocumentProperties::editEmbeddedScript(){
 void DocumentProperties::populate_script_lists(){
     _ExternalScriptsListStore->clear();
     _EmbeddedScriptsListStore->clear();
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     if (!current.empty()) {
         SPObject *obj = *(current.begin());
         g_assert(obj != NULL);
         _scripts_observer.set(obj->parent);
     }
-    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         SPScript* script = dynamic_cast<SPScript *>(obj);
         g_assert(script != NULL);

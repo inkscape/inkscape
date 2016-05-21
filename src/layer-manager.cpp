@@ -191,10 +191,10 @@ Glib::ustring LayerManager::getNextLayerName( SPObject* obj, gchar const *label)
     }
 
     std::set<Glib::ustring> currentNames;
-    std::set<SPObject *> layers = _document->getResourceList("layer");
+    std::vector<SPObject *> layers = _document->getResourceList("layer");
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
-        for (std::set<SPObject *>::const_iterator iter = layers.begin(); iter != layers.end(); ++iter) { 
+        for (std::vector<SPObject *>::const_iterator iter = layers.begin(); iter != layers.end(); ++iter) { 
             if (*iter != obj)
                 currentNames.insert( (*iter)->label() ? Glib::ustring((*iter)->label()) : Glib::ustring() );
         }
@@ -260,7 +260,7 @@ void LayerManager::_rebuild() {
     if (!_document) // http://sourceforge.net/mailarchive/forum.php?thread_name=5747bce9a7ed077c1b4fc9f0f4f8a5e0%40localhost&forum_name=inkscape-devel
         return;
 
-    std::set<SPObject *> layers = _document->getResourceList("layer");
+    std::vector<SPObject *> layers = _document->getResourceList("layer");
 
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
@@ -268,7 +268,7 @@ void LayerManager::_rebuild() {
 
         std::set<SPGroup*> layersToAdd;
 
-        for ( std::set<SPObject *>::const_iterator iter = layers.begin(); iter != layers.end(); ++iter ) {
+        for ( std::vector<SPObject *>::const_iterator iter = layers.begin(); iter != layers.end(); ++iter ) {
             SPObject *layer = *iter;
 //             Debug::EventTracker<DebugLayerNote> tracker(Util::format("Examining %s", layer->label()));
             bool needsAdd = false;
@@ -281,7 +281,7 @@ void LayerManager::_rebuild() {
                         SPGroup* group = SP_GROUP(curr);
                         if ( group->layerMode() == SPGroup::LAYER ) {
                             // If we have a layer-group as the one or a parent, ensure it is listed as a valid layer.
-                            needsAdd &= ( layers.find(curr) != layers.end() );
+                            needsAdd &= ( std::find(layers.begin(),layers.end(),curr) != layers.end() );
 							// XML Tree being used here directly while it shouldn't be...
                             if ( (!(group->getRepr())) || (!(group->getRepr()->parent())) ) {
                                 needsAdd = false;

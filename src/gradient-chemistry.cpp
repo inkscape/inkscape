@@ -1612,8 +1612,8 @@ void sp_gradient_unset_swatch(SPDesktop *desktop, std::string id)
     SPDocument *doc = desktop ? desktop->doc() : 0;
 
     if (doc) {
-        const std::set<SPObject *> gradients = doc->getResourceList("gradient");
-        for (std::set<SPObject *>::const_iterator i = gradients.begin(); i != gradients.end(); ++i) {
+        const std::vector<SPObject *> gradients = doc->getResourceList("gradient");
+        for (std::vector<SPObject *>::const_iterator i = gradients.begin(); i != gradients.end(); ++i) {
             SPGradient* grad = SP_GRADIENT(*i);
             if ( id == grad->getId() ) {
                 grad->setSwatch(false);

@@ -1591,11 +1591,11 @@ void FilterEffectsDialog::FilterModifier::update_filters()
     SPDesktop* desktop = _dialog.getDesktop();
     SPDocument* document = desktop->getDocument();
 
-    std::set<SPObject *> filters = document->getResourceList( "filter" );
+    std::vector<SPObject *> filters = document->getResourceList( "filter" );
 
     _model->clear();
 
-    for (std::set<SPObject *>::const_iterator it = filters.begin(); it != filters.end(); ++it) {
+    for (std::vector<SPObject *>::const_iterator it = filters.begin(); it != filters.end(); ++it) {
         Gtk::TreeModel::Row row = *_model->append();
         SPFilter* f = SP_FILTER(*it);
         row[_columns.filter] = f;
