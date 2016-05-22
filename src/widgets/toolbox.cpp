@@ -499,9 +499,10 @@ static gchar const * ui_descr =
         "    <toolitem action='EraserModeAction' />"
         "    <separator />"
         "    <toolitem action='EraserWidthAction' />"
-        "    <toolitem action='EraserBreakAppart' />"
         "    <separator />"
         "    <toolitem action='EraserMassAction' />"
+        "    <separator />"
+        "    <toolitem action='EraserBreakAppart' />"
         "  </toolbar>"
 
         "  <toolbar name='TextToolbar'>"
