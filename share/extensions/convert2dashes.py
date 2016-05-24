@@ -49,9 +49,21 @@ def cspseglength(sp1,sp2, tolerance = 0.001):
 class SplitIt(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
+        self.not_converted = []
 
     def effect(self):
-        for id, node in self.selected.iteritems():
+        for _, node in self.selected.iteritems():
+            self.convert2dash(node)
+        if len(self.not_converted):
+            inkex.errormsg('Total number of objects not converted: {}\n'.format(len(self.not_converted)))
+            # return list of IDs in case the user needs to find a specific object
+            inkex.debug(self.not_converted)
+
+    def convert2dash(self, node):
+        if node.tag == inkex.addNS('g', 'svg'):
+            for child in node:
+                self.convert2dash(child)
+        else:
             if node.tag == inkex.addNS('path','svg'):
                 dashes = []
                 offset = 0
@@ -97,7 +109,7 @@ class SplitIt(inkex.Effect):
                     if node.get(inkex.addNS('type','sodipodi')):
                         del node.attrib[inkex.addNS('type', 'sodipodi')]
             else:
-                inkex.errormsg(_("The selected object is not a path.\nTry using the procedure Path->Object to Path."))
+                self.not_converted.append(node.get('id'))
 
 if __name__ == '__main__':
     e = SplitIt()
