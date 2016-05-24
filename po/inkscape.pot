@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-16 16:38+0200\n"
+"POT-Creation-Date: 2016-05-24 17:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6709,12 +6709,12 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:819
 #: ../src/ui/widget/color-icc-selector.cpp:193
 #: ../src/ui/widget/color-scales.cpp:448 ../src/ui/widget/color-scales.cpp:449
-#: ../src/ui/widget/selected-style.cpp:274
+#: ../src/ui/widget/selected-style.cpp:275
 msgid "Black"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:820
-#: ../src/ui/widget/selected-style.cpp:270
+#: ../src/ui/widget/selected-style.cpp:271
 msgid "White"
 msgstr ""
 
@@ -6737,7 +6737,7 @@ msgid "Customize greyscale components"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:980
-#: ../src/ui/widget/selected-style.cpp:266
+#: ../src/ui/widget/selected-style.cpp:267
 msgid "Invert"
 msgstr ""
 
@@ -6967,7 +6967,7 @@ msgstr ""
 #: ../src/extension/internal/filter/distort.h:77
 #: ../src/extension/internal/filter/textures.h:75
 #: ../src/ui/widget/selected-style.cpp:132
-#: ../src/ui/widget/style-swatch.cpp:128
+#: ../src/ui/widget/style-swatch.cpp:130
 msgid "Stroke:"
 msgstr ""
 
@@ -7244,10 +7244,10 @@ msgstr ""
 #: ../share/extensions/gimp_xcf.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:2
 #: ../share/extensions/jessyInk_uninstall.inx.h:2
+#: ../share/extensions/jitternodes.inx.h:2
 #: ../share/extensions/lorem_ipsum.inx.h:2
 #: ../share/extensions/pathalongpath.inx.h:2
-#: ../share/extensions/pathscatter.inx.h:2
-#: ../share/extensions/radiusrand.inx.h:2 ../share/extensions/scour.inx.h:2
+#: ../share/extensions/pathscatter.inx.h:2 ../share/extensions/scour.inx.h:2
 #: ../share/extensions/split.inx.h:2 ../share/extensions/voronoi2svg.inx.h:2
 #: ../share/extensions/web-set-att.inx.h:2
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -7354,7 +7354,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:331
 #: ../src/ui/dialog/align-and-distribute.cpp:1090
-#: ../src/widgets/desktop-widget.cpp:2070
+#: ../src/widgets/desktop-widget.cpp:2087
 msgid "Drawing"
 msgstr ""
 
@@ -7363,7 +7363,7 @@ msgstr ""
 #: ../src/extension/internal/filter/paint.h:496
 #: ../src/extension/internal/filter/paint.h:590
 #: ../src/extension/internal/filter/paint.h:976
-#: ../src/live_effects/effect.cpp:136 ../src/splivarot.cpp:2206
+#: ../src/live_effects/effect.cpp:136 ../src/splivarot.cpp:2209
 msgid "Simplify"
 msgstr ""
 
@@ -7797,7 +7797,7 @@ msgstr ""
 msgid "Gradients used in GIMP"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:204 ../src/ui/widget/panel.cpp:116
+#: ../src/extension/internal/grid.cpp:204 ../src/ui/widget/panel.cpp:117
 msgid "Grid"
 msgstr ""
 
@@ -7854,7 +7854,7 @@ msgstr ""
 #: ../src/extension/internal/grid.cpp:215
 #: ../src/ui/dialog/document-properties.cpp:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:832
-#: ../src/widgets/toolbox.cpp:1886
+#: ../src/widgets/toolbox.cpp:1894
 msgid "Grids"
 msgstr ""
 
@@ -8878,7 +8878,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1089
 #: ../src/ui/dialog/document-properties.cpp:161
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1549
-#: ../src/widgets/desktop-widget.cpp:2066
+#: ../src/widgets/desktop-widget.cpp:2083
 #: ../share/extensions/empty_page.inx.h:1
 #: ../share/extensions/voronoi2svg.inx.h:10
 msgid "Page"
@@ -10252,71 +10252,6 @@ msgstr ""
 msgid "Hide Points"
 msgstr ""
 
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:36
-msgid "Vertical Page Center"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:37
-msgid "Horizontal Page Center"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:38
-msgid "Free from reflection line"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:39
-msgid "X from middle knot"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:40
-msgid "Y from middle knot"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:72
-#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
-msgid "Mode"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:72
-msgid "Symmetry move mode"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:73
-msgid "Discard original path?"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:73
-msgid "Check this to only keep the mirrored part of the path"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:74
-msgid "Fuse paths"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:74
-msgid "Fuse original and the reflection into a single path"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:75
-msgid "Opposite fuse"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:75
-msgid "Picks the other side of the mirror as the original"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:76
-msgid "Start mirror line"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:77
-msgid "End mirror line"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:335
-msgid "Adjust the center"
-msgstr ""
-
 #: ../src/live_effects/lpe-patternalongpath.cpp:63
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Single"
@@ -10755,7 +10690,7 @@ msgid "Handles options"
 msgstr ""
 
 #: ../src/live_effects/lpe-roughen.cpp:63
-#: ../share/extensions/radiusrand.inx.h:5
+#: ../share/extensions/jitternodes.inx.h:5
 msgid "Shift nodes"
 msgstr ""
 
@@ -11695,7 +11630,7 @@ msgstr ""
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:876 ../src/main.cpp:1322
+#: ../src/main.cpp:876 ../src/main.cpp:1349
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -13111,41 +13046,41 @@ msgstr ""
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr ""
 
-#: ../src/splivarot.cpp:1962
+#: ../src/splivarot.cpp:1965
 msgid "Outset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1962
+#: ../src/splivarot.cpp:1965
 msgid "Inset path"
 msgstr ""
 
-#: ../src/splivarot.cpp:1964
+#: ../src/splivarot.cpp:1967
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:2126
+#: ../src/splivarot.cpp:2129
 msgid "Simplifying paths (separately):"
 msgstr ""
 
-#: ../src/splivarot.cpp:2128
+#: ../src/splivarot.cpp:2131
 msgid "Simplifying paths:"
 msgstr ""
 
-#: ../src/splivarot.cpp:2165
+#: ../src/splivarot.cpp:2168
 #, c-format
 msgid "%s <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr ""
 
-#: ../src/splivarot.cpp:2178
+#: ../src/splivarot.cpp:2181
 #, c-format
 msgid "<b>%d</b> paths simplified."
 msgstr ""
 
-#: ../src/splivarot.cpp:2192
+#: ../src/splivarot.cpp:2195
 msgid "Select <b>path(s)</b> to simplify."
 msgstr ""
 
-#: ../src/splivarot.cpp:2208
+#: ../src/splivarot.cpp:2211
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
@@ -13431,7 +13366,7 @@ msgid "Rearrange"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:941
-#: ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1796
 msgid "Nodes"
 msgstr ""
 
@@ -14348,27 +14283,27 @@ msgstr ""
 msgid "Change color definition"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:675
+#: ../src/ui/dialog/color-item.cpp:677
 msgid "Remove stroke color"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:675
+#: ../src/ui/dialog/color-item.cpp:677
 msgid "Remove fill color"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:680
+#: ../src/ui/dialog/color-item.cpp:682
 msgid "Set stroke color to none"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:680
+#: ../src/ui/dialog/color-item.cpp:682
 msgid "Set fill color to none"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:698
+#: ../src/ui/dialog/color-item.cpp:700
 msgid "Set stroke color from swatch"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:698
+#: ../src/ui/dialog/color-item.cpp:700
 msgid "Set fill color from swatch"
 msgstr ""
 
@@ -14639,7 +14574,7 @@ msgstr ""
 msgid "Remove selected grid."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:162 ../src/widgets/toolbox.cpp:1895
+#: ../src/ui/dialog/document-properties.cpp:162 ../src/widgets/toolbox.cpp:1903
 msgid "Guides"
 msgstr ""
 
@@ -14741,7 +14676,7 @@ msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:768
 #: ../src/ui/dialog/document-properties.cpp:845
-#: ../src/ui/widget/selected-style.cpp:356
+#: ../src/ui/widget/selected-style.cpp:357
 msgid "Remove"
 msgstr ""
 
@@ -15023,13 +14958,13 @@ msgid "Export aborted."
 msgstr ""
 
 #: ../src/ui/dialog/export.cpp:1308 ../src/ui/interface.cpp:1401
-#: ../src/widgets/desktop-widget.cpp:1186
-#: ../src/widgets/desktop-widget.cpp:1248
+#: ../src/widgets/desktop-widget.cpp:1201
+#: ../src/widgets/desktop-widget.cpp:1263
 msgid "_Cancel"
 msgstr ""
 
 #: ../src/ui/dialog/export.cpp:1309 ../src/ui/dialog/input.cpp:1082
-#: ../src/verbs.cpp:2432 ../src/widgets/desktop-widget.cpp:1187
+#: ../src/verbs.cpp:2432 ../src/widgets/desktop-widget.cpp:1202
 msgid "_Save"
 msgstr ""
 
@@ -15071,13 +15006,14 @@ msgstr ""
 #: ../share/extensions/jessyInk_uninstall.inx.h:10
 #: ../share/extensions/jessyInk_video.inx.h:2
 #: ../share/extensions/jessyInk_view.inx.h:7
+#: ../share/extensions/jitternodes.inx.h:12
 #: ../share/extensions/layout_nup.inx.h:24
 #: ../share/extensions/lindenmayer.inx.h:13
 #: ../share/extensions/lorem_ipsum.inx.h:6 ../share/extensions/measure.inx.h:33
 #: ../share/extensions/pathalongpath.inx.h:16
 #: ../share/extensions/pathscatter.inx.h:18
-#: ../share/extensions/radiusrand.inx.h:8 ../share/extensions/restack.inx.h:25
-#: ../share/extensions/split.inx.h:8 ../share/extensions/voronoi2svg.inx.h:16
+#: ../share/extensions/restack.inx.h:25 ../share/extensions/split.inx.h:8
+#: ../share/extensions/voronoi2svg.inx.h:16
 #: ../share/extensions/web-set-att.inx.h:25
 #: ../share/extensions/web-transmit-att.inx.h:23
 #: ../share/extensions/webslicer_create_group.inx.h:11
@@ -15199,7 +15135,7 @@ msgid "Document"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1553 ../src/verbs.cpp:175
-#: ../src/widgets/desktop-widget.cpp:2074
+#: ../src/widgets/desktop-widget.cpp:2091
 #: ../share/extensions/printing_marks.inx.h:18
 msgid "Selection"
 msgstr ""
@@ -16058,7 +15994,7 @@ msgstr ""
 msgid "Search spirals"
 msgstr ""
 
-#: ../src/ui/dialog/find.cpp:103 ../src/widgets/toolbox.cpp:1796
+#: ../src/ui/dialog/find.cpp:103 ../src/widgets/toolbox.cpp:1804
 msgid "Paths"
 msgstr ""
 
@@ -16938,7 +16874,7 @@ msgstr ""
 #: ../src/ui/dialog/grid-arrange-tab.cpp:571
 #: ../src/ui/dialog/object-attributes.cpp:66
 #: ../src/ui/dialog/object-attributes.cpp:75
-#: ../src/ui/widget/page-sizer.cpp:247 ../src/widgets/desktop-widget.cpp:703
+#: ../src/ui/widget/page-sizer.cpp:247 ../src/widgets/desktop-widget.cpp:744
 #: ../src/widgets/node-toolbar.cpp:581
 msgid "X:"
 msgstr ""
@@ -16950,7 +16886,7 @@ msgstr ""
 #: ../src/ui/dialog/grid-arrange-tab.cpp:572
 #: ../src/ui/dialog/object-attributes.cpp:67
 #: ../src/ui/dialog/object-attributes.cpp:76
-#: ../src/ui/widget/page-sizer.cpp:248 ../src/widgets/desktop-widget.cpp:704
+#: ../src/ui/widget/page-sizer.cpp:248 ../src/widgets/desktop-widget.cpp:745
 #: ../src/widgets/node-toolbar.cpp:599
 msgid "Y:"
 msgstr ""
@@ -17413,7 +17349,7 @@ msgstr ""
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:394
-#: ../src/widgets/desktop-widget.cpp:668
+#: ../src/widgets/desktop-widget.cpp:709
 msgid "Zoom"
 msgstr ""
 
@@ -20051,19 +19987,19 @@ msgstr ""
 msgid "Move to Layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:525 ../src/ui/widget/layer-selector.cpp:610
+#: ../src/ui/dialog/layers.cpp:525 ../src/ui/widget/layer-selector.cpp:612
 msgid "Unhide layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:525 ../src/ui/widget/layer-selector.cpp:610
+#: ../src/ui/dialog/layers.cpp:525 ../src/ui/widget/layer-selector.cpp:612
 msgid "Hide layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:536 ../src/ui/widget/layer-selector.cpp:602
+#: ../src/ui/dialog/layers.cpp:536 ../src/ui/widget/layer-selector.cpp:604
 msgid "Lock layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:536 ../src/ui/widget/layer-selector.cpp:602
+#: ../src/ui/dialog/layers.cpp:536 ../src/ui/widget/layer-selector.cpp:604
 msgid "Unlock layer"
 msgstr ""
 
@@ -21844,7 +21780,7 @@ msgid "Open _Recent"
 msgstr ""
 
 #: ../src/ui/interface.cpp:1018 ../src/ui/interface.cpp:1104
-#: ../src/ui/interface.cpp:1207 ../src/ui/widget/selected-style.cpp:542
+#: ../src/ui/interface.cpp:1207 ../src/ui/widget/selected-style.cpp:543
 msgid "Drop color"
 msgstr ""
 
@@ -23124,53 +23060,53 @@ msgstr ""
 msgid "Create mesh"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:653
+#: ../src/ui/tools/node-tool.cpp:648
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:657
+#: ../src/ui/tools/node-tool.cpp:652
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:686
+#: ../src/ui/tools/node-tool.cpp:681
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tools/node-tool.cpp:693
+#: ../src/ui/tools/node-tool.cpp:688
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:699
+#: ../src/ui/tools/node-tool.cpp:694
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:708
+#: ../src/ui/tools/node-tool.cpp:703
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:711
+#: ../src/ui/tools/node-tool.cpp:706
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:716
+#: ../src/ui/tools/node-tool.cpp:711
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:719
+#: ../src/ui/tools/node-tool.cpp:714
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr ""
@@ -24144,19 +24080,19 @@ msgstr ""
 msgid "Feature settings in CSS form. No sanity checking is performed."
 msgstr ""
 
-#: ../src/ui/widget/layer-selector.cpp:116
+#: ../src/ui/widget/layer-selector.cpp:118
 msgid "Toggle current layer visibility"
 msgstr ""
 
-#: ../src/ui/widget/layer-selector.cpp:136
+#: ../src/ui/widget/layer-selector.cpp:138
 msgid "Lock or unlock current layer"
 msgstr ""
 
-#: ../src/ui/widget/layer-selector.cpp:139
+#: ../src/ui/widget/layer-selector.cpp:141
 msgid "Current layer"
 msgstr ""
 
-#: ../src/ui/widget/layer-selector.cpp:580
+#: ../src/ui/widget/layer-selector.cpp:582
 msgid "(root)"
 msgstr ""
 
@@ -24173,8 +24109,8 @@ msgid "Document license updated"
 msgstr ""
 
 #: ../src/ui/widget/object-composite-settings.cpp:47
-#: ../src/ui/widget/selected-style.cpp:1117
 #: ../src/ui/widget/selected-style.cpp:1118
+#: ../src/ui/widget/selected-style.cpp:1119
 msgid "Opacity (%)"
 msgstr ""
 
@@ -24183,8 +24119,8 @@ msgid "Change blur"
 msgstr ""
 
 #: ../src/ui/widget/object-composite-settings.cpp:200
-#: ../src/ui/widget/selected-style.cpp:941
-#: ../src/ui/widget/selected-style.cpp:1243
+#: ../src/ui/widget/selected-style.cpp:942
+#: ../src/ui/widget/selected-style.cpp:1244
 msgid "Change opacity"
 msgstr ""
 
@@ -24306,92 +24242,92 @@ msgstr ""
 msgid "Set 'viewBox'"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:115
+#: ../src/ui/widget/panel.cpp:116
 msgid "List"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:138
+#: ../src/ui/widget/panel.cpp:139
 msgctxt "Swatches"
 msgid "Size"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:142
+#: ../src/ui/widget/panel.cpp:143
 msgctxt "Swatches height"
 msgid "Tiny"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:143
+#: ../src/ui/widget/panel.cpp:144
 msgctxt "Swatches height"
 msgid "Small"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:144
-msgctxt "Swatches height"
-msgid "Medium"
-msgstr ""
-
 #: ../src/ui/widget/panel.cpp:145
 msgctxt "Swatches height"
-msgid "Large"
+msgid "Medium"
 msgstr ""
 
 #: ../src/ui/widget/panel.cpp:146
 msgctxt "Swatches height"
+msgid "Large"
+msgstr ""
+
+#: ../src/ui/widget/panel.cpp:147
+msgctxt "Swatches height"
 msgid "Huge"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:168
+#: ../src/ui/widget/panel.cpp:169
 msgctxt "Swatches"
 msgid "Width"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:172
+#: ../src/ui/widget/panel.cpp:173
 msgctxt "Swatches width"
 msgid "Narrower"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:173
+#: ../src/ui/widget/panel.cpp:174
 msgctxt "Swatches width"
 msgid "Narrow"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:174
+#: ../src/ui/widget/panel.cpp:175
 msgctxt "Swatches width"
 msgid "Medium"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:175
+#: ../src/ui/widget/panel.cpp:176
 msgctxt "Swatches width"
 msgid "Wide"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:176
+#: ../src/ui/widget/panel.cpp:177
 msgctxt "Swatches width"
 msgid "Wider"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:206
+#: ../src/ui/widget/panel.cpp:207
 msgctxt "Swatches"
 msgid "Border"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:210
+#: ../src/ui/widget/panel.cpp:211
 msgctxt "Swatches border"
 msgid "None"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:211
+#: ../src/ui/widget/panel.cpp:212
 msgctxt "Swatches border"
 msgid "Solid"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:212
+#: ../src/ui/widget/panel.cpp:213
 msgctxt "Swatches border"
 msgid "Wide"
 msgstr ""
 
 #. TRANSLATORS: "Wrap" indicates how colour swatches are displayed
-#: ../src/ui/widget/panel.cpp:243
+#: ../src/ui/widget/panel.cpp:244
 msgctxt "Swatches"
 msgid "Wrap"
 msgstr ""
@@ -24445,7 +24381,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:131
-#: ../src/ui/widget/style-swatch.cpp:127
+#: ../src/ui/widget/style-swatch.cpp:129
 msgid "Fill:"
 msgstr ""
 
@@ -24453,287 +24389,287 @@ msgstr ""
 msgid "O:"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:178
+#: ../src/ui/widget/selected-style.cpp:179
 msgid "N/A"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:181
-#: ../src/ui/widget/selected-style.cpp:1110
+#: ../src/ui/widget/selected-style.cpp:182
 #: ../src/ui/widget/selected-style.cpp:1111
+#: ../src/ui/widget/selected-style.cpp:1112
 #: ../src/widgets/gradient-toolbar.cpp:162
 msgid "Nothing selected"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:184
+#: ../src/ui/widget/selected-style.cpp:185
 msgctxt "Fill"
 msgid "<i>None</i>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:186
+#: ../src/ui/widget/selected-style.cpp:187
 msgctxt "Stroke"
 msgid "<i>None</i>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:190
-#: ../src/ui/widget/style-swatch.cpp:321
+#: ../src/ui/widget/selected-style.cpp:191
+#: ../src/ui/widget/style-swatch.cpp:323
 msgctxt "Fill and stroke"
 msgid "No fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:190
-#: ../src/ui/widget/style-swatch.cpp:321
+#: ../src/ui/widget/selected-style.cpp:191
+#: ../src/ui/widget/style-swatch.cpp:323
 msgctxt "Fill and stroke"
 msgid "No stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:192
-#: ../src/ui/widget/style-swatch.cpp:300 ../src/widgets/paint-selector.cpp:231
+#: ../src/ui/widget/selected-style.cpp:193
+#: ../src/ui/widget/style-swatch.cpp:302 ../src/widgets/paint-selector.cpp:231
 msgid "Pattern"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:195
-#: ../src/ui/widget/style-swatch.cpp:302
+#: ../src/ui/widget/selected-style.cpp:196
+#: ../src/ui/widget/style-swatch.cpp:304
 msgid "Pattern fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:195
-#: ../src/ui/widget/style-swatch.cpp:302
+#: ../src/ui/widget/selected-style.cpp:196
+#: ../src/ui/widget/style-swatch.cpp:304
 msgid "Pattern stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:197
+#: ../src/ui/widget/selected-style.cpp:198
 msgid "<b>L</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:200
-#: ../src/ui/widget/style-swatch.cpp:294
+#: ../src/ui/widget/selected-style.cpp:201
+#: ../src/ui/widget/style-swatch.cpp:296
 msgid "Linear gradient fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:200
-#: ../src/ui/widget/style-swatch.cpp:294
+#: ../src/ui/widget/selected-style.cpp:201
+#: ../src/ui/widget/style-swatch.cpp:296
 msgid "Linear gradient stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:207
+#: ../src/ui/widget/selected-style.cpp:208
 msgid "<b>R</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:210
-#: ../src/ui/widget/style-swatch.cpp:298
+#: ../src/ui/widget/selected-style.cpp:211
+#: ../src/ui/widget/style-swatch.cpp:300
 msgid "Radial gradient fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:210
-#: ../src/ui/widget/style-swatch.cpp:298
+#: ../src/ui/widget/selected-style.cpp:211
+#: ../src/ui/widget/style-swatch.cpp:300
 msgid "Radial gradient stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:218
+#: ../src/ui/widget/selected-style.cpp:219
 msgid "<b>M</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:221
+#: ../src/ui/widget/selected-style.cpp:222
 msgid "Mesh gradient fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:221
+#: ../src/ui/widget/selected-style.cpp:222
 msgid "Mesh gradient stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:229
+#: ../src/ui/widget/selected-style.cpp:230
 msgid "Different"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:232
+#: ../src/ui/widget/selected-style.cpp:233
 msgid "Different fills"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:232
+#: ../src/ui/widget/selected-style.cpp:233
 msgid "Different strokes"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:234
-#: ../src/ui/widget/style-swatch.cpp:324
+#: ../src/ui/widget/selected-style.cpp:235
+#: ../src/ui/widget/style-swatch.cpp:326
 msgid "<b>Unset</b>"
 msgstr ""
 
 #. TRANSLATORS COMMENT: unset is a verb here
-#: ../src/ui/widget/selected-style.cpp:237
-#: ../src/ui/widget/selected-style.cpp:295
-#: ../src/ui/widget/selected-style.cpp:573
-#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:703
+#: ../src/ui/widget/selected-style.cpp:238
+#: ../src/ui/widget/selected-style.cpp:296
+#: ../src/ui/widget/selected-style.cpp:574
+#: ../src/ui/widget/style-swatch.cpp:328 ../src/widgets/fill-style.cpp:703
 msgid "Unset fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:237
-#: ../src/ui/widget/selected-style.cpp:295
-#: ../src/ui/widget/selected-style.cpp:589
-#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:703
+#: ../src/ui/widget/selected-style.cpp:238
+#: ../src/ui/widget/selected-style.cpp:296
+#: ../src/ui/widget/selected-style.cpp:590
+#: ../src/ui/widget/style-swatch.cpp:328 ../src/widgets/fill-style.cpp:703
 msgid "Unset stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:240
+#: ../src/ui/widget/selected-style.cpp:241
 msgid "Flat color fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:240
+#: ../src/ui/widget/selected-style.cpp:241
 msgid "Flat color stroke"
 msgstr ""
 
 #. TRANSLATOR COMMENT: A means "Averaged"
-#: ../src/ui/widget/selected-style.cpp:243
+#: ../src/ui/widget/selected-style.cpp:244
 msgid "<b>a</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:246
+#: ../src/ui/widget/selected-style.cpp:247
 msgid "Fill is averaged over selected objects"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:246
+#: ../src/ui/widget/selected-style.cpp:247
 msgid "Stroke is averaged over selected objects"
 msgstr ""
 
 #. TRANSLATOR COMMENT: M means "Multiple"
-#: ../src/ui/widget/selected-style.cpp:249
+#: ../src/ui/widget/selected-style.cpp:250
 msgid "<b>m</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:252
+#: ../src/ui/widget/selected-style.cpp:253
 msgid "Multiple selected objects have the same fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:252
+#: ../src/ui/widget/selected-style.cpp:253
 msgid "Multiple selected objects have the same stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:254
+#: ../src/ui/widget/selected-style.cpp:255
 msgid "Edit fill..."
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:254
+#: ../src/ui/widget/selected-style.cpp:255
 msgid "Edit stroke..."
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:258
+#: ../src/ui/widget/selected-style.cpp:259
 msgid "Last set color"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:262
+#: ../src/ui/widget/selected-style.cpp:263
 msgid "Last selected color"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:278
+#: ../src/ui/widget/selected-style.cpp:279
 msgid "Copy color"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:282
+#: ../src/ui/widget/selected-style.cpp:283
 msgid "Paste color"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:286
-#: ../src/ui/widget/selected-style.cpp:866
+#: ../src/ui/widget/selected-style.cpp:287
+#: ../src/ui/widget/selected-style.cpp:867
 msgid "Swap fill and stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:290
-#: ../src/ui/widget/selected-style.cpp:598
-#: ../src/ui/widget/selected-style.cpp:607
+#: ../src/ui/widget/selected-style.cpp:291
+#: ../src/ui/widget/selected-style.cpp:599
+#: ../src/ui/widget/selected-style.cpp:608
 msgid "Make fill opaque"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:290
+#: ../src/ui/widget/selected-style.cpp:291
 msgid "Make stroke opaque"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:299
-#: ../src/ui/widget/selected-style.cpp:555 ../src/widgets/fill-style.cpp:503
+#: ../src/ui/widget/selected-style.cpp:300
+#: ../src/ui/widget/selected-style.cpp:556 ../src/widgets/fill-style.cpp:503
 msgid "Remove fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:299
-#: ../src/ui/widget/selected-style.cpp:564 ../src/widgets/fill-style.cpp:503
+#: ../src/ui/widget/selected-style.cpp:300
+#: ../src/ui/widget/selected-style.cpp:565 ../src/widgets/fill-style.cpp:503
 msgid "Remove stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:619
+#: ../src/ui/widget/selected-style.cpp:620
 msgid "Apply last set color to fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:631
+#: ../src/ui/widget/selected-style.cpp:632
 msgid "Apply last set color to stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:642
+#: ../src/ui/widget/selected-style.cpp:643
 msgid "Apply last selected color to fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:653
+#: ../src/ui/widget/selected-style.cpp:654
 msgid "Apply last selected color to stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:679
+#: ../src/ui/widget/selected-style.cpp:680
 msgid "Invert fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:703
+#: ../src/ui/widget/selected-style.cpp:704
 msgid "Invert stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:715
+#: ../src/ui/widget/selected-style.cpp:716
 msgid "White fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:727
+#: ../src/ui/widget/selected-style.cpp:728
 msgid "White stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:739
+#: ../src/ui/widget/selected-style.cpp:740
 msgid "Black fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:751
+#: ../src/ui/widget/selected-style.cpp:752
 msgid "Black stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:794
+#: ../src/ui/widget/selected-style.cpp:795
 msgid "Paste fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:812
+#: ../src/ui/widget/selected-style.cpp:813
 msgid "Paste stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:968
+#: ../src/ui/widget/selected-style.cpp:969
 msgid "Change stroke width"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1071
+#: ../src/ui/widget/selected-style.cpp:1072
 msgid ", drag to adjust"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1156
+#: ../src/ui/widget/selected-style.cpp:1157
 #, c-format
 msgid "Stroke width: %.5g%s%s"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1160
+#: ../src/ui/widget/selected-style.cpp:1161
 msgid " (averaged)"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1186
+#: ../src/ui/widget/selected-style.cpp:1187
 msgid "0 (transparent)"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1210
+#: ../src/ui/widget/selected-style.cpp:1211
 msgid "100% (opaque)"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1384
+#: ../src/ui/widget/selected-style.cpp:1385
 msgid "Adjust alpha"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1386
+#: ../src/ui/widget/selected-style.cpp:1387
 #, c-format
 msgid ""
 "Adjusting <b>alpha</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Ctrl</"
@@ -24741,11 +24677,11 @@ msgid ""
 "modifiers to adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1390
+#: ../src/ui/widget/selected-style.cpp:1391
 msgid "Adjust saturation"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1392
+#: ../src/ui/widget/selected-style.cpp:1393
 #, c-format
 msgid ""
 "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
@@ -24753,11 +24689,11 @@ msgid ""
 "modifiers to adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1396
+#: ../src/ui/widget/selected-style.cpp:1397
 msgid "Adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1398
+#: ../src/ui/widget/selected-style.cpp:1399
 #, c-format
 msgid ""
 "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
@@ -24765,11 +24701,11 @@ msgid ""
 "modifiers to adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1402
+#: ../src/ui/widget/selected-style.cpp:1403
 msgid "Adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1404
+#: ../src/ui/widget/selected-style.cpp:1405
 #, c-format
 msgid ""
 "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</"
@@ -24777,12 +24713,12 @@ msgid ""
 "to adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1522
-#: ../src/ui/widget/selected-style.cpp:1536
+#: ../src/ui/widget/selected-style.cpp:1523
+#: ../src/ui/widget/selected-style.cpp:1537
 msgid "Adjust stroke width"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1523
+#: ../src/ui/widget/selected-style.cpp:1524
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
 msgstr ""
@@ -24793,40 +24729,40 @@ msgctxt "Sliders"
 msgid "Link"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:292
+#: ../src/ui/widget/style-swatch.cpp:294
 msgid "L Gradient"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:296
+#: ../src/ui/widget/style-swatch.cpp:298
 msgid "R Gradient"
-msgstr ""
-
-#: ../src/ui/widget/style-swatch.cpp:312
-#, c-format
-msgid "Fill: %06x/%.3g"
 msgstr ""
 
 #: ../src/ui/widget/style-swatch.cpp:314
 #, c-format
+msgid "Fill: %06x/%.3g"
+msgstr ""
+
+#: ../src/ui/widget/style-swatch.cpp:316
+#, c-format
 msgid "Stroke: %06x/%.3g"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:319
+#: ../src/ui/widget/style-swatch.cpp:321
 msgctxt "Fill and stroke"
 msgid "<i>None</i>"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:346
+#: ../src/ui/widget/style-swatch.cpp:348
 #, c-format
 msgid "Stroke width: %.5g%s"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:362
+#: ../src/ui/widget/style-swatch.cpp:364
 #, c-format
 msgid "O: %2.0f"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:367
+#: ../src/ui/widget/style-swatch.cpp:369
 #, c-format
 msgid "Opacity: %2.1f %%"
 msgstr ""
@@ -25546,7 +25482,7 @@ msgstr ""
 msgid "Lock All Guides"
 msgstr ""
 
-#: ../src/verbs.cpp:2546 ../src/widgets/desktop-widget.cpp:402
+#: ../src/verbs.cpp:2546 ../src/widgets/desktop-widget.cpp:404
 msgid "Toggle lock of all guides in the document"
 msgstr ""
 
@@ -27692,96 +27628,96 @@ msgstr ""
 msgid "Pattern offset"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:495
+#: ../src/widgets/desktop-widget.cpp:499
 msgid "Zoom drawing if window size changes"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:702
-msgid "Cursor coordinates"
-msgstr ""
-
-#: ../src/widgets/desktop-widget.cpp:723
-msgid "Z:"
-msgstr ""
-
-#. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:776
+#. Display the initial welcome message in the statusbar
+#: ../src/widgets/desktop-widget.cpp:701
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:870
+#: ../src/widgets/desktop-widget.cpp:743
+msgid "Cursor coordinates"
+msgstr ""
+
+#: ../src/widgets/desktop-widget.cpp:764
+msgid "Z:"
+msgstr ""
+
+#: ../src/widgets/desktop-widget.cpp:885
 msgid "grayscale"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:871
+#: ../src/widgets/desktop-widget.cpp:886
 msgid ", grayscale"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:872
+#: ../src/widgets/desktop-widget.cpp:887
 msgid "print colors preview"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:873
+#: ../src/widgets/desktop-widget.cpp:888
 msgid ", print colors preview"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:874
+#: ../src/widgets/desktop-widget.cpp:889
 msgid "outline"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:875
+#: ../src/widgets/desktop-widget.cpp:890
 msgid "no filters"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:902
+#: ../src/widgets/desktop-widget.cpp:917
 #, c-format
 msgid "%s%s: %d (%s%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:904 ../src/widgets/desktop-widget.cpp:908
+#: ../src/widgets/desktop-widget.cpp:919 ../src/widgets/desktop-widget.cpp:923
 #, c-format
 msgid "%s%s: %d (%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:910
+#: ../src/widgets/desktop-widget.cpp:925
 #, c-format
 msgid "%s%s: %d - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:916
+#: ../src/widgets/desktop-widget.cpp:931
 #, c-format
 msgid "%s%s (%s%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:918 ../src/widgets/desktop-widget.cpp:922
+#: ../src/widgets/desktop-widget.cpp:933 ../src/widgets/desktop-widget.cpp:937
 #, c-format
 msgid "%s%s (%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:924
+#: ../src/widgets/desktop-widget.cpp:939
 #, c-format
 msgid "%s%s - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1096
+#: ../src/widgets/desktop-widget.cpp:1111
 msgid "Locked all guides"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1098
+#: ../src/widgets/desktop-widget.cpp:1113
 msgid "Unlocked all guides"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1115
+#: ../src/widgets/desktop-widget.cpp:1130
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1117
+#: ../src/widgets/desktop-widget.cpp:1132
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1172
+#: ../src/widgets/desktop-widget.cpp:1187
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -27790,12 +27726,12 @@ msgid ""
 "If you close without saving, your changes will be discarded."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1182
-#: ../src/widgets/desktop-widget.cpp:1241
+#: ../src/widgets/desktop-widget.cpp:1197
+#: ../src/widgets/desktop-widget.cpp:1256
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1231
+#: ../src/widgets/desktop-widget.cpp:1246
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -27804,11 +27740,11 @@ msgid ""
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1243
+#: ../src/widgets/desktop-widget.cpp:1258
 msgid "_Save as Inkscape SVG"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1456
+#: ../src/widgets/desktop-widget.cpp:1472
 msgid "Note:"
 msgstr ""
 
@@ -29341,6 +29277,10 @@ msgstr ""
 msgid "Delete sprayed items from selection"
 msgstr ""
 
+#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
+msgid "Mode"
+msgstr ""
+
 #. Population
 #: ../src/widgets/spray-toolbar.cpp:408
 msgid "(low population)"
@@ -30095,131 +30035,131 @@ msgstr ""
 msgid "Style of Paint Bucket fill objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1742
+#: ../src/widgets/toolbox.cpp:1750
 msgid "Bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1742
+#: ../src/widgets/toolbox.cpp:1750
 msgid "Snap bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1751
+#: ../src/widgets/toolbox.cpp:1759
 msgid "Bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1751
+#: ../src/widgets/toolbox.cpp:1759
 msgid "Snap to edges of a bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1760
+#: ../src/widgets/toolbox.cpp:1768
 msgid "Bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1760
+#: ../src/widgets/toolbox.cpp:1768
 msgid "Snap bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1769
+#: ../src/widgets/toolbox.cpp:1777
 msgid "BBox Edge Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1769
+#: ../src/widgets/toolbox.cpp:1777
 msgid "Snap midpoints of bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1779
+#: ../src/widgets/toolbox.cpp:1787
 msgid "BBox Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1779
+#: ../src/widgets/toolbox.cpp:1787
 msgid "Snapping centers of bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1796
 msgid "Snap nodes, paths, and handles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1796
+#: ../src/widgets/toolbox.cpp:1804
 msgid "Snap to paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1805
+#: ../src/widgets/toolbox.cpp:1813
 msgid "Path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1805
+#: ../src/widgets/toolbox.cpp:1813
 msgid "Snap to path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1814
+#: ../src/widgets/toolbox.cpp:1822
 msgid "To nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1814
+#: ../src/widgets/toolbox.cpp:1822
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1831
 msgid "Smooth nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1831
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1832
+#: ../src/widgets/toolbox.cpp:1840
 msgid "Line Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1832
+#: ../src/widgets/toolbox.cpp:1840
 msgid "Snap midpoints of line segments"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1841
+#: ../src/widgets/toolbox.cpp:1849
 msgid "Others"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1841
+#: ../src/widgets/toolbox.cpp:1849
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1849
+#: ../src/widgets/toolbox.cpp:1857
 msgid "Object Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1849
+#: ../src/widgets/toolbox.cpp:1857
 msgid "Snap centers of objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1858
+#: ../src/widgets/toolbox.cpp:1866
 msgid "Rotation Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1858
+#: ../src/widgets/toolbox.cpp:1866
 msgid "Snap an item's rotation center"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1867
+#: ../src/widgets/toolbox.cpp:1875
 msgid "Text baseline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1867
+#: ../src/widgets/toolbox.cpp:1875
 msgid "Snap text anchors and baselines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1877
+#: ../src/widgets/toolbox.cpp:1885
 msgid "Page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1877
+#: ../src/widgets/toolbox.cpp:1885
 msgid "Snap to the page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1886
+#: ../src/widgets/toolbox.cpp:1894
 msgid "Snap to grids"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1895
+#: ../src/widgets/toolbox.cpp:1903
 msgid "Snap guides"
 msgstr ""
 
@@ -30432,12 +30372,6 @@ msgstr ""
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 
-#: ../share/extensions/convert2dashes.py:100
-msgid ""
-"The selected object is not a path.\n"
-"Try using the procedure Path->Object to Path."
-msgstr ""
-
 #: ../share/extensions/dimension.py:109
 msgid "Please select an object."
 msgstr ""
@@ -30479,7 +30413,7 @@ msgstr ""
 msgid "Area (px^2): "
 msgstr ""
 
-#: ../share/extensions/dxf_input.py:528
+#: ../share/extensions/dxf_input.py:531
 #, python-format
 msgid ""
 "%d ENTITIES of type POLYLINE encountered and ignored. Please try to convert "
@@ -31121,17 +31055,29 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/plotter.py:147
-msgid ""
-"pySerial is not installed.\n"
-"\n"
-"1. Download pySerial here (not the \".exe\"!): http://pypi.python.org/pypi/"
-"pyserial\n"
-"2. Extract the \"serial\" subfolder from the zip to the following folder: C:"
-"\\[Program files]\\inkscape\\python\\Lib\\\n"
-"3. Restart Inkscape."
+msgid "pySerial is not installed. Please follow these steps:"
 msgstr ""
 
-#: ../share/extensions/plotter.py:199
+#: ../share/extensions/plotter.py:148
+msgid "1. Download and extract (unzip) this file to your local harddisk:"
+msgstr ""
+
+#: ../share/extensions/plotter.py:150
+msgid ""
+"2. Copy the \"serial\" folder (Can be found inside the just extracted folder)"
+msgstr ""
+
+#: ../share/extensions/plotter.py:151
+msgid ""
+"   into the following Inkscape folder: C:\\<Program files>\\inkscape\\python"
+"\\Lib\\"
+msgstr ""
+
+#: ../share/extensions/plotter.py:152
+msgid "3. Close and restart Inkscape."
+msgstr ""
+
+#: ../share/extensions/plotter.py:201
 msgid ""
 "Could not open port. Please check that your plotter is running, connected "
 "and the settings are correct."
@@ -31357,10 +31303,10 @@ msgstr ""
 #: ../share/extensions/edge3d.inx.h:9 ../share/extensions/flatten.inx.h:3
 #: ../share/extensions/fractalize.inx.h:4
 #: ../share/extensions/interp_att_g.inx.h:31
+#: ../share/extensions/jitternodes.inx.h:14
 #: ../share/extensions/markers_strokepaint.inx.h:13
 #: ../share/extensions/perspective.inx.h:2
 #: ../share/extensions/pixelsnap.inx.h:3
-#: ../share/extensions/radiusrand.inx.h:10
 #: ../share/extensions/rubberstretch.inx.h:6
 #: ../share/extensions/straightseg.inx.h:4
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
@@ -34596,6 +34542,48 @@ msgid ""
 "presentation. Please see code.google.com/p/jessyink for more details."
 msgstr ""
 
+#: ../share/extensions/jitternodes.inx.h:1
+msgid "Jitter nodes"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:3
+msgid "Maximum displacement in X (px):"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:4
+msgid "Maximum displacement in Y (px):"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:6
+msgid "Shift node handles"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:7
+msgid "Distribution of the displacements:"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:8
+msgid "Uniform"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:9
+msgid "Pareto"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:10
+msgid "Gaussian"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:11
+msgid "Log-normal"
+msgstr ""
+
+#: ../share/extensions/jitternodes.inx.h:13
+msgid ""
+"This effect randomly shifts the nodes (and optionally node handles) of the "
+"selected path."
+msgstr ""
+
 #: ../share/extensions/layers2svgfont.inx.h:1
 msgid "3 - Convert Glyph Layers to SVG Font"
 msgstr ""
@@ -35807,32 +35795,6 @@ msgstr ""
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "PostScript Input"
-msgstr ""
-
-#: ../share/extensions/radiusrand.inx.h:1
-msgid "Jitter nodes"
-msgstr ""
-
-#: ../share/extensions/radiusrand.inx.h:3
-msgid "Maximum displacement in X (px):"
-msgstr ""
-
-#: ../share/extensions/radiusrand.inx.h:4
-msgid "Maximum displacement in Y (px):"
-msgstr ""
-
-#: ../share/extensions/radiusrand.inx.h:6
-msgid "Shift node handles"
-msgstr ""
-
-#: ../share/extensions/radiusrand.inx.h:7
-msgid "Use normal distribution"
-msgstr ""
-
-#: ../share/extensions/radiusrand.inx.h:9
-msgid ""
-"This effect randomly shifts the nodes (and optionally node handles) of the "
-"selected path."
 msgstr ""
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
