@@ -9,7 +9,7 @@ AC_PREREQ([2.64])
 # (whereas we always know what the previous version was called).
 #
 # Pre-releases are named "M.NNpreX" where X starts at 0 for the first alpha.
-AC_INIT([inkscape], [0.92pre0],
+AC_INIT([inkscape], [0.92pre1],
         [http://bugs.launchpad.net/inkscape/+filebug],
         [inkscape],
         [http://inkscape.org/])
