@@ -34,8 +34,6 @@ import sys
 import inkex
 import simplestyle
 
-inkex.localize()
-
 text_tags = ['{http://www.w3.org/2000/svg}tspan',
                             '{http://www.w3.org/2000/svg}text',
                             '{http://www.w3.org/2000/svg}flowRoot',

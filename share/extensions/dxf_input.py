@@ -26,7 +26,6 @@ import inkex, simplestyle, math
 from StringIO import StringIO
 from urllib import quote
 
-inkex.localize()
 
 def export_MTEXT():
     # mandatory group codes : (1 or 3, 10, 20) (text, x, y)

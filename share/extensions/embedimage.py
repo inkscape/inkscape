@@ -25,7 +25,6 @@ import urlparse
 # local library
 import inkex
 
-inkex.localize()
 
 class Embedder(inkex.Effect):
     def __init__(self):

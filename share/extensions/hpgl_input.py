@@ -25,8 +25,6 @@ from StringIO import StringIO
 import hpgl_decoder
 import inkex
 import sys
-inkex.localize()
-
 
 # parse options
 parser = inkex.optparse.OptionParser(usage='usage: %prog [options] HPGLfile', option_class=inkex.InkOption)

@@ -27,7 +27,6 @@ import gettext
 import hpgl_decoder
 import hpgl_encoder
 import inkex
-inkex.localize()
 
 
 class Plot(inkex.Effect):

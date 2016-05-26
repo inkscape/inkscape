@@ -37,7 +37,6 @@ from datetime import *
 import inkex
 import simplestyle
 
-inkex.localize()
 
 class SVGCalendar (inkex.Effect):
 

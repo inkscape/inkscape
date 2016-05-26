@@ -26,8 +26,6 @@ sys.path.append('C:\Program Files\Inkscape\share\extensions')
 # We will use the inkex module with the predefined Effect base class.
 import inkex
 
-inkex.localize()
-
 class JessyInk_MasterSlide(inkex.Effect):
 	def __init__(self):
 		# Call the base class constructor.

@@ -34,8 +34,6 @@ import inkex
 import simplepath
 import simplestyle
 
-inkex.localize()
-
 def drawfunction(xstart, xend, ybottom, ytop, samples, width, height, left, bottom, 
     fx = "sin(x)", fpx = "cos(x)", fponum = True, times2pi = False, polar = False, isoscale = True, drawaxis = True, endpts = False):
 

@@ -26,8 +26,6 @@ import cubicsuperpath
 import bezmisc
 import simplestyle
 
-inkex.localize()
-
 def tpoint((x1,y1), (x2,y2), t = 0.5):
     return [x1+t*(x2-x1),y1+t*(y2-y1)]
 def cspbezsplit(sp1, sp2, t = 0.5):

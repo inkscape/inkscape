@@ -5,7 +5,6 @@ import threading
 from optparse import OptionParser
 # local library
 import inkex
-inkex.localize()
 
 class VisitWebSiteWithoutLockingInkscape(threading.Thread):
     def __init__(self):

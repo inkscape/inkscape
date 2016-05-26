@@ -27,8 +27,6 @@ import tempfile
 # local library
 import inkex
 
-inkex.localize()
-
 # Define extension exceptions
 class GimpXCFError(Exception): pass
 

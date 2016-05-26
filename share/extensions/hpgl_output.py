@@ -23,7 +23,6 @@ import sys
 # local libraries
 import hpgl_encoder
 import inkex
-inkex.localize()
 
 
 class HpglOutput(inkex.Effect):

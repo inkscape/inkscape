@@ -39,8 +39,6 @@ import bezmisc
 import simplestyle
 from simpletransform import *
 
-inkex.localize()
-
 ####################################################################
 ##-- zOrder computation...
 ##-- this should be shipped out in a separate file. inkex.py?

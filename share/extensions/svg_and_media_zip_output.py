@@ -51,7 +51,7 @@ import inkex
 import simplestyle
 
 locale.setlocale(locale.LC_ALL, '')
-inkex.localize()
+inkex.localize()  # TODO: test if it's still needed now that localize is called from inkex.
 
 class CompressedMediaOutput(inkex.Effect):
     def __init__(self):

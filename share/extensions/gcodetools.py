@@ -87,8 +87,6 @@ import simplepath
 import cubicsuperpath
 import simpletransform
 import bezmisc
-
-inkex.localize()
  
 ### Check if inkex has errormsg (0.46 version does not have one.) Could be removed later.
 if "errormsg" not in dir(inkex):

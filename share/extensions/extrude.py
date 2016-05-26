@@ -22,8 +22,6 @@ import simplepath
 import simpletransform
 import cubicsuperpath
 
-inkex.localize()
-
 class Extrude(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
