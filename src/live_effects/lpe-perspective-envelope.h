@@ -60,12 +60,13 @@ private:
 
     BoolParam horizontal_mirror;
     BoolParam vertical_mirror;
+    BoolParam overflow_perspective;
     EnumParam<unsigned> deform_type;
     PointParam up_left_point;
     PointParam up_right_point;
     PointParam down_left_point;
     PointParam down_right_point;
-
+    std::vector<Geom::Point> handles;
     LPEPerspectiveEnvelope(const LPEPerspectiveEnvelope&);
     LPEPerspectiveEnvelope& operator=(const LPEPerspectiveEnvelope&);
 };
