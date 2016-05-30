@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Deep Ungroup</_name>
+    <id>mcepl.ungroup_deep</id>
+    <dependency type="executable" location="extensions">ungroup_deep.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+    <_param name="title" type="description">Ungroup all groups in the selected object.</_param>
+    <param name="startdepth" type="int" min="0" max="65535" _gui-text="Starting Depth">0</param>
+    <param name="maxdepth" type="int" min="0" max="65535" _gui-text="Stopping Depth (from top)">65535</param>
+    <param name="keepdepth" type="int" min="0" max="65535" _gui-text="Depth to Keep (from bottom)">0</param>
+    <effect needs-live-preview="false">
+        <effects-menu >
+            <submenu _name="Arrange" />
+        </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">ungroup_deep.py</command>
+    </script>
+</inkscape-extension>
