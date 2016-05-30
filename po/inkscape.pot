@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-24 17:15+0200\n"
+"POT-Creation-Date: 2016-05-30 07:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10355,46 +10355,50 @@ msgid "Envelope deformation"
 msgstr ""
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:45
+msgid "Overflow perspective"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:46
 msgid "Type"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:45
+#: ../src/live_effects/lpe-perspective-envelope.cpp:46
 msgid "Select the type of deformation"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:46
+#: ../src/live_effects/lpe-perspective-envelope.cpp:47
 msgid "Top Left"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:46
+#: ../src/live_effects/lpe-perspective-envelope.cpp:47
 msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:47
+#: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Top Right"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:47
+#: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:48
+#: ../src/live_effects/lpe-perspective-envelope.cpp:49
 msgid "Down Left"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:48
+#: ../src/live_effects/lpe-perspective-envelope.cpp:49
 msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:49
+#: ../src/live_effects/lpe-perspective-envelope.cpp:50
 msgid "Down Right"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:49
+#: ../src/live_effects/lpe-perspective-envelope.cpp:50
 msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:269
+#: ../src/live_effects/lpe-perspective-envelope.cpp:367
 msgid "Handles:"
 msgstr ""
 
@@ -22266,7 +22270,7 @@ msgstr ""
 
 #: ../src/ui/tool/node.cpp:529
 msgctxt "Path handle tip"
-msgid "<b>Ctrl</b>: Move handle by his actual steps in BSpline Live Effect"
+msgid "<b>Ctrl</b>: Snap handle to steps defined in BSpline Live Path Effect"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:532
@@ -30372,83 +30376,83 @@ msgstr ""
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 
-#: ../share/extensions/dimension.py:109
+#: ../share/extensions/dimension.py:108
 msgid "Please select an object."
 msgstr ""
 
-#: ../share/extensions/dimension.py:134
+#: ../share/extensions/dimension.py:133
 msgid "Unable to process this object.  Try changing it into a path first."
 msgstr ""
 
 #. report to the Inkscape console using errormsg
-#: ../share/extensions/draw_from_triangle.py:180
+#: ../share/extensions/draw_from_triangle.py:179
 msgid "Side Length 'a' (px): "
 msgstr ""
 
-#: ../share/extensions/draw_from_triangle.py:181
+#: ../share/extensions/draw_from_triangle.py:180
 msgid "Side Length 'b' (px): "
 msgstr ""
 
-#: ../share/extensions/draw_from_triangle.py:182
+#: ../share/extensions/draw_from_triangle.py:181
 msgid "Side Length 'c' (px): "
 msgstr ""
 
-#: ../share/extensions/draw_from_triangle.py:183
+#: ../share/extensions/draw_from_triangle.py:182
 msgid "Angle 'A' (radians): "
 msgstr ""
 
-#: ../share/extensions/draw_from_triangle.py:184
+#: ../share/extensions/draw_from_triangle.py:183
 msgid "Angle 'B' (radians): "
 msgstr ""
 
-#: ../share/extensions/draw_from_triangle.py:185
+#: ../share/extensions/draw_from_triangle.py:184
 msgid "Angle 'C' (radians): "
 msgstr ""
 
-#: ../share/extensions/draw_from_triangle.py:186
+#: ../share/extensions/draw_from_triangle.py:185
 msgid "Semiperimeter (px): "
 msgstr ""
 
-#: ../share/extensions/draw_from_triangle.py:187
+#: ../share/extensions/draw_from_triangle.py:186
 msgid "Area (px^2): "
 msgstr ""
 
-#: ../share/extensions/dxf_input.py:531
+#: ../share/extensions/dxf_input.py:530
 #, python-format
 msgid ""
 "%d ENTITIES of type POLYLINE encountered and ignored. Please try to convert "
 "to Release 13 format using QCad."
 msgstr ""
 
-#: ../share/extensions/dxf_outlines.py:49
+#: ../share/extensions/dxf_outlines.py:47
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
 msgstr ""
 
-#: ../share/extensions/dxf_outlines.py:315
+#: ../share/extensions/dxf_outlines.py:313
 msgid ""
 "Error: Field 'Layer match name' must be filled when using 'By name match' "
 "option"
 msgstr ""
 
-#: ../share/extensions/dxf_outlines.py:356
+#: ../share/extensions/dxf_outlines.py:354
 #, python-format
 msgid "Warning: Layer '%s' not found!"
 msgstr ""
 
-#: ../share/extensions/embedimage.py:84
+#: ../share/extensions/embedimage.py:83
 msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
 msgstr ""
 
-#: ../share/extensions/embedimage.py:86
+#: ../share/extensions/embedimage.py:85
 #, python-format
 msgid "Sorry we could not locate %s"
 msgstr ""
 
-#: ../share/extensions/embedimage.py:111
+#: ../share/extensions/embedimage.py:110
 #, python-format
 msgid ""
 "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
@@ -30461,87 +30465,87 @@ msgid ""
 "from http://pyxml.sourceforge.net/."
 msgstr ""
 
-#: ../share/extensions/extractimage.py:68
+#: ../share/extensions/extractimage.py:66
 #, python-format
 msgid "Image extracted to: %s"
 msgstr ""
 
-#: ../share/extensions/extractimage.py:75
+#: ../share/extensions/extractimage.py:73
 msgid "Unable to find image data."
 msgstr ""
 
-#: ../share/extensions/extrude.py:43
+#: ../share/extensions/extrude.py:41
 msgid "Need at least 2 paths selected"
 msgstr ""
 
-#: ../share/extensions/funcplot.py:48
+#: ../share/extensions/funcplot.py:46
 msgid ""
 "x-interval cannot be zero. Please modify 'Start X value' or 'End X value'"
 msgstr ""
 
-#: ../share/extensions/funcplot.py:60
+#: ../share/extensions/funcplot.py:58
 msgid ""
 "y-interval cannot be zero. Please modify 'Y value of rectangle's top' or 'Y "
 "value of rectangle's bottom'"
 msgstr ""
 
-#: ../share/extensions/funcplot.py:315
+#: ../share/extensions/funcplot.py:313
 msgid "Please select a rectangle"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3321
-#: ../share/extensions/gcodetools.py:4526
-#: ../share/extensions/gcodetools.py:4699
-#: ../share/extensions/gcodetools.py:6232
-#: ../share/extensions/gcodetools.py:6427
+#: ../share/extensions/gcodetools.py:3319
+#: ../share/extensions/gcodetools.py:4524
+#: ../share/extensions/gcodetools.py:4697
+#: ../share/extensions/gcodetools.py:6230
+#: ../share/extensions/gcodetools.py:6425
 msgid "No paths are selected! Trying to work on all available paths."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3324
+#: ../share/extensions/gcodetools.py:3322
 msgid "Nothing is selected. Please select something."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3864
+#: ../share/extensions/gcodetools.py:3862
 msgid ""
 "Directory does not exist! Please specify existing directory at Preferences "
 "tab!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:3894
+#: ../share/extensions/gcodetools.py:3892
 #, python-format
 msgid ""
 "Can not write to specified file!\n"
 "%s"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4040
+#: ../share/extensions/gcodetools.py:4038
 #, python-format
 msgid ""
 "Orientation points for '%s' layer have not been found! Please add "
 "orientation points using Orientation tab!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4047
+#: ../share/extensions/gcodetools.py:4045
 #, python-format
 msgid "There are more than one orientation point groups in '%s' layer"
 msgstr ""
 
+#: ../share/extensions/gcodetools.py:4076
 #: ../share/extensions/gcodetools.py:4078
-#: ../share/extensions/gcodetools.py:4080
 msgid ""
 "Orientation points are wrong! (if there are two orientation points they "
 "should not be the same. If there are three orientation points they should "
 "not be in a straight line.)"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4250
+#: ../share/extensions/gcodetools.py:4248
 #, python-format
 msgid ""
 "Warning! Found bad orientation points in '%s' layer. Resulting Gcode could "
 "be corrupt!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4263
+#: ../share/extensions/gcodetools.py:4261
 #, python-format
 msgid ""
 "Warning! Found bad graffiti reference point in '%s' layer. Resulting Gcode "
@@ -30549,7 +30553,7 @@ msgid ""
 msgstr ""
 
 #. xgettext:no-pango-format
-#: ../share/extensions/gcodetools.py:4284
+#: ../share/extensions/gcodetools.py:4282
 msgid ""
 "This extension works with Paths and Dynamic Offsets and groups of them only! "
 "All other objects will be ignored!\n"
@@ -30559,108 +30563,108 @@ msgid ""
 "and File->Import this file."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4290
+#: ../share/extensions/gcodetools.py:4288
 msgid ""
 "Document has no layers! Add at least one layer using layers panel (Ctrl+Shift"
 "+L)"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4294
+#: ../share/extensions/gcodetools.py:4292
 msgid ""
 "Warning! There are some paths in the root of the document, but not in any "
 "layer! Using bottom-most layer for them."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4371
+#: ../share/extensions/gcodetools.py:4369
 #, python-format
 msgid ""
 "Warning! Tool's and default tool's parameter's (%s) types are not the same "
 "( type('%s') != type('%s') )."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4374
+#: ../share/extensions/gcodetools.py:4372
 #, python-format
 msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4388
+#: ../share/extensions/gcodetools.py:4386
 #, python-format
 msgid "Layer '%s' contains more than one tool!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4391
+#: ../share/extensions/gcodetools.py:4389
 #, python-format
 msgid ""
 "Can not find tool for '%s' layer! Please add one with Tools library tab!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4553
-#: ../share/extensions/gcodetools.py:4708
+#: ../share/extensions/gcodetools.py:4551
+#: ../share/extensions/gcodetools.py:4706
 msgid ""
 "Warning: One or more paths do not have 'd' parameter, try to Ungroup (Ctrl"
 "+Shift+G) and Object to Path (Ctrl+Shift+C)!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4667
+#: ../share/extensions/gcodetools.py:4665
 msgid ""
 "Nothing is selected. Please select something to convert to drill point "
 "(dxfpoint) or clear point sign."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4750
-#: ../share/extensions/gcodetools.py:4996
+#: ../share/extensions/gcodetools.py:4748
+#: ../share/extensions/gcodetools.py:4994
 msgid "This extension requires at least one selected path."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4756
-#: ../share/extensions/gcodetools.py:5002
+#: ../share/extensions/gcodetools.py:4754
+#: ../share/extensions/gcodetools.py:5000
 #, python-format
 msgid "Tool diameter must be > 0 but tool's diameter on '%s' layer is not!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:4767
-#: ../share/extensions/gcodetools.py:4956
-#: ../share/extensions/gcodetools.py:5011
+#: ../share/extensions/gcodetools.py:4765
+#: ../share/extensions/gcodetools.py:4954
+#: ../share/extensions/gcodetools.py:5009
 msgid "Warning: omitting non-path"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:5511
+#: ../share/extensions/gcodetools.py:5509
 msgid "Please select at least one path to engrave and run again."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:5519
+#: ../share/extensions/gcodetools.py:5517
 msgid "Unknown unit selected. mm assumed"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:5540
+#: ../share/extensions/gcodetools.py:5538
 #, python-format
 msgid "Tool '%s' has no shape. 45 degree cone assumed!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:5611
-#: ../share/extensions/gcodetools.py:5616
+#: ../share/extensions/gcodetools.py:5609
+#: ../share/extensions/gcodetools.py:5614
 msgid "csp_normalised_normal error. See log."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:5804
+#: ../share/extensions/gcodetools.py:5802
 msgid "No need to engrave sharp angles."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:5848
+#: ../share/extensions/gcodetools.py:5846
 msgid ""
 "Active layer already has orientation points! Remove them or select another "
 "layer!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:5893
+#: ../share/extensions/gcodetools.py:5891
 msgid "Active layer already has a tool! Remove it or select another layer!"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:6008
+#: ../share/extensions/gcodetools.py:6006
 msgid "Selection is empty! Will compute whole drawing."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:6062
+#: ../share/extensions/gcodetools.py:6060
 msgid ""
 "Tutorials, manuals and support can be found at\n"
 "English support forum:\n"
@@ -30669,15 +30673,15 @@ msgid ""
 "\thttp://www.cnc-club.ru/gcodetoolsru"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:6107
+#: ../share/extensions/gcodetools.py:6105
 msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:6110
+#: ../share/extensions/gcodetools.py:6108
 msgid "Lathe X and Z axis remap should be the same. Exiting..."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:6662
+#: ../share/extensions/gcodetools.py:6660
 #, python-format
 msgid ""
 "Select one of the action tabs - Path to Gcode, Area, Engraving, DXF points, "
@@ -30685,49 +30689,49 @@ msgid ""
 " Current active tab id is %s"
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:6668
+#: ../share/extensions/gcodetools.py:6666
 msgid ""
 "Orientation points have not been defined! A default set of orientation "
 "points has been automatically added."
 msgstr ""
 
-#: ../share/extensions/gcodetools.py:6672
+#: ../share/extensions/gcodetools.py:6670
 msgid ""
 "Cutting tool has not been defined! A default tool has been automatically "
 "added."
 msgstr ""
 
-#: ../share/extensions/generate_voronoi.py:35
+#: ../share/extensions/generate_voronoi.py:33
 msgid ""
 "Failed to import the subprocess module. Please report this as a bug at: "
 "https://bugs.launchpad.net/inkscape."
 msgstr ""
 
-#: ../share/extensions/generate_voronoi.py:36
+#: ../share/extensions/generate_voronoi.py:34
 msgid "Python version is: "
 msgstr ""
 
-#: ../share/extensions/generate_voronoi.py:94
+#: ../share/extensions/generate_voronoi.py:92
 msgid "Please select an object"
 msgstr ""
 
-#: ../share/extensions/gimp_xcf.py:39
+#: ../share/extensions/gimp_xcf.py:37
 msgid "Inkscape must be installed and set in your path variable."
 msgstr ""
 
-#: ../share/extensions/gimp_xcf.py:43
+#: ../share/extensions/gimp_xcf.py:41
 msgid "Gimp must be installed and set in your path variable."
 msgstr ""
 
-#: ../share/extensions/gimp_xcf.py:47
+#: ../share/extensions/gimp_xcf.py:45
 msgid "An error occurred while processing the XCF file."
 msgstr ""
 
-#: ../share/extensions/gimp_xcf.py:185
+#: ../share/extensions/gimp_xcf.py:183
 msgid "This extension requires at least one non empty layer."
 msgstr ""
 
-#: ../share/extensions/guillotine.py:250
+#: ../share/extensions/guillotine.py:248
 msgid "The sliced bitmaps have been saved as:"
 msgstr ""
 
@@ -30740,23 +30744,23 @@ msgid "Pen "
 msgstr ""
 
 #. issue error if no hpgl data found
-#: ../share/extensions/hpgl_input.py:58
+#: ../share/extensions/hpgl_input.py:56
 msgid "No HPGL data found."
 msgstr ""
 
-#: ../share/extensions/hpgl_input.py:66
+#: ../share/extensions/hpgl_input.py:64
 msgid ""
 "The HPGL data contained unknown (unsupported) commands, there is a "
 "possibility that the drawing is missing some content."
 msgstr ""
 
 #. issue error if no paths found
-#: ../share/extensions/hpgl_output.py:58
+#: ../share/extensions/hpgl_output.py:57
 msgid ""
 "No paths where found. Please convert all objects you want to save into paths."
 msgstr ""
 
-#: ../share/extensions/inkex.py:117
+#: ../share/extensions/inkex.py:116
 #, python-format
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore "
@@ -30768,12 +30772,12 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../share/extensions/inkex.py:185
+#: ../share/extensions/inkex.py:184
 #, python-format
 msgid "Unable to open specified file: %s"
 msgstr ""
 
-#: ../share/extensions/inkex.py:194
+#: ../share/extensions/inkex.py:193
 #, python-format
 msgid "Unable to open object member file: %s"
 msgstr ""
@@ -30787,20 +30791,20 @@ msgstr ""
 msgid "SVG Width not set correctly! Assuming width = 100"
 msgstr ""
 
-#: ../share/extensions/interp_att_g.py:176
+#: ../share/extensions/interp_att_g.py:175
 msgid "There is no selection to interpolate"
 msgstr ""
 
-#: ../share/extensions/jessyInk_autoTexts.py:45
-#: ../share/extensions/jessyInk_effects.py:50
-#: ../share/extensions/jessyInk_export.py:96
-#: ../share/extensions/jessyInk_keyBindings.py:188
-#: ../share/extensions/jessyInk_masterSlide.py:46
-#: ../share/extensions/jessyInk_mouseHandler.py:48
-#: ../share/extensions/jessyInk_summary.py:64
-#: ../share/extensions/jessyInk_transitions.py:50
-#: ../share/extensions/jessyInk_video.py:49
-#: ../share/extensions/jessyInk_view.py:67
+#: ../share/extensions/jessyInk_autoTexts.py:44
+#: ../share/extensions/jessyInk_effects.py:49
+#: ../share/extensions/jessyInk_export.py:94
+#: ../share/extensions/jessyInk_keyBindings.py:187
+#: ../share/extensions/jessyInk_masterSlide.py:44
+#: ../share/extensions/jessyInk_mouseHandler.py:47
+#: ../share/extensions/jessyInk_summary.py:63
+#: ../share/extensions/jessyInk_transitions.py:49
+#: ../share/extensions/jessyInk_video.py:47
+#: ../share/extensions/jessyInk_view.py:66
 msgid ""
 "The JessyInk script is not installed in this SVG file or has a different "
 "version than the JessyInk extensions. Please select \"install/update...\" "
@@ -30809,208 +30813,208 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_autoTexts.py:48
+#: ../share/extensions/jessyInk_autoTexts.py:47
 msgid ""
 "To assign an effect, please select an object.\n"
 "\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_autoTexts.py:54
+#: ../share/extensions/jessyInk_autoTexts.py:53
 #, python-brace-format
 msgid ""
 "Node with id '{0}' is not a suitable text node and was therefore ignored.\n"
 "\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_effects.py:53
+#: ../share/extensions/jessyInk_effects.py:52
 msgid ""
 "No object selected. Please select the object you want to assign an effect to "
 "and then press apply.\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_export.py:82
+#: ../share/extensions/jessyInk_export.py:80
 msgid "Could not find Inkscape command.\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_masterSlide.py:56
+#: ../share/extensions/jessyInk_masterSlide.py:54
 msgid "Layer not found. Removed current master slide selection.\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_masterSlide.py:58
+#: ../share/extensions/jessyInk_masterSlide.py:56
 msgid ""
 "More than one layer with this name found. Removed current master slide "
 "selection.\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:69
+#: ../share/extensions/jessyInk_summary.py:68
 #, python-brace-format
 msgid "JessyInk script version {0} installed."
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:71
+#: ../share/extensions/jessyInk_summary.py:70
 msgid "JessyInk script installed."
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:83
+#: ../share/extensions/jessyInk_summary.py:82
 msgid ""
 "\n"
 "Master slide:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:89
+#: ../share/extensions/jessyInk_summary.py:88
 msgid ""
 "\n"
 "Slide {0!s}:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:94
+#: ../share/extensions/jessyInk_summary.py:93
 #, python-brace-format
 msgid "{0}Layer name: {1}"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:102
+#: ../share/extensions/jessyInk_summary.py:101
 msgid "{0}Transition in: {1} ({2!s} s)"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:104
+#: ../share/extensions/jessyInk_summary.py:103
 #, python-brace-format
 msgid "{0}Transition in: {1}"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:111
+#: ../share/extensions/jessyInk_summary.py:110
 msgid "{0}Transition out: {1} ({2!s} s)"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:113
+#: ../share/extensions/jessyInk_summary.py:112
 #, python-brace-format
 msgid "{0}Transition out: {1}"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:120
+#: ../share/extensions/jessyInk_summary.py:119
 #, python-brace-format
 msgid ""
 "\n"
 "{0}Auto-texts:"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:123
+#: ../share/extensions/jessyInk_summary.py:122
 #, python-brace-format
 msgid "{0}\t\"{1}\" (object id \"{2}\") will be replaced by \"{3}\"."
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:168
+#: ../share/extensions/jessyInk_summary.py:167
 #, python-brace-format
 msgid ""
 "\n"
 "{0}Initial effect (order number {1}):"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:170
+#: ../share/extensions/jessyInk_summary.py:169
 msgid ""
 "\n"
 "{0}Effect {1!s} (order number {2}):"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:174
+#: ../share/extensions/jessyInk_summary.py:173
 #, python-brace-format
 msgid "{0}\tView will be set according to object \"{1}\""
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:176
+#: ../share/extensions/jessyInk_summary.py:175
 #, python-brace-format
 msgid "{0}\tObject \"{1}\""
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:179
+#: ../share/extensions/jessyInk_summary.py:178
 msgid " will appear"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:181
+#: ../share/extensions/jessyInk_summary.py:180
 msgid " will disappear"
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:184
+#: ../share/extensions/jessyInk_summary.py:183
 #, python-brace-format
 msgid " using effect \"{0}\""
 msgstr ""
 
-#: ../share/extensions/jessyInk_summary.py:187
+#: ../share/extensions/jessyInk_summary.py:186
 msgid " in {0!s} s"
 msgstr ""
 
-#: ../share/extensions/jessyInk_transitions.py:55
+#: ../share/extensions/jessyInk_transitions.py:54
 msgid "Layer not found.\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_transitions.py:57
+#: ../share/extensions/jessyInk_transitions.py:56
 msgid "More than one layer with this name found.\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_transitions.py:70
+#: ../share/extensions/jessyInk_transitions.py:69
 msgid "Please enter a layer name.\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_video.py:54
-#: ../share/extensions/jessyInk_video.py:59
+#: ../share/extensions/jessyInk_video.py:52
+#: ../share/extensions/jessyInk_video.py:57
 msgid ""
 "Could not obtain the selected layer for inclusion of the video element.\n"
 "\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_view.py:75
+#: ../share/extensions/jessyInk_view.py:74
 msgid "More than one object selected. Please select only one object.\n"
 msgstr ""
 
-#: ../share/extensions/jessyInk_view.py:79
+#: ../share/extensions/jessyInk_view.py:78
 msgid ""
 "No object selected. Please select the object you want to assign a view to "
 "and then press apply.\n"
 msgstr ""
 
-#: ../share/extensions/markers_strokepaint.py:83
+#: ../share/extensions/markers_strokepaint.py:82
 #, python-format
 msgid "No style attribute found for id: %s"
 msgstr ""
 
-#: ../share/extensions/markers_strokepaint.py:137
+#: ../share/extensions/markers_strokepaint.py:136
 #, python-format
 msgid "unable to locate marker: %s"
 msgstr ""
 
-#: ../share/extensions/measure.py:58
+#: ../share/extensions/measure.py:57
 msgid ""
 "Failed to import the numpy modules. These modules are required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 
-#: ../share/extensions/measure.py:120
+#: ../share/extensions/measure.py:119
 msgid "Area is zero, cannot calculate Center of Mass"
 msgstr ""
 
-#: ../share/extensions/pathalongpath.py:208
-#: ../share/extensions/pathscatter.py:228 ../share/extensions/perspective.py:52
+#: ../share/extensions/pathalongpath.py:207
+#: ../share/extensions/pathscatter.py:226 ../share/extensions/perspective.py:50
 msgid "This extension requires two selected paths."
 msgstr ""
 
-#: ../share/extensions/pathalongpath.py:234
+#: ../share/extensions/pathalongpath.py:233
 msgid ""
 "The total length of the pattern is too small :\n"
 "Please choose a larger object or set 'Space between copies' > 0"
 msgstr ""
 
-#: ../share/extensions/pathalongpath.py:277
+#: ../share/extensions/pathalongpath.py:276
 msgid ""
 "The 'stretch' option requires that the pattern must have non-zero width :\n"
 "Please edit the pattern width."
 msgstr ""
 
-#: ../share/extensions/pathmodifier.py:237
+#: ../share/extensions/pathmodifier.py:235
 #, python-format
 msgid "Please first convert objects to paths!  (Got [%s].)"
 msgstr ""
 
-#: ../share/extensions/perspective.py:44
+#: ../share/extensions/perspective.py:42
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again.  On a Debian-"
@@ -31018,150 +31022,150 @@ msgid ""
 "numpy."
 msgstr ""
 
-#: ../share/extensions/perspective.py:60 ../share/extensions/summersnight.py:51
+#: ../share/extensions/perspective.py:58 ../share/extensions/summersnight.py:49
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 
-#: ../share/extensions/perspective.py:67 ../share/extensions/summersnight.py:59
+#: ../share/extensions/perspective.py:65 ../share/extensions/summersnight.py:57
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
 
-#: ../share/extensions/perspective.py:93 ../share/extensions/summersnight.py:92
+#: ../share/extensions/perspective.py:91 ../share/extensions/summersnight.py:90
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
 msgstr ""
 
-#: ../share/extensions/perspective.py:95 ../share/extensions/summersnight.py:94
+#: ../share/extensions/perspective.py:93 ../share/extensions/summersnight.py:92
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 
-#: ../share/extensions/perspective.py:98 ../share/extensions/summersnight.py:97
+#: ../share/extensions/perspective.py:96 ../share/extensions/summersnight.py:95
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
 
 #. issue error if no paths found
-#: ../share/extensions/plotter.py:69
+#: ../share/extensions/plotter.py:68
 msgid ""
 "No paths where found. Please convert all objects you want to plot into paths."
 msgstr ""
 
-#: ../share/extensions/plotter.py:147
+#: ../share/extensions/plotter.py:146
 msgid "pySerial is not installed. Please follow these steps:"
 msgstr ""
 
-#: ../share/extensions/plotter.py:148
+#: ../share/extensions/plotter.py:147
 msgid "1. Download and extract (unzip) this file to your local harddisk:"
 msgstr ""
 
-#: ../share/extensions/plotter.py:150
+#: ../share/extensions/plotter.py:149
 msgid ""
 "2. Copy the \"serial\" folder (Can be found inside the just extracted folder)"
 msgstr ""
 
-#: ../share/extensions/plotter.py:151
+#: ../share/extensions/plotter.py:150
 msgid ""
-"   into the following Inkscape folder: C:\\<Program files>\\inkscape\\python"
+"   into the following Inkscape folder: C:\\[Program files]\\inkscape\\python"
 "\\Lib\\"
 msgstr ""
 
-#: ../share/extensions/plotter.py:152
+#: ../share/extensions/plotter.py:151
 msgid "3. Close and restart Inkscape."
 msgstr ""
 
-#: ../share/extensions/plotter.py:201
+#: ../share/extensions/plotter.py:200
 msgid ""
 "Could not open port. Please check that your plotter is running, connected "
 "and the settings are correct."
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.py:66
+#: ../share/extensions/polyhedron_3d.py:64
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
 "can be done with the command 'sudo apt-get install python-numpy'."
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.py:337
+#: ../share/extensions/polyhedron_3d.py:335
 msgid "No face data found in specified file."
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.py:338
+#: ../share/extensions/polyhedron_3d.py:336
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.py:344
+#: ../share/extensions/polyhedron_3d.py:342
 msgid "No edge data found in specified file."
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.py:345
+#: ../share/extensions/polyhedron_3d.py:343
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
 msgstr ""
 
 #. we cannot generate a list of faces from the edges without a lot of computation
-#: ../share/extensions/polyhedron_3d.py:524
+#: ../share/extensions/polyhedron_3d.py:522
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
 msgstr ""
 
-#: ../share/extensions/polyhedron_3d.py:526
+#: ../share/extensions/polyhedron_3d.py:524
 msgid "Internal Error. No view type selected\n"
 msgstr ""
 
-#: ../share/extensions/print_win32_vector.py:41
+#: ../share/extensions/print_win32_vector.py:39
 msgid "sorry, this will run only on Windows, exiting..."
 msgstr ""
 
-#: ../share/extensions/print_win32_vector.py:179
+#: ../share/extensions/print_win32_vector.py:177
 msgid "Failed to open default printer"
 msgstr ""
 
-#: ../share/extensions/render_barcode_datamatrix.py:203
+#: ../share/extensions/render_barcode_datamatrix.py:201
 msgid "Unrecognised DataMatrix size"
 msgstr ""
 
 #. we have an invalid bit value
-#: ../share/extensions/render_barcode_datamatrix.py:644
+#: ../share/extensions/render_barcode_datamatrix.py:642
 msgid "Invalid bit value, this is a bug!"
 msgstr ""
 
 #. abort if converting blank text
-#: ../share/extensions/render_barcode_datamatrix.py:679
+#: ../share/extensions/render_barcode_datamatrix.py:677
 msgid "Please enter an input string"
 msgstr ""
 
 #. abort if converting blank text
-#: ../share/extensions/render_barcode_qrcode.py:1055
+#: ../share/extensions/render_barcode_qrcode.py:1053
 msgid "Please enter an input text"
 msgstr ""
 
-#: ../share/extensions/replace_font.py:133
+#: ../share/extensions/replace_font.py:131
 msgid ""
 "Couldn't find anything using that font, please ensure the spelling and "
 "spacing is correct."
 msgstr ""
 
-#: ../share/extensions/replace_font.py:140
+#: ../share/extensions/replace_font.py:138
 #: ../share/extensions/svg_and_media_zip_output.py:193
 msgid "Didn't find any fonts in this document/selection."
 msgstr ""
 
-#: ../share/extensions/replace_font.py:143
+#: ../share/extensions/replace_font.py:141
 #: ../share/extensions/svg_and_media_zip_output.py:196
 #, python-format
 msgid "Found the following font only: %s"
 msgstr ""
 
-#: ../share/extensions/replace_font.py:145
+#: ../share/extensions/replace_font.py:143
 #: ../share/extensions/svg_and_media_zip_output.py:198
 #, python-format
 msgid ""
@@ -31169,27 +31173,27 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../share/extensions/replace_font.py:196
+#: ../share/extensions/replace_font.py:194
 msgid "There was nothing selected"
 msgstr ""
 
-#: ../share/extensions/replace_font.py:244
+#: ../share/extensions/replace_font.py:242
 msgid "Please enter a search string in the find box."
 msgstr ""
 
-#: ../share/extensions/replace_font.py:248
+#: ../share/extensions/replace_font.py:246
 msgid "Please enter a replacement font in the replace with box."
 msgstr ""
 
-#: ../share/extensions/replace_font.py:253
+#: ../share/extensions/replace_font.py:251
 msgid "Please enter a replacement font in the replace all box."
 msgstr ""
 
-#: ../share/extensions/restack.py:76
+#: ../share/extensions/restack.py:75
 msgid "There is no selection to restack."
 msgstr ""
 
-#: ../share/extensions/summersnight.py:43
+#: ../share/extensions/summersnight.py:41
 msgid ""
 "This extension requires two selected paths. \n"
 "The second path must be exactly four nodes long."
@@ -31200,13 +31204,13 @@ msgstr ""
 msgid "Could not locate file: %s"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.py:266
-#: ../share/extensions/svgcalendar.py:288
+#: ../share/extensions/svgcalendar.py:265
+#: ../share/extensions/svgcalendar.py:287
 msgid "You must select a correct system encoding."
 msgstr ""
 
-#: ../share/extensions/uniconv-ext.py:56
-#: ../share/extensions/uniconv_output.py:122
+#: ../share/extensions/uniconv-ext.py:54
+#: ../share/extensions/uniconv_output.py:121
 msgid ""
 "You need to install the UniConvertor software.\n"
 "For GNU/Linux: install the package python-uniconvertor.\n"
@@ -31215,65 +31219,65 @@ msgid ""
 "and install into your Inkscape's Python location\n"
 msgstr ""
 
-#: ../share/extensions/voronoi2svg.py:206
+#: ../share/extensions/voronoi2svg.py:205
 msgid "Please select objects!"
 msgstr ""
 
-#: ../share/extensions/web-set-att.py:58
-#: ../share/extensions/web-transmit-att.py:54
+#: ../share/extensions/web-set-att.py:56
+#: ../share/extensions/web-transmit-att.py:53
 msgid "You must select at least two elements."
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.py:57
+#: ../share/extensions/webslicer_create_group.py:55
 msgid ""
 "You must create and select some \"Slicer rectangles\" before trying to group."
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.py:72
+#: ../share/extensions/webslicer_create_group.py:70
 msgid ""
 "You must to select some \"Slicer rectangles\" or other \"Layout groups\"."
 msgstr ""
 
-#: ../share/extensions/webslicer_create_group.py:76
+#: ../share/extensions/webslicer_create_group.py:74
 #, python-format
 msgid "Oops... The element \"%s\" is not in the Web Slicer layer"
 msgstr ""
 
-#: ../share/extensions/webslicer_export.py:57
+#: ../share/extensions/webslicer_export.py:55
 msgid "You must give a directory to export the slices."
 msgstr ""
 
-#: ../share/extensions/webslicer_export.py:69
+#: ../share/extensions/webslicer_export.py:67
 #, python-format
 msgid "Can't create \"%s\"."
 msgstr ""
 
-#: ../share/extensions/webslicer_export.py:70
+#: ../share/extensions/webslicer_export.py:68
 #, python-format
 msgid "Error: %s"
 msgstr ""
 
-#: ../share/extensions/webslicer_export.py:73
+#: ../share/extensions/webslicer_export.py:71
 #, python-format
 msgid "The directory \"%s\" does not exists."
 msgstr ""
 
-#: ../share/extensions/webslicer_export.py:78
+#: ../share/extensions/webslicer_export.py:76
 msgid "No slicer layer found."
 msgstr ""
 
-#: ../share/extensions/webslicer_export.py:108
+#: ../share/extensions/webslicer_export.py:106
 #, python-format
 msgid "You have more than one element with \"%s\" html-id."
 msgstr ""
 
-#: ../share/extensions/webslicer_export.py:338
+#: ../share/extensions/webslicer_export.py:336
 msgid "You must install the ImageMagick to get JPG and GIF."
 msgstr ""
 
 #. PARAMETER PROCESSING
 #. lines of longitude are odd : abort
-#: ../share/extensions/wireframe_sphere.py:117
+#: ../share/extensions/wireframe_sphere.py:116
 msgid "Please enter an even number of lines of longitude."
 msgstr ""
 

@@ -54,11 +54,12 @@
 # to tweak / tweak context  -  retoucheren
 # Tool Controls bar  -  Gereedschapsdetailsbalk
 # (toevoegingen welkom)
+#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-24 17:15+0200\n"
+"POT-Creation-Date: 2016-05-30 07:25+0200\n"
 "PO-Revision-Date: 2016-05-24 22:49+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -738,8 +739,7 @@ msgstr "Zwart gat"
 #: ../share/filters/filters.svg.h:279 ../share/filters/filters.svg.h:835
 #: ../share/filters/filters.svg.h:839 ../share/filters/filters.svg.h:843
 #: ../src/extension/internal/filter/morphology.h:76
-#: ../src/extension/internal/filter/morphology.h:203
-#: ../src/filter-enums.cpp:32
+#: ../src/extension/internal/filter/morphology.h:203 ../src/filter-enums.cpp:32
 msgid "Morphology"
 msgstr "Morfologie"
 
@@ -5130,8 +5130,7 @@ msgstr "Aanpassende drempelwaarde"
 #: ../src/ui/widget/page-sizer.cpp:249
 #: ../src/widgets/calligraphy-toolbar.cpp:430
 #: ../src/widgets/eraser-toolbar.cpp:154 ../src/widgets/spray-toolbar.cpp:297
-#: ../src/widgets/tweak-toolbar.cpp:128
-#: ../share/extensions/foldablebox.inx.h:2
+#: ../src/widgets/tweak-toolbar.cpp:128 ../share/extensions/foldablebox.inx.h:2
 msgid "Width:"
 msgstr "Breedte:"
 
@@ -6598,15 +6597,13 @@ msgid "Transparency type:"
 msgstr "Type transparantie:"
 
 #: ../src/extension/internal/filter/bumps.h:353
-#: ../src/extension/internal/filter/morphology.h:176
-#: ../src/filter-enums.cpp:91
+#: ../src/extension/internal/filter/morphology.h:176 ../src/filter-enums.cpp:91
 msgid "Atop"
 msgstr "Bovenop"
 
 #: ../src/extension/internal/filter/bumps.h:354
 #: ../src/extension/internal/filter/distort.h:70
-#: ../src/extension/internal/filter/morphology.h:174
-#: ../src/filter-enums.cpp:89
+#: ../src/extension/internal/filter/morphology.h:174 ../src/filter-enums.cpp:89
 msgid "In"
 msgstr "In"
 
@@ -7123,8 +7120,7 @@ msgid "Felt Feather"
 msgstr "Veren vilt"
 
 #: ../src/extension/internal/filter/distort.h:71
-#: ../src/extension/internal/filter/morphology.h:175
-#: ../src/filter-enums.cpp:90
+#: ../src/extension/internal/filter/morphology.h:175 ../src/filter-enums.cpp:90
 msgid "Out"
 msgstr "Uit"
 
@@ -7319,13 +7315,11 @@ msgstr "Afbeelding verbergen"
 msgid "Composite type:"
 msgstr "Composiettype:"
 
-#: ../src/extension/internal/filter/morphology.h:173
-#: ../src/filter-enums.cpp:88
+#: ../src/extension/internal/filter/morphology.h:173 ../src/filter-enums.cpp:88
 msgid "Over"
 msgstr "Erover"
 
-#: ../src/extension/internal/filter/morphology.h:177
-#: ../src/filter-enums.cpp:92
+#: ../src/extension/internal/filter/morphology.h:177 ../src/filter-enums.cpp:92
 msgid "XOR"
 msgstr "XOR"
 
@@ -7399,8 +7393,8 @@ msgstr "Ruis opvulling"
 #: ../src/ui/dialog/tracedialog.cpp:747
 #: ../share/extensions/color_HSL_adjust.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
-#: ../share/extensions/color_randomize.inx.h:2
-#: ../share/extensions/dots.inx.h:2 ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/color_randomize.inx.h:2 ../share/extensions/dots.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:2
 #: ../share/extensions/dxf_outlines.inx.h:2
 #: ../share/extensions/gcodetools_area.inx.h:29
 #: ../share/extensions/gcodetools_engraving.inx.h:7
@@ -7999,15 +7993,13 @@ msgstr "Verticale inspringing:"
 #: ../src/extension/internal/grid.cpp:214
 #: ../src/ui/dialog/inkscape-preferences.cpp:1532
 #: ../share/extensions/draw_from_triangle.inx.h:58
-#: ../share/extensions/eqtexsvg.inx.h:4
-#: ../share/extensions/foldablebox.inx.h:9
+#: ../share/extensions/eqtexsvg.inx.h:4 ../share/extensions/foldablebox.inx.h:9
 #: ../share/extensions/funcplot.inx.h:38
 #: ../share/extensions/grid_cartesian.inx.h:23
 #: ../share/extensions/grid_isometric.inx.h:11
 #: ../share/extensions/grid_polar.inx.h:22
 #: ../share/extensions/guides_creator.inx.h:25
-#: ../share/extensions/hershey.inx.h:52
-#: ../share/extensions/layout_nup.inx.h:35
+#: ../share/extensions/hershey.inx.h:52 ../share/extensions/layout_nup.inx.h:35
 #: ../share/extensions/lindenmayer.inx.h:34
 #: ../share/extensions/nicechart.inx.h:45
 #: ../share/extensions/param_curves.inx.h:30
@@ -8367,8 +8359,7 @@ msgid "Map all fill patterns to standard WMF hatches"
 msgstr "Alle vulpatronen naar standaard WMF-hatches mappen"
 
 #: ../src/extension/internal/wmf-inout.cpp:3208
-#: ../share/extensions/wmf_input.inx.h:2
-#: ../share/extensions/wmf_output.inx.h:2
+#: ../share/extensions/wmf_input.inx.h:2 ../share/extensions/wmf_output.inx.h:2
 msgid "Windows Metafile (*.wmf)"
 msgstr "Windows Metafile (*.wmf)"
 
@@ -8641,8 +8632,7 @@ msgstr "Tintrotatie"
 msgid "Luminance to Alpha"
 msgstr "Luminantie naar alfa"
 
-#: ../src/filter-enums.cpp:87
-#: ../share/extensions/jessyInk_mouseHandler.inx.h:3
+#: ../src/filter-enums.cpp:87 ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_transitions.inx.h:7
 #: ../share/extensions/measure.inx.h:20 ../share/extensions/nicechart.inx.h:33
 msgid "Default"
@@ -8956,8 +8946,7 @@ msgstr "Dit paneel inklappen"
 msgid "Close this dock"
 msgstr "Dit paneel sluiten"
 
-#: ../src/libgdl/gdl-dock-item-grip.c:723
-#: ../src/libgdl/gdl-dock-tablabel.c:125
+#: ../src/libgdl/gdl-dock-item-grip.c:723 ../src/libgdl/gdl-dock-tablabel.c:125
 msgid "Controlling dock item"
 msgstr "Aansturend paneelitem"
 
@@ -9125,8 +9114,7 @@ msgstr "De index van de huidige pagina"
 #: ../src/libgdl/gdl-dock-object.c:125
 #: ../src/live_effects/parameter/originalpatharray.cpp:82
 #: ../src/ui/dialog/inkscape-preferences.cpp:1566
-#: ../src/ui/widget/page-sizer.cpp:285
-#: ../src/widgets/gradient-selector.cpp:150
+#: ../src/ui/widget/page-sizer.cpp:285 ../src/widgets/gradient-selector.cpp:150
 #: ../src/widgets/sp-xmlview-attr-list.cpp:49
 msgid "Name"
 msgstr "Naam"
@@ -10691,54 +10679,59 @@ msgid "Envelope deformation"
 msgstr "Omslagvervorming"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:45
+#, fuzzy
+msgid "Overflow perspective"
+msgstr "Perspectief"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:46
 msgid "Type"
 msgstr "Type"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:45
+#: ../src/live_effects/lpe-perspective-envelope.cpp:46
 msgid "Select the type of deformation"
 msgstr "Selecteer het type vervorming"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:46
+#: ../src/live_effects/lpe-perspective-envelope.cpp:47
 msgid "Top Left"
 msgstr "Linksboven"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:46
+#: ../src/live_effects/lpe-perspective-envelope.cpp:47
 msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Linksboven - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: bewegen langs "
 "assen"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:47
+#: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Top Right"
 msgstr "Rechtsboven"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:47
+#: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Rechtsboven - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: bewegen langs "
 "assen"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:48
+#: ../src/live_effects/lpe-perspective-envelope.cpp:49
 msgid "Down Left"
 msgstr "Linksonder"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:48
+#: ../src/live_effects/lpe-perspective-envelope.cpp:49
 msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Linksonder - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: bewegen langs "
 "assen"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:49
+#: ../src/live_effects/lpe-perspective-envelope.cpp:50
 msgid "Down Right"
 msgstr "Rechtsonder"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:49
+#: ../src/live_effects/lpe-perspective-envelope.cpp:50
 msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Rechtsonder - <b>Ctrl+Alt+Klikken</b>: resetten, <b>Ctrl</b>: bewegen langs "
 "assen"
 
-#: ../src/live_effects/lpe-perspective-envelope.cpp:269
+#: ../src/live_effects/lpe-perspective-envelope.cpp:367
 msgid "Handles:"
 msgstr "Handvatten:"
 
@@ -11131,8 +11124,7 @@ msgstr "Inter_val markeringen:"
 msgid "Distance between successive ruler marks"
 msgstr "Afstand tussen opeenvolgende markeringen"
 
-#: ../src/live_effects/lpe-ruler.cpp:42
-#: ../share/extensions/foldablebox.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:42 ../share/extensions/foldablebox.inx.h:7
 #: ../share/extensions/interp_att_g.inx.h:9
 #: ../share/extensions/layout_nup.inx.h:3
 #: ../share/extensions/printing_marks.inx.h:11
@@ -12501,8 +12493,7 @@ msgstr "Er is <b>niets</b> verwijderd."
 #: ../src/widgets/eraser-toolbar.cpp:120
 #: ../src/widgets/gradient-toolbar.cpp:1181
 #: ../src/widgets/gradient-toolbar.cpp:1195
-#: ../src/widgets/gradient-toolbar.cpp:1209
-#: ../src/widgets/node-toolbar.cpp:401
+#: ../src/widgets/gradient-toolbar.cpp:1209 ../src/widgets/node-toolbar.cpp:401
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -13387,8 +13378,8 @@ msgstr "Voorwaardelijke groep"
 
 #: ../src/sp-text.cpp:361 ../src/verbs.cpp:347
 #: ../share/extensions/lorem_ipsum.inx.h:8
-#: ../share/extensions/replace_font.inx.h:11
-#: ../share/extensions/split.inx.h:10 ../share/extensions/text_braille.inx.h:2
+#: ../share/extensions/replace_font.inx.h:11 ../share/extensions/split.inx.h:10
+#: ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_extract.inx.h:14
 #: ../share/extensions/text_flipcase.inx.h:2
 #: ../share/extensions/text_lowercase.inx.h:2
@@ -15133,8 +15124,7 @@ msgstr "Ve_rwijderen"
 msgid "Remove selected grid."
 msgstr "Geselecteerd raster verwijderen."
 
-#: ../src/ui/dialog/document-properties.cpp:162
-#: ../src/widgets/toolbox.cpp:1903
+#: ../src/ui/dialog/document-properties.cpp:162 ../src/widgets/toolbox.cpp:1903
 msgid "Guides"
 msgstr "Hulplijnen"
 
@@ -15577,8 +15567,7 @@ msgstr "Informatie"
 #: ../share/extensions/jitternodes.inx.h:12
 #: ../share/extensions/layout_nup.inx.h:24
 #: ../share/extensions/lindenmayer.inx.h:13
-#: ../share/extensions/lorem_ipsum.inx.h:6
-#: ../share/extensions/measure.inx.h:33
+#: ../share/extensions/lorem_ipsum.inx.h:6 ../share/extensions/measure.inx.h:33
 #: ../share/extensions/pathalongpath.inx.h:16
 #: ../share/extensions/pathscatter.inx.h:18
 #: ../share/extensions/restack.inx.h:25 ../share/extensions/split.inx.h:8
@@ -20802,8 +20791,7 @@ msgstr "X-helling"
 msgid "Y tilt"
 msgstr "Y-helling"
 
-#: ../src/ui/dialog/input.cpp:1616
-#: ../src/ui/widget/color-wheel-selector.cpp:29
+#: ../src/ui/dialog/input.cpp:1616 ../src/ui/widget/color-wheel-selector.cpp:29
 msgid "Wheel"
 msgstr "Wiel"
 
@@ -21609,18 +21597,15 @@ msgstr "Kopf-Lischinski"
 msgid "Output"
 msgstr "Uitvoer"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:297
-#: ../src/ui/dialog/tracedialog.cpp:814
+#: ../src/ui/dialog/pixelartdialog.cpp:297 ../src/ui/dialog/tracedialog.cpp:814
 msgid "Reset all settings to defaults"
 msgstr "Alle instellingen naar de standaarwaarden terugzetten"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:302
-#: ../src/ui/dialog/tracedialog.cpp:819
+#: ../src/ui/dialog/pixelartdialog.cpp:302 ../src/ui/dialog/tracedialog.cpp:819
 msgid "Abort a trace in progress"
 msgstr "Het overtrekken afbreken"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:306
-#: ../src/ui/dialog/tracedialog.cpp:823
+#: ../src/ui/dialog/pixelartdialog.cpp:306 ../src/ui/dialog/tracedialog.cpp:823
 msgid "Execute the trace"
 msgstr "Het overtrekken starten"
 
@@ -21993,8 +21978,7 @@ msgid "Preview Text:"
 msgstr "Voorbeeldtekst:"
 
 #: ../src/ui/dialog/swatches.cpp:202 ../src/ui/tools/gradient-tool.cpp:360
-#: ../src/ui/tools/gradient-tool.cpp:458
-#: ../src/widgets/gradient-vector.cpp:801
+#: ../src/ui/tools/gradient-tool.cpp:458 ../src/widgets/gradient-vector.cpp:801
 msgid "Add gradient stop"
 msgstr "Kleurverloopovergang toevoegen"
 
@@ -23284,8 +23268,9 @@ msgstr ""
 "roteren"
 
 #: ../src/ui/tool/node.cpp:529
+#, fuzzy
 msgctxt "Path handle tip"
-msgid "<b>Ctrl</b>: Move handle by his actual steps in BSpline Live Effect"
+msgid "<b>Ctrl</b>: Snap handle to steps defined in BSpline Live Path Effect"
 msgstr ""
 "<b>Ctrl</b>: handvat met dit aantal stappen verplaaten in het BSpline Live "
 "Effect"
@@ -23432,8 +23417,7 @@ msgid "Rotate handle"
 msgstr "Roteerhandvat"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1555
-#: ../src/widgets/node-toolbar.cpp:397
+#: ../src/ui/tool/path-manipulator.cpp:1555 ../src/widgets/node-toolbar.cpp:397
 msgid "Delete node"
 msgstr "Item verwijderen"
 
@@ -29288,33 +29272,27 @@ msgstr "radiaal"
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "Radiaal kleurverloop (eliptisch of cirkelvormig) maken"
 
-#: ../src/widgets/gradient-toolbar.cpp:1044
-#: ../src/widgets/mesh-toolbar.cpp:387
+#: ../src/widgets/gradient-toolbar.cpp:1044 ../src/widgets/mesh-toolbar.cpp:387
 msgid "New:"
 msgstr "Nieuw:"
 
-#: ../src/widgets/gradient-toolbar.cpp:1067
-#: ../src/widgets/mesh-toolbar.cpp:410
+#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:410
 msgid "fill"
 msgstr "vulling"
 
-#: ../src/widgets/gradient-toolbar.cpp:1067
-#: ../src/widgets/mesh-toolbar.cpp:410
+#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:410
 msgid "Create gradient in the fill"
 msgstr "Kleurverloop maken voor vulling"
 
-#: ../src/widgets/gradient-toolbar.cpp:1071
-#: ../src/widgets/mesh-toolbar.cpp:414
+#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:414
 msgid "stroke"
 msgstr "lijn"
 
-#: ../src/widgets/gradient-toolbar.cpp:1071
-#: ../src/widgets/mesh-toolbar.cpp:414
+#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:414
 msgid "Create gradient in the stroke"
 msgstr "Kleurverloop maken voor lijn"
 
-#: ../src/widgets/gradient-toolbar.cpp:1074
-#: ../src/widgets/mesh-toolbar.cpp:417
+#: ../src/widgets/gradient-toolbar.cpp:1074 ../src/widgets/mesh-toolbar.cpp:417
 msgid "on:"
 msgstr "Op:"
 
@@ -29414,8 +29392,7 @@ msgstr "Kleurverlopen linken"
 msgid "Link gradients to change all related gradients"
 msgstr "Kleurverlopen linken om alle gerelateerde kleurverlopen te veranderen"
 
-#: ../src/widgets/gradient-vector.cpp:317
-#: ../src/widgets/paint-selector.cpp:965
+#: ../src/widgets/gradient-vector.cpp:317 ../src/widgets/paint-selector.cpp:965
 #: ../src/widgets/stroke-marker-selector.cpp:154
 msgid "No document selected"
 msgstr "Geen document geselecteerd"
@@ -31822,50 +31799,50 @@ msgstr ""
 "De op het invoerapparaat uitgeoefende druk gebruiken om de boetseerkracht te "
 "variëren"
 
-#: ../share/extensions/dimension.py:109
+#: ../share/extensions/dimension.py:108
 msgid "Please select an object."
 msgstr "Selecteer aub. een object."
 
-#: ../share/extensions/dimension.py:134
+#: ../share/extensions/dimension.py:133
 msgid "Unable to process this object.  Try changing it into a path first."
 msgstr ""
 "Onmogelijk om dit object te verwerken. Tracht eerst het om te zetten in een "
 "pad."
 
 #. report to the Inkscape console using errormsg
-#: ../share/extensions/draw_from_triangle.py:180
+#: ../share/extensions/draw_from_triangle.py:179
 msgid "Side Length 'a' (px): "
 msgstr "Lengte zijde 'a' (px): "
 
-#: ../share/extensions/draw_from_triangle.py:181
+#: ../share/extensions/draw_from_triangle.py:180
 msgid "Side Length 'b' (px): "
 msgstr "Lengte zijde 'b' (px): "
 
-#: ../share/extensions/draw_from_triangle.py:182
+#: ../share/extensions/draw_from_triangle.py:181
 msgid "Side Length 'c' (px): "
 msgstr "Lengte zijde 'c' (px): "
 
-#: ../share/extensions/draw_from_triangle.py:183
+#: ../share/extensions/draw_from_triangle.py:182
 msgid "Angle 'A' (radians): "
 msgstr "Hoek 'A' (radialen): "
 
-#: ../share/extensions/draw_from_triangle.py:184
+#: ../share/extensions/draw_from_triangle.py:183
 msgid "Angle 'B' (radians): "
 msgstr "Hoek 'B' (radialen): "
 
-#: ../share/extensions/draw_from_triangle.py:185
+#: ../share/extensions/draw_from_triangle.py:184
 msgid "Angle 'C' (radians): "
 msgstr "Hoek 'C' (radialen): "
 
-#: ../share/extensions/draw_from_triangle.py:186
+#: ../share/extensions/draw_from_triangle.py:185
 msgid "Semiperimeter (px): "
 msgstr "Semiperimeter (px): "
 
-#: ../share/extensions/draw_from_triangle.py:187
+#: ../share/extensions/draw_from_triangle.py:186
 msgid "Area (px^2): "
 msgstr "Oppervlak (px^2): "
 
-#: ../share/extensions/dxf_input.py:531
+#: ../share/extensions/dxf_input.py:530
 #, python-format
 msgid ""
 "%d ENTITIES of type POLYLINE encountered and ignored. Please try to convert "
@@ -31874,7 +31851,7 @@ msgstr ""
 "%d ENTITIES van het type POLYLINE tegengekomen en genegeerd. Tracht aub. te "
 "converteren naar Release 13-formaat met QCad."
 
-#: ../share/extensions/dxf_outlines.py:49
+#: ../share/extensions/dxf_outlines.py:47
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again."
@@ -31882,7 +31859,7 @@ msgstr ""
 "Laden van de numpy of numpy.linalg modules mislukt. Deze modules zijn nodig "
 "voor deze uitbreiding. Installeer deze alstublief en probeer opnieuw."
 
-#: ../share/extensions/dxf_outlines.py:315
+#: ../share/extensions/dxf_outlines.py:313
 msgid ""
 "Error: Field 'Layer match name' must be filled when using 'By name match' "
 "option"
@@ -31890,14 +31867,14 @@ msgstr ""
 "Fout: veld 'Naamovereenkomst laag' moet ingevuld worden bij gebruik van de "
 "optie 'Overeenkosmt naam'"
 
-#: ../share/extensions/dxf_outlines.py:356
+#: ../share/extensions/dxf_outlines.py:354
 #, python-format
 msgid "Warning: Layer '%s' not found!"
 msgstr ""
 "Laag niet gevonden.\n"
 "Waarschuwing: laag '%s' niet gevonden!"
 
-#: ../share/extensions/embedimage.py:84
+#: ../share/extensions/embedimage.py:83
 msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
@@ -31905,12 +31882,12 @@ msgstr ""
 "Geen xlink:href of sodipodi:absref attributen gevonden of ze verwijzen niet "
 "naar een bestaand bestand! Het is onmogelijk om de afbeelding in te voegen."
 
-#: ../share/extensions/embedimage.py:86
+#: ../share/extensions/embedimage.py:85
 #, python-format
 msgid "Sorry we could not locate %s"
 msgstr "Sorry we konden %s niet localiseren"
 
-#: ../share/extensions/embedimage.py:111
+#: ../share/extensions/embedimage.py:110
 #, python-format
 msgid ""
 "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
@@ -31927,26 +31904,26 @@ msgstr ""
 "De export_gpl.py module vereist PyXML. Download alstublief de laatste versie "
 "van http://pyxml.sourceforge.net/."
 
-#: ../share/extensions/extractimage.py:68
+#: ../share/extensions/extractimage.py:66
 #, python-format
 msgid "Image extracted to: %s"
 msgstr "Afbeelding geëxtraheerd naar: %s"
 
-#: ../share/extensions/extractimage.py:75
+#: ../share/extensions/extractimage.py:73
 msgid "Unable to find image data."
 msgstr "Geen afbeeldingsdata gevonden."
 
-#: ../share/extensions/extrude.py:43
+#: ../share/extensions/extrude.py:41
 msgid "Need at least 2 paths selected"
 msgstr "Tenminste twee geselecteerde paden nodig"
 
-#: ../share/extensions/funcplot.py:48
+#: ../share/extensions/funcplot.py:46
 msgid ""
 "x-interval cannot be zero. Please modify 'Start X value' or 'End X value'"
 msgstr ""
 "x-interval kan niet nul zijn. Pas aub 'x-beginwaarde' of 'x-eindwaarde' aan"
 
-#: ../share/extensions/funcplot.py:60
+#: ../share/extensions/funcplot.py:58
 msgid ""
 "y-interval cannot be zero. Please modify 'Y value of rectangle's top' or 'Y "
 "value of rectangle's bottom'"
@@ -31954,24 +31931,24 @@ msgstr ""
 "y-interval kan niet nul zijn. Pas aub. 'y-waarde onderzijde rechthoek' of 'y-"
 "waarde bovenzijde rechthoek' aan"
 
-#: ../share/extensions/funcplot.py:315
+#: ../share/extensions/funcplot.py:313
 msgid "Please select a rectangle"
 msgstr "Selecteer aub. een rechthoek"
 
-#: ../share/extensions/gcodetools.py:3321
-#: ../share/extensions/gcodetools.py:4526
-#: ../share/extensions/gcodetools.py:4699
-#: ../share/extensions/gcodetools.py:6232
-#: ../share/extensions/gcodetools.py:6427
+#: ../share/extensions/gcodetools.py:3319
+#: ../share/extensions/gcodetools.py:4524
+#: ../share/extensions/gcodetools.py:4697
+#: ../share/extensions/gcodetools.py:6230
+#: ../share/extensions/gcodetools.py:6425
 msgid "No paths are selected! Trying to work on all available paths."
 msgstr ""
 "Er zijn geen paden geselecteerd! Tracht te werken op alle aanwezige paden."
 
-#: ../share/extensions/gcodetools.py:3324
+#: ../share/extensions/gcodetools.py:3322
 msgid "Nothing is selected. Please select something."
 msgstr "Er is niets geselecteerd. Selecteer aub. iets."
 
-#: ../share/extensions/gcodetools.py:3864
+#: ../share/extensions/gcodetools.py:3862
 msgid ""
 "Directory does not exist! Please specify existing directory at Preferences "
 "tab!"
@@ -31979,7 +31956,7 @@ msgstr ""
 "Map bestaat niet! Geef alstublief een bestaande map op in het tabblad "
 "Voorkeuren!"
 
-#: ../share/extensions/gcodetools.py:3894
+#: ../share/extensions/gcodetools.py:3892
 #, python-format
 msgid ""
 "Can not write to specified file!\n"
@@ -31988,7 +31965,7 @@ msgstr ""
 "Kan niet schrijven naar opgegeven bestand!\n"
 "%s"
 
-#: ../share/extensions/gcodetools.py:4040
+#: ../share/extensions/gcodetools.py:4038
 #, python-format
 msgid ""
 "Orientation points for '%s' layer have not been found! Please add "
@@ -31997,13 +31974,13 @@ msgstr ""
 "Oriëntatiepunten voor laag '%s' werden niet gevonden! Voeg aub "
 "oriëntatiepunten toe met de tab Oriëntatie!"
 
-#: ../share/extensions/gcodetools.py:4047
+#: ../share/extensions/gcodetools.py:4045
 #, python-format
 msgid "There are more than one orientation point groups in '%s' layer"
 msgstr "Er is meer dan één oriëntatiepuntgroep in laag '%s'."
 
+#: ../share/extensions/gcodetools.py:4076
 #: ../share/extensions/gcodetools.py:4078
-#: ../share/extensions/gcodetools.py:4080
 msgid ""
 "Orientation points are wrong! (if there are two orientation points they "
 "should not be the same. If there are three orientation points they should "
@@ -32013,7 +31990,7 @@ msgstr ""
 "deze niet identiek zijn. Indien er drie oriëntatiepunten zijn, mogen ze niet "
 "op een rechte lijn liggen.)"
 
-#: ../share/extensions/gcodetools.py:4250
+#: ../share/extensions/gcodetools.py:4248
 #, python-format
 msgid ""
 "Warning! Found bad orientation points in '%s' layer. Resulting Gcode could "
@@ -32022,7 +31999,7 @@ msgstr ""
 "Waarschuwing! Slechte oriëntatiepunten gevonden in laag '%s'. Resulterende "
 "Gcode kan corrupt zijn!"
 
-#: ../share/extensions/gcodetools.py:4263
+#: ../share/extensions/gcodetools.py:4261
 #, python-format
 msgid ""
 "Warning! Found bad graffiti reference point in '%s' layer. Resulting Gcode "
@@ -32032,7 +32009,7 @@ msgstr ""
 "Resulterende Gcode kan corrupt zijn!"
 
 #. xgettext:no-pango-format
-#: ../share/extensions/gcodetools.py:4284
+#: ../share/extensions/gcodetools.py:4282
 msgid ""
 "This extension works with Paths and Dynamic Offsets and groups of them only! "
 "All other objects will be ignored!\n"
@@ -32048,7 +32025,7 @@ msgstr ""
 "Oplossing 3: exporteer alle contouren naar PostScript niveau 2 (Bestand-"
 ">Opslaan als->.ps) en dit vervolgens importeren (Bestand->Importeren)."
 
-#: ../share/extensions/gcodetools.py:4290
+#: ../share/extensions/gcodetools.py:4288
 msgid ""
 "Document has no layers! Add at least one layer using layers panel (Ctrl+Shift"
 "+L)"
@@ -32056,7 +32033,7 @@ msgstr ""
 "Document bevat geen lagen! Voeg op zijn minst een laag toe met het "
 "dialoogvenster Lagen (Ctrl+Shift+L)."
 
-#: ../share/extensions/gcodetools.py:4294
+#: ../share/extensions/gcodetools.py:4292
 msgid ""
 "Warning! There are some paths in the root of the document, but not in any "
 "layer! Using bottom-most layer for them."
@@ -32064,7 +32041,7 @@ msgstr ""
 "Waarschuwing! Sommige paden bevinden zich in het document, maar niet in een "
 "laag! De onderste laag wordt hiervoor gebruikt."
 
-#: ../share/extensions/gcodetools.py:4371
+#: ../share/extensions/gcodetools.py:4369
 #, python-format
 msgid ""
 "Warning! Tool's and default tool's parameter's (%s) types are not the same "
@@ -32073,19 +32050,19 @@ msgstr ""
 "Waarschwing! De parametertypes van het gereedschap en het standaard "
 "gereedschap (%s) zijn verschillend ( type('%s') != type('%s') )."
 
-#: ../share/extensions/gcodetools.py:4374
+#: ../share/extensions/gcodetools.py:4372
 #, python-format
 msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
 msgstr ""
 "Waarschuwing! Gereedschap bevat parameter dat standaard gereedschap niet "
 "heeft ( '%s': '%s' )."
 
-#: ../share/extensions/gcodetools.py:4388
+#: ../share/extensions/gcodetools.py:4386
 #, python-format
 msgid "Layer '%s' contains more than one tool!"
 msgstr "Laag '%s' bevat meer dan één gereedschap!"
 
-#: ../share/extensions/gcodetools.py:4391
+#: ../share/extensions/gcodetools.py:4389
 #, python-format
 msgid ""
 "Can not find tool for '%s' layer! Please add one with Tools library tab!"
@@ -32093,8 +32070,8 @@ msgstr ""
 "Kan geen gereedschap vinden voor de laag '%s'! Voeg alstublieft één toe met "
 "het tabblad Gereedschappenbibliotheek!"
 
-#: ../share/extensions/gcodetools.py:4553
-#: ../share/extensions/gcodetools.py:4708
+#: ../share/extensions/gcodetools.py:4551
+#: ../share/extensions/gcodetools.py:4706
 msgid ""
 "Warning: One or more paths do not have 'd' parameter, try to Ungroup (Ctrl"
 "+Shift+G) and Object to Path (Ctrl+Shift+C)!"
@@ -32102,7 +32079,7 @@ msgstr ""
 "Waarschuwing: een of meer paden hebben geen 'd' parameter. Probeer Groep "
 "opheffen (Ctrl+Shift+G) en Object naar pad (Ctrl+Shift+C)!"
 
-#: ../share/extensions/gcodetools.py:4667
+#: ../share/extensions/gcodetools.py:4665
 msgid ""
 "Nothing is selected. Please select something to convert to drill point "
 "(dxfpoint) or clear point sign."
@@ -32110,47 +32087,47 @@ msgstr ""
 "Er is niets geselecteerd. Selecteer aub. iets om te converteren naar een "
 "boorpunt (dxf-punt) of vrij puntteken."
 
-#: ../share/extensions/gcodetools.py:4750
-#: ../share/extensions/gcodetools.py:4996
+#: ../share/extensions/gcodetools.py:4748
+#: ../share/extensions/gcodetools.py:4994
 msgid "This extension requires at least one selected path."
 msgstr "Deze uitbreiding vereist ten minste één geselecteerd pad."
 
-#: ../share/extensions/gcodetools.py:4756
-#: ../share/extensions/gcodetools.py:5002
+#: ../share/extensions/gcodetools.py:4754
+#: ../share/extensions/gcodetools.py:5000
 #, python-format
 msgid "Tool diameter must be > 0 but tool's diameter on '%s' layer is not!"
 msgstr ""
 "Diameter gereedschap moet > 0 zijn, maar dit is niet zo voor laag '%s'!"
 
-#: ../share/extensions/gcodetools.py:4767
-#: ../share/extensions/gcodetools.py:4956
-#: ../share/extensions/gcodetools.py:5011
+#: ../share/extensions/gcodetools.py:4765
+#: ../share/extensions/gcodetools.py:4954
+#: ../share/extensions/gcodetools.py:5009
 msgid "Warning: omitting non-path"
 msgstr "Waarschuwing: niet-pad overgeslagen"
 
-#: ../share/extensions/gcodetools.py:5511
+#: ../share/extensions/gcodetools.py:5509
 msgid "Please select at least one path to engrave and run again."
 msgstr "Selecteer minstens één pad om te graveren en voer opnieuw uit."
 
-#: ../share/extensions/gcodetools.py:5519
+#: ../share/extensions/gcodetools.py:5517
 msgid "Unknown unit selected. mm assumed"
 msgstr "Onbekende geselecteerde eenheid. Mm worden verondersteld."
 
-#: ../share/extensions/gcodetools.py:5540
+#: ../share/extensions/gcodetools.py:5538
 #, python-format
 msgid "Tool '%s' has no shape. 45 degree cone assumed!"
 msgstr "Gereedschap '%s' heeft geen vorm. 45 graden conus wordt verondersteld!"
 
-#: ../share/extensions/gcodetools.py:5611
-#: ../share/extensions/gcodetools.py:5616
+#: ../share/extensions/gcodetools.py:5609
+#: ../share/extensions/gcodetools.py:5614
 msgid "csp_normalised_normal error. See log."
 msgstr "csp_normalised_normal fout. Zie log."
 
-#: ../share/extensions/gcodetools.py:5804
+#: ../share/extensions/gcodetools.py:5802
 msgid "No need to engrave sharp angles."
 msgstr "Het is niet nodig om scherpe hoeken te graveren."
 
-#: ../share/extensions/gcodetools.py:5848
+#: ../share/extensions/gcodetools.py:5846
 msgid ""
 "Active layer already has orientation points! Remove them or select another "
 "layer!"
@@ -32158,17 +32135,17 @@ msgstr ""
 "Actieve laag bevat al oriëntatiepunten! Verwijder ze of selecteer een andere "
 "laag!"
 
-#: ../share/extensions/gcodetools.py:5893
+#: ../share/extensions/gcodetools.py:5891
 msgid "Active layer already has a tool! Remove it or select another layer!"
 msgstr ""
 "Actieve laag bevat al een gereedschap! Verwijder het of selecteer een andere "
 "laag!"
 
-#: ../share/extensions/gcodetools.py:6008
+#: ../share/extensions/gcodetools.py:6006
 msgid "Selection is empty! Will compute whole drawing."
 msgstr "Selectie is leeg! De volledige tekening wordt berekend."
 
-#: ../share/extensions/gcodetools.py:6062
+#: ../share/extensions/gcodetools.py:6060
 msgid ""
 "Tutorials, manuals and support can be found at\n"
 "English support forum:\n"
@@ -32182,19 +32159,19 @@ msgstr ""
 "en Russisch support forum:\n"
 "\thttp://www.cnc-club.ru/gcodetoolsru"
 
-#: ../share/extensions/gcodetools.py:6107
+#: ../share/extensions/gcodetools.py:6105
 msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
 msgstr ""
 "X- en Z-as herindeling van draaibank zouden 'X', 'Y' of 'Z' moeten zijn. "
 "Bezig met afronden..."
 
-#: ../share/extensions/gcodetools.py:6110
+#: ../share/extensions/gcodetools.py:6108
 msgid "Lathe X and Z axis remap should be the same. Exiting..."
 msgstr ""
 "X- en Z-as herindeling van draaibank zouden gelijk moeten zijn. Bezig met "
 "afronden..."
 
-#: ../share/extensions/gcodetools.py:6662
+#: ../share/extensions/gcodetools.py:6660
 #, python-format
 msgid ""
 "Select one of the action tabs - Path to Gcode, Area, Engraving, DXF points, "
@@ -32206,7 +32183,7 @@ msgstr ""
 "Gereedschappenbibliotheek.\n"
 " De actieve tab id is %s"
 
-#: ../share/extensions/gcodetools.py:6668
+#: ../share/extensions/gcodetools.py:6666
 msgid ""
 "Orientation points have not been defined! A default set of orientation "
 "points has been automatically added."
@@ -32214,7 +32191,7 @@ msgstr ""
 "Oriëntatiepunten werden niet gedefinieerd! Een standaard set "
 "oriëntatiepunten werd automatisch toegevoegd."
 
-#: ../share/extensions/gcodetools.py:6672
+#: ../share/extensions/gcodetools.py:6670
 msgid ""
 "Cutting tool has not been defined! A default tool has been automatically "
 "added."
@@ -32222,7 +32199,7 @@ msgstr ""
 "Snijgereedschap is niet gedefinieerd! Een standaard gereedschap werd "
 "automatisch toegevoegd."
 
-#: ../share/extensions/generate_voronoi.py:35
+#: ../share/extensions/generate_voronoi.py:33
 msgid ""
 "Failed to import the subprocess module. Please report this as a bug at: "
 "https://bugs.launchpad.net/inkscape."
@@ -32230,31 +32207,31 @@ msgstr ""
 "Importeren van subprocesmodule gefaald. Rapporteer aub. deze bug op: https://"
 "bugs.launchpad.net/inkscape."
 
-#: ../share/extensions/generate_voronoi.py:36
+#: ../share/extensions/generate_voronoi.py:34
 msgid "Python version is: "
 msgstr "Pythonversie: "
 
-#: ../share/extensions/generate_voronoi.py:94
+#: ../share/extensions/generate_voronoi.py:92
 msgid "Please select an object"
 msgstr "Selecteer aub. een object"
 
-#: ../share/extensions/gimp_xcf.py:39
+#: ../share/extensions/gimp_xcf.py:37
 msgid "Inkscape must be installed and set in your path variable."
 msgstr "Inkscape moet geïnstalleerd zijn en in de padvariabele staan."
 
-#: ../share/extensions/gimp_xcf.py:43
+#: ../share/extensions/gimp_xcf.py:41
 msgid "Gimp must be installed and set in your path variable."
 msgstr "Gimp moet geïnstalleerd zijn en in de padvariabele staan."
 
-#: ../share/extensions/gimp_xcf.py:47
+#: ../share/extensions/gimp_xcf.py:45
 msgid "An error occurred while processing the XCF file."
 msgstr "Er trad een fout bij bij het verwerken van het XCF-bestand."
 
-#: ../share/extensions/gimp_xcf.py:185
+#: ../share/extensions/gimp_xcf.py:183
 msgid "This extension requires at least one non empty layer."
 msgstr "Deze uitbreiding vereist ten minste één niet lege laag."
 
-#: ../share/extensions/guillotine.py:250
+#: ../share/extensions/guillotine.py:248
 msgid "The sliced bitmaps have been saved as:"
 msgstr "De versneden bitmaps werden bewaard als:"
 
@@ -32267,11 +32244,11 @@ msgid "Pen "
 msgstr "Pen"
 
 #. issue error if no hpgl data found
-#: ../share/extensions/hpgl_input.py:58
+#: ../share/extensions/hpgl_input.py:56
 msgid "No HPGL data found."
 msgstr "Geen HPGL-data gevonden."
 
-#: ../share/extensions/hpgl_input.py:66
+#: ../share/extensions/hpgl_input.py:64
 msgid ""
 "The HPGL data contained unknown (unsupported) commands, there is a "
 "possibility that the drawing is missing some content."
@@ -32280,14 +32257,14 @@ msgstr ""
 "ontbreekt een deel van de afbeelding."
 
 #. issue error if no paths found
-#: ../share/extensions/hpgl_output.py:58
+#: ../share/extensions/hpgl_output.py:57
 msgid ""
 "No paths where found. Please convert all objects you want to save into paths."
 msgstr ""
 "Geen paden gevonden. Converteer aub. alle objecten die je wil bewaren in "
 "paden."
 
-#: ../share/extensions/inkex.py:117
+#: ../share/extensions/inkex.py:116
 #, fuzzy, python-format
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore "
@@ -32306,12 +32283,12 @@ msgstr ""
 "Technische details:\n"
 "%s"
 
-#: ../share/extensions/inkex.py:185
+#: ../share/extensions/inkex.py:184
 #, python-format
 msgid "Unable to open specified file: %s"
 msgstr "Kan opgegeven bestand niet openen: %s"
 
-#: ../share/extensions/inkex.py:194
+#: ../share/extensions/inkex.py:193
 #, python-format
 msgid "Unable to open object member file: %s"
 msgstr "Kan opgegeven deelobjectbestand niet openen: %s"
@@ -32325,20 +32302,20 @@ msgstr "Geen overeenkomend knooppunt voor de expressie: %s"
 msgid "SVG Width not set correctly! Assuming width = 100"
 msgstr "SVG-breedte niet correct ingesteld! Aanname van breedte = 100"
 
-#: ../share/extensions/interp_att_g.py:176
+#: ../share/extensions/interp_att_g.py:175
 msgid "There is no selection to interpolate"
 msgstr "Er is geen selectie om te interpoleren"
 
-#: ../share/extensions/jessyInk_autoTexts.py:45
-#: ../share/extensions/jessyInk_effects.py:50
-#: ../share/extensions/jessyInk_export.py:96
-#: ../share/extensions/jessyInk_keyBindings.py:188
-#: ../share/extensions/jessyInk_masterSlide.py:46
-#: ../share/extensions/jessyInk_mouseHandler.py:48
-#: ../share/extensions/jessyInk_summary.py:64
-#: ../share/extensions/jessyInk_transitions.py:50
-#: ../share/extensions/jessyInk_video.py:49
-#: ../share/extensions/jessyInk_view.py:67
+#: ../share/extensions/jessyInk_autoTexts.py:44
+#: ../share/extensions/jessyInk_effects.py:49
+#: ../share/extensions/jessyInk_export.py:94
+#: ../share/extensions/jessyInk_keyBindings.py:187
+#: ../share/extensions/jessyInk_masterSlide.py:44
+#: ../share/extensions/jessyInk_mouseHandler.py:47
+#: ../share/extensions/jessyInk_summary.py:63
+#: ../share/extensions/jessyInk_transitions.py:49
+#: ../share/extensions/jessyInk_video.py:47
+#: ../share/extensions/jessyInk_view.py:66
 msgid ""
 "The JessyInk script is not installed in this SVG file or has a different "
 "version than the JessyInk extensions. Please select \"install/update...\" "
@@ -32352,7 +32329,7 @@ msgstr ""
 "script te installeren of updaten.\n"
 "\n"
 
-#: ../share/extensions/jessyInk_autoTexts.py:48
+#: ../share/extensions/jessyInk_autoTexts.py:47
 msgid ""
 "To assign an effect, please select an object.\n"
 "\n"
@@ -32360,7 +32337,7 @@ msgstr ""
 "Selecteer aub. een object om een effect toe te kennen.\n"
 "\n"
 
-#: ../share/extensions/jessyInk_autoTexts.py:54
+#: ../share/extensions/jessyInk_autoTexts.py:53
 #, python-brace-format
 msgid ""
 "Node with id '{0}' is not a suitable text node and was therefore ignored.\n"
@@ -32370,7 +32347,7 @@ msgstr ""
 "genegeerd.\n"
 "\n"
 
-#: ../share/extensions/jessyInk_effects.py:53
+#: ../share/extensions/jessyInk_effects.py:52
 msgid ""
 "No object selected. Please select the object you want to assign an effect to "
 "and then press apply.\n"
@@ -32378,15 +32355,15 @@ msgstr ""
 "Geen objecten geselecteerd. Selecteer aub. het object waaraan je een effect "
 "wil toekennen en druk op toepassen.\n"
 
-#: ../share/extensions/jessyInk_export.py:82
+#: ../share/extensions/jessyInk_export.py:80
 msgid "Could not find Inkscape command.\n"
 msgstr "Kon Inkscape commando niet vinden.\n"
 
-#: ../share/extensions/jessyInk_masterSlide.py:56
+#: ../share/extensions/jessyInk_masterSlide.py:54
 msgid "Layer not found. Removed current master slide selection.\n"
 msgstr "Laag niet gevonden. Huidige hoofddiaselectie is verwijderd.\n"
 
-#: ../share/extensions/jessyInk_masterSlide.py:58
+#: ../share/extensions/jessyInk_masterSlide.py:56
 msgid ""
 "More than one layer with this name found. Removed current master slide "
 "selection.\n"
@@ -32394,16 +32371,16 @@ msgstr ""
 "Er is meer dan één laag met deze naam. Huidige hoofddiaselectie is "
 "verwijderd.\n"
 
-#: ../share/extensions/jessyInk_summary.py:69
+#: ../share/extensions/jessyInk_summary.py:68
 #, python-brace-format
 msgid "JessyInk script version {0} installed."
 msgstr "JessyInk script versie {0} geïnstalleerd."
 
-#: ../share/extensions/jessyInk_summary.py:71
+#: ../share/extensions/jessyInk_summary.py:70
 msgid "JessyInk script installed."
 msgstr "JessInk script geïnstalleerd."
 
-#: ../share/extensions/jessyInk_summary.py:83
+#: ../share/extensions/jessyInk_summary.py:82
 msgid ""
 "\n"
 "Master slide:"
@@ -32411,7 +32388,7 @@ msgstr ""
 "\n"
 "Hoofddia:"
 
-#: ../share/extensions/jessyInk_summary.py:89
+#: ../share/extensions/jessyInk_summary.py:88
 msgid ""
 "\n"
 "Slide {0!s}:"
@@ -32419,30 +32396,30 @@ msgstr ""
 "\n"
 "Dia {0!s}:"
 
-#: ../share/extensions/jessyInk_summary.py:94
+#: ../share/extensions/jessyInk_summary.py:93
 #, python-brace-format
 msgid "{0}Layer name: {1}"
 msgstr "{0}Naam van de laag: {1}"
 
-#: ../share/extensions/jessyInk_summary.py:102
+#: ../share/extensions/jessyInk_summary.py:101
 msgid "{0}Transition in: {1} ({2!s} s)"
 msgstr "{0}Effect bij tonen: {1} ({2!s} s)"
 
-#: ../share/extensions/jessyInk_summary.py:104
+#: ../share/extensions/jessyInk_summary.py:103
 #, python-brace-format
 msgid "{0}Transition in: {1}"
 msgstr "{0}Effect bij tonen: {1}"
 
-#: ../share/extensions/jessyInk_summary.py:111
+#: ../share/extensions/jessyInk_summary.py:110
 msgid "{0}Transition out: {1} ({2!s} s)"
 msgstr "{0}Effect bij verlaten: {1} ({2!s} s)"
 
-#: ../share/extensions/jessyInk_summary.py:113
+#: ../share/extensions/jessyInk_summary.py:112
 #, python-brace-format
 msgid "{0}Transition out: {1}"
 msgstr "{0}Effect bij verlaten: {1}"
 
-#: ../share/extensions/jessyInk_summary.py:120
+#: ../share/extensions/jessyInk_summary.py:119
 #, python-brace-format
 msgid ""
 "\n"
@@ -32451,12 +32428,12 @@ msgstr ""
 "\n"
 "{0}Autoteksten:"
 
-#: ../share/extensions/jessyInk_summary.py:123
+#: ../share/extensions/jessyInk_summary.py:122
 #, python-brace-format
 msgid "{0}\t\"{1}\" (object id \"{2}\") will be replaced by \"{3}\"."
 msgstr "{0}\t\"{1}\" (object id \"{2}\") wordt vervangen door \"{3}\"."
 
-#: ../share/extensions/jessyInk_summary.py:168
+#: ../share/extensions/jessyInk_summary.py:167
 #, python-brace-format
 msgid ""
 "\n"
@@ -32465,7 +32442,7 @@ msgstr ""
 "\n"
 "{0}Initieel effect (rangnummer {1}):"
 
-#: ../share/extensions/jessyInk_summary.py:170
+#: ../share/extensions/jessyInk_summary.py:169
 msgid ""
 "\n"
 "{0}Effect {1!s} (order number {2}):"
@@ -32473,47 +32450,47 @@ msgstr ""
 "\n"
 "{0}Effect {1!s} (rangnummer {2}):"
 
-#: ../share/extensions/jessyInk_summary.py:174
+#: ../share/extensions/jessyInk_summary.py:173
 #, python-brace-format
 msgid "{0}\tView will be set according to object \"{1}\""
 msgstr "{0}\tZicht wordt ingesteld volgens het object \"{1}\""
 
-#: ../share/extensions/jessyInk_summary.py:176
+#: ../share/extensions/jessyInk_summary.py:175
 #, python-brace-format
 msgid "{0}\tObject \"{1}\""
 msgstr "{0}\tObject \"{1}\""
 
-#: ../share/extensions/jessyInk_summary.py:179
+#: ../share/extensions/jessyInk_summary.py:178
 msgid " will appear"
 msgstr " zal verschijnen"
 
-#: ../share/extensions/jessyInk_summary.py:181
+#: ../share/extensions/jessyInk_summary.py:180
 msgid " will disappear"
 msgstr " zal verdwijnen"
 
-#: ../share/extensions/jessyInk_summary.py:184
+#: ../share/extensions/jessyInk_summary.py:183
 #, python-brace-format
 msgid " using effect \"{0}\""
 msgstr " met effect \"{0}\""
 
-#: ../share/extensions/jessyInk_summary.py:187
+#: ../share/extensions/jessyInk_summary.py:186
 msgid " in {0!s} s"
 msgstr " in {0!s} s"
 
-#: ../share/extensions/jessyInk_transitions.py:55
+#: ../share/extensions/jessyInk_transitions.py:54
 msgid "Layer not found.\n"
 msgstr "Laag niet gevonden.\n"
 
-#: ../share/extensions/jessyInk_transitions.py:57
+#: ../share/extensions/jessyInk_transitions.py:56
 msgid "More than one layer with this name found.\n"
 msgstr "Meer dan één laag gevonden met deze naam.\n"
 
-#: ../share/extensions/jessyInk_transitions.py:70
+#: ../share/extensions/jessyInk_transitions.py:69
 msgid "Please enter a layer name.\n"
 msgstr "Geef aub. een laagnaam op.\n"
 
-#: ../share/extensions/jessyInk_video.py:54
-#: ../share/extensions/jessyInk_video.py:59
+#: ../share/extensions/jessyInk_video.py:52
+#: ../share/extensions/jessyInk_video.py:57
 msgid ""
 "Could not obtain the selected layer for inclusion of the video element.\n"
 "\n"
@@ -32521,11 +32498,11 @@ msgstr ""
 "Laag voor invoeging van de video is niet beschikbaar.\n"
 "\n"
 
-#: ../share/extensions/jessyInk_view.py:75
+#: ../share/extensions/jessyInk_view.py:74
 msgid "More than one object selected. Please select only one object.\n"
 msgstr "Meer dan één object geselecteerd. Selecteer aub. slechts één object.\n"
 
-#: ../share/extensions/jessyInk_view.py:79
+#: ../share/extensions/jessyInk_view.py:78
 msgid ""
 "No object selected. Please select the object you want to assign a view to "
 "and then press apply.\n"
@@ -32533,17 +32510,17 @@ msgstr ""
 "Geen object geselecteerd. Selecteer aub. een object waar je een zicht aan "
 "wil toekennen en druk op Toepassen.\n"
 
-#: ../share/extensions/markers_strokepaint.py:83
+#: ../share/extensions/markers_strokepaint.py:82
 #, python-format
 msgid "No style attribute found for id: %s"
 msgstr "Geen stijlattribuut gevonden voor id: %s"
 
-#: ../share/extensions/markers_strokepaint.py:137
+#: ../share/extensions/markers_strokepaint.py:136
 #, python-format
 msgid "unable to locate marker: %s"
 msgstr "onmogelijk om plaats markering te bepalen: %s"
 
-#: ../share/extensions/measure.py:58
+#: ../share/extensions/measure.py:57
 msgid ""
 "Failed to import the numpy modules. These modules are required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
@@ -32554,17 +32531,16 @@ msgstr ""
 "gebaseerd systeem kan dit gedaan worden met het commando, sudo apt-get "
 "install python-numpy."
 
-#: ../share/extensions/measure.py:120
+#: ../share/extensions/measure.py:119
 msgid "Area is zero, cannot calculate Center of Mass"
 msgstr "Oppervlak is gelijk aan nul, kan massacentrum niet berekenen"
 
-#: ../share/extensions/pathalongpath.py:208
-#: ../share/extensions/pathscatter.py:228
-#: ../share/extensions/perspective.py:52
+#: ../share/extensions/pathalongpath.py:207
+#: ../share/extensions/pathscatter.py:226 ../share/extensions/perspective.py:50
 msgid "This extension requires two selected paths."
 msgstr "Deze uitbreiding vereist twee geselecteerde paden."
 
-#: ../share/extensions/pathalongpath.py:234
+#: ../share/extensions/pathalongpath.py:233
 msgid ""
 "The total length of the pattern is too small :\n"
 "Please choose a larger object or set 'Space between copies' > 0"
@@ -32572,7 +32548,7 @@ msgstr ""
 "De volledige lengte van het patroon is te kort:\n"
 "Kies een groter object of stel 'Ruimte tussen kopieën' > 0 in."
 
-#: ../share/extensions/pathalongpath.py:277
+#: ../share/extensions/pathalongpath.py:276
 msgid ""
 "The 'stretch' option requires that the pattern must have non-zero width :\n"
 "Please edit the pattern width."
@@ -32580,12 +32556,12 @@ msgstr ""
 "De optie 'uitgerekt' vereist dat het patroon een niet-nul breedte heeft:\n"
 "Bewerk aub. de patroonbreedte."
 
-#: ../share/extensions/pathmodifier.py:237
+#: ../share/extensions/pathmodifier.py:235
 #, python-format
 msgid "Please first convert objects to paths!  (Got [%s].)"
 msgstr "Converteer alstublief eerst de objecten naar paden! (Kreeg [%s].)"
 
-#: ../share/extensions/perspective.py:44
+#: ../share/extensions/perspective.py:42
 msgid ""
 "Failed to import the numpy or numpy.linalg modules. These modules are "
 "required by this extension. Please install them and try again.  On a Debian-"
@@ -32597,8 +32573,7 @@ msgstr ""
 "Debian-gebaseerd systeem kan dit gedaan worden met het commando, sudo apt-"
 "get install python-numpy."
 
-#: ../share/extensions/perspective.py:60
-#: ../share/extensions/summersnight.py:51
+#: ../share/extensions/perspective.py:58 ../share/extensions/summersnight.py:49
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -32607,16 +32582,14 @@ msgstr ""
 "Het eerste geselecteerde object is van het type '%s'.\n"
 "Probeer de procedure Paden->Object naar Pad."
 
-#: ../share/extensions/perspective.py:67
-#: ../share/extensions/summersnight.py:59
+#: ../share/extensions/perspective.py:65 ../share/extensions/summersnight.py:57
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
 "Deze uitbreiding vereist dat het tweede geselecteerde pad vier knooppunten "
 "lang is."
 
-#: ../share/extensions/perspective.py:93
-#: ../share/extensions/summersnight.py:92
+#: ../share/extensions/perspective.py:91 ../share/extensions/summersnight.py:90
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -32624,8 +32597,7 @@ msgstr ""
 "Het tweede geselecteerde object is een groep en geen pad.\n"
 "Probeer de procedure Object->Groep opheffen."
 
-#: ../share/extensions/perspective.py:95
-#: ../share/extensions/summersnight.py:94
+#: ../share/extensions/perspective.py:93 ../share/extensions/summersnight.py:92
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -32633,8 +32605,7 @@ msgstr ""
 "Het tweede geselecteerde object is geen pad.\n"
 "Probeer de procedure Paden->Object naar Pad."
 
-#: ../share/extensions/perspective.py:98
-#: ../share/extensions/summersnight.py:97
+#: ../share/extensions/perspective.py:96 ../share/extensions/summersnight.py:95
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -32643,37 +32614,37 @@ msgstr ""
 "Probeer de procedure Paden->Object naar Pad."
 
 #. issue error if no paths found
-#: ../share/extensions/plotter.py:69
+#: ../share/extensions/plotter.py:68
 msgid ""
 "No paths where found. Please convert all objects you want to plot into paths."
 msgstr ""
 "Er zijn geen paden gevonden. Converteer aub. alle objecten die je als paden "
 "wil plotten."
 
-#: ../share/extensions/plotter.py:147
+#: ../share/extensions/plotter.py:146
 msgid "pySerial is not installed. Please follow these steps:"
 msgstr ""
 
-#: ../share/extensions/plotter.py:148
+#: ../share/extensions/plotter.py:147
 msgid "1. Download and extract (unzip) this file to your local harddisk:"
 msgstr ""
 
-#: ../share/extensions/plotter.py:150
+#: ../share/extensions/plotter.py:149
 msgid ""
 "2. Copy the \"serial\" folder (Can be found inside the just extracted folder)"
 msgstr ""
 
-#: ../share/extensions/plotter.py:151
+#: ../share/extensions/plotter.py:150
 msgid ""
-"   into the following Inkscape folder: C:\\<Program files>\\inkscape\\python"
+"   into the following Inkscape folder: C:\\[Program files]\\inkscape\\python"
 "\\Lib\\"
 msgstr ""
 
-#: ../share/extensions/plotter.py:152
+#: ../share/extensions/plotter.py:151
 msgid "3. Close and restart Inkscape."
 msgstr ""
 
-#: ../share/extensions/plotter.py:201
+#: ../share/extensions/plotter.py:200
 msgid ""
 "Could not open port. Please check that your plotter is running, connected "
 "and the settings are correct."
@@ -32681,7 +32652,7 @@ msgstr ""
 "Kon de poort niet openen. Kijk aub. na of je plotter aanstaat, verbonden is "
 "en of de de instellingen juist zijn."
 
-#: ../share/extensions/polyhedron_3d.py:66
+#: ../share/extensions/polyhedron_3d.py:64
 msgid ""
 "Failed to import the numpy module. This module is required by this "
 "extension. Please install it and try again.  On a Debian-like system this "
@@ -32692,28 +32663,28 @@ msgstr ""
 "gebaseerd systeem kan dit gedaan worden met het commando 'sudo apt-get "
 "install python-numpy'."
 
-#: ../share/extensions/polyhedron_3d.py:337
+#: ../share/extensions/polyhedron_3d.py:335
 msgid "No face data found in specified file."
 msgstr "Geen data voor zijden gevonden in het opgegeven bestand."
 
-#: ../share/extensions/polyhedron_3d.py:338
+#: ../share/extensions/polyhedron_3d.py:336
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
 msgstr ""
 "Probeer het selecteren van \"Door randen bepaald\" in het tabblad "
 "modelbestand.\n"
 
-#: ../share/extensions/polyhedron_3d.py:344
+#: ../share/extensions/polyhedron_3d.py:342
 msgid "No edge data found in specified file."
 msgstr "Geen data voor randen gevonden in het opgegeven bestand."
 
-#: ../share/extensions/polyhedron_3d.py:345
+#: ../share/extensions/polyhedron_3d.py:343
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
 msgstr ""
 "Probeer het selecteren van \"Door zijden bepaald\" in het tabblad "
 "modelbestand.\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
-#: ../share/extensions/polyhedron_3d.py:524
+#: ../share/extensions/polyhedron_3d.py:522
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
@@ -32722,56 +32693,56 @@ msgstr ""
 "en dat het bestand wordt geïmporteerd als \"Door zijde bepaald\" bij het "
 "tabblad \"Modelbestand\".\n"
 
-#: ../share/extensions/polyhedron_3d.py:526
+#: ../share/extensions/polyhedron_3d.py:524
 msgid "Internal Error. No view type selected\n"
 msgstr "Interne fout. Geen beeldtype geselecteerd\n"
 
-#: ../share/extensions/print_win32_vector.py:41
+#: ../share/extensions/print_win32_vector.py:39
 msgid "sorry, this will run only on Windows, exiting..."
 msgstr "sorry, dit draait alleen op Windows, bezig met afsluiten..."
 
-#: ../share/extensions/print_win32_vector.py:179
+#: ../share/extensions/print_win32_vector.py:177
 msgid "Failed to open default printer"
 msgstr "Openen van standaardprinter is mislukt"
 
-#: ../share/extensions/render_barcode_datamatrix.py:203
+#: ../share/extensions/render_barcode_datamatrix.py:201
 msgid "Unrecognised DataMatrix size"
 msgstr "Niet herkende DataMatrix-grootte"
 
 #. we have an invalid bit value
-#: ../share/extensions/render_barcode_datamatrix.py:644
+#: ../share/extensions/render_barcode_datamatrix.py:642
 msgid "Invalid bit value, this is a bug!"
 msgstr "Foute bitwaarde. Dit is een programmeerfout!"
 
 #. abort if converting blank text
-#: ../share/extensions/render_barcode_datamatrix.py:679
+#: ../share/extensions/render_barcode_datamatrix.py:677
 msgid "Please enter an input string"
 msgstr "Voeg aub. een invoerstring in"
 
 #. abort if converting blank text
-#: ../share/extensions/render_barcode_qrcode.py:1055
+#: ../share/extensions/render_barcode_qrcode.py:1053
 msgid "Please enter an input text"
 msgstr "Geef aub. een invoertekst op"
 
-#: ../share/extensions/replace_font.py:133
+#: ../share/extensions/replace_font.py:131
 msgid ""
 "Couldn't find anything using that font, please ensure the spelling and "
 "spacing is correct."
 msgstr ""
 "Er is niets dat dat lettertype gebruikt. Kijk de spelling en spaties na."
 
-#: ../share/extensions/replace_font.py:140
+#: ../share/extensions/replace_font.py:138
 #: ../share/extensions/svg_and_media_zip_output.py:193
 msgid "Didn't find any fonts in this document/selection."
 msgstr "Geen lettertypen gevonden in dit document/selectie."
 
-#: ../share/extensions/replace_font.py:143
+#: ../share/extensions/replace_font.py:141
 #: ../share/extensions/svg_and_media_zip_output.py:196
 #, python-format
 msgid "Found the following font only: %s"
 msgstr "Alleen dit lettertype gevonden: %s"
 
-#: ../share/extensions/replace_font.py:145
+#: ../share/extensions/replace_font.py:143
 #: ../share/extensions/svg_and_media_zip_output.py:198
 #, python-format
 msgid ""
@@ -32781,28 +32752,28 @@ msgstr ""
 "Volgende lettertypes gevonden:\n"
 "%s"
 
-#: ../share/extensions/replace_font.py:196
+#: ../share/extensions/replace_font.py:194
 msgid "There was nothing selected"
 msgstr "Er was niets geselecteerd"
 
-#: ../share/extensions/replace_font.py:244
+#: ../share/extensions/replace_font.py:242
 msgid "Please enter a search string in the find box."
 msgstr "Geef een zoekstring op in Zoeken"
 
-#: ../share/extensions/replace_font.py:248
+#: ../share/extensions/replace_font.py:246
 msgid "Please enter a replacement font in the replace with box."
 msgstr "Geef een vervanglettertype op in Vervangen."
 
-#: ../share/extensions/replace_font.py:253
+#: ../share/extensions/replace_font.py:251
 msgid "Please enter a replacement font in the replace all box."
 msgstr "Geef een vervanglettertype op in Alle lettertypen vervangen met."
 
-#: ../share/extensions/restack.py:76
+#: ../share/extensions/restack.py:75
 #, fuzzy
 msgid "There is no selection to restack."
 msgstr "Er is geen selectie om te interpoleren"
 
-#: ../share/extensions/summersnight.py:43
+#: ../share/extensions/summersnight.py:41
 msgid ""
 "This extension requires two selected paths. \n"
 "The second path must be exactly four nodes long."
@@ -32815,13 +32786,13 @@ msgstr ""
 msgid "Could not locate file: %s"
 msgstr "Kon bestand niet vinden: %s"
 
-#: ../share/extensions/svgcalendar.py:266
-#: ../share/extensions/svgcalendar.py:288
+#: ../share/extensions/svgcalendar.py:265
+#: ../share/extensions/svgcalendar.py:287
 msgid "You must select a correct system encoding."
 msgstr "Je moet een correcte systeemencodering selecteren."
 
-#: ../share/extensions/uniconv-ext.py:56
-#: ../share/extensions/uniconv_output.py:122
+#: ../share/extensions/uniconv-ext.py:54
+#: ../share/extensions/uniconv_output.py:121
 msgid ""
 "You need to install the UniConvertor software.\n"
 "For GNU/Linux: install the package python-uniconvertor.\n"
@@ -32830,68 +32801,68 @@ msgid ""
 "and install into your Inkscape's Python location\n"
 msgstr ""
 
-#: ../share/extensions/voronoi2svg.py:206
+#: ../share/extensions/voronoi2svg.py:205
 msgid "Please select objects!"
 msgstr "Selecteer aub. objecten!"
 
-#: ../share/extensions/web-set-att.py:58
-#: ../share/extensions/web-transmit-att.py:54
+#: ../share/extensions/web-set-att.py:56
+#: ../share/extensions/web-transmit-att.py:53
 msgid "You must select at least two elements."
 msgstr "Je moet tenminste twee elementen selecteren."
 
-#: ../share/extensions/webslicer_create_group.py:57
+#: ../share/extensions/webslicer_create_group.py:55
 msgid ""
 "You must create and select some \"Slicer rectangles\" before trying to group."
 msgstr ""
 "Je moet enkele \"kniprechthoeken\" maken en selecteren vooraleer je "
 "groepeert."
 
-#: ../share/extensions/webslicer_create_group.py:72
+#: ../share/extensions/webslicer_create_group.py:70
 msgid ""
 "You must to select some \"Slicer rectangles\" or other \"Layout groups\"."
 msgstr "Je moet enkele \"kniprechthoeken\" of andere selecteren."
 
-#: ../share/extensions/webslicer_create_group.py:76
+#: ../share/extensions/webslicer_create_group.py:74
 #, python-format
 msgid "Oops... The element \"%s\" is not in the Web Slicer layer"
 msgstr "Oeps... Het element \"%s\" maakt geen deel uit van de Web Slicer laag"
 
-#: ../share/extensions/webslicer_export.py:57
+#: ../share/extensions/webslicer_export.py:55
 msgid "You must give a directory to export the slices."
 msgstr "Je moet een map opgeven voor de export van de deelafbeeldingen."
 
-#: ../share/extensions/webslicer_export.py:69
+#: ../share/extensions/webslicer_export.py:67
 #, python-format
 msgid "Can't create \"%s\"."
 msgstr "Kan \"%s\" niet maken."
 
-#: ../share/extensions/webslicer_export.py:70
+#: ../share/extensions/webslicer_export.py:68
 #, python-format
 msgid "Error: %s"
 msgstr "Fout: %s"
 
-#: ../share/extensions/webslicer_export.py:73
+#: ../share/extensions/webslicer_export.py:71
 #, python-format
 msgid "The directory \"%s\" does not exists."
 msgstr "De map \"%s\" bestaat niet."
 
-#: ../share/extensions/webslicer_export.py:78
+#: ../share/extensions/webslicer_export.py:76
 #, fuzzy
 msgid "No slicer layer found."
 msgstr "Geen huidige laag."
 
-#: ../share/extensions/webslicer_export.py:108
+#: ../share/extensions/webslicer_export.py:106
 #, python-format
 msgid "You have more than one element with \"%s\" html-id."
 msgstr "Je hebt meer dan één element met html-id \"%s\"."
 
-#: ../share/extensions/webslicer_export.py:338
+#: ../share/extensions/webslicer_export.py:336
 msgid "You must install the ImageMagick to get JPG and GIF."
 msgstr "Je moet ImageMagick installeren voor JPG en GIF."
 
 #. PARAMETER PROCESSING
 #. lines of longitude are odd : abort
-#: ../share/extensions/wireframe_sphere.py:117
+#: ../share/extensions/wireframe_sphere.py:116
 msgid "Please enter an even number of lines of longitude."
 msgstr "Geef aub. een even aantal lijnen in."
 
@@ -35447,14 +35418,12 @@ msgstr ""
 "UniConverter geïnstalleerd hebben en opnieuw openen."
 
 #: ../share/extensions/hpgl_input.inx.h:3
-#: ../share/extensions/hpgl_output.inx.h:4
-#: ../share/extensions/plotter.inx.h:32
+#: ../share/extensions/hpgl_output.inx.h:4 ../share/extensions/plotter.inx.h:32
 msgid "Resolution X (dpi):"
 msgstr "X-resolutie (ppi):"
 
 #: ../share/extensions/hpgl_input.inx.h:4
-#: ../share/extensions/hpgl_output.inx.h:5
-#: ../share/extensions/plotter.inx.h:33
+#: ../share/extensions/hpgl_output.inx.h:5 ../share/extensions/plotter.inx.h:33
 msgid ""
 "The amount of steps the plotter moves if it moves for 1 inch on the X axis "
 "(Default: 1016.0)"
@@ -35463,14 +35432,12 @@ msgstr ""
 "(standaard 1016.0)"
 
 #: ../share/extensions/hpgl_input.inx.h:5
-#: ../share/extensions/hpgl_output.inx.h:6
-#: ../share/extensions/plotter.inx.h:34
+#: ../share/extensions/hpgl_output.inx.h:6 ../share/extensions/plotter.inx.h:34
 msgid "Resolution Y (dpi):"
 msgstr "Y-resolutie (ppi):"
 
 #: ../share/extensions/hpgl_input.inx.h:6
-#: ../share/extensions/hpgl_output.inx.h:7
-#: ../share/extensions/plotter.inx.h:35
+#: ../share/extensions/hpgl_output.inx.h:7 ../share/extensions/plotter.inx.h:35
 msgid ""
 "The amount of steps the plotter moves if it moves for 1 inch on the Y axis "
 "(Default: 1016.0)"
@@ -35510,18 +35477,15 @@ msgstr ""
 "de plotteruitbreiding (menu Uitbreidingen) om onmiddellijk over een seriële "
 "verbinding te plotten."
 
-#: ../share/extensions/hpgl_output.inx.h:3
-#: ../share/extensions/plotter.inx.h:31
+#: ../share/extensions/hpgl_output.inx.h:3 ../share/extensions/plotter.inx.h:31
 msgid "Plotter Settings "
 msgstr "Plotterinstellingen"
 
-#: ../share/extensions/hpgl_output.inx.h:8
-#: ../share/extensions/plotter.inx.h:36
+#: ../share/extensions/hpgl_output.inx.h:8 ../share/extensions/plotter.inx.h:36
 msgid "Pen number:"
 msgstr "Nummer pen:"
 
-#: ../share/extensions/hpgl_output.inx.h:9
-#: ../share/extensions/plotter.inx.h:37
+#: ../share/extensions/hpgl_output.inx.h:9 ../share/extensions/plotter.inx.h:37
 msgid "The number of the pen (tool) to use (Standard: '1')"
 msgstr "Te gebruiken pennummer (gereedschap) (Standaard: '1')"
 
@@ -35867,13 +35831,11 @@ msgstr "Eindpaden dupliceren"
 msgid "Interpolate style"
 msgstr "Stijl interpoleren"
 
-#: ../share/extensions/interp.inx.h:7
-#: ../share/extensions/interp_att_g.inx.h:10
+#: ../share/extensions/interp.inx.h:7 ../share/extensions/interp_att_g.inx.h:10
 msgid "Use Z-order"
 msgstr "Z-orde gebruiken"
 
-#: ../share/extensions/interp.inx.h:8
-#: ../share/extensions/interp_att_g.inx.h:11
+#: ../share/extensions/interp.inx.h:8 ../share/extensions/interp_att_g.inx.h:11
 msgid "Workaround for reversed selection order in Live Preview cycles"
 msgstr ""
 
@@ -37543,8 +37505,7 @@ msgstr ""
 msgid "AutoCAD Plot Input"
 msgstr "AutoCAD Plot invoer"
 
-#: ../share/extensions/plt_input.inx.h:2
-#: ../share/extensions/plt_output.inx.h:2
+#: ../share/extensions/plt_input.inx.h:2 ../share/extensions/plt_output.inx.h:2
 msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
 msgstr "HP Graphics Language Plot bestand [AutoCAD] (*.plt)"
 
@@ -38459,8 +38420,7 @@ msgstr "Staarthoogte:"
 msgid "sK1 vector graphics files input"
 msgstr "sK1 vector graphics invoer"
 
-#: ../share/extensions/sk1_input.inx.h:2
-#: ../share/extensions/sk1_output.inx.h:2
+#: ../share/extensions/sk1_input.inx.h:2 ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (*.sk1)"
 msgstr "sK1 vector graphics bestanden (*.sk1)"
 
@@ -39411,13 +39371,11 @@ msgstr "Helling (graden):"
 msgid "Hide lines behind the sphere"
 msgstr "Lijnen achter de sfeer verbergen"
 
-#: ../share/extensions/wmf_input.inx.h:1
-#: ../share/extensions/wmf_output.inx.h:1
+#: ../share/extensions/wmf_input.inx.h:1 ../share/extensions/wmf_output.inx.h:1
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile-invoer"
 
-#: ../share/extensions/wmf_input.inx.h:3
-#: ../share/extensions/wmf_output.inx.h:3
+#: ../share/extensions/wmf_input.inx.h:3 ../share/extensions/wmf_output.inx.h:3
 msgid "A popular graphics file format for clipart"
 msgstr "Een populair bestandsformaat voor clipart"
 

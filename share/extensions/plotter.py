@@ -147,7 +147,7 @@ class Plot(inkex.Effect):
                 + "\n\n" + _("1. Download and extract (unzip) this file to your local harddisk:")
                 + "\n"   +   "   https://pypi.python.org/packages/source/p/pyserial/pyserial-2.7.tar.gz"
                 + "\n"   + _("2. Copy the \"serial\" folder (Can be found inside the just extracted folder)")
-                + "\n"   + _("   into the following Inkscape folder: C:\\<Program files>\\inkscape\\python\\Lib\\")
+                + "\n"   + _("   into the following Inkscape folder: C:\\[Program files]\\inkscape\\python\\Lib\\")
                 + "\n"   + _("3. Close and restart Inkscape."))
             return
         # init serial framework
