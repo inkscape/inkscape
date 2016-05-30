@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-30 07:25+0200\n"
+"POT-Creation-Date: 2016-05-30 08:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30376,6 +30376,10 @@ msgstr ""
 msgid "Use the pressure of the input device to alter the force of tweak action"
 msgstr ""
 
+#: ../share/extensions/convert2dashes.py:56
+msgid "Total number of objects not converted: {}\n"
+msgstr ""
+
 #: ../share/extensions/dimension.py:108
 msgid "Please select an object."
 msgstr ""
@@ -36059,6 +36063,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:27
+#: ../share/extensions/ungroup_deep.inx.h:6
 msgid "Arrange"
 msgstr ""
 
@@ -36875,6 +36880,26 @@ msgstr ""
 
 #: ../share/extensions/triangle.inx.h:13
 msgid "From Side c and Angles a, b"
+msgstr ""
+
+#: ../share/extensions/ungroup_deep.inx.h:1
+msgid "Deep Ungroup"
+msgstr ""
+
+#: ../share/extensions/ungroup_deep.inx.h:2
+msgid "Ungroup all groups in the selected object."
+msgstr ""
+
+#: ../share/extensions/ungroup_deep.inx.h:3
+msgid "Starting Depth"
+msgstr ""
+
+#: ../share/extensions/ungroup_deep.inx.h:4
+msgid "Stopping Depth (from top)"
+msgstr ""
+
+#: ../share/extensions/ungroup_deep.inx.h:5
+msgid "Depth to Keep (from bottom)"
 msgstr ""
 
 #: ../share/extensions/voronoi2svg.inx.h:1
