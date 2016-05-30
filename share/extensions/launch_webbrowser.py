@@ -16,6 +16,7 @@ class VisitWebSiteWithoutLockingInkscape(threading.Thread):
         (self.options, args) = parser.parse_args()
 
     def run(self):
+        inkex.localize()
         webbrowser.open(_(self.options.url))
 
 vwswli = VisitWebSiteWithoutLockingInkscape()
