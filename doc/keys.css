@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------ 
 Project:      Inkscape, Keyboard and mouse reference
-Last change:  2010-10-15
+Last change:  2015-12-16
 --------------------------------------------------------------------
 [Table of contents] 
 1. Body
@@ -17,7 +17,7 @@ Last change:  2010-10-15
 [1. Body] 
 */
 
-body {
+body.kmr {
     margin: 1em;
     font: 1em serif;
     background-color: #ffffff;
@@ -27,7 +27,7 @@ body {
 [2. Header ]
 */
 
-h1 {
+h1.kmr {
     margin-top: 0.5em;
     padding-left: 40px;
     padding-bottom: 0em;
@@ -35,7 +35,7 @@ h1 {
     letter-spacing: -0.02em;
 }
 
-.releaseinfo, .pubdate {
+.kmr-releaseinfo, .kmr-pubdate {
 	font-family: sans-serif;
 	font-size: 0.7em;
 	font-weight: bold;
@@ -46,35 +46,35 @@ h1 {
 [3. Table of content ]
 */
 
-.toc {
+.kmr-toc {
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
     padding: 1em;
-    padding-left: 40px;
     background-color: #eeeeee;
     font-size: 0.8em;
     line-height: 1.5em;
+    width: 250px;
+    float: left;
 }
 
-.toc-title {
-    font-size: 1.6em;
-    font-weight: bold;
-    letter-spacing: 0.4em;
+.kmr-toc ul {
+    padding-left: 10px;
+    list-style:none;
 }
 
-.toc-section {
+.kmr-toc-section {
     font-size: 1.4em;
     font-weight: bold;
     text-decoration: none;
 }
 
-.toc-group {
+.kmr-toc-group {
     font-size: 0.9em;
     text-decoration: none;
 }
 
-.toc a:hover {
+.kmr-toc a:hover {
     text-decoration: underline;
 }
 /*------------------------------------------------------------------ 
@@ -83,18 +83,18 @@ h1 {
 
 /*-- [4.1. Headings] --*/
 
-h2,h3 {
+h2.kmr,h3.kmr {
     padding-bottom: 0em;
     margin-bottom: 0.2em;
 }
 
-h2 {
+h2.kmr {
     margin-top: 0.5em;
     padding-left: 40px;
     font-size: 1.6em;
 }
 
-h3 {
+h3.kmr {
     font-size: 1.1em;
     font-style: italic;
     margin-top: 1em;
@@ -106,7 +106,11 @@ h3 {
 
 /*-- [4.2. Sections] --*/
 
-table {
+.kmr-chapter {
+    margin-left: 300px;
+}
+
+table.kmr {
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -116,47 +120,47 @@ table {
     width: 100%;
 }
 
-.color1 {background-color: #f5f5f5;}
-.color2 {background-color: #f0eae7;}
-.color3 {background-color: #f8f3e9;}
-.color4 {background-color: #e5f1e7;}
-.color5 {background-color: #efcfdf;}
-.color6 {background-color: #f3f2e2;}
-.color7 {background-color: #e8fae1;}
-.color8 {background-color: #f6f9d9;}
-.color9 {background-color: #f4ecf5;}
-.color10 {background-color: #f9f1d9;}
-.color11 {background-color: #eee4dc;}
-.color12 {background-color: #f9f1d9;}
-.color13 {background-color: #f2f1ea;}
-.color14 {background-color: #ebf1fd;}
-.color15 {background-color: #cff4e2;}
-.color16 {background-color: #ffece8;}
-.color17 {background-color: #f8f7d5;}
-.color18 {background-color: #f3f3f3;}
-.color19 {background-color: #e7e9f3;}
-.color20 {background-color: #e9efc5;}
-.color21 {background-color: #e7f5d7;}
-.color22 {background-color: #e9dfef;}
-.color23 {background-color: #f2f9da;}
-.color24 {background-color: #e9f3e7;}
-.color25 {background-color: #feeffa;}
-.color26 {background-color: #eefdf3;}
+.kmr-color1 {background-color: #f5f5f5;}
+.kmr-color2 {background-color: #f0eae7;}
+.kmr-color3 {background-color: #f8f3e9;}
+.kmr-color4 {background-color: #e5f1e7;}
+.kmr-color5 {background-color: #efcfdf;}
+.kmr-color6 {background-color: #f3f2e2;}
+.kmr-color7 {background-color: #e8fae1;}
+.kmr-color8 {background-color: #f6f9d9;}
+.kmr-color9 {background-color: #f4ecf5;}
+.kmr-color10 {background-color: #f9f1d9;}
+.kmr-color11 {background-color: #eee4dc;}
+.kmr-color12 {background-color: #f9f1d9;}
+.kmr-color13 {background-color: #f2f1ea;}
+.kmr-color14 {background-color: #ebf1fd;}
+.kmr-color15 {background-color: #cff4e2;}
+.kmr-color16 {background-color: #ffece8;}
+.kmr-color17 {background-color: #f8f7d5;}
+.kmr-color18 {background-color: #f3f3f3;}
+.kmr-color19 {background-color: #e7e9f3;}
+.kmr-color20 {background-color: #e9efc5;}
+.kmr-color21 {background-color: #e7f5d7;}
+.kmr-color22 {background-color: #e9dfef;}
+.kmr-color23 {background-color: #f2f9da;}
+.kmr-color24 {background-color: #e9f3e7;}
+.kmr-color25 {background-color: #feeffa;}
+.kmr-color26 {background-color: #eefdf3;}
 
 /*-- [4.3. Shortcuts list] --*/
 
-.keys {
+.kmr-keys {
     text-align: right;
     line-height: 1.5em;
     width: 45%;
     padding-top: 2px;
 }
 
-.shortcut {
+.kmr-shortcut {
     font-weight: bold;
 }
 
-.keypad {
+.kmr-keypad {
     background-color: #eeeee6;
     padding: 1px 5px;
     border: 1px solid #999999;
@@ -166,16 +170,16 @@ table {
     border-radius: 0.3em;
 }
 
-.plussign {
+.kmr-plussign {
   margin: 0 2px;
 }
 
-.action {
+.kmr-action {
     line-height: 1.5em;
     padding-left: 10px;
 }
 
-.note {
+.kmr-note {
     padding-left: 80px;
     padding-right: 40px;
     width: 100%;
@@ -183,7 +187,7 @@ table {
     padding-bottom: 0;
 }
 
-.note span {
+.kmr-note span {
     display: block;
     font-size: 70%;
     font-family: sans-serif;
@@ -196,6 +200,6 @@ table {
 [5. Footer] 
 */
 
-img {
+img.kmr {
     border: 0;
 }
