@@ -203,7 +203,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e75"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Dans les exemples ci-dessus, le segment a été tourné autour de son centre. Et au cas où vous voudriez que le centre soit en dehors de votre forme ? Il suffit de créer un rectangle invisible (sans remplissage ni contour) recouvrant votre forme et dont le centre est à l&apos;emplacement désiré ; groupez la forme et le rectangle puis utilisez <flowSpan font-family="sans-serif">Créer un pavage avec des clones</flowSpan> sur ce groupe. Vous pouvez maintenant créer des belles explosions ou éclaboussures en rendant aléatoire le redimensionnement, la rotation ou l&apos;opacité :</flowDiv>
+  <flowDiv xml:space="preserve">Dans les exemples ci-dessus, le segment a été tourné autour de son centre. Et au cas où vous voudriez que le centre soit en dehors de votre forme ? Il suffit de créer un rectangle invisible (sans fond ni contour) recouvrant votre forme et dont le centre est à l&apos;emplacement désiré ; groupez la forme et le rectangle puis utilisez <flowSpan font-family="sans-serif">Créer un pavage avec des clones</flowSpan> sur ce groupe. Vous pouvez maintenant créer des belles explosions ou éclaboussures en rendant aléatoire le redimensionnement, la rotation ou l&apos;opacité :</flowDiv>
  </flowRoot>
  <g id="tips-f03-fr.svgg1768" inkscape:tile-w="87.999840" transform="translate(10 818.82) matrix(.63768 0 0 .63768 37.609 -470.92)" inkscape:tile-h="7.3333200" inkscape:tile-cx="158.99982" inkscape:tile-cy="859.24904">
   <path id="tips-f03-fr.svgpath1592" style="color:#000000" d="m210.17 859.92c4.54-2.08 15.81-3.8 15.81-0.12 0 3.67-15.81 0.12-15.81 0.12z" fill-rule="evenodd"/>
@@ -577,7 +577,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e343"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Supposons que vous vouliez créer une icône de 24×24 pixels. Créez un canevas de 24×24 px (utilisez les <flowSpan font-family="sans-serif">Préférences du document</flowSpan>) et définissez la taille de la grille à 0,5 px (48×48 lignes de grille, donc). Maintenant, si vous alignez les remplissages d&apos;objets sur les lignes <flowSpan font-style="italic">paires</flowSpan> de grille et les contours sur les lignes <flowSpan font-style="italic">impaires</flowSpan>, avec un nombre pair (en px) comme largeur de contour, en exportant le document à la résolution par défaut de 90 ppp (de sorte qu&apos;1 px corresponde à 1 pixel matriciel), vous obtiendrez une icône matricielle nette ne nécessitant pas d&apos;anticrénelage.</flowDiv>
+  <flowDiv xml:space="preserve">Supposons que vous vouliez créer une icône de 24×24 pixels. Créez un canevas de 24×24 px (utilisez les <flowSpan font-family="sans-serif">Préférences du document</flowSpan>) et définissez la taille de la grille à 0,5 px (48×48 lignes de grille, donc). Maintenant, si vous alignez les fonds d&apos;objets sur les lignes <flowSpan font-style="italic">paires</flowSpan> de grille et les contours sur les lignes <flowSpan font-style="italic">impaires</flowSpan>, avec un nombre pair (en px) comme largeur de contour, en exportant le document à la résolution par défaut de 90 ppp (de sorte qu&apos;1 px corresponde à 1 pixel matriciel), vous obtiendrez une icône matricielle nette ne nécessitant pas d&apos;anticrénelage.</flowDiv>
  </flowRoot>
  <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2807.9614308" x="10" font-family="sans-serif" fill="#000000">
   <tspan y="2807.9614308" x="10">Rotation d&apos;objets</tspan>
@@ -611,49 +611,49 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e406"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Vous pouvez aussi facilement créer des ombres portées manuellement avec le paramètre de flou de la boîte de dialogue Remplissage et contour. Sélectionnez un objet, dupliquez-le avec <flowSpan font-weight="bold">Ctrl+D</flowSpan>, appuyez sur la touche <flowSpan font-weight="bold">Page suivante</flowSpan> pour déplacer le duplicata sous l&apos;objet original, puis déplacez-le légèrement vers le bas et la droite par rapport à l&apos;original. Ouvrez maintenant la boîte de dialogue Remplissage et contour et changez la valeur du flou à 5. Le tour est joué !</flowDiv>
+  <flowDiv xml:space="preserve">Vous pouvez aussi facilement créer des ombres portées manuellement avec le paramètre de flou de la boîte de dialogue Fond et contour. Sélectionnez un objet, dupliquez-le avec <flowSpan font-weight="bold">Ctrl+D</flowSpan>, appuyez sur la touche <flowSpan font-weight="bold">Page suivante</flowSpan> pour déplacer le duplicata sous l&apos;objet original, puis déplacez-le légèrement vers le bas et la droite par rapport à l&apos;original. Ouvrez maintenant la boîte de dialogue Fond et contour et changez la valeur du flou à 5. Le tour est joué !</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3096.4664358" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3096.4664358" x="10">Placement d&apos;un texte le long d&apos;un chemin</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3085.8264318" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3085.8264318" x="10">Placement d&apos;un texte le long d&apos;un chemin</tspan>
  </text>
- <rect id="d0e421" display="none" height="1e3px" width="288" y="3101.7" x="10"/>
+ <rect id="d0e421" display="none" height="1e3px" width="288" y="3091" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e421"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Pour placer du texte le long d&apos;une courbe, sélectionnez le texte et la courbe puis utilisez la commande <flowSpan font-family="sans-serif">Mettre suivant un chemin</flowSpan> du menu Texte. Le texte commencera au début du chemin. En général, il vaut mieux créer un chemin auquel vous voulez que le texte s&apos;adapte plutôt que d&apos;adapter ce texte à un autre élément (préexistant) du dessin — cela vous autorisera un meilleur contrôle sans avoir à « bricoler » votre dessin.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3194.8181548000002" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3194.8181548000002" x="10">Sélection de l&apos;original</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3184.1781508000004" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3184.1781508000004" x="10">Sélection de l&apos;original</tspan>
  </text>
- <rect id="d0e433" display="none" height="1e3px" width="288" y="3200" x="10"/>
+ <rect id="d0e433" display="none" height="1e3px" width="288" y="3189.4" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e433"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Quand vous avez affaire à un texte suivant un chemin, un offset lié ou un clone, leur objet/chemin source peut être difficile à sélectionner (caché sous d&apos;autres objets, rendu invisible et/ou verrouillé). Le raccourci magique <flowSpan font-weight="bold">Maj+D</flowSpan> peut alors vous aider ; sélectionnez le texte, l&apos;offset lié ou le clone et appuyez sur <flowSpan font-weight="bold">Maj+D</flowSpan> pour sélectionner alors le chemin correspondant, la source de l&apos;offset ou l&apos;original du clone.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3293.1698738000005" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3293.1698738000005" x="10">Au cas où la fenêtre serait hors de l&apos;écran</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3282.5298698000006" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3282.5298698000006" x="10">Au cas où la fenêtre serait hors de l&apos;écran</tspan>
  </text>
- <rect id="d0e448" display="none" height="1e3px" width="288" y="3298.4" x="10"/>
+ <rect id="d0e448" display="none" height="1e3px" width="288" y="3287.7" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e448"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Quand vous transférez des documents entre des systèmes avec des résolutions ou un nombre d&apos;écrans différents, vous pouvez être confronté au problème suivant : Inkscape a enregistré une position de fenêtre qui fait que vous ne pouvez plus atteindre Inkscape sur votre écran. Il suffit de maximiser la fenêtre (ce qui devrait la rendre de nouveau visible à l&apos;écran ; utilisez la barre des tâches), d&apos;enregistrer le document et de le recharger. Vous pouvez éviter tout cela en désactivant l&apos;option « enregistrer la taille et la position des fenêtres » (dans l&apos;onglet <flowSpan font-family="sans-serif">Interface &gt; Fenêtres</flowSpan> des <flowSpan font-family="sans-serif">Préférences d&apos;Inkscape</flowSpan>).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3424.9923738000007" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3424.9923738000007" x="10">Transparence, dégradés et export en Postscript</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3414.352369800001" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3414.352369800001" x="10">Transparence, dégradés et export en Postscript</tspan>
  </text>
- <rect id="d0e463" display="none" height="1e3px" width="288" y="3430.2" x="10"/>
+ <rect id="d0e463" display="none" height="1e3px" width="288" y="3419.6" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e463"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Les formats PostScript ou EPS ne supportent pas la <flowSpan font-style="italic">transparence</flowSpan>, aussi vous ne devriez pas utiliser cette fonctionnalité si vous comptez exporter en PS/EPS. Dans le cas d&apos;une transparence uniforme chevauchant une couleur uniforme, il est facile d&apos;y remédier : sélectionnez l&apos;un des objets transparents et passez à l&apos;outil Pipette (<flowSpan font-weight="bold">F7</flowSpan>) ; assurez-vous qu&apos;il est en mode « capturer la couleur visible sans alpha » et cliquez sur ce même objet. La couleur visible sera capturée et réassignée à l&apos;objet mais cette fois, sans transparence. Répétez cette opération pour tous les objets transparents. Si votre objet transparent chevauche plusieurs zones de différentes couleurs uniformes, vous devrez le découper en morceaux (un morceau par zone) puis appliquer la procédure ci-dessus à chacun des morceaux.</flowDiv>
  </flowRoot>
- <g transform="translate(0 3565)">
+ <g transform="translate(0 3554.3)">
   <defs id="defs3" xmlns:cc="http://creativecommons.org/ns#">
    <linearGradient id="linearGradient2465" y2="-7528.7" xlink:href="#linearGradient841" gradientUnits="userSpaceOnUse" x2="76.847" gradientTransform="matrix(2.1496 0 0 .46519 -.13015 3495.4)" y1="-7656.4" x1="76.847" inkscape:collect="always"/>
    <filter id="filter57" height="1.2" width="1.2" color-interpolation-filters="sRGB" y="-.1" x="-.1" inkscape:label="Drop shadow, custom">
