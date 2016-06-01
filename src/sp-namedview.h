@@ -90,7 +90,6 @@ public:
     unsigned int getViewCount();
     std::vector<SPDesktop *> const getViewList() const;
     Inkscape::Util::Unit const * getDisplayUnit() const;
-    Inkscape::Util::Unit const & getSVGUnit() const;
 
     void translateGuides(Geom::Translate const &translation);
     void translateGrids(Geom::Translate const &translation);

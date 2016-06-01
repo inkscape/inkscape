@@ -1155,12 +1155,6 @@ Inkscape::Util::Unit const * SPNamedView::getDisplayUnit() const
     return display_units ? display_units : unit_table.getUnit("px");
 }
 
-Inkscape::Util::Unit const & SPNamedView::getSVGUnit() const
-{
-    assert(svg_units);
-    return *svg_units; 
-}
-
 /**
  * Returns the first grid it could find that isEnabled(). Returns NULL, if none is enabled
  */
