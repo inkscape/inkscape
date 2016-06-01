@@ -243,8 +243,11 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
 
     bool _goToNextWrapShape();
 
-    bool _findChunksForLine(ParagraphInfo const &para, UnbrokenSpanPosition *start_span_pos,
-                            std::vector<ChunkInfo> *chunk_info, FontMetrics *line_box_height);
+    bool _findChunksForLine(ParagraphInfo const &para,
+                            UnbrokenSpanPosition *start_span_pos,
+                            std::vector<ChunkInfo> *chunk_info,
+                            FontMetrics *line_box_height,
+                            FontMetrics const *strut_height);
 
     static inline PangoLogAttr const &_charAttributes(ParagraphInfo const &para,
                                                       UnbrokenSpanPosition const &span_pos)
@@ -1138,31 +1141,17 @@ void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) con
  */
 double Layout::Calculator::_computeFontLineHeight( SPStyle const *style )
 {
-    // yet another borked SPStyle member that we're going to have to fix ourselves
-    // We shouldn't need to climb the element tree...
-    for ( ; ; ) {
-        if (style->line_height.set && !style->line_height.inherit) {
-            if (style->line_height.normal)
-                break;
-            switch (style->line_height.unit) {
-                case SP_CSS_UNIT_NONE:
-                    return style->line_height.computed;
-                case SP_CSS_UNIT_EX:
-                    return style->line_height.value * 0.5;
-                    // 0.5 is an approximation of the x-height. Fixme.
-                case SP_CSS_UNIT_EM:
-                case SP_CSS_UNIT_PERCENT:
-                    return style->line_height.value;
-                default:  // absolute values
-                    return style->line_height.computed / style->font_size.computed;
-            }
-            break;
-        }
-        if (style->object == NULL || style->object->parent == NULL) break;
-        style = style->object->parent->style;
-        if (style == NULL) break;
+    // This is a bit backwards... we should be returning the absolute height
+    // but as the code expects line_height_multiplier we return that.
+    if (style->line_height.normal) {
+        return (LINE_HEIGHT_NORMAL);
+    } else if (style->line_height.unit == SP_CSS_UNIT_NONE) {
+        // Special case per CSS, computed value is multiplier
+        return style->line_height.computed;
+    } else {
+        // Normal case, computed value is absolute height. Turn it into multiplier.
+        return style->line_height.computed / style->font_size.computed;
     }
-    return (LINE_HEIGHT_NORMAL);
 }
 
 bool compareGlyphWidth(const PangoGlyphInfo &a, const PangoGlyphInfo &b)
@@ -1449,34 +1438,24 @@ bool Layout::Calculator::_goToNextWrapShape()
  * line to #_flow. Returns with \a start_span_pos set to the end of the
  * text that was fitted, \a chunk_info completely filled out and
  * \a line_box_height set with the largest ascent and the largest
- * descent (individually per CSS) on the line. The return
+ * descent (individually per CSS) on the line. The line_box_height
+ * can never be smaller than the line_box_strut (which is determined
+ * by the block level value of line_height). The return
  * value is false only if we've run out of shapes to wrap inside (and
  * hence couldn't create any chunks).
  */
 bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
                                             UnbrokenSpanPosition *start_span_pos,
                                             std::vector<ChunkInfo> *chunk_info,
-                                            FontMetrics *line_box_height)
+                                            FontMetrics *line_box_height,
+                                            FontMetrics const *strut_height)
 {
     TRACE(("  begin _findChunksForLine: chunks: %lu, em size: %f\n", chunk_info->size(), line_box_height->emSize() ));
 
-    // CSS 2.1 dictates that the minimum line height (i.e. the strut height) is found from the block element. This,
-    // however, is not what the browsers seem to be doing. Instead, find the height from the first text source.
-    InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_flow._input_stream.front());
-    font_instance *font = text_source->styleGetFontInstance();
-    if (font) {
-        double multiplier = _computeFontLineHeight(text_source->style);
-        line_box_height->set( font );
-        *line_box_height *= text_source->style->font_size.computed;
-        font->Unref();
-        line_box_height->computeEffective( multiplier );
-    } else {
-        std::cerr << "Layout::Calculator::_findChunksForLine: Font not found." << std::endl;
-    }
+    // CSS 2.1 dictates that the minimum line height (i.e. the strut height)
+    // is found from the block element.
+    *line_box_height = *strut_height;
     TRACE(("    initial line_box_height (em size): %f\n", line_box_height->emSize() ));
-
-    // Save strut height for use when recalculating line height after backing out chunks that don't fit.
-    FontMetrics strut_height = *line_box_height;
 
     UnbrokenSpanPosition span_pos;
     for( ; ; ) {
@@ -1495,7 +1474,7 @@ bool Layout::Calculator::_findChunksForLine(ParagraphInfo const &para,
         unsigned scan_run_index;
         span_pos = *start_span_pos;
         for (scan_run_index = 0 ; scan_run_index < scan_runs.size() ; scan_run_index++) {
-            if (!_buildChunksInScanRun(para, span_pos, scan_runs[scan_run_index], chunk_info, line_box_height, &strut_height))
+            if (!_buildChunksInScanRun(para, span_pos, scan_runs[scan_run_index], chunk_info, line_box_height, strut_height))
                 break;
             if (!chunk_info->empty() && !chunk_info->back().broken_spans.empty())
                 span_pos = chunk_info->back().broken_spans.back().end;
@@ -1568,6 +1547,7 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
         // see if this span is too tall to fit on the current line
         FontMetrics new_span_height = new_span.start.iter_span->line_height;
         new_span_height.computeEffective( new_span.start.iter_span->line_height_multiplier );
+
         /* floating point 80-bit/64-bit rounding problems require epsilon. See
            discussion http://inkscape.gristle.org/2005-03-16.txt around 22:00 */
         if ( new_span_height.ascent  > line_height->ascent  + std::numeric_limits<float>::epsilon() ||
@@ -1705,11 +1685,13 @@ bool Layout::Calculator::calculate()
         pango_context_set_base_gravity(_pango_context, PANGO_GRAVITY_AUTO);
     }
 
+    // Minimum line box height determined by block container.
+    FontMetrics strut_height = _flow.strut;
     _y_offset = 0.0;
     _createFirstScanlineMaker();
 
     ParagraphInfo para;
-    FontMetrics line_box_height; // needs to be maintained across paragraphs to be able to deal with blank paras
+    FontMetrics line_box_height; // Current value of line box height for line.
     for(para.first_input_index = 0 ; para.first_input_index < _flow._input_stream.size() ; ) {
         // jump to the next wrap shape if this is a SHAPE_BREAK control code
         if (_flow._input_stream[para.first_input_index]->Type() == CONTROL_CODE) {
@@ -1749,7 +1731,7 @@ bool Layout::Calculator::calculate()
         do {   // for each line in the paragraph
             TRACE(("begin line\n"));
             std::vector<ChunkInfo> line_chunk_info;
-            if (!_findChunksForLine(para, &span_pos, &line_chunk_info, &line_box_height))
+            if (!_findChunksForLine(para, &span_pos, &line_chunk_info, &line_box_height, &strut_height ))
                 break;   // out of shapes to wrap in to
 
             _outputLine(para, line_box_height, line_chunk_info);

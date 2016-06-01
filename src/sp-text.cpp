@@ -535,7 +535,28 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
 
     if (SP_IS_TEXT(root)) {
         SP_TEXT(root)->attributes.mergeInto(&optional_attrs, parent_optional_attrs, parent_attrs_offset, true, true);
-        if (SP_TEXT(root)->attributes.getTextLength()->_set) { // set textLength on the entire layout, see note in TNG-Layout.h
+
+        layout.strut.reset();
+        if (style) {
+            font_instance *font = font_factory::Default()->FaceFromStyle( style );
+            if (font) {
+                font->FontMetrics(layout.strut.ascent, layout.strut.descent, layout.strut.xheight);
+                font->Unref();
+            }
+            layout.strut *= style->font_size.computed;
+            if (style->line_height.normal ) {
+                layout.strut.computeEffective( Inkscape::Text::Layout::LINE_HEIGHT_NORMAL ); 
+            } else if (style->line_height.unit == SP_CSS_UNIT_NONE) {
+                layout.strut.computeEffective( style->line_height.computed );
+            } else {
+                if( style->font_size.computed > 0.0 ) {
+                    layout.strut.computeEffective( style->line_height.computed/style->font_size.computed );
+                }
+            }
+        }
+
+        // set textLength on the entire layout, see note in TNG-Layout.h
+        if (SP_TEXT(root)->attributes.getTextLength()->_set) {
             layout.textLength._set = true;
             layout.textLength.value = SP_TEXT(root)->attributes.getTextLength()->value;
             layout.textLength.computed = SP_TEXT(root)->attributes.getTextLength()->computed;

@@ -671,6 +671,9 @@ public:
 
     }; // End FontMetrics
 
+    /** The strut is the minimum value used in calculating line height. */
+    FontMetrics strut;
+
     /// see _enum_converter()
     struct EnumConversionItem {
         int input, output;
