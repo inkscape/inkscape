@@ -2266,7 +2266,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
 
     clonetiler_remove (NULL, dlg, false);
 
-    double scale_units = Inkscape::Util::Quantity::convert(1, "px", &desktop->getDocument()->getSVGUnit());
+    double scale_units = Inkscape::Util::Quantity::convert(1, "px", desktop->getDocument()->getDisplayUnit());
 
     double shiftx_per_i = 0.01 * prefs->getDoubleLimited(prefs_path + "shiftx_per_i", 0, -10000, 10000);
     double shifty_per_i = 0.01 * prefs->getDoubleLimited(prefs_path + "shifty_per_i", 0, -10000, 10000);
