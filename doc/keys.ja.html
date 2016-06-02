@@ -11,15 +11,20 @@
    <body class="kmr">
       <div id="header">
          <h1 class="kmr">Inkscape キーとマウスのリファレンス</h1>
-         <div class="kmr-releaseinfo">バージョン 0.91</div>
-         <div class="kmr-pubdate">最終リビジョン: 2015-02-04</div>
+         <div class="kmr-releaseinfo">バージョン 0.92</div>
+         <div class="kmr-pubdate">最終リビジョン: 2016-06-01</div>
       </div>
       <div id="kmr-preface">
     
-         <p>このドキュメントは、Inkscape の、デフォルトのキーボードおよびマウスのショートカットについて説明しています。内容は Inkscape に含まれる share/keys/default.xml で定義されており、そのほとんど (すべてではありません) はユーザーによる変更が可能です。変更手順の詳細は default.xml をご覧ください。</p>
+         <p>This document describes the default keyboard and mouse shortcuts of Inkscape, corresponding to the
+share/keys/default.xml file in your Inkscape installation. Some of the keyboard shortcuts may not be available for non-US keyboard layouts, but most (not all) of these shortcuts are configurable by the user. You can create custom shortcuts and load custom keyboard shortcut files in the Inkscape Preferences, or by following the instructions in the default.xml file.</p>
 
     
-         <p>特に断りのない限り、テンキーまたはキーパッドのキー (矢印、Home、End、+、-、数字キーなど) は対応する通常のキーと同じとみなされます。もし何か新しいショートカットのアイデアがあれば、<a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">開発者メーリングリスト</a>または<a href="https://bugs.launchpad.net/inkscape">バグトラッカーで RFE (改善要望) として</a>私たち開発者までお知らせください。</p>
+         <p>Unless noted otherwise, keypad keys (such as arrows, Home, End, +, -, digits) are
+supposed to work the same as corresponding regular keys. If you have a new shortcut
+idea, please contact the developers (by writing to the <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">devel mailing list</a>
+or by <a href="https://bugs.launchpad.net/inkscape">submitting a
+feature request</a>).</p>
 
       </div>
       <div class="kmr-toc">
@@ -42,7 +47,7 @@
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e610">コントロールバー</a>
+               <a class="kmr-toc-section" href="#d0e610">Tool controls bar</a>
             </li>
             <ul>
                <li>
@@ -158,332 +163,329 @@
                   <a class="kmr-toc-group" href="#d0e2292">選択 (マウス)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2340">ラバーバンド、タッチ選択</a>
+                  <a class="kmr-toc-group" href="#d0e2337">ラバーバンド、タッチ選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2399">選択 (キーボード)</a>
+                  <a class="kmr-toc-group" href="#d0e2396">選択 (キーボード)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2501">グループ内の選択、下にあるものの選択</a>
+                  <a class="kmr-toc-group" href="#d0e2498">グループ内の選択、下にあるものの選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2615">移動 (マウス)</a>
+                  <a class="kmr-toc-group" href="#d0e2612">移動 (マウス)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2689">移動 (キーボード)</a>
+                  <a class="kmr-toc-group" href="#d0e2686">移動 (キーボード)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2740">変形 (マウス)</a>
+                  <a class="kmr-toc-group" href="#d0e2737">変形 (マウス)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2773">ハンドルによる拡大縮小</a>
+                  <a class="kmr-toc-group" href="#d0e2770">ハンドルによる拡大縮小</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2824">拡大縮小 (キーボード)</a>
+                  <a class="kmr-toc-group" href="#d0e2821">拡大縮小 (キーボード)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2928">ハンドルによる回転/傾斜</a>
+                  <a class="kmr-toc-group" href="#d0e2925">ハンドルによる回転/傾斜</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2967">回転 (キーボード)</a>
+                  <a class="kmr-toc-group" href="#d0e2974">回転 (キーボード)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3025">反転</a>
+                  <a class="kmr-toc-group" href="#d0e3032">反転</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3048">回転中心</a>
+                  <a class="kmr-toc-group" href="#d0e3055">回転中心</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3087">キャンセル</a>
+                  <a class="kmr-toc-group" href="#d0e3094">キャンセル</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e3107">ノードツール</a>
+               <a class="kmr-toc-section" href="#d0e3114">ノードツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3112">オブジェクトの選択 (マウス)</a>
+                  <a class="kmr-toc-group" href="#d0e3119">オブジェクトの選択 (マウス)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3158">ノードの選択 (マウス)</a>
+                  <a class="kmr-toc-group" href="#d0e3165">ノードの選択 (マウス)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3207">ラバーバンド選択</a>
+                  <a class="kmr-toc-group" href="#d0e3214">ラバーバンド選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3239">ノードの選択 (キーボード)</a>
+                  <a class="kmr-toc-group" href="#d0e3246">ノードの選択 (キーボード)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3322">選択ノードの拡大/縮小</a>
+                  <a class="kmr-toc-group" href="#d0e3329">選択ノードの拡大/縮小</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3382">ノードの移動 (マウス)</a>
+                  <a class="kmr-toc-group" href="#d0e3389">ノードの移動 (マウス)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3481">ノードの移動 (キーボード)</a>
+                  <a class="kmr-toc-group" href="#d0e3488">ノードの移動 (キーボード)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3532">ノードハンドルの移動 (マウス)</a>
+                  <a class="kmr-toc-group" href="#d0e3539">ノードハンドルの移動 (マウス)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3594">ハンドルの伸縮 (1 ノード選択時)</a>
+                  <a class="kmr-toc-group" href="#d0e3601">ハンドルの伸縮 (1 ノード選択時)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3700">ハンドルの回転 (1 ノード選択時)</a>
+                  <a class="kmr-toc-group" href="#d0e3707">ハンドルの回転 (1 ノード選択時)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3786">ハンドルの表示</a>
+                  <a class="kmr-toc-group" href="#d0e3793">ハンドルの表示</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3802">ノード群の拡大縮小 (複数ノード選択時)</a>
+                  <a class="kmr-toc-group" href="#d0e3809">ノード群の拡大縮小 (複数ノード選択時)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3878">ノード群の回転 (複数ノード選択時)</a>
+                  <a class="kmr-toc-group" href="#d0e3885">ノード群の回転 (複数ノード選択時)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3922">ノード群の反転 (複数ノード選択時)</a>
+                  <a class="kmr-toc-group" href="#d0e3929">ノード群の反転 (複数ノード選択時)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3948">セグメントの変更</a>
+                  <a class="kmr-toc-group" href="#d0e3955">セグメントの変更</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3977">ノード種類の変更</a>
+                  <a class="kmr-toc-group" href="#d0e3984">ノード種類の変更</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4042">連結/切断</a>
+                  <a class="kmr-toc-group" href="#d0e4049">連結/切断</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4087">削除、作成、複製</a>
+                  <a class="kmr-toc-group" href="#d0e4094">削除、作成、複製</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4197">方向を逆に</a>
+                  <a class="kmr-toc-group" href="#d0e4201">方向を逆に</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4213">シェイプの編集</a>
+                  <a class="kmr-toc-group" href="#d0e4217">シェイプの編集</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4225">フィルとパスエフェクトの編集</a>
+                  <a class="kmr-toc-group" href="#d0e4229">フィルとパスエフェクトの編集</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4234">キャンセル</a>
+                  <a class="kmr-toc-group" href="#d0e4238">キャンセル</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4254">微調整ツール</a>
+               <a class="kmr-toc-section" href="#d0e4258">微調整ツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4259">操作</a>
+                  <a class="kmr-toc-group" href="#d0e4263">操作</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4307">モード</a>
+                  <a class="kmr-toc-group" href="#d0e4311">モード</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4533">パラメーター</a>
+                  <a class="kmr-toc-group" href="#d0e4537">パラメーター</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4576">ズームツール</a>
+               <a class="kmr-toc-section" href="#d0e4580">ズームツール</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e4609">Measure tool</a>
+               <a class="kmr-toc-section" href="#d0e4613">Measure tool</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e4648">矩形ツール</a>
+               <a class="kmr-toc-section" href="#d0e4652">矩形ツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4653">描画</a>
+                  <a class="kmr-toc-group" href="#d0e4657">描画</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4692">選択</a>
+                  <a class="kmr-toc-group" href="#d0e4696">選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4744">ハンドルによるサイズ変更</a>
+                  <a class="kmr-toc-group" href="#d0e4748">ハンドルによるサイズ変更</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4773">ハンドルによる角の丸め</a>
+                  <a class="kmr-toc-group" href="#d0e4777">ハンドルによる角の丸め</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4826">3D ボックスツール</a>
+               <a class="kmr-toc-section" href="#d0e4830">3D ボックスツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4831">描画</a>
+                  <a class="kmr-toc-group" href="#d0e4835">描画</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4854">選択</a>
+                  <a class="kmr-toc-group" href="#d0e4858">選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4903">ハンドルによる編集</a>
+                  <a class="kmr-toc-group" href="#d0e4907">ハンドルによる編集</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4942">遠近法の編集</a>
+                  <a class="kmr-toc-group" href="#d0e4946">遠近法の編集</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5042">円/弧ツール</a>
+               <a class="kmr-toc-section" href="#d0e5046">円/弧ツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5047">描画</a>
+                  <a class="kmr-toc-group" href="#d0e5051">描画</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5107">選択</a>
+                  <a class="kmr-toc-group" href="#d0e5111">選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5159">ハンドルによる編集</a>
+                  <a class="kmr-toc-group" href="#d0e5163">ハンドルによる編集</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5212">星形ツール</a>
+               <a class="kmr-toc-section" href="#d0e5216">星形ツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5217">描画</a>
+                  <a class="kmr-toc-group" href="#d0e5221">描画</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5243">選択</a>
+                  <a class="kmr-toc-group" href="#d0e5247">選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5295">ハンドルによる編集</a>
+                  <a class="kmr-toc-group" href="#d0e5299">ハンドルによる編集</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5368">らせんツール</a>
+               <a class="kmr-toc-section" href="#d0e5372">らせんツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5373">描画</a>
+                  <a class="kmr-toc-group" href="#d0e5377">描画</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5399">選択</a>
+                  <a class="kmr-toc-group" href="#d0e5403">選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5450">ハンドルによる編集</a>
+                  <a class="kmr-toc-group" href="#d0e5454">ハンドルによる編集</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5564">鉛筆ツール</a>
+               <a class="kmr-toc-section" href="#d0e5568">鉛筆ツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5615">ドットの作成</a>
+                  <a class="kmr-toc-group" href="#d0e5626">ドットの作成</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5659">ペン (ベジエ) ツール</a>
+               <a class="kmr-toc-section" href="#d0e5670">ペン (ベジエ) ツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5664">ノードの作製</a>
+                  <a class="kmr-toc-group" href="#d0e5675">ノードの作製</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5728">最後のノードの移動</a>
+                  <a class="kmr-toc-group" href="#d0e5739">最後のノードの移動</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5782">セグメントの作成/修正</a>
+                  <a class="kmr-toc-group" href="#d0e5793">セグメントの作成/修正</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5821">ドットの作成</a>
+                  <a class="kmr-toc-group" href="#d0e5832">ドットの作成</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5864">仕上げ</a>
+                  <a class="kmr-toc-group" href="#d0e5875">仕上げ</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5897">キャンセル</a>
+                  <a class="kmr-toc-group" href="#d0e5905">キャンセル</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5927">カリグラフィツール</a>
+               <a class="kmr-toc-section" href="#d0e5935">カリグラフィツール</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6025">テキストツール</a>
+               <a class="kmr-toc-section" href="#d0e6033">テキストツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6030">選択/作成</a>
+                  <a class="kmr-toc-group" href="#d0e6038">選択/作成</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6058">テキスト内のナビゲート</a>
+                  <a class="kmr-toc-group" href="#d0e6066">テキスト内のナビゲート</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6147">流し込みテキスト (内部フレーム)</a>
+                  <a class="kmr-toc-group" href="#d0e6155">流し込みテキスト (内部フレーム)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6186">流し込みテキスト (外部フレーム)</a>
+                  <a class="kmr-toc-group" href="#d0e6194">流し込みテキスト (外部フレーム)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6236">パス上テキスト</a>
+                  <a class="kmr-toc-group" href="#d0e6244">パス上テキスト</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6255">テキストの編集</a>
+                  <a class="kmr-toc-group" href="#d0e6263">テキストの編集</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6309">テキストの選択</a>
+                  <a class="kmr-toc-group" href="#d0e6317">テキストの選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6437">スタイルの選択</a>
+                  <a class="kmr-toc-group" href="#d0e6442">スタイルの選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6466">文字間隔</a>
+                  <a class="kmr-toc-group" href="#d0e6471">文字間隔</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6522">行間隔</a>
+                  <a class="kmr-toc-group" href="#d0e6527">行間隔</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6586">カーニングとシフティング</a>
+                  <a class="kmr-toc-group" href="#d0e6591">カーニングとシフティング</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6626">回転</a>
+                  <a class="kmr-toc-group" href="#d0e6631">回転</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e6676">スプレーツール</a>
+               <a class="kmr-toc-section" href="#d0e6681">スプレーツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6681">モード</a>
+                  <a class="kmr-toc-group" href="#d0e6686">モード</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6717">パラメーター</a>
+                  <a class="kmr-toc-group" href="#d0e6722">パラメーター</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e6757">消しゴムツール</a>
+               <a class="kmr-toc-section" href="#d0e6762">消しゴムツール</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6788">バケツ (塗りつぶし) ツール</a>
+               <a class="kmr-toc-section" href="#d0e6793">バケツ (塗りつぶし) ツール</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6871">グラデーションツール</a>
+               <a class="kmr-toc-section" href="#d0e6876">グラデーションツール</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6876">オブジェクトの選択</a>
+                  <a class="kmr-toc-group" href="#d0e6881">オブジェクトの選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6909">グラデーションの作成</a>
+                  <a class="kmr-toc-group" href="#d0e6914">グラデーションの作成</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6938">ハンドルの選択</a>
+                  <a class="kmr-toc-group" href="#d0e6940">ハンドルの選択</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e7008">色フェーズの作成/削除</a>
+                  <a class="kmr-toc-group" href="#d0e7010">色フェーズの作成/削除</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e7071">ハンドル/色フェーズの移動</a>
+                  <a class="kmr-toc-group" href="#d0e7070">ハンドル/色フェーズの移動</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e7161">方向を逆に</a>
-               </li>
-               <li>
-                  <a class="kmr-toc-group" href="#d0e7182">グラデーションエディター</a>
+                  <a class="kmr-toc-group" href="#d0e7160">方向を逆に</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e7202">スポイトツール</a>
+               <a class="kmr-toc-section" href="#d0e7180">スポイトツール</a>
             </li>
          </ul>
       </div>
@@ -885,7 +887,7 @@
                         <span class="plussign">+</span>D</span>
                   </td>
                   <td>
-                     <span class="kmr-action">ドキュメントの設定</span>
+                     <span class="kmr-action">Document Properties</span>
                   </td>
                </tr>
 
@@ -1110,7 +1112,7 @@
          </div>
          <div class="kmr-sect">
             <a name="d0e610"/>
-            <h2 class="kmr">コントロールバー</h2>
+            <h2 class="kmr">Tool controls bar</h2>
             <table class="kmr kmr-color3">
 
 
@@ -1125,7 +1127,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>ドキュメントウィンドウの上にあるコントロールバーでは、各ツール用の様々なボタンやコントロールが表示されます。</span>
+                     <span>The tool controls bar at the top of the document window provides different buttons and controls for each tool.</span>
                   </td>
                </tr>
 
@@ -1172,7 +1174,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>コントロールバー内のフィールド間をフォーカスが移動します (フィールドの値が変更されていればフォーカス移動時にそれが適用されます)。</span>
+                     <span>Use these to navigate between fields in the tool controls bar (the value in the field you leave, if changed, is accepted).</span>
                   </td>
                </tr>
 
@@ -1645,19 +1647,19 @@
                         <span class="kmr-plussign">+</span>\</span>
                   </td>
                   <td>
-                     <span class="kmr-action">ガイドおよびガイドへのスナップのオン・オフを切り替え</span>
+                     <span class="kmr-action">toggle guide visibility</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>ガイドは表示させたいがスナップはさせたくない場合は、全体スナップの切り替え (% キー) を使用してください。</span>
+                     <span>For activating / deactivating snapping to guides, use the snap bar or the global snapping toggle (% key).</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>ルーラーからのドラッグで新しくガイドを作成したときは、ガイドの表示およびスナップは有効になっています。</span>
+                     <span>When you create a new guide by dragging off the ruler, guide visibility is automatically turned on.</span>
                   </td>
                </tr>
 
@@ -1669,13 +1671,13 @@
                         <span class="kmr-plussign">+</span>3</span>
                   </td>
                   <td>
-                     <span class="kmr-action">グリッドおよびグリッドへのスナップのオン・オフを切り替え</span>
+                     <span class="kmr-action">toggle grids visibility</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>グリッドは表示させたいがスナップはさせたくない場合は、全体スナップの切り替え (% キー) を使用してください。</span>
+                     <span>For activating / deactivating snapping to grids, use the snap bar or the global snapping toggle (% key).</span>
                   </td>
                </tr>
 
@@ -1696,7 +1698,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>この切り替えは、すべてのツールにおいて、グリッド、ガイド、およびオブジェクトへのスナップに作用します。</span>
+                     <span>This toggle affects snapping to grids, guides, and objects in all tools. The settings in the snap bar determine which snap targets and snapping points will snap.</span>
                   </td>
                </tr>
 
@@ -2579,7 +2581,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>選択したオブジェクトを PNG データに変換します。PNG データはドキュメントのディレクトリにエクスポートされます。</span>
+                     <span>This exports the selected object(s) (all other objects hidden) as PNG in the document's directory and imports it back as embedded bitmap.</span>
                   </td>
                </tr>
 
@@ -3241,7 +3243,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">クリック<span class="kmr-plussign">+</span>クリック</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">オブジェクトを編集</span>
@@ -3272,7 +3274,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2340"/>ラバーバンド、タッチ選択</h3>
+                        <a name="d0e2337"/>ラバーバンド、タッチ選択</h3>
                   </td>
                </tr>
 
@@ -3354,7 +3356,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2399"/>選択 (キーボード)</h3>
+                        <a name="d0e2396"/>選択 (キーボード)</h3>
                   </td>
                </tr>
 
@@ -3495,7 +3497,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2501"/>グループ内の選択、下にあるものの選択</h3>
+                        <a name="d0e2498"/>グループ内の選択、下にあるものの選択</h3>
                   </td>
                </tr>
 
@@ -3639,7 +3641,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2615"/>移動 (マウス)</h3>
+                        <a name="d0e2612"/>移動 (マウス)</h3>
                   </td>
                </tr>
 
@@ -3711,7 +3713,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>グリッドやガイドが有効時、ドラッグ中のグリッドやガイドへのスナップを一時的に無効にします。</span>
+                     <span>This temporarily disables snapping when you are dragging with snapping activated.</span>
                   </td>
                </tr>
 
@@ -3742,7 +3744,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2689"/>移動 (キーボード)</h3>
+                        <a name="d0e2686"/>移動 (キーボード)</h3>
                   </td>
                </tr>
 
@@ -3808,7 +3810,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2740"/>変形 (マウス)</h3>
+                        <a name="d0e2737"/>変形 (マウス)</h3>
                   </td>
                </tr>
 
@@ -3848,7 +3850,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2773"/>ハンドルによる拡大縮小</h3>
+                        <a name="d0e2770"/>ハンドルによる拡大縮小</h3>
                   </td>
                </tr>
 
@@ -3913,7 +3915,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2824"/>拡大縮小 (キーボード)</h3>
+                        <a name="d0e2821"/>拡大縮小 (キーボード)</h3>
                   </td>
                </tr>
 
@@ -4007,7 +4009,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>拡大縮小は中心を基準に均等に行われます。したがって、サイズの変更はタテヨコ双方に対して同時に適用されます。</span>
+                     <span>The default size increment is added to (or subtracted from) either the selection's height or width, whichever one is larger. Scaling is done around the center of the selection's bounding box and keeps the proportions of the selected object(s).</span>
                   </td>
                </tr>
 
@@ -4017,7 +4019,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2928"/>ハンドルによる回転/傾斜</h3>
+                        <a name="d0e2925"/>ハンドルによる回転/傾斜</h3>
                   </td>
                </tr>
 
@@ -4064,13 +4066,24 @@
                   </td>
                </tr>
 
+               <tr>
+                  <td class="kmr-keys">
+                     <span class="kmr-shortcut">
+                        <span class="kmr-keypad">Shift</span>
+                        <span class="kmr-plussign">+</span>マウスドラッグ</span>
+                  </td>
+                  <td>
+                     <span class="kmr-action">rotate around opposite corner</span>
+                  </td>
+               </tr>
+
 
 
 
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2967"/>回転 (キーボード)</h3>
+                        <a name="d0e2974"/>回転 (キーボード)</h3>
                   </td>
                </tr>
 
@@ -4136,7 +4149,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3025"/>反転</h3>
+                        <a name="d0e3032"/>反転</h3>
                   </td>
                </tr>
 
@@ -4170,7 +4183,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3048"/>回転中心</h3>
+                        <a name="d0e3055"/>回転中心</h3>
                   </td>
                </tr>
 
@@ -4223,7 +4236,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3087"/>キャンセル</h3>
+                        <a name="d0e3094"/>キャンセル</h3>
                   </td>
                </tr>
 
@@ -4247,7 +4260,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e3107"/>
+            <a name="d0e3114"/>
             <h2 class="kmr">ノードツール</h2>
             <table class="kmr kmr-color13">
 
@@ -4257,7 +4270,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3112"/>オブジェクトの選択 (マウス)</h3>
+                        <a name="d0e3119"/>オブジェクトの選択 (マウス)</h3>
                   </td>
                </tr>
 
@@ -4315,7 +4328,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3158"/>ノードの選択 (マウス)</h3>
+                        <a name="d0e3165"/>ノードの選択 (マウス)</h3>
                   </td>
                </tr>
 
@@ -4387,7 +4400,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3207"/>ラバーバンド選択</h3>
+                        <a name="d0e3214"/>ラバーバンド選択</h3>
                   </td>
                </tr>
 
@@ -4435,7 +4448,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3239"/>ノードの選択 (キーボード)</h3>
+                        <a name="d0e3246"/>ノードの選択 (キーボード)</h3>
                   </td>
                </tr>
 
@@ -4548,7 +4561,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3322"/>選択ノードの拡大/縮小</h3>
+                        <a name="d0e3329"/>選択ノードの拡大/縮小</h3>
                   </td>
                </tr>
 
@@ -4604,7 +4617,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>各キーの押下あるいはホイールの回転で、隣接する未選択ノードを選択、あるいは最も遠い選択ノードの選択を解除します。</span>
+                     <span>Each key press or turn of the mouse wheel selects the nearest unselected node or deselects the farthest selected node.</span>
                   </td>
                </tr>
 
@@ -4620,7 +4633,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3382"/>ノードの移動 (マウス)</h3>
+                        <a name="d0e3389"/>ノードの移動 (マウス)</h3>
                   </td>
                </tr>
 
@@ -4659,7 +4672,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>移動方向をノードのハンドルの延長および垂直方向 (計8方向) のみに制限します。</span>
+                     <span>This restricts movement to the directions of the node's handles, their counter directions and perpendiculars (total 8 snaps).</span>
                   </td>
                </tr>
 
@@ -4753,7 +4766,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3481"/>ノードの移動 (キーボード)</h3>
+                        <a name="d0e3488"/>ノードの移動 (キーボード)</h3>
                   </td>
                </tr>
 
@@ -4819,7 +4832,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3532"/>ノードハンドルの移動 (マウス)</h3>
+                        <a name="d0e3539"/>ノードハンドルの移動 (マウス)</h3>
                   </td>
                </tr>
 
@@ -4845,7 +4858,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>デフォルトのスナップ角度は 15°です。これはハンドルのオリジナル角度も、その延長方向及び垂直方向にスナップします。</span>
+                     <span>The default angle step is 15 degrees. This also snaps to the handle's original angle, its counter direction and perpendiculars.</span>
                   </td>
                </tr>
 
@@ -4900,7 +4913,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3594"/>ハンドルの伸縮 (1 ノード選択時)</h3>
+                        <a name="d0e3601"/>ハンドルの伸縮 (1 ノード選択時)</h3>
                   </td>
                </tr>
 
@@ -4994,7 +5007,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3700"/>ハンドルの回転 (1 ノード選択時)</h3>
+                        <a name="d0e3707"/>ハンドルの回転 (1 ノード選択時)</h3>
                   </td>
                </tr>
 
@@ -5076,7 +5089,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3786"/>ハンドルの表示</h3>
+                        <a name="d0e3793"/>ハンドルの表示</h3>
                   </td>
                </tr>
 
@@ -5096,7 +5109,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3802"/>ノード群の拡大縮小 (複数ノード選択時)</h3>
+                        <a name="d0e3809"/>ノード群の拡大縮小 (複数ノード選択時)</h3>
                   </td>
                </tr>
 
@@ -5174,7 +5187,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>拡大縮小は中心を基準に均等に行われます。したがって、サイズの変更はタテヨコ双方に対して同時に適用されます。</span>
+                     <span>The default size increment is added to (or subtracted from) either the node selection's height or width, whichever one is larger. Scaling keeps the proportions of the node selection.</span>
                   </td>
                </tr>
 
@@ -5184,7 +5197,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3878"/>ノード群の回転 (複数ノード選択時)</h3>
+                        <a name="d0e3885"/>ノード群の回転 (複数ノード選択時)</h3>
                   </td>
                </tr>
 
@@ -5242,7 +5255,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3922"/>ノード群の反転 (複数ノード選択時)</h3>
+                        <a name="d0e3929"/>ノード群の反転 (複数ノード選択時)</h3>
                   </td>
                </tr>
 
@@ -5282,7 +5295,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3948"/>セグメントの変更</h3>
+                        <a name="d0e3955"/>セグメントの変更</h3>
                   </td>
                </tr>
 
@@ -5320,7 +5333,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3977"/>ノード種類の変更</h3>
+                        <a name="d0e3984"/>ノード種類の変更</h3>
                   </td>
                </tr>
 
@@ -5403,7 +5416,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4042"/>連結/切断</h3>
+                        <a name="d0e4049"/>連結/切断</h3>
                   </td>
                </tr>
 
@@ -5464,7 +5477,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4087"/>削除、作成、複製</h3>
+                        <a name="d0e4094"/>削除、作成、複製</h3>
                   </td>
                </tr>
 
@@ -5542,7 +5555,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">クリック<span class="kmr-plussign">+</span>クリック</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">ノードを作成</span>
@@ -5599,7 +5612,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4197"/>方向を逆に</h3>
+                        <a name="d0e4201"/>方向を逆に</h3>
                   </td>
                </tr>
 
@@ -5620,7 +5633,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4213"/>シェイプの編集</h3>
+                        <a name="d0e4217"/>シェイプの編集</h3>
                   </td>
                </tr>
 
@@ -5642,7 +5655,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4225"/>フィルとパスエフェクトの編集</h3>
+                        <a name="d0e4229"/>フィルとパスエフェクトの編集</h3>
                   </td>
                </tr>
 
@@ -5658,7 +5671,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4234"/>キャンセル</h3>
+                        <a name="d0e4238"/>キャンセル</h3>
                   </td>
                </tr>
 
@@ -5682,7 +5695,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4254"/>
+            <a name="d0e4258"/>
             <h2 class="kmr">微調整ツール</h2>
             <table class="kmr kmr-color14">
 
@@ -5692,7 +5705,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4259"/>操作</h3>
+                        <a name="d0e4263"/>操作</h3>
                   </td>
                </tr>
 
@@ -5723,7 +5736,7 @@
                         <span class="kmr-plussign">+</span>マウスドラッグ</span>
                   </td>
                   <td>
-                     <span class="kmr-action">一時的に収縮モードに切り替え</span>
+                     <span class="kmr-action">temporarily switch to shrink mode</span>
                   </td>
                </tr>
 
@@ -5736,7 +5749,7 @@
                         <span class="plussign">+</span>マウスドラッグ</span>
                   </td>
                   <td>
-                     <span class="kmr-action">一時的に膨張モードに切り替え</span>
+                     <span class="kmr-action">temporarily switch to grow mode</span>
                   </td>
                </tr>
 
@@ -5752,7 +5765,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4307"/>モード</h3>
+                        <a name="d0e4311"/>モード</h3>
                   </td>
                </tr>
 
@@ -5965,7 +5978,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4533"/>パラメーター</h3>
+                        <a name="d0e4537"/>パラメーター</h3>
                   </td>
                </tr>
 
@@ -5985,7 +5998,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">ブラシの幅を 1 または 100 に設定</span>
+                     <span class="kmr-action">set brush width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -6010,7 +6023,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4576"/>
+            <a name="d0e4580"/>
             <h2 class="kmr">ズームツール</h2>
             <table class="kmr kmr-color15">
 
@@ -6050,7 +6063,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4609"/>
+            <a name="d0e4613"/>
             <h2 class="kmr">Measure tool</h2>
             <table class="kmr kmr-color16">
 
@@ -6073,7 +6086,7 @@
                         <span class="kmr-plussign">+</span>マウスドラッグ</span>
                   </td>
                   <td>
-                     <span class="kmr-action">set the measure base to the cursor</span>
+                     <span class="kmr-action">set base of angle measurement to cursor position</span>
                   </td>
                </tr>  
 
@@ -6098,7 +6111,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4648"/>
+            <a name="d0e4652"/>
             <h2 class="kmr">矩形ツール</h2>
             <table class="kmr kmr-color17">
 
@@ -6108,7 +6121,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4653"/>描画</h3>
+                        <a name="d0e4657"/>描画</h3>
                   </td>
                </tr>
 
@@ -6134,7 +6147,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>矩形の縦横比が常に整数になるようにします。</span>
+                     <span>This restricts width/height ratio or its inverse to a whole number or the golden ratio.</span>
                   </td>
                </tr>
 
@@ -6161,7 +6174,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4692"/>選択</h3>
+                        <a name="d0e4696"/>選択</h3>
                   </td>
                </tr>
 
@@ -6222,7 +6235,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4744"/>ハンドルによるサイズ変更</h3>
+                        <a name="d0e4748"/>ハンドルによるサイズ変更</h3>
                   </td>
                </tr>
 
@@ -6264,7 +6277,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4773"/>ハンドルによる角の丸め</h3>
+                        <a name="d0e4777"/>ハンドルによる角の丸め</h3>
                   </td>
                </tr>
 
@@ -6333,7 +6346,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4826"/>
+            <a name="d0e4830"/>
             <h2 class="kmr">3D ボックスツール</h2>
             <table class="kmr kmr-color18">
 
@@ -6343,7 +6356,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4831"/>描画</h3>
+                        <a name="d0e4835"/>描画</h3>
                   </td>
                </tr>
 
@@ -6373,7 +6386,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4854"/>選択</h3>
+                        <a name="d0e4858"/>選択</h3>
                   </td>
                </tr>
 
@@ -6428,7 +6441,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4903"/>ハンドルによる編集</h3>
+                        <a name="d0e4907"/>ハンドルによる編集</h3>
                   </td>
                </tr>
 
@@ -6481,7 +6494,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4942"/>遠近法の編集</h3>
+                        <a name="d0e4946"/>遠近法の編集</h3>
                   </td>
                </tr>
 
@@ -6585,7 +6598,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5042"/>
+            <a name="d0e5046"/>
             <h2 class="kmr">円/弧ツール</h2>
             <table class="kmr kmr-color19">
 
@@ -6595,7 +6608,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5047"/>描画</h3>
+                        <a name="d0e5051"/>描画</h3>
                   </td>
                </tr>
 
@@ -6633,7 +6646,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>円/弧の縦横比が常に整数になるようにします。</span>
+                     <span>This restricts width/height ratio or its inverse to a whole number or the golden ratio.</span>
                   </td>
                </tr>
 
@@ -6679,7 +6692,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5107"/>選択</h3>
+                        <a name="d0e5111"/>選択</h3>
                   </td>
                </tr>
 
@@ -6740,7 +6753,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5159"/>ハンドルによる編集</h3>
+                        <a name="d0e5163"/>ハンドルによる編集</h3>
                   </td>
                </tr>
 
@@ -6809,7 +6822,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5212"/>
+            <a name="d0e5216"/>
             <h2 class="kmr">星形ツール</h2>
             <table class="kmr kmr-color20">
 
@@ -6819,7 +6832,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5217"/>描画</h3>
+                        <a name="d0e5221"/>描画</h3>
                   </td>
                </tr>
 
@@ -6855,7 +6868,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5243"/>選択</h3>
+                        <a name="d0e5247"/>選択</h3>
                   </td>
                </tr>
 
@@ -6916,7 +6929,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5295"/>ハンドルによる編集</h3>
+                        <a name="d0e5299"/>ハンドルによる編集</h3>
                   </td>
                </tr>
 
@@ -6993,7 +7006,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5368"/>
+            <a name="d0e5372"/>
             <h2 class="kmr">らせんツール</h2>
             <table class="kmr kmr-color21">
 
@@ -7003,7 +7016,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5373"/>描画</h3>
+                        <a name="d0e5377"/>描画</h3>
                   </td>
                </tr>
 
@@ -7039,7 +7052,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5399"/>選択</h3>
+                        <a name="d0e5403"/>選択</h3>
                   </td>
                </tr>
 
@@ -7100,7 +7113,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5450"/>ハンドルによる編集</h3>
+                        <a name="d0e5454"/>ハンドルによる編集</h3>
                   </td>
                </tr>
 
@@ -7241,7 +7254,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5564"/>
+            <a name="d0e5568"/>
             <h2 class="kmr">鉛筆ツール</h2>
             <table class="kmr kmr-color22">
 
@@ -7253,7 +7266,7 @@
                      <span class="kmr-shortcut">マウスドラッグ</span>
                   </td>
                   <td>
-                     <span class="kmr-action">フリーハンドで線を描く</span>
+                     <span class="kmr-action">draw a freehand path</span>
                   </td>
                </tr>
 
@@ -7270,7 +7283,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>パスが選択されていた場合、Shift+クリックで、そこから独立した新しいパスではなく、新しいサブパスを開始します。</span>
+                     <span>If a path is selected, Shift+dragging from anywhere starts a new subpath instead of a new independent path.</span>
                   </td>
                </tr>
 
@@ -7287,7 +7300,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>グリッドやガイドが有効時、ドラッグ中のグリッドやガイドへのスナップを一時的に無効にします。</span>
+                     <span>This temporarily disables snapping when you are dragging with snapping activated.</span>
                   </td>
                </tr>
 
@@ -7302,13 +7315,22 @@
                   </td>
                </tr>
 
+               <tr>
+                  <td class="kmr-keys">
+                     <span class="kmr-shortcut">クリック</span>
+                  </td>
+                  <td>
+                     <span class="kmr-action">start a straight path (finish with another click)</span>
+                  </td>
+               </tr>
+
 
 
 
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5615"/>ドットの作成</h3>
+                        <a name="d0e5626"/>ドットの作成</h3>
                   </td>
                </tr>
 
@@ -7359,7 +7381,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5659"/>
+            <a name="d0e5670"/>
             <h2 class="kmr">ペン (ベジエ) ツール</h2>
             <table class="kmr kmr-color23">
 
@@ -7369,7 +7391,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5664"/>ノードの作製</h3>
+                        <a name="d0e5675"/>ノードの作製</h3>
                   </td>
                </tr>
 
@@ -7455,7 +7477,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5728"/>最後のノードの移動</h3>
+                        <a name="d0e5739"/>最後のノードの移動</h3>
                   </td>
                </tr>
 
@@ -7527,7 +7549,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5782"/>セグメントの作成/修正</h3>
+                        <a name="d0e5793"/>セグメントの作成/修正</h3>
                   </td>
                </tr>
 
@@ -7582,7 +7604,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5821"/>ドットの作成</h3>
+                        <a name="d0e5832"/>ドットの作成</h3>
                   </td>
                </tr>
 
@@ -7635,7 +7657,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5864"/>仕上げ</h3>
+                        <a name="d0e5875"/>仕上げ</h3>
                   </td>
                </tr>
 
@@ -7644,7 +7666,7 @@
                      <span class="kmr-shortcut">Enter</span>
                   </td>
                   <td>
-                     <span class="kmr-action">現在の線を終了</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
@@ -7653,22 +7675,22 @@
                      <span class="kmr-shortcut">右クリック</span>
                   </td>
                   <td>
-                     <span class="kmr-action">現在の線を終了</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">クリック<span class="kmr-plussign">+</span>クリック</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
-                     <span class="kmr-action">現在の線を終了</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Enter、右クリック、あるいはダブルクリックで現在の線の作成を終了し、最後の未完了の (赤い) セグメントは破棄されます。</span>
+                     <span>Enter or right click finish the current line, discarding the last unfinished (red) segment. Double left click finishes the current line where double-clicked.</span>
                   </td>
                </tr>
 
@@ -7678,7 +7700,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5897"/>キャンセル</h3>
+                        <a name="d0e5905"/>キャンセル</h3>
                   </td>
                </tr>
 
@@ -7709,7 +7731,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5927"/>
+            <a name="d0e5935"/>
             <h2 class="kmr">カリグラフィツール</h2>
             <table class="kmr kmr-color24">
 
@@ -7721,7 +7743,7 @@
                      <span class="kmr-shortcut">マウスドラッグ</span>
                   </td>
                   <td>
-                     <span class="kmr-action">カリグラフィ線を描画</span>
+                     <span class="kmr-action">draw a calligraphic stroke</span>
                   </td>
                </tr>
 
@@ -7792,7 +7814,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">ペン幅を 1 または 100 に設定</span>
+                     <span class="kmr-action">set pen width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -7826,7 +7848,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6025"/>
+            <a name="d0e6033"/>
             <h2 class="kmr">テキストツール</h2>
             <table class="kmr kmr-color25">
 
@@ -7836,7 +7858,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6030"/>選択/作成</h3>
+                        <a name="d0e6038"/>選択/作成</h3>
                   </td>
                </tr>
 
@@ -7877,7 +7899,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6058"/>テキスト内のナビゲート</h3>
+                        <a name="d0e6066"/>テキスト内のナビゲート</h3>
                   </td>
                </tr>
 
@@ -7954,7 +7976,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>これらすべてのコマンドは、テキストが選択されていればそれを解除します。Shift を押しながらで選択領域を拡大します。</span>
+                     <span>All these commands cancel current text selection, if any. Use them with Shift to add to / subtract from selection instead.</span>
                   </td>
                </tr>
 
@@ -7964,7 +7986,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6147"/>流し込みテキスト (内部フレーム)</h3>
+                        <a name="d0e6155"/>流し込みテキスト (内部フレーム)</h3>
                   </td>
                </tr>
 
@@ -8021,7 +8043,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6186"/>流し込みテキスト (外部フレーム)</h3>
+                        <a name="d0e6194"/>流し込みテキスト (外部フレーム)</h3>
                   </td>
                </tr>
 
@@ -8090,7 +8112,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6236"/>パス上テキスト</h3>
+                        <a name="d0e6244"/>パス上テキスト</h3>
                   </td>
                </tr>
 
@@ -8117,7 +8139,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6255"/>テキストの編集</h3>
+                        <a name="d0e6263"/>テキストの編集</h3>
                   </td>
                </tr>
 
@@ -8200,7 +8222,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6309"/>テキストの選択</h3>
+                        <a name="d0e6317"/>テキストの選択</h3>
                   </td>
                </tr>
 
@@ -8291,7 +8313,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">クリック<span class="kmr-plussign">+</span>クリック</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">単語を選択</span>
@@ -8330,7 +8352,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6437"/>スタイルの選択</h3>
+                        <a name="d0e6442"/>スタイルの選択</h3>
                   </td>
                </tr>
 
@@ -8368,7 +8390,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6466"/>文字間隔</h3>
+                        <a name="d0e6471"/>文字間隔</h3>
                   </td>
                </tr>
 
@@ -8438,7 +8460,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6522"/>行間隔</h3>
+                        <a name="d0e6527"/>行間隔</h3>
                   </td>
                </tr>
 
@@ -8516,7 +8538,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6586"/>カーニングとシフティング</h3>
+                        <a name="d0e6591"/>カーニングとシフティング</h3>
                   </td>
                </tr>
 
@@ -8574,7 +8596,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6626"/>回転</h3>
+                        <a name="d0e6631"/>回転</h3>
                   </td>
                </tr>
 
@@ -8629,7 +8651,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6676"/>
+            <a name="d0e6681"/>
             <h2 class="kmr">スプレーツール</h2>
             <table class="kmr kmr-color26">
 
@@ -8639,7 +8661,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6681"/>モード</h3>
+                        <a name="d0e6686"/>モード</h3>
                   </td>
                </tr>
 
@@ -8682,7 +8704,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6717"/>パラメーター</h3>
+                        <a name="d0e6722"/>パラメーター</h3>
                   </td>
                </tr>
 
@@ -8712,7 +8734,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">スプレー幅を 1 または 100 に設定</span>
+                     <span class="kmr-action">set spray width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -8721,7 +8743,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6757"/>
+            <a name="d0e6762"/>
             <h2 class="kmr">消しゴムツール</h2>
             <table class="kmr kmr-color1">
 
@@ -8744,7 +8766,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">消しゴム幅を 1 または 100 に設定</span>
+                     <span class="kmr-action">set eraser width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -8753,7 +8775,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6788"/>
+            <a name="d0e6793"/>
             <h2 class="kmr">バケツ (塗りつぶし) ツール</h2>
             <table class="kmr kmr-color2">
 
@@ -8814,7 +8836,7 @@
                         <span class="kmr-plussign">+</span>マウスドラッグ</span>
                   </td>
                   <td>
-                     <span class="kmr-action">開始点と同じ通過点からフィル</span>
+                     <span class="kmr-action">fill from each point similar to the initial point</span>
                   </td>
                </tr>
 
@@ -8865,7 +8887,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6871"/>
+            <a name="d0e6876"/>
             <h2 class="kmr">グラデーションツール</h2>
             <table class="kmr kmr-color3">
 
@@ -8875,7 +8897,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6876"/>オブジェクトの選択</h3>
+                        <a name="d0e6881"/>オブジェクトの選択</h3>
                   </td>
                </tr>
 
@@ -8916,7 +8938,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6909"/>グラデーションの作成</h3>
+                        <a name="d0e6914"/>グラデーションの作成</h3>
                   </td>
                </tr>
 
@@ -8931,13 +8953,13 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>選択したオブジェクトにグラデーションを作成します。コントロールバーで新しく作成するグラデーションの線形/放射およびフィル/ストロークの選択が行えます。</span>
+                     <span>This creates gradient on selected objects. The tool controls bar lets you select linear/radial and fill/stroke for the new gradient.</span>
                   </td>
                </tr>
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">クリック<span class="kmr-plussign">+</span>クリック</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">デフォルトグラデーションを作成</span>
@@ -8956,7 +8978,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6938"/>ハンドルの選択</h3>
+                        <a name="d0e6940"/>ハンドルの選択</h3>
                   </td>
                </tr>
 
@@ -9043,7 +9065,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e7008"/>色フェーズの作成/削除</h3>
+                        <a name="d0e7010"/>色フェーズの作成/削除</h3>
                   </td>
                </tr>
 
@@ -9062,7 +9084,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">クリック<span class="kmr-plussign">+</span>クリック</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">色フェーズを作成</span>
@@ -9105,7 +9127,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>選択したセグメント上の中間に新しく色フェーズを追加します。隣接した 2 つのハンドルが選択されている必要があります。</span>
+                     <span>This adds new stop(s) in the middle(s) between adjacent, selected stops or, if only one stop is selected, in the middle of the segment that starts with the selected stop.</span>
                   </td>
                </tr>
 
@@ -9124,7 +9146,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e7071"/>ハンドル/色フェーズの移動</h3>
+                        <a name="d0e7070"/>ハンドル/色フェーズの移動</h3>
                   </td>
                </tr>
 
@@ -9245,7 +9267,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e7161"/>方向を逆に</h3>
+                        <a name="d0e7160"/>方向を逆に</h3>
                   </td>
                </tr>
 
@@ -9268,36 +9290,10 @@
 
 
 
-
-
-               <tr>
-                  <td colspan="2">
-                     <h3 class="kmr">
-                        <a name="d0e7182"/>グラデーションエディター</h3>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="kmr-keys">
-                     <span class="kmr-shortcut">クリック<span class="kmr-plussign">+</span>クリック</span>
-                  </td>
-                  <td>
-                     <span class="kmr-action">グラデーションエディターを開く</span>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td colspan="2" class="kmr-note">
-                     <span>グラデーションハンドルをダブルクリックで、そのグラデーションをグラデーションエディタを開きます。クリックしたハンドルが色フェーズリストから選択されています。</span>
-                  </td>
-               </tr>
-
-
-
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e7202"/>
+            <a name="d0e7180"/>
             <h2 class="kmr">スポイトツール</h2>
             <table class="kmr kmr-color4">
 

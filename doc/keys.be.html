@@ -11,467 +11,471 @@
    <body class="kmr">
       <div id="header">
          <h1 class="kmr">Даведка па клявіятуры й мышы ў Inkscape</h1>
-         <div class="kmr-releaseinfo">Вэрсія 0.91</div>
-         <div class="kmr-pubdate">Апошняя рэдакцыя: 2015-02-04</div>
+         <div class="kmr-releaseinfo">Вэрсія 0.92</div>
+         <div class="kmr-pubdate">Апошняя рэдакцыя: 2016-06-01</div>
       </div>
       <div id="kmr-preface">
     
-         <p>Гэты дакумэнт апісвае прадвызначаныя скароты клявіятуры й мышы ў Inkscape, якія адпавядаюць файлу share/keys/default.xml ў пакунку Inkscape. Карыстальнік можа настроіць бальшыню (але ня ўсе) з гэтыя клявіш, падрабязнасьці як гэта зрабіць глядзі ў файле  default.xml.</p>
+         <p>This document describes the default keyboard and mouse shortcuts of Inkscape, corresponding to the
+share/keys/default.xml file in your Inkscape installation. Some of the keyboard shortcuts may not be available for non-US keyboard layouts, but most (not all) of these shortcuts are configurable by the user. You can create custom shortcuts and load custom keyboard shortcut files in the Inkscape Preferences, or by following the instructions in the default.xml file.</p>
 
     
-         <p>Калі не зазначана іншага, клявішы на лічбавай клявіятуры (такія як стрэлкі, Home, End, +, -, лічбы) працуюць як гэтаксама як і іхныя адпаведнікі на асноўнай клявіятуры. Калі маеш задумку пра новы скарот, скантактуйся з распрацоўнікамі, напісаўшы ў <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">сьпіс рассылкі распрацоўнікаў</a> або <a href="https://bugs.launchpad.net/inkscape">аформіўшы паведамленьне ў сыстэме кантролю хіб.</a>
-         </p>
+         <p>Unless noted otherwise, keypad keys (such as arrows, Home, End, +, -, digits) are
+supposed to work the same as corresponding regular keys. If you have a new shortcut
+idea, please contact the developers (by writing to the <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">devel mailing list</a>
+or by <a href="https://bugs.launchpad.net/inkscape">submitting a
+feature request</a>).</p>
 
       </div>
       <div class="kmr-toc">
          <ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e44">Прылады</a>
+               <a class="kmr-toc-section" href="#d0e45">Прылады</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e293">Дыялёґі</a>
+               <a class="kmr-toc-section" href="#d0e294">Дыялёґі</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e298">Адкрыць</a>
+                  <a class="kmr-toc-group" href="#d0e299">Адкрыць</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e497">Паказаць ці схаваць</a>
+                  <a class="kmr-toc-group" href="#d0e498">Паказаць ці схаваць</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e513">Унутры дыялёґу</a>
+                  <a class="kmr-toc-group" href="#d0e514">Унутры дыялёґу</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e609">Кіроўная панэль</a>
+               <a class="kmr-toc-section" href="#d0e610">Tool controls bar</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e614">Доступ</a>
+                  <a class="kmr-toc-group" href="#d0e615">Доступ</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e633">Пераход</a>
+                  <a class="kmr-toc-group" href="#d0e634">Пераход</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e659">Зьмяніць значэньні</a>
+                  <a class="kmr-toc-group" href="#d0e660">Зьмяніць значэньні</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e721">Палатно</a>
+               <a class="kmr-toc-section" href="#d0e722">Палатно</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e726">Маштаб</a>
+                  <a class="kmr-toc-group" href="#d0e727">Маштаб</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e829">Прадвызначаныя маштабы</a>
+                  <a class="kmr-toc-group" href="#d0e830">Прадвызначаныя маштабы</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e884">Гісторыя маштабаў</a>
+                  <a class="kmr-toc-group" href="#d0e885">Гісторыя маштабаў</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e910">Пракручваньне (азіраньне)</a>
+                  <a class="kmr-toc-group" href="#d0e911">Пракручваньне (азіраньне)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e975">Накіроўныя, сеткі, прыцягваньне</a>
+                  <a class="kmr-toc-group" href="#d0e976">Накіроўныя, сеткі, прыцягваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1074">Рэжым паказу</a>
+                  <a class="kmr-toc-group" href="#d0e1075">Рэжым паказу</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e1091">Палітра</a>
+               <a class="kmr-toc-section" href="#d0e1092">Палітра</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e1160">Файл</a>
+               <a class="kmr-toc-section" href="#d0e1161">Файл</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e1267">Вакно</a>
+               <a class="kmr-toc-section" href="#d0e1268">Вакно</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e1410">Extensions</a>
+               <a class="kmr-toc-section" href="#d0e1411">Extensions</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e1441">Пласты</a>
+               <a class="kmr-toc-section" href="#d0e1442">Пласты</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1538">Hide/lock</a>
+                  <a class="kmr-toc-group" href="#d0e1539">Hide/lock</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e1570">Аб'ект</a>
+               <a class="kmr-toc-section" href="#d0e1571">Аб'ект</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1575">Адмяніць/паўтарыць</a>
+                  <a class="kmr-toc-group" href="#d0e1576">Адмяніць/паўтарыць</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1619">Абменны буфэр</a>
+                  <a class="kmr-toc-group" href="#d0e1620">Абменны буфэр</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1728">Падвойваньне</a>
+                  <a class="kmr-toc-group" href="#d0e1729">Падвойваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1747">Клон</a>
+                  <a class="kmr-toc-group" href="#d0e1748">Клон</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1800">Растры</a>
+                  <a class="kmr-toc-group" href="#d0e1801">Растры</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1837">Узоры</a>
+                  <a class="kmr-toc-group" href="#d0e1838">Узоры</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1871">Накіроўныя</a>
+                  <a class="kmr-toc-group" href="#d0e1872">Накіроўныя</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1887">Ґрупа</a>
+                  <a class="kmr-toc-group" href="#d0e1888">Ґрупа</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1938">Парадак па восі Z</a>
+                  <a class="kmr-toc-group" href="#d0e1939">Парадак па восі Z</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e1973">Шлях</a>
+               <a class="kmr-toc-section" href="#d0e1974">Шлях</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e1978">ператварыць у шлях</a>
+                  <a class="kmr-toc-group" href="#d0e1979">ператварыць у шлях</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2008">Ляґічныя дзеяньні</a>
+                  <a class="kmr-toc-group" href="#d0e2009">Ляґічныя дзеяньні</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2100">Зрухі</a>
+                  <a class="kmr-toc-group" href="#d0e2101">Зрухі</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2217">Спалучэньне</a>
+                  <a class="kmr-toc-group" href="#d0e2218">Спалучэньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2257">Спрошчваньне</a>
+                  <a class="kmr-toc-group" href="#d0e2258">Спрошчваньне</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e2286">Вылучальнік</a>
+               <a class="kmr-toc-section" href="#d0e2287">Вылучальнік</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2291">Вылучэньне (з дапамогай мышы)</a>
+                  <a class="kmr-toc-group" href="#d0e2292">Вылучэньне (з дапамогай мышы)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2339">Вылучэньне «гумовай стужкай» ці дотыкам</a>
+                  <a class="kmr-toc-group" href="#d0e2337">Вылучэньне «гумовай стужкай» ці дотыкам</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2398">Вылучэньне (з дапамогай клявіятуры)</a>
+                  <a class="kmr-toc-group" href="#d0e2396">Вылучэньне (з дапамогай клявіятуры)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2500">Вылучэньне унутры ґрупы, вылучэньне пад курсорам</a>
+                  <a class="kmr-toc-group" href="#d0e2498">Вылучэньне унутры ґрупы, вылучэньне пад курсорам</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2614">Перасоўваньне (з дапамогай мышы)</a>
+                  <a class="kmr-toc-group" href="#d0e2612">Перасоўваньне (з дапамогай мышы)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2688">Перасоўваньне (з дапамогай клявіятуры)</a>
+                  <a class="kmr-toc-group" href="#d0e2686">Перасоўваньне (з дапамогай клявіятуры)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2739">Ператварэнрьне (з дапамогай мышы)</a>
+                  <a class="kmr-toc-group" href="#d0e2737">Ператварэнрьне (з дапамогай мышы)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2772">Зьмяненьне памеру з дапамогай ручак</a>
+                  <a class="kmr-toc-group" href="#d0e2770">Зьмяненьне памеру з дапамогай ручак</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2823">Зьмяненьне памеру (з дапамогай клявіятуры)</a>
+                  <a class="kmr-toc-group" href="#d0e2821">Зьмяненьне памеру (з дапамогай клявіятуры)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2927">Паварочваньне/нахільваньне з дапамогай ручак</a>
+                  <a class="kmr-toc-group" href="#d0e2925">Паварочваньне/нахільваньне з дапамогай ручак</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2966">Паварочваньне (з дапамогай клявіятуры)</a>
+                  <a class="kmr-toc-group" href="#d0e2974">Паварочваньне (з дапамогай клявіятуры)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3024">Перакульваньне</a>
+                  <a class="kmr-toc-group" href="#d0e3032">Перакульваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3047">Цэнтар паварочваньня</a>
+                  <a class="kmr-toc-group" href="#d0e3055">Цэнтар паварочваньня</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3086">Адмяніць</a>
+                  <a class="kmr-toc-group" href="#d0e3094">Адмяніць</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e3106">Вузлы</a>
+               <a class="kmr-toc-section" href="#d0e3114">Вузлы</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3111">Вылучэньне аб'ектаў (з дапамогай мышы)</a>
+                  <a class="kmr-toc-group" href="#d0e3119">Вылучэньне аб'ектаў (з дапамогай мышы)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3157">Вылучэньне вузлоў (з дапамогай мышы)</a>
+                  <a class="kmr-toc-group" href="#d0e3165">Вылучэньне вузлоў (з дапамогай мышы)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3206">Вылучэньне «гумовай стужкай»</a>
+                  <a class="kmr-toc-group" href="#d0e3214">Вылучэньне «гумовай стужкай»</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3238">Вылучэньне вузлоў (з дапамогай клявіятурай)</a>
+                  <a class="kmr-toc-group" href="#d0e3246">Вылучэньне вузлоў (з дапамогай клявіятурай)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3321">Зьмяншэньне/павелічэньне вылучэньня вузлоў</a>
+                  <a class="kmr-toc-group" href="#d0e3329">Зьмяншэньне/павелічэньне вылучэньня вузлоў</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3381">Перасоўваньне вузлоў (з дапамогай мышы)</a>
+                  <a class="kmr-toc-group" href="#d0e3389">Перасоўваньне вузлоў (з дапамогай мышы)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3480">Перасоўваньне вузлоў (з дапамогай клявіятуры)</a>
+                  <a class="kmr-toc-group" href="#d0e3488">Перасоўваньне вузлоў (з дапамогай клявіятуры)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3531">Перасоўваньне ручкі вузла (з дапамогай мышы)</a>
+                  <a class="kmr-toc-group" href="#d0e3539">Перасоўваньне ручкі вузла (з дапамогай мышы)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3593">Зьмяненьне памеру ручак (вылучаны 1 вузел)</a>
+                  <a class="kmr-toc-group" href="#d0e3601">Зьмяненьне памеру ручак (вылучаны 1 вузел)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3699">Паварочваньне ручкі (вылучаная 1 ручка)</a>
+                  <a class="kmr-toc-group" href="#d0e3707">Паварочваньне ручкі (вылучаная 1 ручка)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3785">Бачнасьць ручак</a>
+                  <a class="kmr-toc-group" href="#d0e3793">Бачнасьць ручак</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3801">Зьмяненьне памеру ручак (вылучана &gt;1 вузел)</a>
+                  <a class="kmr-toc-group" href="#d0e3809">Зьмяненьне памеру ручак (вылучана &gt;1 вузел)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3877">Павернуць вузлы (вылучана &gt; 1 вузел)</a>
+                  <a class="kmr-toc-group" href="#d0e3885">Павернуць вузлы (вылучана &gt; 1 вузел)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3921">Перакуліць вузлы (вылучана &gt; 1 вузел)</a>
+                  <a class="kmr-toc-group" href="#d0e3929">Перакуліць вузлы (вылучана &gt; 1 вузел)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3947">Зьмяненьне адрэзкаў</a>
+                  <a class="kmr-toc-group" href="#d0e3955">Зьмяненьне адрэзкаў</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3976">Зьмяненьне тыпу вузла</a>
+                  <a class="kmr-toc-group" href="#d0e3984">Зьмяненьне тыпу вузла</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4041">Злучэньне/разьбіваньне</a>
+                  <a class="kmr-toc-group" href="#d0e4049">Злучэньне/разьбіваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4086">Выдаленьне, стварэньне, падвойваньне</a>
+                  <a class="kmr-toc-group" href="#d0e4094">Выдаленьне, стварэньне, падвойваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4196">Разьварочваньне</a>
+                  <a class="kmr-toc-group" href="#d0e4201">Разьварочваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4212">Праўленьне фіґур</a>
+                  <a class="kmr-toc-group" href="#d0e4217">Праўленьне фіґур</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4224">Праўленьне запаўненьняў і эфэктаў шляхоў</a>
+                  <a class="kmr-toc-group" href="#d0e4229">Праўленьне запаўненьняў і эфэктаў шляхоў</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4233">Адмяніць</a>
+                  <a class="kmr-toc-group" href="#d0e4238">Адмяніць</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4253">Карэкцыя</a>
+               <a class="kmr-toc-section" href="#d0e4258">Карэкцыя</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4258">Дзеяньне</a>
+                  <a class="kmr-toc-group" href="#d0e4263">Дзеяньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4306">Рэжымы</a>
+                  <a class="kmr-toc-group" href="#d0e4311">Рэжымы</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4532">Парамэтры</a>
+                  <a class="kmr-toc-group" href="#d0e4537">Парамэтры</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4575">Маштаб</a>
+               <a class="kmr-toc-section" href="#d0e4580">Маштаб</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e4608">Measure tool</a>
+               <a class="kmr-toc-section" href="#d0e4613">Measure tool</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e4647">Прастакутнік</a>
+               <a class="kmr-toc-section" href="#d0e4652">Прастакутнік</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4652">Рысаваньне</a>
+                  <a class="kmr-toc-group" href="#d0e4657">Рысаваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4691">Вылучэньне</a>
+                  <a class="kmr-toc-group" href="#d0e4696">Вылучэньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4743">Зьмяненьне вымераў з дапамогай ручак</a>
+                  <a class="kmr-toc-group" href="#d0e4748">Зьмяненьне вымераў з дапамогай ручак</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4772">Скругленьне кутоў з дапамогай ручак</a>
+                  <a class="kmr-toc-group" href="#d0e4777">Скругленьне кутоў з дапамогай ручак</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4825">Трохмерная скрыня</a>
+               <a class="kmr-toc-section" href="#d0e4830">Трохмерная скрыня</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4830">Рысаваньне</a>
+                  <a class="kmr-toc-group" href="#d0e4835">Рысаваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4853">Вылучэньне</a>
+                  <a class="kmr-toc-group" href="#d0e4858">Вылучэньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4902">Праўленьне з дапамогай ручак</a>
+                  <a class="kmr-toc-group" href="#d0e4907">Праўленьне з дапамогай ручак</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4941">Праўленьне пэрспэктыў</a>
+                  <a class="kmr-toc-group" href="#d0e4946">Праўленьне пэрспэктыў</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5041">Эліпс</a>
+               <a class="kmr-toc-section" href="#d0e5046">Эліпс</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5046">Рысаваньне</a>
+                  <a class="kmr-toc-group" href="#d0e5051">Рысаваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5106">Вылучэньне</a>
+                  <a class="kmr-toc-group" href="#d0e5111">Вылучэньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5158">Праўленьне з дапамогай ручак</a>
+                  <a class="kmr-toc-group" href="#d0e5163">Праўленьне з дапамогай ручак</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5211">Зорка</a>
+               <a class="kmr-toc-section" href="#d0e5216">Зорка</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5216">Рысаваньне</a>
+                  <a class="kmr-toc-group" href="#d0e5221">Рысаваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5242">Вылучэньне</a>
+                  <a class="kmr-toc-group" href="#d0e5247">Вылучэньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5294">Праўленьне з дапамогай ручак</a>
+                  <a class="kmr-toc-group" href="#d0e5299">Праўленьне з дапамогай ручак</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5367">Сьпіраль</a>
+               <a class="kmr-toc-section" href="#d0e5372">Сьпіраль</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5372">Рысаваньне</a>
+                  <a class="kmr-toc-group" href="#d0e5377">Рысаваньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5398">Вылучэньне</a>
+                  <a class="kmr-toc-group" href="#d0e5403">Вылучэньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5449">Праўленьне з дапамогай ручак</a>
+                  <a class="kmr-toc-group" href="#d0e5454">Праўленьне з дапамогай ручак</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5563">Аловак</a>
+               <a class="kmr-toc-section" href="#d0e5568">Аловак</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5614">Стварэньне кропак</a>
+                  <a class="kmr-toc-group" href="#d0e5626">Стварэньне кропак</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5658">Пяро (Бэзье)</a>
+               <a class="kmr-toc-section" href="#d0e5670">Пяро (Бэзье)</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5663">Стварэньне вузлоў</a>
+                  <a class="kmr-toc-group" href="#d0e5675">Стварэньне вузлоў</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5727">Перасоўваньне апошняга вузла</a>
+                  <a class="kmr-toc-group" href="#d0e5739">Перасоўваньне апошняга вузла</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5781">Стварэньне/зьмяненьне адрэзкаў</a>
+                  <a class="kmr-toc-group" href="#d0e5793">Стварэньне/зьмяненьне адрэзкаў</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5820">Стварэньне кропак</a>
+                  <a class="kmr-toc-group" href="#d0e5832">Стварэньне кропак</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5863">Сканчэньне</a>
+                  <a class="kmr-toc-group" href="#d0e5875">Сканчэньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5896">Адмяніць</a>
+                  <a class="kmr-toc-group" href="#d0e5905">Адмяніць</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5926">Каліґрафічнае пяро</a>
+               <a class="kmr-toc-section" href="#d0e5935">Каліґрафічнае пяро</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6024">Тэкст</a>
+               <a class="kmr-toc-section" href="#d0e6033">Тэкст</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6029">Вылучэньне/стварэньне</a>
+                  <a class="kmr-toc-group" href="#d0e6038">Вылучэньне/стварэньне</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6057">Перамяшчэньне па тэксьце</a>
+                  <a class="kmr-toc-group" href="#d0e6066">Перамяшчэньне па тэксьце</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6146">Укладзены тэкст (нутраная рамка)</a>
+                  <a class="kmr-toc-group" href="#d0e6155">Укладзены тэкст (нутраная рамка)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6185">Укладзены тэкст (вонкавая рамка)</a>
+                  <a class="kmr-toc-group" href="#d0e6194">Укладзены тэкст (вонкавая рамка)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6235">Тэкст на шляху</a>
+                  <a class="kmr-toc-group" href="#d0e6244">Тэкст на шляху</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6254">Правіць тэкст</a>
+                  <a class="kmr-toc-group" href="#d0e6263">Правіць тэкст</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6308">Вылучыць тэкст</a>
+                  <a class="kmr-toc-group" href="#d0e6317">Вылучыць тэкст</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6436">Стыль вылучэньня</a>
+                  <a class="kmr-toc-group" href="#d0e6442">Стыль вылучэньня</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6465">Прагал між літарамі</a>
+                  <a class="kmr-toc-group" href="#d0e6471">Прагал між літарамі</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6521">Міжрадковы інтэрвал</a>
+                  <a class="kmr-toc-group" href="#d0e6527">Міжрадковы інтэрвал</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6585">Кернінґ і зрух</a>
+                  <a class="kmr-toc-group" href="#d0e6591">Кернінґ і зрух</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6625">Паварочваньне</a>
+                  <a class="kmr-toc-group" href="#d0e6631">Паварочваньне</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e6675">Распыляльнік</a>
+               <a class="kmr-toc-section" href="#d0e6681">Распыляльнік</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6680">Рэжымы</a>
+                  <a class="kmr-toc-group" href="#d0e6686">Рэжымы</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6716">Парамэтры</a>
+                  <a class="kmr-toc-group" href="#d0e6722">Парамэтры</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e6756">Сьцірка</a>
+               <a class="kmr-toc-section" href="#d0e6762">Сьцірка</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6787">Вядро</a>
+               <a class="kmr-toc-section" href="#d0e6793">Вядро</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6870">Ґрадыент</a>
+               <a class="kmr-toc-section" href="#d0e6876">Ґрадыент</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6875">Вылучыць аб'ект</a>
+                  <a class="kmr-toc-group" href="#d0e6881">Вылучыць аб'ект</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6908">Стварэньне ґрадыентаў</a>
+                  <a class="kmr-toc-group" href="#d0e6914">Стварэньне ґрадыентаў</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6937">Вылучэньне ручак</a>
+                  <a class="kmr-toc-group" href="#d0e6940">Вылучэньне ручак</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e7007">Стварэньне/выдаленьне прамежкавых спынаў</a>
+                  <a class="kmr-toc-group" href="#d0e7010">Стварэньне/выдаленьне прамежкавых спынаў</a>
                </li>
                <li>
                   <a class="kmr-toc-group" href="#d0e7070">Перасоўваньне ручак/спынаў</a>
@@ -479,18 +483,15 @@
                <li>
                   <a class="kmr-toc-group" href="#d0e7160">Разьварочваньне</a>
                </li>
-               <li>
-                  <a class="kmr-toc-group" href="#d0e7181">Рэдактар ґрадыентаў</a>
-               </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e7201">Піпетка</a>
+               <a class="kmr-toc-section" href="#d0e7180">Піпетка</a>
             </li>
          </ul>
       </div>
       <div class="kmr-chapter">
          <div class="kmr-sect">
-            <a name="d0e44"/>
+            <a name="d0e45"/>
             <h2 class="kmr">Прылады</h2>
             <table class="kmr kmr-color1">
 
@@ -746,7 +747,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e293"/>
+            <a name="d0e294"/>
             <h2 class="kmr">Дыялёґі</h2>
             <table class="kmr kmr-color2">
 
@@ -756,7 +757,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e298"/>Адкрыць</h3>
+                        <a name="d0e299"/>Адкрыць</h3>
                   </td>
                </tr>
 
@@ -886,7 +887,7 @@
                         <span class="plussign">+</span>D</span>
                   </td>
                   <td>
-                     <span class="kmr-action"> Настаўленьні дакумэнту</span>
+                     <span class="kmr-action">Document Properties</span>
                   </td>
                </tr>
 
@@ -978,7 +979,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e497"/>Паказаць ці схаваць</h3>
+                        <a name="d0e498"/>Паказаць ці схаваць</h3>
                   </td>
                </tr>
 
@@ -1003,7 +1004,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e513"/>Унутры дыялёґу</h3>
+                        <a name="d0e514"/>Унутры дыялёґу</h3>
                   </td>
                </tr>
 
@@ -1110,8 +1111,8 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e609"/>
-            <h2 class="kmr">Кіроўная панэль</h2>
+            <a name="d0e610"/>
+            <h2 class="kmr">Tool controls bar</h2>
             <table class="kmr kmr-color3">
 
 
@@ -1120,13 +1121,13 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e614"/>Доступ</h3>
+                        <a name="d0e615"/>Доступ</h3>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Панэль кіраваньня ў гары вакна дакумэнта паказвае розныя ґузікі й сродкі кіраваньня для кожнай прылады.</span>
+                     <span>The tool controls bar at the top of the document window provides different buttons and controls for each tool.</span>
                   </td>
                </tr>
 
@@ -1147,7 +1148,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e633"/>Пераход</h3>
+                        <a name="d0e634"/>Пераход</h3>
                   </td>
                </tr>
 
@@ -1173,7 +1174,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Карыстайся імі каб пераходзіць з поля на поле ў Кіроўнай панэлі (значэньне ў полі, якое пакідаеш, калі яно было зьмененае, будзе прынятае).</span>
+                     <span>Use these to navigate between fields in the tool controls bar (the value in the field you leave, if changed, is accepted).</span>
                   </td>
                </tr>
 
@@ -1183,7 +1184,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e659"/>Зьмяніць значэньні</h3>
+                        <a name="d0e660"/>Зьмяніць значэньні</h3>
                   </td>
                </tr>
 
@@ -1259,7 +1260,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e721"/>
+            <a name="d0e722"/>
             <h2 class="kmr">Палатно</h2>
             <table class="kmr kmr-color4">
 
@@ -1269,7 +1270,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e726"/>Маштаб</h3>
+                        <a name="d0e727"/>Маштаб</h3>
                   </td>
                </tr>
 
@@ -1390,7 +1391,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e829"/>Прадвызначаныя маштабы</h3>
+                        <a name="d0e830"/>Прадвызначаныя маштабы</h3>
                   </td>
                </tr>
 
@@ -1457,7 +1458,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e884"/>Гісторыя маштабаў</h3>
+                        <a name="d0e885"/>Гісторыя маштабаў</h3>
                   </td>
                </tr>
 
@@ -1493,7 +1494,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e910"/>Пракручваньне (азіраньне)</h3>
+                        <a name="d0e911"/>Пракручваньне (азіраньне)</h3>
                   </td>
                </tr>
 
@@ -1575,7 +1576,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e975"/>Накіроўныя, сеткі, прыцягваньне</h3>
+                        <a name="d0e976"/>Накіроўныя, сеткі, прыцягваньне</h3>
                   </td>
                </tr>
 
@@ -1646,19 +1647,19 @@
                         <span class="kmr-plussign">+</span>\</span>
                   </td>
                   <td>
-                     <span class="kmr-action">уключыць/выключыць накіроўныя й прыцягваньне да іх</span>
+                     <span class="kmr-action">toggle guide visibility</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Калі жадае бачыць накіроўныя, але без прыцягваньня да іх, карыстайся глябальным пераключальнікам прыцягваньня (клявіша %).</span>
+                     <span>For activating / deactivating snapping to guides, use the snap bar or the global snapping toggle (% key).</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Калі ствараеш новую накіроўную, цягнучы яе ад лінейкі, уключаюцца бачнасьць накіроўных і прыцягваньне да іх.</span>
+                     <span>When you create a new guide by dragging off the ruler, guide visibility is automatically turned on.</span>
                   </td>
                </tr>
 
@@ -1670,13 +1671,13 @@
                         <span class="kmr-plussign">+</span>3</span>
                   </td>
                   <td>
-                     <span class="kmr-action">уключыць/выключыць сеткі й прыцягваньне да іх</span>
+                     <span class="kmr-action">toggle grids visibility</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Калі жадае бачыць сеткі, але без прыцягваньня да іх, карыстайся глябальным пераключальнікам прыцягваньня (клявіша %).</span>
+                     <span>For activating / deactivating snapping to grids, use the snap bar or the global snapping toggle (% key).</span>
                   </td>
                </tr>
 
@@ -1697,7 +1698,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Гэты загад уключае ці выключае прыцягваньне да сетак, накіроўных і аб'ектаў ва ўсіх прыладах.</span>
+                     <span>This toggle affects snapping to grids, guides, and objects in all tools. The settings in the snap bar determine which snap targets and snapping points will snap.</span>
                   </td>
                </tr>
 
@@ -1707,7 +1708,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1074"/>Рэжым паказу</h3>
+                        <a name="d0e1075"/>Рэжым паказу</h3>
                   </td>
                </tr>
 
@@ -1727,7 +1728,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e1091"/>
+            <a name="d0e1092"/>
             <h2 class="kmr">Палітра</h2>
             <table class="kmr kmr-color5">
 
@@ -1815,7 +1816,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e1160"/>
+            <a name="d0e1161"/>
             <h2 class="kmr">Файл</h2>
             <table class="kmr kmr-color6">
 
@@ -1934,7 +1935,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e1267"/>
+            <a name="d0e1268"/>
             <h2 class="kmr">Вакно</h2>
             <table class="kmr kmr-color7">
 
@@ -2096,7 +2097,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e1410"/>
+            <a name="d0e1411"/>
             <h2 class="kmr">Extensions</h2>
             <table class="kmr kmr-color8">
 
@@ -2132,7 +2133,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e1441"/>
+            <a name="d0e1442"/>
             <h2 class="kmr">Пласты</h2>
             <table class="kmr kmr-color9">
 
@@ -2248,7 +2249,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1538"/>Hide/lock</h3>
+                        <a name="d0e1539"/>Hide/lock</h3>
                   </td>
                </tr>
 
@@ -2284,7 +2285,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e1570"/>
+            <a name="d0e1571"/>
             <h2 class="kmr">Аб'ект</h2>
             <table class="kmr kmr-color10">
 
@@ -2294,7 +2295,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1575"/>Адмяніць/паўтарыць</h3>
+                        <a name="d0e1576"/>Адмяніць/паўтарыць</h3>
                   </td>
                </tr>
 
@@ -2336,7 +2337,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1619"/>Абменны буфэр</h3>
+                        <a name="d0e1620"/>Абменны буфэр</h3>
                   </td>
                </tr>
 
@@ -2461,7 +2462,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1728"/>Падвойваньне</h3>
+                        <a name="d0e1729"/>Падвойваньне</h3>
                   </td>
                </tr>
 
@@ -2488,7 +2489,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1747"/>Клон</h3>
+                        <a name="d0e1748"/>Клон</h3>
                   </td>
                </tr>
 
@@ -2563,7 +2564,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1800"/>Растры</h3>
+                        <a name="d0e1801"/>Растры</h3>
                   </td>
                </tr>
 
@@ -2580,7 +2581,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Гэты загад экспартуе вылучаныя аб'екты (усе іншыя аб'екты будуць схаваныя) як PNG у каталёґу дакумэнту й імпартуе яго назад.</span>
+                     <span>This exports the selected object(s) (all other objects hidden) as PNG in the document's directory and imports it back as embedded bitmap.</span>
                   </td>
                </tr>
 
@@ -2615,7 +2616,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1837"/>Узоры</h3>
+                        <a name="d0e1838"/>Узоры</h3>
                   </td>
                </tr>
 
@@ -2661,7 +2662,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1871"/>Накіроўныя</h3>
+                        <a name="d0e1872"/>Накіроўныя</h3>
                   </td>
                </tr>
 
@@ -2682,7 +2683,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1887"/>Ґрупа</h3>
+                        <a name="d0e1888"/>Ґрупа</h3>
                   </td>
                </tr>
 
@@ -2736,7 +2737,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1938"/>Парадак па восі Z</h3>
+                        <a name="d0e1939"/>Парадак па восі Z</h3>
                   </td>
                </tr>
 
@@ -2781,7 +2782,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e1973"/>
+            <a name="d0e1974"/>
             <h2 class="kmr">Шлях</h2>
             <table class="kmr kmr-color11">
 
@@ -2791,7 +2792,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e1978"/>ператварыць у шлях</h3>
+                        <a name="d0e1979"/>ператварыць у шлях</h3>
                   </td>
                </tr>
 
@@ -2827,7 +2828,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2008"/>Ляґічныя дзеяньні</h3>
+                        <a name="d0e2009"/>Ляґічныя дзеяньні</h3>
                   </td>
                </tr>
 
@@ -2953,7 +2954,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2100"/>Зрухі</h3>
+                        <a name="d0e2101"/>Зрухі</h3>
                   </td>
                </tr>
 
@@ -3098,7 +3099,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2217"/>Спалучэньне</h3>
+                        <a name="d0e2218"/>Спалучэньне</h3>
                   </td>
                </tr>
 
@@ -3156,7 +3157,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2257"/>Спрошчваньне</h3>
+                        <a name="d0e2258"/>Спрошчваньне</h3>
                   </td>
                </tr>
 
@@ -3194,7 +3195,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e2286"/>
+            <a name="d0e2287"/>
             <h2 class="kmr">Вылучальнік</h2>
             <table class="kmr kmr-color12">
 
@@ -3204,7 +3205,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2291"/>Вылучэньне (з дапамогай мышы)</h3>
+                        <a name="d0e2292"/>Вылучэньне (з дапамогай мышы)</h3>
                   </td>
                </tr>
 
@@ -3242,7 +3243,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">пстрык<span class="kmr-plussign">+</span>пстрык</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">правіць аб'ект</span>
@@ -3273,7 +3274,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2339"/>Вылучэньне «гумовай стужкай» ці дотыкам</h3>
+                        <a name="d0e2337"/>Вылучэньне «гумовай стужкай» ці дотыкам</h3>
                   </td>
                </tr>
 
@@ -3355,7 +3356,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2398"/>Вылучэньне (з дапамогай клявіятуры)</h3>
+                        <a name="d0e2396"/>Вылучэньне (з дапамогай клявіятуры)</h3>
                   </td>
                </tr>
 
@@ -3496,7 +3497,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2500"/>Вылучэньне унутры ґрупы, вылучэньне пад курсорам</h3>
+                        <a name="d0e2498"/>Вылучэньне унутры ґрупы, вылучэньне пад курсорам</h3>
                   </td>
                </tr>
 
@@ -3640,7 +3641,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2614"/>Перасоўваньне (з дапамогай мышы)</h3>
+                        <a name="d0e2612"/>Перасоўваньне (з дапамогай мышы)</h3>
                   </td>
                </tr>
 
@@ -3712,7 +3713,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Гэты загад часова абязьдзейнівае прыцягваньне да сеткі ці накіроўных, калі перацягваеш з задзейнічанымі сеткай ці накіроўнымі.</span>
+                     <span>This temporarily disables snapping when you are dragging with snapping activated.</span>
                   </td>
                </tr>
 
@@ -3743,7 +3744,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2688"/>Перасоўваньне (з дапамогай клявіятуры)</h3>
+                        <a name="d0e2686"/>Перасоўваньне (з дапамогай клявіятуры)</h3>
                   </td>
                </tr>
 
@@ -3809,7 +3810,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2739"/>Ператварэнрьне (з дапамогай мышы)</h3>
+                        <a name="d0e2737"/>Ператварэнрьне (з дапамогай мышы)</h3>
                   </td>
                </tr>
 
@@ -3849,7 +3850,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2772"/>Зьмяненьне памеру з дапамогай ручак</h3>
+                        <a name="d0e2770"/>Зьмяненьне памеру з дапамогай ручак</h3>
                   </td>
                </tr>
 
@@ -3914,7 +3915,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2823"/>Зьмяненьне памеру (з дапамогай клявіятуры)</h3>
+                        <a name="d0e2821"/>Зьмяненьне памеру (з дапамогай клявіятуры)</h3>
                   </td>
                </tr>
 
@@ -4008,7 +4009,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Памер зьмяняецца аднастайна вакол цэнтру, таму павелічэньне памеру выкарыстоўваецца да большага з двух вымераў.</span>
+                     <span>The default size increment is added to (or subtracted from) either the selection's height or width, whichever one is larger. Scaling is done around the center of the selection's bounding box and keeps the proportions of the selected object(s).</span>
                   </td>
                </tr>
 
@@ -4018,7 +4019,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2927"/>Паварочваньне/нахільваньне з дапамогай ручак</h3>
+                        <a name="d0e2925"/>Паварочваньне/нахільваньне з дапамогай ручак</h3>
                   </td>
                </tr>
 
@@ -4065,13 +4066,24 @@
                   </td>
                </tr>
 
+               <tr>
+                  <td class="kmr-keys">
+                     <span class="kmr-shortcut">
+                        <span class="kmr-keypad">Shift</span>
+                        <span class="kmr-plussign">+</span>перацягваньне мышай</span>
+                  </td>
+                  <td>
+                     <span class="kmr-action">rotate around opposite corner</span>
+                  </td>
+               </tr>
+
 
 
 
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2966"/>Паварочваньне (з дапамогай клявіятуры)</h3>
+                        <a name="d0e2974"/>Паварочваньне (з дапамогай клявіятуры)</h3>
                   </td>
                </tr>
 
@@ -4137,7 +4149,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3024"/>Перакульваньне</h3>
+                        <a name="d0e3032"/>Перакульваньне</h3>
                   </td>
                </tr>
 
@@ -4171,7 +4183,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3047"/>Цэнтар паварочваньня</h3>
+                        <a name="d0e3055"/>Цэнтар паварочваньня</h3>
                   </td>
                </tr>
 
@@ -4224,7 +4236,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3086"/>Адмяніць</h3>
+                        <a name="d0e3094"/>Адмяніць</h3>
                   </td>
                </tr>
 
@@ -4248,7 +4260,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e3106"/>
+            <a name="d0e3114"/>
             <h2 class="kmr">Вузлы</h2>
             <table class="kmr kmr-color13">
 
@@ -4258,7 +4270,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3111"/>Вылучэньне аб'ектаў (з дапамогай мышы)</h3>
+                        <a name="d0e3119"/>Вылучэньне аб'ектаў (з дапамогай мышы)</h3>
                   </td>
                </tr>
 
@@ -4316,7 +4328,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3157"/>Вылучэньне вузлоў (з дапамогай мышы)</h3>
+                        <a name="d0e3165"/>Вылучэньне вузлоў (з дапамогай мышы)</h3>
                   </td>
                </tr>
 
@@ -4388,7 +4400,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3206"/>Вылучэньне «гумовай стужкай»</h3>
+                        <a name="d0e3214"/>Вылучэньне «гумовай стужкай»</h3>
                   </td>
                </tr>
 
@@ -4436,7 +4448,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3238"/>Вылучэньне вузлоў (з дапамогай клявіятурай)</h3>
+                        <a name="d0e3246"/>Вылучэньне вузлоў (з дапамогай клявіятурай)</h3>
                   </td>
                </tr>
 
@@ -4549,7 +4561,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3321"/>Зьмяншэньне/павелічэньне вылучэньня вузлоў</h3>
+                        <a name="d0e3329"/>Зьмяншэньне/павелічэньне вылучэньня вузлоў</h3>
                   </td>
                </tr>
 
@@ -4605,7 +4617,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Кожнае націсканьне клявішы ці пстрык колам вылучае найбліжэйшы нявылучаны вузел ці здымае вылучэньне з найдалейшага вылучанага вузла.</span>
+                     <span>Each key press or turn of the mouse wheel selects the nearest unselected node or deselects the farthest selected node.</span>
                   </td>
                </tr>
 
@@ -4621,7 +4633,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3381"/>Перасоўваньне вузлоў (з дапамогай мышы)</h3>
+                        <a name="d0e3389"/>Перасоўваньне вузлоў (з дапамогай мышы)</h3>
                   </td>
                </tr>
 
@@ -4660,7 +4672,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Абмяжоўвае рух напрамкамі ручак вузла, іхнымі працягамі й прастастаўнікамі (агулам 8 напрамкаў).</span>
+                     <span>This restricts movement to the directions of the node's handles, their counter directions and perpendiculars (total 8 snaps).</span>
                   </td>
                </tr>
 
@@ -4754,7 +4766,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3480"/>Перасоўваньне вузлоў (з дапамогай клявіятуры)</h3>
+                        <a name="d0e3488"/>Перасоўваньне вузлоў (з дапамогай клявіятуры)</h3>
                   </td>
                </tr>
 
@@ -4820,7 +4832,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3531"/>Перасоўваньне ручкі вузла (з дапамогай мышы)</h3>
+                        <a name="d0e3539"/>Перасоўваньне ручкі вузла (з дапамогай мышы)</h3>
                   </td>
                </tr>
 
@@ -4846,7 +4858,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Прадвызначаны крок вугла роўны 15 ґрадусам. Гэты загад таксама абмяжоўвае спачатны вугал ручкі, ейныя працягі й прастастаўнікі.</span>
+                     <span>The default angle step is 15 degrees. This also snaps to the handle's original angle, its counter direction and perpendiculars.</span>
                   </td>
                </tr>
 
@@ -4901,7 +4913,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3593"/>Зьмяненьне памеру ручак (вылучаны 1 вузел)</h3>
+                        <a name="d0e3601"/>Зьмяненьне памеру ручак (вылучаны 1 вузел)</h3>
                   </td>
                </tr>
 
@@ -4995,7 +5007,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3699"/>Паварочваньне ручкі (вылучаная 1 ручка)</h3>
+                        <a name="d0e3707"/>Паварочваньне ручкі (вылучаная 1 ручка)</h3>
                   </td>
                </tr>
 
@@ -5077,7 +5089,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3785"/>Бачнасьць ручак</h3>
+                        <a name="d0e3793"/>Бачнасьць ручак</h3>
                   </td>
                </tr>
 
@@ -5097,7 +5109,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3801"/>Зьмяненьне памеру ручак (вылучана &gt;1 вузел)</h3>
+                        <a name="d0e3809"/>Зьмяненьне памеру ручак (вылучана &gt;1 вузел)</h3>
                   </td>
                </tr>
 
@@ -5175,7 +5187,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Памер зьмяняецца аднастайна вакол цэнтру, таму павелічэньне памеру выкарыстоўваецца да большага з двух вымераў.</span>
+                     <span>The default size increment is added to (or subtracted from) either the node selection's height or width, whichever one is larger. Scaling keeps the proportions of the node selection.</span>
                   </td>
                </tr>
 
@@ -5185,7 +5197,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3877"/>Павернуць вузлы (вылучана &gt; 1 вузел)</h3>
+                        <a name="d0e3885"/>Павернуць вузлы (вылучана &gt; 1 вузел)</h3>
                   </td>
                </tr>
 
@@ -5243,7 +5255,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3921"/>Перакуліць вузлы (вылучана &gt; 1 вузел)</h3>
+                        <a name="d0e3929"/>Перакуліць вузлы (вылучана &gt; 1 вузел)</h3>
                   </td>
                </tr>
 
@@ -5283,7 +5295,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3947"/>Зьмяненьне адрэзкаў</h3>
+                        <a name="d0e3955"/>Зьмяненьне адрэзкаў</h3>
                   </td>
                </tr>
 
@@ -5321,7 +5333,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3976"/>Зьмяненьне тыпу вузла</h3>
+                        <a name="d0e3984"/>Зьмяненьне тыпу вузла</h3>
                   </td>
                </tr>
 
@@ -5404,7 +5416,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4041"/>Злучэньне/разьбіваньне</h3>
+                        <a name="d0e4049"/>Злучэньне/разьбіваньне</h3>
                   </td>
                </tr>
 
@@ -5465,7 +5477,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4086"/>Выдаленьне, стварэньне, падвойваньне</h3>
+                        <a name="d0e4094"/>Выдаленьне, стварэньне, падвойваньне</h3>
                   </td>
                </tr>
 
@@ -5543,7 +5555,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">пстрык<span class="kmr-plussign">+</span>пстрык</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">стварыць вузел</span>
@@ -5600,7 +5612,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4196"/>Разьварочваньне</h3>
+                        <a name="d0e4201"/>Разьварочваньне</h3>
                   </td>
                </tr>
 
@@ -5621,7 +5633,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4212"/>Праўленьне фіґур</h3>
+                        <a name="d0e4217"/>Праўленьне фіґур</h3>
                   </td>
                </tr>
 
@@ -5643,7 +5655,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4224"/>Праўленьне запаўненьняў і эфэктаў шляхоў</h3>
+                        <a name="d0e4229"/>Праўленьне запаўненьняў і эфэктаў шляхоў</h3>
                   </td>
                </tr>
 
@@ -5659,7 +5671,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4233"/>Адмяніць</h3>
+                        <a name="d0e4238"/>Адмяніць</h3>
                   </td>
                </tr>
 
@@ -5683,7 +5695,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4253"/>
+            <a name="d0e4258"/>
             <h2 class="kmr">Карэкцыя</h2>
             <table class="kmr kmr-color14">
 
@@ -5693,7 +5705,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4258"/>Дзеяньне</h3>
+                        <a name="d0e4263"/>Дзеяньне</h3>
                   </td>
                </tr>
 
@@ -5724,7 +5736,7 @@
                         <span class="kmr-plussign">+</span>перацягваньне мышай</span>
                   </td>
                   <td>
-                     <span class="kmr-action">дзейнічаць, часова пераключыўшыся ў рэжым сьцісканьня</span>
+                     <span class="kmr-action">temporarily switch to shrink mode</span>
                   </td>
                </tr>
 
@@ -5737,7 +5749,7 @@
                         <span class="plussign">+</span>перацягваньне мышай</span>
                   </td>
                   <td>
-                     <span class="kmr-action">дзейнічаць, часова пераключыўшыся ў рэжым расьцягваньня</span>
+                     <span class="kmr-action">temporarily switch to grow mode</span>
                   </td>
                </tr>
 
@@ -5753,7 +5765,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4306"/>Рэжымы</h3>
+                        <a name="d0e4311"/>Рэжымы</h3>
                   </td>
                </tr>
 
@@ -5966,7 +5978,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4532"/>Парамэтры</h3>
+                        <a name="d0e4537"/>Парамэтры</h3>
                   </td>
                </tr>
 
@@ -5986,7 +5998,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">зрабіць таўшчыню пэндзля роўнай 1/100</span>
+                     <span class="kmr-action">set brush width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -6011,7 +6023,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4575"/>
+            <a name="d0e4580"/>
             <h2 class="kmr">Маштаб</h2>
             <table class="kmr kmr-color15">
 
@@ -6051,7 +6063,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4608"/>
+            <a name="d0e4613"/>
             <h2 class="kmr">Measure tool</h2>
             <table class="kmr kmr-color16">
 
@@ -6074,7 +6086,7 @@
                         <span class="kmr-plussign">+</span>перацягваньне мышай</span>
                   </td>
                   <td>
-                     <span class="kmr-action">set the measure base to the cursor</span>
+                     <span class="kmr-action">set base of angle measurement to cursor position</span>
                   </td>
                </tr>  
 
@@ -6099,7 +6111,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4647"/>
+            <a name="d0e4652"/>
             <h2 class="kmr">Прастакутнік</h2>
             <table class="kmr kmr-color17">
 
@@ -6109,7 +6121,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4652"/>Рысаваньне</h3>
+                        <a name="d0e4657"/>Рысаваньне</h3>
                   </td>
                </tr>
 
@@ -6135,7 +6147,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Гэты загад абмяжоўвае прастакутнік гэтак, што стасунак вышыні да шырыні роўны цэламу ліку.</span>
+                     <span>This restricts width/height ratio or its inverse to a whole number or the golden ratio.</span>
                   </td>
                </tr>
 
@@ -6162,7 +6174,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4691"/>Вылучэньне</h3>
+                        <a name="d0e4696"/>Вылучэньне</h3>
                   </td>
                </tr>
 
@@ -6223,7 +6235,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4743"/>Зьмяненьне вымераў з дапамогай ручак</h3>
+                        <a name="d0e4748"/>Зьмяненьне вымераў з дапамогай ручак</h3>
                   </td>
                </tr>
 
@@ -6265,7 +6277,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4772"/>Скругленьне кутоў з дапамогай ручак</h3>
+                        <a name="d0e4777"/>Скругленьне кутоў з дапамогай ручак</h3>
                   </td>
                </tr>
 
@@ -6334,7 +6346,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4825"/>
+            <a name="d0e4830"/>
             <h2 class="kmr">Трохмерная скрыня</h2>
             <table class="kmr kmr-color18">
 
@@ -6344,7 +6356,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4830"/>Рысаваньне</h3>
+                        <a name="d0e4835"/>Рысаваньне</h3>
                   </td>
                </tr>
 
@@ -6374,7 +6386,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4853"/>Вылучэньне</h3>
+                        <a name="d0e4858"/>Вылучэньне</h3>
                   </td>
                </tr>
 
@@ -6429,7 +6441,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4902"/>Праўленьне з дапамогай ручак</h3>
+                        <a name="d0e4907"/>Праўленьне з дапамогай ручак</h3>
                   </td>
                </tr>
 
@@ -6482,7 +6494,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4941"/>Праўленьне пэрспэктыў</h3>
+                        <a name="d0e4946"/>Праўленьне пэрспэктыў</h3>
                   </td>
                </tr>
 
@@ -6586,7 +6598,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5041"/>
+            <a name="d0e5046"/>
             <h2 class="kmr">Эліпс</h2>
             <table class="kmr kmr-color19">
 
@@ -6596,7 +6608,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5046"/>Рысаваньне</h3>
+                        <a name="d0e5051"/>Рысаваньне</h3>
                   </td>
                </tr>
 
@@ -6634,7 +6646,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Гэтак абмяжоўвае эліпс, што ягоны стасунак вышыі да шырыні роўны цэламу ліку.</span>
+                     <span>This restricts width/height ratio or its inverse to a whole number or the golden ratio.</span>
                   </td>
                </tr>
 
@@ -6680,7 +6692,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5106"/>Вылучэньне</h3>
+                        <a name="d0e5111"/>Вылучэньне</h3>
                   </td>
                </tr>
 
@@ -6741,7 +6753,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5158"/>Праўленьне з дапамогай ручак</h3>
+                        <a name="d0e5163"/>Праўленьне з дапамогай ручак</h3>
                   </td>
                </tr>
 
@@ -6810,7 +6822,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5211"/>
+            <a name="d0e5216"/>
             <h2 class="kmr">Зорка</h2>
             <table class="kmr kmr-color20">
 
@@ -6820,7 +6832,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5216"/>Рысаваньне</h3>
+                        <a name="d0e5221"/>Рысаваньне</h3>
                   </td>
                </tr>
 
@@ -6856,7 +6868,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5242"/>Вылучэньне</h3>
+                        <a name="d0e5247"/>Вылучэньне</h3>
                   </td>
                </tr>
 
@@ -6917,7 +6929,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5294"/>Праўленьне з дапамогай ручак</h3>
+                        <a name="d0e5299"/>Праўленьне з дапамогай ручак</h3>
                   </td>
                </tr>
 
@@ -6994,7 +7006,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5367"/>
+            <a name="d0e5372"/>
             <h2 class="kmr">Сьпіраль</h2>
             <table class="kmr kmr-color21">
 
@@ -7004,7 +7016,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5372"/>Рысаваньне</h3>
+                        <a name="d0e5377"/>Рысаваньне</h3>
                   </td>
                </tr>
 
@@ -7040,7 +7052,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5398"/>Вылучэньне</h3>
+                        <a name="d0e5403"/>Вылучэньне</h3>
                   </td>
                </tr>
 
@@ -7101,7 +7113,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5449"/>Праўленьне з дапамогай ручак</h3>
+                        <a name="d0e5454"/>Праўленьне з дапамогай ручак</h3>
                   </td>
                </tr>
 
@@ -7242,7 +7254,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5563"/>
+            <a name="d0e5568"/>
             <h2 class="kmr">Аловак</h2>
             <table class="kmr kmr-color22">
 
@@ -7254,7 +7266,7 @@
                      <span class="kmr-shortcut">перацягваньне мышай</span>
                   </td>
                   <td>
-                     <span class="kmr-action">нарысаваць лінію ад рукі</span>
+                     <span class="kmr-action">draw a freehand path</span>
                   </td>
                </tr>
 
@@ -7271,7 +7283,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Калі вылучаны шлях Shift+пстрык дзе заўгодна пачынае новы падшлях замест новага незалежнага шляху.</span>
+                     <span>If a path is selected, Shift+dragging from anywhere starts a new subpath instead of a new independent path.</span>
                   </td>
                </tr>
 
@@ -7288,7 +7300,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Гэты загад часова абязьдзейнівае прыцягваньне да сеткі ці накіроўных, калі перацягваеш з задзейнічанымі сеткай ці накіроўнымі.</span>
+                     <span>This temporarily disables snapping when you are dragging with snapping activated.</span>
                   </td>
                </tr>
 
@@ -7303,13 +7315,22 @@
                   </td>
                </tr>
 
+               <tr>
+                  <td class="kmr-keys">
+                     <span class="kmr-shortcut">пстрык</span>
+                  </td>
+                  <td>
+                     <span class="kmr-action">start a straight path (finish with another click)</span>
+                  </td>
+               </tr>
+
 
 
 
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5614"/>Стварэньне кропак</h3>
+                        <a name="d0e5626"/>Стварэньне кропак</h3>
                   </td>
                </tr>
 
@@ -7360,7 +7381,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5658"/>
+            <a name="d0e5670"/>
             <h2 class="kmr">Пяро (Бэзье)</h2>
             <table class="kmr kmr-color23">
 
@@ -7370,7 +7391,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5663"/>Стварэньне вузлоў</h3>
+                        <a name="d0e5675"/>Стварэньне вузлоў</h3>
                   </td>
                </tr>
 
@@ -7456,7 +7477,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5727"/>Перасоўваньне апошняга вузла</h3>
+                        <a name="d0e5739"/>Перасоўваньне апошняга вузла</h3>
                   </td>
                </tr>
 
@@ -7528,7 +7549,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5781"/>Стварэньне/зьмяненьне адрэзкаў</h3>
+                        <a name="d0e5793"/>Стварэньне/зьмяненьне адрэзкаў</h3>
                   </td>
                </tr>
 
@@ -7583,7 +7604,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5820"/>Стварэньне кропак</h3>
+                        <a name="d0e5832"/>Стварэньне кропак</h3>
                   </td>
                </tr>
 
@@ -7636,7 +7657,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5863"/>Сканчэньне</h3>
+                        <a name="d0e5875"/>Сканчэньне</h3>
                   </td>
                </tr>
 
@@ -7645,7 +7666,7 @@
                      <span class="kmr-shortcut">Увод</span>
                   </td>
                   <td>
-                     <span class="kmr-action">скончыць бягучую лінію</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
@@ -7654,22 +7675,22 @@
                      <span class="kmr-shortcut">пстрык правай</span>
                   </td>
                   <td>
-                     <span class="kmr-action">скончыць бягучую лінію</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">пстрык<span class="kmr-plussign">+</span>пстрык</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
-                     <span class="kmr-action">скончыць бягучую лінію</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Enter, пстрык правай, ці падвойны пстрык левай заканчвае бягучую лінію, адкідваючы апошні няспынены (чырвоны) адрэзак.</span>
+                     <span>Enter or right click finish the current line, discarding the last unfinished (red) segment. Double left click finishes the current line where double-clicked.</span>
                   </td>
                </tr>
 
@@ -7679,7 +7700,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5896"/>Адмяніць</h3>
+                        <a name="d0e5905"/>Адмяніць</h3>
                   </td>
                </tr>
 
@@ -7710,7 +7731,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5926"/>
+            <a name="d0e5935"/>
             <h2 class="kmr">Каліґрафічнае пяро</h2>
             <table class="kmr kmr-color24">
 
@@ -7722,7 +7743,7 @@
                      <span class="kmr-shortcut">перацягваньне мышай</span>
                   </td>
                   <td>
-                     <span class="kmr-action">нарысаваць каліґрафічную лінію</span>
+                     <span class="kmr-action">draw a calligraphic stroke</span>
                   </td>
                </tr>
 
@@ -7793,7 +7814,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">зрабіць таўшчыню пяра роўнай 1 ці 100</span>
+                     <span class="kmr-action">set pen width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -7827,7 +7848,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6024"/>
+            <a name="d0e6033"/>
             <h2 class="kmr">Тэкст</h2>
             <table class="kmr kmr-color25">
 
@@ -7837,7 +7858,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6029"/>Вылучэньне/стварэньне</h3>
+                        <a name="d0e6038"/>Вылучэньне/стварэньне</h3>
                   </td>
                </tr>
 
@@ -7878,7 +7899,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6057"/>Перамяшчэньне па тэксьце</h3>
+                        <a name="d0e6066"/>Перамяшчэньне па тэксьце</h3>
                   </td>
                </tr>
 
@@ -7955,7 +7976,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Усе гэтыя загады скасоўваюць бягучае вылучэньне тэксту, калі яно ёсьць. Выкарыстоўвай іх з Shift каб пашырыць вылучэньне.</span>
+                     <span>All these commands cancel current text selection, if any. Use them with Shift to add to / subtract from selection instead.</span>
                   </td>
                </tr>
 
@@ -7965,7 +7986,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6146"/>Укладзены тэкст (нутраная рамка)</h3>
+                        <a name="d0e6155"/>Укладзены тэкст (нутраная рамка)</h3>
                   </td>
                </tr>
 
@@ -8022,7 +8043,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6185"/>Укладзены тэкст (вонкавая рамка)</h3>
+                        <a name="d0e6194"/>Укладзены тэкст (вонкавая рамка)</h3>
                   </td>
                </tr>
 
@@ -8091,7 +8112,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6235"/>Тэкст на шляху</h3>
+                        <a name="d0e6244"/>Тэкст на шляху</h3>
                   </td>
                </tr>
 
@@ -8118,7 +8139,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6254"/>Правіць тэкст</h3>
+                        <a name="d0e6263"/>Правіць тэкст</h3>
                   </td>
                </tr>
 
@@ -8201,7 +8222,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6308"/>Вылучыць тэкст</h3>
+                        <a name="d0e6317"/>Вылучыць тэкст</h3>
                   </td>
                </tr>
 
@@ -8292,7 +8313,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">пстрык<span class="kmr-plussign">+</span>пстрык</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">вылучыць слова</span>
@@ -8331,7 +8352,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6436"/>Стыль вылучэньня</h3>
+                        <a name="d0e6442"/>Стыль вылучэньня</h3>
                   </td>
                </tr>
 
@@ -8369,7 +8390,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6465"/>Прагал між літарамі</h3>
+                        <a name="d0e6471"/>Прагал між літарамі</h3>
                   </td>
                </tr>
 
@@ -8439,7 +8460,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6521"/>Міжрадковы інтэрвал</h3>
+                        <a name="d0e6527"/>Міжрадковы інтэрвал</h3>
                   </td>
                </tr>
 
@@ -8517,7 +8538,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6585"/>Кернінґ і зрух</h3>
+                        <a name="d0e6591"/>Кернінґ і зрух</h3>
                   </td>
                </tr>
 
@@ -8575,7 +8596,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6625"/>Паварочваньне</h3>
+                        <a name="d0e6631"/>Паварочваньне</h3>
                   </td>
                </tr>
 
@@ -8630,7 +8651,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6675"/>
+            <a name="d0e6681"/>
             <h2 class="kmr">Распыляльнік</h2>
             <table class="kmr kmr-color26">
 
@@ -8640,7 +8661,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6680"/>Рэжымы</h3>
+                        <a name="d0e6686"/>Рэжымы</h3>
                   </td>
                </tr>
 
@@ -8683,7 +8704,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6716"/>Парамэтры</h3>
+                        <a name="d0e6722"/>Парамэтры</h3>
                   </td>
                </tr>
 
@@ -8713,7 +8734,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">зрабіць таўшчыню распыленьня роўнай 1/100</span>
+                     <span class="kmr-action">set spray width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -8722,7 +8743,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6756"/>
+            <a name="d0e6762"/>
             <h2 class="kmr">Сьцірка</h2>
             <table class="kmr kmr-color1">
 
@@ -8745,7 +8766,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">зрабіць таўшчыню сьціркі роўнай 1/100</span>
+                     <span class="kmr-action">set eraser width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -8754,7 +8775,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6787"/>
+            <a name="d0e6793"/>
             <h2 class="kmr">Вядро</h2>
             <table class="kmr kmr-color2">
 
@@ -8815,7 +8836,7 @@
                         <span class="kmr-plussign">+</span>перацягваньне мышай</span>
                   </td>
                   <td>
-                     <span class="kmr-action">запаўняць з кожнага пункту як з пачатковага пункту</span>
+                     <span class="kmr-action">fill from each point similar to the initial point</span>
                   </td>
                </tr>
 
@@ -8866,7 +8887,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6870"/>
+            <a name="d0e6876"/>
             <h2 class="kmr">Ґрадыент</h2>
             <table class="kmr kmr-color3">
 
@@ -8876,7 +8897,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6875"/>Вылучыць аб'ект</h3>
+                        <a name="d0e6881"/>Вылучыць аб'ект</h3>
                   </td>
                </tr>
 
@@ -8917,7 +8938,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6908"/>Стварэньне ґрадыентаў</h3>
+                        <a name="d0e6914"/>Стварэньне ґрадыентаў</h3>
                   </td>
                </tr>
 
@@ -8932,13 +8953,13 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Гэты загад стварае ґрадыент на вылучаных аб'ектах. Кіроўная панэль дазваляе выбраць лінейны/радыяльны тып й запаўненьне/контур новага ґрадыенту.</span>
+                     <span>This creates gradient on selected objects. The tool controls bar lets you select linear/radial and fill/stroke for the new gradient.</span>
                   </td>
                </tr>
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">пстрык<span class="kmr-plussign">+</span>пстрык</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">стварыць прадвызначаны ґрадыент</span>
@@ -8957,7 +8978,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6937"/>Вылучэньне ручак</h3>
+                        <a name="d0e6940"/>Вылучэньне ручак</h3>
                   </td>
                </tr>
 
@@ -9044,7 +9065,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e7007"/>Стварэньне/выдаленьне прамежкавых спынаў</h3>
+                        <a name="d0e7010"/>Стварэньне/выдаленьне прамежкавых спынаў</h3>
                   </td>
                </tr>
 
@@ -9063,7 +9084,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">пстрык<span class="kmr-plussign">+</span>пстрык</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">стварыць спын</span>
@@ -9106,7 +9127,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>Гэты загад дадае новыя спыны ў сярэдзіны вылучаных адрэзкаў, таму ён патрабуе каб былі вылучаныя больш за дзьве прылеглыя ручкі.</span>
+                     <span>This adds new stop(s) in the middle(s) between adjacent, selected stops or, if only one stop is selected, in the middle of the segment that starts with the selected stop.</span>
                   </td>
                </tr>
 
@@ -9269,36 +9290,10 @@
 
 
 
-
-
-               <tr>
-                  <td colspan="2">
-                     <h3 class="kmr">
-                        <a name="d0e7181"/>Рэдактар ґрадыентаў</h3>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="kmr-keys">
-                     <span class="kmr-shortcut">пстрык<span class="kmr-plussign">+</span>пстрык</span>
-                  </td>
-                  <td>
-                     <span class="kmr-action">адкрыць рэдактар ґрадыентаў</span>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td colspan="2" class="kmr-note">
-                     <span>Падвойны пстрык па ручцы ґрадыенту адкрывае рэдактар ґрадыентаў з гэтым ґрадыентам і пстрыкнутай ручкай, вылучанай у сьпісе спынаў.</span>
-                  </td>
-               </tr>
-
-
-
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e7201"/>
+            <a name="d0e7180"/>
             <h2 class="kmr">Піпетка</h2>
             <table class="kmr kmr-color4">
 

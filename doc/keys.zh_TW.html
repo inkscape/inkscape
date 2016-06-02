@@ -11,15 +11,20 @@
    <body class="kmr">
       <div id="header">
          <h1 class="kmr">Inkscape 鍵盤和滑鼠參考</h1>
-         <div class="kmr-releaseinfo">版本 0.91</div>
-         <div class="kmr-pubdate">最新修訂版本： 2015-02-04</div>
+         <div class="kmr-releaseinfo">版本 0.92</div>
+         <div class="kmr-pubdate">最新修訂版本： 2016-06-01</div>
       </div>
       <div id="kmr-preface">
     
-         <p>這份文件講述 Inkscape 預設的鍵盤滑鼠快捷鍵，對應 Inkscape 發行裡的 share/keys/default.xml 檔案。使用者可設定大部分 (非全部) 的按鍵；請閱讀 default.xml 檔案取得如何設定的詳細資訊。</p>
+         <p>This document describes the default keyboard and mouse shortcuts of Inkscape, corresponding to the
+share/keys/default.xml file in your Inkscape installation. Some of the keyboard shortcuts may not be available for non-US keyboard layouts, but most (not all) of these shortcuts are configurable by the user. You can create custom shortcuts and load custom keyboard shortcut files in the Inkscape Preferences, or by following the instructions in the default.xml file.</p>
 
     
-         <p>除非另有說明，數字鍵 (例如方向鍵、Home、End、+、-、數字) 都和相對應的普通按鍵有相同的效果。如果您有新的快捷鍵構想，請聯絡開發者 (寄信到<a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">開發者郵件論壇</a>或到 <a href="https://bugs.launchpad.net/inkscape">Inkscape 的 launchpad 上提交 RFE</a>)。</p>
+         <p>Unless noted otherwise, keypad keys (such as arrows, Home, End, +, -, digits) are
+supposed to work the same as corresponding regular keys. If you have a new shortcut
+idea, please contact the developers (by writing to the <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">devel mailing list</a>
+or by <a href="https://bugs.launchpad.net/inkscape">submitting a
+feature request</a>).</p>
 
       </div>
       <div class="kmr-toc">
@@ -42,7 +47,7 @@
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e610">控制列</a>
+               <a class="kmr-toc-section" href="#d0e610">Tool controls bar</a>
             </li>
             <ul>
                <li>
@@ -158,332 +163,329 @@
                   <a class="kmr-toc-group" href="#d0e2292">選取 (滑鼠)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2340">框選、觸碰選取</a>
+                  <a class="kmr-toc-group" href="#d0e2337">框選、觸碰選取</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2399">選取 (鍵盤)</a>
+                  <a class="kmr-toc-group" href="#d0e2396">選取 (鍵盤)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2501">選取群組內的物件、選取下層物件</a>
+                  <a class="kmr-toc-group" href="#d0e2498">選取群組內的物件、選取下層物件</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2615">移動 (滑鼠)</a>
+                  <a class="kmr-toc-group" href="#d0e2612">移動 (滑鼠)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2689">移動 (鍵盤)</a>
+                  <a class="kmr-toc-group" href="#d0e2686">移動 (鍵盤)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2740">變形 (滑鼠)</a>
+                  <a class="kmr-toc-group" href="#d0e2737">變形 (滑鼠)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2773">用控制點縮放</a>
+                  <a class="kmr-toc-group" href="#d0e2770">用控制點縮放</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2824">縮放 (鍵盤)</a>
+                  <a class="kmr-toc-group" href="#d0e2821">縮放 (鍵盤)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2928">用控制點旋轉 / 傾斜</a>
+                  <a class="kmr-toc-group" href="#d0e2925">用控制點旋轉 / 傾斜</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e2967">旋轉 (鍵盤)</a>
+                  <a class="kmr-toc-group" href="#d0e2974">旋轉 (鍵盤)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3025">翻轉</a>
+                  <a class="kmr-toc-group" href="#d0e3032">翻轉</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3048">旋轉中心</a>
+                  <a class="kmr-toc-group" href="#d0e3055">旋轉中心</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3087">取消</a>
+                  <a class="kmr-toc-group" href="#d0e3094">取消</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e3107">節點工具</a>
+               <a class="kmr-toc-section" href="#d0e3114">節點工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3112">選取物件 (滑鼠)</a>
+                  <a class="kmr-toc-group" href="#d0e3119">選取物件 (滑鼠)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3158">選取節點 (滑鼠)</a>
+                  <a class="kmr-toc-group" href="#d0e3165">選取節點 (滑鼠)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3207">框選</a>
+                  <a class="kmr-toc-group" href="#d0e3214">框選</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3239">選取節點 (鍵盤)</a>
+                  <a class="kmr-toc-group" href="#d0e3246">選取節點 (鍵盤)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3322">膨脹 / 收縮節點選取範圍</a>
+                  <a class="kmr-toc-group" href="#d0e3329">膨脹 / 收縮節點選取範圍</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3382">移動節點 (滑鼠)</a>
+                  <a class="kmr-toc-group" href="#d0e3389">移動節點 (滑鼠)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3481">移動節點 (鍵盤)</a>
+                  <a class="kmr-toc-group" href="#d0e3488">移動節點 (鍵盤)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3532">移動節點控制柄 (滑鼠)</a>
+                  <a class="kmr-toc-group" href="#d0e3539">移動節點控制柄 (滑鼠)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3594">縮放控制柄 (須先選取1 個節點)</a>
+                  <a class="kmr-toc-group" href="#d0e3601">縮放控制柄 (須先選取1 個節點)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3700">旋轉控制柄 (須先選取1 個節點)</a>
+                  <a class="kmr-toc-group" href="#d0e3707">旋轉控制柄 (須先選取1 個節點)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3786">控制柄隱現狀態</a>
+                  <a class="kmr-toc-group" href="#d0e3793">控制柄隱現狀態</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3802">縮放節點 (須選取 1 個以上的節點)</a>
+                  <a class="kmr-toc-group" href="#d0e3809">縮放節點 (須選取 1 個以上的節點)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3878">旋轉節點 (須選取一個以上的節點)</a>
+                  <a class="kmr-toc-group" href="#d0e3885">旋轉節點 (須選取一個以上的節點)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3922">翻轉節點 (須選取一個以上的節點)</a>
+                  <a class="kmr-toc-group" href="#d0e3929">翻轉節點 (須選取一個以上的節點)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3948">變更線段</a>
+                  <a class="kmr-toc-group" href="#d0e3955">變更線段</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e3977">變更節點類型</a>
+                  <a class="kmr-toc-group" href="#d0e3984">變更節點類型</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4042">結合 / 打斷</a>
+                  <a class="kmr-toc-group" href="#d0e4049">結合 / 打斷</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4087">刪除、建立、再製</a>
+                  <a class="kmr-toc-group" href="#d0e4094">刪除、建立、再製</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4197">反轉</a>
+                  <a class="kmr-toc-group" href="#d0e4201">反轉</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4213">編輯形狀</a>
+                  <a class="kmr-toc-group" href="#d0e4217">編輯形狀</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4225">編輯填充和路徑特效</a>
+                  <a class="kmr-toc-group" href="#d0e4229">編輯填充和路徑特效</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4234">取消</a>
+                  <a class="kmr-toc-group" href="#d0e4238">取消</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4254">微調工具</a>
+               <a class="kmr-toc-section" href="#d0e4258">微調工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4259">操作</a>
+                  <a class="kmr-toc-group" href="#d0e4263">操作</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4307">模式</a>
+                  <a class="kmr-toc-group" href="#d0e4311">模式</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4533">參數</a>
+                  <a class="kmr-toc-group" href="#d0e4537">參數</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4576">縮放工具</a>
+               <a class="kmr-toc-section" href="#d0e4580">縮放工具</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e4609">Measure tool</a>
+               <a class="kmr-toc-section" href="#d0e4613">Measure tool</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e4648">矩形工具</a>
+               <a class="kmr-toc-section" href="#d0e4652">矩形工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4653">繪畫</a>
+                  <a class="kmr-toc-group" href="#d0e4657">繪畫</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4692">選取</a>
+                  <a class="kmr-toc-group" href="#d0e4696">選取</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4744">用控制點調整大小</a>
+                  <a class="kmr-toc-group" href="#d0e4748">用控制點調整大小</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4773">用控制點將頂點圓角化</a>
+                  <a class="kmr-toc-group" href="#d0e4777">用控制點將頂點圓角化</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e4826">立方體工具</a>
+               <a class="kmr-toc-section" href="#d0e4830">立方體工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4831">繪畫</a>
+                  <a class="kmr-toc-group" href="#d0e4835">繪畫</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4854">選取</a>
+                  <a class="kmr-toc-group" href="#d0e4858">選取</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4903">用控制點編輯</a>
+                  <a class="kmr-toc-group" href="#d0e4907">用控制點編輯</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e4942">透視角編輯</a>
+                  <a class="kmr-toc-group" href="#d0e4946">透視角編輯</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5042">橢圓形工具</a>
+               <a class="kmr-toc-section" href="#d0e5046">橢圓形工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5047">繪畫</a>
+                  <a class="kmr-toc-group" href="#d0e5051">繪畫</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5107">選取</a>
+                  <a class="kmr-toc-group" href="#d0e5111">選取</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5159">用控制點編輯</a>
+                  <a class="kmr-toc-group" href="#d0e5163">用控制點編輯</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5212">星形工具</a>
+               <a class="kmr-toc-section" href="#d0e5216">星形工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5217">繪畫</a>
+                  <a class="kmr-toc-group" href="#d0e5221">繪畫</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5243">選取</a>
+                  <a class="kmr-toc-group" href="#d0e5247">選取</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5295">用控制點編輯</a>
+                  <a class="kmr-toc-group" href="#d0e5299">用控制點編輯</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5368">螺旋形工具</a>
+               <a class="kmr-toc-section" href="#d0e5372">螺旋形工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5373">繪畫</a>
+                  <a class="kmr-toc-group" href="#d0e5377">繪畫</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5399">選取</a>
+                  <a class="kmr-toc-group" href="#d0e5403">選取</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5450">用控制點編輯</a>
+                  <a class="kmr-toc-group" href="#d0e5454">用控制點編輯</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5564">鉛筆工具</a>
+               <a class="kmr-toc-section" href="#d0e5568">鉛筆工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5615">建立點</a>
+                  <a class="kmr-toc-group" href="#d0e5626">建立點</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5659">筆型 (貝茲曲線) 工具</a>
+               <a class="kmr-toc-section" href="#d0e5670">筆型 (貝茲曲線) 工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5664">建立節點</a>
+                  <a class="kmr-toc-group" href="#d0e5675">建立節點</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5728">移動最後建立的節點</a>
+                  <a class="kmr-toc-group" href="#d0e5739">移動最後建立的節點</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5782">建立/修改線段</a>
+                  <a class="kmr-toc-group" href="#d0e5793">建立/修改線段</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5821">建立點</a>
+                  <a class="kmr-toc-group" href="#d0e5832">建立點</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5864">結束</a>
+                  <a class="kmr-toc-group" href="#d0e5875">結束</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e5897">取消</a>
+                  <a class="kmr-toc-group" href="#d0e5905">取消</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e5927">書法工具</a>
+               <a class="kmr-toc-section" href="#d0e5935">書法工具</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6025">文字工具</a>
+               <a class="kmr-toc-section" href="#d0e6033">文字工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6030">選取 / 建立</a>
+                  <a class="kmr-toc-group" href="#d0e6038">選取 / 建立</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6058">瀏覽文字</a>
+                  <a class="kmr-toc-group" href="#d0e6066">瀏覽文字</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6147">流動文字 (內部文字框)</a>
+                  <a class="kmr-toc-group" href="#d0e6155">流動文字 (內部文字框)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6186">流動文字 (外部文字框)</a>
+                  <a class="kmr-toc-group" href="#d0e6194">流動文字 (外部文字框)</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6236">文字沿置路徑</a>
+                  <a class="kmr-toc-group" href="#d0e6244">文字沿置路徑</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6255">編輯文字</a>
+                  <a class="kmr-toc-group" href="#d0e6263">編輯文字</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6309">選取文字</a>
+                  <a class="kmr-toc-group" href="#d0e6317">選取文字</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6437">選取樣式</a>
+                  <a class="kmr-toc-group" href="#d0e6442">選取樣式</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6466">字母間距</a>
+                  <a class="kmr-toc-group" href="#d0e6471">字母間距</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6522">列距</a>
+                  <a class="kmr-toc-group" href="#d0e6527">列距</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6586">字母緊排和位移</a>
+                  <a class="kmr-toc-group" href="#d0e6591">字母緊排和位移</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6626">旋轉</a>
+                  <a class="kmr-toc-group" href="#d0e6631">旋轉</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e6676">噴灑工具</a>
+               <a class="kmr-toc-section" href="#d0e6681">噴灑工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6681">模式</a>
+                  <a class="kmr-toc-group" href="#d0e6686">模式</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6717">參數</a>
+                  <a class="kmr-toc-group" href="#d0e6722">參數</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e6757">橡皮擦工具</a>
+               <a class="kmr-toc-section" href="#d0e6762">橡皮擦工具</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6788">油漆桶</a>
+               <a class="kmr-toc-section" href="#d0e6793">油漆桶</a>
             </li>
             <li>
-               <a class="kmr-toc-section" href="#d0e6871">漸層工具</a>
+               <a class="kmr-toc-section" href="#d0e6876">漸層工具</a>
             </li>
             <ul>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6876">選取物件</a>
+                  <a class="kmr-toc-group" href="#d0e6881">選取物件</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6909">建立漸層</a>
+                  <a class="kmr-toc-group" href="#d0e6914">建立漸層</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e6938">選取控制點</a>
+                  <a class="kmr-toc-group" href="#d0e6940">選取控制點</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e7008">建立 / 刪除中間停止點</a>
+                  <a class="kmr-toc-group" href="#d0e7010">建立 / 刪除中間停止點</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e7071">移動控制點 / 停止點</a>
+                  <a class="kmr-toc-group" href="#d0e7070">移動控制點 / 停止點</a>
                </li>
                <li>
-                  <a class="kmr-toc-group" href="#d0e7161">反轉</a>
-               </li>
-               <li>
-                  <a class="kmr-toc-group" href="#d0e7182">漸層編輯器</a>
+                  <a class="kmr-toc-group" href="#d0e7160">反轉</a>
                </li>
             </ul>
             <li>
-               <a class="kmr-toc-section" href="#d0e7202">滴管工具</a>
+               <a class="kmr-toc-section" href="#d0e7180">滴管工具</a>
             </li>
          </ul>
       </div>
@@ -885,7 +887,7 @@
                         <span class="plussign">+</span>D</span>
                   </td>
                   <td>
-                     <span class="kmr-action">文件偏好設定</span>
+                     <span class="kmr-action">Document Properties</span>
                   </td>
                </tr>
 
@@ -1110,7 +1112,7 @@
          </div>
          <div class="kmr-sect">
             <a name="d0e610"/>
-            <h2 class="kmr">控制列</h2>
+            <h2 class="kmr">Tool controls bar</h2>
             <table class="kmr kmr-color3">
 
 
@@ -1125,7 +1127,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>位於文件視窗頂端的控制列可提供每種工具不同的按鈕和控制項。</span>
+                     <span>The tool controls bar at the top of the document window provides different buttons and controls for each tool.</span>
                   </td>
                </tr>
 
@@ -1172,7 +1174,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>使用這些快捷鍵可在控制列的輸入欄之間瀏覽 (如果您離開時輸入欄裡的數值已變更，程式會視為同意變更數值)。</span>
+                     <span>Use these to navigate between fields in the tool controls bar (the value in the field you leave, if changed, is accepted).</span>
                   </td>
                </tr>
 
@@ -1645,19 +1647,19 @@
                         <span class="kmr-plussign">+</span>\</span>
                   </td>
                   <td>
-                     <span class="kmr-action">開啟 / 關閉參考線與貼齊參考線</span>
+                     <span class="kmr-action">toggle guide visibility</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>若您想看見參考線但不要貼齊到參考線，請使用整體貼齊功能開關 (% 按鍵)。</span>
+                     <span>For activating / deactivating snapping to guides, use the snap bar or the global snapping toggle (% key).</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>當您用滑鼠游標從尺標拖動離開建立新參考線，參考線為可見的且會開啟貼齊功能。</span>
+                     <span>When you create a new guide by dragging off the ruler, guide visibility is automatically turned on.</span>
                   </td>
                </tr>
 
@@ -1669,13 +1671,13 @@
                         <span class="kmr-plussign">+</span>3</span>
                   </td>
                   <td>
-                     <span class="kmr-action">開啟 / 關閉格線和貼齊格點</span>
+                     <span class="kmr-action">toggle grids visibility</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>若您想看見格線但不要貼齊到格線，請使用整體貼齊功能開關 (% 按鍵)。</span>
+                     <span>For activating / deactivating snapping to grids, use the snap bar or the global snapping toggle (% key).</span>
                   </td>
                </tr>
 
@@ -1696,7 +1698,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>此開關會影響所有工具裡的貼齊格線、貼齊參考線和貼齊物件之功能。</span>
+                     <span>This toggle affects snapping to grids, guides, and objects in all tools. The settings in the snap bar determine which snap targets and snapping points will snap.</span>
                   </td>
                </tr>
 
@@ -2579,7 +2581,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>這可將選取物件匯出 PNG 到文件資料夾裡 (其他物件都會被隱藏起來) 和將 PNG 匯入到文件中。</span>
+                     <span>This exports the selected object(s) (all other objects hidden) as PNG in the document's directory and imports it back as embedded bitmap.</span>
                   </td>
                </tr>
 
@@ -3241,7 +3243,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">點擊<span class="kmr-plussign">+</span>點擊</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">編輯物件</span>
@@ -3272,7 +3274,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2340"/>框選、觸碰選取</h3>
+                        <a name="d0e2337"/>框選、觸碰選取</h3>
                   </td>
                </tr>
 
@@ -3354,7 +3356,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2399"/>選取 (鍵盤)</h3>
+                        <a name="d0e2396"/>選取 (鍵盤)</h3>
                   </td>
                </tr>
 
@@ -3495,7 +3497,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2501"/>選取群組內的物件、選取下層物件</h3>
+                        <a name="d0e2498"/>選取群組內的物件、選取下層物件</h3>
                   </td>
                </tr>
 
@@ -3639,7 +3641,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2615"/>移動 (滑鼠)</h3>
+                        <a name="d0e2612"/>移動 (滑鼠)</h3>
                   </td>
                </tr>
 
@@ -3711,7 +3713,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>這可暫時停用貼齊到格點或參考線 (當拖曳到格點或參考線上方時) 的功能。</span>
+                     <span>This temporarily disables snapping when you are dragging with snapping activated.</span>
                   </td>
                </tr>
 
@@ -3742,7 +3744,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2689"/>移動 (鍵盤)</h3>
+                        <a name="d0e2686"/>移動 (鍵盤)</h3>
                   </td>
                </tr>
 
@@ -3808,7 +3810,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2740"/>變形 (滑鼠)</h3>
+                        <a name="d0e2737"/>變形 (滑鼠)</h3>
                   </td>
                </tr>
 
@@ -3848,7 +3850,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2773"/>用控制點縮放</h3>
+                        <a name="d0e2770"/>用控制點縮放</h3>
                   </td>
                </tr>
 
@@ -3913,7 +3915,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2824"/>縮放 (鍵盤)</h3>
+                        <a name="d0e2821"/>縮放 (鍵盤)</h3>
                   </td>
                </tr>
 
@@ -4007,7 +4009,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>從中心均勻縮放，因此大小增加量會套用到長寬增加。</span>
+                     <span>The default size increment is added to (or subtracted from) either the selection's height or width, whichever one is larger. Scaling is done around the center of the selection's bounding box and keeps the proportions of the selected object(s).</span>
                   </td>
                </tr>
 
@@ -4017,7 +4019,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2928"/>用控制點旋轉 / 傾斜</h3>
+                        <a name="d0e2925"/>用控制點旋轉 / 傾斜</h3>
                   </td>
                </tr>
 
@@ -4064,13 +4066,24 @@
                   </td>
                </tr>
 
+               <tr>
+                  <td class="kmr-keys">
+                     <span class="kmr-shortcut">
+                        <span class="kmr-keypad">Shift</span>
+                        <span class="kmr-plussign">+</span>拖動滑鼠</span>
+                  </td>
+                  <td>
+                     <span class="kmr-action">rotate around opposite corner</span>
+                  </td>
+               </tr>
+
 
 
 
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e2967"/>旋轉 (鍵盤)</h3>
+                        <a name="d0e2974"/>旋轉 (鍵盤)</h3>
                   </td>
                </tr>
 
@@ -4136,7 +4149,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3025"/>翻轉</h3>
+                        <a name="d0e3032"/>翻轉</h3>
                   </td>
                </tr>
 
@@ -4170,7 +4183,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3048"/>旋轉中心</h3>
+                        <a name="d0e3055"/>旋轉中心</h3>
                   </td>
                </tr>
 
@@ -4223,7 +4236,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3087"/>取消</h3>
+                        <a name="d0e3094"/>取消</h3>
                   </td>
                </tr>
 
@@ -4247,7 +4260,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e3107"/>
+            <a name="d0e3114"/>
             <h2 class="kmr">節點工具</h2>
             <table class="kmr kmr-color13">
 
@@ -4257,7 +4270,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3112"/>選取物件 (滑鼠)</h3>
+                        <a name="d0e3119"/>選取物件 (滑鼠)</h3>
                   </td>
                </tr>
 
@@ -4315,7 +4328,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3158"/>選取節點 (滑鼠)</h3>
+                        <a name="d0e3165"/>選取節點 (滑鼠)</h3>
                   </td>
                </tr>
 
@@ -4387,7 +4400,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3207"/>框選</h3>
+                        <a name="d0e3214"/>框選</h3>
                   </td>
                </tr>
 
@@ -4435,7 +4448,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3239"/>選取節點 (鍵盤)</h3>
+                        <a name="d0e3246"/>選取節點 (鍵盤)</h3>
                   </td>
                </tr>
 
@@ -4548,7 +4561,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3322"/>膨脹 / 收縮節點選取範圍</h3>
+                        <a name="d0e3329"/>膨脹 / 收縮節點選取範圍</h3>
                   </td>
                </tr>
 
@@ -4604,7 +4617,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>按下按鍵或滑鼠滾輪點擊可選取最靠近未選取的節點或者取消選取最遠的已選取節點。</span>
+                     <span>Each key press or turn of the mouse wheel selects the nearest unselected node or deselects the farthest selected node.</span>
                   </td>
                </tr>
 
@@ -4620,7 +4633,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3382"/>移動節點 (滑鼠)</h3>
+                        <a name="d0e3389"/>移動節點 (滑鼠)</h3>
                   </td>
                </tr>
 
@@ -4659,7 +4672,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>這可限制節點控制柄移動的方向，連續並垂直 (總共 8 段貼齊)。</span>
+                     <span>This restricts movement to the directions of the node's handles, their counter directions and perpendiculars (total 8 snaps).</span>
                   </td>
                </tr>
 
@@ -4753,7 +4766,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3481"/>移動節點 (鍵盤)</h3>
+                        <a name="d0e3488"/>移動節點 (鍵盤)</h3>
                   </td>
                </tr>
 
@@ -4819,7 +4832,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3532"/>移動節點控制柄 (滑鼠)</h3>
+                        <a name="d0e3539"/>移動節點控制柄 (滑鼠)</h3>
                   </td>
                </tr>
 
@@ -4845,7 +4858,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>預設固定角度為 15 度。同時也會貼齊控制柄的原本角度、逐漸增加的角度及垂直方向。</span>
+                     <span>The default angle step is 15 degrees. This also snaps to the handle's original angle, its counter direction and perpendiculars.</span>
                   </td>
                </tr>
 
@@ -4900,7 +4913,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3594"/>縮放控制柄 (須先選取1 個節點)</h3>
+                        <a name="d0e3601"/>縮放控制柄 (須先選取1 個節點)</h3>
                   </td>
                </tr>
 
@@ -4994,7 +5007,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3700"/>旋轉控制柄 (須先選取1 個節點)</h3>
+                        <a name="d0e3707"/>旋轉控制柄 (須先選取1 個節點)</h3>
                   </td>
                </tr>
 
@@ -5076,7 +5089,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3786"/>控制柄隱現狀態</h3>
+                        <a name="d0e3793"/>控制柄隱現狀態</h3>
                   </td>
                </tr>
 
@@ -5096,7 +5109,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3802"/>縮放節點 (須選取 1 個以上的節點)</h3>
+                        <a name="d0e3809"/>縮放節點 (須選取 1 個以上的節點)</h3>
                   </td>
                </tr>
 
@@ -5174,7 +5187,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>從中心均勻縮放，因此大小增加量會套用到長寬增加。</span>
+                     <span>The default size increment is added to (or subtracted from) either the node selection's height or width, whichever one is larger. Scaling keeps the proportions of the node selection.</span>
                   </td>
                </tr>
 
@@ -5184,7 +5197,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3878"/>旋轉節點 (須選取一個以上的節點)</h3>
+                        <a name="d0e3885"/>旋轉節點 (須選取一個以上的節點)</h3>
                   </td>
                </tr>
 
@@ -5242,7 +5255,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3922"/>翻轉節點 (須選取一個以上的節點)</h3>
+                        <a name="d0e3929"/>翻轉節點 (須選取一個以上的節點)</h3>
                   </td>
                </tr>
 
@@ -5282,7 +5295,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3948"/>變更線段</h3>
+                        <a name="d0e3955"/>變更線段</h3>
                   </td>
                </tr>
 
@@ -5320,7 +5333,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e3977"/>變更節點類型</h3>
+                        <a name="d0e3984"/>變更節點類型</h3>
                   </td>
                </tr>
 
@@ -5403,7 +5416,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4042"/>結合 / 打斷</h3>
+                        <a name="d0e4049"/>結合 / 打斷</h3>
                   </td>
                </tr>
 
@@ -5464,7 +5477,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4087"/>刪除、建立、再製</h3>
+                        <a name="d0e4094"/>刪除、建立、再製</h3>
                   </td>
                </tr>
 
@@ -5542,7 +5555,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">點擊<span class="kmr-plussign">+</span>點擊</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">建立節點</span>
@@ -5599,7 +5612,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4197"/>反轉</h3>
+                        <a name="d0e4201"/>反轉</h3>
                   </td>
                </tr>
 
@@ -5620,7 +5633,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4213"/>編輯形狀</h3>
+                        <a name="d0e4217"/>編輯形狀</h3>
                   </td>
                </tr>
 
@@ -5642,7 +5655,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4225"/>編輯填充和路徑特效</h3>
+                        <a name="d0e4229"/>編輯填充和路徑特效</h3>
                   </td>
                </tr>
 
@@ -5658,7 +5671,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4234"/>取消</h3>
+                        <a name="d0e4238"/>取消</h3>
                   </td>
                </tr>
 
@@ -5682,7 +5695,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4254"/>
+            <a name="d0e4258"/>
             <h2 class="kmr">微調工具</h2>
             <table class="kmr kmr-color14">
 
@@ -5692,7 +5705,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4259"/>操作</h3>
+                        <a name="d0e4263"/>操作</h3>
                   </td>
                </tr>
 
@@ -5723,7 +5736,7 @@
                         <span class="kmr-plussign">+</span>拖動滑鼠</span>
                   </td>
                   <td>
-                     <span class="kmr-action">暫時切換到收縮模式</span>
+                     <span class="kmr-action">temporarily switch to shrink mode</span>
                   </td>
                </tr>
 
@@ -5736,7 +5749,7 @@
                         <span class="plussign">+</span>拖動滑鼠</span>
                   </td>
                   <td>
-                     <span class="kmr-action">暫時切換到膨脹模式</span>
+                     <span class="kmr-action">temporarily switch to grow mode</span>
                   </td>
                </tr>
 
@@ -5752,7 +5765,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4307"/>模式</h3>
+                        <a name="d0e4311"/>模式</h3>
                   </td>
                </tr>
 
@@ -5965,7 +5978,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4533"/>參數</h3>
+                        <a name="d0e4537"/>參數</h3>
                   </td>
                </tr>
 
@@ -5985,7 +5998,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">將筆刷寬度設定為 1 / 100</span>
+                     <span class="kmr-action">set brush width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -6010,7 +6023,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4576"/>
+            <a name="d0e4580"/>
             <h2 class="kmr">縮放工具</h2>
             <table class="kmr kmr-color15">
 
@@ -6050,7 +6063,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4609"/>
+            <a name="d0e4613"/>
             <h2 class="kmr">Measure tool</h2>
             <table class="kmr kmr-color16">
 
@@ -6073,7 +6086,7 @@
                         <span class="kmr-plussign">+</span>拖動滑鼠</span>
                   </td>
                   <td>
-                     <span class="kmr-action">set the measure base to the cursor</span>
+                     <span class="kmr-action">set base of angle measurement to cursor position</span>
                   </td>
                </tr>  
 
@@ -6098,7 +6111,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4648"/>
+            <a name="d0e4652"/>
             <h2 class="kmr">矩形工具</h2>
             <table class="kmr kmr-color17">
 
@@ -6108,7 +6121,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4653"/>繪畫</h3>
+                        <a name="d0e4657"/>繪畫</h3>
                   </td>
                </tr>
 
@@ -6134,7 +6147,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>這可將矩形的長/寬比例限制為正整數。</span>
+                     <span>This restricts width/height ratio or its inverse to a whole number or the golden ratio.</span>
                   </td>
                </tr>
 
@@ -6161,7 +6174,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4692"/>選取</h3>
+                        <a name="d0e4696"/>選取</h3>
                   </td>
                </tr>
 
@@ -6222,7 +6235,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4744"/>用控制點調整大小</h3>
+                        <a name="d0e4748"/>用控制點調整大小</h3>
                   </td>
                </tr>
 
@@ -6264,7 +6277,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4773"/>用控制點將頂點圓角化</h3>
+                        <a name="d0e4777"/>用控制點將頂點圓角化</h3>
                   </td>
                </tr>
 
@@ -6333,7 +6346,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e4826"/>
+            <a name="d0e4830"/>
             <h2 class="kmr">立方體工具</h2>
             <table class="kmr kmr-color18">
 
@@ -6343,7 +6356,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4831"/>繪畫</h3>
+                        <a name="d0e4835"/>繪畫</h3>
                   </td>
                </tr>
 
@@ -6373,7 +6386,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4854"/>選取</h3>
+                        <a name="d0e4858"/>選取</h3>
                   </td>
                </tr>
 
@@ -6428,7 +6441,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4903"/>用控制點編輯</h3>
+                        <a name="d0e4907"/>用控制點編輯</h3>
                   </td>
                </tr>
 
@@ -6481,7 +6494,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e4942"/>透視角編輯</h3>
+                        <a name="d0e4946"/>透視角編輯</h3>
                   </td>
                </tr>
 
@@ -6585,7 +6598,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5042"/>
+            <a name="d0e5046"/>
             <h2 class="kmr">橢圓形工具</h2>
             <table class="kmr kmr-color19">
 
@@ -6595,7 +6608,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5047"/>繪畫</h3>
+                        <a name="d0e5051"/>繪畫</h3>
                   </td>
                </tr>
 
@@ -6633,7 +6646,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>這可將橢圓形的高寬比限制為整數。</span>
+                     <span>This restricts width/height ratio or its inverse to a whole number or the golden ratio.</span>
                   </td>
                </tr>
 
@@ -6679,7 +6692,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5107"/>選取</h3>
+                        <a name="d0e5111"/>選取</h3>
                   </td>
                </tr>
 
@@ -6740,7 +6753,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5159"/>用控制點編輯</h3>
+                        <a name="d0e5163"/>用控制點編輯</h3>
                   </td>
                </tr>
 
@@ -6809,7 +6822,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5212"/>
+            <a name="d0e5216"/>
             <h2 class="kmr">星形工具</h2>
             <table class="kmr kmr-color20">
 
@@ -6819,7 +6832,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5217"/>繪畫</h3>
+                        <a name="d0e5221"/>繪畫</h3>
                   </td>
                </tr>
 
@@ -6855,7 +6868,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5243"/>選取</h3>
+                        <a name="d0e5247"/>選取</h3>
                   </td>
                </tr>
 
@@ -6916,7 +6929,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5295"/>用控制點編輯</h3>
+                        <a name="d0e5299"/>用控制點編輯</h3>
                   </td>
                </tr>
 
@@ -6993,7 +7006,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5368"/>
+            <a name="d0e5372"/>
             <h2 class="kmr">螺旋形工具</h2>
             <table class="kmr kmr-color21">
 
@@ -7003,7 +7016,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5373"/>繪畫</h3>
+                        <a name="d0e5377"/>繪畫</h3>
                   </td>
                </tr>
 
@@ -7039,7 +7052,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5399"/>選取</h3>
+                        <a name="d0e5403"/>選取</h3>
                   </td>
                </tr>
 
@@ -7100,7 +7113,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5450"/>用控制點編輯</h3>
+                        <a name="d0e5454"/>用控制點編輯</h3>
                   </td>
                </tr>
 
@@ -7241,7 +7254,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5564"/>
+            <a name="d0e5568"/>
             <h2 class="kmr">鉛筆工具</h2>
             <table class="kmr kmr-color22">
 
@@ -7253,7 +7266,7 @@
                      <span class="kmr-shortcut">拖動滑鼠</span>
                   </td>
                   <td>
-                     <span class="kmr-action">繪製手繪線條</span>
+                     <span class="kmr-action">draw a freehand path</span>
                   </td>
                </tr>
 
@@ -7270,7 +7283,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>若已選取路徑，在任何地方 Shift+點擊會開始一條新的子路徑而不是新的獨立路徑。</span>
+                     <span>If a path is selected, Shift+dragging from anywhere starts a new subpath instead of a new independent path.</span>
                   </td>
                </tr>
 
@@ -7287,7 +7300,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>這可暫時停用貼齊到格點或參考線 (當拖曳到格點或參考線上方時) 的功能。</span>
+                     <span>This temporarily disables snapping when you are dragging with snapping activated.</span>
                   </td>
                </tr>
 
@@ -7302,13 +7315,22 @@
                   </td>
                </tr>
 
+               <tr>
+                  <td class="kmr-keys">
+                     <span class="kmr-shortcut">點擊</span>
+                  </td>
+                  <td>
+                     <span class="kmr-action">start a straight path (finish with another click)</span>
+                  </td>
+               </tr>
+
 
 
 
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5615"/>建立點</h3>
+                        <a name="d0e5626"/>建立點</h3>
                   </td>
                </tr>
 
@@ -7359,7 +7381,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5659"/>
+            <a name="d0e5670"/>
             <h2 class="kmr">筆型 (貝茲曲線) 工具</h2>
             <table class="kmr kmr-color23">
 
@@ -7369,7 +7391,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5664"/>建立節點</h3>
+                        <a name="d0e5675"/>建立節點</h3>
                   </td>
                </tr>
 
@@ -7455,7 +7477,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5728"/>移動最後建立的節點</h3>
+                        <a name="d0e5739"/>移動最後建立的節點</h3>
                   </td>
                </tr>
 
@@ -7527,7 +7549,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5782"/>建立/修改線段</h3>
+                        <a name="d0e5793"/>建立/修改線段</h3>
                   </td>
                </tr>
 
@@ -7582,7 +7604,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5821"/>建立點</h3>
+                        <a name="d0e5832"/>建立點</h3>
                   </td>
                </tr>
 
@@ -7635,7 +7657,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5864"/>結束</h3>
+                        <a name="d0e5875"/>結束</h3>
                   </td>
                </tr>
 
@@ -7644,7 +7666,7 @@
                      <span class="kmr-shortcut">Enter</span>
                   </td>
                   <td>
-                     <span class="kmr-action">結束目前線條</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
@@ -7653,22 +7675,22 @@
                      <span class="kmr-shortcut">點擊滑鼠右鍵</span>
                   </td>
                   <td>
-                     <span class="kmr-action">結束目前線條</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">點擊<span class="kmr-plussign">+</span>點擊</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
-                     <span class="kmr-action">結束目前線條</span>
+                     <span class="kmr-action">finish current path</span>
                   </td>
                </tr>
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>輸入鍵 (Enter 鍵)、點擊滑鼠右鍵或滑鼠右鍵可放棄最後未完成 (紅色) 的線段以結束目前線條。</span>
+                     <span>Enter or right click finish the current line, discarding the last unfinished (red) segment. Double left click finishes the current line where double-clicked.</span>
                   </td>
                </tr>
 
@@ -7678,7 +7700,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e5897"/>取消</h3>
+                        <a name="d0e5905"/>取消</h3>
                   </td>
                </tr>
 
@@ -7709,7 +7731,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e5927"/>
+            <a name="d0e5935"/>
             <h2 class="kmr">書法工具</h2>
             <table class="kmr kmr-color24">
 
@@ -7721,7 +7743,7 @@
                      <span class="kmr-shortcut">拖動滑鼠</span>
                   </td>
                   <td>
-                     <span class="kmr-action">繪製書法式線條</span>
+                     <span class="kmr-action">draw a calligraphic stroke</span>
                   </td>
                </tr>
 
@@ -7792,7 +7814,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">將筆寬設定為 1 或 100</span>
+                     <span class="kmr-action">set pen width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -7826,7 +7848,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6025"/>
+            <a name="d0e6033"/>
             <h2 class="kmr">文字工具</h2>
             <table class="kmr kmr-color25">
 
@@ -7836,7 +7858,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6030"/>選取 / 建立</h3>
+                        <a name="d0e6038"/>選取 / 建立</h3>
                   </td>
                </tr>
 
@@ -7877,7 +7899,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6058"/>瀏覽文字</h3>
+                        <a name="d0e6066"/>瀏覽文字</h3>
                   </td>
                </tr>
 
@@ -7954,7 +7976,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>若執行前已選取文字的話，這些指令全都會取消目前文字的選取狀態。按著 Shift 鍵使用這些指令可變為延伸選取。</span>
+                     <span>All these commands cancel current text selection, if any. Use them with Shift to add to / subtract from selection instead.</span>
                   </td>
                </tr>
 
@@ -7964,7 +7986,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6147"/>流動文字 (內部文字框)</h3>
+                        <a name="d0e6155"/>流動文字 (內部文字框)</h3>
                   </td>
                </tr>
 
@@ -8021,7 +8043,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6186"/>流動文字 (外部文字框)</h3>
+                        <a name="d0e6194"/>流動文字 (外部文字框)</h3>
                   </td>
                </tr>
 
@@ -8090,7 +8112,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6236"/>文字沿置路徑</h3>
+                        <a name="d0e6244"/>文字沿置路徑</h3>
                   </td>
                </tr>
 
@@ -8117,7 +8139,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6255"/>編輯文字</h3>
+                        <a name="d0e6263"/>編輯文字</h3>
                   </td>
                </tr>
 
@@ -8200,7 +8222,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6309"/>選取文字</h3>
+                        <a name="d0e6317"/>選取文字</h3>
                   </td>
                </tr>
 
@@ -8291,7 +8313,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">點擊<span class="kmr-plussign">+</span>點擊</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">選取單字</span>
@@ -8330,7 +8352,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6437"/>選取樣式</h3>
+                        <a name="d0e6442"/>選取樣式</h3>
                   </td>
                </tr>
 
@@ -8368,7 +8390,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6466"/>字母間距</h3>
+                        <a name="d0e6471"/>字母間距</h3>
                   </td>
                </tr>
 
@@ -8438,7 +8460,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6522"/>列距</h3>
+                        <a name="d0e6527"/>列距</h3>
                   </td>
                </tr>
 
@@ -8516,7 +8538,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6586"/>字母緊排和位移</h3>
+                        <a name="d0e6591"/>字母緊排和位移</h3>
                   </td>
                </tr>
 
@@ -8574,7 +8596,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6626"/>旋轉</h3>
+                        <a name="d0e6631"/>旋轉</h3>
                   </td>
                </tr>
 
@@ -8629,7 +8651,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6676"/>
+            <a name="d0e6681"/>
             <h2 class="kmr">噴灑工具</h2>
             <table class="kmr kmr-color26">
 
@@ -8639,7 +8661,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6681"/>模式</h3>
+                        <a name="d0e6686"/>模式</h3>
                   </td>
                </tr>
 
@@ -8682,7 +8704,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6717"/>參數</h3>
+                        <a name="d0e6722"/>參數</h3>
                   </td>
                </tr>
 
@@ -8712,7 +8734,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">將噴灑寬度設定為 1 / 100</span>
+                     <span class="kmr-action">set spray width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -8721,7 +8743,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6757"/>
+            <a name="d0e6762"/>
             <h2 class="kmr">橡皮擦工具</h2>
             <table class="kmr kmr-color1">
 
@@ -8744,7 +8766,7 @@
 <span class="kmr-shortcut">End</span>
                   </td>
                   <td>
-                     <span class="kmr-action">將橡皮擦寬度設定為 1 / 100</span>
+                     <span class="kmr-action">set eraser width to its minimum or maximum</span>
                   </td>
                </tr>
 
@@ -8753,7 +8775,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6788"/>
+            <a name="d0e6793"/>
             <h2 class="kmr">油漆桶</h2>
             <table class="kmr kmr-color2">
 
@@ -8814,7 +8836,7 @@
                         <span class="kmr-plussign">+</span>拖動滑鼠</span>
                   </td>
                   <td>
-                     <span class="kmr-action">從與起點相同的每個點填充</span>
+                     <span class="kmr-action">fill from each point similar to the initial point</span>
                   </td>
                </tr>
 
@@ -8865,7 +8887,7 @@
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e6871"/>
+            <a name="d0e6876"/>
             <h2 class="kmr">漸層工具</h2>
             <table class="kmr kmr-color3">
 
@@ -8875,7 +8897,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6876"/>選取物件</h3>
+                        <a name="d0e6881"/>選取物件</h3>
                   </td>
                </tr>
 
@@ -8916,7 +8938,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6909"/>建立漸層</h3>
+                        <a name="d0e6914"/>建立漸層</h3>
                   </td>
                </tr>
 
@@ -8931,13 +8953,13 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>此指令可在選取的物件上建立漸層。該控制列能讓您選擇新漸層為線性 / 放射狀以及填充 / 邊框。</span>
+                     <span>This creates gradient on selected objects. The tool controls bar lets you select linear/radial and fill/stroke for the new gradient.</span>
                   </td>
                </tr>
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">點擊<span class="kmr-plussign">+</span>點擊</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">建立預設漸層</span>
@@ -8956,7 +8978,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e6938"/>選取控制點</h3>
+                        <a name="d0e6940"/>選取控制點</h3>
                   </td>
                </tr>
 
@@ -9043,7 +9065,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e7008"/>建立 / 刪除中間停止點</h3>
+                        <a name="d0e7010"/>建立 / 刪除中間停止點</h3>
                   </td>
                </tr>
 
@@ -9062,7 +9084,7 @@
 
                <tr>
                   <td class="kmr-keys">
-                     <span class="kmr-shortcut">點擊<span class="kmr-plussign">+</span>點擊</span>
+                     <span class="kmr-shortcut">double-click</span>
                   </td>
                   <td>
                      <span class="kmr-action">建立停止點</span>
@@ -9105,7 +9127,7 @@
 
                <tr>
                   <td colspan="2" class="kmr-note">
-                     <span>此指令可在選取的線段中間加入新的停止點，因此這個動作需要事先選取兩個以上的相鄰控制點。</span>
+                     <span>This adds new stop(s) in the middle(s) between adjacent, selected stops or, if only one stop is selected, in the middle of the segment that starts with the selected stop.</span>
                   </td>
                </tr>
 
@@ -9124,7 +9146,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e7071"/>移動控制點 / 停止點</h3>
+                        <a name="d0e7070"/>移動控制點 / 停止點</h3>
                   </td>
                </tr>
 
@@ -9245,7 +9267,7 @@
                <tr>
                   <td colspan="2">
                      <h3 class="kmr">
-                        <a name="d0e7161"/>反轉</h3>
+                        <a name="d0e7160"/>反轉</h3>
                   </td>
                </tr>
 
@@ -9268,36 +9290,10 @@
 
 
 
-
-
-               <tr>
-                  <td colspan="2">
-                     <h3 class="kmr">
-                        <a name="d0e7182"/>漸層編輯器</h3>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td class="kmr-keys">
-                     <span class="kmr-shortcut">點擊<span class="kmr-plussign">+</span>點擊</span>
-                  </td>
-                  <td>
-                     <span class="kmr-action">開啟漸層編輯器</span>
-                  </td>
-               </tr>
-
-               <tr>
-                  <td colspan="2" class="kmr-note">
-                     <span>點擊兩下漸層控制點可開啟漸層編輯器並且停止點清單裡面的該點擊控制點變成選取狀態。</span>
-                  </td>
-               </tr>
-
-
-
             </table>
          </div>
          <div class="kmr-sect">
-            <a name="d0e7202"/>
+            <a name="d0e7180"/>
             <h2 class="kmr">滴管工具</h2>
             <table class="kmr kmr-color4">
 
