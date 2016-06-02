@@ -605,11 +605,12 @@ Inkscape bietet auch eine Benutzeroberfläche für die
 Potrace-Bitmap-Vektorisier-Engine (http://potrace.sf.net), die in Inkscape
 enthalten ist.
 
-Inkscape can use external scripts (stdin-to-stdout filters) that are
-represented by commands in the Extensions menu. A script can have a GUI
-dialog for setting various parameters and can get the IDs of the selected
-objects on which to act via the command line. Inkscape comes with an
-assortment of effects written in Python.
+Inkscape kann externe Skripte verwenden (stdin-zu-stdout-Filter), die als
+Einträge im Erweiterungsmenü dargestellt werden. Ein Skript kann einen
+Dialog in der Benutzeroberfläche öffnen, in dem verschiedene Einstellungen
+vorgenommen werden können und kann auf die ID der ausgewählten Objekte, die
+bearbeitet werden sollen, über die Kommandozeile zugreifen. Inkscape
+beinhaltet eine Auswahl von Effekten, die in Python geschrieben sind.
 
 =head1 TASTATURBEFEHLE
 
