@@ -514,7 +514,7 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
     this->AddSelcueCheckbox(_page_dropper, "/tools/dropper", true);
     this->AddGradientCheckbox(_page_dropper, "/tools/dropper", true);
-    
+
     //Connector
     this->AddPage(_page_connector, _("Connector"), iter_tools, PREFS_PAGE_TOOLS_CONNECTOR);
     this->AddSelcueCheckbox(_page_connector, "/tools/connector", true);
@@ -665,16 +665,16 @@ void InkscapePreferences::initPageUI()
         _dockbar_style.init( "/options/dock/dockbarstyle", dockbarstyleLabels, dockbarstyleValues, G_N_ELEMENTS(dockbarstyleLabels), 0);
         _page_ui.add_line(false, _("Dockbar style (requires restart):"),  _dockbar_style, "",
                         _("Selects whether the vertical bars on the dockbar will show text labels, icons, or both"), false);
-	
+
         Glib::ustring switcherstyleLabels[] = {_("Text only"), _("Icons only"), _("Icons and text")}; /* see bug #1098437   */
         int switcherstyleValues[] = {0, 1, 2};
-	
+
         /* switcher style */
         _switcher_style.init( "/options/dock/switcherstyle", switcherstyleLabels, switcherstyleValues, G_N_ELEMENTS(switcherstyleLabels), 0);
         _page_ui.add_line(false, _("Switcher style (requires restart):"),  _switcher_style, "",
                         _("Selects whether the dockbar switcher will show text labels, icons, or both"), false);
     }
-    
+
     // Windows
     _win_save_geom.init ( _("Save and restore window geometry for each document"), "/options/savewindowgeometry/value", 1, true, 0);
     _win_save_geom_prefs.init ( _("Remember and use last window's geometry"), "/options/savewindowgeometry/value", 2, false, &_win_save_geom);
@@ -689,7 +689,7 @@ void InkscapePreferences::initPageUI()
 
     _win_native.init ( _("Native open/save dialogs"), "/options/desktopintegration/value", 1, true, 0);
     _win_gtk.init ( _("GTK open/save dialogs"), "/options/desktopintegration/value", 0, false, &_win_native);
-    
+
     _win_hide_task.init ( _("Dialogs are hidden in taskbar"), "/options/dialogsskiptaskbar/value", true);
     _win_save_viewport.init ( _("Save and restore documents viewport"), "/options/savedocviewport/value", true);
     _win_zoom_resize.init ( _("Zoom when window is resized"), "/options/stickyzoom/value", false);
@@ -1005,9 +1005,9 @@ void InkscapePreferences::initPageIO()
     _page_cms.add_group_header( _("Display adjustment"));
 
     Glib::ustring tmpStr;
-    std::vector<Glib::ustring> sources = ColorProfile::getBaseProfileDirs();
-    for ( std::vector<Glib::ustring>::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
-        gchar* part = g_strdup_printf( "\n%s", it->c_str() );
+    std::vector<std::pair<Glib::ustring, bool> > sources = ColorProfile::getBaseProfileDirs();
+    for ( std::vector<std::pair<Glib::ustring, bool> >::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
+        gchar* part = g_strdup_printf( "\n%s", it->first.c_str() );
         tmpStr += part;
         g_free(part);
     }
@@ -1377,28 +1377,28 @@ void InkscapePreferences::initPageBehavior()
     _mask_mask_remove.init ( _("Remove clippath/mask object after applying"), "/options/maskobject/remove", true);
     _page_mask.add_line(false, "", _mask_mask_remove, "",
                         _("After applying, remove the object used as the clipping path or mask from the drawing"));
-    
+
     _page_mask.add_group_header( _("Before applying"));
-    
+
     _mask_grouping_none.init( _("Do not group clipped/masked objects"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_NONE, true, 0);
     _mask_grouping_separate.init( _("Put every clipped/masked object in its own group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_SEPARATE, false, &_mask_grouping_none);
     _mask_grouping_all.init( _("Put all clipped/masked objects into one group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_ALL, false, &_mask_grouping_none);
-    
+
     _page_mask.add_line(true, "", _mask_grouping_none, "",
                         _("Apply clippath/mask to every object"));
-    
+
     _page_mask.add_line(true, "", _mask_grouping_separate, "",
                         _("Apply clippath/mask to groups containing single object"));
-    
+
     _page_mask.add_line(true, "", _mask_grouping_all, "",
                         _("Apply clippath/mask to group containing all objects"));
-                        
+
     _page_mask.add_group_header( _("After releasing"));
-    
+
     _mask_ungrouping.init ( _("Ungroup automatically created groups"), "/options/maskobject/ungrouping", true);
     _page_mask.add_line(true, "", _mask_ungrouping, "",
                         _("Ungroup groups created when setting clip/mask"));
-    
+
     this->AddPage(_page_mask, _("Clippaths and masks"), iter_behavior, PREFS_PAGE_BEHAVIOR_MASKS);
 
 
@@ -1411,8 +1411,8 @@ void InkscapePreferences::initPageBehavior()
                            _("Update marker color when object color changes"));
 
     this->AddPage(_page_markers, _("Markers"), iter_behavior, PREFS_PAGE_BEHAVIOR_MARKERS);
-    
-    
+
+
     _page_cleanup.add_group_header( _("Document cleanup"));
     _cleanup_swatches.init ( _("Remove unused swatches when doing a document cleanup"), "/options/cleanupswatches/value", false); // text label
     _page_cleanup.add_line( true, "", _cleanup_swatches, "",
@@ -1896,15 +1896,15 @@ void InkscapePreferences::initPageSpellcheck()
 
     /* the returned pointer should _not_ need to be deleted */
     AspellDictInfoList *dlist = get_aspell_dict_info_list(config);
-    
+
     /* config is no longer needed */
     delete_aspell_config(config);
-    
+
     AspellDictInfoEnumeration *dels = aspell_dict_info_list_elements(dlist);
-    
+
     languages.push_back(Glib::ustring(C_("Spellchecker language", "None")));
     langValues.push_back(Glib::ustring(""));
-    
+
     const AspellDictInfo *entry;
     int en_index = 0;
     int i = 0;

@@ -33,9 +33,9 @@ public:
     friend cmsHPROFILE colorprofile_get_handle( SPDocument*, unsigned int*, char const* );
     friend class CMSSystem;
 
-    static std::vector<Glib::ustring> getBaseProfileDirs();
-    static std::vector<Glib::ustring> getProfileFiles();
-    static std::vector<std::pair<Glib::ustring, Glib::ustring> > getProfileFilesWithNames();
+    static std::vector<std::pair<Glib::ustring, bool> > getBaseProfileDirs();
+    static std::vector<std::pair<Glib::ustring, bool> > getProfileFiles();
+    static std::vector<std::pair<std::pair<Glib::ustring, bool>, Glib::ustring> > getProfileFilesWithNames();
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     //icColorSpaceSignature getColorSpace() const;
     ColorSpaceSig getColorSpace() const;
