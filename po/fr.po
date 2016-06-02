@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-30 08:43+0200\n"
-"PO-Revision-Date: 2016-05-31 15:17+0200\n"
+"POT-Creation-Date: 2016-06-02 12:12+0200\n"
+"PO-Revision-Date: 2016-06-02 12:14+0200\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team: fr@li.org\n"
 "Language: fr_FR\n"
@@ -4936,7 +4936,7 @@ msgstr "Document en mémoire %d"
 msgid "Memory document %1"
 msgstr "Document d'information %1"
 
-#: ../src/document.cpp:873
+#: ../src/document.cpp:864
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Document sans nom %d"
@@ -7965,31 +7965,31 @@ msgstr "Dégradé GIMP (*.ggr)"
 msgid "Gradients used in GIMP"
 msgstr "Dégradés utilisés dans GIMP"
 
-#: ../src/extension/internal/grid.cpp:204 ../src/ui/widget/panel.cpp:117
+#: ../src/extension/internal/grid.cpp:199 ../src/ui/widget/panel.cpp:117
 msgid "Grid"
 msgstr "Grille"
 
-#: ../src/extension/internal/grid.cpp:206
+#: ../src/extension/internal/grid.cpp:201
 msgid "Line Width:"
 msgstr "Largeur de ligne :"
 
-#: ../src/extension/internal/grid.cpp:207
+#: ../src/extension/internal/grid.cpp:202
 msgid "Horizontal Spacing:"
 msgstr "Espacement horizontal :"
 
-#: ../src/extension/internal/grid.cpp:208
+#: ../src/extension/internal/grid.cpp:203
 msgid "Vertical Spacing:"
 msgstr "Espacement vertical :"
 
-#: ../src/extension/internal/grid.cpp:209
+#: ../src/extension/internal/grid.cpp:204
 msgid "Horizontal Offset:"
 msgstr "Décalage horizontal :"
 
-#: ../src/extension/internal/grid.cpp:210
+#: ../src/extension/internal/grid.cpp:205
 msgid "Vertical Offset:"
 msgstr "Décalage vertical :"
 
-#: ../src/extension/internal/grid.cpp:214
+#: ../src/extension/internal/grid.cpp:209
 #: ../src/ui/dialog/inkscape-preferences.cpp:1532
 #: ../share/extensions/draw_from_triangle.inx.h:58
 #: ../share/extensions/eqtexsvg.inx.h:4 ../share/extensions/foldablebox.inx.h:9
@@ -8019,14 +8019,14 @@ msgstr "Décalage vertical :"
 msgid "Render"
 msgstr "Rendu"
 
-#: ../src/extension/internal/grid.cpp:215
+#: ../src/extension/internal/grid.cpp:210
 #: ../src/ui/dialog/document-properties.cpp:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:832
 #: ../src/widgets/toolbox.cpp:1894
 msgid "Grids"
 msgstr "Grilles"
 
-#: ../src/extension/internal/grid.cpp:218
+#: ../src/extension/internal/grid.cpp:213
 msgid "Draw a path which is a grid"
 msgstr "Tracer un chemin en forme de grille"
 
@@ -13261,20 +13261,20 @@ msgstr "Région d'encadrement"
 msgid "Flow Excluded Region"
 msgstr "Région d'encadrement exclue"
 
-#: ../src/sp-flowtext.cpp:282
+#: ../src/sp-flowtext.cpp:284
 msgid "Flowed Text"
 msgstr "Texte encadré"
 
-#: ../src/sp-flowtext.cpp:284
+#: ../src/sp-flowtext.cpp:286
 msgid "Linked Flowed Text"
 msgstr "Texte encadré lié"
 
-#: ../src/sp-flowtext.cpp:290 ../src/sp-text.cpp:380
+#: ../src/sp-flowtext.cpp:292 ../src/sp-text.cpp:380
 #: ../src/ui/tools/text-tool.cpp:1556
 msgid " [truncated]"
 msgstr " [tronqué]"
 
-#: ../src/sp-flowtext.cpp:292
+#: ../src/sp-flowtext.cpp:294
 #, c-format
 msgid "(%d character%s)"
 msgid_plural "(%d characters%s)"
@@ -14917,19 +14917,19 @@ msgstr ""
 msgid "<small>Creating tiled clones...</small>"
 msgstr "<small>Création d'un pavage de clones...</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2669
+#: ../src/ui/dialog/clonetiler.cpp:2670
 msgid "Create tiled clones"
 msgstr "Créer un pavage avec des clones"
 
-#: ../src/ui/dialog/clonetiler.cpp:2906
+#: ../src/ui/dialog/clonetiler.cpp:2907
 msgid "<small>Per row:</small>"
 msgstr "<small>Par ligne :</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2924
+#: ../src/ui/dialog/clonetiler.cpp:2925
 msgid "<small>Per column:</small>"
 msgstr "<small>Par colonne :</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2932
+#: ../src/ui/dialog/clonetiler.cpp:2933
 msgid "<small>Randomize:</small>"
 msgstr "<small>Hasard :</small>"
 
@@ -36141,8 +36141,8 @@ msgstr "Référence des raccourcis clavier et souris"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_keys.inx.h:3
-msgid "http://inkscape.org/doc/keys091.html"
-msgstr "http://inkscape.org/doc/keys091.fr.html"
+msgid "http://inkscape.org/doc/keys092.html"
+msgstr "http://inkscape.org/doc/keys092.fr.html"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
@@ -36159,8 +36159,8 @@ msgstr "Nouveautés de cette version"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_relnotes.inx.h:3
-msgid "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91"
-msgstr "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91"
+msgid "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.92"
+msgstr "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.92"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
 msgid "Report a Bug"
@@ -38752,7 +38752,8 @@ msgid "Custom Height (px):"
 msgstr "Droite (px) :"
 
 #: ../share/extensions/seamless_pattern.inx.h:4
-msgid "This extension overwrite current document"
+#, fuzzy
+msgid "This extension overwrites the current document"
 msgstr "L'extension écrase le document en cours"
 
 #: ../share/extensions/seamless_pattern_procedural.inx.h:1

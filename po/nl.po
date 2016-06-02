@@ -59,7 +59,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-30 07:25+0200\n"
+"POT-Creation-Date: 2016-06-02 12:12+0200\n"
 "PO-Revision-Date: 2016-05-24 22:49+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -4932,7 +4932,7 @@ msgstr "Document in het geheugen %d"
 msgid "Memory document %1"
 msgstr "Document in het geheugen %1"
 
-#: ../src/document.cpp:873
+#: ../src/document.cpp:864
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Naamloos document %d"
@@ -7966,31 +7966,31 @@ msgstr "GIMP-kleurverloop (*.ggr)"
 msgid "Gradients used in GIMP"
 msgstr "Kleurverlopen gebruikt in GIMP"
 
-#: ../src/extension/internal/grid.cpp:204 ../src/ui/widget/panel.cpp:117
+#: ../src/extension/internal/grid.cpp:199 ../src/ui/widget/panel.cpp:117
 msgid "Grid"
 msgstr "Raster"
 
-#: ../src/extension/internal/grid.cpp:206
+#: ../src/extension/internal/grid.cpp:201
 msgid "Line Width:"
 msgstr "Lijnbreedte:"
 
-#: ../src/extension/internal/grid.cpp:207
+#: ../src/extension/internal/grid.cpp:202
 msgid "Horizontal Spacing:"
 msgstr "Horizontale tussenruimte:"
 
-#: ../src/extension/internal/grid.cpp:208
+#: ../src/extension/internal/grid.cpp:203
 msgid "Vertical Spacing:"
 msgstr "Verticale tussenruimte:"
 
-#: ../src/extension/internal/grid.cpp:209
+#: ../src/extension/internal/grid.cpp:204
 msgid "Horizontal Offset:"
 msgstr "Horizontale inspringing:"
 
-#: ../src/extension/internal/grid.cpp:210
+#: ../src/extension/internal/grid.cpp:205
 msgid "Vertical Offset:"
 msgstr "Verticale inspringing:"
 
-#: ../src/extension/internal/grid.cpp:214
+#: ../src/extension/internal/grid.cpp:209
 #: ../src/ui/dialog/inkscape-preferences.cpp:1532
 #: ../share/extensions/draw_from_triangle.inx.h:58
 #: ../share/extensions/eqtexsvg.inx.h:4 ../share/extensions/foldablebox.inx.h:9
@@ -8020,14 +8020,14 @@ msgstr "Verticale inspringing:"
 msgid "Render"
 msgstr "Renderen"
 
-#: ../src/extension/internal/grid.cpp:215
+#: ../src/extension/internal/grid.cpp:210
 #: ../src/ui/dialog/document-properties.cpp:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:832
 #: ../src/widgets/toolbox.cpp:1894
 msgid "Grids"
 msgstr "Rasters"
 
-#: ../src/extension/internal/grid.cpp:218
+#: ../src/extension/internal/grid.cpp:213
 msgid "Draw a path which is a grid"
 msgstr "Een pad tekenen dat een raster is"
 
@@ -13166,20 +13166,20 @@ msgstr "Tekstgebied"
 msgid "Flow Excluded Region"
 msgstr "Gebied zonder tekst"
 
-#: ../src/sp-flowtext.cpp:282
+#: ../src/sp-flowtext.cpp:284
 msgid "Flowed Text"
 msgstr "Ingekaderde tekst"
 
-#: ../src/sp-flowtext.cpp:284
+#: ../src/sp-flowtext.cpp:286
 msgid "Linked Flowed Text"
 msgstr "Gelinkte ingekaderde tekst"
 
-#: ../src/sp-flowtext.cpp:290 ../src/sp-text.cpp:380
+#: ../src/sp-flowtext.cpp:292 ../src/sp-text.cpp:380
 #: ../src/ui/tools/text-tool.cpp:1556
 msgid " [truncated]"
 msgstr " [afgekort]"
 
-#: ../src/sp-flowtext.cpp:292
+#: ../src/sp-flowtext.cpp:294
 #, c-format
 msgid "(%d character%s)"
 msgid_plural "(%d characters%s)"
@@ -14792,19 +14792,19 @@ msgstr ""
 msgid "<small>Creating tiled clones...</small>"
 msgstr "<small>Getegelde klonen maken...</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2669
+#: ../src/ui/dialog/clonetiler.cpp:2670
 msgid "Create tiled clones"
 msgstr "Tegels met klonen"
 
-#: ../src/ui/dialog/clonetiler.cpp:2906
+#: ../src/ui/dialog/clonetiler.cpp:2907
 msgid "<small>Per row:</small>"
 msgstr "<small>Per rij:</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2924
+#: ../src/ui/dialog/clonetiler.cpp:2925
 msgid "<small>Per column:</small>"
 msgstr "<small>Per kolom:</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2932
+#: ../src/ui/dialog/clonetiler.cpp:2933
 msgid "<small>Randomize:</small>"
 msgstr "<small>Willekeurig:</small>"
 
@@ -31799,6 +31799,10 @@ msgstr ""
 "De op het invoerapparaat uitgeoefende druk gebruiken om de boetseerkracht te "
 "variëren"
 
+#: ../share/extensions/convert2dashes.py:56
+msgid "Total number of objects not converted: {}\n"
+msgstr ""
+
 #: ../share/extensions/dimension.py:108
 msgid "Please select an object."
 msgstr "Selecteer aub. een object."
@@ -35782,7 +35786,8 @@ msgstr "Bedieningsoverzicht"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_keys.inx.h:3
-msgid "http://inkscape.org/doc/keys091.html"
+#, fuzzy
+msgid "http://inkscape.org/doc/keys092.html"
 msgstr "http://inkscape.org/doc/keys091.html"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
@@ -35800,7 +35805,8 @@ msgstr "Nieuw in deze versie"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_relnotes.inx.h:3
-msgid "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91"
+#, fuzzy
+msgid "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.92"
 msgstr "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
@@ -38045,6 +38051,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:27
+#: ../share/extensions/ungroup_deep.inx.h:6
 msgid "Arrange"
 msgstr "Ordenen"
 
@@ -38385,8 +38392,9 @@ msgid "Custom Height (px):"
 msgstr "Aangepaste hoogte (px):"
 
 #: ../share/extensions/seamless_pattern.inx.h:4
-msgid "This extension overwrite current document"
-msgstr ""
+#, fuzzy
+msgid "This extension overwrites the current document"
+msgstr "Symbool uit huidig document verwijderen."
 
 #: ../share/extensions/seamless_pattern_procedural.inx.h:1
 msgid "Seamless Pattern Procedural"
@@ -38888,6 +38896,30 @@ msgstr "Gebruik zijde a en hoeken a en b"
 #: ../share/extensions/triangle.inx.h:13
 msgid "From Side c and Angles a, b"
 msgstr "Gebruik zijde c en hoeken a en b"
+
+#: ../share/extensions/ungroup_deep.inx.h:1
+#, fuzzy
+msgid "Deep Ungroup"
+msgstr "Groep opheffen"
+
+#: ../share/extensions/ungroup_deep.inx.h:2
+#, fuzzy
+msgid "Ungroup all groups in the selected object."
+msgstr "Een afsnijgroep op basis van de geselecteerde objecten maken"
+
+#: ../share/extensions/ungroup_deep.inx.h:3
+#, fuzzy
+msgid "Starting Depth"
+msgstr "Startpad:"
+
+#: ../share/extensions/ungroup_deep.inx.h:4
+#, fuzzy
+msgid "Stopping Depth (from top)"
+msgstr "Maskerpad uitschakelen"
+
+#: ../share/extensions/ungroup_deep.inx.h:5
+msgid "Depth to Keep (from bottom)"
+msgstr ""
 
 #: ../share/extensions/voronoi2svg.inx.h:1
 msgid "Voronoi Diagram"
