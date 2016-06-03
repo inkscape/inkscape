@@ -196,6 +196,7 @@ void SPGuide::set(unsigned int key, const gchar *value) {
     }
 }
 
+/* Only used internally and in sp-line.cpp */
 SPGuide *SPGuide::createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2)
 {
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
