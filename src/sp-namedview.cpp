@@ -1098,7 +1098,6 @@ void SPNamedView::setGuides(bool v)
     g_assert(this->getRepr() != NULL);
     sp_repr_set_boolean(this->getRepr(), "showguides", v);
     sp_repr_set_boolean(this->getRepr(), "inkscape:guide-bbox", v);
-    sp_repr_set_boolean(this->getRepr(), "inkscape:lockguides", false);
 }
 
 bool SPNamedView::getGuides()
