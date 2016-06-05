@@ -262,6 +262,18 @@ if(WITH_DBUS)
     endif()
 endif()
 
+if(WITH_SVG2)
+	add_definitions(-DWITH_MESH -DWITH_CSSBLEND -DWITH_CSSCOMPOSITE -DWITH_SVG2)
+else()
+	add_definitions(-UWITH_MESH -UWITH_CSSBLEND -UWITH_CSSCOMPOSITE -UWITH_SVG2)
+endif()
+
+if(WITH_LPETOOL)
+	add_definitions(-DWITH_LPETOOL -DLPE_ENABLE_TEST_EFFECTS)
+else()
+	add_definitions(-UWITH_LPETOOL -ULPE_ENABLE_TEST_EFFECTS)
+endif()
+
 if(WITH_GTEST)
     if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
 	
