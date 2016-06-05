@@ -28,6 +28,8 @@
 #include "util/expression-evaluator.h"
 #include "util/units.h"
 
+#include <glib/gconvert.h>
+
 #include <math.h>
 #include <string.h>
 
@@ -49,7 +51,7 @@ EvaluatorToken::EvaluatorToken()
 }
 
 ExpressionEvaluator::ExpressionEvaluator(const char *string, Unit const *unit) :
-    string(string),
+    string(g_locale_to_utf8(string,-1,0,0,0)),
     unit(unit)
 {
     current_token.type  = TOKEN_END;
