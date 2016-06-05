@@ -186,7 +186,7 @@ Gtk::Widget * ParamFloat::get_widget(SPDocument * doc, Inkscape::XML::Node * nod
     
     if (_mode == FULL) {
 
-        UI::Widget::SpinScale *scale = new UI::Widget::SpinScale(_(_text), fadjust, _precision);
+        UI::Widget::SpinScale *scale = new UI::Widget::SpinScale(_text, fadjust, _precision);
         scale->set_size_request(400, -1);
         scale->show();
         hbox->pack_start(*scale, false, false);
@@ -194,7 +194,7 @@ Gtk::Widget * ParamFloat::get_widget(SPDocument * doc, Inkscape::XML::Node * nod
     }
     else if (_mode == MINIMAL) {
 
-        Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START));
+        Gtk::Label * label = Gtk::manage(new Gtk::Label(_text, Gtk::ALIGN_START));
         label->show();
         hbox->pack_start(*label, true, true, _indent);
 
