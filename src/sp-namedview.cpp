@@ -261,16 +261,6 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
 
     // backwards compatibility with grid settings (pre 0.46)
     sp_namedview_generate_old_grid(this, document, repr);
-
-    // If viewbox defined: try to calculate the SVG unit from document width and viewbox
-    if (document->getRoot()->viewBox_set) {
-        Inkscape::Util::Quantity svgwidth = document->getWidth();
-        Geom::Rect viewbox = document->getRoot()->viewBox;
-        double factor = svgwidth.value(unit_table.primary(Inkscape::Util::UNIT_TYPE_LINEAR)) / viewbox.width(); 
-        svg_units = unit_table.findUnit(factor, Inkscape::Util::UNIT_TYPE_LINEAR);
-    } else {  // force the document units to be px
-        repr->setAttribute("inkscape:document-units", "px");
-    }
 }
 
 void SPNamedView::release() {
