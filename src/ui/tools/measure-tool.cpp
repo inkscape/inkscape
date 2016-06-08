@@ -778,7 +778,7 @@ void MeasureTool::toPhantom()
     measure_tmp_items.clear();
     showCanvasItems(false, false, true);
     doc->ensureUpToDate();
-    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MEASURE,_("Add Stored to measure tool"));
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MEASURE,_("Keep last measure on the canvas, for reference"));
 }
 
 void MeasureTool::toItem()
