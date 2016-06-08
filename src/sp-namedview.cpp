@@ -59,25 +59,25 @@ static gboolean sp_str_to_bool(const gchar *str);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
 
 SPNamedView::SPNamedView() : SPObjectGroup(), snap_manager(this) {
-	this->zoom = 0;
-	this->guidecolor = 0;
-	this->guidehicolor = 0;
-	this->views.clear();
-	this->borderlayer = 0;
-	this->page_size_units = NULL;
-	this->window_x = 0;
-	this->cy = 0;
-	this->window_y = 0;
-    this->svg_units = unit_table.getUnit("px"); // legacy behavior: if no viewbox present, default to 'px' units
+
+    this->zoom = 0;
+    this->guidecolor = 0;
+    this->guidehicolor = 0;
+    this->views.clear();
+    this->borderlayer = 0;
+    this->page_size_units = NULL;
+    this->window_x = 0;
+    this->cy = 0;
+    this->window_y = 0;
     this->display_units = NULL;
-	this->page_size_units = NULL;
-	this->pagecolor = 0;
-	this->cx = 0;
-	this->pageshadow = 0;
-	this->window_width = 0;
-	this->window_height = 0;
-	this->window_maximized = 0;
-	this->bordercolor = 0;
+    this->page_size_units = NULL;
+    this->pagecolor = 0;
+    this->cx = 0;
+    this->pageshadow = 0;
+    this->window_width = 0;
+    this->window_height = 0;
+    this->window_maximized = 0;
+    this->bordercolor = 0;
 
     this->editable = TRUE;
     this->showguides = TRUE;
