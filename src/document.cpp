@@ -369,11 +369,6 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
     // Recursively build object tree
     document->root->invoke_build(document, rroot, false);
 
-    /* fixme: Not sure about this, but lets assume ::build updates */
-    rroot->setAttribute("inkscape:version", Inkscape::version_string);
-    /* fixme: Again, I moved these here to allow version determining in ::build (Lauris) */
-
-
     /* Eliminate obsolete sodipodi:docbase, for privacy reasons */
     rroot->setAttribute("sodipodi:docbase", NULL);
 

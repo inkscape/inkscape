@@ -313,9 +313,11 @@ Inkscape::XML::Node *SPRoot::write(Inkscape::XML::Document *xml_doc, Inkscape::X
         repr = xml_doc->createElement("svg:svg");
     }
 
-    if (flags & SP_OBJECT_WRITE_EXT) {
-        repr->setAttribute("inkscape:version", Inkscape::version_string);
-    }
+    /* Only update version string on successful write to file. This is handled by 'file_save()'.
+     * if (flags & SP_OBJECT_WRITE_EXT) {
+     *   repr->setAttribute("inkscape:version", Inkscape::version_string);
+     * }
+     */
 
     if (!repr->attribute("version")) {
         gchar *myversion = sp_version_to_string(this->version.svg);
