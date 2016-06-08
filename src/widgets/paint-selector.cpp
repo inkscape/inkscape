@@ -789,7 +789,7 @@ static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSe
         SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_LINEAR);
         //sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
         gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Linear gradient</b>"));
-    } else if (mode == SPPaintSelector::MODE_GRADIENT_LINEAR) {
+    } else if (mode == SPPaintSelector::MODE_GRADIENT_RADIAL) {
         SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_RADIAL);
         gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Radial gradient</b>"));
     }
