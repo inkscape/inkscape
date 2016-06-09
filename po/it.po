@@ -7,12 +7,13 @@
 # Luca Bruno <lucab@debian.org>, 2005-2009.
 # Firas Hanife <FirasHanife@gmail.com>, 2014-2016.
 #
+#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-06 20:00+0200\n"
-"PO-Revision-Date: 2016-06-07 15:20+0100\n"
+"POT-Creation-Date: 2016-06-08 20:26+0200\n"
+"PO-Revision-Date: 2016-06-08 15:48+0100\n"
 "Last-Translator: Firas Hanife <FirasHanife@gmail.com>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -20,6 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../inkscape.appdata.xml.in.h:1 ../inkscape.desktop.in.h:1
 msgid "Inkscape"
@@ -35,9 +37,9 @@ msgid ""
 "Illustrator, CorelDraw, or Xara X, using the W3C standard Scalable Vector "
 "Graphics (SVG) file format."
 msgstr ""
-"Un editor di grafiche vettoriali, con funzionalità simili a Illustrator, "
-"CorelDraw o Xara X. Utilizza il formato file standard W3C Scalable Vector "
-"Graphics (SVG)."
+"Un editor di grafiche vettoriali open source, con funzionalità simili a "
+"Illustrator, CorelDraw o Xara X. Utilizza il formato file standard W3C "
+"Scalable Vector Graphics (SVG)."
 
 #: ../inkscape.appdata.xml.in.h:4
 msgid ""
@@ -47,11 +49,14 @@ msgid ""
 "trace bitmaps and much more. We also aim to maintain a thriving user and "
 "developer community by using open, community-oriented development."
 msgstr ""
+"Inkscape supporta molte funzionalità avanzate del formato SVG e offre una "
+"semplice interfaccia di uso. Si possono modificare nodi, eseguire complesse "
+"operazioni su tracciati, tracciare bitmap e molto altro. Inoltre Inkscape "
+"supporta un'attiva comunità di utenti e sviluppatori."
 
 #: ../inkscape.appdata.xml.in.h:5
-#, fuzzy
 msgid "Main application window"
-msgstr "Duplic_a finestra"
+msgstr "Finestra applicazione"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
@@ -63,7 +68,7 @@ msgstr "Crea e modifica immagini Scalable Vector Graphics"
 
 #: ../inkscape.desktop.in.h:5
 msgid "image;editor;vector;drawing;"
-msgstr ""
+msgstr "immagine;editor;vettoriale;disegno;"
 
 #: ../inkscape.desktop.in.h:6
 msgid "New Drawing"
@@ -4887,21 +4892,21 @@ msgstr "Multiplo spaziatura griglia"
 msgid " to "
 msgstr " a "
 
-#: ../src/document.cpp:531
+#: ../src/document.cpp:526
 #, c-format
 msgid "New document %d"
 msgstr "Nuovo documento %d"
 
-#: ../src/document.cpp:536
+#: ../src/document.cpp:531
 #, c-format
 msgid "Memory document %d"
 msgstr "Documento memoria %d"
 
-#: ../src/document.cpp:565
+#: ../src/document.cpp:560
 msgid "Memory document %1"
 msgstr "Documento memoria %1"
 
-#: ../src/document.cpp:864
+#: ../src/document.cpp:859
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Documento senza nome %d"
@@ -5761,28 +5766,24 @@ msgstr "PostScript livello 2"
 #: ../src/extension/internal/cairo-ps-out.cpp:333
 #: ../src/extension/internal/cairo-ps-out.cpp:375
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
-#, fuzzy
 msgid "Text output options:"
-msgstr "Orientamento testo"
+msgstr "Opzioni testo:"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:334
 #: ../src/extension/internal/cairo-ps-out.cpp:376
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
-#, fuzzy
 msgid "Embed fonts"
 msgstr "Incorpora caratteri"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:377
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
-#, fuzzy
 msgid "Convert text to paths"
-msgstr "Converti testo in tracciato"
+msgstr "Converti testo in tracciati"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:336
 #: ../src/extension/internal/cairo-ps-out.cpp:378
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
-#, fuzzy
 msgid "Omit text in PDF and create LaTeX file"
 msgstr "Ometti testo nel file PDF e crea un file LaTeX"
 
@@ -8096,19 +8097,19 @@ msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:134
 msgid "Poppler/Cairo import"
-msgstr ""
+msgstr "Importa con Poppler/Cairo"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:135
+#, fuzzy
 msgid ""
 "Import via external library. Text consists of groups containing cloned "
 "glyphs where each glyph is a path. Images are stored internally. Meshes "
 "cause entire document to be rendered as a raster image."
-msgstr ""
+msgstr "Importa con una libreria esterna"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:136
-#, fuzzy
 msgid "Internal import"
-msgstr "Punto verticale:"
+msgstr "Importa con libreria interna"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:137
 msgid ""
@@ -8369,52 +8370,52 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.it.svg"
 
-#: ../src/file.cpp:332
+#: ../src/file.cpp:338
 msgid "Broken links have been changed to point to existing files."
 msgstr ""
 
-#: ../src/file.cpp:343 ../src/file.cpp:1278
+#: ../src/file.cpp:349 ../src/file.cpp:1292
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Impossibile caricare il file %s"
 
-#: ../src/file.cpp:369
+#: ../src/file.cpp:375
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Documento non ancora salvato. Impossibile ricaricarlo."
 
-#: ../src/file.cpp:375
+#: ../src/file.cpp:381
 msgid "Changes will be lost! Are you sure you want to reload document %1?"
 msgstr ""
 "Le modifiche andranno perdute! Sicuri di voler ricaricare il documento %1?"
 
-#: ../src/file.cpp:401
+#: ../src/file.cpp:407
 msgid "Document reverted."
 msgstr "Documento ricaricato."
 
-#: ../src/file.cpp:403
+#: ../src/file.cpp:409
 msgid "Document not reverted."
 msgstr "Documento non ricaricato."
 
-#: ../src/file.cpp:553
+#: ../src/file.cpp:559
 msgid "Select file to open"
 msgstr "Seleziona il file da aprire"
 
-#: ../src/file.cpp:635
+#: ../src/file.cpp:641
 msgid "Clean up document"
 msgstr "Pulisci documento"
 
-#: ../src/file.cpp:642
+#: ../src/file.cpp:648
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Rimossa <b>%i</b> definizione inutilizzata in &lt;defs&gt;."
 msgstr[1] "Rimosse <b>%i</b> definizioni inutilizzate in &lt;defs&gt;."
 
-#: ../src/file.cpp:647
+#: ../src/file.cpp:653
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Nessuna definizione inutilizzata in &lt;defs&gt;."
 
-#: ../src/file.cpp:679
+#: ../src/file.cpp:687
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -8424,66 +8425,66 @@ msgstr ""
 "(%s). Ciò potrebbe esser stato causato da un'estensione del nome del file "
 "sconosciuta."
 
-#: ../src/file.cpp:680 ../src/file.cpp:688 ../src/file.cpp:696
-#: ../src/file.cpp:702 ../src/file.cpp:707
+#: ../src/file.cpp:688 ../src/file.cpp:698 ../src/file.cpp:707
+#: ../src/file.cpp:714 ../src/file.cpp:720
 msgid "Document not saved."
 msgstr "Documento non salvato."
 
-#: ../src/file.cpp:687
+#: ../src/file.cpp:697
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
 "Il file %s è protetto dalla scrittura. Rimuovere la protezione e riprovare."
 
-#: ../src/file.cpp:695
+#: ../src/file.cpp:706
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Impossibile salvare il file %s."
 
-#: ../src/file.cpp:725 ../src/file.cpp:727
+#: ../src/file.cpp:739 ../src/file.cpp:741
 msgid "Document saved."
 msgstr "Documento salvato."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:870 ../src/file.cpp:1437
+#: ../src/file.cpp:884 ../src/file.cpp:1451
 msgid "drawing"
 msgstr "disegno"
 
-#: ../src/file.cpp:875
+#: ../src/file.cpp:889
 msgid "drawing-%1"
 msgstr "disegno-%1"
 
-#: ../src/file.cpp:892
+#: ../src/file.cpp:906
 msgid "Select file to save a copy to"
 msgstr "Seleziona il file in cui salvare una copia"
 
-#: ../src/file.cpp:894
+#: ../src/file.cpp:908
 msgid "Select file to save to"
 msgstr "Seleziona il file da salvare"
 
-#: ../src/file.cpp:999 ../src/file.cpp:1001
+#: ../src/file.cpp:1013 ../src/file.cpp:1015
 msgid "No changes need to be saved."
 msgstr "Nessuna modifica da salvare."
 
-#: ../src/file.cpp:1020
+#: ../src/file.cpp:1034
 msgid "Saving document..."
 msgstr "Salvataggio del documento..."
 
-#: ../src/file.cpp:1275 ../src/ui/dialog/inkscape-preferences.cpp:1505
+#: ../src/file.cpp:1289 ../src/ui/dialog/inkscape-preferences.cpp:1505
 #: ../src/ui/dialog/ocaldialogs.cpp:1244
 msgid "Import"
 msgstr "Importa"
 
-#: ../src/file.cpp:1325
+#: ../src/file.cpp:1339
 msgid "Select file to import"
 msgstr "Seleziona il file da importare"
 
-#: ../src/file.cpp:1458
+#: ../src/file.cpp:1472
 msgid "Select file to export to"
 msgstr "Seleziona il file su cui esportare"
 
-#: ../src/file.cpp:1711
+#: ../src/file.cpp:1725
 msgid "Import Clip Art"
 msgstr "Importa Clip Art"
 
@@ -9902,7 +9903,6 @@ msgid "Left path along which to bend the original path"
 msgstr "Tracciato del lato sinistro usato per deformare il tracciato originale"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
-#, fuzzy
 msgid "_Enable left & right paths"
 msgstr "A_bilita tracciati sinistro e destro"
 
@@ -10341,341 +10341,290 @@ msgstr "Cambia intersezione nodo"
 
 #: ../src/live_effects/lpe-lattice2.cpp:47
 #: ../src/live_effects/lpe-perspective-envelope.cpp:43
-#, fuzzy
 msgid "Mirror movements in horizontal"
-msgstr "Muove i nodi verticalmente"
+msgstr "Rispecchia i movimenti orizzontalmente"
 
 #: ../src/live_effects/lpe-lattice2.cpp:48
 #: ../src/live_effects/lpe-perspective-envelope.cpp:44
-#, fuzzy
 msgid "Mirror movements in vertical"
-msgstr "Muove i nodi verticalmente"
+msgstr "Rispecchia i movimenti verticalmente"
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Update while moving knots (maybe slow)"
 msgstr ""
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
-#, fuzzy
 msgid "Control 0:"
-msgstr "Maniglia di controllo 0"
+msgstr "Controllo 0:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
-#, fuzzy
 msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 0 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
-#, fuzzy
 msgid "Control 1:"
-msgstr "Maniglia di controllo 1"
+msgstr "Controllo 1:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
-#, fuzzy
 msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 1 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
-#, fuzzy
 msgid "Control 2:"
-msgstr "Maniglia di controllo 3"
+msgstr "Controllo 2:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
-#, fuzzy
 msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 2 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
-#, fuzzy
 msgid "Control 3:"
-msgstr "Maniglia di controllo 3"
+msgstr "Controllo 3:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
-#, fuzzy
 msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 3 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
-#, fuzzy
 msgid "Control 4:"
-msgstr "Maniglia di controllo 4"
+msgstr "Controllo 4:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
-#, fuzzy
 msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 4 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
-#, fuzzy
 msgid "Control 5:"
-msgstr "Maniglia di controllo 5"
+msgstr "Controllo 5:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
-#, fuzzy
 msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 5 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
-#, fuzzy
 msgid "Control 6:"
-msgstr "Maniglia di controllo 6"
+msgstr "Controllo 6:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
-#, fuzzy
 msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 6 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
-#, fuzzy
 msgid "Control 7:"
-msgstr "Maniglia di controllo 7"
+msgstr "Controllo 7:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
-#, fuzzy
 msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 7 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
-#, fuzzy
 msgid "Control 8x9:"
-msgstr "Maniglia di controllo 8"
+msgstr "Controllo 8x9:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
-#, fuzzy
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 8x9 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
-#, fuzzy
 msgid "Control 10x11:"
-msgstr "Maniglia di controllo 10"
+msgstr "Controllo 10x11:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
-#, fuzzy
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 10x11 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
-#, fuzzy
 msgid "Control 12:"
-msgstr "Maniglia di controllo 12"
+msgstr "Controllo 12:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
-#, fuzzy
 msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 12 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
-#, fuzzy
 msgid "Control 13:"
-msgstr "Maniglia di controllo 13"
+msgstr "Controllo 13:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
-#, fuzzy
 msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 13 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
-#, fuzzy
 msgid "Control 14:"
-msgstr "Maniglia di controllo 14"
+msgstr "Controllo 14:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
-#, fuzzy
 msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 14 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
-#, fuzzy
 msgid "Control 15:"
-msgstr "Maniglia di controllo 15"
+msgstr "Controllo 15:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
-#, fuzzy
 msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 15- <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
-#, fuzzy
 msgid "Control 16:"
-msgstr "Maniglia di controllo 1"
+msgstr "Controllo 16:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
-#, fuzzy
 msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 16 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
-#, fuzzy
 msgid "Control 17:"
-msgstr "Maniglia di controllo 1"
+msgstr "Controllo 17:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
-#, fuzzy
 msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 17 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
-#, fuzzy
 msgid "Control 18:"
-msgstr "Maniglia di controllo 1"
+msgstr "Controllo 18:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
-#, fuzzy
 msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 18 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-#, fuzzy
 msgid "Control 19:"
-msgstr "Maniglia di controllo 1"
+msgstr "Controllo 19:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-#, fuzzy
 msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 19 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
+"assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-#, fuzzy
 msgid "Control 20x21:"
-msgstr "Maniglia di controllo 0"
+msgstr "Controllo 20x21:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-#, fuzzy
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 20x21 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-#, fuzzy
 msgid "Control 22x23:"
-msgstr "Maniglia di controllo 3"
+msgstr "Controllo 22x23:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-#, fuzzy
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 22x23 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-#, fuzzy
 msgid "Control 24x26:"
-msgstr "Maniglia di controllo 3"
+msgstr "Controllo 24x26:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-#, fuzzy
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 24x26 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-#, fuzzy
 msgid "Control 25x27:"
-msgstr "Maniglia di controllo 3"
+msgstr "Controllo 25x27:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-#, fuzzy
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 25x27 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
-#, fuzzy
 msgid "Control 28x30:"
-msgstr "Maniglia di controllo 0"
+msgstr "Controllo 28x30:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
-#, fuzzy
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 28x30 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
-#, fuzzy
 msgid "Control 29x31:"
-msgstr "Maniglia di controllo 1"
+msgstr "Controllo 29x31:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
-#, fuzzy
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Controllo 29x31 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:74
 msgid "Control 32x33x34x35:"
-msgstr ""
+msgstr "Controllo 32x33x34x35:"
 
 #: ../src/live_effects/lpe-lattice2.cpp:74
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
 msgstr ""
+"Controllo 32x33x34x35 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi "
+"lungo gli assi"
 
 #: ../src/live_effects/lpe-lattice2.cpp:239
-#, fuzzy
 msgid "Reset grid"
-msgstr "Rimuovi griglia"
+msgstr "Reimposta griglia"
 
 #: ../src/live_effects/lpe-lattice2.cpp:271
 #: ../src/live_effects/lpe-lattice2.cpp:286
-#, fuzzy
 msgid "Show Points"
-msgstr "Ordina punti"
+msgstr "Mostra punti di controllo"
 
 #: ../src/live_effects/lpe-lattice2.cpp:284
-#, fuzzy
 msgid "Hide Points"
-msgstr "Punti"
+msgstr "Nascondi punti"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:63
 #: ../share/extensions/pathalongpath.inx.h:10
@@ -10781,7 +10730,6 @@ msgid "Perspective"
 msgstr "Prospettiva"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:36
-#, fuzzy
 msgid "Envelope deformation"
 msgstr "Deformazione a busta"
 
@@ -10799,57 +10747,48 @@ msgid "Select the type of deformation"
 msgstr "Seleziona il tipo di deformazione"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
-#, fuzzy
 msgid "Top Left"
-msgstr "Tracciato lato superiore"
+msgstr "Superiore sinistra"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
-#, fuzzy
 msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Superiore sinistra - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi "
+"lungo gli assi"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
-#, fuzzy
 msgid "Top Right"
-msgstr "_Trucchi"
+msgstr "Superiore destra"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
-#, fuzzy
 msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Superiore destra - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
-#, fuzzy
 msgid "Down Left"
-msgstr "Tracciato lato superiore"
+msgstr "Inferiore sinistra"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
-#, fuzzy
 msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Inferiore sinistra - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi "
+"lungo gli assi"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
-#, fuzzy
 msgid "Down Right"
-msgstr "Destra"
+msgstr "Inferiore destra"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
-#, fuzzy
 msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"<b>Alt</b>: blocca la lunghezza della maniglia; <b>Ctrl+Alt</b>: muove tra "
-"le maniglie"
+"Inferiore destra - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
+"gli assi"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:367
-#, fuzzy
 msgid "Handles:"
-msgstr "Maniglia"
+msgstr "Maniglie:"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:132
 msgid "CubicBezierSmooth"
@@ -11877,15 +11816,14 @@ msgstr "Modifica parametri del punto"
 
 #: ../src/live_effects/parameter/powerstrokepointarray.cpp:239
 #: ../src/live_effects/parameter/powerstrokepointarray.cpp:256
-#, fuzzy
 msgid ""
 "<b>Stroke width control point</b>: drag to alter the stroke width. <b>Ctrl"
 "+click</b> adds a control point, <b>Ctrl+Alt+click</b> deletes it, <b>Shift"
 "+click</b> launches width dialog."
 msgstr ""
 "<b>Punto di controllo</b>: trascina per modificare la larghezza del "
-"contorno. <b>Ctrl+clic</b> aggiunge un punto di controllo, <b>Ctrl-Alt+clic</"
-"b> lo elimina."
+"contorno. <b>Ctrl+Clic</b> aggiunge un punto di controllo, <b>Ctrl+Alt+Clic</"
+"b> lo elimina, <b>Maiusc+Clic</b> apre la finestra di controllo."
 
 #: ../src/live_effects/parameter/random.cpp:134
 msgid "Change random parameter"
@@ -13062,9 +13000,8 @@ msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Seleziona l'<b>oggetto</b> da cui creare la maschera o il fissaggio."
 
 #: ../src/selection-chemistry.cpp:3850 ../src/ui/dialog/objects.cpp:1922
-#, fuzzy
 msgid "Create Clip Group"
-msgstr "Crea clo_ne"
+msgstr "Crea gruppo di ritaglio"
 
 #: ../src/selection-chemistry.cpp:3879
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
@@ -13154,7 +13091,7 @@ msgid " in unnamed group (%s)"
 msgstr " nel gruppo senza nome (%s)"
 
 #: ../src/selection-describer.cpp:183
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> parent (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] " in <b>%i</b> genitore (%s)"
@@ -15001,7 +14938,7 @@ msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
 "Colore: <b>%s</b>; <b>Clicca</b> per impostare il riempimento, <b>Maiusc"
-"+clic</b> per impostare il contorno"
+"+Clic</b> per impostare il contorno"
 
 #: ../src/ui/dialog/color-item.cpp:505
 msgid "Change color definition"
@@ -17917,7 +17854,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 msgid "Ctrl+click _dot size:"
-msgstr "Dimensione _punto con Ctrl+clic:"
+msgstr "Dimensione _punto con Ctrl+Clic:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 msgid "times current stroke width"
@@ -17926,7 +17863,7 @@ msgstr "volte la larghezza attuale del contorno"
 #: ../src/ui/dialog/inkscape-preferences.cpp:205
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr ""
-"Dimensione dei punti creati con Ctrl+clic (relativi alla larghezza del "
+"Dimensione dei punti creati con Ctrl+Clic (relativi alla larghezza del "
 "contorno attuale)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
@@ -18856,25 +18793,21 @@ msgid "Set the language for menus and number formats"
 msgstr "Imposta la lingua per i menu e il formato dei numeri"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
-#, fuzzy
 msgctxt "Icon size"
 msgid "Larger"
-msgstr "Grande"
+msgstr "Più grande"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
-#, fuzzy
 msgctxt "Icon size"
 msgid "Large"
 msgstr "Grande"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
-#, fuzzy
 msgctxt "Icon size"
 msgid "Small"
 msgstr "Piccola"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
-#, fuzzy
 msgctxt "Icon size"
 msgid "Smaller"
 msgstr "Più piccola"
@@ -21049,19 +20982,16 @@ msgid "None"
 msgstr "Nessuno"
 
 #: ../src/ui/dialog/knot-properties.cpp:59
-#, fuzzy
 msgid "Position X:"
-msgstr "Posizione:"
+msgstr "Posizione X:"
 
 #: ../src/ui/dialog/knot-properties.cpp:66
-#, fuzzy
 msgid "Position Y:"
-msgstr "Posizione:"
+msgstr "Posizione Y:"
 
 #: ../src/ui/dialog/knot-properties.cpp:120
-#, fuzzy
 msgid "Modify Knot Position"
-msgstr "Posizione x dell'illuminazione"
+msgstr "Modifica posizione nodo"
 
 #: ../src/ui/dialog/knot-properties.cpp:121
 #: ../src/ui/dialog/layer-properties.cpp:411
@@ -21071,14 +21001,14 @@ msgid "_Move"
 msgstr "_Muovi"
 
 #: ../src/ui/dialog/knot-properties.cpp:180
-#, fuzzy, c-format
+#, c-format
 msgid "Position X (%s):"
-msgstr "Posizione:"
+msgstr "Posizione X (%s):"
 
 #: ../src/ui/dialog/knot-properties.cpp:181
-#, fuzzy, c-format
+#, c-format
 msgid "Position Y (%s):"
-msgstr "Posizione:"
+msgstr "Posizione Y (%s):"
 
 #: ../src/ui/dialog/layer-properties.cpp:55
 msgid "Layer name:"
@@ -21167,7 +21097,6 @@ msgid "Lock other layers"
 msgstr "Blocca altri livelli"
 
 #: ../src/ui/dialog/layers.cpp:730
-#, fuzzy
 msgid "Move layer"
 msgstr "Sposta livello"
 
@@ -22334,9 +22263,8 @@ msgid "Add selection to set"
 msgstr "Aggiunge selezione al set"
 
 #: ../src/ui/dialog/tags.cpp:824
-#, fuzzy
 msgid "Moved sets"
-msgstr "Muovi gradiente"
+msgstr "Sposta set"
 
 #: ../src/ui/dialog/tags.cpp:1004
 msgid "Add a new selection set"
@@ -23060,7 +22988,6 @@ msgstr "Modifica gruppo #%1"
 
 #. Pop selection out of group
 #: ../src/ui/interface.cpp:1528
-#, fuzzy
 msgid "_Pop selection out of group"
 msgstr "_Estrai selezione dal gruppo"
 
@@ -23119,9 +23046,8 @@ msgstr "Rimuovi maschera"
 
 #. SSet Clip Group
 #: ../src/ui/interface.cpp:1776
-#, fuzzy
 msgid "Create Clip G_roup"
-msgstr "Crea clo_ne"
+msgstr "Crea gruppo di _ritaglio"
 
 #. Set Clip
 #: ../src/ui/interface.cpp:1783
@@ -23355,14 +23281,13 @@ msgid "<b>Ctrl+Alt</b>: click to insert a node"
 msgstr "<b>Ctrl+Alt</b>: clicca per inserire un nodo"
 
 #: ../src/ui/tool/curve-drag-point.cpp:204
-#, fuzzy
 msgctxt "Path segment tip"
 msgid ""
 "<b>BSpline segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>Segmento di Bezier</b>: trascina per formare il segmento, doppio clic per "
-"inserire un nodo, clicca per selezionare (altro: Maiusc, Ctrl+Alt)"
+"<b>Segmento di BSpline</b>: trascina per formare il segmento, doppio Clic "
+"per inserire un nodo, clicca per selezionare (altro: Maiusc, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:209
 msgctxt "Path segment tip"
@@ -23371,7 +23296,7 @@ msgid ""
 "insert node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
 "<b>Segmento lineare</b>: trascina per convertire in un segmento di Bezier, "
-"doppio clic per inserire un nodo, clicca per selezionare (altro: Maiusc, Ctrl"
+"doppio Clic per inserire un nodo, clicca per selezionare (altro: Maiusc, Ctrl"
 "+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:213
@@ -23380,7 +23305,7 @@ msgid ""
 "<b>Bezier segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>Segmento di Bezier</b>: trascina per formare il segmento, doppio clic per "
+"<b>Segmento di Bezier</b>: trascina per formare il segmento, doppio Clic per "
 "inserire un nodo, clicca per selezionare (altro: Maiusc, Ctrl+Alt)"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:315
@@ -23493,10 +23418,9 @@ msgid "more: Shift, Ctrl, Alt"
 msgstr "altro: Maiusc, Ctrl, Alt"
 
 #: ../src/ui/tool/node.cpp:496
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "more: Ctrl"
-msgstr "altro: Ctrl, Alt"
+msgstr "altro: Ctrl"
 
 #: ../src/ui/tool/node.cpp:498
 msgctxt "Path handle tip"
@@ -23561,10 +23485,9 @@ msgid "<b>Shift</b>: rotate both handles by the same angle"
 msgstr "<b>Maiusc</b>: ruota entrambe le maniglie dello stesso angolo"
 
 #: ../src/ui/tool/node.cpp:540
-#, fuzzy
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: move handle"
-msgstr "Sposta maniglie dei nodi"
+msgstr "<b>Maiusc</b>: muovi maniglia"
 
 #: ../src/ui/tool/node.cpp:547 ../src/ui/tool/node.cpp:551
 #, c-format
@@ -23580,6 +23503,8 @@ msgid ""
 "<b>BSpline node handle</b>: Shift to drag, double click to reset (%s). %g "
 "power"
 msgstr ""
+"<b>Maniglia nodo BSpline</b>: Maiusc per trascinare, doppio Clic per "
+"reimpostare (%s). Forza %g"
 
 #: ../src/ui/tool/node.cpp:574
 #, c-format
@@ -23623,13 +23548,14 @@ msgstr ""
 "<b>%s</b>: trascina per formare il tracciato (altro: Maiusc, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1451
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid ""
 "<b>BSpline node</b>: drag to shape the path (more: Shift, Ctrl, Alt). %g "
 "power"
 msgstr ""
-"<b>%s</b>: trascina per formare il tracciato (altro: Maiusc, Ctrl, Alt)"
+"<b>Nodo BSpline</b>: trascina per formare il tracciato (altro: Maiusc, Ctrl, "
+"Alt). Forza %g"
 
 #: ../src/ui/tool/node.cpp:1454
 #, c-format
@@ -23652,14 +23578,14 @@ msgstr ""
 "questo nodo (altro: Maiusc, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1461
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid ""
 "<b>BSpline node</b>: drag to shape the path, click to select only this node "
 "(more: Shift, Ctrl, Alt). %g power"
 msgstr ""
-"<b>%s</b>: trascina per formare il tracciato, clicca per selezionare solo "
-"questo nodo (altro: Maiusc, Ctrl, Alt)"
+"<b>Nodo BSpline</b>: trascina per formare il tracciato, clicca per "
+"selezionare solo questo nodo (altro: Maiusc, Ctrl, Alt). Forza %g"
 
 #: ../src/ui/tool/node.cpp:1474
 #, c-format
@@ -23915,7 +23841,7 @@ msgid ""
 "line modes only)."
 msgstr ""
 "<b>Clicca</b> o <b>clicca e trascina</b> per iniziare un percorso; con "
-"<b>Maiusc</b> per accodare al percorso selezionato. <b>Ctrl+clic</b> per "
+"<b>Maiusc</b> per accodare al percorso selezionato. <b>Ctrl+Clic</b> per "
 "creare punti singoli (solo in modalità linea semplice)."
 
 #: ../src/ui/tools-switch.cpp:112
@@ -23940,7 +23866,7 @@ msgid ""
 "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, "
 "<b>drag handles</b> to adjust gradients."
 msgstr ""
-"<b>Trascina</b> o <b>doppio clic</b> per creare un gradiente sull'oggetto "
+"<b>Trascina</b> o <b>doppio Clic</b> per creare un gradiente sull'oggetto "
 "selezionato; <b>trascina le maniglie</b> per modificare il gradiente."
 
 #: ../src/ui/tools-switch.cpp:115
@@ -23948,7 +23874,7 @@ msgid ""
 "<b>Drag</b> or <b>double click</b> to create a mesh on selected objects, "
 "<b>drag handles</b> to adjust meshes."
 msgstr ""
-"<b>Trascina</b> o <b>doppio clic</b> per creare un gradiente a maglia "
+"<b>Trascina</b> o <b>doppio Clic</b> per creare un gradiente a maglia "
 "sull'oggetto selezionato, <b>trascina le maniglie</b> per modificare il "
 "gradiente."
 
@@ -23957,7 +23883,7 @@ msgid ""
 "<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to "
 "zoom out."
 msgstr ""
-"<b>Clicca</b> o <b>seleziona una zona</b> per ingrandire, <b>Maiusc+clic</b> "
+"<b>Clicca</b> o <b>seleziona una zona</b> per ingrandire, <b>Maiusc+Clic</b> "
 "per rimpicciolire."
 
 #: ../src/ui/tools-switch.cpp:117
@@ -23970,7 +23896,7 @@ msgid ""
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
 "to copy the color under mouse to clipboard"
 msgstr ""
-"<b>Clicca</b> per impostare il colore di riempimento, <b>Maiusc+clic</b> per "
+"<b>Clicca</b> per impostare il colore di riempimento, <b>Maiusc+Clic</b> per "
 "impostare il colore del contorno; <b>trascina</b> per prelevare il colore "
 "medio di un'area; con <b>Alt</b> per prelevare il colore inverso; <b>Ctrl+C</"
 "b> per copiare negli appunti il colore sotto al mouse"
@@ -23985,8 +23911,8 @@ msgid ""
 "fill with the current selection, <b>Ctrl+click</b> to change the clicked "
 "object's fill and stroke to the current setting."
 msgstr ""
-"<b>Clicca</b> per riempire un'area delimitata, <b>Maiusc+clic</b> per unire "
-"il nuovo riempimento alla selezione attuale, <b>Ctrl+clic</b> per applicare "
+"<b>Clicca</b> per riempire un'area delimitata, <b>Maiusc+Clic</b> per unire "
+"il nuovo riempimento alla selezione attuale, <b>Ctrl+Clic</b> per applicare "
 "al riempimento e al contorno dell'oggetto le impostazioni attuali."
 
 #: ../src/ui/tools-switch.cpp:123
@@ -24341,10 +24267,13 @@ msgstr "Scegliere uno strumento di costruzione dalla barra degli strumenti."
 #: ../src/ui/tools/measure-tool.cpp:349
 msgid "Measure start, <b>Shift+Click</b> for position dialog"
 msgstr ""
+"Inizio misurazione, <b>Maiusc+Clic</b> per aprire la finestra di "
+"posizionamento"
 
 #: ../src/ui/tools/measure-tool.cpp:355
 msgid "Measure end, <b>Shift+Click</b> for position dialog"
 msgstr ""
+"Fine misurazione, <b>Maiusc+Clic</b> per aprire la finestra di posizionamento"
 
 #: ../src/ui/tools/measure-tool.cpp:747 ../share/extensions/measure.inx.h:2
 msgid "Measure"
@@ -24359,7 +24288,7 @@ msgid "Add guides from measure tool"
 msgstr "Aggiungi guide dallo strumento di misurazione"
 
 #: ../src/ui/tools/measure-tool.cpp:781
-msgid "Add Stored to measure tool"
+msgid "Keep last measure on the canvas, for reference"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:801
@@ -24527,13 +24456,12 @@ msgstr ""
 "tracciato."
 
 #: ../src/ui/tools/pen-tool.cpp:642
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to close and finish the path. Shift"
 "+Click make a cusp node"
 msgstr ""
-"<b>Clicca</b> o <b>clicca e trascina</b> per chiudere e terminare il "
-"tracciato."
+"<b>Clicca</b> o <b>Clicca e trascina</b> per chiudere e terminare il "
+"tracciato. Maiusc+Clic per creare un nodo angolare"
 
 #: ../src/ui/tools/pen-tool.cpp:654
 msgid ""
@@ -24543,49 +24471,52 @@ msgstr ""
 "questo punto."
 
 #: ../src/ui/tools/pen-tool.cpp:656
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point. "
 "Shift+Click make a cusp node"
 msgstr ""
-"<b>Clicca</b> o <b>clicca e trascina</b> per continuare il tracciato da "
-"questo punto."
+"<b>Clicca</b> o <b>Clicca e trascina</b> per continuare il tracciato da "
+"questo punto. Maiusc+Clic per creare un nodo angolare"
 
 #: ../src/ui/tools/pen-tool.cpp:1797
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> or <b>Shift+Enter</b> to finish the path"
 msgstr ""
 "<b>Segmento di curva</b>: angolo %3.2f&#176;, distanza %s; con <b>Ctrl</b> "
-"angoli a scatti; <b>Invio</b> per terminare il tracciato"
+"angoli a scatti; <b>Invio</b> o <b>Maiusc+Invio</b> per terminare il "
+"tracciato"
 
 #: ../src/ui/tools/pen-tool.cpp:1798
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> or <b>Shift+Enter</b> to finish the path"
 msgstr ""
 "<b>Segmento di linea</b>: angolo %3.2f&#176;, distanza %s; con <b>Ctrl</b> "
-"angoli a scatti; <b>Invio</b> per terminare il tracciato"
+"angoli a scatti; <b>Invio</b> o <b>Maiusc+Invio</b> per terminare il "
+"tracciato"
 
 #: ../src/ui/tools/pen-tool.cpp:1801
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</"
 "b> make a cusp node, <b>Enter</b> or <b>Shift+Enter</b> to finish the path"
 msgstr ""
 "<b>Segmento di curva</b>: angolo %3.2f&#176;, distanza %s; con <b>Ctrl</b> "
-"angoli a scatti; <b>Invio</b> per terminare il tracciato"
+"angoli a scatti; <b>Invio</b> o <b>Maiusc+Invio</b> per terminare il "
+"tracciato"
 
 #: ../src/ui/tools/pen-tool.cpp:1802
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> "
 "make a cusp node, <b>Enter</b> or <b>Shift+Enter</b> to finish the path"
 msgstr ""
 "<b>Segmento di linea</b>: angolo %3.2f&#176;, distanza %s; con <b>Ctrl</b> "
-"angoli a scatti; <b>Invio</b> per terminare il tracciato"
+"angoli a scatti; <b>Invio</b> o <b>Maiusc+Invio</b> per terminare il "
+"tracciato"
 
 #: ../src/ui/tools/pen-tool.cpp:1819
 #, c-format
@@ -24706,7 +24637,7 @@ msgid ""
 "No objects selected. Click, Shift+click, Alt+scroll mouse on top of objects, "
 "or drag around objects to select."
 msgstr ""
-"Nessun oggetto selezionato. Clicca, Maiusc+clic, Alt+scorrimento mouse sugli "
+"Nessun oggetto selezionato. Clicca, Maiusc+Clic, Alt+scorrimento mouse sugli "
 "oggetti, o trascina attorno agli oggetti per selezionare."
 
 #: ../src/ui/tools/select-tool.cpp:210
@@ -27622,15 +27553,12 @@ msgstr ""
 "tracciato di fissaggio)"
 
 #: ../src/verbs.cpp:2721
-#, fuzzy
 msgid "Create Cl_ip Group"
-msgstr "Crea clo_ne"
+msgstr "Crea gruppo di _ritaglio"
 
 #: ../src/verbs.cpp:2722
-#, fuzzy
 msgid "Creates a clip group using the selected objects as a base"
-msgstr ""
-"Crea un clone dell'oggetto selezionato (una copia collegata all'originale)"
+msgstr "Crea un gruppo di ritaglio utilizzando gli oggetti selezionati"
 
 #: ../src/verbs.cpp:2724
 msgid "Edit clipping path"
@@ -29352,13 +29280,11 @@ msgid "Unlocked all guides"
 msgstr "Tutte le guide sono sbloccate"
 
 #: ../src/widgets/desktop-widget.cpp:1130
-#, fuzzy
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
 "La gestione del colore del display è <b>abilitata</b> in questa finestra"
 
 #: ../src/widgets/desktop-widget.cpp:1132
-#, fuzzy
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
 "La gestione del colore del display è <b>disabilitata</b> in questa finestra"
@@ -30336,9 +30262,8 @@ msgid "Radial gradient"
 msgstr "Gradiente radiale"
 
 #: ../src/widgets/paint-selector.cpp:228
-#, fuzzy
 msgid "Mesh gradient"
-msgstr "Muovi gradiente"
+msgstr "Gradiente a maglia"
 
 #: ../src/widgets/paint-selector.cpp:235
 msgid "Unset paint (make it undefined so it can be inherited)"
@@ -30491,7 +30416,7 @@ msgstr "Zigzag"
 
 #: ../src/widgets/pencil-toolbar.cpp:126
 msgid "Create a sequence of straight line segments"
-msgstr "Crea una sequenza di segmenti diritti"
+msgstr "Crea una sequenza di segmenti lineari"
 
 #: ../src/widgets/pencil-toolbar.cpp:132
 msgid "Paraxial"
@@ -31119,15 +31044,15 @@ msgstr "Imposta l'ultimo colore selezionato come contorno"
 
 #: ../src/widgets/spray-toolbar.cpp:554 ../src/widgets/spray-toolbar.cpp:555
 msgid "No overlap between colors"
-msgstr ""
+msgstr "Non sovrapporre colori differenti"
 
 #: ../src/widgets/spray-toolbar.cpp:567 ../src/widgets/spray-toolbar.cpp:568
 msgid "Apply over transparent areas"
-msgstr ""
+msgstr "Applica su aree trasparenti"
 
 #: ../src/widgets/spray-toolbar.cpp:580 ../src/widgets/spray-toolbar.cpp:581
 msgid "Apply over no transparent areas"
-msgstr ""
+msgstr "Applica su aree non trasparenti"
 
 #: ../src/widgets/spray-toolbar.cpp:593 ../src/widgets/spray-toolbar.cpp:594
 msgid "Prevent overlapping objects"
