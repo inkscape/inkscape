@@ -274,14 +274,6 @@ else()
 	add_definitions(-UWITH_LPETOOL -ULPE_ENABLE_TEST_EFFECTS)
 endif()
 
-if(WITH_GTEST)
-    if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
-	
-    else()
-	set(WITH_GTEST off)
-    endif()
-endif()
-
 # ----------------------------------------------------------------------------
 # CMake's builtin
 # ----------------------------------------------------------------------------

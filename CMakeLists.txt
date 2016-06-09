@@ -70,18 +70,6 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "" )
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib CACHE INTERNAL "" )
 
 # -----------------------------------------------------------------------------
-# Test Harness
-# -----------------------------------------------------------------------------
-set(GMOCK_DIR "${CMAKE_SOURCE_DIR}/gtest/gmock-1.7.0"
-    CACHE PATH "The path to the GoogleMock test framework.")
-
-if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
-    set(GMOCK_PRESENT ON)
-else()
-    message("No gmock/gtest found! Perhaps you wish to run 'bash download-gtest.sh' to download it.")
-endif()
-
-# -----------------------------------------------------------------------------
 # Options
 # -----------------------------------------------------------------------------
 option(WITH_DBUS "Compile with support for DBus interface" OFF)
@@ -90,7 +78,6 @@ option(WITH_GNOME_VFS "Compile with support for Gnome VFS" ON)
 option(WITH_SVG2 "Compile with support for new SVG2 features" ON)
 option(WITH_LPETOOL "Compile with LPE Tool and experimental LPEs enabled" ON)
 #option(WITH_INKJAR "Enable support for openoffice files (SVG jars)" ON)
-option(WITH_GTEST "Compile with Google Test support" ${GMOCK_PRESENT})
 option(WITH_OPENMP "Compile with OpenMP support" ON)
 
 option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
@@ -103,6 +90,19 @@ option(WITH_LIBVISIO "Compile with support of libvisio for Microsoft Visio Diagr
 option(WITH_LIBWPG "Compile with support of libwpg for WordPerfect Graphics" ON)
 option(WITH_NLS "Compile with Native Language Support (using gettext)" ON)
 option(WITH_GTK3_EXPERIMENTAL "Enable compilation with GTK+3 (EXPERIMENTAL!)" OFF)
+
+# -----------------------------------------------------------------------------
+# Test Harness
+# -----------------------------------------------------------------------------
+set(GMOCK_DIR "${CMAKE_SOURCE_DIR}/gtest/gmock-1.7.0"
+    CACHE PATH "The path to the GoogleMock test framework.")
+
+if(EXISTS "${GMOCK_DIR}" AND IS_DIRECTORY "${GMOCK_DIR}")
+    set(GMOCK_PRESENT ON)
+else()
+    set(GMOCK_PRESENT OFF)
+    message("No gmock/gtest found! Perhaps you wish to run 'bash download-gtest.sh' to download it.")
+endif()
 
 include(CMakeScripts/ConfigPaths.cmake) # Installation Paths
 include(CMakeScripts/DefineDependsandFlags.cmake) # Includes, Compiler Flags, and Link Libraries
@@ -210,12 +210,11 @@ add_custom_target(clean-all
 )
 
 #-----------------------------------------------------------------------------
-
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
-
-if(WITH_GTEST)
+if(GMOCK_PRESENT)
+    set(CMAKE_CTEST_COMMAND ctest -V)
     enable_testing()
-    add_subdirectory(test EXCLUDE_FROM_ALL)
+    add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
+    add_subdirectory(testfiles)
 endif()
 
 # Canonicalize the flags to speed up recompilation using ccache/etc.
