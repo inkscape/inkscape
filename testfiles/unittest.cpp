@@ -35,10 +35,13 @@ int main(int argc, char **argv) {
 #if !GLIB_CHECK_VERSION(2,36,0)
     g_type_init();
 #endif
-    int tmpArgc = 1;
-    char const *tmp[] = {"foo", ""};
-    char **tmpArgv = const_cast<char **>(tmp);
-    Gtk::Main(tmpArgc, tmpArgv);
+
+    // If possible, unit tests shouldn't require a GUI session
+    // since this won't generally be available in auto-builders
+    // int tmpArgc = 1;
+    // char const *tmp[] = {"foo", ""};
+    // char **tmpArgv = const_cast<char **>(tmp);
+    // Gtk::Main(tmpArgc, tmpArgv);
 
     Inkscape::GC::init();
 
