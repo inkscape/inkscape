@@ -513,17 +513,6 @@ add_library(inkscape_base SHARED ${inkscape_SRC} ${sp_SRC})
 add_executable(inkscape ${main_SRC} )
 add_executable(inkview inkview.cpp )
 
-
-
-if(UNIX)
-# message after building.
-add_custom_command(
-    TARGET inkscape
-    POST_BUILD MAIN_DEPENDENCY inkscape
-    COMMAND ${CMAKE_COMMAND} -E echo 'now run: \"make install\" to copy runtime files & scripts to ${CMAKE_INSTALL_PREFIX}'
-)
-endif()
-
 add_dependencies(inkscape inkscape_version)
 
 if(WITH_DBUS)
