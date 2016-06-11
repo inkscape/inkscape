@@ -399,7 +399,6 @@ void SPItem::build(SPDocument *document, Inkscape::XML::Node *repr) {
     object->readAttr( "clip-path" );
     object->readAttr( "mask" );
     object->readAttr( "sodipodi:insensitive" );
-    object->readAttr( "sodipodi:nonprintable" );
     object->readAttr( "inkscape:transform-center-x" );
     object->readAttr( "inkscape:transform-center-y" );
     object->readAttr( "inkscape:connector-avoid" );
