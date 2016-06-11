@@ -520,7 +520,7 @@ public:
     {}
 
     SPIEnumBits( Glib::ustring const &name, SPStyleEnum const *enums, unsigned value = 0, bool inherits = true ) :
-        SPIEnum( name, enums, value, inherit )
+        SPIEnum( name, enums, value, inherits )
     {}
 
     virtual ~SPIEnumBits()
