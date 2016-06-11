@@ -20,7 +20,6 @@
 #include "extension/extension.h"
 #include "preferences.h"
 #include "float.h"
-#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace Extension {
