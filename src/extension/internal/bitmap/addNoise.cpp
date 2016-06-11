@@ -44,7 +44,7 @@ AddNoise::init(void)
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Add Noise") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.addNoise</id>\n"
-			"<param name=\"noiseType\" gui-text=\"" N_("Type:") "\" type=\"enum\" >\n"
+			"<param name=\"noiseType\" _gui-text=\"" N_("Type:") "\" type=\"enum\" >\n"
 				"<_item value='Uniform Noise'>" N_("Uniform Noise") "</_item>\n"
 				"<_item value='Gaussian Noise'>" N_("Gaussian Noise") "</_item>\n"
 				"<_item value='Multiplicative Gaussian Noise'>" N_("Multiplicative Gaussian Noise") "</_item>\n"

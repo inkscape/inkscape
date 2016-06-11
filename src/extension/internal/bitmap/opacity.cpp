@@ -37,7 +37,7 @@ Opacity::init(void)
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Opacity") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.opacity</id>\n"
-			"<param name=\"opacity\" gui-text=\"" N_("Opacity:") "\" type=\"float\" min=\"0.0\" max=\"100.0\">80.0</param>\n"
+			"<param name=\"opacity\" _gui-text=\"" N_("Opacity:") "\" type=\"float\" min=\"0.0\" max=\"100.0\">80.0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
