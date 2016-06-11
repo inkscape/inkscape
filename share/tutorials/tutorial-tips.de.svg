@@ -484,176 +484,176 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e235"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">In der Standardvorlage für ein neues Dokument sind die Maßeinheiten für die Lineale immer px (»SVG-Benutzereinheit«, was in Inkscape ungefähr 0,75pt oder 1/96 Zoll ist). Dies ist auch die Einheit, in der die Koordinaten unten links angezeigt werden, und die als Vorauswahl in allen Menüs erscheint, die Einheiten benutzen. (Sie können immer mit dem Mauszeiger über ein Lineal fahren. Ein kleines Infofenster wird Ihnen anzeigen, welche Einheit das Lineal benutzt.) Um die Anzeigeeinheit zu verändern, öffnen Sie die <flowSpan font-family="sans-serif">Dokumenteneinstellungen</flowSpan> (<flowSpan font-weight="bold">Umschalt+Strg+D</flowSpan>) und ändern Sie die <flowSpan font-family="sans-serif">Anzeigeeinheit</flowSpan> im Reiter <flowSpan font-family="sans-serif">Seite</flowSpan>.</flowDiv>
+  <flowDiv xml:space="preserve">In der Standardvorlage für ein neues Dokument ist die Maßeinheit für die Lineale immer mm. Dies ist auch die Einheit, in der die Koordinaten unten links angezeigt werden, und die als Vorauswahl in allen Menüs erscheint, die Einheiten benutzen. (Sie können immer mit dem Mauszeiger über ein Lineal fahren. Ein kleines Infofenster wird Ihnen anzeigen, welche Einheit das Lineal benutzt.) Um die Anzeigeeinheit zu verändern, öffnen Sie die <flowSpan font-family="sans-serif">Dokumenteneinstellungen</flowSpan> (<flowSpan font-weight="bold">Umschalt+Strg+D</flowSpan>) und ändern Sie die <flowSpan font-family="sans-serif">Anzeigeeinheit</flowSpan> im Reiter <flowSpan font-family="sans-serif">Seite</flowSpan>.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2387.9207838000007" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="2387.9207838000007" x="10">Stempeln</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2375.7300038000003" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2375.7300038000003" x="10">Stempeln</tspan>
  </text>
- <rect id="d0e256" display="none" height="1e3px" width="288" y="2393.1" x="10"/>
+ <rect id="d0e256" display="none" height="1e3px" width="288" y="2380.9" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e256"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Um schnell mal eben viele Kopien eines Objekts zu erzeugen, benutzen Sie die Funktion <flowSpan font-style="italic">Stempeln</flowSpan>. Verschieben Sie einfach ein Objekt (oder skalieren oder drehen Sie es), und noch während Sie die Maustaste gedrückt halten, drücken Sie die <flowSpan font-weight="bold">Leertaste</flowSpan>. Auf diese Art wird ein »Stempelabdruck« des aktuellen Objekts hinterlassen. Sie können stempeln, so oft Sie wollen.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2476.8629718000007" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="2476.8629718000007" x="10">Tricks mit dem Zeichenwerkzeug</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2464.6721918000003" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2464.6721918000003" x="10">Tricks mit dem Zeichenwerkzeug</tspan>
  </text>
- <rect id="d0e271" display="none" height="1e3px" width="288" y="2482.1" x="10"/>
+ <rect id="d0e271" display="none" height="1e3px" width="288" y="2469.9" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e271"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Beim Benutzen des Zeichenwerkzeugs (Bézier) können Sie das Zeichnen einer Linie auf folgende Arten beenden:</flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 2516.9)"/>
- <rect id="d0e277" display="none" height="1e3px" width="258" y="2510.9" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 2504.7)"/>
+ <rect id="d0e277" display="none" height="1e3px" width="258" y="2498.7" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e277"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Drücken Sie die <flowSpan font-weight="bold">Eingabetaste</flowSpan></flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 2534.8)"/>
- <rect id="d0e283" display="none" height="1e3px" width="258" y="2528.8" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 2522.6)"/>
+ <rect id="d0e283" display="none" height="1e3px" width="258" y="2516.6" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e283"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Machen Sie einen Doppelklick mit der linken Maustaste</flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 2552.5)"/>
- <rect id="d0e287" display="none" height="1e3px" width="258" y="2546.5" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 2540.3)"/>
+ <rect id="d0e287" display="none" height="1e3px" width="258" y="2534.3" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e287"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Machen Sie einen Rechtsklick mit der Maus</flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 2568.7)"/>
- <rect id="d0e291" display="none" height="1e3px" width="258" y="2562.7" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 2556.5)"/>
+ <rect id="d0e291" display="none" height="1e3px" width="258" y="2550.5" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e291"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Wählen Sie ein anderes Werkzeug</flowDiv>
  </flowRoot>
- <rect id="d0e295" display="none" height="1e3px" width="288" y="2580.6" x="10"/>
+ <rect id="d0e295" display="none" height="1e3px" width="288" y="2568.4" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e295"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Beachten Sie, dass der Pfad noch nicht als Objekt im Dokument existiert, solange er noch nicht beendet wurde (das heißt, solange er grün angezeigt wird, und das aktuelle Segment rot). Deshalb sollten Sie entweder die Taste <flowSpan font-weight="bold">Esc</flowSpan> (um den ganzen Pfad zu verwerfen) oder die <flowSpan font-weight="bold">Rückschritttaste</flowSpan> (um das letzte Segment des noch nicht beendeten Pfads zu verwerfen) statt der <flowSpan font-family="sans-serif">Rückgängig</flowSpan>-Funktion verwenden.</flowDiv>
  </flowRoot>
- <rect id="d0e307" display="none" height="1e3px" width="288" y="2660.7" x="10"/>
+ <rect id="d0e307" display="none" height="1e3px" width="288" y="2648.5" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e307"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Um einen neuen Unterpfad zu einem existierenden Pfad hinzuzufügen, wählen Sie den Pfad aus und drücken Sie die <flowSpan font-weight="bold">Umschalttaste</flowSpan>, dann fangen Sie von einem beliebigen Punkt aus an, zu zeichnen. Wenn Sie jedoch einen bestehenden Pfad nur <flowSpan font-style="italic">weiterführen</flowSpan> möchten, ist der Tastendruck nicht notwendig; fangen Sie einfach an einem der Endknoten des ausgewählten Pfades mit dem Weiterzeichnen an.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2753.487659500001" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="2753.487659500001" x="10">Unicode-Zeichen eingeben</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2741.2968795000006" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2741.2968795000006" x="10">Unicode-Zeichen eingeben</tspan>
  </text>
- <rect id="d0e322" display="none" height="1e3px" width="288" y="2758.7" x="10"/>
+ <rect id="d0e322" display="none" height="1e3px" width="288" y="2746.5" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e322"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Während Sie mit dem Textwerkzeug arbeiten, schaltet die Tastenkombination <flowSpan font-weight="bold">Strg+U</flowSpan> zwischen Unicode- und normalem Modus um. Im Unicode-Modus wird jede Gruppe von vier Hexadezimalzahlen, die Sie eingeben, zu einem einzelnen Unicode-Zeichen. Auf diese Weise können Sie beliebige Symbole erzeugen (wenn Sie den Unicode-Code dazu wissen und wenn die gewählte Schriftart sie enthält). Um den Unicode-Modus wieder zu verlassen, drücken Sie die <flowSpan font-weight="bold">Eingabetaste</flowSpan>. Ein Beispiel: die Tastenfolge <flowSpan font-weight="bold">Strg+U 2 0 1 4 Eingabe</flowSpan> fügt einen betonten Bindestrich (em-dash) ein (—). Um den Unicode-Modus zu verlassen, ohne irgendein Zeichen in den Text einzufügen, drücken Sie <flowSpan font-weight="bold">Esc</flowSpan>.</flowDiv>
  </flowRoot>
- <rect id="d0e337" display="none" height="1e3px" width="288" y="2881.3" x="10"/>
+ <rect id="d0e337" display="none" height="1e3px" width="288" y="2869.1" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e337"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Sie können auch den Dialog unter <flowSpan font-family="sans-serif">Text &gt; Glyphen</flowSpan> verwenden, um bestimmte Zeichen zu suchen und in Ihr Dokument einzufügen.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2922.676099500001" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="2922.676099500001" x="10">Das Seitengitter zum Zeichnen von Icons verwenden</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2910.4853195000005" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2910.4853195000005" x="10">Das Seitengitter zum Zeichnen von Icons verwenden</tspan>
  </text>
- <rect id="d0e349" display="none" height="1e3px" width="288" y="2927.9" x="10"/>
+ <rect id="d0e349" display="none" height="1e3px" width="288" y="2915.7" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e349"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Nehmen wir einmal an, Sie wollen ein 24×24 Pixel großes Icon erstellen. Erzeugen Sie dazu zunächst eine Leinwand der Größe 24×24 Pixel (benutzen Sie dazu die <flowSpan font-family="sans-serif">Dokumenteneinstellungen</flowSpan>) und setzen Sie das Gitter auf 0,5 Pixel (ergibt 48×48 Rasterlinien). Wenn Sie nun gefüllte Objekte an <flowSpan font-style="italic">geradzahligen</flowSpan> Rasterlinien und gerahmte Objekte an <flowSpan font-style="italic">ungeradzahligen</flowSpan> Rasterlinien ausrichten, darauf achten, dass die Strichstärke eine gerade Pixelanzahl ist und Ihr Bild mit der Standardeinstellung von 96dpi exportieren (sodass aus einem Pixel ein Bitmap-Pixel wird), bekommen Sie ein schönes gestochen scharfes Bitmap-Bild ohne unerwünschtes Antialiasing.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3054.291569500001" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3054.291569500001" x="10">Objekte drehen</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3042.1007895000007" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3042.1007895000007" x="10">Objekte drehen</tspan>
  </text>
- <rect id="d0e367" display="none" height="1e3px" width="288" y="3059.5" x="10"/>
+ <rect id="d0e367" display="none" height="1e3px" width="288" y="3047.3" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e367"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Wenn Sie mit dem Auswahlwerkzeug arbeiten, <flowSpan font-weight="bold">klicken</flowSpan> Sie einmal auf ein Objekt, um die Skalierungspfeile zu sehen. Dann <flowSpan font-weight="bold">klicken Sie nochmals</flowSpan> auf das Objekt, um die Rotations- und Scherpfeile zu sehen. Wenn Sie auf die Pfeile an den Ecken klicken und sie verschieben, dreht sich das Objekt um sein Zentrum (welches als Fadenkreuz angezeigt wird). Wenn Sie nun noch während des Drehens die <flowSpan font-weight="bold">Umschalttaste</flowSpan> gedrückt halten, wird das Objekt um die gegenüberliegende Ecke gedreht. Sie können aber auch das Rotationszentrum an eine beliebige andere Stelle verschieben.</flowDiv>
  </flowRoot>
- <rect id="d0e379" display="none" height="1e3px" width="288" y="3162.5" x="10"/>
+ <rect id="d0e379" display="none" height="1e3px" width="288" y="3150.3" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e379"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Oder Sie rotieren das Objekt mit Hilfe der Tastatur durch Drücken der Tasten <flowSpan font-weight="bold">[</flowSpan> und <flowSpan font-weight="bold">]</flowSpan> (um jeweils 15°) oder <flowSpan font-weight="bold">Strg+[</flowSpan> and <flowSpan font-weight="bold">Strg+]</flowSpan> (um jeweils 90°). Die gleichen <flowSpan font-weight="bold">[]</flowSpan>-Tasten zusammen mit der <flowSpan font-weight="bold">Alt</flowSpan>-Taste ermöglichen eine langsame Rotation um je einen Pixel (leider nicht mit deutscher Tastatur).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3235.202041500001" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3235.202041500001" x="10">Schattenwurf</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3223.0112615000007" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3223.0112615000007" x="10">Schattenwurf</tspan>
  </text>
- <rect id="d0e406" display="none" height="1e3px" width="288" y="3240.4" x="10"/>
+ <rect id="d0e406" display="none" height="1e3px" width="288" y="3228.2" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e406"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Um schnell mal eben einen Schatten für ein Objekt zu erstellen, verwenden Sie die Funktion Filter &gt; Schatten und Lichter &gt; Abgesetzter Schattend&gt;.</flowDiv>
  </flowRoot>
- <rect id="d0e411" display="none" height="1e3px" width="288" y="3279.6" x="10"/>
+ <rect id="d0e411" display="none" height="1e3px" width="288" y="3267.4" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e411"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Sie können auch ganz leicht einen unscharfen Schatten für ein Objekt erstellen, indem Sie »Unschärfe« im »Füllung und Kontur«-Dialog nutzen. Wählen Sie ein Objekt, duplizieren Sie es mit <flowSpan font-weight="bold">Strg+D</flowSpan>, drücken Sie <flowSpan font-weight="bold">Bild runter</flowSpan>, um es unter das originale Objekt abzusenken, und verschieben Sie es etwas nach rechts unten vom originalen Objekt. Öffnen Sie nun den Dialog »Füllung und Kontur« und ändern Sie den Weichzeichner-Wert auf z.B. 5,0. Das war es schon!</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3383.110483500001" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3383.110483500001" x="10">Text auf einen Pfad platzieren</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3370.9197035000007" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3370.9197035000007" x="10">Text auf einen Pfad platzieren</tspan>
  </text>
- <rect id="d0e426" display="none" height="1e3px" width="288" y="3388.3" x="10"/>
+ <rect id="d0e426" display="none" height="1e3px" width="288" y="3376.1" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e426"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Um Text an einem Pfad auszurichten, wählen Sie den Text und den Pfad zusammen aus und benutzen Sie den Befehl <flowSpan font-family="sans-serif">An Pfad ausrichten</flowSpan> aus dem Text-Menü. Der Text wird ab dem Anfang des Pfades ausgerichtet. Normalerweise ist es besser, für den Text einen eigenen Pfad zu erstellen, als den Text an irgendeinem Zeichnungselement auszurichten – auf diese Art haben Sie mehr Kontrolle über den Text, ohne dass Sie an Ihrer eigentlichen Zeichnung herumändern müssen.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3482.856733500001" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3482.856733500001" x="10">Das Original auswählen</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3470.665953500001" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3470.665953500001" x="10">Das Original auswählen</tspan>
  </text>
- <rect id="d0e438" display="none" height="1e3px" width="288" y="3488.1" x="10"/>
+ <rect id="d0e438" display="none" height="1e3px" width="288" y="3475.9" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e438"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Bei Text, der an einem Pfad ausgerichtet ist, einen verbundenen Versatz oder einem Klon kann es schwierig sein, das Quellobjekt oder den Quellpfad auszuwählen, weil die Quelle direkt unterhalb, unsichtbar und/oder gesperrt sein könnte. In so einem Fall hilft Ihnen die Tastenkombination <flowSpan font-weight="bold">Umschalt+D</flowSpan>. Wählen Sie den Text, den verbundenen Versatz oder den Klon aus und drücken Sie <flowSpan font-weight="bold">Umschalt+D</flowSpan>, um den dazugehörigen Pfad, das Quellobjekt des Versatzes oder das Original des Klons auszuwählen.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3593.1922055000014" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3593.1922055000014" x="10">Programmfenster außerhalb des Bildschirms</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3581.001425500001" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3581.001425500001" x="10">Programmfenster außerhalb des Bildschirms</tspan>
  </text>
- <rect id="d0e453" display="none" height="1e3px" width="288" y="3598.4" x="10"/>
+ <rect id="d0e453" display="none" height="1e3px" width="288" y="3586.2" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e453"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Wenn Sie Dokumente auf verschiedenen Systemen bearbeiten, die entweder unterschiedliche Auflösungen besitzen oder unterschiedlich viele Bildschirme, kann es Ihnen passieren, dass Inkscape eine Fensterposition mit abgespeichert hat, welche dazu führt, dass Sie das Fenster an Ihrem Monitor nicht mehr erreichen können. In diesem Fall maximieren Sie das Fenster einfach (das bringt das Fenster wieder in Ihren Anzeigebereich; benutzen Sie die Taskleiste dazu), speichern Sie das Dokument und öffnen Sie es erneut. Sie können dieses Verhalten auch komplett abstellen, indem Sie die globale Einstellung, die Fenstergeometrie mit abzuspeichern, abschalten (in den <flowSpan font-family="sans-serif">Inkscape-Einstellungen</flowSpan>, im Abschnitt <flowSpan font-family="sans-serif">Benutzeroberfläche &gt; Fenster</flowSpan>).</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3745.5564255000013" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3745.5564255000013" x="10">Transparenz, Farbverläufe und PostScript-Export</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3733.365645500001" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3733.365645500001" x="10">Transparenz, Farbverläufe und PostScript-Export</tspan>
  </text>
- <rect id="d0e468" display="none" height="1e3px" width="288" y="3750.8" x="10"/>
+ <rect id="d0e468" display="none" height="1e3px" width="288" y="3738.6" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e468"/>
   </flowRegion>
   <flowDiv xml:space="preserve">PostScript- oder EPS-Formate unterstützen keine <flowSpan font-style="italic">Transparenz</flowSpan>, deshalb sollten Sie auch keine Transparenz verwenden, wenn Sie etwas nach PS oder EPS exportieren wollen. Wenn Sie Teiltransparenz benutzen wollen, die etwas einfarbiges überdeckt, dann können Sie dieses Problem leicht lösen: Wählen Sie eines der transparenten Objekte aus, wechseln Sie zur Farbpipette (<flowSpan font-weight="bold">F7</flowSpan> oder <flowSpan font-weight="bold">d</flowSpan>). Stellen Sie sicher, dass die Schaltfläche <flowSpan font-family="sans-serif">Deckkraft: Aufnehmen</flowSpan> in der Werkzeugleiste der Farbpipette deaktiviert ist. Klicken Sie nun auf das Objekt. Das Werkzeug nimmt jetzt die sichtbare Farbe auf und  weist sie demselben Objekt zu, aber diesmal ohne Transparenz. Wiederholen Sie diesen Schritt für alle teiltransparenten Objekte. Wenn Ihr teiltransparentes Objekt mehrere einfarbigen Flächen überdeckt, müssen Sie es entsprechend in einzelne Teile auftrennen und für jeden einzelnen Teil wie oben beschrieben vorgehen. Beachten Sie, dass die Farbpipette nicht den Deckkraft-Wert des Objektes verändert, sondern lediglich den Alpha-Wert seiner Füllung oder Kontur. Stellen Sie daher sicher, dass die Deckkraft aller Objekte auf 100% gesetzt ist, bevor Sie loslegen.</flowDiv>
  </flowRoot>
- <g transform="translate(0 3949.5)">
+ <g transform="translate(0 3937.4)">
   <defs id="defs3" xmlns:cc="http://creativecommons.org/ns#">
    <linearGradient id="linearGradient2465" y2="-7528.7" xlink:href="#linearGradient841" gradientUnits="userSpaceOnUse" x2="76.847" gradientTransform="matrix(2.1496 0 0 .46519 -.13015 3495.4)" y1="-7656.4" x1="76.847" inkscape:collect="always"/>
    <filter id="filter85" height="1.2" width="1.2" color-interpolation-filters="sRGB" y="-.1" x="-.1" inkscape:label="Drop shadow, custom">
