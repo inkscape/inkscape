@@ -565,7 +565,6 @@ bool MeasureTool::root_handler(GdkEvent* event)
         explicit_base = boost::none;
         explicit_base_tmp = boost::none;
         last_end = boost::none;
-        start_p = desktop->w2d(button_w);
 
         if (event->button.button == 1 && !this->space_panning) {
             // save drag origin
