@@ -10,6 +10,7 @@ set(sp_SRC
 	attribute-rel-css.cpp
 	attribute-rel-svg.cpp
 	attribute-rel-util.cpp
+	attribute-sort-util.cpp
 	sp-anchor.cpp
 	sp-clippath.cpp
 	sp-conn-end-pair.cpp
@@ -92,6 +93,7 @@ set(sp_SRC
 	attribute-rel-css.h
 	attribute-rel-svg.h
 	attribute-rel-util.h
+	attribute-sort-util.h
 	sp-anchor.h
 	sp-clippath.h
 	sp-conn-end-pair.h
