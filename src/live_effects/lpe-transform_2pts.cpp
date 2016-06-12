@@ -434,7 +434,7 @@ LPETransform2Pts::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<
     }
     if(!lock_angle && lock_lenght) {
         char const * svgd;
-        svgd = "m 7.07,7.07 c -3.9,3.91 -10.24,3.91 -14.14,0 -3.91,-3.9 -3.91,-10.24 0,-14.14 3.9,-3.91 10.24,-3.91 14.14,0 l -2.83,-4.24 -0.7,2.12";
+        svgd = "M 0,9.94 C -2.56,9.91 -5.17,8.98 -7.07,7.07 c -3.91,-3.9 -3.91,-10.24 0,-14.14 1.97,-1.97 4.51,-3.02 7.07,-3.04 2.56,0.02 5.1,1.07 7.07,3.04 3.91,3.9 3.91,10.24 0,14.14 C 5.17,8.98 2.56,9.91 0,9.94 Z";
         PathVector pathv_turn = sp_svg_read_pathv(svgd);
         pathv_turn *= Geom::Rotate(previous_angle);
         pathv_turn *= Affine(r,0,0,r,0,0) * Translate(Geom::Point(end));
