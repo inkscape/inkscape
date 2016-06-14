@@ -633,9 +633,10 @@ void ColorICCSelectorImpl::_switchToProfile(gchar const *name)
 #endif // DEBUG_LCMS
                         tmp.set(SP_RGBA32_U_COMPOSE(pre[0], pre[1], pre[2], 0xff));
                     }
+
+                    dirty = true;
                 }
             }
-            dirty = true;
         }
     }
     else {

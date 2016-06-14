@@ -588,7 +588,11 @@ bool ColorProfile::GamutCheck(SPColor color)
         static_cast<guchar>(SP_RGBA32_G_U(val)),
         static_cast<guchar>(SP_RGBA32_B_U(val)),
         255};
-    cmsDoTransform(ColorProfile::getTransfGamutCheck(), &check_color, &outofgamut, 1);
+
+    cmsHTRANSFORM gamutCheck = ColorProfile::getTransfGamutCheck();
+    if (gamutCheck) {
+        cmsDoTransform(gamutCheck, &check_color, &outofgamut, 1);
+    }
 
 #if HAVE_LIBLCMS1
     cmsSetAlarmCodes(alarm_r, alarm_g, alarm_b);
