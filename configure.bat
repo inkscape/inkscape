@@ -1,5 +1,5 @@
 REM Set the MinGW environment variables.
-if "%MINGW_BIN%"=="" mingwenv.bat
+if "%MINGW_BIN%"=="" call mingwenv.bat
 
 REM Delete the CMake cache. Needed when changes on the CMakeLists should be applied in a consistent way.
 del CMakeCache.txt
