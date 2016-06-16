@@ -42,8 +42,7 @@ public:
 
         std::vector<SPItem *> cycling_items;
         std::vector<SPItem *> cycling_items_cmp;
-        std::vector<SPItem *> cycling_items_selected_before;
-        std::vector<SPItem *>::iterator cycling_cur_item;
+        SPItem *cycling_cur_item;
 	bool cycling_wrap;
 
 	SPItem *item;
