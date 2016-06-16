@@ -65,7 +65,7 @@ static gint rb_escaped = 0; // if non-zero, rubberband was canceled by esc, so t
 static gint drag_escaped = 0; // if non-zero, drag was canceled by esc
 
 const std::string& SelectTool::getPrefsPath() {
-	return SelectTool::prefsPath;
+    return SelectTool::prefsPath;
 }
 
 const std::string SelectTool::prefsPath = "/tools/select";
@@ -296,7 +296,7 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
                 } else {
                     GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
                    
-                	this->dragging = TRUE;
+                    this->dragging = TRUE;
                     this->moved = FALSE;
 
                     gdk_window_set_cursor(window, CursorSelectDragging);
@@ -346,11 +346,11 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
             break;
         }
         case GDK_LEAVE_NOTIFY:
-        	if (!desktop->isWaitingCursor() && !this->dragging) {
+            if (!desktop->isWaitingCursor() && !this->dragging) {
                 GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                 gdk_window_set_cursor(window, this->cursor);
-        	}
+            }
             break;
 
         case GDK_KEY_PRESS:
@@ -378,7 +378,7 @@ bool SelectTool::item_handler(SPItem* item, GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = ToolBase::item_handler(item, event);
+        ret = ToolBase::item_handler(item, event);
     }
 
     return ret;
@@ -710,7 +710,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
 
                     if (r->is_started() && !within_tolerance) {
                         // this was a rubberband drag
-                    	std::vector<SPItem*> items;
+                        std::vector<SPItem*> items;
 
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
                             Geom::OptRect const b = r->getRectangle();
@@ -860,10 +860,10 @@ bool SelectTool::root_handler(GdkEvent* event) {
         }
 
         case GDK_KEY_PRESS: // keybindings for select context
-			{
-			{
-        	guint keyval = get_group0_keyval(&event->key);
-        	
+            {
+            {
+            guint keyval = get_group0_keyval(&event->key);
+            
                 bool alt = ( MOD__ALT(event)
                                     || (keyval == GDK_KEY_Alt_L)
                                     || (keyval == GDK_KEY_Alt_R)
@@ -891,7 +891,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     
                     // if Alt and nonempty selection, show moving cursor ("move selected"):
                     if (alt && !selection->isEmpty() && !desktop->isWaitingCursor()) {
-                    	GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
+                        GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (desktop->getCanvas()));
 
                         gdk_window_set_cursor(window, CursorSelectDragging);
                     }
@@ -912,15 +912,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(desktop->getSelection(), mul*-10, 0); // shift
+                                sp_selection_move_screen(desktop->getSelection(), mul*-10, 0); // shift
                             } else {
-                            	sp_selection_move_screen(desktop->getSelection(), mul*-1, 0); // no shift
+                                sp_selection_move_screen(desktop->getSelection(), mul*-1, 0); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(desktop->getSelection(), mul*-10*nudge, 0); // shift
+                                sp_selection_move(desktop->getSelection(), mul*-10*nudge, 0); // shift
                             } else {
-                            	sp_selection_move(desktop->getSelection(), mul*-nudge, 0); // no shift
+                                sp_selection_move(desktop->getSelection(), mul*-nudge, 0); // no shift
                             }
                         }
                         
@@ -935,15 +935,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*10); // shift
+                                sp_selection_move_screen(desktop->getSelection(), 0, mul*10); // shift
                             } else {
-                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*1); // no shift
+                                sp_selection_move_screen(desktop->getSelection(), 0, mul*1); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(desktop->getSelection(), 0, mul*10*nudge); // shift
+                                sp_selection_move(desktop->getSelection(), 0, mul*10*nudge); // shift
                             } else {
-                            	sp_selection_move(desktop->getSelection(), 0, mul*nudge); // no shift
+                                sp_selection_move(desktop->getSelection(), 0, mul*nudge); // no shift
                             }
                         }
                         
@@ -958,15 +958,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(desktop->getSelection(), mul*10, 0); // shift
+                                sp_selection_move_screen(desktop->getSelection(), mul*10, 0); // shift
                             } else {
-                            	sp_selection_move_screen(desktop->getSelection(), mul*1, 0); // no shift
+                                sp_selection_move_screen(desktop->getSelection(), mul*1, 0); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(desktop->getSelection(), mul*10*nudge, 0); // shift
+                                sp_selection_move(desktop->getSelection(), mul*10*nudge, 0); // shift
                             } else {
-                            	sp_selection_move(desktop->getSelection(), mul*nudge, 0); // no shift
+                                sp_selection_move(desktop->getSelection(), mul*nudge, 0); // no shift
                             }
                         }
                         
@@ -981,15 +981,15 @@ bool SelectTool::root_handler(GdkEvent* event) {
                         
                         if (MOD__ALT(event)) { // alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*-10); // shift
+                                sp_selection_move_screen(desktop->getSelection(), 0, mul*-10); // shift
                             } else {
-                            	sp_selection_move_screen(desktop->getSelection(), 0, mul*-1); // no shift
+                                sp_selection_move_screen(desktop->getSelection(), 0, mul*-1); // no shift
                             }
                         } else { // no alt
                             if (MOD__SHIFT(event)) {
-                            	sp_selection_move(desktop->getSelection(), 0, mul*-10*nudge); // shift
+                                sp_selection_move(desktop->getSelection(), 0, mul*-10*nudge); // shift
                             } else {
-                            	sp_selection_move(desktop->getSelection(), 0, mul*-nudge); // no shift
+                                sp_selection_move(desktop->getSelection(), 0, mul*-nudge); // no shift
                             }
                         }
                         
@@ -1133,7 +1133,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     break;
             }
             break;
-			}
+            }
         case GDK_KEY_RELEASE: {
             guint keyval = get_group0_keyval(&event->key);
             if (key_is_a_modifier (keyval)) {
@@ -1174,7 +1174,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
     }
 
     if (!ret) {
-    	ret = ToolBase::root_handler(event);
+        ret = ToolBase::root_handler(event);
     }
 
     return ret;
