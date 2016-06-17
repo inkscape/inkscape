@@ -111,7 +111,7 @@ class CompressedMediaOutput(inkex.Effect):
                 url = urlparse.urlparse(xlink)
                 href = urllib.url2pathname(url.path)
                 
-                if (href != None):
+                if (href != None and os.path.isfile(href)):
                     absref = os.path.realpath(href)
 
                 absref = unicode(absref, "utf-8")
