@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-08 20:26+0200\n"
-"PO-Revision-Date: 2016-06-08 15:48+0100\n"
+"POT-Creation-Date: 2016-06-16 23:22+0200\n"
+"PO-Revision-Date: 2016-06-10 15:31+0100\n"
 "Last-Translator: Firas Hanife <FirasHanife@gmail.com>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -4471,16 +4471,16 @@ msgstr "guide tipografia tipografico canvas"
 msgid "3D Box"
 msgstr "Solido 3D"
 
-#: ../src/color-profile.cpp:856
+#: ../src/color-profile.cpp:860
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr "La cartella dei profili colore (%s) non è disponibile."
 
-#: ../src/color-profile.cpp:928 ../src/color-profile.cpp:945
+#: ../src/color-profile.cpp:932 ../src/color-profile.cpp:949
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
-#: ../src/color-profile.cpp:930
+#: ../src/color-profile.cpp:934
 msgctxt "Profile name"
 msgid "None"
 msgstr "Nessuno"
@@ -6739,7 +6739,7 @@ msgstr "Discreto"
 
 #: ../src/extension/internal/filter/color.h:505 ../src/filter-enums.cpp:113
 #: ../src/live_effects/lpe-interpolate_points.cpp:25
-#: ../src/live_effects/lpe-powerstroke.cpp:133
+#: ../src/live_effects/lpe-powerstroke.cpp:134
 msgid "Linear"
 msgstr "Lineare"
 
@@ -8550,28 +8550,24 @@ msgstr "Colore contorno"
 
 #. New in Compositing and Blending Level 1
 #: ../src/filter-enums.cpp:58
-#, fuzzy
 msgid "Overlay"
-msgstr "Sovrapposizione"
+msgstr "Sovrapponi"
 
 #: ../src/filter-enums.cpp:59
-#, fuzzy
 msgid "Color Dodge"
-msgstr "Colore delle linee guida"
+msgstr "Scherma colore"
 
 #: ../src/filter-enums.cpp:60
-#, fuzzy
 msgid "Color Burn"
-msgstr "Barra colori"
+msgstr "Brucia colore"
 
 #: ../src/filter-enums.cpp:61
 msgid "Hard Light"
-msgstr ""
+msgstr "Luce forte"
 
 #: ../src/filter-enums.cpp:62
-#, fuzzy
 msgid "Soft Light"
-msgstr "Punto luce"
+msgstr "Luce leggera"
 
 #: ../src/filter-enums.cpp:63 ../src/splivarot.cpp:89 ../src/splivarot.cpp:95
 msgid "Difference"
@@ -8591,7 +8587,7 @@ msgstr "Tonalità"
 
 #: ../src/filter-enums.cpp:68
 msgid "Luminosity"
-msgstr ""
+msgstr "Luminosità"
 
 #: ../src/filter-enums.cpp:78
 msgid "Matrix"
@@ -9541,12 +9537,12 @@ msgstr "Nessun effetto"
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "Specificare un tracciato parametro per l'effetto '%s' con %d clic"
 
-#: ../src/live_effects/effect.cpp:765
+#: ../src/live_effects/effect.cpp:766
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Modifica del parametro <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:770
+#: ../src/live_effects/effect.cpp:771
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 "Nessuno dei parametri dell'effetto su tracciato applicato può essere "
@@ -10132,32 +10128,32 @@ msgstr ""
 "posizione dei nodi del tracciato di sostegno."
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:26
-#: ../src/live_effects/lpe-powerstroke.cpp:134
+#: ../src/live_effects/lpe-powerstroke.cpp:135
 msgid "CubicBezierFit"
 msgstr "CubicBezierFit"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:27
-#: ../src/live_effects/lpe-powerstroke.cpp:135
+#: ../src/live_effects/lpe-powerstroke.cpp:136
 msgid "CubicBezierJohan"
 msgstr "CubicBezierJohan"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:28
-#: ../src/live_effects/lpe-powerstroke.cpp:136
+#: ../src/live_effects/lpe-powerstroke.cpp:137
 msgid "SpiroInterpolator"
 msgstr "SpiroInterpolator"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:29
-#: ../src/live_effects/lpe-powerstroke.cpp:137
+#: ../src/live_effects/lpe-powerstroke.cpp:138
 msgid "Centripetal Catmull-Rom"
 msgstr ""
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:37
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 msgid "Interpolator type:"
 msgstr "Tipo interpolazione:"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:38
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 msgid ""
 "Determines which kind of interpolator will be used to interpolate between "
 "stroke width along the path"
@@ -10166,21 +10162,21 @@ msgstr ""
 "larghezza del contorno lungo il tracciato"
 
 #: ../src/live_effects/lpe-jointype.cpp:31
-#: ../src/live_effects/lpe-powerstroke.cpp:166
+#: ../src/live_effects/lpe-powerstroke.cpp:167
 #: ../src/live_effects/lpe-taperstroke.cpp:63
 msgid "Beveled"
 msgstr "Tagliati"
 
 #: ../src/live_effects/lpe-jointype.cpp:32
 #: ../src/live_effects/lpe-jointype.cpp:43
-#: ../src/live_effects/lpe-powerstroke.cpp:167
+#: ../src/live_effects/lpe-powerstroke.cpp:168
 #: ../src/live_effects/lpe-taperstroke.cpp:64
 #: ../src/widgets/star-toolbar.cpp:534
 msgid "Rounded"
 msgstr "Arrotondati"
 
 #: ../src/live_effects/lpe-jointype.cpp:33
-#: ../src/live_effects/lpe-powerstroke.cpp:170
+#: ../src/live_effects/lpe-powerstroke.cpp:171
 #: ../src/live_effects/lpe-taperstroke.cpp:65
 msgid "Miter"
 msgstr "Vivi"
@@ -10192,7 +10188,7 @@ msgstr "Spigolosità:"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
 #: ../src/live_effects/lpe-jointype.cpp:35
-#: ../src/live_effects/lpe-powerstroke.cpp:169
+#: ../src/live_effects/lpe-powerstroke.cpp:170
 msgid "Extrapolated arc"
 msgstr "Arco estrapolato"
 
@@ -10212,17 +10208,17 @@ msgid "Extrapolated arc Alt3"
 msgstr "Arco estrapolato"
 
 #: ../src/live_effects/lpe-jointype.cpp:42
-#: ../src/live_effects/lpe-powerstroke.cpp:149
+#: ../src/live_effects/lpe-powerstroke.cpp:150
 msgid "Butt"
 msgstr "Geometrica"
 
 #: ../src/live_effects/lpe-jointype.cpp:44
-#: ../src/live_effects/lpe-powerstroke.cpp:150
+#: ../src/live_effects/lpe-powerstroke.cpp:151
 msgid "Square"
 msgstr "Quadrata"
 
 #: ../src/live_effects/lpe-jointype.cpp:45
-#: ../src/live_effects/lpe-powerstroke.cpp:152
+#: ../src/live_effects/lpe-powerstroke.cpp:153
 msgid "Peak"
 msgstr "Punta"
 
@@ -10245,20 +10241,20 @@ msgstr "Orientazione del righello"
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/live_effects/lpe-jointype.cpp:56
-#: ../src/live_effects/lpe-powerstroke.cpp:182
+#: ../src/live_effects/lpe-powerstroke.cpp:183
 #: ../src/widgets/stroke-style.cpp:288
 msgid "Join:"
 msgstr "Spigoli:"
 
 #: ../src/live_effects/lpe-jointype.cpp:56
-#: ../src/live_effects/lpe-powerstroke.cpp:182
+#: ../src/live_effects/lpe-powerstroke.cpp:183
 msgid "Determines the shape of the path's corners"
 msgstr "Determina la forma degli spigoli del tracciato"
 
 #. start_lean(_("Start path lean"), _("Start path lean"), "start_lean", &wr, this, 0.),
 #. end_lean(_("End path lean"), _("End path lean"), "end_lean", &wr, this, 0.),
 #: ../src/live_effects/lpe-jointype.cpp:59
-#: ../src/live_effects/lpe-powerstroke.cpp:183
+#: ../src/live_effects/lpe-powerstroke.cpp:184
 #: ../src/live_effects/lpe-taperstroke.cpp:78
 msgid "Miter limit:"
 msgstr "Spigolosità:"
@@ -10790,43 +10786,43 @@ msgstr ""
 msgid "Handles:"
 msgstr "Maniglie:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:132
+#: ../src/live_effects/lpe-powerstroke.cpp:133
 msgid "CubicBezierSmooth"
 msgstr "CubicBezierSmooth"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:151
+#: ../src/live_effects/lpe-powerstroke.cpp:152
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
 msgid "Round"
 msgstr "Arrotondata"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:153
+#: ../src/live_effects/lpe-powerstroke.cpp:154
 msgid "Zero width"
 msgstr "Larghezza zero"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:171
+#: ../src/live_effects/lpe-powerstroke.cpp:172
 #: ../src/widgets/pencil-toolbar.cpp:112
 msgid "Spiro"
 msgstr "Spiro"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:177
+#: ../src/live_effects/lpe-powerstroke.cpp:178
 msgid "Offset points"
 msgstr "Punti proiezione"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:178
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 msgid "Sort points"
 msgstr "Ordina punti"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:178
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 msgid "Sort offset points according to their time value along the curve"
 msgstr ""
 "Ordina i punti della proiezione secondo la loro posizione lungo la curva"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
 msgstr "Curvatura:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 msgid ""
 "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
 "interpolation, 1 = smooth"
@@ -10834,25 +10830,25 @@ msgstr ""
 "Imposta la curvatura per l'interpolazione CubicBezierJohan; 0 = lineare, 1 = "
 "morbida"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:181
+#: ../src/live_effects/lpe-powerstroke.cpp:182
 msgid "Start cap:"
 msgstr "Estremità iniziale:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:181
+#: ../src/live_effects/lpe-powerstroke.cpp:182
 msgid "Determines the shape of the path's start"
 msgstr "Determina la forma dell'estremità iniziale del tracciato"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:183
+#: ../src/live_effects/lpe-powerstroke.cpp:184
 #: ../src/widgets/stroke-style.cpp:335
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 "Lunghezza massima dello spigolo (in unità della larghezza del contorno)"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:184
+#: ../src/live_effects/lpe-powerstroke.cpp:185
 msgid "End cap:"
 msgstr "Estremità finale:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:184
+#: ../src/live_effects/lpe-powerstroke.cpp:185
 msgid "Determines the shape of the path's end"
 msgstr "Determina la forma dell'estremità finale del tracciato"
 
@@ -11179,13 +11175,13 @@ msgstr "Nessuno"
 
 #: ../src/live_effects/lpe-ruler.cpp:33
 #: ../src/live_effects/lpe-transform_2pts.cpp:37
-#: ../src/ui/tools/measure-tool.cpp:756 ../src/widgets/arc-toolbar.cpp:319
+#: ../src/ui/tools/measure-tool.cpp:755 ../src/widgets/arc-toolbar.cpp:319
 msgid "Start"
 msgstr "Inizio"
 
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/live_effects/lpe-transform_2pts.cpp:38
-#: ../src/ui/tools/measure-tool.cpp:757 ../src/widgets/arc-toolbar.cpp:332
+#: ../src/ui/tools/measure-tool.cpp:756 ../src/widgets/arc-toolbar.cpp:332
 msgid "End"
 msgstr "Fine"
 
@@ -11756,7 +11752,7 @@ msgstr "Inverti"
 
 #: ../src/live_effects/parameter/originalpatharray.cpp:130
 #: ../src/live_effects/parameter/originalpatharray.cpp:315
-#: ../src/live_effects/parameter/path.cpp:486
+#: ../src/live_effects/parameter/path.cpp:510
 msgid "Link path parameter to path"
 msgstr "Lega il parametro del tracciato al parametro"
 
@@ -11790,23 +11786,23 @@ msgstr "Sposta in basso effetto su tracciato"
 msgid "Remove path"
 msgstr "Muovi motivi"
 
-#: ../src/live_effects/parameter/path.cpp:170
+#: ../src/live_effects/parameter/path.cpp:184
 msgid "Edit on-canvas"
 msgstr "Modifica sul disegno"
 
-#: ../src/live_effects/parameter/path.cpp:180
+#: ../src/live_effects/parameter/path.cpp:194
 msgid "Copy path"
 msgstr "Copia tracciato"
 
-#: ../src/live_effects/parameter/path.cpp:190
+#: ../src/live_effects/parameter/path.cpp:204
 msgid "Paste path"
 msgstr "Incolla tracciato"
 
-#: ../src/live_effects/parameter/path.cpp:200
+#: ../src/live_effects/parameter/path.cpp:214
 msgid "Link to path on clipboard"
 msgstr "Collega a tracciato negli appunti"
 
-#: ../src/live_effects/parameter/path.cpp:454
+#: ../src/live_effects/parameter/path.cpp:478
 msgid "Paste path parameter"
 msgstr "Incolla parametri tracciato"
 
@@ -13373,26 +13369,26 @@ msgstr "di <b>%d</b> oggetto"
 msgid "of <b>%d</b> objects"
 msgstr "di <b>%d</b> oggetti"
 
-#: ../src/sp-item.cpp:1031 ../src/verbs.cpp:213
+#: ../src/sp-item.cpp:1030 ../src/verbs.cpp:213
 msgid "Object"
 msgstr "Oggetto"
 
-#: ../src/sp-item.cpp:1043
+#: ../src/sp-item.cpp:1042
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>con fissaggio</i>"
 
-#: ../src/sp-item.cpp:1049
+#: ../src/sp-item.cpp:1048
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>con maschera</i>"
 
-#: ../src/sp-item.cpp:1059
+#: ../src/sp-item.cpp:1058
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>con filtro (%s)</i>"
 
-#: ../src/sp-item.cpp:1061
+#: ../src/sp-item.cpp:1060
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>con filtro</i>"
@@ -15056,14 +15052,14 @@ msgid "Back_ground color:"
 msgstr "Colore di sfo_ndo:"
 
 #: ../src/ui/dialog/document-properties.cpp:123
-#, fuzzy
 msgid ""
 "Color of the page background. Note: transparency setting ignored while "
 "editing if 'Checkerboard background' unset (but used when exporting to "
 "bitmap)."
 msgstr ""
 "Colore di sfondo della pagina. Nota: l'impostazione della trasparenza è "
-"ignorata durante la modifica ma utilizzata nell'esportazione bitmap."
+"ignorata durante la modifica se 'Sfondo a scacchiera' non è selezionato, ma "
+"utilizzata nell'esportazione bitmap."
 
 #: ../src/ui/dialog/document-properties.cpp:124
 msgid "Border _color:"
@@ -19697,7 +19693,7 @@ msgstr "Preserva il canale K nelle trasformazioni CMYK -> CMYK"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 #: ../src/ui/widget/color-icc-selector.cpp:394
-#: ../src/ui/widget/color-icc-selector.cpp:699
+#: ../src/ui/widget/color-icc-selector.cpp:700
 msgid "<none>"
 msgstr "<nessuno>"
 
@@ -20428,6 +20424,8 @@ msgid ""
 "Stroke color same as object, fill color either object fill color or marker "
 "fill color"
 msgstr ""
+"Colore di contorno uguale all'oggetto, colore di riempimento uguale "
+"all'oggetto o al colore di riempimento del delimitatore"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1413
 #: ../share/extensions/hershey.inx.h:27
@@ -20654,7 +20652,6 @@ msgid "Bitmaps"
 msgstr "Bitmap"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1549
-#, fuzzy
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added separately to "
@@ -22299,15 +22296,15 @@ msgid "By: "
 msgstr "By: "
 
 #: ../src/ui/dialog/text-edit.cpp:72
-#, fuzzy
 msgid "_Variants"
-msgstr "Variazione"
+msgstr "_Varianti"
 
 #: ../src/ui/dialog/text-edit.cpp:73
 msgid "Set as _default"
 msgstr "Imposta come _predefinito"
 
 #: ../src/ui/dialog/text-edit.cpp:87
+#, fuzzy
 msgid "AaBbCcIiPpQq12369$ےے?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -23996,7 +23993,7 @@ msgstr "<b>Creazione</b> di una linea calligrafica"
 
 #: ../src/ui/tools/calligraphic-tool.cpp:966
 msgid "Draw calligraphic stroke"
-msgstr "Crea linea calligrafiche"
+msgstr "Crea linea calligrafica"
 
 #: ../src/ui/tools/connector-tool.cpp:489
 msgid "Creating new connector"
@@ -24146,24 +24143,24 @@ msgstr ""
 "b> per riempire al tocco"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/ui/tools/freehand-base.cpp:677
+#: ../src/ui/tools/freehand-base.cpp:657
 msgid "Path is closed."
 msgstr "Il tracciato è chiuso."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/ui/tools/freehand-base.cpp:692
+#: ../src/ui/tools/freehand-base.cpp:672
 msgid "Closing path."
 msgstr "Chiusura tracciato."
 
-#: ../src/ui/tools/freehand-base.cpp:831
+#: ../src/ui/tools/freehand-base.cpp:811
 msgid "Draw path"
 msgstr "Disegna tracciato"
 
-#: ../src/ui/tools/freehand-base.cpp:984
+#: ../src/ui/tools/freehand-base.cpp:964
 msgid "Creating single dot"
 msgstr "Creazione singolo punto"
 
-#: ../src/ui/tools/freehand-base.cpp:985
+#: ../src/ui/tools/freehand-base.cpp:965
 msgid "Create single dot"
 msgstr "Crea singolo punto"
 
@@ -24275,31 +24272,31 @@ msgid "Measure end, <b>Shift+Click</b> for position dialog"
 msgstr ""
 "Fine misurazione, <b>Maiusc+Clic</b> per aprire la finestra di posizionamento"
 
-#: ../src/ui/tools/measure-tool.cpp:747 ../share/extensions/measure.inx.h:2
+#: ../src/ui/tools/measure-tool.cpp:746 ../share/extensions/measure.inx.h:2
 msgid "Measure"
 msgstr "Misura"
 
-#: ../src/ui/tools/measure-tool.cpp:752
+#: ../src/ui/tools/measure-tool.cpp:751
 msgid "Base"
 msgstr ""
 
-#: ../src/ui/tools/measure-tool.cpp:761
+#: ../src/ui/tools/measure-tool.cpp:760
 msgid "Add guides from measure tool"
 msgstr "Aggiungi guide dallo strumento di misurazione"
 
-#: ../src/ui/tools/measure-tool.cpp:781
+#: ../src/ui/tools/measure-tool.cpp:780
 msgid "Keep last measure on the canvas, for reference"
-msgstr ""
+msgstr "Mantieni ultima misura fantasma sullo spazio di lavoro"
 
-#: ../src/ui/tools/measure-tool.cpp:801
+#: ../src/ui/tools/measure-tool.cpp:800
 msgid "Convert measure to items"
 msgstr "Converti misura in oggetto"
 
-#: ../src/ui/tools/measure-tool.cpp:839
+#: ../src/ui/tools/measure-tool.cpp:838
 msgid "Add global measure line"
-msgstr ""
+msgstr "Aggiungi misurazione complessiva"
 
-#: ../src/ui/tools/measure-tool.cpp:1290 ../src/ui/tools/measure-tool.cpp:1292
+#: ../src/ui/tools/measure-tool.cpp:1289 ../src/ui/tools/measure-tool.cpp:1291
 #, c-format
 msgid "Crossing %lu"
 msgstr "Intersezione %lu"
@@ -24627,12 +24624,12 @@ msgstr ""
 msgid "Create rectangle"
 msgstr "Crea rettangolo"
 
-#: ../src/ui/tools/select-tool.cpp:156
+#: ../src/ui/tools/select-tool.cpp:155
 msgid "Click selection to toggle scale/rotation handles"
 msgstr ""
 "Clicca la selezione per alternare le maniglie di ridimensionamento/rotazione"
 
-#: ../src/ui/tools/select-tool.cpp:157
+#: ../src/ui/tools/select-tool.cpp:156
 msgid ""
 "No objects selected. Click, Shift+click, Alt+scroll mouse on top of objects, "
 "or drag around objects to select."
@@ -24640,15 +24637,15 @@ msgstr ""
 "Nessun oggetto selezionato. Clicca, Maiusc+Clic, Alt+scorrimento mouse sugli "
 "oggetti, o trascina attorno agli oggetti per selezionare."
 
-#: ../src/ui/tools/select-tool.cpp:210
+#: ../src/ui/tools/select-tool.cpp:209
 msgid "Move canceled."
 msgstr "Spostamento cancellato."
 
-#: ../src/ui/tools/select-tool.cpp:218
+#: ../src/ui/tools/select-tool.cpp:217
 msgid "Selection canceled."
 msgstr "Selezione cancellata."
 
-#: ../src/ui/tools/select-tool.cpp:638
+#: ../src/ui/tools/select-tool.cpp:645
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
@@ -24656,7 +24653,7 @@ msgstr ""
 "<b>Disegna</b> sugli oggetti per selezionarli; rilascia <b>Alt</b> per "
 "passare alla selezione ad elastico"
 
-#: ../src/ui/tools/select-tool.cpp:640
+#: ../src/ui/tools/select-tool.cpp:647
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
@@ -24664,19 +24661,19 @@ msgstr ""
 "<b>Trascina</b> attorno agli oggetti per selezionarli; premi <b>Alt</b> per "
 "passare alla selezione col tocco"
 
-#: ../src/ui/tools/select-tool.cpp:921
+#: ../src/ui/tools/select-tool.cpp:888
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 "<b>Ctrl</b>: clicca per selezionare nei gruppi, trascina per muovere in "
 "orizzontale o verticale"
 
-#: ../src/ui/tools/select-tool.cpp:922
+#: ../src/ui/tools/select-tool.cpp:889
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 "<b>Maiusc</b>: clicca per commutare la selezione, trascina per usare la "
 "selezione ad elastico"
 
-#: ../src/ui/tools/select-tool.cpp:923
+#: ../src/ui/tools/select-tool.cpp:890
 msgid ""
 "<b>Alt</b>: click to select under; scroll mouse-wheel to cycle-select; drag "
 "to move selected or select by touch"
@@ -24684,7 +24681,7 @@ msgstr ""
 "<b>Alt</b>: clicca per selezionare sotto, scorri con il mouse per "
 "selezionare in ciclo, trascina per muovere la selezione o seleziona col tocco"
 
-#: ../src/ui/tools/select-tool.cpp:1131
+#: ../src/ui/tools/select-tool.cpp:1098
 msgid "Selected object is not a group. Cannot enter."
 msgstr "L'oggetto selezionato non è un gruppo, impossibile entrarvi."
 
@@ -24943,7 +24940,7 @@ msgstr[1] ""
 msgid "Type text"
 msgstr "Inserimento testo"
 
-#: ../src/ui/tools/tool-base.cpp:700
+#: ../src/ui/tools/tool-base.cpp:705
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr "<b>Spazio+spostamento puntatore</b> per muovere la tela"
 
@@ -25229,7 +25226,7 @@ msgstr "Sfocatura (%)"
 #: ../src/ui/widget/font-variants.cpp:38
 msgctxt "Font variant"
 msgid "Ligatures"
-msgstr ""
+msgstr "Legature"
 
 #: ../src/ui/widget/font-variants.cpp:39
 #, fuzzy
@@ -25256,46 +25253,41 @@ msgid "Contextual"
 msgstr "Contesto"
 
 #: ../src/ui/widget/font-variants.cpp:44
-#, fuzzy
 msgctxt "Font variant"
 msgid "Position"
 msgstr "Posizione"
 
 #: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
-#, fuzzy
 msgctxt "Font variant"
 msgid "Normal"
 msgstr "Normale"
 
 #: ../src/ui/widget/font-variants.cpp:46
-#, fuzzy
 msgctxt "Font variant"
 msgid "Subscript"
-msgstr "Script"
+msgstr "Pedice"
 
 #: ../src/ui/widget/font-variants.cpp:47
-#, fuzzy
 msgctxt "Font variant"
 msgid "Superscript"
-msgstr "Abilita apice"
+msgstr "Apice"
 
 #: ../src/ui/widget/font-variants.cpp:49
-#, fuzzy
 msgctxt "Font variant"
 msgid "Capitals"
-msgstr "Ospedale"
+msgstr "Maiuscole"
 
 #: ../src/ui/widget/font-variants.cpp:51
 #, fuzzy
 msgctxt "Font variant"
 msgid "Small"
-msgstr "Piccola"
+msgstr "Piccole"
 
 #: ../src/ui/widget/font-variants.cpp:52
 #, fuzzy
 msgctxt "Font variant"
 msgid "All small"
-msgstr "piccola"
+msgstr "Tutte piccole"
 
 #: ../src/ui/widget/font-variants.cpp:53
 msgctxt "Font variant"
@@ -25323,31 +25315,27 @@ msgstr "Vela"
 #: ../src/ui/widget/font-variants.cpp:58
 msgctxt "Font variant"
 msgid "Numeric"
-msgstr ""
+msgstr "Numeri"
 
 #: ../src/ui/widget/font-variants.cpp:59
-#, fuzzy
 msgctxt "Font variant"
 msgid "Lining"
-msgstr "Diradamento:"
+msgstr "Maiuscoli"
 
 #: ../src/ui/widget/font-variants.cpp:60
-#, fuzzy
 msgctxt "Font variant"
 msgid "Old Style"
-msgstr "Stile"
+msgstr "Elzeviriani"
 
 #: ../src/ui/widget/font-variants.cpp:61
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Style"
-msgstr "Titolo predefinito"
+msgstr "Stile predefinito"
 
 #: ../src/ui/widget/font-variants.cpp:62
-#, fuzzy
 msgctxt "Font variant"
 msgid "Proportional"
-msgstr "Proporzione schede:"
+msgstr "Proporzionale"
 
 #: ../src/ui/widget/font-variants.cpp:63
 msgctxt "Font variant"
@@ -25355,28 +25343,24 @@ msgid "Tabular"
 msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:64
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Width"
-msgstr "Titolo predefinito"
+msgstr "Larghezza predefinita"
 
 #: ../src/ui/widget/font-variants.cpp:65
-#, fuzzy
 msgctxt "Font variant"
 msgid "Diagonal"
-msgstr "Guide diagonali"
+msgstr "Diagonali"
 
 #: ../src/ui/widget/font-variants.cpp:66
-#, fuzzy
 msgctxt "Font variant"
 msgid "Stacked"
-msgstr "Terminale"
+msgstr "Impilate"
 
 #: ../src/ui/widget/font-variants.cpp:67
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Fractions"
-msgstr "Impostazioni predefinite griglia"
+msgstr "Frazioni predefinite"
 
 #: ../src/ui/widget/font-variants.cpp:68
 msgctxt "Font variant"
@@ -25386,7 +25370,7 @@ msgstr ""
 #: ../src/ui/widget/font-variants.cpp:69
 msgctxt "Font variant"
 msgid "Slashed Zero"
-msgstr ""
+msgstr "Zero barrato"
 
 #: ../src/ui/widget/font-variants.cpp:71
 #, fuzzy
@@ -25418,33 +25402,35 @@ msgstr ""
 #. Position ----------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:112
-#, fuzzy
 msgid "Normal position."
-msgstr "Posizione X"
+msgstr "Posizione normale."
 
 #: ../src/ui/widget/font-variants.cpp:113
 msgid "Subscript. OpenType table: 'subs'"
-msgstr ""
+msgstr "Apice. OpenType table: 'subs'"
 
 #: ../src/ui/widget/font-variants.cpp:114
 msgid "Superscript. OpenType table: 'sups'"
-msgstr ""
+msgstr "Pedice. OpenType table: 'sups'"
 
 #. Caps ----------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:138
-#, fuzzy
 msgid "Normal capitalization."
-msgstr "Localizzazione"
+msgstr "Maiuscole normali."
 
 #: ../src/ui/widget/font-variants.cpp:139
+#, fuzzy
 msgid "Small-caps (lowercase). OpenType table: 'smcp'"
-msgstr ""
+msgstr "Maiuscole piccole (minuscole). OpenType table: 'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:140
+#, fuzzy
 msgid ""
 "All small-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'smcp'"
 msgstr ""
+"Tutte maiuscole piccole (maiuscole e minuscole). OpenType table: 'c2sc' e "
+"'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:141
 msgid "Petite-caps (lowercase). OpenType table: 'pcap'"
@@ -25470,43 +25456,40 @@ msgstr ""
 #. Numeric ------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:180
-#, fuzzy
 msgid "Normal style."
-msgstr "Proiezione normale:"
+msgstr "Stile normale."
 
 #: ../src/ui/widget/font-variants.cpp:181
 msgid "Lining numerals. OpenType table: 'lnum'"
-msgstr ""
+msgstr "Numeri maiuscoli. OpenType table: 'lnum'"
 
 #: ../src/ui/widget/font-variants.cpp:182
 msgid "Old style numerals. OpenType table: 'onum'"
-msgstr ""
+msgstr "Numeri elzeviriani. OpenType table: 'onum'"
 
 #: ../src/ui/widget/font-variants.cpp:183
-#, fuzzy
 msgid "Normal widths."
-msgstr "Luce normale"
+msgstr "Larghezze normali."
 
 #: ../src/ui/widget/font-variants.cpp:184
 msgid "Proportional width numerals. OpenType table: 'pnum'"
-msgstr ""
+msgstr "Larghezza numeri proporzionale. OpenType table: 'pnum'"
 
 #: ../src/ui/widget/font-variants.cpp:185
 msgid "Same width numerals. OpenType table: 'tnum'"
-msgstr ""
+msgstr "Larghezza numeri fissa. OpenType table: 'tnum'"
 
 #: ../src/ui/widget/font-variants.cpp:186
-#, fuzzy
 msgid "Normal fractions."
-msgstr "Ignora rotazione immagini"
+msgstr "Frazioni normali."
 
 #: ../src/ui/widget/font-variants.cpp:187
 msgid "Diagonal fractions. OpenType table: 'frac'"
-msgstr ""
+msgstr "Frazioni diagonali. OpenType table: 'frac'"
 
 #: ../src/ui/widget/font-variants.cpp:188
 msgid "Stacked fractions. OpenType table: 'afrc'"
-msgstr ""
+msgstr "Frazioni impilate. OpenType table: 'afrc'"
 
 #: ../src/ui/widget/font-variants.cpp:189
 msgid "Ordinals (raised 'th', etc.). OpenType table: 'ordn'"
@@ -25514,7 +25497,7 @@ msgstr ""
 
 #: ../src/ui/widget/font-variants.cpp:190
 msgid "Slashed zeros. OpenType table: 'zero'"
-msgstr ""
+msgstr "Zeri barrati. OpenType table: 'zero'"
 
 #. Feature settings ---------------------
 #. Add tooltips
@@ -28403,18 +28386,16 @@ msgid "Object_s..."
 msgstr "Ogge_tti..."
 
 #: ../src/verbs.cpp:2949
-#, fuzzy
 msgid "View Objects"
-msgstr "Oggetti"
+msgstr "Visualizza oggetti"
 
 #: ../src/verbs.cpp:2950
 msgid "Selection se_ts..."
 msgstr "Set di selezione..."
 
 #: ../src/verbs.cpp:2951
-#, fuzzy
 msgid "View Tags"
-msgstr "Mostra i livelli"
+msgstr "Visualizza set di selezione"
 
 #: ../src/verbs.cpp:2952
 msgid "Path E_ffects ..."
@@ -29786,39 +29767,35 @@ msgstr "Apri finestra LPE (per la modifica dei parametri numerici)"
 
 #: ../src/widgets/measure-toolbar.cpp:157
 msgid "Start and end measures inactive."
-msgstr ""
+msgstr "Misura del primo e ultimo punto disattivata."
 
 #: ../src/widgets/measure-toolbar.cpp:159
 msgid "Start and end measures active."
-msgstr ""
+msgstr "Misura del primo e ultimo punto attivata."
 
 #: ../src/widgets/measure-toolbar.cpp:175
-#, fuzzy
 msgid "Show all crossings."
-msgstr "Mostra tutti i livelli"
+msgstr "Mostra tutte le intersezioni."
 
 #: ../src/widgets/measure-toolbar.cpp:177
 msgid "Show visible crossings."
-msgstr ""
+msgstr "Mostra le intersezioni visibili."
 
 #: ../src/widgets/measure-toolbar.cpp:193
 msgid "Use all layers in the measure."
-msgstr ""
+msgstr "Usa tutti i livelli nella misurazione."
 
 #: ../src/widgets/measure-toolbar.cpp:195
-#, fuzzy
 msgid "Use current layer in the measure."
-msgstr "Sposta il livello attuale in cima"
+msgstr "Usa il livello attuale nella misurazione."
 
 #: ../src/widgets/measure-toolbar.cpp:211
-#, fuzzy
 msgid "Compute all elements."
-msgstr "tutorial-elements.svg"
+msgstr "Calcola tutti gli oggetti."
 
 #: ../src/widgets/measure-toolbar.cpp:213
-#, fuzzy
 msgid "Compute max length."
-msgstr "Lunghezza tracciato"
+msgstr "Calcola la lunghezza massima."
 
 #: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1609
 msgid "Font Size"
@@ -29846,9 +29823,8 @@ msgid "Decimal precision of measure"
 msgstr "Precisione decimale della misura"
 
 #: ../src/widgets/measure-toolbar.cpp:315
-#, fuzzy
 msgid "Scale %"
-msgstr "Ridimensionamento x"
+msgstr "Scala %"
 
 #: ../src/widgets/measure-toolbar.cpp:315
 msgid "Scale %:"
@@ -29870,9 +29846,8 @@ msgstr "Ignora primo e ultimo punto"
 
 #: ../src/widgets/measure-toolbar.cpp:352
 #: ../src/widgets/measure-toolbar.cpp:353
-#, fuzzy
 msgid "Show hidden intersections"
-msgstr "intersezione guide"
+msgstr "Mostra intersezioni nascoste"
 
 #: ../src/widgets/measure-toolbar.cpp:363
 #: ../src/widgets/measure-toolbar.cpp:364
@@ -30530,7 +30505,7 @@ msgstr "Rx:"
 
 #: ../src/widgets/rect-toolbar.cpp:351
 msgid "Horizontal radius of rounded corners"
-msgstr "Raggio orizzontale di un angolo arrotondato"
+msgstr "Raggio orizzontale dell'angolo arrotondato"
 
 #: ../src/widgets/rect-toolbar.cpp:366
 msgid "Vertical radius"
@@ -30542,7 +30517,7 @@ msgstr "Ry:"
 
 #: ../src/widgets/rect-toolbar.cpp:366
 msgid "Vertical radius of rounded corners"
-msgstr "Raggio verticale di un angolo arrotondato"
+msgstr "Raggio verticale dell'angolo arrotondato"
 
 #: ../src/widgets/rect-toolbar.cpp:385
 msgid "Not rounded"
