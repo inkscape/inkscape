@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-16 23:22+0200\n"
+"POT-Creation-Date: 2016-06-17 15:11+0200\n"
 "PO-Revision-Date: 2016-06-10 15:31+0100\n"
 "Last-Translator: Firas Hanife <FirasHanife@gmail.com>\n"
 "Language-Team: \n"
@@ -1010,7 +1010,7 @@ msgstr "Arcobaleno tinto"
 
 #: ../share/filters/filters.svg.h:380
 msgid "Smooth rainbow colors melted along the edges and colorizable"
-msgstr "Arcobaleno di colori, fuso lungo i bordi e colorabile"
+msgstr "Arcobaleno colorato fuso lungo i bordi e colorabile"
 
 #: ../share/filters/filters.svg.h:382
 msgid "Melted Rainbow"
@@ -1018,7 +1018,7 @@ msgstr "Arcobaleno fuso"
 
 #: ../share/filters/filters.svg.h:384
 msgid "Smooth rainbow colors slightly melted along the edges"
-msgstr "Arcobaleno di colori, leggermente fuso lungo i bordi"
+msgstr "Arcobaleno colorato leggermente fuso lungo i bordi"
 
 #: ../share/filters/filters.svg.h:386
 msgid "Flex Metal"
@@ -6324,7 +6324,7 @@ msgstr "Miscela a sfondo"
 
 #: ../src/extension/internal/filter/blurs.h:354
 msgid "Blur eroded by white or transparency"
-msgstr ""
+msgstr "Sfocatura graduale al bianco o al trasparente"
 
 #: ../src/extension/internal/filter/bumps.h:80
 msgid "Bump"
@@ -6777,7 +6777,7 @@ msgstr "Solo colore"
 
 #: ../src/extension/internal/filter/color.h:593
 msgid "Alpha only"
-msgstr "Solo alfa"
+msgstr "Solo alpha"
 
 #: ../src/extension/internal/filter/color.h:597
 msgid "Color 1"
@@ -9465,7 +9465,6 @@ msgstr "Trasforma gradienti"
 
 #: ../src/live_effects/effect.cpp:141
 #: ../src/live_effects/lpe-show_handles.cpp:26
-#, fuzzy
 msgid "Show handles"
 msgstr "Mostra maniglie"
 
@@ -11262,19 +11261,16 @@ msgid "Choose whether to draw marks at the beginning and end of the path"
 msgstr "Disegna o meno le tacche all'inizio e alla fine del tracciato"
 
 #: ../src/live_effects/lpe-show_handles.cpp:25
-#, fuzzy
 msgid "Show nodes"
-msgstr "Mostra maniglie"
+msgstr "Mostra nodi"
 
 #: ../src/live_effects/lpe-show_handles.cpp:27
-#, fuzzy
 msgid "Show path"
-msgstr "Disegna tracciato"
+msgstr "Mostra tracciato"
 
 #: ../src/live_effects/lpe-show_handles.cpp:28
-#, fuzzy
 msgid "Scale nodes and handles"
-msgstr "Aggancia nodi, tracciati e maniglie"
+msgstr "Scala nodi e maniglie"
 
 #: ../src/live_effects/lpe-show_handles.cpp:29
 #: ../src/ui/tool/multi-path-manipulator.cpp:788
@@ -16850,7 +16846,7 @@ msgstr "_Sostituisci tutti"
 
 #: ../src/ui/dialog/find.cpp:116
 msgid "Replace all matches"
-msgstr "Sostituisci tutte le occorrenze"
+msgstr "Sostituisce tutte le occorrenze"
 
 #: ../src/ui/dialog/find.cpp:801
 msgid "Nothing to replace"
@@ -17272,11 +17268,12 @@ msgstr "Estensioni IPA"
 #: ../src/ui/dialog/glyphs.cpp:158
 #, fuzzy
 msgid "Spacing Modifier Letters"
-msgstr "Spaziatura tra le lettere"
+msgstr "Spacing Modifier Letters"
 
 #: ../src/ui/dialog/glyphs.cpp:159
+#, fuzzy
 msgid "Combining Diacritical Marks"
-msgstr ""
+msgstr "Combining Diacritical Marks"
 
 #: ../src/ui/dialog/glyphs.cpp:160
 msgid "Greek and Coptic"
@@ -17335,8 +17332,9 @@ msgid "Phonetic Extensions Supplement"
 msgstr "Supplemento Estensioni Fonetico"
 
 #: ../src/ui/dialog/glyphs.cpp:213
+#, fuzzy
 msgid "Combining Diacritical Marks Supplement"
-msgstr ""
+msgstr "Combining Diacritical Marks Supplement"
 
 #: ../src/ui/dialog/glyphs.cpp:214
 msgid "Latin Extended Additional"
@@ -17359,12 +17357,14 @@ msgid "Currency Symbols"
 msgstr "Simboli di valuta"
 
 #: ../src/ui/dialog/glyphs.cpp:219
+#, fuzzy
 msgid "Combining Diacritical Marks for Symbols"
-msgstr ""
+msgstr "Combining Diacritical Marks for Symbols"
 
 #: ../src/ui/dialog/glyphs.cpp:220
+#, fuzzy
 msgid "Letterlike Symbols"
-msgstr ""
+msgstr "Letterlike Symbols"
 
 #: ../src/ui/dialog/glyphs.cpp:221
 msgid "Number Forms"
@@ -17388,7 +17388,7 @@ msgstr "Immagini controllo"
 
 #: ../src/ui/dialog/glyphs.cpp:226
 msgid "Optical Character Recognition"
-msgstr ""
+msgstr "Riconoscimento ottico dei caratteri OCR"
 
 #: ../src/ui/dialog/glyphs.cpp:227
 msgid "Enclosed Alphanumerics"
@@ -17471,8 +17471,9 @@ msgid "Kangxi Radicals"
 msgstr "Radicali Kangxi"
 
 #: ../src/ui/dialog/glyphs.cpp:250
+#, fuzzy
 msgid "Ideographic Description Characters"
-msgstr ""
+msgstr "Ideographic Description Characters"
 
 #: ../src/ui/dialog/glyphs.cpp:251
 msgid "CJK Symbols and Punctuation"
@@ -17539,8 +17540,9 @@ msgid "Bamum"
 msgstr "Bamum"
 
 #: ../src/ui/dialog/glyphs.cpp:271
+#, fuzzy
 msgid "Modifier Tone Letters"
-msgstr ""
+msgstr "Modifier Tone Letters"
 
 #: ../src/ui/dialog/glyphs.cpp:272
 msgid "Latin Extended-D"
@@ -17863,17 +17865,16 @@ msgstr ""
 "contorno attuale)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
-#, fuzzy
 msgid "Base simplify:"
-msgstr "Semplifica"
+msgstr "Semplificazione base:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
 msgid "on dynamic LPE simplify"
-msgstr ""
+msgstr "con la semplificazione interattiva LPE"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:214
 msgid "Base simplify of dynamic LPE based simplify"
-msgstr ""
+msgstr "Semplificazione base della semplificazione dinamica LPE"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:229
 msgid "<b>No objects selected</b> to take the style from."
@@ -22304,7 +22305,6 @@ msgid "Set as _default"
 msgstr "Imposta come _predefinito"
 
 #: ../src/ui/dialog/text-edit.cpp:87
-#, fuzzy
 msgid "AaBbCcIiPpQq12369$ےے?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -25648,6 +25648,9 @@ msgid ""
 "scaling in Inkscape. To set a non-uniform scaling, set the 'viewBox' "
 "directly."
 msgstr ""
+"SVG permette un ridimensionamento non uniforme, ma si consiglia di "
+"utilizzare solo l'uniforme in Inkscape. Per impostarlo come non uniforme "
+"modifica direttamente la 'viewBox'."
 
 #: ../src/ui/widget/page-sizer.cpp:483
 msgid "_Viewbox..."
@@ -25659,7 +25662,7 @@ msgstr "Imposta dimensione pagina"
 
 #: ../src/ui/widget/page-sizer.cpp:836
 msgid "User units per "
-msgstr ""
+msgstr "Unità utente per "
 
 #: ../src/ui/widget/page-sizer.cpp:932
 msgid "Set page scale"
@@ -27514,7 +27517,7 @@ msgstr "Riflette verticalmente gli oggetti selezionati"
 #: ../src/verbs.cpp:2714
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
-"Applica la maschera alla selezione (usando come maschera l'oggetto superiore)"
+"Applica la maschera alla selezione (usando l'oggetto più alto come maschera)"
 
 #: ../src/verbs.cpp:2716
 msgid "Edit mask"
@@ -28671,7 +28674,7 @@ msgstr "<b>Nuovo:</b>"
 #: ../src/widgets/spiral-toolbar.cpp:212 ../src/widgets/spiral-toolbar.cpp:223
 #: ../src/widgets/star-toolbar.cpp:384
 msgid "<b>Change:</b>"
-msgstr "<b>Cambia:</b>"
+msgstr "<b>Modifica:</b>"
 
 #: ../src/widgets/arc-toolbar.cpp:319
 msgid "Start:"
@@ -29179,7 +29182,8 @@ msgstr "Spostamento del motivo"
 
 #: ../src/widgets/desktop-widget.cpp:499
 msgid "Zoom drawing if window size changes"
-msgstr "Aggiusta l'ingrandimento se cambia la dimensione della finestra"
+msgstr ""
+"Aggiusta l'ingrandimento al cambiamento della dimensione della finestra"
 
 #. Display the initial welcome message in the statusbar
 #: ../src/widgets/desktop-widget.cpp:701
@@ -29763,7 +29767,7 @@ msgstr "Apri finestra LPE"
 
 #: ../src/widgets/lpe-toolbar.cpp:398
 msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr "Apri finestra LPE (per la modifica dei parametri numerici)"
+msgstr "Apre la finestra LPE (per la modifica dei parametri numerici)"
 
 #: ../src/widgets/measure-toolbar.cpp:157
 msgid "Start and end measures inactive."
@@ -30465,11 +30469,11 @@ msgstr ""
 
 #: ../src/widgets/pencil-toolbar.cpp:407 ../src/widgets/pencil-toolbar.cpp:408
 msgid "LPE based interactive simplify"
-msgstr ""
+msgstr "Semplificazione interattiva LPE"
 
 #: ../src/widgets/pencil-toolbar.cpp:418 ../src/widgets/pencil-toolbar.cpp:419
 msgid "LPE simplify flatten"
-msgstr ""
+msgstr "Semplifica tracciato LPE"
 
 #: ../src/widgets/rect-toolbar.cpp:125
 msgid "Change rectangle"
@@ -31647,7 +31651,7 @@ msgstr "Rotazione carattere (gradi)"
 
 #: ../src/widgets/toolbox.cpp:186
 msgid "Color/opacity used for color tweaking"
-msgstr "Colore/opacità usato per il ritocco del colore"
+msgstr "Colore/Opacità usato per il ritocco del colore"
 
 #: ../src/widgets/toolbox.cpp:194
 msgid "Style of new stars"
