@@ -63,17 +63,17 @@ class Ungroup(inkex.Effect):
         elif s[-2:] == "px":
             return float(s[:-2])
         elif s[-2:] == "pt":
-            return float(s[:-2]) * 1.25
+            return float(s[:-2]) * 1.33
         elif s[-2:] == "em":
             return float(s[:-2]) * 16
         elif s[-2:] == "mm":
-            return float(s[:-2]) * 3.54
+            return float(s[:-2]) * 3.779
         elif s[-2:] == "pc":
-            return float(s[:-2]) * 15
+            return float(s[:-2]) * 16
         elif s[-2:] == "cm":
-            return float(s[:-2]) * 35.43
+            return float(s[:-2]) * 37.79
         elif s[-2:] == "in":
-            return float(s[:-2]) * 90
+            return float(s[:-2]) * 96
         else:
             return 1024
 
