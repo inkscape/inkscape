@@ -54,6 +54,9 @@ from math import sqrt
 import inkex
 from simplestyle import *
 
+# for localized debugging output
+inkex.localize()
+
 from xml.etree import ElementTree as ET
 
 # for golden number formula and diagonal guides

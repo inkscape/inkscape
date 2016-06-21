@@ -26,6 +26,7 @@ sys.path.append('C:\Program Files\Inkscape\share\extensions')
 # We will use the inkex module with the predefined Effect base class.
 import inkex
 
+inkex.localize()
 
 class	JessyInk_CustomKeyBindings(inkex.Effect):
 	modes = ('slide', 'index', 'drawing')

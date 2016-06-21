@@ -95,6 +95,7 @@ def errormsg(msg):
        Note that this should always be combined with translation:
 
          import inkex
+         inkex.localize()
          ...
          inkex.errormsg(_("This extension requires two selected paths."))
     """
@@ -274,7 +275,6 @@ class Effect:
     def affect(self, args=sys.argv[1:], output=True):
         """Affect an SVG document with a callback effect"""
         self.svg_file = args[-1]
-        localize()
         self.getoptions(args)
         self.parse()
         self.getposinlayer()

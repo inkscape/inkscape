@@ -31,6 +31,8 @@ import zipfile
 import glob
 import re
 
+inkex.localize()
+
 def propStrToDict(inStr):
 	dictio = {}
 

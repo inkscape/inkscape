@@ -1,6 +1,9 @@
 # -----------------------------------------------------------------------------
 #
 # -----------------------------------------------------------------------------
+
+set(CMAKE_CTEST_COMMAND ctest -V)
+
 add_subdirectory(${GMOCK_DIR} ${CMAKE_BINARY_DIR}/gmock)
 
 include_directories(SYSTEM ${GMOCK_DIR}/gtest/include
@@ -57,8 +60,8 @@ target_link_libraries(unittest
 	${INKSCAPE_LIBS}
 )
 
-
 add_test(BaseTest ${EXECUTABLE_OUTPUT_PATH}/unittest)
+
 add_dependencies(check unittest)
 
 #

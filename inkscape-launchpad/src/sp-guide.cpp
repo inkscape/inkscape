@@ -196,7 +196,6 @@ void SPGuide::set(unsigned int key, const gchar *value) {
     }
 }
 
-/* Only used internally and in sp-line.cpp */
 SPGuide *SPGuide::createSPGuide(SPDocument *doc, Geom::Point const &pt1, Geom::Point const &pt2)
 {
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
@@ -265,7 +264,7 @@ void sp_guide_create_guides_around_page(SPDesktop *dt)
 void sp_guide_delete_all_guides(SPDesktop *dt)
 {
     SPDocument *doc=dt->getDocument();
-    std::vector<SPObject *> current = doc->getResourceList("guide");
+    std::set<SPObject *> current = doc->getResourceList("guide");
     while (!current.empty()){
         SPGuide* guide = SP_GUIDE(*(current.begin()));
         sp_guide_remove(guide);

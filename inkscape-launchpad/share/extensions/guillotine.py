@@ -50,6 +50,8 @@ except:
 import inkex
 import simplestyle
 
+inkex.localize()
+
 locale.setlocale(locale.LC_ALL, '')
 
 def float_sort(a, b):

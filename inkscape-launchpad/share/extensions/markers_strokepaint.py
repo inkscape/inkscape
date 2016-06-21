@@ -24,6 +24,7 @@ import copy
 import inkex
 import simplestyle
 
+inkex.localize()
 
 class MyEffect(inkex.Effect):
     def __init__(self):

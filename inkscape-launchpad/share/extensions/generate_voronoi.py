@@ -27,6 +27,8 @@ import inkex
 import simplestyle, simpletransform
 import voronoi
 
+inkex.localize()
+
 try:
     from subprocess import Popen, PIPE
 except:

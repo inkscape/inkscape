@@ -10,7 +10,6 @@ set(sp_SRC
 	attribute-rel-css.cpp
 	attribute-rel-svg.cpp
 	attribute-rel-util.cpp
-	attribute-sort-util.cpp
 	sp-anchor.cpp
 	sp-clippath.cpp
 	sp-conn-end-pair.cpp
@@ -93,7 +92,6 @@ set(sp_SRC
 	attribute-rel-css.h
 	attribute-rel-svg.h
 	attribute-rel-util.h
-	attribute-sort-util.h
 	sp-anchor.h
 	sp-clippath.h
 	sp-conn-end-pair.h
@@ -514,6 +512,17 @@ add_library(inkscape_base SHARED ${inkscape_SRC} ${sp_SRC})
 # make executables for inkscape and inkview
 add_executable(inkscape ${main_SRC} )
 add_executable(inkview inkview.cpp )
+
+
+
+if(UNIX)
+# message after building.
+add_custom_command(
+    TARGET inkscape
+    POST_BUILD MAIN_DEPENDENCY inkscape
+    COMMAND ${CMAKE_COMMAND} -E echo 'now run: \"make install\" to copy runtime files & scripts to ${CMAKE_INSTALL_PREFIX}'
+)
+endif()
 
 add_dependencies(inkscape inkscape_version)
 

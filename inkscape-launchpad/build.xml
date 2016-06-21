@@ -42,7 +42,7 @@
     </description>
 
   <!-- set global properties for this build -->
-  <property name="version"       value="0.92pre1"/>
+  <property name="version"       value="0.91+devel"/>
   <property name="src"           location="src"/>
   <property name="lib"           location="lib"/>
   <property name="build"         location="build"/>
@@ -652,9 +652,7 @@
     <!-- Create the distribution directory -->
     <copy todir="${dist}" file="AUTHORS"/>
     <copy todir="${dist}" file="COPYING"/>
-    <copy todir="${dist}" file="GPL2.txt"/>
-    <copy todir="${dist}" file="GPL3.txt"/>
-    <copy todir="${dist}" file="LGPL2.1.txt"/>
+    <copy todir="${dist}" file="COPYING.LIB"/>
     <copy todir="${dist}" file="NEWS"/>
     <copy todir="${dist}" file="README"/>
     <copy todir="${dist}" file="TRANSLATORS"/>
@@ -763,12 +761,12 @@
     <copy todir="${dist}" file="${devlibs}/perl/bin/perl58.dll"/>
 
     <!-- PYTHON -->
-    <copy todir="${dist}" file="${devlibs}/python/python27.dll"/>
+    <copy todir="${dist}" file="${devlibs}/python/python26.dll"/>
     <copy todir="${dist}/python" file="${devlibs}/python/python.exe" />
     <copy todir="${dist}/python" file="${devlibs}/python/pythonw.exe"/>
     <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Lib"/> </copy>
     <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/DLLs"/> </copy>
-    <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Scripts"/> </copy>
+    <!-- <copy todir="${dist}/python"> <fileset dir="${devlibs}/python/Scripts"/> </copy> -->
 
     <!--<copy file="${devlibs}/share/themes/MS-Windows/gtk-2.0/gtkrc" todir="${dist}/etc/gtk-2.0"/>-->
     <makefile file="${dist}/etc/gtk-2.0/gtkrc">

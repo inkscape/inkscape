@@ -22,6 +22,8 @@ import os
 # local library
 import inkex
 
+inkex.localize()
+
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)

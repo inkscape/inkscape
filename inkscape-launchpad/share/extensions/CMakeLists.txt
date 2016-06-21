@@ -1,4 +1,3 @@
-# Install the set of non-executable data files
 file(GLOB _FILES
       "README"
       "fontfix.conf"
@@ -14,20 +13,13 @@ file(GLOB _FILES
       "svg2xaml.xsl"
       "xaml2svg.xsl"
       "inkscape.extension.rng"
-      "*.inx"
-    )
-
-install(FILES ${_FILES} DESTINATION ${SHARE_INSTALL}/inkscape/extensions)
-
-# Install the executable scripts
-file(GLOB _SCRIPTS
       "*.py"
       "*.pl"
       "*.sh"
       "*.rb"
+      "*.inx"
     )
-
-install(PROGRAMS ${_SCRIPTS} DESTINATION ${SHARE_INSTALL}/inkscape/extensions)
+install(FILES ${_FILES} DESTINATION ${SHARE_INSTALL}/inkscape/extensions)
 
 file(GLOB _FILES "alphabet_soup/*.svg")
 install(FILES ${_FILES} DESTINATION ${SHARE_INSTALL}/inkscape/extensions/alphabet_soup)

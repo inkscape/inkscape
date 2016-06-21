@@ -55,6 +55,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import inkex
 import simplestyle
 from simpletransform import computePointInNode
+
+inkex.localize()
     
 symbols = {
     'sq10': (10, 10),

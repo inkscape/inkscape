@@ -44,6 +44,8 @@ import bezmisc
 import pathmodifier
 import simpletransform 
 
+inkex.localize()
+
 def zSort(inNode,idList):
     sortedList=[]
     theid = inNode.get("id")

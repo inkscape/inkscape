@@ -2266,8 +2266,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
 
     clonetiler_remove (NULL, dlg, false);
 
-    Geom::Scale scale = desktop->getDocument()->getDocumentScale().inverse();
-    double scale_units = scale[Geom::X]; // Use just x direction....
+    double scale_units = Inkscape::Util::Quantity::convert(1, "px", &desktop->getDocument()->getSVGUnit());
 
     double shiftx_per_i = 0.01 * prefs->getDoubleLimited(prefs_path + "shiftx_per_i", 0, -10000, 10000);
     double shifty_per_i = 0.01 * prefs->getDoubleLimited(prefs_path + "shifty_per_i", 0, -10000, 10000);

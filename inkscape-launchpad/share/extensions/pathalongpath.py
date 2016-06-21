@@ -42,6 +42,7 @@ import bezmisc
 import pathmodifier
 import simpletransform
 
+inkex.localize()
 
 def flipxy(path):
     for pathcomp in path:

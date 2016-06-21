@@ -34,6 +34,7 @@ import sys
 import tempfile
 # local library
 import inkex
+inkex.localize()
 
 def run(command_format, prog_name, uniconv_format):
     outfile = tempfile.mktemp(uniconv_format)

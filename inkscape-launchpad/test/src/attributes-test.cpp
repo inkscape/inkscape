@@ -1,4 +1,3 @@
-
 /*
  * Unit tests for attributes.
  *
@@ -407,8 +406,6 @@ std::vector<AttributeInfo> getKnownAttrs()
         AttributeInfo("inkscape:layoutOptions", true),
         AttributeInfo("inkscape:lockguides", true),
         AttributeInfo("inkscape:locked", true),
-        AttributeInfo("inkscape:measure-end", true),
-        AttributeInfo("inkscape:measure-start", true),
         AttributeInfo("inkscape:object-nodes", true),
         AttributeInfo("inkscape:object-paths", true),
         AttributeInfo("inkscape:original", true),
@@ -434,7 +431,6 @@ std::vector<AttributeInfo> getKnownAttrs()
         AttributeInfo("inkscape:snap-nodes", true),
         AttributeInfo("inkscape:snap-object-midpoints", true),
         AttributeInfo("inkscape:snap-others", true),
-        AttributeInfo("inkscape:snap-from-guide", true),
         AttributeInfo("inkscape:snap-page", true),
         AttributeInfo("inkscape:snap-path-clip", true),
         AttributeInfo("inkscape:snap-path-mask", true),
@@ -464,11 +460,11 @@ std::vector<AttributeInfo> getKnownAttrs()
         AttributeInfo("sodipodi:argument", true),
         AttributeInfo("sodipodi:cx", true),
         AttributeInfo("sodipodi:cy", true),
-        AttributeInfo("sodipodi:docname", true),
         AttributeInfo("sodipodi:end", true),
         AttributeInfo("sodipodi:expansion", true),
         AttributeInfo("sodipodi:insensitive", true),
         AttributeInfo("sodipodi:linespacing", true),
+        AttributeInfo("sodipodi:nonprintable", true),
         AttributeInfo("sodipodi:open", true),
         AttributeInfo("sodipodi:original", true),
         AttributeInfo("sodipodi:r1", true),
@@ -481,7 +477,6 @@ std::vector<AttributeInfo> getKnownAttrs()
         AttributeInfo("sodipodi:sides", true),
         AttributeInfo("sodipodi:start", true),
         AttributeInfo("sodipodi:t0", true),
-        AttributeInfo("sodipodi:type", true),
         AttributeInfo("sodipodi:version", false),
 
         // SPMeshPatch

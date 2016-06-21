@@ -114,8 +114,7 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         bounding_area = temprec;
     }
 
-    double scale = document->doc()->getDocumentScale().inverse()[Geom::X];
-
+    gdouble scale = Inkscape::Util::Quantity::convert(1, "px", &document->doc()->getSVGUnit());
     bounding_area *= Geom::Scale(scale);
     Geom::Point spacings( scale * module->get_param_float("xspacing"),
                           scale * module->get_param_float("yspacing") );
@@ -134,9 +133,15 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
 
     path->setAttribute("d", path_data.c_str());
 
+    Glib::ustring style("fill:none;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000");
+    style += ";stroke-width:";
+    gchar floatstring[64];
     std::ostringstream stringstream;
-    stringstream << "fill:none;stroke:#000000;stroke-width:" << line_width << "px";
-    path->setAttribute("style", stringstream.str().c_str());
+    stringstream << line_width;
+    sprintf(floatstring, "%s", stringstream.str().c_str());
+    style += floatstring;
+    style += "pt";
+    path->setAttribute("style", style.c_str());
 
     current_layer->appendChild(path);
     Inkscape::GC::release(path);

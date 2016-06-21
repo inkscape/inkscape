@@ -35,7 +35,6 @@
 #include <2geom/ellipse.h>
 #include <2geom/circle.h>
 #include <2geom/math-utils.h>
-#include "helper/geom.h"
 #include <math.h>
 
 #include "spiro.h"
@@ -206,13 +205,14 @@ LPEPowerStroke::~LPEPowerStroke()
 
 }
 
+
 void
 LPEPowerStroke::doOnApply(SPLPEItem const* lpeitem)
 {
-    if (SP_IS_SHAPE(lpeitem) && offset_points.data().empty()) {
+    if (SP_IS_SHAPE(lpeitem)) {
         SPLPEItem* item = const_cast<SPLPEItem*>(lpeitem);
         std::vector<Geom::Point> points;
-        Geom::PathVector const &pathv = pathv_to_linear_and_cubic_beziers(SP_SHAPE(lpeitem)->_curve->get_pathvector());
+        Geom::PathVector const &pathv = SP_SHAPE(lpeitem)->_curve->get_pathvector();
         double width = (lpeitem && lpeitem->style) ? lpeitem->style->stroke_width.computed / 2 : 1.;
         
         SPCSSAttr *css = sp_repr_css_attr_new ();
@@ -565,11 +565,12 @@ LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
     if (path_in.empty()) {
         return path_out;
     }
-    Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers(path_in);
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in = pathv[0].toPwSb();
+
+    // for now, only regard first subpath and ignore the rest
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in = path_in[0].toPwSb();
+
     Piecewise<D2<SBasis> > der = derivative(pwd2_in);
-    Piecewise<D2<SBasis> > n = unitVector(der,0.0001);
-    n = rot90(n);
+    Piecewise<D2<SBasis> > n = rot90(unitVector(der));
     offset_points.set_pwd2(pwd2_in, n);
 
     LineCapType end_linecap = static_cast<LineCapType>(end_linecap_type.get_value());
@@ -582,7 +583,7 @@ LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
     if (sort_points) {
         sort(ts.begin(), ts.end(), compare_offsets);
     }
-    if (pathv[0].closed()) {
+    if (path_in[0].closed()) {
         // add extra points for interpolation between first and last point
         Point first_point = ts.front();
         Point last_point = ts.back();
@@ -604,6 +605,7 @@ LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
     for (std::size_t i = 0, e = ts.size(); i < e; ++i) {
         ts[i][Geom::X] *= xcoord_scaling;
     }
+
     // create stroke path where points (x,y) := (t, offset)
     Geom::Interpolate::Interpolator *interpolator = Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value()));
     if (Geom::Interpolate::CubicBezierJohan *johan = dynamic_cast<Geom::Interpolate::CubicBezierJohan*>(interpolator)) {
@@ -629,6 +631,7 @@ LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
         x = portion(x, rtsmin.at(0), rtsmax.at(0));
         y = portion(y, rtsmin.at(0), rtsmax.at(0));
     }
+
     LineJoinType jointype = static_cast<LineJoinType>(linejoin_type.get_value());
 
     Piecewise<D2<SBasis> > pwd2_out   = compose(pwd2_in,x) + y*compose(n,x);
@@ -636,7 +639,8 @@ LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
 
     Geom::Path fixed_path       = path_from_piecewise_fix_cusps( pwd2_out,   y,          jointype, miter_limit, LPE_CONVERSION_TOLERANCE);
     Geom::Path fixed_mirrorpath = path_from_piecewise_fix_cusps( mirrorpath, reverse(y), jointype, miter_limit, LPE_CONVERSION_TOLERANCE);
-    if (pathv[0].closed()) {
+
+    if (path_in[0].closed()) {
         fixed_path.close(true);
         path_out.push_back(fixed_path);
         fixed_mirrorpath.close(true);
@@ -680,6 +684,7 @@ LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
         }
 
         fixed_path.append(fixed_mirrorpath);
+
         switch (start_linecap) {
             case LINECAP_ZERO_WIDTH:
                 // do nothing
@@ -715,9 +720,11 @@ LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
                 break;
             }
         }
+
         fixed_path.close(true);
         path_out.push_back(fixed_path);
     }
+
     return path_out;
 }
 

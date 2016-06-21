@@ -35,6 +35,8 @@ import bezmisc
 import simplepath
 import simpletransform
 
+inkex.localize()
+
 syntax   = render_alphabetsoup_config.syntax
 alphabet = render_alphabetsoup_config.alphabet
 units	= render_alphabetsoup_config.units

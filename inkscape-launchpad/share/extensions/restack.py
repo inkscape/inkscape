@@ -24,6 +24,7 @@ THE SOFTWARE.
 import inkex, os, csv, math, random
 from pathmodifier import zSort
 
+inkex.localize()
 
 try:
     from subprocess import Popen, PIPE

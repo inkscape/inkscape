@@ -499,10 +499,9 @@ static gchar const * ui_descr =
         "    <toolitem action='EraserModeAction' />"
         "    <separator />"
         "    <toolitem action='EraserWidthAction' />"
+        "    <toolitem action='EraserBreakAppart' />"
         "    <separator />"
         "    <toolitem action='EraserMassAction' />"
-        "    <separator />"
-        "    <toolitem action='EraserBreakAppart' />"
         "  </toolbar>"
 
         "  <toolbar name='TextToolbar'>"
@@ -1000,7 +999,6 @@ static GtkWidget* toolboxNewCommon( GtkWidget* tb, BarId id, GtkPositionType /*h
     gtk_widget_set_sensitive(tb, FALSE);
 
     GtkWidget *hb = gtk_event_box_new(); // A simple, neutral container.
-    gtk_widget_set_name(hb, "ToolboxCommon");
 
     gtk_container_add(GTK_CONTAINER(hb), tb);
     gtk_widget_show(GTK_WIDGET(tb));
@@ -1018,7 +1016,6 @@ GtkWidget *ToolboxFactory::createToolToolbox()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_name(tb, "ToolToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
 #else
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
@@ -1031,7 +1028,6 @@ GtkWidget *ToolboxFactory::createAuxToolbox()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_name(tb, "AuxToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
 #else
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
@@ -1048,7 +1044,6 @@ GtkWidget *ToolboxFactory::createCommandsToolbox()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_name(tb, "CommandsToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
 #else
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
@@ -1061,7 +1056,6 @@ GtkWidget *ToolboxFactory::createSnapToolbox()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_name(tb, "SnapToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
 #else
     GtkWidget *tb = gtk_vbox_new(FALSE, 0);
@@ -1412,7 +1406,6 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
             // converted to GtkActions and UIManager
 
             GtkWidget* kludge = gtk_toolbar_new();
-            gtk_widget_set_name( kludge, "Kludge" );
             g_object_set_data( G_OBJECT(kludge), "dtw", desktop->canvas);
             g_object_set_data( G_OBJECT(kludge), "desktop", desktop);
             dataHolders[aux_toolboxes[i].type_name] = kludge;
@@ -1425,7 +1418,7 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
             } else {
                 sub_toolbox = aux_toolboxes[i].create_func(desktop);
             }
-            gtk_widget_set_name( sub_toolbox, "SubToolBox" );
+
             gtk_size_group_add_widget( grouper, sub_toolbox );
 
             gtk_container_add(GTK_CONTAINER(toolbox), sub_toolbox);
@@ -1443,7 +1436,6 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
 #if GTK_CHECK_VERSION(3,0,0)
             GtkWidget* holder = gtk_grid_new();
-            gtk_widget_set_name( holder, "ToolbarHolder" );
             gtk_grid_attach( GTK_GRID(holder), kludge, 2, 0, 1, 1);
 #else
             GtkWidget* holder = gtk_table_new( 1, 3, FALSE );

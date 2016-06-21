@@ -24,6 +24,8 @@ import tempfile
 from webslicer_effect import *
 import inkex
 
+inkex.localize()
+
 
 class WebSlicer_Export(WebSlicer_Effect):
 

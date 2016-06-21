@@ -41,6 +41,7 @@ import simpletransform
 import cubicsuperpath
 import bezmisc
 
+inkex.localize()
 
 # On darwin, fall back to C in cases of 
 # - incorrect locale IDs (see comments in bug #406662)

@@ -26,6 +26,8 @@ import simplepath
 import simpletransform
 from ffgeom import *
 
+inkex.localize()
+
 try:
     from subprocess import Popen, PIPE
     bsubprocess = True

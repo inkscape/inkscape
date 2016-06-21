@@ -44,6 +44,7 @@ import inkex
 import pathmodifier
 from simpletransform import *
 
+inkex.localize()
 
 class Dimension(pathmodifier.PathModifier):
     def __init__(self):

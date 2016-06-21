@@ -25,6 +25,7 @@ import inkex
 import simplestyle
 from pathmodifier import zSort
 
+inkex.localize()
 
 class InterpAttG(inkex.Effect):
 

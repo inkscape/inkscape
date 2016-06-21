@@ -13,8 +13,6 @@
 
 #define SVG_VERSION "1.1"
 
-#include <string>
-
 namespace Inkscape {
 
 class Version {
@@ -45,7 +43,6 @@ public:
 
     unsigned int _major;
     unsigned int _minor;
-    std::string _tail; // Development version
 };
 
 }

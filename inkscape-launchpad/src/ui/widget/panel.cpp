@@ -73,7 +73,6 @@ Panel::Panel(Glib::ustring const &label, gchar const *prefs_path,
     _action_area(0),
     _fillable(0)
 {
-    set_name( "InkscapePanel" );
 #if WITH_GTKMM_3_0
     set_orientation( Gtk::ORIENTATION_VERTICAL );
 #endif
@@ -285,10 +284,7 @@ void Panel::_init()
     pack_start(_top_bar, false, false);
 
     Gtk::HBox* boxy = Gtk::manage(new Gtk::HBox());
-    boxy->set_name( "PanelBoxY" );
-    _contents.set_name( "PanelContents" );
-    _right_bar.set_name( "PanelRightBar" );
-    _top_bar.set_name( "PanelTopBar" );
+
     boxy->pack_start(_contents, true, true);
     boxy->pack_start(_right_bar, false, true);
 

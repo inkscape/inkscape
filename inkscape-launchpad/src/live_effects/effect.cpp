@@ -714,7 +714,6 @@ Effect::getParameter(const char * key)
 {
     Glib::ustring stringkey(key);
 
-    if (param_vector.empty()) return NULL;
     std::vector<Parameter *>::iterator it = param_vector.begin();
     while (it != param_vector.end()) {
         Parameter * param = *it;

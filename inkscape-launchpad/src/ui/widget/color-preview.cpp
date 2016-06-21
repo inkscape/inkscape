@@ -23,7 +23,6 @@ ColorPreview::ColorPreview (guint32 rgba)
 {
     _rgba = rgba;
     set_has_window(false);
-    set_name("ColorPreview");
 }
 
 void

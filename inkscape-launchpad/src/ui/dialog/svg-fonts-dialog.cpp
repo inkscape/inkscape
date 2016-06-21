@@ -266,10 +266,10 @@ void SvgFontsDialog::update_fonts()
 {
     SPDesktop* desktop = this->getDesktop();
     SPDocument* document = desktop->getDocument();
-    std::vector<SPObject *> fonts = document->getResourceList( "fonts" );
+    std::set<SPObject *> fonts = document->getResourceList( "fonts" );
 
     _model->clear();
-    for (std::vector<SPObject *>::const_iterator it = fonts.begin(); it != fonts.end(); ++it) {
+    for (std::set<SPObject *>::const_iterator it = fonts.begin(); it != fonts.end(); ++it) {
         Gtk::TreeModel::Row row = *_model->append();
         SPFont* f = SP_FONT(*it);
         row[_columns.spfont] = f;

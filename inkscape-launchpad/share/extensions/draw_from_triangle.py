@@ -38,6 +38,7 @@ import inkex
 import simplestyle
 import simplepath
 
+inkex.localize()
 
 #DRAWING ROUTINES
 

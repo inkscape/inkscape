@@ -155,7 +155,6 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       _unit_mis(NULL),
       _sw_unit(NULL)
 {
-    set_name("SelectedStyle");
     _drop[0] = _drop[1] = 0;
     _dropEnabled[0] = _dropEnabled[1] = false;
 

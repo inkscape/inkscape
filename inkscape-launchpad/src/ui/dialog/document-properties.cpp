@@ -283,7 +283,7 @@ inline void attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned con
                 } else {
 #if WITH_GTKMM_3_0
                     arr[i+1]->set_hexpand();
-
+                        
                     if (yoptions & Gtk::EXPAND)
                         arr[i+1]->set_vexpand();
                     else
@@ -428,30 +428,13 @@ void DocumentProperties::build_snap()
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 /// Populates the available color profiles combo box
 void DocumentProperties::populate_available_profiles(){
-    _AvailableProfilesListStore->clear(); // Clear any existing items in the combo box
+    _combo_avail.remove_all(); // Clear any existing items in the combo box
 
     // Iterate through the list of profiles and add the name to the combo box.
-    std::vector<std::pair<std::pair<Glib::ustring, bool>, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
-    bool home = true; // initial value doesn't matter, it's just to avoid a compiler warning
-    for ( std::vector<std::pair<std::pair<Glib::ustring, bool>, Glib::ustring> >::const_iterator it = pairs.begin(); it != pairs.end(); ++it ) {
-        Gtk::TreeModel::Row row;
-        Glib::ustring file = it->first.first;
+    std::vector<std::pair<Glib::ustring, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
+    for ( std::vector<std::pair<Glib::ustring, Glib::ustring> >::const_iterator it = pairs.begin(); it != pairs.end(); ++it ) {
         Glib::ustring name = it->second;
-
-        // add a separator between profiles from the user's home directory and system profiles
-        if (it != pairs.begin() && it->first.second != home)
-        {
-          row = *(_AvailableProfilesListStore->append());
-          row[_AvailableProfilesListColumns.fileColumn] = "<separator>";
-          row[_AvailableProfilesListColumns.nameColumn] = "<separator>";
-          row[_AvailableProfilesListColumns.separatorColumn] = true;
-        }
-        home = it->first.second;
-
-        row = *(_AvailableProfilesListStore->append());
-        row[_AvailableProfilesListColumns.fileColumn] = file;
-        row[_AvailableProfilesListColumns.nameColumn] = name;
-        row[_AvailableProfilesListColumns.separatorColumn] = false;
+	_combo_avail.append(name);
     }
 }
 
@@ -459,7 +442,7 @@ void DocumentProperties::populate_available_profiles(){
  * Cleans up name to remove disallowed characters.
  * Some discussion at http://markmail.org/message/bhfvdfptt25kgtmj
  * Allowed ASCII first characters:  ':', 'A'-'Z', '_', 'a'-'z'
- * Allowed ASCII remaining chars add: '-', '.', '0'-'9',
+ * Allowed ASCII remaining chars add: '-', '.', '0'-'9', 
  *
  * @param str the string to clean up.
  */
@@ -491,25 +474,26 @@ static void sanitizeName( Glib::ustring& str )
 /// Links the selected color profile in the combo box to the document
 void DocumentProperties::linkSelectedProfile()
 {
-    //store this profile in the SVG document (create <color-profile> element in the XML)
+//store this profile in the SVG document (create <color-profile> element in the XML)
     // TODO remove use of 'active' desktop
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop){
         g_warning("No active desktop");
     } else {
-        // Find the index of the currently-selected row in the color profiles combobox
-        Gtk::TreeModel::iterator iter = _AvailableProfilesList.get_active();
+	// Find the index of the currently-selected row in the color profiles combobox
+	int row = _combo_avail.get_active_row_number();
 
-        if (!iter) {
+	if (row == -1){
             g_warning("No color profile available.");
             return;
         }
 	
-        // Read the filename and description from the list of available profiles
-        Glib::ustring file = (*iter)[_AvailableProfilesListColumns.fileColumn];
-        Glib::ustring name = (*iter)[_AvailableProfilesListColumns.nameColumn];
-        std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
-        for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+	// Read the filename and description from the list of available profiles
+	std::vector<std::pair<Glib::ustring, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
+        Glib::ustring file = pairs[row].first;
+        Glib::ustring name = pairs[row].second;
+        std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+        for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
             SPObject* obj = *it;
             Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
             if (!strcmp(prof->href, file.c_str()))
@@ -527,7 +511,7 @@ void DocumentProperties::linkSelectedProfile()
 
         // Checks whether there is a defs element. Creates it when needed
         Inkscape::XML::Node *defsRepr = sp_repr_lookup_name(xml_doc, "svg:defs");
-        if (!defsRepr) {
+        if (!defsRepr){
             defsRepr = xml_doc->createElement("svg:defs");
             xml_doc->root()->addChild(defsRepr, NULL);
         }
@@ -545,29 +529,14 @@ void DocumentProperties::linkSelectedProfile()
     }
 }
 
-struct _cmp {
-  bool operator()(const SPObject * const & a, const SPObject * const & b)
-  {
-    const Inkscape::ColorProfile &a_prof = reinterpret_cast<const Inkscape::ColorProfile &>(*a);
-    const Inkscape::ColorProfile &b_prof = reinterpret_cast<const Inkscape::ColorProfile &>(*b);
-    gchar *a_name_casefold = g_utf8_casefold(a_prof.name, -1 );
-    gchar *b_name_casefold = g_utf8_casefold(b_prof.name, -1 );
-    int result = g_strcmp0(a_name_casefold, b_name_casefold);
-    g_free(a_name_casefold);
-    g_free(b_name_casefold);
-    return result < 0;
-  }
-};
-
 void DocumentProperties::populate_linked_profiles_box()
 {
     _LinkedProfilesListStore->clear();
-    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
     if (! current.empty()) {
         _emb_profiles_observer.set((*(current.begin()))->parent);
     }
-    std::set<SPObject *, _cmp> _current (current.begin(), current.end());
-    for (std::set<SPObject *, _cmp>::const_iterator it = _current.begin(); it != _current.end(); ++it) {
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         Gtk::TreeModel::Row row = *(_LinkedProfilesListStore->append());
@@ -645,8 +614,8 @@ void DocumentProperties::removeSelectedProfile(){
             return;
         }
     }
-    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
-    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         if (!name.compare(prof->name)){
@@ -658,12 +627,6 @@ void DocumentProperties::removeSelectedProfile(){
 
     populate_linked_profiles_box();
     onColorProfileSelectRow();
-}
-
-bool DocumentProperties::_AvailableProfilesList_separator(const Glib::RefPtr<Gtk::TreeModel>& model, const Gtk::TreeModel::iterator& iter)
-{
-    bool separator = (*iter)[_AvailableProfilesListColumns.separatorColumn];
-    return separator;
 }
 
 void DocumentProperties::build_cms()
@@ -731,9 +694,9 @@ void DocumentProperties::build_cms()
     row++;
 
 #if WITH_GTKMM_3_0
-    _AvailableProfilesList.set_hexpand();
-    _AvailableProfilesList.set_valign(Gtk::ALIGN_CENTER);
-    _page_cms->table().attach(_AvailableProfilesList, 0, row, 1, 1);
+    _combo_avail.set_hexpand();
+    _combo_avail.set_valign(Gtk::ALIGN_CENTER);
+    _page_cms->table().attach(_combo_avail, 0, row, 1, 1);
 
     _link_btn.set_halign(Gtk::ALIGN_CENTER);
     _link_btn.set_valign(Gtk::ALIGN_CENTER);
@@ -745,16 +708,10 @@ void DocumentProperties::build_cms()
     _unlink_btn.set_valign(Gtk::ALIGN_CENTER);
     _page_cms->table().attach(_unlink_btn, 2, row, 1, 1);
 #else
-    _page_cms->table().attach(_AvailableProfilesList, 0, 1, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_cms->table().attach(_combo_avail, 0, 1, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     _page_cms->table().attach(_link_btn, 1, 2, row, row + 1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0, 2, 0);
     _page_cms->table().attach(_unlink_btn, 2, 3, row, row + 1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0, 0, 0);
 #endif
-
-    // Set up the Avialable Profiles combo box
-    _AvailableProfilesListStore = Gtk::ListStore::create(_AvailableProfilesListColumns);
-    _AvailableProfilesList.set_model(_AvailableProfilesListStore);
-    _AvailableProfilesList.pack_start(_AvailableProfilesListColumns.nameColumn);
-    _AvailableProfilesList.set_row_separator_func(sigc::mem_fun(*this, &DocumentProperties::_AvailableProfilesList_separator));
 
     populate_available_profiles();
 
@@ -781,7 +738,7 @@ void DocumentProperties::build_cms()
     _LinkedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::linked_profiles_list_button_release));
     cms_create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
 
-    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "defs" );
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "defs" );
     if (!current.empty()) {
         _emb_profiles_observer.set((*(current.begin()))->parent);
     }
@@ -1018,7 +975,7 @@ void DocumentProperties::build_scripting()
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 //TODO: review this observers code:
-    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     if (! current.empty()) {
         _scripts_observer.set((*(current.begin()))->parent);
     }
@@ -1233,8 +1190,8 @@ void DocumentProperties::removeExternalScript(){
         }
     }
 
-    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         if (obj) {
             SPScript* script = dynamic_cast<SPScript *>(obj);
@@ -1311,8 +1268,8 @@ void DocumentProperties::changeEmbeddedScript(){
     }
 
     bool voidscript=true;
-    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         if (id == obj->getId()){
 
@@ -1356,8 +1313,8 @@ void DocumentProperties::editEmbeddedScript(){
     }
 
     Inkscape::XML::Document *xml_doc = SP_ACTIVE_DOCUMENT->getReprDoc();
-    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
-    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         if (id == obj->getId()){
 
@@ -1380,13 +1337,13 @@ void DocumentProperties::editEmbeddedScript(){
 void DocumentProperties::populate_script_lists(){
     _ExternalScriptsListStore->clear();
     _EmbeddedScriptsListStore->clear();
-    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
+    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     if (!current.empty()) {
         SPObject *obj = *(current.begin());
         g_assert(obj != NULL);
         _scripts_observer.set(obj->parent);
     }
-    for (std::vector<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
         SPObject* obj = *it;
         SPScript* script = dynamic_cast<SPScript *>(obj);
         g_assert(script != NULL);
@@ -1736,7 +1693,7 @@ void DocumentProperties::onDocUnitChange()
 
     // Disable changing of SVG Units. The intent here is to change the units in the UI, not the units in SVG.
     // This code should be moved (and fixed) once we have an "SVG Units" setting that sets what units are used in SVG data.
-#if 0
+#if 0    
     // Set viewBox
     if (doc->getRoot()->viewBox_set) {
         gdouble scale = Inkscape::Util::Quantity::convert(1, old_doc_unit, doc_unit);
@@ -1746,12 +1703,12 @@ void DocumentProperties::onDocUnitChange()
         Inkscape::Util::Quantity height = doc->getHeight();
         doc->setViewBox(Geom::Rect::from_xywh(0, 0, width.value(doc_unit), height.value(doc_unit)));
     }
-
+    
     // TODO: Fix bug in nodes tool instead of switching away from it
     if (tools_active(getDesktop()) == TOOLS_NODES) {
         tools_switch(getDesktop(), TOOLS_SELECT);
     }
-
+    
     // Scale and translate objects
     // set transform options to scale all things with the transform, so all things scale properly after the viewbox change.
     /// \todo this "low-level" code of changing viewbox/unit should be moved somewhere else
@@ -1791,7 +1748,7 @@ void DocumentProperties::onDocUnitChange()
 #endif
 
     doc->setModifiedSinceSave();
-
+    
     DocumentUndo::done(doc, SP_VERB_NONE, _("Changed default display unit"));
 }
 

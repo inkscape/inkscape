@@ -40,6 +40,8 @@ import cubicsuperpath
 import coloreffect
 import dxf_templates
 
+inkex.localize()
+
 try:
     from numpy import *
     from numpy.linalg import solve

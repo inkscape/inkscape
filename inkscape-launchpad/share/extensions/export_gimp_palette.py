@@ -19,6 +19,8 @@ except:
 import inkex
 import simplestyle
 
+inkex.localize()
+
 colortags=(u'fill',u'stroke',u'stop-color',u'flood-color',u'lighting-color')
 colors={}
 
