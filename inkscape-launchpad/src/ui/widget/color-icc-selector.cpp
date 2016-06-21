@@ -633,9 +633,10 @@ void ColorICCSelectorImpl::_switchToProfile(gchar const *name)
 #endif // DEBUG_LCMS
                         tmp.set(SP_RGBA32_U_COMPOSE(pre[0], pre[1], pre[2], 0xff));
                     }
+
+                    dirty = true;
                 }
             }
-            dirty = true;
         }
     }
     else {
@@ -671,6 +672,20 @@ void ColorICCSelectorImpl::_switchToProfile(gchar const *name)
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+struct _cmp {
+  bool operator()(const SPObject * const & a, const SPObject * const & b)
+  {
+    const Inkscape::ColorProfile &a_prof = reinterpret_cast<const Inkscape::ColorProfile &>(*a);
+    const Inkscape::ColorProfile &b_prof = reinterpret_cast<const Inkscape::ColorProfile &>(*b);
+    gchar *a_name_casefold = g_utf8_casefold(a_prof.name, -1 );
+    gchar *b_name_casefold = g_utf8_casefold(b_prof.name, -1 );
+    int result = g_strcmp0(a_name_casefold, b_name_casefold);
+    g_free(a_name_casefold);
+    g_free(b_name_casefold);
+    return result < 0;
+  }
+};
+
 void ColorICCSelectorImpl::_profilesChanged(std::string const &name)
 {
     GtkComboBox *combo = GTK_COMBO_BOX(_profileSel);
@@ -687,8 +702,9 @@ void ColorICCSelectorImpl::_profilesChanged(std::string const &name)
     gtk_combo_box_set_active(combo, 0);
 
     int index = 1;
-    std::set<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList("iccprofile");
-    for (std::set<SPObject *>::const_iterator it = current.begin(); it != current.end(); ++it) {
+    std::vector<SPObject *> current = SP_ACTIVE_DOCUMENT->getResourceList("iccprofile");
+    std::set<SPObject *, _cmp> _current(current.begin(), current.end());
+    for (std::set<SPObject *, _cmp>::const_iterator it = _current.begin(); it != _current.end(); ++it) {
         SPObject *obj = *it;
         Inkscape::ColorProfile *prof = reinterpret_cast<Inkscape::ColorProfile *>(obj);
 

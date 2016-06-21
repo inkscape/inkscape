@@ -183,8 +183,8 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     /* Overlap */
     {
         InkToggleAction* act = ink_toggle_action_new( "EraserBreakAppart",
-                                                      _("Break appart cutted items"),
-                                                      _("Break appart cutted itemss"),
+                                                      _("Break apart cut items"),
+                                                      _("Break apart cut items"),
                                                       INKSCAPE_ICON("distribute-randomize"),
                                                       secondarySize );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/eraser/break_apart", false) );

@@ -19,7 +19,7 @@ use HTML::TokeParser;
 # Note "flowRoot, flowPara, flowSpan, flowRegion, and flowRect are Inkscape
 #   specific (failed SVG1.2 items)
 my @container_elements = ("a", "defs", "glyph", "g", "marker", "mask", "missing-glyph", "pattern", "svg", "switch", "symbol", "use");
-my @graphics_elements = ("circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use");
+my @graphics_elements = ("circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "flowRoot", "use");
 my @filter_primitives = ("feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix",
 			 "feDiffuseLighting", "feDisplacementMap", "feFlood", "feGaussianBlur", "feImage",
 			 "feMerge", "feMorphology", "feOffset", "feSpecularLighting", "feTile", "feTurbulence" );

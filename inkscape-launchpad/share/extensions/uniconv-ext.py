@@ -26,8 +26,6 @@ import sys
 from run_command import run
 import inkex
 
-inkex.localize()
-
 cmd = None
 
 try:

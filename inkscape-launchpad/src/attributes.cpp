@@ -14,6 +14,7 @@
 
 #include <glib.h> // g_assert()
 #include "attributes.h"
+#include <iostream>
 
 typedef struct {
     gint code;
@@ -28,15 +29,24 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INVALID, NULL},
     /* SPObject */
     {SP_ATTR_ID, "id"},
+    {SP_ATTR_STYLE, "style"},
     {SP_ATTR_INKSCAPE_COLLECT, "inkscape:collect"},
     {SP_ATTR_INKSCAPE_LABEL, "inkscape:label"},
+    /* SPRoot */
+    {SP_ATTR_VERSION, "version"},
+    {SP_ATTR_INKSCAPE_VERSION, "inkscape:version"},
+    {SP_ATTR_WIDTH, "width"},
+    {SP_ATTR_HEIGHT, "height"},
+    {SP_ATTR_VIEWBOX, "viewBox"},
+    {SP_ATTR_PRESERVEASPECTRATIO, "preserveAspectRatio"},
+    {SP_ATTR_ONLOAD, "onload"},
+    {SP_ATTR_SODIPODI_DOCNAME, "sodipodi:docname"},
     /* SPItem */
     {SP_ATTR_TRANSFORM, "transform"},
+    {SP_ATTR_SODIPODI_TYPE, "sodipodi:type"},
     {SP_ATTR_SODIPODI_INSENSITIVE, "sodipodi:insensitive"},
-    {SP_ATTR_SODIPODI_NONPRINTABLE, "sodipodi:nonprintable"},
     {SP_ATTR_CONNECTOR_AVOID, "inkscape:connector-avoid"},
     {SP_ATTR_CONNECTION_POINTS, "inkscape:connection-points"},
-    {SP_ATTR_STYLE, "style"},
     {SP_ATTR_TRANSFORM_CENTER_X, "inkscape:transform-center-x"},
     {SP_ATTR_TRANSFORM_CENTER_Y, "inkscape:transform-center-y"},
     {SP_ATTR_INKSCAPE_PATH_EFFECT, "inkscape:path-effect"},
@@ -53,14 +63,6 @@ static SPStyleProp const props[] = {
     {SP_ATTR_TARGET, "target"},
     {SP_ATTR_INKSCAPE_GROUPMODE, "inkscape:groupmode"},
     {SP_ATTR_INKSCAPE_EXPANDED, "inkscape:expanded"},
-    /* SPRoot */
-    {SP_ATTR_VERSION, "version"},
-    {SP_ATTR_WIDTH, "width"},
-    {SP_ATTR_HEIGHT, "height"},
-    {SP_ATTR_VIEWBOX, "viewBox"},
-    {SP_ATTR_PRESERVEASPECTRATIO, "preserveAspectRatio"},
-    {SP_ATTR_INKSCAPE_VERSION, "inkscape:version"},
-    {SP_ATTR_ONLOAD, "onload"},
     /* SPNamedView */
     {SP_ATTR_VIEWONLY, "viewonly"},
     {SP_ATTR_SHOWGUIDES, "showguides"},
@@ -99,6 +101,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_SNAP_BBOX, "inkscape:snap-bbox"},
     {SP_ATTR_INKSCAPE_SNAP_NODE, "inkscape:snap-nodes"},
     {SP_ATTR_INKSCAPE_SNAP_OTHERS, "inkscape:snap-others"},
+    {SP_ATTR_INKSCAPE_SNAP_FROM_GUIDE, "inkscape:snap-from-guide"},
     {SP_ATTR_INKSCAPE_SNAP_ROTATION_CENTER, "inkscape:snap-center"},
     {SP_ATTR_INKSCAPE_SNAP_GRID, "inkscape:snap-grids"},
     {SP_ATTR_INKSCAPE_SNAP_GUIDE, "inkscape:snap-to-guides"},
@@ -120,7 +123,6 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_DOCUMENT_UNITS, "inkscape:document-units"},  // This setting sets the Display units, *not* the units used in SVG
     {SP_ATTR_INKSCAPE_LOCKGUIDES, "inkscape:lockguides"},
     {SP_ATTR_UNITS, "units"},
-    {SP_ATTR_INKSCAPE_CONNECTOR_SPACING, "inkscape:connector-spacing"},
     /* SPColorProfile */
     {SP_ATTR_LOCAL, "local"},
     {SP_ATTR_NAME, "name"},
@@ -130,6 +132,9 @@ static SPStyleProp const props[] = {
     {SP_ATTR_POSITION, "position"},
     {SP_ATTR_INKSCAPE_COLOR, "inkscape:color"},
     {SP_ATTR_INKSCAPE_LOCKED, "inkscape:locked"},
+    /* Measure tool */
+    {SP_ATTR_INKSCAPE_MEASURE_START, "inkscape:measure-start"},
+    {SP_ATTR_INKSCAPE_MEASURE_END,   "inkscape:measure-end"},
     /* SPImage */
     {SP_ATTR_X, "x"},
     {SP_ATTR_Y, "y"},
@@ -139,6 +144,7 @@ static SPStyleProp const props[] = {
     /* (Note: XML representation of connectors may change in future.) */
     {SP_ATTR_CONNECTOR_TYPE, "inkscape:connector-type"},
     {SP_ATTR_CONNECTOR_CURVATURE, "inkscape:connector-curvature"},
+    {SP_ATTR_INKSCAPE_CONNECTOR_SPACING, "inkscape:connector-spacing"},
     {SP_ATTR_CONNECTION_START, "inkscape:connection-start"},
     {SP_ATTR_CONNECTION_END, "inkscape:connection-end"},
     {SP_ATTR_CONNECTION_START_POINT, "inkscape:connection-start-point"},
@@ -414,11 +420,49 @@ static SPStyleProp const props[] = {
     {SP_ATTR_TEXT_EXCLUDE,"inkscape:excludeShape"},
     {SP_ATTR_LAYOUT_OPTIONS,"inkscape:layoutOptions"},
 
-    /* CSS2 */
-    {SP_PROP_INKSCAPE_FONT_SPEC, "-inkscape-font-specification"},
+    /* CSS & SVG Properites */
+
+    /* Paint */
+    {SP_PROP_COLOR, "color"},
+    {SP_PROP_OPACITY, "opacity"},
+    {SP_PROP_FILL, "fill"},
+    {SP_PROP_FILL_OPACITY, "fill-opacity"},
+    {SP_PROP_FILL_RULE, "fill-rule"},
+    {SP_PROP_STROKE, "stroke"},
+    {SP_PROP_STROKE_OPACITY, "stroke-opacity"},
+    {SP_PROP_STROKE_WIDTH, "stroke-width"},
+    {SP_PROP_STROKE_LINECAP, "stroke-linecap"},
+    {SP_PROP_STROKE_LINEJOIN, "stroke-linejoin"},
+    {SP_PROP_STROKE_MITERLIMIT, "stroke-miterlimit"},
+    {SP_PROP_STROKE_DASHARRAY, "stroke-dasharray"},
+    {SP_PROP_STROKE_DASHOFFSET, "stroke-dashoffset"},
+    {SP_PROP_MARKER, "marker"},
+    {SP_PROP_MARKER_END, "marker-end"},
+    {SP_PROP_MARKER_MID, "marker-mid"},
+    {SP_PROP_MARKER_START, "marker-start"},
+    {SP_PROP_PAINT_ORDER, "paint-order" },
+    {SP_PROP_SOLID_COLOR, "solid-color"},
+    {SP_PROP_SOLID_OPACITY, "solid-opacity"},
+
+    /* CSS Blending/Compositing */
+    {SP_PROP_MIX_BLEND_MODE, "mix-blend-mode"},
+    {SP_PROP_ISOLATION, "isolation"},
+
+    /* Misc. Display */
+    {SP_PROP_DISPLAY, "display"},
+    {SP_PROP_OVERFLOW, "overflow"},
+    {SP_PROP_VISIBILITY, "visibility"},
+
+    /* Clip/Mask */
+    {SP_PROP_CLIP, "clip"},
+    {SP_PROP_CLIP_PATH, "clip-path"},
+    {SP_PROP_CLIP_RULE, "clip-rule"},
+    {SP_PROP_MASK, "mask"},
+
     /* Font */
     {SP_PROP_FONT, "font"},
     {SP_PROP_FONT_FAMILY, "font-family"},
+    {SP_PROP_INKSCAPE_FONT_SPEC, "-inkscape-font-specification"},
     {SP_PROP_FONT_SIZE, "font-size"},
     {SP_PROP_FONT_SIZE_ADJUST, "font-size-adjust"},
     {SP_PROP_FONT_STRETCH, "font-stretch"},
@@ -443,7 +487,7 @@ static SPStyleProp const props[] = {
     {SP_PROP_WORD_SPACING, "word-spacing"},
     {SP_PROP_TEXT_TRANSFORM, "text-transform"},
 
-    /* Text (css3) */
+    /* Text (CSS3) */
     {SP_PROP_DIRECTION, "direction"},
     {SP_PROP_WRITING_MODE, "writing-mode"},
     {SP_PROP_TEXT_ORIENTATION, "text-orientation"},
@@ -464,70 +508,43 @@ static SPStyleProp const props[] = {
     {SP_PROP_SHAPE_MARGIN,  "shape-margin"},
 
     /* Text Decoration */
-    {SP_PROP_TEXT_DECORATION,       "text-decoration"},
+    {SP_PROP_TEXT_DECORATION,       "text-decoration"},  // CSS 2/CSS3-Shorthand
     {SP_PROP_TEXT_DECORATION_LINE,  "text-decoration-line"},
     {SP_PROP_TEXT_DECORATION_STYLE, "text-decoration-style"},
     {SP_PROP_TEXT_DECORATION_COLOR, "text-decoration-color"},
     {SP_PROP_TEXT_DECORATION_FILL,  "text-decoration-fill"},
     {SP_PROP_TEXT_DECORATION_STROKE,"text-decoration-stroke"},
 
-    /* Misc */
-    {SP_PROP_CLIP, "clip"},
-    {SP_PROP_COLOR, "color"},
-    {SP_PROP_CURSOR, "cursor"},
-    {SP_PROP_DISPLAY, "display"},
-    {SP_PROP_OVERFLOW, "overflow"},
-    {SP_PROP_VISIBILITY, "visibility"},
-    {SP_PROP_MIX_BLEND_MODE, "mix-blend-mode"}, // CSS Blending and Compositing
-    {SP_PROP_ISOLATION, "isolation"},
-    /* SVG */
-    /* Clip/Mask */
-    {SP_PROP_CLIP_PATH, "clip-path"},
-    {SP_PROP_CLIP_RULE, "clip-rule"},
-    {SP_PROP_MASK, "mask"},
-    {SP_PROP_OPACITY, "opacity"},
     /* Filter */
     {SP_PROP_ENABLE_BACKGROUND, "enable-background"},
     {SP_PROP_FILTER, "filter"},
     {SP_PROP_FLOOD_COLOR, "flood-color"},
     {SP_PROP_FLOOD_OPACITY, "flood-opacity"},
     {SP_PROP_LIGHTING_COLOR, "lighting-color"},
+
     /* Gradient */
     {SP_PROP_STOP_COLOR, "stop-color"},
     {SP_PROP_STOP_OPACITY, "stop-opacity"},
     {SP_PROP_STOP_PATH, "path"},
-    /* Interactivity */
-    {SP_PROP_POINTER_EVENTS, "pointer-events"},
-    /* Paint */
+
+    /* Rendering */
     {SP_PROP_COLOR_INTERPOLATION, "color-interpolation"},
     {SP_PROP_COLOR_INTERPOLATION_FILTERS, "color-interpolation-filters"},
     {SP_PROP_COLOR_PROFILE, "color-profile"},
     {SP_PROP_COLOR_RENDERING, "color-rendering"},
-    {SP_PROP_FILL, "fill"},
-    {SP_PROP_FILL_OPACITY, "fill-opacity"},
-    {SP_PROP_FILL_RULE, "fill-rule"},
     {SP_PROP_IMAGE_RENDERING, "image-rendering"},
-    {SP_PROP_MARKER, "marker"},
-    {SP_PROP_MARKER_END, "marker-end"},
-    {SP_PROP_MARKER_MID, "marker-mid"},
-    {SP_PROP_MARKER_START, "marker-start"},
-    {SP_PROP_PAINT_ORDER, "paint-order" },
     {SP_PROP_SHAPE_RENDERING, "shape-rendering"},
-    {SP_PROP_SOLID_COLOR, "solid-color"},
-    {SP_PROP_SOLID_OPACITY, "solid-opacity"},
-    {SP_PROP_STROKE, "stroke"},
-    {SP_PROP_STROKE_DASHARRAY, "stroke-dasharray"},
-    {SP_PROP_STROKE_DASHOFFSET, "stroke-dashoffset"},
-    {SP_PROP_STROKE_LINECAP, "stroke-linecap"},
-    {SP_PROP_STROKE_LINEJOIN, "stroke-linejoin"},
-    {SP_PROP_STROKE_MITERLIMIT, "stroke-miterlimit"},
-    {SP_PROP_STROKE_OPACITY, "stroke-opacity"},
-    {SP_PROP_STROKE_WIDTH, "stroke-width"},
     {SP_PROP_TEXT_RENDERING, "text-rendering"},
+
+    /* Interactivity */
+    {SP_PROP_POINTER_EVENTS, "pointer-events"},
+    {SP_PROP_CURSOR, "cursor"},
+
     /* Conditional */
     {SP_PROP_SYSTEM_LANGUAGE, "systemLanguage"},
     {SP_PROP_REQUIRED_FEATURES, "requiredFeatures"},
     {SP_PROP_REQUIRED_EXTENSIONS, "requiredExtensions"},
+
     /* LivePathEffect */
     {SP_PROP_PATH_EFFECT, "effect"},
 };
@@ -544,6 +561,8 @@ sp_attribute_lookup(gchar const *key)
         if(g_str_equal(const_cast<void *>(static_cast<void const *>(props[i].name)), key))
             return GPOINTER_TO_UINT(GINT_TO_POINTER(props[i].code));
     }
+    // std::cerr << "sp_attribute_lookup: invalid attribute: "
+    //           << (key?key:"Null") << std::endl;
     return SP_ATTR_INVALID;
 }
 

@@ -369,11 +369,6 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
     // Recursively build object tree
     document->root->invoke_build(document, rroot, false);
 
-    /* fixme: Not sure about this, but lets assume ::build updates */
-    rroot->setAttribute("inkscape:version", Inkscape::version_string);
-    /* fixme: Again, I moved these here to allow version determining in ::build (Lauris) */
-
-
     /* Eliminate obsolete sodipodi:docbase, for privacy reasons */
     rroot->setAttribute("sodipodi:docbase", NULL);
 
@@ -587,15 +582,6 @@ Inkscape::Util::Unit const* SPDocument::getDisplayUnit() const
 {
     SPNamedView const* nv = sp_document_namedview(this, NULL);
     return nv ? nv->getDisplayUnit() : unit_table.getUnit("px");
-}
-
-/// guaranteed not to return nullptr
-// returns 'px' units as default, like legacy Inkscape
-// THIS SHOULD NOT BE USED... INSTEAD USE DOCUMENT SCALE
-Inkscape::Util::Unit const& SPDocument::getSVGUnit() const
-{
-    SPNamedView const* nv = sp_document_namedview(this, NULL);
-    return nv ? nv->getSVGUnit() : *unit_table.getUnit("px");
 }
 
 /// Sets document scale (by changing viewBox)
@@ -1541,9 +1527,9 @@ bool SPDocument::addResource(gchar const *key, SPObject *object)
     bool result = false;
 
     if ( !object->cloned ) {
-        std::set<SPObject *> rlist = priv->resources[key];
-        g_return_val_if_fail(rlist.find(object) == rlist.end(), false);
-        priv->resources[key].insert(object);
+        std::vector<SPObject *> rlist = priv->resources[key];
+        g_return_val_if_fail(std::find(rlist.begin(),rlist.end(),object) == rlist.end(), false);
+        priv->resources[key].insert(priv->resources[key].begin(),object);
 
         GQuark q = g_quark_from_string(key);
 
@@ -1572,10 +1558,11 @@ bool SPDocument::removeResource(gchar const *key, SPObject *object)
     bool result = false;
 
     if ( !object->cloned ) {
-        std::set<SPObject *> rlist = priv->resources[key];
+        std::vector<SPObject *> rlist = priv->resources[key];
         g_return_val_if_fail(!rlist.empty(), false);
-        g_return_val_if_fail(rlist.find(object) != rlist.end(), false);
-        priv->resources[key].erase(object);
+        std::vector<SPObject*>::iterator it = std::find(priv->resources[key].begin(),priv->resources[key].end(),object);
+        g_return_val_if_fail(it != rlist.end(), false);
+        priv->resources[key].erase(it);
 
         GQuark q = g_quark_from_string(key);
         priv->resources_changed_signals[q].emit();
@@ -1586,9 +1573,9 @@ bool SPDocument::removeResource(gchar const *key, SPObject *object)
     return result;
 }
 
-std::set<SPObject *> const SPDocument::getResourceList(gchar const *key) const
+std::vector<SPObject *> const SPDocument::getResourceList(gchar const *key) const
 {
-    std::set<SPObject *> emptyset;
+    std::vector<SPObject *> emptyset;
     g_return_val_if_fail(key != NULL, emptyset);
     g_return_val_if_fail(*key != '\0', emptyset);
 
@@ -1615,11 +1602,22 @@ static unsigned int count_objects_recursive(SPObject *obj, unsigned int count)
     return count;
 }
 
+/**
+ * Count the number of objects in a given document recursively using the count_objects_recursive helper function
+ * 
+ * @param[in] document Pointer to the document for counting objects
+ * @return Numer of objects in the document
+ */
 static unsigned int objects_in_document(SPDocument *document)
 {
     return count_objects_recursive(document->getRoot(), 0);
 }
 
+/**
+ * Remove unused definitions etc. recursively from an object and its siblings
+ *
+ * @param[inout] obj Object which shall be "cleaned"
+ */
 static void vacuum_document_recursive(SPObject *obj)
 {
     if (SP_IS_DEFS(obj)) {
@@ -1634,6 +1632,11 @@ static void vacuum_document_recursive(SPObject *obj)
     }
 }
 
+/**
+ * Remove unused definitions etc. recursively from an entire document.
+ *
+ * @return Number of removed objects
+ */
 unsigned int SPDocument::vacuumDocument()
 {
     unsigned int start = objects_in_document(this);
@@ -1652,6 +1655,7 @@ unsigned int SPDocument::vacuumDocument()
         newend = objects_in_document(this);
 
     } while (iterations < 100 && newend < end);
+    // We stop if vacuum_document_recursive doesn't remove any more objects or after 100 iterations, whichever occurs first.
 
     return start - newend;
 }
@@ -1660,6 +1664,11 @@ bool SPDocument::isSeeking() const {
     return priv->seeking;
 }
 
+/**
+ * Indicate to the user if the document has been modified since the last save by displaying a "*" in front of the name of the file in the window title.
+ *
+ * @param[in] modified True if the document has been modified.
+ */
 void SPDocument::setModifiedSinceSave(bool modified) {
     this->modified_since_save = modified;
     if (SP_ACTIVE_DESKTOP) {

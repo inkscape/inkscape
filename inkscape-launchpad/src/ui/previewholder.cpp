@@ -49,16 +49,20 @@ PreviewHolder::PreviewHolder() :
     _wrap(false),
     _border(BORDER_NONE)
 {
+    set_name( "PreviewHolder" );
     _scroller = Gtk::manage(new Gtk::ScrolledWindow());
+    _scroller->set_name( "PreviewHolderScroller" );
     ((Gtk::ScrolledWindow *)_scroller)->set_policy(Gtk::POLICY_AUTOMATIC,
                                                    Gtk::POLICY_AUTOMATIC);
 
 #if WITH_GTKMM_3_0
     _insides = Gtk::manage(new Gtk::Grid());
+    _insides->set_name( "PreviewHolderGrid" );
     _insides->set_column_spacing(8);
     
     // Add a container with the scroller and a spacer
     Gtk::Grid* spaceHolder = Gtk::manage(new Gtk::Grid());
+    spaceHolder->set_name( "PreviewHolderSpaceHolder" );
 
     _scroller->set_hexpand();
     _scroller->set_vexpand();

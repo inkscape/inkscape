@@ -20,7 +20,6 @@
 #include "extension/extension.h"
 #include "preferences.h"
 #include "int.h"
-#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace Extension {
@@ -168,14 +167,14 @@ ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal
 
     if (_mode == FULL) {
 
-        UI::Widget::SpinScale *scale = new UI::Widget::SpinScale(_(_text), fadjust, 0);
+        UI::Widget::SpinScale *scale = new UI::Widget::SpinScale(_text, fadjust, 0);
         scale->set_size_request(400, -1);
         scale->show();
         hbox->pack_start(*scale, false, false);
     }
     else if (_mode == MINIMAL) {
    
-        Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START));
+        Gtk::Label * label = Gtk::manage(new Gtk::Label(_text, Gtk::ALIGN_START));
         label->show();
         hbox->pack_start(*label, true, true, _indent);
 

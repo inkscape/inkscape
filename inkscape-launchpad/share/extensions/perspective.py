@@ -34,8 +34,6 @@ import cubicsuperpath
 import simpletransform
 from ffgeom import *
 
-inkex.localize()
-
 # third party
 try:
     from numpy import *

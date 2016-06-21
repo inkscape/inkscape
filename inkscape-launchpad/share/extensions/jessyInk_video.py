@@ -30,8 +30,6 @@ import re
 from lxml import etree
 from copy import deepcopy
 
-inkex.localize()
-
 class JessyInk_Effects(inkex.Effect):
 	def __init__(self):
 		# Call the base class constructor.

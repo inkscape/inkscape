@@ -526,7 +526,7 @@ Glib::ustring Handle::_getTip(unsigned state) const
                     snap_increment_degrees());
             } else if(isBSpline){
                 return format_tip(C_("Path handle tip",
-                    "<b>Ctrl</b>: Move handle by his actual steps in BSpline Live Effect"));
+                    "<b>Ctrl</b>: Snap handle to steps defined in BSpline Live Path Effect"));
             }else{
                 return format_tip(C_("Path handle tip",
                     "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"),

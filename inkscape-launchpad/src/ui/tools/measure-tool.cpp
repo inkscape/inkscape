@@ -346,13 +346,13 @@ MeasureTool::MeasureTool()
     end_p = readMeasurePoint(false);
     dimension_offset = 35;
     // create the knots
-    this->knot_start = new SPKnot(desktop, N_("Measure start, <b>Shift+Click</b> for position dialog"));
+    this->knot_start = new SPKnot(desktop, _("Measure start, <b>Shift+Click</b> for position dialog"));
     this->knot_start->setMode(SP_KNOT_MODE_XOR);
     this->knot_start->setFill(MT_KNOT_COLOR_NORMAL, MT_KNOT_COLOR_MOUSEOVER, MT_KNOT_COLOR_MOUSEOVER);
     this->knot_start->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
     this->knot_start->setShape(SP_KNOT_SHAPE_CIRCLE);
     this->knot_start->updateCtrl();
-    this->knot_end = new SPKnot(desktop, N_("Measure end, <b>Shift+Click</b> for position dialog"));
+    this->knot_end = new SPKnot(desktop, _("Measure end, <b>Shift+Click</b> for position dialog"));
     this->knot_end->setMode(SP_KNOT_MODE_XOR);
     this->knot_end->setFill(MT_KNOT_COLOR_NORMAL, MT_KNOT_COLOR_MOUSEOVER, MT_KNOT_COLOR_MOUSEOVER);
     this->knot_end->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
@@ -565,7 +565,6 @@ bool MeasureTool::root_handler(GdkEvent* event)
         explicit_base = boost::none;
         explicit_base_tmp = boost::none;
         last_end = boost::none;
-        start_p = desktop->w2d(button_w);
 
         if (event->button.button == 1 && !this->space_panning) {
             // save drag origin
@@ -778,7 +777,7 @@ void MeasureTool::toPhantom()
     measure_tmp_items.clear();
     showCanvasItems(false, false, true);
     doc->ensureUpToDate();
-    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MEASURE,_("Add Stored to measure tool"));
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MEASURE,_("Keep last measure on the canvas, for reference"));
 }
 
 void MeasureTool::toItem()

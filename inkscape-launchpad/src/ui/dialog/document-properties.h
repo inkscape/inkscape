@@ -139,14 +139,26 @@ protected:
     UI::Widget::RegisteredCheckButton _rcb_perp;
     UI::Widget::RegisteredCheckButton _rcb_tang;
     //---------------------------------------------------------------
-    Gtk::ComboBoxText _combo_avail;
     Gtk::Button         _link_btn;
     Gtk::Button         _unlink_btn;
+    class AvailableProfilesColumns : public Gtk::TreeModel::ColumnRecord
+        {
+        public:
+            AvailableProfilesColumns()
+              { add(fileColumn); add(nameColumn); add(separatorColumn); }
+            Gtk::TreeModelColumn<Glib::ustring> fileColumn;
+            Gtk::TreeModelColumn<Glib::ustring> nameColumn;
+            Gtk::TreeModelColumn<bool> separatorColumn;
+        };
+    AvailableProfilesColumns _AvailableProfilesListColumns;
+    Glib::RefPtr<Gtk::ListStore> _AvailableProfilesListStore;
+    Gtk::ComboBox _AvailableProfilesList;
+    bool _AvailableProfilesList_separator(const Glib::RefPtr<Gtk::TreeModel>& model, const Gtk::TreeModel::iterator& iter);
     class LinkedProfilesColumns : public Gtk::TreeModel::ColumnRecord
         {
         public:
             LinkedProfilesColumns()
-               { add(nameColumn); add(previewColumn);  }
+              { add(nameColumn); add(previewColumn); }
             Gtk::TreeModelColumn<Glib::ustring> nameColumn;
             Gtk::TreeModelColumn<Glib::ustring> previewColumn;
         };
@@ -218,7 +230,7 @@ private:
     // callback methods for buttons on grids page.
     void onNewGrid();
     void onRemoveGrid();
-    
+
     // callback for document unit change
     void onDocUnitChange();
 };

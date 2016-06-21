@@ -4,8 +4,6 @@ import math, sys
 import inkex
 from simpletransform import computePointInNode
 
-inkex.localize()
-
 #QRCode for Python
 #
 #Ported from the Javascript library by Sam Curren

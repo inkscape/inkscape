@@ -9,6 +9,7 @@ keys_DATA = \
 	adobe-illustrator-cs2.xml \
 	right-handed-illustration.xml \
 	corel-draw-x4.xml \
+	corel-draw-x8.xml \
 	zoner-draw.xml \
 	acd-canvas.xml
 

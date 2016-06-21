@@ -24,19 +24,35 @@ unsigned char const *sp_attribute_name(unsigned int id);
  */
 #define SP_ATTRIBUTE_IS_CSS(k) (((k) >= SP_PROP_INKSCAPE_FONT_SPEC) && ((k) <= SP_PROP_TEXT_RENDERING))
 
+/*
+ * Do not change order of attributes and properties. Attribute and
+ * order in an SVG file is  (optionally) determined by the order here.
+ * This makes comparing different versions of a drawing easier using
+ * line-by-line comparison. Also, inorder for proper parsing, some
+ * properites must be before others (e.g. 'font' before 'font-family').
+ */
 enum SPAttributeEnum {
     SP_ATTR_INVALID,  ///< Must have value 0.
     /* SPObject */
     SP_ATTR_ID,
+    SP_ATTR_STYLE,
     SP_ATTR_INKSCAPE_COLLECT,
     SP_ATTR_INKSCAPE_LABEL,
+    /* SPRoot  Put these near top as the apply to the entire SVG */
+    SP_ATTR_VERSION,
+    SP_ATTR_INKSCAPE_VERSION,
+    SP_ATTR_WIDTH,
+    SP_ATTR_HEIGHT,
+    SP_ATTR_VIEWBOX,
+    SP_ATTR_PRESERVEASPECTRATIO,
+    SP_ATTR_ONLOAD,
+    SP_ATTR_SODIPODI_DOCNAME,
     /* SPItem */
     SP_ATTR_TRANSFORM,
+    SP_ATTR_SODIPODI_TYPE,
     SP_ATTR_SODIPODI_INSENSITIVE,
-    SP_ATTR_SODIPODI_NONPRINTABLE,
     SP_ATTR_CONNECTOR_AVOID,
     SP_ATTR_CONNECTION_POINTS,
-    SP_ATTR_STYLE,
     SP_ATTR_TRANSFORM_CENTER_X,
     SP_ATTR_TRANSFORM_CENTER_Y,
     SP_ATTR_INKSCAPE_PATH_EFFECT,
@@ -54,14 +70,6 @@ enum SPAttributeEnum {
     /* SPGroup */
     SP_ATTR_INKSCAPE_GROUPMODE,
     SP_ATTR_INKSCAPE_EXPANDED,
-    /* SPRoot */
-    SP_ATTR_VERSION,
-    SP_ATTR_WIDTH,
-    SP_ATTR_HEIGHT,
-    SP_ATTR_VIEWBOX,
-    SP_ATTR_PRESERVEASPECTRATIO,
-    SP_ATTR_INKSCAPE_VERSION,
-    SP_ATTR_ONLOAD,
     /* SPNamedView */
     SP_ATTR_VIEWONLY,
     SP_ATTR_SHOWGUIDES,
@@ -100,7 +108,7 @@ enum SPAttributeEnum {
     SP_ATTR_INKSCAPE_SNAP_BBOX,
     SP_ATTR_INKSCAPE_SNAP_NODE,
     SP_ATTR_INKSCAPE_SNAP_OTHERS,
-    //SP_ATTR_INKSCAPE_SNAP_FROM_GUIDE,
+    SP_ATTR_INKSCAPE_SNAP_FROM_GUIDE,
     SP_ATTR_INKSCAPE_SNAP_ROTATION_CENTER,
     SP_ATTR_INKSCAPE_SNAP_GRID,
     SP_ATTR_INKSCAPE_SNAP_GUIDE,
@@ -122,7 +130,6 @@ enum SPAttributeEnum {
     SP_ATTR_INKSCAPE_DOCUMENT_UNITS,
     SP_ATTR_INKSCAPE_LOCKGUIDES,
     SP_ATTR_UNITS,
-    SP_ATTR_INKSCAPE_CONNECTOR_SPACING,
     /* SPColorProfile */
     SP_ATTR_LOCAL,
     SP_ATTR_NAME,
@@ -132,7 +139,10 @@ enum SPAttributeEnum {
     SP_ATTR_POSITION,
     SP_ATTR_INKSCAPE_COLOR,
     SP_ATTR_INKSCAPE_LOCKED,
-    /* SPImage */
+    /* Measure tool */
+    SP_ATTR_INKSCAPE_MEASURE_START,
+    SP_ATTR_INKSCAPE_MEASURE_END,
+    /* SPImage, SPRect, etc. */
     SP_ATTR_X,
     SP_ATTR_Y,
     /* SPPath */
@@ -140,6 +150,7 @@ enum SPAttributeEnum {
     SP_ATTR_INKSCAPE_ORIGINAL_D,
     SP_ATTR_CONNECTOR_TYPE,
     SP_ATTR_CONNECTOR_CURVATURE,
+    SP_ATTR_INKSCAPE_CONNECTOR_SPACING,
     SP_ATTR_CONNECTION_START,
     SP_ATTR_CONNECTION_END,
     SP_ATTR_CONNECTION_START_POINT,
@@ -334,6 +345,7 @@ enum SPAttributeEnum {
     SP_ATTR_RESTART,
     SP_ATTR_REPEATCOUNT,
     SP_ATTR_REPEATDUR,
+
     /* Interpolating animations */
     SP_ATTR_CALCMODE,
     //SP_ATTR_VALUES,
@@ -415,14 +427,49 @@ enum SPAttributeEnum {
     SP_ATTR_TEXT_EXCLUDE,
     SP_ATTR_LAYOUT_OPTIONS,
 
-    /* CSS & SVG Properties */
+    /* CSS & SVG Properties   KEEP ORDER */
 
-    /* Custom full font name because Font stuff below is inadequate REMOVE ME */
-    SP_PROP_INKSCAPE_FONT_SPEC,
+    /* Paint */
+    SP_PROP_COLOR,
+    SP_PROP_OPACITY,
+    SP_PROP_FILL,
+    SP_PROP_FILL_OPACITY,
+    SP_PROP_FILL_RULE,
+    SP_PROP_STROKE,
+    SP_PROP_STROKE_OPACITY,
+    SP_PROP_STROKE_WIDTH,
+    SP_PROP_STROKE_LINECAP,
+    SP_PROP_STROKE_LINEJOIN,
+    SP_PROP_STROKE_MITERLIMIT,
+    SP_PROP_STROKE_DASHARRAY,
+    SP_PROP_STROKE_DASHOFFSET,
+    SP_PROP_MARKER,
+    SP_PROP_MARKER_END,
+    SP_PROP_MARKER_MID,
+    SP_PROP_MARKER_START,
+    SP_PROP_PAINT_ORDER, /* SVG2 */
+    SP_PROP_SOLID_COLOR,
+    SP_PROP_SOLID_OPACITY,
 
-    /* Font */
+    /* CSS Blending/Compositing */
+    SP_PROP_MIX_BLEND_MODE,
+    SP_PROP_ISOLATION,
+
+    /* Misc. Display */
+    SP_PROP_DISPLAY,
+    SP_PROP_OVERFLOW,
+    SP_PROP_VISIBILITY,
+
+    /* Clip/Mask */
+    SP_PROP_CLIP,
+    SP_PROP_CLIP_PATH,
+    SP_PROP_CLIP_RULE,
+    SP_PROP_MASK,
+
+    /* Font: Order is important! */
     SP_PROP_FONT,
     SP_PROP_FONT_FAMILY,
+    SP_PROP_INKSCAPE_FONT_SPEC,  // Remove me
     SP_PROP_FONT_SIZE,
     SP_PROP_FONT_SIZE_ADJUST,
     SP_PROP_FONT_STRETCH,
@@ -442,12 +489,12 @@ enum SPAttributeEnum {
     /* Text Layout */
     SP_PROP_TEXT_INDENT,
     SP_PROP_TEXT_ALIGN,
-
     SP_PROP_LINE_HEIGHT,
     SP_PROP_LETTER_SPACING,
     SP_PROP_WORD_SPACING,
     SP_PROP_TEXT_TRANSFORM,
 
+    /* Text (CSS3) */
     SP_PROP_DIRECTION,
     SP_PROP_WRITING_MODE,
     SP_PROP_TEXT_ORIENTATION,
@@ -467,31 +514,13 @@ enum SPAttributeEnum {
     SP_PROP_SHAPE_PADDING,
     SP_PROP_SHAPE_MARGIN,
     
-    /* Text Decoration CSS 2/CSS 3 Shorthand */
-    SP_PROP_TEXT_DECORATION,
-    /* Text Decoration CSS 3/SVG 2 */
+    /* Text Decoration */
+    SP_PROP_TEXT_DECORATION,  // CSS 2/CSS3-Shorthand
     SP_PROP_TEXT_DECORATION_LINE,
     SP_PROP_TEXT_DECORATION_STYLE,
     SP_PROP_TEXT_DECORATION_COLOR,
     SP_PROP_TEXT_DECORATION_FILL,
     SP_PROP_TEXT_DECORATION_STROKE,
-
-    /* Misc */
-    SP_PROP_CLIP,
-    SP_PROP_COLOR,
-    SP_PROP_CURSOR,
-    SP_PROP_DISPLAY,
-    SP_PROP_OVERFLOW,
-    SP_PROP_VISIBILITY,
-    SP_PROP_MIX_BLEND_MODE,
-    SP_PROP_ISOLATION,
-
-    /* SVG */
-    /* Clip/Mask */
-    SP_PROP_CLIP_PATH,
-    SP_PROP_CLIP_RULE,
-    SP_PROP_MASK,
-    SP_PROP_OPACITY,
 
     /* Filter */
     SP_PROP_ENABLE_BACKGROUND,
@@ -505,35 +534,18 @@ enum SPAttributeEnum {
     SP_PROP_STOP_OPACITY,
     SP_PROP_STOP_PATH,
 
-    /* Interactivity */
-    SP_PROP_POINTER_EVENTS,
-
-    /* Paint */
+    /* Rendering */
     SP_PROP_COLOR_INTERPOLATION,
     SP_PROP_COLOR_INTERPOLATION_FILTERS,
     SP_PROP_COLOR_PROFILE,
     SP_PROP_COLOR_RENDERING,
-    SP_PROP_FILL,
-    SP_PROP_FILL_OPACITY,
-    SP_PROP_FILL_RULE,
     SP_PROP_IMAGE_RENDERING,
-    SP_PROP_MARKER,
-    SP_PROP_MARKER_END,
-    SP_PROP_MARKER_MID,
-    SP_PROP_MARKER_START,
-    SP_PROP_PAINT_ORDER, /* SVG2 */
     SP_PROP_SHAPE_RENDERING,
-    SP_PROP_SOLID_COLOR,
-    SP_PROP_SOLID_OPACITY,
-    SP_PROP_STROKE,
-    SP_PROP_STROKE_DASHARRAY,
-    SP_PROP_STROKE_DASHOFFSET,
-    SP_PROP_STROKE_LINECAP,
-    SP_PROP_STROKE_LINEJOIN,
-    SP_PROP_STROKE_MITERLIMIT,
-    SP_PROP_STROKE_OPACITY,
-    SP_PROP_STROKE_WIDTH,
     SP_PROP_TEXT_RENDERING,
+
+    /* Interactivity */
+    SP_PROP_POINTER_EVENTS,
+    SP_PROP_CURSOR,
 
     /* Conditional */
     SP_PROP_SYSTEM_LANGUAGE,

@@ -236,38 +236,14 @@ static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points
     Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
     static_cast<LPEPowerStroke*>(lpe)->offset_points.param_set_and_write_new_value(points);
 
-    // find out stroke width (TODO: is there an easier way??)
-    SPDesktop *desktop = dc->desktop;
-    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
-    Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
-    Inkscape::GC::release(repr);
-
-    char const* tool = SP_IS_PEN_CONTEXT(dc) ? "/tools/freehand/pen" : "/tools/freehand/pencil";
-
-    // apply the tool's current style
-    sp_desktop_apply_style_tool(desktop, repr, tool, false);
-
-    double stroke_width = 1.0;
-    char const *style_str = NULL;
-    style_str = repr->attribute("style");
-    if (style_str) {
-        SPStyle style(SP_ACTIVE_DOCUMENT);
-        style.mergeString(style_str);
-        stroke_width = style.stroke_width.computed;
-    }
-
-    std::ostringstream s;
-    s.imbue(std::locale::classic());
-    s << points[0][Geom::X] << "," << stroke_width / 2.;
-
     // write powerstroke parameters:
     lpe->getRepr()->setAttribute("start_linecap_type", "zerowidth");
     lpe->getRepr()->setAttribute("end_linecap_type", "zerowidth");
-    lpe->getRepr()->setAttribute("cusp_linecap_type", "round");
     lpe->getRepr()->setAttribute("sort_points", "true");
     lpe->getRepr()->setAttribute("interpolator_type", "CubicBezierJohan");
     lpe->getRepr()->setAttribute("interpolator_beta", "0.2");
-    lpe->getRepr()->setAttribute("offset_points", s.str().c_str());
+    lpe->getRepr()->setAttribute("miter_limit", "4");
+    lpe->getRepr()->setAttribute("linejoin_type", "extrp_arc");
 }
 
 static void spdc_apply_bend_shape(gchar const *svgd, FreehandBase *dc, SPItem *item)
@@ -341,11 +317,13 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
+        const char *stroke_width = sp_repr_css_property(css_item, "stroke-width", "0");
+        double swidth;
+        sp_svg_number_read_d(stroke_width, &swidth);
         static SPItem *bend_item;
 
 #define SHAPE_LENGTH 10
 #define SHAPE_HEIGHT 10
-
 
         if(shape == LAST_APPLIED){
 
@@ -363,7 +341,8 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             {
                 // "triangle in"
                 std::vector<Geom::Point> points(1);
-                points[0] = Geom::Point(0., SHAPE_HEIGHT/2);
+                points[0] = Geom::Point(0., swidth/2);
+                points[0] *= i2anc_affine(static_cast<SPItem *>(item->parent), NULL).inverse();
                 spdc_apply_powerstroke_shape(points, dc, item);
 
                 shape_applied = true;
@@ -374,7 +353,9 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 // "triangle out"
                 guint curve_length = curve->get_segment_count();
                 std::vector<Geom::Point> points(1);
-                points[0] = Geom::Point((double)curve_length, SHAPE_HEIGHT/2);
+                points[0] = Geom::Point(0, swidth/2);
+                points[0] *= i2anc_affine(static_cast<SPItem *>(item->parent), NULL).inverse();
+                points[0][Geom::X] = (double)curve_length;
                 spdc_apply_powerstroke_shape(points, dc, item);
 
                 shape_applied = true;
@@ -455,7 +436,6 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 if(previous_shape_type == CLIPBOARD){
                     if(previous_shape_pathv.size() != 0){
                         spdc_paste_curve_as_freehand_shape(previous_shape_pathv, dc, item);
-
                         shape_applied = true;
                         shape = CLIPBOARD;
                     } else{

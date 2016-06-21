@@ -789,7 +789,7 @@ static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSe
         SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_LINEAR);
         //sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
         gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Linear gradient</b>"));
-    } else if (mode == SPPaintSelector::MODE_GRADIENT_LINEAR) {
+    } else if (mode == SPPaintSelector::MODE_GRADIENT_RADIAL) {
         SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_RADIAL);
         gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Radial gradient</b>"));
     }
@@ -844,8 +844,8 @@ ink_pattern_list_get (SPDocument *source)
         return NULL;
 
     GSList *pl = NULL;
-    std::set<SPObject *> patterns = source->getResourceList("pattern");
-    for (std::set<SPObject *>::const_iterator it = patterns.begin(); it != patterns.end(); ++it) {
+    std::vector<SPObject *> patterns = source->getResourceList("pattern");
+    for (std::vector<SPObject *>::const_iterator it = patterns.begin(); it != patterns.end(); ++it) {
         if (SP_PATTERN(*it) == SP_PATTERN(*it)->rootPattern()) {  // only if this is a root pattern
             pl = g_slist_prepend(pl, *it);
         }

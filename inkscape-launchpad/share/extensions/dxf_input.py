@@ -26,7 +26,6 @@ import inkex, simplestyle, math
 from StringIO import StringIO
 from urllib import quote
 
-inkex.localize()
 
 def export_MTEXT():
     # mandatory group codes : (1 or 3, 10, 20) (text, x, y)
@@ -482,6 +481,9 @@ while line[0] and (line[1] != 'ENDSEC' or not inENTITIES):
             elif vals[groups['8']]:                 # use Common Layer Name
                 if not vals[groups['8']][0]:
                     vals[groups['8']][0] = '0'      # use default name
+                if not layer_nodes.has_key(vals[groups['8']][0]):
+                    attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '%s' % vals[groups['8']][0]}
+                    layer_nodes[vals[groups['8']][0]] = inkex.etree.SubElement(doc.getroot(), 'g', attribs)
                 layer = layer_nodes[vals[groups['8']][0]]
             color = '#000000'                       # default color
             if vals[groups['8']]:

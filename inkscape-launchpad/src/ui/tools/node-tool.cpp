@@ -164,11 +164,6 @@ NodeTool::~NodeTool() {
     if (this->helperpath_tmpitem) {
         this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
     }
-
-    if (this->helperpath_tmpitem) {
-        this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
-    }
-
     this->_selection_changed_connection.disconnect();
     //this->_selection_modified_connection.disconnect();
     this->_mouseover_changed_connection.disconnect();

@@ -143,23 +143,11 @@
 /* Use libpoppler-glib and Cairo-SVG for PDF import */
 #cmakedefine HAVE_POPPLER_GLIB 1
 
-/* Use GfxFont from Poppler >= 0.8.3 */
-#cmakedefine POPPLER_NEW_GFXFONT 1
-
-/* Use color space API from Poppler >= 0.12.2 */
-#cmakedefine POPPLER_NEW_COLOR_SPACE_API 1
-
 /* Use color space API from Poppler >= 0.26.0 */
 #cmakedefine POPPLER_EVEN_NEWER_COLOR_SPACE_API 1
 
 /* Use color space API from Poppler >= 0.29.0 */
 #cmakedefine POPPLER_EVEN_NEWER_NEW_COLOR_SPACE_API 1
-
-/* Use new error API from Poppler >= 0.20.0 */
-#cmakedefine POPPLER_NEW_ERRORAPI
-
-/* GfxPatch no longer uses GfxColor in >= 0.15.1 */
-#cmakedefine POPPLER_NEW_GFXPATCH 1
 
 /* Define to 1 if you have the `pow' function. */
 #cmakedefine HAVE_POW 1

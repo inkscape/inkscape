@@ -57,8 +57,6 @@ import inkex
 import simplestyle
 from simpletransform import computePointInNode
 
-inkex.localize()
-
 # third party
 try:
     from numpy import *

@@ -124,6 +124,8 @@ StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
 #endif
       _sw_unit(NULL)
 {
+    set_name("StyleSwatch");
+    
     _label[SS_FILL].set_markup(_("Fill:"));
     _label[SS_STROKE].set_markup(_("Stroke:"));
 

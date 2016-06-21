@@ -5,7 +5,6 @@ import threading
 from optparse import OptionParser
 # local library
 import inkex
-inkex.localize()
 
 class VisitWebSiteWithoutLockingInkscape(threading.Thread):
     def __init__(self):
@@ -17,6 +16,7 @@ class VisitWebSiteWithoutLockingInkscape(threading.Thread):
         (self.options, args) = parser.parse_args()
 
     def run(self):
+        inkex.localize()
         webbrowser.open(_(self.options.url))
 
 vwswli = VisitWebSiteWithoutLockingInkscape()

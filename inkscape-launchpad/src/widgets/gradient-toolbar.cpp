@@ -140,8 +140,8 @@ gboolean gr_vector_list(GtkWidget *combo_box, SPDesktop *desktop, bool selection
     gtk_list_store_clear(store);
 
     std::vector<SPObject *> gl;
-    std::set<SPObject *> gradients = document->getResourceList( "gradient" );
-    for (std::set<SPObject *>::const_iterator it = gradients.begin(); it != gradients.end(); ++it) {
+    std::vector<SPObject *> gradients = document->getResourceList( "gradient" );
+    for (std::vector<SPObject *>::const_iterator it = gradients.begin(); it != gradients.end(); ++it) {
         SPGradient *grad = SP_GRADIENT(*it);
         if ( grad->hasStops() && !grad->isSolid() ) {
             gl.push_back(*it);

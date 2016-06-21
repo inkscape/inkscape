@@ -570,13 +570,13 @@ void EllipticalArc::_filterIntersections(std::vector<ShapeIntersection> &xs, boo
     std::vector<ShapeIntersection>::reverse_iterator i = xs.rbegin(), last = xs.rend();
     while (i != last) {
         Coord &t = is_first ? i->first : i->second;
-        assert(are_near(_ellipse.pointAt(t), i->point(), 1e-6));
+        assert(are_near(_ellipse.pointAt(t), i->point(), 1e-5));
         t = timeAtAngle(t);
         if (!unit.contains(t)) {
             xs.erase((++i).base());
             continue;
         } else {
-            assert(are_near(pointAt(t), i->point(), 1e-6));
+            assert(are_near(pointAt(t), i->point(), 1e-5));
             ++i;
         }
     }

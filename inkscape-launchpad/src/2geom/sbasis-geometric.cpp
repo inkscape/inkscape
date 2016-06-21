@@ -101,7 +101,7 @@ static SBasis divide_by_t1k(SBasis const &a, int k) {
 static D2<SBasis> RescaleForNonVanishingEnds(D2<SBasis> const &MM, double ZERO=1.e-4){
     D2<SBasis> M = MM;
     //TODO: divide by all the s at once!!!
-    while ((M[0].size()>0||M[1].size()>0) &&
+    while ((M[0].size()>1||M[1].size()>1) &&
            fabs(M[0].at0())<ZERO && 
            fabs(M[1].at0())<ZERO &&
            fabs(M[0].at1())<ZERO && 
@@ -109,12 +109,12 @@ static D2<SBasis> RescaleForNonVanishingEnds(D2<SBasis> const &MM, double ZERO=1
         M[0] = divide_by_sk(M[0],1);
         M[1] = divide_by_sk(M[1],1);
     }
-    while ((M[0].size()>0||M[1].size()>0) &&
+    while ((M[0].size()>1||M[1].size()>1) &&
            fabs(M[0].at0())<ZERO && fabs(M[1].at0())<ZERO){
         M[0] = divide_by_t0k(M[0],1);
         M[1] = divide_by_t0k(M[1],1);
     }
-    while ((M[0].size()>0||M[1].size()>0) && 
+    while ((M[0].size()>1||M[1].size()>1) && 
            fabs(M[0].at1())<ZERO && fabs(M[1].at1())<ZERO){
         M[0] = divide_by_t1k(M[0],1);
         M[1] = divide_by_t1k(M[1],1);
@@ -227,9 +227,9 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
     // -This approach is numerically bad. Find a stable way to rescale V_in to have non vanishing ends.
     // -This done, unitVector will have jumps at zeros: fill the gaps with arcs of circles.
     D2<SBasis> V = RescaleForNonVanishingEnds(V_in);
-
     if (V[0].isZero(0) && V[1].isZero(0))
         return Piecewise<D2<SBasis> >(D2<SBasis>(Linear(1),SBasis()));
+
     SBasis x = V[0], y = V[1];
     SBasis r_eqn1, r_eqn2;
 
@@ -242,7 +242,6 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
 
     r_eqn1 = -(a*x+b*y);
     r_eqn2 = Linear(1.)-(a*a+b*b);
-
     for (unsigned k=1; k<=order; k++){
         double r0  = (k<r_eqn1.size())? r_eqn1.at(k).at0() : 0;
         double r1  = (k<r_eqn1.size())? r_eqn1.at(k).at1() : 0;

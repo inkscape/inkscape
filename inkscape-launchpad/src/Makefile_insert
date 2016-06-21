@@ -8,6 +8,7 @@ ink_common_sources +=	\
 	attribute-rel-svg.cpp attribute-rel-svg.h			\
 	attribute-rel-css.cpp attribute-rel-css.h			\
 	attribute-rel-util.cpp attribute-rel-util.h			\
+	attribute-sort-util.cpp attribute-sort-util.h			\
 	axis-manip.cpp axis-manip.h					\
 	bad-uri-exception.h						\
 	box3d.cpp box3d.h						\

@@ -35,8 +35,6 @@ import simplestyle
 import simpletransform
 import cubicsuperpath
 
-inkex.localize()
-
 if not inkex.sys.platform.startswith('win'):
     exit(_("sorry, this will run only on Windows, exiting..."))
 

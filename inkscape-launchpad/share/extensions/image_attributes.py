@@ -28,12 +28,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import inkex
 import simplestyle
 
-try:
-    inkex.localize()
-except:
-    import gettext
-    _ = gettext.gettext
-
 
 class SetAttrImage(inkex.Effect):
     def __init__(self):

@@ -39,7 +39,7 @@ ReduceNoise::init(void)
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Reduce Noise") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.reduceNoise</id>\n"
-			"<param name=\"order\" gui-text=\"" N_("Order:") "\" type=\"int\" min=\"-1\" max=\"100\">-1</param>\n"
+			"<param name=\"order\" _gui-text=\"" N_("Order:") "\" type=\"int\" min=\"-1\" max=\"100\">-1</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"

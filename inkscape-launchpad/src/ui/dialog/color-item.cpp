@@ -571,6 +571,8 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         widget = lbl;
     } else {
         GtkWidget* eekWidget = eek_preview_new();
+        gtk_widget_set_name( eekWidget, "ColorItemPreview" );
+
         EekPreview * preview = EEK_PREVIEW(eekWidget);
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
         _regenPreview(preview);

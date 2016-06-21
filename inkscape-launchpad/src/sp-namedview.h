@@ -64,7 +64,6 @@ public:
     std::vector<Inkscape::CanvasGrid *> grids;
     bool grids_visible;
 
-    Inkscape::Util::Unit const *svg_units;   // Units used for the values in SVG
     Inkscape::Util::Unit const *display_units;   // Units used for the UI (*not* the same as units of SVG coordinates)
     Inkscape::Util::Unit const *page_size_units; // Only used in "Custom size" part of Document Properties dialog 
     
@@ -90,7 +89,6 @@ public:
     unsigned int getViewCount();
     std::vector<SPDesktop *> const getViewList() const;
     Inkscape::Util::Unit const * getDisplayUnit() const;
-    Inkscape::Util::Unit const & getSVGUnit() const;
 
     void translateGuides(Geom::Translate const &translation);
     void translateGrids(Geom::Translate const &translation);

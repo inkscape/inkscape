@@ -45,7 +45,7 @@
 #include "helper/png-write.h"
 #include "id-clash.h"
 #include "inkscape.h"
-#include "inkscape.h"
+#include "inkscape-version.h"
 #include "ui/interface.h"
 #include "io/sys.h"
 #include "message.h"
@@ -317,6 +317,12 @@ bool sp_file_open(const Glib::ustring &uri,
 
         // everyone who cares now has a reference, get rid of our`s
         doc->doUnref();
+
+        SPRoot *root = doc->getRoot();
+
+        // This is the only place original values should be set.
+        root->original.inkscape = root->version.inkscape;
+        root->original.svg      = root->version.svg;
 
         // resize the window to match the document properties
         sp_namedview_window_from_document(desktop);
@@ -669,6 +675,8 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
     if (!doc || uri.size()<1) //Safety check
         return false;
 
+    Inkscape::Version save = doc->getRoot()->version.inkscape;
+    doc->getReprRoot()->setAttribute("inkscape:version", Inkscape::version_string);
     try {
         Inkscape::Extension::save(key, doc, uri.c_str(),
                                   false,
@@ -681,6 +689,8 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         sp_ui_error_dialog(text);
         g_free(text);
         g_free(safeUri);
+        // Restore Inkscape version
+        doc->getReprRoot()->setAttribute("inkscape:version", sp_version_to_string( save ));
         return false;
     } catch (Inkscape::Extension::Output::file_read_only &e) {
         gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
@@ -689,6 +699,7 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         sp_ui_error_dialog(text);
         g_free(text);
         g_free(safeUri);
+        doc->getReprRoot()->setAttribute("inkscape:version", sp_version_to_string( save ));
         return false;
     } catch (Inkscape::Extension::Output::save_failed &e) {
         gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
@@ -697,14 +708,17 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         sp_ui_error_dialog(text);
         g_free(text);
         g_free(safeUri);
+        doc->getReprRoot()->setAttribute("inkscape:version", sp_version_to_string( save ));
         return false;
     } catch (Inkscape::Extension::Output::save_cancelled &e) {
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
+        doc->getReprRoot()->setAttribute("inkscape:version", sp_version_to_string( save ));
         return false;
     } catch (Inkscape::Extension::Output::no_overwrite &e) {
         return sp_file_save_dialog(parentWindow, doc, save_method);
     } catch (...) {
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
+        doc->getReprRoot()->setAttribute("inkscape:version", sp_version_to_string( save ));
         return false;
     }
 

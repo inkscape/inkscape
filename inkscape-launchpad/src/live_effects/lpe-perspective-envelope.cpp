@@ -42,6 +42,7 @@ LPEPerspectiveEnvelope::LPEPerspectiveEnvelope(LivePathEffectObject *lpeobject) 
     Effect(lpeobject),
     horizontal_mirror(_("Mirror movements in horizontal"), _("Mirror movements in horizontal"), "horizontal_mirror", &wr, this, false),
     vertical_mirror(_("Mirror movements in vertical"), _("Mirror movements in vertical"), "vertical_mirror", &wr, this, false),
+    overflow_perspective(_("Overflow perspective"), _("Overflow perspective"), "overflow_perspective", &wr, this, false),
     deform_type(_("Type"), _("Select the type of deformation"), "deform_type", DeformationTypeConverter, &wr, this, DEFORMATION_PERSPECTIVE),
     up_left_point(_("Top Left"), _("Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "up_left_point", &wr, this),
     up_right_point(_("Top Right"), _("Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"), "up_right_point", &wr, this),
@@ -52,6 +53,7 @@ LPEPerspectiveEnvelope::LPEPerspectiveEnvelope(LivePathEffectObject *lpeobject) 
     registerParameter(&deform_type);
     registerParameter(&horizontal_mirror);
     registerParameter(&vertical_mirror);
+    registerParameter(&overflow_perspective);
     registerParameter(&up_left_point);
     registerParameter(&up_right_point);
     registerParameter(&down_left_point);
@@ -76,11 +78,107 @@ void LPEPerspectiveEnvelope::doEffect(SPCurve *curve)
     }
     double projmatrix[3][3];
     if(deform_type == DEFORMATION_PERSPECTIVE) {
-        std::vector<Geom::Point> handles(4);
-        handles[0] = down_left_point;
-        handles[1] = up_left_point;
-        handles[2] = up_right_point;
-        handles[3] = down_right_point;
+        if (!overflow_perspective && handles.size() == 4) {
+            bool move0 = false;
+            if (handles[0] != down_left_point) {
+                move0 = true;
+            }
+            bool move1 = false;
+            if (handles[1] != up_left_point) {
+                move1 = true;
+            }
+            bool move2 = false;
+            if (handles[2] != up_right_point) {
+                move2 = true;
+            }
+            bool move3 = false;
+            if (handles[3] != down_right_point) {
+                move3 = true;
+            }
+            handles.resize(4);
+            handles[0] = down_left_point;
+            handles[1] = up_left_point;
+            handles[2] = up_right_point;
+            handles[3] = down_right_point;
+            Geom::Line line_a(handles[3],handles[1]);
+            Geom::Line line_b(handles[1],handles[2]);
+            Geom::Line line_c(handles[2],handles[3]);
+            int position_a = Geom::sgn(Geom::cross(handles[3] - handles[1], handles[0] - handles[1]));
+            int position_b = Geom::sgn(Geom::cross(handles[1] - handles[2], handles[0] - handles[2]));
+            int position_c = Geom::sgn(Geom::cross(handles[2] - handles[3], handles[0] - handles[3]));
+            if (position_a != 1 && move0) {
+                Geom::Point point_a = line_a.pointAt(line_a.nearestTime(handles[0]));
+                down_left_point.param_setValue(point_a, true);
+            }
+            if (position_b == 1 && move0) {
+                Geom::Point point_b = line_b.pointAt(line_b.nearestTime(handles[0]));
+                down_left_point.param_setValue(point_b, true);
+            }
+            if (position_c == 1 && move0) {
+                Geom::Point point_c = line_c.pointAt(line_c.nearestTime(handles[0]));
+                down_left_point.param_setValue(point_c, true);
+            }
+            line_a.setPoints(handles[0],handles[2]);
+            line_b.setPoints(handles[2],handles[3]);
+            line_c.setPoints(handles[3],handles[0]);
+            position_a = Geom::sgn(Geom::cross(handles[0] - handles[2], handles[1] - handles[2]));
+            position_b = Geom::sgn(Geom::cross(handles[2] - handles[3], handles[1] - handles[3]));
+            position_c = Geom::sgn(Geom::cross(handles[3] - handles[0], handles[1] - handles[0]));
+            if (position_a != 1 && move1) {
+                Geom::Point point_a = line_a.pointAt(line_a.nearestTime(handles[1]));
+                up_left_point.param_setValue(point_a, true);
+            }
+            if (position_b == 1 && move1) {
+                Geom::Point point_b = line_b.pointAt(line_b.nearestTime(handles[1]));
+                up_left_point.param_setValue(point_b, true);
+            }
+            if (position_c == 1 && move1) {
+                Geom::Point point_c = line_c.pointAt(line_c.nearestTime(handles[1]));
+                up_left_point.param_setValue(point_c, true);
+            }
+            line_a.setPoints(handles[1],handles[3]);
+            line_b.setPoints(handles[3],handles[0]);
+            line_c.setPoints(handles[0],handles[1]);
+            position_a = Geom::sgn(Geom::cross(handles[1] - handles[3], handles[2] - handles[3]));
+            position_b = Geom::sgn(Geom::cross(handles[3] - handles[0], handles[2] - handles[0]));
+            position_c = Geom::sgn(Geom::cross(handles[0] - handles[1], handles[2] - handles[1]));
+            if (position_a != 1 && move2) {
+                Geom::Point point_a = line_a.pointAt(line_a.nearestTime(handles[2]));
+                up_right_point.param_setValue(point_a, true);
+            }
+            if (position_b == 1 && move2) {
+                Geom::Point point_b = line_b.pointAt(line_b.nearestTime(handles[2]));
+                up_right_point.param_setValue(point_b, true);
+            }
+            if (position_c == 1 && move2) {
+                Geom::Point point_c = line_c.pointAt(line_c.nearestTime(handles[2]));
+                up_right_point.param_setValue(point_c, true);
+            }
+            line_a.setPoints(handles[2],handles[0]);
+            line_b.setPoints(handles[0],handles[1]);
+            line_c.setPoints(handles[1],handles[2]);
+            position_a = Geom::sgn(Geom::cross(handles[2] - handles[0], handles[3] - handles[0]));
+            position_b = Geom::sgn(Geom::cross(handles[0] - handles[1], handles[3] - handles[1]));
+            position_c = Geom::sgn(Geom::cross(handles[1] - handles[2], handles[3] - handles[2]));
+            if (position_a != 1 && move3) {
+                Geom::Point point_a = line_a.pointAt(line_a.nearestTime(handles[3]));
+                down_right_point.param_setValue(point_a, true);
+            }
+            if (position_b == 1 && move3) {
+                Geom::Point point_b = line_b.pointAt(line_b.nearestTime(handles[3]));
+                down_right_point.param_setValue(point_b, true);
+            }
+            if (position_c == 1 && move3) {
+                Geom::Point point_c = line_c.pointAt(line_c.nearestTime(handles[3]));
+                down_right_point.param_setValue(point_c, true);
+            }
+        } else {
+            handles.resize(4);
+            handles[0] = down_left_point;
+            handles[1] = up_left_point;
+            handles[2] = up_right_point;
+            handles[3] = down_right_point;
+        }
         std::vector<Geom::Point> source_handles(4);
         source_handles[0] = Geom::Point(boundingbox_X.min(), boundingbox_Y.max());
         source_handles[1] = Geom::Point(boundingbox_X.min(), boundingbox_Y.min());
@@ -206,14 +304,14 @@ LPEPerspectiveEnvelope::projectPoint(Geom::Point p)
     double delta_y = boundingbox_Y.max() - p[Y];
     Geom::Coord x_ratio = (delta_x * -1) / width;
     Geom::Coord y_ratio = delta_y / height;
-    Geom::Line* horiz = new Geom::Line();
-    Geom::Line* vert = new Geom::Line();
-    vert->setPoints (pointAtRatio(y_ratio,down_left_point,up_left_point),pointAtRatio(y_ratio,down_right_point,up_right_point));
-    horiz->setPoints (pointAtRatio(x_ratio,down_left_point,down_right_point),pointAtRatio(x_ratio,up_left_point,up_right_point));
+    Geom::Line horiz;
+    Geom::Line vert;
+    vert.setPoints (pointAtRatio(y_ratio,down_left_point,up_left_point),pointAtRatio(y_ratio,down_right_point,up_right_point));
+    horiz.setPoints (pointAtRatio(x_ratio,down_left_point,down_right_point),pointAtRatio(x_ratio,up_left_point,up_right_point));
 
-    OptCrossing crossPoint = intersection(*horiz,*vert);
+    OptCrossing crossPoint = intersection(horiz,vert);
     if(crossPoint) {
-        return horiz->pointAt(Geom::Coord(crossPoint->ta));
+        return horiz.pointAt(Geom::Coord(crossPoint->ta));
     } else {
         return p;
     }

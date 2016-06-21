@@ -273,7 +273,7 @@ PrefDialog::on_response (int signal) {
 
 #include "internal/clear-n_.h"
 
-const char * PrefDialog::live_param_xml = "<param name=\"__live_effect__\" type=\"boolean\" gui-text=\"" N_("Live preview") "\" gui-description=\"" N_("Is the effect previewed live on canvas?") "\" scope=\"user\">false</param>";
+const char * PrefDialog::live_param_xml = "<param name=\"__live_effect__\" type=\"boolean\" _gui-text=\"" N_("Live preview") "\" gui-description=\"" N_("Is the effect previewed live on canvas?") "\" scope=\"user\">false</param>";
 
 }; }; /* namespace Inkscape, Extension */
 

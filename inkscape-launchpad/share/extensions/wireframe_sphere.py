@@ -61,7 +61,6 @@ import inkex
 import simplestyle
 from simpletransform import computePointInNode
 
-inkex.localize()
 
 #SVG OUTPUT FUNCTIONS ================================================
 def draw_SVG_ellipse((rx, ry), (cx, cy), width, parent, start_end=(0,2*pi),transform='' ):

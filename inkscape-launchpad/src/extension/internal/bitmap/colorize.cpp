@@ -49,7 +49,7 @@ Colorize::init(void)
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Colorize") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.colorize</id>\n"
-			"<param name=\"color\" gui-text=\"" N_("Color") "\" type=\"color\">0</param>\n"
+			"<param name=\"color\" _gui-text=\"" N_("Color") "\" type=\"color\">0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"

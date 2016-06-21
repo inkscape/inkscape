@@ -38,7 +38,6 @@ import simpletransform
 import voronoi
 import random
 
-inkex.localize()
 
 class Point:
   def __init__(self,x,y):

@@ -1810,9 +1810,11 @@ SPIDashArray::read( gchar const *str ) {
         return;
     }
 
+    // std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("[,\\s]+", str );
+
     gchar *e = NULL;
     bool LineSolid = true;
-    while (e != str) {
+    while (e != str && *str != '\0') {
         /* TODO: Should allow <length> rather than just a unitless (px) number. */
         double number = g_ascii_strtod(str, (char **) &e);
         values.push_back( number );
@@ -1821,7 +1823,7 @@ SPIDashArray::read( gchar const *str ) {
         if (e != str) {
             str = e;
         }
-        while (str && *str && !isalnum(*str)) str += 1;
+        while (str && *str && !(isalnum(*str) || *str=='.')) str += 1;
     }
 
     if (LineSolid) {

@@ -72,7 +72,7 @@ LPEMirrorSymmetry::LPEMirrorSymmetry(LivePathEffectObject *lpeobject) :
     mode(_("Mode"), _("Symmetry move mode"), "mode", MTConverter, &wr, this, MT_FREE),
     discard_orig_path(_("Discard original path?"), _("Check this to only keep the mirrored part of the path"), "discard_orig_path", &wr, this, false),
     fuse_paths(_("Fuse paths"), _("Fuse original and the reflection into a single path"), "fuse_paths", &wr, this, false),
-    oposite_fuse(_("Oposite fuse"), _("Picks the other side of the mirror as the original"), "oposite_fuse", &wr, this, false),
+    oposite_fuse(_("Opposite fuse"), _("Picks the other side of the mirror as the original"), "oposite_fuse", &wr, this, false),
     start_point(_("Start mirror line"), _("Start mirror line"), "start_point", &wr, this, "Adjust the start of mirroring"),
     end_point(_("End mirror line"), _("End mirror line"), "end_point", &wr, this, "Adjust end of mirroring")
 {

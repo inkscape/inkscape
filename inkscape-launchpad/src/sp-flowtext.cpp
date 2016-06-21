@@ -30,6 +30,8 @@
 #include "text-editing.h"
 #include "sp-text.h"
 
+#include "libnrtype/font-instance.h"
+
 #include "livarot/Shape.h"
 
 #include "display/drawing-text.h"
@@ -339,6 +341,26 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
     bool with_indent = false;
 
     if (dynamic_cast<SPFlowpara *>(root)) {
+
+        layout.strut.reset();
+        if (style) {
+            font_instance *font = font_factory::Default()->FaceFromStyle( style );
+            if (font) {
+                font->FontMetrics(layout.strut.ascent, layout.strut.descent, layout.strut.xheight);
+                font->Unref();
+            }
+            layout.strut *= style->font_size.computed;
+            if (style->line_height.normal ) {
+                layout.strut.computeEffective( Inkscape::Text::Layout::LINE_HEIGHT_NORMAL ); 
+            } else if (style->line_height.unit == SP_CSS_UNIT_NONE) {
+                layout.strut.computeEffective( style->line_height.computed );
+            } else {
+                if( style->font_size.computed > 0.0 ) {
+                    layout.strut.computeEffective( style->line_height.computed/style->font_size.computed );
+                }
+            }
+        }
+
         // emulate par-indent with the first char's kern
         SPObject *t = root;
         SPFlowtext *ft = NULL;
