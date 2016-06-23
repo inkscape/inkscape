@@ -147,8 +147,6 @@ def get_n_points_from_path( node, n):#returns a list of first n points (x,y) in 
     if len(xi) == n and len(yi) == n:
         points = [] # returned pairs of points
         for i in range(n):
-            xi[i] = Draw_From_Triangle.unittouu(e, str(xi[i]) + 'px')
-            yi[i] = Draw_From_Triangle.unittouu(e, str(yi[i]) + 'px')
             points.append( [ xi[i], yi[i] ] )
     else:
         #inkex.errormsg(_('Error: Not enough nodes to gather coordinates.')) #fail silently and exit, rather than invoke an error console
@@ -176,21 +174,23 @@ def cot(x):#cotangent(x)
         return 1/tan(x)
         
 def report_properties( params ):#report to the Inkscape console using errormsg
-    inkex.errormsg(_("Side Length 'a' (px): " + str( params[0][0] ) ))
-    inkex.errormsg(_("Side Length 'b' (px): " + str( params[0][1] ) ))
-    inkex.errormsg(_("Side Length 'c' (px): " + str( params[0][2] ) ))
+    # TODO: unit identifier needs solution for arbitrary document scale
+    unit = Draw_From_Triangle.getDocumentUnit(e)
+    inkex.errormsg(_("Side Length 'a' (" + unit + "): " + str( params[0][0] ) ))
+    inkex.errormsg(_("Side Length 'b' (" + unit + "): " + str( params[0][1] ) ))
+    inkex.errormsg(_("Side Length 'c' (" + unit + "): " + str( params[0][2] ) ))
     inkex.errormsg(_("Angle 'A' (radians): " + str( params[1][0] ) ))
     inkex.errormsg(_("Angle 'B' (radians): " + str( params[1][1] ) ))
     inkex.errormsg(_("Angle 'C' (radians): " + str( params[1][2] ) ))
     inkex.errormsg(_("Semiperimeter (px): " + str( params[4][1] ) ))
-    inkex.errormsg(_("Area (px^2): " + str( params[4][0] ) ))
+    inkex.errormsg(_("Area ("+ unit + "^2): " + str( params[4][0] ) ))
     return
     
 
 class Style(object): #container for style information
     def __init__(self, options):
         #dot markers
-        self.d_rad = 4 #dot marker radius
+        self.d_rad = Draw_From_Triangle.unittouu(e, '4px') #dot marker radius
         self.d_th  = Draw_From_Triangle.unittouu(e, '2px') #stroke width
         self.d_fill= '#aaaaaa' #fill colour
         self.d_col = '#000000' #stroke colour
