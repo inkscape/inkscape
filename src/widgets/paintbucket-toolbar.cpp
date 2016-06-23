@@ -42,6 +42,7 @@
 #include "ui/uxmanager.h"
 #include "ui/widget/unit-tracker.h"
 #include "util/units.h"
+#include "widgets/ink-action.h"
 
 using Inkscape::UI::Widget::UnitTracker;
 using Inkscape::UI::UXManager;
@@ -207,13 +208,14 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
     /* Reset */
     {
-        GtkAction* act = gtk_action_new( "PaintbucketResetAction",
+        InkAction* inky = ink_action_new( "PaintbucketResetAction",
                                           _("Defaults"),
                                           _("Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
-                                          INKSCAPE_ICON("edit-clear"));
-        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(paintbucket_defaults), holder );
-        gtk_action_group_add_action( mainActions, act );
-        gtk_action_set_sensitive( act, TRUE );
+                                          INKSCAPE_ICON("edit-clear"),
+                                          Inkscape::ICON_SIZE_SMALL_TOOLBAR);
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(paintbucket_defaults), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+        gtk_action_set_sensitive( GTK_ACTION(inky), TRUE );
     }
 
 }
