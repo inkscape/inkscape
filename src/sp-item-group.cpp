@@ -53,6 +53,10 @@
 #include "layer-model.h"
 #include "sp-textpath.h"
 #include "sp-flowtext.h"
+#include "sp-tspan.h"
+#include "selection-chemistry.h"
+#include "xml/sp-css-attr.h"
+#include "svg/css-ostringstream.h"
 
 using Inkscape::DocumentUndo;
 
@@ -389,6 +393,89 @@ void sp_item_group_ungroup_handle_clones(SPItem *parent, Geom::Affine const g)
 }
 
 void
+sp_recursive_scale_text_size(Inkscape::XML::Node *repr, double scale){
+    for (Inkscape::XML::Node *child = repr->firstChild() ; child; child = child->next() ){
+        if ( child) {
+            sp_recursive_scale_text_size(child, scale);
+        }
+    }
+    SPCSSAttr * css = sp_repr_css_attr(repr,"style");
+    Glib::ustring element = g_quark_to_string(repr->code());
+    if (css && element == "svg:text" || element == "svg:tspan") {
+        gchar const *w = sp_repr_css_property(css, "font-size", NULL);
+        if (w) {
+            gchar *units = NULL;
+            double wd = g_ascii_strtod(w, &units);
+            wd *= scale;
+            if (w != units) {
+                Inkscape::CSSOStringStream os;
+                os << wd << units; // reattach units
+                sp_repr_css_set_property(css, "font-size", os.str().c_str());
+                Glib::ustring css_str;
+                sp_repr_css_write_string(css,css_str);
+                repr->setAttribute("style", css_str.c_str());
+            }
+        }
+        w = NULL;
+        w = sp_repr_css_property(css, "letter-spacing", NULL);
+        if (w) {
+            gchar *units = NULL;
+            double wd = g_ascii_strtod(w, &units);
+            wd *= scale;
+            if (w != units) {
+                Inkscape::CSSOStringStream os;
+                os << wd << units; // reattach units
+                sp_repr_css_set_property(css, "letter-spacing", os.str().c_str());
+                Glib::ustring css_str;
+                sp_repr_css_write_string(css,css_str);
+                repr->setAttribute("style", css_str.c_str());
+            }
+        }
+        w = NULL;
+        w = sp_repr_css_property(css, "word-spacing", NULL);
+        if (w) {
+            gchar *units = NULL;
+            double wd = g_ascii_strtod(w, &units);
+            wd *= scale;
+            if (w != units) {
+                Inkscape::CSSOStringStream os;
+                os << wd << units; // reattach units
+                sp_repr_css_set_property(css, "word-spacing", os.str().c_str());
+                Glib::ustring css_str;
+                sp_repr_css_write_string(css,css_str);
+                repr->setAttribute("style", css_str.c_str());
+            }
+        }
+        gchar const *dx = repr->attribute("dx");
+        if (dx) {
+            gchar ** dxarray = g_strsplit(dx, " ", 0);
+            Inkscape::SVGOStringStream dx_data;
+            while (*dxarray != NULL) {
+                double pos;
+                sp_svg_number_read_d(*dxarray, &pos);
+                pos *= scale;
+                dx_data << pos << " ";
+                dxarray++;
+            }
+            repr->setAttribute("dx", dx_data.str().c_str());
+        }
+        gchar const *dy = repr->attribute("dy");
+        if (dy) {
+            gchar ** dyarray = g_strsplit(dy, " ", 0);
+            Inkscape::SVGOStringStream dy_data;
+            while (*dyarray != NULL) {
+                double pos;
+                sp_svg_number_read_d(*dyarray, &pos);
+                pos *= scale;
+                dy_data << pos << " ";
+                dyarray++;
+            }
+            repr->setAttribute("dy", dy_data.str().c_str());
+        }
+    }
+}
+
+void
 sp_item_group_ungroup (SPGroup *group, std::vector<SPItem*> &children, bool do_done)
 {
     g_return_if_fail (group != NULL);
@@ -492,7 +579,22 @@ sp_item_group_ungroup (SPGroup *group, std::vector<SPItem*> &children, bool do_d
             // reattached outside of the group, the transform will be written more properly
             // (i.e. optimized into the object if the corresponding preference is set)
             gchar *affinestr=sp_svg_transform_write(ctrans);
-            nrepr->setAttribute("transform", affinestr);
+            SPText * text = dynamic_cast<SPText *>(citem);
+            if (text) {
+                //this causes a change in text-on-path appearance when there is a non-conformal transform, see bug #1594565
+                double scale = (ctrans.expansionX() + ctrans.expansionY()) / 2.0;
+                SPTextPath * text_path = dynamic_cast<SPTextPath *>(text->children);
+                if (!text_path) {
+                    nrepr->setAttribute("transform", affinestr);
+                } else {
+                    sp_recursive_scale_text_size(nrepr, scale);
+                    Geom::Affine ttrans = ctrans.inverse() * SP_ITEM(text)->transform * ctrans;
+                    gchar *affinestr = sp_svg_transform_write(ttrans);
+                    nrepr->setAttribute("transform", affinestr);
+                }
+            } else {
+                nrepr->setAttribute("transform", affinestr);
+            }
             g_free(affinestr);
 
             items = g_slist_prepend (items, nrepr);
