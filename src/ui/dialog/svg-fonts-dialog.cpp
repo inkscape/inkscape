@@ -340,7 +340,7 @@ void SvgFontsDialog::on_font_selection_changed(){
     update_sensitiveness();
 }
 
-void SvgFontsDialog::on_setwidth_changed(){
+void SvgFontsDialog::on_setfontdata_changed(){
     SPFont* spfont = this->get_selected_spfont();
     if (spfont){
         spfont->horiz_adv_x = setwidth_spin.get_value();
@@ -397,7 +397,7 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
     setwidth_hbox->add(*Gtk::manage(new Gtk::Label(_("Set width:"))));
     setwidth_hbox->add(setwidth_spin);
 
-    setwidth_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_setwidth_changed));
+    setwidth_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_setfontdata_changed));
     setwidth_spin.set_range(0, 4096);
     setwidth_spin.set_increments(10, 0);
     global_vbox.pack_start(*setwidth_hbox, false, false);
