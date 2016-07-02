@@ -237,7 +237,6 @@ PathParam::param_editOncanvas(SPItem *item, SPDesktop * dt)
 
     r.role = SHAPE_ROLE_LPE_PARAM;
     r.edit_transform = item->i2dt_affine(); // TODO is it right?
-    r.edit_transform *= item->transform.inverse();
     if (!href) {
         r.item = reinterpret_cast<SPItem*>(param_effect->getLPEObj());
         r.lpe_key = param_key;
@@ -458,8 +457,7 @@ PathParam::paste_param_path(const char *svgd)
         SPItem * item = SP_ACTIVE_DESKTOP->getSelection()->singleItem();
         if (item != NULL) {
             Geom::PathVector path_clipboard =  sp_svg_read_pathv(svgd);
-            path_clipboard *= item->i2doc_affine().inverse() * item->transform;
-            path_clipboard *= Geom::Translate(path_clipboard.initialPoint() - _pathvector.initialPoint()).inverse();
+            path_clipboard *= item->i2doc_affine().inverse();
             svgd = sp_svg_write_path( path_clipboard );
         }
         
