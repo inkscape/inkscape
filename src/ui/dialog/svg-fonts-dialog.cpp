@@ -266,7 +266,7 @@ void SvgFontsDialog::update_fonts()
 {
     SPDesktop* desktop = this->getDesktop();
     SPDocument* document = desktop->getDocument();
-    std::vector<SPObject *> fonts = document->getResourceList( "fonts" );
+    std::vector<SPObject *> fonts = document->getResourceList( "font" );
 
     _model->clear();
     for (std::vector<SPObject *>::const_iterator it = fonts.begin(); it != fonts.end(); ++it) {
