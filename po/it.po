@@ -6633,51 +6633,48 @@ msgid "Replace RGB by any color"
 msgstr "Rimpiazza RGB con qualsiasi colore"
 
 #: ../src/extension/internal/filter/color.h:254
-#, fuzzy
 msgid "Color Blindness"
-msgstr "Cecità colori"
+msgstr "Cecità ai colori"
 
 #: ../src/extension/internal/filter/color.h:258
-#, fuzzy
 msgid "Blindness type:"
 msgstr "Tipo cecità:"
 
 #: ../src/extension/internal/filter/color.h:259
 msgid "Rod monochromacy (atypical achromatopsia)"
-msgstr ""
+msgstr "Monocromatismo dei bastoncelli (acromatopsia atipica)"
 
 #: ../src/extension/internal/filter/color.h:260
 msgid "Cone monochromacy (typical achromatopsia)"
-msgstr ""
+msgstr "Monocromatismo dei coni (acromatopsia tipica)"
 
 #: ../src/extension/internal/filter/color.h:261
 msgid "Green weak (deuteranomaly)"
-msgstr ""
+msgstr "Scarsa sensibilità al verde (deuteranomalia)"
 
 #: ../src/extension/internal/filter/color.h:262
 msgid "Green blind (deuteranopia)"
-msgstr ""
+msgstr "Cecità al verde (deuteranopia)"
 
 #: ../src/extension/internal/filter/color.h:263
 msgid "Red weak (protanomaly)"
-msgstr ""
+msgstr "Scarsa sensibilità al rosso (protanomalia)"
 
 #: ../src/extension/internal/filter/color.h:264
 msgid "Red blind (protanopia)"
-msgstr ""
+msgstr "Cecità al rosso (protanopia)"
 
 #: ../src/extension/internal/filter/color.h:265
 msgid "Blue weak (tritanomaly)"
-msgstr ""
+msgstr "Scarsa sensibilità al blu (tritanomalia)"
 
 #: ../src/extension/internal/filter/color.h:266
 msgid "Blue blind (tritanopia)"
-msgstr ""
+msgstr "Cecità al blu (tritanopia)"
 
 #: ../src/extension/internal/filter/color.h:286
-#, fuzzy
 msgid "Simulate color blindness"
-msgstr "Simula cecità colori"
+msgstr "Simula la cecità ai colori"
 
 #: ../src/extension/internal/filter/color.h:329
 msgid "Color Shift"
@@ -9444,19 +9441,16 @@ msgid "Clone original path"
 msgstr "Clona tracciato originale"
 
 #: ../src/live_effects/effect.cpp:137
-#, fuzzy
 msgid "Lattice Deformation 2"
-msgstr "Deformazione reticolare"
+msgstr "Deformazione reticolare 2"
 
 #: ../src/live_effects/effect.cpp:138
-#, fuzzy
 msgid "Perspective/Envelope"
-msgstr "Prospettiva"
+msgstr "Prospettiva/Busta"
 
 #: ../src/live_effects/effect.cpp:139
-#, fuzzy
 msgid "Interpolate points"
-msgstr "Interpola"
+msgstr "Interpola punti"
 
 #: ../src/live_effects/effect.cpp:140
 #, fuzzy
@@ -9492,9 +9486,8 @@ msgstr "Ruota copie"
 
 #. Ponyscape -> Inkscape 0.92
 #: ../src/live_effects/effect.cpp:149
-#, fuzzy
 msgid "Attach path"
-msgstr "Tracciato di cucitura:"
+msgstr "Lega tracciato"
 
 #: ../src/live_effects/effect.cpp:150
 #, fuzzy
@@ -9511,9 +9504,8 @@ msgid "Ellipse by 5 points"
 msgstr "Cerchio da 3 punti"
 
 #: ../src/live_effects/effect.cpp:153
-#, fuzzy
 msgid "Bounding Box"
-msgstr "Riquadri"
+msgstr "Riquadro di delimitazione"
 
 #: ../src/live_effects/effect.cpp:361
 msgid "Is visible?"
@@ -9525,7 +9517,7 @@ msgid ""
 "disabled on canvas"
 msgstr ""
 "Se non selezionato, l'effetto rimane applicato all'oggetto ma è "
-"temporaneamente disabilitato sulla tela"
+"temporaneamente disabilitato sull'area di lavoro"
 
 #: ../src/live_effects/effect.cpp:386
 msgid "No effect"
@@ -9545,78 +9537,68 @@ msgstr "Modifica del parametro <b>%s</b>."
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 "Nessuno dei parametri dell'effetto su tracciato applicato può essere "
-"modificato direttamente sulla tela."
+"modificato direttamente sull'area di lavoro."
 
 #: ../src/live_effects/lpe-attach-path.cpp:29
-#, fuzzy
 msgid "Start path:"
-msgstr "Tracciato di cucitura:"
+msgstr "Inizio tracciato:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:29
-#, fuzzy
 msgid "Path to attach to the start of this path"
-msgstr "Tracciato da mettere sul tracciato scheletro"
+msgstr "Tracciato da legare all'inizio di questo tracciato"
 
 #: ../src/live_effects/lpe-attach-path.cpp:30
-#, fuzzy
 msgid "Start path position:"
-msgstr "Posizione casuale"
+msgstr "Posizione inizio tracciato:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:30
 msgid "Position to attach path start to"
-msgstr ""
+msgstr "Posizione del legame di inizio tracciato"
 
 #: ../src/live_effects/lpe-attach-path.cpp:31
-#, fuzzy
 msgid "Start path curve start:"
-msgstr "Imposta colore tracciato a rosso:"
+msgstr "Curvatura iniziale di inizio tracciato:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:31
 #: ../src/live_effects/lpe-attach-path.cpp:35
-#, fuzzy
 msgid "Starting curve"
-msgstr "Trascina curva"
+msgstr "Curvatura iniziale"
 
 #. , true
 #: ../src/live_effects/lpe-attach-path.cpp:32
-#, fuzzy
 msgid "Start path curve end:"
-msgstr "Imposta colore tracciato a rosso:"
+msgstr "Curvatura finale di inizio tracciato:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:32
 #: ../src/live_effects/lpe-attach-path.cpp:36
-#, fuzzy
 msgid "Ending curve"
-msgstr "curvatura minima"
+msgstr "Curvatura finale"
 
 #. , true
 #: ../src/live_effects/lpe-attach-path.cpp:33
-#, fuzzy
 msgid "End path:"
-msgstr "Tracciato di piega:"
+msgstr "Fine tracciato:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:33
-#, fuzzy
 msgid "Path to attach to the end of this path"
-msgstr "Tracciato da mettere sul tracciato scheletro"
+msgstr "Tracciato da legare alla fine di questo tracciato"
 
 #: ../src/live_effects/lpe-attach-path.cpp:34
-#, fuzzy
 msgid "End path position:"
-msgstr "Posizione casuale"
+msgstr "Posizione fine tracciato:"
 
 #: ../src/live_effects/lpe-attach-path.cpp:34
 msgid "Position to attach path end to"
-msgstr ""
+msgstr "Posizione del legame di fine tracciato"
 
 #: ../src/live_effects/lpe-attach-path.cpp:35
 msgid "End path curve start:"
-msgstr ""
+msgstr "Curvatura iniziale di fine tracciato:"
 
 #. , true
 #: ../src/live_effects/lpe-attach-path.cpp:36
 msgid "End path curve end:"
-msgstr ""
+msgstr "Curvatura finale di fine tracciato:"
 
 #: ../src/live_effects/lpe-bendpath.cpp:69
 msgid "Bend path:"
@@ -10346,7 +10328,7 @@ msgstr "Rispecchia i movimenti verticalmente"
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Update while moving knots (maybe slow)"
-msgstr ""
+msgstr "Aggiorna durante lo spostamento dei punti (può rallentare)"
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 0:"
@@ -11336,7 +11318,7 @@ msgstr "Tratti:"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Draw that many approximating strokes"
-msgstr "Disegna un tal numero di tratti approssimanti"
+msgstr "Disegna questo numero di tratti approssimanti"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Max stroke length:"
@@ -11910,7 +11892,7 @@ msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:340
 msgid "Exported area is the entire drawing (not page)"
-msgstr "L'area esportata è il disegno intero (non la tela)"
+msgstr "L'area esportata è il disegno intero (non l'area di lavoro)"
 
 #: ../src/main.cpp:345
 msgid "Exported area is the entire page"
@@ -13024,7 +13006,7 @@ msgstr "Rimuovi maschera"
 
 #: ../src/selection-chemistry.cpp:4180
 msgid "Select <b>object(s)</b> to fit canvas to."
-msgstr "Seleziona l'<b>oggetto</b> a cui adattare la tela."
+msgstr "Seleziona l'<b>oggetto</b> a cui adattare l'area di lavoro."
 
 #. Fit Page
 #: ../src/selection-chemistry.cpp:4200 ../src/verbs.cpp:3004
@@ -14628,18 +14610,16 @@ msgid "_Trace"
 msgstr "Ve_ttorizza"
 
 #: ../src/ui/dialog/clonetiler.cpp:788
-#, fuzzy
 msgid "Trace the drawing under the clones/sprayed items"
-msgstr "Vettorizza il disegno sotto i cloni"
+msgstr "Vettorizza il disegno sotto i cloni/oggetti spruzzati"
 
 #: ../src/ui/dialog/clonetiler.cpp:792
-#, fuzzy
 msgid ""
 "For each clone/sprayed item, pick a value from the drawing in its location "
 "and apply it"
 msgstr ""
-"Per ogni clone preleva il valore del disegno su cui il clone è posto e lo "
-"applica al clone"
+"Per ogni clone/oggetto spruzzato preleva il valore del disegno su cui il "
+"clone è posto e lo applica al clone"
 
 #: ../src/ui/dialog/clonetiler.cpp:811
 msgid "1. Pick from the drawing:"
@@ -14772,9 +14752,8 @@ msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr "L'opacità di ogni clone è determinata dal valore preso in quel punto"
 
 #: ../src/ui/dialog/clonetiler.cpp:1011
-#, fuzzy
 msgid "Apply to tiled clones:"
-msgstr "Elimina cloni in serie"
+msgstr "Applica ai cloni in serie:"
 
 #: ../src/ui/dialog/clonetiler.cpp:1052
 msgid "How many rows in the tiling"
@@ -20034,7 +20013,7 @@ msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
 msgstr ""
-"La velocità con cui la tela scorrerà automaticamente durante il "
+"La velocità con cui l'area di lavoro scorrerà automaticamente durante il "
 "trascinamento fuori dal bordo (0 per disattivarlo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1264
@@ -20047,9 +20026,9 @@ msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
 msgstr ""
-"La distanza (in pixel dello schermo) dal bordo della tela per attivare lo "
-"scorrimento automatico; un numero positivo indica l'esterno della tela, uno "
-"negativo l'interno"
+"La distanza (in pixel dello schermo) dal bordo dell'area di lavoro per "
+"attivare lo scorrimento automatico; un numero positivo indica l'esterno "
+"dell'area di lavoro, uno negativo l'interno"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1266
 msgid "Mouse move pans when Space is pressed"
@@ -20070,8 +20049,9 @@ msgid ""
 "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when "
 "off, it zooms with Ctrl and scrolls without Ctrl"
 msgstr ""
-"Quando attivo, la rotella del mouse ingrandisce senza Ctrl e sposta la tela "
-"con Ctrl; quando disattivo ingrandisce con Ctrl e sposta la tela senza Ctrl"
+"Quando attivo, la rotella del mouse ingrandisce senza Ctrl e sposta l'area "
+"di lavoro con Ctrl; quando disattivo ingrandisce con Ctrl e sposta l'area di "
+"lavoro senza Ctrl"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1272
 msgid "Scrolling"
@@ -24942,7 +24922,7 @@ msgstr "Inserimento testo"
 
 #: ../src/ui/tools/tool-base.cpp:705
 msgid "<b>Space+mouse move</b> to pan canvas"
-msgstr "<b>Spazio+spostamento puntatore</b> per muovere la tela"
+msgstr "<b>Spazio+spostamento puntatore</b> per muovere l'area di lavoro"
 
 #: ../src/ui/tools/tweak-tool.cpp:164
 #, c-format
@@ -25340,7 +25320,7 @@ msgstr "Proporzionale"
 #: ../src/ui/widget/font-variants.cpp:63
 msgctxt "Font variant"
 msgid "Tabular"
-msgstr ""
+msgstr "Tabellare"
 
 #: ../src/ui/widget/font-variants.cpp:64
 msgctxt "Font variant"
@@ -28824,7 +28804,7 @@ msgstr "Larghezza pennino"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:431
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
-msgstr "La larghezza del pennino (relativa all'area della tela visibile)"
+msgstr "La larghezza del pennino (relativa all'area di lavoro visibile)"
 
 #. Thinning
 #: ../src/widgets/calligraphy-toolbar.cpp:444
@@ -29368,7 +29348,7 @@ msgstr "Larghezza zero"
 
 #: ../src/widgets/eraser-toolbar.cpp:155
 msgid "The width of the eraser pen (relative to the visible canvas area)"
-msgstr "La larghezza del cancellino (relativa all'area della tela visibile)"
+msgstr "La larghezza del cancellino (relativa all'area di lavoro visibile)"
 
 #: ../src/widgets/eraser-toolbar.cpp:171
 #, fuzzy
@@ -30427,9 +30407,8 @@ msgid "From clipboard"
 msgstr "Dagli appunti"
 
 #: ../src/widgets/pencil-toolbar.cpp:181
-#, fuzzy
 msgid "Bend from clipboard"
-msgstr "Dagli appunti"
+msgstr "Piega dagli appunti"
 
 #: ../src/widgets/pencil-toolbar.cpp:182
 msgid "Last applied"
@@ -30848,7 +30827,7 @@ msgstr "(area larga)"
 #: ../src/widgets/spray-toolbar.cpp:297
 msgid "The width of the spray area (relative to the visible canvas area)"
 msgstr ""
-"La larghezza dell'area di spruzzo (relativa all'area della tela visibile)"
+"La larghezza dell'area di spruzzo (relativa all'area di lavoro visibile)"
 
 #: ../src/widgets/spray-toolbar.cpp:312
 msgid "Use the pressure of the input device to alter the width of spray area"
@@ -31002,24 +30981,24 @@ msgid ""
 "Pick color from the drawing. You can use clonetiler trace dialog for "
 "advanced effects. In clone mode original fill or stroke colors must be unset."
 msgstr ""
+"Preleva il colore dal disegno. Per effetti più avanzati usare i cloni in "
+"serie. In modalità di clonazione "
 
 #: ../src/widgets/spray-toolbar.cpp:502 ../src/widgets/spray-toolbar.cpp:503
 msgid "Pick from center instead average area."
-msgstr ""
+msgstr "Preleva colore medio area"
 
 #: ../src/widgets/spray-toolbar.cpp:515 ../src/widgets/spray-toolbar.cpp:516
 msgid "Inverted pick value, retaining color in advanced trace mode"
 msgstr ""
 
 #: ../src/widgets/spray-toolbar.cpp:528 ../src/widgets/spray-toolbar.cpp:529
-#, fuzzy
 msgid "Apply picked color to fill"
-msgstr "Imposta l'ultimo colore selezionato come riempimento"
+msgstr "Applica il colore prelevato allo riempimento"
 
 #: ../src/widgets/spray-toolbar.cpp:541 ../src/widgets/spray-toolbar.cpp:542
-#, fuzzy
 msgid "Apply picked color to stroke"
-msgstr "Imposta l'ultimo colore selezionato come contorno"
+msgstr "Applica il colore prelevato al contorno"
 
 #: ../src/widgets/spray-toolbar.cpp:554 ../src/widgets/spray-toolbar.cpp:555
 msgid "No overlap between colors"
@@ -31055,7 +31034,7 @@ msgstr "Scostamento %:"
 
 #: ../src/widgets/spray-toolbar.cpp:609
 msgid "Increase to segregate objects more (value in percent)"
-msgstr ""
+msgstr "Aumentare per separare maggiormente gli oggetti (valore in percentuale)"
 
 #: ../src/widgets/star-toolbar.cpp:103
 msgid "Star: Change number of corners"
@@ -31833,7 +31812,7 @@ msgstr "(ritocco ampio)"
 #: ../src/widgets/tweak-toolbar.cpp:128
 msgid "The width of the tweak area (relative to the visible canvas area)"
 msgstr ""
-"La larghezza dell'area di ritocco (relativa all'area della tela visibile)"
+"La larghezza dell'area di ritocco (relativa all'area di lavoro visibile)"
 
 #. Force
 #: ../src/widgets/tweak-toolbar.cpp:142
@@ -39575,10 +39554,6 @@ msgstr "Un formato grafico molto diffuso per clipart"
 msgid "XAML Input"
 msgstr "Input XAML"
 
-#, fuzzy
-#~ msgid "Break appart cutted itemss"
-#~ msgstr "Separa il percorso nel nodo selezionato"
-
 #~ msgid ""
 #~ "The selected object is not a path.\n"
 #~ "Try using the procedure Path->Object to Path."
@@ -39589,245 +39564,11 @@ msgstr "Input XAML"
 #~ msgid "Use normal distribution"
 #~ msgstr "Usa distribuzione normale"
 
-#~ msgid "A4 Landscape Page"
-#~ msgstr "Pagina A4 Orizzontale"
-
-#~ msgid "Empty A4 landscape sheet"
-#~ msgstr "Foglio A4 orizzontale vuoto"
-
-#~ msgid "A4 paper sheet empty landscape"
-#~ msgstr "A4 pagina foglio vuoto orizzontale"
-
-#~ msgid "A4 Page"
-#~ msgstr "Pagina A4"
-
-#~ msgid "Empty A4 sheet"
-#~ msgstr "Foglio A4 vuoto"
-
-#~ msgid "A4 paper sheet empty"
-#~ msgstr "A4 pagina foglio vuoto"
-
-#~ msgid "Black Opaque"
-#~ msgstr "Nero opaco"
-
-#~ msgid "Empty black page"
-#~ msgstr "Pagina nera vuota"
-
-#~ msgid "black opaque empty"
-#~ msgstr "nero opaco vuoto"
-
-#~ msgid "White Opaque"
-#~ msgstr "Bianco opaco"
-
-#~ msgid "Empty white page"
-#~ msgstr "Pagina bianca vuota"
-
-#~ msgid "white opaque empty"
-#~ msgstr "bianco opaco vuoto"
-
-#~ msgid "Empty business card template."
-#~ msgstr "Modello biglietto da visita vuoto."
-
-#~ msgid "business card empty 85x54"
-#~ msgstr "biglietto visita vuoto 85x54"
-
-#~ msgid "Business Card 90x50mm"
-#~ msgstr "Biglietto da visita 90x50mm"
-
-#~ msgid "business card empty 90x50"
-#~ msgstr "biglietto visita vuoto 90x50"
-
-#~ msgid "CD Cover 300dpi"
-#~ msgstr "Cover CD 300dpi"
-
-#~ msgid "Empty CD box cover."
-#~ msgstr "Cover CD vuota."
-
-#~ msgid "CD cover disc disk 300dpi box"
-#~ msgstr "CD cover disco 300dpi"
-
-#~ msgid "DVD Cover Regular 300dpi "
-#~ msgstr "Cover DVD Normale 300dpi "
-
-#~ msgid "Template for both-sides DVD covers."
-#~ msgstr "Modello per cover DVD fronte-retro."
-
-#~ msgid "DVD cover regular 300dpi"
-#~ msgstr "DVD cover normale 300dpi"
-
-#~ msgid "DVD Cover Slim 300dpi "
-#~ msgstr "Cover DVD slim 300dpi "
-
-#~ msgid "Template for both-sides DVD slim covers."
-#~ msgstr "Modello per cover DVD slim fronte-retro."
-
-#~ msgid "DVD cover slim 300dpi"
-#~ msgstr "DVD cover slim 300dpi"
-
-#~ msgid "DVD Cover Superslim 300dpi "
-#~ msgstr "Cover DVD superslim 300dpi "
-
-#~ msgid "Template for both-sides DVD superslim covers."
-#~ msgstr "Modello per cover DVD fronte-retro superslim."
-
-#~ msgid "DVD cover superslim 300dpi"
-#~ msgstr "DVD cover superslim 300dpi"
-
-#~ msgid "DVD Cover Ultraslim 300dpi "
-#~ msgstr "Cover DVD ultraslim 300dpi "
-
-#~ msgid "Template for both-sides DVD ultraslim covers."
-#~ msgstr "Modello per cover DVD ultraslim fronte-retro."
-
-#~ msgid "DVD cover ultraslim 300dpi"
-#~ msgstr "DVD cover ultraslim 300dpi"
-
-#~ msgid "Desktop 1024x768"
-#~ msgstr "Desktop 1024x768"
-
-#~ msgid "Empty desktop size sheet"
-#~ msgstr "Foglio dimensione desktop vuoto"
-
-#~ msgid "desktop 1024x768 wallpaper"
-#~ msgstr "desktop 1024x768 wallpaper"
-
-#~ msgid "Desktop 1600x1200"
-#~ msgstr "Desktop 1600x1200"
-
-#~ msgid "desktop 1600x1200 wallpaper"
-#~ msgstr "desktop 1600x1200 wallpaper"
-
-#~ msgid "desktop 640x480 wallpaper"
-#~ msgstr "desktop 640x480 wallpaper"
-
-#~ msgid "Desktop 800x600"
-#~ msgstr "Desktop 800x600"
-
-#~ msgid "desktop 800x600 wallpaper"
-#~ msgstr "desktop 800x600 wallpaper"
-
-#~ msgid "Fontforge Glyph"
-#~ msgstr "Glifo Fontforge"
-
-#~ msgid "font fontforge glyph 1000x1000"
-#~ msgstr "font fontforge glifo 1000x1000"
-
-#~ msgid "Icon 16x16"
-#~ msgstr "Icona 16x16"
-
-#~ msgid "Small 16x16 icon template."
-#~ msgstr "Modello icona piccola 16x16."
-
-#~ msgid "icon 16x16 empty"
-#~ msgstr "icona 16x16 vuota"
-
-#~ msgid "Icon 32x32"
-#~ msgstr "Icona 32x32"
-
-#~ msgid "32x32 icon template."
-#~ msgstr "Modello icona 32x32."
-
-#~ msgid "icon 32x32 empty"
-#~ msgstr "icona 32x32 vuota"
-
-#~ msgid "Icon 48x48"
-#~ msgstr "Icona 48x48"
-
-#~ msgid "48x48 icon template."
-#~ msgstr "Modello icona 48x48."
-
-#~ msgid "icon 48x48 empty"
-#~ msgstr "icona 48x48 vuota"
-
-#~ msgid "Icon 64x64"
-#~ msgstr "Icona 64x64"
-
-#~ msgid "64x64 icon template."
-#~ msgstr "Modello icona 64x64."
-
-#~ msgid "icon 64x64 empty"
-#~ msgstr "icona 64x64 vuota"
-
-#~ msgid "Letter Landscape"
-#~ msgstr "Letter Orizzontale"
-
-#~ msgid "Standard letter landscape sheet - 792x612"
-#~ msgstr "Foglio letter standard orizzontale - 792x612"
-
-#~ msgid "letter landscape 792x612 empty"
-#~ msgstr "letter orizzontale 792x612 vuoto"
-
-#~ msgid "Letter"
-#~ msgstr "Letter"
-
-#~ msgid "Standard letter sheet - 612x792"
-#~ msgstr "Foglio letter standard - 612x792"
-
-#~ msgid "letter 612x792 empty"
-#~ msgstr "letter 612x792 vuoto"
-
-#~ msgid "No Borders"
-#~ msgstr "Nessun bordo"
-
-#~ msgid "Empty sheet with no borders"
-#~ msgstr "Foglio vuoto senza bordi"
-
-#~ msgid "no borders empty"
-#~ msgstr "no bordi vuoto"
-
-#~ msgid "Video HDTV 1920x1080"
-#~ msgstr "Video HDTV 1920x1080"
-
-#~ msgid "HDTV video template for 1920x1080 resolution."
-#~ msgstr "Modello video HDTV per risoluzione 1920x1080."
-
-#~ msgid "HDTV video empty 1920x1080"
-#~ msgstr "HDTV video vuoto 1920x1080"
-
-#~ msgid "Video NTSC 720x486"
-#~ msgstr "Video NTSC 720x486"
-
-#~ msgid "NTSC video template for 720x486 resolution."
-#~ msgstr "Modello video NTSC per risoluzione 720x486."
-
-#~ msgid "NTSC video empty 720x486"
-#~ msgstr "NTSC video vuoto 720x486"
-
-#~ msgid "Video PAL 728x576"
-#~ msgstr "Video PAL 728x576"
-
-#~ msgid "PAL video template for 728x576 resolution."
-#~ msgstr "Modello video PAL per risoluzione 728x576."
-
-#~ msgid "PAL video empty 728x576"
-#~ msgstr "PAL video vuoto 728x576"
-
-#~ msgid "Web Banner 468x60"
-#~ msgstr "Web Banner 468x60"
-
-#~ msgid "Empty 468x60 web banner template."
-#~ msgstr "Modello web banner vuoto 468x60."
-
-#~ msgid "web banner 468x60 empty"
-#~ msgstr "web banner 468x60 vuoto"
-
-#~ msgid "Web Banner 728x90"
-#~ msgstr "Web Banner 728x90"
-
-#~ msgid "Empty 728x90 web banner template."
-#~ msgstr "Modello web banner vuoto 728x90."
-
-#~ msgid "web banner 728x90 empty"
-#~ msgstr "web banner 728x90 vuoto"
-
 #~ msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
 #~ msgstr "PS+LaTeX: ometti testo nel file PS, e crea un file LaTeX"
 
 #~ msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
 #~ msgstr "EPS+LaTeX: ometti testo nel file EPS, e crea un file LaTeX"
-
-#~ msgid "import via Poppler"
-#~ msgstr "importa via Poppler"
 
 #~ msgid "Text handling:"
 #~ msgstr "Gestione testo:"
@@ -39890,11 +39631,6 @@ msgstr "Input XAML"
 #~ msgid "Fixed Angle"
 #~ msgstr "Angolo fisso"
 
-#, fuzzy
-#~ msgctxt "Flow control"
-#~ msgid "None"
-#~ msgstr "Nessuno"
-
 #~ msgid "Arbitrary Angle"
 #~ msgstr "Angolo arbitrario"
 
@@ -39907,10 +39643,6 @@ msgstr "Input XAML"
 #, fuzzy
 #~ msgid "Ids"
 #~ msgstr "_Id"
-
-#, fuzzy
-#~ msgid "Help (Options)"
-#~ msgstr "Opzioni"
 
 #~ msgid "You need to install the UniConvertor software.\n"
 #~ msgstr "È necessario installare il programma UniConvertor.\n"
@@ -40394,22 +40126,6 @@ msgstr "Input XAML"
 #~ msgstr "&lt;nessun nome trovato&gt;"
 
 #, fuzzy
-#~ msgid "Set Resolution"
-#~ msgstr "Relazione:"
-
-#, fuzzy
-#~ msgid "Fill Area"
-#~ msgstr "Colore uniforme"
-
-#, fuzzy
-#~ msgid "Move a connection point"
-#~ msgstr "Reinstrada connettore"
-
-#, fuzzy
-#~ msgid "Remove a connection point"
-#~ msgstr "Reinstrada connettore"
-
-#, fuzzy
 #~ msgid "<b>Flowed text</b> (%d character%s)"
 #~ msgid_plural "<b>Flowed text</b> (%d characters%s)"
 #~ msgstr[0] "<b>Testo dinamico</b> (%d carattere)"
@@ -40439,22 +40155,6 @@ msgstr "Input XAML"
 #~ msgid "Connection point drag cancelled."
 #~ msgstr "Punto finale connettore cancellato."
 
-#~ msgid "T_ype: "
-#~ msgstr "T_ipo:"
-
-#~ msgid "Search in all object types"
-#~ msgstr "Cerca oggetti di tutti i tipi"
-
-#~ msgid "Search all shapes"
-#~ msgstr "Cerca tutte le forme"
-
-#~ msgid "All shapes"
-#~ msgstr "Tutte le forme"
-
-#, fuzzy
-#~ msgid "_Text:"
-#~ msgstr "Te_sto: "
-
 #~ msgid "Find objects by their text content (exact or partial match)"
 #~ msgstr ""
 #~ "Trova oggetti in base al contenuto testuale (corrispondenza esatta o "
@@ -40465,10 +40165,6 @@ msgstr "Input XAML"
 #~ msgstr ""
 #~ "Trova oggetti in base al valore dell'attributo id (corrispondenza esatta "
 #~ "o parziale)"
-
-#, fuzzy
-#~ msgid "_Style:"
-#~ msgstr "_Stile: "
 
 #~ msgid ""
 #~ "Find objects by the value of the style attribute (exact or partial match)"
@@ -40498,28 +40194,12 @@ msgstr "Input XAML"
 #~ msgstr "Cerca oggetti corrispondenti a tutti i campi spuntati"
 
 #, fuzzy
-#~ msgid "Green:"
-#~ msgstr "Verde"
-
-#, fuzzy
-#~ msgid "Blue:"
-#~ msgstr "Blu"
-
-#, fuzzy
 #~ msgid "Lightness:"
 #~ msgstr "Luminosità"
 
 #, fuzzy
-#~ msgid "Alpha:"
-#~ msgstr "Alfa"
-
-#, fuzzy
 #~ msgid "Level:"
 #~ msgstr "Livello"
-
-#, fuzzy
-#~ msgid "Contrast:"
-#~ msgstr "Contrasto"
 
 #, fuzzy
 #~ msgid "Composite:"
@@ -40530,67 +40210,11 @@ msgstr "Input XAML"
 #~ msgstr "Alone"
 
 #, fuzzy
-#~ msgid "Blur:"
-#~ msgstr "Sfocat_ura:"
-
-#, fuzzy
-#~ msgid "Blur type:"
-#~ msgstr "Ritocco sfocatura"
-
-#, fuzzy
 #~ msgid "Link or embed image:"
 #~ msgstr "Incorpora immagini"
 
 #~ msgid "drawing-%d%s"
 #~ msgstr "disegno-%d%s"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "Pt"
-#~ msgstr "Pt"
-
-#~ msgid "Picas"
-#~ msgstr "Pica"
-
-#~ msgid "Pc"
-#~ msgstr "Pc"
-
-#~ msgid "Pixels"
-#~ msgstr "Pixel"
-
-#~ msgid "Px"
-#~ msgstr "Px"
-
-#~ msgid "Percent"
-#~ msgstr "Percentuale"
-
-#~ msgid "Percents"
-#~ msgstr "Percentuale"
-
-#~ msgid "Millimeters"
-#~ msgstr "Millimetri"
-
-#~ msgid "Centimeters"
-#~ msgstr "Centimetri"
-
-#~ msgid "Meter"
-#~ msgstr "Metro"
-
-#~ msgid "Meters"
-#~ msgstr "Metri"
-
-#~ msgid "Inches"
-#~ msgstr "Pollici"
-
-#~ msgid "Foot"
-#~ msgstr "Piede"
-
-#~ msgid "Feet"
-#~ msgstr "Piedi"
-
-#~ msgid "em"
-#~ msgstr "em"
 
 #~ msgid "Em squares"
 #~ msgstr "Riquadri Em"
@@ -40607,9 +40231,6 @@ msgstr "Input XAML"
 #, fuzzy
 #~ msgid "Specifies the shape of the path's corners"
 #~ msgstr "Preleva la luminosità del colore"
-
-#~ msgid "Whiteboa_rd"
-#~ msgstr "Whiteboa_rd"
 
 #, fuzzy
 #~ msgid "Name by which this document is formally known"
@@ -40660,27 +40281,8 @@ msgstr "Input XAML"
 #~ "L'argomento del documento espresso in parole chiave, frasi, "
 #~ "classificazioni separate da virgole."
 
-#, fuzzy
-#~ msgid "Extent or scope of this document"
-#~ msgstr "Intento o scopo del documento."
-
-#, fuzzy
-#~ msgctxt "Web"
-#~ msgid "Link"
-#~ msgstr "Linea"
-
 #~ msgid "Polyline"
 #~ msgstr "Poligonale"
-
-#, fuzzy
-#~ msgctxt "Object"
-#~ msgid "Text"
-#~ msgstr "Testo"
-
-#, fuzzy
-#~ msgctxt "Object"
-#~ msgid "Clone"
-#~ msgstr "Clonato"
 
 #~ msgid "<b>%i</b> object of type <b>%s</b>"
 #~ msgid_plural "<b>%i</b> objects of type <b>%s</b>"
@@ -40766,10 +40368,6 @@ msgstr "Input XAML"
 #~ "Colore e trasparenza dello sfondo della pagina (usati anche per "
 #~ "l'esportazione bitmap)"
 
-#, fuzzy
-#~ msgid "<b>Color</b>"
-#~ msgstr "<b>Poligono</b>"
-
 #~ msgid ""
 #~ "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives "
 #~ "create \"embossed\" shadings.  The input's alpha channel is used to "
@@ -40799,25 +40397,8 @@ msgstr "Input XAML"
 #~ "disattivo, con Spazio si passa temporaneamente allo strumento Selettore "
 #~ "(predefinito)."
 
-#~ msgid "2x2"
-#~ msgstr "2x2"
-
-#~ msgid "4x4"
-#~ msgstr "4x4"
-
-#~ msgid "8x8"
-#~ msgstr "8x8"
-
 #~ msgid "Oversample bitmaps:"
 #~ msgstr "Sovracampionamento bitmap:"
-
-#, fuzzy
-#~ msgid "Always embed"
-#~ msgstr "Aggancia sempre"
-
-#, fuzzy
-#~ msgid "Always link"
-#~ msgstr "Aggancia sempre"
 
 #~ msgid "_Execute Javascript"
 #~ msgstr "_Esegui Javascript"
@@ -40853,10 +40434,6 @@ msgstr "Input XAML"
 #~ msgid "_Grid"
 #~ msgstr "_Griglia"
 
-#, fuzzy
-#~ msgid " and "
-#~ msgstr "Dentro e fuori"
-
 #~ msgid "S_cripts..."
 #~ msgstr "S_cript..."
 
@@ -40865,18 +40442,6 @@ msgstr "Input XAML"
 
 #~ msgid "Save..."
 #~ msgstr "Salva..."
-
-#, fuzzy
-#~ msgid "EditMode"
-#~ msgstr "Modalità spigolo:"
-
-#, fuzzy
-#~ msgid "New connection point"
-#~ msgstr "Cambia spaziatura connettori"
-
-#, fuzzy
-#~ msgid "Remove connection point"
-#~ msgstr "Reinstrada connettore"
 
 #, fuzzy
 #~ msgid "%s%s: %d (outline%s) - Inkscape"
@@ -40917,34 +40482,6 @@ msgstr "Input XAML"
 #, fuzzy
 #~ msgid "keep only visible layers"
 #~ msgstr "Stampa livelli invisibili"
-
-#~ msgid "1/10"
-#~ msgstr "1/10"
-
-#~ msgid "1/2"
-#~ msgstr "1/2"
-
-#~ msgid "1/3"
-#~ msgstr "1/3"
-
-#~ msgid "1/4"
-#~ msgstr "1/4"
-
-#~ msgid "1/5"
-#~ msgstr "1/5"
-
-#~ msgid "1/6"
-#~ msgstr "1/6"
-
-#~ msgid "1/7"
-#~ msgstr "1/7"
-
-#~ msgid "1/8"
-#~ msgstr "1/8"
-
-#~ msgid "1/9"
-#~ msgstr "1/9"
-
 #, fuzzy
 #~ msgid "Horizontal guide each:"
 #~ msgstr "Guide orizzontali ogni"
@@ -40988,26 +40525,12 @@ msgstr "Input XAML"
 #~ "arbitrari. Il motivo è l'oggetto superiore della selezione (sono permessi "
 #~ "gruppi di tracciati/forme/cloni)."
 
-#~ msgid "ASCII Text"
-#~ msgstr "Testo ASCII"
-
-#~ msgid "Text File (*.txt)"
-#~ msgstr "File di testo (*.txt)"
-
 #~ msgid "Text Input"
 #~ msgstr "Input testo"
 
 #, fuzzy
 #~ msgid "Dark mode"
 #~ msgstr "Rilievo scuro"
-
-#, fuzzy
-#~ msgid "[Unstable!] Power stroke"
-#~ msgstr "Motivo del contorno"
-
-#, fuzzy
-#~ msgid "[Unstable!] Clone original path"
-#~ msgstr "Sostituisci testo"
 
 #~ msgid "The directory where autosaves will be written"
 #~ msgstr "Cartella in cui scrivere i salvataggi automatici"
@@ -41018,24 +40541,11 @@ msgstr "Input XAML"
 #~ msgid "<big><b>Bitmap size</b></big>"
 #~ msgstr "<big><b>Dimensione bitmap</b></big>"
 
-#~ msgid "Grid line _color:"
-#~ msgstr "_Colore della griglia:"
-
-#~ msgid "Grid line color"
-#~ msgstr "Colore della griglia"
-
 #~ msgid "Export area is drawing"
 #~ msgstr "L'area esportata è il disegno"
 
 #~ msgid "Export area is page"
 #~ msgstr "L'area esportata è la pagina"
-
-#~ msgid "Vacuum &lt;defs&gt;"
-#~ msgstr "Definizioni superflue"
-
-#, fuzzy
-#~ msgid "_Select Same Fill and Stroke"
-#~ msgstr "_Riempimento e Contorni"
 
 #~ msgid "%s%s. %s."
 #~ msgstr "%s%s. %s."
@@ -41092,83 +40602,6 @@ msgstr "Input XAML"
 #, fuzzy
 #~ msgid "was found."
 #~ msgstr "File trovati"
-
-#~ msgid "Vac_uum Defs"
-#~ msgstr "Definizioni s_uperflue"
-
-#~ msgid "In_kscape Preferences..."
-#~ msgstr "Preferenze di In_kscape..."
-
-#~ msgid "_Find..."
-#~ msgstr "_Trova..."
-
-#, fuzzy
-#~ msgid "Font size (px)"
-#~ msgstr "Dimensione carattere [px]"
-
-#, fuzzy
-#~ msgid "Angle 0"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 120"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 135"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 150"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 180"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 210"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 225"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 240"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 270"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 30"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 300"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 315"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 330"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 45"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 60"
-#~ msgstr "Angolo X"
-
-#, fuzzy
-#~ msgid "Angle 90"
-#~ msgstr "Angolo X"
 
 #, fuzzy
 #~ msgid "Display Format: "
@@ -41270,13 +40703,6 @@ msgstr "Input XAML"
 
 #~ msgid "No files matched your search"
 #~ msgstr "Nessun file soddisfa la ricerca"
-
-#, fuzzy
-#~ msgid "_Opacity (%):"
-#~ msgstr "Opacità, %:"
-
-#~ msgid "Import a document from Open Clip Art Library"
-#~ msgstr "Importa un documento dall'Open Clip Art Library"
 
 #~ msgid "<small>No gradients</small>"
 #~ msgstr "<small>Nessun gradiente</small>"
@@ -41614,10 +41040,6 @@ msgstr "Input XAML"
 #~ msgstr "angolo convesso"
 
 #, fuzzy
-#~ msgid "Experimental"
-#~ msgstr "Esponente"
-
-#, fuzzy
 #~ msgid "Diffuse light, custom (ABCs)"
 #~ msgstr "Illuminazione diffusa"
 
@@ -41626,24 +41048,8 @@ msgstr "Input XAML"
 #~ msgstr "Illuminazione speculare"
 
 #, fuzzy
-#~ msgid "Brightness, custom (Color)"
-#~ msgstr "Riduzione luminosità"
-
-#, fuzzy
-#~ msgid "Vibration:"
-#~ msgstr "Incidenza:"
-
-#, fuzzy
-#~ msgid "Lightness, custom (Color)"
-#~ msgstr "Riduzione luminosità"
-
-#, fuzzy
 #~ msgid "Quadritone fantasy, custom (Color)"
 #~ msgstr "Fantasia in quattro torni"
-
-#, fuzzy
-#~ msgid "Opacity (%):"
-#~ msgstr "Opacità, %:"
 
 #~ msgid "Black, blurred drop shadow"
 #~ msgstr "Ombra proiettata, nera e sfuocata"
@@ -41659,16 +41065,8 @@ msgstr "Input XAML"
 #~ msgstr "Frequenza base:"
 
 #, fuzzy
-#~ msgid "Drawing, custom"
-#~ msgstr "Disegno"
-
-#, fuzzy
 #~ msgid "Transluscent"
 #~ msgstr "Traslucido"
-
-#, fuzzy
-#~ msgid "link"
-#~ msgstr "linee"
 
 #, fuzzy
 #~ msgid "To spray a path by pushing, select it and drag over it."
@@ -41767,416 +41165,6 @@ msgstr "Input XAML"
 
 #~ msgid "ZIP Output"
 #~ msgstr "Output ZIP"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Blue1"
-#~ msgstr "Blu"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Blue2"
-#~ msgstr "Blu"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Blue3"
-#~ msgstr "Blu"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Red1"
-#~ msgstr "Rosso"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Red2"
-#~ msgstr "Rosso"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Red3"
-#~ msgstr "Rosso"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Orange1"
-#~ msgstr "Ordinamento"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Orange2"
-#~ msgstr "Ordinamento"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Orange3"
-#~ msgstr "Ordinamento"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Green1"
-#~ msgstr "Verde"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Green2"
-#~ msgstr "Verde"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Green3"
-#~ msgstr "Verde"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Purple1"
-#~ msgstr "Persone"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Purple2"
-#~ msgstr "Persone"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Purple3"
-#~ msgstr "Persone"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Metalic1"
-#~ msgstr "Magenta"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Metalic2"
-#~ msgstr "Magenta"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Metalic3"
-#~ msgstr "Magenta"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Metalic4"
-#~ msgstr "Magenta"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey1"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey2"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey3"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey4"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey5"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default outer 1"
-#~ msgstr "Titolo predefinito"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default outer 2"
-#~ msgstr "Titolo predefinito"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default outer 3"
-#~ msgstr "Titolo predefinito"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default block"
-#~ msgstr "(predefinito)"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default covered text"
-#~ msgstr "Crea testo dinamico"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default text"
-#~ msgstr "Titolo predefinito"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default light block"
-#~ msgstr "Titolo predefinito"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default light covered text"
-#~ msgstr "Licenza predefinita"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "default light text"
-#~ msgstr "Titolo predefinito"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beetle added green"
-#~ msgstr "Crea e modifica i gradienti"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beetle header text"
-#~ msgstr "Elimina testo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beetle background"
-#~ msgstr "Rimuovi sfondo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beetle covered text"
-#~ msgstr "Crea testo dinamico"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beetle text"
-#~ msgstr "Elimina testo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "albatross background"
-#~ msgstr "Rimuovi sfondo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "albatross block"
-#~ msgstr "curvo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "albatross block header"
-#~ msgstr "curvo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "fly text"
-#~ msgstr "Inserimento testo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "fly outer"
-#~ msgstr "filtro"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "fly background"
-#~ msgstr "Sfondo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "fly header text"
-#~ msgstr "Incolla testo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "fly covered text"
-#~ msgstr "Il testo dinamico è stato creato"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "seagull background"
-#~ msgstr "Rimuovi sfondo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "seagull text"
-#~ msgstr "Testo verticale"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beaver block header text"
-#~ msgstr "Crea testo dinamico"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beaver added green"
-#~ msgstr "Crea e modifica i gradienti"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beaver covered text"
-#~ msgstr "Crea testo dinamico"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beaver background"
-#~ msgstr "Rimuovi sfondo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "beaver text"
-#~ msgstr "Crea testo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "crane outer 1"
-#~ msgstr "Triangolo decrescente"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "crane outer 2"
-#~ msgstr "Triangolo decrescente"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "crane outer 3"
-#~ msgstr "Triangolo decrescente"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "crane added orange"
-#~ msgstr "Angolo di rotazione"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "crane block header"
-#~ msgstr "Sblocca livello"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "crane covered text"
-#~ msgstr "Crea testo dinamico"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "crane text"
-#~ msgstr "Crea testo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "wolverine background"
-#~ msgstr "Rimuovi sfondo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "wolverine text"
-#~ msgstr "Elimina testo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Orange Hilight"
-#~ msgstr "Altezza"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Orange"
-#~ msgstr "Ordinamento"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Orange Shadow"
-#~ msgstr "Ombra interna"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Yellow"
-#~ msgstr "Giallo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Accent Orange"
-#~ msgstr "Triangolo exincentro"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Accent Red"
-#~ msgstr "centro"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Human"
-#~ msgstr "Maniglia"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Environmental Shadow"
-#~ msgstr "Ombra interna"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Accent Blue Shadow"
-#~ msgstr "Ombra interna"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Accent Green Base"
-#~ msgstr "Maiuscole paragrafo"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Accent Magenta"
-#~ msgstr "Magenta"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey 1"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey 2"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey 3"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey 4"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey 5"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Palette"
-#~ msgid "Grey 6"
-#~ msgstr "Grigio"
-
-#, fuzzy
-#~ msgctxt "Filter blend mode"
-#~ msgid "Normal"
-#~ msgstr "Normale"
-
-#, fuzzy
-#~ msgctxt "Filter blend mode"
-#~ msgid "Screen"
-#~ msgstr "Scherma"
-
-#, fuzzy
-#~ msgctxt "Gap"
-#~ msgid "H:"
-#~ msgstr "H:"
 
 #~ msgid "When the original is deleted, its clones:"
 #~ msgstr "Quando l'originale viene cancellato, i suoi cloni vengono:"
@@ -42746,10 +41734,6 @@ msgstr "Input XAML"
 #~ msgid "Text label attached to the path"
 #~ msgstr "Etichetta testuale attaccata al tracciato"
 
-#, fuzzy
-#~ msgid "Transform Handles:"
-#~ msgstr "Trasforma gradienti"
-
 #~ msgid "Session file"
 #~ msgstr "File sessione:"
 
@@ -42761,10 +41745,6 @@ msgstr "Input XAML"
 
 #~ msgid "Close file"
 #~ msgstr "Chiudi file"
-
-#, fuzzy
-#~ msgid "Open new file"
-#~ msgstr "Apri file sessione"
 
 #~ msgid "Rewind"
 #~ msgstr "Riavvolgi"
@@ -43207,18 +42187,6 @@ msgstr "Input XAML"
 #~ msgid "HSL bubbles, diffuse"
 #~ msgstr "Bolle HSL, luce diffusa"
 
-#, fuzzy
-#~ msgid "HSL bubbles, transparent"
-#~ msgstr "0 (trasparente)"
-
-#, fuzzy
-#~ msgid "Subtract negative"
-#~ msgstr "Sottrazione A-B"
-
-#, fuzzy
-#~ msgid "Subtract positive"
-#~ msgstr "Variazione punto iniziale"
-
 #~ msgid "Open files saved for plotters"
 #~ msgstr "Apri file salvati per plotter"
 
@@ -43226,20 +42194,8 @@ msgstr "Input XAML"
 #~ msgid "Glossy painting effect for bitmaps"
 #~ msgstr "Converti effetti sfocatura a bitmap"
 
-#, fuzzy
-#~ msgid "Melt and glow"
-#~ msgstr "Angolo sinistro"
-
-#, fuzzy
-#~ msgid "Badge"
-#~ msgstr "Bordatura"
-
 #~ msgid "Ghost outline"
 #~ msgstr "Contorno fantasma"
-
-#, fuzzy
-#~ msgid "Flow inside"
-#~ msgstr "Modalità increspatura"
 
 #~ msgid "Lead pencil"
 #~ msgstr "Pastello a piombo"
@@ -43256,39 +42212,11 @@ msgstr "Input XAML"
 #~ msgid "Organization"
 #~ msgstr "Organizzazione"
 
-#, fuzzy
-#~ msgid "Comics rounded"
-#~ msgstr "non arrotondato"
-
 #~ msgid "Preferred resolution (DPI) of bitmaps"
 #~ msgstr "Risoluzione preferita (DPI) delle bitmap"
 
-#, fuzzy
-#~ msgid "Deactivate knotholder?"
-#~ msgstr "Disattivato"
-
 #~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
 #~ msgstr "La risoluzione per esportare SVG in bitmap (predefinita 90)"
-
-#, fuzzy
-#~ msgid "gradient level"
-#~ msgstr "Nessun gradiente selezionato"
-
-#, fuzzy
-#~ msgid "Under glass effect for bitmaps"
-#~ msgstr "Converti effetti sfocatura a bitmap"
-
-#, fuzzy
-#~ msgid "HSL-sensitive Bubbles effect for bitmaps"
-#~ msgstr "Converti effetti sfocatura a bitmap"
-
-#, fuzzy
-#~ msgid "Kilt"
-#~ msgstr "Tilt"
-
-#, fuzzy
-#~ msgid "Bump for bitmaps"
-#~ msgstr "Bitmap"
 
 #~ msgid "Biggest item"
 #~ msgstr "L'oggetto più grande"
@@ -43301,18 +42229,6 @@ msgstr "Input XAML"
 
 #~ msgid "Median Filter"
 #~ msgstr "Filtro mediano"
-
-#, fuzzy
-#~ msgid "el Greek"
-#~ msgstr "Verde"
-
-#, fuzzy
-#~ msgid "Commands bar icon size"
-#~ msgstr "Barra dei comandi"
-
-#, fuzzy
-#~ msgid "Snap nodes"
-#~ msgstr "Aggancia ai n_odi"
 
 #, fuzzy
 #~ msgid "Snap to intersections of a grid with a guide"
@@ -43354,34 +42270,6 @@ msgstr "Input XAML"
 
 #~ msgid "Embed fonts (Type 1 only)"
 #~ msgstr "Includi font (solo Type 1)"
-
-#, fuzzy
-#~ msgid "Yes, more descriptions"
-#~ msgstr "Imposta descrizione oggetto"
-
-#, fuzzy
-#~ msgid "Crystal"
-#~ msgstr "Scala di grigi"
-
-#, fuzzy
-#~ msgid "Artist text"
-#~ msgstr "Testo verticale"
-
-#, fuzzy
-#~ msgid "Amount of Blur"
-#~ msgstr "Grado di vorticosità"
-
-#, fuzzy
-#~ msgid "Iron Man vector objects"
-#~ msgstr "Riordina gli oggetti selezionati"
-
-#, fuzzy
-#~ msgid "PatternedGlass"
-#~ msgstr "Motivo"
-
-#, fuzzy
-#~ msgid "Snow"
-#~ msgstr "Mostra:"
 
 #~ msgid "Print Destination"
 #~ msgstr "Destinazione stampa"
@@ -43471,26 +42359,6 @@ msgstr "Input XAML"
 #~ msgstr ""
 #~ "Inkscape verrà eseguito con i menù predefiniti.\n"
 #~ "I nuovi menù non verranno salvati."
-
-#, fuzzy
-#~ msgid "Gap width"
-#~ msgstr "Larghezza uguale"
-
-#, fuzzy
-#~ msgid "Lala"
-#~ msgstr "Etichet_ta"
-
-#, fuzzy
-#~ msgid "Lolo"
-#~ msgstr "Colore"
-
-#, fuzzy
-#~ msgid "Last gen. segment"
-#~ msgstr "Elimina segmento"
-
-#, fuzzy
-#~ msgid "Reference"
-#~ msgstr "Differenza"
 
 #, fuzzy
 #~ msgid "Change LPE point parameter"
@@ -43598,10 +42466,6 @@ msgstr "Input XAML"
 #~ msgid "<b>What snaps</b>"
 #~ msgstr "<b>Applicazione aggancio</b>"
 
-#, fuzzy
-#~ msgid "<b>Special points to consider</b>"
-#~ msgstr "<b>Aggancio alle guide</b>"
-
 #~ msgid ""
 #~ "This value affects the amount of smoothing applied to freehand lines; "
 #~ "lower values produce more uneven paths with more nodes"
@@ -43631,18 +42495,6 @@ msgstr "Input XAML"
 
 #~ msgid "Angle Z"
 #~ msgstr "Angolo Z"
-
-#, fuzzy
-#~ msgid "Enable auto-save of document"
-#~ msgstr "Vettorizza: Nessun documento attivo"
-
-#, fuzzy
-#~ msgid "<b>Mode:</b>"
-#~ msgstr "<b>Bordo</b>"
-
-#, fuzzy
-#~ msgid "Spiro splines mode"
-#~ msgstr "Modalità riduzione"
 
 #~ msgid "Grow (outset) parts of paths"
 #~ msgstr "Accresce (estrude) parti di tracciati"
@@ -43950,10 +42802,6 @@ msgstr "Input XAML"
 
 #~ msgid "Print Preview not available"
 #~ msgstr "Anteprima di stampa non disponibile"
-
-#, fuzzy
-#~ msgid "Snap details"
-#~ msgstr "Aggancia ai _tracciati"
 
 #~ msgid "Gridtype"
 #~ msgstr "Tipo di griglia"
