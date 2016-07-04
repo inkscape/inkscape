@@ -497,7 +497,7 @@ SvgFontsDialog::flip_coordinate_system(Geom::PathVector pathv){
     for (obj = get_selected_spfont()->children; obj; obj=obj->next){
         if (SP_IS_FONTFACE(obj)){
             //XML Tree being directly used here while it shouldn't be.
-            sp_repr_get_double(obj->getRepr(), "units_per_em", &units_per_em);
+            sp_repr_get_double(obj->getRepr(), "units-per-em", &units_per_em);
         }
     }
 
