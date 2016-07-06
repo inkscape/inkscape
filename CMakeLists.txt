@@ -6,6 +6,7 @@ message("------------------------------")
 message("Source Dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 message("Binary Dir: ${CMAKE_CURRENT_BINARY_DIR}")
 
+include(CMakeScripts/HelperFunctions.cmake)
 include(CMakeScripts/ConfigEnv.cmake)
 
 # -----------------------------------------------------------------------------
@@ -40,7 +41,6 @@ if(CMAKE_COMPILER_IS_GNUCC)
     endif()
 endif()
 
-include(CMakeScripts/HelperFunctions.cmake)
 
 # -----------------------------------------------------------------------------
 # Redirect output files
