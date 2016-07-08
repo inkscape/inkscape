@@ -48,14 +48,14 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e10"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Inkscape permet de vectoriser des images matricielles, pour en faire un &lt;chemin&gt; inséré dans votre dessin SVG. Ce didacticiel devrait vous aider à comprendre le fonctionnement de cet outil.</flowDiv>
+  <flowDiv xml:space="preserve">Inkscape permet de vectoriser des images matricielles, pour en faire un chemin (élément &lt;path&gt;) inséré dans votre dessin SVG. Ce didacticiel devrait vous aider à prendre en main l&apos;outil.</flowDiv>
  </flowRoot>
  <rect id="d0e16" display="none" height="1e3px" width="288" y="86.568" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e16"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">À l&apos;heure actuelle, Inkscape utilise le moteur de vectorisation de bitmap Potrace (<flowSpan font-weight="bold" font-family="sans-serif">potrace.sourceforge.net</flowSpan>) créé par Peter Selinger. Dans le futur, nous espérons permettre l&apos;utilisation d&apos;autres programmes/moteurs de vectorisation ; pour le moment, cependant, cet excellent outil est plus que suffisant pour nos besoins.</flowDiv>
+  <flowDiv xml:space="preserve">À l&apos;heure actuelle, Inkscape utilise le moteur de vectorisation d&apos;images matricielles Potrace (<flowSpan font-weight="bold" font-family="sans-serif">potrace.sourceforge.net</flowSpan>) créé par Peter Selinger. Dans le futur, nous espérons permettre l&apos;utilisation d&apos;autres programmes/moteurs de vectorisation ; pour le moment, cependant, cet excellent outil est plus que suffisant pour nos besoins.</flowDiv>
  </flowRoot>
  <rect id="d0e22" display="none" height="1e3px" width="288" y="148.21" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
@@ -83,7 +83,7 @@
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e31"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Pour utiliser l&apos;outil de vectorisation, ouvrez ou importez une image, sélectionnez-la, et lancez la commande <flowSpan font-family="sans-serif">Chemin &gt; Vectoriser le bitmap</flowSpan> ou appuyez sur <flowSpan font-weight="bold">Maj+Alt+B</flowSpan>.</flowDiv>
+  <flowDiv xml:space="preserve">Pour utiliser l&apos;outil de vectorisation, ouvrez ou importez une image, sélectionnez-la, et lancez la commande <flowSpan font-family="sans-serif">Chemin &gt; Vectoriser un objet matriciel</flowSpan> ou appuyez sur <flowSpan font-weight="bold">Maj+Alt+B</flowSpan>.</flowDiv>
  </flowRoot>
  <text id="tracing-f01-fr.svgtext7000" font-weight="bold" sodipodi:linespacing="100.00000%" display="block" transform="translate(10 387.84)" xml:space="preserve" line-height="100.00000%" font-size="5.7038" y="99.753128" x="101.47987" font-family="sans-serif" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f01-fr.svgtspan7001" sodipodi:role="line" y="99.753128" x="101.47987">Options principales de vectorisation</tspan></text>
  <image id="tracing-f01-fr.svgimage2577" sodipodi:absref="/potrace-fr.png" xlink:href="potrace-fr.png" transform="translate(10 387.84)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>

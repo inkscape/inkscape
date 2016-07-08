@@ -12,7 +12,7 @@
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2006.
 # Florent Becker <florent.becker@ens-lyon.org>
 # Sophie Gousset <contact@sophieweb.com>
-# Nicolas Dufour <nicoduf@yahoo.fr>, 2008-2015.
+# Nicolas Dufour <nicoduf@yahoo.fr>, 2008-2016.
 # Sylvain Chiron <chironsylvain@orange.fr>, 2016.
 #
 msgid ""
@@ -13865,7 +13865,8 @@ msgstr ""
 " Jonathan Ernst (jonathan@ernstfamily.ch)\n"
 " Florent Becker (florent.becker@ens-lyon.org)\n"
 " Sophie Gousset (contact@sophieweb.com)\n"
-" Nicolas Dufour (nicoduf@yahoo.fr)"
+" Nicolas Dufour (nicoduf@yahoo.fr)\n"
+" Sylvain Chiron (chironsylvain@orange.fr)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:206
 #: ../src/ui/dialog/align-and-distribute.cpp:937

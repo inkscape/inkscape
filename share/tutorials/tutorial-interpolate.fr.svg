@@ -43,7 +43,7 @@
  <text id="text1920" font-family="sans-serif" font-size="7" transform="scale(1.1307)" y="30" x="35" fill="#ffffff">
   <tspan id="tspan1668" style="letter-spacing:2.1813" fill="#ffffff" dx="0 -0.57057059 0 0 0 0 0">::INTERPOLATION</tspan>
  </text>
-Ryan Lerch, ryanlerch at gmail dot com
+<!--Author: Ryan Lerch, ryanlerch at gmail dot com-->
  <rect id="d0e15" display="none" height="1e3px" width="264" y="46" x="35"/>
  <flowRoot font-family="sans-serif" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
   <flowRegion>
@@ -176,7 +176,7 @@ Ryan Lerch, ryanlerch at gmail dot com
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e124"/>
   </flowRegion>
-  <flowDiv xml:space="preserve">Lorsque vous utilisez l&apos;extension Interpoler entre deux chemins différents, la <flowSpan font-style="italic">position</flowSpan> du nœud de départ de chaque chemin est importante. Pour trouver ce nœud particulier, sélectionnez le chemin, puis l&apos;outil Nœud pour faire apparaître les nœuds, et appuyez sur la touche <flowSpan font-weight="bold">Tab</flowSpan>. Le premier nœud apparaissant sélectionné est le nœud de départ.</flowDiv>
+  <flowDiv xml:space="preserve">Lorsque vous utilisez l&apos;extension Interpoler entre deux chemins différents, la <flowSpan font-style="italic">position</flowSpan> du nœud de départ de chaque chemin est importante. Pour trouver ce nœud particulier, sélectionnez le chemin, puis l&apos;outil Nœuds pour faire apparaître les nœuds, et appuyez sur la touche <flowSpan font-weight="bold">Tab</flowSpan>. Le premier nœud apparaissant sélectionné est le nœud de départ.</flowDiv>
  </flowRoot>
  <rect id="d0e133" display="none" height="1e3px" width="288" y="981.71" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
