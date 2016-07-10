@@ -33,13 +33,13 @@ namespace XML {
 /**
  * @brief Enumeration of all XML event types
  */
-enum EventType {
-    EVENT_ADD, ///< Child added
-    EVENT_DEL, ///< Child removed
-    EVENT_CHG_ATTR, ///< Attribute changed
-    EVENT_CHG_CONTENT, ///< Content changed
-    EVENT_CHG_ORDER ///< Order of children changed
-};
+// enum EventType {
+//     EVENT_ADD, ///< Child added
+//     EVENT_DEL, ///< Child removed
+//     EVENT_CHG_ATTR, ///< Attribute changed
+//     EVENT_CHG_CONTENT, ///< Content changed
+//     EVENT_CHG_ORDER ///< Order of children changed
+// };
 
 /**
  * @brief Generic XML modification event
