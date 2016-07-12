@@ -230,8 +230,11 @@ class Path(AbstractShape):
         rx = data[0]
         ry = data[1]
         angle = data[2] * (math.pi / 180.0)
-        arcflag = data[3]
-        sweepflag = data[4]
+        arcFlag = data[3]
+        sweepFlag = data[4]
+        
+        if x1 == x2 and y1 == y2:
+            return
 
         #compute (x1', y1')
         _x1 = math.cos(angle) * (x1 - x2) / 2.0 + math.sin(angle) * (y1 - y2) / 2.0
@@ -246,7 +249,7 @@ class Path(AbstractShape):
         #compute (cx', cy')
         numr = (rx**2 * ry**2) - (rx**2 * _y1**2) - (ry**2 * _x1**2)
         demr = (rx**2 * _y1**2) + (ry**2 * _x1**2)
-        sig = -1 if arcflag == sweepflag else 1
+        sig = -1 if arcFlag == sweepFlag else 1
         sig = sig * math.sqrt(numr / demr)
         if math.isnan(sig): sig = 0;
         _cx = sig * rx * _y1 / ry
@@ -272,8 +275,8 @@ class Path(AbstractShape):
         if r(u,v) <= -1: ad = math.pi
         if r(u,v) >= 1: ad = 0
 
-        if sweepflag == 0 and ad > 0: ad = ad - 2 * math.pi;
-        if sweepflag == 1 and ad < 0: ad = ad + 2 * math.pi;
+        if sweepFlag == 0 and ad > 0: ad = ad - 2 * math.pi;
+        if sweepFlag == 1 and ad < 0: ad = ad + 2 * math.pi;
 
         r = rx if rx > ry else ry
         sx = 1 if rx > ry else rx / ry
@@ -282,7 +285,7 @@ class Path(AbstractShape):
         self.ctx.translate(cx, cy)
         self.ctx.rotate(angle)
         self.ctx.scale(sx, sy)
-        self.ctx.arc(0, 0, r, a1, a1 + ad, 1 - sweepflag)
+        self.ctx.arc(0, 0, r, a1, a1 + ad, 1 - sweepFlag)
         self.ctx.scale(1/sx, 1/sy)
         self.ctx.rotate(-angle)
         self.ctx.translate(-cx, -cy)
