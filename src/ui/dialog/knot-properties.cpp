@@ -145,7 +145,7 @@ KnotPropertiesDialog::_close()
     destroy_();
     Glib::signal_idle().connect(
         sigc::bind_return(
-            sigc::bind(sigc::ptr_fun(&::operator delete), this),
+            sigc::bind(sigc::ptr_fun<void*, void>(&::operator delete), this),
             false 
         )
     );
