@@ -17,9 +17,6 @@
  */
 
 #include "live_effects/lpe-lattice2.h"
-
-#include <gtkmm/expander.h>
-
 #include "sp-shape.h"
 #include "sp-item.h"
 #include "sp-path.h"
@@ -36,6 +33,8 @@
 #include <2geom/d2.h>
 #include <2geom/piecewise.h>
 #include <2geom/transforms.h>
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 using namespace Geom;
 
@@ -280,7 +279,7 @@ void
 LPELattice2::onExpanderChanged()
 {
     expanded = expander->get_expanded();
-    if(expander->get_expanded()) {
+    if(expanded) {
         expander->set_label (Glib::ustring(_("Hide Points")));
     } else {
         expander->set_label (Glib::ustring(_("Show Points")));

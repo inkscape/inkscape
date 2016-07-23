@@ -2,12 +2,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtkmm.h>
-
 #include "live_effects/lpe-simplify.h"
 #include "display/curve.h"
 #include "live_effects/parameter/parameter.h"
-#include <glibmm/i18n.h>
 #include "helper/geom.h"
 #include "livarot/Path.h"
 #include "splivarot.h"
@@ -21,6 +18,8 @@
 #include <2geom/interval.h>
 #include "ui/icon-names.h"
 #include "util/units.h"
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace LivePathEffect {

@@ -13,9 +13,6 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#include <gtkmm.h>
-#include <glibmm/i18n.h>
-
 #include "live_effects/lpe-mirror_symmetry.h"
 #include <sp-path.h>
 #include <display/curve.h>
@@ -28,6 +25,8 @@
 #include "knot-holder-entity.h"
 #include "knotholder.h"
 #include "inkscape.h"
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
