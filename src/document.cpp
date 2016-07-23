@@ -955,6 +955,9 @@ SPDocument::emitReconstructionFinish(void)
 {
     // printf("Finishing Reconstruction\n");
     priv->_reconstruction_finish_signal.emit();
+    // indicates that gradients are reloaded (to rebuild the Auto palette)
+    priv->resources_changed_signals[g_quark_from_string("gradient")].emit();
+
 
 /**    
     // Reference to the old persp3d object is invalid after reconstruction.
