@@ -166,7 +166,7 @@ protected:
 class RegisteredToggleButton : public RegisteredWidget<Gtk::ToggleButton> {
 public:
     virtual ~RegisteredToggleButton();
-    RegisteredToggleButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL, char const *active_str = "true", char const *inactive_str = "false");
+    RegisteredToggleButton (const Glib::ustring& label, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right=true, Inkscape::XML::Node* repr_in=NULL, SPDocument *doc_in=NULL, char const *icon_active = "true", char const *icon_inactive = "false");
 
     void setActive (bool);
 
@@ -183,7 +183,6 @@ public:
                                 // if a callback checks it, it must reset it back to false
 
 protected:
-    char const *_active_str, *_inactive_str;
     sigc::connection  _toggled_connection;
     void on_toggled();
 };

@@ -113,10 +113,8 @@ RegisteredToggleButton::~RegisteredToggleButton()
     _toggled_connection.disconnect();
 }
 
-RegisteredToggleButton::RegisteredToggleButton (const Glib::ustring& /*label*/, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in, SPDocument *doc_in, char const *active_str, char const *inactive_str)
+RegisteredToggleButton::RegisteredToggleButton (const Glib::ustring& /*label*/, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr, bool right, Inkscape::XML::Node* repr_in, SPDocument *doc_in, char const *icon_active, char const *icon_inactive)
     : RegisteredWidget<Gtk::ToggleButton>()
-    , _active_str(active_str)
-    , _inactive_str(inactive_str)
 {
     init_parent(key, wr, repr_in, doc_in);
     setProgrammatically = false;
@@ -149,7 +147,7 @@ RegisteredToggleButton::on_toggled()
         return;
     _wr->setUpdating (true);
 
-    write_to_xml(get_active() ? _active_str : _inactive_str);
+    write_to_xml(get_active() ? "true" : "false");
     //The slave button is greyed out if the master button is untoggled
     for (std::list<Gtk::Widget*>::const_iterator i = _slavewidgets.begin(); i != _slavewidgets.end(); ++i) {
         (*i)->set_sensitive(get_active());

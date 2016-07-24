@@ -24,10 +24,10 @@ namespace LivePathEffect {
 ToggleButtonParam::ToggleButtonParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect, bool default_value, const Glib::ustring& inactive_label,
-                      char const * icon_active, char const * icon_inactive, 
-                      Inkscape::IconSize icon_size)
+                      char const * _icon_active, char const * _icon_inactive, 
+                      Inkscape::IconSize _icon_size)
     : Parameter(label, tip, key, wr, effect), value(default_value), defvalue(default_value),
-      inactiveLabel(inactive_label), iconActive(icon_active), iconInactive(icon_inactive), iconSize(icon_size)
+      inactive_label(inactive_label), _icon_active(_icon_active), _icon_inactive(_icon_inactive), _icon_size(_icon_size)
 {
     checkwdg = NULL;
 }
@@ -75,38 +75,40 @@ ToggleButtonParam::param_newWidget()
                                                          param_effect->getRepr(),
                                                          param_effect->getSPDoc()) );
 #if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget * boxButton = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_set_homogeneous(GTK_BOX(boxButton), false);
+    GtkWidget * box_button = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(box_button), false);
 #else
-    GtkWidget * boxButton = gtk_hbox_new (false, 0);
+    GtkWidget * box_button = gtk_hbox_new (false, 0);
 #endif
-    GtkWidget * labelButton = gtk_label_new ("");
+    GtkWidget * label_button = gtk_label_new ("");
     if (!param_label.empty()) {
-        if(value || inactiveLabel.empty()){
-            gtk_label_set_text(GTK_LABEL(labelButton), param_label.c_str());
+        if(value || inactive_label.empty()){
+            gtk_label_set_text(GTK_LABEL(label_button), param_label.c_str());
         }else{
-            gtk_label_set_text(GTK_LABEL(labelButton), inactiveLabel.c_str());
+            gtk_label_set_text(GTK_LABEL(label_button), inactive_label.c_str());
         }
     }
-    gtk_widget_show(labelButton);
-    if ( iconActive ) {
-        if(!iconInactive){
-            iconInactive = iconActive;
+    gtk_widget_show(label_button);
+    if ( _icon_active ) {
+        if(!_icon_inactive){
+            _icon_inactive = _icon_active;
         }
-        gtk_widget_show(boxButton);
-        GtkWidget *iconButton = sp_icon_new(iconSize, iconActive);
+        gtk_widget_show(box_button);
+        GtkWidget *icon_button = NULL;
         if(!value){ 
-            iconButton = sp_icon_new(iconSize, iconInactive);
+            icon_button = sp_icon_new(_icon_size, _icon_inactive);
+        } else {
+            icon_button = sp_icon_new(_icon_size, _icon_active);
         }
-        gtk_widget_show(iconButton);
-        gtk_box_pack_start (GTK_BOX(boxButton), iconButton, false, false, 1);
+        gtk_widget_show(icon_button);
+        gtk_box_pack_start (GTK_BOX(box_button), icon_button, false, false, 1);
         if (!param_label.empty()) {
-            gtk_box_pack_start (GTK_BOX(boxButton), labelButton, false, false, 1);
+            gtk_box_pack_start (GTK_BOX(box_button), label_button, false, false, 1);
         }
     }else{
-        gtk_box_pack_start (GTK_BOX(boxButton), labelButton, false, false, 1);
+        gtk_box_pack_start (GTK_BOX(box_button), label_button, false, false, 1);
     }
-    checkwdg->add(*Gtk::manage(Glib::wrap(boxButton)));
+    checkwdg->add(*Gtk::manage(Glib::wrap(box_button)));
     checkwdg->setActive(value);
     checkwdg->setProgrammatically = false;
     checkwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change togglebutton parameter"));
@@ -126,25 +128,27 @@ ToggleButtonParam::refresh_button()
     if(!checkwdg){
         return;
     }
-    Gtk::Widget * boxButton = checkwdg->get_child();
-    if(!boxButton){
+    Gtk::Widget * box_button = checkwdg->get_child();
+    if(!box_button){
         return;
     }
-    GList * childs = gtk_container_get_children(GTK_CONTAINER(boxButton->gobj()));
-    guint totalWidgets = g_list_length (childs);
+    GList * childs = gtk_container_get_children(GTK_CONTAINER(box_button->gobj()));
+    guint total_widgets = g_list_length (childs);
     if (!param_label.empty()) {
-        if(value || inactiveLabel.empty()){
-            gtk_label_set_text(GTK_LABEL(g_list_nth_data(childs, totalWidgets-1)), param_label.c_str());
+        if(value || inactive_label.empty()){
+            gtk_label_set_text(GTK_LABEL(g_list_nth_data(childs, total_widgets-1)), param_label.c_str());
         }else{
-            gtk_label_set_text(GTK_LABEL(g_list_nth_data(childs, totalWidgets-1)), inactiveLabel.c_str());
+            gtk_label_set_text(GTK_LABEL(g_list_nth_data(childs, total_widgets-1)), inactive_label.c_str());
         }
     }
-    if ( iconActive ) {
-        GdkPixbuf * iconPixbuf = sp_pixbuf_new( iconSize, iconActive );
+    if ( _icon_active ) {
+        GdkPixbuf * icon_pixbuf = NULL;
         if(!value){ 
-            iconPixbuf = sp_pixbuf_new( iconSize, iconInactive);
+            icon_pixbuf = sp_pixbuf_new( _icon_size, _icon_inactive );
+        } else {
+            icon_pixbuf = sp_pixbuf_new( _icon_size, _icon_active );
         }
-        gtk_image_set_from_pixbuf (GTK_IMAGE(g_list_nth_data(childs, 0)), iconPixbuf);
+        gtk_image_set_from_pixbuf (GTK_IMAGE(g_list_nth_data(childs, 0)), icon_pixbuf);
     }
 }
 

@@ -3241,7 +3241,7 @@
 </g>
 <g id="on" transform="translate(454.5112,482.827)">
 <rect y="199.5352" x="10.48884" height="16" width="16" id="rect23222-9" style="fill:none" />
-<ellipse style="color:#000000;fill:none;stroke:url(#linearGradient19282);stroke-linejoin:round" id="ellipse10646" cx="18.48884" cy="207.5353" rx="6.611154" ry="6.515604" transform="translate(-1.031494e-7,-4.35791e-5)" />
+<ellipse style="color:#000000;fill:none;stroke:url(#linearGradient19282);stroke-linejoin:round" id="ellipse10646" cx="18.48884" cy="207.5353" rx="6.611154" ry="6.515604" />
 <path sodipodi:nodetypes="ccc" inkscape:connector-curvature="0" id="path10653" d="M 15.35239,207.5955 17.38434,209.4915 21.62529,205.579" style="color:#000000;fill:none;stroke:url(#linearGradient19282)" />
 </g>
 <g id="off" transform="translate(429.5112,500.3125)">

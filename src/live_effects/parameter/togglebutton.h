@@ -59,10 +59,10 @@ private:
     void refresh_button();
     bool value;
     bool defvalue;
-    const Glib::ustring inactiveLabel;
-    const char * iconActive;
-    const char * iconInactive;
-    Inkscape::IconSize  iconSize;
+    const Glib::ustring inactive_label;
+    const char * _icon_active;
+    const char * _icon_inactive;
+    Inkscape::IconSize  _icon_size;
     Inkscape::UI::Widget::RegisteredToggleButton * checkwdg;
 
     sigc::signal<void> _signal_toggled;
