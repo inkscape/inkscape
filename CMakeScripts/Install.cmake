@@ -11,10 +11,15 @@ if(WIN32)
     ${EXECUTABLE_OUTPUT_PATH}/inkview.exe
     DESTINATION ${CMAKE_INSTALL_PREFIX}
   )
+  
+  install(PROGRAMS
+	${EXECUTABLE_OUTPUT_PATH}/inkscape_com.exe
+	DESTINATION ${CMAKE_INSTALL_PREFIX}
+	RENAME inkscape.com
+  )
 
   install(FILES
     ${LIBRARY_OUTPUT_PATH}/libinkscape_base.dll
-    ${LIBRARY_OUTPUT_PATH}/libgrid2.dll
     DESTINATION ${CMAKE_INSTALL_PREFIX}
   )
     
@@ -25,6 +30,9 @@ if(WIN32)
     NEWS
     README
     TRANSLATORS
+	GPL2.txt
+	GPL3.txt
+	LGPL2.1.txt
     DESTINATION ${CMAKE_INSTALL_PREFIX})
     
   # There are differences in the devlibs for 64-Bit and 32-Bit build environments.

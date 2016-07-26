@@ -159,6 +159,34 @@ if(HAVE_MINGW64)
 endif()
 
 # -----------------------------------------------------------------------------
+# MSYS CHECKS
+# -----------------------------------------------------------------------------
+
+# Somehow the MSYS variable does not work as documented..
+if("${CMAKE_GENERATOR}" STREQUAL "MSYS Makefiles")
+  set(HAVE_MSYS ON)
+else()
+  set(HAVE_MSYS OFF)
+endif()
+
+# Set the path to the 'ar' utility for the MSYS shell as it fails to detect it properly.
+if(HAVE_MSYS)
+  message(STATUS "Configuring MSYS environment:")
+  
+  if(NOT EXISTS ${CMAKE_AR})
+	set(MINGW_AR ${MINGW_BIN}/ar.exe)
+  
+	if(EXISTS ${MINGW_AR})
+		set(CMAKE_AR ${MINGW_AR} CACHE FILEPATH "Archive Utility")
+	else()
+		message(FATAL_ERROR "ar.exe not found.")
+	endif()
+	
+	message(STATUS "  Setting path to ar.exe: ${CMAKE_AR}")
+  endif()
+endif()
+
+# -----------------------------------------------------------------------------
 # GHOSTSCRIPT CHECKS
 # -----------------------------------------------------------------------------
 

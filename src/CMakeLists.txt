@@ -418,7 +418,7 @@ set(inkscape_SRC
   verbs.h
   version.h
 )
-
+  
 # -----------------------------------------------------------------------------
 # Generate version file
 # -----------------------------------------------------------------------------
@@ -484,35 +484,33 @@ set(inkscape_SRC
 # -----------------------------------------------------------------------------
 # Setup the executable
 # -----------------------------------------------------------------------------
-#add_inkscape_lib(sp_LIB "${sp_SRC}")
-#add_inkscape_lib(inkscape_LIB "${inkscape_SRC}")
+set(main_SRC main.cpp)
+set(view_SRC inkview.cpp)
 
-if(WIN32)
+if(WIN32)  
   # Sources for the inkscape executable on Windows.
-  set(main_SRC
+  list(APPEND main_SRC
     registrytool.h
     registrytool.cpp
-    main.cpp
     winmain.cpp
-    #winconsole.cpp
   )
   
   # Add the platform specific resource files (enabling the app icon).
   if(${HAVE_MINGW64})
     list(APPEND main_SRC inkscape-x64.rc)
+	list(APPEND view_SRC inkscape-x64.rc)
   else()
     list(APPEND main_SRC inkscape.rc)
+	list(APPEND view_SRC inkscape.rc)
   endif()
-else()
-  set(main_SRC main.cpp)
+  
+  # Build the windows MS-DOS console executable.
+  add_executable(inkscape_com winconsole.cpp)
 endif()
-
-# Build everything except main and inkview.c in a shared library.
-add_library(inkscape_base SHARED ${inkscape_SRC} ${sp_SRC})
 
 # make executables for inkscape and inkview
 add_executable(inkscape ${main_SRC})
-add_executable(inkview inkview.cpp)
+add_executable(inkview ${view_SRC})
 
 add_dependencies(inkscape inkscape_version)
 
@@ -544,6 +542,9 @@ if (NOT "${WITH_EXT_GDL}")
     # Insert it at the beginning of the list as the windows build fails otherwise
     list (INSERT INKSCAPE_TARGET_LIBS 0 "gdl_LIB")
 endif()
+
+# Build everything except main and inkview.c in a shared library.
+add_library(inkscape_base SHARED ${inkscape_SRC} ${sp_SRC})
 
 # Link the inkscape_base library against all external dependencies
 target_link_libraries(inkscape_base ${INKSCAPE_TARGET_LIBS})

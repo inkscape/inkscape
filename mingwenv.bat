@@ -2,7 +2,7 @@
 
 REM -----------------------------------------------------------------------------
 REM The paths in this file are used if you want to build Inkscape from the
-REM the Windows built-in command line (i.e. MSYS).
+REM the Windows built-in command line.
 REM -----------------------------------------------------------------------------
 
 REM Directory containing the precompiled Inkscape libraries. Usually c:\devlibs or c:\devlibs64
