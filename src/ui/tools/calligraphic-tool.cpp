@@ -23,8 +23,6 @@
 
 #define noDYNA_DRAW_VERBOSE
 
-#include "config.h"
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
@@ -35,12 +33,10 @@
 #include "svg/svg.h"
 #include "display/canvas-bpath.h"
 #include "display/cairo-utils.h"
-#include <2geom/math-utils.h>
 #include <2geom/pathvector.h>
 #include <2geom/bezier-utils.h>
 #include <2geom/circle.h>
 #include "display/curve.h"
-#include <glib.h>
 #include "macros.h"
 #include "document.h"
 #include "document-undo.h"
@@ -50,20 +46,15 @@
 
 #include "desktop-style.h"
 #include "message-context.h"
-#include "preferences.h"
 #include "pixmaps/cursor-calligraphy.xpm"
-#include "xml/repr.h"
 #include "context-fns.h"
-#include "sp-item.h"
 #include "inkscape.h"
-#include "color.h"
 #include "splivarot.h"
 #include "sp-item-group.h"
 #include "sp-shape.h"
 #include "sp-path.h"
 #include "sp-text.h"
 #include "display/sp-canvas.h"
-#include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"
 #include "verbs.h"

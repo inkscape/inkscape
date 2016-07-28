@@ -17,7 +17,6 @@
 #include "sp-guide.h"
 #include "display/curve.h"
 #include <glibmm/i18n.h>
-#include "xml/repr.h"
 #include "document.h"
 #include "inkscape.h"
 

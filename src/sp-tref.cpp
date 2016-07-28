@@ -22,14 +22,9 @@
 #include "document.h"
 #include "sp-factory.h"
 #include "sp-text.h"
-#include "sp-tspan.h"
 #include "sp-tref.h"
 #include "style.h"
 #include "text-editing.h"
-#include "uri.h"
-
-#include "xml/node.h"
-#include "xml/repr.h"
 
 //#define DEBUG_TREF
 #ifdef DEBUG_TREF

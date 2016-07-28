@@ -25,15 +25,12 @@
 #include "config.h"
 #endif
 
-#include <stddef.h>
 #include <sigc++/sigc++.h>
 
 #include <2geom/affine.h>
-#include <2geom/rect.h>
 
 #include "ui/view/view.h"
 #include "display/rendermode.h"
-#include <glibmm/ustring.h>
 
 #include "preferences.h"
 #include "sp-gradient.h" // TODO refactor enums out to their own .h file

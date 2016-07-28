@@ -9,7 +9,7 @@
 
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include "ui/widget/addtoicon.h"
@@ -19,9 +19,7 @@
 #include "widgets/icon.h"
 #include "widgets/toolbox.h"
 #include "ui/icon-names.h"
-#include "preferences.h"
 #include "layertypeicon.h"
-#include "addtoicon.h"
 
 namespace Inkscape {
 namespace UI {

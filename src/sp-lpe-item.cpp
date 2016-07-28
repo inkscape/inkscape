@@ -13,7 +13,6 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
 #endif
 
 #include "ui/tool/multi-path-manipulator.h"
@@ -27,11 +26,7 @@
 
 #include "sp-path.h"
 #include "sp-item-group.h"
-#include "streq.h"
-#include "macros.h"
 #include "attributes.h"
-#include "sp-lpe-item.h"
-#include "xml/repr.h"
 #include "uri.h"
 #include "message-stack.h"
 #include "inkscape.h"
@@ -40,14 +35,10 @@
 #include "sp-ellipse.h"
 #include "display/curve.h"
 #include "svg/svg.h"
-#include <2geom/pathvector.h>
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "ui/tools-switch.h"
 #include "ui/tools/node-tool.h"
-#include "ui/tools/tool-base.h"
-
-#include <algorithm>
 
 /* LPEItem base class */
 static void sp_lpe_item_enable_path_effects(SPLPEItem *lpeitem, bool enable);

@@ -14,29 +14,18 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "lpe-powerstroke-properties.h"
 #include <boost/lexical_cast.hpp>
-#include <gtkmm/stock.h>
-#include <glibmm/main.h>
 #include <glibmm/i18n.h>
 #include "inkscape.h"
 #include "desktop.h"
-#include "document.h"
 #include "document-undo.h"
 #include "layer-manager.h"
-#include "message-stack.h"
 
-#include "sp-object.h"
-#include "sp-item.h"
-#include "verbs.h"
-#include "selection.h"
 #include "selection-chemistry.h"
-#include "ui/icon-names.h"
-#include "ui/widget/imagetoggler.h"
-#include "live_effects/parameter/parameter.h"
 //#include "event-context.h"
 
 namespace Inkscape {

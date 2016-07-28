@@ -16,7 +16,6 @@
 #include <map>
 #include <vector>
 #include <glib.h>
-#include <glib-object.h>
 #include <sigc++/signal.h>
 #include "layer-model.h"
 #include "selection.h"

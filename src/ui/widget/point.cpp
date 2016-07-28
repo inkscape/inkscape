@@ -12,14 +12,11 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 
 #include "ui/widget/point.h"
-#include "ui/widget/labelled.h"
-#include "ui/widget/scalar.h"
-#include <gtkmm/box.h>
 
 namespace Inkscape {
 namespace UI {

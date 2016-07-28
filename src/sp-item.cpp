@@ -13,7 +13,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "sp-item.h"
@@ -33,19 +33,14 @@
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "sp-rect.h"
-#include "sp-use.h"
 #include "sp-text.h"
 #include "sp-textpath.h"
 #include "sp-item-rm-unsatisfied-cns.h"
 #include "sp-pattern.h"
-#include "sp-paint-server.h"
 #include "sp-switch.h"
-#include "sp-guide-constraint.h"
 #include "gradient-chemistry.h"
-#include "preferences.h"
 #include "conn-avoid-ref.h"
 #include "conditions.h"
-#include "sp-filter-reference.h"
 #include "filter-chemistry.h"
 #include "sp-guide.h"
 #include "sp-title.h"
@@ -53,13 +48,8 @@
 
 #include "util/find-last-if.h"
 #include "util/reverse-list.h"
-#include <2geom/rect.h>
-#include <2geom/affine.h>
-#include <2geom/transforms.h>
 
-#include "xml/repr.h"
 #include "extract-uri.h"
-#include "helper/geom.h"
 
 #include "live_effects/lpeobject.h"
 #include "live_effects/effect.h"

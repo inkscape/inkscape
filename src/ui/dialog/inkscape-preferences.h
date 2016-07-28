@@ -19,7 +19,6 @@
 # include "config.h"
 #endif
 
-#include <iostream>
 #include <vector>
 #include "ui/widget/preferences-widget.h"
 #include "ui/widget/button.h"

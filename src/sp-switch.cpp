@@ -18,7 +18,6 @@
 #include "display/drawing-group.h"
 #include "conditions.h"
 
-#include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 
 SPSwitch::SPSwitch() : SPGroup() {

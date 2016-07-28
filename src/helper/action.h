@@ -15,6 +15,7 @@
 #include "helper/action-context.h"
 #include <sigc++/signal.h>
 #include <glibmm/ustring.h>
+#include <glib-object.h>
 
 #define SP_TYPE_ACTION (sp_action_get_type())
 #define SP_ACTION(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_ACTION, SPAction))

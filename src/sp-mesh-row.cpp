@@ -17,8 +17,6 @@
 #include "sp-mesh-row.h"
 #include "style.h"
 
-#include "xml/repr.h"
-
 SPMeshrow* SPMeshrow::getNextMeshrow()
 {
     SPMeshrow *result = 0;

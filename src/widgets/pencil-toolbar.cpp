@@ -25,19 +25,17 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
-#include <list>
 
 #include "pencil-toolbar.h"
 #include "desktop.h"
 #include "widgets/ege-adjustment-action.h"
 #include "widgets/ege-select-one-action.h"
 #include "widgets/ink-action.h"
-#include "preferences.h"
 #include "toolbox.h"
 #include "ui/tools-switch.h"
 #include "ui/icon-names.h"
@@ -46,13 +44,10 @@
 #include "widgets/spinbutton-events.h"
 #include <selection.h>
 #include "display/curve.h"
-#include "live_effects/effect.h"
 #include "live_effects/lpe-simplify.h"
 #include "live_effects/lpe-powerstroke.h"
-#include "live_effects/effect-enum.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
-#include "sp-lpe-item.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::UI::ToolboxFactory;

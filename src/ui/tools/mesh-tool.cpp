@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 //#define DEBUG_MESH
@@ -33,7 +33,6 @@
 #include "macros.h"
 #include "message-context.h"
 #include "message-stack.h"
-#include "preferences.h"
 #include "rubberband.h"
 #include "selection.h"
 #include "snap.h"

@@ -9,13 +9,9 @@
 
 #include <iomanip>
 #include <2geom/path-sink.h>
-#include <2geom/point.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/elliptical-arc.h>
 #include <2geom/sbasis-to-bezier.h> // cubicbezierpath_from_sbasis
 #include <2geom/path-intersection.h>
 #include <2geom/circle.h>
-#include <math.h>
 
 #include "helper/geom-pathstroke.h"
 

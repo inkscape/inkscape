@@ -12,7 +12,6 @@
 
 
 #include "previewholder.h"
-#include "preferences.h"
 
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/sizegroup.h>

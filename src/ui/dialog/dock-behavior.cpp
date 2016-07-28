@@ -12,7 +12,7 @@
 
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "dock-behavior.h"
@@ -23,14 +23,10 @@
 #include "ui/widget/dock.h"
 #include "verbs.h"
 #include "dialog.h"
-#include "preferences.h"
 #include "ui/dialog-events.h"
 
 #include <gtkmm/invisible.h>
-#include <gtkmm/label.h>
 #include <gtkmm/stock.h>
-
-#include <gtk/gtk.h>
 
 namespace Inkscape {
 namespace UI {

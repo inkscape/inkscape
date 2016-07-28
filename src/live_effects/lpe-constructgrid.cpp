@@ -14,9 +14,6 @@
 
 #include "live_effects/lpe-constructgrid.h"
 
-#include <2geom/path.h>
-#include <2geom/transforms.h>
-
 namespace Inkscape {
 namespace LivePathEffect {
 

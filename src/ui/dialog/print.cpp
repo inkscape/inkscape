@@ -11,7 +11,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include <gtkmm.h>
@@ -26,7 +26,6 @@
 
 #include "extension/internal/cairo-render-context.h"
 #include "extension/internal/cairo-renderer.h"
-#include "ui/widget/rendering-options.h"
 #include "document.h"
 
 #include "util/units.h"

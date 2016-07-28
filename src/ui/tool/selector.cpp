@@ -14,7 +14,6 @@
 
 #include "display/sodipodi-ctrlrect.h"
 #include "ui/tools/tool-base.h"
-#include "preferences.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/selector.h"
 

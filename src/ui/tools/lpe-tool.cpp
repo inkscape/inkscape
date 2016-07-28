@@ -15,19 +15,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
 #include <2geom/sbasis-geometric.h>
-#include <gdk/gdkkeysyms.h>
 
 #include <glibmm/i18n.h>
-#include "macros.h"
 #include "pixmaps/cursor-crosshairs.xpm"
 #include <gtk/gtk.h>
 #include "desktop.h"
 #include "message-context.h"
-#include "preferences.h"
 #include "ui/shape-editor.h"
 #include "selection.h"
 

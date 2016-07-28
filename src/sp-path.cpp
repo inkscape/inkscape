@@ -16,7 +16,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -27,7 +27,6 @@
 #include "sp-lpe-item.h"
 
 #include "display/curve.h"
-#include <2geom/pathvector.h>
 #include <2geom/curves.h>
 #include "helper/geom-curves.h"
 
@@ -46,7 +45,6 @@
 #include "inkscape.h"
 #include "style.h"
 #include "message-stack.h"
-#include "selection.h"
 
 #define noPATH_VERBOSE
 

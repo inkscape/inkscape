@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 #include <cstring>
 #include <string>
@@ -30,11 +30,9 @@
 #include "desktop-style.h"
 #include "knot.h"
 #include "message-stack.h"
-#include "snap.h"
 #include "pure-transform.h"
 #include "selection.h"
 #include "ui/tools/select-tool.h"
-#include "sp-item.h"
 #include "sp-item-transform.h"
 #include "sp-root.h"
 #include "seltrans-handles.h"
@@ -44,13 +42,9 @@
 #include <glibmm/i18n.h>
 #include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
-#include "preferences.h"
-#include "xml/repr.h"
 #include "mod360.h"
-#include <2geom/angle.h>
 #include "display/snap-indicator.h"
 #include "ui/control-manager.h"
-#include "seltrans-handles.h"
 
 using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;

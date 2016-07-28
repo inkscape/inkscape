@@ -24,7 +24,6 @@
 #include <2geom/bezier-curve.h>
 #include <2geom/crossing.h>
 #include <2geom/line.h>
-#include <2geom/angle.h>
 
 #include "style.h"
 #include "document-private.h"
@@ -38,7 +37,6 @@
 #include <glibmm/i18n.h>
 
 #include "sp-gradient-reference.h"
-#include "sp-gradient-vector.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-mesh.h"
@@ -48,11 +46,9 @@
 
 #include "sp-text.h"
 #include "sp-tspan.h"
-#include "xml/repr.h"
 #include "svg/svg.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
-#include "preferences.h"
 
 #define noSP_GR_VERBOSE
 

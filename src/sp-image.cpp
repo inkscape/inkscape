@@ -30,7 +30,6 @@
 #include "display/cairo-utils.h"
 #include "display/curve.h"
 //Added for preserveAspectRatio support -- EAF
-#include "enums.h"
 #include "attributes.h"
 #include "print.h"
 #include "brokenimage.xpm"
@@ -38,8 +37,6 @@
 #include "sp-image.h"
 #include "sp-clippath.h"
 #include "xml/quote.h"
-#include "xml/repr.h"
-#include "snap-candidate.h"
 #include "preferences.h"
 #include "io/sys.h"
 

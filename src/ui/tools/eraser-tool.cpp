@@ -24,8 +24,6 @@
 
 #define noERASER_VERBOSE
 
-#include "config.h"
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
@@ -38,7 +36,6 @@
 #include "display/canvas-bpath.h"
 #include <2geom/bezier-utils.h>
 
-#include <glib.h>
 #include "macros.h"
 #include "document.h"
 #include "selection.h"
@@ -47,26 +44,18 @@
 
 #include "desktop-style.h"
 #include "message-context.h"
-#include "preferences.h"
 #include "pixmaps/cursor-eraser.xpm"
-#include "xml/repr.h"
 #include "context-fns.h"
-#include "sp-item.h"
-#include "color.h"
 #include "rubberband.h"
 #include "splivarot.h"
 #include "sp-item-group.h"
 #include "sp-shape.h"
 #include "sp-path.h"
 #include "sp-text.h"
-#include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
-#include "livarot/Shape.h"
 #include "document-undo.h"
 #include "verbs.h"
 #include "style.h"
-#include "style-enums.h"
-#include <2geom/math-utils.h>
 #include <2geom/pathvector.h>
 #include "path-chemistry.h"
 #include "display/curve.h"

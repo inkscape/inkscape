@@ -8,9 +8,7 @@
 
 #include "spin-scale.h"
 
-#include <gtkmm/adjustment.h>
 #include <glibmm/i18n.h>
-#include <glibmm/stringutils.h>
 
 #include "ui/widget/gimpspinscale.h"
 

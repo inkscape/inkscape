@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -38,7 +38,6 @@
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
 #include "widgets/ege-output-action.h"
-#include "preferences.h"
 #include "toolbox.h"
 #include "widgets/ink-action.h"
 #include "ui/icon-names.h"

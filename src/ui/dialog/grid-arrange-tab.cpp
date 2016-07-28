@@ -16,14 +16,12 @@
 //#define DEBUG_GRID_ARRANGE 1
 
 #include "ui/dialog/grid-arrange-tab.h"
-#include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
 
 #if WITH_GTKMM_3_0
 # include <gtkmm/grid.h>
 #else
-# include <gtkmm/table.h>
 #endif
 
 #include <2geom/transforms.h>
@@ -32,10 +30,8 @@
 #include "preferences.h"
 #include "inkscape.h"
 
-#include "selection.h"
 #include "document.h"
 #include "document-undo.h"
-#include "sp-item.h"
 #include "widgets/icon.h"
 #include "desktop.h"
 //#include "sp-item-transform.h" FIXME

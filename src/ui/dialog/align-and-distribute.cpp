@@ -18,7 +18,7 @@
 
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "align-and-distribute.h"
@@ -27,13 +27,10 @@
 
 #include "unclump.h"
 #include "document.h"
-#include "enums.h"
 #include "graphlayout.h"
 #include "inkscape.h"
-#include "macros.h"
 #include "preferences.h"
 #include "removeoverlap.h"
-#include "selection.h"
 #include "sp-flowtext.h"
 #include "sp-item-transform.h"
 #include "sp-text.h"

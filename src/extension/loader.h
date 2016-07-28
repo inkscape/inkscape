@@ -1,4 +1,5 @@
-/** @file
+/** @file#include <config.h>
+
  * Loader for external plug-ins.
  *//*
  *

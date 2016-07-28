@@ -13,32 +13,17 @@
 #include "live_effects/lpe-powerstroke.h"
 #include "live_effects/lpe-powerstroke-interpolators.h"
 
-#include "sp-shape.h"
 #include "style.h"
-#include "xml/repr.h"
-#include "sp-paint-server.h"
 #include "svg/svg-color.h"
 #include "desktop-style.h"
 #include "svg/css-ostringstream.h"
 #include "display/curve.h"
 
-#include <2geom/path.h>
-#include <2geom/piecewise.h>
-#include <2geom/sbasis-geometric.h>
-#include <2geom/transforms.h>
-#include <2geom/bezier-utils.h>
 #include <2geom/elliptical-arc.h>
-#include <2geom/sbasis-to-bezier.h>
 #include <2geom/path-sink.h>
 #include <2geom/path-intersection.h>
-#include <2geom/crossing.h>
-#include <2geom/ellipse.h>
 #include <2geom/circle.h>
-#include <2geom/math-utils.h>
 #include "helper/geom.h"
-#include <math.h>
-
-#include "spiro.h"
 
 namespace Geom {
 // should all be moved to 2geom at some point

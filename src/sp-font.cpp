@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 /*
@@ -17,8 +17,6 @@
 #include "xml/repr.h"
 #include "attributes.h"
 #include "sp-font.h"
-#include "sp-glyph.h"
-#include "sp-missing-glyph.h"
 #include "document.h"
 
 #include "display/nr-svgfonts.h"

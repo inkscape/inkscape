@@ -1,4 +1,4 @@
-#ifndef SEEN_DIR_UTIL_H
+#ifndef SEEN_DIR_UTIL_H#include <config.h>
 #define SEEN_DIR_UTIL_H
 
 /*

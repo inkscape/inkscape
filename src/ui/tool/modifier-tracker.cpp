@@ -12,7 +12,6 @@
 #include <gdk/gdkkeysyms.h>
 #include "ui/tool/event-utils.h"
 #include "ui/tool/modifier-tracker.h"
-#include <gtk/gtk.h>
 
 namespace Inkscape {
 namespace UI {

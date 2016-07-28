@@ -10,8 +10,6 @@
  */
 
 #include "inkscape.h"
-#include "snap-preferences.h"
-#include <glib.h> // g_assert()
 
 Inkscape::SnapPreferences::SnapPreferences() :
     _snap_enabled_globally(true),

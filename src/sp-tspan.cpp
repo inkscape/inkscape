@@ -24,7 +24,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <cstring>
@@ -40,9 +40,7 @@
 #include "sp-textpath.h"
 #include "text-editing.h"
 #include "style.h"
-#include "xml/repr.h"
 #include "document.h"
-#include "2geom/transforms.h"
 
 /*#####################################################
 #  SPTSPAN

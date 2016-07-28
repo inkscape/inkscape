@@ -13,7 +13,6 @@
  */
 
 #include <algorithm>
-#include <iostream>
 #include <iomanip>
 #include <vector>
 #include "math.h"

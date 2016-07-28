@@ -14,9 +14,6 @@
 
 #include "live_effects/lpe-transform_2pts.h"
 #include "display/curve.h"
-#include <2geom/transforms.h>
-#include <2geom/pathvector.h>
-#include "sp-path.h"
 #include "ui/icon-names.h"
 #include "svg/svg.h"
 #include "verbs.h"

@@ -8,10 +8,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <config.h>
-
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include "gtkmm/messagedialog.h"
@@ -25,7 +23,6 @@
 #include "document.h"
 #include "document-undo.h"
 #include "desktop.h"
-#include "ui/view/view.h"
 #include "sp-namedview.h"
 
 #include "display/sp-canvas.h"

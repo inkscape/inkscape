@@ -15,13 +15,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "document-metadata.h"
 #include "desktop.h"
 
-#include "inkscape.h"
 #include "rdf.h"
 #include "sp-namedview.h"
 #include "ui/widget/entity-entry.h"

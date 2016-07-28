@@ -1,10 +1,12 @@
-#include <libcroco/cr-parser.h>
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
 #include "document.h"
 #include "sp-style-elem.h"
 #include "attributes.h"
 #include "style.h"
+#include <libcroco/cr-parser.h>
+#include <libcroco/cr-cascade.h>
+
 using Inkscape::XML::TEXT_NODE;
 
 SPStyleElem::SPStyleElem() : SPObject() {

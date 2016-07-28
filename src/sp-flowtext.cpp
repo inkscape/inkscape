@@ -2,7 +2,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 #include <glibmm/i18n.h>
 #include <cstring>
@@ -13,20 +13,15 @@
 #include "style.h"
 #include "inkscape.h"
 #include "document.h"
-#include "selection.h"
 
 #include "desktop.h"
-
-#include "xml/repr.h"
 
 #include "sp-flowdiv.h"
 #include "sp-flowregion.h"
 #include "sp-flowtext.h"
 #include "sp-string.h"
-#include "sp-use.h"
 #include "sp-rect.h"
 #include "text-tag-attributes.h"
-#include "text-chemistry.h"
 #include "text-editing.h"
 #include "sp-text.h"
 

@@ -12,10 +12,6 @@
  */
 
 #include "live_effects/lpe-ruler.h"
-#include <2geom/piecewise.h>
-#include <2geom/sbasis-geometric.h>
-#include "inkscape.h"
-#include "desktop.h"
 
 
 namespace Inkscape {

@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -45,10 +45,7 @@
 #include "ui/tools/star-tool.h"
 #include "ui/uxmanager.h"
 #include "verbs.h"
-#include "widgets/../preferences.h"
 #include "xml/node-event-vector.h"
-#include "xml/node.h"
-#include "xml/repr.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;

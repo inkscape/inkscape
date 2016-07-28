@@ -17,12 +17,10 @@
 #include <math.h>
 #include <vector>
 #include "attributes.h"
-#include "svg/svg.h"
 #include "filters/convolvematrix.h"
 #include "helper-fns.h"
 #include "xml/repr.h"
 #include "display/nr-filter.h"
-#include "display/nr-filter-convolve-matrix.h"
 
 SPFeConvolveMatrix::SPFeConvolveMatrix() : SPFilterPrimitive() {
 	this->bias = 0;

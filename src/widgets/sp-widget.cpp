@@ -13,7 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "macros.h"
 #include "document.h"
 #include "inkscape.h"
 #include "sp-widget.h"

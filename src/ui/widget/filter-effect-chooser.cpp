@@ -10,12 +10,8 @@
  */
 
 #include "filter-effect-chooser.h"
-#include <glibmm/i18n.h>
-
-#include "desktop.h"
 
 #include "document.h"
-#include "inkscape.h"
 
 namespace Inkscape {
 namespace UI {

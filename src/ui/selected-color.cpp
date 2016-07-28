@@ -11,7 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/ustring.h>

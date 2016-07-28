@@ -10,7 +10,6 @@
  */
 
 #include <cstring>
-#include <string>
 
 #include "xml/node-event-vector.h"
 #include "sp-xmlview-tree.h"

@@ -9,7 +9,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "livepatheffect-add.h"
@@ -17,7 +17,6 @@
 #include <gtkmm/stock.h>
 
 #include "desktop.h"
-#include "live_effects/effect-enum.h"
 
 namespace Inkscape {
 namespace UI {

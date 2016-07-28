@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -40,7 +40,6 @@
 #include "widgets/ink-action.h"
 #include "inkscape.h"
 #include "persp3d.h"
-#include "selection.h"
 #include "toolbox.h"
 #include "ui/icon-names.h"
 #include "ui/tools/box3d-tool.h"

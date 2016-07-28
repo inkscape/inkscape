@@ -32,8 +32,6 @@
 #include "ui/draw-anchor.h"
 #include "message-stack.h"
 #include "message-context.h"
-#include "preferences.h"
-#include "sp-path.h"
 #include "display/sp-canvas.h"
 #include "display/curve.h"
 #include "pixmaps/cursor-pen.xpm"
@@ -46,7 +44,6 @@
 #include "ui/tools-switch.h"
 #include "ui/control-manager.h"
 // we include the necessary files for BSpline & Spiro
-#include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
@@ -54,25 +51,16 @@
 #include "live_effects/lpe-spiro.h"
 
 
-#include <typeinfo>
-#include <2geom/pathvector.h>
-#include <2geom/affine.h>
 #include <2geom/curves.h>
 #include "helper/geom-nodetype.h"
-#include "helper/geom-curves.h"
 
 // For handling un-continuous paths:
-#include "message-stack.h"
 #include "inkscape.h"
-#include "desktop.h"
 
 #include "live_effects/spiro.h"
 
 #define INKSCAPE_LPE_BSPLINE_C
 #include "live_effects/lpe-bspline.h"
-#include <2geom/nearest-time.h>
-
-#include "live_effects/effect.h"
 
 
 using Inkscape::ControlManager;

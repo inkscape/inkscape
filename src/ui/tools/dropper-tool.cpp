@@ -12,7 +12,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -27,7 +27,6 @@
 #include "display/curve.h"
 #include "display/cairo-utils.h"
 #include "svg/svg-color.h"
-#include "color.h"
 #include "color-rgba.h"
 #include "desktop-style.h"
 #include "preferences.h"
@@ -36,7 +35,6 @@
 #include "desktop.h"
 
 #include "selection.h"
-#include "document.h"
 #include "document-undo.h"
 
 #include "pixmaps/cursor-dropper-f.xpm"
@@ -45,7 +43,6 @@
 #include "ui/tools/dropper-tool.h"
 #include "message-context.h"
 #include "verbs.h"
-#include "ui/tools/tool-base.h"
 
 using Inkscape::DocumentUndo;
 

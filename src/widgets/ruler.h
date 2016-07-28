@@ -14,7 +14,6 @@
  */
 
 #include <gtk/gtk.h>
-#include <iostream>
 #include <glib.h>
 
 namespace Inkscape {

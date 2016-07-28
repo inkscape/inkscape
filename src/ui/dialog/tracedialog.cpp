@@ -12,7 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "tracedialog.h"
@@ -20,10 +20,8 @@
 #include <gtkmm/frame.h>
 #include "ui/widget/spinbutton.h"
 #include "ui/widget/frame.h"
-#include <gtkmm/radiobutton.h>
 #include <gtkmm/stock.h>
 
-#include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 
 #include "desktop.h"

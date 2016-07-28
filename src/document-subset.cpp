@@ -13,18 +13,7 @@
 #include "document.h"
 #include "sp-object.h"
 
-#include <glib.h>
-
-#include <sigc++/signal.h>
-#include <sigc++/functors/mem_fun.h>
-
-#include "util/list.h"
-#include "util/reverse-list.h"
-
-#include <vector>
 #include <map>
-#include <algorithm>
-#include <iterator>
 
 namespace Inkscape {
 

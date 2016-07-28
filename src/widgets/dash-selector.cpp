@@ -13,15 +13,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "dash-selector.h"
 
 #include <cstring>
-#include <string>
 #include <glibmm/i18n.h>
-#include <gtkmm/adjustment.h>
 #include <2geom/coord.h>
 
 #include "style.h"

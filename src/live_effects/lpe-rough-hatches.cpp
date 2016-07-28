@@ -18,18 +18,10 @@
 
 #include "sp-item.h"
 #include "sp-path.h"
-#include "svg/svg.h"
 #include "xml/repr.h"
 
-#include <2geom/path.h>
-#include <2geom/piecewise.h>
-#include <2geom/sbasis.h>
 #include <2geom/sbasis-math.h>
-#include <2geom/sbasis-geometric.h>
 #include <2geom/bezier-to-sbasis.h>
-#include <2geom/sbasis-to-bezier.h>
-#include <2geom/d2.h>
-#include <2geom/affine.h>
 
 
 namespace Inkscape {

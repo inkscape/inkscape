@@ -13,7 +13,6 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
 #endif
 
 #include "licensor.h"
@@ -27,7 +26,6 @@
 #include "document-undo.h"
 #include "document-private.h"
 #include "verbs.h"
-#include <gtkmm/radiobutton.h>
 
 
 namespace Inkscape {

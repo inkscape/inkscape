@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 #include <gdk/gdkkeysyms.h>
 
@@ -30,7 +30,6 @@
 #include "sp-namedview.h"
 #include "selection.h"
 
-#include "snap.h"
 #include "pixmaps/cursor-ellipse.xpm"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"

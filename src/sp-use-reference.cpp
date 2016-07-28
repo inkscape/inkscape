@@ -9,7 +9,6 @@
 
 #include <cstring>
 #include <string>
-#include <string.h>
 
 #include "enums.h"
 #include "sp-use-reference.h"
@@ -20,8 +19,6 @@
 #include "sp-shape.h"
 #include "sp-text.h"
 #include "uri.h"
-
-
 
 bool SPUseReference::_acceptObject(SPObject * const obj) const
 {

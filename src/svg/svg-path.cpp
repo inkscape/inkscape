@@ -17,17 +17,13 @@
 
 #include <cstring>
 #include <string>
-#include <cassert>
 #include <glib.h> // g_assert()
 
 #include <2geom/pathvector.h>
-#include <2geom/path.h>
 #include <2geom/curves.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/path-sink.h>
 #include <2geom/svg-path-parser.h>
-#include <2geom/exception.h>
-#include <2geom/angle.h>
 
 #include "svg/svg.h"
 #include "svg/path-string.h"

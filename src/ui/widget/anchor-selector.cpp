@@ -8,7 +8,6 @@
  */
 
 #include "ui/widget/anchor-selector.h"
-#include <iostream>
 #include "widgets/icon.h"
 #include "ui/icon-names.h"
 

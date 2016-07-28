@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 // REVIEW THESE AT END OF REWRITE
@@ -25,17 +25,13 @@
 
 #include "verbs.h"
 
-#include "macros.h"
 #include "widgets/button.h"
-#include "widgets/widget-sizes.h"
-#include "widgets/spw-utilities.h"
 #include "widgets/spinbutton-events.h"
 #include "widgets/gradient-vector.h"
 #include "widgets/gradient-image.h"
 #include "style.h"
 
 #include "inkscape.h"
-#include "preferences.h"
 #include "document-private.h"
 #include "document-undo.h"
 #include "desktop.h"
@@ -47,22 +43,15 @@
 #include "gradient-drag.h"
 #include "sp-mesh.h"
 #include "gradient-chemistry.h"
-#include "gradient-selector.h"
-#include "selection.h"
 #include "ui/icon-names.h"
 
 #include "widgets/ege-adjustment-action.h"
-#include "widgets/ege-output-action.h"
 #include "widgets/ege-select-one-action.h"
 #include "widgets/ink-action.h"
-#include "widgets/ink-comboboxentry-action.h"
 
 #include "sp-stop.h"
 #include "svg/css-ostringstream.h"
-#include "svg/svg-color.h"
 #include "desktop-style.h"
-
-#include "toolbox.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;

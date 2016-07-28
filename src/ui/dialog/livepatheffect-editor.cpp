@@ -13,20 +13,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "livepatheffect-editor.h"
-#include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
-#include <gtkmm/toolbar.h>
-#include <vector>
 
 #include "desktop.h"
 
 #include "document.h"
 #include "document-undo.h"
-#include "gtkmm/widget.h"
 #include "helper/action.h"
 #include "inkscape.h"
 #include "live_effects/effect.h"
@@ -34,19 +30,14 @@
 #include "live_effects/lpeobject-reference.h"
 #include "path-chemistry.h"
 #include "selection-chemistry.h"
-#include "selection.h"
 #include "sp-item-group.h"
-#include "sp-lpe-item.h"
 #include "sp-path.h"
 #include "sp-rect.h"
-#include "sp-use.h"
 #include "sp-text.h"
-#include "sp-shape.h"
 #include "ui/icon-names.h"
 #include "ui/widget/imagetoggler.h"
 #include "verbs.h"
 #include "widgets/icon.h"
-#include "xml/node.h"
 #include "livepatheffect-add.h"
 
 namespace Inkscape {

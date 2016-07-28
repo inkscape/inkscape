@@ -13,36 +13,23 @@
 #include "live_effects/lpe-powerstroke.h"
 #include "live_effects/lpe-bspline.h"
 #include "live_effects/lpe-fillet-chamfer.h"
-#include <string>
-#include <sstream>
-#include <deque>
-#include <stdexcept>
-#include <boost/shared_ptr.hpp>
-#include <2geom/bezier-curve.h>
 #include <2geom/bezier-utils.h>
 #include <2geom/path-sink.h>
-#include <glibmm/i18n.h>
 #include "ui/tool/path-manipulator.h"
-#include "desktop.h"
 
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-util.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
-#include "document.h"
-#include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
-#include "sp-path.h"
 #include "helper/geom.h"
-#include "preferences.h"
 #include "style.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/curve-drag-point.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/multi-path-manipulator.h"
-#include "xml/node.h"
 #include "xml/node-observer.h"
 
 namespace Inkscape {

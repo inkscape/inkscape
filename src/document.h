@@ -17,18 +17,15 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <stddef.h>
 #include <sigc++/sigc++.h>
-#include "libcroco/cr-cascade.h"
 #include <2geom/forward.h>
 #include "inkgc/gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include <glibmm/ustring.h>
 #include <boost/ptr_container/ptr_list.hpp>
-#include <vector>
-#include <set>
 #include <deque>
+#include <vector>
 
 namespace Avoid {
 class Router;
@@ -59,6 +56,9 @@ class SP3DBox;
 class Persp3D;
 class Persp3DImpl;
 class SPItemCtx;
+
+struct _CRCascade;
+typedef struct _CRCascade CRCascade;
 
 namespace Proj {
     class TransfMat3x4;

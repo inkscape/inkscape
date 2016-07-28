@@ -34,7 +34,6 @@
 #include "style.h"
 #include "sp-symbol.h"
 #include "sp-root.h"
-#include "sp-use.h"
 #include "sp-use-reference.h"
 #include "sp-shape.h"
 #include "sp-text.h"

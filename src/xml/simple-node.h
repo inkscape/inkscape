@@ -19,7 +19,6 @@
 #define SEEN_INKSCAPE_XML_SIMPLE_NODE_H
 
 #include <cassert>
-#include <iostream>
 
 #include "xml/node.h"
 #include "xml/attribute-record.h"

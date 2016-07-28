@@ -36,21 +36,15 @@
 #include "desktop-widget.h"
 #include "display/sp-canvas.h"
 #include "display/canvas-arena.h"
-#include "document.h"
 #include "ege-color-prof-tracker.h"
 #include "widgets/ege-select-one-action.h"
 #include <extension/db.h>
 #include "file.h"
 #include "helper/action.h"
-#include "helper/action-context.h"
 #include "util/units.h"
 #include "ui/widget/unit-tracker.h"
-#include "inkscape.h"
 #include "ui/interface.h"
-#include "macros.h"
-#include "preferences.h"
 #include "sp-image.h"
-#include "sp-item.h"
 #include "sp-namedview.h"
 #include "ui/dialog/swatches.h"
 #include "ui/icon-names.h"
@@ -75,8 +69,6 @@
 #endif
 #include <gtkmm/paned.h>
 #include <gtkmm/messagedialog.h>
-
-#include <gtk/gtk.h>
 
 #if defined (SOLARIS) && (SOLARIS == 8)
 #include "round.h"

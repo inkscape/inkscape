@@ -18,7 +18,6 @@
 #endif
 
 #include <cstring>
-#include <string>
 #include <glibmm/ustring.h>
 
 struct SPAction;

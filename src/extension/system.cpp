@@ -17,12 +17,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include "ui/interface.h"
-#include <unistd.h>
-#include <glibmm/miscutils.h>
 
 #include "system.h"
 #include "preferences.h"

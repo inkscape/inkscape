@@ -13,7 +13,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "ui/widget/color-preview.h"
@@ -29,7 +29,6 @@
 #include "gradient-toolbar.h"
 #include "widgets/ink-action.h"
 #include "macros.h"
-#include "preferences.h"
 #include "selection.h"
 #include "sp-defs.h"
 #include "sp-linear-gradient.h"

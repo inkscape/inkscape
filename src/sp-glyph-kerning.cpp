@@ -16,7 +16,6 @@
 #include "sp-glyph-kerning.h"
 
 #include "document.h"
-#include <string>
 #include <cstring>
 
 

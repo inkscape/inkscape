@@ -17,10 +17,6 @@
 #include "sp-shape.h"
 #include "display/curve.h"
 
-#include <2geom/path.h>
-#include <2geom/transforms.h>
-
-#include "knot-holder-entity.h"
 #include "knotholder.h"
 
 namespace Inkscape {

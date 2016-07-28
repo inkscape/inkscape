@@ -12,17 +12,14 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <gtkmm/entry.h>
 #include <gtkmm/window.h>
-#include <gdk/gdkkeysyms.h>
 #include "macros.h"
-#include <gtk/gtk.h>
 #include "desktop.h"
 #include "inkscape.h"
-#include "preferences.h"
 #include "ui/tools/tool-base.h"
 
 #include "ui/dialog-events.h"

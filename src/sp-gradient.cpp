@@ -35,7 +35,6 @@
 
 #include "display/cairo-utils.h"
 #include "svg/svg.h"
-#include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 #include "attributes.h"
 #include "document-private.h"
@@ -46,13 +45,7 @@
 #include "sp-radial-gradient.h"
 #include "sp-mesh.h"
 #include "sp-mesh-row.h"
-#include "sp-mesh-patch.h"
 #include "sp-stop.h"
-#include "streq.h"
-#include "uri.h"
-#include "xml/repr.h"
-#include "style.h"
-#include "display/grayscale.h"
 
 /// Has to be power of 2   Seems to be unused.
 //#define NCOLORS NR_GRADIENT_VECTOR_LENGTH

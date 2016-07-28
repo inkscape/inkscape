@@ -13,8 +13,6 @@
 #ifndef INKSCAPE_PREFSTORE_H
 #define INKSCAPE_PREFSTORE_H
 
-#include <climits>
-#include <cfloat>
 #include <glibmm/ustring.h>
 #include <map>
 #include <vector>

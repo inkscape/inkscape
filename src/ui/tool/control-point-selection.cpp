@@ -13,7 +13,6 @@
 #include "ui/tool/selectable-control-point.h"
 #include <2geom/transforms.h>
 #include "desktop.h"
-#include "preferences.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/transform-handle-set.h"

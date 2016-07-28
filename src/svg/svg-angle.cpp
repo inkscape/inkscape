@@ -13,16 +13,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 
 #include <cstring>
 #include <string>
-#include <math.h>
 #include <glib.h>
 
-#include "svg.h"
-#include "stringstream.h"
 #include "svg/svg-angle.h"
 #include "util/units.h"
 

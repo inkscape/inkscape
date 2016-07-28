@@ -15,8 +15,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "config.h"
-
 #include <gdk/gdkkeysyms.h>
 
 #include "macros.h"
@@ -27,8 +25,6 @@
 #include "selection.h"
 #include "selection-chemistry.h"
 
-#include "snap.h"
-#include "display/curve.h"
 #include "display/sp-canvas-item.h"
 #include "desktop.h"
 #include "message-context.h"
@@ -36,17 +32,12 @@
 #include "box3d.h"
 #include "ui/tools/box3d-tool.h"
 #include <glibmm/i18n.h>
-#include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "preferences.h"
 #include "context-fns.h"
 #include "desktop-style.h"
-#include "transf_mat_3x4.h"
 #include "perspective-line.h"
-#include "persp3d.h"
 #include "box3d-side.h"
 #include "document-private.h"
-#include "line-geometry.h"
 #include "ui/shape-editor.h"
 #include "verbs.h"
 

@@ -14,7 +14,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 #include "guides.h"
 
@@ -30,11 +30,7 @@
 #include <glibmm/i18n.h>
 #include "ui/dialog-events.h"
 #include "message-context.h"
-#include "xml/repr.h"
 #include "verbs.h"
-
-#include <2geom/point.h>
-#include <2geom/angle.h>
 
 #include <gtkmm/stock.h>
 

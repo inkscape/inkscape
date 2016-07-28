@@ -23,7 +23,6 @@
 #include "attributes.h"
 #include "document.h"
 #include "document-private.h"
-#include "sp-item.h"
 #include "style.h"
 
 #include <2geom/transforms.h>

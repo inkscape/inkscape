@@ -10,7 +10,6 @@
  */
 
 #include "line-geometry.h"
-#include "inkscape.h"
 #include "desktop.h"
 #include "desktop-style.h"
 

@@ -12,17 +12,13 @@
 
 #include "event-log.h"
 #include <glibmm/i18n.h>
-#include <gtkmm/treemodel.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
 #include "desktop.h"
 #include "inkscape.h"
-#include "util/signal-blocker.h"
 #include "util/ucompose.hpp"
 #include "document.h"
-#include "xml/repr.h"
-#include "sp-object.h"
 
 namespace
 {

@@ -22,7 +22,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "document.h"
@@ -32,11 +32,7 @@
 #include "sp-defs.h"
 #include "sp-item.h"
 #include "sp-item-group.h"
-#include "sp-object.h"
 #include "sp-root.h"
-#include <glib.h>
-#include <glibmm/i18n.h>
-#include <sigc++/functors/ptr_fun.h>
 
 // Callbacks
 static void _layer_activated(SPObject *layer, Inkscape::LayerModel *layer_model);

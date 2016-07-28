@@ -27,7 +27,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 
 #include <gtkmm/box.h>
@@ -40,14 +40,9 @@
 #include "../desktop-style.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
-#include "widgets/ege-output-action.h"
-#include "widgets/ege-select-one-action.h"
-#include "../graphlayout.h"
 #include "../helper/action.h"
-#include "../helper/action-context.h"
 #include "icon.h"
 #include "ink-action.h"
-#include "ink-comboboxentry-action.h"
 #include "../inkscape.h"
 #include "ui/interface.h"
 #include "../shortcuts.h"
@@ -64,7 +59,6 @@
 #include "../widgets/widget-sizes.h"
 #include "../xml/attribute-record.h"
 #include "../xml/node-event-vector.h"
-#include "../xml/repr.h"
 #include "ui/uxmanager.h"
 
 
@@ -95,7 +89,6 @@
 #include "zoom-toolbar.h"
 
 #include "toolbox.h"
-#include <gtk/gtk.h>
 
 #include "ui/tools/tool-base.h"
 

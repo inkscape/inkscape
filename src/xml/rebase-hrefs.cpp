@@ -4,10 +4,7 @@
 #include "io/sys.h"
 #include "sp-object.h"
 #include "streq.h"
-#include "util/share.h"
-#include "xml/attribute-record.h"
 #include "xml/node.h"
-#include <glib.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/convert.h>
 #include <glibmm/uriutils.h>

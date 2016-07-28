@@ -21,7 +21,6 @@
 #include "guide-snapper.h"
 #include "object-snapper.h"
 #include "snap-preferences.h"
-//#include "pure-transform.h"
 
 
 // Guides

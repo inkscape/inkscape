@@ -13,7 +13,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 
@@ -31,17 +31,10 @@
 #include "ui/tools/gradient-tool.h"
 #include "gradient-chemistry.h"
 #include <glibmm/i18n.h>
-#include "preferences.h"
 #include "gradient-drag.h"
-#include "gradient-chemistry.h"
-#include "xml/repr.h"
-#include "sp-item.h"
 #include "display/sp-ctrlline.h"
-#include "sp-linear-gradient.h"
-#include "sp-radial-gradient.h"
 #include "sp-stop.h"
 #include "svg/css-ostringstream.h"
-#include "svg/svg-color.h"
 #include "snap.h"
 #include "sp-namedview.h"
 #include "rubberband.h"

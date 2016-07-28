@@ -29,7 +29,6 @@
 #include "snap-preferences.h"
 #include "snap-candidate.h"
 
-//class SPGuideConstraint;
 #include "sp-guide-constraint.h"
 
 class SPClipPathReference;

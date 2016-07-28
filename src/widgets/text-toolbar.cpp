@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "libnrtype/font-lister.h"
@@ -41,9 +41,7 @@
 #include "widgets/ink-action.h"
 #include "widgets/ink-comboboxentry-action.h"
 #include "inkscape.h"
-#include "preferences.h"
 #include "selection-chemistry.h"
-#include "selection.h"
 #include "sp-flowtext.h"
 #include "sp-root.h"
 #include "sp-text.h"
@@ -53,11 +51,8 @@
 #include "toolbox.h"
 #include "ui/icon-names.h"
 #include "ui/tools/text-tool.h"
-#include "ui/tools/tool-base.h"
 #include "ui/widget/unit-tracker.h"
-#include "util/units.h"
 #include "verbs.h"
-#include "xml/repr.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;

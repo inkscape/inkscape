@@ -14,7 +14,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <map>
@@ -29,14 +29,10 @@ using std::pair;
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
 #include "sp-filter-primitive.h"
-#include "sp-item.h"
 #include "uri.h"
 #include "xml/repr.h"
-#include <cstring>
-#include <string>
 
 #define SP_MACROS_SILENT
-#include "macros.h"
 
 static void filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter);
 static void filter_ref_modified(SPObject *href, guint flags, SPFilter *filter);

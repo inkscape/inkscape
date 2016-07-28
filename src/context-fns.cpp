@@ -6,7 +6,6 @@
 #include "message-context.h"
 #include "message-stack.h"
 #include "snap.h"
-#include "sp-item.h"
 #include "sp-namedview.h"
 #include "ui/tools/tool-base.h"
 

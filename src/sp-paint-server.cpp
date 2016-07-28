@@ -13,7 +13,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <string.h>
 #include "sp-paint-server-reference.h"
 #include "sp-paint-server.h"
 

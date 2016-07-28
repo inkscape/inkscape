@@ -17,43 +17,29 @@
 #define DRAW_VERBOSE
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "live_effects/lpe-bendpath.h"
 #include "live_effects/lpe-patternalongpath.h"
 #include "live_effects/lpe-simplify.h"
 #include "display/canvas-bpath.h"
-#include "xml/repr.h"
 #include "svg/svg.h"
-#include <glibmm/i18n.h>
 #include "display/curve.h"
-#include "desktop.h"
 
 #include "desktop-style.h"
-#include "document.h"
 #include "ui/draw-anchor.h"
 #include "macros.h"
 #include "message-stack.h"
 #include "ui/tools/pen-tool.h"
 #include "ui/tools/lpe-tool.h"
-#include "preferences.h"
-#include "selection.h"
 #include "selection-chemistry.h"
-#include "snap.h"
-#include "sp-path.h"
-#include "sp-use.h"
 #include "sp-item-group.h"
-#include "sp-namedview.h"
 #include "live_effects/lpe-powerstroke.h"
 #include "style.h"
 #include "ui/control-manager.h"
-#include "util/units.h"
 // clipboard support
 #include "ui/clipboard.h"
-#include "ui/tools/freehand-base.h"
-
-#include <gdk/gdkkeysyms.h>
 
 using Inkscape::DocumentUndo;
 

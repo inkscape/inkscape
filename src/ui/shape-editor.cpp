@@ -8,7 +8,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
 #include <string.h>
@@ -16,11 +16,8 @@
 
 #include "desktop.h"
 #include "document.h"
-#include "gc-anchored.h"
 #include "knotholder.h"
 #include "ui/object-edit.h"
-#include "sp-item.h"
-#include "sp-object.h"
 #include "ui/shape-editor.h"
 #include "xml/node-event-vector.h"
 

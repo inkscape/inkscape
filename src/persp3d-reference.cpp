@@ -8,7 +8,6 @@
  */
 
 #include "persp3d-reference.h"
-#include "persp3d.h"
 #include "uri.h"
 
 static void persp3dreference_href_changed(SPObject *old_ref, SPObject *ref, Persp3DReference *persp3dref);

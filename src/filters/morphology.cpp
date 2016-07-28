@@ -20,7 +20,6 @@
 #include "morphology.h"
 #include "xml/repr.h"
 #include "display/nr-filter.h"
-#include "display/nr-filter-morphology.h"
 
 SPFeMorphology::SPFeMorphology() : SPFilterPrimitive() {
 	this->Operator = Inkscape::Filters::MORPHOLOGY_OPERATOR_ERODE;

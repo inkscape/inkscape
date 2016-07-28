@@ -11,14 +11,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gdk/gdk.h>
-#include <stddef.h>
 #include <sigc++/connection.h>
 #include "message.h"
 #include "inkgc/gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include <2geom/forward.h>
+#include <glib.h>
 
 /**
  * Iterates until true or returns false.

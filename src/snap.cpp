@@ -19,10 +19,6 @@
 #include <2geom/transforms.h>
 
 #include "sp-namedview.h"
-#include "snap.h"
-#include "snap-enums.h"
-#include "snapped-line.h"
-#include "snapped-curve.h"
 #include "pure-transform.h"
 
 #include "display/canvas-grid.h"
@@ -30,9 +26,7 @@
 
 #include "inkscape.h"
 #include "desktop.h"
-#include "selection.h"
 #include "sp-guide.h"
-#include "preferences.h"
 #include "ui/tools/tool-base.h"
 #include "helper/mathfns.h"
 using std::vector;

@@ -11,11 +11,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "ui/dialog/memory.h"
-#include <glibmm/main.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>

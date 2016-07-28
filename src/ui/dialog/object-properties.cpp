@@ -33,11 +33,8 @@
 #include "document-undo.h"
 #include "verbs.h"
 #include "inkscape.h"
-#include "selection.h"
 #include "desktop.h"
-#include "sp-item.h"
 #include "sp-image.h"
-#include "xml/repr.h"
 #include <glibmm/i18n.h>
 
 #if WITH_GTKMM_3_0

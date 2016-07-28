@@ -15,18 +15,12 @@
 #include "ui/widget/panel.h"
 #include "ui/widget/frame.h"
 
-#include <glib/gprintf.h>
 #include <glibmm/i18n.h>
 
-#include <gtkmm/alignment.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/cellrenderercombo.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/comboboxtext.h>
-#include <gtkmm/enums.h>
-#include <gtkmm/eventbox.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/image.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/menubar.h>
 #include <gtkmm/notebook.h>
@@ -40,10 +34,7 @@
 # include <gtkmm/table.h>
 #endif
 
-#include <gtkmm/treemodel.h>
-#include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/treestore.h>
-#include <gtkmm/treeview.h>
 
 #include "device-manager.h"
 #include "preferences.h"

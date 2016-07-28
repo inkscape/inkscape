@@ -26,7 +26,7 @@
 
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <cstring>
@@ -45,11 +45,9 @@
 #include "document.h"
 #include "ui/tools/freehand-base.h"
 #include "extension/effect.h"
-#include "ui/tools/tool-base.h"
 #include "file.h"
 #include "gradient-drag.h"
 #include "helper/action.h"
-#include "helper/action-context.h"
 #include "help.h"
 #include "inkscape.h"
 #include "ui/interface.h"
@@ -57,7 +55,6 @@
 #include "layer-manager.h"
 #include "message-stack.h"
 #include "path-chemistry.h"
-#include "preferences.h"
 #include "ui/tools/select-tool.h"
 #include "selection-chemistry.h"
 #include "seltrans.h"
@@ -87,9 +84,6 @@
 #include "ui/dialog/spellcheck.h"
 #include "ui/icon-names.h"
 #include "ui/tools/node-tool.h"
-#include "selection.h"
-
-#include <gtk/gtk.h>
 
 using Inkscape::DocumentUndo;
 using Inkscape::UI::Dialog::ActionAlign;

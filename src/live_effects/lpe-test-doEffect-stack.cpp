@@ -8,9 +8,6 @@
 
 #include "live_effects/lpe-test-doEffect-stack.h"
 
-#include <2geom/piecewise.h>
-#include <vector>
-#include <cstring>
 using std::memcpy;
 
 namespace Inkscape {

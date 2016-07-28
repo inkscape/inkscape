@@ -22,9 +22,7 @@
 #include "persp3d.h"
 #include "persp3d-reference.h"
 #include "ui/tools/box3d-tool.h"
-#include "preferences.h"
 #include "desktop-style.h"
-#include "box3d.h"
 
 static void box3d_side_compute_corner_ids(Box3DSide *side, unsigned int corners[4]);
 

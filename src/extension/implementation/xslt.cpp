@@ -13,7 +13,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include "file.h"
@@ -22,13 +22,11 @@
 #include "../output.h"
 #include "extension/input.h"
 
-#include "xml/repr.h"
 #include "io/sys.h"
 #include <unistd.h>
 #include <cstring>
 #include "document.h"
 
-#include <libxml/parser.h>
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
 

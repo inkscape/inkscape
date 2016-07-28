@@ -1,7 +1,6 @@
 #include <2geom/coord.h>
 #include "desktop.h"
 #include "sp-guide.h"
-#include "sp-guide-constraint.h"
 #include "sp-namedview.h"
 #include "satisfied-guide-cns.h"
 

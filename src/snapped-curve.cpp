@@ -9,7 +9,6 @@
  */
 
 #include "snapped-curve.h"
-#include <2geom/crossing.h>
 #include <2geom/path-intersection.h>
 
 Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Point const &tangent, int num_path, int num_segm, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target, Geom::OptRect target_bbox)

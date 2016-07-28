@@ -19,7 +19,6 @@
 #include "svg/svg-color.h"
 #include "filters/flood.h"
 #include "xml/repr.h"
-#include "helper-fns.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-flood.h"
 

@@ -17,21 +17,16 @@
  
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/elliptical-arc.h>
-#include <2geom/line.h>
 
-#include "desktop.h"
 #include "display/curve.h"
 #include "helper/geom-nodetype.h"
 #include "helper/geom-curves.h"
 #include "helper/geom.h"
 
-#include "live_effects/parameter/filletchamferpointarray.h"
-
 // for programmatically updating knots
 #include "ui/tools-switch.h"
 
 // TODO due to internal breakage in glibmm headers, this must be last:
-#include <glibmm/i18n.h>
 
 using namespace Geom;
 namespace Inkscape {

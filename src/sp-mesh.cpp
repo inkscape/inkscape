@@ -2,7 +2,6 @@
 
 #include "attributes.h"
 #include "display/cairo-utils.h"
-#include "xml/repr.h"
 
 #include "sp-mesh.h"
 

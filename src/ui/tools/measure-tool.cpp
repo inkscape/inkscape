@@ -11,11 +11,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include <gtkmm.h>
-#include <gdk/gdkkeysyms.h>
 #include <boost/none_t.hpp>
 #include "util/units.h"
 #include "display/curve.h"
@@ -23,7 +22,6 @@
 #include "display/sp-ctrlline.h"
 #include "display/sp-ctrlcurve.h"
 #include "display/sp-canvas.h"
-#include "display/sp-canvas-item.h"
 #include "display/sp-canvas-util.h"
 #include "svg/svg.h"
 #include "svg/svg-color.h"
@@ -31,34 +29,20 @@
 #include "ui/tools/freehand-base.h"
 #include <2geom/line.h>
 #include <2geom/path-intersection.h>
-#include <2geom/pathvector.h>
-#include <2geom/crossing.h>
-#include <2geom/angle.h>
-#include <2geom/transforms.h>
 #include "ui/dialog/knot-properties.h"
 #include "sp-namedview.h"
-#include "sp-shape.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "sp-defs.h"
-#include "sp-item.h"
 #include "sp-root.h"
-#include "macros.h"
 #include "svg/stringstream.h"
 #include "rubberband.h"
 #include "path-chemistry.h"
 #include "desktop.h"
-#include "document.h"
 #include "document-undo.h"
-#include "viewbox.h"
-#include "snap.h"
-#include "knot.h"
 #include "text-editing.h"
 #include "pixmaps/cursor-measure.xpm"
-#include "preferences.h"
 #include "inkscape.h"
-#include "enums.h"
-#include "knot-enums.h"
 #include "desktop-style.h"
 #include "verbs.h"
 #include <glibmm/i18n.h>

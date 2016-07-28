@@ -15,18 +15,13 @@
 
 #include "persp3d.h"
 //#include "transf_mat_3x4.h"
-#include "document.h"
 #include "document-private.h"
 #include "live_effects/lpe-perspective_path.h"
 #include "live_effects/lpeobject.h"
-#include "sp-item-group.h"
 #include "knot-holder-entity.h"
 #include "knotholder.h"
 #include "desktop.h"
 #include <util/units.h>
-#include "inkscape.h"
-
-#include <2geom/path.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
