@@ -8,6 +8,7 @@
  */
 
 #include "device-manager.h"
+#include <map>
 #include <set>
 
 #include "preferences.h"
@@ -17,6 +18,8 @@
 #if WITH_GTKMM_3_0
 # include <gdkmm/devicemanager.h>
 #endif
+
+#include <glibmm/regex.h>
 
 #include <gtk/gtk.h>
 

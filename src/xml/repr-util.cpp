@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #if HAVE_STRING_H
 # include <cstring>
 #endif

@@ -10,6 +10,7 @@
  */
 
 #include "perspective-line.h"
+#include "persp3d.h"
 
 namespace Box3D {
 

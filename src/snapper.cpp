@@ -10,6 +10,7 @@
  */
 
 #include "sp-namedview.h"
+#include "inkscape.h"
 #include "desktop.h"
 
 /**

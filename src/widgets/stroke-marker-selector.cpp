@@ -18,13 +18,17 @@
 
 #include "stroke-marker-selector.h"
 
+#include <cstring>
+#include <string>
 #include <glibmm/i18n.h>
+#include <2geom/coord.h>
 
 
 #include "style.h"
 #include "ui/dialog-events.h"
 
 #include "desktop-style.h"
+#include "preferences.h"
 #include "path-prefix.h"
 #include "io/sys.h"
 #include "sp-marker.h"
@@ -35,8 +39,10 @@
 #include "gradient-vector.h"
 
 #include <gtkmm/icontheme.h>
+#include <gtkmm/adjustment.h>
 #include "ui/widget/spinbutton.h"
 #include "stroke-style.h"
+#include "gradient-chemistry.h"
 
 static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 

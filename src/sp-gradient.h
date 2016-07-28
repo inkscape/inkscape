@@ -15,6 +15,8 @@
  */
 
 #include <2geom/affine.h>
+#include <cstddef>
+#include <glibmm/ustring.h>
 #include <sigc++/connection.h>
 #include <vector>
 

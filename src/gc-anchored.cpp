@@ -14,6 +14,7 @@
 #include "debug/event-tracker.h"
 #include "debug/simple-event.h"
 #include "debug/demangle.h"
+#include "util/share.h"
 #include "util/format.h"
 
 namespace Inkscape {

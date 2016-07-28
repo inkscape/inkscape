@@ -14,6 +14,7 @@
 
 #include <glib.h> // g_assert()
 #include "attributes.h"
+#include <iostream>
 
 typedef struct {
     gint code;

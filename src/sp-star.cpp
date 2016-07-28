@@ -14,7 +14,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include "config.h"
 #endif
 
 #include <cstring>
@@ -27,6 +27,8 @@
 #include "display/curve.h"
 #include "xml/repr.h"
 #include "document.h"
+
+#include <2geom/pathvector.h>
 
 #include "sp-star.h"
 

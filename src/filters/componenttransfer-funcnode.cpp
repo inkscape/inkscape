@@ -19,10 +19,12 @@
 #include "document.h"
 #include "componenttransfer.h"
 #include "componenttransfer-funcnode.h"
+#include "display/nr-filter-component-transfer.h"
 #include "xml/repr.h"
 #include "helper-fns.h"
 
 #define SP_MACROS_SILENT
+#include "macros.h"
 
 
 /* FeFuncNode class */

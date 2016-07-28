@@ -18,6 +18,7 @@
 #include "live_effects/lpe-perspective-envelope.h"
 #include "helper/geom.h"
 #include "display/curve.h"
+#include "svg/svg.h"
 #include <gsl/gsl_linalg.h>
 
 using namespace Geom;

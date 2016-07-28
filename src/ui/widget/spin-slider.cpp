@@ -11,6 +11,7 @@
 #include "spin-slider.h"
 
 #include <glibmm/i18n.h>
+#include <glibmm/stringutils.h>
 
 namespace Inkscape {
 namespace UI {

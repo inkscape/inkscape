@@ -14,6 +14,9 @@
 
 #include "svg/svg.h"
 #include <2geom/path-intersection.h>
+#include <2geom/pathvector.h>
+#include <2geom/point.h>
+#include <2geom/rect.h>
 #include <2geom/line.h>
 #include <2geom/circle.h>
 #include <2geom/path-sink.h>
@@ -21,7 +24,9 @@
 #include "sp-namedview.h"
 #include "sp-image.h"
 #include "sp-item-group.h"
+#include "sp-item.h"
 #include "sp-use.h"
+#include "display/curve.h"
 #include "inkscape.h"
 #include "preferences.h"
 #include "sp-text.h"
@@ -29,6 +34,7 @@
 #include "text-editing.h"
 #include "sp-clippath.h"
 #include "sp-mask.h"
+#include "helper/geom-curves.h"
 #include "desktop.h"
 #include "sp-root.h"
 

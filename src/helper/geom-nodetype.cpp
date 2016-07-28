@@ -12,6 +12,8 @@
 #include "helper/geom-nodetype.h"
 
 #include <2geom/curve.h>
+#include <2geom/point.h>
+#include <vector>
 
 namespace Geom {
 

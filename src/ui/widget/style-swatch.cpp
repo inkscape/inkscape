@@ -13,6 +13,9 @@
 
 #include "style-swatch.h"
 
+#include <cstring>
+#include <string>
+
 #include "widgets/spw-utilities.h"
 #include "ui/widget/color-preview.h"
 
@@ -20,10 +23,13 @@
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-pattern.h"
+#include "xml/repr.h"
 #include "xml/sp-css-attr.h"
 #include "widgets/widget-sizes.h"
 #include "util/units.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
+#include "preferences.h"
 #include "inkscape.h"
 #include "verbs.h"
 #include <glibmm/i18n.h>

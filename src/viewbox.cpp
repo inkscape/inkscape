@@ -15,6 +15,7 @@
 #include <2geom/transforms.h>
 
 #include "viewbox.h"
+#include "attributes.h"
 #include "enums.h"
 #include "sp-item.h"
 

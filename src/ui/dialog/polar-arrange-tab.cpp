@@ -17,8 +17,10 @@
 #include "preferences.h"
 #include "inkscape.h"
 
+#include "selection.h"
 #include "document.h"
 #include "document-undo.h"
+#include "sp-item.h"
 #include "widgets/icon.h"
 #include "desktop.h"
 #include "sp-ellipse.h"

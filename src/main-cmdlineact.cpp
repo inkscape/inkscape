@@ -10,6 +10,7 @@
 #include <ui/view/view.h>
 #include <desktop.h>
 #include <helper/action.h>
+#include <helper/action-context.h>
 #include <selection.h>
 #include <verbs.h>
 #include <inkscape.h>

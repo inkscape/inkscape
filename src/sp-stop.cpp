@@ -22,6 +22,7 @@
 #include "svg/svg.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
+#include "xml/repr.h"
 
 SPStop::SPStop() : SPObject() {
 	this->path_string = NULL;

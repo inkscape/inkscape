@@ -16,6 +16,8 @@
 #include "display/snap-indicator.h"
 #include "ui/tools/tool-base.h"
 #include "message-context.h"
+#include "preferences.h"
+#include "snap-preferences.h"
 #include "sp-namedview.h"
 #include "ui/control-manager.h"
 #include "ui/tool/control-point.h"

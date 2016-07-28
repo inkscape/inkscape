@@ -4,6 +4,8 @@
 
 #include "remove-last.h"
 #include "sp-guide.h"
+#include "sp-guide-constraint.h"
+#include "sp-item.h"
 #include "sp-item-rm-unsatisfied-cns.h"
 
 using std::vector;

@@ -12,10 +12,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include "config.h"
 #endif
 
+
 #include "display/curve.h"
+#include <2geom/rect.h>
 
 #include "inkscape.h"
 #include "document.h"
@@ -23,6 +25,7 @@
 #include "style.h"
 #include "sp-rect.h"
 #include <glibmm/i18n.h>
+#include "xml/repr.h"
 #include "sp-guide.h"
 #include "preferences.h"
 

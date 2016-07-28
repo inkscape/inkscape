@@ -17,10 +17,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include "ui/interface.h"
+#include <unistd.h>
+#include <glibmm/miscutils.h>
 
 #include "system.h"
 #include "preferences.h"
@@ -38,7 +40,7 @@
 #include "inkscape.h"
 #include "document-undo.h"
 #include "loader.h"
-#include <glibmm/miscutils.h>
+
 
 namespace Inkscape {
 namespace Extension {

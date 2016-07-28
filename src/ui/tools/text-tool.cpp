@@ -14,7 +14,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <gtkmm/clipboard.h>
@@ -23,6 +23,7 @@
 #include <display/sp-ctrlquadr.h>
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
+#include <sstream>
 
 #include "context-fns.h"
 
@@ -35,6 +36,7 @@
 #include "message-stack.h"
 #include "pixmaps/cursor-text-insert.xpm"
 #include "pixmaps/cursor-text.xpm"
+#include "preferences.h"
 #include "rubberband.h"
 #include "selection-chemistry.h"
 #include "selection.h"
@@ -48,6 +50,8 @@
 #include "ui/control-manager.h"
 #include "verbs.h"
 #include "xml/node-event-vector.h"
+#include "xml/repr.h"
+#include <gtk/gtk.h>
 
 using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;

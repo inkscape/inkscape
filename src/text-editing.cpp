@@ -13,6 +13,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
+# include "config.h"
 #endif
 
 #include <cstring>
@@ -26,6 +27,7 @@
 #include "util/units.h"
 
 #include "document.h"
+#include "xml/repr.h"
 #include "xml/attribute-record.h"
 #include "xml/sp-css-attr.h"
 

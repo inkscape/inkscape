@@ -9,13 +9,16 @@
 
 #include "ui/widget/dock.h"
 
+#include "dock-item.h"
 #include "desktop.h"
 #include "inkscape.h"
+#include "preferences.h"
 #include "ui/icon-names.h"
 #include "widgets/icon.h"
 
 #include <gtkmm/icontheme.h>
 #include <gtkmm/stockitem.h>
+#include <glibmm/exceptionhandler.h>
 
 namespace Inkscape {
 namespace UI {

@@ -14,6 +14,8 @@
 
 #include "ui/widget/object-composite-settings.h"
 
+#include <glibmm/i18n.h>
+
 #include "desktop.h"
 
 #include "desktop-style.h"
@@ -21,12 +23,17 @@
 #include "document-undo.h"
 #include "filter-chemistry.h"
 #include "inkscape.h"
+#include "selection.h"
 #include "style.h"
+#include "sp-item.h"
 #include "svg/css-ostringstream.h"
 #include "verbs.h"
+#include "xml/repr.h"
 #include "widgets/icon.h"
+#include "ui/icon-names.h"
 #include "display/sp-canvas.h"
 #include "ui/widget/style-subject.h"
+#include "ui/widget/gimpspinscale.h"
 
 namespace Inkscape {
 namespace UI {

@@ -11,7 +11,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include "config.h"
 #endif
 
 #include <cstring>
@@ -29,6 +29,8 @@
 #include "selection.h"
 
 #include "spw-utilities.h"
+
+#include <gtk/gtk.h>
 
 /**
  * Creates a label widget with the given text, at the given col, row

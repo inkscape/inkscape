@@ -13,6 +13,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
+# include <config.h>
 #endif
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
@@ -23,6 +24,7 @@
 #include "knot-ptr.h"
 #include "document.h"
 #include "document-undo.h"
+#include "preferences.h"
 #include "message-stack.h"
 #include "message-context.h"
 #include "ui/tools-switch.h"

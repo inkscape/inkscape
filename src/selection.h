@@ -26,6 +26,8 @@
 #include "inkgc/gc-soft-ptr.h"
 #include "sp-item.h"
 
+
+
 class SPDesktop;
 class SPItem;
 class SPBox3D;

@@ -19,6 +19,7 @@
 #include <cstdio> // sprintf
 #include <cstring>
 #include <string>
+#include <cassert>
 #include <math.h>
 #include <glib.h> // g_assert
 #include <errno.h>

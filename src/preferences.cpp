@@ -15,6 +15,7 @@
 #include <glibmm/fileutils.h>
 #include <glibmm/convert.h>
 #include <glibmm/i18n.h>
+#include <glib.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include "preferences.h"

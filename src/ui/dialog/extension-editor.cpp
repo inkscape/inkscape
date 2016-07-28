@@ -12,13 +12,14 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+# include <config.h>
 #endif
 
 #include "extension-editor.h"
 #include <glibmm/i18n.h>
 
 #include <gtkmm/frame.h>
+#include <gtkmm/scrolledwindow.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/notebook.h>
 
@@ -26,6 +27,7 @@
 #include "preferences.h"
 #include "ui/interface.h"
 
+#include "extension/extension.h"
 #include "extension/db.h"
 
 namespace Inkscape {

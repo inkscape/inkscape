@@ -16,17 +16,19 @@
 
 #include <cstring>
 #include <string>
-#include <iostream>
 
 #include <glib.h>
 
 #include "preferences.h"
 
+#include "xml/node.h"
 #include "xml/simple-node.h"
 #include "xml/node-event-vector.h"
 #include "xml/node-fns.h"
+#include "xml/repr.h"
 #include "debug/event-tracker.h"
 #include "debug/simple-event.h"
+#include "util/share.h"
 #include "util/format.h"
 
 #include "attribute-rel-util.h"

@@ -18,6 +18,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <string>
 #include <iostream>
 
 #include "attribute-rel-css.h"

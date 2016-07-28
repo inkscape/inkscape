@@ -14,6 +14,10 @@
 
 #include "attributes.h"
 #include "style.h"
+#include "xml/repr.h"
+
+#include "sp-item.h"
+#include "style-internal.h"
 
 
 /*

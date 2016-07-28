@@ -9,13 +9,14 @@
  */
 
 #if HAVE_CONFIG_H
-#include "config.h"
+ #include "config.h"
 #endif
 
 #include "new-from-template.h"
 #include "file.h"
 
 #include <gtkmm/alignment.h>
+#include <glibmm/i18n.h>
 
 
 namespace Inkscape {

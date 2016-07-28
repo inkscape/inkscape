@@ -11,6 +11,7 @@
 
 #include "loader.h"
 #include "system.h"
+#include <exception>
 #include <string.h>
 #include "dependency.h"
 #include "inkscape-version.h"

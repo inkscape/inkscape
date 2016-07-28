@@ -17,10 +17,16 @@
 #include "desktop.h"
 
 #include "layer-manager.h"
+#include "preferences.h"
+#include "ui/view/view.h"
 #include "selection.h"
+#include "sp-object.h"
 #include "sp-item-group.h"
+#include "xml/node.h"
 #include "xml/node-observer.h"
 #include "util/format.h"
+// #include "debug/event-tracker.h"
+// #include "debug/simple-event.h"
 
 namespace Inkscape {
 

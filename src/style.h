@@ -21,6 +21,7 @@
 #include "style-internal.h"
 
 #include <sigc++/connection.h>
+#include <iostream>
 #include <vector>
 
 // Define SPIBasePtr, a Pointer to a data member of SPStyle of type SPIBase;

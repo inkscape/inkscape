@@ -10,6 +10,7 @@
 
 #include <glib.h>
 #include "uri.h"
+#include <string>
 #include <glibmm/ustring.h>
 #include <glibmm/miscutils.h>
 

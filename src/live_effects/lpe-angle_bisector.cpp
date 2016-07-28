@@ -12,6 +12,7 @@
 
 #include "live_effects/lpe-angle_bisector.h"
 
+#include <2geom/path.h>
 #include <2geom/sbasis-to-bezier.h>
 
 #include "sp-lpe-item.h"

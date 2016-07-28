@@ -13,6 +13,8 @@
 
 #include "sp-text.h"
 #include "sp-tref.h"
+#include "sp-tspan.h"
+
 
 
 bool SPTRefReference::_acceptObject(SPObject * const obj) const

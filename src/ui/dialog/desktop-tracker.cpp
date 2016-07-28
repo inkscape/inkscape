@@ -6,6 +6,7 @@
  */
 
 #include "widgets/desktop-widget.h"
+#include <glib-object.h>
 
 #include "desktop-tracker.h"
 

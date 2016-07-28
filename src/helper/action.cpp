@@ -9,6 +9,8 @@
  * This code is in public domain
  */
 
+#include <string.h>
+
 #include "debug/logger.h"
 #include "debug/timestamp.h"
 #include "debug/simple-event.h"

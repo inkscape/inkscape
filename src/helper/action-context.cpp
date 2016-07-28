@@ -14,6 +14,7 @@
 #include "layer-model.h"
 #include "selection.h"
 #include "helper/action-context.h"
+#include "ui/view/view.h"
 
 namespace Inkscape {
 

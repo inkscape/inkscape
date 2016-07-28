@@ -13,6 +13,7 @@
 #include "helper/action.h"
 #include "ui/view/view.h"
 
+#include "selection.h"
 #include "sp-namedview.h"
 #include "desktop.h"
 #include "implementation/implementation.h"

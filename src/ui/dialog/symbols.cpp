@@ -15,6 +15,7 @@
 #include <iostream>
 #include <algorithm>
 #include <locale>
+#include <functional>
 #include <sstream>
 
 #include <gtkmm/buttonbox.h>
@@ -31,6 +32,10 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/iconview.h>
 #include <gtkmm/liststore.h>
+#include <gtkmm/treemodelcolumn.h>
+#include <gtkmm/clipboard.h>
+#include <glibmm/stringutils.h>
+#include <glibmm/markup.h>
 #include <glibmm/i18n.h>
 #include "path-prefix.h"
 #include "io/sys.h"
@@ -71,6 +76,8 @@
 
 #include "verbs.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
+#include "xml/repr.h"
 
 namespace Inkscape {
 namespace UI {

@@ -14,7 +14,10 @@
 
 #include "live_effects/lpe-interpolate.h"
 
+#include <2geom/path.h>
 #include <2geom/sbasis-to-bezier.h>
+#include <2geom/piecewise.h>
+#include <2geom/sbasis-geometric.h>
 
 #include "sp-path.h"
 #include "display/curve.h"

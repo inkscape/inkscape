@@ -11,7 +11,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <gtkmm/box.h>
@@ -26,14 +26,19 @@
 #include "verbs.h"
 #include "selcue.h"
 #include "io/sys.h"
+#include <iostream>
 #include "desktop.h"
+#include "enums.h"
 #include "inkscape.h"
 
 #include "message-stack.h"
 #include "style.h"
+#include "selection.h"
 #include "selection-chemistry.h"
 #include "ui/dialog/filedialog.h"
+#include "xml/repr.h"
 
+#include <glibmm/convert.h>
 #include <glibmm/i18n.h>
 
 #ifdef WIN32

@@ -21,6 +21,7 @@
 #include "desktop.h"
 #include "pixmaps/cursor-zoom.xpm"
 #include "pixmaps/cursor-zoom-out.xpm"
+#include "preferences.h"
 #include "selection-chemistry.h"
 
 #include "ui/tools/zoom-tool.h"

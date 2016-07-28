@@ -11,6 +11,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <string>
 #include <iostream>
 #include <vector>
 #include <utility>      // std::pair
@@ -20,6 +21,7 @@
 
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
+#include "xml/sp-css-attr.h"
 
 #include "attributes.h"
 

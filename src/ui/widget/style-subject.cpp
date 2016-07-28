@@ -8,6 +8,7 @@
 #include "ui/widget/style-subject.h"
 
 #include "desktop.h"
+#include "sp-object.h"
 #include "xml/sp-css-attr.h"
 #include "desktop-style.h"
 

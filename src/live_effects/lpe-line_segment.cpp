@@ -14,6 +14,10 @@
 #include "live_effects/lpe-line_segment.h"
 #include "ui/tools/lpe-tool.h"
 
+#include <2geom/pathvector.h>
+#include <2geom/geom.h>
+#include <2geom/bezier-curve.h>
+
 namespace Inkscape {
 namespace LivePathEffect {
 

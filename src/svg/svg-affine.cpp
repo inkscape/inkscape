@@ -12,7 +12,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+# include "config.h"
 #endif
 
 #include <cstring>
@@ -21,6 +21,7 @@
 #include <cstdio>
 #include <glib.h>
 #include <2geom/transforms.h>
+#include <2geom/angle.h>
 #include "svg.h"
 #include "preferences.h"
 

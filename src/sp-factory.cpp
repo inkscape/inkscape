@@ -32,6 +32,7 @@
 #include "sp-hatch.h"
 #include "sp-hatch-path.h"
 #include "sp-image.h"
+#include "sp-item-group.h"
 #include "sp-line.h"
 #include "sp-linear-gradient.h"
 #include "sp-marker.h"
@@ -42,8 +43,11 @@
 #include "sp-metadata.h"
 #include "sp-missing-glyph.h"
 #include "sp-namedview.h"
+#include "sp-object.h"
 #include "sp-offset.h"
+#include "sp-path.h"
 #include "sp-pattern.h"
+#include "sp-polygon.h"
 #include "sp-polyline.h"
 #include "sp-radial-gradient.h"
 #include "sp-rect.h"
@@ -64,6 +68,7 @@
 #include "sp-title.h"
 #include "sp-tref.h"
 #include "sp-tspan.h"
+#include "sp-use.h"
 #include "live_effects/lpeobject.h"
 
 // filters

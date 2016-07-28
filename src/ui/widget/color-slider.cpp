@@ -12,10 +12,11 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #include <gdkmm/cursor.h>
+#include <gdkmm/screen.h>
 #include <gdkmm/general.h>
 #include <gtkmm/adjustment.h>
 #if WITH_GTKMM_3_0

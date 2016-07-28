@@ -27,7 +27,7 @@
 #define _PREFIX_C_
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include "config.h"
 #endif
 
 
@@ -35,6 +35,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
+#include <limits.h>
 #include "prefix.h"
 
 

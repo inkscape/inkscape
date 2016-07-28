@@ -12,18 +12,21 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+# include <config.h>
 #endif
 
 #include "svg-fonts-dialog.h"
 #include "document-private.h"
 #include "document-undo.h"
 #include <gtkmm/notebook.h>
+#include <gtkmm/imagemenuitem.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/stock.h>
 #include <message-stack.h>
 #include "selection.h"
+#include <string.h>
 #include "svg/svg.h"
+#include "xml/node.h"
 #include "xml/repr.h"
 #include "sp-font-face.h"
 #include "desktop.h"
@@ -36,6 +39,7 @@
 #include "sp-glyph-kerning.h"
 
 #include <glibmm/i18n.h>
+#include <glibmm/stringutils.h>
 
 SvgFontDrawingArea::SvgFontDrawingArea():
     _x(0),

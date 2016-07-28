@@ -11,7 +11,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <cstring>
@@ -39,6 +39,7 @@
 #include "preferences.h"
 
 #include <glibmm/miscutils.h>
+#include <map>
 
 using Inkscape::IO::Writer;
 using Inkscape::Util::List;

@@ -18,6 +18,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <string>
 
 #include "attribute-rel-svg.h"
 

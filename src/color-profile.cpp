@@ -10,6 +10,7 @@
 # include <gdkmm/color.h>
 #endif
 
+#include <glibmm/checksum.h>
 #include <glib/gstdio.h>
 #include <fcntl.h>
 #include <glib/gi18n.h>
@@ -20,6 +21,7 @@
 
 #include <unistd.h>
 #include <cstring>
+#include <string>
 #include <io/sys.h>
 
 #ifdef WIN32
@@ -50,6 +52,8 @@
 #ifdef WIN32
 #include <icm.h>
 #endif // WIN32
+
+#include <glibmm/convert.h>
 
 using Inkscape::ColorProfile;
 using Inkscape::ColorProfileImpl;
@@ -615,6 +619,8 @@ private:
     cmsColorSpaceSignature _profileSpace;
     cmsProfileClassSignature _profileClass;
 };
+
+#include <iostream>
 
 ProfileInfo::ProfileInfo( cmsHPROFILE prof, Glib::ustring const & path ) :
     _path( path ),

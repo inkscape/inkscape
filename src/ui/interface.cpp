@@ -20,7 +20,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include "config.h"
 #endif
 
 #include "ui/dialog/dialog-manager.h"
@@ -35,20 +35,25 @@
 #include "extension/input.h"
 #include "widgets/icon.h"
 #include "preferences.h"
+#include "path-prefix.h"
 #include "shortcuts.h"
 #include "document.h"
 
 #include "ui/interface.h"
 #include "desktop.h"
+#include "selection.h"
 #include "selection-chemistry.h"
 #include "svg-view-widget.h"
 #include "widgets/desktop-widget.h"
 #include "sp-item-group.h"
 #include "sp-text.h"
+#include "sp-gradient.h"
 #include "sp-flowtext.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
+#include "ui/view/view.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "helper/gnome-utils.h"
 #include "helper/window.h"
 #include "io/sys.h"
@@ -58,6 +63,7 @@
 #include "ui/clipboard.h"
 
 #include "display/sp-canvas.h"
+#include "color.h"
 #include "svg/svg-color.h"
 #include "desktop-style.h"
 #include "style.h"
@@ -68,6 +74,7 @@
 #include "sp-anchor.h"
 #include "sp-clippath.h"
 #include "sp-image.h"
+#include "sp-item.h"
 #include "sp-mask.h"
 #include "message-stack.h"
 #include "ui/dialog/layer-properties.h"
@@ -75,6 +82,10 @@
 #if GTK_CHECK_VERSION(3,0,0)
     #include "widgets/image-menu-item.h"
 #endif
+
+#include <gdk/gdkkeysyms.h>
+
+#include <glibmm/miscutils.h>
 
 using Inkscape::DocumentUndo;
 

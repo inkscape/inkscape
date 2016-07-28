@@ -35,6 +35,7 @@
 #include <locale.h>
 
 #include <gtkmm/main.h>
+#include <glib.h>
 
 // #include <stropts.h>
 
@@ -56,6 +57,8 @@
 #endif
 
 #include "inkscape.h"
+
+#include <iostream>
 
 #ifndef HAVE_BIND_TEXTDOMAIN_CODESET
 #define bind_textdomain_codeset(p,c)

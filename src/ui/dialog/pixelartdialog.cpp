@@ -31,6 +31,7 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
 
+#include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 
 #include "ui/widget/spinbutton.h"
@@ -40,13 +41,18 @@
 #include "desktop-tracker.h"
 #include "message-stack.h"
 #include "selection.h"
+#include "preferences.h"
 
 #include "sp-image.h"
 #include "display/cairo-utils.h"
 #include "libdepixelize/kopftracer2011.h"
+#include <algorithm>
 #include "document.h"
+#include "xml/repr.h"
+#include "xml/document.h"
 #include "svg/svg.h"
 #include "svg/svg-color.h"
+#include "color.h"
 #include "svg/css-ostringstream.h"
 #include "document-undo.h"
 

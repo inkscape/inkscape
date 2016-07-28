@@ -36,6 +36,7 @@
 #define LIB2GEOM_SEEN_POLY_H
 #include <assert.h>
 #include <vector>
+#include <iostream>
 #include <algorithm>
 #include <complex>
 #include <2geom/coord.h>

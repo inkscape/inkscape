@@ -11,6 +11,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "config.h"
+
 #include "attributes.h"
 #include "sp-polyline.h"
 #include "display/curve.h"

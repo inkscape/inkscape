@@ -1,4 +1,5 @@
 #ifdef HAVE_CONFIG_H
+# include <config.h>
 #endif
 
 /*
@@ -17,6 +18,7 @@
 #include "attributes.h"
 #include "sp-glyph.h"
 #include "document.h"
+#include <cstring>
 
 SPGlyph::SPGlyph()
     : SPObject() 

@@ -10,6 +10,8 @@
 #include "uri.h"
 #include "document.h"
 #include "sp-item-group.h"
+#include "2geom/path.h"
+#include "2geom/pathvector.h"
 #include "2geom/path-intersection.h"
 
 

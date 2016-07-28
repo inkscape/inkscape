@@ -13,6 +13,8 @@
 
 #include "sp-script.h"
 #include "attributes.h"
+#include <cstring>
+#include "document.h"
 
 SPScript::SPScript() : SPObject() {
 	this->xlinkhref = NULL;

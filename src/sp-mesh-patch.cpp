@@ -18,6 +18,7 @@
 #include "style.h"
 
 #include "attributes.h"
+#include "xml/repr.h"
 
 SPMeshpatch* SPMeshpatch::getNextMeshpatch()
 {

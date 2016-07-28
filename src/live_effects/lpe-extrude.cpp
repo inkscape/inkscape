@@ -15,6 +15,11 @@
 
 #include <glibmm/i18n.h>
 
+#include <2geom/path.h>
+#include <2geom/piecewise.h>
+#include <2geom/transforms.h>
+#include <algorithm>
+
 #include "sp-item.h"
 
 namespace Inkscape {

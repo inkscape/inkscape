@@ -23,6 +23,8 @@
 #include "sp-object.h"
 #include "style.h"
 #include "sp-paint-server.h"
+#include "xml/node.h"
+#include "xml/repr.h"
 #include "sp-root.h"
 #include "sp-gradient.h"
 

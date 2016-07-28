@@ -22,6 +22,7 @@
 #include "knotholder.h"
 #include "knot-holder-entity.h"
 #include "ui/tools/rect-tool.h"
+#include "sp-rect.h"
 #include "ui/tools/arc-tool.h"
 #include "sp-ellipse.h"
 #include "ui/tools/tweak-tool.h"
@@ -36,8 +37,11 @@
 #include "live_effects/effect.h"
 #include "desktop.h"
 #include "display/sp-canvas.h"
+#include "display/sp-canvas-item.h"
 #include "verbs.h"
 #include "ui/control-manager.h"
+
+#include "xml/repr.h" // for debugging only
 
 using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;

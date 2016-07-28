@@ -23,12 +23,15 @@
 #include "ui/dialog/dialog-manager.h"
 #include "desktop.h"
 
+#include "macros.h"
 #include "sp-anchor.h"
 #include "sp-image.h"
 #include "verbs.h"
+#include "xml/repr.h"
 #include "ui/dialog/object-attributes.h"
 #include "widgets/sp-attribute-widget.h"
 #include "inkscape.h"
+#include "selection.h"
 #include <glibmm/i18n.h>
 
 namespace Inkscape {

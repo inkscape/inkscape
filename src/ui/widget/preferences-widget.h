@@ -19,6 +19,7 @@
 # include <config.h>
 #endif
 
+#include <iostream>
 #include <vector>
 
 #include <gtkmm/filechooserbutton.h>

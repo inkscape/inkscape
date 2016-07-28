@@ -11,8 +11,14 @@
 #include "template-widget.h"
 
 #include <gtkmm/alignment.h>
+#include <gtkmm/button.h>
+#include <gtkmm/label.h>
 #include <gtkmm/messagedialog.h>
 
+#include <glibmm/i18n.h>
+#include <glibmm/miscutils.h>
+
+#include "template-load-tab.h"
 #include "desktop.h"
 
 #include "document.h"
