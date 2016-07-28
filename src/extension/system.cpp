@@ -38,7 +38,7 @@
 #include "inkscape.h"
 #include "document-undo.h"
 #include "loader.h"
-
+#include <glibmm/miscutils.h>
 
 namespace Inkscape {
 namespace Extension {
