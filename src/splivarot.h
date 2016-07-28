@@ -54,6 +54,7 @@ void sp_selected_path_create_updating_offset_object_zero (SPDesktop *desktop);
 // outline of a curve
 // uses the stroke-width
 void sp_selected_path_outline (SPDesktop *desktop);
+bool sp_item_path_outline(SPItem *item, SPDesktop *desktop);
 Geom::PathVector* item_outline(SPItem const *item, bool bbox_only = false);
 
 // simplifies a path (removes small segments and the like)
