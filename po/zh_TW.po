@@ -1,16 +1,16 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Dongjun Wu <ziyawu@gmail.com>, 2011, 2012, 2013, 2014.
 #: ../src/ui/dialog/clonetiler.cpp:1010
+# Dongjun Wu <ziyawu@gmail.com>, 2011, 2012, 2013, 2014, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-02 12:12+0200\n"
-"PO-Revision-Date: 2015-09-10 11:39+0100\n"
+"POT-Creation-Date: 2016-06-08 09:06+0200\n"
+"PO-Revision-Date: 2016-06-22 02:22+0800\n"
 "Last-Translator: Dongjun Wu <ziyawu@gmail.com>\n"
-"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"Language-Team: Chinese <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Language: Chinese (tranditional)\n"
 "X-Poedit-Country: TAIWAN\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../inkscape.appdata.xml.in.h:1 ../inkscape.desktop.in.h:1
 msgid "Inkscape"
@@ -34,6 +34,8 @@ msgid ""
 "Illustrator, CorelDraw, or Xara X, using the W3C standard Scalable Vector "
 "Graphics (SVG) file format."
 msgstr ""
+"開放原始碼向量繪圖編輯器，功能類似 Illustrator、CorelDraw 或 Xara X，使用 "
+"W3C 標準可縮放向量圖形 (SVG) 檔案格式。"
 
 #: ../inkscape.appdata.xml.in.h:4
 msgid ""
@@ -43,11 +45,13 @@ msgid ""
 "trace bitmaps and much more. We also aim to maintain a thriving user and "
 "developer community by using open, community-oriented development."
 msgstr ""
+"Inkscape 支援許多進階的 SVG 特性 (標記、仿製、透明混合等等) 並著重流暢操作性"
+"所設計的使用介面。此軟體能夠簡單編輯節點、操作複雜的路徑、描繪點陣圖等許多功"
+"能。我們積極經營使用者與開發人員的社群，秉持開放、社群導向開發理念。"
 
 #: ../inkscape.appdata.xml.in.h:5
-#, fuzzy
 msgid "Main application window"
-msgstr "再製視窗(_A)"
+msgstr "應用程式主視窗"
 
 #: ../inkscape.desktop.in.h:3
 msgid "Inkscape Vector Graphics Editor"
@@ -59,7 +63,7 @@ msgstr "建立和編輯可縮放向量繪圖圖形"
 
 #: ../inkscape.desktop.in.h:5
 msgid "image;editor;vector;drawing;"
-msgstr ""
+msgstr "影像;編輯器;向量;圖畫;"
 
 #: ../inkscape.desktop.in.h:6
 msgid "New Drawing"
@@ -4215,17 +4219,15 @@ msgstr "碼頭"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:239 ../share/symbols/symbols.h:240
-#, fuzzy
 msgctxt "Symbol"
 msgid "Motorbike Trail"
-msgstr "雪車道"
+msgstr "摩托車"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:241 ../share/symbols/symbols.h:242
-#, fuzzy
 msgctxt "Symbol"
 msgid "Radiator Water"
-msgstr "相關性"
+msgstr "暖氣機水"
 
 #. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:243 ../share/symbols/symbols.h:244
@@ -4363,7 +4365,7 @@ msgstr "衝浪"
 #: ../share/symbols/symbols.h:291
 msgctxt "Symbol"
 msgid "Blank"
-msgstr ""
+msgstr "空白符號"
 
 #: ../share/templates/templates.h:1
 msgid "CD Label 120mmx120mm "
@@ -4419,16 +4421,16 @@ msgstr "參考線印刷畫布"
 msgid "3D Box"
 msgstr "立方體"
 
-#: ../src/color-profile.cpp:842
+#: ../src/color-profile.cpp:856
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr "色彩描述檔目錄 (%s) 無法使用。"
 
-#: ../src/color-profile.cpp:901 ../src/color-profile.cpp:918
+#: ../src/color-profile.cpp:928 ../src/color-profile.cpp:945
 msgid "(invalid UTF-8 string)"
 msgstr "(不正確的 UTF-8 字串)"
 
-#: ../src/color-profile.cpp:903
+#: ../src/color-profile.cpp:930
 msgctxt "Profile name"
 msgid "None"
 msgstr "無"
@@ -4993,7 +4995,7 @@ msgstr ""
 "目前沒有關於這個擴充功能的說明。如果你有關於這個擴充功能的問題請詳見 "
 "Inkscape 網站或在郵件論壇上詢問。"
 
-#: ../src/extension/implementation/script.cpp:1108
+#: ../src/extension/implementation/script.cpp:1111
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -5662,30 +5664,26 @@ msgstr "Postscript 等級 2"
 #: ../src/extension/internal/cairo-ps-out.cpp:333
 #: ../src/extension/internal/cairo-ps-out.cpp:375
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
-#, fuzzy
 msgid "Text output options:"
-msgstr "文字方向"
+msgstr "文字輸出選項："
 
 #: ../src/extension/internal/cairo-ps-out.cpp:334
 #: ../src/extension/internal/cairo-ps-out.cpp:376
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:251
-#, fuzzy
 msgid "Embed fonts"
-msgstr "嵌入點陣圖"
+msgstr "內嵌字型"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:335
 #: ../src/extension/internal/cairo-ps-out.cpp:377
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
-#, fuzzy
 msgid "Convert text to paths"
 msgstr "將文字轉成路徑"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:336
 #: ../src/extension/internal/cairo-ps-out.cpp:378
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
-#, fuzzy
 msgid "Omit text in PDF and create LaTeX file"
-msgstr "PDF+LaTeX：省略 PDF 裡的文字，並建立 LaTeX 檔"
+msgstr "省略 PDF 中的文字並建立 LaTeX 檔"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:338
 #: ../src/extension/internal/cairo-ps-out.cpp:380
@@ -6525,51 +6523,48 @@ msgid "Replace RGB by any color"
 msgstr "用兩種顏色替代 RGB"
 
 #: ../src/extension/internal/filter/color.h:254
-#, fuzzy
 msgid "Color Blindness"
-msgstr "彩色外框"
+msgstr "色盲"
 
 #: ../src/extension/internal/filter/color.h:258
-#, fuzzy
 msgid "Blindness type:"
-msgstr "混合類型："
+msgstr "色盲類型："
 
 #: ../src/extension/internal/filter/color.h:259
 msgid "Rod monochromacy (atypical achromatopsia)"
-msgstr ""
+msgstr "桿細胞單色盲 (非典型色盲)"
 
 #: ../src/extension/internal/filter/color.h:260
 msgid "Cone monochromacy (typical achromatopsia)"
-msgstr ""
+msgstr "視錐細胞單色盲 (典型色盲)"
 
 #: ../src/extension/internal/filter/color.h:261
 msgid "Green weak (deuteranomaly)"
-msgstr ""
+msgstr "綠色弱 (第二色弱)"
 
 #: ../src/extension/internal/filter/color.h:262
 msgid "Green blind (deuteranopia)"
-msgstr ""
+msgstr "綠色盲 (第二色盲)"
 
 #: ../src/extension/internal/filter/color.h:263
 msgid "Red weak (protanomaly)"
-msgstr ""
+msgstr "紅色弱 (第一色弱)"
 
 #: ../src/extension/internal/filter/color.h:264
 msgid "Red blind (protanopia)"
-msgstr ""
+msgstr "紅色盲 (第一色盲)"
 
 #: ../src/extension/internal/filter/color.h:265
 msgid "Blue weak (tritanomaly)"
-msgstr ""
+msgstr "藍色弱 (第三色弱)"
 
 #: ../src/extension/internal/filter/color.h:266
 msgid "Blue blind (tritanopia)"
-msgstr ""
+msgstr "藍色盲 (第三色盲)"
 
 #: ../src/extension/internal/filter/color.h:286
-#, fuzzy
 msgid "Simulate color blindness"
-msgstr "模擬油畫筆觸風格"
+msgstr "模擬色盲"
 
 #: ../src/extension/internal/filter/color.h:329
 msgid "Color Shift"
@@ -7969,7 +7964,7 @@ msgstr "<b>備註</b>：若精確度設定太高可能會使 SVG 檔的體積變
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:134
 msgid "Poppler/Cairo import"
-msgstr ""
+msgstr "Poppler/Cairo 匯入"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:135
 msgid ""
@@ -7977,11 +7972,12 @@ msgid ""
 "glyphs where each glyph is a path. Images are stored internally. Meshes "
 "cause entire document to be rendered as a raster image."
 msgstr ""
+"經由外部函式庫匯入。文字組成群組包含複製字而每一個字是路徑。影像儲存在內部。"
+"網面會將整個文件繪算為點陣圖。"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:136
-#, fuzzy
 msgid "Internal import"
-msgstr "序列連接埠："
+msgstr "內部匯入"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:137
 msgid ""
@@ -7989,6 +7985,8 @@ msgid ""
 "white space is missing. Meshes are converted to tiles, the number depends on "
 "the precision set below."
 msgstr ""
+"經由內部 (源自 Poppler) 函式庫匯入。文字以文字儲存，但空白會遺失。網面轉換成"
+"圖塊，數量取決於下面設定的精確度。"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:148
 msgid "rough"
@@ -8288,8 +8286,7 @@ msgstr "在 &lt;defs&gt; 沒有未使用的定義。"
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
-msgstr ""
-"找不到 Inkscape 擴充功能來儲存檔案 (%s) 。這可能是因不明的副檔名所導致。"
+msgstr "找不到 Inkscape 擴充功能來儲存檔案 (%s) 。這可能是因不明的副檔名所導致。"
 
 #: ../src/file.cpp:680 ../src/file.cpp:688 ../src/file.cpp:696
 #: ../src/file.cpp:702 ../src/file.cpp:707
@@ -8750,8 +8747,7 @@ msgstr "管理器"
 
 #: ../src/libgdl/gdl-dock-bar.c:106
 msgid "GdlDockMaster object which the dockbar widget is attached to"
-msgstr ""
-"工具欄列介面元件被放到圖形裝置介面 (GDI) 工具欄管理器 (GdlDockMaster) 物件"
+msgstr "工具欄列介面元件被放到圖形裝置介面 (GDI) 工具欄管理器 (GdlDockMaster) 物件"
 
 #: ../src/libgdl/gdl-dock-bar.c:113
 msgid "Dockbar style"
@@ -8902,8 +8898,7 @@ msgstr "切換按鈕樣式"
 msgid ""
 "master %p: unable to add object %p[%s] to the hash.  There already is an "
 "item with that name (%p)."
-msgstr ""
-"管理器 %p：無法加入物件 %p[%s] 到此信息。已有一個相同名稱 (%p) 的項目。"
+msgstr "管理器 %p：無法加入物件 %p[%s] 到此信息。已有一個相同名稱 (%p) 的項目。"
 
 #: ../src/libgdl/gdl-dock-master.c:955
 #, c-format
@@ -9272,9 +9267,8 @@ msgid "Interpolate points"
 msgstr "插入點"
 
 #: ../src/live_effects/effect.cpp:140
-#, fuzzy
 msgid "Transform by 2 points"
-msgstr "漸層變形"
+msgstr "依 2 點變形"
 
 #: ../src/live_effects/effect.cpp:141
 #: ../src/live_effects/lpe-show_handles.cpp:26
@@ -9448,9 +9442,8 @@ msgstr "在沿著彎曲路徑彎曲之前，將原本的旋轉 90 度"
 
 #: ../src/live_effects/lpe-bendpath.cpp:178
 #: ../src/live_effects/lpe-patternalongpath.cpp:285
-#, fuzzy
 msgid "Change the width"
-msgstr "變更邊框寬度"
+msgstr "變更寬度"
 
 #: ../src/live_effects/lpe-bounding-box.cpp:24
 #: ../src/live_effects/lpe-clone-original.cpp:18
@@ -9494,11 +9487,11 @@ msgstr "輔助標示尺寸"
 
 #: ../src/live_effects/lpe-bspline.cpp:32
 msgid "Apply changes if weight = 0%"
-msgstr ""
+msgstr "如果權重 = 0% 則套用變更"
 
 #: ../src/live_effects/lpe-bspline.cpp:33
 msgid "Apply changes if weight > 0%"
-msgstr ""
+msgstr "如果權重 > 0% 則套用變更"
 
 #: ../src/live_effects/lpe-bspline.cpp:34
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:56
@@ -9506,14 +9499,12 @@ msgid "Change only selected nodes"
 msgstr "只改變選取的節點"
 
 #: ../src/live_effects/lpe-bspline.cpp:35
-#, fuzzy
 msgid "Change weight %:"
-msgstr "變更權重："
+msgstr "變更權重 %："
 
 #: ../src/live_effects/lpe-bspline.cpp:35
-#, fuzzy
 msgid "Change weight percent of the effect"
-msgstr "變更特效權重"
+msgstr "變更特效權重百分比"
 
 #: ../src/live_effects/lpe-bspline.cpp:99
 msgid "Default weight"
@@ -9524,14 +9515,12 @@ msgid "Make cusp"
 msgstr "變成尖角"
 
 #: ../src/live_effects/lpe-bspline.cpp:148
-#, fuzzy
 msgid "Change to default weight"
-msgstr "預設權重"
+msgstr "變更為預設權重"
 
 #: ../src/live_effects/lpe-bspline.cpp:154
-#, fuzzy
 msgid "Change to 0 weight"
-msgstr "變更權重："
+msgstr "變更為 0 權重"
 
 #: ../src/live_effects/lpe-bspline.cpp:160
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:240
@@ -9747,36 +9736,32 @@ msgid "Use knots distance instead radius"
 msgstr "改用環結距離而非半徑"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
-#, fuzzy
 msgid "Method:"
-msgstr "方式"
+msgstr "方式："
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
 msgid "Fillets methods"
 msgstr "圓角方式"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:60
-#, fuzzy
 msgid "Radius (unit or %):"
-msgstr "半徑 (單位或 %)"
+msgstr "半徑 (單位或 %)："
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:60
 msgid "Radius, in unit or %"
 msgstr "半徑，單位或 %"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
-#, fuzzy
 msgid "Chamfer steps:"
-msgstr "倒角階數"
+msgstr "倒角階數："
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
 msgid "Chamfer steps"
 msgstr "倒角階數"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:63
-#, fuzzy
 msgid "Helper size with direction:"
-msgstr "方向性輔助標示尺寸"
+msgstr "方向性輔助標示尺寸："
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:63
 msgid "Helper size with direction"
@@ -9784,11 +9769,11 @@ msgstr "方向性輔助標示尺寸"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:103
 msgid "IMPORTANT! New version soon..."
-msgstr ""
+msgstr "重要！即將有新版本..."
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:107
 msgid "Not compatible. Convert to path after."
-msgstr ""
+msgstr "不相容。之後轉換成路徑。"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:165
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:72
@@ -9807,29 +9792,25 @@ msgstr "倒角"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:178
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:78
-#, fuzzy
 msgid "Inverse chamfer"
-msgstr "反向圓角"
+msgstr "反向倒角"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:247
-#, fuzzy
 msgid "Convert to fillet"
-msgstr "轉換成點字"
+msgstr "轉換成圓角"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:254
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:278
-#, fuzzy
 msgid "Convert to inverse fillet"
-msgstr "轉換成點字"
+msgstr "轉換成反向圓角"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:270
-#, fuzzy
 msgid "Convert to chamfer"
-msgstr "轉成破折號"
+msgstr "轉換成倒角"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:290
 msgid "Knots and helper paths refreshed"
-msgstr ""
+msgstr "環結和輔助標示路徑已重新整理"
 
 #: ../src/live_effects/lpe-gears.cpp:214
 msgid "_Teeth:"
@@ -9931,9 +9912,8 @@ msgid "Miter"
 msgstr "斜切"
 
 #: ../src/live_effects/lpe-jointype.cpp:34
-#, fuzzy
 msgid "Miter Clip"
-msgstr "斜切限制"
+msgstr "斜切剪裁"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
 #: ../src/live_effects/lpe-jointype.cpp:35
@@ -9942,19 +9922,16 @@ msgid "Extrapolated arc"
 msgstr "外推弧"
 
 #: ../src/live_effects/lpe-jointype.cpp:36
-#, fuzzy
 msgid "Extrapolated arc Alt1"
-msgstr "外推弧"
+msgstr "外推弧 Alt1"
 
 #: ../src/live_effects/lpe-jointype.cpp:37
-#, fuzzy
 msgid "Extrapolated arc Alt2"
-msgstr "外推弧"
+msgstr "外推弧 Alt2"
 
 #: ../src/live_effects/lpe-jointype.cpp:38
-#, fuzzy
 msgid "Extrapolated arc Alt3"
-msgstr "外推弧"
+msgstr "外推弧 Alt3"
 
 #: ../src/live_effects/lpe-jointype.cpp:42
 #: ../src/live_effects/lpe-powerstroke.cpp:149
@@ -10077,279 +10054,227 @@ msgstr "變更環結交叉點"
 
 #: ../src/live_effects/lpe-lattice2.cpp:47
 #: ../src/live_effects/lpe-perspective-envelope.cpp:43
-#, fuzzy
 msgid "Mirror movements in horizontal"
-msgstr "水平移動節點"
+msgstr "水平鏡像移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:48
 #: ../src/live_effects/lpe-perspective-envelope.cpp:44
-#, fuzzy
 msgid "Mirror movements in vertical"
-msgstr "垂直移動節點"
+msgstr "垂直鏡像移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Update while moving knots (maybe slow)"
-msgstr ""
+msgstr "移動環結時更新 (可能會讓程式變很慢)"
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
-#, fuzzy
 msgid "Control 0:"
 msgstr "控制柄 0："
 
 #: ../src/live_effects/lpe-lattice2.cpp:50
-#, fuzzy
 msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 0 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 0 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
-#, fuzzy
 msgid "Control 1:"
 msgstr "控制柄 1："
 
 #: ../src/live_effects/lpe-lattice2.cpp:51
-#, fuzzy
 msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 1 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 1 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
-#, fuzzy
 msgid "Control 2:"
-msgstr "控制柄 2:"
+msgstr "控制柄 2："
 
 #: ../src/live_effects/lpe-lattice2.cpp:52
-#, fuzzy
 msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 2 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 2 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
-#, fuzzy
 msgid "Control 3:"
-msgstr "控制柄 3:"
+msgstr "控制柄 3："
 
 #: ../src/live_effects/lpe-lattice2.cpp:53
-#, fuzzy
 msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 3 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 3 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
-#, fuzzy
 msgid "Control 4:"
-msgstr "控制柄 4:"
+msgstr "控制柄 4："
 
 #: ../src/live_effects/lpe-lattice2.cpp:54
-#, fuzzy
 msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 4 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 4 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
-#, fuzzy
 msgid "Control 5:"
-msgstr "控制柄 5:"
+msgstr "控制柄 5："
 
 #: ../src/live_effects/lpe-lattice2.cpp:55
-#, fuzzy
 msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 5 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 5 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
-#, fuzzy
 msgid "Control 6:"
-msgstr "控制柄 6:"
+msgstr "控制柄 6："
 
 #: ../src/live_effects/lpe-lattice2.cpp:56
-#, fuzzy
 msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 6 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 6 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
-#, fuzzy
 msgid "Control 7:"
-msgstr "控制柄 7:"
+msgstr "控制柄 7："
 
 #: ../src/live_effects/lpe-lattice2.cpp:57
-#, fuzzy
 msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 7 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 7 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
-#, fuzzy
 msgid "Control 8x9:"
-msgstr "控制柄 8x9:"
+msgstr "控制柄 8x9："
 
 #: ../src/live_effects/lpe-lattice2.cpp:58
-#, fuzzy
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 8x9 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 8x9  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
-#, fuzzy
 msgid "Control 10x11:"
-msgstr "控制柄 10x11:"
+msgstr "控制柄 10x11："
 
 #: ../src/live_effects/lpe-lattice2.cpp:59
-#, fuzzy
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 10x11 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 10x11  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
-#, fuzzy
 msgid "Control 12:"
-msgstr "控制柄 12:"
+msgstr "控制柄 12："
 
 #: ../src/live_effects/lpe-lattice2.cpp:60
-#, fuzzy
 msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 12 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 12 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
-#, fuzzy
 msgid "Control 13:"
-msgstr "控制柄 12"
+msgstr "控制柄 13："
 
 #: ../src/live_effects/lpe-lattice2.cpp:61
-#, fuzzy
 msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 13 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 13 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
-#, fuzzy
 msgid "Control 14:"
-msgstr "控制柄 14:"
+msgstr "控制柄 14："
 
 #: ../src/live_effects/lpe-lattice2.cpp:62
-#, fuzzy
 msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 14 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 14 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
-#, fuzzy
 msgid "Control 15:"
-msgstr "控制柄 14"
+msgstr "控制柄 15："
 
 #: ../src/live_effects/lpe-lattice2.cpp:63
-#, fuzzy
 msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 15 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 15 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
-#, fuzzy
 msgid "Control 16:"
-msgstr "控制柄 16："
+msgstr "控制柄 15 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:64
-#, fuzzy
 msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 16 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 16 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
-#, fuzzy
 msgid "Control 17:"
 msgstr "控制柄 17："
 
 #: ../src/live_effects/lpe-lattice2.cpp:65
-#, fuzzy
 msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 16 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 17 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
-#, fuzzy
 msgid "Control 18:"
-msgstr "控制柄 18："
+msgstr "控制柄 15 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:66
-#, fuzzy
 msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 16 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 18 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-#, fuzzy
 msgid "Control 19:"
 msgstr "控制柄 19："
 
 #: ../src/live_effects/lpe-lattice2.cpp:67
-#, fuzzy
 msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 16 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 19 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-#, fuzzy
 msgid "Control 20x21:"
-msgstr "控制柄 20x21:"
+msgstr "控制柄 20x21："
 
 #: ../src/live_effects/lpe-lattice2.cpp:68
-#, fuzzy
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 20x21 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 20x21  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-#, fuzzy
 msgid "Control 22x23:"
-msgstr "控制柄 22x23:"
+msgstr "控制柄 22x23："
 
 #: ../src/live_effects/lpe-lattice2.cpp:69
-#, fuzzy
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 22x23 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 22x23  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-#, fuzzy
 msgid "Control 24x26:"
-msgstr "控制柄 24x26:"
+msgstr "控制柄 24x26："
 
 #: ../src/live_effects/lpe-lattice2.cpp:70
-#, fuzzy
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 24x26 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 24x26  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-#, fuzzy
 msgid "Control 25x27:"
-msgstr "控制柄 25x27:"
+msgstr "控制柄 25x27："
 
 #: ../src/live_effects/lpe-lattice2.cpp:71
-#, fuzzy
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 25x27 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 25x27  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
-#, fuzzy
 msgid "Control 28x30:"
-msgstr "控制柄 28x30:"
+msgstr "控制柄 28x30："
 
 #: ../src/live_effects/lpe-lattice2.cpp:72
-#, fuzzy
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 28x30 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 28x30  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
-#, fuzzy
 msgid "Control 29x31:"
-msgstr "控制柄 29x31:"
+msgstr "控制柄 29x31："
 
 #: ../src/live_effects/lpe-lattice2.cpp:73
-#, fuzzy
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "控制柄 29x31 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 29x31  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:74
-#, fuzzy
 msgid "Control 32x33x34x35:"
-msgstr "控制柄 32x33x34x35:"
+msgstr "控制柄 32x33x34x35："
 
 #: ../src/live_effects/lpe-lattice2.cpp:74
-#, fuzzy
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
-msgstr "控制柄 32x33x34x35 - Ctrl+Alt+滑鼠點擊可重設"
+msgstr "控制柄 32x33x34x35  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:239
 msgid "Reset grid"
@@ -10357,14 +10282,12 @@ msgstr "重設格線"
 
 #: ../src/live_effects/lpe-lattice2.cpp:271
 #: ../src/live_effects/lpe-lattice2.cpp:286
-#, fuzzy
 msgid "Show Points"
-msgstr "排序偏移點"
+msgstr "顯示點"
 
 #: ../src/live_effects/lpe-lattice2.cpp:284
-#, fuzzy
 msgid "Hide Points"
-msgstr "隱藏環結"
+msgstr "隱藏點"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:63
 #: ../share/extensions/pathalongpath.inx.h:10
@@ -10469,9 +10392,8 @@ msgid "Envelope deformation"
 msgstr "封套變形"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:45
-#, fuzzy
 msgid "Overflow perspective"
-msgstr "透視"
+msgstr "溢流透視"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:46
 msgid "Type"
@@ -10486,36 +10408,32 @@ msgid "Top Left"
 msgstr "左上"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
-#, fuzzy
 msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "<b>Alt</b>：鎖定控柄長度；<b>Ctrl+Alt</b>：沿著控柄移動"
+msgstr "左上 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Top Right"
 msgstr "右上"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
-#, fuzzy
 msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "<b>Alt</b>：鎖定控柄長度；<b>Ctrl+Alt</b>：沿著控柄移動"
+msgstr "右上 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
 msgid "Down Left"
 msgstr "左下"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
-#, fuzzy
 msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "<b>Alt</b>：鎖定控柄長度；<b>Ctrl+Alt</b>：沿著控柄移動"
+msgstr "左下 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
 msgid "Down Right"
 msgstr "右下"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
-#, fuzzy
 msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "<b>Alt</b>：鎖定控柄長度；<b>Ctrl+Alt</b>：沿著控柄移動"
+msgstr "右下 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:367
 msgid "Handles:"
@@ -10764,19 +10682,16 @@ msgid "By max. segment size"
 msgstr "依照最大線段長度"
 
 #: ../src/live_effects/lpe-roughen.cpp:38
-#, fuzzy
 msgid "Along nodes"
-msgstr "對齊節點"
+msgstr "沿著節點"
 
 #: ../src/live_effects/lpe-roughen.cpp:39
-#, fuzzy
 msgid "Rand"
-msgstr "隨機"
+msgstr "隨機數"
 
 #: ../src/live_effects/lpe-roughen.cpp:40
-#, fuzzy
 msgid "Retract"
-msgstr "摘取"
+msgstr "撤銷"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-roughen.cpp:49
@@ -10808,14 +10723,12 @@ msgid "Global randomize"
 msgstr "總體隨機化"
 
 #: ../src/live_effects/lpe-roughen.cpp:61
-#, fuzzy
 msgid "Handles"
-msgstr "控制點："
+msgstr "控制點"
 
 #: ../src/live_effects/lpe-roughen.cpp:61
-#, fuzzy
 msgid "Handles options"
-msgstr "隨機位置"
+msgstr "控制點選項"
 
 #: ../src/live_effects/lpe-roughen.cpp:63
 #: ../share/extensions/jitternodes.inx.h:5
@@ -10823,22 +10736,20 @@ msgid "Shift nodes"
 msgstr "移動節點"
 
 #: ../src/live_effects/lpe-roughen.cpp:65
-#, fuzzy
 msgid "Fixed displacement"
-msgstr "X 移位："
+msgstr "固定移位"
 
 #: ../src/live_effects/lpe-roughen.cpp:65
 msgid "Fixed displacement, 1/3 of segment length"
-msgstr ""
+msgstr "固定移位，1/3 線段長度"
 
 #: ../src/live_effects/lpe-roughen.cpp:67
-#, fuzzy
 msgid "Spray Tool friendly"
-msgstr "噴灑工具偏好設定"
+msgstr "簡單好用噴灑工具"
 
 #: ../src/live_effects/lpe-roughen.cpp:67
 msgid "For use with spray tool in copy mode"
-msgstr ""
+msgstr "複製模式中使用噴灑工具"
 
 #: ../src/live_effects/lpe-roughen.cpp:121
 msgid "<b>Add nodes</b> Subdivide each segment"
@@ -10854,7 +10765,7 @@ msgstr "<b>加強型粗糙化</b>會加入額外的粗糙圖層"
 
 #: ../src/live_effects/lpe-roughen.cpp:148
 msgid "<b>Options</b> Modify options to rough"
-msgstr ""
+msgstr "<b>選項</b>修改粗糙的選項"
 
 #: ../src/live_effects/lpe-ruler.cpp:25 ../share/extensions/measure.inx.h:27
 #: ../share/extensions/restack.inx.h:16
@@ -11005,13 +10916,12 @@ msgid "Roughly threshold:"
 msgstr "粗略臨界值："
 
 #: ../src/live_effects/lpe-simplify.cpp:32
-#, fuzzy
 msgid "Smooth angles:"
-msgstr "平滑度："
+msgstr "平滑角度："
 
 #: ../src/live_effects/lpe-simplify.cpp:32
 msgid "Max degree difference on handles to perform a smooth"
-msgstr ""
+msgstr "執行平滑的控制柄最大角度差值"
 
 #: ../src/live_effects/lpe-simplify.cpp:34
 msgid "Paths separately"
@@ -11179,36 +11089,32 @@ msgid "The (non-tapered) width of the path"
 msgstr "該路徑的寬度 (非錐化的寬度)"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:74
-#, fuzzy
 msgid "Start offset:"
-msgstr "開始偏移"
+msgstr "起始偏移："
 
 #: ../src/live_effects/lpe-taperstroke.cpp:74
 msgid "Taper distance from path start"
 msgstr "路徑起點的錐化距離"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:75
-#, fuzzy
 msgid "End offset:"
-msgstr "結束偏移"
+msgstr "結束偏移："
 
 #: ../src/live_effects/lpe-taperstroke.cpp:75
 msgid "The ending position of the taper"
 msgstr "錐化的結束位置"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:76
-#, fuzzy
 msgid "Taper smoothing:"
-msgstr "錐化平滑"
+msgstr "錐化平滑："
 
 #: ../src/live_effects/lpe-taperstroke.cpp:76
 msgid "Amount of smoothing to apply to the tapers"
 msgstr "套用到錐化的平滑程度"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:77
-#, fuzzy
 msgid "Join type:"
-msgstr "接合類型"
+msgstr "接合類型："
 
 #: ../src/live_effects/lpe-taperstroke.cpp:77
 msgid "Join type for non-smooth nodes"
@@ -11227,89 +11133,72 @@ msgid "End point of the taper"
 msgstr "錐化的末端"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:31
-#, fuzzy
 msgid "Elastic"
-msgstr "塑像黏土"
+msgstr "彈性伸縮"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:31
-#, fuzzy
 msgid "Elastic transform mode"
-msgstr "選取和變形物件"
+msgstr "彈性伸縮變形模式"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:32
-#, fuzzy
 msgid "From original width"
-msgstr "複製原本路徑"
+msgstr "原本路徑寬度"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-#, fuzzy
 msgid "Lock length"
-msgstr "鎖定圖層"
+msgstr "鎖定長度"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
-#, fuzzy
 msgid "Lock length to current distance"
-msgstr "鎖定或解除鎖定目前圖層"
+msgstr "鎖定長度到目前距離"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:34
-#, fuzzy
 msgid "Lock angle"
-msgstr "圓錐角"
+msgstr "鎖定角度"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:35
-#, fuzzy
 msgid "Flip horizontal"
 msgstr "水平翻轉"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:36
-#, fuzzy
 msgid "Flip vertical"
 msgstr "垂直翻轉"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:37
-#, fuzzy
 msgid "Start point"
-msgstr "排序偏移點"
+msgstr "起始點"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:38
-#, fuzzy
 msgid "End point"
-msgstr "結束路徑："
+msgstr "結束點"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
-#, fuzzy
 msgid "Stretch"
-msgstr "強度"
+msgstr "拉伸"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
-#, fuzzy
 msgid "Stretch the result"
-msgstr "設定濾鏡解析度"
+msgstr "拉伸結果"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:40
-#, fuzzy
 msgid "Offset from knots"
-msgstr "偏移點"
+msgstr "環結偏移"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:41
-#, fuzzy
 msgid "First Knot"
-msgstr "急救"
+msgstr "第一個環結"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:42
-#, fuzzy
 msgid "Last Knot"
-msgstr "環結"
+msgstr "最後環結"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:43
-#, fuzzy
 msgid "Rotation helper size"
-msgstr "旋轉中心"
+msgstr "旋轉輔助標示尺寸"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:196
-#, fuzzy
 msgid "Change index of knot"
-msgstr "變更節點類型"
+msgstr "變更環結索引"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:349
 #: ../src/ui/dialog/inkscape-preferences.cpp:1623
@@ -11384,43 +11273,39 @@ msgstr "變更計算參數"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:778
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:839
-#, fuzzy
 msgid ""
 "<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
-"<b>倒角</b>：<b>Ctrl+滑鼠點擊</b>可以開啟/關閉類型，<b>Shift+滑鼠點擊</b>可以"
-"開啟對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可以重設"
+"<b>倒角</b>：<b>Ctrl+滑鼠點擊</b>可開啟/關閉類型，<b>Shift+滑鼠點擊</b>可開啟"
+"對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可重設"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:782
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
-#, fuzzy
 msgid ""
 "<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
-"<b>倒角</b>：<b>Ctrl+滑鼠點擊</b>可以開啟/關閉類型，<b>Shift+滑鼠點擊</b>可以"
-"開啟對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可以重設"
+"<b>反轉倒角</b>：<b>Ctrl+滑鼠點擊</b>可開啟/關閉類型，<b>Shift+滑鼠點擊</b>可"
+"開啟對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可重設"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:786
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
-#, fuzzy
 msgid ""
 "<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
-"<b>反向圓角</b>：<b>Ctrl+滑鼠點擊</b>可以開啟/關閉類型，<b>Shift+滑鼠點擊</b>"
-"可以開啟對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可以重設"
+"<b>反轉圓角</b>：<b>Ctrl+滑鼠點擊</b>可開啟/關閉類型，<b>Shift+滑鼠點擊</b>可"
+"開啟對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可重設"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:790
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:851
-#, fuzzy
 msgid ""
 "<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
-"<b>圓角</b>：<b>Ctrl+滑鼠點擊</b>可以開啟/關閉類型，<b>Shift+滑鼠點擊</b>可以"
-"開啟對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可以重設"
+"<b>圓角</b>：<b>Ctrl+滑鼠點擊</b>可開啟/關閉類型，<b>Shift+滑鼠點擊</b>可開啟"
+"對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可重設"
 
 #: ../src/live_effects/parameter/originalpath.cpp:67
 #: ../src/live_effects/parameter/originalpatharray.cpp:155
@@ -11666,11 +11551,10 @@ msgid "Export document to an EPS file"
 msgstr "將文件匯出成 EPS 檔"
 
 #: ../src/main.cpp:412
-#, fuzzy
 msgid ""
 "Choose the PostScript Level used to export. Possible choices are 2 and 3 "
 "(the default)"
-msgstr "選擇匯出要使用的 PostScript 等級。正常選擇 2 (預設值) 和 3"
+msgstr "選擇匯出要使用的 PostScript 等級。正常選擇 2 和 3 (預設值)"
 
 #: ../src/main.cpp:414
 msgid "PS Level"
@@ -12276,19 +12160,16 @@ msgid "Group"
 msgstr "群組"
 
 #: ../src/selection-chemistry.cpp:798
-#, fuzzy
 msgid "<b>No objects selected</b> to pop out of group."
-msgstr "<b>沒有選取任何物件</b>可從其中取得樣式。"
+msgstr "<b>沒有選取任何物件</b>可脫離群組。"
 
 #: ../src/selection-chemistry.cpp:808
-#, fuzzy
 msgid "Selection <b>not in a group</b>."
-msgstr "選擇要解散的<b>群組</b>。"
+msgstr "選取項目<b>不在群組中</b>。"
 
 #: ../src/selection-chemistry.cpp:822
-#, fuzzy
 msgid "Pop selection from group"
-msgstr "將選取區視為群組(_T)："
+msgstr "從群組中脫離選取項目"
 
 #: ../src/selection-chemistry.cpp:830
 msgid "Select a <b>group</b> to ungroup."
@@ -12746,8 +12627,8 @@ msgstr "使用 <b>Shift+D</b> 找尋訊框"
 #, c-format
 msgid "<b>%1$i</b> objects selected of type %2$s"
 msgid_plural "<b>%1$i</b> objects selected of types %2$s"
-msgstr[0] "已選擇類型 %2$s 的 <b>%1$i</b> 個物件"
-msgstr[1] "已選擇類型 %2$s 的 <b>%1$i</b> 個物件"
+msgstr[0] "已選取類型 %2$s 的 <b>%1$i</b> 物件"
+msgstr[1] "已選取類型 %2$s 的 <b>%1$i</b> 物件"
 
 #: ../src/selection-describer.cpp:246
 #, c-format
@@ -12920,36 +12801,36 @@ msgid_plural "(%d characters%s)"
 msgstr[0] "(%d 個字元%s)"
 msgstr[1] "(%d 個字元%s)"
 
-#: ../src/sp-guide.cpp:261
+#: ../src/sp-guide.cpp:262
 msgid "Create Guides Around the Page"
 msgstr "在頁面周圍建立參考線"
 
-#: ../src/sp-guide.cpp:274 ../src/verbs.cpp:2544
+#: ../src/sp-guide.cpp:275 ../src/verbs.cpp:2544
 msgid "Delete All Guides"
 msgstr "刪除全部參考線"
 
 #. Guide has probably been deleted and no longer has an attached namedview.
-#: ../src/sp-guide.cpp:485
+#: ../src/sp-guide.cpp:486
 msgid "Deleted"
 msgstr "已刪除"
 
-#: ../src/sp-guide.cpp:494
+#: ../src/sp-guide.cpp:495
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
 msgstr "<b>Shift+拖曳</b>可旋轉，<b>Ctrl+拖曳</b>可移動原點，<b>Del</b> 可刪除"
 
-#: ../src/sp-guide.cpp:498
+#: ../src/sp-guide.cpp:499
 #, c-format
 msgid "vertical, at %s"
 msgstr "垂直，位於 %s"
 
-#: ../src/sp-guide.cpp:501
+#: ../src/sp-guide.cpp:502
 #, c-format
 msgid "horizontal, at %s"
 msgstr "水平，位於 %s"
 
-#: ../src/sp-guide.cpp:506
+#: ../src/sp-guide.cpp:507
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "於 %d 度，經過 (%s,%s)"
@@ -13205,8 +13086,7 @@ msgstr "請至少選擇 <b>1 條路徑</b>來執行布林聯集。"
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
-msgstr ""
-"無法決定選取物件的<b>排列順序</b>來進行差集﹑互斥 (XOR)﹑分割或剪切路徑。"
+msgstr "無法決定選取物件的<b>排列順序</b>來進行差集﹑互斥 (XOR)﹑分割或剪切路徑。"
 
 #: ../src/splivarot.cpp:408
 msgid ""
@@ -13751,19 +13631,16 @@ msgid "Selection Area"
 msgstr "選取範圍"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1097
-#, fuzzy
 msgid "Middle of selection"
-msgstr "選取區的寬度"
+msgstr "選取區中間"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1098
-#, fuzzy
 msgid "Min value"
-msgstr "字母緊排值："
+msgstr "最小值"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1099
-#, fuzzy
 msgid "Max value"
-msgstr "清除數值"
+msgstr "最大值"
 
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:40
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:138
@@ -14135,11 +14012,12 @@ msgid "Initial color of tiled clones"
 msgstr "鋪排仿製物件的初始顏色"
 
 #: ../src/ui/dialog/clonetiler.cpp:665
-#, fuzzy
 msgid ""
 "Initial color for clones (works only if the original has unset fill or "
 "stroke or on spray tool in copy mode)"
-msgstr "仿製物件的初始顏色 (需將原始物件填充或邊框設定為「取消塗繪」)"
+msgstr ""
+"仿製物件的初始顏色 (需將原始物件填充或邊框設定為「取消塗繪」或者噴灑工具使用"
+"複製模式)"
 
 #: ../src/ui/dialog/clonetiler.cpp:680
 msgid "<b>H:</b>"
@@ -14202,28 +14080,26 @@ msgid "_Trace"
 msgstr "描繪(_T)"
 
 #: ../src/ui/dialog/clonetiler.cpp:788
-#, fuzzy
 msgid "Trace the drawing under the clones/sprayed items"
-msgstr "描繪鋪排物件下面的圖畫"
+msgstr "描繪鋪排/噴灑物件下面的圖畫"
 
 #: ../src/ui/dialog/clonetiler.cpp:792
-#, fuzzy
 msgid ""
 "For each clone/sprayed item, pick a value from the drawing in its location "
 "and apply it"
-msgstr "對於每個仿製物件，都從它所在位置的繪圖中取得數值，並將其套用到仿製物件"
+msgstr "每個仿製/噴灑物件都從它所在位置的繪圖中取得數值，並將其套用到仿製物件"
 
 #: ../src/ui/dialog/clonetiler.cpp:811
 msgid "1. Pick from the drawing:"
-msgstr "1. 從圖畫中汲取："
+msgstr "1. 從圖畫中拾取："
 
 #: ../src/ui/dialog/clonetiler.cpp:829
 msgid "Pick the visible color and opacity"
-msgstr "汲取可見色彩與不透明度"
+msgstr "拾取可見色彩與不透明度"
 
 #: ../src/ui/dialog/clonetiler.cpp:837
 msgid "Pick the total accumulated opacity"
-msgstr "汲取整體累加的不透明度"
+msgstr "拾取整體累加的不透明度"
 
 #: ../src/ui/dialog/clonetiler.cpp:844
 msgid "R"
@@ -14231,7 +14107,7 @@ msgstr "紅"
 
 #: ../src/ui/dialog/clonetiler.cpp:845
 msgid "Pick the Red component of the color"
-msgstr "汲取色彩的紅色組成"
+msgstr "拾取色彩的紅色組成"
 
 #: ../src/ui/dialog/clonetiler.cpp:852
 msgid "G"
@@ -14239,7 +14115,7 @@ msgstr "綠"
 
 #: ../src/ui/dialog/clonetiler.cpp:853
 msgid "Pick the Green component of the color"
-msgstr "汲取色彩的綠色組成"
+msgstr "拾取色彩的綠色組成"
 
 #: ../src/ui/dialog/clonetiler.cpp:860
 msgid "B"
@@ -14247,7 +14123,7 @@ msgstr "藍"
 
 #: ../src/ui/dialog/clonetiler.cpp:861
 msgid "Pick the Blue component of the color"
-msgstr "汲取色彩的藍色組成"
+msgstr "拾取色彩的藍色組成"
 
 #: ../src/ui/dialog/clonetiler.cpp:868
 msgctxt "Clonetiler color hue"
@@ -14256,7 +14132,7 @@ msgstr "色相"
 
 #: ../src/ui/dialog/clonetiler.cpp:869
 msgid "Pick the hue of the color"
-msgstr "汲取色相"
+msgstr "拾取色相"
 
 #: ../src/ui/dialog/clonetiler.cpp:876
 msgctxt "Clonetiler color saturation"
@@ -14265,7 +14141,7 @@ msgstr "飽和度"
 
 #: ../src/ui/dialog/clonetiler.cpp:877
 msgid "Pick the saturation of the color"
-msgstr "汲取顏色飽和度"
+msgstr "拾取顏色飽和度"
 
 #: ../src/ui/dialog/clonetiler.cpp:884
 msgctxt "Clonetiler color lightness"
@@ -14274,7 +14150,7 @@ msgstr "明度"
 
 #: ../src/ui/dialog/clonetiler.cpp:885
 msgid "Pick the lightness of the color"
-msgstr "汲取顏色亮度"
+msgstr "拾取顏色亮度"
 
 #: ../src/ui/dialog/clonetiler.cpp:895
 msgid "2. Tweak the picked value:"
@@ -14316,7 +14192,7 @@ msgstr "出現"
 msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
-msgstr "每個仿製物件由該點取得數值決定的機率來建立"
+msgstr "每個仿製物件由該拾取得數值決定的機率來建立"
 
 #: ../src/ui/dialog/clonetiler.cpp:969
 msgid "Size"
@@ -14324,22 +14200,21 @@ msgstr "大小"
 
 #: ../src/ui/dialog/clonetiler.cpp:972
 msgid "Each clone's size is determined by the picked value in that point"
-msgstr "每個仿製物件的大小由該點取得數值來決定"
+msgstr "每個仿製物件的大小由該拾取得數值來決定"
 
 #: ../src/ui/dialog/clonetiler.cpp:982
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
-msgstr "每個仿製物件由取得的顏色來繪製 (原始物件必須解除設定填充或邊框)"
+msgstr "每個仿製物件由取得的顏色來繪製 (原始物件必須將填充或邊框改為未設定)"
 
 #: ../src/ui/dialog/clonetiler.cpp:992
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr "每個仿製物件的不透明度由該點取得的數值來決定"
+msgstr "每個仿製物件的不透明度由該拾取得的數值來決定"
 
 #: ../src/ui/dialog/clonetiler.cpp:1011
-#, fuzzy
 msgid "Apply to tiled clones:"
-msgstr "刪除鋪排的仿製物件"
+msgstr "套用到鋪排仿製物件："
 
 #: ../src/ui/dialog/clonetiler.cpp:1052
 msgid "How many rows in the tiling"
@@ -14381,8 +14256,7 @@ msgstr "使用已儲存的鋪排大小和位置"
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
-msgstr ""
-"假定鋪排的大小和位置跟上一次使用鋪排時相同 (如果有的話)，而不是使用目前的大小"
+msgstr "假定鋪排的大小和位置跟上一次使用鋪排時相同 (如果有的話)，而不是使用目前的大小"
 
 #: ../src/ui/dialog/clonetiler.cpp:1254
 msgid " <b>_Create</b> "
@@ -14544,12 +14418,12 @@ msgid "License"
 msgstr "授權"
 
 #: ../src/ui/dialog/document-metadata.cpp:126
-#: ../src/ui/dialog/document-properties.cpp:994
+#: ../src/ui/dialog/document-properties.cpp:1037
 msgid "<b>Dublin Core Entities</b>"
 msgstr "<b>都柏林核心實體</b>"
 
 #: ../src/ui/dialog/document-metadata.cpp:168
-#: ../src/ui/dialog/document-properties.cpp:1056
+#: ../src/ui/dialog/document-properties.cpp:1099
 msgid "<b>License</b>"
 msgstr "<b>授權</b>"
 
@@ -14563,15 +14437,14 @@ msgid "If unset, no antialiasing will be done on the drawing"
 msgstr "如果取消設定，則圖形繪製不會使用反鋸齒"
 
 #: ../src/ui/dialog/document-properties.cpp:119
-#, fuzzy
 msgid "Checkerboard background"
-msgstr "棋盤格紋"
+msgstr "棋盤格紋背景"
 
 #: ../src/ui/dialog/document-properties.cpp:119
 msgid ""
 "If set, use checkerboard for background, otherwise use background color at "
 "full opacity."
-msgstr ""
+msgstr "若設定此項，背景會使用棋盤格紋，反之則使用不透明的背景顏色。"
 
 #: ../src/ui/dialog/document-properties.cpp:120
 msgid "Show page _border"
@@ -14602,12 +14475,13 @@ msgid "Back_ground color:"
 msgstr "背景顏色(_G)："
 
 #: ../src/ui/dialog/document-properties.cpp:123
-#, fuzzy
 msgid ""
 "Color of the page background. Note: transparency setting ignored while "
 "editing if 'Checkerboard background' unset (but used when exporting to "
 "bitmap)."
-msgstr "頁面背景顏色。備註：編輯時會忽略透明度設定值，但匯出成點陣圖時會使用。"
+msgstr ""
+"頁面背景顏色。備註：若沒有設定「棋盤格紋背景」則編輯時會忽略透明度設定值 (但"
+"匯出成點陣圖時會使用)。"
 
 #: ../src/ui/dialog/document-properties.cpp:124
 msgid "Border _color:"
@@ -14622,9 +14496,8 @@ msgid "Color of the page border"
 msgstr "頁面邊界的顏色"
 
 #: ../src/ui/dialog/document-properties.cpp:125
-#, fuzzy
 msgid "Display _units:"
-msgstr "顯示單位"
+msgstr "顯示單位(_U)："
 
 #. ---------------------------------------------------------------
 #. General snap options
@@ -14808,9 +14681,8 @@ msgid "<b>Page Size</b>"
 msgstr "<b>頁面尺寸</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:336
-#, fuzzy
 msgid "<b>Background</b>"
-msgstr "背景"
+msgstr "<b>背景</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:339
 msgid "<b>Border</b>"
@@ -14844,139 +14716,138 @@ msgstr "<b>其他</b>"
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:526 ../src/verbs.cpp:3020
+#: ../src/ui/dialog/document-properties.cpp:542 ../src/verbs.cpp:3020
 msgid "Link Color Profile"
 msgstr "連結色彩描述檔"
 
-#: ../src/ui/dialog/document-properties.cpp:623
+#: ../src/ui/dialog/document-properties.cpp:654
 msgid "Remove linked color profile"
 msgstr "移除已連結的色彩描述檔"
 
-#: ../src/ui/dialog/document-properties.cpp:636
+#: ../src/ui/dialog/document-properties.cpp:673
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>已連結的色彩描述檔：</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:638
+#: ../src/ui/dialog/document-properties.cpp:675
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>可用的色彩描述檔：</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:640
+#: ../src/ui/dialog/document-properties.cpp:677
 msgid "Link Profile"
 msgstr "連結描述檔"
 
-#: ../src/ui/dialog/document-properties.cpp:643
+#: ../src/ui/dialog/document-properties.cpp:680
 msgid "Unlink Profile"
 msgstr "取消連結描述檔"
 
-#: ../src/ui/dialog/document-properties.cpp:721
+#: ../src/ui/dialog/document-properties.cpp:764
 msgid "Profile Name"
 msgstr "描述檔名稱"
 
-#: ../src/ui/dialog/document-properties.cpp:757
+#: ../src/ui/dialog/document-properties.cpp:800
 msgid "External scripts"
 msgstr "外部腳本"
 
-#: ../src/ui/dialog/document-properties.cpp:758
+#: ../src/ui/dialog/document-properties.cpp:801
 msgid "Embedded scripts"
 msgstr "內嵌腳本"
 
-#: ../src/ui/dialog/document-properties.cpp:763
+#: ../src/ui/dialog/document-properties.cpp:806
 msgid "<b>External script files:</b>"
 msgstr "<b>外部的腳本檔案：</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:765
+#: ../src/ui/dialog/document-properties.cpp:808
 msgid "Add the current file name or browse for a file"
 msgstr "加入目前檔案名稱或瀏覽檔案"
 
-#: ../src/ui/dialog/document-properties.cpp:768
-#: ../src/ui/dialog/document-properties.cpp:845
+#: ../src/ui/dialog/document-properties.cpp:811
+#: ../src/ui/dialog/document-properties.cpp:888
 #: ../src/ui/widget/selected-style.cpp:357
 msgid "Remove"
 msgstr "移除"
 
-#: ../src/ui/dialog/document-properties.cpp:832
+#: ../src/ui/dialog/document-properties.cpp:875
 msgid "Filename"
 msgstr "檔名"
 
-#: ../src/ui/dialog/document-properties.cpp:840
+#: ../src/ui/dialog/document-properties.cpp:883
 msgid "<b>Embedded script files:</b>"
 msgstr "<b>內嵌的腳本檔案：</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:842
+#: ../src/ui/dialog/document-properties.cpp:885
 #: ../src/ui/dialog/objects.cpp:1894
 msgid "New"
 msgstr "新增"
 
-#: ../src/ui/dialog/document-properties.cpp:909
+#: ../src/ui/dialog/document-properties.cpp:952
 msgid "Script id"
 msgstr "腳本識別碼"
 
-#: ../src/ui/dialog/document-properties.cpp:915
+#: ../src/ui/dialog/document-properties.cpp:958
 msgid "<b>Content:</b>"
 msgstr "<b>內容：</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1032
+#: ../src/ui/dialog/document-properties.cpp:1075
 msgid "_Save as default"
 msgstr "儲存成預設值(_S)"
 
-#: ../src/ui/dialog/document-properties.cpp:1033
+#: ../src/ui/dialog/document-properties.cpp:1076
 msgid "Save this metadata as the default metadata"
 msgstr "將此中繼資料儲存為預設中繼資料"
 
-#: ../src/ui/dialog/document-properties.cpp:1034
+#: ../src/ui/dialog/document-properties.cpp:1077
 msgid "Use _default"
 msgstr "使用預設值(_D)"
 
-#: ../src/ui/dialog/document-properties.cpp:1035
+#: ../src/ui/dialog/document-properties.cpp:1078
 msgid "Use the previously saved default metadata here"
 msgstr "這裡使用上次儲存的預設中繼資料"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1108
+#: ../src/ui/dialog/document-properties.cpp:1151
 msgid "Add external script..."
 msgstr "加入外部腳本..."
 
-#: ../src/ui/dialog/document-properties.cpp:1147
+#: ../src/ui/dialog/document-properties.cpp:1190
 msgid "Select a script to load"
 msgstr "選擇要載入的腳本"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1175
+#: ../src/ui/dialog/document-properties.cpp:1218
 msgid "Add embedded script..."
 msgstr "加入內嵌腳本..."
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1206
+#: ../src/ui/dialog/document-properties.cpp:1249
 msgid "Remove external script"
 msgstr "移除外部腳本"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1235
+#: ../src/ui/dialog/document-properties.cpp:1278
 msgid "Remove embedded script"
 msgstr "移除內嵌腳本"
 
 #. TODO repr->set_content(_EmbeddedContent.get_buffer()->get_text());
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1331
+#: ../src/ui/dialog/document-properties.cpp:1374
 msgid "Edit embedded script"
 msgstr "編輯內嵌腳本"
 
-#: ../src/ui/dialog/document-properties.cpp:1415
+#: ../src/ui/dialog/document-properties.cpp:1458
 msgid "<b>Creation</b>"
 msgstr "<b>建立</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1416
+#: ../src/ui/dialog/document-properties.cpp:1459
 msgid "<b>Defined grids</b>"
 msgstr "<b>定義的格線</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1660
+#: ../src/ui/dialog/document-properties.cpp:1703
 msgid "Remove grid"
 msgstr "移除格線"
 
-#: ../src/ui/dialog/document-properties.cpp:1752
-#, fuzzy
+#: ../src/ui/dialog/document-properties.cpp:1795
 msgid "Changed default display unit"
-msgstr "變更的文件單位"
+msgstr "變更預設顯示單位"
 
 #: ../src/ui/dialog/export.cpp:147 ../src/verbs.cpp:2887
 msgid "_Page"
@@ -15097,7 +14968,6 @@ msgid "Export the bitmap file with these settings"
 msgstr "依照這些設定值匯出點陣圖檔案"
 
 #: ../src/ui/dialog/export.cpp:479
-#, fuzzy
 msgid "bitmap"
 msgstr "點陣圖"
 
@@ -16022,8 +15892,7 @@ msgstr ""
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
-msgstr ""
-"此<b>圖片 (feImage) </b>濾鏡基元會用外部的影像或文件的其他部份來填充該區域。"
+msgstr "此<b>圖片 (feImage) </b>濾鏡基元會用外部的影像或文件的其他部份來填充該區域。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:3026
 msgid ""
@@ -16066,12 +15935,12 @@ msgstr ""
 "圍會加強浮凸的視覺效果，而較低的不透明範圍則會減弱。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:3042
-#, fuzzy
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with an input graphic. The "
 "source tile is defined by the filter primitive subregion of the input."
 msgstr ""
-"此<b>圖片 (feImage) </b>濾鏡基元會用外部的影像或文件的其他部份來填充該區域。"
+"此<b>鋪排 (feTile) </b>濾鏡基元會用輸入圖形鋪排成一個區域。鋪排的來源由輸入的"
+"濾鏡基元子區域 (subregion) 定義。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:3046
 msgid ""
@@ -17221,13 +17090,12 @@ msgid "_Set spacing:"
 msgstr "設定間距(_S)："
 
 #: ../src/ui/dialog/guides.cpp:47
-#, fuzzy
 msgid "Lo_cked"
-msgstr "鎖定"
+msgstr "鎖定(_C)"
 
 #: ../src/ui/dialog/guides.cpp:47
 msgid "Lock the movement of guides"
-msgstr ""
+msgstr "鎖定參考線的移動"
 
 #: ../src/ui/dialog/guides.cpp:48
 msgid "Rela_tive change"
@@ -17341,17 +17209,16 @@ msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr "用 Ctrl+點擊所建立的點大小 (相對於目前的邊框寬度)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
-#, fuzzy
 msgid "Base simplify:"
-msgstr "簡化："
+msgstr "基本簡化："
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:213
 msgid "on dynamic LPE simplify"
-msgstr ""
+msgstr "動態即時路徑特效簡化"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:214
 msgid "Base simplify of dynamic LPE based simplify"
-msgstr ""
+msgstr "以簡化功能為基礎的動態即時路徑特效基本簡化"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:229
 msgid "<b>No objects selected</b> to take the style from."
@@ -17549,8 +17416,7 @@ msgstr "拖曳節點時更新輪廓"
 msgid ""
 "Update the outline when dragging or transforming nodes; if this is off, the "
 "outline will only update when completing a drag"
-msgstr ""
-"拖曳或變形節點時更新輪廓；若停用這選項，只有在完成拖曳動作時才會更新輪廓"
+msgstr "拖曳或變形節點時更新輪廓；若停用這選項，只有在完成拖曳動作時才會更新輪廓"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:371
 msgid "Update paths when dragging nodes"
@@ -17560,8 +17426,7 @@ msgstr "拖曳節點時更新路徑"
 msgid ""
 "Update paths when dragging or transforming nodes; if this is off, paths will "
 "only be updated when completing a drag"
-msgstr ""
-"拖曳或變形節點時更新路徑；若停用這選項，只有在完成拖曳動作時才會更新路徑"
+msgstr "拖曳或變形節點時更新路徑；若停用這選項，只有在完成拖曳動作時才會更新路徑"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:373
 msgid "Show path direction on outlines"
@@ -17671,8 +17536,7 @@ msgstr "草圖模式"
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch"
-msgstr ""
-"若開啟，該草圖結果是全部草圖製作的普通平均值，而不是用新草圖平均之前的結果"
+msgstr "若開啟，該草圖結果是全部草圖製作的普通平均值，而不是用新草圖平均之前的結果"
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
@@ -17867,9 +17731,8 @@ msgid "Armenian (hy)"
 msgstr "亞美尼亞語 (hy)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:538
-#, fuzzy
 msgid "Assamese (as)"
-msgstr "日文 (ja)"
+msgstr "阿薩姆語 (as)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:538
 msgid "Azerbaijani (az)"
@@ -17896,9 +17759,8 @@ msgid "Bengali/Bangladesh (bn_BD)"
 msgstr "孟加拉語 / 西孟加拉 (bn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
-#, fuzzy
 msgid "Bodo (brx)"
-msgstr "不列塔尼語 (br)"
+msgstr "博多語 (brx)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Breton (br)"
@@ -17934,7 +17796,7 @@ msgstr "丹麥語 (da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid "Dogri (doi)"
-msgstr ""
+msgstr "多格萊語 (doi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid "Dutch (nl)"
@@ -17997,9 +17859,8 @@ msgid "Galician (gl)"
 msgstr "加裡西亞語 (gl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:545
-#, fuzzy
 msgid "Gujarati (gu)"
-msgstr "古吉拉特文"
+msgstr "古吉拉特語 (qu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Hebrew (he)"
@@ -18007,7 +17868,7 @@ msgstr "希伯來語 (he)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Hindi (hi)"
-msgstr ""
+msgstr "印地語 (hi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Hungarian (hu)"
@@ -18015,7 +17876,7 @@ msgstr "匈牙利語 (hu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:547
 msgid "Icelandic (is)"
-msgstr ""
+msgstr "冰島語 (is)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:547
 msgid "Indonesian (id)"
@@ -18034,17 +17895,16 @@ msgid "Japanese (ja)"
 msgstr "日文 (ja)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:549
-#, fuzzy
 msgid "Kannada (kn)"
-msgstr "坎那達文"
+msgstr "坎那達語 (kn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:549
 msgid "Kashmiri in Peso-Arabic script (ks@aran)"
-msgstr ""
+msgstr "披索阿拉伯書寫體喀什米爾語 (ks@aran)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:549
 msgid "Kashmiri in Devanagari script (ks@deva)"
-msgstr ""
+msgstr "迪瓦那格里書寫體喀什米爾語 (ks@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:549
 msgid "Khmer (km)"
@@ -18055,14 +17915,12 @@ msgid "Kinyarwanda (rw)"
 msgstr "金亞盧安達語 (rw)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:549
-#, fuzzy
 msgid "Konkani (kok)"
-msgstr "韓語 (ko)"
+msgstr "孔卡尼語 (kok)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:549
-#, fuzzy
 msgid "Konkani in Latin script (kok@latin)"
-msgstr "塞爾維亞文 - 拉丁 (sr@latin)"
+msgstr "拉丁書寫體孔卡尼語 (kok@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:549
 msgid "Korean (ko)"
@@ -18082,24 +17940,23 @@ msgstr "馬其頓語 (mk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Maithili (mai)"
-msgstr ""
+msgstr "邁蒂利語 (mai)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:551
-#, fuzzy
 msgid "Malayalam (ml)"
-msgstr "馬拉雅拉姆文"
+msgstr "馬拉雅拉姆語 (ml)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Manipuri (mni)"
-msgstr ""
+msgstr "曼尼普爾語 (mni)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Manipuri in Bengali script (mni@beng)"
-msgstr ""
+msgstr "孟加拉書寫體曼尼普爾語 (mni@beng)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Marathi (mr)"
-msgstr ""
+msgstr "馬拉提語 (mr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:551
 msgid "Mongolian (mn)"
@@ -18119,7 +17976,7 @@ msgstr "挪威 Nynorsk 語 (nn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:553
 msgid "Odia (or)"
-msgstr ""
+msgstr "歐利亞語 (or)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:554
 msgid "Panjabi (pa)"
@@ -18147,17 +18004,15 @@ msgstr "俄文 (ru)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:556
 msgid "Sanskrit (sa)"
-msgstr ""
+msgstr "梵語 (sa)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:556
-#, fuzzy
 msgid "Santali (sat)"
-msgstr "義大利語 (it)"
+msgstr "桑塔利語 (sat)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:556
-#, fuzzy
 msgid "Santali in Devanagari script (sat@deva)"
-msgstr "塞爾維亞文 - 拉丁 (sr@latin)"
+msgstr "迪瓦那格里書寫體桑塔利語 (sat@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:556
 msgid "Serbian (sr)"
@@ -18169,12 +18024,11 @@ msgstr "塞爾維亞文 - 拉丁 (sr@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:557
 msgid "Sindhi (sd)"
-msgstr ""
+msgstr "信德語 (sd)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:557
-#, fuzzy
 msgid "Sindhi in Devanagari script (sd@deva)"
-msgstr "塞爾維亞文 - 拉丁 (sr@latin)"
+msgstr "迪瓦那格里書寫體信德語 (sd@deva)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:557
 msgid "Slovak (sk)"
@@ -18197,9 +18051,8 @@ msgid "Swedish (sv)"
 msgstr "瑞典語 (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:558
-#, fuzzy
 msgid "Tamil (ta)"
-msgstr "塔米爾文"
+msgstr "坦米爾語 (ta)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid "Telugu (te)"
@@ -18219,7 +18072,7 @@ msgstr "烏克蘭語 (uk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:559
 msgid "Urdu (ur)"
-msgstr ""
+msgstr "烏爾都語 (ur)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "Vietnamese (vi)"
@@ -18234,28 +18087,24 @@ msgid "Set the language for menus and number formats"
 msgstr "設定選單的語言和數字的格式"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
-#, fuzzy
 msgctxt "Icon size"
 msgid "Larger"
-msgstr "大"
+msgstr "更大"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
-#, fuzzy
 msgctxt "Icon size"
 msgid "Large"
 msgstr "大"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
-#, fuzzy
 msgctxt "Icon size"
 msgid "Small"
 msgstr "小"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
-#, fuzzy
 msgctxt "Icon size"
 msgid "Smaller"
-msgstr "較小"
+msgstr "更小"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:621
 msgid "Toolbox icon size:"
@@ -18436,19 +18285,16 @@ msgid "Aggressive"
 msgstr "積極"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:702
-#, fuzzy
 msgctxt "Window size"
 msgid "Small"
 msgstr "小"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:702
-#, fuzzy
 msgctxt "Window size"
 msgid "Large"
 msgstr "大"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:702
-#, fuzzy
 msgctxt "Window size"
 msgid "Maximized"
 msgstr "最大化"
@@ -18761,8 +18607,7 @@ msgstr "使用命名顏色"
 msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
 "'magenta') instead of the numeric value"
-msgstr ""
-"若設定，可用 (例如：'red' 或 'magenta') 時寫入顏色的 CSS 名稱而不是數值"
+msgstr "若設定，可用 (例如：'red' 或 'magenta') 時寫入顏色的 CSS 名稱而不是數值"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:928
 msgid "XML formatting"
@@ -18941,8 +18786,7 @@ msgstr "編輯階段"
 msgid ""
 "Check attributes and style properties while editing SVG files (may slow down "
 "Inkscape, mostly useful for debugging)"
-msgstr ""
-"編輯 SVG 檔案時檢查屬性值和樣式屬性 (可能會讓 Inkscape 變慢，大多用來除錯)"
+msgstr "編輯 SVG 檔案時檢查屬性值和樣式屬性 (可能會讓 Inkscape 變慢，大多用來除錯)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:988
 msgid "Writing"
@@ -19076,7 +18920,7 @@ msgstr "在 CMYK  ->  CMYK 轉換時保留黑色色版"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 #: ../src/ui/widget/color-icc-selector.cpp:394
-#: ../src/ui/widget/color-icc-selector.cpp:685
+#: ../src/ui/widget/color-icc-selector.cpp:699
 msgid "<none>"
 msgstr "<無>"
 
@@ -19190,7 +19034,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1189
 msgid "Color stock markers the same color as object"
-msgstr "彩色配備標記與物件顏色相同"
+msgstr "彩色 stock 標記與物件顏色相同"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1190
 msgid "Color custom markers the same color as object"
@@ -19398,13 +19242,12 @@ msgstr ""
 "畫布的內側"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1266
-#, fuzzy
 msgid "Mouse move pans when Space is pressed"
-msgstr "按著空白鍵時滑鼠左鍵可平移畫布"
+msgstr "按著空白鍵時滑鼠可平移畫布"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid "When on, pressing and holding Space and dragging pans canvas"
-msgstr ""
+msgstr "開啟時，按住空白鍵並拖曳平移畫布"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1269
 msgid "Mouse wheel zooms by default"
@@ -19424,9 +19267,8 @@ msgstr "捲動"
 
 #. Snapping options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1275
-#, fuzzy
 msgid "Snap indicator"
-msgstr "啟用貼齊指標"
+msgstr "貼齊指標"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Enable snap indicator"
@@ -19438,17 +19280,17 @@ msgstr "貼齊之後，於已貼齊的點上繪製符號"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1284
 msgid "Snap indicator persistence (in seconds):"
-msgstr ""
+msgstr "貼齊標示持續時間 (單位為秒)："
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1285
 msgid ""
 "Controls how long the snap indicator message will be shown, before it "
 "disappears"
-msgstr ""
+msgstr "控制貼齊標示訊息在消失前持續顯示的時間"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid "What should snap"
-msgstr ""
+msgstr "貼齊的條件"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Only snap the node closest to the pointer"
@@ -19481,18 +19323,15 @@ msgid ""
 "When dragging a knot along a constraint line, then snap the position of the "
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
-msgstr ""
-"沿著限定直線拖曳節點時，貼齊滑鼠游標的位置而不是向限定線來貼齊環結的突起部位"
+msgstr "沿著限定直線拖曳節點時，貼齊滑鼠游標的位置而不是向限定線來貼齊環結的突起部位"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1301
-#, fuzzy
 msgid "Delayed snap"
-msgstr "始終貼齊"
+msgstr "延遲式貼齊"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1304
-#, fuzzy
 msgid "Delay (in seconds):"
-msgstr "延遲 (毫秒)："
+msgstr "延遲 (單位為秒)："
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1305
 msgid ""
@@ -19791,8 +19630,7 @@ msgstr "MiB"
 msgid ""
 "Set the amount of memory per document which can be used to store rendered "
 "parts of the drawing for later reuse; set to zero to disable caching"
-msgstr ""
-"設定每份文件存取稍候可重複使用的圖畫繪算部分記憶體容量；設定為零可停用快取"
+msgstr "設定每份文件存取稍候可重複使用的圖畫繪算部分記憶體容量；設定為零可停用快取"
 
 #. blur quality
 #. filter quality
@@ -19830,8 +19668,7 @@ msgstr "高斯模糊顯示品質"
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
-msgstr ""
-"最佳品質，於高倍畫面縮放時顯示也許會非常慢 (點陣圖匯出時會自動使用最佳品質)"
+msgstr "最佳品質，於高倍畫面縮放時顯示也許會非常慢 (點陣圖匯出時會自動使用最佳品質)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1451
 #: ../src/ui/dialog/inkscape-preferences.cpp:1475
@@ -19958,12 +19795,10 @@ msgid "Bitmaps"
 msgstr "點陣圖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1549
-#, fuzzy
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added separately to "
-msgstr ""
-"選擇要使用的預先定義快捷鍵檔案。任何你建立的自訂快捷鍵都會個別加入到該檔案"
+msgstr "選擇要使用的預先定義快捷鍵檔案。任何你建立的自訂快捷鍵都會個別加入到該檔案"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1552
 msgid "Shortcut file:"
@@ -20081,8 +19916,7 @@ msgstr "預先繪算命名圖示"
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
-msgstr ""
-"開啟時，顯示使用介面前會繪算命名圖示。這是為了避開在 GTK+ 命名圖示通知的錯誤"
+msgstr "開啟時，顯示使用介面前會繪算命名圖示。這是為了避開在 GTK+ 命名圖示通知的錯誤"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1977
 msgid "System info"
@@ -20268,19 +20102,16 @@ msgid "None"
 msgstr "無"
 
 #: ../src/ui/dialog/knot-properties.cpp:59
-#, fuzzy
 msgid "Position X:"
-msgstr "位置："
+msgstr "位置 X："
 
 #: ../src/ui/dialog/knot-properties.cpp:66
-#, fuzzy
 msgid "Position Y:"
-msgstr "位置："
+msgstr "位置 Y："
 
 #: ../src/ui/dialog/knot-properties.cpp:120
-#, fuzzy
 msgid "Modify Knot Position"
-msgstr "修改節點位置"
+msgstr "修改環結位置"
 
 #: ../src/ui/dialog/knot-properties.cpp:121
 #: ../src/ui/dialog/layer-properties.cpp:411
@@ -20290,14 +20121,14 @@ msgid "_Move"
 msgstr "移動(_M)"
 
 #: ../src/ui/dialog/knot-properties.cpp:180
-#, fuzzy, c-format
+#, c-format
 msgid "Position X (%s):"
-msgstr "位置 (%)："
+msgstr "位置 X (%s)："
 
 #: ../src/ui/dialog/knot-properties.cpp:181
-#, fuzzy, c-format
+#, c-format
 msgid "Position Y (%s):"
-msgstr "位置 (%)："
+msgstr "位置 Y (%s)："
 
 #: ../src/ui/dialog/layer-properties.cpp:55
 msgid "Layer name:"
@@ -20386,9 +20217,8 @@ msgid "Lock other layers"
 msgstr "鎖定其他圖層"
 
 #: ../src/ui/dialog/layers.cpp:730
-#, fuzzy
 msgid "Move layer"
-msgstr "移動的圖層"
+msgstr "移動圖層"
 
 #: ../src/ui/dialog/layers.cpp:892
 msgctxt "Layers"
@@ -20506,17 +20336,14 @@ msgid "_Modify"
 msgstr "修改(_M)"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:201
-#, fuzzy
 msgid "Radius"
-msgstr "半徑："
+msgstr "半徑"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:203
-#, fuzzy
 msgid "Radius approximated"
 msgstr "近似半徑"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:206
-#, fuzzy
 msgid "Knot distance"
 msgstr "環結距離"
 
@@ -20525,9 +20352,8 @@ msgid "Position (%):"
 msgstr "位置 (%)："
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:216
-#, fuzzy
 msgid "%1:"
-msgstr "k1："
+msgstr "%1："
 
 #: ../src/ui/dialog/lpe-powerstroke-properties.cpp:122
 msgid "Modify Node Position"
@@ -20729,9 +20555,8 @@ msgid "Set object description"
 msgstr "設定物件描述"
 
 #: ../src/ui/dialog/object-properties.cpp:535
-#, fuzzy
 msgid "Set image rendering option"
-msgstr "裝置色彩對應方式："
+msgstr "設定影像繪算選項"
 
 #: ../src/ui/dialog/object-properties.cpp:554
 msgid "Lock object"
@@ -20801,67 +20626,64 @@ msgstr "設定物件模糊"
 #: ../src/ui/dialog/objects.cpp:1621
 msgctxt "Visibility"
 msgid "V"
-msgstr ""
+msgstr "可見度(V)"
 
 #: ../src/ui/dialog/objects.cpp:1622
-#, fuzzy
 msgctxt "Lock"
 msgid "L"
-msgstr "明度"
+msgstr "鎖定(L)"
 
 #: ../src/ui/dialog/objects.cpp:1623
 msgctxt "Type"
 msgid "T"
-msgstr ""
+msgstr "類型(T)"
 
 #: ../src/ui/dialog/objects.cpp:1624
-#, fuzzy
 msgctxt "Clip and mask"
 msgid "CM"
-msgstr "CMS"
+msgstr "裁剪和遮罩(CM)"
 
 #: ../src/ui/dialog/objects.cpp:1625
-#, fuzzy
 msgctxt "Highlight"
 msgid "HL"
-msgstr "HSL"
+msgstr "高亮度顯示(HL)"
 
 #: ../src/ui/dialog/objects.cpp:1626
-#, fuzzy
 msgid "Label"
-msgstr "標籤："
+msgstr "標籤"
 
 #. In order to get tooltips on header, we must create our own label.
 #: ../src/ui/dialog/objects.cpp:1668
-#, fuzzy
 msgid "Toggle visibility of Layer, Group, or Object."
-msgstr "切換目前圖層的隱現狀態"
+msgstr "切換圖層、群組、物件的隱現狀態。"
 
 #: ../src/ui/dialog/objects.cpp:1681
 msgid "Toggle lock of Layer, Group, or Object."
-msgstr ""
+msgstr "開啟/關閉圖層、群組、物件的鎖定狀態。"
 
 #: ../src/ui/dialog/objects.cpp:1693
 msgid ""
 "Type: Layer, Group, or Object. Clicking on Layer or Group icon, toggles "
 "between the two types."
 msgstr ""
+"類型：圖層、群組或物件。在圖層或圖群組圖示上點擊滑鼠左鍵，可在兩種類型之間進"
+"行切換。"
 
 #: ../src/ui/dialog/objects.cpp:1712
 msgid "Is object clipped and/or masked?"
-msgstr ""
+msgstr "物件有套用裁剪或遮罩嗎？"
 
 #: ../src/ui/dialog/objects.cpp:1723
 msgid ""
 "Highlight color of outline in Node tool. Click to set. If alpha is zero, use "
 "inherited color."
-msgstr ""
+msgstr "節點工具中外框的高亮度顯示顏色。點擊可設定。如果透明值為零，使用繼承的顏色。"
 
 #: ../src/ui/dialog/objects.cpp:1734
 msgid ""
 "Layer/Group/Object label (inkscape:label). Double-click to set. Default "
 "value is object 'id'."
-msgstr ""
+msgstr "圖層/群組/物件標籤 (inkscape:label)。點擊兩下可設定。預設值是物件「識別碼」。"
 
 #: ../src/ui/dialog/objects.cpp:1831
 msgid "Add layer..."
@@ -20884,33 +20706,28 @@ msgid "Collapse All"
 msgstr "全部折疊"
 
 #: ../src/ui/dialog/objects.cpp:1892
-#, fuzzy
 msgid "Rename"
-msgstr "重新命名(_R)"
+msgstr "重新命名"
 
 #: ../src/ui/dialog/objects.cpp:1898
 msgid "Solo"
-msgstr ""
+msgstr "單獨顯示"
 
 #: ../src/ui/dialog/objects.cpp:1899
-#, fuzzy
 msgid "Show All"
-msgstr "顯示："
+msgstr "顯示全部"
 
 #: ../src/ui/dialog/objects.cpp:1900
-#, fuzzy
 msgid "Hide All"
-msgstr "全部取消隱藏"
+msgstr "隱藏全部"
 
 #: ../src/ui/dialog/objects.cpp:1904
-#, fuzzy
 msgid "Lock Others"
-msgstr "鎖定其他圖層"
+msgstr "鎖定其他"
 
 #: ../src/ui/dialog/objects.cpp:1905
-#, fuzzy
 msgid "Lock All"
-msgstr "全部解除鎖定"
+msgstr "鎖定全部"
 
 #. LockAndHide
 #: ../src/ui/dialog/objects.cpp:1906 ../src/verbs.cpp:3011
@@ -20918,26 +20735,22 @@ msgid "Unlock All"
 msgstr "全部解除鎖定"
 
 #: ../src/ui/dialog/objects.cpp:1910
-#, fuzzy
 msgid "Up"
-msgstr "上一層"
+msgstr "上移"
 
 #: ../src/ui/dialog/objects.cpp:1911
-#, fuzzy
 msgid "Down"
-msgstr "左下"
+msgstr "下移"
 
 #: ../src/ui/dialog/objects.cpp:1920
-#, fuzzy
 msgid "Set Clip"
-msgstr "設定裁剪(_I)"
+msgstr "設定裁剪"
 
 #. will never be implemented
 #. _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_OBJECT_SET_INVERSE_CLIPPATH, 0, "Set Inverse Clip", (int)BUTTON_SETINVCLIP ) );
 #: ../src/ui/dialog/objects.cpp:1926
-#, fuzzy
 msgid "Unset Clip"
-msgstr "設定裁剪(_I)"
+msgstr "取消設定裁剪"
 
 #. Set mask
 #: ../src/ui/dialog/objects.cpp:1930 ../src/ui/interface.cpp:1754
@@ -20945,9 +20758,8 @@ msgid "Set Mask"
 msgstr "設定遮罩"
 
 #: ../src/ui/dialog/objects.cpp:1931
-#, fuzzy
 msgid "Unset Mask"
-msgstr "設定遮罩"
+msgstr "取消設定遮罩"
 
 #: ../src/ui/dialog/objects.cpp:1953
 msgid "Select Highlight Color"
@@ -21108,40 +20920,34 @@ msgid "Trace pixel art"
 msgstr "描繪像素圖案"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:41
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Y coordinate of the center"
-msgstr "選取節點的 Y 坐標"
+msgstr "中心點的 Y 坐標"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:42
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "X coordinate of the center"
-msgstr "選取節點的 X 坐標"
+msgstr "中心點的 X 坐標"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:43
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Y coordinate of the radius"
-msgstr "選取節點的 Y 坐標"
+msgstr "半徑的 Y 坐標"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:44
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "X coordinate of the radius"
-msgstr "選取節點的 X 坐標"
+msgstr "半徑的 X 坐標"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:45
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Starting angle"
-msgstr "旋轉角度："
+msgstr "起始角度"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:46
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "End angle"
-msgstr "圓錐角"
+msgstr "結束角度"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:48
 msgctxt "Polar arrange tab"
@@ -21179,13 +20985,11 @@ msgid "Parameterized:"
 msgstr "參數化 ："
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:83
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Center X/Y:"
 msgstr "中心 X/Y："
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:105
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Radius X/Y:"
 msgstr "半徑 X/Y："
@@ -21445,7 +21249,7 @@ msgstr "字型(_F)"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:921
 msgid "_Global Settings"
-msgstr "整體設定值(_G)"
+msgstr "總體設定值(_G)"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:922
 msgid "_Glyphs"
@@ -21584,16 +21388,14 @@ msgid "By: "
 msgstr "依據："
 
 #: ../src/ui/dialog/text-edit.cpp:72
-#, fuzzy
 msgid "_Variants"
-msgstr "變化量"
+msgstr "變化量(_V)"
 
 #: ../src/ui/dialog/text-edit.cpp:73
 msgid "Set as _default"
 msgstr "設為預設(_D)"
 
 #: ../src/ui/dialog/text-edit.cpp:87
-#, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -21627,9 +21429,8 @@ msgid "Vertical text"
 msgstr "直書"
 
 #: ../src/ui/dialog/text-edit.cpp:130 ../src/ui/dialog/text-edit.cpp:131
-#, fuzzy
 msgid "Spacing between baselines (percent of font size)"
-msgstr "每一行之間的距離 (字型大小的百分比)"
+msgstr "基準線之間的距離 (字型大小的百分比)"
 
 #: ../src/ui/dialog/text-edit.cpp:147
 msgid "Text path offset"
@@ -22251,9 +22052,8 @@ msgstr "進入群組 #%1"
 
 #. Pop selection out of group
 #: ../src/ui/interface.cpp:1528
-#, fuzzy
 msgid "_Pop selection out of group"
-msgstr "將選取區視為群組(_T)："
+msgstr "將選取項目脫離群組(_P)"
 
 #. Item dialog
 #: ../src/ui/interface.cpp:1656 ../src/verbs.cpp:2940
@@ -22420,8 +22220,7 @@ msgstr "調整<b>垂直圓角</b>半徑；按著 <b>Ctrl</b> 可讓水平半徑�
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
-msgstr ""
-"調整矩形的<b>寬度和高度</b>；按著 <b>Ctrl</b> 可鎖定比例或只伸展單一尺寸"
+msgstr "調整矩形的<b>寬度和高度</b>；按著 <b>Ctrl</b> 可鎖定比例或只伸展單一尺寸"
 
 #: ../src/ui/object-edit.cpp:712 ../src/ui/object-edit.cpp:716
 #: ../src/ui/object-edit.cpp:720 ../src/ui/object-edit.cpp:724
@@ -22517,10 +22316,9 @@ msgid "Drag curve"
 msgstr "拖曳曲線"
 
 #: ../src/ui/tool/curve-drag-point.cpp:192
-#, fuzzy
 msgctxt "Path segment tip"
 msgid "<b>Shift</b>: drag to open or move BSpline handles"
-msgstr "<b>Shift</b>：移動節點控柄"
+msgstr "<b>Shift</b>：拖曳可開啟或移動貝氏雲形線控制柄"
 
 #: ../src/ui/tool/curve-drag-point.cpp:196
 msgctxt "Path segment tip"
@@ -22533,14 +22331,13 @@ msgid "<b>Ctrl+Alt</b>: click to insert a node"
 msgstr "<b>Ctrl+Alt</b>：點擊可插入節點"
 
 #: ../src/ui/tool/curve-drag-point.cpp:204
-#, fuzzy
 msgctxt "Path segment tip"
 msgid ""
 "<b>BSpline segment</b>: drag to shape the segment, doubleclick to insert "
 "node, click to select (more: Shift, Ctrl+Alt)"
 msgstr ""
-"<b>貝茲曲線線段</b>：拖曳可改變線段的形狀，點擊兩下可插入節點，點擊可選取 (更"
-"多：Shift, Ctrl+Alt)"
+"<b>貝氏雲形線線段</b>：拖曳可改變線段的形狀，點擊兩下可插入節點，點擊可選取 "
+"(更多：Shift, Ctrl+Alt)"
 
 #: ../src/ui/tool/curve-drag-point.cpp:209
 msgctxt "Path segment tip"
@@ -22713,10 +22510,9 @@ msgid ""
 msgstr "<b>Shift+Ctrl</b>：貼齊旋轉角度為 %g° 遞增並同時旋轉控制柄"
 
 #: ../src/ui/tool/node.cpp:529
-#, fuzzy
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: Snap handle to steps defined in BSpline Live Path Effect"
-msgstr "<b>Ctrl</b>: 在貝氏雲形線即時特效中依照本身實際的階數移動控制柄"
+msgstr "<b>Ctrl</b>: 以貝氏雲形線即時特效中定義的階數貼齊控制柄"
 
 #: ../src/ui/tool/node.cpp:532
 #, c-format
@@ -22741,12 +22537,14 @@ msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr "<b>自動節點控制柄</b>：拖曳可轉換成平滑節點 (%s)"
 
 #: ../src/ui/tool/node.cpp:554
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>BSpline node handle</b>: Shift to drag, double click to reset (%s). %g "
 "power"
-msgstr "<b>貝氏節點控制柄</b>：Shift 鍵可以拖曳，滑鼠點擊兩下可以重設 (%s)"
+msgstr ""
+"<b>貝氏雲形線節點控制柄</b>：Shift 鍵可以拖曳，滑鼠點擊兩下可以重設 (%s)。%g"
+"力量"
 
 #: ../src/ui/tool/node.cpp:574
 #, c-format
@@ -22786,13 +22584,14 @@ msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>：拖曳可改變路徑的形狀 (更進一步：Shift, Ctrl, Alt)"
 
 #: ../src/ui/tool/node.cpp:1451
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid ""
 "<b>BSpline node</b>: drag to shape the path (more: Shift, Ctrl, Alt). %g "
 "power"
 msgstr ""
-"<b>貝氏雲形線</b>：%g 權重，拖曳可改變路徑的形狀 (更進一步：Shift, Ctrl, Alt)"
+"<b>貝氏雲形線</b>：%g 權重，拖曳可改變路徑的形狀 (更進一步：Shift, Ctrl, "
+"Alt)。%g力量"
 
 #: ../src/ui/tool/node.cpp:1454
 #, c-format
@@ -22815,14 +22614,14 @@ msgstr ""
 "Alt)"
 
 #: ../src/ui/tool/node.cpp:1461
-#, fuzzy, c-format
+#, c-format
 msgctxt "Path node tip"
 msgid ""
 "<b>BSpline node</b>: drag to shape the path, click to select only this node "
 "(more: Shift, Ctrl, Alt). %g power"
 msgstr ""
 "<b>貝氏雲形線節點</b>：拖曳可改變路徑的形狀，點擊可以只選取該節點 (更進一步："
-"Shift, Ctrl, Alt)"
+"Shift, Ctrl, Alt)。%g 力量"
 
 #: ../src/ui/tool/node.cpp:1474
 #, c-format
@@ -23003,8 +22802,7 @@ msgstr "<b>拖曳</b>、<b>點擊</b>或<b>滾動滑鼠滾輪</b>來噴灑選取
 msgid ""
 "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and "
 "resize. <b>Click</b> to select."
-msgstr ""
-"<b>拖曳</b>可建立矩形。<b>拖曳控制點</b>可調整圓角及大小。<b>點擊</b>可選取。"
+msgstr "<b>拖曳</b>可建立矩形。<b>拖曳控制點</b>可調整圓角及大小。<b>點擊</b>可選取。"
 
 #: ../src/ui/tools-switch.cpp:106
 msgid ""
@@ -23026,8 +22824,7 @@ msgstr ""
 msgid ""
 "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. "
 "<b>Click</b> to select."
-msgstr ""
-"<b>拖曳</b>可建立星形。<b>拖曳控制點</b>可編輯星形的形狀。<b>點擊</b>可選取。"
+msgstr "<b>拖曳</b>可建立星形。<b>拖曳控制點</b>可編輯星形的形狀。<b>點擊</b>可選取。"
 
 #: ../src/ui/tools-switch.cpp:109
 msgid ""
@@ -23103,7 +22900,7 @@ msgid ""
 "to copy the color under mouse to clipboard"
 msgstr ""
 "<b>點擊</b>可設定填充，<b>Shift+click</b> 可設定邊框；<b>拖曳</b>可設定區域中"
-"的平均顏色；按著 <b>Alt</b> 可汲取反相顏色；<b>Ctrl+C</b> 可將滑鼠下方的顏色"
+"的平均顏色；按著 <b>Alt</b> 可拾取反相顏色；<b>Ctrl+C</b> 可將滑鼠下方的顏色"
 "複製到剪貼簿"
 
 #: ../src/ui/tools-switch.cpp:119
@@ -23260,7 +23057,7 @@ msgstr "<b>放開滑鼠鍵</b>來設定顏色。"
 
 #: ../src/ui/tools/dropper-tool.cpp:322
 msgid "Set picked color"
-msgstr "設定點取的顏色"
+msgstr "設定拾取的顏色"
 
 #: ../src/ui/tools/eraser-tool.cpp:436
 msgid "<b>Drawing</b> an eraser stroke"
@@ -23449,41 +23246,40 @@ msgstr "從這工具列中選擇一個建造工具。"
 #. create the knots
 #: ../src/ui/tools/measure-tool.cpp:349
 msgid "Measure start, <b>Shift+Click</b> for position dialog"
-msgstr ""
+msgstr "測量起始，<b>Shift+點擊滑鼠</b>開啟位置對話窗"
 
 #: ../src/ui/tools/measure-tool.cpp:355
 msgid "Measure end, <b>Shift+Click</b> for position dialog"
-msgstr ""
+msgstr "測量結束，<b>Shift+點擊滑鼠</b>開啟位置對話窗"
 
 #: ../src/ui/tools/measure-tool.cpp:747 ../share/extensions/measure.inx.h:2
 msgid "Measure"
-msgstr "量測"
+msgstr "測量"
 
 #: ../src/ui/tools/measure-tool.cpp:752
 msgid "Base"
-msgstr ""
+msgstr "基本"
 
 #: ../src/ui/tools/measure-tool.cpp:761
 msgid "Add guides from measure tool"
-msgstr ""
+msgstr "從測量工具加入參考線"
 
 #: ../src/ui/tools/measure-tool.cpp:781
-msgid "Add Stored to measure tool"
-msgstr ""
+msgid "Keep last measure on the canvas, for reference"
+msgstr "保留畫布上最後一次測量作為參考"
 
 #: ../src/ui/tools/measure-tool.cpp:801
-#, fuzzy
 msgid "Convert measure to items"
-msgstr "將邊框轉成路徑"
+msgstr "將測量轉成路徑"
 
 #: ../src/ui/tools/measure-tool.cpp:839
 msgid "Add global measure line"
-msgstr ""
+msgstr "加入總體測量工具"
 
 #: ../src/ui/tools/measure-tool.cpp:1290 ../src/ui/tools/measure-tool.cpp:1292
-#, fuzzy, c-format
+#, c-format
 msgid "Crossing %lu"
-msgstr "交疊模糊"
+msgstr "交叉點 %lu"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
 #: ../src/ui/tools/mesh-tool.cpp:122 ../src/ui/tools/mesh-tool.cpp:133
@@ -23530,7 +23326,7 @@ msgstr "平滑網面邊角顏色。"
 
 #: ../src/ui/tools/mesh-tool.cpp:413
 msgid "Picked mesh corner color."
-msgstr "汲取網面邊角顏色。"
+msgstr "拾取網面邊角顏色。"
 
 #: ../src/ui/tools/mesh-tool.cpp:489
 msgid "Create default mesh"
@@ -23545,9 +23341,8 @@ msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
 msgstr "按住<b>Shift</b>：於起始點周圍繪製"
 
 #: ../src/ui/tools/mesh-tool.cpp:971
-#, fuzzy
 msgid "Create mesh"
-msgstr "建立預設網面"
+msgstr "建立網面"
 
 #: ../src/ui/tools/node-tool.cpp:648
 msgctxt "Node tool tip"
@@ -23642,48 +23437,47 @@ msgstr ""
 "尖銳節點"
 
 #: ../src/ui/tools/pen-tool.cpp:1797
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> or <b>Shift+Enter</b> to finish the path"
 msgstr ""
 "<b>曲線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 可貼齊角度，"
-"<b>Enter</b> 可結束路徑"
+"<b>Enter</b> 或 <b>Shift+Enter</b> 可結束路徑"
 
 #: ../src/ui/tools/pen-tool.cpp:1798
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> or <b>Shift+Enter</b> to finish the path"
 msgstr ""
 "<b>直線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 可貼齊角度，"
-"<b>Enter</b> 來結束路徑"
+"<b>Enter</b> 或 <b>Shift+Enter</b> 來結束路徑"
 
 #: ../src/ui/tools/pen-tool.cpp:1801
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</"
 "b> make a cusp node, <b>Enter</b> or <b>Shift+Enter</b> to finish the path"
 msgstr ""
-"<b>曲線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 可貼齊角度; "
-"<b>Shift+滑鼠點擊</b>可變成尖銳節點，<b>Enter</b> 可結束路徑"
+"<b>曲線線段</b>：角度 %3.2f&#176;、距離 %s; <b>Shift+滑鼠點擊</b>可變成尖銳節"
+"點，<b>Enter</b> 或 <b>Shift+Enter</b>可結束路徑"
 
 #: ../src/ui/tools/pen-tool.cpp:1802
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Shift+Click</b> "
 "make a cusp node, <b>Enter</b> or <b>Shift+Enter</b> to finish the path"
 msgstr ""
-"<b>直線線段</b>：角度 %3.2f&#176;、距離 %s; 按著 <b>Ctrl</b> 可貼齊角度; "
-"<b>Shift+滑鼠點擊</b>可讓此節點變成尖銳節點，<b>Enter</b> 來結束路徑"
+"<b>直線線段</b>：角度 %3.2f&#176;、距離 %s; <b>Shift+滑鼠點擊</b>可變成尖銳節"
+"點，<b>Enter</b> 或 <b>Shift+Enter</b> 來結束路徑"
 
 #: ../src/ui/tools/pen-tool.cpp:1819
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr ""
-"<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 可貼齊角度"
+msgstr "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 可貼齊角度"
 
 #: ../src/ui/tools/pen-tool.cpp:1843
 #, c-format
@@ -24048,10 +23842,8 @@ msgid ""
 msgid_plural ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
-msgstr[0] ""
-"輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
-msgstr[1] ""
-"輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
+msgstr[0] "輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
+msgstr[1] "輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
 
 #: ../src/ui/tools/text-tool.cpp:1575
 #, c-format
@@ -24307,7 +24099,7 @@ msgstr "太多墨水！"
 
 #: ../src/ui/widget/color-notebook.cpp:207 ../src/verbs.cpp:2766
 msgid "Pick colors from image"
-msgstr "從影像汲取顏色"
+msgstr "從影像拾取顏色"
 
 #. Create RGBA entry and color preview
 #: ../src/ui/widget/color-notebook.cpp:212
@@ -24337,299 +24129,272 @@ msgstr "模糊 (%)"
 #: ../src/ui/widget/font-variants.cpp:38
 msgctxt "Font variant"
 msgid "Ligatures"
-msgstr ""
+msgstr "連字"
 
 #: ../src/ui/widget/font-variants.cpp:39
-#, fuzzy
 msgctxt "Font variant"
 msgid "Common"
-msgstr "一般"
+msgstr "普通"
 
 #: ../src/ui/widget/font-variants.cpp:40
-#, fuzzy
 msgctxt "Font variant"
 msgid "Discretionary"
-msgstr "方向"
+msgstr "自由連字"
 
 #: ../src/ui/widget/font-variants.cpp:41
-#, fuzzy
 msgctxt "Font variant"
 msgid "Historical"
-msgstr "指導手冊"
+msgstr "歷史性連字"
 
 #: ../src/ui/widget/font-variants.cpp:42
-#, fuzzy
 msgctxt "Font variant"
 msgid "Contextual"
-msgstr "功能表"
+msgstr "上下文連字"
 
 #: ../src/ui/widget/font-variants.cpp:44
-#, fuzzy
 msgctxt "Font variant"
 msgid "Position"
 msgstr "位置"
 
 #: ../src/ui/widget/font-variants.cpp:45 ../src/ui/widget/font-variants.cpp:50
-#, fuzzy
 msgctxt "Font variant"
 msgid "Normal"
-msgstr "標準"
+msgstr "一般"
 
 #: ../src/ui/widget/font-variants.cpp:46
-#, fuzzy
 msgctxt "Font variant"
 msgid "Subscript"
-msgstr "腳本"
+msgstr "下標"
 
 #: ../src/ui/widget/font-variants.cpp:47
-#, fuzzy
 msgctxt "Font variant"
 msgid "Superscript"
-msgstr "切換上標"
+msgstr "上標"
 
 #: ../src/ui/widget/font-variants.cpp:49
-#, fuzzy
 msgctxt "Font variant"
 msgid "Capitals"
-msgstr "醫院"
+msgstr "大寫"
 
 #: ../src/ui/widget/font-variants.cpp:51
-#, fuzzy
 msgctxt "Font variant"
 msgid "Small"
-msgstr "小"
+msgstr "小體大寫"
 
 #: ../src/ui/widget/font-variants.cpp:52
-#, fuzzy
 msgctxt "Font variant"
 msgid "All small"
-msgstr "小"
+msgstr "全部小體大寫"
 
 #: ../src/ui/widget/font-variants.cpp:53
-#, fuzzy
 msgctxt "Font variant"
 msgid "Petite"
-msgstr "所有非使用中的工具"
+msgstr "Petite 大寫"
 
 #: ../src/ui/widget/font-variants.cpp:54
-#, fuzzy
 msgctxt "Font variant"
 msgid "All petite"
-msgstr "所有非使用中的工具"
+msgstr "全部 Petite 大寫"
 
 #: ../src/ui/widget/font-variants.cpp:55
-#, fuzzy
 msgctxt "Font variant"
 msgid "Unicase"
-msgstr "派卡"
+msgstr "不指定大小寫"
 
 #: ../src/ui/widget/font-variants.cpp:56
-#, fuzzy
 msgctxt "Font variant"
 msgid "Titling"
-msgstr "航行"
+msgstr "標題大寫"
 
 #: ../src/ui/widget/font-variants.cpp:58
 msgctxt "Font variant"
 msgid "Numeric"
-msgstr ""
+msgstr "數字式"
 
 #: ../src/ui/widget/font-variants.cpp:59
-#, fuzzy
 msgctxt "Font variant"
 msgid "Lining"
-msgstr "變細："
+msgstr "加襯式"
 
 #: ../src/ui/widget/font-variants.cpp:60
-#, fuzzy
 msgctxt "Font variant"
 msgid "Old Style"
-msgstr "樣式"
+msgstr "舊樣式"
 
 #: ../src/ui/widget/font-variants.cpp:61
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Style"
-msgstr "預設標題"
+msgstr "預設樣式"
 
 #: ../src/ui/widget/font-variants.cpp:62
-#, fuzzy
 msgctxt "Font variant"
 msgid "Proportional"
-msgstr "分頁比例："
+msgstr "比例式"
 
 #: ../src/ui/widget/font-variants.cpp:63
 msgctxt "Font variant"
 msgid "Tabular"
-msgstr ""
+msgstr "表格式"
 
 #: ../src/ui/widget/font-variants.cpp:64
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Width"
-msgstr "預設標題"
+msgstr "預設寬度"
 
 #: ../src/ui/widget/font-variants.cpp:65
-#, fuzzy
 msgctxt "Font variant"
 msgid "Diagonal"
-msgstr "對角參考線"
+msgstr "對角"
 
 #: ../src/ui/widget/font-variants.cpp:66
-#, fuzzy
 msgctxt "Font variant"
 msgid "Stacked"
-msgstr "後端"
+msgstr "堆疊"
 
 #: ../src/ui/widget/font-variants.cpp:67
-#, fuzzy
 msgctxt "Font variant"
 msgid "Default Fractions"
-msgstr "預設格線設定值"
+msgstr "預設分率"
 
 #: ../src/ui/widget/font-variants.cpp:68
 msgctxt "Font variant"
 msgid "Ordinal"
-msgstr ""
+msgstr "依序"
 
 #: ../src/ui/widget/font-variants.cpp:69
 msgctxt "Font variant"
 msgid "Slashed Zero"
-msgstr ""
+msgstr "斜線零"
 
 #: ../src/ui/widget/font-variants.cpp:71
-#, fuzzy
 msgctxt "Font variant"
 msgid "Feature Settings"
-msgstr "頁面設定值"
+msgstr "特性設定值"
 
 #: ../src/ui/widget/font-variants.cpp:72
 msgctxt "Font variant"
 msgid "Selection has different Feature Settings!"
-msgstr ""
+msgstr "選取項目有不同的特性設定值！"
 
 #: ../src/ui/widget/font-variants.cpp:85
 msgid "Common ligatures. On by default. OpenType tables: 'liga', 'clig'"
-msgstr ""
+msgstr "一般連字。預設開啟。OpenType 表格：'liga', 'clig'"
 
 #: ../src/ui/widget/font-variants.cpp:87
 msgid "Discretionary ligatures. Off by default. OpenType table: 'dlig'"
-msgstr ""
+msgstr "自由連字。預設關閉。OpenType 表格：'dlig'"
 
 #: ../src/ui/widget/font-variants.cpp:89
 msgid "Historical ligatures. Off by default. OpenType table: 'hlig'"
-msgstr ""
+msgstr "歷史性連字。預設關閉。OpenType 表格：'hlig'"
 
 #: ../src/ui/widget/font-variants.cpp:91
 msgid "Contextual forms. On by default. OpenType table: 'calt'"
-msgstr ""
+msgstr "上下文格式。預設開啟。OpenType 表格：'calt'"
 
 #. Position ----------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:112
-#, fuzzy
 msgid "Normal position."
-msgstr "X 位置"
+msgstr "一般位置"
 
 #: ../src/ui/widget/font-variants.cpp:113
 msgid "Subscript. OpenType table: 'subs'"
-msgstr ""
+msgstr "下標。OpenType 表格：'subs'"
 
 #: ../src/ui/widget/font-variants.cpp:114
 msgid "Superscript. OpenType table: 'sups'"
-msgstr ""
+msgstr "上標。OpenType 表格：'sups'"
 
 #. Caps ----------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:138
-#, fuzzy
 msgid "Normal capitalization."
-msgstr "語系"
+msgstr "一般大寫"
 
 #: ../src/ui/widget/font-variants.cpp:139
 msgid "Small-caps (lowercase). OpenType table: 'smcp'"
-msgstr ""
+msgstr "小體大寫 (小寫字母)。OpenType 表格：'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:140
 msgid ""
 "All small-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'smcp'"
-msgstr ""
+msgstr "全部小體大寫 (大寫和小寫字母)。OpenType 表格：'c2sc' 和 'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:141
 msgid "Petite-caps (lowercase). OpenType table: 'pcap'"
-msgstr ""
+msgstr "Petie 大寫 (小寫字母)。OpenType 表格：'pcap'"
 
 #: ../src/ui/widget/font-variants.cpp:142
 msgid ""
 "All petite-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'pcap'"
-msgstr ""
+msgstr "全部 Petie 大寫 (大寫和小寫字母)。OpenType 表格：'c2sc' 和 'pcap'"
 
 #: ../src/ui/widget/font-variants.cpp:143
 msgid ""
 "Unicase (small caps for uppercase, normal for lowercase). OpenType table: "
 "'unic'"
 msgstr ""
+"不指定大小寫 (大寫字母使用小體大寫，小寫字母使用一般大寫)。OpenType 表"
+"格：'unic'"
 
 #: ../src/ui/widget/font-variants.cpp:144
 msgid ""
 "Titling caps (lighter-weight uppercase for use in titles). OpenType table: "
 "'titl'"
-msgstr ""
+msgstr "標題大寫 (標題使用較輕比重的大寫字母)。OpenType 表格：'titl'"
 
 #. Numeric ------------------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:180
-#, fuzzy
 msgid "Normal style."
-msgstr "普通偏移："
+msgstr "一般樣式。"
 
 #: ../src/ui/widget/font-variants.cpp:181
 msgid "Lining numerals. OpenType table: 'lnum'"
-msgstr ""
+msgstr "加襯式數字。OpenType 表格：'lnum'"
 
 #: ../src/ui/widget/font-variants.cpp:182
 msgid "Old style numerals. OpenType table: 'onum'"
-msgstr ""
+msgstr "舊風格數字。OpenType 表格：'onum'"
 
 #: ../src/ui/widget/font-variants.cpp:183
-#, fuzzy
 msgid "Normal widths."
-msgstr "標準照明"
+msgstr "一般寬度。"
 
 #: ../src/ui/widget/font-variants.cpp:184
 msgid "Proportional width numerals. OpenType table: 'pnum'"
-msgstr ""
+msgstr "比例寬度數字。OpenType 表格：'pnum'"
 
 #: ../src/ui/widget/font-variants.cpp:185
 msgid "Same width numerals. OpenType table: 'tnum'"
-msgstr ""
+msgstr "相同寬度數字。OpenType 表格：'tnum'"
 
 #: ../src/ui/widget/font-variants.cpp:186
-#, fuzzy
 msgid "Normal fractions."
-msgstr "忽略圖片旋轉"
+msgstr "一般分率。"
 
 #: ../src/ui/widget/font-variants.cpp:187
 msgid "Diagonal fractions. OpenType table: 'frac'"
-msgstr ""
+msgstr "對角分率。OpenType 表格：'frac'"
 
 #: ../src/ui/widget/font-variants.cpp:188
 msgid "Stacked fractions. OpenType table: 'afrc'"
-msgstr ""
+msgstr "堆疊分率。OpenType 表格：'afrc'"
 
 #: ../src/ui/widget/font-variants.cpp:189
 msgid "Ordinals (raised 'th', etc.). OpenType table: 'ordn'"
-msgstr ""
+msgstr "依序 (提高 'th' 等等)。OpenType 表格：'ordn'"
 
 #: ../src/ui/widget/font-variants.cpp:190
 msgid "Slashed zeros. OpenType table: 'zero'"
-msgstr ""
+msgstr "斜線零。OpenType 表格：'zero'"
 
 #. Feature settings ---------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:240
 msgid "Feature settings in CSS form. No sanity checking is performed."
-msgstr ""
+msgstr "CSS 表單中的特性設定值。不會執行完整性檢查。"
 
 #: ../src/ui/widget/layer-selector.cpp:118
 msgid "Toggle current layer visibility"
@@ -24656,9 +24421,8 @@ msgid "MetadataLicence|Other"
 msgstr "其他"
 
 #: ../src/ui/widget/licensor.cpp:72
-#, fuzzy
 msgid "Document license updated"
-msgstr "文件清理"
+msgstr "文件授權更新"
 
 #: ../src/ui/widget/object-composite-settings.cpp:47
 #: ../src/ui/widget/selected-style.cpp:1118
@@ -24721,24 +24485,20 @@ msgid "Bottom margin"
 msgstr "底端邊距"
 
 #: ../src/ui/widget/page-sizer.cpp:244
-#, fuzzy
 msgid "Scale _x:"
-msgstr "縮放 x"
+msgstr "縮放 _x："
 
 #: ../src/ui/widget/page-sizer.cpp:244
-#, fuzzy
 msgid "Scale X"
-msgstr "縮放 x"
+msgstr "縮放 X"
 
 #: ../src/ui/widget/page-sizer.cpp:245
-#, fuzzy
 msgid "Scale _y:"
-msgstr "縮放 y"
+msgstr "縮放 _y："
 
 #: ../src/ui/widget/page-sizer.cpp:245
-#, fuzzy
 msgid "Scale Y"
-msgstr "縮放 x"
+msgstr "縮放 Y"
 
 #: ../src/ui/widget/page-sizer.cpp:323
 msgid "Orientation:"
@@ -24777,11 +24537,12 @@ msgid ""
 "scaling in Inkscape. To set a non-uniform scaling, set the 'viewBox' "
 "directly."
 msgstr ""
+"當 SVG 允許非等比例縮放時程式會建議 Inkscape 只使用等比例縮放。直接經由「檢視"
+"框」設定非等比例縮放。"
 
 #: ../src/ui/widget/page-sizer.cpp:483
-#, fuzzy
 msgid "_Viewbox..."
-msgstr "檢視(_V)"
+msgstr "檢視框(_V)..."
 
 #: ../src/ui/widget/page-sizer.cpp:590
 msgid "Set page size"
@@ -24789,16 +24550,15 @@ msgstr "設定頁面尺寸"
 
 #: ../src/ui/widget/page-sizer.cpp:836
 msgid "User units per "
-msgstr ""
+msgstr "使用者單位每"
 
 #: ../src/ui/widget/page-sizer.cpp:932
-#, fuzzy
 msgid "Set page scale"
-msgstr "設定頁面尺寸"
+msgstr "設定頁面比例"
 
 #: ../src/ui/widget/page-sizer.cpp:958
 msgid "Set 'viewBox'"
-msgstr ""
+msgstr "設定「顯示框」"
 
 #: ../src/ui/widget/panel.cpp:116
 msgid "List"
@@ -25381,8 +25141,7 @@ msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected "
 "box(es)"
 msgstr[0] "有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 拖曳可分開選取的立方體"
-msgstr[1] ""
-"有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 並拖曳可分開選取的立方體"
+msgstr[1] "有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 並拖曳可分開選取的立方體"
 
 #: ../src/verbs.cpp:137
 msgid "File"
@@ -25508,9 +25267,9 @@ msgid "Flip vertically"
 msgstr "垂直翻轉"
 
 #: ../src/verbs.cpp:1590
-#, fuzzy, c-format
+#, c-format
 msgid "Set %d"
-msgstr "設定延遲"
+msgstr "設定 %d"
 
 #: ../src/verbs.cpp:1599 ../src/verbs.cpp:2729
 msgid "Create new selection set"
@@ -25703,9 +25462,8 @@ msgid "Quit Inkscape"
 msgstr "離開 Inkscape"
 
 #: ../src/verbs.cpp:2456
-#, fuzzy
 msgid "New from _Template..."
-msgstr "從範本新增"
+msgstr "從範本新增(_T)..."
 
 #: ../src/verbs.cpp:2457
 msgid "Create new project from template"
@@ -26055,14 +25813,12 @@ msgid "Delete all the guides in the document"
 msgstr "刪除文件中所有的參考線"
 
 #: ../src/verbs.cpp:2546
-#, fuzzy
 msgid "Lock All Guides"
-msgstr "全部解除鎖定"
+msgstr "鎖定全部參考線"
 
 #: ../src/verbs.cpp:2546 ../src/widgets/desktop-widget.cpp:404
-#, fuzzy
 msgid "Toggle lock of all guides in the document"
-msgstr "刪除文件中所有的參考線"
+msgstr "開啟/關閉鎖定文件中所有的參考線"
 
 #: ../src/verbs.cpp:2547
 msgid "Create _Guides Around the Page"
@@ -26122,14 +25878,12 @@ msgid "Ungroup selected groups"
 msgstr "解散選取的群組"
 
 #: ../src/verbs.cpp:2565
-#, fuzzy
 msgid "_Pop selected objects out of group"
-msgstr "群組選取的物件"
+msgstr "將選取物件脫離群組(_P)"
 
 #: ../src/verbs.cpp:2566
-#, fuzzy
 msgid "Pop selected objects out of group"
-msgstr "群組選取的物件"
+msgstr "將選取物件脫離群組"
 
 #: ../src/verbs.cpp:2568
 msgid "_Put on Path"
@@ -27629,9 +27383,8 @@ msgid "Fit the page to the drawing"
 msgstr "將頁面調整成繪畫部份大小"
 
 #: ../src/verbs.cpp:3008
-#, fuzzy
 msgid "_Resize Page to Selection"
-msgstr "將頁面調整成選取區大小"
+msgstr "將頁面調整成選取區大小(_R)"
 
 #: ../src/verbs.cpp:3009
 msgid ""
@@ -28287,14 +28040,12 @@ msgid "%s%s - Inkscape"
 msgstr "%s%s - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:1111
-#, fuzzy
 msgid "Locked all guides"
-msgstr "鎖定全部圖層"
+msgstr "鎖定全部參考線"
 
 #: ../src/widgets/desktop-widget.cpp:1113
-#, fuzzy
 msgid "Unlocked all guides"
-msgstr "解除鎖定全部圖層"
+msgstr "解除鎖定全部參考線"
 
 #: ../src/widgets/desktop-widget.cpp:1130
 msgid "Color-managed display is <b>enabled</b> in this window"
@@ -28345,19 +28096,19 @@ msgstr "備註:"
 
 #: ../src/widgets/dropper-toolbar.cpp:90
 msgid "Pick opacity"
-msgstr "汲取不透明度"
+msgstr "拾取不透明度"
 
 #: ../src/widgets/dropper-toolbar.cpp:91
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
 msgstr ""
-"同時汲取游標底下的顏色和透明 (alpha)；否則，只會汲取到用透明 (alpha) 預先乘以"
+"同時拾取游標底下的顏色和透明 (alpha)；否則，只會拾取到用透明 (alpha) 預先乘以"
 "可見顏色的數值"
 
 #: ../src/widgets/dropper-toolbar.cpp:94
 msgid "Pick"
-msgstr "汲取"
+msgstr "拾取"
 
 #: ../src/widgets/dropper-toolbar.cpp:103
 msgid "Assign opacity"
@@ -28366,7 +28117,7 @@ msgstr "指定不透明度"
 #: ../src/widgets/dropper-toolbar.cpp:104
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
-msgstr "若點取透明 (alpha)，將數值指定給選取區作為填色或邊框透明度"
+msgstr "若拾取透明 (alpha)，將數值指定給選取區作為填色或邊框透明度"
 
 #: ../src/widgets/dropper-toolbar.cpp:107
 msgid "Assign"
@@ -28390,28 +28141,24 @@ msgstr "從物件切掉"
 
 #. Width
 #: ../src/widgets/eraser-toolbar.cpp:151
-#, fuzzy
 msgid "(no width)"
-msgstr "凹端"
+msgstr "(無寬度)"
 
 #: ../src/widgets/eraser-toolbar.cpp:155
 msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "橡皮擦的寬度 (相對於可見畫布區域)"
 
 #: ../src/widgets/eraser-toolbar.cpp:171
-#, fuzzy
 msgid "Eraser Mass"
-msgstr "橡皮擦"
+msgstr "橡皮擦質量"
 
 #: ../src/widgets/eraser-toolbar.cpp:172
-#, fuzzy
 msgid "Increase to make the eraser drag behind, as if slowed by inertia"
-msgstr "增加這項數值可使筆畫拖延，就像因慣性而減慢"
+msgstr "增加這項數值可使筆畫拖動延緩，就像因慣性而減慢"
 
 #: ../src/widgets/eraser-toolbar.cpp:186 ../src/widgets/eraser-toolbar.cpp:187
-#, fuzzy
 msgid "Break apart cut items"
-msgstr "打散"
+msgstr "打散項目"
 
 #: ../src/widgets/fill-style.cpp:356
 msgid "Change fill rule"
@@ -28690,31 +28437,28 @@ msgid "Change gradient stop color"
 msgstr "變更漸層停止點顏色"
 
 #: ../src/widgets/image-menu-item.c:151
-#, fuzzy
 msgid "Image widget"
-msgstr "圖片檔"
+msgstr "圖片介面元件"
 
 #: ../src/widgets/image-menu-item.c:152
 msgid "Child widget to appear next to the menu text"
-msgstr ""
+msgstr "子介面元件會出現在選單文字的後面"
 
 #: ../src/widgets/image-menu-item.c:167
-#, fuzzy
 msgid "Use stock"
-msgstr "貼上邊框"
+msgstr "使用 stock"
 
 #: ../src/widgets/image-menu-item.c:168
 msgid "Whether to use the label text to create a stock menu item"
-msgstr ""
+msgstr "是否要用標籤文字建立 stock 選單項目"
 
 #: ../src/widgets/image-menu-item.c:183
-#, fuzzy
 msgid "Accel Group"
-msgstr "群組"
+msgstr "加速群組"
 
 #: ../src/widgets/image-menu-item.c:184
 msgid "The Accel Group to use for stock accelerator keys"
-msgstr ""
+msgstr "stock 加速器鍵值要使用的加速群組"
 
 #: ../src/widgets/lpe-toolbar.cpp:233
 msgid "Closed"
@@ -28788,39 +28532,35 @@ msgstr "開啟即時路徑特效對話窗 (調整參數)"
 
 #: ../src/widgets/measure-toolbar.cpp:157
 msgid "Start and end measures inactive."
-msgstr ""
+msgstr "起始和結束測量已停止。"
 
 #: ../src/widgets/measure-toolbar.cpp:159
 msgid "Start and end measures active."
-msgstr ""
+msgstr "起始和結束測量啟動中。"
 
 #: ../src/widgets/measure-toolbar.cpp:175
-#, fuzzy
 msgid "Show all crossings."
-msgstr "顯示全部圖層"
+msgstr "顯示全部交叉點。"
 
 #: ../src/widgets/measure-toolbar.cpp:177
 msgid "Show visible crossings."
-msgstr ""
+msgstr "顯示可見的交叉點。"
 
 #: ../src/widgets/measure-toolbar.cpp:193
 msgid "Use all layers in the measure."
-msgstr ""
+msgstr "測量使用全部圖層。"
 
 #: ../src/widgets/measure-toolbar.cpp:195
-#, fuzzy
 msgid "Use current layer in the measure."
-msgstr "提升目前圖層到最上層"
+msgstr "測量使用目前圖層。"
 
 #: ../src/widgets/measure-toolbar.cpp:211
-#, fuzzy
 msgid "Compute all elements."
-msgstr "tutorial-elements.zh_TW.svg"
+msgstr "計算全部元件。"
 
 #: ../src/widgets/measure-toolbar.cpp:213
-#, fuzzy
 msgid "Compute max length."
-msgstr "導入-導出路徑長度："
+msgstr "計算最大長度"
 
 #: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1609
 msgid "Font Size"
@@ -28845,84 +28585,72 @@ msgstr "精確度："
 
 #: ../src/widgets/measure-toolbar.cpp:303
 msgid "Decimal precision of measure"
-msgstr ""
+msgstr "測量的十進制精準度"
 
 #: ../src/widgets/measure-toolbar.cpp:315
-#, fuzzy
 msgid "Scale %"
-msgstr "縮放 x"
+msgstr "縮放 %"
 
 #: ../src/widgets/measure-toolbar.cpp:315
-#, fuzzy
 msgid "Scale %:"
-msgstr "級別："
+msgstr "縮放 %："
 
 #: ../src/widgets/measure-toolbar.cpp:316
 msgid "Scale the results"
-msgstr ""
+msgstr "縮放結果"
 
 #: ../src/widgets/measure-toolbar.cpp:329
-#, fuzzy
 msgid "The offset size"
-msgstr "紅色偏移"
+msgstr "偏移尺寸"
 
 #: ../src/widgets/measure-toolbar.cpp:341
 #: ../src/widgets/measure-toolbar.cpp:342
-#, fuzzy
 msgid "Ignore first and last"
 msgstr "忽略第一個點和最後一個點"
 
 #: ../src/widgets/measure-toolbar.cpp:352
 #: ../src/widgets/measure-toolbar.cpp:353
-#, fuzzy
 msgid "Show hidden intersections"
-msgstr "參考線交點"
+msgstr "顯示隱藏的交叉點"
 
 #: ../src/widgets/measure-toolbar.cpp:363
 #: ../src/widgets/measure-toolbar.cpp:364
-#, fuzzy
 msgid "Show measures between items"
-msgstr "顯示路徑之間的移動數"
+msgstr "顯示項目之間的測量值"
 
 #: ../src/widgets/measure-toolbar.cpp:374
 #: ../src/widgets/measure-toolbar.cpp:375
-#, fuzzy
 msgid "Measure all layers"
-msgstr "搜尋所有圖層"
+msgstr "測量所有圖層"
 
 #: ../src/widgets/measure-toolbar.cpp:385
 #: ../src/widgets/measure-toolbar.cpp:386
-#, fuzzy
 msgid "Reverse measure"
-msgstr "反轉路徑"
+msgstr "反向測量"
 
 #: ../src/widgets/measure-toolbar.cpp:395
 #: ../src/widgets/measure-toolbar.cpp:396
 msgid "Phantom measure"
-msgstr ""
+msgstr "假體測量"
 
 #: ../src/widgets/measure-toolbar.cpp:405
 #: ../src/widgets/measure-toolbar.cpp:406
-#, fuzzy
 msgid "To guides"
-msgstr "顯示參考線(_G)"
+msgstr "到參考線"
 
 #: ../src/widgets/measure-toolbar.cpp:415
 #: ../src/widgets/measure-toolbar.cpp:416
-#, fuzzy
 msgid "Mark Dimension"
-msgstr "尺寸標註線"
+msgstr "標記尺寸標註"
 
 #: ../src/widgets/measure-toolbar.cpp:425
 #: ../src/widgets/measure-toolbar.cpp:426
-#, fuzzy
 msgid "Convert to item"
-msgstr "轉換成點字"
+msgstr "轉換成項目"
 
 #: ../src/widgets/mesh-toolbar.cpp:318
-#, fuzzy
 msgid "Set mesh type"
-msgstr "設定文字樣式"
+msgstr "設定網面類型"
 
 #: ../src/widgets/mesh-toolbar.cpp:380
 msgid "normal"
@@ -28993,72 +28721,66 @@ msgstr "顯示邊和張量控制柄"
 
 #: ../src/widgets/mesh-toolbar.cpp:509
 msgid "WARNING: Mesh SVG Syntax Subject to Change"
-msgstr ""
+msgstr "警告：變更網面 SVG 語法主題"
 
 #: ../src/widgets/mesh-toolbar.cpp:519
 msgctxt "Type"
 msgid "Coons"
-msgstr ""
+msgstr "孔斯"
 
 #: ../src/widgets/mesh-toolbar.cpp:522
 msgid "Bicubic"
-msgstr ""
+msgstr "雙立方"
 
 #: ../src/widgets/mesh-toolbar.cpp:524
 msgid "Coons"
-msgstr ""
+msgstr "孔斯"
 
 #: ../src/widgets/mesh-toolbar.cpp:525
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
-msgstr ""
+msgstr "孔斯：無平滑化。雙立方：平滑路徑邊界相交部分。"
 
 #: ../src/widgets/mesh-toolbar.cpp:527 ../src/widgets/pencil-toolbar.cpp:375
 msgid "Smoothing:"
 msgstr "平滑："
 
 #: ../src/widgets/mesh-toolbar.cpp:537
-#, fuzzy
 msgid "Toggle Sides"
-msgstr "切換粗體"
+msgstr "切換邊"
 
 #: ../src/widgets/mesh-toolbar.cpp:538
 msgid "Toggle selected sides between Beziers and lines."
-msgstr ""
+msgstr "邊在貝茲和線條之間切換"
 
 #: ../src/widgets/mesh-toolbar.cpp:541
-#, fuzzy
 msgid "Toggle side:"
-msgstr "切換粗體"
+msgstr "切換邊："
 
 #: ../src/widgets/mesh-toolbar.cpp:548
-#, fuzzy
 msgid "Make elliptical"
-msgstr "使用斜體"
+msgstr "橢圓化"
 
 #: ../src/widgets/mesh-toolbar.cpp:549
 msgid ""
 "Make selected sides elliptical by changing length of handles. Works best if "
 "handles already approximate ellipse."
-msgstr ""
+msgstr "變更控制柄長度以將選擇的邊橢圓化。若控制柄已經接近橢圓形的時候效果最好。"
 
 #: ../src/widgets/mesh-toolbar.cpp:552
-#, fuzzy
 msgid "Make elliptical:"
-msgstr "使用斜體"
+msgstr "橢圓化："
 
 #: ../src/widgets/mesh-toolbar.cpp:559
-#, fuzzy
 msgid "Pick colors:"
-msgstr "網點顏色："
+msgstr "拾取顏色："
 
 #: ../src/widgets/mesh-toolbar.cpp:560
 msgid "Pick colors for selected corner nodes from underneath mesh."
-msgstr ""
+msgstr "讓選擇的邊角頂點拾取網面下面的顏色。"
 
 #: ../src/widgets/mesh-toolbar.cpp:563
-#, fuzzy
 msgid "Pick Color"
-msgstr "填充顏色"
+msgstr "拾取顏色"
 
 #: ../src/widgets/node-toolbar.cpp:341
 msgid "Insert node"
@@ -29274,7 +28996,7 @@ msgstr "網面漸層"
 
 #: ../src/widgets/paint-selector.cpp:235
 msgid "Unset paint (make it undefined so it can be inherited)"
-msgstr "取消塗繪設定 (將值設為「未定義」使鋪排仿製物件的顏色設定可被繼承使用)"
+msgstr "未設定塗繪 (將值設為「未定義」使鋪排仿製物件的顏色設定可被繼承使用)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:252
@@ -29444,9 +29166,8 @@ msgid "From clipboard"
 msgstr "從剪貼簿"
 
 #: ../src/widgets/pencil-toolbar.cpp:181
-#, fuzzy
 msgid "Bend from clipboard"
-msgstr "從剪貼簿"
+msgstr "從剪貼簿套用彎曲"
 
 #: ../src/widgets/pencil-toolbar.cpp:182
 msgid "Last applied"
@@ -29484,11 +29205,11 @@ msgstr "將鉛筆參數重設為預設值 (可在 Inkscape 偏好設定 > 工具
 
 #: ../src/widgets/pencil-toolbar.cpp:407 ../src/widgets/pencil-toolbar.cpp:408
 msgid "LPE based interactive simplify"
-msgstr ""
+msgstr "互動式簡化的即時路徑特效 (LPE)"
 
 #: ../src/widgets/pencil-toolbar.cpp:418 ../src/widgets/pencil-toolbar.cpp:419
 msgid "LPE simplify flatten"
-msgstr ""
+msgstr "LPE 簡化平坦"
 
 #: ../src/widgets/rect-toolbar.cpp:125
 msgid "Change rectangle"
@@ -29644,7 +29365,6 @@ msgstr "X："
 
 #. shortLabel
 #: ../src/widgets/select-toolbar.cpp:443
-#, fuzzy
 msgctxt "Select toolbar"
 msgid "Horizontal coordinate of selection"
 msgstr "選取區的水平坐標"
@@ -29663,7 +29383,6 @@ msgstr "Y："
 
 #. shortLabel
 #: ../src/widgets/select-toolbar.cpp:462
-#, fuzzy
 msgctxt "Select toolbar"
 msgid "Vertical coordinate of selection"
 msgstr "選取區的垂直坐標"
@@ -29682,10 +29401,9 @@ msgstr "寬："
 
 #. shortLabel
 #: ../src/widgets/select-toolbar.cpp:481
-#, fuzzy
 msgctxt "Select toolbar"
 msgid "Width of selection"
-msgstr "選取區的寬度"
+msgstr "選取區寬度"
 
 #: ../src/widgets/select-toolbar.cpp:499
 msgid "Lock width and height"
@@ -29709,10 +29427,9 @@ msgstr "高："
 
 #. shortLabel
 #: ../src/widgets/select-toolbar.cpp:513
-#, fuzzy
 msgctxt "Select toolbar"
 msgid "Height of selection"
-msgstr "選取區的高度"
+msgstr "選取區高度"
 
 #: ../src/widgets/select-toolbar.cpp:575
 msgid "Scale rounded corners"
@@ -29846,9 +29563,8 @@ msgid "The width of the spray area (relative to the visible canvas area)"
 msgstr "噴灑範圍的寬度 (相對於可見畫布區域)"
 
 #: ../src/widgets/spray-toolbar.cpp:312
-#, fuzzy
 msgid "Use the pressure of the input device to alter the width of spray area"
-msgstr "利用輸入裝置的壓力來改變筆尖寬度"
+msgstr "利用輸入裝置的壓力來改變噴灑區域的寬度"
 
 #: ../src/widgets/spray-toolbar.cpp:323
 msgid "(maximum mean)"
@@ -29906,14 +29622,12 @@ msgid "Spray objects in a single path"
 msgstr "用單一路徑噴灑物件"
 
 #: ../src/widgets/spray-toolbar.cpp:383
-#, fuzzy
 msgid "Delete sprayed items"
-msgstr "刪除漸層停止點"
+msgstr "刪除噴灑的項目"
 
 #: ../src/widgets/spray-toolbar.cpp:384
-#, fuzzy
 msgid "Delete sprayed items from selection"
-msgstr "從選取區取得曲線..."
+msgstr "從選取區刪除噴灑的項目"
 
 #: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
 msgid "Mode"
@@ -29982,74 +29696,68 @@ msgid ""
 msgstr "噴灑物件的縮放變化量；0% 代表除了原始物件外縮放量都相同"
 
 #: ../src/widgets/spray-toolbar.cpp:477
-#, fuzzy
 msgid "Use the pressure of the input device to alter the scale of new items"
-msgstr "利用輸入裝置的壓力來改變筆尖寬度"
+msgstr "利用輸入裝置的壓力來改變新項目的尺寸"
 
 #: ../src/widgets/spray-toolbar.cpp:489 ../src/widgets/spray-toolbar.cpp:490
 msgid ""
 "Pick color from the drawing. You can use clonetiler trace dialog for "
 "advanced effects. In clone mode original fill or stroke colors must be unset."
 msgstr ""
+"從圖畫中拾取顏色。你能使用鋪排彷製描繪對話框的進階特效。在仿製模式中原始填充"
+"或邊框必須是「未設定」狀態。"
 
 #: ../src/widgets/spray-toolbar.cpp:502 ../src/widgets/spray-toolbar.cpp:503
 msgid "Pick from center instead average area."
-msgstr ""
+msgstr "從中心點拾取，而不是平均範圍。"
 
 #: ../src/widgets/spray-toolbar.cpp:515 ../src/widgets/spray-toolbar.cpp:516
 msgid "Inverted pick value, retaining color in advanced trace mode"
-msgstr ""
+msgstr "反轉拾取數值，在進階描繪模式中保留顏色"
 
 #: ../src/widgets/spray-toolbar.cpp:528 ../src/widgets/spray-toolbar.cpp:529
-#, fuzzy
 msgid "Apply picked color to fill"
-msgstr "套用最後選擇的顏色到填充"
+msgstr "套用拾取顏色到填充"
 
 #: ../src/widgets/spray-toolbar.cpp:541 ../src/widgets/spray-toolbar.cpp:542
-#, fuzzy
 msgid "Apply picked color to stroke"
-msgstr "套用最後選擇的顏色到邊框"
+msgstr "套用拾取顏色到邊框"
 
 #: ../src/widgets/spray-toolbar.cpp:554 ../src/widgets/spray-toolbar.cpp:555
 msgid "No overlap between colors"
-msgstr ""
+msgstr "顏色之間不重疊"
 
 #: ../src/widgets/spray-toolbar.cpp:567 ../src/widgets/spray-toolbar.cpp:568
 msgid "Apply over transparent areas"
-msgstr ""
+msgstr "套用涵蓋透明區域"
 
 #: ../src/widgets/spray-toolbar.cpp:580 ../src/widgets/spray-toolbar.cpp:581
 msgid "Apply over no transparent areas"
-msgstr ""
+msgstr "套用不含透明區域"
 
 #: ../src/widgets/spray-toolbar.cpp:593 ../src/widgets/spray-toolbar.cpp:594
-#, fuzzy
 msgid "Prevent overlapping objects"
-msgstr "請選取一個物件"
+msgstr "避免重疊物件"
 
 #: ../src/widgets/spray-toolbar.cpp:605
-#, fuzzy
 msgid "(minimum offset)"
-msgstr "(最小力道)"
+msgstr "(最小偏移)"
 
 #: ../src/widgets/spray-toolbar.cpp:605
-#, fuzzy
 msgid "(maximum offset)"
-msgstr "(最大力道)"
+msgstr "(最大偏移)"
 
 #: ../src/widgets/spray-toolbar.cpp:608
-#, fuzzy
 msgid "Offset %"
-msgstr "偏移 x"
+msgstr "偏移 %"
 
 #: ../src/widgets/spray-toolbar.cpp:608
-#, fuzzy
 msgid "Offset %:"
-msgstr "偏移："
+msgstr "偏移 %："
 
 #: ../src/widgets/spray-toolbar.cpp:609
 msgid "Increase to segregate objects more (value in percent)"
-msgstr ""
+msgstr "分離物件增加更多偏移 (數值單位為百分比)"
 
 #: ../src/widgets/star-toolbar.cpp:103
 msgid "Star: Change number of corners"
@@ -30308,33 +30016,28 @@ msgid "Square cap"
 msgstr "方端點"
 
 #: ../src/widgets/stroke-style.cpp:392
-#, fuzzy
 msgid "Fill, Stroke, Markers"
-msgstr "邊框樣式標記"
+msgstr "填充、邊框、標記"
 
 #: ../src/widgets/stroke-style.cpp:396
-#, fuzzy
 msgid "Stroke, Fill, Markers"
-msgstr "邊框樣式標記"
+msgstr "邊框、填充、標記"
 
 #: ../src/widgets/stroke-style.cpp:400
-#, fuzzy
 msgid "Fill, Markers, Stroke"
-msgstr "填充和邊框"
+msgstr "填充、標記、邊框"
 
 #: ../src/widgets/stroke-style.cpp:408
-#, fuzzy
 msgid "Markers, Fill, Stroke"
-msgstr "填充和邊框"
+msgstr "標記、填充、邊框"
 
 #: ../src/widgets/stroke-style.cpp:412
-#, fuzzy
 msgid "Stroke, Markers, Fill"
-msgstr "邊框樣式標記"
+msgstr "邊框、標記、填充"
 
 #: ../src/widgets/stroke-style.cpp:416
 msgid "Markers, Stroke, Fill"
-msgstr ""
+msgstr "標記、邊框、填充"
 
 #: ../src/widgets/stroke-style.cpp:534
 msgid "Set markers"
@@ -30374,12 +30077,11 @@ msgstr "文字：變更對齊"
 
 #: ../src/widgets/text-toolbar.cpp:573
 msgid "Text: Change line-height"
-msgstr "文字：變更行高"
+msgstr "文字：變更列高"
 
 #: ../src/widgets/text-toolbar.cpp:728
-#, fuzzy
 msgid "Text: Change line-height unit"
-msgstr "文字：變更行高"
+msgstr "文字：變更列高單位"
 
 #: ../src/widgets/text-toolbar.cpp:777
 msgid "Text: Change word-spacing"
@@ -30402,9 +30104,8 @@ msgid "Text: Change rotate"
 msgstr "文字：變更旋轉"
 
 #: ../src/widgets/text-toolbar.cpp:977
-#, fuzzy
 msgid "Text: Change writing mode"
-msgstr "文字：變更方向"
+msgstr "文字：變更書寫模式"
 
 #: ../src/widgets/text-toolbar.cpp:1031
 msgid "Text: Change orientation"
@@ -30475,57 +30176,50 @@ msgid "Horizontal"
 msgstr "橫向"
 
 #: ../src/widgets/text-toolbar.cpp:1746
-#, fuzzy
 msgid "Vertical — RL"
-msgstr "直向"
+msgstr "直向 — 右到左"
 
 #: ../src/widgets/text-toolbar.cpp:1747
 msgid "Vertical text — lines: right to left"
-msgstr ""
+msgstr "直向文字 — 文字列：從右到左"
 
 #: ../src/widgets/text-toolbar.cpp:1753
-#, fuzzy
 msgid "Vertical — LR"
-msgstr "直向"
+msgstr "直向 — 左到右"
 
 #: ../src/widgets/text-toolbar.cpp:1754
 msgid "Vertical text — lines: left to right"
-msgstr ""
+msgstr "直向文字 — 文字列：從左到右"
 
 #. Name
 #: ../src/widgets/text-toolbar.cpp:1759
-#, fuzzy
 msgid "Writing mode"
-msgstr "繪製模式"
+msgstr "書寫模式"
 
 #. Label
 #: ../src/widgets/text-toolbar.cpp:1760
 msgid "Block progression"
-msgstr ""
+msgstr "文字區塊"
 
 #: ../src/widgets/text-toolbar.cpp:1789
-#, fuzzy
 msgid "Auto glyph orientation"
-msgstr "沿著路徑方向"
+msgstr "自動文字方向"
 
 #: ../src/widgets/text-toolbar.cpp:1796
-#, fuzzy
 msgid "Upright"
-msgstr "增亮"
+msgstr "右上"
 
 #: ../src/widgets/text-toolbar.cpp:1797
-#, fuzzy
 msgid "Upright glyph orientation"
-msgstr "文字方向"
+msgstr "右上文字方向"
 
 #: ../src/widgets/text-toolbar.cpp:1804
 msgid "Sideways"
-msgstr ""
+msgstr "側面"
 
 #: ../src/widgets/text-toolbar.cpp:1805
-#, fuzzy
 msgid "Sideways glyph orientation"
-msgstr "沿著路徑方向"
+msgstr "側面文字方向"
 
 #. Name
 #: ../src/widgets/text-toolbar.cpp:1811
@@ -30535,7 +30229,7 @@ msgstr "文字方向"
 #. Label
 #: ../src/widgets/text-toolbar.cpp:1812
 msgid "Text (glyph) orientation in vertical text."
-msgstr ""
+msgstr "直向文字的文字 (字) 方向。"
 
 #. Drop down menu
 #: ../src/widgets/text-toolbar.cpp:1845
@@ -30564,9 +30258,8 @@ msgstr "行："
 
 #. short label
 #: ../src/widgets/text-toolbar.cpp:1852
-#, fuzzy
 msgid "Spacing between baselines (times font size)"
-msgstr "每一行的間隔距離 (字型大小的倍數)"
+msgstr "基本線的間隔距離 (字型大小的倍數)"
 
 #. Drop down menu
 #: ../src/widgets/text-toolbar.cpp:1884 ../src/widgets/text-toolbar.cpp:1915
@@ -30972,7 +30665,6 @@ msgstr "在顏色模式裡，影響物件的色相"
 
 #. TRANSLATORS:  "H" here stands for hue
 #: ../src/widgets/tweak-toolbar.cpp:291
-#, fuzzy
 msgctxt "Hue"
 msgid "H"
 msgstr "色相"
@@ -30983,7 +30675,6 @@ msgstr "在顏色模式裡，影響物件的飽和度"
 
 #. TRANSLATORS: "S" here stands for Saturation
 #: ../src/widgets/tweak-toolbar.cpp:307
-#, fuzzy
 msgctxt "Saturation"
 msgid "S"
 msgstr "飽和度"
@@ -30994,7 +30685,6 @@ msgstr "在顏色模式，影響物件的亮度"
 
 #. TRANSLATORS: "L" here stands for Lightness
 #: ../src/widgets/tweak-toolbar.cpp:323
-#, fuzzy
 msgctxt "Lightness"
 msgid "L"
 msgstr "明度"
@@ -31005,7 +30695,6 @@ msgstr "在顏色模式，影響物件的不透明度"
 
 #. TRANSLATORS: "O" here stands for Opacity
 #: ../src/widgets/tweak-toolbar.cpp:339
-#, fuzzy
 msgctxt "Opacity"
 msgid "O"
 msgstr "不透明度"
@@ -31039,7 +30728,7 @@ msgstr "使用輸入裝置的壓力來改變微調動作的力道"
 
 #: ../share/extensions/convert2dashes.py:56
 msgid "Total number of objects not converted: {}\n"
-msgstr ""
+msgstr "不轉換的物件總數量：{}\n"
 
 #: ../share/extensions/dimension.py:108
 msgid "Please select an object."
@@ -31152,17 +30841,15 @@ msgid "Need at least 2 paths selected"
 msgstr "至少需要選取 2 個路徑"
 
 #: ../share/extensions/funcplot.py:46
-#, fuzzy
 msgid ""
 "x-interval cannot be zero. Please modify 'Start X value' or 'End X value'"
-msgstr "x 間距不能為零。請修改「起始 X」或「結束 X」"
+msgstr "x 間距不能為零。請修改「起始 X 數值」或「結束 X 數值」"
 
 #: ../share/extensions/funcplot.py:58
-#, fuzzy
 msgid ""
 "y-interval cannot be zero. Please modify 'Y value of rectangle's top' or 'Y "
 "value of rectangle's bottom'"
-msgstr "y 間距不能為零。請修改「Y 頂端」或「Y 底端」"
+msgstr "y 間距不能為零。請修改「矩形頂端 Y 數值」或「矩形底端 Y 數值」"
 
 #: ../share/extensions/funcplot.py:313
 msgid "Please select a rectangle"
@@ -31266,8 +30953,7 @@ msgstr ""
 msgid ""
 "Warning! Tool's and default tool's parameter's (%s) types are not the same "
 "( type('%s') != type('%s') )."
-msgstr ""
-"警告！刀具和預設刀具的參數 (%s) 類型不相同 ( 類型('%s') != 類型('%s'))。"
+msgstr "警告！刀具和預設刀具的參數 (%s) 類型不相同 ( 類型('%s') != 類型('%s'))。"
 
 #: ../share/extensions/gcodetools.py:4372
 #, python-format
@@ -31414,9 +31100,8 @@ msgid "Please select an object"
 msgstr "請選取一個物件"
 
 #: ../share/extensions/gimp_xcf.py:37
-#, fuzzy
 msgid "Inkscape must be installed and set in your path variable."
-msgstr "必須已經安裝 GIMP 並且設定正確的路徑。"
+msgstr "必須已經安裝 Inkscape 並且設定正確的路徑。"
 
 #: ../share/extensions/gimp_xcf.py:41
 msgid "Gimp must be installed and set in your path variable."
@@ -31439,9 +31124,8 @@ msgid "Movements"
 msgstr "移動"
 
 #: ../share/extensions/hpgl_decoder.py:43
-#, fuzzy
 msgid "Pen "
-msgstr "筆 #"
+msgstr "筆"
 
 #. issue error if no hpgl data found
 #: ../share/extensions/hpgl_input.py:56
@@ -31461,7 +31145,7 @@ msgid ""
 msgstr "找不到路徑。請將要儲存的物件全部轉換成路徑。"
 
 #: ../share/extensions/inkex.py:116
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore "
 "this extension.Please download and install the latest version from http://"
@@ -31473,7 +31157,7 @@ msgid ""
 msgstr ""
 "libxml2 的假想 lxml 包覆器相依於 inkex.py 而這個擴充功能需要 libxml2。請從 "
 "http://cheeseshop.python.org/pypi/lxml/ 下載並安裝最新版本，或者經由你的套件"
-"管理程式用命令 (例如：sudo apt-get install python-lxml) 來安裝\n"
+"管理程式用指令 (例如：sudo apt-get install python-lxml) 來安裝\n"
 "\n"
 "技術詳細資訊：\n"
 "%s"
@@ -31495,7 +31179,7 @@ msgstr "沒有符合表示式的節點：%s"
 
 #: ../share/extensions/inkex.py:358
 msgid "SVG Width not set correctly! Assuming width = 100"
-msgstr ""
+msgstr "SVG 寬度設定不正確！假設寬度 = 100"
 
 #: ../share/extensions/interp_att_g.py:175
 msgid "There is no selection to interpolate"
@@ -31802,28 +31486,29 @@ msgid ""
 msgstr "該處找不到路徑。請將你想要繪製的物件全部轉換成路徑。"
 
 #: ../share/extensions/plotter.py:146
-#, fuzzy
 msgid "pySerial is not installed. Please follow these steps:"
-msgstr "尚未安裝 pySerial。"
+msgstr "尚未安裝 pySerial。請依照這些步驟安裝："
 
 #: ../share/extensions/plotter.py:147
 msgid "1. Download and extract (unzip) this file to your local harddisk:"
-msgstr ""
+msgstr "1. 下載並解壓縮 (unzip) 該檔案到你的本機硬碟："
 
 #: ../share/extensions/plotter.py:149
 msgid ""
 "2. Copy the \"serial\" folder (Can be found inside the just extracted folder)"
-msgstr ""
+msgstr "2. 複製「serial」資料夾 (能夠在解壓縮後的資料夾中找到)"
 
 #: ../share/extensions/plotter.py:150
 msgid ""
 "   into the following Inkscape folder: C:\\[Program files]\\inkscape\\python"
 "\\Lib\\"
 msgstr ""
+"   到下列 Inkscape 資料夾：C:\\[Program files]\\inkscape\\python"
+"\\Lib\\"
 
 #: ../share/extensions/plotter.py:151
 msgid "3. Close and restart Inkscape."
-msgstr ""
+msgstr "3. 關閉並重新啟動 Inkscape。"
 
 #: ../share/extensions/plotter.py:200
 msgid ""
@@ -31941,9 +31626,8 @@ msgid "Please enter a replacement font in the replace all box."
 msgstr "請在全部取代欄位中輸入取代字型。"
 
 #: ../share/extensions/restack.py:75
-#, fuzzy
 msgid "There is no selection to restack."
-msgstr "沒有選取物件進行內插"
+msgstr "沒有選取物件可重新堆疊。"
 
 #: ../share/extensions/summersnight.py:41
 msgid ""
@@ -31972,6 +31656,11 @@ msgid ""
 "http://sk1project.org/modules.php?name=Products&product=uniconvertor\n"
 "and install into your Inkscape's Python location\n"
 msgstr ""
+"你需要安裝 UniConvertor 軟體。\n"
+"GNU/Linux 系統：安裝套件 python-uniconverto。\n"
+"Windows：從 http://sk1project.org/modules.php?"
+"name=Products&product=uniconvertor\n"
+"下載並安裝到 Inkscape 的 Python 位置\n"
 
 #: ../share/extensions/voronoi2svg.py:205
 msgid "Please select objects!"
@@ -32017,9 +31706,8 @@ msgid "The directory \"%s\" does not exists."
 msgstr "目錄「%s」不存在。"
 
 #: ../share/extensions/webslicer_export.py:76
-#, fuzzy
 msgid "No slicer layer found."
-msgstr "無目前圖層。"
+msgstr "找不到切片圖層。"
 
 #: ../share/extensions/webslicer_export.py:106
 #, python-format
@@ -32305,24 +31993,24 @@ msgid "Randomize"
 msgstr "隨機化"
 
 #: ../share/extensions/color_randomize.inx.h:4
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Hue range (%)"
-msgstr "色相旋轉 (°)"
+msgstr "色相範圍 (°)"
 
 #: ../share/extensions/color_randomize.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Saturation range (%)"
-msgstr "飽和度 (%)"
+msgstr "飽和度範圍 (%)"
 
 #: ../share/extensions/color_randomize.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Lightness range (%)"
-msgstr "亮度 (%)"
+msgstr "亮度範圍 (%)"
 
 #: ../share/extensions/color_randomize.inx.h:10
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Opacity range (%)"
-msgstr "不透明度 (%0"
+msgstr "不透明度範圍 (%)"
 
 #: ../share/extensions/color_randomize.inx.h:12
 msgid ""
@@ -32330,6 +32018,8 @@ msgid ""
 "only for objects and groups). Change the range values to limit the distance "
 "between the original color and the randomized one."
 msgstr ""
+"隨機變化色相、飽和度、亮度和/或不透明度 (只有隨機變化物件和群組的不透明度)。"
+"變更原始顏色之間距離限制的數值範圍並隨機變化一個數值。"
 
 #: ../share/extensions/color_removeblue.inx.h:1
 msgid "Remove Blue"
@@ -32400,8 +32090,7 @@ msgstr ""
 msgid ""
 "In order to import Dia files, Dia itself must be installed.  You can get Dia "
 "at http://live.gnome.org/Dia"
-msgstr ""
-"想要匯入 Dia 檔案，必須安裝 Dia。你可在 http://live.gnome.org/Dia 取得該程式"
+msgstr "想要匯入 Dia 檔案，必須安裝 Dia。你可在 http://live.gnome.org/Dia 取得該程式"
 
 #: ../share/extensions/dia.inx.h:4
 msgid "Dia Diagram (*.dia)"
@@ -32466,7 +32155,7 @@ msgid ""
 "first node of the path.\n"
 "    * Step: numbering step between two nodes."
 msgstr ""
-"此擴充功能會根據下列選項用數字點取代選取項目的節點：\n"
+"此擴充功能會根據下列選項用數字拾取代選取項目的節點：\n"
 "    * 字型尺寸：節點數字標籤的大小 (20px, 12pt...)。\n"
 "    * 點大小：於路徑節點上放置的點直徑 (10px, 2mm...)。\n"
 "    * 起始點數字：數列的起始數字，指定到此路徑的起始節點。\n"
@@ -32672,12 +32361,11 @@ msgstr "DXF 輸入"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Method of Scaling:"
-msgstr ""
+msgstr "縮放方式："
 
 #: ../share/extensions/dxf_input.inx.h:4
-#, fuzzy
 msgid "Manual scale factor:"
-msgstr "或者，使用手動縮放係數："
+msgstr "手動縮放係數："
 
 #: ../share/extensions/dxf_input.inx.h:5
 msgid "Manual x-axis origin (mm):"
@@ -32701,7 +32389,6 @@ msgid "Text Font:"
 msgstr "文字字型："
 
 #: ../share/extensions/dxf_input.inx.h:11
-#, fuzzy
 msgid ""
 "- AutoCAD Release 13 and newer.\n"
 "- for manual scaling, assume dxf drawing is in mm.\n"
@@ -32713,9 +32400,11 @@ msgid ""
 "- limited support for BLOCKS, use AutoCAD Explode Blocks instead, if needed."
 msgstr ""
 "- AutoCAD 版本 13 及更新版本。\n"
-"- 假設 dxf  圖畫的單位為 mm。\n"
+"- 手動縮放，假設 dxf  圖畫的單位為 mm。\n"
 "- 假設 svg 圖畫單位為、像素，解析度為 96 dpi。\n"
 "- 縮放係數和原點只套用到手動縮放。\n"
+"- 「自動縮放」會符合 A4 頁面寬度。\n"
+"- 「從檔案讀取」使用變數 $MEASUREMENT。\n"
 "- 圖層只保存在 檔案->開啟 上，而不匯入。\n"
 "- 僅限支援圖塊，需要時改為使用 AutoCAD 分解圖塊。"
 
@@ -32740,24 +32429,20 @@ msgid "use LWPOLYLINE type of line output"
 msgstr "使用多折線 (LWPOLYLINE) 類型的直線輸出"
 
 #: ../share/extensions/dxf_outlines.inx.h:5
-#, fuzzy
 msgid "Base unit:"
-msgstr "基本單位"
+msgstr "基本單位："
 
 #: ../share/extensions/dxf_outlines.inx.h:6
-#, fuzzy
 msgid "Character Encoding:"
-msgstr "字元編碼"
+msgstr "字元編碼："
 
 #: ../share/extensions/dxf_outlines.inx.h:7
-#, fuzzy
 msgid "Layer export selection:"
-msgstr "圖層匯出選取範圍"
+msgstr "圖層匯出選取範圍："
 
 #: ../share/extensions/dxf_outlines.inx.h:8
-#, fuzzy
 msgid "Layer match name:"
-msgstr "圖層符合名稱"
+msgstr "圖層符合名稱："
 
 #: ../share/extensions/dxf_outlines.inx.h:9
 msgid "pt"
@@ -34688,6 +34373,8 @@ msgid ""
 "each pen, name the layers \"Pen 1\", \"Pen 2\", etc., and put your drawings "
 "in the corresponding layers. This overrules the pen number option above."
 msgstr ""
+"如果你想在筆畫機上使用多種畫筆，針對每一種畫筆建立圖層，圖層命名為「筆 1」、"
+"「筆 2」等等，並將你的圖畫放在同一圖層。此畫筆編號會取代上面的選項。"
 
 #: ../share/extensions/hpgl_output.inx.h:23
 #: ../share/extensions/plotter.inx.h:51
@@ -34710,23 +34397,20 @@ msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:26
 #: ../share/extensions/plotter.inx.h:54
-#, fuzzy
 msgid "Tool (Knife) offset correction (mm):"
-msgstr "刀具偏移 (公釐)："
+msgstr "刀具偏移校正 (公釐)："
 
 #: ../share/extensions/hpgl_output.inx.h:27
 #: ../share/extensions/plotter.inx.h:55
 msgid ""
 "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit "
 "command (Default: 0.25)"
-msgstr ""
-"刀具尖端到刀具軸的偏移，單位為公釐，設定為 0 表示省略指令 (預設:「0.25」)"
+msgstr "刀具尖端到刀具軸的偏移，單位為公釐，設定為 0 表示省略指令 (預設:「0.25」)"
 
 #: ../share/extensions/hpgl_output.inx.h:28
 #: ../share/extensions/plotter.inx.h:56
-#, fuzzy
 msgid "Precut"
-msgstr "使用預切"
+msgstr "預切"
 
 #: ../share/extensions/hpgl_output.inx.h:29
 #: ../share/extensions/plotter.inx.h:57
@@ -34778,96 +34462,84 @@ msgid "Export an HP Graphics Language file"
 msgstr "匯出惠普圖形語言檔"
 
 #: ../share/extensions/image_attributes.inx.h:1
-#, fuzzy
 msgid "Set Image Attributes"
-msgstr "設定屬性"
+msgstr "設定圖片屬性"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:3
-#, fuzzy
 msgid "Basic"
-msgstr "基本拉丁字母"
+msgstr "基本"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:5
 msgid "Support non-uniform scaling"
-msgstr ""
+msgstr "支援非等比例縮放"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:7
 msgid "Render images blocky"
-msgstr ""
+msgstr "塊狀繪算點陣圖"
 
 #. render images like in 0.48
 #: ../share/extensions/image_attributes.inx.h:9
 msgid ""
 "Render all bitmap images like in older Inskcape versions. Available options:"
-msgstr ""
+msgstr "全部的點陣圖用舊版 Inkscape 方式繪算。可用的選項："
 
 #. image aspect ratio
 #: ../share/extensions/image_attributes.inx.h:11
-#, fuzzy
 msgid "Image Aspect Ratio"
-msgstr "圖片簡化"
+msgstr "圖片外觀比例"
 
 #. image aspect ratio
 #: ../share/extensions/image_attributes.inx.h:13
 msgid "preserveAspectRatio attribute:"
-msgstr ""
+msgstr "維持外觀比例屬性："
 
 #. image aspect ratio
 #: ../share/extensions/image_attributes.inx.h:15
 msgid "meetOrSlice:"
-msgstr ""
+msgstr "交切或切層："
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:17
-#, fuzzy
 msgid "Scope:"
-msgstr "範圍"
+msgstr "範圍："
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:19
-#, fuzzy
 msgid "Unset"
-msgstr "內凹"
+msgstr "未設定"
 
 #: ../share/extensions/image_attributes.inx.h:20
-#, fuzzy
 msgid "Change only selected image(s)"
-msgstr "只改變選取的節點"
+msgstr "只變更選擇的圖片"
 
 #: ../share/extensions/image_attributes.inx.h:21
-#, fuzzy
 msgid "Change all images in selection"
-msgstr "選取範圍裡找不到橢圓"
+msgstr "變更選取項目中的所有圖片"
 
 #: ../share/extensions/image_attributes.inx.h:22
-#, fuzzy
 msgid "Change all images in document"
-msgstr "檢查文件的文字拼寫"
+msgstr "變更選取文件中的所有圖片"
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:24
-#, fuzzy
 msgid "Image Rendering Quality"
-msgstr "影像繪算："
+msgstr "影像繪算品質"
 
 #. image-rendering
 #: ../share/extensions/image_attributes.inx.h:26
-#, fuzzy
 msgid "Image rendering attribute:"
-msgstr "圖形繪算模式："
+msgstr "影像繪算屬性："
 
 #: ../share/extensions/image_attributes.inx.h:27
-#, fuzzy
 msgid "Apply attribute to parent group of selection"
-msgstr "套用變形到選取區"
+msgstr "套用屬性到選取項目群組的上一層"
 
 #: ../share/extensions/image_attributes.inx.h:28
-#, fuzzy
 msgid "Apply attribute to SVG root"
-msgstr "設定的屬性："
+msgstr "套用屬性到 SVG 根層"
 
 #: ../share/extensions/ink2canvas.inx.h:1
 msgid "Convert to html5 canvas"
@@ -34896,7 +34568,7 @@ msgstr "命令列選項"
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_commandline.inx.h:3
 msgid "http://inkscape.org/doc/inkscape-man.html"
-msgstr "http://inkscape.org/doc/inkscape-man.zh_TW.html"
+msgstr "http://inkscape.org/doc/inkscape-man.html"
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
@@ -34908,9 +34580,8 @@ msgstr "鍵盤滑鼠快捷鍵參考"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_keys.inx.h:3
-#, fuzzy
 msgid "http://inkscape.org/doc/keys092.html"
-msgstr "http://inkscape.org/doc/keys091.zh_TW.html"
+msgstr "http://inkscape.org/doc/keys092.html"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
@@ -34927,9 +34598,8 @@ msgstr "本版新功能"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_relnotes.inx.h:3
-#, fuzzy
 msgid "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.92"
-msgstr "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.91"
+msgstr "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.92"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
 msgid "Report a Bug"
@@ -34960,13 +34630,12 @@ msgid "Interpolate style"
 msgstr "內插樣式"
 
 #: ../share/extensions/interp.inx.h:7 ../share/extensions/interp_att_g.inx.h:10
-#, fuzzy
 msgid "Use Z-order"
-msgstr "邊框隆起"
+msgstr "使用排列順序"
 
 #: ../share/extensions/interp.inx.h:8 ../share/extensions/interp_att_g.inx.h:11
 msgid "Workaround for reversed selection order in Live Preview cycles"
-msgstr ""
+msgstr "反轉即時預覽循環中的選取項目順序的規避錯誤措施"
 
 #: ../share/extensions/interp_att_g.inx.h:1
 msgid "Interpolate Attribute in a group"
@@ -35552,26 +35221,23 @@ msgstr "移動節點控柄"
 
 #: ../share/extensions/jitternodes.inx.h:7
 msgid "Distribution of the displacements:"
-msgstr ""
+msgstr "位移的分佈："
 
 #: ../share/extensions/jitternodes.inx.h:8
-#, fuzzy
 msgid "Uniform"
-msgstr "楔形文字"
+msgstr "均勻"
 
 #: ../share/extensions/jitternodes.inx.h:9
 msgid "Pareto"
-msgstr ""
+msgstr "柏拉圖"
 
 #: ../share/extensions/jitternodes.inx.h:10
-#, fuzzy
 msgid "Gaussian"
-msgstr "高斯模糊"
+msgstr "高斯"
 
 #: ../share/extensions/jitternodes.inx.h:11
-#, fuzzy
 msgid "Log-normal"
-msgstr "標準"
+msgstr "對數常態"
 
 #: ../share/extensions/jitternodes.inx.h:13
 msgid ""
@@ -35866,34 +35532,29 @@ msgid "Measurement Type: "
 msgstr "測量類型："
 
 #: ../share/extensions/measure.inx.h:4
-#, fuzzy
 msgid "Text Presets"
-msgstr "文字偏好設定"
+msgstr "文字前置設定"
 
 #: ../share/extensions/measure.inx.h:6
-#, fuzzy
 msgid "Text on Path"
-msgstr "路徑文字"
+msgstr "文字隨路徑變化"
 
 #: ../share/extensions/measure.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Offset (%)"
-msgstr "偏移 (px)："
+msgstr "偏移 (%)"
 
 #: ../share/extensions/measure.inx.h:9
-#, fuzzy
 msgid "Text anchor:"
-msgstr "文字錨點"
+msgstr "文字錨點："
 
 #: ../share/extensions/measure.inx.h:10
-#, fuzzy
 msgid "Fixed Text"
-msgstr "流動文字"
+msgstr "固定文字"
 
 #: ../share/extensions/measure.inx.h:11
-#, fuzzy
 msgid "Angle (°):"
-msgstr "X 角度："
+msgstr "角度 (°)："
 
 #: ../share/extensions/measure.inx.h:12
 msgid "Font size (px):"
@@ -35922,50 +35583,42 @@ msgid "Center of Mass"
 msgstr "質心"
 
 #: ../share/extensions/measure.inx.h:21
-#, fuzzy
 msgid "Text on Path, Start"
-msgstr "路徑文字"
+msgstr "文字隨路徑變化，起點"
 
 #: ../share/extensions/measure.inx.h:22
-#, fuzzy
 msgid "Text on Path, Middle"
-msgstr "路徑文字"
+msgstr "文字隨路徑變化，中間"
 
 #: ../share/extensions/measure.inx.h:23
-#, fuzzy
 msgid "Text on Path, End"
-msgstr "路徑文字"
+msgstr "文字隨路徑變化，終點"
 
 #: ../share/extensions/measure.inx.h:24
 msgid "Fixed Text, Start of Path"
-msgstr ""
+msgstr "固定文字，路徑起點"
 
 #: ../share/extensions/measure.inx.h:25
 msgid "Fixed Text, Center of BBox"
-msgstr ""
+msgstr "固定文字，邊界框中心"
 
 #: ../share/extensions/measure.inx.h:26
-#, fuzzy
 msgid "Fixed Text, Center of Mass"
-msgstr "質心"
+msgstr "固定文字，質心"
 
 #: ../share/extensions/measure.inx.h:28
-#, fuzzy
 msgid "Center"
 msgstr "中心點"
 
 #: ../share/extensions/measure.inx.h:30
-#, fuzzy
 msgid "Start of Path"
-msgstr "起始路徑："
+msgstr "路徑起點"
 
 #: ../share/extensions/measure.inx.h:31
-#, fuzzy
 msgid "Center of BBox"
-msgstr "質心"
+msgstr "邊界框中心"
 
 #: ../share/extensions/measure.inx.h:32
-#, fuzzy
 msgid "Center of Mass"
 msgstr "質心"
 
@@ -36043,174 +35696,151 @@ msgstr "檢視下一個字形"
 
 #: ../share/extensions/nicechart.inx.h:1
 msgid "NiceCharts"
-msgstr ""
+msgstr "美觀圖表"
 
 #: ../share/extensions/nicechart.inx.h:2
-#, fuzzy
 msgid "Data"
-msgstr "資料輸入 / 輸出"
+msgstr "資料"
 
 #: ../share/extensions/nicechart.inx.h:3
-#, fuzzy
 msgid "Data from file"
-msgstr "從檔案載入"
+msgstr "檔案資料"
 
 #: ../share/extensions/nicechart.inx.h:5
-#, fuzzy
 msgid "Delimiter:"
-msgstr "斜切限制："
+msgstr "欄位分隔字元："
 
 #: ../share/extensions/nicechart.inx.h:6
 msgid "Column that contains the keys:"
-msgstr ""
+msgstr "包含此鍵值的欄位："
 
 #: ../share/extensions/nicechart.inx.h:7
-#, fuzzy
 msgid "Column that contains the values:"
-msgstr "一個常數投票值"
+msgstr "包含此數值的欄位："
 
 #: ../share/extensions/nicechart.inx.h:8
 msgid "File encoding (e.g. utf-8):"
-msgstr ""
+msgstr "檔案編碼 (例如 utf-8)："
 
 #: ../share/extensions/nicechart.inx.h:9
 msgid "First line contains headings"
-msgstr ""
+msgstr "第一行包含檔頭"
 
 #: ../share/extensions/nicechart.inx.h:10
-#, fuzzy
 msgid "Direct input"
-msgstr "方向"
+msgstr "直接輸入"
 
 #: ../share/extensions/nicechart.inx.h:11
-#, fuzzy
 msgid "Data:"
-msgstr "資料輸入 / 輸出"
+msgstr "資料："
 
 #: ../share/extensions/nicechart.inx.h:12
-#, fuzzy
 msgid "Enter the full path to a CSV file:"
-msgstr "日誌檔的完整路徑："
+msgstr "輸入 CSV 檔案的完整路徑："
 
 #: ../share/extensions/nicechart.inx.h:13
 msgid "Type in comma separated values:"
-msgstr ""
+msgstr "輸入以逗號分隔開的數值組："
 
 #: ../share/extensions/nicechart.inx.h:14
 msgid "(format like this: apples:3,bananas:5)"
-msgstr ""
+msgstr "(格式像這樣：apples:3,bananas:5)"
 
 #: ../share/extensions/nicechart.inx.h:15
-#, fuzzy
 msgid "Labels"
-msgstr "標籤："
+msgstr "標籤"
 
 #: ../share/extensions/nicechart.inx.h:16
-#, fuzzy
 msgid "Font:"
-msgstr "字型"
+msgstr "字型："
 
 #: ../share/extensions/nicechart.inx.h:18
-#, fuzzy
 msgid "Font color:"
-msgstr "月份顏色："
+msgstr "字型顏色："
 
 #: ../share/extensions/nicechart.inx.h:19
 msgid "Charts"
-msgstr ""
+msgstr "圖表"
 
 #: ../share/extensions/nicechart.inx.h:20
-#, fuzzy
 msgid "Draw horizontally"
-msgstr "水平移動"
+msgstr "水平繪製"
 
 #: ../share/extensions/nicechart.inx.h:21
-#, fuzzy
 msgid "Bar length:"
-msgstr "主要長度(_J)："
+msgstr "長條長度："
 
 #: ../share/extensions/nicechart.inx.h:22
-#, fuzzy
 msgid "Bar width:"
-msgstr "模糊寬度："
+msgstr "長條寬度："
 
 #: ../share/extensions/nicechart.inx.h:23
-#, fuzzy
 msgid "Pie radius:"
-msgstr "內徑："
+msgstr "圓餅半徑："
 
 #: ../share/extensions/nicechart.inx.h:24
-#, fuzzy
 msgid "Bar offset:"
-msgstr "開始偏移"
+msgstr "長條偏移："
 
 #: ../share/extensions/nicechart.inx.h:26
 msgid "Offset between chart and labels:"
-msgstr ""
+msgstr "圖表和標籤之間的偏移："
 
 #: ../share/extensions/nicechart.inx.h:27
 msgid "Offset between chart and chart title:"
-msgstr ""
+msgstr "圖表和圖表標題之間的偏移："
 
 #: ../share/extensions/nicechart.inx.h:28
 msgid "Work around aliasing effects (creates overlapping segments)"
-msgstr ""
+msgstr "避開圖形失真效果措施 (建立重疊線段)"
 
 #: ../share/extensions/nicechart.inx.h:29
-#, fuzzy
 msgid "Color scheme:"
-msgstr "顏色："
+msgstr "配色："
 
 #: ../share/extensions/nicechart.inx.h:30
-#, fuzzy
 msgid "Custom colors:"
-msgstr "色彩凹凸"
+msgstr "自訂顏色："
 
 #: ../share/extensions/nicechart.inx.h:31
-#, fuzzy
 msgid "Reverse color scheme"
-msgstr "移除邊框顏色"
+msgstr "反轉配色"
 
 #: ../share/extensions/nicechart.inx.h:32
-#, fuzzy
 msgid "Drop shadow"
 msgstr "下落式陰影"
 
 #: ../share/extensions/nicechart.inx.h:37
 msgid "SAP"
-msgstr ""
+msgstr "SAP"
 
 #: ../share/extensions/nicechart.inx.h:38
-#, fuzzy
 msgid "Values"
 msgstr "數值"
 
 #: ../share/extensions/nicechart.inx.h:39
-#, fuzzy
 msgid "Show values"
-msgstr "顯示控制柄"
+msgstr "顯示數值"
 
 #: ../share/extensions/nicechart.inx.h:40
-#, fuzzy
 msgid "Chart type:"
-msgstr "陰影類型："
+msgstr "圖表類型："
 
 #: ../share/extensions/nicechart.inx.h:41
-#, fuzzy
 msgid "Bar chart"
-msgstr "條碼高度："
+msgstr "長條圖"
 
 #: ../share/extensions/nicechart.inx.h:42
 msgid "Pie chart"
-msgstr ""
+msgstr "圓餅圖"
 
 #: ../share/extensions/nicechart.inx.h:43
 msgid "Pie chart (percentage)"
-msgstr ""
+msgstr "圓餅圖 (百分比)"
 
 #: ../share/extensions/nicechart.inx.h:44
 msgid "Stacked bar chart"
-msgstr ""
+msgstr "堆疊長條圖"
 
 #: ../share/extensions/param_curves.inx.h:1
 msgid "Parametric Curves"
@@ -36492,45 +36122,41 @@ msgid "The Baud rate of your serial connection (Default: 9600)"
 msgstr "你的序列連線鮑率 (預設:「9600」)"
 
 #: ../share/extensions/plotter.inx.h:8
-#, fuzzy
 msgid "Serial byte size:"
-msgstr "調色盤大小："
+msgstr "序列位元組大小："
 
 #: ../share/extensions/plotter.inx.h:10
 #, no-c-format
 msgid ""
 "The Byte size of your serial connection, 99% of all plotters use the default "
 "setting (Default: 8 Bits)"
-msgstr ""
+msgstr "你的序列連線位元組大小，99% 的繪圖機使用預設設定值 (預設：8 位元)"
 
 #: ../share/extensions/plotter.inx.h:11
-#, fuzzy
 msgid "Serial stop bits:"
-msgstr "序列連接埠："
+msgstr "序列停止位元："
 
 #: ../share/extensions/plotter.inx.h:13
 #, no-c-format
 msgid ""
 "The Stop bits of your serial connection, 99% of all plotters use the default "
 "setting (Default: 1 Bit)"
-msgstr ""
+msgstr "你的序列連線停止位元，99% 的繪圖機使用預設設定值 (預設：1 位元)"
 
 #: ../share/extensions/plotter.inx.h:14
-#, fuzzy
 msgid "Serial parity:"
-msgstr "序列連接埠："
+msgstr "序列奇偶性："
 
 #: ../share/extensions/plotter.inx.h:16
 #, no-c-format
 msgid ""
 "The Parity of your serial connection, 99% of all plotters use the default "
 "setting (Default: None)"
-msgstr ""
+msgstr "你的序列連線奇偶性，99% 的繪圖機使用預設設定值 (預設：無)"
 
 #: ../share/extensions/plotter.inx.h:17
-#, fuzzy
 msgid "Serial flow control:"
-msgstr "錄放控制："
+msgstr "序列串流控制："
 
 #: ../share/extensions/plotter.inx.h:18
 msgid ""
@@ -36567,9 +36193,8 @@ msgid "DMPL"
 msgstr "DMPL"
 
 #: ../share/extensions/plotter.inx.h:27
-#, fuzzy
 msgid "KNK Plotter (HPGL variant)"
-msgstr "KNK Zing (HPGL 衍生型)"
+msgstr "KNK 繪圖機 (HPGL 衍生型)"
 
 #: ../share/extensions/plotter.inx.h:28
 msgid ""
@@ -37064,29 +36689,24 @@ msgid "Restack"
 msgstr "重新堆疊"
 
 #: ../share/extensions/restack.inx.h:2
-#, fuzzy
 msgid "Based on Position"
-msgstr "修改節點位置"
+msgstr "依照位置"
 
 #: ../share/extensions/restack.inx.h:3
-#, fuzzy
 msgid "Presets"
-msgstr "前置設定："
+msgstr "前置設定"
 
 #: ../share/extensions/restack.inx.h:6
-#, fuzzy
 msgid "Horizontal:"
-msgstr "水平(_H)："
+msgstr "水平："
 
 #: ../share/extensions/restack.inx.h:7
-#, fuzzy
 msgid "Vertical:"
-msgstr "垂直(_V)："
+msgstr "垂直："
 
 #: ../share/extensions/restack.inx.h:8
-#, fuzzy
 msgid "Restack Direction"
-msgstr "重新堆疊方向："
+msgstr "重新堆疊方向"
 
 #: ../share/extensions/restack.inx.h:9
 msgid "Left to Right (0)"
@@ -37113,9 +36733,8 @@ msgid "Radial Inward"
 msgstr "向心"
 
 #: ../share/extensions/restack.inx.h:15
-#, fuzzy
 msgid "Object Reference Point"
-msgstr "導入-導出參考點"
+msgstr "物件參考點"
 
 #: ../share/extensions/restack.inx.h:17
 #: ../share/extensions/text_extract.inx.h:9
@@ -37136,23 +36755,20 @@ msgid "Bottom"
 msgstr "底端"
 
 #: ../share/extensions/restack.inx.h:21
-#, fuzzy
 msgid "Based on Z-Order"
-msgstr "邊框隆起"
+msgstr "依據排列順序"
 
 #: ../share/extensions/restack.inx.h:22
-#, fuzzy
 msgid "Restack Mode"
-msgstr "重新堆疊"
+msgstr "重新堆疊模式"
 
 #: ../share/extensions/restack.inx.h:23
-#, fuzzy
 msgid "Reverse Z-Order"
-msgstr "反轉漸層"
+msgstr "反轉排列順序"
 
 #: ../share/extensions/restack.inx.h:24
 msgid "Shuffle Z-Order"
-msgstr ""
+msgstr "隨機排列順序"
 
 #: ../share/extensions/restack.inx.h:26
 msgid ""
@@ -37161,6 +36777,9 @@ msgid ""
 "objects inside a single selected group, or a selection of multiple objects "
 "on the current drawing level (layer or group)."
 msgstr ""
+"此擴充功能會依照物件畫布上的位置或目前的排列順序變更物件的排列順序。選取：此"
+"擴充功能會重新排列單一選取群組內的物件，或目前圖畫層級上的多個物件選取項目 "
+"(圖層或群組)。"
 
 #: ../share/extensions/restack.inx.h:27
 #: ../share/extensions/ungroup_deep.inx.h:6
@@ -37180,13 +36799,12 @@ msgid "Minimum size:"
 msgstr "最小尺寸："
 
 #: ../share/extensions/rtree.inx.h:4
-#, fuzzy
 msgid "Omit redundant segments"
-msgstr "拉直線段"
+msgstr "省略多餘線段"
 
 #: ../share/extensions/rtree.inx.h:5
 msgid "Lift pen for backward steps"
-msgstr ""
+msgstr "向後階段抬升畫筆"
 
 #: ../share/extensions/rubberstretch.inx.h:1
 msgid "Rubber Stretch"
@@ -37207,7 +36825,6 @@ msgid "Optimized SVG Output"
 msgstr "最佳化的 SVG 輸出"
 
 #: ../share/extensions/scour.inx.h:3
-#, fuzzy
 msgid "Number of significant digits for coordinates:"
 msgstr "坐標的有效數字位數："
 
@@ -37219,6 +36836,9 @@ msgid ""
 "\"3\" is specified, the coordinate 3.14159 is output as 3.14 while the "
 "coordinate 123.675 is output as 124."
 msgstr ""
+"指定坐標輸出的有效數字位數。注意有效數字不是小數位數，而是輸出的整體數字位"
+"數。例如若指定為 \"3\"，那麼坐標 3.14159 會輸出為 3.14 而坐標 123.675 則會輸"
+"出為 124。"
 
 #: ../share/extensions/scour.inx.h:5
 msgid "Shorten color values"
@@ -37228,7 +36848,7 @@ msgstr "縮短色彩值"
 msgid ""
 "Convert all color specifications to #RRGGBB (or #RGB where applicable) "
 "format."
-msgstr ""
+msgstr "轉換所有顏色規格為 #RRGGBB (或適當的 #RGB) 格式。"
 
 #: ../share/extensions/scour.inx.h:7
 msgid "Convert CSS attributes to XML attributes"
@@ -37238,18 +36858,17 @@ msgstr "將 CSS 屬性轉換成 XML 屬性"
 msgid ""
 "Convert styles from style tags and inline style=\"\" declarations into XML "
 "attributes."
-msgstr ""
+msgstr "將樣式從樣式標籤和行內樣式=\"\" 宣告轉換成 XML 屬性。"
 
 #: ../share/extensions/scour.inx.h:9
-#, fuzzy
 msgid "Collapse groups"
-msgstr "全部折疊"
+msgstr "折疊群組"
 
 #: ../share/extensions/scour.inx.h:10
 msgid ""
 "Remove useless groups, promoting their contents up one level. Requires "
 "\"Remove unused IDs\" to be set."
-msgstr ""
+msgstr "移除無用的群組，並將其內容往上移一層。須要設定「移除沒用到的識別碼」。"
 
 #: ../share/extensions/scour.inx.h:11
 msgid "Create groups for similar attributes"
@@ -37259,7 +36878,7 @@ msgstr "建立相似屬性的群組"
 msgid ""
 "Create groups for runs of elements having at least one attribute in common "
 "(e.g. fill-color, stroke-opacity, ...)."
-msgstr ""
+msgstr "為執行元件建立群組並至少有一條共通屬性 (例如填色、邊框不透明度...)。"
 
 #: ../share/extensions/scour.inx.h:13
 msgid "Keep editor data"
@@ -37270,14 +36889,16 @@ msgid ""
 "Don't remove editor-specific elements and attributes. Currently supported: "
 "Inkscape, Sodipodi and Adobe Illustrator."
 msgstr ""
+"不要移除編輯程式專屬元件和屬性。目前支援：Inkscape、Sodipodi 和 Adobe "
+"Illustrator。"
 
 #: ../share/extensions/scour.inx.h:15
 msgid "Keep unreferenced definitions"
-msgstr ""
+msgstr "保留未被引用的定義"
 
 #: ../share/extensions/scour.inx.h:16
 msgid "Keep element definitions that are not currently used in the SVG"
-msgstr ""
+msgstr "保留目前 SVG 中沒有用到的元件定義"
 
 #: ../share/extensions/scour.inx.h:17
 msgid "Work around renderer bugs"
@@ -37288,11 +36909,12 @@ msgid ""
 "Works around some common renderer bugs (mainly libRSVG) at the cost of a "
 "slightly larger SVG file."
 msgstr ""
+"以稍微較大的 SVG 檔案為代價避開某些圖形繪算引擎共通的程式錯誤 (主要是 "
+"libRSVG)。"
 
 #: ../share/extensions/scour.inx.h:20
-#, fuzzy
 msgid "Remove the XML declaration"
-msgstr "移除此 xml 宣告"
+msgstr "移除 xml 宣告"
 
 #: ../share/extensions/scour.inx.h:21
 msgid ""
@@ -37300,6 +36922,8 @@ msgid ""
 "especially if special characters are used in the document) from the file "
 "header."
 msgstr ""
+"從檔案表頭移除 XML 宣告 (此宣告是非必要的，但應該要提供宣告資訊，尤其如果文件"
+"有使用到特殊字元)。"
 
 #: ../share/extensions/scour.inx.h:22
 msgid "Remove metadata"
@@ -37311,6 +36935,8 @@ msgid ""
 "include license and author information, alternate versions for non-SVG-"
 "enabled browsers, etc."
 msgstr ""
+"移除中繼資料標籤及其包含的資訊，該標籤可能有授權和作者資訊、不支援 SVG 瀏覽器"
+"的替代版本等等。"
 
 #: ../share/extensions/scour.inx.h:24
 msgid "Remove comments"
@@ -37318,10 +36944,9 @@ msgstr "移除註解"
 
 #: ../share/extensions/scour.inx.h:25
 msgid "Remove all XML comments from output."
-msgstr ""
+msgstr "從輸出中移除全部 XML 註解。"
 
 #: ../share/extensions/scour.inx.h:26
-#, fuzzy
 msgid "Embed raster images"
 msgstr "嵌入點陣圖"
 
@@ -37329,7 +36954,7 @@ msgstr "嵌入點陣圖"
 msgid ""
 "Resolve external references to raster images and embed them as Base64-"
 "encoded data URLs."
-msgstr ""
+msgstr "解析外部點陣圖引用並將圖片內嵌為 Base64 編碼資料網址。"
 
 #: ../share/extensions/scour.inx.h:28
 msgid "Enable viewboxing"
@@ -37341,10 +36966,12 @@ msgid ""
 "Set page size to 100%/100% (full width and height of the display area) and "
 "introduce a viewBox specifying the drawings dimensions."
 msgstr ""
+"將頁面大小設定為 100%/100% (顯示區域的完整寬度和高度) 並引入檢視框指定的圖畫"
+"尺寸。"
 
 #: ../share/extensions/scour.inx.h:31
 msgid "Format output with line-breaks and indentation"
-msgstr ""
+msgstr "用斷行和縮排格式化輸出"
 
 #: ../share/extensions/scour.inx.h:32
 msgid ""
@@ -37352,11 +36979,12 @@ msgid ""
 "to hand-edit the SVG file you can disable this option to bring down the file "
 "size even more at the cost of clarity."
 msgstr ""
+"產生美觀的輸出格式 (包含斷行)。如果你不打算手動編輯 SVG 檔案，可以停用此選項"
+"以減小檔案大小及降低可讀性。"
 
 #: ../share/extensions/scour.inx.h:33
-#, fuzzy
 msgid "Indentation characters:"
-msgstr "萬國碼字元："
+msgstr "縮排字元："
 
 #: ../share/extensions/scour.inx.h:34
 msgid ""
@@ -37364,21 +36992,24 @@ msgid ""
 "Specify \"None\" to disable indentation. This option has no effect if "
 "\"Format output with line-breaks and indentation\" is disabled."
 msgstr ""
+"用於輸出中每層巢狀結構的縮排類型。設定「無」會停用縮排。如果「用斷行和縮排格"
+"式化輸出」已停用則此選項不會有任何作用。"
 
 #: ../share/extensions/scour.inx.h:35
-#, fuzzy
 msgid "Depth of indentation:"
-msgstr "深度函數："
+msgstr "縮排深度："
 
 #: ../share/extensions/scour.inx.h:36
 msgid ""
 "The depth of the chosen type of indentation. E.g. if you choose \"2\" every "
 "nesting level in the output will be indented by two additional spaces/tabs."
 msgstr ""
+"選擇縮排類型的深度。例如你若選擇 \"2\" 則輸出中每層巢狀結構會用兩個附加空格/"
+"定位字元進行縮排。"
 
 #: ../share/extensions/scour.inx.h:37
 msgid "Strip the \"xml:space\" attribute from the root SVG element"
-msgstr ""
+msgstr "從根層 SVG 元件移除 \"xml:space\" 屬性"
 
 #: ../share/extensions/scour.inx.h:38
 msgid ""
@@ -37386,16 +37017,16 @@ msgid ""
 "root SVG element which instructs the SVG editor not to change whitespace in "
 "the document at all (and therefore overrides the options above)."
 msgstr ""
+"若輸入檔案在根層 SVG 元件中給定 \"xml:space='preserve'\" 會非常有用，這會指"
+"示 SVG 編輯程式不要變更文件中的空白 (因此會覆蓋上面的選項)。"
 
 #: ../share/extensions/scour.inx.h:39
-#, fuzzy
 msgid "Document options"
-msgstr "文件屬性(_D)..."
+msgstr "文件選項"
 
 #: ../share/extensions/scour.inx.h:40
-#, fuzzy
 msgid "Pretty-printing"
-msgstr "油畫"
+msgstr "美觀列印"
 
 #: ../share/extensions/scour.inx.h:41
 msgid "Space"
@@ -37411,20 +37042,18 @@ msgid "None"
 msgstr "無"
 
 #: ../share/extensions/scour.inx.h:44
-#, fuzzy
 msgid "IDs"
-msgstr "ID"
+msgstr "識別碼"
 
 #: ../share/extensions/scour.inx.h:45
-#, fuzzy
 msgid "Remove unused IDs"
-msgstr "移除紅色"
+msgstr "移除沒用到的識別碼"
 
 #: ../share/extensions/scour.inx.h:46
 msgid ""
 "Remove all unreferenced IDs from elements. Those are not needed for "
 "rendering."
-msgstr ""
+msgstr "從元件中移除所有沒被引用的識別碼。圖形繪算時不需要這些識別碼。"
 
 #: ../share/extensions/scour.inx.h:47
 msgid "Shorten IDs"
@@ -37436,19 +37065,20 @@ msgid ""
 "shortest values to the most-referenced elements. For instance, "
 "\"linearGradient5621\" will become \"a\" if it is the most used element."
 msgstr ""
+"只使用小寫字母讓識別碼長度變短，且指定最短值給最多引用的元件。例"
+"如，\"linearGradient5621\" 若是最常被使用的元件會變成 \"a\"。"
 
 #: ../share/extensions/scour.inx.h:49
 msgid "Prefix shortened IDs with:"
-msgstr ""
+msgstr "用此字首縮短識別碼："
 
 #: ../share/extensions/scour.inx.h:50
 msgid "Prepend shortened IDs with the specified prefix."
-msgstr ""
+msgstr "以指定的字首來縮短識別碼。"
 
 #: ../share/extensions/scour.inx.h:51
-#, fuzzy
 msgid "Preserve manually created IDs not ending with digits"
-msgstr "保留手動建立非數字結尾的 ID 名稱"
+msgstr "保留手動建立且非數字結尾的識別碼"
 
 #: ../share/extensions/scour.inx.h:52
 msgid ""
@@ -37457,28 +37087,29 @@ msgid ""
 "preserved while numbered IDs (as they are generated by most SVG editors "
 "including Inkscape) will be removed/shortened."
 msgstr ""
+"當移除或縮短數字式識別碼 (這些識別碼由多數的 SVG 編輯程式產生，包括 "
+"Inkscape) 時，手動建立參考、標籤特定元件或群組的可描述識別碼 (例如 "
+"#arrowStart, #arrowEnd or #textLabels) 會被保留。"
 
 #: ../share/extensions/scour.inx.h:53
-#, fuzzy
 msgid "Preserve the following IDs:"
-msgstr ""
-"找到下列字型：\n"
-"%s"
+msgstr "保留下列識別碼："
 
 #: ../share/extensions/scour.inx.h:54
 msgid "A comma-separated list of IDs that are to be preserved."
-msgstr ""
+msgstr "要保留的識別碼，用逗號分隔開。"
 
 #: ../share/extensions/scour.inx.h:55
-#, fuzzy
 msgid "Preserve IDs starting with:"
-msgstr "保留以此開頭的 ID 名稱："
+msgstr "保留以此字首起始的識別碼："
 
 #: ../share/extensions/scour.inx.h:56
 msgid ""
 "Preserve all IDs that start with the specified prefix (e.g. specify \"flag\" "
 "to preserve \"flag-mx\", \"flag-pt\", etc.)."
 msgstr ""
+"保留所有給定字首起始的識別碼 (例如指定「flag」會保留「flag-mx」、「flag-pt」"
+"等等)。"
 
 #: ../share/extensions/scour.inx.h:57
 msgid "Optimized SVG (*.svg)"
@@ -37494,18 +37125,15 @@ msgstr "無縫圖樣"
 
 #: ../share/extensions/seamless_pattern.inx.h:2
 #: ../share/extensions/seamless_pattern_procedural.inx.h:2
-#, fuzzy
 msgid "Custom Width (px):"
 msgstr "自訂寬度 (px)："
 
 #: ../share/extensions/seamless_pattern.inx.h:3
 #: ../share/extensions/seamless_pattern_procedural.inx.h:3
-#, fuzzy
 msgid "Custom Height (px):"
 msgstr "自訂高度 (px)："
 
 #: ../share/extensions/seamless_pattern.inx.h:4
-#, fuzzy
 msgid "This extension overwrites the current document"
 msgstr "此擴充功能會覆寫目前的文件"
 
@@ -38004,28 +37632,24 @@ msgid "From Side c and Angles a, b"
 msgstr "從邊 c 和角 a、b"
 
 #: ../share/extensions/ungroup_deep.inx.h:1
-#, fuzzy
 msgid "Deep Ungroup"
-msgstr "解散群組"
+msgstr "深層解散群組"
 
 #: ../share/extensions/ungroup_deep.inx.h:2
-#, fuzzy
 msgid "Ungroup all groups in the selected object."
-msgstr "用選取的務件作為基準建立裁剪群組"
+msgstr "解散選取物件中的所有群組。"
 
 #: ../share/extensions/ungroup_deep.inx.h:3
-#, fuzzy
 msgid "Starting Depth"
-msgstr "起始路徑："
+msgstr "起始深度"
 
 #: ../share/extensions/ungroup_deep.inx.h:4
-#, fuzzy
 msgid "Stopping Depth (from top)"
-msgstr "從選取區移除剪裁路徑"
+msgstr "停止深度 (從頂部)"
 
 #: ../share/extensions/ungroup_deep.inx.h:5
 msgid "Depth to Keep (from bottom)"
-msgstr ""
+msgstr "要保留的深度 (從底部)"
 
 #: ../share/extensions/voronoi2svg.inx.h:1
 msgid "Voronoi Diagram"
@@ -38044,9 +37668,8 @@ msgid "Show the bounding box"
 msgstr "顯示邊界框"
 
 #: ../share/extensions/voronoi2svg.inx.h:6
-#, fuzzy
 msgid "Triangles color"
-msgstr "外三角"
+msgstr "三角形顏色"
 
 #: ../share/extensions/voronoi2svg.inx.h:7
 msgid "Delaunay Triangulation"
@@ -38065,22 +37688,20 @@ msgid "Automatic from selected objects"
 msgstr "從選取的物件自動化"
 
 #: ../share/extensions/voronoi2svg.inx.h:12
-#, fuzzy
 msgid "Options for Delaunay Triangulation"
-msgstr "德洛涅三角剖分"
+msgstr "德洛涅三角剖分選項"
 
 #: ../share/extensions/voronoi2svg.inx.h:13
 msgid "Default (Stroke black and no fill)"
-msgstr ""
+msgstr "預設 (黑色邊框且無填色)"
 
 #: ../share/extensions/voronoi2svg.inx.h:14
-#, fuzzy
 msgid "Triangles with item color"
-msgstr "變更色票顏色"
+msgstr "項目顏色的三角形"
 
 #: ../share/extensions/voronoi2svg.inx.h:15
 msgid "Triangles with item color (random on apply)"
-msgstr ""
+msgstr "項目顏色的三角形 (套用時隨機變化)"
 
 #: ../share/extensions/voronoi2svg.inx.h:17
 msgid ""
@@ -38195,8 +37816,7 @@ msgstr "在所有其他裡將第一次選擇設定為屬性"
 msgid ""
 "This effect adds a feature visible (or usable) only on a SVG enabled web "
 "browser (like Firefox)."
-msgstr ""
-"這個特效增加的功能只可見 (或可用) 於支援 SVG 的網頁瀏覽器 (如 firefox)。"
+msgstr "這個特效增加的功能只可見 (或可用) 於支援 SVG 的網頁瀏覽器 (如 firefox)。"
 
 #: ../share/extensions/web-set-att.inx.h:27
 msgid ""
@@ -38248,8 +37868,7 @@ msgstr "第一個選擇傳輸到全部其他"
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when an event occurs."
-msgstr ""
-"當一個事件發生時，這個特效傳輸一個或多個屬性從第一個選擇的元件到第二個。"
+msgstr "當一個事件發生時，這個特效傳輸一個或多個屬性從第一個選擇的元件到第二個。"
 
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid ""
@@ -38505,17 +38124,53 @@ msgstr "用於美工圖形的流行圖形檔案格式"
 msgid "XAML Input"
 msgstr "XAML 輸入"
 
-#~ msgid ""
-#~ "Select <b>exactly 2 paths</b> to perform difference, division, or path "
-#~ "cut."
-#~ msgstr "請選擇<b>剛好兩條路徑</b>來執行差集﹑分割或剪切路徑。"
+#~ msgid "Vertical Page Center"
+#~ msgstr "垂直頁面中心"
 
-#~ msgid ""
-#~ "The <b>feTile</b> filter primitive tiles a region with its input graphic"
-#~ msgstr "此<b>鋪排 (feTile) </b>濾鏡基元用其輸入的圖形鋪排成一個區域"
+#~ msgid "Horizontal Page Center"
+#~ msgstr "水平頁面中心"
 
-#~ msgid "Miter _limit:"
-#~ msgstr "斜切限制："
+#~ msgid "Free from reflection line"
+#~ msgstr "從反射線起始的任意位置"
+
+#~ msgid "X from middle knot"
+#~ msgstr "從中間環結起始的 X"
+
+#~ msgid "Y from middle knot"
+#~ msgstr "從中間環結起始的 Y"
+
+#~ msgid "Symmetry move mode"
+#~ msgstr "對稱移動模式"
+
+#~ msgid "Discard original path?"
+#~ msgstr "丟棄原本路徑？"
+
+#~ msgid "Check this to only keep the mirrored part of the path"
+#~ msgstr "勾選這個以只保留路徑的鏡像部份"
+
+#~ msgid "Fuse paths"
+#~ msgstr "融合路徑"
+
+#~ msgid "Fuse original and the reflection into a single path"
+#~ msgstr "將原始和反射融合成單一路徑"
+
+#~ msgid "Opposite fuse"
+#~ msgstr "相反融合"
+
+#~ msgid "Picks the other side of the mirror as the original"
+#~ msgstr "選擇鏡像另一側作為原始路徑"
+
+#~ msgid "Start mirror line"
+#~ msgstr "起始鏡像線"
+
+#~ msgid "End mirror line"
+#~ msgstr "結束鏡像線"
+
+#~ msgid "Adjust the center"
+#~ msgstr "調整中心"
+
+#~ msgid "Add Stored to measure tool"
+#~ msgstr "加入儲存項目到測量工具"
 
 #~ msgid ""
 #~ "The selected object is not a path.\n"
@@ -38525,9 +38180,205 @@ msgstr "XAML 輸入"
 #~ "試著使用「路徑->物件轉成路徑」功能。"
 
 #~ msgid ""
+#~ "pySerial is not installed.\n"
+#~ "\n"
+#~ "1. Download pySerial here (not the \".exe\"!): http://pypi.python.org/"
+#~ "pypi/pyserial\n"
+#~ "2. Extract the \"serial\" subfolder from the zip to the following folder: "
+#~ "C:\\[Program files]\\inkscape\\python\\Lib\\\n"
+#~ "3. Restart Inkscape."
+#~ msgstr ""
+#~ "沒有安裝 pySerial。\n"
+#~ "\n"
+#~ "1. 從這裡 http://pypi.python.org/pypi/pyserial 下載 pySerial (並非下載「."
+#~ "exe.」！)\n"
+#~ "2. 從 zip 檔案解壓縮 \"serial\" 子資料夾到：C:\\[Program files]\\inkscape"
+#~ "\\python\\Lib\\\n"
+#~ "3. 重新啟動 Inkscape。"
+
+#~ msgid "Use normal distribution"
+#~ msgstr "使用正常分布"
+
+#~ msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
+#~ msgstr "PS+LaTeX：省略 PS 裡的文字，並建立 LaTeX 檔"
+
+#~ msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
+#~ msgstr "EPS+LaTeX：省略 EPS 裡的文字，並建立 LaTeX 檔"
+
+#~ msgid "import via Poppler"
+#~ msgstr "用 Poppler 匯入"
+
+#~ msgid "Text handling:"
+#~ msgstr "文字處理："
+
+#~ msgid "Import text as text"
+#~ msgstr "將文字匯入成文字"
+
+#~ msgid "Boolops"
+#~ msgstr "布林運算"
+
+#~ msgid "Ignore cusp nodes"
+#~ msgstr "忽略尖銳節點"
+
+#~ msgid "Change ignoring cusp nodes"
+#~ msgstr "改變忽略的尖銳節點"
+
+#~ msgid "Show helper paths"
+#~ msgstr "顯示輔助路徑"
+
+#~ msgid "Leaned"
+#~ msgstr "傾斜"
+
+#~ msgid "Start path lean"
+#~ msgstr "起始路徑傾斜"
+
+#~ msgid "End path lean"
+#~ msgstr "結束路徑傾斜"
+
+#~ msgid "Control handle 0 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 0 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 1 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 1 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 2 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 2 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 3 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 3 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 4 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 4 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 5 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 5 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 6 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 6 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 7 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 7 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 8x9 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 8x9 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 10x11 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 10x11 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 12 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 12 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 13 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 13 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 14 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 14 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 15 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 15 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 16 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 16 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 17 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 16 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 18 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 16 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 19 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 16 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 20x21 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 20x21 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 22x23 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 22x23 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 24x26 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 24x26 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 25x27 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 25x27 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 28x30 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 28x30 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Control handle 29x31 - Ctrl+Alt+Click to reset"
+#~ msgstr "控制柄 29x31 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Top Left - Ctrl+Alt+Click to reset"
+#~ msgstr "左上 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Top Right - Ctrl+Alt+Click to reset"
+#~ msgstr "右上 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Down Left - Ctrl+Alt+Click to reset"
+#~ msgstr "左下 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "Down Right - Ctrl+Alt+Click to reset"
+#~ msgstr "右下 - Ctrl+Alt+滑鼠點擊可重設"
+
+#~ msgid "<b>Roughen unit</b>"
+#~ msgstr "<b>粗糙化單位</b>"
+
+#~ msgid "Helper nodes"
+#~ msgstr "輔助標示節點"
+
+#~ msgid "Show helper nodes"
+#~ msgstr "顯示輔助標示節點"
+
+#~ msgid "Helper handles"
+#~ msgstr "輔助標示控制點"
+
+#~ msgid "Show helper handles"
+#~ msgstr "顯示輔助標示控制點"
+
+#~ msgid ""
+#~ "Select <b>exactly 2 paths</b> to perform difference, division, or path "
+#~ "cut."
+#~ msgstr "請選擇<b>剛好兩條路徑</b>來執行差集﹑分割或剪切路徑。"
+
+#~ msgid "Default _units:"
+#~ msgstr "預設單位(_U)："
+
+#~ msgid ""
+#~ "The <b>feTile</b> filter primitive tiles a region with its input graphic"
+#~ msgstr "此<b>鋪排 (feTile) </b>濾鏡基元用其輸入的圖形鋪排成一個區域"
+
+#~ msgid ""
+#~ "Always convert the text size units above into pixels (px) before saving "
+#~ "to file"
+#~ msgstr "儲存檔案前都將上面的文字大小單位轉換成像素 (px)"
+
+#~ msgid "_Delay (in ms):"
+#~ msgstr "延遲 (毫秒)(_D)："
+
+#~ msgid "Radius "
+#~ msgstr "半徑"
+
+#~ msgid "("
+#~ msgstr "("
+
+#~ msgid "_Templates..."
+#~ msgstr "範本(_T)..."
+
+#~ msgid "Miter _limit:"
+#~ msgstr "斜切限制："
+
+#~ msgid "You need to install the UniConvertor software.\n"
+#~ msgstr "你必須安裝 UniConvertor 軟體。\n"
+
+#~ msgid ""
 #~ "Converts to HSL, randomizes hue and/or saturation and/or lightness and "
 #~ "converts it back to RGB."
 #~ msgstr "轉換成 HSL，將色相、飽和度和 (或) 亮度隨機化並且轉換回 RGB。"
+
+#~ msgid "Use automatic scaling to size A4"
+#~ msgstr "自動縮放為 A4 尺寸"
+
+#~ msgid "http://wiki.inkscape.org/wiki/index.php/FAQ"
+#~ msgstr "http://wiki.inkscape.org/wiki/index.php/FAQ"
 
 #~ msgid "Text Orientation: "
 #~ msgstr "文字方向："
@@ -38542,9 +38393,6 @@ msgstr "XAML 輸入"
 #~ msgctxt "Flow control"
 #~ msgid "None"
 #~ msgstr "無"
-
-#~ msgid "Use normal distribution"
-#~ msgstr "使用正常分布"
 
 #~ msgid "Arbitrary Angle"
 #~ msgstr "任意角度"
@@ -38660,104 +38508,6 @@ msgstr "XAML 輸入"
 #~ "    * 保留某字首開頭的識別名稱：正常情況下，最佳化的 SVG 輸出會移除全部沒"
 #~ "用到的識別名稱，但如果想要保留的識別名稱都以相同字首開頭 (例如 #flag-mx、"
 #~ "#flag-pt)，可以使用此選項。"
-
-#~ msgid "import via Poppler"
-#~ msgstr "用 Poppler 匯入"
-
-#~ msgid "Text handling:"
-#~ msgstr "文字處理："
-
-#~ msgid "Import text as text"
-#~ msgstr "將文字匯入成文字"
-
-#~ msgid "Boolops"
-#~ msgstr "布林運算"
-
-#~ msgid "Ignore cusp nodes"
-#~ msgstr "忽略尖銳節點"
-
-#~ msgid "Change ignoring cusp nodes"
-#~ msgstr "改變忽略的尖銳節點"
-
-#~ msgid "Show helper paths"
-#~ msgstr "顯示輔助路徑"
-
-#~ msgid "Leaned"
-#~ msgstr "傾斜"
-
-#~ msgid "Start path lean"
-#~ msgstr "起始路徑傾斜"
-
-#~ msgid "End path lean"
-#~ msgstr "結束路徑傾斜"
-
-#~ msgid "<b>Roughen unit</b>"
-#~ msgstr "<b>粗糙化單位</b>"
-
-#~ msgid "Helper nodes"
-#~ msgstr "輔助標示節點"
-
-#~ msgid "Show helper nodes"
-#~ msgstr "顯示輔助標示節點"
-
-#~ msgid "Helper handles"
-#~ msgstr "輔助標示控制點"
-
-#~ msgid "Show helper handles"
-#~ msgstr "顯示輔助標示控制點"
-
-#~ msgid "_Delay (in ms):"
-#~ msgstr "延遲 (毫秒)(_D)："
-
-#~ msgid "You need to install the UniConvertor software.\n"
-#~ msgstr "你必須安裝 UniConvertor 軟體。\n"
-
-#~ msgid "http://wiki.inkscape.org/wiki/index.php/FAQ"
-#~ msgstr "http://wiki.inkscape.org/wiki/index.php/FAQ"
-
-#~ msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
-#~ msgstr "PS+LaTeX：省略 PS 裡的文字，並建立 LaTeX 檔"
-
-#~ msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
-#~ msgstr "EPS+LaTeX：省略 EPS 裡的文字，並建立 LaTeX 檔"
-
-#~ msgid "Top Left - Ctrl+Alt+Click to reset"
-#~ msgstr "左上 - Ctrl+Alt+滑鼠點擊可重設"
-
-#~ msgid "Top Right - Ctrl+Alt+Click to reset"
-#~ msgstr "右上 - Ctrl+Alt+滑鼠點擊可重設"
-
-#~ msgid "Down Left - Ctrl+Alt+Click to reset"
-#~ msgstr "左下 - Ctrl+Alt+滑鼠點擊可重設"
-
-#~ msgid "Down Right - Ctrl+Alt+Click to reset"
-#~ msgstr "右下 - Ctrl+Alt+滑鼠點擊可重設"
-
-#~ msgid "_Templates..."
-#~ msgstr "範本(_T)..."
-
-#~ msgid "Custom Width (px.):"
-#~ msgstr "自訂寬度 (px)："
-
-#~ msgid "Custom Height (px.):"
-#~ msgstr "自訂高度 (px)："
-
-#~ msgid "Default _units:"
-#~ msgstr "預設單位(_U)："
-
-#~ msgid ""
-#~ "Always convert the text size units above into pixels (px) before saving "
-#~ "to file"
-#~ msgstr "儲存檔案前都將上面的文字大小單位轉換成像素 (px)"
-
-#~ msgid "Radius "
-#~ msgstr "半徑"
-
-#~ msgid "("
-#~ msgstr "("
-
-#~ msgid "Use automatic scaling to size A4"
-#~ msgstr "自動縮放為 A4 尺寸"
 
 #~ msgid "A4 Landscape Page"
 #~ msgstr "A4 橫頁"
@@ -39740,12 +39490,6 @@ msgstr "XAML 輸入"
 #~ msgid "Determines on which side the line or line segment is infinite."
 #~ msgstr "決定哪一邊的線或線段為無限長。"
 
-#~ msgid "Discard original path?"
-#~ msgstr "丟棄原本路徑？"
-
-#~ msgid "Check this to only keep the mirrored part of the path"
-#~ msgstr "勾選這個以只保留路徑的鏡像部份"
-
 #~ msgid "Reflection line:"
 #~ msgstr "反射線段："
 
@@ -39754,9 +39498,6 @@ msgstr "XAML 輸入"
 
 #~ msgid "Handle to control the distance of the offset from the curve"
 #~ msgstr "從曲線來操作控制偏移的距離"
-
-#~ msgid "Adjust the offset"
-#~ msgstr "調整偏移"
 
 #~ msgid "Specifies the left end of the parallel"
 #~ msgstr "指定此平行線的左邊端點"
@@ -40981,14 +40722,8 @@ msgstr "XAML 輸入"
 #~ msgid "Drop shadow under the cut-out of the shape"
 #~ msgstr "在形狀的鏤空部位下方加上下落式陰影"
 
-#~ msgid "Horizontal edge detect"
-#~ msgstr "偵測水平邊緣"
-
 #~ msgid "Detect horizontal color edges in object"
 #~ msgstr "偵測物件的水平顏色邊緣"
-
-#~ msgid "Vertical edge detect"
-#~ msgstr "偵測垂直邊緣"
 
 #~ msgid "Detect vertical color edges in object"
 #~ msgstr "偵測物件內的垂直顏色邊緣"
