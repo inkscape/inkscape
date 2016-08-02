@@ -532,6 +532,7 @@ EXTRA_DIST = \
 	packaging/win32/languages/Italian.nsh	\
 	packaging/win32/languages/Japanese.nsh	\
 	packaging/win32/languages/Polish.nsh	\
+	packaging/win32/languages/Portuguese.nsh \
 	packaging/win32/languages/PortugueseBR.nsh \
 	packaging/win32/languages/Romanian.nsh	\
 	packaging/win32/languages/Russian.nsh	\

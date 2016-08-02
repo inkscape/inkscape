@@ -130,6 +130,7 @@ ShowUninstDetails hide
 !insertmacro INKLANGFILE Italian
 !insertmacro INKLANGFILE Japanese
 !insertmacro INKLANGFILE Polish
+!insertmacro INKLANGFILE Portuguese
 !insertmacro INKLANGFILE PortugueseBR
 !insertmacro INKLANGFILE Romanian
 !insertmacro INKLANGFILE Russian
@@ -238,7 +239,7 @@ VIProductVersion ${VERSION_X.X.X.X}
 VIAddVersionKey ProductName Inkscape
 VIAddVersionKey Comments "Licensed under the GNU GPL"
 VIAddVersionKey CompanyName inkscape.org
-VIAddVersionKey LegalCopyright "© 2015 Inkscape"
+VIAddVersionKey LegalCopyright "© 2016 Inkscape"
 VIAddVersionKey FileDescription Inkscape
 VIAddVersionKey FileVersion ${VERSION_X.X.X.X}
 VIAddVersionKey ProductVersion ${VERSION_X.X.X.X}
@@ -664,7 +665,6 @@ Function .onInit ; initialise the installer {{{2
   !macroend
 
   ; No need for English to be detected as it's the default
-  !insertmacro LanguageAutoSelect PortugueseBrazil  1046
   !insertmacro LanguageAutoSelect Breton        1150
   !insertmacro LanguageAutoSelect Catalan       1027
   !insertmacro LanguageAutoSelect Czech         1029
@@ -680,6 +680,8 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro LanguageAutoSelect Italian       1040
   !insertmacro LanguageAutoSelect Japanese      1041
   !insertmacro LanguageAutoSelect Polish        1045
+  !insertmacro LanguageAutoSelect Portuguese    2070
+  !insertmacro LanguageAutoSelect PortugueseBrazil  1046
   !insertmacro LanguageAutoSelect Romanian      1048
   !insertmacro LanguageAutoSelect Russian       1049
   !insertmacro LanguageAutoSelect Slovak        1051
