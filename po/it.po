@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-17 15:11+0200\n"
+"POT-Creation-Date: 2016-07-17 21:43+0200\n"
 "PO-Revision-Date: 2016-06-10 15:31+0100\n"
 "Last-Translator: Firas Hanife <FirasHanife@gmail.com>\n"
 "Language-Team: \n"
@@ -959,7 +959,7 @@ msgstr "Rughe a bolle, opache"
 
 #: ../share/filters/filters.svg.h:352
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr "Come rughe a bolle ma con un'illuminazione diffusa anziché speculare"
+msgstr "Come Rughe a bolle ma con un'illuminazione diffusa anziché speculare"
 
 #: ../share/filters/filters.svg.h:354
 msgid "Blotting Paper"
@@ -5683,7 +5683,7 @@ msgstr "Soglia"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:40
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:46
-#: ../src/widgets/paintbucket-toolbar.cpp:147
+#: ../src/widgets/paintbucket-toolbar.cpp:148
 msgid "Threshold:"
 msgstr "Soglia:"
 
@@ -11730,7 +11730,7 @@ msgstr "Inverti"
 
 #: ../src/live_effects/parameter/originalpatharray.cpp:130
 #: ../src/live_effects/parameter/originalpatharray.cpp:315
-#: ../src/live_effects/parameter/path.cpp:510
+#: ../src/live_effects/parameter/path.cpp:508
 msgid "Link path parameter to path"
 msgstr "Lega il parametro del tracciato al parametro"
 
@@ -11780,7 +11780,7 @@ msgstr "Incolla tracciato"
 msgid "Link to path on clipboard"
 msgstr "Collega a tracciato negli appunti"
 
-#: ../src/live_effects/parameter/path.cpp:478
+#: ../src/live_effects/parameter/path.cpp:476
 msgid "Paste path parameter"
 msgstr "Incolla parametri tracciato"
 
@@ -12641,7 +12641,7 @@ msgstr "Seleziona un <b>gruppo</b> da dividere."
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Nessun gruppo</b> nella selezione da dividere."
 
-#: ../src/selection-chemistry.cpp:901 ../src/sp-item-group.cpp:550
+#: ../src/selection-chemistry.cpp:901 ../src/sp-item-group.cpp:652
 #: ../src/ui/dialog/objects.cpp:1916
 msgid "Ungroup"
 msgstr "Dividi"
@@ -13333,16 +13333,16 @@ msgstr "[riferimento errato]: %s"
 msgid "%d &#215; %d: %s"
 msgstr "%d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:307 ../src/ui/dialog/objects.cpp:1915
+#: ../src/sp-item-group.cpp:311 ../src/ui/dialog/objects.cpp:1915
 msgid "Group"
 msgstr "Gruppo"
 
-#: ../src/sp-item-group.cpp:313 ../src/sp-switch.cpp:69
+#: ../src/sp-item-group.cpp:317 ../src/sp-switch.cpp:69
 #, c-format
 msgid "of <b>%d</b> object"
 msgstr "di <b>%d</b> oggetto"
 
-#: ../src/sp-item-group.cpp:313 ../src/sp-switch.cpp:69
+#: ../src/sp-item-group.cpp:317 ../src/sp-switch.cpp:69
 #, c-format
 msgid "of <b>%d</b> objects"
 msgstr "di <b>%d</b> oggetti"
@@ -14476,7 +14476,7 @@ msgstr "Accumula la rotazione per ogni colonna"
 
 #: ../src/ui/dialog/clonetiler.cpp:551
 msgid "_Blur & opacity"
-msgstr "Sfocatura & _opacità"
+msgstr "Sfocatura & _Opacità"
 
 #: ../src/ui/dialog/clonetiler.cpp:560
 msgid "<b>Blur:</b>"
@@ -29735,7 +29735,7 @@ msgstr "Visualizza informazioni di misura per gli elementi selezionati"
 
 #. Add the units menu.
 #: ../src/widgets/lpe-toolbar.cpp:387 ../src/widgets/node-toolbar.cpp:613
-#: ../src/widgets/paintbucket-toolbar.cpp:167
+#: ../src/widgets/paintbucket-toolbar.cpp:168
 #: ../src/widgets/rect-toolbar.cpp:378 ../src/widgets/select-toolbar.cpp:530
 #: ../src/widgets/text-toolbar.cpp:1876
 msgid "Units"
@@ -30296,19 +30296,19 @@ msgstr "<b>Motivo</b>"
 msgid "<b>Swatch fill</b>"
 msgstr "<b>Campione</b>"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:134
+#: ../src/widgets/paintbucket-toolbar.cpp:135
 msgid "Fill by"
 msgstr "Riempi con"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:135
+#: ../src/widgets/paintbucket-toolbar.cpp:136
 msgid "Fill by:"
 msgstr "Riempi con:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:147
+#: ../src/widgets/paintbucket-toolbar.cpp:148
 msgid "Fill Threshold"
 msgstr "Soglia riempimento"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:148
+#: ../src/widgets/paintbucket-toolbar.cpp:149
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -30316,36 +30316,36 @@ msgstr ""
 "La differenza massima consentita tra il pixel cliccato e i pixel vicini da "
 "contare per il riempimento"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:175
+#: ../src/widgets/paintbucket-toolbar.cpp:176
 msgid "Grow/shrink by"
 msgstr "Intrudi/Estrudi di"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:175
+#: ../src/widgets/paintbucket-toolbar.cpp:176
 msgid "Grow/shrink by:"
 msgstr "Intrudi/Estrudi di:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:176
+#: ../src/widgets/paintbucket-toolbar.cpp:177
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Di quanto estrudere (valore positivo) o intrudere (valore negativo) il "
 "riempimento creato"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:199
+#: ../src/widgets/paintbucket-toolbar.cpp:200
 msgid "Close gaps"
 msgstr "Area cuscinetto"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:200
+#: ../src/widgets/paintbucket-toolbar.cpp:201
 msgid "Close gaps:"
 msgstr "Area cuscinetto:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:211
+#: ../src/widgets/paintbucket-toolbar.cpp:212
 #: ../src/widgets/pencil-toolbar.cpp:396 ../src/widgets/spiral-toolbar.cpp:285
 #: ../src/widgets/star-toolbar.cpp:564
 msgid "Defaults"
 msgstr "Predefiniti"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:212
+#: ../src/widgets/paintbucket-toolbar.cpp:213
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -31034,7 +31034,8 @@ msgstr "Scostamento %:"
 
 #: ../src/widgets/spray-toolbar.cpp:609
 msgid "Increase to segregate objects more (value in percent)"
-msgstr "Aumentare per separare maggiormente gli oggetti (valore in percentuale)"
+msgstr ""
+"Aumentare per separare maggiormente gli oggetti (valore in percentuale)"
 
 #: ../src/widgets/star-toolbar.cpp:103
 msgid "Star: Change number of corners"
@@ -32031,18 +32032,17 @@ msgstr "Seleziona un oggetto."
 msgid "Unable to process this object.  Try changing it into a path first."
 msgstr "Impossibile elaborare questo oggetto. Convertirlo prima in tracciato."
 
-#. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:179
-msgid "Side Length 'a' (px): "
-msgstr "Lunghezza lato 'a' (px): "
+msgid "Side Length 'a' ("
+msgstr "Lunghezza lato 'a' ("
 
 #: ../share/extensions/draw_from_triangle.py:180
-msgid "Side Length 'b' (px): "
-msgstr "Lunghezza lato 'b' (px): "
+msgid "Side Length 'b' ("
+msgstr "Lunghezza lato 'b' ("
 
 #: ../share/extensions/draw_from_triangle.py:181
-msgid "Side Length 'c' (px): "
-msgstr "Lunghezza lato 'c' (px): "
+msgid "Side Length 'c' ("
+msgstr "Lunghezza lato 'c' ("
 
 #: ../share/extensions/draw_from_triangle.py:182
 msgid "Angle 'A' (radians): "
@@ -32061,8 +32061,8 @@ msgid "Semiperimeter (px): "
 msgstr "Semiperimetro (px): "
 
 #: ../share/extensions/draw_from_triangle.py:186
-msgid "Area (px^2): "
-msgstr "Area (px^2): "
+msgid "Area ("
+msgstr "Area ("
 
 #: ../share/extensions/dxf_input.py:530
 #, python-format
@@ -39554,6 +39554,9 @@ msgstr "Un formato grafico molto diffuso per clipart"
 msgid "XAML Input"
 msgstr "Input XAML"
 
+#~ msgid "Area (px^2): "
+#~ msgstr "Area (px^2): "
+
 #~ msgid ""
 #~ "The selected object is not a path.\n"
 #~ "Try using the procedure Path->Object to Path."
@@ -40482,6 +40485,7 @@ msgstr "Input XAML"
 #, fuzzy
 #~ msgid "keep only visible layers"
 #~ msgstr "Stampa livelli invisibili"
+
 #, fuzzy
 #~ msgid "Horizontal guide each:"
 #~ msgstr "Guide orizzontali ogni"
