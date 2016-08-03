@@ -13,13 +13,16 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "filters/pointlight.h"
+
 #include <glib.h>
 
 #include "attributes.h"
 #include "document.h"
-#include "filters/pointlight.h"
 #include "filters/diffuselighting.h"
 #include "filters/specularlighting.h"
+#include "xml/node.h"
+#include "xml/repr.h"
 
 #define SP_MACROS_SILENT
 

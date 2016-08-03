@@ -1,16 +1,9 @@
-#ifndef SP_FEPOI"attributes.h"
-#include "svg/svg.h"
-#include "xml/repr.h"
-
-#include "merge.h"
-#include "mergenode.h"
-#include "display/nr-filter.h"
-#include "display/nr-filter-merge.h"NTLIGHT_H_SEEN
-#define SP_FEPOINTLIGHT_H_SEEN
-
 /** \file
  * SVG <filter> implementation, see sp-filter.cpp.
  */
+#ifndef SP_FEPOINTLIGHT_H_SEEN
+#define SP_FEPOINTLIGHT_H_SEEN
+
 /*
  * Authors:
  *   Hugo Rodrigues <haa.rodrigues@gmail.com>

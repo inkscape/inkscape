@@ -10,6 +10,9 @@
  */
 
 #include "loader.h"
+
+#include <gmodule.h>
+
 #include "system.h"
 #include <string.h>
 #include "dependency.h"

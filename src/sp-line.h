@@ -1,5 +1,4 @@
-#ifndef SEEN_SP_LINE_H * SPGradient, SPStop, SPLinearGradient, SPRadialGradient,
-
+#ifndef SEEN_SP_LINE_H 
 #define SEEN_SP_LINE_H
 
 /*
