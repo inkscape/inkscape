@@ -841,7 +841,7 @@ static
 void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Affine marker_transform,
                                           Geom::Scale stroke_scale, Geom::Affine transform,
                                           Inkscape::XML::Node *g_repr, Inkscape::XML::Document *xml_doc, SPDocument * doc,
-                                          SPDesktop *desktop )
+                                          SPDesktop *desktop , bool legacy)
 {
     SPMarker* marker = SP_MARKER (marker_object);
     SPItem* marker_item = sp_item_first_item_child(marker_object);
@@ -865,7 +865,9 @@ void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Affine 
         m_repr->setPosition(0);
         SPItem *marker_item = (SPItem *) doc->getObjectByRepr(m_repr);
         marker_item->doWriteTransform(m_repr, tr);
-        sp_item_path_outline(marker_item, desktop);
+        if (!legacy) {
+            sp_item_path_outline(marker_item, desktop, legacy);
+        }
     }
 }
 
@@ -1140,7 +1142,7 @@ Geom::PathVector* item_outline(SPItem const *item, bool bbox_only)
 }
 
 bool
-sp_item_path_outline(SPItem *item, SPDesktop *desktop)
+sp_item_path_outline(SPItem *item, SPDesktop *desktop, bool legacy)
 {
     bool did = false;
     Inkscape::Selection *selection = desktop->getSelection();
@@ -1150,10 +1152,13 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop)
     }
     SPGroup *group = dynamic_cast<SPGroup *>(item);
     if (group) {
+        if (legacy) {
+            return false;
+        }
         std::vector<SPItem*> const item_list = sp_item_group_item_list(group);
         for ( std::vector<SPItem*>::const_iterator iter=item_list.begin();iter!=item_list.end();++iter) {
             SPItem *subitem = *iter;
-            sp_item_path_outline(subitem, desktop);
+            sp_item_path_outline(subitem, desktop, legacy);
         }
     } else {
         if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item))
@@ -1375,23 +1380,24 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop)
                 g_repr->setPosition(pos > 0 ? pos : 0);
 
                 //The fill
-
                 Inkscape::XML::Node *fill = NULL;
-                gchar const *f_val = sp_repr_css_property(ncsf, "fill", NULL);
-                if (f_val) {
-                    fill = xml_doc->createElement("svg:path");
-                    sp_repr_css_change(fill, ncsf, "style");
+                if (!legacy) {
+                    gchar const *f_val = sp_repr_css_property(ncsf, "fill", NULL);
+                    if (f_val) {
+                        fill = xml_doc->createElement("svg:path");
+                        sp_repr_css_change(fill, ncsf, "style");
 
-                    sp_repr_css_attr_unref(ncsf);
+                        sp_repr_css_attr_unref(ncsf);
 
-                    gchar *str = sp_svg_write_path( pathv );
-                    fill->setAttribute("d", str);
-                    g_free(str);
+                        gchar *str = sp_svg_write_path( pathv );
+                        fill->setAttribute("d", str);
+                        g_free(str);
 
-                    if (mask)
-                        fill->setAttribute("mask", mask);
-                    if (clip_path)
-                        fill->setAttribute("clip-path", clip_path);
+                        if (mask)
+                            fill->setAttribute("mask", mask);
+                        if (clip_path)
+                            fill->setAttribute("clip-path", clip_path);
+                    }
                 }
                 // restore title, description, id, transform
                 g_repr->setAttribute("id", id);
@@ -1403,22 +1409,25 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop)
                 if (desc) {
                 	newitem->setDesc(desc);
                 }
-                
                 SPShape *shape = SP_SHAPE(item);
 
                 Geom::PathVector const & pathv = curve->get_pathvector();
                 Inkscape::XML::Node *markers = NULL;
                 if(SP_SHAPE(item)->hasMarkers ()) {
-                    markers = xml_doc->createElement("svg:g");
-                    g_repr->appendChild(markers);
-                    markers->setPosition(pos > 0 ? pos : 0);
+                    if (!legacy) {
+                        markers = xml_doc->createElement("svg:g");
+                        g_repr->appendChild(markers);
+                        markers->setPosition(pos > 0 ? pos : 0);
+                    } else {
+                        markers = g_repr;
+                    }
                     // START marker
                     for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
                         if ( SPObject *marker_obj = shape->_marker[i] ) {
                             Geom::Affine const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
                             sp_selected_path_outline_add_marker( marker_obj, m,
                                                                  Geom::Scale(i_style->stroke_width.computed), transform,
-                                                                 markers, xml_doc, doc, desktop );
+                                                                 markers, xml_doc, doc, desktop, legacy);
                         }
                     }
                     // MID marker
@@ -1433,7 +1442,7 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop)
                                 Geom::Affine const m (sp_shape_marker_get_transform_at_start(path_it->front()));
                                 sp_selected_path_outline_add_marker( midmarker_obj, m,
                                                                      Geom::Scale(i_style->stroke_width.computed), transform,
-                                                                     markers, xml_doc, doc, desktop );
+                                                                     markers, xml_doc, doc, desktop, legacy);
                             }
                             // MID position
                            if (path_it->size_default() > 1) {
@@ -1448,7 +1457,7 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop)
                                     Geom::Affine const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
                                     sp_selected_path_outline_add_marker( midmarker_obj, m,
                                                                          Geom::Scale(i_style->stroke_width.computed), transform,
-                                                                         markers, xml_doc, doc, desktop );
+                                                                         markers, xml_doc, doc, desktop, legacy);
 
                                     ++curve_it1;
                                     ++curve_it2;
@@ -1460,7 +1469,7 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop)
                                 Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
                                 sp_selected_path_outline_add_marker( midmarker_obj, m,
                                                                      Geom::Scale(i_style->stroke_width.computed), transform,
-                                                                     markers, xml_doc, doc, desktop );
+                                                                     markers, xml_doc, doc, desktop, legacy);
                             }
                         }
                     }
@@ -1479,18 +1488,20 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop)
                             Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
                             sp_selected_path_outline_add_marker( marker_obj, m,
                                                                  Geom::Scale(i_style->stroke_width.computed), transform,
-                                                                 markers, xml_doc, doc, desktop );
+                                                                 markers, xml_doc, doc, desktop, legacy);
                         }
                     }
-                    if (mask)
-                        markers->setAttribute("mask", mask);
-                    if (clip_path)
-                        markers->setAttribute("clip-path", clip_path);
+                    if (!legacy) {
+                        if (mask)
+                            markers->setAttribute("mask", mask);
+                        if (clip_path)
+                            markers->setAttribute("clip-path", clip_path);
+                    }
                 }
                 gchar const *paint_order = sp_repr_css_property(ncss, "paint-order", NULL);
                 SPIPaintOrder temp;
                 temp.read( paint_order );
-                if (temp.layer[0] != SP_CSS_PAINT_ORDER_NORMAL) {
+                if (temp.layer[0] != SP_CSS_PAINT_ORDER_NORMAL && !legacy) {
 
                     if (temp.layer[0] == SP_CSS_PAINT_ORDER_FILL) {
                         if (temp.layer[1] == SP_CSS_PAINT_ORDER_STROKE) {
@@ -1615,7 +1626,7 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop)
 }
 
 void
-sp_selected_path_outline(SPDesktop *desktop)
+sp_selected_path_outline(SPDesktop *desktop, bool legacy)
 {
     Inkscape::Selection *selection = desktop->getSelection();
 
@@ -1630,7 +1641,7 @@ sp_selected_path_outline(SPDesktop *desktop)
     std::vector<SPItem*> il(selection->itemList());
     for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
         SPItem *item = *l;
-        did = sp_item_path_outline(item, desktop);
+        did = sp_item_path_outline(item, desktop, legacy);
     }
 
     prefs->setBool("/options/transform/stroke", scale_stroke);
