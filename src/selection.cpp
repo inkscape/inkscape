@@ -17,14 +17,11 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
-#include "macros.h"
+
 #include "inkscape.h"
 #include "document.h"
-#include "layer-model.h"
-#include "selection.h"
-#include <2geom/rect.h>
 #include "xml/repr.h"
 #include "preferences.h"
 
@@ -32,10 +29,7 @@
 #include "sp-path.h"
 #include "sp-item-group.h"
 #include "box3d.h"
-#include "box3d.h"
 #include "persp3d.h"
-
-#include <sigc++/functors/mem_fun.h>
 
 #define SP_SELECTION_UPDATE_PRIORITY (G_PRIORITY_HIGH_IDLE + 1)
 

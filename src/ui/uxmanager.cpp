@@ -10,18 +10,15 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "widgets/desktop-widget.h"
-#include <algorithm>
 
 #include "uxmanager.h"
 #include "desktop.h"
 #include "util/ege-tags.h"
 #include "widgets/toolbox.h"
-#include "preferences.h"
-#include "gdkmm/screen.h"
 
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>

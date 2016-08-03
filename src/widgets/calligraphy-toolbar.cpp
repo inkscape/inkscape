@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "ui/dialog/calligraphic-profile-rename.h"
@@ -37,7 +37,6 @@
 #include "widgets/ege-adjustment-action.h"
 #include "widgets/ege-select-one-action.h"
 #include "widgets/ink-action.h"
-#include "preferences.h"
 #include "toolbox.h"
 #include "ui/icon-names.h"
 #include "ui/uxmanager.h"

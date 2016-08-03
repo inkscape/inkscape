@@ -14,14 +14,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/entry.h>
 
 #include "inkscape.h"
-#include "sp-object.h"
 #include "rdf.h"
 #include "ui/widget/registry.h"
 #include "sp-root.h"

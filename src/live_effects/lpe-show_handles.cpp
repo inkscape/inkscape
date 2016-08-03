@@ -7,7 +7,6 @@
  */
 
 #include "live_effects/lpe-show_handles.h"
-#include "live_effects/parameter/parameter.h"
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/svg-path-parser.h>
 #include "helper/geom.h"

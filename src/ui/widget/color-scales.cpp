@@ -3,15 +3,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
-#include <math.h>
 #include <gtkmm/adjustment.h>
 #include <glibmm/i18n.h>
 #include <gtk/gtk.h>
 
-#include "svg/svg-icc-color.h"
 #include "ui/dialog-events.h"
 #include "ui/widget/color-scales.h"
 #include "ui/widget/color-slider.h"

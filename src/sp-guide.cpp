@@ -16,7 +16,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include <algorithm>
@@ -31,8 +31,6 @@
 #include "attributes.h"
 #include "sp-guide.h"
 #include <sp-item-notify-moveto.h>
-#include <sp-item.h>
-#include <sp-guide-constraint.h>
 #include <glibmm/i18n.h>
 #include <xml/repr.h>
 #include <remove-last.h>
@@ -40,8 +38,6 @@
 #include "desktop.h"
 #include "sp-root.h"
 #include "sp-namedview.h"
-#include <2geom/angle.h>
-#include "document.h"
 #include "document-undo.h"
 #include "helper-fns.h"
 #include "verbs.h"

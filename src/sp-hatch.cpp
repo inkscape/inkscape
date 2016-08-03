@@ -25,11 +25,8 @@
 #include "display/drawing-pattern.h"
 #include "attributes.h"
 #include "document-private.h"
-#include "uri.h"
-#include "style.h"
 #include "sp-hatch.h"
 #include "sp-hatch-path.h"
-#include "xml/repr.h"
 
 SPHatch::SPHatch()
     : SPPaintServer(),

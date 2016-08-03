@@ -13,27 +13,19 @@
 
 #include "live_effects/lpe-taperstroke.h"
 
-#include <2geom/path.h>
-#include <2geom/path.h>
 #include <2geom/circle.h>
 #include <2geom/sbasis-to-bezier.h>
 
 #include "helper/geom-nodetype.h"
 #include "helper/geom-pathstroke.h"
 #include "display/curve.h"
-#include "sp-shape.h"
 #include "style.h"
-#include "xml/repr.h"
-#include "sp-paint-server.h"
 #include "svg/svg-color.h"
 #include "desktop-style.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg.h"
 
-#include "knot-holder-entity.h"
 #include "knotholder.h"
-
-#include <glibmm/i18n.h>
 
 template<typename T>
 inline bool withinRange(T value, T low, T high) {

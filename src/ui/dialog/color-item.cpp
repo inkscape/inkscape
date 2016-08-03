@@ -12,15 +12,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 
 #include <errno.h>
 
 #include <gtkmm/label.h>
 #include <glibmm/i18n.h>
-#include <cairo.h>
-#include <gtk/gtk.h>
 
 #include "color-item.h"
 
@@ -34,15 +32,9 @@
 #include "io/resource.h"
 #include "io/sys.h"
 #include "message-context.h"
-#include "sp-gradient.h"
-#include "sp-item.h"
 #include "svg/svg-color.h"
-#include "xml/node.h"
-#include "xml/repr.h"
 #include "verbs.h"
 #include "widgets/gradient-vector.h"
-
-#include "color.h" // for SP_RGBA32_U_COMPOSE
 
 
 namespace Inkscape {

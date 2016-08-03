@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "widgets/desktop-widget.h"
@@ -24,12 +24,8 @@
 #include "file.h"
 #include "ui/tools/tool-base.h"
 
-#include <string.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
-#include <cstring>
-#include <string>
 
 #include "display/sp-canvas.h"
 #include "xml/node-event-vector.h"
@@ -43,18 +39,14 @@
 #include "ui/interface.h"
 #include "macros.h"
 #include "ui/tools-switch.h"
-#include "preferences.h"
 #include "message-context.h"
 #include "gradient-drag.h"
-#include "attributes.h"
 #include "rubberband.h"
 #include "selcue.h"
 #include "ui/tools/lpe-tool.h"
 #include "ui/tool/control-point.h"
 #include "ui/shape-editor.h"
 #include "sp-guide.h"
-#include "color.h"
-#include "knot.h"
 #include "knot-ptr.h"
 
 // globals for temporary switching to selector by space

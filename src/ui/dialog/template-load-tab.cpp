@@ -9,28 +9,20 @@
  */
 
 #include "template-widget.h"
-#include "template-load-tab.h"
 #include "new-from-template.h"
 
-#include <gtkmm/messagedialog.h>
-#include <gtkmm/scrolledwindow.h>
-#include <glibmm/i18n.h>
-#include <glibmm/fileutils.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/stringutils.h>
+#include <glibmm/fileutils.h>
+#include <gtkmm/messagedialog.h>
+#include <gtkmm/scrolledwindow.h>
 #include <iostream>
-#include <list>
 
 #include "extension/db.h"
-#include "extension/effect.h"
 #include "inkscape.h"
 #include "ui/interface.h"
 #include "file.h"
 #include "path-prefix.h"
-#include "preferences.h"
-#include "xml/repr.h"
-#include "xml/document.h"
-#include "xml/node.h"
 
 namespace Inkscape {
 namespace UI {

@@ -8,8 +8,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "ui/tool/node.h"
-#include "ui/tool/manipulator.h"
+//#include "ui/tool/node.h"
+//#include "ui/tool/manipulator.h"
 
 namespace Inkscape {
 namespace UI {

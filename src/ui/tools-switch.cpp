@@ -13,15 +13,10 @@
 
 #include <gtkmm.h> // prevents deprecation warnings
 
-#include <cstring>
-#include <string>
-
 #include "inkscape.h"
 #include "desktop.h"
 
 #include <glibmm/i18n.h>
-
-#include <xml/repr.h>
 
 #include "ui/tools-switch.h"
 
@@ -52,7 +47,6 @@
 #include "ui/tools/measure-tool.h"
 #include "ui/tools/mesh-tool.h"
 #include "ui/tools/node-tool.h"
-#include "ui/tools/pen-tool.h"
 #include "ui/tools/pencil-tool.h"
 #include "ui/tools/rect-tool.h"
 #include "ui/tools/select-tool.h"

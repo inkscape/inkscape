@@ -22,7 +22,6 @@
 
 #include "text-edit.h"
 #include <libnrtype/font-instance.h>
-#include <gtk/gtk.h>
 
 #ifdef WITH_GTKSPELL
 extern "C" {
@@ -31,11 +30,8 @@ extern "C" {
 #endif
 
 #include <gtkmm/stock.h>
-#include <libnrtype/font-instance.h>
 #include <libnrtype/font-lister.h>
-#include <xml/repr.h>
 
-#include "macros.h"
 #include "helper/window.h"
 #include "inkscape.h"
 #include "document.h"
@@ -43,13 +39,10 @@ extern "C" {
 #include "desktop-style.h"
 
 #include "document-undo.h"
-#include "selection.h"
-#include "style.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "text-editing.h"
 #include "ui/icon-names.h"
-#include "preferences.h"
 #include "verbs.h"
 #include "ui/interface.h"
 #include "svg/css-ostringstream.h"

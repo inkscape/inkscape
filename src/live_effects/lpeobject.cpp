@@ -11,12 +11,9 @@
 
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "sp-object.h"
 #include "attributes.h"
 #include "document.h"
 #include "document-private.h"
-
-#include <glibmm/i18n.h>
 
 //#define LIVEPATHEFFECT_VERBOSE
 

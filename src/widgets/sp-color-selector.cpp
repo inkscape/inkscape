@@ -4,7 +4,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <math.h>
@@ -179,8 +179,6 @@ gfloat ColorSelector::getAlpha() const
 {
     return _alpha;
 }
-
-#include "svg/svg-icc-color.h"
 
 /**
 Called from the outside to set the color; optionally emits signal (only when called from

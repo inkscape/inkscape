@@ -12,7 +12,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include <cstring>
@@ -27,7 +27,6 @@
 #include "document.h"
 #include "document-undo.h"
 #include "message-stack.h"
-#include "selection.h"
 #include "style.h"
 
 #include "text-editing.h"

@@ -14,7 +14,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "ui/dialog/dialog-manager.h"
@@ -45,11 +45,8 @@
 #include "ui/dialog/panel-dialog.h"
 #include "ui/dialog/layers.h"
 #include "ui/dialog/icon-preview.h"
-#include "ui/dialog/floating-behavior.h"
-#include "ui/dialog/dock-behavior.h"
 //#include "ui/dialog/print-colors-preview-dialog.h"
 #include "util/ege-appear-time-tracker.h"
-#include "preferences.h"
 #include "ui/dialog/object-attributes.h"
 #include "ui/dialog/object-properties.h"
 #include "ui/dialog/text-edit.h"

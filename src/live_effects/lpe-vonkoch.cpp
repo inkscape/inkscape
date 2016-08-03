@@ -8,8 +8,6 @@
 
 #include <glibmm/i18n.h>
 
-#include <2geom/transforms.h>
-
 //using std::vector;
 namespace Inkscape {
 namespace LivePathEffect {

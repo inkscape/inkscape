@@ -18,35 +18,18 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include "page-sizer.h"
 
-#include <cmath>
-#include <string>
-#include <string.h>
-#include <sstream>
-#include <vector>
-
 #include <glibmm/i18n.h>
 
-#include <2geom/transforms.h>
 
-
-#include "document.h"
-#include "desktop.h"
 #include "helper/action.h"
-#include "helper/action-context.h"
-#include "util/units.h"
-#include "inkscape.h"
-#include "sp-namedview.h"
 #include "sp-root.h"
 #include "ui/widget/button.h"
-#include "ui/widget/scalar-unit.h"
 #include "verbs.h"
-#include "xml/node.h"
-#include "xml/repr.h"
 
 using std::pair;
 using Inkscape::Util::unit_table;

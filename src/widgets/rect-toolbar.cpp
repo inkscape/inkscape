@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -38,8 +38,6 @@
 #include "widgets/ege-output-action.h"
 #include "widgets/ink-action.h"
 #include "inkscape.h"
-#include "preferences.h"
-#include "selection.h"
 #include "sp-namedview.h"
 #include "sp-rect.h"
 #include "toolbox.h"
@@ -47,11 +45,9 @@
 #include "ui/tools/rect-tool.h"
 #include "ui/uxmanager.h"
 #include "ui/widget/unit-tracker.h"
-#include "util/units.h"
 #include "verbs.h"
 #include "widgets/widget-sizes.h"
 #include "xml/node-event-vector.h"
-#include "xml/repr.h"
 
 using Inkscape::UI::Widget::UnitTracker;
 using Inkscape::UI::UXManager;

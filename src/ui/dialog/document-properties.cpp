@@ -25,27 +25,17 @@
 #include "ui/widget/notebook-page.h"
 #include "document-properties.h"
 #include "display/canvas-grid.h"
-#include "document.h"
 
-#include "desktop.h"
-#include "inkscape.h"
 #include "io/sys.h"
-#include "preferences.h"
 #include "ui/shape-editor.h"
-#include "sp-namedview.h"
 #include "sp-root.h"
 #include "sp-script.h"
 #include "style.h"
-#include "svg/stringstream.h"
 #include "ui/tools-switch.h"
-#include "ui/widget/color-picker.h"
-#include "ui/widget/scalar-unit.h"
 #include "ui/dialog/filedialog.h"
 #include "verbs.h"
 #include "widgets/icon.h"
 #include "xml/node-event-vector.h"
-#include "xml/repr.h"
-#include <algorithm>    // std::min
 
 #include "rdf.h"
 #include "ui/widget/entity-entry.h"
@@ -54,11 +44,9 @@
 #include "color-profile.h"
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-#include <gtkmm/imagemenuitem.h>
 #include <gtkmm/stock.h>
-#include <gtkmm/table.h>
+#include <gtkmm/imagemenuitem.h>
 
-#include <2geom/transforms.h>
 #include "ui/icon-names.h"
 
 using std::pair;

@@ -24,7 +24,6 @@
 #include <glibmm/i18n.h>
 #include <glibmm/main.h>
 #include <glibmm/timer.h>
-#include <gdkmm/pixbuf.h>
 
 #include "color-item.h"
 #include "desktop.h"
@@ -35,28 +34,20 @@
 #include "document-undo.h"
 #include "extension/db.h"
 #include "inkscape.h"
-#include "inkscape.h"
 #include "io/sys.h"
 #include "io/resource.h"
 #include "message-context.h"
 #include "path-prefix.h"
-#include "preferences.h"
-#include "sp-item.h"
-#include "sp-gradient.h"
-#include "sp-gradient-vector.h"
 #include "style.h"
 #include "ui/previewholder.h"
 #include "widgets/desktop-widget.h"
 #include "widgets/gradient-vector.h"
-#include "widgets/eek-preview.h"
 #include "display/cairo-utils.h"
 #include "sp-gradient-reference.h"
 #include "dialog-manager.h"
-#include "selection.h"
 #include "verbs.h"
 #include "gradient-chemistry.h"
 #include "helper/action.h"
-#include "helper/action-context.h"
 
 namespace Inkscape {
 namespace UI {

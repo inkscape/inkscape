@@ -31,7 +31,6 @@
 #include <cmath>
 #include <cstdio>
 
-#include "widget-sizes.h"
 #include "ruler.h"
 #include "round.h"
 #include <glibmm/i18n.h>

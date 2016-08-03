@@ -18,11 +18,7 @@
 #include "sp-namedview.h"
 
 #include "display/sodipodi-ctrlrect.h"
-#include "preferences.h"
 #include "pure-transform.h"
-#include "snap.h"
-#include "snap-candidate.h"
-#include "sp-namedview.h"
 #include "ui/tool/commit-events.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/selectable-control-point.h"

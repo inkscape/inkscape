@@ -18,17 +18,12 @@
 #include "sp-item.h"
 #include "display/curve.h"
 #include "2geom/line.h"
-#include "2geom/crossing.h"
 #include "2geom/convex-hull.h"
-#include "helper/geom-curves.h"
 #include "svg/stringstream.h"
 #include "conn-avoid-ref.h"
 #include "sp-conn-end.h"
 #include "sp-path.h"
 #include "libavoid/router.h"
-#include "libavoid/connector.h"
-#include "libavoid/geomtypes.h"
-#include "libavoid/shape.h"
 #include "xml/node.h"
 #include "document.h"
 #include "desktop.h"
@@ -38,7 +33,6 @@
 #include "sp-item-group.h"
 #include "inkscape.h"
 #include "verbs.h"
-#include <glibmm/i18n.h>
 
 using Inkscape::DocumentUndo;
 

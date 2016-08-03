@@ -41,7 +41,6 @@
 #include <document-private.h>
 #include <desktop-style.h>
 #include <style.h>
-#include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 #include "path-prefix.h"
 #include "io/sys.h"
@@ -54,8 +53,6 @@
 #ifdef SP_PS_VERBOSE
 #include "svg/svg-icc-color.h"
 #endif // SP_PS_VERBOSE
-
-#include <gtk/gtk.h>
 
 using Inkscape::Widgets::SwatchSelector;
 using Inkscape::UI::SelectedColor;

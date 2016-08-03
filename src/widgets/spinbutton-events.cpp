@@ -12,7 +12,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <gtk/gtk.h>
@@ -21,7 +21,6 @@
 #include "ui/tools/tool-base.h"
 
 #include "sp-widget.h"
-#include "widget-sizes.h"
 #include "spinbutton-events.h"
 
 gboolean spinbutton_focus_in(GtkWidget *w, GdkEventKey * /*event*/, gpointer /*data*/)

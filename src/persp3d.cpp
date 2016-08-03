@@ -18,9 +18,7 @@
 #include "document-undo.h"
 #include "vanishing-point.h"
 #include "ui/tools/box3d-tool.h"
-#include "box3d.h"
 #include "svg/stringstream.h"
-#include "xml/document.h"
 #include "xml/node-event-vector.h"
 #include "desktop.h"
 

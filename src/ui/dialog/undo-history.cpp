@@ -12,18 +12,14 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "undo-history.h"
-#include <glibmm/i18n.h>
-#include <stddef.h>
-#include <sigc++/sigc++.h>
 
 #include "document.h"
 #include "document-undo.h"
 #include "inkscape.h"
-#include "verbs.h"
 
 #include "util/signal-blocker.h"
 

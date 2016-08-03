@@ -16,22 +16,19 @@
 # include "config.h"
 #endif
 
+#include <glibmm/fileutils.h>
+#include <glibmm/miscutils.h>
 #include <gtkmm/icontheme.h>
 #include <cstring>
-#include <glib.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <gtkmm/image.h>
-#include <gdkmm/pixbuf.h>
-#include <glibmm/fileutils.h>
-#include <glibmm/miscutils.h>
 #include <2geom/transforms.h>
 
 #include "path-prefix.h"
 #include "preferences.h"
 #include "inkscape.h"
 #include "document.h"
-#include "sp-item.h"
 #include "display/cairo-utils.h"
 #include "display/drawing-context.h"
 #include "display/drawing-item.h"

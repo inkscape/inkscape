@@ -24,11 +24,7 @@
 #include "selection.h"
 #include "inkscape.h"
 #include "style.h"
-#include "preferences.h"
-#include "sp-use.h"
 #include "filters/blend.h"
-#include "sp-filter.h"
-#include "sp-filter-reference.h"
 #include "filters/gaussian-blur.h"
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
@@ -39,15 +35,12 @@
 #include "sp-textpath.h"
 #include "sp-tref.h"
 #include "sp-tspan.h"
-#include "xml/repr.h"
 #include "xml/sp-css-attr.h"
 #include "sp-path.h"
 #include "ui/tools/tool-base.h"
 
 #include "desktop-style.h"
-#include "svg/svg-icc-color.h"
 #include "box3d-side.h"
-#include <2geom/math-utils.h>
 
 namespace {
 

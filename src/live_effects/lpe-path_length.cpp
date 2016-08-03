@@ -16,8 +16,6 @@
 #include "live_effects/lpe-path_length.h"
 #include "util/units.h"
 
-#include "2geom/sbasis-geometric.h"
-
 namespace Inkscape {
 namespace LivePathEffect {
 

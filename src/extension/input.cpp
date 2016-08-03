@@ -8,14 +8,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
 #endif
 
 #include "prefdialog.h"
 #include "implementation/implementation.h"
 #include "timer.h"
 #include "input.h"
-#include "io/sys.h"
 
 /* Inkscape::Extension::Input */
 

@@ -9,14 +9,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
 #include <glibmm/fileutils.h>
 #include <glibmm/miscutils.h>
-#include "config.h"
-#include "path-prefix.h"
 #include "dependency.h"
 #include "db.h"
 #include "extension.h"

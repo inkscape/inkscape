@@ -14,8 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "config.h"
-
 #include <gdk/gdkkeysyms.h>
 #include <cstring>
 #include <string>
@@ -29,16 +27,13 @@
 #include "selection.h"
 #include "selection-chemistry.h"
 
-#include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-rect.xpm"
 #include "ui/tools/rect-tool.h"
 #include <glibmm/i18n.h>
-#include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "preferences.h"
 #include "context-fns.h"
 #include "ui/shape-editor.h"
 #include "verbs.h"

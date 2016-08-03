@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -40,10 +40,7 @@
 #include "graphlayout.h"
 #include "widgets/ink-action.h"
 #include "inkscape.h"
-#include "preferences.h"
-#include "selection.h"
 #include "sp-namedview.h"
-#include "sp-path.h"
 #include "toolbox.h"
 #include "ui/icon-names.h"
 #include "ui/tools/connector-tool.h"
@@ -51,7 +48,6 @@
 #include "verbs.h"
 #include "widgets/spinbutton-events.h"
 #include "xml/node-event-vector.h"
-#include "xml/repr.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;

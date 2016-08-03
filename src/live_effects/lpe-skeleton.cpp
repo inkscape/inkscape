@@ -21,12 +21,8 @@
 #include "live_effects/lpe-skeleton.h"
 
 // You might need to include other 2geom files. You can add them here:
-#include <2geom/path.h>
 
 #include <glibmm/i18n.h>
-
-//#include "knot-holder-entity.h"
-//#include "knotholder.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

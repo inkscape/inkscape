@@ -17,14 +17,9 @@
 
 #include "filedialogimpl-win32.h"
 #include "filedialogimpl-gtkmm.h"
-#include "filedialog.h"
 
-#include "inkgc/gc-core.h"
 #include "ui/dialog-events.h"
 #include "extension/output.h"
-#include "preferences.h"
-
-#include <glibmm/convert.h>
 
 namespace Inkscape
 {

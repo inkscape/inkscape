@@ -29,17 +29,14 @@
 
 #include <glibmm/i18n.h>
 #include "svg/svg.h"
-#include "svg/stringstream.h"
 #include "display/drawing-text.h"
 #include "attributes.h"
 #include "document.h"
 #include "preferences.h"
 #include "desktop.h"
 #include "sp-namedview.h"
-#include "style.h"
 #include "inkscape.h"
 #include "xml/quote.h"
-#include "xml/repr.h"
 #include "mod360.h"
 #include "sp-title.h"
 #include "sp-desc.h"
@@ -52,9 +49,7 @@
 #include "text-editing.h"
 
 // For SVG 2 text flow
-#include "livarot/Path.h"
 #include "livarot/Shape.h"
-#include "sp-shape.h"
 #include "display/curve.h"
 
 /*#####################################################

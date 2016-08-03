@@ -13,31 +13,21 @@
  */
 
 #include <iostream>
-#include <config.h>
 #include <map>
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#include <cstdlib>
-#include <float.h>
 #include <2geom/transforms.h>
 
 #include "desktop.h"
 #include "inkscape.h"
 #include "sp-namedview.h"
 #include "graphlayout.h"
-#include "sp-path.h"
-#include "sp-item.h"
 #include "sp-item-transform.h"
-#include "sp-conn-end-pair.h"
 #include "style.h"
 #include "conn-avoid-ref.h"
-#include "libavoid/connector.h"
 #include "libavoid/router.h"
-#include "libavoid/geomtypes.h"
 #include "libcola/cola.h"
-#include "libvpsc/generate-constraints.h"
-#include "preferences.h"
 
 using namespace std;
 using namespace cola;

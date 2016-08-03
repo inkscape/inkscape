@@ -15,21 +15,19 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
 #include <2geom/path-intersection.h>
-#include <2geom/exception.h>
 #include "helper/geom.h"
 #include "helper/geom-nodetype.h"
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 
-#include "macros.h"
 #include "display/drawing-shape.h"
 #include "display/curve.h"
 #include "print.h"
@@ -41,11 +39,6 @@
 #include "attributes.h"
 
 #include "live_effects/lpeobject.h"
-#include "uri.h"
-#include "extract-uri.h"
-#include "uri-references.h"
-#include "bad-uri-exception.h"
-#include "xml/repr.h"
 
 #include "helper/mathfns.h" // for triangle_area()
 

@@ -1,13 +1,7 @@
 
 #include "ui/tools/dynamic-base.h"
 
-#include <gtk/gtk.h>
-
-#include "config.h"
-
 #include "message-context.h"
-#include "streq.h"
-#include "preferences.h"
 #include "display/sp-canvas-item.h"
 #include "desktop.h"
 #include "display/curve.h"

@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 #include <cstring>
 #include <string>
@@ -40,14 +40,12 @@
 #include "desktop.h"
 
 #include "sp-root.h"
-#include "preferences.h"
 #include "ui/tools-switch.h"
 #include "message-stack.h"
 #include "selection-describer.h"
 #include "seltrans.h"
 #include "box3d.h"
 #include "display/sp-canvas.h"
-#include "display/sp-canvas-item.h"
 #include "display/drawing-item.h"
 
 using Inkscape::DocumentUndo;

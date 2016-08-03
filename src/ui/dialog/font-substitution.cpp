@@ -7,7 +7,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include <gtkmm/messagedialog.h>
@@ -21,16 +21,11 @@
 #include "inkscape.h"
 #include "desktop.h"
 #include "document.h"
-#include "selection.h"
 
 #include "ui/dialog-events.h"
 
 #include "selection-chemistry.h"
-#include "preferences.h"
 
-#include "xml/repr.h"
-
-#include "sp-defs.h"
 #include "sp-root.h"
 #include "sp-text.h"
 #include "sp-textpath.h"

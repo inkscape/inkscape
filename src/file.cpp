@@ -33,14 +33,12 @@
 #include "ui/dialog/ocaldialogs.h"
 #include "desktop.h"
 
-#include "dir-util.h"
 #include "document-private.h"
 #include "document-undo.h"
 #include "ui/tools/tool-base.h"
 #include "extension/db.h"
 #include "extension/input.h"
 #include "extension/output.h"
-#include "extension/system.h"
 #include "file.h"
 #include "helper/png-write.h"
 #include "id-clash.h"
@@ -48,33 +46,24 @@
 #include "inkscape-version.h"
 #include "ui/interface.h"
 #include "io/sys.h"
-#include "message.h"
 #include "message-stack.h"
 #include "path-prefix.h"
-#include "preferences.h"
 #include "print.h"
 #include "resource-manager.h"
 #include "rdf.h"
 #include "selection-chemistry.h"
-#include "selection.h"
 #include "sp-namedview.h"
 #include "style.h"
 #include "ui/view/view-widget.h"
-#include "uri.h"
 #include "xml/rebase-hrefs.h"
 #include "xml/sp-css-attr.h"
 #include "verbs.h"
 #include "event-log.h"
 #include "ui/dialog/font-substitution.h"
 
-#include <gtk/gtk.h>
 #include <gtkmm/main.h>
-
-#include <glibmm/convert.h>
-#include <glibmm/i18n.h>
 #include <glibmm/miscutils.h>
-
-#include <string>
+#include <glibmm/convert.h>
 
 using Inkscape::DocumentUndo;
 

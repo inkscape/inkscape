@@ -16,7 +16,6 @@
 
 #include <cstring>
 #include <string>
-#include "config.h"
 
 #include <2geom/affine.h>
 #include <2geom/transforms.h>

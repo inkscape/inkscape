@@ -27,7 +27,6 @@
 #include "message-stack.h"
 #include "message-context.h"
 #include "sp-path.h"
-#include "preferences.h"
 #include "snap.h"
 #include "pixmaps/cursor-pencil.xpm"
 #include <2geom/sbasis-to-bezier.h>
@@ -36,13 +35,9 @@
 #include <glibmm/i18n.h>
 #include "context-fns.h"
 #include "sp-namedview.h"
-#include "xml/repr.h"
-#include "document.h"
 #include "desktop-style.h"
-#include "macros.h"
 #include "display/sp-canvas.h"
 #include "display/curve.h"
-#include "livarot/Path.h"
 #include "ui/tool/event-utils.h"
 
 namespace Inkscape {

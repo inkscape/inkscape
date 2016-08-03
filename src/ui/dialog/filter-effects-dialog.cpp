@@ -16,7 +16,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "dialog-manager.h"
@@ -28,59 +28,42 @@
 
 #include "ui/widget/spinbutton.h"
 
-#include <glibmm/convert.h>
 #include <glibmm/i18n.h>
-#include <glibmm/main.h>
 #include <glibmm/stringutils.h>
+#include <glibmm/main.h>
+#include <glibmm/convert.h>
 
 #include "desktop.h"
 
-#include "dir-util.h"
 #include "document.h"
 #include "document-undo.h"
 #include "filter-chemistry.h"
 #include "filter-effects-dialog.h"
 #include "filter-enums.h"
 #include "inkscape.h"
-#include "path-prefix.h"
-#include "preferences.h"
-#include "selection.h"
 #include "filters/blend.h"
 #include "filters/colormatrix.h"
 #include "filters/componenttransfer.h"
 #include "filters/componenttransfer-funcnode.h"
-#include "filters/composite.h"
 #include "filters/convolvematrix.h"
-#include "filters/displacementmap.h"
 #include "filters/distantlight.h"
-#include "filters/gaussian-blur.h"
 #include "filters/merge.h"
 #include "filters/mergenode.h"
-#include "filters/offset.h"
 #include "filters/pointlight.h"
 #include "filters/spotlight.h"
-#include "sp-filter-primitive.h"
 
 #include "style.h"
 #include "svg/svg-color.h"
-#include "svg/stringstream.h"
 #include "ui/dialog/filedialog.h"
 #include "verbs.h"
-#include "xml/node.h"
-#include "xml/node-observer.h"
-#include "xml/repr.h"
-#include <sstream>
 
 #include "io/sys.h"
-#include <iostream>
 #include "selection-chemistry.h"
 
-#include <gtkmm/checkbutton.h>
 #include <gtkmm/colorbutton.h>
-#include <gtkmm/paned.h>
-#include <gtkmm/scrolledwindow.h>
 #include <gtkmm/stock.h>
 #include <gdkmm/general.h>
+#include <gtkmm/checkbutton.h>
 
 using namespace Inkscape::Filters;
 

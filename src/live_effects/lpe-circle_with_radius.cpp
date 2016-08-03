@@ -15,7 +15,6 @@
 #include "display/curve.h"
 
 // You might need to include other 2geom files. You can add them here:
-#include <2geom/pathvector.h>
 #include <2geom/circle.h>
 #include <2geom/path-sink.h>
 

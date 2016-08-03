@@ -6,7 +6,7 @@
  * Authors:
  *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *   Steren Giannini
- *   Noé Falzon
+ *   Noï¿½ Falzon
  *   Victor Navez
  *   ~suv
  *   Jabiertxo Arraiza
@@ -17,24 +17,11 @@
  */
 
 #include "live_effects/lpe-lattice2.h"
-#include "sp-shape.h"
-#include "sp-item.h"
-#include "sp-path.h"
 #include "display/curve.h"
-#include "svg/svg.h"
 #include "helper/geom.h"
-#include <2geom/path.h>
-#include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>
-#include "helper/geom-curves.h"
-#include <2geom/sbasis-geometric.h>
 #include <2geom/bezier-to-sbasis.h>
-#include <2geom/sbasis-to-bezier.h>
-#include <2geom/d2.h>
-#include <2geom/piecewise.h>
-#include <2geom/transforms.h>
 // TODO due to internal breakage in glibmm headers, this must be last:
-#include <glibmm/i18n.h>
 
 using namespace Geom;
 

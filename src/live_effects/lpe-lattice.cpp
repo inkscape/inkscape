@@ -6,7 +6,7 @@
  * Authors:
  *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *   Steren Giannini
- *   Noé Falzon
+ *   Noï¿½ Falzon
  *   Victor Navez
 *
 * Copyright (C) 2007-2008 Authors 
@@ -16,22 +16,10 @@
 
 #include "live_effects/lpe-lattice.h"
 
-#include "sp-shape.h"
-#include "sp-item.h"
-#include "sp-path.h"
 #include "display/curve.h"
-#include "svg/svg.h"
 
-#include <2geom/sbasis.h>
 #include <2geom/sbasis-2d.h>
-#include <2geom/sbasis-geometric.h>
 #include <2geom/bezier-to-sbasis.h>
-#include <2geom/sbasis-to-bezier.h>
-#include <2geom/d2.h>
-#include <2geom/piecewise.h>
-#include <2geom/transforms.h>
-
-#include "desktop.h" // TODO: should be factored out (see below)
 
 using namespace Geom;
 

@@ -16,7 +16,6 @@
 #include "sp-path.h"
 #include "display/curve.h"
 #include "live_effects/lpe-knot.h"
-#include "svg/svg.h"
 #include "style.h"
 #include "knot-holder-entity.h"
 #include "knotholder.h"
@@ -25,19 +24,13 @@
 #include <gdk/gdk.h>
 
 #include <2geom/sbasis-to-bezier.h>
-#include <2geom/sbasis.h>
-#include <2geom/d2.h>
-#include <2geom/path.h>
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/basic-intersection.h>
-#include <2geom/exception.h>
 
 // for change crossing undo
 #include "verbs.h"
 #include "document.h"
 #include "document-undo.h"
-
-#include <exception>
 
 namespace Inkscape {
 namespace LivePathEffect {

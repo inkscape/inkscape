@@ -14,9 +14,6 @@
 
 #include "highlight-picker.h"
 #include "widgets/icon.h"
-#include "widgets/toolbox.h"
-#include "ui/icon-names.h"
-#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace UI {

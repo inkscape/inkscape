@@ -18,7 +18,6 @@
 
 #include "xml-tree.h"
 #include "widgets/icon.h"
-#include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
 
@@ -31,18 +30,14 @@
 #include "helper/window.h"
 #include "inkscape.h"
 #include "ui/interface.h"
-#include "macros.h"
 #include "message-context.h"
 #include "message-stack.h"
-#include "preferences.h"
-#include "selection.h"
 #include "shortcuts.h"
 #include "sp-root.h"
 #include "sp-string.h"
 #include "sp-tspan.h"
 #include "ui/icon-names.h"
 #include "verbs.h"
-#include "widgets/icon.h"
 
 #include "widgets/sp-xmlview-attr-list.h"
 #include "widgets/sp-xmlview-content.h"

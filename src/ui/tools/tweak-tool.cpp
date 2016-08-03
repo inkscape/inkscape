@@ -11,8 +11,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "config.h"
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
@@ -21,7 +19,6 @@
 
 #include "svg/svg.h"
 
-#include <glib.h>
 #include "macros.h"
 #include "document.h"
 #include "document-undo.h"
@@ -48,19 +45,13 @@
 #include "pixmaps/cursor-push.xpm"
 #include "pixmaps/cursor-roughen.xpm"
 #include "pixmaps/cursor-color.xpm"
-#include <boost/optional.hpp>
-#include "xml/repr.h"
 #include "context-fns.h"
-#include "sp-item.h"
 #include "inkscape.h"
-#include "color.h"
-#include "svg/svg-color.h"
 #include "splivarot.h"
 #include "sp-item-group.h"
 #include "sp-shape.h"
 #include "sp-path.h"
 #include "path-chemistry.h"
-#include "sp-gradient.h"
 #include "sp-stop.h"
 #include "sp-gradient-reference.h"
 #include "sp-linear-gradient.h"
@@ -69,13 +60,10 @@
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "display/sp-canvas.h"
-#include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "display/curve.h"
 #include "livarot/Shape.h"
-#include <2geom/transforms.h>
 #include <2geom/circle.h>
-#include "preferences.h"
 #include "style.h"
 #include "box3d.h"
 #include "sp-item-transform.h"

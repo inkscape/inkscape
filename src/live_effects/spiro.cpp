@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <string.h>
 
 #include "display/curve.h"
-#include <2geom/math-utils.h>
 
 #define SPIRO_SHOW_INFINITE_COORDINATE_CALLS
 

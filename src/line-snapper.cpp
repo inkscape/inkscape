@@ -11,10 +11,8 @@
  */
 
 #include <2geom/line.h>
-#include <cassert>
 
 #include "line-snapper.h"
-#include "snapped-line.h"
 #include "snap.h"
 
 Inkscape::LineSnapper::LineSnapper(SnapManager *sm, Geom::Coord const d) : Snapper(sm, d)

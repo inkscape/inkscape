@@ -12,7 +12,6 @@
 
 #include <iostream>
 #include <cstring>
-#include <string>
 
 #include "document.h"
 #include "sp-object.h"
@@ -21,7 +20,6 @@
 #include "extract-uri.h"
 #include "sp-tag-use.h"
 #include <glibmm/miscutils.h>
-#include <sigc++/functors/mem_fun.h>
 
 namespace Inkscape {
 

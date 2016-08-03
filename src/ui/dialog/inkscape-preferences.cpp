@@ -19,30 +19,22 @@
 
 #include "inkscape-preferences.h"
 #include <glibmm/i18n.h>
-#include <glibmm/markup.h>
 #include <glibmm/miscutils.h>
+#include <glibmm/markup.h>
 #include <gtkmm/main.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/scrolledwindow.h>
 #include <gtkmm/alignment.h>
 
 #include "preferences.h"
 #include "verbs.h"
 #include "selcue.h"
-#include "util/units.h"
-#include <iostream>
-#include "enums.h"
 
 #include "extension/internal/gdkpixbuf-input.h"
 #include "message-stack.h"
 #include "style.h"
 #include "selection.h"
 #include "selection-chemistry.h"
-#include "xml/repr.h"
 #include "ui/widget/style-swatch.h"
-#include "ui/widget/spinbutton.h"
 #include "display/nr-filter-gaussian.h"
-#include "display/nr-filter-types.h"
 #include "cms-system.h"
 #include "color-profile.h"
 #include "display/canvas-grid.h"

@@ -2,7 +2,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 #include <glibmm/i18n.h>
 
@@ -17,8 +17,6 @@
 #include "sp-desc.h"
 
 #include "sp-flowregion.h"
-
-#include "display/canvas-bpath.h"
 
 #include "livarot/Path.h"
 #include "livarot/Shape.h"

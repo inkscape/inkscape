@@ -16,21 +16,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <libnrtype/font-lister.h>
 #include <libnrtype/font-instance.h>
 
-#include <2geom/transforms.h>
-
-#include <gtk/gtk.h>
-
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
 #include "widgets/font-selector.h"
-#include "preferences.h"
 
 /* SPFontSelector */
 

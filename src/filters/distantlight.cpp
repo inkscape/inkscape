@@ -23,7 +23,6 @@
 #include "xml/repr.h"
 
 #define SP_MACROS_SILENT
-#include "macros.h"
 
 
 SPFeDistantLight::SPFeDistantLight()

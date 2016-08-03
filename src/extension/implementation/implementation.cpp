@@ -11,7 +11,7 @@
 */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 #include "implementation.h"
 
@@ -22,7 +22,6 @@
 #include "selection.h"
 #include "desktop.h"
 
-#include "ui/view/view.h"
 
 namespace Inkscape {
 namespace Extension {

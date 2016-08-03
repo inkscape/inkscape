@@ -38,9 +38,6 @@
 #include <ieeefp.h>
 #endif
 #include <cstring>
-#include <string>
-#include <locale.h>
-#include <stdlib.h>
 
 #include <popt.h>
 #ifndef POPT_TABLEEND
@@ -48,9 +45,6 @@
 #endif /* Not def: POPT_TABLEEND */
 
 #include <libxml/tree.h>
-#include <glib/gprintf.h>
-#include <glib-object.h>
-#include <gtk/gtk.h>
 
 #if GTK_CHECK_VERSION(3,0,0)
 #include <gtkmm/cssprovider.h>
@@ -63,16 +57,13 @@
 #undef AND
 #endif
 
-#include "macros.h"
 #include "file.h"
 #include "document.h"
 #include "layer-model.h"
 #include "selection.h"
-#include "sp-object.h"
 #include "ui/interface.h"
 #include "print.h"
 #include "color.h"
-#include "sp-item.h"
 #include "sp-root.h"
 
 #include "svg/svg.h"
@@ -93,10 +84,8 @@
 
 #include "helper/action-context.h"
 #include "helper/png-write.h"
-#include "helper/geom.h"
 
 #include <extension/extension.h>
-#include <extension/system.h>
 #include <extension/db.h>
 #include <extension/output.h>
 #include <extension/input.h>
@@ -114,9 +103,8 @@
 #endif // WITH_DBUS
 
 #include <glibmm/i18n.h>
-#include <glibmm/main.h>
 #include <glibmm/miscutils.h>
-
+#include <glibmm/main.h>
 #include <gtkmm/main.h>
 
 #ifndef HAVE_BIND_TEXTDOMAIN_CODESET
@@ -128,8 +116,6 @@
 
 #include <errno.h>
 #include "verbs.h"
-
-#include <gdk/gdkkeysyms.h>
 
 #include "path-chemistry.h"
 #include "sp-text.h"

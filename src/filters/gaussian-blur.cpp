@@ -14,7 +14,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "attributes.h"
@@ -23,9 +23,7 @@
 #include "xml/repr.h"
 
 #include "display/nr-filter.h"
-#include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"
-#include "display/nr-filter-types.h"
 
 SPGaussianBlur::SPGaussianBlur() : SPFilterPrimitive() {
 }

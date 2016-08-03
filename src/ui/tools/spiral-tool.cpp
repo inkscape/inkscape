@@ -14,8 +14,6 @@
  * Released under GNU GPL
  */
 
-#include "config.h"
-
 #include <gdk/gdkkeysyms.h>
 #include <cstring>
 #include <string>
@@ -28,16 +26,13 @@
 #include "sp-namedview.h"
 #include "selection.h"
 
-#include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-spiral.xpm"
 #include "ui/tools/spiral-tool.h"
 #include <glibmm/i18n.h>
-#include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "preferences.h"
 #include "context-fns.h"
 #include "ui/shape-editor.h"
 #include "verbs.h"

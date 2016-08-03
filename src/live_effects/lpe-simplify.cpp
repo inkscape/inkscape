@@ -4,20 +4,11 @@
 
 #include "live_effects/lpe-simplify.h"
 #include "display/curve.h"
-#include "live_effects/parameter/parameter.h"
 #include "helper/geom.h"
-#include "livarot/Path.h"
-#include "splivarot.h"
 #include <2geom/svg-path-parser.h>
-#include "desktop.h"
-#include "inkscape.h"
 #include "svg/svg.h"
 #include "ui/tools/node-tool.h"
-#include <2geom/d2.h>
-#include <2geom/generic-rect.h>
-#include <2geom/interval.h>
 #include "ui/icon-names.h"
-#include "util/units.h"
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
 

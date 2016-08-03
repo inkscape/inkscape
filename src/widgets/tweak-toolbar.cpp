@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 
 #include "ui/widget/spinbutton.h"
@@ -37,7 +37,6 @@
 #include "widgets/ege-output-action.h"
 #include "widgets/ege-select-one-action.h"
 #include "widgets/ink-action.h"
-#include "preferences.h"
 #include "toolbox.h"
 #include "ui/icon-names.h"
 #include "ui/tools/tweak-tool.h"

@@ -26,11 +26,6 @@
 
 #include "filters/blend.h"
 #include "filters/gaussian-blur.h"
-#include "sp-filter.h"
-#include "sp-filter-reference.h"
-#include "svg/css-ostringstream.h"
-
-#include "xml/repr.h"
 
 /**
  * Count how many times the filter is used by the styles of o and its

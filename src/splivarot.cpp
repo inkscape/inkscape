@@ -13,7 +13,6 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
 #endif
 
 #include <cstring>
@@ -23,14 +22,11 @@
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "sp-path.h"
-#include "sp-shape.h"
 #include "sp-image.h"
 #include "sp-marker.h"
-#include "enums.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "text-editing.h"
-#include "sp-item-group.h"
 #include "style.h"
 #include "document.h"
 #include "document-undo.h"
@@ -39,14 +35,9 @@
 #include "selection.h"
 
 #include "desktop.h"
-#include "display/canvas-bpath.h"
-#include "display/curve.h"
 #include <glibmm/i18n.h>
-#include "preferences.h"
 
-#include "xml/repr.h"
 #include "xml/repr-sorting.h"
-#include <2geom/pathvector.h>
 #include <2geom/svg-path-writer.h>
 #include "helper/geom.h"
 

@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <cstring>
@@ -31,14 +31,11 @@
 #include "sp-namedview.h"
 #include "selection.h"
 
-#include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-star.xpm"
 #include <glibmm/i18n.h>
-#include "preferences.h"
-#include "xml/repr.h"
 #include "xml/node-event-vector.h"
 #include "context-fns.h"
 #include "ui/shape-editor.h"

@@ -11,17 +11,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-
-
-
 #include "imageicon.h"
-#include <sys/stat.h>
 #include "svg-view-widget.h"
 #include "document.h"
 #include "inkscape.h"
-#include <glibmm/convert.h>
 #include <glibmm/fileutils.h>
-
+#include <glibmm/convert.h>
 
 namespace Inkscape
 {

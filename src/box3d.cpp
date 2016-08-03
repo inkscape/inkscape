@@ -23,18 +23,12 @@
 #include "box3d.h"
 #include "box3d-side.h"
 #include "ui/tools/box3d-tool.h"
-#include "proj_pt.h"
-#include "transf_mat_3x4.h"
 #include "perspective-line.h"
-#include "inkscape.h"
-#include "persp3d.h"
-#include "line-geometry.h"
 #include "persp3d-reference.h"
 #include "uri.h"
 #include <2geom/line.h>
 #include "sp-guide.h"
 #include "sp-namedview.h"
-#include "preferences.h"
 
 #include "desktop.h"
 

@@ -8,12 +8,11 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>
-#include <glibmm/i18n.h>
 #include <2geom/point.h>
 #include "ui/tools/tool-base.h"
 #include "rotateable.h"

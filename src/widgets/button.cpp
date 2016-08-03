@@ -20,8 +20,6 @@
 #include "shortcuts.h"
 #include "helper/action.h"
 
-#include <gdk/gdkkeysyms.h>
-
 static void sp_button_dispose(GObject *object);
 
 #if GTK_CHECK_VERSION(3, 0, 0)

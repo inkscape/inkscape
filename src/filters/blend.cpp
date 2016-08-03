@@ -18,13 +18,9 @@
 #include "sp-filter.h"
 #include "filters/blend.h"
 #include "attributes.h"
-#include "svg/svg.h"
 #include "xml/repr.h"
 
 #include "display/nr-filter.h"
-#include "display/nr-filter-primitive.h"
-#include "display/nr-filter-blend.h"
-#include "display/nr-filter-types.h"
 
 SPFeBlend::SPFeBlend()
     : SPFilterPrimitive(), blend_mode(Inkscape::Filters::BLEND_NORMAL),

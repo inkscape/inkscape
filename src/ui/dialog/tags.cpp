@@ -10,17 +10,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "tags.h"
-#include <gtkmm/widget.h>
 #include <gtkmm/icontheme.h>
 #include <gtkmm/imagemenuitem.h>
-#include <gtkmm/separatormenuitem.h>
-
 #include <glibmm/main.h>
-#include <glibmm/i18n.h>
 
 #include "desktop.h"
 #include "desktop-style.h"
@@ -30,28 +26,19 @@
 #include "inkscape.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
-#include "preferences.h"
-#include "sp-item.h"
-#include "sp-object.h"
 #include "sp-shape.h"
 #include "svg/css-ostringstream.h"
-#include "ui/icon-names.h"
 #include "ui/widget/layertypeicon.h"
 #include "ui/widget/addtoicon.h"
 #include "verbs.h"
 #include "widgets/icon.h"
-#include "xml/node.h"
 #include "xml/node-observer.h"
-#include "xml/repr.h"
 #include "sp-root.h"
 #include "ui/tools/tool-base.h" //"event-context.h"
-#include "selection.h"
 //#include "dialogs/dialog-events.h"
 #include "ui/widget/color-notebook.h"
 #include "style.h"
 #include "filter-chemistry.h"
-#include "filters/blend.h"
-#include "filters/gaussian-blur.h"
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "sp-tag.h"

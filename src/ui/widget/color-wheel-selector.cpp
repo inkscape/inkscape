@@ -1,18 +1,14 @@
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
 #include "color-wheel-selector.h"
 
-#include <math.h>
-#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/label.h>
 #include <gtkmm/spinbutton.h>
-#include "svg/svg-icc-color.h"
 #include "ui/dialog-events.h"
-#include "ui/selected-color.h"
 #include "ui/widget/color-scales.h"
 #include "ui/widget/color-slider.h"
 #include "ui/widget/gimpcolorwheel.h"

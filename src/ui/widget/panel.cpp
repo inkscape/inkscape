@@ -12,19 +12,17 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include <gtkmm/dialog.h> // for Gtk::RESPONSE_*
 #include <gtkmm/menu.h>
 #include <gtkmm/stock.h>
-#include <gtkmm/radiobutton.h>
+#include <gtkmm/checkmenuitem.h>
 #include <gtkmm/radiomenuitem.h>
 #include <gtkmm/separatormenuitem.h>
 
 #include <glibmm/i18n.h>
-
-#include <gtk/gtk.h>
 
 #include "panel.h"
 #include "icon-size.h"

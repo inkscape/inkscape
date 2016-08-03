@@ -13,7 +13,6 @@
 
 #include <cstring>
 #include <string>
-#include <iostream>
 #include <glibmm/stringutils.h>
 
 #include "attributes.h"
@@ -22,7 +21,6 @@
 #include "display/curve.h"
 #include "xml/repr.h"
 #include "sp-path.h"
-#include "libavoid/vertices.h"
 #include "libavoid/router.h"
 #include "document.h"
 #include "sp-item-group.h"

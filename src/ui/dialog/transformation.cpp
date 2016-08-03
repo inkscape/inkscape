@@ -12,7 +12,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include <gtkmm/dialog.h>
@@ -26,15 +26,11 @@
 #include "transformation.h"
 #include "align-and-distribute.h"
 #include "inkscape.h"
-#include "selection.h"
 #include "selection-chemistry.h"
 #include "message-stack.h"
 #include "verbs.h"
-#include "preferences.h"
 #include "sp-namedview.h"
 #include "sp-item-transform.h"
-#include "macros.h"
-#include "sp-item.h"
 #include "ui/icon-names.h"
 #include "widgets/icon.h"
 

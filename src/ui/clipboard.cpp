@@ -27,9 +27,6 @@
 // TODO: reduce header bloat if possible
 
 #include "file.h" // for file_import, used in _pasteImage
-#include <list>
-#include <algorithm>
-#include <glibmm/ustring.h>
 #include <glibmm/i18n.h>
 #include <glib/gstdio.h> // for g_file_set_contents etc., used in _onGet and paste
 #include "inkgc/gc-core.h"
@@ -41,7 +38,6 @@
 #include "desktop-style.h" // for sp_desktop_set_style, used in _pasteStyle
 #include "document.h"
 #include "document-private.h"
-#include "selection.h"
 #include "message-stack.h"
 #include "context-fns.h"
 #include "ui/tools/dropper-tool.h" // used in copy()
@@ -50,17 +46,13 @@
 #include "extension/input.h"
 #include "extension/output.h"
 #include "selection-chemistry.h"
-#include <2geom/rect.h>
 #include <2geom/transforms.h>
 #include "box3d.h"
 #include "gradient-drag.h"
 #include "sp-marker.h"
-#include "sp-item.h"
 #include "sp-item-transform.h" // for sp_item_scale_rel, used in _pasteSize
 #include "sp-path.h"
 #include "sp-pattern.h"
-#include "sp-shape.h"
-#include "sp-gradient.h"
 #include "sp-gradient-reference.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
@@ -68,8 +60,6 @@
 #include "sp-mask.h"
 #include "sp-textpath.h"
 #include "sp-rect.h"
-#include "sp-use.h"
-#include "sp-symbol.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
@@ -83,9 +73,7 @@
 #include "helper/png-write.h"
 #include "svg/svg-color.h"
 #include "sp-namedview.h"
-#include "snap.h"
 #include "persp3d.h"
-#include "preferences.h"
 
 /// Made up mimetype to represent Gdk::Pixbuf clipboard contents.
 #define CLIPBOARD_GDK_PIXBUF_TARGET "image/x-gdk-pixbuf"

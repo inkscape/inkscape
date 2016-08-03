@@ -15,15 +15,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 #include <cstring>
 #include <string>
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "display/curve.h"
-#include "color.h"
-#include <glib.h>
 #include <glibmm/i18n.h>
 #include "sp-path.h"
 #include "sp-text.h"
@@ -37,7 +35,6 @@
 #include "selection.h"
 
 #include "box3d.h"
-#include <2geom/pathvector.h>
 #include "selection-chemistry.h"
 #include "path-chemistry.h"
 #include "verbs.h"

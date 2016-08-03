@@ -14,7 +14,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <gtkmm/treeview.h>
@@ -28,14 +28,11 @@
 #include "inkscape.h"
 #include "verbs.h"
 #include "helper/action.h"
-#include "helper/action-context.h"
 #include "preferences.h"
 #include "widgets/icon.h"
 
 #include <glibmm/i18n.h>
-#include <xml/repr.h>
 
-#include "gradient-selector.h"
 #include "paint-selector.h"
 #include "style.h"
 #include "id-clash.h"

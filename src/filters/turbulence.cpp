@@ -19,10 +19,8 @@
 #include "turbulence.h"
 #include "helper-fns.h"
 #include "xml/repr.h"
-#include <string.h>
 
 #include "display/nr-filter.h"
-#include "display/nr-filter-turbulence.h"
 
 SPFeTurbulence::SPFeTurbulence() : SPFilterPrimitive() {
 	this->stitchTiles = 0;

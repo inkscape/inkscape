@@ -6,26 +6,10 @@
  */
 
 #include "live_effects/lpe-bendpath.h"
-#include "sp-shape.h"
-#include "sp-item.h"
-#include "sp-path.h"
 #include "sp-item-group.h"
-#include "svg/svg.h"
-#include "ui/widget/scalar.h"
-
-#include <2geom/sbasis.h>
-#include <2geom/sbasis-geometric.h>
-#include <2geom/bezier-to-sbasis.h>
-#include <2geom/sbasis-to-bezier.h>
-#include <2geom/d2.h>
-#include <2geom/piecewise.h>
 
 #include "knot-holder-entity.h"
 #include "knotholder.h"
-
-#include <glibmm/i18n.h>
-
-#include <algorithm>
 
 using std::vector;
 

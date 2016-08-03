@@ -8,12 +8,9 @@
 
 #include <cstring>
 #include <string>
-#include <string.h>
 
-#include "enums.h"
 #include "sp-tag-use-reference.h"
 
-#include "display/curve.h"
 #include "livarot/Path.h"
 #include "preferences.h"
 #include "sp-shape.h"

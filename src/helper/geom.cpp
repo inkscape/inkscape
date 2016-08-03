@@ -12,15 +12,8 @@
 #include <algorithm>
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
-#include <typeinfo>
-#include <2geom/pathvector.h>
-#include <2geom/path.h>
 #include <2geom/curves.h>
-#include <2geom/transforms.h>
-#include <2geom/rect.h>
-#include <2geom/coord.h>
 #include <2geom/sbasis-to-bezier.h>
-#include <math.h> // for M_PI
 
 using Geom::X;
 using Geom::Y;

@@ -11,7 +11,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <cstring>
@@ -25,9 +25,7 @@
 #include "document.h"
 #include "document-undo.h"
 #include "layer-manager.h"
-#include "sp-item.h"
 #include "ui/icon-names.h"
-#include "ui/widget/layer-selector.h"
 #include "util/filter-list.h"
 #include "util/reverse-list.h"
 #include "verbs.h"

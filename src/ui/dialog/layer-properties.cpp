@@ -15,8 +15,9 @@
 
 #include "layer-properties.h"
 #include <gtkmm/stock.h>
-#include <glibmm/main.h>
 #include <glibmm/i18n.h>
+#include <glibmm/main.h>
+
 #include "inkscape.h"
 #include "desktop.h"
 #include "document.h"
@@ -24,10 +25,7 @@
 #include "layer-manager.h"
 #include "message-stack.h"
 
-#include "sp-object.h"
-#include "sp-item.h"
 #include "verbs.h"
-#include "selection.h"
 #include "selection-chemistry.h"
 #include "ui/icon-names.h"
 #include "ui/widget/imagetoggler.h"

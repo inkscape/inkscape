@@ -19,15 +19,13 @@
 #define noSP_FS_VERBOSE
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <gtkmm/box.h>
 #include <glibmm/i18n.h>
 
 #include "verbs.h"
-
-#include <gtk/gtk.h>
 
 #include "desktop.h"
 #include "selection.h"
@@ -38,13 +36,11 @@
 #include "document-undo.h"
 #include "gradient-chemistry.h"
 #include "inkscape.h"
-#include "selection.h"
 #include "sp-linear-gradient.h"
 #include "sp-pattern.h"
 #include "sp-radial-gradient.h"
 #include "style.h"
 #include "widgets/paint-selector.h"
-#include "xml/repr.h"
 
 #include "fill-style.h"
 #include "fill-n-stroke-factory.h"

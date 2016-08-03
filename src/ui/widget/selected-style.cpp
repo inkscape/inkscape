@@ -10,11 +10,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include "selected-style.h"
-#include <gtkmm/separatormenuitem.h>
 
 #include "widgets/spw-utilities.h"
 #include "ui/widget/color-preview.h"
@@ -31,19 +30,14 @@
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/fill-and-stroke.h"
 #include "ui/dialog/panel-dialog.h"
-#include "xml/repr.h"
-#include "document.h"
 #include "document-undo.h"
 #include "widgets/widget-sizes.h"
 #include "widgets/spinbutton-events.h"
 #include "widgets/gradient-image.h"
-#include "sp-gradient.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 #include "ui/tools/tool-base.h"
 #include "message-context.h"
-#include "verbs.h"
-#include "color.h"
 #include <display/sp-canvas.h>
 #include "pixmaps/cursor-adj-h.xpm"
 #include "pixmaps/cursor-adj-s.xpm"
@@ -51,7 +45,8 @@
 #include "pixmaps/cursor-adj-a.xpm"
 #include "sp-cursor.h"
 #include "gradient-chemistry.h"
-#include "util/units.h"
+
+#include <gtkmm/separatormenuitem.h>
 
 using Inkscape::Util::unit_table;
 

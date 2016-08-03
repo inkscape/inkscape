@@ -15,7 +15,6 @@
 
 #include "rubberband.h"
 #include "display/sp-canvas.h"
-#include "display/sp-canvas-item.h"
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
 

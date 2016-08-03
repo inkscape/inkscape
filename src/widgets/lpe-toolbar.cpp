@@ -25,27 +25,19 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "live_effects/lpe-line_segment.h"
 #include "lpe-toolbar.h"
 
-#include "desktop.h"
-#include "document-undo.h"
 #include "widgets/ege-select-one-action.h"
 #include "helper/action-context.h"
 #include "helper/action.h"
 #include "widgets/ink-action.h"
-#include "live_effects/effect.h"
-#include "preferences.h"
-#include "selection.h"
-#include "sp-namedview.h"
 #include "ui/tools-switch.h"
 #include "ui/tools/lpe-tool.h"
 #include "ui/widget/unit-tracker.h"
-#include "util/units.h"
-#include "verbs.h"
 
 using Inkscape::UI::Widget::UnitTracker;
 using Inkscape::Util::Unit;

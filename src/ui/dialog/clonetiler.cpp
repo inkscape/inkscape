@@ -15,12 +15,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 
 #include "clonetiler.h"
-
-#include <climits>
 
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>
@@ -31,23 +29,15 @@
 #include "display/cairo-utils.h"
 #include "display/drawing.h"
 #include "display/drawing-context.h"
-#include "display/drawing-item.h"
 #include "document.h"
 #include "document-undo.h"
 #include "filter-chemistry.h"
 #include "ui/widget/unit-menu.h"
-#include "util/units.h"
 #include "helper/window.h"
 #include "inkscape.h"
 #include "ui/interface.h"
-#include "macros.h"
 #include "message-stack.h"
-#include "preferences.h"
-#include "selection.h"
-#include "sp-filter.h"
 #include "sp-namedview.h"
-#include "sp-use.h"
-#include "style.h"
 #include "svg/svg-color.h"
 #include "svg/svg.h"
 #include "ui/icon-names.h"
@@ -55,8 +45,6 @@
 #include "unclump.h"
 #include "verbs.h"
 #include "widgets/icon.h"
-#include "xml/repr.h"
-#include "sp-root.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::Util::unit_table;

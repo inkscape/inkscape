@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <cstring>
@@ -35,11 +35,6 @@
 #include "sp-offset.h"
 #include "sp-use-reference.h"
 #include "uri.h"
-
-#include <2geom/affine.h>
-#include <2geom/pathvector.h>
-
-#include "xml/repr.h"
 
 class SPDocument;
 

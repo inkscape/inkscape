@@ -18,16 +18,10 @@
 
 #include "ocaldialogs.h"
 
-#include <stdio.h>  // rename()
-#include <unistd.h> // close()
-#include <errno.h>  // errno
-#include <string.h> // strerror()
-
 #include "path-prefix.h"
 #include "filedialogimpl-gtkmm.h"
 #include "ui/interface.h"
 #include "inkgc/gc-core.h"
-#include "ui/dialog-events.h"
 #include "io/sys.h"
 #include "preferences.h"
 
@@ -37,12 +31,13 @@
 #include <gdkmm/general.h>
 #include <libxml/tree.h>
 
+#include <glibmm/i18n.h>
+#include <glibmm/miscutils.h>
+#include <glibmm/markup.h>
 #include <glibmm/convert.h>
 #include <glibmm/fileutils.h>
-#include <glibmm/i18n.h>
 #include <glibmm/main.h>
-#include <glibmm/markup.h>
-#include <glibmm/miscutils.h>
+
 #include "ui/icon-names.h"
 
 namespace Inkscape

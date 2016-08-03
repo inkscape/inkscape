@@ -15,11 +15,7 @@
 #include <2geom/path-intersection.h>
 #include <2geom/sbasis-to-bezier.h>
 #include "live_effects/lpe-copy_rotate.h"
-#include <2geom/path.h>
-#include <2geom/transforms.h>
-#include <2geom/angle.h>
 
-#include "knot-holder-entity.h"
 #include "knotholder.h"
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>

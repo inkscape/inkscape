@@ -14,9 +14,7 @@
 #include <glibmm/i18n.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/comboboxtext.h>
-#include <gtkmm/entry.h>
 #include <gtkmm/iconview.h>
-#include <gtkmm/label.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/scrolledwindow.h>
 
@@ -25,9 +23,6 @@
 #else
 # include <gtkmm/table.h>
 #endif
-
-#include <gtkmm/treemodelcolumn.h>
-#include <gtkmm/widget.h>
 
 #include "desktop.h"
 #include "document.h" // for SPDocumentUndo::done()

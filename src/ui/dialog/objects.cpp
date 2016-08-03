@@ -10,17 +10,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "objects.h"
-#include <gtkmm/widget.h>
 #include <gtkmm/icontheme.h>
+#include <gtkmm/stock.h>
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/separatormenuitem.h>
-#include <gtkmm/stock.h>
-
-#include <glibmm/i18n.h>
 #include <glibmm/main.h>
 
 #include "desktop.h"
@@ -34,12 +31,8 @@
 #include "helper/action.h"
 #include "inkscape.h"
 #include "layer-manager.h"
-#include "preferences.h"
-#include "selection.h"
 #include "sp-clippath.h"
 #include "sp-mask.h"
-#include "sp-item.h"
-#include "sp-object.h"
 #include "sp-root.h"
 #include "sp-shape.h"
 #include "style.h"
@@ -52,13 +45,10 @@
 #include "ui/widget/clipmaskicon.h"
 #include "ui/widget/highlight-picker.h"
 #include "ui/tools/node-tool.h"
-#include "ui/tools/tool-base.h"
 #include "verbs.h"
 #include "ui/widget/color-notebook.h"
 #include "widgets/icon.h"
-#include "xml/node.h"
 #include "xml/node-observer.h"
-#include "xml/repr.h"
 
 //#define DUMP_LAYERS 1
 

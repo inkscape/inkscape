@@ -19,13 +19,11 @@
 #include "document-undo.h"
 #include "live_effects/lpeobject.h"
 #include "message-stack.h"
-#include "preferences.h"
 #include "sp-path.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/path-manipulator.h"
-#include "util/unordered-containers.h"
 #include "verbs.h"
 
 #include <gdk/gdkkeysyms.h>

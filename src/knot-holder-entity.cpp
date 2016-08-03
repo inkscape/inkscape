@@ -25,8 +25,6 @@
 #include "snap.h"
 #include "desktop.h"
 #include "sp-namedview.h"
-#include <2geom/affine.h>
-#include <2geom/transforms.h>
 
 int KnotHolderEntity::counter = 0;
 

@@ -23,12 +23,11 @@
 
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "ui/dialog/dialog-manager.h"
 #include <glibmm/i18n.h>
-#include <sigc++/functors/mem_fun.h>
 
 #include <2geom/transforms.h>
 #include <2geom/rect.h>
@@ -45,35 +44,24 @@
 #include "display/canvas-temporary-item-list.h"
 #include "display/drawing-group.h"
 #include "display/gnome-canvas-acetate.h"
-#include "display/drawing.h"
 #include "display/snap-indicator.h"
 #include "display/sodipodi-ctrlrect.h"
 #include "display/sp-canvas-group.h"
-#include "display/sp-canvas.h"
 #include "display/sp-canvas-util.h"
-#include "document.h"
 #include "document-undo.h"
 #include "event-log.h"
 #include "helper/action-context.h"
 #include "ui/interface.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
-#include "layer-model.h"
-#include "macros.h"
 #include "message-context.h"
 #include "message-stack.h"
-#include "preferences.h"
 #include "resource-manager.h"
 #include "ui/tools/select-tool.h"
-#include "selection.h"
-#include "sp-item-group.h"
-#include "sp-item-group.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
-#include "sp-defs.h"
 #include "ui/tool-factory.h"
 #include "widgets/desktop-widget.h"
-#include "xml/repr.h"
 #include "helper/action.h" //sp_action_perform
 
 // TODO those includes are only for node tool quick zoom. Remove them after fixing it.

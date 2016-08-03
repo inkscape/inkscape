@@ -11,8 +11,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <string.h>
-
 #include "desktop.h"
 
 #include "selection.h"
@@ -23,7 +21,6 @@
 #include "text-editing.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
-#include "preferences.h"
 #include "selcue.h"
 
 Inkscape::SelCue::BoundingBoxPrefsObserver::BoundingBoxPrefsObserver(SelCue &sel_cue) :

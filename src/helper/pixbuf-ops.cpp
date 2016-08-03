@@ -12,10 +12,9 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
-#include <png.h>
 #include <boost/scoped_ptr.hpp>
 #include <2geom/transforms.h>
 
@@ -24,11 +23,8 @@
 #include "display/cairo-utils.h"
 #include "display/drawing.h"
 #include "display/drawing-context.h"
-#include "display/drawing-item.h"
 #include "document.h"
-#include "sp-item.h"
 #include "sp-root.h"
-#include "sp-use.h"
 #include "sp-defs.h"
 #include "util/units.h"
 

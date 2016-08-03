@@ -8,7 +8,6 @@
 
 #include <string.h>
 
-#include "enums.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/lpeobject.h"
 #include "uri.h"

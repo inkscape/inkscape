@@ -13,8 +13,6 @@
 
 #include "live_effects/lpe-interpolate_points.h"
 
-#include <2geom/path.h>
-
 #include "live_effects/lpe-powerstroke-interpolators.h"
 
 namespace Inkscape {

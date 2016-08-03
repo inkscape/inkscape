@@ -9,12 +9,8 @@
 #include "live_effects/lpe-bounding-box.h"
 
 #include "display/curve.h"
-#include "sp-item.h"
-#include "2geom/path.h"
 #include "sp-shape.h"
 #include "sp-text.h"
-#include "2geom/bezier-curve.h"
-#include "lpe-bounding-box.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

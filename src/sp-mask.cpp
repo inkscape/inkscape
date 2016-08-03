@@ -23,7 +23,6 @@
 #include "attributes.h"
 #include "document.h"
 #include "document-private.h"
-#include "sp-item.h"
 
 #include "sp-mask.h"
 

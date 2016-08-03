@@ -22,7 +22,6 @@
 #include "fill-and-stroke.h"
 #include "filter-chemistry.h"
 #include "inkscape.h"
-#include "selection.h"
 #include "preferences.h"
 #include "style.h"
 #include "svg/css-ostringstream.h"
@@ -32,11 +31,8 @@
 #include "widgets/icon.h"
 #include "widgets/paint-selector.h"
 #include "widgets/stroke-style.h"
-#include "xml/repr.h"
 
 #include "ui/view/view-widget.h"
-
-#include <gtkmm/table.h>
 
 namespace Inkscape {
 namespace UI {

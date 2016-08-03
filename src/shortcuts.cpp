@@ -26,16 +26,14 @@
 #include <map>
 
 #include "shortcuts.h"
-#include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include <glibmm/convert.h>
 #include <glibmm/i18n.h>
+#include <glibmm/convert.h>
 #include <glibmm/miscutils.h>
 
 #include "helper/action.h"
-#include "helper/action-context.h"
 #include "io/sys.h"
 #include "io/resource.h"
 #include "verbs.h"

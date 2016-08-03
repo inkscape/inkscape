@@ -11,30 +11,25 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include "find.h"
 
 #include <gtkmm/entry.h>
-#include <gtkmm/widget.h>
 
 #include "verbs.h"
 
 #include "message-stack.h"
 #include "helper/window.h"
-#include "macros.h"
 #include "inkscape.h"
 #include "desktop.h"
 #include "document.h"
 #include "document-undo.h"
-#include "selection.h"
 
 
 #include "ui/dialog-events.h"
-#include "verbs.h"
 #include "ui/interface.h"
-#include "preferences.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "sp-flowdiv.h"
@@ -51,11 +46,9 @@
 #include "sp-line.h"
 #include "sp-polyline.h"
 #include "sp-item-group.h"
-#include "sp-use.h"
 #include "sp-image.h"
 #include "sp-offset.h"
 #include "sp-root.h"
-#include "xml/repr.h"
 #include "xml/node-iterators.h"
 #include "xml/attribute-record.h"
 

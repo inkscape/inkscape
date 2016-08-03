@@ -17,25 +17,18 @@
 #include "message-stack.h"
 
 #include "helper/window.h"
-#include "macros.h"
 #include "inkscape.h"
 #include "document.h"
-#include "selection.h"
 #include "desktop.h"
 
 #include "ui/tools-switch.h"
 #include "ui/tools/text-tool.h"
 #include "ui/interface.h"
-#include "preferences.h"
-#include "sp-text.h"
 #include "sp-flowtext.h"
 #include "text-editing.h"
-#include "sp-tspan.h"
 #include "sp-tref.h"
 #include "sp-defs.h"
 #include "selection-chemistry.h"
-#include <xml/repr.h>
-#include "display/canvas-bpath.h"
 #include "display/curve.h"
 #include "document-undo.h"
 #include "sp-root.h"
@@ -47,7 +40,7 @@
 #endif
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 
 

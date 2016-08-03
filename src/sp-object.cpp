@@ -32,12 +32,10 @@
 #include "sp-script.h"
 #include "streq.h"
 #include "strneq.h"
-#include "xml/repr.h"
 #include "xml/node-fns.h"
 #include "debug/event-tracker.h"
 #include "debug/simple-event.h"
 #include "debug/demangle.h"
-#include "util/share.h"
 #include "util/format.h"
 #include "util/longest-common-suffix.h"
 

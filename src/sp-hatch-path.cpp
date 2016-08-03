@@ -12,10 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <cstring>
 #include <string>
 #include <2geom/path.h>
-#include <2geom/transforms.h>
 
 #include "svg/svg.h"
 #include "display/cairo-utils.h"
@@ -27,11 +25,8 @@
 #include "helper/geom.h"
 #include "attributes.h"
 #include "document-private.h"
-#include "uri.h"
-#include "style.h"
 #include "sp-hatch-path.h"
 #include "svg/css-ostringstream.h"
-#include "xml/repr.h"
 
 SPHatchPath::SPHatchPath()
     : offset(),

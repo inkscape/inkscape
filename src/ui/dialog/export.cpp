@@ -24,18 +24,14 @@
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/dialog.h>
 #include <gtkmm/entry.h>
-#include <gtkmm/image.h>
-#include <gtkmm/label.h>
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/stock.h>
-#include <gtkmm/stockid.h>
+
 #if WITH_GTKMM_3_0
 # include <gtkmm/grid.h>
 #else
 # include <gtkmm/table.h>
 #endif
-#include <gtkmm/togglebutton.h>
-#include <gtkmm/widget.h>
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
@@ -45,16 +41,12 @@
 #include <glibmm/miscutils.h>
 
 #include "ui/widget/unit-menu.h"
-#include "util/units.h"
 #include "helper/window.h"
 #include "inkscape.h"
 #include "document.h"
 #include "document-undo.h"
 
-#include "sp-item.h"
-#include "selection.h"
 #include "file.h"
-#include "macros.h"
 #include "sp-namedview.h"
 #include "selection-chemistry.h"
 
@@ -89,17 +81,12 @@
 #include <glibmm/fileutils.h>
 #endif
 
-#include <gtk/gtk.h>
-
 #define SP_EXPORT_MIN_SIZE 1.0
 
 #define DPI_BASE Inkscape::Util::Quantity::convert(1, "in", "px")
 
 #define EXPORT_COORD_PRECISION 3
 
-#include "../../document.h"
-#include "../../document-undo.h"
-#include "verbs.h"
 #include "export.h"
 
 using Inkscape::Util::unit_table;

@@ -11,13 +11,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 
 #include <gtkmm/dialog.h>
 #include <gtkmm/stock.h>
 #include <glibmm/main.h>
-#include <gtk/gtk.h>
 
 #include "floating-behavior.h"
 #include "dialog.h"
@@ -26,7 +25,6 @@
 #include "desktop.h"
 #include "ui/dialog-events.h"
 #include "ui/interface.h"
-#include "preferences.h"
 #include "verbs.h"
 
 namespace Inkscape {

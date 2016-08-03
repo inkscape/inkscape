@@ -18,12 +18,9 @@
 #include "display/nr-filter-image.h"
 #include "uri.h"
 #include "uri-references.h"
-#include "enums.h"
 #include "attributes.h"
-#include "svg/svg.h"
 #include "image.h"
 #include "xml/repr.h"
-#include <string.h>
 
 #include "display/nr-filter.h"
 

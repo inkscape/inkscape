@@ -14,19 +14,17 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <png.h>
 #include "ui/interface.h"
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
-#include <glib.h>
 #include "png-write.h"
 #include "io/sys.h"
 #include "display/drawing.h"
 #include "display/drawing-context.h"
-#include "display/drawing-item.h"
 #include "document.h"
 #include "sp-item.h"
 #include "sp-root.h"

@@ -14,15 +14,15 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #include <gtkmm/buttonbox.h>
 #include <boost/scoped_ptr.hpp>
 
 #include <glibmm/i18n.h>
-#include <glibmm/main.h>
 #include <glibmm/timer.h>
+#include <glibmm/main.h>
 
 #include <gtkmm/alignment.h>
 #include <gtkmm/checkbutton.h>
@@ -35,10 +35,7 @@
 #include "display/drawing.h"
 #include "document.h"
 #include "inkscape.h"
-#include "preferences.h"
-#include "selection.h"
 #include "sp-root.h"
-#include "xml/repr.h"
 #include "verbs.h"
 
 #include "icon-preview.h"

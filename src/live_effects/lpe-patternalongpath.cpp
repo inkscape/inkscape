@@ -6,22 +6,12 @@
 
 #include "live_effects/lpe-patternalongpath.h"
 #include "live_effects/lpeobject.h"
-#include "sp-shape.h"
 #include "display/curve.h"
-#include "svg/svg.h"
-#include "ui/widget/scalar.h"
 
-#include <2geom/sbasis.h>
-#include <2geom/sbasis-geometric.h>
 #include <2geom/bezier-to-sbasis.h>
-#include <2geom/sbasis-to-bezier.h>
-#include <2geom/d2.h>
-#include <2geom/piecewise.h>
 
-#include "knot-holder-entity.h"
 #include "knotholder.h"
 
-#include <algorithm>
 using std::vector;
 
 

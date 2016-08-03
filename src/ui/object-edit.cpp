@@ -12,10 +12,8 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
-
-
 
 #include "sp-item.h"
 #include "sp-rect.h"
@@ -32,11 +30,8 @@
 #include "sp-namedview.h"
 #include "live_effects/effect.h"
 #include "sp-pattern.h"
-#include "sp-path.h"
 #include <glibmm/i18n.h>
 #include "ui/object-edit.h"
-#include "xml/repr.h"
-#include <2geom/math-utils.h>
 #include "knot-holder-entity.h"
 
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))

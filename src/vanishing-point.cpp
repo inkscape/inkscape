@@ -21,12 +21,10 @@
 #include "display/sp-canvas-item.h"
 #include "display/sp-ctrlline.h"
 #include "ui/tools/tool-base.h"
-#include "xml/repr.h"
 #include "perspective-line.h"
 #include "ui/shape-editor.h"
 #include "snap.h"
 #include "sp-namedview.h"
-#include "ui/control-manager.h"
 #include "document-undo.h"
 #include "verbs.h"
 

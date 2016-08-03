@@ -37,7 +37,7 @@
 #define noSP_DOCUMENT_DEBUG_UNDO
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 #include <string>
 #include <cstring>
@@ -47,7 +47,6 @@
 #include "desktop.h"
 #include "dir-util.h"
 #include "display/drawing.h"
-#include "display/drawing-item.h"
 #include "document-private.h"
 #include "document-undo.h"
 #include "id-clash.h"
@@ -55,18 +54,12 @@
 #include "inkscape-version.h"
 #include "libavoid/router.h"
 #include "persp3d.h"
-#include "preferences.h"
 #include "profile-manager.h"
 #include "rdf.h"
 #include "sp-factory.h"
-#include "sp-item-group.h"
 #include "sp-namedview.h"
 #include "sp-symbol.h"
-#include "transf_mat_3x4.h"
-#include "util/units.h"
-#include "xml/repr.h"
 #include "xml/rebase-hrefs.h"
-#include "libcroco/cr-cascade.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::Util::unit_table;

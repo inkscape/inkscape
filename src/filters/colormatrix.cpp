@@ -23,7 +23,6 @@
 #include "helper-fns.h"
 
 #include "display/nr-filter.h"
-#include "display/nr-filter-colormatrix.h"
 
 SPFeColorMatrix::SPFeColorMatrix() 
     : SPFilterPrimitive(), type(Inkscape::Filters::COLORMATRIX_MATRIX), value(0)

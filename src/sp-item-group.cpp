@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -32,16 +32,13 @@
 #include "attributes.h"
 #include "sp-item-transform.h"
 #include "sp-root.h"
-#include "sp-use.h"
 #include "sp-offset.h"
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "sp-path.h"
 #include "box3d.h"
 #include "persp3d.h"
-#include "inkscape.h"
 
-#include "selection.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
@@ -50,10 +47,8 @@
 #include "sp-switch.h"
 #include "sp-defs.h"
 #include "verbs.h"
-#include "layer-model.h"
 #include "sp-textpath.h"
 #include "sp-flowtext.h"
-#include "sp-tspan.h"
 #include "selection-chemistry.h"
 #include "xml/sp-css-attr.h"
 #include "svg/css-ostringstream.h"

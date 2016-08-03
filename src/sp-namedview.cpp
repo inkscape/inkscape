@@ -14,14 +14,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "config.h"
 #include <cstring>
 #include <string>
 #include "event-log.h"
 #include <2geom/transforms.h>
 
 #include "display/canvas-grid.h"
-#include "display/guideline.h"
 #include "util/units.h"
 #include "svg/svg-color.h"
 #include "xml/repr.h"

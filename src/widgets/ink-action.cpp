@@ -1,13 +1,8 @@
 #include "widgets/icon.h"
-#include "icon-size.h"
-#include <glib/gi18n.h>
-
 
 #include "widgets/ink-action.h"
 
 #include "widgets/button.h"
-
-#include <gtk/gtk.h>
 
 #if GTK_CHECK_VERSION(3,0,0)
     // Fork of gtk-imagemenuitem to continue support

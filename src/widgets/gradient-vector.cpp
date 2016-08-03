@@ -20,14 +20,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm.h>
 #include "gradient-vector.h"
 #include "ui/widget/color-preview.h"
 #include "verbs.h"
-#include <gtk/gtk.h>
 #include "macros.h"
 #include <glibmm/i18n.h>
 #include <set>
@@ -50,8 +49,6 @@
 #include "desktop.h"
 #include "layer-manager.h"
 
-#include <sigc++/functors/ptr_fun.h>
-#include <sigc++/adaptors/bind.h>
 #include "document-undo.h"
 
 #include "ui/dialog-events.h"
@@ -476,7 +473,6 @@ void SPGradientVectorSelector::setSwatched()
 #include "widgets/widget-sizes.h"
 #include "xml/node-event-vector.h"
 #include "svg/svg-color.h"
-#include "ui/widget/color-notebook.h"
 
 #define PAD 4
 

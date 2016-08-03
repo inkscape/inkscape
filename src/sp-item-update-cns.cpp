@@ -1,10 +1,8 @@
 
 #include "satisfied-guide-cns.h"
-#include "sp-guide-constraint.h"
 #include "sp-item-update-cns.h"
 #include "sp-guide.h"
-#include "sp-item.h"
-#include <algorithm>
+
 using std::find;
 using std::vector;
 

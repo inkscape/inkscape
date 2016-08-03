@@ -23,16 +23,14 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include "style-internal.h"
-#include "style-enums.h"
 #include "style.h"
 
 #include "svg/svg.h"
 #include "svg/svg-color.h"
-#include "svg/svg-icc-color.h"
 
 #include "streq.h"
 #include "strneq.h"
@@ -41,9 +39,6 @@
 #include "preferences.h"
 #include "svg/css-ostringstream.h"
 #include "util/units.h"
-
-#include <sigc++/functors/ptr_fun.h>
-#include <sigc++/adaptors/bind.h>
 
 #include <glibmm/regex.h>
 

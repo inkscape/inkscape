@@ -15,7 +15,6 @@
 #include "live_effects/lpe-circle_3pts.h"
 
 // You might need to include other 2geom files. You can add them here:
-#include <2geom/path.h>
 #include <2geom/circle.h>
 #include <2geom/path-sink.h>
 

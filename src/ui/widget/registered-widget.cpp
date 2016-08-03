@@ -14,32 +14,20 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include "registered-widget.h"
-#include <gtkmm/radiobutton.h>
 
-#include "ui/widget/color-picker.h"
-#include "ui/widget/registry.h"
-#include "ui/widget/scalar-unit.h"
-#include "ui/widget/point.h"
-#include "ui/widget/random.h"
 #include "widgets/spinbutton-events.h"
 
-#include "xml/repr.h"
 #include "svg/svg-color.h"
 #include "svg/stringstream.h"
 
 #include "verbs.h"
-
-// for interruptability bug:
-#include "display/sp-canvas.h"
-
-#include "desktop.h"
-
-
 #include "sp-root.h"
+
+#include <gtkmm/radiobutton.h>
 
 namespace Inkscape {
 namespace UI {

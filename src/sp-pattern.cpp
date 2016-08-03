@@ -13,14 +13,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
 #include <cstring>
 #include <string>
 #include <glibmm.h>
 #include <2geom/transforms.h>
-#include <sigc++/functors/mem_fun.h>
 
 #include "svg/svg.h"
 #include "display/cairo-utils.h"
@@ -30,10 +29,7 @@
 #include "display/drawing-group.h"
 #include "attributes.h"
 #include "document-private.h"
-#include "uri.h"
-#include "style.h"
 #include "sp-pattern.h"
-#include "xml/repr.h"
 
 #include "sp-factory.h"
 

@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <errno.h>
@@ -40,14 +40,10 @@
 # include <shlobj.h>
 #endif
 
-#include <cstring>
 #include <glib/gstdio.h>
 #include <glibmm/i18n.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/convert.h>
-#include <gtk/gtk.h>
-#include <signal.h>
-#include <string>
 
 #include "desktop.h"
 
@@ -58,17 +54,12 @@
 #include "extension/output.h"
 #include "extension/system.h"
 #include "helper/action-context.h"
-#include "helper/sp-marshal.h"
 #include "inkscape.h"
 #include "io/sys.h"
-#include "layer-model.h"
 #include "message-stack.h"
-#include "preferences.h"
 #include "resource-manager.h"
-#include "selection.h"
 #include "ui/tools/tool-base.h"
 #include "ui/dialog/debug.h"
-#include "xml/repr.h"
 
 /* Backbones of configuration xml data */
 #include "menus-skeleton.h"

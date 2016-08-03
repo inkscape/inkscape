@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -37,7 +37,6 @@
 #include "widgets/ege-adjustment-action.h"
 #include "widgets/ege-output-action.h"
 #include "widgets/ink-action.h"
-#include "preferences.h"
 #include "selection.h"
 #include "sp-spiral.h"
 #include "toolbox.h"
@@ -46,8 +45,6 @@
 #include "verbs.h"
 #include "widgets/spinbutton-events.h"
 #include "xml/node-event-vector.h"
-#include "xml/node.h"
-#include "xml/repr.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;

@@ -15,7 +15,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
 #include <glibmm/i18n.h>
@@ -32,20 +32,15 @@
 #include "display/sp-ctrlline.h"
 #include "display/sp-ctrlcurve.h"
 #include "display/sp-canvas-util.h"
-#include "xml/repr.h"
 #include "xml/sp-css-attr.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg.h"
-#include "preferences.h"
 #include "inkscape.h"
-#include "sp-item.h"
 #include "style.h"
 #include "knot.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-mesh.h"
-#include "sp-mesh-row.h"
-#include "sp-mesh-patch.h"
 #include "gradient-chemistry.h"
 #include "gradient-drag.h"
 #include "sp-stop.h"
