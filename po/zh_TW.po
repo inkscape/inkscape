@@ -12907,7 +12907,7 @@ msgstr "動態偏移"
 #: ../src/sp-offset.cpp:339
 #, c-format
 msgid "%s by %f pt"
-msgstr "以 %f pt %s"
+msgstr "%s 偏移 %f pt"
 
 #: ../src/sp-offset.cpp:340
 msgid "outset"
@@ -22590,8 +22590,8 @@ msgid ""
 "<b>BSpline node</b>: drag to shape the path (more: Shift, Ctrl, Alt). %g "
 "power"
 msgstr ""
-"<b>貝氏雲形線</b>：%g 權重，拖曳可改變路徑的形狀 (更進一步：Shift, Ctrl, "
-"Alt)。%g力量"
+"<b>貝氏雲形線節點</b>：拖曳可改變路徑的形狀 (更進一步：Shift, Ctrl, Alt)。%g "
+"力量"
 
 #: ../src/ui/tool/node.cpp:1454
 #, c-format
