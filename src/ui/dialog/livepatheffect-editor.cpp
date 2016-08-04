@@ -125,13 +125,6 @@ LivePathEffectEditor::LivePathEffectEditor()
 
     // Add toolbar items to toolbar
     toolbar_hbox.set_layout (Gtk::BUTTONBOX_END);
-
-#if !WITH_GTKMM_3_0
-    // TODO: This has been removed from Gtkmm 3.0. Check that
-    //       everything still looks OK!
-    toolbar_hbox.set_child_min_width( 16 );
-#endif
-
     toolbar_hbox.add( button_add );
     toolbar_hbox.set_child_secondary( button_add , true);
     toolbar_hbox.add( button_remove );

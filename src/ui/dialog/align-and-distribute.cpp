@@ -58,11 +58,7 @@ namespace Dialog {
 Action::Action(const Glib::ustring &id,
        const Glib::ustring &tiptext,
        guint row, guint column,
-#if WITH_GTKMM_3_0
-   Gtk::Grid &parent,
-#else
-   Gtk::Table &parent,
-#endif
+       Gtk::Grid &parent,
        AlignAndDistribute &dialog):
     _dialog(dialog),
     _id(id),
@@ -78,11 +74,7 @@ Action::Action(const Glib::ustring &id,
     pButton->signal_clicked()
         .connect(sigc::mem_fun(*this, &Action::on_button_click));
     pButton->set_tooltip_text(tiptext);
-#if WITH_GTKMM_3_0
     parent.attach(*pButton, column, row, 1, 1);
-#else
-    parent.attach(*pButton, column, column+1, row, row+1, Gtk::FILL, Gtk::FILL);
-#endif
 }
 
 
@@ -444,11 +436,7 @@ public:
         Action(id, tiptext, row, column + 4,
                dialog.removeOverlap_table(), dialog)
     {
-#if WITH_GTKMM_3_0
         dialog.removeOverlap_table().set_column_spacing(3);
-#else
-        dialog.removeOverlap_table().set_col_spacings(3);
-#endif
 
         removeOverlapXGap.set_digits(1);
         removeOverlapXGap.set_size_request(60, -1);
@@ -470,17 +458,10 @@ public:
         removeOverlapYGapLabel.set_text_with_mnemonic(C_("Gap", "_V:"));
         removeOverlapYGapLabel.set_mnemonic_widget(removeOverlapYGap);
 
-#if WITH_GTKMM_3_0
         dialog.removeOverlap_table().attach(removeOverlapXGapLabel, column, row, 1, 1);
         dialog.removeOverlap_table().attach(removeOverlapXGap, column+1, row, 1, 1);
         dialog.removeOverlap_table().attach(removeOverlapYGapLabel, column+2, row, 1, 1);
         dialog.removeOverlap_table().attach(removeOverlapYGap, column+3, row, 1, 1);
-#else
-        dialog.removeOverlap_table().attach(removeOverlapXGapLabel, column, column+1, row, row+1, Gtk::FILL, Gtk::FILL);
-        dialog.removeOverlap_table().attach(removeOverlapXGap, column+1, column+2, row, row+1, Gtk::FILL, Gtk::FILL);
-        dialog.removeOverlap_table().attach(removeOverlapYGapLabel, column+2, column+3, row, row+1, Gtk::FILL, Gtk::FILL);
-        dialog.removeOverlap_table().attach(removeOverlapYGap, column+3, column+4, row, row+1, Gtk::FILL, Gtk::FILL);
-#endif
     }
 
 private :
@@ -759,11 +740,7 @@ public :
                guint row,
                guint column,
                AlignAndDistribute &dialog,
-#if WITH_GTKMM_3_0
                Gtk::Grid &table,
-#else
-               Gtk::Table &table,
-#endif
                Geom::Dim2 orientation, bool distribute):
         Action(id, tiptext, row, column,
                table, dialog),
@@ -936,19 +913,11 @@ AlignAndDistribute::AlignAndDistribute()
       _rearrangeFrame(_("Rearrange")),
       _removeOverlapFrame(_("Remove overlaps")),
       _nodesFrame(_("Nodes")),
-#if WITH_GTKMM_3_0
       _alignTable(),
       _distributeTable(),
       _rearrangeTable(),
       _removeOverlapTable(),
       _nodesTable(),
-#else
-      _alignTable(2, 6, true),
-      _distributeTable(2, 6, true),
-      _rearrangeTable(1, 5, false),
-      _removeOverlapTable(1, 5, false),
-      _nodesTable(1, 4, true),
-#endif
       _anchorLabel(_("Relative to: ")),
       _anchorLabelNode(_("Relative to: ")),
       _selgrpLabel(_("_Treat selection as group: "), 1)
@@ -1313,13 +1282,8 @@ void AlignAndDistribute::addRandomizeButton(const Glib::ustring &id, const Glib:
         );
 }
 
-#if WITH_GTKMM_3_0
 void AlignAndDistribute::addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
                                     guint row, guint col, Gtk::Grid &table, Geom::Dim2 orientation, bool distribute)
-#else
-void AlignAndDistribute::addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
-                                    guint row, guint col, Gtk::Table &table, Geom::Dim2 orientation, bool distribute)
-#endif
 {
     _actionList.push_back(
         new ActionBaseline(

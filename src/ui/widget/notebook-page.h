@@ -17,11 +17,7 @@
 #include <gtkmm/box.h>
 
 namespace Gtk {
-#if WITH_GTKMM_3_0
 class Grid;
-#else
-class Table;
-#endif
 }
 
 namespace Inkscape {
@@ -42,19 +38,10 @@ public:
      */
     NotebookPage(int n_rows, int n_columns, bool expand=false, bool fill=false, guint padding=0);
 
-#if WITH_GTKMM_3_0
     Gtk::Grid& table() { return *_table; }
-#else
-    Gtk::Table& table() { return *_table; }
-#endif
 
 protected:
-
-#if WITH_GTKMM_3_0
     Gtk::Grid *_table;
-#else
-    Gtk::Table *_table;
-#endif
 };
 
 } // namespace Widget

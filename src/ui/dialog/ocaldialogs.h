@@ -17,18 +17,15 @@
 # include <config.h>
 #endif
 
-//Gtk includes
+// Gtkmm includes
 #include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/listviewtext.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/searchentry.h>
 #include <gtkmm/window.h>
 
 #include <cairomm/refptr.h>
-
-#if GTK_CHECK_VERSION(3,0,0)
-# include <gtkmm/searchentry.h>
-#endif
 
 #include <giomm/file.h>
 
@@ -283,10 +280,6 @@ private:
     sigc::connection timeout;
     bool draw_spinner;
 
-#if !WITH_GTKMM_3_0
-    bool _on_expose_event(GdkEventExpose* event);
-#endif
-
     bool _on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
     bool on_timeout();
 };
@@ -310,10 +303,6 @@ private:
     WrapLabel* label_description;
     WrapLabel* label_time;
     
-#if !WITH_GTKMM_3_0
-    bool _on_expose_event(GdkEventExpose* event);
-#endif
-
     bool _on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
 };
 
@@ -336,21 +325,6 @@ public:
     Gtk::Label* label;
 };
 
-#if !GTK_CHECK_VERSION(3,0,0)
-/**
- * A Gtk::Entry with search & clear icons
- */
-class SearchEntry : public Gtk::Entry
-{
-public:
-    SearchEntry();
-    
-private:
-    void _on_icon_pressed(Gtk::EntryIconPosition icon_position, const GdkEventButton* event);
-    void _on_changed();
-};
-#endif
-
 /**
  * A box which paints an overlay of the OCAL logo
  */
@@ -359,9 +333,6 @@ class LogoArea : public Gtk::EventBox
 public:
     LogoArea();
 private:
-#if !WITH_GTKMM_3_0
-    bool _on_expose_event(GdkEventExpose* event);
-#endif
     bool _on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
     bool draw_logo;
     Cairo::RefPtr<Cairo::ImageSurface> logo_mask;
@@ -375,9 +346,6 @@ class BaseBox : public Gtk::EventBox
 public:
     BaseBox();
 private:
-#if !WITH_GTKMM_3_0
-    bool _on_expose_event(GdkEventExpose* event);
-#endif
     bool _on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
 };
 
@@ -459,12 +427,7 @@ protected:
 private:
     Glib::ustring filename_image;
     Glib::ustring filename_thumbnail;
-
-#if GTK_CHECK_VERSION(3,0,0)
     Gtk::SearchEntry *entry_search;
-#else
-    SearchEntry *entry_search;
-#endif
 
     LogoArea *drawingarea_logo;
     SearchResultList *list_results;

@@ -20,12 +20,7 @@
 
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/radiobuttongroup.h>
-
-#if WITH_GTKMM_3_0
- #include <gtkmm/grid.h>
-#else
- #include <gtkmm/table.h>
-#endif
+#include <gtkmm/grid.h>
 
 namespace Inkscape {
 namespace UI {
@@ -75,11 +70,7 @@ private:
     Gtk::RadioButton       arrangeOnLastCircleRadio;
     Gtk::RadioButton       arrangeOnParametersRadio;
 
-#if WITH_GTKMM_3_0
     Gtk::Grid              parametersTable;
-#else
-    Gtk::Table             parametersTable;
-#endif
 
     Gtk::Label             centerLabel;
     Inkscape::UI::Widget::ScalarUnit centerY;

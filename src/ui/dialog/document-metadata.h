@@ -21,12 +21,7 @@
 #include <stddef.h>
 #include "ui/widget/panel.h"
 #include <gtkmm/notebook.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
+#include <gtkmm/grid.h>
 
 #include "inkscape.h"
 #include "ui/widget/licensor.h"
@@ -62,13 +57,8 @@ protected:
 
     Gtk::Notebook  _notebook;
 
-#if WITH_GTKMM_3_0
     Gtk::Grid     _page_metadata1;
     Gtk::Grid     _page_metadata2;
-#else
-    Gtk::Table     _page_metadata1;
-    Gtk::Table     _page_metadata2;
-#endif
 
     //---------------------------------------------------------------
     RDElist _rdflist;

@@ -52,13 +52,8 @@ namespace Widget {
 
 
 ColorNotebook::ColorNotebook(SelectedColor &color)
-#if GTK_CHECK_VERSION(3, 0, 0)
     : Gtk::Grid()
-#else
-    : Gtk::Table(2, 3, false)
-#endif
     , _selected_color(color)
-
 {
     Page *page;
 
@@ -106,12 +101,8 @@ void ColorNotebook::_initUI()
     notebook->set_show_tabs(false);
     _book = GTK_WIDGET(notebook->gobj());
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     _buttonbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_box_set_homogeneous(GTK_BOX(_buttonbox), TRUE);
-#else
-    _buttonbox = gtk_hbox_new(TRUE, 2);
-#endif
 
     gtk_widget_show(_buttonbox);
     _buttons = new GtkWidget *[_available_pages.size()];
@@ -122,7 +113,6 @@ void ColorNotebook::_initUI()
 
     sp_set_font_size_smaller(_buttonbox);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
   #if GTK_CHECK_VERSION(3, 12, 0)
     gtk_widget_set_margin_start(_buttonbox, XPAD);
     gtk_widget_set_margin_end(_buttonbox, XPAD);
@@ -135,14 +125,9 @@ void ColorNotebook::_initUI()
     gtk_widget_set_hexpand(_buttonbox, TRUE);
     gtk_widget_set_valign(_buttonbox, GTK_ALIGN_CENTER);
     attach(*Glib::wrap(_buttonbox), 0, row, 2, 1);
-#else
-    attach(*Glib::wrap(_buttonbox), 0, 2, row, row + 1, Gtk::EXPAND | Gtk::FILL, static_cast<Gtk::AttachOptions>(0),
-           XPAD, YPAD);
-#endif
 
     row++;
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 #if GTK_CHECK_VERSION(3, 12, 0)
     gtk_widget_set_margin_start(_book, XPAD * 2);
     gtk_widget_set_margin_end(_book, XPAD * 2);
@@ -155,20 +140,13 @@ void ColorNotebook::_initUI()
     gtk_widget_set_hexpand(_book, TRUE);
     gtk_widget_set_vexpand(_book, TRUE);
     attach(*notebook, 0, row, 2, 1);
-#else
-    attach(*notebook, 0, 2, row, row + 1, Gtk::EXPAND | Gtk::FILL, Gtk::EXPAND | Gtk::FILL, XPAD * 2, YPAD);
-#endif
 
     // restore the last active page
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     _setCurrentPage(prefs->getInt("/colorselector/page", 0));
     row++;
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     GtkWidget *rgbabox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-#else
-    GtkWidget *rgbabox = gtk_hbox_new(FALSE, 0);
-#endif
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     /* Create color management icons */
@@ -206,11 +184,7 @@ void ColorNotebook::_initUI()
 
     /* Create RGBA entry and color preview */
     _rgbal = gtk_label_new_with_mnemonic(_("RGBA_:"));
-#if GTK_CHECK_VERSION(3,0,0)
     gtk_widget_set_halign(_rgbal, GTK_ALIGN_END);
-#else
-    gtk_misc_set_alignment(GTK_MISC(_rgbal), 1.0, 0.5);
-#endif
     gtk_box_pack_start(GTK_BOX(rgbabox), _rgbal, TRUE, TRUE, 2);
 
     ColorEntry *rgba_entry = Gtk::manage(new ColorEntry(_selected_color));
@@ -226,7 +200,6 @@ void ColorNotebook::_initUI()
     gtk_widget_hide(GTK_WIDGET(_box_toomuchink));
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-#if GTK_CHECK_VERSION(3, 0, 0)
   #if GTK_CHECK_VERSION(3, 12, 0)
     gtk_widget_set_margin_start(rgbabox, XPAD);
     gtk_widget_set_margin_end(rgbabox, XPAD);
@@ -237,9 +210,6 @@ void ColorNotebook::_initUI()
     gtk_widget_set_margin_top(rgbabox, YPAD);
     gtk_widget_set_margin_bottom(rgbabox, YPAD);
     attach(*Glib::wrap(rgbabox), 0, row, 2, 1);
-#else
-    attach(*Glib::wrap(rgbabox), 0, 2, row, row + 1, Gtk::FILL, Gtk::SHRINK, XPAD, YPAD);
-#endif
 
 #ifdef SPCS_PREVIEW
     _p = sp_color_preview_new(0xffffffff);

@@ -120,13 +120,8 @@ void GuidelinePropertiesDialog::_onOK()
     
     g_free((gpointer) name);
 
-#if WITH_GTKMM_3_0
-    const Gdk::RGBA c = _color.get_rgba();
+    const auto c = _color.get_rgba();
     unsigned r = c.get_red_u()/257, g = c.get_green_u()/257, b = c.get_blue_u()/257;
-#else
-    const Gdk::Color c = _color.get_color();
-    unsigned r = c.get_red()/257, g = c.get_green()/257, b = c.get_blue()/257;
-#endif
     //TODO: why 257? verify this!
 
     _guide->set_color(r, g, b, true);
@@ -167,15 +162,9 @@ void GuidelinePropertiesDialog::_setup() {
     add_button(Gtk::Stock::DELETE, -12);
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 
-#if WITH_GTKMM_3_0
-    Gtk::Box *mainVBox = get_content_area();
+    auto mainVBox = get_content_area();
     _layout_table.set_row_spacing(4);
     _layout_table.set_column_spacing(4);
-#else
-    Gtk::Box *mainVBox = get_vbox();
-    _layout_table.set_spacings(4);
-    _layout_table.resize (3, 4);
-#endif
 
     mainVBox->pack_start(_layout_table, false, false, 0);
 
@@ -185,7 +174,6 @@ void GuidelinePropertiesDialog::_setup() {
     _label_descr.set_label("foo1");
     _label_descr.set_alignment(0, 0.5);
     
-#if WITH_GTKMM_3_0
     _label_name.set_halign(Gtk::ALIGN_FILL);
     _label_name.set_valign(Gtk::ALIGN_FILL);
     _layout_table.attach(_label_name, 0, 0, 3, 1);
@@ -203,19 +191,6 @@ void GuidelinePropertiesDialog::_setup() {
     _color.set_valign(Gtk::ALIGN_FILL);
     _color.set_hexpand();
     _layout_table.attach(_color, 1, 3, 2, 1);
-#else
-    _layout_table.attach(_label_name,
-                         0, 3, 0, 1, Gtk::FILL, Gtk::FILL);
-
-    _layout_table.attach(_label_descr,
-                         0, 3, 1, 2, Gtk::FILL, Gtk::FILL);
-
-    _layout_table.attach(_label_entry,
-                         1, 3, 2, 3, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-
-    _layout_table.attach(_color,
-                         1, 3, 3, 4, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-#endif
 
     // unitmenus
     /* fixme: We should allow percents here too, as percents of the canvas size */
@@ -234,7 +209,6 @@ void GuidelinePropertiesDialog::_setup() {
     _spin_button_y.setIncrements(1.0, 10.0);
     _spin_button_y.setRange(-1e6, 1e6);
 
-#if WITH_GTKMM_3_0
     _spin_button_x.set_halign(Gtk::ALIGN_FILL);
     _spin_button_x.set_valign(Gtk::ALIGN_FILL);
     _spin_button_x.set_hexpand();
@@ -248,22 +222,12 @@ void GuidelinePropertiesDialog::_setup() {
     _unit_menu.set_halign(Gtk::ALIGN_FILL);
     _unit_menu.set_valign(Gtk::ALIGN_FILL);
     _layout_table.attach(_unit_menu, 2, 4, 1, 1);
-#else
-    _layout_table.attach(_spin_button_x,
-                         1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-    _layout_table.attach(_spin_button_y,
-                         1, 2, 5, 6, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-
-    _layout_table.attach(_unit_menu,
-                         2, 3, 4, 5, Gtk::FILL, Gtk::FILL);
-#endif
 
     // angle spinbutton
     _spin_angle.setDigits(3);
     _spin_angle.setIncrements(1.0, 10.0);
     _spin_angle.setRange(-3600., 3600.);
 
-#if WITH_GTKMM_3_0
     _spin_angle.set_halign(Gtk::ALIGN_FILL);
     _spin_angle.set_valign(Gtk::ALIGN_FILL);
     _spin_angle.set_hexpand();
@@ -280,18 +244,6 @@ void GuidelinePropertiesDialog::_setup() {
     _locked_toggle.set_valign(Gtk::ALIGN_FILL);
     _locked_toggle.set_hexpand();
     _layout_table.attach(_locked_toggle, 1, 8, 2, 1);
-#else
-    _layout_table.attach(_spin_angle,
-                         1, 3, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-
-    // mode radio button
-    _layout_table.attach(_relative_toggle,
-                         1, 3, 7, 8, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-
-    // locked radio button
-    _layout_table.attach(_locked_toggle,
-                         1, 3, 8, 9, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
-#endif
 
     _relative_toggle.signal_toggled().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_modeChanged));
     _relative_toggle.set_active(_relative_toggle_status);
@@ -344,15 +296,9 @@ void GuidelinePropertiesDialog::_setup() {
     // init name entry
     _label_entry.getEntry()->set_text(_guide->getLabel() ? _guide->getLabel() : "");
 
-#if WITH_GTKMM_3_0
     Gdk::RGBA c;
     c.set_rgba(((_guide->getColor()>>24)&0xff) / 255.0, ((_guide->getColor()>>16)&0xff) / 255.0, ((_guide->getColor()>>8)&0xff) / 255.0);
     _color.set_rgba(c);
-#else
-    Gdk::Color c;
-    c.set_rgb_p(((_guide->getColor()>>24)&0xff) / 255.0, ((_guide->getColor()>>16)&0xff) / 255.0, ((_guide->getColor()>>8)&0xff) / 255.0);
-    _color.set_color(c);
-#endif
 
     _modeChanged(); // sets values of spinboxes.
 

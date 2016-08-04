@@ -73,9 +73,7 @@
 #include "message-stack.h"
 #include "ui/dialog/layer-properties.h"
 
-#if GTK_CHECK_VERSION(3,0,0)
-    #include "widgets/image-menu-item.h"
-#endif
+#include "widgets/image-menu-item.h"
 
 using Inkscape::DocumentUndo;
 
@@ -407,11 +405,7 @@ sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
 
     icon = sp_icon_new( Inkscape::ICON_SIZE_MENU, icon_name );
     gtk_widget_show(icon);
-#if GTK_CHECK_VERSION(3,0,0)
     image_menu_item_set_image((ImageMenuItem *) item, icon);
-#else
-    gtk_image_menu_item_set_image((GtkImageMenuItem *) item, icon);
-#endif
 } // end of sp_ui_menu_add_icon
 
 void
@@ -465,11 +459,7 @@ static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb
         if (radio) {
             item = gtk_radio_menu_item_new_with_mnemonic(group, action->name);
         } else {
-#if GTK_CHECK_VERSION(3,0,0)
             item = image_menu_item_new_with_mnemonic(action->name);
-#else
-            item = gtk_image_menu_item_new_with_mnemonic(action->name);
-#endif
         }
 
         gtk_label_set_markup_with_mnemonic( GTK_LABEL(gtk_bin_get_child(GTK_BIN (item))), action->name);
@@ -560,11 +550,7 @@ static bool getViewStateFromPref(Inkscape::UI::View::View *view, gchar const *pr
     return prefs->getBool(pref_path, true);
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 static gboolean checkitem_update(GtkWidget *widget, cairo_t * /*cr*/, gpointer user_data)
-#else
-static gboolean checkitem_update(GtkWidget *widget, GdkEventExpose * /*event*/, gpointer user_data)
-#endif
 {
     GtkCheckMenuItem *menuitem=GTK_CHECK_MENU_ITEM(widget);
 
@@ -621,11 +607,7 @@ static void taskToggled(GtkCheckMenuItem *menuitem, gpointer userData)
 /**
  * Callback function to update the status of the radio buttons in the View -> Display mode menu (Normal, No Filters, Outline) and Color display mode.
  */
-#if GTK_CHECK_VERSION(3,0,0)
 static gboolean update_view_menu(GtkWidget *widget, cairo_t * /*cr*/, gpointer user_data)
-#else
-static gboolean update_view_menu(GtkWidget *widget, GdkEventExpose * /*event*/, gpointer user_data)
-#endif
 {
     SPAction *action = (SPAction *) user_data;
     g_assert(action->id != NULL);
@@ -669,11 +651,7 @@ static gboolean update_view_menu(GtkWidget *widget, GdkEventExpose * /*event*/, 
 static void
 sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *view, gchar const *label, gchar const *tip, gchar const *pref,
                                        void (*callback_toggle)(GtkCheckMenuItem *, gpointer user_data),
-#if GTK_CHECK_VERSION(3,0,0)
                                        gboolean (*callback_update)(GtkWidget *widget, cairo_t *cr, gpointer user_data),
-#else
-                                       gboolean (*callback_update)(GtkWidget *widget, GdkEventExpose *event, gpointer user_data),
-#endif
                                        Inkscape::Verb *verb)
 {
     unsigned int shortcut = (verb) ? sp_shortcut_get_primary(verb) : 0;
@@ -697,11 +675,7 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
 
     g_signal_connect( G_OBJECT(item), "toggled", (GCallback) callback_toggle, (void *) pref);
 
-#if GTK_CHECK_VERSION(3,0,0)
     g_signal_connect( G_OBJECT(item), "draw", (GCallback) callback_update, (void *) pref);
-#else
-    g_signal_connect( G_OBJECT(item), "expose_event", (GCallback) callback_update, (void *) pref);
-#endif
 
     (*callback_update)(item, NULL, (void *)pref);
 
@@ -844,11 +818,7 @@ static void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, I
                     }
                     if (verb->get_code() != SP_VERB_NONE) {
                         SPAction *action = verb->get_action(Inkscape::ActionContext(view));
-#if GTK_CHECK_VERSION(3,0,0)
                         g_signal_connect( G_OBJECT(item), "draw", (GCallback) update_view_menu, (void *) action);
-#else
-                        g_signal_connect( G_OBJECT(item), "expose_event", (GCallback) update_view_menu, (void *) action);
-#endif
                     }
                 } else if (menu_pntr->attribute("check") != NULL) {
                     if (verb->get_code() != SP_VERB_NONE) {

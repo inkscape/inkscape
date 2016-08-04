@@ -16,16 +16,9 @@ bin_PROGRAMS = inkscape inkview
 # Libraries which should be compiled by "make" but not installed.
 # Use this only for libraries that are really standalone, rather than for
 # source tree subdirectories.
-
-if !WITH_EXT_GDL
-internal_GDL = libgdl/libgdl.a
-endif
-
-
 noinst_LIBRARIES =	\
 	libcroco/libcroco.a		\
 	libavoid/libavoid.a		\
-	$(internal_GDL)			\
 	libuemf/libuemf.a   		\
 	libcola/libcola.a		\
         inkgc/libinkgc.a		\
@@ -48,10 +41,9 @@ all_libs =			\
 	$(kdeldadd)		\
 	$(win32ldflags)		\
 	$(LIBWPG_LIBS)		\
-	$(LIBVISIO_LIBS)		\
+	$(LIBVISIO_LIBS)	\
 	$(LIBCDR_LIBS)		\
 	$(DBUS_LIBS)		\
-	$(GDL_LIBS)             \
 	$(IMAGEMAGICK_LIBS)     \
 	$(X11_LIBS)
 
@@ -82,7 +74,6 @@ AM_CPPFLAGS =	\
 	$(LIBVISIO_CFLAGS) \
 	$(LIBCDR_CFLAGS) \
 	$(DBUS_CFLAGS) \
-	$(GDL_CFLAGS)  \
 	$(XFT_CFLAGS)	\
 	$(LCMS_CFLAGS)	\
 	$(POPPLER_CFLAGS)	\
@@ -122,7 +113,6 @@ include helper/Makefile_insert
 include io/Makefile_insert
 include libcroco/Makefile_insert
 include inkgc/Makefile_insert
-include libgdl/Makefile_insert
 include libnrtype/Makefile_insert
 include libavoid/Makefile_insert
 include livarot/Makefile_insert
@@ -160,7 +150,6 @@ EXTRA_DIST +=	\
 	io/makefile.in	\
 	libavoid/makefile.in	\
 	libcroco/makefile.in	\
-	libgdl/makefile.in	\
 	libnrtype/makefile.in	\
 	libuemf/makefile.in \
 	livarot/makefile.in	\

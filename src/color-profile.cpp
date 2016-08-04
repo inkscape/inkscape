@@ -4,11 +4,7 @@
 
 #define noDEBUG_LCMS
 
-#if WITH_GTKMM_3_0
-# include <gdkmm/rgba.h>
-#else
-# include <gdkmm/color.h>
-#endif
+#include <gdkmm/rgba.h>
 
 #include <glib/gstdio.h>
 #include <fcntl.h>
@@ -997,11 +993,7 @@ void loadProfiles()
 
 static bool gamutWarn = false;
 
-#if WITH_GTKMM_3_0
 static Gdk::RGBA lastGamutColor("#808080");
-#else
-static Gdk::Color lastGamutColor("#808080");
-#endif
 
 static bool lastBPC = false;
 #if defined(cmsFLAGS_PRESERVEBLACK)
@@ -1147,12 +1139,7 @@ cmsHTRANSFORM Inkscape::CMSSystem::getDisplayTransform()
     bool preserveBlack = prefs->getBool( "/options/softproof/preserveblack");
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
     Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
-
-#if WITH_GTKMM_3_0
     Gdk::RGBA gamutColor( colorStr.empty() ? "#808080" : colorStr );
-#else
-    Gdk::Color gamutColor( colorStr.empty() ? "#808080" : colorStr );
-#endif
 
     if ( (warn != gamutWarn)
          || (lastIntent != intent)
@@ -1184,15 +1171,9 @@ cmsHTRANSFORM Inkscape::CMSSystem::getDisplayTransform()
             if ( gamutWarn ) {
                 dwFlags |= cmsFLAGS_GAMUTCHECK;
 
-#if WITH_GTKMM_3_0
-                gushort gamutColor_r = gamutColor.get_red_u();
-                gushort gamutColor_g = gamutColor.get_green_u();
-                gushort gamutColor_b = gamutColor.get_blue_u();
-#else
-                gushort gamutColor_r = gamutColor.get_red();
-                gushort gamutColor_g = gamutColor.get_green();
-                gushort gamutColor_b = gamutColor.get_blue();
-#endif
+                auto gamutColor_r = gamutColor.get_red_u();
+                auto gamutColor_g = gamutColor.get_green_u();
+                auto gamutColor_b = gamutColor.get_blue_u();
 
 #if HAVE_LIBLCMS1
                 cmsSetAlarmCodes(gamutColor_r >> 8, gamutColor_g >> 8, gamutColor_b >> 8);
@@ -1333,12 +1314,7 @@ cmsHTRANSFORM Inkscape::CMSSystem::getDisplayPer( Glib::ustring const& id )
                 bool preserveBlack = prefs->getBool( "/options/softproof/preserveblack");
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
                 Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
-
-#if WITH_GTKMM_3_0
                 Gdk::RGBA gamutColor( colorStr.empty() ? "#808080" : colorStr );
-#else
-                Gdk::Color gamutColor( colorStr.empty() ? "#808080" : colorStr );
-#endif
 
                 if ( (warn != gamutWarn)
                      || (lastIntent != intent)
@@ -1368,16 +1344,9 @@ cmsHTRANSFORM Inkscape::CMSSystem::getDisplayPer( Glib::ustring const& id )
                         cmsUInt32Number dwFlags = cmsFLAGS_SOFTPROOFING;
                         if ( gamutWarn ) {
                             dwFlags |= cmsFLAGS_GAMUTCHECK;
-
-#if WITH_GTKMM_3_0
-                            gushort gamutColor_r = gamutColor.get_red_u();
-                            gushort gamutColor_g = gamutColor.get_green_u();
-                            gushort gamutColor_b = gamutColor.get_blue_u();
-#else
-                            gushort gamutColor_r = gamutColor.get_red();
-                            gushort gamutColor_g = gamutColor.get_green();
-                            gushort gamutColor_b = gamutColor.get_blue();
-#endif
+                            auto gamutColor_r = gamutColor.get_red_u();
+                            auto gamutColor_g = gamutColor.get_green_u();
+                            auto gamutColor_b = gamutColor.get_blue_u();
 
 #if HAVE_LIBLCMS1
                             cmsSetAlarmCodes(gamutColor_r >> 8, gamutColor_g >> 8, gamutColor_b >> 8);

@@ -50,20 +50,11 @@ public:
     property_event_type() { return _property_event_type.get_proxy(); }
 
 protected:
-#if WITH_GTKMM_3_0
     virtual void render_vfunc(const Cairo::RefPtr<Cairo::Context>& cr,
                               Gtk::Widget& widget,
                               const Gdk::Rectangle& background_area,
                               const Gdk::Rectangle& cell_area,
                               Gtk::CellRendererState flags);
-#else
-    virtual void render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
-                              Gtk::Widget& widget,
-                              const Gdk::Rectangle& background_area,
-                              const Gdk::Rectangle& cell_area,
-                              const Gdk::Rectangle& expose_area,
-                              Gtk::CellRendererState flags);
-#endif
 private:
 
     Glib::Property<Glib::RefPtr<Gdk::Pixbuf> > _property_icon;
@@ -95,20 +86,11 @@ public:
     static const Filter& no_filter;
 
 protected:
-#if WITH_GTKMM_3_0
     virtual void render_vfunc(const Cairo::RefPtr<Cairo::Context>& cr,
                               Gtk::Widget& widget,
                               const Gdk::Rectangle& background_area,
                               const Gdk::Rectangle& cell_area,
                               Gtk::CellRendererState flags);
-#else
-    virtual void render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
-                              Gtk::Widget& widget,
-                              const Gdk::Rectangle& background_area,
-                              const Gdk::Rectangle& cell_area,
-                              const Gdk::Rectangle& expose_area,
-                              Gtk::CellRendererState flags);
-#endif
 
 private:
 

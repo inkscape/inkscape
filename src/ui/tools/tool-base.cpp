@@ -110,11 +110,7 @@ ToolBase::~ToolBase() {
     }
 
     if (this->cursor != NULL) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(this->cursor);
-#else
-        gdk_cursor_unref(this->cursor);
-#endif
         this->cursor = NULL;
     }
 
@@ -141,16 +137,10 @@ void ToolBase::sp_event_context_set_cursor(GdkCursorType cursor_type) {
     GdkDisplay *display = gdk_display_get_default();
     GdkCursor *cursor = gdk_cursor_new_for_display(display, cursor_type);
 
-#if WITH_GTKMM_3_0
     if (cursor) {
           gdk_window_set_cursor (gtk_widget_get_window (w), cursor);
           g_object_unref (cursor);
     }
-#else
-    gdk_window_set_cursor (gtk_widget_get_window (w), cursor);
-    gdk_cursor_unref (cursor);
-#endif
-
 }
 
 /**
@@ -180,11 +170,7 @@ void ToolBase::sp_event_context_update_cursor() {
                     );
                 if (pixbuf != NULL) {
                     if (this->cursor) {
-#if GTK_CHECK_VERSION(3,0,0)
                         g_object_unref(this->cursor);
-#else
-                        gdk_cursor_unref(this->cursor);
-#endif
                     }
                     this->cursor = gdk_cursor_new_from_pixbuf(display, pixbuf, this->hot_x, this->hot_y);
                     g_object_unref(pixbuf);
@@ -194,11 +180,7 @@ void ToolBase::sp_event_context_update_cursor() {
 
                 if (pixbuf) {
                     if (this->cursor) {
-#if GTK_CHECK_VERSION(3,0,0)
                         g_object_unref(this->cursor);
-#else
-                        gdk_cursor_unref(this->cursor);
-#endif
                     }
                     this->cursor = gdk_cursor_new_from_pixbuf(display,
                     pixbuf, this->hot_x, this->hot_y);
@@ -769,11 +751,9 @@ bool ToolBase::root_handler(GdkEvent* event) {
         int const wheel_scroll = prefs->getIntLimited(
                 "/options/wheelscroll/value", 40, 0, 1000);
 
-#if GTK_CHECK_VERSION(3,0,0)
         // Size of smooth-scrolls (only used in GTK+ 3)
         gdouble delta_x = 0;
         gdouble delta_y = 0;
-#endif
 
         /* shift + wheel, pan left--right */
         if (event->scroll.state & GDK_SHIFT_MASK) {
@@ -834,12 +814,10 @@ bool ToolBase::root_handler(GdkEvent* event) {
                 desktop->scroll_world(-wheel_scroll, 0);
                 break;
 
-#if GTK_CHECK_VERSION(3,0,0)
             case GDK_SCROLL_SMOOTH:
                 gdk_event_get_scroll_deltas(event, &delta_x, &delta_y);
                 desktop->scroll_world(delta_x, delta_y);
                 break;
-#endif
             }
         }
         break;

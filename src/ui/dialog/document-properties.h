@@ -173,11 +173,7 @@ protected:
     Gtk::Button         _external_remove_btn;
     Gtk::Button         _embed_new_btn;
     Gtk::Button         _embed_remove_btn;
-#if WITH_GTKMM_3_0
-    Gtk::ButtonBox _embed_button_box;
-#else
-    Gtk::HButtonBox _embed_button_box;
-#endif
+    Gtk::ButtonBox      _embed_button_box;
 
     class ExternalScriptsColumns : public Gtk::TreeModel::ColumnRecord
         {

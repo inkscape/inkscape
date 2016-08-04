@@ -27,11 +27,7 @@
 #include "xml/helper-observer.h"
 
 namespace Gtk {
-#if WITH_GTKMM_3_0
 class Scale;
-#else
-class HScale;
-#endif
 }
 
 class SPGlyph;
@@ -216,12 +212,7 @@ private:
     GlyphComboBox first_glyph, second_glyph;
     SPGlyphKerning* kerning_pair;
     Inkscape::UI::Widget::SpinButton setwidth_spin;
-
-#if WITH_GTKMM_3_0
     Gtk::Scale* kerning_slider;
-#else
-    Gtk::HScale* kerning_slider;
-#endif
 
     class EntryWidget : public Gtk::HBox
     {

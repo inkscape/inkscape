@@ -14,15 +14,10 @@
 #include <glibmm/i18n.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/grid.h>
 #include <gtkmm/iconview.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/scrolledwindow.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
 
 #include "desktop.h"
 #include "document.h" // for SPDocumentUndo::done()
@@ -337,12 +332,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     instanceConns(),
     desktopConns()
 {
-#if WITH_GTKMM_3_0
-    Gtk::Grid *table = new Gtk::Grid();
-#else
-    Gtk::Table *table = new Gtk::Table(3, 1, false);
-#endif
-
+    auto table = new Gtk::Grid();
     _getContents()->pack_start(*Gtk::manage(table), Gtk::PACK_EXPAND_WIDGET);
     guint row = 0;
 
@@ -355,29 +345,16 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     gtk_widget_set_size_request (fontsel, 0, 150);
     g_signal_connect( G_OBJECT(fontsel), "font_set", G_CALLBACK(fontChangeCB), this );
 
-#if WITH_GTKMM_3_0
     table->attach(*Gtk::manage(Glib::wrap(fontsel)), 0, row, 3, 1);
-#else
-    table->attach(*Gtk::manage(Glib::wrap(fontsel)),
-                  0, 3, row, row + 1,
-                  Gtk::SHRINK|Gtk::FILL, Gtk::SHRINK|Gtk::FILL);
-#endif
-
     row++;
 
 
 // -------------------------------
 
     {
-        Gtk::Label *label = new Gtk::Label(_("Script: "));
+        auto label = new Gtk::Label(_("Script: "));
 
-#if WITH_GTKMM_3_0
         table->attach( *Gtk::manage(label), 0, row, 1, 1);
-#else
-        table->attach( *Gtk::manage(label),
-                       0, 1, row, row + 1,
-                       Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
         scriptCombo = new Gtk::ComboBoxText();
         for (std::map<GUnicodeScript, Glib::ustring>::iterator it = getScriptToName().begin(); it != getScriptToName().end(); ++it)
@@ -391,14 +368,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
         Gtk::Alignment *align = Gtk::manage(new Gtk::Alignment(Gtk::ALIGN_START, Gtk::ALIGN_START, 0.0, 0.0));
         align->add(*Gtk::manage(scriptCombo));
 
-#if WITH_GTKMM_3_0
         align->set_hexpand();
         table->attach( *align, 1, row, 1, 1);
-#else
-        table->attach( *align,
-                       1, 2, row, row + 1,
-                       Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK);
-#endif
     }
 
     row++;
@@ -406,15 +377,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
 // -------------------------------
 
     {
-        Gtk::Label *label = new Gtk::Label(_("Range: "));
-
-#if WITH_GTKMM_3_0
+        auto label = new Gtk::Label(_("Range: "));
         table->attach( *Gtk::manage(label), 0, row, 1, 1);
-#else
-        table->attach( *Gtk::manage(label),
-                       0, 1, row, row + 1,
-                       Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
         rangeCombo = new Gtk::ComboBoxText();
         for ( std::vector<NamedRange>::iterator it = getRanges().begin(); it != getRanges().end(); ++it ) {
@@ -426,15 +390,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
         instanceConns.push_back(conn);
         Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_START, Gtk::ALIGN_START, 0.0, 0.0);
         align->add(*Gtk::manage(rangeCombo));
-
-#if WITH_GTKMM_3_0
         align->set_hexpand();
         table->attach( *Gtk::manage(align), 1, row, 1, 1);
-#else
-        table->attach( *Gtk::manage(align),
-                       1, 2, row, row + 1,
-                       Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK);
-#endif
     }
 
     row++;
@@ -457,16 +414,9 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     Gtk::ScrolledWindow *scroller = new Gtk::ScrolledWindow();
     scroller->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_ALWAYS);
     scroller->add(*Gtk::manage(iconView));
-
-#if WITH_GTKMM_3_0
     scroller->set_hexpand();
     scroller->set_vexpand();
     table->attach(*Gtk::manage(scroller), 0, row, 3, 1);
-#else
-    table->attach(*Gtk::manage(scroller),
-                  0, 3, row, row + 1,
-                  Gtk::EXPAND|Gtk::FILL, Gtk::EXPAND|Gtk::FILL);
-#endif
 
     row++;
 
@@ -496,15 +446,8 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     insertBtn->set_sensitive(false);
 
     box->pack_end(*Gtk::manage(insertBtn), Gtk::PACK_SHRINK);
-
-#if WITH_GTKMM_3_0
     box->set_hexpand();
     table->attach( *Gtk::manage(box), 0, row, 3, 1);
-#else
-    table->attach( *Gtk::manage(box),
-                   0, 3, row, row + 1,
-                   Gtk::EXPAND|Gtk::FILL, Gtk::SHRINK);
-#endif
 
     row++;
 
@@ -586,12 +529,7 @@ void GlyphsPanel::insertText()
         if (entry->get_text_length() > 0) {
             glyphs = entry->get_text();
         } else {
-
-#if WITH_GTKMM_3_0
-            std::vector<Gtk::TreePath> itemArray = iconView->get_selected_items();
-#else
-            Gtk::IconView::ArrayHandle_TreePaths itemArray = iconView->get_selected_items();
-#endif
+            auto itemArray = iconView->get_selected_items();
 
             if (!itemArray.empty()) {
                 Gtk::TreeModel::Path const & path = *itemArray.begin();
@@ -636,11 +574,7 @@ void GlyphsPanel::glyphActivated(Gtk::TreeModel::Path const & path)
 
 void GlyphsPanel::glyphSelectionChanged()
 {
-#if WITH_GTKMM_3_0
-    std::vector<Gtk::TreePath> itemArray = iconView->get_selected_items();
-#else
-    Gtk::IconView::ArrayHandle_TreePaths itemArray = iconView->get_selected_items();
-#endif
+    auto itemArray = iconView->get_selected_items();
 
     if (itemArray.empty()) {
         label->set_text("      ");

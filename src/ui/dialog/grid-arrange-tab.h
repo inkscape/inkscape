@@ -111,12 +111,7 @@ private:
     Inkscape::UI::Widget::UnitMenu      PaddingUnitMenu;
     Inkscape::UI::Widget::ScalarUnit    XPadding;
     Inkscape::UI::Widget::ScalarUnit    YPadding;
-
-#if WITH_GTKMM_3_0
     Gtk::Grid                          *PaddingTable;
-#else
-    Gtk::Table                         *PaddingTable;
-#endif
 
     // BBox or manual spacing
     Gtk::VBox             SpacingVBox;

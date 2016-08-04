@@ -225,11 +225,7 @@ private:
      *  Dialogs widgets
      */
     Gtk::Label          banner_label;
-#if WITH_GTKMM_3_0
     Gtk::ButtonBox      banner_hbox;
-#else
-    Gtk::HButtonBox     banner_hbox;
-#endif
     Gtk::ScrolledWindow scrolled_window;
     Gtk::TreeView       tree_view;
     Glib::RefPtr<Gtk::ListStore> model;
@@ -243,21 +239,10 @@ private:
     Gtk::Button     add_button;
     GtkWidget *     dictionary_combo;
     Gtk::HBox       dictionary_hbox;
-
-#if WITH_GTKMM_3_0
     Gtk::Separator  action_sep;
-#else
-    Gtk::HSeparator action_sep;
-#endif
-
     Gtk::Button     stop_button;
     Gtk::Button     start_button;
-
-#if WITH_GTKMM_3_0
     Gtk::ButtonBox  actionbutton_hbox;
-#else
-    Gtk::HButtonBox actionbutton_hbox;
-#endif
 
     SPDesktop *     desktop;
     DesktopTracker  deskTrack;

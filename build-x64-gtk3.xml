@@ -159,11 +159,9 @@
 
         #define HAVE_LIBLCMS2                 1
 
-        #define WITH_GTKMM_3_0                1
         #define WITH_GTKMM_3_10               1
         //#define WITH_GLIBMM_2_32              1
         #define HAVE_GLIBMM_THREADS_H         1
-        #define WITH_EXT_GDL                  1
         #define WITH_GDL_3_6                  1
 
         #define ENABLE_NLS                    1

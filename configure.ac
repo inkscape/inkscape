@@ -640,7 +640,7 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  bdw-gc      >= 7.2
 		  cairo       >= 1.10
 		  glib-2.0    >= 2.28
-          gmodule-2.0
+		  gmodule-2.0
 		  gsl
 		  gthread-2.0 >= 2.0
 		  libpng      >= 1.2
@@ -650,7 +650,7 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  pangoft2    >= 1.24
 		  )
 
-# test whether depenencies require C++11
+# test whether dependencies require C++11
 AC_MSG_CHECKING([whether C++11 mode is required])
 CXXFLAGS_SAVE="$CXXFLAGS"
 CXXFLAGS="$INKSCAPE_CXX_DEPS_CFLAGS $CXXFLAGS"
@@ -712,149 +712,67 @@ fi
 
 AC_CHECK_HEADER([boost/unordered_set.hpp], [AC_DEFINE(HAVE_BOOST_UNORDERED_SET, 1, [Boost unordered_set (Boost >= 1.36)])], [])
 
-dnl *********************************
-dnl   Allow experimental GTK+3 build
-dnl *********************************
-AC_ARG_ENABLE(gtk3-experimental,
-	AS_HELP_STRING([--enable-gtk3-experimental], [enable compilation with GTK+3 (EXPERIMENTAL!)]),
-	[enable_gtk3=$enableval], [enable_gtk3=no])
-
-with_gtkmm_3_0="no"
-if test "x$enable_gtk3" = "xyes"; then
-
-	ink_spell_pkg=
-	if pkg-config --exists gtkspell-3.0; then
-		ink_spell_pkg=gtkspell-3.0
-		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
-	fi
-
-	PKG_CHECK_MODULES(GTK,
-			  gtk+-3.0  >= 3.8
-			  gdk-3.0   >= 3.8
-			  gdl-3.0   > 3.4
-			  $ink_spell_pkg)
-
-	dnl Separate out dependencies that are known to introduce
-	dnl C++-specific compiler flags
-	PKG_CHECK_MODULES(GTKMM,
-			  gtkmm-3.0 >= 3.8
-			  gdkmm-3.0 >= 3.8,
-			  with_gtkmm_3_0=yes,
-			  with_gtkmm_3_0=no)
-
-	if test "x$with_gtkmm_3_0" = "xyes"; then
-		AC_MSG_RESULT([Using EXPERIMENTAL Gtkmm 3 build])
-		AC_DEFINE(WITH_GTKMM_3_0,1,[Build with Gtkmm 3.x])
-		
-		AC_MSG_RESULT([Using external GDL])
-		AC_DEFINE(WITH_EXT_GDL,1,[Build with external GDL])
-	else
-		AC_MSG_ERROR([Some dependencies were not fulfilled for the experimental GTK+ 3 build. One possible cause for this is a new dependency on the gdl-3.0 development package.])
-	fi
-
-	# Check whether we can use new features in Gtkmm 3.10
-	# TODO: Drop this test and bump the version number in the GTK test above
-	#       as soon as all supported distributions provide Gtkmm >= 3.10
-	PKG_CHECK_MODULES(GTKMM_3_10,
-			  gtkmm-3.0 >= 3.10,
-			  with_gtkmm_3_10=yes,
-			  with_gtkmm_3_10=no)
-
-	if test "x$with_gtkmm_3_10" = "xyes"; then
-		AC_MSG_RESULT([Using Gtkmm 3.10 build])
-		AC_DEFINE(WITH_GTKMM_3_10,1,[Build with Gtkmm 3.10.x or higher])
-	fi
-
-	# Check whether we are using Gdl >= 3.6.  This version introduced an API/ABI change.
-	# TODO: We should drop support for older versions of Gdl once all supported distros
-	#       provide Gdl 3.6 or higher
-	PKG_CHECK_MODULES(GDL_3_6, gdl-3.0 >= 3.6, with_gdl_3_6=yes, with_gdl_3_6=no)
-
-	if test "x$with_gdl_3_6" = "xyes"; then
-		AC_MSG_RESULT([Using Gdl 3.6 or higher])
-		AC_DEFINE(WITH_GDL_3_6,1,[Build with Gdl 3.6 or higher])
-	fi
-
-	dnl The following test is only defined if Gtk+ 3 development libraries
-	dnl are installed on the system.  Therefore, it is guarded by an 
-	dnl m4_ifdef statement.  The ifdef can be probably be removed once we 
-	dnl switch to Gtk+ 3 as a hard dependency
-
-	# Check whether we are using the X11 backend target for Gtk+ 3.
-	m4_ifdef([GTK_CHECK_BACKEND],
-		 [GTK_CHECK_BACKEND([x11], , [have_x11=yes], [have_x11=no])])
-
-	# Enable strict build options that should work on most systems unless
-	# the build has been configured not to do so
-	if test "x$enable_strict_build" != "xno"; then
-		# Add build flags here as soon as Inkscape trunk can build
-		# against Gtk+ 3 with the option enabled
-		echo ""
-	fi
-
-	# Enable strict build options that are known to cause failure in
-	# Gtk+ 3 builds
-	if test "x$enable_strict_build" = "xhigh"; then
-		# Disable deprecated Gtk+ symbols that have been removed since
-		# Gtk+ 3.
-		CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
-		CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
-		CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
-	fi
-else
-
-	ink_spell_pkg=
-	if pkg-config --exists gtkspell-2.0; then
-		ink_spell_pkg=gtkspell-2.0
-		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
-	fi
-
-	PKG_CHECK_MODULES(GTK,
-			  gtk+-2.0  >= 2.24
-			  $ink_spell_pkg)
-	
-	dnl Separate out dependencies that are known to introduce C++-specific
-	dnl compiler flags
-	PKG_CHECK_MODULES(GTKMM,
-			  gdkmm-2.4 >= 2.24
-			  gtkmm-2.4 >= 2.24)
-
-	# Check whether we are using the X11 backend for Gtk+ 2.
-	AC_MSG_CHECKING([if Gtk+ 2.0 is using the X11 backend target])
-	if test "x`$PKG_CONFIG --variable=target gtk+-2.0`" = "xx11"; then
-		have_x11=yes
-	else
-		have_x11=no
-	fi
-	AC_MSG_RESULT($have_x11)
-	
-	# Enable build strict options that should work on most systems unless
-	# the build has been configured explicitly not to do so
-	if test "x$enable_strict_build" != "xno"; then
-		# Prevent usage of deprecated Gtk+ symbols.  These have all
-		# been removed in Gtk+ 3 so these checks are important.
-		CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
-		CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
-		
-		# Allow only top-level GTK+ headers to be used.  This is mandatory
-		# for GTK+ >= 3.0 so there is no need to apply the flag in GTK+ 3
-		# builds.
-		CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
-	fi
-
-	# Optionally enable strict build options that are known to cause build
-	# failure in many/most systems
-	if test "x$enable_strict_build" == "xhigh"; then
-		# FIXME: This causes build failure because our internal
-		# copy of GDL uses deprecated GDK symbols.
-		# 
-		# This specific issue isn't a problem for GTK+ 3 builds because 
-		# we build against external GDL >= 3.3.4 rather than using
-		# the deprecated internal code
-		CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
-	fi
+ink_spell_pkg=
+if pkg-config --exists gtkspell-3.0; then
+	ink_spell_pkg=gtkspell-3.0
+	AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 fi
-AM_CONDITIONAL(WITH_GTKMM_3_0, test "x$with_gtkmm_3_0" = "xyes")
+
+PKG_CHECK_MODULES(GTK,
+                  gtk+-3.0  >= 3.8
+		  gdk-3.0   >= 3.8
+		  gdl-3.0   > 3.4
+		  $ink_spell_pkg)
+
+dnl Separate out dependencies that are known to introduce
+dnl C++-specific compiler flags
+PKG_CHECK_MODULES(GTKMM,
+		  gtkmm-3.0 >= 3.8
+		  gdkmm-3.0 >= 3.8)
+
+# Check whether we can use new features in Gtkmm 3.10
+# TODO: Drop this test and bump the version number in the GTK test above
+#       as soon as all supported distributions provide Gtkmm >= 3.10
+PKG_CHECK_MODULES(GTKMM_3_10,
+		  gtkmm-3.0 >= 3.10,
+		  with_gtkmm_3_10=yes,
+		  with_gtkmm_3_10=no)
+
+if test "x$with_gtkmm_3_10" = "xyes"; then
+	AC_MSG_RESULT([Using Gtkmm 3.10 build])
+	AC_DEFINE(WITH_GTKMM_3_10,1,[Build with Gtkmm 3.10.x or higher])
+fi
+
+# Check whether we are using Gdl >= 3.6.  This version introduced an API/ABI change.
+# TODO: We should drop support for older versions of Gdl once all supported distros
+#       provide Gdl 3.6 or higher
+PKG_CHECK_MODULES(GDL_3_6, gdl-3.0 >= 3.6, with_gdl_3_6=yes, with_gdl_3_6=no)
+
+if test "x$with_gdl_3_6" = "xyes"; then
+	AC_MSG_RESULT([Using Gdl 3.6 or higher])
+	AC_DEFINE(WITH_GDL_3_6,1,[Build with Gdl 3.6 or higher])
+fi
+
+# Check whether we are using the X11 backend target for Gtk+ 3.
+GTK_CHECK_BACKEND([x11], , [have_x11=yes], [have_x11=no])
+
+# Enable strict build options that should work on most systems unless
+# the build has been configured not to do so
+if test "x$enable_strict_build" != "xno"; then
+	# Add build flags here as soon as Inkscape trunk can build
+	# against Gtk+ 3 with the option enabled
+	echo ""
+fi
+
+# Enable strict build options that are known to cause failure in
+# Gtk+ 3 builds
+if test "x$enable_strict_build" = "xhigh"; then
+	# Disable deprecated Gtk+ symbols that have been removed since
+	# Gtk+ 3.
+	CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
+	CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
+	CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
+fi
 
 INKSCAPE_CFLAGS="$GTK_CFLAGS $INKSCAPE_CFLAGS"
 INKSCAPE_CXX_DEPS_CFLAGS="$GTKMM_CFLAGS $INKSCAPE_CXX_DEPS_CFLAGS"
@@ -869,8 +787,6 @@ if test "x$have_x11" = "xyes"; then
 fi
 AC_SUBST(X11_CFLAGS)
 AC_SUBST(X11_LIBS)
-
-AM_CONDITIONAL(WITH_EXT_GDL, test "x$with_gtkmm_3_0" = "xyes")
 
 # Prevent usage of deprecated library symbols unless strict build
 # checking has been disabled
@@ -1112,7 +1028,6 @@ src/filters/makefile
 src/helper/makefile
 src/io/makefile
 src/libcroco/makefile
-src/libgdl/makefile
 src/libnrtype/makefile
 src/libavoid/makefile
 src/libuemf/makefile

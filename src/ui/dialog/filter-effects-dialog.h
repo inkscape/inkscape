@@ -163,7 +163,6 @@ private:
         static const int size = 24;
         
     protected:
-#if WITH_GTKMM_3_0
         virtual void get_preferred_width_vfunc(Gtk::Widget& widget,
                                                int& minimum_width,
                                                int& natural_width) const;
@@ -181,10 +180,6 @@ private:
                                                           int width,
                                                           int& minimum_height,
                                                           int& natural_height) const;
-#else
-        virtual void get_size_vfunc(Gtk::Widget& widget, const Gdk::Rectangle* cell_area,
-                                    int* x_offset, int* y_offset, int* width, int* height) const;
-#endif
     private:
         // void* should be SPFilterPrimitive*, some weirdness with properties prevents this
         Glib::Property<void*> _primitive;
@@ -211,9 +206,6 @@ private:
     protected:
         bool on_draw_signal(const Cairo::RefPtr<Cairo::Context> &cr);
 
-#if !WITH_GTKMM_3_0
-        bool on_expose_signal(GdkEventExpose*);
-#endif
 
         bool on_button_press_event(GdkEventButton*);
         bool on_motion_notify_event(GdkEventMotion*);
@@ -283,11 +275,7 @@ private:
     Gtk::ScrolledWindow* _sw_infobox;
 
     // View/add primitives
-#if WITH_GTKMM_3_0
     Gtk::Paned* _primitive_box;
-#else
-    Gtk::VPaned* _primitive_box;
-#endif
     
     UI::Widget::ComboBoxEnum<Inkscape::Filters::FilterPrimitiveType> _add_primitive_type;
     Gtk::Button _add_primitive;

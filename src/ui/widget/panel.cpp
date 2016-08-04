@@ -72,9 +72,7 @@ Panel::Panel(Glib::ustring const &label, gchar const *prefs_path,
     _fillable(0)
 {
     set_name( "InkscapePanel" );
-#if WITH_GTKMM_3_0
     set_orientation( Gtk::ORIENTATION_VERTICAL );
-#endif
     _init();
 }
 
@@ -596,13 +594,9 @@ void Panel::_addResponseButton(Gtk::Button *button, int response_id, bool pack_s
 {
     // Create a button box for the response buttons if it's the first button to be added
     if (!_action_area) {
-#if WITH_GTKMM_3_0
         _action_area = new Gtk::ButtonBox();
         _action_area->set_layout(Gtk::BUTTONBOX_END);
         _action_area->set_spacing(6);
-#else
-        _action_area = new Gtk::HButtonBox(Gtk::BUTTONBOX_END, 6);
-#endif
         _action_area->set_border_width(4);
         pack_end(*_action_area, Gtk::PACK_SHRINK, 0);
     }

@@ -30,12 +30,7 @@
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/drawingarea.h>
-
-#if WITH_GTKMM_3_0
 #include <gtkmm/grid.h>
-#else
-#include <gtkmm/table.h>
-#endif
 
 #include "ui/widget/color-picker.h"
 #include "ui/widget/unit-menu.h"
@@ -43,11 +38,7 @@
 #include "ui/widget/scalar-unit.h"
 
 namespace Gtk {
-#if WITH_GTKMM_3_0
 class Scale;
-#else
-class HScale;
-#endif
 }
 
 namespace Inkscape {
@@ -126,10 +117,6 @@ public:
     static const double textpadding;
 
 private:
-#if !WITH_GTKMM_3_0
-    bool on_expose_event(GdkEventExpose *event);
-#endif
-
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
 
     void draw_marks(Cairo::RefPtr<Cairo::Context> cr, double dist, int major_interval);
@@ -155,11 +142,7 @@ private:
 
     Inkscape::UI::Widget::SpinButton _sb;
     UnitMenu        _unit;
-#if WITH_GTKMM_3_0
     Gtk::Scale*      _slider;
-#else
-    Gtk::HScale*     _slider;
-#endif
     ZoomCorrRuler   _ruler;
     bool freeze; // used to block recursive updates of slider and spinbutton
 };
@@ -178,11 +161,7 @@ private:
     Glib::ustring _prefs_path;
     Inkscape::UI::Widget::SpinButton _sb;
 
-#if WITH_GTKMM_3_0
     Gtk::Scale*     _slider;
-#else
-    Gtk::HScale*    _slider;
-#endif
 
     bool freeze; // used to block recursive updates of slider and spinbutton
 };
@@ -279,11 +258,7 @@ protected:
     void on_changed();
 };
 
-#if WITH_GTKMM_3_0
 class DialogPage : public Gtk::Grid
-#else
-class DialogPage : public Gtk::Table
-#endif
 {
 public:
     DialogPage();

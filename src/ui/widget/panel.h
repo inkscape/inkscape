@@ -31,13 +31,7 @@ class SPDocument;
 
 namespace Gtk {
 	class CheckMenuItem;
-
-#if WITH_GTKMM_3_0
 	class ButtonBox;
-#else
-	class HButtonBox;
-#endif
-
 	class MenuItem;
 }
 
@@ -64,12 +58,7 @@ namespace Widget {
  * @see UI::Dialog::DesktopTracker to handle desktop change, selection change and selected object modifications.
  * @see UI::Dialog::DialogManager manages the dialogs within inkscape.
  */
-#if WITH_GTKMM_3_0
 class Panel : public Gtk::Box {
-#else
-class Panel : public Gtk::VBox {
-#endif
-
 public:
     static void prep();
 
@@ -172,12 +161,7 @@ private:
     Gtk::EventBox    _menu_popper;
     Gtk::Button      _close_button;
     Gtk::Menu       *_menu;
-
-#if WITH_GTKMM_3_0
-    Gtk::ButtonBox *_action_area;  //< stores response buttons
-#else
-    Gtk::HButtonBox *_action_area;  //< stores response buttons
-#endif
+    Gtk::ButtonBox  *_action_area;  //< stores response buttons
 
     std::vector<Gtk::Widget *> _non_horizontal;
     std::vector<Gtk::Widget *> _non_vertical;

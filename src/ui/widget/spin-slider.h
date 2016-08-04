@@ -42,17 +42,8 @@ public:
     double get_value() const;
     void set_value(const double);
 
-#if WITH_GTKMM_3_0
-    const Glib::RefPtr<Gtk::Adjustment> get_adjustment() const;
-    Glib::RefPtr<Gtk::Adjustment> get_adjustment();
     const Gtk::Scale& get_scale() const;
     Gtk::Scale& get_scale();
-#else
-    const Gtk::Adjustment& get_adjustment() const;
-    Gtk::Adjustment& get_adjustment();
-    const Gtk::HScale& get_scale() const;
-    Gtk::HScale& get_scale();
-#endif
 
     const Inkscape::UI::Widget::SpinButton& get_spin_button() const;
     Inkscape::UI::Widget::SpinButton& get_spin_button();
@@ -60,14 +51,13 @@ public:
     // Change the SpinSlider into a SpinButton with AttrWidget support)
     void remove_scale();
 private:
-#if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> _adjustment;
     Gtk::Scale _scale;
-#else
-    Gtk::Adjustment _adjustment;
-    Gtk::HScale _scale;
-#endif
     Inkscape::UI::Widget::SpinButton _spin;
+
+public:
+    const decltype(_adjustment) get_adjustment() const;
+    decltype(_adjustment) get_adjustment();
 };
 
 /**

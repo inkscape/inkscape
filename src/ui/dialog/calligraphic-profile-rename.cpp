@@ -16,12 +16,7 @@
 #include "calligraphic-profile-rename.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
+#include <gtkmm/grid.h>
 
 #include "desktop.h"
 
@@ -30,40 +25,24 @@ namespace UI {
 namespace Dialog {
 
 CalligraphicProfileRename::CalligraphicProfileRename() :
-#if WITH_GTKMM_3_0
     _layout_table(Gtk::manage(new Gtk::Grid())),
-#else
-    _layout_table(Gtk::manage(new Gtk::Table(1, 2))),
-#endif
     _applied(false)
 {
     set_title(_("Edit profile"));
 
-#if WITH_GTKMM_3_0
-    Gtk::Box *mainVBox = get_content_area();
+    auto mainVBox = get_content_area();
     _layout_table->set_column_spacing(4);
     _layout_table->set_row_spacing(4);
-#else
-    Gtk::Box *mainVBox = get_vbox();
-    _layout_table->set_spacings(4);
-#endif
 
     _profile_name_entry.set_activates_default(true);
 
     _profile_name_label.set_label(_("Profile name:"));
     _profile_name_label.set_alignment(1.0, 0.5);
 
-#if WITH_GTKMM_3_0
     _layout_table->attach(_profile_name_label, 0, 0, 1, 1);
 
     _profile_name_entry.set_hexpand();
     _layout_table->attach(_profile_name_entry, 1, 0, 1, 1);
-#else
-    _layout_table->attach(_profile_name_label,
-	           0, 1, 0, 1, Gtk::FILL, Gtk::FILL);
-    _layout_table->attach(_profile_name_entry,
-	           1, 2, 0, 1, Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
-#endif
 
     mainVBox->pack_start(*_layout_table, false, false, 4);
     // Buttons

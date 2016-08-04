@@ -25,16 +25,9 @@ namespace Widget {
 const gchar *ColorWheelSelector::MODE_NAME = N_("Wheel");
 
 ColorWheelSelector::ColorWheelSelector(SelectedColor &color)
-#if GTK_CHECK_VERSION(3, 0, 0)
     : Gtk::Grid()
-#else
-    : Gtk::Table(5, 3, false)
-#endif
     , _color(color)
     , _updating(false)
-#if !GTK_CHECK_VERSION(3, 0, 0)
-    , _alpha_adjustment(NULL)
-#endif
     , _wheel(0)
     , _slider(0)
 {
@@ -46,9 +39,6 @@ ColorWheelSelector::ColorWheelSelector(SelectedColor &color)
 ColorWheelSelector::~ColorWheelSelector()
 {
     _wheel = 0;
-#if !GTK_CHECK_VERSION(3, 0, 0)
-    delete _alpha_adjustment;
-#endif
 
     _color_changed_connection.disconnect();
     _color_dragged_connection.disconnect();
@@ -62,16 +52,11 @@ void ColorWheelSelector::_initUI()
     _wheel = gimp_color_wheel_new();
     gtk_widget_show(_wheel);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
     gtk_widget_set_halign(_wheel, GTK_ALIGN_FILL);
     gtk_widget_set_valign(_wheel, GTK_ALIGN_FILL);
     gtk_widget_set_hexpand(_wheel, TRUE);
     gtk_widget_set_vexpand(_wheel, TRUE);
     gtk_grid_attach(GTK_GRID(gobj()), _wheel, 0, row, 3, 1);
-#else
-    gtk_table_attach(GTK_TABLE(gobj()), _wheel, 0, 3, row, row + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
-#endif
 
     row++;
 
@@ -80,7 +65,6 @@ void ColorWheelSelector::_initUI()
     label->set_alignment(1.0, 0.5);
     label->show();
 
-#if GTK_CHECK_VERSION(3, 0, 0)
   #if GTK_CHECK_VERSION(3, 12, 0)
     label->set_margin_start(XPAD);
     label->set_margin_end(XPAD);
@@ -93,22 +77,15 @@ void ColorWheelSelector::_initUI()
     label->set_halign(Gtk::ALIGN_FILL);
     label->set_valign(Gtk::ALIGN_FILL);
     attach(*label, 0, row, 1, 1);
-#else
-    attach(*label, 0, 1, row, row + 1, Gtk::FILL, Gtk::FILL, XPAD, YPAD);
-#endif
 
-/* Adjustment */
-#if GTK_CHECK_VERSION(3, 0, 0)
+    /* Adjustment */
     _alpha_adjustment = Gtk::Adjustment::create(0.0, 0.0, 255.0, 1.0, 10.0, 10.0);
-#else
-    _alpha_adjustment = new Gtk::Adjustment(0.0, 0.0, 255.0, 1.0, 10.0, 10.0);
-#endif
+
     /* Slider */
     _slider = Gtk::manage(new Inkscape::UI::Widget::ColorSlider(_alpha_adjustment));
     _slider->set_tooltip_text(_("Alpha (opacity)"));
     _slider->show();
 
-#if GTK_CHECK_VERSION(3, 0, 0)
   #if GTK_CHECK_VERSION(3, 12, 0)
     _slider->set_margin_start(XPAD);
     _slider->set_margin_end(XPAD);
@@ -122,25 +99,17 @@ void ColorWheelSelector::_initUI()
     _slider->set_halign(Gtk::ALIGN_FILL);
     _slider->set_valign(Gtk::ALIGN_FILL);
     attach(*_slider, 1, row, 1, 1);
-#else
-    attach(*_slider, 1, 2, row, row + 1, Gtk::EXPAND | Gtk::FILL, Gtk::FILL, XPAD, YPAD);
-#endif
 
     _slider->setColors(SP_RGBA32_F_COMPOSE(1.0, 1.0, 1.0, 0.0), SP_RGBA32_F_COMPOSE(1.0, 1.0, 1.0, 0.5),
                        SP_RGBA32_F_COMPOSE(1.0, 1.0, 1.0, 1.0));
 
-/* Spinbutton */
-#if GTK_CHECK_VERSION(3, 0, 0)
-    Gtk::SpinButton *spin_button = Gtk::manage(new Gtk::SpinButton(_alpha_adjustment, 1.0, 0));
-#else
-    Gtk::SpinButton *spin_button = Gtk::manage(new Gtk::SpinButton(*_alpha_adjustment, 1.0, 0));
-#endif
+    /* Spinbutton */
+    auto spin_button = Gtk::manage(new Gtk::SpinButton(_alpha_adjustment, 1.0, 0));
     spin_button->set_tooltip_text(_("Alpha (opacity)"));
     sp_dialog_defocus_on_enter(GTK_WIDGET(spin_button->gobj()));
     label->set_mnemonic_widget(*spin_button);
     spin_button->show();
 
-#if GTK_CHECK_VERSION(3, 0, 0)
   #if GTK_CHECK_VERSION(3, 12, 0)
     spin_button->set_margin_start(XPAD);
     spin_button->set_margin_end(XPAD);
@@ -153,9 +122,6 @@ void ColorWheelSelector::_initUI()
     spin_button->set_halign(Gtk::ALIGN_CENTER);
     spin_button->set_valign(Gtk::ALIGN_CENTER);
     attach(*spin_button, 2, row, 1, 1);
-#else
-    attach(*spin_button, 2, 3, row, row + 1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0, XPAD, YPAD);
-#endif
 
     /* Signals */
     _alpha_adjustment->signal_value_changed().connect(sigc::mem_fun(this, &ColorWheelSelector::_adjustmentChanged));
@@ -168,11 +134,7 @@ void ColorWheelSelector::_initUI()
 
 void ColorWheelSelector::on_show()
 {
-#if GTK_CHECK_VERSION(3, 0, 0)
     Gtk::Grid::on_show();
-#else
-    Gtk::Table::on_show();
-#endif
     _updateDisplay();
 }
 

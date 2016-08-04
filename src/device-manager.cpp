@@ -8,16 +8,17 @@
  */
 
 #include "device-manager.h"
+
 #include <set>
 
 #include "preferences.h"
-#include <gdkmm/display.h>
-#include <gtkmm/accelkey.h>
+
 #include <glibmm/regex.h>
 
-#if WITH_GTKMM_3_0
-# include <gdkmm/devicemanager.h>
-#endif
+#include <gdkmm/devicemanager.h>
+#include <gdkmm/display.h>
+
+#include <gtkmm/accelkey.h>
 
 #include <gtk/gtk.h>
 
@@ -47,11 +48,7 @@ static bool isValidDevice(Glib::RefPtr<Gdk::Device> device)
 	const bool source_matches   = (device->get_source() == (*it).source);
 	const bool mode_matches     = (device->get_mode()   == (*it).mode);
 	const bool num_axes_matches = (device->get_n_axes() == (*it).num_axes);
-#if WITH_GTKMM_3_0
 	const bool num_keys_matches = (device->get_n_keys() == (*it).num_keys);
-#else
-	const bool num_keys_matches = (gdk_device_get_n_keys(device->gobj()) == (*it).num_keys);
-#endif
 
 	if (name_matches && source_matches && mode_matches 
 			&& num_axes_matches && num_keys_matches)
@@ -175,13 +172,7 @@ public:
     virtual Gdk::InputMode getMode() const {return (device->get_mode());}
     virtual gint getNumAxes() const {return device->get_n_axes();}
     virtual bool hasCursor() const {return device->get_has_cursor();}
-
-#if WITH_GTKMM_3_0
     virtual int getNumKeys() const {return device->get_n_keys();}
-#else
-    virtual int getNumKeys() const {return gdk_device_get_n_keys(device->gobj());}
-#endif
-
     virtual Glib::ustring getLink() const {return link;}
     virtual void setLink( Glib::ustring const& link ) {this->link = link;}
     virtual gint getLiveAxes() const {return liveAxes;}
@@ -326,12 +317,8 @@ DeviceManagerImpl::DeviceManagerImpl() :
 {
     Glib::RefPtr<Gdk::Display> display = Gdk::Display::get_default();
 
-#if WITH_GTKMM_3_0
-    Glib::RefPtr<Gdk::DeviceManager> dm = display->get_device_manager();
-    std::vector< Glib::RefPtr<Gdk::Device> > devList = dm->list_devices(Gdk::DEVICE_TYPE_SLAVE);	
-#else
-    std::vector< Glib::RefPtr<Gdk::Device> > devList = display->list_devices();
-#endif
+    auto dm = display->get_device_manager();
+    auto devList = dm->list_devices(Gdk::DEVICE_TYPE_SLAVE);	
 
     if (fakeList.empty()) {
         createFakeList();
@@ -340,24 +327,19 @@ DeviceManagerImpl::DeviceManagerImpl() :
 
     std::set<Glib::ustring> knownIDs;
 
-    for ( std::vector< Glib::RefPtr<Gdk::Device> >::iterator dev = devList.begin(); dev != devList.end(); ++dev ) {
-#if WITH_GTKMM_3_0
+    for (auto dev : devList) {
            // GTK+ 3 has added keyboards to the list of supported devices.
-           if((*dev)->get_source() != Gdk::SOURCE_KEYBOARD) {
-#endif
+           if(dev->get_source() != Gdk::SOURCE_KEYBOARD) {
 
 #if DEBUG_VERBOSE
                g_message("device: name[%s] source[0x%x] mode[0x%x] cursor[%s] axis count[%d] key count[%d]", dev->name, dev->source, dev->mode,
                        dev->has_cursor?"Yes":"no", dev->num_axes, dev->num_keys);
 #endif
 
-               InputDeviceImpl* device = new InputDeviceImpl(*dev, knownIDs);
+               InputDeviceImpl* device = new InputDeviceImpl(dev, knownIDs);
                device->reference();
                devices.push_back(Glib::RefPtr<InputDeviceImpl>(device));
-
-#if WITH_GTKMM_3_0
            }
-#endif
     }
 }
 
@@ -667,12 +649,8 @@ static void createFakeList() {
 
         // try to find the first *real* core pointer
         Glib::RefPtr<Gdk::Display> display = Gdk::Display::get_default();
-#if WITH_GTKMM_3_0
-        Glib::RefPtr<Gdk::DeviceManager> dm = display->get_device_manager();
-        std::vector< Glib::RefPtr<Gdk::Device> > devList = dm->list_devices(Gdk::DEVICE_TYPE_SLAVE);	
-#else
-        std::vector< Glib::RefPtr<Gdk::Device> > devList = display->list_devices();
-#endif
+        auto dm = display->get_device_manager();
+        auto devList = dm->list_devices(Gdk::DEVICE_TYPE_SLAVE);	
 
         // Set iterator to point at beginning of device list
         std::vector< Glib::RefPtr<Gdk::Device> >::iterator dev = devList.begin();
@@ -689,11 +667,7 @@ static void createFakeList() {
             fakeList[4].mode       = device->get_mode();
             fakeList[4].has_cursor = device->get_has_cursor();
             fakeList[4].num_axes   = device->get_n_axes();
-#if WITH_GTKMM_3_0
             fakeList[4].num_keys   = device->get_n_keys();
-#else
-            fakeList[4].num_keys   = gdk_device_get_n_keys(device->gobj());
-#endif
         } else {
             fakeList[4].name       = "Core Pointer";
             fakeList[4].source     = Gdk::SOURCE_MOUSE;

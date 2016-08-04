@@ -124,15 +124,9 @@ private:
     Gtk::TreeView _tree;
     Gtk::CellRendererText *_text_renderer;
     Gtk::TreeView::Column *_name_column;
-#if WITH_GTKMM_3_0
     Gtk::Box _buttonsRow;
     Gtk::Box _buttonsPrimary;
     Gtk::Box _buttonsSecondary;
-#else
-    Gtk::HBox _buttonsRow;
-    Gtk::HBox _buttonsPrimary;
-    Gtk::HBox _buttonsSecondary;
-#endif
     Gtk::ScrolledWindow _scroller;
     Gtk::Menu _popupMenu;
     Inkscape::UI::Widget::SpinButton _spinBtn;

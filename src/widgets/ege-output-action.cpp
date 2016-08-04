@@ -166,12 +166,8 @@ GtkWidget* create_tool_item( GtkAction* action )
     if ( IS_EGE_OUTPUT_ACTION(action) )
     {
         GValue value;
-#if GTK_CHECK_VERSION(3,0,0)
-        GtkWidget* hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+        auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-        GtkWidget* hb = gtk_hbox_new( FALSE, 5 );
-#endif
         GtkWidget* lbl = 0;
         memset( &value, 0, sizeof(value) );
 

@@ -322,13 +322,9 @@ void sp_canvas_item_dispose(GObject *object)
       if (item == item->canvas->_grabbed_item) {
           item->canvas->_grabbed_item = NULL;
 
-#if GTK_CHECK_VERSION(3,0,0)
-          GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
-          GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+          auto dm = gdk_display_get_device_manager(gdk_display_get_default());
+          auto device = gdk_device_manager_get_client_pointer(dm);
           gdk_device_ungrab(device, GDK_CURRENT_TIME);
-#else
-          gdk_pointer_ungrab (GDK_CURRENT_TIME);
-#endif
       }
 
       if (item == item->canvas->_focused_item) {
@@ -617,9 +613,8 @@ int sp_canvas_item_grab(SPCanvasItem *item, guint event_mask, GdkCursor *cursor,
     // fixme: Top hack (Lauris)
     // fixme: If we add key masks to event mask, Gdk will abort (Lauris)
     // fixme: But Canvas actualle does get key events, so all we need is routing these here
-#if GTK_CHECK_VERSION(3,0,0)
-    GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
-    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+    auto dm = gdk_display_get_device_manager(gdk_display_get_default());
+    auto device = gdk_device_manager_get_client_pointer(dm);
     gdk_device_grab(device, 
                     getWindow(item->canvas),
                     GDK_OWNERSHIP_NONE,
@@ -627,11 +622,6 @@ int sp_canvas_item_grab(SPCanvasItem *item, guint event_mask, GdkCursor *cursor,
                     (GdkEventMask)(event_mask & (~(GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK))),
                     cursor,
                     etime);
-#else
-    gdk_pointer_grab( getWindow(item->canvas), FALSE,
-                      (GdkEventMask)(event_mask & (~(GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK))),
-                      NULL, cursor, etime);
-#endif
 
     item->canvas->_grabbed_item = item;
     item->canvas->_grabbed_event_mask = event_mask;
@@ -658,13 +648,9 @@ void sp_canvas_item_ungrab(SPCanvasItem *item, guint32 etime)
 
     item->canvas->_grabbed_item = NULL;
 
-#if GTK_CHECK_VERSION(3,0,0)
-    GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
-    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+    auto dm = gdk_display_get_device_manager(gdk_display_get_default());
+    auto device = gdk_device_manager_get_client_pointer(dm);
     gdk_device_ungrab(device, etime);
-#else
-    gdk_pointer_ungrab (etime);
-#endif
 }
 
 /**
@@ -913,16 +899,9 @@ void sp_canvas_class_init(SPCanvasClass *klass)
 
     widget_class->realize              = SPCanvas::handle_realize;
     widget_class->unrealize            = SPCanvas::handle_unrealize;
-
-#if GTK_CHECK_VERSION(3,0,0)
     widget_class->get_preferred_width  = SPCanvas::handle_get_preferred_width;
     widget_class->get_preferred_height = SPCanvas::handle_get_preferred_height;
     widget_class->draw                 = SPCanvas::handle_draw;
-#else
-    widget_class->size_request         = SPCanvas::handle_size_request;
-    widget_class->expose_event         = SPCanvas::handle_expose;
-#endif
-
     widget_class->size_allocate        = SPCanvas::handle_size_allocate;
     widget_class->button_press_event   = SPCanvas::handle_button;
     widget_class->button_release_event = SPCanvas::handle_button;
@@ -980,13 +959,9 @@ void SPCanvas::shutdownTransients()
 
     if (_grabbed_item) {
         _grabbed_item = NULL;
-#if GTK_CHECK_VERSION(3,0,0)
-        GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
-        GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+        auto dm = gdk_display_get_device_manager(gdk_display_get_default());
+        auto device = gdk_device_manager_get_client_pointer(dm);
         gdk_device_ungrab(device, GDK_CURRENT_TIME);
-#else
-        gdk_pointer_ungrab(GDK_CURRENT_TIME);
-#endif
     }
     removeIdle();
 }
@@ -1053,10 +1028,6 @@ void SPCanvas::handle_realize(GtkWidget *widget)
     attributes.wclass = GDK_INPUT_OUTPUT;
     attributes.visual = gdk_visual_get_system();
 
-#if !GTK_CHECK_VERSION(3,0,0)
-    attributes.colormap = gdk_colormap_get_system();
-#endif
-
     attributes.event_mask = (gtk_widget_get_events (widget) |
                              GDK_EXPOSURE_MASK |
                              GDK_BUTTON_PRESS_MASK |
@@ -1073,11 +1044,7 @@ void SPCanvas::handle_realize(GtkWidget *widget)
                              GDK_SCROLL_MASK |
                              GDK_FOCUS_CHANGE_MASK);
 
-#if GTK_CHECK_VERSION(3,0,0)
     gint attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
-#else
-    gint attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
-#endif
 
     GdkWindow *window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
     gtk_widget_set_window (widget, window);
@@ -1086,17 +1053,7 @@ void SPCanvas::handle_realize(GtkWidget *widget)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/useextinput/value", true)) {
         gtk_widget_set_events(widget, attributes.event_mask);
-#if !GTK_CHECK_VERSION(3,0,0)
-        gtk_widget_set_extension_events(widget, GDK_EXTENSION_EVENTS_ALL);
-        // TODO: Extension event stuff has been deprecated in GTK+ 3
-#endif
     }
-
-#if !GTK_CHECK_VERSION(3,0,0)
-    // This does nothing in GTK+ 3
-    GtkStyle *style = gtk_widget_get_style (widget);
-    gtk_widget_set_style (widget, gtk_style_attach (style, window));
-#endif
 
     gtk_widget_set_realized (widget, TRUE);
 }
@@ -1115,8 +1072,6 @@ void SPCanvas::handle_unrealize(GtkWidget *widget)
         (* GTK_WIDGET_CLASS(sp_canvas_parent_class)->unrealize)(widget);
 }
 
-
-#if GTK_CHECK_VERSION(3,0,0)
 void SPCanvas::handle_get_preferred_width(GtkWidget *widget, gint *minimum_width, gint *natural_width)
 {
     static_cast<void>(SP_CANVAS (widget));
@@ -1130,16 +1085,6 @@ void SPCanvas::handle_get_preferred_height(GtkWidget *widget, gint *minimum_heig
     *minimum_height = 256;
     *natural_height = 256;
 }
-#else
-void SPCanvas::handle_size_request(GtkWidget *widget, GtkRequisition *req)
-{
-    static_cast<void>(SP_CANVAS (widget));
-
-    req->width = 256;
-    req->height = 256;
-}
-#endif
-
 
 void SPCanvas::handle_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
@@ -1219,9 +1164,7 @@ int SPCanvas::emitEvent(GdkEvent *event)
             break;
         case GDK_SCROLL:
             mask = GDK_SCROLL_MASK;
-#if GTK_CHECK_VERSION(3,0,0)
             mask |= GDK_SMOOTH_SCROLL_MASK;
-#endif
             break;
         default:
             mask = 0;
@@ -1503,13 +1446,9 @@ gint SPCanvas::handle_scroll(GtkWidget *widget, GdkEventScroll *event)
 }
 
 static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
-#if GTK_CHECK_VERSION(3,0,0)
     gdk_window_get_device_position(w,
                                    gdk_event_get_device((GdkEvent *)(event)),
                                    NULL, NULL, NULL);
-#else
-    gdk_window_get_pointer(w, NULL, NULL, NULL);
-#endif
     gdk_event_request_motions(event);
 }
 
@@ -1746,16 +1685,12 @@ bool SPCanvas::paintRect(int xx0, int yy0, int xx1, int yy1)
     // Save the mouse location
     gint x, y;
 
-#if GTK_CHECK_VERSION(3,0,0)
-    GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
-    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+    auto dm = gdk_display_get_device_manager(gdk_display_get_default());
+    auto device = gdk_device_manager_get_client_pointer(dm);
 
     gdk_window_get_device_position(gtk_widget_get_window(GTK_WIDGET(this)),
                                    device,
                                    &x, &y, NULL);
-#else
-    gdk_window_get_pointer(gtk_widget_get_window(GTK_WIDGET(this)), &x, &y, NULL);
-#endif
 
     setup.mouse_loc = sp_canvas_window_to_world(this, Geom::Point(x,y));
 
@@ -1818,21 +1753,6 @@ gboolean SPCanvas::handle_draw(GtkWidget *widget, cairo_t *cr) {
 
 	return TRUE;
 }
-#if !GTK_CHECK_VERSION(3,0,0)
-gboolean SPCanvas::handle_expose(GtkWidget *widget, GdkEventExpose *event)
-{
-    cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
-
-    gdk_cairo_region (cr, event->region);
-    cairo_clip (cr);
-    gboolean result = SPCanvas::handle_draw(widget, cr);
-
-    cairo_destroy (cr);
-
-    return result;
-}
-#endif
-
 
 gint SPCanvas::handle_key_event(GtkWidget *widget, GdkEventKey *event)
 {

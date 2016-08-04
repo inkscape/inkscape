@@ -56,11 +56,7 @@ ErrorFileNotice::ErrorFileNotice (void) :
     g_free(ext_error_file);
     set_message(dialog_text, true);
 
-#if WITH_GTKMM_3_0
-    Gtk::Box * vbox = get_content_area();
-#else
-    Gtk::Box * vbox = get_vbox();
-#endif
+    auto vbox = get_content_area();
 
     /* This is some filler text, needs to change before relase */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

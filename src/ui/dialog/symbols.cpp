@@ -19,14 +19,8 @@
 
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/togglebutton.h>
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
-
+#include <gtkmm/togglebutton.h>
+#include <gtkmm/grid.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/iconview.h>
@@ -116,11 +110,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 {
 
   /********************    Table    *************************/
-#if WITH_GTKMM_3_0
-  Gtk::Grid *table = new Gtk::Grid();
-#else
-  Gtk::Table *table = new Gtk::Table(2, 4, false);
-#endif
+  auto table = new Gtk::Grid();
 
   // panel is a cloked Gtk::VBox
   _getContents()->pack_start(*Gtk::manage(table), Gtk::PACK_EXPAND_WIDGET);
@@ -128,24 +118,12 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 
   /******************** Symbol Sets *************************/
   Gtk::Label* labelSet = new Gtk::Label(_("Symbol set: "));
-
-#if WITH_GTKMM_3_0
   table->attach(*Gtk::manage(labelSet),0,row,1,1);
-#else
-  table->attach(*Gtk::manage(labelSet),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
-#endif
-
   symbolSet = new Gtk::ComboBoxText();  // Fill in later
   symbolSet->append(_("Current Document"));
   symbolSet->set_active_text(_("Current Document"));
-
-#if WITH_GTKMM_3_0
   symbolSet->set_hexpand();
   table->attach(*Gtk::manage(symbolSet),1,row,1,1);
-#else
-  table->attach(*Gtk::manage(symbolSet),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
-#endif
-
   sigc::connection connSet = symbolSet->signal_changed().connect(
           sigc::mem_fun(*this, &SymbolsDialog::rebuild));
   instanceConns.push_back(connSet);
@@ -178,14 +156,9 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   Gtk::ScrolledWindow *scroller = new Gtk::ScrolledWindow();
   scroller->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_ALWAYS);
   scroller->add(*Gtk::manage(iconView));
-
-#if WITH_GTKMM_3_0
   scroller->set_hexpand();
   scroller->set_vexpand();
   table->attach(*Gtk::manage(scroller),0,row,2,1);
-#else
-  table->attach(*Gtk::manage(scroller),0,2,row,row+1,Gtk::EXPAND|Gtk::FILL,Gtk::EXPAND|Gtk::FILL);
-#endif
 
   ++row;
 
@@ -194,12 +167,8 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   Gtk::HBox* tools = new Gtk::HBox();
 
   //tools->set_layout( Gtk::BUTTONBOX_END );
-#if WITH_GTKMM_3_0
   scroller->set_hexpand();
   table->attach(*Gtk::manage(tools),0,row,2,1);
-#else
-  table->attach(*Gtk::manage(tools),0,2,row,row+1,Gtk::EXPAND|Gtk::FILL,Gtk::FILL);
-#endif
 
   addSymbol = Gtk::manage(new Gtk::Button());
   addSymbol->add(*Gtk::manage(Glib::wrap(
@@ -393,11 +362,7 @@ void SymbolsDialog::revertSymbol() {
 
 void SymbolsDialog::iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& /*context*/, Gtk::SelectionData& data, guint /*info*/, guint /*time*/)
 {
-#if WITH_GTKMM_3_0
-  std::vector<Gtk::TreePath> iconArray = iconView->get_selected_items();
-#else
-  Gtk::IconView::ArrayHandle_TreePaths iconArray = iconView->get_selected_items();
-#endif
+  auto iconArray = iconView->get_selected_items();
 
   if( iconArray.empty() ) {
     //std::cout << "  iconArray empty: huh? " << std::endl;
@@ -450,11 +415,7 @@ SPDocument* SymbolsDialog::selectedSymbols() {
 
 Glib::ustring SymbolsDialog::selectedSymbolId() {
 
-#if WITH_GTKMM_3_0
-  std::vector<Gtk::TreePath> iconArray = iconView->get_selected_items();
-#else
-  Gtk::IconView::ArrayHandle_TreePaths iconArray = iconView->get_selected_items();
-#endif
+  auto iconArray = iconView->get_selected_items();
 
   if( !iconArray.empty() ) {
     Gtk::TreeModel::Path const & path = *iconArray.begin();

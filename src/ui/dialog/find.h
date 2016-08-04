@@ -286,13 +286,7 @@ private:
     Gtk::Label status;
     UI::Widget::Button button_find;
     UI::Widget::Button button_replace;
-
-#if WITH_GTKMM_3_0
     Gtk::ButtonBox box_buttons;
-#else
-    Gtk::HButtonBox box_buttons;
-#endif
-
     Gtk::HBox hboxbutton_row;
 
     /**

@@ -36,12 +36,8 @@ public:
 	       int digits, const SPAttributeEnum a = SP_ATTR_INVALID, const char* tip_text = NULL);
 
     SpinScale(const char* label,
-#if WITH_GTKMM_3_0
-       Glib::RefPtr<Gtk::Adjustment> adj,
-#else
-       Gtk::Adjustment *adj,
-#endif
-           int digits, const SPAttributeEnum a = SP_ATTR_INVALID, const char* tip_text = NULL);
+              Glib::RefPtr<Gtk::Adjustment> adj,
+	      int digits, const SPAttributeEnum a = SP_ATTR_INVALID, const char* tip_text = NULL);
 
     virtual Glib::ustring get_as_attribute() const;
     virtual void set_from_attribute(SPObject*);
@@ -52,23 +48,14 @@ public:
     void set_value(const double);
     void set_focuswidget(GtkWidget *widget);
     void set_appearance(const gchar* appearance);
-
-#if WITH_GTKMM_3_0
-    const Glib::RefPtr<Gtk::Adjustment> get_adjustment() const;
-    Glib::RefPtr<Gtk::Adjustment> get_adjustment();
-#else
-    const Gtk::Adjustment *get_adjustment() const;
-    Gtk::Adjustment *get_adjustment();
-#endif
     
 private:
-#if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> _adjustment;
-#else
-    Gtk::Adjustment *_adjustment;
-#endif
-
     GtkWidget *_spinscale;
+
+public:
+    const decltype(_adjustment) get_adjustment() const;
+    decltype(_adjustment) get_adjustment();
 };
 
 

@@ -19,12 +19,7 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
+#include <gtkmm/grid.h>
 
 #include <glibmm/i18n.h>
 
@@ -400,15 +395,10 @@ void CanvasGrid::setOrigin(Geom::Point const &origin_px)
 **/
 #define SPACE_SIZE_X 15
 #define SPACE_SIZE_Y 10
-#if WITH_GTKMM_3_0
 static inline void attach_all(Gtk::Grid &table, Gtk::Widget const *const arr[], unsigned size, int start = 0)
-#else
-static inline void attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int start = 0)
-#endif
 {
     for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2) {
         if (arr[i] && arr[i+1]) {
-#if WITH_GTKMM_3_0
             (const_cast<Gtk::Widget&>(*arr[i])).set_hexpand();
             (const_cast<Gtk::Widget&>(*arr[i])).set_valign(Gtk::ALIGN_CENTER);
             table.attach(const_cast<Gtk::Widget&>(*arr[i]),   1, r, 1, 1);
@@ -416,44 +406,23 @@ static inline void attach_all(Gtk::Table &table, Gtk::Widget const *const arr[],
             (const_cast<Gtk::Widget&>(*arr[i+1])).set_hexpand();
             (const_cast<Gtk::Widget&>(*arr[i+1])).set_valign(Gtk::ALIGN_CENTER);
             table.attach(const_cast<Gtk::Widget&>(*arr[i+1]), 2, r, 1, 1);
-#else
-            table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1,
-                          Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1,
-                          Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-#endif
         } else {
             if (arr[i+1]) {
-#if WITH_GTKMM_3_0
                 (const_cast<Gtk::Widget&>(*arr[i+1])).set_hexpand();
                 (const_cast<Gtk::Widget&>(*arr[i+1])).set_valign(Gtk::ALIGN_CENTER);
                 table.attach(const_cast<Gtk::Widget&>(*arr[i+1]), 1, r, 2, 1);
-#else
-                table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1,
-                              Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-#endif
             } else if (arr[i]) {
                 Gtk::Label& label = reinterpret_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
                 label.set_alignment (0.0);
-#if WITH_GTKMM_3_0
                 label.set_hexpand();
                 label.set_valign(Gtk::ALIGN_CENTER);
                 table.attach(label, 0, r, 3, 1);
-#else
-                table.attach (label, 0, 3, r, r+1,
-                              Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-#endif
             } else {
                 Gtk::HBox *space = Gtk::manage (new Gtk::HBox);
                 space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
-#if WITH_GTKMM_3_0
                 space->set_halign(Gtk::ALIGN_CENTER);
                 space->set_valign(Gtk::ALIGN_CENTER);
                 table.attach(*space, 0, r, 1, 1);
-#else
-                table.attach (*space, 0, 1, r, r+1,
-                              (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
-#endif
             }
         }
         ++r;
@@ -684,14 +653,9 @@ CanvasXYGrid::onReprAttrChanged(Inkscape::XML::Node */*repr*/, gchar const */*ke
 Gtk::Widget *
 CanvasXYGrid::newSpecificWidget()
 {
-#if WITH_GTKMM_3_0
-    Gtk::Grid * table = Gtk::manage( new Gtk::Grid() );
+    auto table = Gtk::manage( new Gtk::Grid() );
     table->set_row_spacing(2);
     table->set_column_spacing(2);
-#else
-    Gtk::Table * table = Gtk::manage( new Gtk::Table(1,1) );
-    table->set_spacings(2);
-#endif
 
     Inkscape::UI::Widget::RegisteredUnitMenu *_rumg = Gtk::manage( new Inkscape::UI::Widget::RegisteredUnitMenu(
             _("Grid _units:"), "units", _wr, repr, doc) );

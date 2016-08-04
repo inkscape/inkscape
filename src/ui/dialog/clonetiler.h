@@ -121,13 +121,8 @@ private:
     GtkSizeGroup* table_row_labels;
     Inkscape::UI::Widget::UnitMenu *unit_menu;
 
-#if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> fill_width;
     Glib::RefPtr<Gtk::Adjustment> fill_height;
-#else
-    Gtk::Adjustment *fill_width;
-    Gtk::Adjustment *fill_height;
-#endif
 
     sigc::connection desktopChangeConn;
     sigc::connection selectChangedConn;

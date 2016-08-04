@@ -57,11 +57,7 @@ static void sp_gradient_selector_delete_vector_clicked (GtkWidget *w, SPGradient
 
 static guint signals[LAST_SIGNAL] = {0};
 
-#if GTK_CHECK_VERSION(3,0,0)
 G_DEFINE_TYPE(SPGradientSelector, sp_gradient_selector, GTK_TYPE_BOX);
-#else
-G_DEFINE_TYPE(SPGradientSelector, sp_gradient_selector, GTK_TYPE_VBOX);
-#endif
 
 static void sp_gradient_selector_class_init(SPGradientSelectorClass *klass)
 {
@@ -113,9 +109,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     sel->safelyInit = true;
     sel->blocked = false;
 
-#if GTK_CHECK_VERSION(3,0,0)
     gtk_orientable_set_orientation(GTK_ORIENTABLE(sel), GTK_ORIENTATION_VERTICAL);
-#endif
 
     new (&sel->nonsolid) std::vector<GtkWidget*>();
     new (&sel->swatch_widgets) std::vector<GtkWidget*>();
@@ -177,13 +171,8 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
 
 
     /* Create box for buttons */
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-    GtkWidget *hb = gtk_hbox_new( FALSE, 2 );
-#endif
-    //sel->nonsolid.push_back(hb);
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
 
     sel->add = gtk_button_new();

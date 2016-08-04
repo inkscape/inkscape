@@ -113,12 +113,7 @@ VsdImportDialog::VsdImportDialog(const std::vector<RVNGString> &vec)
      _previewArea = Gtk::manage(new class Gtk::VBox());
      vbox1 = Gtk::manage(new class Gtk::VBox());
      vbox1->pack_start(*_previewArea, Gtk::PACK_EXPAND_WIDGET, 0);
-#if WITH_GTKMM_3_0
      this->get_content_area()->pack_start(*vbox1);
-#else
-     this->get_vbox()->pack_start(*vbox1);
-#endif
-
 
      // CONTROLS
 
@@ -140,13 +135,8 @@ VsdImportDialog::VsdImportDialog(const std::vector<RVNGString> &vec)
      g_free(label_text);
 
      // Adjustment + spinner
-#if WITH_GTKMM_3_0
-     Glib::RefPtr<Gtk::Adjustment> _pageNumberSpin_adj = Gtk::Adjustment::create(1, 1, _vec.size(), 1, 10, 0);
+     auto _pageNumberSpin_adj = Gtk::Adjustment::create(1, 1, _vec.size(), 1, 10, 0);
      _pageNumberSpin = Gtk::manage(new Gtk::SpinButton(_pageNumberSpin_adj, 1, 0));
-#else
-     Gtk::Adjustment *_pageNumberSpin_adj = Gtk::manage(new class Gtk::Adjustment(1, 1, _vec.size(), 1, 10, 0));
-     _pageNumberSpin = Gtk::manage(new Gtk::SpinButton(*_pageNumberSpin_adj, 1, 0));
-#endif
      _pageNumberSpin->set_can_focus();
      _pageNumberSpin->set_update_policy(Gtk::UPDATE_ALWAYS);
      _pageNumberSpin->set_numeric(true);

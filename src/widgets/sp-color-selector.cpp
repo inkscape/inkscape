@@ -32,11 +32,7 @@ static guint csel_signals[LAST_SIGNAL] = {0};
 
 double ColorSelector::_epsilon = 1e-4;
 
-#if GTK_CHECK_VERSION(3,0,0)
 G_DEFINE_TYPE(SPColorSelector, sp_color_selector, GTK_TYPE_BOX);
-#else
-G_DEFINE_TYPE(SPColorSelector, sp_color_selector, GTK_TYPE_VBOX);
-#endif
 
 void sp_color_selector_class_init( SPColorSelectorClass *klass )
 {
@@ -86,9 +82,7 @@ void sp_color_selector_class_init( SPColorSelectorClass *klass )
 
 void sp_color_selector_init( SPColorSelector *csel )
 {
-#if GTK_CHECK_VERSION(3,0,0)
     gtk_orientable_set_orientation(GTK_ORIENTABLE(csel), GTK_ORIENTATION_VERTICAL);
-#endif
 
     if ( csel->base )
     {

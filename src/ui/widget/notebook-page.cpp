@@ -11,31 +11,19 @@
 
 #include "notebook-page.h"
 
-#if WITH_GTKMM_3_0
 # include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
 NotebookPage::NotebookPage(int n_rows, int n_columns, bool expand, bool fill, guint padding)
-#if WITH_GTKMM_3_0
     :_table(Gtk::manage(new Gtk::Grid()))
-#else
-    :_table(Gtk::manage(new Gtk::Table(n_rows, n_columns)))
-#endif
 {
     set_border_width(2);
 
-#if WITH_GTKMM_3_0
     _table->set_row_spacing(2);
     _table->set_column_spacing(2);
-#else
-    _table->set_spacings(2);
-#endif
 
     pack_start(*_table, expand, fill, padding);
 }

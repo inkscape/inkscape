@@ -1288,11 +1288,7 @@ Geom::Scale ClipboardManagerImpl::_getScale(SPDesktop *desktop, Geom::Point cons
  */
 Glib::ustring ClipboardManagerImpl::_getBestTarget()
 {
-#if WITH_GTKMM_3_0
-    std::vector<Glib::ustring> targets = _clipboard->wait_for_targets();
-#else
-    std::list<Glib::ustring> targets = _clipboard->wait_for_targets();
-#endif
+    auto targets = _clipboard->wait_for_targets();
 
     // clipboard target debugging snippet
     /*
@@ -1351,12 +1347,7 @@ void ClipboardManagerImpl::_setClipboardTargets()
 {
     Inkscape::Extension::DB::OutputList outlist;
     Inkscape::Extension::db.get_output_list(outlist);
-
-#if WITH_GTKMM_3_0
     std::vector<Gtk::TargetEntry> target_list;
-#else
-    std::list<Gtk::TargetEntry> target_list;
-#endif
 
     bool plaintextSet = false;
     for (Inkscape::Extension::DB::OutputList::const_iterator out = outlist.begin() ; out != outlist.end() ; ++out) {

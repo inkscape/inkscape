@@ -29,11 +29,7 @@ class SPStyle;
 class SPCSSAttr;
 
 namespace Gtk {
-#if WITH_GTKMM_3_0
 class Grid;
-#else
-class Table;
-#endif
 }
 
 namespace Inkscape {
@@ -75,11 +71,7 @@ private:
 
     Gtk::EventBox _swatch;
 
-#if WITH_GTKMM_3_0
     Gtk::Grid *_table;
-#else
-    Gtk::Table *_table;
-#endif
 
     Gtk::Label _label[2];
     Gtk::EventBox _place[2];

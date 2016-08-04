@@ -27,7 +27,6 @@ static void sp_svg_view_widget_dispose(GObject *object);
 static void sp_svg_view_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static void sp_svg_view_widget_size_request (GtkWidget *widget, GtkRequisition *req);
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_svg_view_widget_get_preferred_width(GtkWidget *widget, 
                                                    gint *minimal_width,
 						   gint *natural_width);
@@ -35,7 +34,6 @@ static void sp_svg_view_widget_get_preferred_width(GtkWidget *widget,
 static void sp_svg_view_widget_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
-#endif
 
 static void sp_svg_view_widget_view_resized (SPViewWidget *vw, Inkscape::UI::View::View *view, gdouble width, gdouble height);
 
@@ -53,12 +51,8 @@ static void sp_svg_view_widget_class_init(SPSVGSPViewWidgetClass *klass)
 	object_class->dispose = sp_svg_view_widget_dispose;
 
 	widget_class->size_allocate = sp_svg_view_widget_size_allocate;
-#if GTK_CHECK_VERSION(3,0,0)
 	widget_class->get_preferred_width = sp_svg_view_widget_get_preferred_width;
 	widget_class->get_preferred_height = sp_svg_view_widget_get_preferred_height;
-#else
-	widget_class->size_request = sp_svg_view_widget_size_request;
-#endif
 
 	vw_class->view_resized = sp_svg_view_widget_view_resized;
 }
@@ -83,16 +77,10 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 	gtk_widget_show (vw->sw);
 
 	/* Canvas */
-#if !GTK_CHECK_VERSION(3,0,0)
-	GdkColormap *cmap = gdk_colormap_get_system();
-	gtk_widget_push_colormap(cmap);
-#endif
-
 	vw->canvas = SPCanvas::createAA();
 
-#if GTK_CHECK_VERSION(3,0,0)
-        GtkCssProvider  *css_provider  = gtk_css_provider_new();
-        GtkStyleContext *style_context = gtk_widget_get_style_context(GTK_WIDGET(vw->canvas));
+        auto css_provider  = gtk_css_provider_new();
+        auto style_context = gtk_widget_get_style_context(GTK_WIDGET(vw->canvas));
 
         gtk_css_provider_load_from_data(css_provider,
                                         "SPCanvas {\n"
@@ -103,19 +91,8 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
         gtk_style_context_add_provider(style_context,
                                        GTK_STYLE_PROVIDER(css_provider),
                                        GTK_STYLE_PROVIDER_PRIORITY_USER);
-#else
-	gtk_widget_pop_colormap ();
-	GtkStyle *style = gtk_style_copy (gtk_widget_get_style (vw->canvas));
-	style->bg[GTK_STATE_NORMAL] = style->white;
-	gtk_widget_set_style (vw->canvas, style);
-#endif
 
-#if GTK_CHECK_VERSION(3,0,0)
 	gtk_container_add (GTK_CONTAINER (vw->sw), vw->canvas);
-#else
-	gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (vw->sw), vw->canvas);
-#endif
-
 	gtk_widget_show (vw->canvas);
 
 	/* View */
@@ -146,7 +123,6 @@ static void sp_svg_view_widget_size_request(GtkWidget *widget, GtkRequisition *r
 	SPSVGSPViewWidget *vw = SP_SVG_VIEW_WIDGET (widget);
 	Inkscape::UI::View::View *v = SP_VIEW_WIDGET_VIEW (widget);
 
-#if GTK_CHECK_VERSION(3,0,0)
 	if (GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->get_preferred_width &&
             GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->get_preferred_height) {
 		gint width_min, height_min, width_nat, height_nat;
@@ -156,11 +132,6 @@ static void sp_svg_view_widget_size_request(GtkWidget *widget, GtkRequisition *r
 		req->width=width_min;
 		req->height=height_min;
         }
-#else
-	if (GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->size_request) {
-            GTK_WIDGET_CLASS(sp_svg_view_widget_parent_class)->size_request(widget, req);
-        }
-#endif
 
 	if (v->doc()) {
 		SPSVGView *svgv;
@@ -189,7 +160,6 @@ static void sp_svg_view_widget_size_request(GtkWidget *widget, GtkRequisition *r
 	}
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_svg_view_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -203,7 +173,6 @@ static void sp_svg_view_widget_get_preferred_height(GtkWidget *widget, gint *min
 	sp_svg_view_widget_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
-#endif
 
 /**
  * Callback connected with size_allocate signal.

@@ -128,11 +128,7 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
 
     Glib::RefPtr<const Gdk::Window> parentWindow = parent.get_window();
     g_assert(parentWindow->gobj() != NULL);
-#if WITH_GTKMM_3_0
     _ownerHwnd = (HWND)gdk_win32_window_get_handle((GdkWindow*)parentWindow->gobj());
-#else
-    _ownerHwnd = (HWND)gdk_win32_drawable_get_handle((GdkDrawable*)parentWindow->gobj());
-#endif
 }
 
 FileDialogBaseWin32::~FileDialogBaseWin32()

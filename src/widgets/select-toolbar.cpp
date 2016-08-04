@@ -411,12 +411,8 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     g_object_set_data(G_OBJECT(spw), "dtw", desktop->getCanvas());
 
     // The vb frame holds all other widgets and is used to set sensitivity depending on selection state.
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    auto vb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
-#else
-    GtkWidget *vb = gtk_hbox_new(FALSE, 0);
-#endif
     gtk_widget_show(vb);
     gtk_container_add(GTK_CONTAINER(spw), vb);
 

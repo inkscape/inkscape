@@ -65,7 +65,6 @@ Dock::Dock(Gtk::Orientation orientation)
                                  static_cast<GtkOrientation>(orientation));
 #endif
 
-#if WITH_GTKMM_3_0
     switch(orientation) {
         case Gtk::ORIENTATION_VERTICAL:
             _dock_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL));
@@ -75,17 +74,6 @@ Dock::Dock(Gtk::Orientation orientation)
     }
     
     _paned = Gtk::manage(new Gtk::Paned(orientation));
-#else
-    switch (orientation) {
-        case Gtk::ORIENTATION_VERTICAL:
-            _dock_box = Gtk::manage(new Gtk::HBox());
-            _paned = Gtk::manage(new Gtk::VPaned());
-            break;
-        case Gtk::ORIENTATION_HORIZONTAL:
-            _dock_box = Gtk::manage(new Gtk::VBox());
-            _paned = Gtk::manage(new Gtk::HPaned());
-    }
-#endif
 
     _scrolled_window->add(*_dock_box);
     _scrolled_window->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);

@@ -16,12 +16,7 @@
 
 #include <glibmm/i18n.h>
 #include <gtkmm/entry.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
+#include <gtkmm/grid.h>
 
 #include "sp-object.h"
 #include "xml/repr.h"
@@ -152,11 +147,7 @@ void SPAttributeTable::set_object(SPObject *object,
         release_connection  = object->connectRelease (sigc::bind<1>(sigc::ptr_fun(&sp_attribute_table_object_release), this));
 
         // Create table
-#if WITH_GTKMM_3_0
         table = new Gtk::Grid();
-#else
-        table = new Gtk::Table(attributes.size(), 2, false);
-#endif
 
         if (!(parent == NULL))
             gtk_container_add(GTK_CONTAINER(parent), (GtkWidget*)table->gobj());
@@ -167,27 +158,17 @@ void SPAttributeTable::set_object(SPObject *object,
             Gtk::Label *ll = new Gtk::Label (_(labels[i].c_str()));
             ll->show();
             ll->set_alignment (1.0, 0.5);
-
-#if WITH_GTKMM_3_0
             ll->set_vexpand();
             ll->set_margin_left(XPAD);
             ll->set_margin_right(XPAD);
             ll->set_margin_top(XPAD);
             ll->set_margin_bottom(XPAD);
             table->attach(*ll, 0, i, 1, 1);
-#else
-            table->attach (*ll, 0, 1, i, i + 1,
-                               Gtk::FILL,
-                               (Gtk::EXPAND | Gtk::FILL),
-                               XPAD, YPAD );
-#endif
 
             Gtk::Entry *ee = new Gtk::Entry();
             ee->show();
             const gchar *val = object->getRepr()->attribute(attributes[i].c_str());
             ee->set_text (val ? val : (const gchar *) "");
-
-#if WITH_GTKMM_3_0
             ee->set_hexpand();
             ee->set_vexpand();
             ee->set_margin_left(XPAD);
@@ -195,12 +176,6 @@ void SPAttributeTable::set_object(SPObject *object,
             ee->set_margin_top(XPAD);
             ee->set_margin_bottom(XPAD);
             table->attach(*ee, 1, i, 1, 1);
-#else
-            table->attach (*ee, 1, 2, i, i + 1,
-                               (Gtk::EXPAND | Gtk::FILL),
-                               (Gtk::EXPAND | Gtk::FILL),
-                               XPAD, YPAD );
-#endif
 
             _entries.push_back(ee);
             g_signal_connect ( ee->gobj(), "changed",

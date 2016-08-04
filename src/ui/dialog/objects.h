@@ -134,15 +134,9 @@ private:
     Gtk::TreeView _tree;
     Gtk::CellRendererText *_text_renderer;
     Gtk::TreeView::Column *_name_column;
-#if WITH_GTKMM_3_0
     Gtk::Box _buttonsRow;
     Gtk::Box _buttonsPrimary;
     Gtk::Box _buttonsSecondary;
-#else
-    Gtk::HBox _buttonsRow;
-    Gtk::HBox _buttonsPrimary;
-    Gtk::HBox _buttonsSecondary;
-#endif
     Gtk::ScrolledWindow _scroller;
     Gtk::Menu _popupMenu;
     Inkscape::UI::Widget::SpinButton _spinBtn;
@@ -161,11 +155,7 @@ private:
     Gtk::HBox       _opacity_hbox;
     Gtk::Label      _opacity_label;
     Gtk::Label      _opacity_label_unit;
-#if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> _opacity_adjustment;
-#else
-    Gtk::Adjustment _opacity_adjustment;
-#endif
     Gtk::HScale     _opacity_hscale;
     Inkscape::UI::Widget::SpinButton _opacity_spin_button;
     

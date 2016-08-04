@@ -21,7 +21,6 @@
 
 static void sp_gradient_image_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_image_destroy(GtkWidget *object);
 static void sp_gradient_image_get_preferred_width(GtkWidget *widget, 
                                                    gint *minimal_width,
@@ -30,11 +29,6 @@ static void sp_gradient_image_get_preferred_width(GtkWidget *widget,
 static void sp_gradient_image_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
                                                     gint *natural_height);
-#else
-static void sp_gradient_image_destroy(GtkObject *object);
-static gboolean sp_gradient_image_expose(GtkWidget *widget, GdkEventExpose *event);
-#endif
-
 static gboolean sp_gradient_image_draw(GtkWidget *widget, cairo_t *cr);
 static void sp_gradient_image_gradient_release (SPObject *, SPGradientImage *im);
 static void sp_gradient_image_gradient_modified (SPObject *, guint flags, SPGradientImage *im);
@@ -46,18 +40,10 @@ static void sp_gradient_image_class_init(SPGradientImageClass *klass)
 {
         GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
-#if GTK_CHECK_VERSION(3,0,0)
         widget_class->get_preferred_width = sp_gradient_image_get_preferred_width;
         widget_class->get_preferred_height = sp_gradient_image_get_preferred_height;
         widget_class->draw = sp_gradient_image_draw;
         widget_class->destroy = sp_gradient_image_destroy;
-#else
-        GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
-
-        object_class->destroy = sp_gradient_image_destroy;
-        widget_class->size_request = sp_gradient_image_size_request;
-        widget_class->expose_event = sp_gradient_image_expose;
-#endif
 }
 
 static void
@@ -71,11 +57,7 @@ sp_gradient_image_init (SPGradientImage *image)
         new (&image->modified_connection) sigc::connection();
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_image_destroy(GtkWidget *object)
-#else
-static void sp_gradient_image_destroy(GtkObject *object)
-#endif
 {
         SPGradientImage *image = SP_GRADIENT_IMAGE (object);
 
@@ -88,13 +70,8 @@ static void sp_gradient_image_destroy(GtkObject *object)
         image->release_connection.~connection();
         image->modified_connection.~connection();
 
-#if GTK_CHECK_VERSION(3,0,0)
         if (GTK_WIDGET_CLASS(sp_gradient_image_parent_class)->destroy)
             GTK_WIDGET_CLASS(sp_gradient_image_parent_class)->destroy(object);
-#else
-        if (GTK_OBJECT_CLASS(sp_gradient_image_parent_class)->destroy)
-            GTK_OBJECT_CLASS(sp_gradient_image_parent_class)->destroy(object);
-#endif
 }
 
 static void sp_gradient_image_size_request(GtkWidget * /*widget*/, GtkRequisition *requisition)
@@ -103,7 +80,6 @@ static void sp_gradient_image_size_request(GtkWidget * /*widget*/, GtkRequisitio
     requisition->height = 12;
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_image_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
         GtkRequisition requisition;
@@ -117,27 +93,6 @@ static void sp_gradient_image_get_preferred_height(GtkWidget *widget, gint *mini
         sp_gradient_image_size_request(widget, &requisition);
         *minimal_height = *natural_height = requisition.height;
 }
-#endif
-
-#if !GTK_CHECK_VERSION(3,0,0)
-static gboolean sp_gradient_image_expose(GtkWidget *widget, GdkEventExpose *event)
-{
-        gboolean result = TRUE;
-        if(gtk_widget_is_drawable(widget)) {
-                cairo_t *ct = gdk_cairo_create(gtk_widget_get_window (widget));
-                cairo_rectangle(ct, event->area.x, event->area.y,
-                                event->area.width, event->area.height);
-                cairo_clip(ct);
-                GtkAllocation allocation;
-                gtk_widget_get_allocation(widget, &allocation);
-                cairo_translate(ct, allocation.x, allocation.y);
-                result = sp_gradient_image_draw(widget, ct);
-                cairo_destroy(ct);
-        }
-
-        return result;
-}
-#endif
 
 static gboolean sp_gradient_image_draw(GtkWidget *widget, cairo_t *ct)
 {

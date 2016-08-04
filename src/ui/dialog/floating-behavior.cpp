@@ -138,11 +138,7 @@ FloatingBehavior::create(Dialog &dialog)
 inline FloatingBehavior::operator Gtk::Widget &()                          { return *_d; }
 inline GtkWidget *FloatingBehavior::gobj()                                { return GTK_WIDGET(_d->gobj()); }
 inline Gtk::Box* FloatingBehavior::get_vbox()                            { 
-#if WITH_GTKMM_3_0
     return _d->get_content_area();
-#else
-    return _d->get_vbox();
-#endif
 }
 inline void FloatingBehavior::present()                                   { _d->present(); }
 inline void FloatingBehavior::hide()                                      { _d->hide(); }
@@ -153,12 +149,8 @@ inline void FloatingBehavior::move(int x, int y)                          { _d->
 inline void FloatingBehavior::set_position(Gtk::WindowPosition position)  { _d->set_position(position); }
 inline void FloatingBehavior::set_size_request(int width, int height)     { _d->set_size_request(width, height); }
 inline void FloatingBehavior::size_request(Gtk::Requisition &requisition) {
-#if WITH_GTKMM_3_0
 	Gtk::Requisition requisition_natural;
 	_d->get_preferred_size(requisition, requisition_natural); 
-#else
-	requisition = _d->size_request(); 
-#endif
 }
 inline void FloatingBehavior::get_position(int &x, int &y)                { _d->get_position(x, y); }
 inline void FloatingBehavior::get_size(int &width, int &height)           { _d->get_size(width, height); }

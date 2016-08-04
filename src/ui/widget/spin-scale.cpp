@@ -21,13 +21,8 @@ SpinScale::SpinScale(const char* label, double value, double lower, double upper
                      double /*climb_rate*/, int digits, const SPAttributeEnum a, const char* tip_text)
     : AttrWidget(a, value)
 {
-#if WITH_GTKMM_3_0
     _adjustment = Gtk::Adjustment::create(value, lower, upper, step_inc);
     _spinscale = gimp_spin_scale_new (_adjustment->gobj(), label, digits);
-#else
-    _adjustment = new Gtk::Adjustment(value, lower, upper, step_inc);
-    _spinscale = gimp_spin_scale_new (_adjustment->gobj(), label, digits);
-#endif
 
     signal_value_changed().connect(signal_attr_changed().make_slot());
 
@@ -41,12 +36,10 @@ SpinScale::SpinScale(const char* label, double value, double lower, double upper
 }
 
 SpinScale::SpinScale(const char* label,
-#if WITH_GTKMM_3_0
-       Glib::RefPtr<Gtk::Adjustment> adj,
-#else
-       Gtk::Adjustment *adj,
-#endif
-        int digits, const SPAttributeEnum a, const char* tip_text)
+                     Glib::RefPtr<Gtk::Adjustment> adj,
+                     int digits,
+                     const SPAttributeEnum a,
+                     const char* tip_text)
     : AttrWidget(a, 0.0),
       _adjustment(adj)
 
@@ -110,19 +103,12 @@ void SpinScale::set_appearance(const gchar* appearance)
     gimp_spin_scale_set_appearance(_spinscale, appearance);
 }
 
-#if WITH_GTKMM_3_0
-const Glib::RefPtr<Gtk::Adjustment> SpinScale::get_adjustment() const
-#else
-const Gtk::Adjustment *SpinScale::get_adjustment() const
-#endif
+const decltype(SpinScale::_adjustment) SpinScale::get_adjustment() const
 {
     return _adjustment;
 }
-#if WITH_GTKMM_3_0
-Glib::RefPtr<Gtk::Adjustment> SpinScale::get_adjustment()
-#else
-Gtk::Adjustment *SpinScale::get_adjustment()
-#endif
+
+decltype(SpinScale::_adjustment) SpinScale::get_adjustment()
 {
     return _adjustment;
 }

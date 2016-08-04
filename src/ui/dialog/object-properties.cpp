@@ -37,12 +37,7 @@
 #include "sp-image.h"
 #include <glibmm/i18n.h>
 
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
-
+#include <gtkmm/grid.h>
 
 namespace Inkscape {
 namespace UI {
@@ -103,16 +98,9 @@ void ObjectProperties::_init()
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);
 
-#if WITH_GTKMM_3_0
-    Gtk::Grid *grid_top = Gtk::manage(new Gtk::Grid());
+    auto grid_top = Gtk::manage(new Gtk::Grid());
     grid_top->set_row_spacing(4);
     grid_top->set_column_spacing(0);
-#else
-    Gtk::Table *grid_top = Gtk::manage(new Gtk::Table(4, 4));
-    grid_top->set_row_spacings(4);
-    grid_top->set_col_spacings(0);
-#endif
-
     grid_top->set_border_width(4);
 
     contents->pack_start(*grid_top, false, false, 0);
@@ -121,29 +109,14 @@ void ObjectProperties::_init()
     /* Create the label for the object id */
     _label_id.set_label(_label_id.get_label() + " ");
     _label_id.set_alignment(1, 0.5);
-
-#if WITH_GTKMM_3_0
     _label_id.set_valign(Gtk::ALIGN_CENTER);
     grid_top->attach(_label_id, 0, 0, 1, 1);
-#else
-    grid_top->attach(_label_id, 0, 1, 0, 1,
-                     Gtk::SHRINK | Gtk::FILL,
-                     Gtk::AttachOptions(), 0, 0 );
-#endif
-
 
     /* Create the entry box for the object id */
     _entry_id.set_tooltip_text(_("The id= attribute (only letters, digits, and the characters .-_: allowed)"));
     _entry_id.set_max_length(64);
-
-#if WITH_GTKMM_3_0
     _entry_id.set_valign(Gtk::ALIGN_CENTER);
     grid_top->attach(_entry_id, 1, 0, 1, 1);
-#else
-    grid_top->attach(_entry_id, 1, 2, 0, 1,
-                     Gtk::EXPAND | Gtk::FILL,
-                     Gtk::AttachOptions(), 0, 0 );
-#endif
 
     _label_id.set_mnemonic_widget(_entry_id);
 
@@ -157,29 +130,16 @@ void ObjectProperties::_init()
     _label_label.set_label(_label_label.get_label() + " ");
     _label_label.set_alignment(1, 0.5);
 
-#if WITH_GTKMM_3_0
     _label_label.set_valign(Gtk::ALIGN_CENTER);
     grid_top->attach(_label_label, 0, 1, 1, 1);
-#else
-    grid_top->attach(_label_label, 0, 1, 1, 2,
-                     Gtk::SHRINK | Gtk::FILL,
-                     Gtk::AttachOptions(), 0, 0 );
-#endif
-
 
     /* Create the entry box for the object label */
     _entry_label.set_tooltip_text(_("A freeform label for the object"));
     _entry_label.set_max_length(256);
 
-#if WITH_GTKMM_3_0
     _entry_label.set_hexpand();
     _entry_label.set_valign(Gtk::ALIGN_CENTER);
     grid_top->attach(_entry_label, 1, 1, 1, 1);
-#else
-    grid_top->attach(_entry_label, 1, 2, 1, 2,
-                     Gtk::EXPAND | Gtk::FILL,
-                     Gtk::AttachOptions(), 0, 0 );
-#endif
 
     _label_label.set_mnemonic_widget(_entry_label);
 
@@ -191,28 +151,16 @@ void ObjectProperties::_init()
     _label_title.set_label(_label_title.get_label() + " ");
     _label_title.set_alignment (1, 0.5);
 
-#if WITH_GTKMM_3_0
     _label_title.set_valign(Gtk::ALIGN_CENTER);
     grid_top->attach(_label_title, 0, 2, 1, 1);
-#else
-    grid_top->attach(_label_title, 0, 1, 2, 3,
-                     Gtk::SHRINK | Gtk::FILL,
-                     Gtk::AttachOptions(), 0, 0 );
-#endif
 
     /* Create the entry box for the object title */
     _entry_title.set_sensitive (FALSE);
     _entry_title.set_max_length (256);
 
-#if WITH_GTKMM_3_0
     _entry_title.set_hexpand();
     _entry_title.set_valign(Gtk::ALIGN_CENTER);
     grid_top->attach(_entry_title, 1, 2, 1, 1);
-#else
-    grid_top->attach(_entry_title, 1, 2, 2, 3,
-                     Gtk::EXPAND | Gtk::FILL,
-                     Gtk::AttachOptions(), 0, 0 );
-#endif
 
     _label_title.set_mnemonic_widget(_entry_title);
     // pressing enter in the label field is the same as clicking Set:
@@ -241,14 +189,8 @@ void ObjectProperties::_init()
     _label_image_rendering.set_label(_label_image_rendering.get_label() + " ");
     _label_image_rendering.set_alignment(1, 0.5);
 
-#if WITH_GTKMM_3_0
     _label_image_rendering.set_valign(Gtk::ALIGN_CENTER);
     grid_top->attach(_label_image_rendering, 0, 3, 1, 1);
-#else
-    grid_top->attach(_label_image_rendering, 0, 1, 3, 4,
-                     Gtk::SHRINK | Gtk::FILL,
-                     Gtk::AttachOptions(), 0, 0 );
-#endif
 
     /* Create the combo box text for the 'image-rendering' property  */
     _combo_image_rendering.append( "auto" );
@@ -256,14 +198,8 @@ void ObjectProperties::_init()
     _combo_image_rendering.append( "optimizeSpeed" );
     _combo_image_rendering.set_tooltip_text(_("The 'image-rendering' property can influence how a bitmap is up-scaled:\n\t'auto' no preference;\n\t'optimizeQuality' smooth;\n\t'optimizeSpeed' blocky.\nNote that this behaviour is not defined in the SVG 1.1 specification and not all browsers follow this interpretation."));
 
-#if WITH_GTKMM_3_0
     _combo_image_rendering.set_valign(Gtk::ALIGN_CENTER);
     grid_top->attach(_combo_image_rendering, 1, 3, 1, 1);
-#else
-    grid_top->attach(_combo_image_rendering, 1, 2, 3, 4,
-                     Gtk::EXPAND | Gtk::FILL,
-                     Gtk::AttachOptions(), 0, 0 );
-#endif
 
     _label_image_rendering.set_mnemonic_widget(_combo_image_rendering);
 
@@ -275,60 +211,36 @@ void ObjectProperties::_init()
     Gtk::HBox *hb_checkboxes = Gtk::manage(new Gtk::HBox());
     contents->pack_start(*hb_checkboxes, FALSE, FALSE, 0);
 
-#if WITH_GTKMM_3_0
-    Gtk::Grid *grid_cb = Gtk::manage(new Gtk::Grid());
+    auto grid_cb = Gtk::manage(new Gtk::Grid());
     grid_cb->set_row_homogeneous();
     grid_cb->set_column_homogeneous(true);
-#else
-    Gtk::Table *grid_cb = Gtk::manage(new Gtk::Table(1, 2, true));
-#endif
 
     grid_cb->set_border_width(4);
     hb_checkboxes->pack_start(*grid_cb, true, true, 0);
 
     /* Hide */
     _cb_hide.set_tooltip_text (_("Check to make the object invisible"));
-
-#if WITH_GTKMM_3_0
     _cb_hide.set_hexpand();
     _cb_hide.set_valign(Gtk::ALIGN_CENTER);
     grid_cb->attach(_cb_hide, 0, 0, 1, 1);
-#else
-    grid_cb->attach(_cb_hide, 0, 1, 0, 1,
-                       Gtk::EXPAND | Gtk::FILL,
-                       Gtk::AttachOptions(), 0, 0 );
-#endif
 
     _cb_hide.signal_toggled().connect(sigc::mem_fun(this, &ObjectProperties::_hiddenToggled));
 
     /* Lock */
     // TRANSLATORS: "Lock" is a verb here
     _cb_lock.set_tooltip_text(_("Check to make the object insensitive (not selectable by mouse)"));
-
-#if WITH_GTKMM_3_0
     _cb_lock.set_hexpand();
     _cb_lock.set_valign(Gtk::ALIGN_CENTER);
     grid_cb->attach(_cb_lock, 1, 0, 1, 1);
-#else
-    grid_cb->attach(_cb_lock, 1, 2, 0, 1,
-                    Gtk::EXPAND | Gtk::FILL,
-                    Gtk::AttachOptions(), 0, 0 );
-#endif
 
     _cb_lock.signal_toggled().connect(sigc::mem_fun(this, &ObjectProperties::_sensitivityToggled));
 
 
     /* Button for setting the object's id, label, title and description. */
     Gtk::Button *btn_set = Gtk::manage(new Gtk::Button(_("_Set"), 1));
-#if WITH_GTKMM_3_0
     btn_set->set_hexpand();
     btn_set->set_valign(Gtk::ALIGN_CENTER);
     grid_cb->attach(*btn_set, 2, 0, 1, 1);
-#else
-    grid_cb->attach(*btn_set, 2, 3, 0, 1,
-                    Gtk::EXPAND | Gtk::FILL,
-                    Gtk::AttachOptions(), 0, 0 );
-#endif
 
     btn_set->signal_clicked().connect(sigc::mem_fun(this, &ObjectProperties::_labelChanged));
 

@@ -649,12 +649,8 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 
     if (Glib::ustring(prefsPath) == "/dialogs/swatches") {
         Gtk::Requisition sreq;
-#if WITH_GTKMM_3_0
         Gtk::Requisition sreq_natural;
         get_preferred_size(sreq_natural, sreq);
-#else
-        sreq = size_request();
-#endif
         int minHeight = 60;
         if (sreq.height < minHeight) {
             set_size_request(70, minHeight);

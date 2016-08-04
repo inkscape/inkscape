@@ -97,11 +97,7 @@ enum {
 };
 
 namespace Gtk {
-#if WITH_GTKMM_3_0
 class Scale;
-#else
-class HScale;
-#endif
 }
 
 namespace Inkscape {
@@ -206,11 +202,7 @@ protected:
     UI::Widget::PrefCheckButton _scroll_space;
     UI::Widget::PrefCheckButton _wheel_zoom;
 
-#if WITH_GTKMM_3_0
     Gtk::Scale      *_slider_snapping_delay;
-#else
-    Gtk::HScale     *_slider_snapping_delay;
-#endif
 
     UI::Widget::PrefCheckButton _snap_indicator;
     UI::Widget::PrefCheckButton _snap_closest_only;

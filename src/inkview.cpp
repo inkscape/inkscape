@@ -343,13 +343,7 @@ static GtkWidget* sp_svgview_control_show(struct SPSlideShow *ss)
         gtk_window_set_transient_for(GTK_WINDOW(ctrlwin), GTK_WINDOW(ss->window));
         g_signal_connect(G_OBJECT (ctrlwin), "key_press_event", (GCallback) sp_svgview_main_key_press, ss);
         g_signal_connect(G_OBJECT (ctrlwin), "delete_event", (GCallback) sp_svgview_ctrlwin_delete, NULL);
-
-#if GTK_CHECK_VERSION(3,0,0)
-        GtkWidget *t = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-#else
-        GtkWidget *t = gtk_hbutton_box_new();
-#endif
-
+        auto t = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
         gtk_container_add(GTK_CONTAINER(ctrlwin), t);
 
 #if GTK_CHECK_VERSION(3,10,0)
@@ -428,19 +422,11 @@ static void sp_svgview_waiting_cursor(struct SPSlideShow *ss)
     GdkDisplay *display = gdk_display_get_default();
     GdkCursor  *waiting = gdk_cursor_new_for_display(display, GDK_WATCH);
     gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ss->window)), waiting);
-#if GTK_CHECK_VERSION(3,0,0)
     g_object_unref(waiting);
-#else
-    gdk_cursor_unref(waiting);
-#endif
     if (ctrlwin) {
         GdkCursor *waiting = gdk_cursor_new_for_display(display, GDK_WATCH);
         gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ctrlwin)), waiting);
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(waiting);
-#else
-        gdk_cursor_unref(waiting);
-#endif
     }
     while(gtk_events_pending()) {
        gtk_main_iteration();

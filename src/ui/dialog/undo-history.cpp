@@ -31,20 +31,11 @@ namespace UI {
 namespace Dialog {
 
 /* Rendering functions for custom cell renderers */
-#if WITH_GTKMM_3_0
 void CellRendererSPIcon::render_vfunc(const Cairo::RefPtr<Cairo::Context>& cr,
                                       Gtk::Widget& widget,
                                       const Gdk::Rectangle& background_area,
                                       const Gdk::Rectangle& cell_area,
                                       Gtk::CellRendererState flags)
-#else
-void CellRendererSPIcon::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
-                                      Gtk::Widget& widget,
-                                      const Gdk::Rectangle& background_area,
-                                      const Gdk::Rectangle& cell_area,
-                                      const Gdk::Rectangle& expose_area,
-                                      Gtk::CellRendererState flags)
-#endif
 {
     // if this event type doesn't have an icon...
     if ( !Inkscape::Verb::get(_property_event_type)->get_image() ) return;
@@ -63,13 +54,8 @@ void CellRendererSPIcon::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
                 sp_icon_fetch_pixbuf(sp_icon);
                 _property_icon = Glib::wrap(sp_icon->pb, true);
             } else if ( GTK_IS_IMAGE(icon->gobj()) ) {
-#if WITH_GTKMM_3_0
                 _property_icon = Gtk::Invisible().render_icon_pixbuf(Gtk::StockID(image),
                                                                      Gtk::ICON_SIZE_MENU);
-#else
-                _property_icon = Gtk::Invisible().render_icon(Gtk::StockID(image),
-                                                              Gtk::ICON_SIZE_MENU);
-#endif
             } else {
                 delete icon;
                 return;
@@ -83,42 +69,23 @@ void CellRendererSPIcon::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
         property_pixbuf() = _icon_cache[_property_event_type];
     }
 
-#if WITH_GTKMM_3_0
     Gtk::CellRendererPixbuf::render_vfunc(cr, widget, background_area,
                                           cell_area, flags);
-#else
-    Gtk::CellRendererPixbuf::render_vfunc(window, widget, background_area,
-                                          cell_area, expose_area, flags);
-#endif
 }
 
 
-#if WITH_GTKMM_3_0
 void CellRendererInt::render_vfunc(const Cairo::RefPtr<Cairo::Context>& cr,
                                    Gtk::Widget& widget,
                                    const Gdk::Rectangle& background_area,
                                    const Gdk::Rectangle& cell_area,
                                    Gtk::CellRendererState flags)
-#else
-void CellRendererInt::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
-                                   Gtk::Widget& widget,
-                                   const Gdk::Rectangle& background_area,
-                                   const Gdk::Rectangle& cell_area,
-                                   const Gdk::Rectangle& expose_area,
-                                   Gtk::CellRendererState flags)
-#endif
 {
     if( _filter(_property_number) ) {
         std::ostringstream s;
         s << _property_number << std::flush;
         property_text() = s.str();
-#if WITH_GTKMM_3_0
         Gtk::CellRendererText::render_vfunc(cr, widget, background_area,
                                             cell_area, flags);
-#else
-        Gtk::CellRendererText::render_vfunc(window, widget, background_area,
-                                            cell_area, expose_area, flags);
-#endif
     }
 }
 

@@ -36,11 +36,7 @@ public:
   {
       connect_signals();
   };
-#if GTK_CHECK_VERSION(3,0,0)
   explicit SpinButton(Glib::RefPtr<Gtk::Adjustment>& adjustment, double climb_rate = 0.0, guint digits = 0)
-#else
-  explicit SpinButton(Gtk::Adjustment& adjustment, double climb_rate = 0.0, guint digits = 0)
-#endif
     : Gtk::SpinButton(adjustment, climb_rate, digits),
       _unit_menu(NULL),
       _unit_tracker(NULL),

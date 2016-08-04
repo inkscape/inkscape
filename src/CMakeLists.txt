@@ -467,7 +467,6 @@ add_subdirectory(libavoid)
 add_subdirectory(libcola)
 add_subdirectory(libcroco)
 add_subdirectory(inkgc)
-add_subdirectory(libgdl)
 add_subdirectory(libuemf)
 add_subdirectory(libvpsc)
 add_subdirectory(livarot)
@@ -537,11 +536,6 @@ set(INKSCAPE_TARGET_LIBS
         gc_LIB
         ${INKSCAPE_LIBS}
 )
-
-if (NOT "${WITH_EXT_GDL}")
-    # Insert it at the beginning of the list as the windows build fails otherwise
-    list (INSERT INKSCAPE_TARGET_LIBS 0 "gdl_LIB")
-endif()
 
 # Build everything except main and inkview.c in a shared library.
 add_library(inkscape_base SHARED ${inkscape_SRC} ${sp_SRC})

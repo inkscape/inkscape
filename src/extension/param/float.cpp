@@ -176,12 +176,8 @@ Gtk::Widget * ParamFloat::get_widget(SPDocument * doc, Inkscape::XML::Node * nod
 
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
-#if WITH_GTKMM_3_0
-    ParamFloatAdjustment * pfa = new ParamFloatAdjustment(this, doc, node, changeSignal);
+    auto pfa = new ParamFloatAdjustment(this, doc, node, changeSignal);
     Glib::RefPtr<Gtk::Adjustment> fadjust(pfa);
-#else
-    ParamFloatAdjustment * fadjust = Gtk::manage(new ParamFloatAdjustment(this, doc, node, changeSignal));
-#endif
     
     if (_mode == FULL) {
 
@@ -197,11 +193,7 @@ Gtk::Widget * ParamFloat::get_widget(SPDocument * doc, Inkscape::XML::Node * nod
         label->show();
         hbox->pack_start(*label, true, true, _indent);
 
-#if WITH_GTKMM_3_0
-    Inkscape::UI::Widget::SpinButton * spin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(fadjust, 0.1, _precision));
-#else
-    Inkscape::UI::Widget::SpinButton * spin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(*fadjust, 0.1, _precision));
-#endif
+	auto spin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(fadjust, 0.1, _precision));
         spin->show();
         hbox->pack_start(*spin, false, false);
     }

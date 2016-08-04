@@ -858,12 +858,8 @@ LayersPanel::LayersPanel() :
     _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
     _scroller.set_shadow_type(Gtk::SHADOW_IN);
     Gtk::Requisition sreq;
-#if WITH_GTKMM_3_0
     Gtk::Requisition sreq_natural;
     _scroller.get_preferred_size(sreq_natural, sreq);
-#else
-    sreq = _scroller.size_request();
-#endif
     int minHeight = 70;
     if (sreq.height < minHeight) {
         // Set a min height to see the layers when used with Ubuntu liboverlay-scrollbar

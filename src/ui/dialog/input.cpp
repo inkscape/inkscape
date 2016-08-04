@@ -21,19 +21,13 @@
 #include <gtkmm/cellrenderercombo.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/grid.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/menubar.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/paned.h>
 #include <gtkmm/progressbar.h>
 #include <gtkmm/scrolledwindow.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
-
 #include <gtkmm/treestore.h>
 
 #include "device-manager.h"
@@ -422,13 +416,7 @@ private:
         Blink watcher;
         Gtk::CheckButton useExt;
         Gtk::Button save;
-
-#if WITH_GTKMM_3_0
         Gtk::Paned pane;
-#else
-        Gtk::HPaned pane;
-#endif
-
         Gtk::VBox detailsBox;
         Gtk::HBox titleFrame;
         Gtk::Label titleLabel;
@@ -489,27 +477,14 @@ private:
     Inkscape::UI::Widget::Frame axisFrame;
     Gtk::ScrolledWindow treeScroller;
     Gtk::ScrolledWindow detailScroller;
-
-#if WITH_GTKMM_3_0
     Gtk::Paned splitter;
     Gtk::Paned split2;
-#else
-    Gtk::HPaned splitter;
-    Gtk::VPaned split2;
-#endif
-
     Gtk::Label devName;
     Gtk::Label devKeyCount;
     Gtk::Label devAxesCount;
     Gtk::ComboBoxText axesCombo;
     Gtk::ProgressBar axesValues[6];
-
-#if WITH_GTKMM_3_0
     Gtk::Grid axisTable;
-#else
-    Gtk::Table axisTable;
-#endif
-
     Gtk::ComboBoxText buttonCombo;
     Gtk::ComboBoxText linkCombo;
     sigc::connection linkConnection;
@@ -519,13 +494,7 @@ private:
     Gtk::Image testThumb;
     Gtk::Image testButtons[24];
     Gtk::Image testAxes[8];
-
-#if WITH_GTKMM_3_0
     Gtk::Grid imageTable;
-#else
-    Gtk::Table imageTable;
-#endif
-
     Gtk::EventBox testDetector;
 
     ConfPanel cfgPanel;
@@ -611,20 +580,11 @@ InputDialogImpl::InputDialogImpl() :
     treeScroller(),
     detailScroller(),
     splitter(),
-#if WITH_GTKMM_3_0
     split2(Gtk::ORIENTATION_VERTICAL),
     axisTable(),
-#else
-    split2(),
-    axisTable(11, 2),
-#endif
     linkCombo(),
     topHolder(),
-#if WITH_GTKMM_3_0
     imageTable(),
-#else
-    imageTable(8, 7),
-#endif
     testDetector(),
     cfgPanel()
 {
@@ -646,27 +606,16 @@ InputDialogImpl::InputDialogImpl() :
     testFrame.add(testDetector);
     testThumb.set(getPix(PIX_TABLET));
     testThumb.set_padding(24, 24);
-
-#if WITH_GTKMM_3_0
     testThumb.set_hexpand();
     testThumb.set_vexpand();
     imageTable.attach(testThumb, 0, 0, 8, 1);
-#else
-    imageTable.attach(testThumb, 0, 8, 0, 1, ::Gtk::EXPAND, ::Gtk::EXPAND);
-#endif
 
     {
         guint col = 0;
         guint row = 1;
         for ( guint num = 0; num < G_N_ELEMENTS(testButtons); num++ ) {
             testButtons[num].set(getPix(PIX_BUTTONS_NONE));
-
-#if WITH_GTKMM_3_0
             imageTable.attach(testButtons[num], col, row, 1, 1);
-#else
-            imageTable.attach(testButtons[num], col, col + 1, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
-#endif
-
             col++;
             if (col > 7) {
                 col = 0;
@@ -677,13 +626,7 @@ InputDialogImpl::InputDialogImpl() :
         col = 0;
         for ( guint num = 0; num < G_N_ELEMENTS(testAxes); num++ ) {
             testAxes[num].set(getPix(PIX_AXIS_NONE));
-
-#if WITH_GTKMM_3_0
             imageTable.attach(testAxes[num], col * 2, row, 2, 1);
-#else
-            imageTable.attach(testAxes[num], col * 2, (col + 1) * 2, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
-#endif
-
             col++;
             if (col > 3) {
                 col = 0;
@@ -721,45 +664,17 @@ InputDialogImpl::InputDialogImpl() :
     axisFrame.add(axisTable);
 
     Gtk::Label *lbl = Gtk::manage(new Gtk::Label(_("Link:")));
-
-#if WITH_GTKMM_3_0
     axisTable.attach(*lbl, 0, rowNum, 1, 1);
-#else
-    axisTable.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
-                      ::Gtk::FILL,
-                      ::Gtk::SHRINK);
-#endif
-
     linkCombo.append(_("None"));
     linkCombo.set_active_text(_("None"));
     linkCombo.set_sensitive(false);
     linkConnection = linkCombo.signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::linkComboChanged));
-
-#if WITH_GTKMM_3_0
     axisTable.attach(linkCombo, 1, rowNum, 1, 1);
-#else
-    axisTable.attach(linkCombo, 1, 2, rowNum, rowNum + 1,
-                      ::Gtk::FILL,
-                      ::Gtk::SHRINK);
-#endif
-
     rowNum++;
 
-
     lbl = Gtk::manage(new Gtk::Label(_("Axes count:")));
-
-#if WITH_GTKMM_3_0
     axisTable.attach(*lbl, 0, rowNum, 1, 1);
     axisTable.attach(devAxesCount, 1, rowNum, 1, 1);
-#else
-    axisTable.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
-                      ::Gtk::FILL,
-                      ::Gtk::SHRINK);
-    axisTable.attach(devAxesCount, 1, 2, rowNum, rowNum + 1,
-                      ::Gtk::SHRINK,
-                      ::Gtk::SHRINK);
-#endif
-
     rowNum++;
 
 
@@ -777,22 +692,11 @@ InputDialogImpl::InputDialogImpl() :
 
     for ( guint barNum = 0; barNum < static_cast<guint>(G_N_ELEMENTS(axesValues)); barNum++ ) {
         lbl = Gtk::manage(new Gtk::Label(_("axis:")));
-
-#if WITH_GTKMM_3_0
         lbl->set_hexpand();
         axisTable.attach(*lbl, 0, rowNum, 1, 1);
         
         axesValues[barNum].set_hexpand();
         axisTable.attach(axesValues[barNum], 1, rowNum, 1, 1);
-#else
-        axisTable.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
-                          ::Gtk::EXPAND,
-                          ::Gtk::SHRINK);
-        axisTable.attach(axesValues[barNum], 1, 2, rowNum, rowNum + 1,
-                          ::Gtk::EXPAND,
-                          ::Gtk::SHRINK);
-#endif
-
         axesValues[barNum].set_sensitive(false);
 
         rowNum++;
@@ -802,17 +706,8 @@ InputDialogImpl::InputDialogImpl() :
 
     lbl = Gtk::manage(new Gtk::Label(_("Button count:")));
 
-#if WITH_GTKMM_3_0
     axisTable.attach(*lbl, 0, rowNum, 1, 1);
     axisTable.attach(devKeyCount, 1, rowNum, 1, 1);
-#else
-    axisTable.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
-                      ::Gtk::FILL,
-                      ::Gtk::SHRINK);
-    axisTable.attach(devKeyCount, 1, 2, rowNum, rowNum + 1,
-                      ::Gtk::SHRINK,
-                      ::Gtk::SHRINK);
-#endif
 
     rowNum++;
 
@@ -828,13 +723,7 @@ InputDialogImpl::InputDialogImpl() :
     rowNum++;
 */
 
-#if WITH_GTKMM_3_0
     axisTable.attach(keyVal, 0, rowNum, 2, 1);
-#else
-    axisTable.attach(keyVal, 0, 2, rowNum, rowNum + 1,
-                      ::Gtk::FILL,
-                      ::Gtk::SHRINK);
-#endif
 
     rowNum++;
 
@@ -848,18 +737,9 @@ InputDialogImpl::InputDialogImpl() :
 
     // TODO: Extension event stuff has been removed from public API in GTK+ 3
     // Need to check that this hasn't broken anything
-#if !GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_extension_events( GTK_WIDGET(testDetector.gobj()), GDK_EXTENSION_EVENTS_ALL );
-#endif
     testDetector.add_events(Gdk::POINTER_MOTION_MASK|Gdk::KEY_PRESS_MASK|Gdk::KEY_RELEASE_MASK |Gdk::PROXIMITY_IN_MASK|Gdk::PROXIMITY_OUT_MASK|Gdk::SCROLL_MASK);
 
-#if WITH_GTKMM_3_0
     axisTable.attach(keyEntry, 0, rowNum, 2, 1);
-#else
-    axisTable.attach(keyEntry, 0, 2, rowNum, rowNum + 1,
-                      ::Gtk::FILL,
-                      ::Gtk::SHRINK);
-#endif
 
     rowNum++;
 
@@ -1141,12 +1021,7 @@ InputDialogImpl::ConfPanel::ConfPanel() :
     useExt.set_active(Preferences::get()->getBool("/options/useextinput/value"));
     useExt.signal_toggled().connect(sigc::mem_fun(*this, &InputDialogImpl::ConfPanel::useExtToggled));
 
-#if WITH_GTKMM_3_0
-    Gtk::ButtonBox *buttonBox = Gtk::manage(new Gtk::ButtonBox);
-#else
-    Gtk::HButtonBox *buttonBox = Gtk::manage (new Gtk::HButtonBox);
-#endif
-
+    auto buttonBox = Gtk::manage(new Gtk::ButtonBox);
     buttonBox->set_layout (Gtk::BUTTONBOX_END);
     //Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_END, Gtk::ALIGN_START, 0, 0);
     buttonBox->add(save);
@@ -1930,7 +1805,6 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
                 testThumb.set(getPix(PIX_ERASER));
                 break;
             }
-#if WITH_GTKMM_3_0
             /// \fixme GTK3 added new GDK_SOURCEs that should be handled here!
             case GDK_SOURCE_KEYBOARD:
             case GDK_SOURCE_TOUCHSCREEN:
@@ -1938,7 +1812,6 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
                  g_warning("InputDialogImpl::eventSnoop : unhandled GDK_SOURCE type!");
                  break;
             }
-#endif
         }
 
         updateTestButtons(key, hotButton);

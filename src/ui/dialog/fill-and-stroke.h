@@ -64,11 +64,7 @@ protected:
     void _layoutPageStrokePaint();
     void _layoutPageStrokeStyle();
     void _savePagePref(guint page_num);
-#if WITH_GTKMM_3_0
     void _onSwitchPage(Gtk::Widget *page, guint pagenum);
-#else
-    void _onSwitchPage(GtkNotebookPage *page, guint pagenum);
-#endif
 
 private:
     FillAndStroke(FillAndStroke const &d);

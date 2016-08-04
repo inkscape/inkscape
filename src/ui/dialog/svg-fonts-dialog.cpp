@@ -888,12 +888,7 @@ void SvgFontsDialog::add_font(){
 SvgFontsDialog::SvgFontsDialog()
  : UI::Widget::Panel("", "/dialogs/svgfonts", SP_VERB_DIALOG_SVG_FONTS), _add(Gtk::Stock::NEW)
 {
-#if WITH_GTKMM_3_0
     kerning_slider = Gtk::manage(new Gtk::Scale(Gtk::ORIENTATION_HORIZONTAL));
-#else
-    kerning_slider = Gtk::manage(new Gtk::HScale);
-#endif
-
     _add.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::add_font));
 
     Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());

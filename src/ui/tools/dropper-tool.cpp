@@ -118,20 +118,12 @@ void DropperTool::finish() {
     }
 
     if (cursor_dropper_fill) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(cursor_dropper_fill);
-#else
-        gdk_cursor_unref (cursor_dropper_fill);
-#endif
         cursor_dropper_fill = NULL;
     }
     
     if (cursor_dropper_stroke) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(cursor_dropper_stroke);
-#else
-        gdk_cursor_unref (cursor_dropper_stroke);
-#endif
         cursor_dropper_fill = NULL;
     }
 

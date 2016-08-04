@@ -118,11 +118,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       current_stroke_width(0),
 
       _desktop (NULL),
-#if WITH_GTKMM_3_0
       _table(),
-#else
-      _table(2, 6),
-#endif
       _fill_label (_("Fill:")),
       _stroke_label (_("Stroke:")),
       _opacity_label (_("O:")),
@@ -134,11 +130,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       _stroke_flag_place (),
 
       _opacity_place (),
-#if WITH_GTKMM_3_0
       _opacity_adjustment(Gtk::Adjustment::create(100, 0.0, 100, 1.0, 10.0)),
-#else
-      _opacity_adjustment (100, 0.0, 100, 1.0, 10.0),
-#endif
       _opacity_sb (0.02, 0),
 
       _stroke (),
@@ -161,13 +153,8 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
     _opacity_label.set_alignment(0.0, 0.5);
     _opacity_label.set_padding(0, 0);
 
-#if WITH_GTKMM_3_0
     _table.set_column_spacing(2);
     _table.set_row_spacing(0);
-#else
-    _table.set_col_spacings (2);
-    _table.set_row_spacings (0);
-#endif
 
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
 
@@ -374,7 +361,6 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
     _opacity_sb.set_size_request (SELECTED_STYLE_SB_WIDTH, -1);
     _opacity_sb.set_sensitive (false);
 
-#if WITH_GTKMM_3_0
     _table.attach(_fill_label, 0, 0, 1, 1);
     _table.attach(_stroke_label, 0, 1, 1, 1);
 
@@ -383,26 +369,11 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
 
     _table.attach(_fill_place, 2, 0, 1, 1);
     _table.attach(_stroke, 2, 1, 1, 1);
-#else
-    _table.attach(_fill_label, 0,1, 0,1, Gtk::FILL, Gtk::SHRINK);
-    _table.attach(_stroke_label, 0,1, 1,2, Gtk::FILL, Gtk::SHRINK);
-
-    _table.attach(_fill_flag_place, 1,2, 0,1, Gtk::SHRINK, Gtk::SHRINK);
-    _table.attach(_stroke_flag_place, 1,2, 1,2, Gtk::SHRINK, Gtk::SHRINK);
-
-    _table.attach(_fill_place, 2,3, 0,1);
-    _table.attach(_stroke, 2,3, 1,2);
-#endif
 
     _opacity_place.add(_opacity_label);
 
-#if WITH_GTKMM_3_0
     _table.attach(_opacity_place, 4, 0, 1, 2);
     _table.attach(_opacity_sb, 5, 0, 1, 2);
-#else
-    _table.attach(_opacity_place, 4,5, 0,2, Gtk::SHRINK, Gtk::SHRINK);
-    _table.attach(_opacity_sb, 5,6, 0,2, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     pack_start(_table, true, true, 2);
 
@@ -1115,11 +1086,7 @@ SelectedStyle::update()
         if (_opacity_blocked) break;
         _opacity_blocked = true;
         _opacity_sb.set_sensitive(true);
-#if WITH_GTKMM_3_0
         _opacity_adjustment->set_value(SP_SCALE24_TO_FLOAT(query.opacity.value) * 100);
-#else
-        _opacity_adjustment.set_value(SP_SCALE24_TO_FLOAT(query.opacity.value) * 100);
-#endif
         _opacity_blocked = false;
         break;
     }
@@ -1219,11 +1186,7 @@ void SelectedStyle::on_opacity_changed ()
     _opacity_blocked = true;
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream os;
-#if WITH_GTKMM_3_0
     os << CLAMP ((_opacity_adjustment->get_value() / 100), 0.0, 1.0);
-#else
-    os << CLAMP ((_opacity_adjustment.get_value() / 100), 0.0, 1.0);
-#endif
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
     // FIXME: workaround for GTK breakage: display interruptibility sometimes results in GTK
     // sending multiple value-changed events. As if when Inkscape interrupts redraw for main loop
@@ -1352,11 +1315,7 @@ RotateableSwatch::do_motion(double by, guint modifier) {
 
             g_object_unref(pixbuf);	    
             gdk_window_set_cursor(gtk_widget_get_window(w), cr);
-#if GTK_CHECK_VERSION(3,0,0)
 	    g_object_unref(cr);
-#else
-            gdk_cursor_unref(cr);
-#endif
 	    cr = NULL;
             cr_set = true;
         }
@@ -1420,11 +1379,7 @@ RotateableSwatch::do_release(double by, guint modifier) {
         GtkWidget *w = GTK_WIDGET(gobj());
         gdk_window_set_cursor(gtk_widget_get_window(w), NULL);
         if (cr) {
-#if GTK_CHECK_VERSION(3,0,0)
            g_object_unref(cr);
-#else
-           gdk_cursor_unref (cr);
-#endif
            cr = NULL;
         }
         cr_set = false;

@@ -19,11 +19,7 @@
 #endif
 
 #include <boost/ptr_container/ptr_vector.hpp>
-#if WITH_GTKMM_3_0
 #include <gtkmm/grid.h>
-#else
-#include <gtkmm/table.h>
-#endif
 #include <gtk/gtk.h>
 #include <glib.h>
 
@@ -35,11 +31,7 @@ namespace UI {
 namespace Widget {
 
 class ColorNotebook
-#if GTK_CHECK_VERSION(3, 0, 0)
     : public Gtk::Grid
-#else
-    : public Gtk::Table
-#endif
 {
 public:
     ColorNotebook(SelectedColor &color);

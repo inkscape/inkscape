@@ -98,11 +98,7 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
     tabs->append_page(*manage(
         make_scrolled_text(license_text)), _("_License"), true);
 
-#if WITH_GTKMM_3_0
     get_content_area()->pack_end(*manage(tabs), true, true);
-#else
-    get_vbox()->pack_end(*manage(tabs), true, true);
-#endif
 
     tabs->show_all();
 
@@ -130,20 +126,12 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
     link->set_selectable(true);
     link->show();
 
-#if WITH_GTKMM_3_0
     get_content_area()->pack_start(*manage(label), false, false);
     get_content_area()->pack_start(*manage(link), false, false);
-#else
-    get_vbox()->pack_start(*manage(label), false, false);
-    get_vbox()->pack_start(*manage(link), false, false);
-#endif
 
     Gtk::Requisition requisition;
-#if GTK_CHECK_VERSION(3,0,0)
     gtk_widget_get_preferred_size(reinterpret_cast<GtkWidget*>(gobj()), &requisition, NULL);
-#else
-    gtk_widget_size_request (reinterpret_cast<GtkWidget*>(gobj()), &requisition);
-#endif
+    
     // allow window to shrink
     set_size_request(0, 0);
     set_default_size(requisition.width, requisition.height);

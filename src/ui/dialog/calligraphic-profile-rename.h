@@ -20,11 +20,7 @@
 #include <gtkmm/label.h>
 
 namespace Gtk {
-#if WITH_GTKMM_3_0
 class Grid;
-#else
-class Table;
-#endif
 }
 
 class SPDesktop;
@@ -59,12 +55,7 @@ protected:
 
     Gtk::Label        _profile_name_label;
     Gtk::Entry        _profile_name_entry;
-
-#if WITH_GTKMM_3_0
     Gtk::Grid*        _layout_table;
-#else
-    Gtk::Table*       _layout_table;
-#endif
 
     Gtk::Button       _close_button;
     Gtk::Button       _delete_button;

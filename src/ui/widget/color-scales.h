@@ -5,11 +5,7 @@
 #include <config.h>
 #endif
 
-#if WITH_GTKMM_3_0
 #include <gtkmm/grid.h>
-#else
-#include <gtkmm/table.h>
-#endif
 
 #include "ui/selected-color.h"
 
@@ -27,11 +23,7 @@ typedef enum {
 } SPColorScalesMode;
 
 class ColorScales
-#if GTK_CHECK_VERSION(3, 0, 0)
     : public Gtk::Grid
-#else
-    : public Gtk::Table
-#endif
 {
 public:
     static const gchar *SUBMODE_NAMES[];

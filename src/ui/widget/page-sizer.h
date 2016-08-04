@@ -23,15 +23,9 @@
 #include <gtkmm/alignment.h>
 #include <gtkmm/expander.h>
 #include <gtkmm/frame.h>
+#include <gtkmm/grid.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/scrolledwindow.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
-
 #include <gtkmm/radiobutton.h>
 
 namespace Inkscape {    
@@ -222,12 +216,7 @@ protected:
 
     //### Custom size frame
     Gtk::Frame           _customFrame;
-
-#if WITH_GTKMM_3_0
     Gtk::Grid            _customDimTable;
-#else
-    Gtk::Table           _customDimTable;
-#endif
 
     RegisteredUnitMenu   _dimensionUnits;
     RegisteredScalarUnit _dimensionWidth;
@@ -237,12 +226,7 @@ protected:
     //### Fit Page options
     Gtk::Expander        _fitPageMarginExpander;
 
-#if WITH_GTKMM_3_0
     Gtk::Grid            _marginTable;
-#else
-    Gtk::Table           _marginTable;
-#endif
-
     Gtk::Alignment       _marginTopAlign;
     Gtk::Alignment       _marginLeftAlign;
     Gtk::Alignment       _marginRightAlign;
@@ -257,11 +241,7 @@ protected:
 
     // Document scale
     Gtk::Frame           _scaleFrame;
-#if WITH_GTKMM_3_0
     Gtk::Grid            _scaleTable;
-#else
-    Gtk::Table           _scaleTable;
-#endif
 
     Gtk::Label           _scaleLabel;
     Gtk::Label           _scaleWarning;
@@ -271,11 +251,7 @@ protected:
 
     // Viewbox
     Gtk::Expander        _viewboxExpander;
-#if WITH_GTKMM_3_0
     Gtk::Grid            _viewboxTable;
-#else
-    Gtk::Table           _viewboxTable;
-#endif
 
     RegisteredScalar     _viewboxX;
     RegisteredScalar     _viewboxY;

@@ -21,11 +21,7 @@
 #include <gtkmm/bin.h>
 
 namespace Gtk {
-#if WITH_GTKMM_3_0
 class Grid;
-#else
-class Table;
-#endif
 }
 
 #include "previewfillable.h"
@@ -68,12 +64,7 @@ private:
 
     std::vector<Previewable*> items;
     Gtk::Bin *_scroller;
-
-#if WITH_GTKMM_3_0
     Gtk::Grid *_insides;
-#else
-    Gtk::Table *_insides;
-#endif
 
     int _prefCols;
     bool _updatesFrozen;

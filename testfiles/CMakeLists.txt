@@ -28,10 +28,6 @@ add_dependencies(unittest inkscape_version)
 
 set (_optional_unittest_libs )
 
-if (NOT "${WITH_EXT_GDL}")
-	list (APPEND _optional_unittest_libs "gdl_LIB")
-endif()
-
 target_link_libraries(unittest
 	gmock_main
 

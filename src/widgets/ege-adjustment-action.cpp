@@ -813,12 +813,8 @@ static GtkWidget* create_tool_item( GtkAction* action )
     if ( IS_EGE_ADJUSTMENT_ACTION(action) ) {
         EgeAdjustmentAction* act = EGE_ADJUSTMENT_ACTION( action );
         GtkWidget* spinbutton = 0;
-#if GTK_CHECK_VERSION(3,0,0)
-	GtkWidget* hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-        GtkWidget* hb = gtk_hbox_new( FALSE, 5 );
-#endif
         GValue value;
         memset( &value, 0, sizeof(value) );
         g_value_init( &value, G_TYPE_STRING );
@@ -865,13 +861,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
                 gtk_box_pack_start( GTK_BOX(hb), icon, FALSE, FALSE, 0 );
             } else {
                 GtkWidget* lbl = gtk_label_new( g_value_get_string( &value ) ? g_value_get_string( &value ) : "wwww" );
-
-#if GTK_CHECK_VERSION(3,0,0)
                 gtk_widget_set_halign(lbl, GTK_ALIGN_END);
-#else
-                gtk_misc_set_alignment( GTK_MISC(lbl), 1.0, 0.5 );
-#endif
-
                 gtk_box_pack_start( GTK_BOX(hb), lbl, FALSE, FALSE, 0 );
             }
         }

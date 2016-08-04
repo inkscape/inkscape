@@ -501,11 +501,7 @@ void ObjectsPanel::_setCompositingValues(SPItem *item)
     _blurConnection.block();
 
     //Set the opacity
-#if WITH_GTKMM_3_0
     _opacity_adjustment->set_value((item->style->opacity.set ? SP_SCALE24_TO_FLOAT(item->style->opacity.value) : 1) * _opacity_adjustment->get_upper());
-#else
-    _opacity_adjustment.set_value((item->style->opacity.set ? SP_SCALE24_TO_FLOAT(item->style->opacity.value) : 1) * _opacity_adjustment.get_upper());
-#endif
     SPFeBlend *spblend = NULL;
     SPGaussianBlur *spblur = NULL;
     if (item->style->getFilter())
@@ -1471,11 +1467,7 @@ void ObjectsPanel::_opacityChangedIter(const Gtk::TreeIter& iter)
     if (item)
     {
         item->style->opacity.set = TRUE;
-#if WITH_GTKMM_3_0
         item->style->opacity.value = SP_SCALE24_FROM_FLOAT(_opacity_adjustment->get_value() / _opacity_adjustment->get_upper());
-#else
-        item->style->opacity.value = SP_SCALE24_FROM_FLOAT(_opacity_adjustment.get_value() / _opacity_adjustment.get_upper());
-#endif
         item->updateRepr(SP_OBJECT_WRITE_NO_CHILDREN | SP_OBJECT_WRITE_EXT);
     }
 }
@@ -1618,11 +1610,7 @@ ObjectsPanel::ObjectsPanel() :
     _opacity_vbox(false, 0),
     _opacity_label(_("Opacity:")),
     _opacity_label_unit(_("%")),
-#if WITH_GTKMM_3_0
     _opacity_adjustment(Gtk::Adjustment::create(100.0, 0.0, 100.0, 1.0, 1.0, 0.0)),
-#else
-    _opacity_adjustment(100.0, 0.0, 100.0, 1.0, 1.0, 0.0),
-#endif
     _opacity_hscale(_opacity_adjustment),
     _opacity_spin_button(_opacity_adjustment, 0.01, 1),
     _fe_cb(UI::Widget::SimpleFilterModifier::BLEND),
@@ -1752,12 +1740,8 @@ ObjectsPanel::ObjectsPanel() :
     _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
     _scroller.set_shadow_type(Gtk::SHADOW_IN);
     Gtk::Requisition sreq;
-#if WITH_GTKMM_3_0
     Gtk::Requisition sreq_natural;
     _scroller.get_preferred_size(sreq_natural, sreq);
-#else
-    sreq = _scroller.size_request();
-#endif
     int minHeight = 70;
     if (sreq.height < minHeight) {
         // Set a min height to see the layers when used with Ubuntu liboverlay-scrollbar
@@ -1790,13 +1774,8 @@ ObjectsPanel::ObjectsPanel() :
     _opacity_hbox.pack_start(_opacity_spin_button, false, false, 0);
     _opacity_hbox.pack_start(_opacity_label_unit, false, false, 3);
     _opacity_hscale.set_draw_value(false);
-#if WITH_GTKMM_3_0
     _opacityConnection = _opacity_adjustment->signal_value_changed().connect(sigc::mem_fun(*this, &ObjectsPanel::_opacityValueChanged));
     _opacity_label.set_mnemonic_widget(_opacity_hscale);
-#else
-    _opacityConnection = _opacity_adjustment.signal_value_changed().connect(sigc::mem_fun(*this, &ObjectsPanel::_opacityValueChanged));
-    _opacity_label.set_mnemonic_widget(_opacity_hscale);
-#endif
     
     //Keep the labels aligned
     GtkSizeGroup *labels = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);

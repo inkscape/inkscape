@@ -20,11 +20,7 @@
 #include "../xml/node-event-vector.h"
 #include "sp-xmlview-attr-list.h"
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_xmlview_attr_list_destroy(GtkWidget * object);
-#else
-static void sp_xmlview_attr_list_destroy(GtkObject * object);
-#endif
 
 static void event_attr_changed (Inkscape::XML::Node * repr, const gchar * name, const gchar * old_value, const gchar * new_value, bool is_interactive, gpointer data);
 
@@ -87,13 +83,8 @@ G_DEFINE_TYPE(SPXMLViewAttrList, sp_xmlview_attr_list, GTK_TYPE_TREE_VIEW);
 
 void sp_xmlview_attr_list_class_init (SPXMLViewAttrListClass * klass)
 {
-#if GTK_CHECK_VERSION(3,0,0)
-	GtkWidgetClass * widget_class = GTK_WIDGET_CLASS(klass);
+	auto widget_class = GTK_WIDGET_CLASS(klass);
 	widget_class->destroy = sp_xmlview_attr_list_destroy;
-#else
-	GtkObjectClass * object_class = GTK_OBJECT_CLASS(klass);
-	object_class->destroy = sp_xmlview_attr_list_destroy;
-#endif
 
         g_signal_new("row-value-changed",
                       G_TYPE_FROM_CLASS(klass),
@@ -112,11 +103,7 @@ sp_xmlview_attr_list_init (SPXMLViewAttrList * list)
 	list->repr = NULL;
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 void sp_xmlview_attr_list_destroy(GtkWidget * object)
-#else
-void sp_xmlview_attr_list_destroy(GtkObject * object)
-#endif
 {
 	SPXMLViewAttrList * list;
 
@@ -125,11 +112,7 @@ void sp_xmlview_attr_list_destroy(GtkObject * object)
 	g_object_unref(list->store);
 	sp_xmlview_attr_list_set_repr (list, NULL);
 
-#if GTK_CHECK_VERSION(3,0,0)
 	GTK_WIDGET_CLASS(sp_xmlview_attr_list_parent_class)->destroy (object);
-#else
-	GTK_OBJECT_CLASS(sp_xmlview_attr_list_parent_class)->destroy (object);
-#endif
 }
 
 void sp_xmlview_attr_list_select_row_by_key(SPXMLViewAttrList * list, const gchar *name)

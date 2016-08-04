@@ -311,27 +311,10 @@ LoadingBox::LoadingBox() : Gtk::EventBox()
     draw_spinner = false;
     spinner_step = 0;
 
-#if WITH_GTKMM_3_0
     signal_draw().connect(sigc::mem_fun(*this, &LoadingBox::_on_draw), false);
-#else
-    signal_expose_event().connect(sigc::mem_fun(*this, &LoadingBox::_on_expose_event), false);
-#endif
 }
 
-#if !WITH_GTKMM_3_0
-bool LoadingBox::_on_expose_event(GdkEventExpose* /*event*/)
-{
-    Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
-
-    return _on_draw(cr);
-}
-#endif
-
-bool LoadingBox::_on_draw(const Cairo::RefPtr<Cairo::Context> &
-#if WITH_GTKMM_3_0
-cr
-#endif
-)
+bool LoadingBox::_on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
 {
     // Draw shadow
     int x = get_allocation().get_x();
@@ -339,27 +322,14 @@ cr
     int width = get_allocation().get_width();
     int height = get_allocation().get_height();
 
-#if WITH_GTKMM_3_0
     get_style_context()->render_frame(cr, x, y, width, height);
-#else
-    get_style()->paint_shadow(get_window(), get_state(), Gtk::SHADOW_IN,
-        Gdk::Rectangle(x, y, width, height),
-        *this, Glib::ustring("viewport"), x, y, width, height);
-#endif
 
     if (draw_spinner) {
         int spinner_size = 16;
         int spinner_x = x + (width - spinner_size) / 2;
         int spinner_y = y + (height - spinner_size) / 2;
 
-#if WITH_GTKMM_3_0
         get_style_context()->render_activity(cr, spinner_x, spinner_y, spinner_size, spinner_size);
-#else
-        gtk_paint_spinner(gtk_widget_get_style(GTK_WIDGET(gobj())),
-            gtk_widget_get_window(GTK_WIDGET(gobj())),
-            gtk_widget_get_state(GTK_WIDGET(gobj())), NULL, GTK_WIDGET(gobj()),
-            NULL, spinner_step, spinner_x, spinner_y, spinner_size, spinner_size);
-#endif
     }
 
     return false;
@@ -429,11 +399,7 @@ PreviewWidget::PreviewWidget() : Gtk::VBox(false, 12)
     box_loading->set_size_request(90, 90);
     set_border_width(12);
 
-#if WITH_GTKMM_3_0
     signal_draw().connect(sigc::mem_fun(*this, &PreviewWidget::_on_draw), false);
-#else 
-    signal_expose_event().connect(sigc::mem_fun(*this, &PreviewWidget::_on_expose_event), false);
-#endif
 
     clear();
 }
@@ -477,15 +443,6 @@ void PreviewWidget::clear()
     image->hide();
 }
 
-#if !WITH_GTKMM_3_0
-bool PreviewWidget::_on_expose_event(GdkEventExpose* /*event*/)
-{
-    Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
-
-    return _on_draw(cr);
-}
-#endif
-
 bool PreviewWidget::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     // Draw background
@@ -494,16 +451,10 @@ bool PreviewWidget::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     int width = get_allocation().get_width();
     int height = get_allocation().get_height();
 
-#if WITH_GTKMM_3_0
     Gdk::RGBA background_fill;
     get_style_context()->lookup_color("base_color", background_fill);
     cr->rectangle(x, y, width, height);
     Gdk::Cairo::set_source_rgba(cr, background_fill);
-#else
-    Gdk::Color background_fill = get_style()->get_base(get_state());
-    cr->rectangle(x, y, width, height);
-    Gdk::Cairo::set_source_color(cr, background_fill);
-#endif
     
     cr->fill();
 
@@ -568,56 +519,11 @@ void StatusWidget::end_process()
     clear();
 }
 
-#if !GTK_CHECK_VERSION(3,0,0)
-SearchEntry::SearchEntry() : Gtk::Entry()
-{
-    signal_changed().connect(sigc::mem_fun(*this, &SearchEntry::_on_changed));
-    signal_icon_press().connect(sigc::mem_fun(*this, &SearchEntry::_on_icon_pressed));
-
-    set_icon_from_icon_name(INKSCAPE_ICON("edit-find"), Gtk::ENTRY_ICON_PRIMARY);
-    gtk_entry_set_icon_from_icon_name(gobj(), GTK_ENTRY_ICON_SECONDARY, NULL);
-}
-
-void SearchEntry::_on_icon_pressed(Gtk::EntryIconPosition icon_position, const GdkEventButton* /*event*/)
-{
-    if (icon_position == Gtk::ENTRY_ICON_SECONDARY) {
-        grab_focus();
-        delete_text(0, -1);
-    } else if (icon_position == Gtk::ENTRY_ICON_PRIMARY) {
-        select_region(0, -1);
-        grab_focus();
-    }
-}
-
-void SearchEntry::_on_changed()
-{
-    if (get_text().empty()) {
-        gtk_entry_set_icon_from_icon_name(gobj(), GTK_ENTRY_ICON_SECONDARY, NULL);
-    } else {
-        set_icon_from_icon_name(INKSCAPE_ICON("edit-clear"), Gtk::ENTRY_ICON_SECONDARY);
-    }
-}
-#endif
-
-
 BaseBox::BaseBox() : Gtk::EventBox()
 {
-#if WITH_GTKMM_3_0
     signal_draw().connect(sigc::mem_fun(*this, &BaseBox::_on_draw), false);
-#else
-    signal_expose_event().connect(sigc::mem_fun(*this, &BaseBox::_on_expose_event), false);
-#endif
     set_visible_window(false);
 }
-
-#if !WITH_GTKMM_3_0
-bool BaseBox::_on_expose_event(GdkEventExpose* /*event*/)
-{
-    Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
-
-    return _on_draw(cr);
-}
-#endif
 
 bool BaseBox::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
@@ -627,23 +533,12 @@ bool BaseBox::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     int width = get_allocation().get_width();
     int height = get_allocation().get_height();
 
-#if WITH_GTKMM_3_0
     Gdk::RGBA background_fill;
     get_style_context()->lookup_color("base_color", background_fill);
     cr->rectangle(x, y, width, height);
     Gdk::Cairo::set_source_rgba(cr, background_fill);
     cr->fill();
     get_style_context()->render_frame(cr, x, y, width, height);
-#else
-    Gdk::Color background_fill = get_style()->get_base(get_state());
-    cr->rectangle(x, y, width, height);
-    Gdk::Cairo::set_source_color(cr, background_fill);
-    cr->fill();
-    
-    get_style()->paint_shadow(get_window(), get_state(), Gtk::SHADOW_IN,
-        Gdk::Rectangle(x, y, width, height),
-        *this, Glib::ustring("viewport"), x, y, width, height);
-#endif
 
     return false;
 }
@@ -660,22 +555,9 @@ LogoArea::LogoArea() : Gtk::EventBox()
         draw_logo = false;
     }
 
-#if WITH_GTKMM_3_0
     signal_draw().connect(sigc::mem_fun(*this, &LogoArea::_on_draw));
-#else
-    signal_expose_event().connect(sigc::mem_fun(*this, &LogoArea::_on_expose_event));
-#endif
     set_visible_window(false);
 }
-
-#if !WITH_GTKMM_3_0
-bool LogoArea::_on_expose_event(GdkEventExpose* /*event*/)
-{
-        Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
-
-	return _on_draw(cr);
-}
-#endif
 
 bool LogoArea::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
@@ -687,16 +569,9 @@ bool LogoArea::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
         int x_logo = x + (width - 220) / 2;
         int y_logo = y + (height - 76) / 2;
         
-        // Draw logo, we mask [read fill] it with the mid colour from the
-        // user's GTK theme
-#if WITH_GTKMM_3_0
-        // For GTK+ 3, use grey
+        // Draw logo, we mask [read fill] it with grey
         Gdk::RGBA logo_fill("grey");
         Gdk::Cairo::set_source_rgba(cr, logo_fill);
-#else
-        Gdk::Color logo_fill = get_style()->get_mid(get_state());
-        Gdk::Cairo::set_source_color(cr, logo_fill);
-#endif
 
         cr->mask(logo_mask, x_logo, y_logo);
     }
@@ -1174,16 +1049,9 @@ void ImportDialog::update_label_no_search_results()
     Glib::ustring msg_two = _("Please make sure all keywords are spelled correctly,"
                               " or try again with different keywords.");
 
-#if WITH_GTKMM_3_0
-    Glib::ustring markup = Glib::ustring::compose(
+    auto markup = Glib::ustring::compose(
         "<span size=\"large\">%1</span>\n<span>%2</span>",
         msg_one, msg_two);
-#else
-    Gdk::Color grey = entry_search->get_style()->get_text_aa(entry_search->get_state());
-    Glib::ustring markup = Glib::ustring::compose(
-        "<span size=\"large\">%1</span>\n<span color=\"%2\">%3</span>",
-        msg_one, grey.to_string(), msg_two);
-#endif
 
     label_not_found->set_markup(markup);
 }
@@ -1203,33 +1071,17 @@ ImportDialog::ImportDialog(Gtk::Window& parent_window, FileDialogType file_types
     dialogType = file_types;
 
     // Creation
-    Gtk::VBox *vbox = new Gtk::VBox(false, 0);
-
-#if WITH_GTKMM_3_0
-    Gtk::ButtonBox *hbuttonbox_bottom = new Gtk::ButtonBox();
-#else
-    Gtk::HButtonBox *hbuttonbox_bottom = new Gtk::HButtonBox();
-#endif
-
-    Gtk::HBox *hbox_bottom = new Gtk::HBox(false, 12);
+    auto vbox = new Gtk::VBox(false, 0);
+    auto hbuttonbox_bottom = new Gtk::ButtonBox();
+    auto hbox_bottom = new Gtk::HBox(false, 12);
     BaseBox *basebox_logo = new BaseBox();
     BaseBox *basebox_no_search_results = new BaseBox();
     label_not_found = new Gtk::Label();
     label_description = new Gtk::Label();
-
-#if GTK_CHECK_VERSION(3,0,0)
     entry_search = new Gtk::SearchEntry();
-#else
-    entry_search = new SearchEntry();
-#endif
-
     button_search = new Gtk::Button(_("Search"));
 
-#if WITH_GTKMM_3_0
-    Gtk::ButtonBox* hbuttonbox_search = new Gtk::ButtonBox();
-#else
-    Gtk::HButtonBox* hbuttonbox_search = new Gtk::HButtonBox();
-#endif
+    auto hbuttonbox_search = new Gtk::ButtonBox();
 
     Gtk::ScrolledWindow* scrolledwindow_preview = new Gtk::ScrolledWindow();
     preview_files = new PreviewWidget();

@@ -25,6 +25,8 @@
 #include "ui/dialog-events.h"
 #include "extension/output.h"
 
+#include <glibmm/convert.h>
+
 namespace Inkscape
 {
 namespace UI

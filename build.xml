@@ -158,8 +158,6 @@
 
         #define HAVE_LIBLCMS2                 1
 
-        #define WITH_GTKMM_2_24               1
-
         #define ENABLE_NLS                    1
         #define HAVE_BIND_TEXTDOMAIN_CODESET  1
 

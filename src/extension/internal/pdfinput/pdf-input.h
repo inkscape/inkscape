@@ -39,11 +39,7 @@ namespace Gtk {
   class DrawingArea;
   class Frame;
   class HBox;
-#if WITH_GTKMM_3_0
   class Scale;
-#else
-  class HScale;
-#endif
   class RadioButton;
   class VBox;
   class Label;
@@ -79,10 +75,6 @@ private:
     void _setPreviewPage(int page);
 
     // Signal handlers
-#if !WITH_GTKMM_3_0
-    bool _onExposePreview(GdkEventExpose *event);
-#endif
-
     bool _onDraw(const Cairo::RefPtr<Cairo::Context>& cr);
     void _onPageNumberChanged();
     void _onToggleCropping();
@@ -110,13 +102,8 @@ private:
     class Gtk::RadioButton * _importViaInternal; // Use native (poppler based) importing
     class Gtk::Label * _labelViaInternal;
 #endif
-#if WITH_GTKMM_3_0
-    class Gtk::Scale * _fallbackPrecisionSlider;
+    Gtk::Scale * _fallbackPrecisionSlider;
     Glib::RefPtr<Gtk::Adjustment> _fallbackPrecisionSlider_adj;
-#else
-    class Gtk::HScale * _fallbackPrecisionSlider;
-    class Gtk::Adjustment *_fallbackPrecisionSlider_adj;
-#endif
     class Gtk::Label * _labelPrecisionComment;
     class Gtk::HBox * hbox6;
     class Gtk::Label * _labelText;

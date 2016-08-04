@@ -303,15 +303,10 @@ Gtk::Widget * ParamRadioButton::get_widget(SPDocument * doc, Inkscape::XML::Node
         return NULL;
     }
 
-#if WITH_GTKMM_3_0
-    Gtk::Box * hbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 4));
+    auto hbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 4));
     hbox->set_homogeneous(false);
-    Gtk::Box * vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+    auto vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
     vbox->set_homogeneous(false);
-#else
-    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
-    Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox(false, 0));
-#endif
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_text, Gtk::ALIGN_START, Gtk::ALIGN_START));
     label->show();

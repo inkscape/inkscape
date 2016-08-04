@@ -14,11 +14,7 @@
 
 namespace Gtk {
 class RadioButton;
-#if WITH_GTKMM_3_0
 class Scale;
-#else
-class HScale;
-#endif
 }
 
 namespace Inkscape {
@@ -60,13 +56,7 @@ protected:
     void on_toggled();
     void update (double val);
     Gtk::HBox         *_hbox;
-
-#if WITH_GTKMM_3_0
     Gtk::Scale        *_hscale;
-#else
-    Gtk::HScale       *_hscale;
-#endif
-
     Gtk::RadioButtonGroup _radio_button_group;
     Gtk::RadioButton  *_button1;
     Gtk::RadioButton  *_button2;

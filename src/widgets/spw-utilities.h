@@ -20,25 +20,13 @@
 
 namespace Gtk {
   class Label;
-
-#if GTK_CHECK_VERSION(3,0,0)
   class Grid;
-#else
-  class Table;
-#endif
-
   class HBox;
   class Widget;
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 Gtk::Label * spw_label(Gtk::Grid *table, gchar const *label_text, int col, int row, Gtk::Widget *target);
 Gtk::HBox * spw_hbox(Gtk::Grid *table, int width, int col, int row);
-#else
-Gtk::Label * spw_label(Gtk::Table *table, gchar const *label_text, int col, int row, Gtk::Widget *target);
-Gtk::HBox * spw_hbox(Gtk::Table *table, int width, int col, int row);
-#endif
-
 GtkWidget * spw_label_old(GtkWidget *table, gchar const *label_text, int col, int row);
 
 GtkWidget *

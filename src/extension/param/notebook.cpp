@@ -353,11 +353,7 @@ public:
         // hook function
         this->signal_switch_page().connect(sigc::mem_fun(this, &ParamNotebookWdg::changed_page));
     };
-#if WITH_GTKMM_3_0
     void changed_page(Gtk::Widget *page, guint pagenum);
-#else
-    void changed_page(GtkNotebookPage *page, guint pagenum);
-#endif
     bool activated;
 };
 
@@ -368,11 +364,7 @@ public:
  * is actually visible. This to exclude 'fake' changes when the
  * notebookpages are added or removed.
  */
-#if WITH_GTKMM_3_0
 void ParamNotebookWdg::changed_page(Gtk::Widget * /*page*/, guint pagenum)
-#else
-void ParamNotebookWdg::changed_page(GtkNotebookPage * /*page*/, guint pagenum)
-#endif
 {
     if (get_visible()) {
         _pref->set((int)pagenum, _doc, _node);

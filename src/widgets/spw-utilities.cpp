@@ -19,12 +19,7 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
-
-#if GTK_CHECK_VERSION(3,0,0)
 #include <gtkmm/grid.h>
-#else
-#include <gtkmm/table.h>
-#endif
 
 #include "selection.h"
 
@@ -34,11 +29,7 @@
  * Creates a label widget with the given text, at the given col, row
  * position in the table.
  */
-#if GTK_CHECK_VERSION(3,0,0)
 Gtk::Label * spw_label(Gtk::Grid *table, const gchar *label_text, int col, int row, Gtk::Widget* target)
-#else
-Gtk::Label * spw_label(Gtk::Table *table, const gchar *label_text, int col, int row, Gtk::Widget* target)
-#endif
 {
   Gtk::Label *label_widget = new Gtk::Label();
   g_assert(label_widget != NULL);
@@ -54,7 +45,6 @@ Gtk::Label * spw_label(Gtk::Table *table, const gchar *label_text, int col, int 
   label_widget->set_alignment(1.0, 0.5);
   label_widget->show();
 
-#if GTK_CHECK_VERSION(3,0,0)
   label_widget->set_hexpand();
   label_widget->set_halign(Gtk::ALIGN_FILL);
   label_widget->set_valign(Gtk::ALIGN_CENTER);
@@ -68,9 +58,6 @@ Gtk::Label * spw_label(Gtk::Table *table, const gchar *label_text, int col, int 
   #endif
 
   table->attach(*label_widget, col, row, 1, 1);
-#else
-  table->attach(*label_widget, col, col+1, row, row+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 4, 0);
-#endif
 
   return label_widget;
 }
@@ -82,16 +69,9 @@ spw_label_old(GtkWidget *table, const gchar *label_text, int col, int row)
 
   label_widget = gtk_label_new (label_text);
   g_assert(label_widget != NULL);
-
-#if GTK_CHECK_VERSION(3,0,0)
   gtk_widget_set_halign(label_widget, GTK_ALIGN_END);
-#else
-  gtk_misc_set_alignment (GTK_MISC (label_widget), 1.0, 0.5);
-#endif
-
   gtk_widget_show (label_widget);
 
-#if GTK_CHECK_VERSION(3,0,0)
 #if GTK_CHECK_VERSION(3,12,0)
   gtk_widget_set_margin_start(label_widget, 4);
   gtk_widget_set_margin_end(label_widget, 4);
@@ -103,10 +83,6 @@ spw_label_old(GtkWidget *table, const gchar *label_text, int col, int row)
   gtk_widget_set_halign(label_widget, GTK_ALIGN_FILL);
   gtk_widget_set_valign(label_widget, GTK_ALIGN_CENTER);
   gtk_grid_attach(GTK_GRID(table), label_widget, col, row, 1, 1);
-#else
-  gtk_table_attach(GTK_TABLE (table), label_widget, col, col+1, row, row+1,
-		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 4, 0);
-#endif
 
   return label_widget;
 }
@@ -115,25 +91,16 @@ spw_label_old(GtkWidget *table, const gchar *label_text, int col, int row)
  * Creates a horizontal layout manager with 4-pixel spacing between children
  * and space for 'width' columns.
  */
-#if GTK_CHECK_VERSION(3,0,0)
 Gtk::HBox * spw_hbox(Gtk::Grid * table, int width, int col, int row)
-#else
-Gtk::HBox * spw_hbox(Gtk::Table * table, int width, int col, int row)
-#endif
 {
   /* Create a new hbox with a 4-pixel spacing between children */
   Gtk::HBox *hb = new Gtk::HBox(false, 4);
   g_assert(hb != NULL);
   hb->show();
-
-#if GTK_CHECK_VERSION(3,0,0)
   hb->set_hexpand();
   hb->set_halign(Gtk::ALIGN_FILL);
   hb->set_valign(Gtk::ALIGN_CENTER);
   table->attach(*hb, col, row, width, 1);
-#else
-  table->attach(*hb, col, col+width, row, row+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
-#endif
 
   return hb;
 }
@@ -175,37 +142,21 @@ spw_checkbutton(GtkWidget * dialog, GtkWidget * table,
   g_assert(table  != NULL);
 
   GtkWidget *l = gtk_label_new (label);
-
-#if GTK_CHECK_VERSION(3,0,0)
   gtk_widget_set_halign(l, GTK_ALIGN_END);
-#else
-  gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
-#endif
-
   gtk_widget_show (l);
 
-#if GTK_CHECK_VERSION(3,0,0)
   gtk_widget_set_halign(l, GTK_ALIGN_FILL);
   gtk_widget_set_hexpand(l, TRUE);
   gtk_widget_set_valign(l, GTK_ALIGN_CENTER);
   gtk_grid_attach(GTK_GRID(table), l, 0, row, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), l, 0, 1, row, row+1,
-		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 0, 0);
-#endif
 
   b = gtk_check_button_new ();
   gtk_widget_show (b);
 
-#if GTK_CHECK_VERSION(3,0,0)
   gtk_widget_set_halign(b, GTK_ALIGN_FILL);
   gtk_widget_set_hexpand(b, TRUE);
   gtk_widget_set_valign(b, GTK_ALIGN_CENTER);
   gtk_grid_attach(GTK_GRID(table), b, 1, row, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), b, 1, 2, row, row+1,
-		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 0, 0);
-#endif
 
   g_object_set_data (G_OBJECT (b), "key", key);
   g_object_set_data (G_OBJECT (dialog), key, b);
@@ -233,16 +184,10 @@ spw_dropdown(GtkWidget * dialog, GtkWidget * table,
   spw_label_old(table, label_text, 0, row);
 
   gtk_widget_show (selector);
-
-#if GTK_CHECK_VERSION(3,0,0)
   gtk_widget_set_halign(selector, GTK_ALIGN_FILL);
   gtk_widget_set_hexpand(selector, TRUE);
   gtk_widget_set_valign(selector, GTK_ALIGN_CENTER);
   gtk_grid_attach(GTK_GRID(table), selector, 1, row, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), selector, 1, 2, row, row+1,
-		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 0, 0);
-#endif
 
   g_object_set_data (G_OBJECT (dialog), key, selector);
   return selector;
@@ -253,8 +198,7 @@ sp_set_font_size_recursive (GtkWidget *w, gpointer font)
 {
 	guint size = GPOINTER_TO_UINT (font);
 
-#if GTK_CHECK_VERSION(3,0,0)
-        GtkCssProvider *css_provider = gtk_css_provider_new();
+        auto css_provider = gtk_css_provider_new();
 
         const double pt_size = size / static_cast<double>(PANGO_SCALE);
         std::ostringstream css_data;
@@ -266,25 +210,16 @@ sp_set_font_size_recursive (GtkWidget *w, gpointer font)
                                         css_data.str().c_str(),
                                         -1, NULL);
 
-        GtkStyleContext *style_context = gtk_widget_get_style_context(w);
+        auto style_context = gtk_widget_get_style_context(w);
         gtk_style_context_add_provider(style_context,
                                        GTK_STYLE_PROVIDER(css_provider),
                                        GTK_STYLE_PROVIDER_PRIORITY_USER);
-#else
-	PangoFontDescription* pan = pango_font_description_new ();
-	pango_font_description_set_size (pan, size);
-	gtk_widget_modify_font (w, pan);
-#endif
 
 	if (GTK_IS_CONTAINER(w)) {
 		gtk_container_foreach (GTK_CONTAINER(w), (GtkCallback) sp_set_font_size_recursive, font);
 	}
 
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(css_provider);
-#else
-	pango_font_description_free (pan);
-#endif
 }
 
 void

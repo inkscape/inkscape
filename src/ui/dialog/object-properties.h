@@ -50,11 +50,7 @@ class SPDesktop;
 class SPItem;
 
 namespace Gtk {
-#if WITH_GTKMM_3_0
 class Grid;
-#else
-class Table;
-#endif
 }
 
 namespace Inkscape {

@@ -39,10 +39,8 @@
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/scale.h>
 
-#if WITH_GTKMM_3_0
 #include <glibmm/convert.h>
 #include <glibmm/miscutils.h>
-#endif
 
 #include "extension/system.h"
 #include "extension/input.h"
@@ -92,14 +90,8 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelSelect = Gtk::manage(new class Gtk::Label(_("Select page:")));
 
     // Page number
-#if WITH_GTKMM_3_0
-    Glib::RefPtr<Gtk::Adjustment> _pageNumberSpin_adj = Gtk::Adjustment::create(1, 1, _pdf_doc->getNumPages(), 1, 10, 0);
+    auto _pageNumberSpin_adj = Gtk::Adjustment::create(1, 1, _pdf_doc->getNumPages(), 1, 10, 0);
     _pageNumberSpin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(_pageNumberSpin_adj, 1, 1));
-#else
-    Gtk::Adjustment *_pageNumberSpin_adj = Gtk::manage(
-            new class Gtk::Adjustment(1, 1, _pdf_doc->getNumPages(), 1, 10, 0));
-    _pageNumberSpin = Gtk::manage(new class Inkscape::UI::Widget::SpinButton(*_pageNumberSpin_adj, 1, 1));
-#endif
     _labelTotalPages = Gtk::manage(new class Gtk::Label());
     hbox2 = Gtk::manage(new class Gtk::HBox(false, 0));
     // Disable the page selector when there's only one page
@@ -137,13 +129,8 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelViaInternal = Gtk::manage(new class Gtk::Label(_("Import via internal (Poppler derived) library. Text is stored as text but white space is missing. Meshes are converted to tiles, the number depends on the precision set below.")));
 #endif
 
-#if WITH_GTKMM_3_0
     _fallbackPrecisionSlider_adj = Gtk::Adjustment::create(2, 1, 256, 1, 10, 10);
     _fallbackPrecisionSlider = Gtk::manage(new class Gtk::Scale(_fallbackPrecisionSlider_adj));
-#else
-    _fallbackPrecisionSlider_adj = Gtk::manage(new class Gtk::Adjustment(2, 1, 256, 1, 10, 10));
-    _fallbackPrecisionSlider = Gtk::manage(new class Gtk::HScale(*_fallbackPrecisionSlider_adj));
-#endif
     _fallbackPrecisionSlider->set_value(2.0);
     _labelPrecisionComment = Gtk::manage(new class Gtk::Label(_("rough")));
     hbox6 = Gtk::manage(new class Gtk::HBox(false, 4));
@@ -278,15 +265,9 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     hbox1->pack_start(*vbox1);
     hbox1->pack_start(*_previewArea, Gtk::PACK_EXPAND_WIDGET, 4);
 
-#if WITH_GTKMM_3_0
     get_content_area()->set_homogeneous(false);
     get_content_area()->set_spacing(0);
     get_content_area()->pack_start(*hbox1);
-#else
-    this->get_vbox()->set_homogeneous(false);
-    this->get_vbox()->set_spacing(0);
-    this->get_vbox()->pack_start(*hbox1);
-#endif
 
     this->set_title(_("PDF Import Settings"));
     this->set_modal(true);
@@ -300,12 +281,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     this->show_all();
     
     // Connect signals
-#if WITH_GTKMM_3_0
     _previewArea->signal_draw().connect(sigc::mem_fun(*this, &PdfImportDialog::_onDraw));
-#else
-    _previewArea->signal_expose_event().connect(sigc::mem_fun(*this, &PdfImportDialog::_onExposePreview));
-#endif
-
     _pageNumberSpin_adj->signal_value_changed().connect(sigc::mem_fun(*this, &PdfImportDialog::_onPageNumberChanged));
     _cropCheck->signal_toggled().connect(sigc::mem_fun(*this, &PdfImportDialog::_onToggleCropping));
     _fallbackPrecisionSlider_adj->signal_value_changed().connect(sigc::mem_fun(*this, &PdfImportDialog::_onPrecisionChanged));
@@ -525,16 +501,6 @@ static void copy_cairo_surface_to_pixbuf (cairo_surface_t *surface,
     }
 }
 
-#endif
-
-/**
- * \brief Updates the preview area with the previously rendered thumbnail
- */
-#if !WITH_GTKMM_3_0
-bool PdfImportDialog::_onExposePreview(GdkEventExpose * /*event*/) {
-    Cairo::RefPtr<Cairo::Context> cr = _previewArea->get_window()->create_cairo_context();
-    return _onDraw(cr);
-}
 #endif
 
 bool PdfImportDialog::_onDraw(const Cairo::RefPtr<Cairo::Context>& cr) {

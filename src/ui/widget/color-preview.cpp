@@ -34,7 +34,6 @@ ColorPreview::on_size_allocate (Gtk::Allocation &all)
         queue_draw();
 }
 
-#if WITH_GTKMM_3_0
 void
 ColorPreview::get_preferred_height_vfunc(int& minimum_height, int& natural_height) const
 {
@@ -58,31 +57,6 @@ ColorPreview::get_preferred_width_for_height_vfunc(int /* height */, int& minimu
 {
     minimum_width = natural_width = SPCP_DEFAULT_WIDTH;
 }
-#else
-void
-ColorPreview::on_size_request (Gtk::Requisition *req)
-{
-    req->width = SPCP_DEFAULT_WIDTH;
-    req->height = SPCP_DEFAULT_HEIGHT;
-}
-
-bool
-ColorPreview::on_expose_event (GdkEventExpose *event)
-{
-    bool result = true;
-
-    if (get_is_drawable())
-    {
-        Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
-    cr->rectangle(event->area.x, event->area.y,
-                      event->area.width, event->area.height);
-    cr->clip();
-        result = on_draw(cr);
-    }
-
-    return result;
-}
-#endif
 
 void
 ColorPreview::setRgba32 (guint32 rgba)

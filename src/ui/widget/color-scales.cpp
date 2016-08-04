@@ -44,11 +44,7 @@ static const gchar *sp_color_scales_hue_map();
 const gchar *ColorScales::SUBMODE_NAMES[] = { N_("None"), N_("RGB"), N_("HSL"), N_("CMYK") };
 
 ColorScales::ColorScales(SelectedColor &color, SPColorScalesMode mode)
-#if GTK_CHECK_VERSION(3, 0, 0)
     : Gtk::Grid()
-#else
-    : Gtk::Table(5, 3, false)
-#endif
     , _color(color)
     , _rangeLimit(255.0)
     , _updating(FALSE)
@@ -91,15 +87,9 @@ void ColorScales::_initUI(SPColorScalesMode mode)
         /* Label */
         _l[i] = gtk_label_new("");
 
-#if GTK_CHECK_VERSION(3,0,0)
 	gtk_widget_set_halign(_l[i], GTK_ALIGN_END);
-#else
-        gtk_misc_set_alignment(GTK_MISC(_l[i]), 1.0, 0.5);
-#endif
-
         gtk_widget_show(_l[i]);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
   #if GTK_CHECK_VERSION(3, 12, 0)
         gtk_widget_set_margin_start(_l[i], XPAD);
         gtk_widget_set_margin_end(_l[i], XPAD);
@@ -110,9 +100,6 @@ void ColorScales::_initUI(SPColorScalesMode mode)
         gtk_widget_set_margin_top(_l[i], YPAD);
         gtk_widget_set_margin_bottom(_l[i], YPAD);
         gtk_grid_attach(GTK_GRID(t), _l[i], 0, i, 1, 1);
-#else
-        gtk_table_attach(GTK_TABLE(t), _l[i], 0, 1, i, i + 1, GTK_FILL, GTK_FILL, XPAD, YPAD);
-#endif
 
         /* Adjustment */
         _a[i] = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, _rangeLimit, 1.0, 10.0, 10.0));
@@ -120,7 +107,6 @@ void ColorScales::_initUI(SPColorScalesMode mode)
         _s[i] = Gtk::manage(new Inkscape::UI::Widget::ColorSlider(Glib::wrap(_a[i], true)));
         _s[i]->show();
 
-#if GTK_CHECK_VERSION(3, 0, 0)
   #if GTK_CHECK_VERSION(3, 12, 0)
         _s[i]->set_margin_start(XPAD);
         _s[i]->set_margin_end(XPAD);
@@ -132,10 +118,6 @@ void ColorScales::_initUI(SPColorScalesMode mode)
         _s[i]->set_margin_bottom(YPAD);
         _s[i]->set_hexpand(true);
         gtk_grid_attach(GTK_GRID(t), _s[i]->gobj(), 1, i, 1, 1);
-#else
-        gtk_table_attach(GTK_TABLE(t), _s[i]->gobj(), 1, 2, i, i + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                         GTK_FILL, XPAD, YPAD);
-#endif
 
         /* Spinbutton */
         _b[i] = gtk_spin_button_new(GTK_ADJUSTMENT(_a[i]), 1.0, 0);
@@ -143,7 +125,6 @@ void ColorScales::_initUI(SPColorScalesMode mode)
         gtk_label_set_mnemonic_widget(GTK_LABEL(_l[i]), _b[i]);
         gtk_widget_show(_b[i]);
 
-#if GTK_CHECK_VERSION(3, 0, 0)
   #if GTK_CHECK_VERSION(3, 12, 0)
         gtk_widget_set_margin_start(_b[i], XPAD);
         gtk_widget_set_margin_end(_b[i], XPAD);
@@ -156,9 +137,6 @@ void ColorScales::_initUI(SPColorScalesMode mode)
         gtk_widget_set_halign(_b[i], GTK_ALIGN_CENTER);
         gtk_widget_set_valign(_b[i], GTK_ALIGN_CENTER);
         gtk_grid_attach(GTK_GRID(t), _b[i], 2, i, 1, 1);
-#else
-        gtk_table_attach(GTK_TABLE(t), _b[i], 2, 3, i, i + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
-#endif
 
         /* Attach channel value to adjustment */
         g_object_set_data(G_OBJECT(_a[i]), "channel", GINT_TO_POINTER(i));
@@ -270,7 +248,6 @@ void ColorScales::_setRangeLimit(gdouble upper)
     _rangeLimit = upper;
     for (gint i = 0; i < static_cast<gint>(G_N_ELEMENTS(_a)); i++) {
         gtk_adjustment_set_upper(_a[i], upper);
-        gtk_adjustment_changed(_a[i]);
     }
 }
 
@@ -284,11 +261,7 @@ void ColorScales::_onColorChanged()
 
 void ColorScales::on_show()
 {
-#if GTK_CHECK_VERSION(3, 0, 0)
     Gtk::Grid::on_show();
-#else
-    Gtk::Table::on_show();
-#endif
     _updateDisplay();
 }
 

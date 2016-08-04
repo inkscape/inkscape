@@ -212,38 +212,20 @@ void Transformation::layoutPageMove()
 
     //_scalar_move_vertical.set_label_image( INKSCAPE_STOCK_ARROWS_HOR );
     
-#if WITH_GTKMM_3_0
     _page_move.table().attach(_scalar_move_horizontal, 0, 0, 2, 1);
     _page_move.table().attach(_units_move,             2, 0, 1, 1);
-#else
-    _page_move.table()
-        .attach(_scalar_move_horizontal, 0, 2, 0, 1, Gtk::FILL, Gtk::SHRINK);
-
-    _page_move.table()
-        .attach(_units_move, 2, 3, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     _scalar_move_horizontal.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onMoveValueChanged));
 
     //_scalar_move_vertical.set_label_image( INKSCAPE_STOCK_ARROWS_VER );
-#if WITH_GTKMM_3_0
     _page_move.table().attach(_scalar_move_vertical, 0, 1, 2, 1);
-#else
-    _page_move.table()
-        .attach(_scalar_move_vertical, 0, 2, 1, 2, Gtk::FILL, Gtk::SHRINK);
-#endif
 
     _scalar_move_vertical.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onMoveValueChanged));
 
     // Relative moves
-#if WITH_GTKMM_3_0
     _page_move.table().attach(_check_move_relative, 0, 2, 2, 1);
-#else
-    _page_move.table()
-        .attach(_check_move_relative, 0, 2, 2, 3, Gtk::FILL, Gtk::SHRINK);
-#endif
 
     _check_move_relative.set_active(true);
     _check_move_relative.signal_toggled()
@@ -269,36 +251,18 @@ void Transformation::layoutPageScale()
     _scalar_scale_vertical.setAbsoluteIsIncrement(true);
     _scalar_scale_vertical.setPercentageIsIncrement(true);
 
-#if WITH_GTKMM_3_0
     _page_scale.table().attach(_scalar_scale_horizontal, 0, 0, 2, 1);
-#else
-    _page_scale.table()
-        .attach(_scalar_scale_horizontal, 0, 2, 0, 1, Gtk::FILL, Gtk::SHRINK);
-#endif
 
     _scalar_scale_horizontal.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onScaleXValueChanged));
 
-#if WITH_GTKMM_3_0
     _page_scale.table().attach(_units_scale,           2, 0, 1, 1);
     _page_scale.table().attach(_scalar_scale_vertical, 0, 1, 2, 1);
-#else
-    _page_scale.table()
-        .attach(_units_scale, 2, 3, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-
-    _page_scale.table()
-        .attach(_scalar_scale_vertical, 0, 2, 1, 2, Gtk::FILL, Gtk::SHRINK);
-#endif
 
     _scalar_scale_vertical.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onScaleYValueChanged));
 
-#if WITH_GTKMM_3_0
     _page_scale.table().attach(_check_scale_proportional, 0, 2, 2, 1);
-#else
-    _page_scale.table()
-        .attach(_check_scale_proportional, 0, 2, 2, 3, Gtk::FILL, Gtk::SHRINK);
-#endif
 
     _check_scale_proportional.set_active(false);
     _check_scale_proportional.signal_toggled()
@@ -330,24 +294,10 @@ void Transformation::layoutPageRotate()
     Gtk::RadioButton::Group group = _counterclockwise_rotate.get_group();
     _clockwise_rotate.set_group(group);
 
-#if WITH_GTKMM_3_0
     _page_rotate.table().attach(_scalar_rotate,           0, 0, 2, 1);
     _page_rotate.table().attach(_units_rotate,            2, 0, 1, 1);
     _page_rotate.table().attach(_counterclockwise_rotate, 3, 0, 1, 1);
     _page_rotate.table().attach(_clockwise_rotate,        4, 0, 1, 1);
-#else
-    _page_rotate.table()
-        .attach(_scalar_rotate, 0, 2, 0, 1, Gtk::FILL, Gtk::SHRINK);
-
-    _page_rotate.table()
-        .attach(_units_rotate, 2, 3, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-
-    _page_rotate.table()
-        .attach(_counterclockwise_rotate, 3, 4, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-
-    _page_rotate.table()
-        .attach(_clockwise_rotate, 4, 5, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/dialogs/transformation/rotateCounterClockwise", TRUE)) {
@@ -381,26 +331,13 @@ void Transformation::layoutPageSkew()
     _scalar_skew_vertical.setDigits(3);
     _scalar_skew_vertical.setIncrements(0.1, 1.0);
 
-#if WITH_GTKMM_3_0
     _page_skew.table().attach(_scalar_skew_horizontal, 0, 0, 2, 1);
-#else
-    _page_skew.table()
-        .attach(_scalar_skew_horizontal, 0, 2, 0, 1, Gtk::FILL, Gtk::SHRINK);
-#endif
 
     _scalar_skew_horizontal.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onSkewValueChanged));
 
-#if WITH_GTKMM_3_0
     _page_skew.table().attach(_units_skew,           2, 0, 1, 1);
     _page_skew.table().attach(_scalar_skew_vertical, 0, 1, 2, 1);
-#else
-    _page_skew.table()
-        .attach(_units_skew, 2, 3, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-
-    _page_skew.table()
-        .attach(_scalar_skew_vertical, 0, 2, 1, 2, Gtk::FILL, Gtk::SHRINK);
-#endif
 
     _scalar_skew_vertical.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onSkewValueChanged));
@@ -418,12 +355,7 @@ void Transformation::layoutPageTransform()
     _scalar_transform_a.setIncrements(0.1, 1.0);
     _scalar_transform_a.setValue(1.0);
 
-#if WITH_GTKMM_3_0
     _page_transform.table().attach(_scalar_transform_a, 0, 0, 1, 1);
-#else
-    _page_transform.table()
-        .attach(_scalar_transform_a, 0, 1, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     _scalar_transform_a.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onTransformValueChanged));
@@ -434,12 +366,7 @@ void Transformation::layoutPageTransform()
     _scalar_transform_b.setIncrements(0.1, 1.0);
     _scalar_transform_b.setValue(0.0);
 
-#if WITH_GTKMM_3_0
     _page_transform.table().attach(_scalar_transform_b, 0, 1, 1, 1);
-#else
-    _page_transform.table()
-        .attach(_scalar_transform_b, 0, 1, 1, 2, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     _scalar_transform_b.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onTransformValueChanged));
@@ -450,12 +377,7 @@ void Transformation::layoutPageTransform()
     _scalar_transform_c.setIncrements(0.1, 1.0);
     _scalar_transform_c.setValue(0.0);
 
-#if WITH_GTKMM_3_0
     _page_transform.table().attach(_scalar_transform_c, 1, 0, 1, 1);
-#else
-    _page_transform.table()
-        .attach(_scalar_transform_c, 1, 2, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     _scalar_transform_c.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onTransformValueChanged));
@@ -467,12 +389,7 @@ void Transformation::layoutPageTransform()
     _scalar_transform_d.setIncrements(0.1, 1.0);
     _scalar_transform_d.setValue(1.0);
 
-#if WITH_GTKMM_3_0
     _page_transform.table().attach(_scalar_transform_d, 1, 1, 1, 1);
-#else
-    _page_transform.table()
-        .attach(_scalar_transform_d, 1, 2, 1, 2, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     _scalar_transform_d.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onTransformValueChanged));
@@ -484,12 +401,7 @@ void Transformation::layoutPageTransform()
     _scalar_transform_e.setIncrements(0.1, 1.0);
     _scalar_transform_e.setValue(0.0);
 
-#if WITH_GTKMM_3_0
     _page_transform.table().attach(_scalar_transform_e, 2, 0, 1, 1);
-#else
-    _page_transform.table()
-        .attach(_scalar_transform_e, 2, 3, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     _scalar_transform_e.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onTransformValueChanged));
@@ -501,23 +413,13 @@ void Transformation::layoutPageTransform()
     _scalar_transform_f.setIncrements(0.1, 1.0);
     _scalar_transform_f.setValue(0.0);
 
-#if WITH_GTKMM_3_0
     _page_transform.table().attach(_scalar_transform_f, 2, 1, 1, 1);
-#else
-    _page_transform.table()
-        .attach(_scalar_transform_f, 2, 3, 1, 2, Gtk::SHRINK, Gtk::SHRINK);
-#endif
 
     _scalar_transform_f.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onTransformValueChanged));
 
     // Edit existing matrix
-#if WITH_GTKMM_3_0
     _page_transform.table().attach(_check_replace_matrix, 0, 2, 2, 1);
-#else
-    _page_transform.table()
-        .attach(_check_replace_matrix, 0, 2, 2, 3, Gtk::FILL, Gtk::SHRINK);
-#endif
 
     _check_replace_matrix.set_active(false);
     _check_replace_matrix.signal_toggled()
@@ -564,11 +466,7 @@ void Transformation::updateSelection(PageType page, Inkscape::Selection *selecti
                          selection && !selection->isEmpty());
 }
 
-#if WITH_GTKMM_3_0
 void Transformation::onSwitchPage(Gtk::Widget * /*page*/, guint pagenum)
-#else
-void Transformation::onSwitchPage(GtkNotebookPage * /*page*/, guint pagenum)
-#endif
 {
     updateSelection((PageType)pagenum, getDesktop()->getSelection());
 }

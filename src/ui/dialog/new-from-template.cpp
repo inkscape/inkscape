@@ -30,20 +30,12 @@ NewFromTemplate::NewFromTemplate()
 
     _main_widget = new TemplateLoadTab(this);
 
-#if WITH_GTKMM_3_0
     get_content_area()->pack_start(*_main_widget);
-#else
-    get_vbox()->pack_start(*_main_widget);
-#endif
    
     Gtk::Alignment *align;
     align = Gtk::manage(new Gtk::Alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER, 0.0, 0.0));
 
-#if WITH_GTKMM_3_0
     get_content_area()->pack_end(*align, Gtk::PACK_SHRINK);
-#else
-    get_vbox()->pack_end(*align, Gtk::PACK_SHRINK);
-#endif
 
     align->set_padding(0, 0, 0, 15);
     align->add(_create_template_button);

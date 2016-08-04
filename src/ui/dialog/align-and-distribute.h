@@ -22,15 +22,11 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/label.h>
-#include "2geom/rect.h"
-#include "ui/dialog/desktop-tracker.h"
-
-#if WITH_GTKMM_3_0
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/grid.h>
-#else
-#include <gtkmm/table.h>
-#endif
+
+#include "2geom/rect.h"
+#include "ui/dialog/desktop-tracker.h"
 
 class SPItem;
 
@@ -51,19 +47,11 @@ public:
 
     static AlignAndDistribute &getInstance() { return *new AlignAndDistribute(); }
 
-#if WITH_GTKMM_3_0
     Gtk::Grid &align_table(){return _alignTable;}
     Gtk::Grid &distribute_table(){return _distributeTable;}
     Gtk::Grid &rearrange_table(){return _rearrangeTable;}
     Gtk::Grid &removeOverlap_table(){return _removeOverlapTable;}
     Gtk::Grid &nodes_table(){return _nodesTable;}
-#else
-    Gtk::Table &align_table(){return _alignTable;}
-    Gtk::Table &distribute_table(){return _distributeTable;}
-    Gtk::Table &rearrange_table(){return _rearrangeTable;}
-    Gtk::Table &removeOverlap_table(){return _removeOverlapTable;}
-    Gtk::Table &nodes_table(){return _nodesTable;}
-#endif
 
     void setMode(bool nodeEdit);
 
@@ -100,22 +88,13 @@ protected:
                         guint row, guint col);
     void addRandomizeButton(const Glib::ustring &id, const Glib::ustring tiptext, 
                         guint row, guint col);
-#if WITH_GTKMM_3_0
     void addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
                            guint row, guint col, Gtk::Grid &table, Geom::Dim2 orientation, bool distribute);
-#else
-    void addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
-                           guint row, guint col, Gtk::Table &table, Geom::Dim2 orientation, bool distribute);
-#endif
     void setTargetDesktop(SPDesktop *desktop);
 
     std::list<Action *> _actionList;
     UI::Widget::Frame _alignFrame, _distributeFrame, _rearrangeFrame, _removeOverlapFrame, _nodesFrame;
-#if WITH_GTKMM_3_0
     Gtk::Grid _alignTable, _distributeTable, _rearrangeTable, _removeOverlapTable, _nodesTable;
-#else
-    Gtk::Table _alignTable, _distributeTable, _rearrangeTable, _removeOverlapTable, _nodesTable;
-#endif
     Gtk::HBox _anchorBox;
     Gtk::HBox _selgrpBox;
     Gtk::VBox _alignBox;
@@ -163,11 +142,7 @@ public :
     Action(const Glib::ustring &id,
            const Glib::ustring &tiptext,
            guint row, guint column,
-    #if WITH_GTKMM_3_0
-       Gtk::Grid &parent,
-    #else
-       Gtk::Table &parent,
-    #endif
+	   Gtk::Grid &parent,
            AlignAndDistribute &dialog);
 
     virtual ~Action(){}
@@ -178,12 +153,7 @@ private :
     virtual void on_button_click(){}
 
     Glib::ustring _id;
-
-#if WITH_GTKMM_3_0
     Gtk::Grid &_parent;
-#else
-    Gtk::Table &_parent;
-#endif
 };
 
 

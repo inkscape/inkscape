@@ -145,12 +145,8 @@ public:
     static void dispose(GObject *object);
     static void handle_realize(GtkWidget *widget);
     static void handle_unrealize(GtkWidget *widget);
-#if GTK_CHECK_VERSION(3,0,0)
     static void handle_get_preferred_width(GtkWidget *widget, gint *min_w, gint *nat_w);
     static void handle_get_preferred_height(GtkWidget *widget, gint *min_h, gint *nat_h);
-#else
-    static void handle_size_request(GtkWidget *widget, GtkRequisition *req);
-#endif
     static void handle_size_allocate(GtkWidget *widget, GtkAllocation *allocation);
     static gint handle_button(GtkWidget *widget, GdkEventButton *event);
 
@@ -162,9 +158,6 @@ public:
     static gint handle_scroll(GtkWidget *widget, GdkEventScroll *event);
     static gint handle_motion(GtkWidget *widget, GdkEventMotion *event);
     static gboolean handle_draw(GtkWidget *widget, cairo_t *cr);
-#if !GTK_CHECK_VERSION(3,0,0)
-    static gboolean handle_expose(GtkWidget *widget, GdkEventExpose *event);
-#endif
     static gint handle_key_event(GtkWidget *widget, GdkEventKey *event);
     static gint handle_crossing(GtkWidget *widget, GdkEventCrossing *event);
     static gint handle_focus_in(GtkWidget *widget, GdkEventFocus *event);

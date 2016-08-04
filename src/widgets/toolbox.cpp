@@ -1009,26 +1009,18 @@ static GtkWidget* toolboxNewCommon( GtkWidget* tb, BarId id, GtkPositionType /*h
 
 GtkWidget *ToolboxFactory::createToolToolbox()
 {
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    auto tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(tb, "ToolToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
-#else
-    GtkWidget *tb = gtk_vbox_new(FALSE, 0);
-#endif
 
     return toolboxNewCommon( tb, BAR_TOOL, GTK_POS_TOP );
 }
 
 GtkWidget *ToolboxFactory::createAuxToolbox()
 {
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    auto tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(tb, "AuxToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
-#else
-    GtkWidget *tb = gtk_vbox_new(FALSE, 0);
-#endif
 
     return toolboxNewCommon( tb, BAR_AUX, GTK_POS_LEFT );
 }
@@ -1039,38 +1031,26 @@ GtkWidget *ToolboxFactory::createAuxToolbox()
 
 GtkWidget *ToolboxFactory::createCommandsToolbox()
 {
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    auto tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(tb, "CommandsToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
-#else
-    GtkWidget *tb = gtk_vbox_new(FALSE, 0);
-#endif
 
     return toolboxNewCommon( tb, BAR_COMMANDS, GTK_POS_LEFT );
 }
 
 GtkWidget *ToolboxFactory::createSnapToolbox()
 {
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    auto tb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(tb, "SnapToolbox");
     gtk_box_set_homogeneous(GTK_BOX(tb), FALSE);
-#else
-    GtkWidget *tb = gtk_vbox_new(FALSE, 0);
-#endif
 
     return toolboxNewCommon( tb, BAR_SNAP, GTK_POS_LEFT );
 }
 
 static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRate, guint digits, Inkscape::UI::Widget::UnitTracker *unit_tracker)
 {
-#if WITH_GTKMM_3_0
-    Glib::RefPtr<Gtk::Adjustment> adj = Glib::wrap(adjustment, true);
-    Inkscape::UI::Widget::SpinButton *inkSpinner = new Inkscape::UI::Widget::SpinButton(adj, climbRate, digits);
-#else
-    Inkscape::UI::Widget::SpinButton *inkSpinner = new Inkscape::UI::Widget::SpinButton(*Glib::wrap(adjustment, true), climbRate, digits);
-#endif
+    auto adj = Glib::wrap(adjustment, true);
+    auto inkSpinner = new Inkscape::UI::Widget::SpinButton(adj, climbRate, digits);
     inkSpinner->addUnitTracker(unit_tracker);
     inkSpinner = Gtk::manage( inkSpinner );
     GtkWidget *widget = GTK_WIDGET( inkSpinner->gobj() );
@@ -1432,17 +1412,10 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         if ( aux_toolboxes[i].prep_func ) {
             // converted to GtkActions and UIManager
 
-            GtkWidget* kludge = dataHolders[aux_toolboxes[i].type_name];
-
-#if GTK_CHECK_VERSION(3,0,0)
-            GtkWidget* holder = gtk_grid_new();
+            auto kludge = dataHolders[aux_toolboxes[i].type_name];
+            auto holder = gtk_grid_new();
             gtk_widget_set_name( holder, "ToolbarHolder" );
             gtk_grid_attach( GTK_GRID(holder), kludge, 2, 0, 1, 1);
-#else
-            GtkWidget* holder = gtk_table_new( 1, 3, FALSE );
-            gtk_table_attach( GTK_TABLE(holder), kludge, 2, 3, 0, 1, GTK_SHRINK, GTK_SHRINK, 0, 0 );
-#endif
-
             gchar* tmp = g_strdup_printf( "/ui/%s", aux_toolboxes[i].ui_name );
             GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, tmp );
             g_free( tmp );
@@ -1454,30 +1427,20 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
             Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize("/toolbox/small");
             gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), static_cast<GtkIconSize>(toolboxSize) );
-
-#if GTK_CHECK_VERSION(3,0,0)
             gtk_widget_set_hexpand(toolBar, TRUE);
             gtk_grid_attach( GTK_GRID(holder), toolBar, 0, 0, 1, 1);
-#else
-            gtk_table_attach( GTK_TABLE(holder), toolBar, 0, 1, 0, 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0 );
-#endif
 
             if ( aux_toolboxes[i].swatch_verb_id != SP_VERB_INVALID ) {
                 Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch( NULL, _(aux_toolboxes[i].swatch_tip) );
                 swatch->setDesktop( desktop );
                 swatch->setClickVerb( aux_toolboxes[i].swatch_verb_id );
                 swatch->setWatchedTool( aux_toolboxes[i].swatch_tool, true );
-                GtkWidget *swatch_ = GTK_WIDGET( swatch->gobj() );
-
-#if GTK_CHECK_VERSION(3,0,0)
+                auto swatch_ = GTK_WIDGET( swatch->gobj() );
                 gtk_widget_set_margin_left(swatch_, AUX_BETWEEN_BUTTON_GROUPS);
                 gtk_widget_set_margin_right(swatch_, AUX_BETWEEN_BUTTON_GROUPS);
                 gtk_widget_set_margin_top(swatch_, AUX_SPACING);
                 gtk_widget_set_margin_bottom(swatch_, AUX_SPACING);
                 gtk_grid_attach( GTK_GRID(holder), swatch_, 1, 0, 1, 1);
-#else
-                gtk_table_attach( GTK_TABLE(holder), swatch_, 1, 2, 0, 1, (GtkAttachOptions)(GTK_SHRINK | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), AUX_BETWEEN_BUTTON_GROUPS, AUX_SPACING );
-#endif
             }
             if(i==0){
                 gtk_widget_show_all( holder );

@@ -25,12 +25,7 @@
 
 namespace Gtk {
 class Entry;
-
-#if WITH_GTKMM_3_0
 class Grid;
-#else
-class Table;
-#endif
 }
 
 namespace Inkscape {
@@ -138,11 +133,7 @@ private:
     /**
      * Container widget for the dynamically created child widgets (labels and entry boxes).
      */
-#if WITH_GTKMM_3_0
     Gtk::Grid  *table;
-#else
-    Gtk::Table *table;
-#endif
     
     /**
      * List of attributes.

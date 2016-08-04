@@ -23,12 +23,7 @@
 
 #include "widgets/dash-selector.h"
 #include <gtkmm/radiobutton.h>
-
-#if WITH_GTKMM_3_0
 #include <gtkmm/grid.h>
-#else
-#include <gtkmm/table.h>
-#endif
 
 #include <glibmm/i18n.h>
 
@@ -189,15 +184,9 @@ private:
     MarkerComboBox *startMarkerCombo;
     MarkerComboBox *midMarkerCombo;
     MarkerComboBox *endMarkerCombo;
-#if WITH_GTKMM_3_0
     Gtk::Grid *table;
     Glib::RefPtr<Gtk::Adjustment> *widthAdj;
     Glib::RefPtr<Gtk::Adjustment> *miterLimitAdj;
-#else
-    Gtk::Table *table;
-    Gtk::Adjustment *widthAdj;
-    Gtk::Adjustment *miterLimitAdj;
-#endif
     Inkscape::UI::Widget::SpinButton *miterLimitSpin;
     Inkscape::UI::Widget::SpinButton *widthSpin;
     Inkscape::UI::Widget::UnitMenu *unitSelector;

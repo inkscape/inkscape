@@ -31,11 +31,7 @@
 
 struct SPFontSelector
 {
-#if GTK_CHECK_VERSION(3,0,0)
     GtkBox hbox;
-#else
-    GtkHBox hbox;
-#endif
 
     unsigned int block_emit : 1;
 
@@ -56,11 +52,7 @@ struct SPFontSelector
 
 struct SPFontSelectorClass
 {
-#if GTK_CHECK_VERSION(3,0,0)
     GtkBoxClass parent_class;
-#else
-    GtkHBoxClass parent_class;
-#endif
 
     void (* font_set) (SPFontSelector *fsel, gchar *fontspec);
 };
@@ -86,11 +78,7 @@ static void sp_font_selector_set_sizes( SPFontSelector *fsel );
 
 static guint fs_signals[LAST_SIGNAL] = { 0 };
 
-#if GTK_CHECK_VERSION(3,0,0)
 G_DEFINE_TYPE(SPFontSelector, sp_font_selector, GTK_TYPE_BOX);
-#else
-G_DEFINE_TYPE(SPFontSelector, sp_font_selector, GTK_TYPE_HBOX);
-#endif
 
 static void sp_font_selector_class_init(SPFontSelectorClass *c)
 {
@@ -155,8 +143,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         /* Muck with style, see text-toolbar.cpp */
         gtk_widget_set_name( GTK_WIDGET(fsel->family_treeview), "font_selector_family" );
 
-#if GTK_CHECK_VERSION(3,0,0)
-        GtkCssProvider *css_provider = gtk_css_provider_new();
+        auto css_provider = gtk_css_provider_new();
         gtk_css_provider_load_from_data(css_provider,
                                         "#font_selector_family {\n"
                                         "  -GtkWidget-wide-separators:  true;\n"
@@ -164,14 +151,10 @@ static void sp_font_selector_init(SPFontSelector *fsel)
                                         "}\n",
                                         -1, NULL);
 
-        GdkScreen *screen = gdk_screen_get_default();
+        auto screen = gdk_screen_get_default();
         gtk_style_context_add_provider_for_screen(screen,
                                                   GTK_STYLE_PROVIDER(css_provider),
                                                   GTK_STYLE_PROVIDER_PRIORITY_USER);
-#else
-        gtk_rc_parse_string (
-            "widget \"*font_selector_family\" style \"fontfamily-separator-style\"");
-#endif        
 
         Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
         Glib::RefPtr<Gtk::ListStore> store = fontlister->get_font_list();
@@ -190,12 +173,8 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_widget_show(f);
         gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
 
-#if GTK_CHECK_VERSION(3,0,0)
-        GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+        auto vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
         gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
-#else
-        GtkWidget *vb = gtk_vbox_new(FALSE, 4);
-#endif
         gtk_widget_show(vb);
         gtk_container_set_border_width(GTK_CONTAINER (vb), 4);
         gtk_container_add(GTK_CONTAINER(f), vb);
@@ -230,12 +209,8 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(fsel->style_treeview));
         g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (sp_font_selector_style_select_row), fsel);
 
-#if GTK_CHECK_VERSION(3,0,0)
-	GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+	auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
 	gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-        GtkWidget *hb = gtk_hbox_new(FALSE, 4);
-#endif
         gtk_widget_show(hb);
         gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, 0);
 

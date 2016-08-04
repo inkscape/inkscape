@@ -51,14 +51,9 @@ DialogPage::DialogPage()
 {
     set_border_width(12);
 
-#if WITH_GTKMM_3_0
     set_orientation(Gtk::ORIENTATION_VERTICAL);
     set_column_spacing(12);
     set_row_spacing(6);
-#else
-    set_col_spacings(12);
-    set_row_spacings(6);
-#endif
 }
 
 /**
@@ -97,12 +92,7 @@ void DialogPage::add_line(bool                 indent,
     // be indented if desired
     Gtk::Alignment* w_alignment = Gtk::manage(new Gtk::Alignment());
     w_alignment->add(*hb);
-
-#if WITH_GTKMM_3_0
     w_alignment->set_valign(Gtk::ALIGN_CENTER);
-#else
-    guint row = property_n_rows();
-#endif
     
     // Add a label in the first column if provided
     if (label != "")
@@ -118,17 +108,12 @@ void DialogPage::add_line(bool                 indent,
         if (indent)
             label_alignment->set_padding(0, 0, 12, 0);
 
-#if WITH_GTKMM_3_0
         label_alignment->set_valign(Gtk::ALIGN_CENTER);
         add(*label_alignment);
         attach_next_to(*w_alignment, *label_alignment, Gtk::POS_RIGHT, 1, 1);
-#else
-        attach(*label_alignment, 0, 1, row, row + 1, Gtk::FILL, Gtk::AttachOptions(), 0, 0);
-#endif
     }
 
     // Now add the widget to the bottom of the dialog
-#if WITH_GTKMM_3_0
     if (label == "")
     {
         if (indent)
@@ -141,17 +126,6 @@ void DialogPage::add_line(bool                 indent,
         g_value_set_int(&width, 2);
         gtk_container_child_set_property(GTK_CONTAINER(gobj()), GTK_WIDGET(w_alignment->gobj()), "width", &width);
     }
-#else
-    // The widget should span two columns if there is no label
-    int w_col_span = 1;
-    if (label == "")
-        w_col_span = 2;
-    
-    attach(*w_alignment, 2 - w_col_span, 2, row, row + 1,
-            Gtk::FILL | Gtk::EXPAND,
-            Gtk::AttachOptions(),
-            0, 0);
-#endif
 
     // Add a label on the right of the widget if desired
     if (suffix != "")
@@ -170,18 +144,8 @@ void DialogPage::add_group_header(Glib::ustring name)
                                                Glib::ustring("</b>"/*</span>"*/) , Gtk::ALIGN_START , Gtk::ALIGN_CENTER, true));
         
         label_widget->set_use_markup(true);
-        
-#if WITH_GTKMM_3_0
         label_widget->set_valign(Gtk::ALIGN_CENTER);
         add(*label_widget);
-//        if (row != 1)
-  //          set_row_spacing(row - 1, 18);
-#else
-        int row = property_n_rows();
-        attach(*label_widget , 0, 4, row, row + 1, Gtk::FILL, Gtk::AttachOptions(), 0, 0);
-        if (row != 1)
-            set_row_spacing(row - 1, 18);
-#endif
     }
 }
 
@@ -423,24 +387,6 @@ ZoomCorrRuler::draw_marks(Cairo::RefPtr<Cairo::Context> cr, double dist, int maj
     }
 }
 
-#if !WITH_GTKMM_3_0
-bool
-ZoomCorrRuler::on_expose_event(GdkEventExpose *event) {
-    bool result = false;
-
-    if(get_is_drawable())
-    {
-        Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
-        cr->rectangle(event->area.x, event->area.y,
-                      event->area.width, event->area.height);
-        cr->clip();
-        result = on_draw(cr);
-    }
-
-    return result;
-}
-#endif
-
 bool
 ZoomCorrRuler::on_draw(const Cairo::RefPtr<Cairo::Context>& cr) {
     Glib::RefPtr<Gdk::Window> window = get_window();
@@ -544,11 +490,7 @@ ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, doubl
 
     _ruler.set_size(ruler_width, ruler_height);
 
-#if WITH_GTKMM_3_0
     _slider = Gtk::manage(new Gtk::Scale(Gtk::ORIENTATION_HORIZONTAL));
-#else
-    _slider = Gtk::manage(new Gtk::HScale());
-#endif
 
     _slider->set_size_request(_ruler.width(), -1);
     _slider->set_range (lower, upper);
@@ -575,21 +517,13 @@ ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, doubl
     alignment1->add(_sb);
     alignment2->add(_unit);
 
-#if WITH_GTKMM_3_0
-    Gtk::Grid *table = Gtk::manage(new Gtk::Grid());
+    auto table = Gtk::manage(new Gtk::Grid());
     table->attach(*_slider,    0, 0, 1, 1);
     alignment1->set_halign(Gtk::ALIGN_CENTER);
     table->attach(*alignment1, 1, 0, 1, 1);
     table->attach(_ruler,      0, 1, 1, 1);
     alignment2->set_halign(Gtk::ALIGN_CENTER);
     table->attach(*alignment2, 1, 1, 1, 1);
-#else
-    Gtk::Table *table = Gtk::manage(new Gtk::Table());
-    table->attach(*_slider,    0, 1, 0, 1);
-    table->attach(*alignment1, 1, 2, 0, 1, static_cast<Gtk::AttachOptions>(0));
-    table->attach(_ruler,      0, 1, 1, 2);
-    table->attach(*alignment2, 1, 2, 1, 2, static_cast<Gtk::AttachOptions>(0));
-#endif
 
     pack_start(*table, Gtk::PACK_SHRINK);
 }
@@ -636,11 +570,7 @@ PrefSlider::init(Glib::ustring const &prefs_path,
 
     freeze = false;
 
-#if WITH_GTKMM_3_0
     _slider = Gtk::manage(new Gtk::Scale(Gtk::ORIENTATION_HORIZONTAL));
-#else
-    _slider = Gtk::manage(new Gtk::HScale());
-#endif
 
     _slider->set_range (lower, upper);
     _slider->set_increments (step_increment, page_increment);
@@ -657,17 +587,11 @@ PrefSlider::init(Glib::ustring const &prefs_path,
     Gtk::Alignment *alignment1 = Gtk::manage(new Gtk::Alignment(0.5,1,0,0));
     alignment1->add(_sb);
 
-#if WITH_GTKMM_3_0
-    Gtk::Grid *table = Gtk::manage(new Gtk::Grid());
+    auto table = Gtk::manage(new Gtk::Grid());
     _slider->set_hexpand();
     table->attach(*_slider,    0, 0, 1, 1);
     alignment1->set_halign(Gtk::ALIGN_CENTER);
     table->attach(*alignment1, 1, 0, 1, 1);
-#else
-    Gtk::Table *table = Gtk::manage(new Gtk::Table());
-    table->attach(*_slider,    0, 1, 0, 1);
-    table->attach(*alignment1, 1, 2, 0, 1, static_cast<Gtk::AttachOptions>(0));
-#endif
 
     this->pack_start(*table, Gtk::PACK_EXPAND_WIDGET);
 }

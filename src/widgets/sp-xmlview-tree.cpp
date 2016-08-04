@@ -22,11 +22,7 @@ struct NodeData {
 
 enum { STORE_TEXT_COL = 0, STORE_DATA_COL, STORE_REPR_COL, STORE_N_COLS };
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_xmlview_tree_destroy(GtkWidget * object);
-#else
-static void sp_xmlview_tree_destroy(GtkObject * object);
-#endif
 
 static NodeData * node_data_new (SPXMLViewTree * tree, GtkTreeIter * node, GtkTreeRowReference  *rowref, Inkscape::XML::Node * repr);
 
@@ -120,13 +116,8 @@ G_DEFINE_TYPE(SPXMLViewTree, sp_xmlview_tree, GTK_TYPE_TREE_VIEW);
 
 void sp_xmlview_tree_class_init(SPXMLViewTreeClass * klass)
 {
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidgetClass * widget_class = GTK_WIDGET_CLASS(klass);
+    auto widget_class = GTK_WIDGET_CLASS(klass);
     widget_class->destroy = sp_xmlview_tree_destroy;
-#else
-    GtkObjectClass * object_class = GTK_OBJECT_CLASS(klass);
-    object_class->destroy = sp_xmlview_tree_destroy;
-#endif
     
     // Signal for when a tree drag and drop has completed
     g_signal_new (  "tree_move",
@@ -147,22 +138,13 @@ sp_xmlview_tree_init (SPXMLViewTree * tree)
 	tree->dndactive = FALSE;
 }
 
-
-#if GTK_CHECK_VERSION(3,0,0)
 void sp_xmlview_tree_destroy(GtkWidget * object)
-#else
-void sp_xmlview_tree_destroy(GtkObject * object)
-#endif
 {
 	SPXMLViewTree * tree = SP_XMLVIEW_TREE (object);
 
 	sp_xmlview_tree_set_repr (tree, NULL);
 
-#if GTK_CHECK_VERSION(3,0,0)
 	GTK_WIDGET_CLASS(sp_xmlview_tree_parent_class)->destroy (object);
-#else
-	GTK_OBJECT_CLASS(sp_xmlview_tree_parent_class)->destroy (object);
-#endif
 }
 
 /*

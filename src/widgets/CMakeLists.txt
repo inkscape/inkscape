@@ -33,6 +33,7 @@ set(widgets_SRC
 	gradient-toolbar.cpp
 	gradient-vector.cpp
 	icon.cpp
+	image-menu-item.c
 	ink-action.cpp
 	ink-comboboxentry-action.cpp
 	paint-selector.cpp
@@ -88,6 +89,7 @@ set(widgets_SRC
 	gradient-toolbar.h
 	gradient-vector.h
 	icon.h
+	image-menu-item.h
         ink-action.h
         ink-comboboxentry-action.h
 	paint-selector.h
@@ -107,11 +109,6 @@ set(widgets_SRC
 	toolbox.h
 	widget-sizes.h
 )
-
-if(${WITH_GTK3_EXPERIMENTAL})
-    set(image_menu_item_SRC image-menu-item.h image-menu-item.c)
-    add_inkscape_source("${image_menu_item_SRC}")
-endif()
 
 # add_inkscape_lib(widgets_LIB "${widgets_SRC}")
 add_inkscape_source("${widgets_SRC}")

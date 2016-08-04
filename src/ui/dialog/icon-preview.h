@@ -66,13 +66,7 @@ private:
     gdouble minDelay;
 
     Gtk::VBox       iconBox;
-
-#if WITH_GTKMM_3_0
     Gtk::Paned      splitter;
-#else
-    Gtk::HPaned     splitter;
-#endif
-
     Glib::ustring targetId;
     int hot;
     int numEntries;

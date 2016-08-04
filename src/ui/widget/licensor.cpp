@@ -134,18 +134,10 @@ void Licensor::update (SPDocument *doc)
         for (i=0; rdf_licenses[i].name; i++) 
             if (license == &rdf_licenses[i]) 
                 break;
-#if WITH_GTKMM_3_0
         static_cast<LicenseItem*>(get_children()[i+1])->set_active();
-#else
-        static_cast<LicenseItem*>(children()[i+1].get_widget())->set_active();
-#endif
     }
     else {
-#if WITH_GTKMM_3_0
         static_cast<LicenseItem*>(get_children()[0])->set_active();
-#else
-        static_cast<LicenseItem*>(children()[0].get_widget())->set_active();
-#endif
     }
     
     /* update the URI */

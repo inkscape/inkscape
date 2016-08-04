@@ -16,11 +16,7 @@
 #include <config.h>
 #endif
 
-#if WITH_GTKMM_3_0
 #include <gtkmm/grid.h>
-#else
-#include <gtkmm/table.h>
-#endif
 
 #include "ui/selected-color.h"
 
@@ -33,11 +29,7 @@ namespace Widget {
 class ColorSlider;
 
 class ColorWheelSelector
-#if GTK_CHECK_VERSION(3, 0, 0)
     : public Gtk::Grid
-#else
-    : public Gtk::Table
-#endif
 {
 public:
     static const gchar *MODE_NAME;
@@ -61,11 +53,7 @@ protected:
 
     SelectedColor &_color;
     bool _updating;
-#if GTK_CHECK_VERSION(3, 0, 0)
     Glib::RefPtr<Gtk::Adjustment> _alpha_adjustment;
-#else
-    Gtk::Adjustment *_alpha_adjustment;
-#endif
     GtkWidget *_wheel;
     Inkscape::UI::Widget::ColorSlider *_slider;
 

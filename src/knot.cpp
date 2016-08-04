@@ -124,21 +124,14 @@ SPKnot::SPKnot(SPDesktop *desktop, gchar const *tip)
 }
 
 SPKnot::~SPKnot() {
-#if GTK_CHECK_VERSION(3,0,0)
-    GdkDisplay *display = gdk_display_get_default();
-    GdkDeviceManager *dm = gdk_display_get_device_manager(display);
-    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+    auto display = gdk_display_get_default();
+    auto dm = gdk_display_get_device_manager(display);
+    auto device = gdk_device_manager_get_client_pointer(dm);
     
     if ((this->flags & SP_KNOT_GRABBED) && gdk_display_device_is_grabbed(display, device)) {
         // This happens e.g. when deleting a node in node tool while dragging it
         gdk_device_ungrab(device, GDK_CURRENT_TIME);
     }
-#else
-    if ((this->flags & SP_KNOT_GRABBED) && gdk_pointer_is_grabbed ()) {
-        // This happens e.g. when deleting a node in node tool while dragging it
-        gdk_pointer_ungrab (GDK_CURRENT_TIME);
-    }
-#endif
 
     if (this->_event_handler_id > 0) {
         g_signal_handler_disconnect(G_OBJECT (this->item), this->_event_handler_id);
@@ -152,11 +145,7 @@ SPKnot::~SPKnot() {
 
     for (gint i = 0; i < SP_KNOT_VISIBLE_STATES; i++) {
         if (this->cursor[i]) {
-#if GTK_CHECK_VERSION(3,0,0)
             g_object_unref(this->cursor[i]);
-#else
-            gdk_cursor_unref(this->cursor[i]);
-#endif
             this->cursor[i] = NULL;
         }
     }
@@ -523,57 +512,33 @@ void SPKnot::setImage(guchar* normal, guchar* mouseover, guchar* dragging) {
 
 void SPKnot::setCursor(GdkCursor* normal, GdkCursor* mouseover, GdkCursor* dragging) {
     if (cursor[SP_KNOT_STATE_NORMAL]) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(cursor[SP_KNOT_STATE_NORMAL]);
-#else
-        gdk_cursor_unref(cursor[SP_KNOT_STATE_NORMAL]);
-#endif
     }
 
     cursor[SP_KNOT_STATE_NORMAL] = normal;
 
     if (normal) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_ref(normal);
-#else
-        gdk_cursor_ref(normal);
-#endif
     }
 
     if (cursor[SP_KNOT_STATE_MOUSEOVER]) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(cursor[SP_KNOT_STATE_MOUSEOVER]);
-#else
-        gdk_cursor_unref(cursor[SP_KNOT_STATE_MOUSEOVER]);
-#endif
     }
 
     cursor[SP_KNOT_STATE_MOUSEOVER] = mouseover;
 
     if (mouseover) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_ref(mouseover);
-#else
-        gdk_cursor_ref(mouseover);
-#endif
     }
 
     if (cursor[SP_KNOT_STATE_DRAGGING]) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_unref(cursor[SP_KNOT_STATE_DRAGGING]);
-#else
-        gdk_cursor_unref(cursor[SP_KNOT_STATE_DRAGGING]);
-#endif
     }
 
     cursor[SP_KNOT_STATE_DRAGGING] = dragging;
 
     if (dragging) {
-#if GTK_CHECK_VERSION(3,0,0)
         g_object_ref(dragging);
-#else
-        gdk_cursor_ref(dragging);
-#endif
     }
 }
 

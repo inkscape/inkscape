@@ -110,7 +110,6 @@ static gboolean gimp_color_wheel_button_release (GtkWidget          *widget,
                                                  GdkEventButton     *event);
 static gboolean gimp_color_wheel_motion         (GtkWidget          *widget,
                                                  GdkEventMotion     *event);
-#if GTK_CHECK_VERSION(3,0,0)
 static gboolean gimp_color_wheel_draw           (GtkWidget          *widget,
                                                  cairo_t            *cr);
 static void     gimp_color_wheel_get_preferred_width (GtkWidget     *widget,
@@ -119,13 +118,6 @@ static void     gimp_color_wheel_get_preferred_width (GtkWidget     *widget,
 static void     gimp_color_wheel_get_preferred_height (GtkWidget    *widget,
 		                                 gint               *minimum_height,
 						 gint               *natural_height);
-#else
-static gboolean gimp_color_wheel_expose         (GtkWidget          *widget,
-                                                 GdkEventExpose     *event);
-static void     gimp_color_wheel_size_request   (GtkWidget          *widget,
-                                                 GtkRequisition     *requisition);
-#endif
-
 static gboolean gimp_color_wheel_grab_broken    (GtkWidget          *widget,
                                                  GdkEventGrabBroken *event);
 static gboolean gimp_color_wheel_focus          (GtkWidget          *widget,
@@ -157,16 +149,9 @@ gimp_color_wheel_class_init (GimpColorWheelClass *class)
   widget_class->button_press_event   = gimp_color_wheel_button_press;
   widget_class->button_release_event = gimp_color_wheel_button_release;
   widget_class->motion_notify_event  = gimp_color_wheel_motion;
-
-#if GTK_CHECK_VERSION(3,0,0)
   widget_class->get_preferred_width  = gimp_color_wheel_get_preferred_width;
   widget_class->get_preferred_height = gimp_color_wheel_get_preferred_height;
   widget_class->draw                 = gimp_color_wheel_draw;
-#else
-  widget_class->size_request         = gimp_color_wheel_size_request;
-  widget_class->expose_event         = gimp_color_wheel_expose;
-#endif
-
   widget_class->focus                = gimp_color_wheel_focus;
   widget_class->grab_broken_event    = gimp_color_wheel_grab_broken;
 
@@ -302,10 +287,6 @@ gimp_color_wheel_realize (GtkWidget *widget)
 
   priv->window = gdk_window_new (parent_window, &attr, attr_mask);
   gdk_window_set_user_data (priv->window, wheel);
-
-#if !GTK_CHECK_VERSION(3,0,0)
-  gtk_widget_style_attach (widget);
-#endif
 }
 
 static void
@@ -321,7 +302,6 @@ gimp_color_wheel_unrealize (GtkWidget *widget)
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void
 gimp_color_wheel_get_preferred_width (GtkWidget *widget,
                                       gint      *minimum_width,
@@ -353,23 +333,6 @@ gimp_color_wheel_get_preferred_height (GtkWidget *widget,
   
   *minimum_height = *natural_height = DEFAULT_SIZE + 2 * (focus_width + focus_pad);
 }
-#else
-static void
-gimp_color_wheel_size_request (GtkWidget      *widget,
-                               GtkRequisition *requisition)
-{
-  gint focus_width;
-  gint focus_pad;
-
-  gtk_widget_style_get (widget,
-                        "focus-line-width", &focus_width,
-                        "focus-padding", &focus_pad,
-                        NULL);
-
-  requisition->width  = DEFAULT_SIZE + 2 * (focus_width + focus_pad);
-  requisition->height = DEFAULT_SIZE + 2 * (focus_width + focus_pad);
-}
-#endif
 
 static void
 gimp_color_wheel_size_allocate (GtkWidget     *widget,
@@ -688,7 +651,6 @@ set_cross_grab (GimpColorWheel *wheel,
     gdk_cursor_new_for_display (gtk_widget_get_display (GTK_WIDGET (wheel)),
                                 GDK_CROSSHAIR);
 
-#if GTK_CHECK_VERSION(3,0,0)
   gdk_device_grab (gtk_get_current_event_device(),
 		   priv->window,
 		   GDK_OWNERSHIP_NONE,
@@ -698,14 +660,6 @@ set_cross_grab (GimpColorWheel *wheel,
 		   GDK_BUTTON_RELEASE_MASK,
 		   cursor, time);
   g_object_unref (cursor);
-#else
-  gdk_pointer_grab (priv->window, FALSE,
-                    GDK_POINTER_MOTION_MASK      |
-                    GDK_POINTER_MOTION_HINT_MASK |
-                    GDK_BUTTON_RELEASE_MASK,
-                    NULL, cursor, time);
-  gdk_cursor_unref (cursor);
-#endif
 }
 
 static gboolean gimp_color_wheel_grab_broken(GtkWidget *widget, GdkEventGrabBroken *event)
@@ -805,13 +759,8 @@ gimp_color_wheel_button_release (GtkWidget      *widget,
   else
     g_assert_not_reached ();
 
-#if GTK_CHECK_VERSION(3,0,0)
   gdk_device_ungrab (gtk_get_current_event_device(),
                      event->time);
-#else
-  gdk_display_pointer_ungrab (gdk_window_get_display (event->window),
-                              event->time);
-#endif
 
   return TRUE;
 }
@@ -859,11 +808,7 @@ static void
 paint_ring (GimpColorWheel *wheel,
             cairo_t        *cr)
 {
-#if GTK_CHECK_VERSION(3,0,0)
   GtkWidget             *widget = GTK_WIDGET (wheel);
-#else
-  GtkAllocation          allocation;
-#endif
   GimpColorWheelPrivate *priv   = wheel->priv;
   gint                   width, height;
   gint                   xx, yy;
@@ -879,14 +824,8 @@ paint_ring (GimpColorWheel *wheel,
   cairo_t               *source_cr;
   gint                   stride;
 
-#if GTK_CHECK_VERSION(3,0,0)
   width  = gtk_widget_get_allocated_width  (widget);
   height = gtk_widget_get_allocated_height (widget);
-#else
-  gtk_widget_get_allocation (GTK_WIDGET (wheel), &allocation);
-  width  = allocation.width;
-  height = allocation.height;
-#endif
 
   center_x = width  / 2.0;
   center_y = height / 2.0;
@@ -1027,19 +966,10 @@ paint_triangle (GimpColorWheel *wheel,
   gdouble                r, g, b;
   gint                   stride;
   gint                   width, height;
-#if GTK_CHECK_VERSION(3,0,0)
   GtkStyleContext       *context;
 
   width  = gtk_widget_get_allocated_width  (widget);
   height = gtk_widget_get_allocated_height (widget);
-#else
-  gchar                 *detail;
-
-  GtkAllocation          allocation;
-  gtk_widget_get_allocation (widget, &allocation);
-  width  = allocation.width;
-  height = allocation.height;
-#endif
 
   /* Compute triangle's vertices */
 
@@ -1180,28 +1110,18 @@ paint_triangle (GimpColorWheel *wheel,
   b = priv->v;
   hsv_to_rgb (&r, &g, &b);
 
-#if GTK_CHECK_VERSION(3,0,0)
   context = gtk_widget_get_style_context (widget);
 
   gtk_style_context_save (context);
-#endif
 
   if (INTENSITY (r, g, b) > 0.5)
     {
-#if GTK_CHECK_VERSION(3,0,0)
       gtk_style_context_add_class (context, "light-area-focus");
-#else
-      detail = "colorwheel_light";
-#endif
       cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
     }
   else
     {
-#if GTK_CHECK_VERSION(3,0,0)
       gtk_style_context_add_class (context, "dark-area-focus");
-#else
-      detail = "colorwheel_dark";
-#endif
       cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
     }
 
@@ -1224,31 +1144,16 @@ paint_triangle (GimpColorWheel *wheel,
                             "focus-padding",    &focus_pad,
                             NULL);
 
-#if GTK_CHECK_VERSION(3,0,0)
       gtk_render_focus (context, cr,
                         xx - FOCUS_RADIUS - focus_width - focus_pad,
                         yy - FOCUS_RADIUS - focus_width - focus_pad,
                         2 * (FOCUS_RADIUS + focus_width + focus_pad),
                         2 * (FOCUS_RADIUS + focus_width + focus_pad));
-#else
-      gtk_widget_get_allocation (widget, &allocation);
-      gtk_paint_focus (gtk_widget_get_style (widget),
-                       gtk_widget_get_window (widget),
-                       gtk_widget_get_state (widget),
-                       NULL, widget, detail,
-                       allocation.x + xx - FOCUS_RADIUS - focus_width - focus_pad,
-                       allocation.y + yy - FOCUS_RADIUS - focus_width - focus_pad,
-                       2 * (FOCUS_RADIUS + focus_width + focus_pad),
-                       2 * (FOCUS_RADIUS + focus_width + focus_pad));
-#endif
     }
 
-#if GTK_CHECK_VERSION(3,0,0)
   gtk_style_context_restore (context);
-#endif
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 static gboolean
 gimp_color_wheel_draw (GtkWidget *widget,
                        cairo_t   *cr)
@@ -1273,48 +1178,6 @@ gimp_color_wheel_draw (GtkWidget *widget,
 
   return FALSE;
 }
-#else
-static gint
-gimp_color_wheel_expose (GtkWidget      *widget,
-                         GdkEventExpose *event)
-{
-  cairo_t               *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv  = wheel->priv;
-  gboolean               draw_focus;
-  GtkAllocation          allocation;
-
-  if (! (event->window == gtk_widget_get_window (widget) &&
-         gtk_widget_is_drawable (widget)))
-    return FALSE;
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-  
-  gtk_widget_get_allocation (widget, &allocation);
-  cairo_translate (cr, allocation.x, allocation.y);
-  
-  draw_focus = gtk_widget_has_focus (widget);
-  
-  paint_ring (wheel, cr);
-  paint_triangle (wheel, cr, draw_focus);
-
-  cairo_destroy (cr);
-  
-  if (draw_focus && priv->focus_on_ring)
-    gtk_paint_focus (gtk_widget_get_style (widget),
-                     gtk_widget_get_window (widget),
-                     gtk_widget_get_state (widget),
-                     &event->area, widget, NULL,
-                     allocation.x,
-                     allocation.y,
-                     allocation.width,
-                     allocation.height);
-
-  return FALSE;
-}
-#endif
 
 static gboolean
 gimp_color_wheel_focus (GtkWidget        *widget,

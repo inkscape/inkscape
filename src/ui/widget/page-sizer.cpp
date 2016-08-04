@@ -336,7 +336,6 @@ PageSizer::PageSizer(Registry & _wr)
 
     _customDimTable.set_border_width(4);
 
-#if WITH_GTKMM_3_0
     _customDimTable.set_row_spacing(4);
     _customDimTable.set_column_spacing(4);
 
@@ -355,15 +354,6 @@ PageSizer::PageSizer(Registry & _wr)
     _fitPageMarginExpander.set_hexpand();
     _fitPageMarginExpander.set_vexpand();
     _customDimTable.attach(_fitPageMarginExpander, 0, 2, 2, 1);
-#else
-    _customDimTable.resize(3, 2);
-    _customDimTable.set_row_spacings(4);
-    _customDimTable.set_col_spacings(4);
-    _customDimTable.attach(_dimensionWidth,        0,1, 0,1);
-    _customDimTable.attach(_dimensionUnits,        1,2, 0,1);
-    _customDimTable.attach(_dimensionHeight,       0,1, 1,2);
-    _customDimTable.attach(_fitPageMarginExpander, 0,2, 2,3);
-#endif
     
     _dimTabOrderGList = NULL;
     _dimTabOrderGList = g_list_append(_dimTabOrderGList, _dimensionWidth.gobj());
@@ -381,7 +371,6 @@ PageSizer::PageSizer(Registry & _wr)
     //## Set up margin settings
     _marginTable.set_border_width(4);
 
-#if WITH_GTKMM_3_0
     _marginTable.set_row_spacing(4);
     _marginTable.set_column_spacing(4);
 
@@ -404,16 +393,6 @@ PageSizer::PageSizer(Registry & _wr)
     _fitPageButtonAlign.set_hexpand();
     _fitPageButtonAlign.set_vexpand();
     _marginTable.attach(_fitPageButtonAlign, 0, 3, 2, 1);
-#else
-    _marginTable.set_border_width(4);
-    _marginTable.set_row_spacings(4);
-    _marginTable.set_col_spacings(4);
-    _marginTable.attach(_marginTopAlign,     0,2, 0,1);
-    _marginTable.attach(_marginLeftAlign,    0,1, 1,2);
-    _marginTable.attach(_marginRightAlign,   1,2, 1,2);
-    _marginTable.attach(_marginBottomAlign,  0,2, 2,3);
-    _marginTable.attach(_fitPageButtonAlign, 0,2, 3,4);
-#endif
     
     _marginTopAlign.set(0.5, 0.5, 0.0, 1.0);
     _marginTopAlign.add(_marginTop);
@@ -436,7 +415,6 @@ PageSizer::PageSizer(Registry & _wr)
 
     _scaleTable.set_border_width(4);
 
-#if WITH_GTKMM_3_0
     _scaleTable.set_row_spacing(4);
     _scaleTable.set_column_spacing(4);
 
@@ -448,16 +426,6 @@ PageSizer::PageSizer(Registry & _wr)
     _viewboxExpander.set_hexpand();
     _viewboxExpander.set_vexpand();
     _scaleTable.attach(_viewboxExpander, 0, 2, 2, 1);
-#else
-    _scaleTable.resize(3, 2);
-    _scaleTable.set_row_spacings(4);
-    _scaleTable.set_col_spacings(4);
-    _scaleTable.attach(_scaleX,        0,1, 0,1);
-    _scaleTable.attach(_scaleY,        1,2, 0,1);
-    _scaleTable.attach(_scaleLabel,    2,3, 0,1);
-    _scaleTable.attach(_scaleWarning,  0,3, 1,2, Gtk::FILL);
-    _scaleTable.attach(_viewboxExpander, 0,3, 2,3);
-#endif
     
     _scaleWarning.set_label(_("While SVG allows non-uniform scaling it is recommended to use only uniform scaling in Inkscape. To set a non-uniform scaling, set the 'viewBox' directly."));
     _scaleWarning.set_line_wrap( true );
@@ -466,7 +434,6 @@ PageSizer::PageSizer(Registry & _wr)
     _viewboxExpander.set_label(_("_Viewbox..."));
     _viewboxExpander.add(_viewboxTable);
 
-#if WITH_GTKMM_3_0
     _viewboxTable.set_row_spacing(2);
     _viewboxTable.set_column_spacing(2);
 
@@ -485,16 +452,6 @@ PageSizer::PageSizer(Registry & _wr)
     _viewboxH.set_hexpand();
     _viewboxH.set_vexpand();
     _viewboxTable.attach(_viewboxH,      1, 1, 1, 1);
-
-#else
-    _viewboxTable.set_border_width(4);
-    _viewboxTable.set_row_spacings(2);
-    _viewboxTable.set_col_spacings(2);
-    _viewboxTable.attach(_viewboxX,     0,1, 0,1);
-    _viewboxTable.attach(_viewboxY,     1,2, 0,1);
-    _viewboxTable.attach(_viewboxW,     0,1, 1,2);
-    _viewboxTable.attach(_viewboxH,     1,2, 1,2);
-#endif
 
     _wr.setUpdating (true);
     updateScaleUI();

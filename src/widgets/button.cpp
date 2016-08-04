@@ -21,15 +21,8 @@
 #include "helper/action.h"
 
 static void sp_button_dispose(GObject *object);
-
-#if GTK_CHECK_VERSION(3, 0, 0)
 static void sp_button_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width);
-
 static void sp_button_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height);
-#else
-static void sp_button_size_request(GtkWidget *widget, GtkRequisition *requisition);
-#endif
-
 static void sp_button_clicked(GtkButton *button);
 static void sp_button_perform_action(SPButton *button, gpointer data);
 static gint sp_button_process_event(SPButton *button, GdkEvent *event);
@@ -48,12 +41,8 @@ static void sp_button_class_init(SPButtonClass *klass)
     GtkButtonClass *button_class = GTK_BUTTON_CLASS(klass);
 
     object_class->dispose = sp_button_dispose;
-#if GTK_CHECK_VERSION(3, 0, 0)
     widget_class->get_preferred_width = sp_button_get_preferred_width;
     widget_class->get_preferred_height = sp_button_get_preferred_height;
-#else
-    widget_class->size_request = sp_button_size_request;
-#endif
     button_class->clicked = sp_button_clicked;
 }
 
@@ -90,7 +79,6 @@ static void sp_button_dispose(GObject *object)
     (G_OBJECT_CLASS(sp_button_parent_class))->dispose(object);
 }
 
-#if GTK_CHECK_VERSION(3, 0, 0)
 static void sp_button_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
     GtkWidget *child = gtk_bin_get_child(GTK_BIN(widget));
@@ -134,23 +122,6 @@ static void sp_button_get_preferred_height(GtkWidget *widget, gint *minimal_heig
     *minimal_height += MAX(2, padding.top + padding.bottom + border.top + border.bottom);
     *natural_height += MAX(2, padding.top + padding.bottom + border.top + border.bottom);
 }
-#else
-static void sp_button_size_request(GtkWidget *widget, GtkRequisition *requisition)
-{
-    GtkWidget *child = gtk_bin_get_child(GTK_BIN(widget));
-    GtkStyle *style = gtk_widget_get_style(widget);
-
-    if (child) {
-        gtk_widget_size_request(GTK_WIDGET(child), requisition);
-    } else {
-        requisition->width = 0;
-        requisition->height = 0;
-    }
-
-    requisition->width += 2 + 2 * MAX(2, style->xthickness);
-    requisition->height += 2 + 2 * MAX(2, style->ythickness);
-}
-#endif
 
 static void sp_button_clicked(GtkButton *button)
 {

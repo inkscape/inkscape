@@ -20,11 +20,7 @@ namespace Widget {
 SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc,
                        double climb_rate, int digits, const SPAttributeEnum a, const char* tip_text)
     : AttrWidget(a, value), 
-#if WITH_GTKMM_3_0
       _adjustment(Gtk::Adjustment::create(value, lower, upper, step_inc)),
-#else
-      _adjustment(value, lower, upper, step_inc),
-#endif
       _scale(_adjustment), _spin(_adjustment, climb_rate, digits)
 {
     signal_value_changed().connect(signal_attr_changed().make_slot());
@@ -43,11 +39,7 @@ SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc
 
 Glib::ustring SpinSlider::get_as_attribute() const
 {
-#if WITH_GTKMM_3_0
-    const double val = _adjustment->get_value();
-#else
-    const double val = _adjustment.get_value();
-#endif
+    const auto val = _adjustment->get_value();
 
     if(_spin.get_digits() == 0)
         return Glib::Ascii::dtostr((int)val);
@@ -58,77 +50,43 @@ Glib::ustring SpinSlider::get_as_attribute() const
 void SpinSlider::set_from_attribute(SPObject* o)
 {
     const gchar* val = attribute_value(o);
-#if WITH_GTKMM_3_0
     if(val)
         _adjustment->set_value(Glib::Ascii::strtod(val));
     else
         _adjustment->set_value(get_default()->as_double());
-#else
-    if(val)
-        _adjustment.set_value(Glib::Ascii::strtod(val));
-    else
-        _adjustment.set_value(get_default()->as_double());
-#endif
 }
 
 Glib::SignalProxy0<void> SpinSlider::signal_value_changed()
 {
-#if WITH_GTKMM_3_0
     return _adjustment->signal_value_changed();
-#else
-    return _adjustment.signal_value_changed();
-#endif
 }
 
 double SpinSlider::get_value() const
 {
-#if WITH_GTKMM_3_0
     return _adjustment->get_value();
-#else
-    return _adjustment.get_value();
-#endif
 }
 
 void SpinSlider::set_value(const double val)
 {
-#if WITH_GTKMM_3_0
     _adjustment->set_value(val);
-#else
-    _adjustment.set_value(val);
-#endif
 }
 
-#if WITH_GTKMM_3_0
-const Glib::RefPtr<Gtk::Adjustment> SpinSlider::get_adjustment() const
-#else
-const Gtk::Adjustment& SpinSlider::get_adjustment() const
-#endif
-{
-    return _adjustment;
-}
-#if WITH_GTKMM_3_0
-Glib::RefPtr<Gtk::Adjustment> SpinSlider::get_adjustment()
-#else
-Gtk::Adjustment& SpinSlider::get_adjustment()
-#endif
+const decltype(SpinSlider::_adjustment) SpinSlider::get_adjustment() const
 {
     return _adjustment;
 }
 
-#if WITH_GTKMM_3_0
+decltype(SpinSlider::_adjustment) SpinSlider::get_adjustment()
+{
+    return _adjustment;
+}
+
 const Gtk::Scale& SpinSlider::get_scale() const
-#else
-const Gtk::HScale& SpinSlider::get_scale() const
-#endif
 {
     return _scale;
 }
 
-#if WITH_GTKMM_3_0
 Gtk::Scale& SpinSlider::get_scale()
-#else
-Gtk::HScale& SpinSlider::get_scale()
-#endif
 {
     return _scale;
 }
@@ -157,15 +115,9 @@ DualSpinSlider::DualSpinSlider(double value, double lower, double upper, double 
 {
     signal_value_changed().connect(signal_attr_changed().make_slot());
 
-#if WITH_GTKMM_3_0
     _s1.get_adjustment()->signal_value_changed().connect(_signal_value_changed.make_slot());
     _s2.get_adjustment()->signal_value_changed().connect(_signal_value_changed.make_slot());
     _s1.get_adjustment()->signal_value_changed().connect(sigc::mem_fun(*this, &DualSpinSlider::update_linked));
-#else
-    _s1.get_adjustment().signal_value_changed().connect(_signal_value_changed.make_slot());
-    _s2.get_adjustment().signal_value_changed().connect(_signal_value_changed.make_slot());
-    _s1.get_adjustment().signal_value_changed().connect(sigc::mem_fun(*this, &DualSpinSlider::update_linked));
-#endif
     _link.signal_toggled().connect(sigc::mem_fun(*this, &DualSpinSlider::link_toggled));
 
     Gtk::VBox* vb = Gtk::manage(new Gtk::VBox);
@@ -202,13 +154,8 @@ void DualSpinSlider::set_from_attribute(SPObject* o)
 
             _link.set_active(toks[1] == 0);
 
-#if WITH_GTKMM_3_0
             _s1.get_adjustment()->set_value(v1);
             _s2.get_adjustment()->set_value(v2);
-#else
-            _s1.get_adjustment().set_value(v1);
-            _s2.get_adjustment().set_value(v2);
-#endif
 
             g_strfreev(toks);
         }

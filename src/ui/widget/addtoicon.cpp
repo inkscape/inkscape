@@ -49,8 +49,6 @@ AddToIcon::AddToIcon() :
     set_pixbuf();
 }
 
-
-#if WITH_GTKMM_3_0
 void AddToIcon::get_preferred_height_vfunc(Gtk::Widget& widget,
                                               int& min_h,
                                               int& nat_h) const
@@ -80,47 +78,16 @@ void AddToIcon::get_preferred_width_vfunc(Gtk::Widget& widget,
         nat_w += (nat_w) >> 1;
     }
 }
-#else
-void AddToIcon::get_size_vfunc(Gtk::Widget& widget,
-                                  const Gdk::Rectangle* cell_area,
-                                  int* x_offset,
-                                  int* y_offset,
-                                  int* width,
-                                  int* height ) const
-{
-    Gtk::CellRendererPixbuf::get_size_vfunc( widget, cell_area, x_offset, y_offset, width, height );
 
-    if ( width ) {
-        *width = phys;//+= (*width) >> 1;
-    }
-    if ( height ) {
-        *height =phys;//+= (*height) >> 1;
-    }
-}
-#endif
-
-#if WITH_GTKMM_3_0
 void AddToIcon::render_vfunc( const Cairo::RefPtr<Cairo::Context>& cr,
                                  Gtk::Widget& widget,
                                  const Gdk::Rectangle& background_area,
                                  const Gdk::Rectangle& cell_area,
                                  Gtk::CellRendererState flags )
-#else
-void AddToIcon::render_vfunc( const Glib::RefPtr<Gdk::Drawable>& window,
-                                 Gtk::Widget& widget,
-                                 const Gdk::Rectangle& background_area,
-                                 const Gdk::Rectangle& cell_area,
-                                 const Gdk::Rectangle& expose_area,
-                                 Gtk::CellRendererState flags )
-#endif
 {
     set_pixbuf();
     
-#if WITH_GTKMM_3_0
     Gtk::CellRendererPixbuf::render_vfunc( cr, widget, background_area, cell_area, flags );
-#else
-    Gtk::CellRendererPixbuf::render_vfunc( window, widget, background_area, cell_area, expose_area, flags );
-#endif
 }
 
 bool AddToIcon::activate_vfunc(GdkEvent* /*event*/,

@@ -85,12 +85,7 @@ private:
     Glib::RefPtr<Gtk::ListStore> dash_store;
     Gtk::ComboBox       dash_combo;
     Gtk::CellRendererPixbuf image_renderer;
-
-#if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> offset;
-#else
-    Gtk::Adjustment     *offset;
-#endif
 
     static gchar const *const _prefs_path;
     int preview_width;

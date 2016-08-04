@@ -63,11 +63,7 @@ enum {
     LAST_SIGNAL
 };
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_vector_selector_destroy(GtkWidget *object);
-#else
-static void sp_gradient_vector_selector_destroy(GtkObject *object);
-#endif
 
 static void sp_gvs_gradient_release(SPObject *obj, SPGradientVectorSelector *gvs);
 static void sp_gvs_defs_release(SPObject *defs, SPGradientVectorSelector *gvs);
@@ -86,11 +82,7 @@ static win_data wd;
 static gint x = -1000, y = -1000, w = 0, h = 0; // impossible original values to make sure they are read from prefs
 static Glib::ustring const prefs_path = "/dialogs/gradienteditor/";
 
-#if GTK_CHECK_VERSION(3,0,0)
 G_DEFINE_TYPE(SPGradientVectorSelector, sp_gradient_vector_selector, GTK_TYPE_BOX);
-#else
-G_DEFINE_TYPE(SPGradientVectorSelector, sp_gradient_vector_selector, GTK_TYPE_VBOX);
-#endif
 
 static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass *klass)
 {
@@ -105,20 +97,13 @@ static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass
                                         G_TYPE_NONE, 1,
                                         G_TYPE_POINTER);
 
-#if GTK_CHECK_VERSION(3,0,0)
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
     widget_class->destroy = sp_gradient_vector_selector_destroy;
-#else
-    GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
-    object_class->destroy = sp_gradient_vector_selector_destroy;
-#endif
 }
 
 static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs)
 {
-#if GTK_CHECK_VERSION(3,0,0)
     gtk_orientable_set_orientation(GTK_ORIENTABLE(gvs), GTK_ORIENTATION_VERTICAL);
-#endif
 
     gvs->idlabel = TRUE;
 
@@ -137,11 +122,7 @@ static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs)
 
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_vector_selector_destroy(GtkWidget *object)
-#else
-static void sp_gradient_vector_selector_destroy(GtkObject *object)
-#endif
 {
     SPGradientVectorSelector *gvs = SP_GRADIENT_VECTOR_SELECTOR(object);
 
@@ -162,15 +143,9 @@ static void sp_gradient_vector_selector_destroy(GtkObject *object)
     gvs->defs_modified_connection.~connection();
     gvs->tree_select_connection.~connection();
 
-#if GTK_CHECK_VERSION(3,0,0)
     if ((GTK_WIDGET_CLASS(sp_gradient_vector_selector_parent_class))->destroy) {
         (GTK_WIDGET_CLASS(sp_gradient_vector_selector_parent_class))->destroy(object);
     }
-#else
-    if ((GTK_OBJECT_CLASS(sp_gradient_vector_selector_parent_class))->destroy) {
-        (GTK_OBJECT_CLASS(sp_gradient_vector_selector_parent_class))->destroy(object);
-    }
-#endif
 }
 
 GtkWidget *sp_gradient_vector_selector_new(SPDocument *doc, SPGradient *gr)
@@ -480,15 +455,8 @@ static GtkWidget *sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *st
 
 static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradient *gradient);
 static gint sp_gradient_vector_dialog_delete(GtkWidget *widget, GdkEvent *event, GtkWidget *dialog);
-
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_vector_dialog_destroy(GtkWidget *object, gpointer data);
 static void sp_gradient_vector_widget_destroy(GtkWidget *object, gpointer data);
-#else
-static void sp_gradient_vector_dialog_destroy(GtkObject *object, gpointer data);
-static void sp_gradient_vector_widget_destroy(GtkObject *object, gpointer data);
-#endif
-
 static void sp_gradient_vector_gradient_release(SPObject *obj, GtkWidget *widget);
 static void sp_gradient_vector_gradient_modified(SPObject *obj, guint flags, GtkWidget *widget);
 static void sp_gradient_vector_color_dragged(Inkscape::UI::SelectedColor *selected_color, GObject *object);
@@ -841,12 +809,8 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     g_return_val_if_fail(gradient != NULL, NULL);
     g_return_val_if_fail(SP_IS_GRADIENT(gradient), NULL);
 
-#if GTK_CHECK_VERSION(3,0,0)
     vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, PAD);
     gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
-#else
-    vb = gtk_vbox_new(FALSE, PAD);
-#endif
     g_signal_connect(G_OBJECT(vb), "destroy", G_CALLBACK(sp_gradient_vector_widget_destroy), NULL);
 
     w = sp_gradient_image_new(gradient);
@@ -879,12 +843,8 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     g_signal_connect(G_OBJECT(combo_box), "changed", G_CALLBACK(sp_grad_edit_combo_box_changed), vb);
 
     /* Add and Remove buttons */
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+    auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
     gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-    GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-#endif
     // TRANSLATORS: "Stop" means: a "phase" of a gradient
     GtkWidget *b = gtk_button_new_with_label(_("Add stop"));
     gtk_widget_show(b);
@@ -901,21 +861,12 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     gtk_box_pack_start(GTK_BOX(vb),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
     /*  Offset Slider and stuff   */
-#if GTK_CHECK_VERSION(3,0,0)
     hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-    hb = gtk_hbox_new(FALSE, 0);
-#endif
 
     /* Label */
     GtkWidget *l = gtk_label_new(C_("Gradient","Offset:"));
-
-#if GTK_CHECK_VERSION(3,0,0)
     gtk_widget_set_halign(l, GTK_ALIGN_END);
-#else
-    gtk_misc_set_alignment(GTK_MISC(l), 1.0, 0.5);
-#endif
 
     gtk_box_pack_start(GTK_BOX(hb),l, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
     gtk_widget_show(l);
@@ -933,11 +884,7 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     gtk_adjustment_set_value(Offset_adj, stop->offset);
 
     /* Slider */
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget *slider = gtk_scale_new(GTK_ORIENTATION_HORIZONTAL, Offset_adj);
-#else
-    GtkWidget *slider = gtk_hscale_new(Offset_adj);
-#endif
+    auto slider = gtk_scale_new(GTK_ORIENTATION_HORIZONTAL, Offset_adj);
     gtk_scale_set_draw_value( GTK_SCALE(slider), FALSE );
     gtk_widget_show(slider);
     gtk_box_pack_start(GTK_BOX(hb),slider, TRUE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);
@@ -1175,11 +1122,7 @@ static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradien
     blocked = FALSE;
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_vector_dialog_destroy(GtkWidget * /*object*/, gpointer /*data*/)
-#else
-static void sp_gradient_vector_dialog_destroy(GtkObject * /*object*/, gpointer /*data*/)
-#endif
 {
     GObject *obj = G_OBJECT(dlg);
     assert(obj != NULL);
@@ -1230,11 +1173,7 @@ static gboolean sp_gradient_vector_dialog_delete(GtkWidget */*widget*/, GdkEvent
 }
 
 /* Widget destroy handler */
-#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_vector_widget_destroy(GtkWidget *object, gpointer /*data*/)
-#else
-static void sp_gradient_vector_widget_destroy(GtkObject *object, gpointer /*data*/)
-#endif
 {
     SPObject *gradient = SP_OBJECT(g_object_get_data(G_OBJECT(object), "gradient"));
 

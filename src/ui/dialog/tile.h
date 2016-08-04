@@ -29,12 +29,7 @@
 
 namespace Gtk {
 class Button;
-
-#if WITH_GTKMM_3_0
 class Grid;
-#else
-class Table;
-#endif
 }
 
 namespace Inkscape {

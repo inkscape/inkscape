@@ -1432,11 +1432,7 @@ void SPDesktop::setWaitingCursor()
     GdkDisplay *display = gdk_display_get_default();
     GdkCursor  *waiting = gdk_cursor_new_for_display(display, GDK_WATCH);
     gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(getCanvas())), waiting);
-#if GTK_CHECK_VERSION(3,0,0)
     g_object_unref(waiting);
-#else
-    gdk_cursor_unref(waiting);
-#endif
     // GDK needs the flush for the cursor change to take effect
     gdk_flush();
     waiting_cursor = true;

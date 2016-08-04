@@ -74,12 +74,8 @@ ToggleButtonParam::param_newWidget()
                                                          false,
                                                          param_effect->getRepr(),
                                                          param_effect->getSPDoc()) );
-#if GTK_CHECK_VERSION(3,0,0)
-    GtkWidget * box_button = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+    auto box_button = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_set_homogeneous(GTK_BOX(box_button), false);
-#else
-    GtkWidget * box_button = gtk_hbox_new (false, 0);
-#endif
     GtkWidget * label_button = gtk_label_new ("");
     if (!param_label.empty()) {
         if(value || inactive_label.empty()){

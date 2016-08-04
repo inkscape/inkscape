@@ -101,11 +101,7 @@ FontSubstitution::show(Glib::ustring out, std::vector<SPItem*> &l)
    cbWarning->set_label(_("Don't show this warning again"));
    cbWarning->show();
 
-#if GTK_CHECK_VERSION(3,0,0)
-   Gtk::Box * box = warning.get_content_area();
-#else
-   Gtk::Box * box = warning.get_vbox();
-#endif
+   auto box = warning.get_content_area();
    box->set_spacing(2);
    box->pack_start(*scrollwindow, true, true, 4);
    box->pack_start(*cbSelect, false, false, 0);

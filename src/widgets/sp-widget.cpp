@@ -40,7 +40,6 @@ public:
     static void show(GtkWidget *widget);
     static void hide(GtkWidget *widget);
 
-#if GTK_CHECK_VERSION(3,0,0)
     static void getPreferredWidth(GtkWidget *widget,
                                   gint *minimal_width,
                                   gint *natural_width);
@@ -49,10 +48,6 @@ public:
                                    gint *minimal_height,
                                    gint *natural_height);
     static gboolean draw(GtkWidget *widget, cairo_t *cr);
-#else
-    static void sizeRequest(GtkWidget *widget, GtkRequisition *requisition);
-    static gboolean expose(GtkWidget *widget, GdkEventExpose *event);
-#endif
 
     static void sizeAllocate(GtkWidget *widget, GtkAllocation *allocation);
     static void modifySelectionCB(Selection *selection, guint flags, SPWidget *spw);
@@ -119,14 +114,9 @@ sp_widget_class_init(SPWidgetClass *klass)
 
     widget_class->show = SPWidgetImpl::show;
     widget_class->hide = SPWidgetImpl::hide;
-#if GTK_CHECK_VERSION(3,0,0)
     widget_class->get_preferred_width = SPWidgetImpl::getPreferredWidth;
     widget_class->get_preferred_height = SPWidgetImpl::getPreferredHeight;
     widget_class->draw = SPWidgetImpl::draw;
-#else
-    widget_class->size_request = SPWidgetImpl::sizeRequest;
-    widget_class->expose_event = SPWidgetImpl::expose;
-#endif
     widget_class->size_allocate = SPWidgetImpl::sizeAllocate;
 }
 
@@ -206,27 +196,18 @@ void SPWidgetImpl::hide(GtkWidget *widget)
     }
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 gboolean SPWidgetImpl::draw(GtkWidget *widget, cairo_t *cr)
-#else
-gboolean SPWidgetImpl::expose(GtkWidget *widget, GdkEventExpose *event)
-#endif
 {
     GtkBin    *bin = GTK_BIN(widget);
     GtkWidget *child = gtk_bin_get_child(bin);
 
     if (child) {
-#if GTK_CHECK_VERSION(3,0,0)
         gtk_container_propagate_draw(GTK_CONTAINER(widget), child, cr);
-#else
-        gtk_container_propagate_expose(GTK_CONTAINER(widget), child, event);
-#endif
     }
 
     return FALSE;
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
 void SPWidgetImpl::getPreferredWidth(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
     GtkBin    *bin   = GTK_BIN(widget);
@@ -246,17 +227,6 @@ void SPWidgetImpl::getPreferredHeight(GtkWidget *widget, gint *minimal_height, g
         gtk_widget_get_preferred_height(child, minimal_height, natural_height);
     }
 }
-#else
-void SPWidgetImpl::sizeRequest(GtkWidget *widget, GtkRequisition *requisition)
-{
-    GtkBin    *bin   = GTK_BIN(widget);
-    GtkWidget *child = gtk_bin_get_child(bin);
-
-    if (child) {
-        gtk_widget_size_request(child, requisition);
-    }
-}
-#endif
 
 void SPWidgetImpl::sizeAllocate(GtkWidget *widget, GtkAllocation *allocation)
 {

@@ -24,14 +24,9 @@
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/dialog.h>
 #include <gtkmm/entry.h>
+#include <gtkmm/grid.h>
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/stock.h>
-
-#if WITH_GTKMM_3_0
-# include <gtkmm/grid.h>
-#else
-# include <gtkmm/table.h>
-#endif
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
@@ -63,12 +58,7 @@
 
 #include "helper/png-write.h"
 
-#if WITH_EXT_GDL
 #include <gdl/gdl-dock-item.h>
-#else
-#include "libgdl/gdl-dock-item.h"
-#endif
-
 
 // required to set status message after export
 #include "desktop.h"
@@ -205,15 +195,9 @@ Export::Export (void) :
             selectiontype_buttons[i]->signal_clicked().connect(sigc::mem_fun(*this, &Export::onAreaToggled));
         }
 
-#if WITH_GTKMM_3_0
-        Gtk::Grid* t = new Gtk::Grid();
+        auto t = new Gtk::Grid();
         t->set_row_spacing(4);
         t->set_column_spacing(4);
-#else
-        Gtk::Table* t = new Gtk::Table(3, 4, false);
-        t->set_row_spacings (4);
-        t->set_col_spacings (4);
-#endif
 
         x0_adj = createSpinbutton ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0,
                                     t, 0, 0, _("_x0:"), "", EXPORT_COORD_PRECISION, 1,
@@ -255,15 +239,9 @@ Export::Export (void) :
         bm_label->set_use_markup(true);
         size_box.pack_start(*bm_label, false, false, 0);
 
-#if WITH_GTKMM_3_0
-        Gtk::Grid *t = new Gtk::Grid();
+        auto t = new Gtk::Grid();
         t->set_row_spacing(4);
         t->set_column_spacing(4);
-#else
-        Gtk::Table *t = new Gtk::Table(2, 5, false);
-        t->set_row_spacings (4);
-        t->set_col_spacings (4);
-#endif
 
         size_box.pack_start(*t);
 
@@ -471,27 +449,14 @@ void Export::set_default_filename () {
     }
 }
 
-#if WITH_GTKMM_3_0
 Glib::RefPtr<Gtk::Adjustment> Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
         float step, float page,
         Gtk::Grid *t, int x, int y,
         const Glib::ustring& ll, const Glib::ustring& lr,
         int digits, unsigned int sensitive,
         void (Export::*cb)() )
-#else
-Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
-        float step, float page,
-        Gtk::Table *t, int x, int y,
-        const Glib::ustring& ll, const Glib::ustring& lr,
-        int digits, unsigned int sensitive,
-        void (Export::*cb)() )
-#endif
 {
-#if WITH_GTKMM_3_0
-    Glib::RefPtr<Gtk::Adjustment> adj = Gtk::Adjustment::create(val, min, max, step, page, 0);
-#else
-    Gtk::Adjustment *adj = new Gtk::Adjustment  ( val, min, max, step, page, 0 );
-#endif
+    auto adj = Gtk::Adjustment::create(val, min, max, step, page, 0);
 
     int pos = 0;
     Gtk::Label *l = NULL;
@@ -499,28 +464,17 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
     if (!ll.empty()) {
         l = new Gtk::Label(ll,true);
         l->set_alignment (1.0, 0.5);
-
-#if WITH_GTKMM_3_0
         l->set_hexpand();
         l->set_vexpand();
         t->attach(*l, x + pos, y, 1, 1);
-#else
-        t->attach (*l, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
-#endif
-
         l->set_sensitive(sensitive);
         pos++;
     }
 
-#if WITH_GTKMM_3_0
-    Gtk::SpinButton *sb = new Gtk::SpinButton(adj, 1.0, digits);
+    auto sb = new Gtk::SpinButton(adj, 1.0, digits);
     sb->set_hexpand();
     sb->set_vexpand();
     t->attach(*sb, x + pos, y, 1, 1);
-#else
-    Gtk::SpinButton *sb = new Gtk::SpinButton(*adj, 1.0, digits);
-    t->attach (*sb, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
-#endif
 
     sb->set_width_chars(7);
     sb->set_sensitive (sensitive);
@@ -533,15 +487,9 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
     if (!lr.empty()) {
         l = new Gtk::Label(lr,true);
         l->set_alignment (0.0, 0.5);
-
-#if WITH_GTKMM_3_0
         l->set_hexpand();
         l->set_vexpand();
         t->attach(*l, x + pos, y, 1, 1);
-#else
-        t->attach (*l, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
-#endif
-
         l->set_sensitive (sensitive);
         pos++;
         l->set_mnemonic_widget (*sb);
@@ -919,11 +867,7 @@ Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
     Gtk::ProgressBar *prg = new Gtk::ProgressBar ();
     prg->set_text(progress_text);
     dlg->set_data ("progress", prg);
-#if GTK_CHECK_VERSION(3,0,0)
-    Gtk::Box* CA = dlg->get_content_area();
-#else
-    Gtk::Box* CA = dlg->get_vbox();
-#endif
+    auto CA = dlg->get_content_area();
     CA->pack_start(*prg, FALSE, FALSE, 4);
 
     Gtk::Button* btn = dlg->add_button (Gtk::Stock::CANCEL,Gtk::RESPONSE_CANCEL );
@@ -1344,11 +1288,7 @@ void Export::onBrowse ()
     Glib::RefPtr<const Gdk::Window> parentWindow = desktop->getToplevel()->get_window();
     g_assert(parentWindow->gobj() != NULL);
 
-#if WITH_GTKMM_3_0
     opf.hwndOwner = (HWND)gdk_win32_window_get_handle((GdkWindow*)parentWindow->gobj());
-#else
-    opf.hwndOwner = (HWND)gdk_win32_drawable_get_handle((GdkDrawable*)parentWindow->gobj());
-#endif
     opf.lpstrFilter = filter_string;
     opf.lpstrCustomFilter = 0;
     opf.nMaxCustFilter = 0L;
@@ -1508,11 +1448,7 @@ void Export::detectSize() {
 } /* sp_export_detect_size */
 
 /// Called when area x0 value is changed
-#if WITH_GTKMM_3_0
 void Export::areaXChange(Glib::RefPtr<Gtk::Adjustment>& adj)
-#else
-void Export::areaXChange (Gtk::Adjustment *adj)
-#endif
 {
     float x0, x1, xdpi, width;
 
@@ -1551,11 +1487,7 @@ void Export::areaXChange (Gtk::Adjustment *adj)
 } // end of sp_export_area_x_value_changed()
 
 /// Called when area y0 value is changed.
-#if WITH_GTKMM_3_0
 void Export::areaYChange(Glib::RefPtr<Gtk::Adjustment>& adj)
-#else
-void Export::areaYChange (Gtk::Adjustment *adj)
-#endif
 {
     float y0, y1, ydpi, height;
 
@@ -1862,11 +1794,7 @@ void Export::setArea( double x0, double y0, double x1, double y1 )
  * @param  adj   The adjustment widget
  * @param  val   What value to set it to.
  */
-#if WITH_GTKMM_3_0
 void Export::setValue(Glib::RefPtr<Gtk::Adjustment>& adj, double val )
-#else
-void Export::setValue(  Gtk::Adjustment *adj, double val )
-#endif
 {
     if (adj) {
         adj->set_value(val);
@@ -1884,11 +1812,7 @@ void Export::setValue(  Gtk::Adjustment *adj, double val )
  * @param  adj   The adjustment widget
  * @param  val   What the value should be in points.
  */
-#if WITH_GTKMM_3_0
 void Export::setValuePx(Glib::RefPtr<Gtk::Adjustment>& adj, double val)
-#else
-void Export::setValuePx( Gtk::Adjustment *adj, double val)
-#endif
 {
     Unit const *unit = unit_selector.getUnit();
 
@@ -1907,11 +1831,7 @@ void Export::setValuePx( Gtk::Adjustment *adj, double val)
  *
  * @return The value in the specified adjustment.
  */
-#if WITH_GTKMM_3_0
 float Export::getValue(Glib::RefPtr<Gtk::Adjustment>& adj)
-#else
-float Export::getValue(  Gtk::Adjustment *adj )
-#endif
 {
     if (!adj) {
         g_message("sp_export_value_get : adj is NULL");
@@ -1933,11 +1853,7 @@ float Export::getValue(  Gtk::Adjustment *adj )
  *
  * @return The value in the adjustment in points.
  */
-#if WITH_GTKMM_3_0
 float Export::getValuePx(Glib::RefPtr<Gtk::Adjustment>& adj)
-#else
-float Export::getValuePx(  Gtk::Adjustment *adj )
-#endif
 {
     float value = getValue( adj);
     Unit const *unit = unit_selector.getUnit();

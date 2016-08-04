@@ -218,13 +218,7 @@ private:
 
     Gtk::Button *create_button;
     Gtk::Entry *name_entry;
-
-#if WITH_GTKMM_3_0
     Gtk::Paned paned;
-#else
-    Gtk::HPaned paned;
-#endif
-
     Gtk::VBox left_box;
     Gtk::VBox right_box;
     Gtk::HBox status_box;
@@ -248,12 +242,7 @@ private:
     Gtk::ScrolledWindow text_container;
     Gtk::HBox attr_hbox;
     Gtk::VBox attr_container;
-
-#if WITH_GTKMM_3_0
     Gtk::Paned attr_subpaned_container;
-#else
-    Gtk::VPaned attr_subpaned_container;
-#endif
 
     Gtk::Button set_attr;
 

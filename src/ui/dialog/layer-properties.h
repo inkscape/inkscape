@@ -19,12 +19,7 @@
 #include <gtkmm/dialog.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/label.h>
-
-#if WITH_GTKMM_3_0
 #include <gtkmm/grid.h>
-#else
-#include <gtkmm/table.h>
-#endif
 
 #include <gtkmm/combobox.h>
 #include <gtkmm/liststore.h>
@@ -102,12 +97,7 @@ protected:
     Gtk::Entry        _layer_name_entry;
     Gtk::Label        _layer_position_label;
     Gtk::ComboBox     _layer_position_combo;
-
-#if WITH_GTKMM_3_0
     Gtk::Grid         _layout_table;
-#else
-    Gtk::Table        _layout_table;
-#endif
 
     bool              _position_visible;
 

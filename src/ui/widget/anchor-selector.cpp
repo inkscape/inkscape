@@ -27,11 +27,7 @@ void AnchorSelector::setupButton(const Glib::ustring& icon, Gtk::ToggleButton& b
 
 AnchorSelector::AnchorSelector()
 	: Gtk::Alignment(0.5, 0, 0, 0),
-#if WITH_GTKMM_3_0
 	  _container()
-#else
-	  _container(3, 3, true)
-#endif
 {
 	setupButton(INKSCAPE_ICON("boundingbox_top_left"),     _buttons[0]);
 	setupButton(INKSCAPE_ICON("boundingbox_top"),          _buttons[1]);
@@ -43,20 +39,14 @@ AnchorSelector::AnchorSelector()
 	setupButton(INKSCAPE_ICON("boundingbox_bottom"),       _buttons[7]);
 	setupButton(INKSCAPE_ICON("boundingbox_bottom_right"), _buttons[8]);
 
-#if WITH_GTKMM_3_0
         _container.set_row_homogeneous();
         _container.set_column_homogeneous(true);
-#endif
 
 	for(int i = 0; i < 9; ++i) {
 		_buttons[i].signal_clicked().connect(
 				sigc::bind(sigc::mem_fun(*this, &AnchorSelector::btn_activated), i));
 
-#if WITH_GTKMM_3_0
 		_container.attach(_buttons[i], i % 3, i / 3, 1, 1);
-#else
-		_container.attach(_buttons[i], i % 3, i % 3+1, i / 3, i / 3+1, Gtk::FILL, Gtk::FILL);
-#endif
 	}
 	_selection = 4;
 	_buttons[4].set_active();
