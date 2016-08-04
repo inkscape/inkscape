@@ -38,6 +38,8 @@ AC_LANG(C++)
 AC_PROG_CXX
 AC_PROG_CC
 AM_PROG_AS
+AX_CXX_COMPILE_STDCXX_11([], [mandatory])
+
 # Initialize libtool
 LT_PREREQ([2.2])
 LT_INIT
@@ -649,34 +651,6 @@ PKG_CHECK_MODULES(INKSCAPE,
 		  pango       >= 1.24
 		  pangoft2    >= 1.24
 		  )
-
-# test whether dependencies require C++11
-AC_MSG_CHECKING([whether C++11 mode is required])
-CXXFLAGS_SAVE="$CXXFLAGS"
-CXXFLAGS="$INKSCAPE_CXX_DEPS_CFLAGS $CXXFLAGS"
-cxx11_required=unknown
-AC_COMPILE_IFELSE([AC_LANG_SOURCE([
-#include <glibmm.h>
-int main() {}
-])], [cxx11_required=no], [cxx11_required=unknown])
-if test "x$cxx11_required" = "xunknown"; then
-  CXXFLAGS="-std=c++11 $CXXFLAGS"
-  AC_COMPILE_IFELSE([AC_LANG_SOURCE([
-  #include <glibmm.h>
-  int main() {}
-  ])], [cxx11_required=yes], [cxx11_required=unknown])
-fi
-CXXFLAGS="$CXXFLAGS_SAVE"
-if test "x$cxx11_required" = "xunknown"; then
-  AC_MSG_RESULT([unknown])
-  AC_MSG_ERROR([cannot detect whether C++11 is required])
-fi
-if test "x$cxx11_required" = "xyes"; then
-  AC_MSG_RESULT([yes])
-  CXXFLAGS="-std=c++11 $CXXFLAGS"
-else
-  AC_MSG_RESULT([no])
-fi
 
 # Detect a working version of unordered containers.
 # First try looking for native support (C++11 feature)
