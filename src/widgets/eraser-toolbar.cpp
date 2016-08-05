@@ -37,7 +37,9 @@
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
 #include "widgets/ege-select-one-action.h"
-#include "widgets/ink-action.h"
+#include "ink-action.h"
+#include "ink-radio-action.h"
+#include "ink-toggle-action.h"
 #include "toolbox.h"
 #include "ui/icon-names.h"
 

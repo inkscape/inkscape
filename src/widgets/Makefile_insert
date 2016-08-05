@@ -50,6 +50,12 @@ ink_common_sources +=	\
 	widgets/ink-action.h		\
 	widgets/ink-comboboxentry-action.cpp	\
 	widgets/ink-comboboxentry-action.h	\
+	widgets/ink-radio-action.cpp       \
+	widgets/ink-radio-action.h         \
+	widgets/ink-toggle-action.cpp      \
+	widgets/ink-toggle-action.h        \
+	widgets/ink-tool-menu-action.cpp   \
+	widgets/ink-tool-menu-action.h     \
 	widgets/lpe-toolbar.cpp	\
 	widgets/lpe-toolbar.h	   \
 	widgets/measure-toolbar.cpp	\

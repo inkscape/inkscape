@@ -36,6 +36,9 @@ set(widgets_SRC
 	image-menu-item.c
 	ink-action.cpp
 	ink-comboboxentry-action.cpp
+	ink-radio-action.cpp
+	ink-toggle-action.cpp
+	ink-tool-menu-action.cpp
 	paint-selector.cpp
 	ruler.cpp
 	select-toolbar.cpp
@@ -92,6 +95,9 @@ set(widgets_SRC
 	image-menu-item.h
         ink-action.h
         ink-comboboxentry-action.h
+	ink-radio-action.h
+        ink-toggle-action.h
+        ink-tool-menu-action.h
 	paint-selector.h
 	ruler.h
 	select-toolbar.h

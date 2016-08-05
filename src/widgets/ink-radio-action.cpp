@@ -1,43 +1,38 @@
-#include "ink-action.h"
-#include "widgets/icon.h"
+#include "ink-radio-action.h"
 
-#include "widgets/image-menu-item.h"
+static void ink_radio_action_finalize( GObject* obj );
+static void ink_radio_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
+static void ink_radio_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
 
-#include <gtk/gtk.h>
+static GtkWidget* ink_radio_action_create_menu_item( GtkAction* action );
+static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action );
 
-static void ink_action_finalize( GObject* obj );
-static void ink_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
-static void ink_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
-
-static GtkWidget* ink_action_create_menu_item( GtkAction* action );
-static GtkWidget* ink_action_create_tool_item( GtkAction* action );
-
-struct _InkActionPrivate
+struct _InkRadioActionPrivate
 {
     gchar* iconId;
     Inkscape::IconSize iconSize;
 };
 
-#define INK_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), INK_ACTION_TYPE, InkActionPrivate ) )
+#define INK_RADIO_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), INK_RADIO_ACTION_TYPE, InkRadioActionPrivate ) )
 
-G_DEFINE_TYPE(InkAction, ink_action, GTK_TYPE_ACTION);
+G_DEFINE_TYPE(InkRadioAction, ink_radio_action, GTK_TYPE_RADIO_ACTION);
 
 enum {
     PROP_INK_ID = 1,
     PROP_INK_SIZE
 };
 
-static void ink_action_class_init( InkActionClass* klass )
+static void ink_radio_action_class_init( InkRadioActionClass* klass )
 {
     if ( klass ) {
         GObjectClass * objClass = G_OBJECT_CLASS( klass );
 
-        objClass->finalize = ink_action_finalize;
-        objClass->get_property = ink_action_get_property;
-        objClass->set_property = ink_action_set_property;
+        objClass->finalize = ink_radio_action_finalize;
+        objClass->get_property = ink_radio_action_get_property;
+        objClass->set_property = ink_radio_action_set_property;
 
-        klass->parent_class.create_menu_item = ink_action_create_menu_item;
-        klass->parent_class.create_tool_item = ink_action_create_tool_item;
+        klass->parent_class.parent_class.parent_class.create_menu_item = ink_radio_action_create_menu_item;
+        klass->parent_class.parent_class.parent_class.create_tool_item = ink_radio_action_create_tool_item;
         /*klass->parent_class.connect_proxy = connect_proxy;*/
         /*klass->parent_class.disconnect_proxy = disconnect_proxy;*/
 
@@ -59,49 +54,48 @@ static void ink_action_class_init( InkActionClass* klass )
                                                            (int)Inkscape::ICON_SIZE_SMALL_TOOLBAR,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
-        g_type_class_add_private( klass, sizeof(InkActionClass) );
+        g_type_class_add_private( klass, sizeof(InkRadioActionClass) );
     }
 }
 
-static void ink_action_init( InkAction* action )
+static void ink_radio_action_init( InkRadioAction* action )
 {
-    action->private_data = INK_ACTION_GET_PRIVATE( action );
+    action->private_data = INK_RADIO_ACTION_GET_PRIVATE( action );
     action->private_data->iconId = 0;
     action->private_data->iconSize = Inkscape::ICON_SIZE_SMALL_TOOLBAR;
 }
 
-static void ink_action_finalize( GObject* obj )
+static void ink_radio_action_finalize( GObject* obj )
 {
-    InkAction* action = INK_ACTION( obj );
+    InkRadioAction* action = INK_RADIO_ACTION( obj );
 
     g_free( action->private_data->iconId );
     g_free( action->private_data );
 
 }
 
-//Any strings passed in should already be localised
-InkAction* ink_action_new( const gchar *name,
+InkRadioAction* ink_radio_action_new( const gchar *name,
                            const gchar *label,
                            const gchar *tooltip,
                            const gchar *inkId,
                            Inkscape::IconSize size )
 {
-    GObject* obj = (GObject*)g_object_new( INK_ACTION_TYPE,
+    GObject* obj = (GObject*)g_object_new( INK_RADIO_ACTION_TYPE,
                                            "name", name,
                                            "label", label,
                                            "tooltip", tooltip,
                                            "iconId", inkId,
-                                           "iconSize", size,
+                                           "iconSize", Inkscape::getRegisteredIconSize(size),
                                            NULL );
 
-    InkAction* action = INK_ACTION( obj );
+    InkRadioAction* action = INK_RADIO_ACTION( obj );
 
     return action;
 }
 
-static void ink_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec )
+static void ink_radio_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec )
 {
-    InkAction* action = INK_ACTION( obj );
+    InkRadioAction* action = INK_RADIO_ACTION( obj );
     (void)action;
     switch ( propId ) {
         case PROP_INK_ID:
@@ -121,9 +115,9 @@ static void ink_action_get_property( GObject* obj, guint propId, GValue* value, 
     }
 }
 
-void ink_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec )
+void ink_radio_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec )
 {
-    InkAction* action = INK_ACTION( obj );
+    InkRadioAction* action = INK_RADIO_ACTION( obj );
     (void)action;
     switch ( propId ) {
         case PROP_INK_ID:
@@ -147,51 +141,26 @@ void ink_action_set_property( GObject* obj, guint propId, const GValue *value, G
     }
 }
 
-static GtkWidget* ink_action_create_menu_item( GtkAction* action )
+static GtkWidget* ink_radio_action_create_menu_item( GtkAction* action )
 {
-    InkAction* act = INK_ACTION( action );
-    GtkWidget* item = 0;
-
-    if ( act->private_data->iconId ) {
-        gchar* label = 0;
-        g_object_get( G_OBJECT(act), "label", &label, NULL );
-        item = image_menu_item_new_with_mnemonic( label );
-
-        GtkWidget* child = sp_icon_new( Inkscape::ICON_SIZE_MENU, act->private_data->iconId );
-        // TODO this work-around is until SPIcon will live properly inside of a popup menu
-        if ( SP_IS_ICON(child) ) {
-            SPIcon* icon = SP_ICON(child);
-            sp_icon_fetch_pixbuf( icon );
-            GdkPixbuf* target = icon->pb;
-            if ( target ) {
-                child = gtk_image_new_from_pixbuf( target );
-                gtk_widget_set_sensitive(child, gtk_action_is_sensitive(action));
-                gtk_widget_destroy( GTK_WIDGET(icon) );
-            }
-        }
-        gtk_widget_show_all( child );
-        image_menu_item_set_image( IMAGE_MENU_ITEM(item), child );
-
-        g_free( label );
-        label = 0;
-    } else {
-        item = GTK_ACTION_CLASS(ink_action_parent_class)->create_menu_item( action );
-    }
+    GtkWidget* item = GTK_RADIO_ACTION_CLASS(ink_radio_action_parent_class)->parent_class.parent_class.create_menu_item(action);
 
     return item;
 }
 
-static GtkWidget* ink_action_create_tool_item( GtkAction* action )
+static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action )
 {
-    InkAction* act = INK_ACTION( action );
-    GtkWidget* item = GTK_ACTION_CLASS(ink_action_parent_class)->create_tool_item(action);
+    InkRadioAction* act = INK_RADIO_ACTION( action );
+    GtkWidget* item = GTK_RADIO_ACTION_CLASS(ink_radio_action_parent_class)->parent_class.parent_class.create_tool_item(action);
 
     if ( act->private_data->iconId ) {
         if ( GTK_IS_TOOL_BUTTON(item) ) {
             GtkToolButton* button = GTK_TOOL_BUTTON(item);
 
             GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
-            gtk_tool_button_set_icon_widget( button, child );
+	    gtk_widget_set_hexpand(child, FALSE);
+	    gtk_widget_set_vexpand(child, FALSE);
+            gtk_tool_button_set_icon_widget(button, child);
         } else {
             // For now trigger a warning but don't do anything else
             GtkToolButton* button = GTK_TOOL_BUTTON(item);
@@ -204,7 +173,6 @@ static GtkWidget* ink_action_create_tool_item( GtkAction* action )
 
     return item;
 }
-
 /*
   Local Variables:
   mode:c++

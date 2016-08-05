@@ -43,6 +43,7 @@
 #include "../helper/action.h"
 #include "icon.h"
 #include "ink-action.h"
+#include "ink-toggle-action.h"
 #include "../inkscape.h"
 #include "ui/interface.h"
 #include "../shortcuts.h"

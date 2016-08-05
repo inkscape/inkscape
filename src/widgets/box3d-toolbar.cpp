@@ -37,7 +37,7 @@
 #include "document-undo.h"
 #include "document.h"
 #include "widgets/ege-adjustment-action.h"
-#include "widgets/ink-action.h"
+#include "widgets/ink-toggle-action.h"
 #include "inkscape.h"
 #include "persp3d.h"
 #include "toolbox.h"
