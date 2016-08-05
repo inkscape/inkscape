@@ -9966,7 +9966,8 @@ bool Make::parseFile()
                 return false;
                 }
             //more work than targets[tname]=target, but avoids default allocator
-            targets.insert(std::make_pair<String, Target>(tname, target));
+            auto pair = std::make_pair(tname, target); 
+            targets.insert(pair);
             }
         //######### none of the above
         else
