@@ -1,1 +1,0 @@
-forfiles /s /m *.obj /c "cmd /c copy /b @path +,,"

@@ -1,9 +1,0 @@
-All code files in this directory are *direct* copies of the files in
-libdepixelize's BZR repo.
-If you want to change the code, please change it in libdepixelize, then copy the
-files here.
-Otherwise, I will probably miss that you changed something in Inkscape's copy,
-and destroy your changes by copying libdepixelize's files over it during the
-next time I update Inkscape's copy of libdepixelize.
-
-libdepixelize's BZR repo = lp:libdepixelize

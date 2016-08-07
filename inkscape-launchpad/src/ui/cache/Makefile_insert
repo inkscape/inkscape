@@ -1,6 +1,0 @@
-## Makefile.am fragment sourced by src/Makefile.am.
-
-ink_common_sources +=	\
-	ui/cache/svg_preview_cache.h	\
-	ui/cache/svg_preview_cache.cpp
-
