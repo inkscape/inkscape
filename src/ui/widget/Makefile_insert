@@ -35,10 +35,6 @@ ink_common_sources +=	\
 	ui/widget/filter-effect-chooser.cpp \
 	ui/widget/font-variants.h      	\
 	ui/widget/font-variants.cpp     \
-	ui/widget/gimpspinscale.c	\
-	ui/widget/gimpspinscale.h       \
-	ui/widget/gimpcolorwheel.c \
-	ui/widget/gimpcolorwheel.h \
 	ui/widget/frame.cpp      \
 	ui/widget/frame.h        \
 	ui/widget/imageicon.cpp		\

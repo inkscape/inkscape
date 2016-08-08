@@ -70,8 +70,12 @@ ink_common_sources +=	\
 	widgets/pencil-toolbar.h	   \
 	widgets/rect-toolbar.cpp	\
 	widgets/rect-toolbar.h	   \
-	widgets/ruler.cpp		\
-	widgets/ruler.h			\
+	widgets/gimp/gimpspinscale.c	\
+	widgets/gimp/gimpspinscale.h       \
+	widgets/gimp/gimpcolorwheel.c \
+	widgets/gimp/gimpcolorwheel.h \
+	widgets/gimp/ruler.cpp		\
+	widgets/gimp/ruler.h			\
 	widgets/select-toolbar.cpp	\
 	widgets/select-toolbar.h	\
 	widgets/spray-toolbar.cpp		\
