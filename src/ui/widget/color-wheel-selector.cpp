@@ -11,7 +11,7 @@
 #include "ui/dialog-events.h"
 #include "ui/widget/color-scales.h"
 #include "ui/widget/color-slider.h"
-#include "ui/widget/gimpcolorwheel.h"
+#include "widgets/gimp/gimpcolorwheel.h"
 
 namespace Inkscape {
 namespace UI {

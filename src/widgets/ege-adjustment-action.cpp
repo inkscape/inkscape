@@ -47,7 +47,7 @@
 
 #include "icon-size.h"
 #include "widgets/ege-adjustment-action.h"
-#include "ui/widget/gimpspinscale.h"
+#include "gimp/gimpspinscale.h"
 #include "ui/icon-names.h"
 
 

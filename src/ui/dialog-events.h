@@ -12,6 +12,7 @@
 #ifndef SEEN_DIALOG_EVENTS_H
 #define SEEN_DIALOG_EVENTS_H
 
+#include <gtk/gtk.h>
  
 /*
  * event callback can only accept one argument, but we need two,

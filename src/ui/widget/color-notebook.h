@@ -20,7 +20,6 @@
 
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <gtkmm/grid.h>
-#include <gtk/gtk.h>
 #include <glib.h>
 
 #include "color.h"

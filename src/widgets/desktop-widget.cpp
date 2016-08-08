@@ -57,7 +57,7 @@
 
 // We're in the "widgets" directory, so no need to explicitly prefix these:
 #include "button.h"
-#include "ruler.h"
+#include "gimp/ruler.h"
 #include "spinbutton-events.h"
 #include "spw-utilities.h"
 #include "toolbox.h"

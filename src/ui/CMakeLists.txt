@@ -130,8 +130,6 @@ set(ui_SRC
 	widget/filter-effect-chooser.cpp
 	widget/font-variants.cpp
 	widget/frame.cpp
-	widget/gimpcolorwheel.c
-	widget/gimpspinscale.c
 	widget/highlight-picker.cpp
 	widget/imageicon.cpp
 	widget/imagetoggler.cpp
@@ -314,8 +312,6 @@ set(ui_SRC
 	widget/filter-effect-chooser.h
 	widget/font-variants.h
 	widget/frame.h
-	widget/gimpspinscale.h
-	widget/gimpcolorwheel.h
 	widget/highlight-picker.h
 	widget/insertordericon.h
 	widget/imageicon.h

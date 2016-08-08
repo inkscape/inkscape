@@ -11,7 +11,7 @@
 #include <glibmm/i18n.h>
 #include <glibmm/stringutils.h>
 
-#include "ui/widget/gimpspinscale.h"
+#include "widgets/gimp/gimpspinscale.h"
 
 namespace Inkscape {
 namespace UI {

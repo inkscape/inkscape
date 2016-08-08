@@ -8,7 +8,6 @@
 
 #include <gtkmm/adjustment.h>
 #include <glibmm/i18n.h>
-#include <gtk/gtk.h>
 
 #include "ui/dialog-events.h"
 #include "ui/widget/color-scales.h"

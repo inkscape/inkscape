@@ -5,7 +5,6 @@
 #include <gtkmm/adjustment.h>
 #include <glibmm/i18n.h>
 
-#include <gtk/gtk.h>
 #include <set>
 
 #include "ui/dialog-events.h"

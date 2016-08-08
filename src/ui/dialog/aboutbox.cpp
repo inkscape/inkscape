@@ -129,12 +129,13 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
     get_content_area()->pack_start(*manage(label), false, false);
     get_content_area()->pack_start(*manage(link), false, false);
 
-    Gtk::Requisition requisition;
-    gtk_widget_get_preferred_size(reinterpret_cast<GtkWidget*>(gobj()), &requisition, NULL);
+    Gtk::Requisition minimum_size;
+    Gtk::Requisition natural_size;
+    get_preferred_size(minimum_size, natural_size);
     
     // allow window to shrink
     set_size_request(0, 0);
-    set_default_size(requisition.width, requisition.height);
+    set_default_size(minimum_size.width, minimum_size.height);
 }
 
 
