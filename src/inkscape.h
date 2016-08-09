@@ -205,6 +205,9 @@ private:
     Application& operator=(Application const&); // no assign
     Application* operator&() const; // no pointer access
 
+    void add_icon_theme();
+    void add_style_sheet();
+
     Inkscape::XML::Document * _menus;
     std::map<SPDocument *, int> _document_set;
     std::map<SPDocument *, AppSelectionModel *> _selection_models;

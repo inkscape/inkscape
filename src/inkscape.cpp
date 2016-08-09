@@ -22,6 +22,10 @@
 
 #include <map>
 
+#include <glibmm/fileutils.h>
+
+#include <gtkmm/cssprovider.h>
+#include <gtkmm/icontheme.h>
 #include <gtkmm/messagedialog.h>
 #include "debug/simple-event.h"
 #include "debug/event-tracker.h"
@@ -57,6 +61,7 @@
 #include "inkscape.h"
 #include "io/sys.h"
 #include "message-stack.h"
+#include "path-prefix.h"
 #include "resource-manager.h"
 #include "ui/tools/tool-base.h"
 #include "ui/dialog/debug.h"
@@ -379,6 +384,103 @@ void Application::argv0(char const* argv)
     _argv0 = g_strdup(argv);
 }
 
+/**
+ * \brief Add our icon theme to the search path
+ */
+void
+Application::add_icon_theme()
+{
+    // Get list of the possible folders containing the theme
+    auto dataDirs = Glib::get_system_data_dirs();
+    dataDirs.insert(dataDirs.begin(), Glib::get_user_data_dir());
+
+    auto icon_theme = Gtk::IconTheme::get_default();
+
+    for (auto it : dataDirs)
+    {
+        std::vector<Glib::ustring> listing;
+        listing.push_back(it);
+        listing.push_back("inkscape");
+        listing.push_back("icons");
+        auto dir = Glib::build_filename(listing);
+        icon_theme->append_search_path(dir);
+    }
+
+    // Add our icon directory to the search path for icon theme lookups.
+    auto const usericondir = Inkscape::Application::profile_path("icons");
+    icon_theme->append_search_path(usericondir);
+    icon_theme->append_search_path(INKSCAPE_PIXMAPDIR);
+#ifdef INKSCAPE_THEMEDIR
+    icon_theme->append_search_path(INKSCAPE_THEMEDIR);
+    icon_theme->rescan_if_needed();
+#endif
+    g_free(usericondir);
+}
+
+/**
+ * \brief Add our CSS style sheets
+ */
+void
+Application::add_style_sheet()
+{
+    // Add style sheet (GTK3)
+    auto const screen = Gdk::Screen::get_default();
+
+    Glib::ustring inkscape_style = INKSCAPE_UIDIR;
+    inkscape_style += "/style.css";
+    // std::cout << "CSS Stylesheet Inkscape: " << inkscape_style << std::endl;
+
+    if (Glib::file_test(inkscape_style, Glib::FILE_TEST_EXISTS)) {
+      auto provider = Gtk::CssProvider::create();
+
+      // From 3.16, throws an error which we must catch.
+      try {
+          provider->load_from_path (inkscape_style);
+      }
+#if GTK_CHECK_VERSION(3,16,0)
+      // Gtk::CssProviderError not defined until 3.16.
+      catch (const Gtk::CssProviderError& ex)
+      {
+          std::cerr << "CSSProviderError::load_from_path(): failed to load: " << inkscape_style
+                    << "\n  (" << ex.what() << ")" << std::endl;
+      }
+#else
+      catch (...)
+      {}
+#endif
+
+      Gtk::StyleContext::add_provider_for_screen (screen, provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    } else {
+        std::cerr << "sp_main_gui: Cannot find default style file:\n  (" << inkscape_style
+                  << ")" << std::endl;
+    }
+
+    Glib::ustring user_style = Inkscape::Application::profile_path("ui/style.css");
+    // std::cout << "CSS Stylesheet User: " << user_style << std::endl;
+
+    if (Glib::file_test(user_style, Glib::FILE_TEST_EXISTS)) {
+      auto provider2 = Gtk::CssProvider::create();
+
+      // From 3.16, throws an error which we must catch.
+      try {
+          provider2->load_from_path (user_style);
+      }
+#if GTK_CHECK_VERSION(3,16,0)
+      // Gtk::CssProviderError not defined until 3.16.
+      catch (const Gtk::CssProviderError& ex)
+      {
+        std::cerr << "CSSProviderError::load_from_path(): failed to load: " << user_style
+                  << "\n  (" << ex.what() << ")" << std::endl;
+      }
+#else
+      catch (...)
+      {}
+#endif
+
+      Gtk::StyleContext::add_provider_for_screen (screen, provider2, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    }
+
+}
 /* \brief Constructor for the application.
  *  Creates a new Inkscape::Application.
  *
@@ -423,9 +525,12 @@ Application::Application(const char* argv, bool use_gui) :
     }
 
     if (use_gui) {
+        add_icon_theme();
+        add_style_sheet();
         load_menus();
         Inkscape::DeviceManager::getManager().loadConfig();
     }
+
     Inkscape::ResourceManager::getManager();
 
     /* set language for user interface according setting in preferences */
