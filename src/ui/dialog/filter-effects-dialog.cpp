@@ -84,9 +84,7 @@ static int input_count(const SPFilterPrimitive* prim)
         return 2;
     else if(SP_IS_FEMERGE(prim)) {
         // Return the number of feMergeNode connections plus an extra
-        int count = 1;
-        for(const SPObject* o = prim->firstChild(); o; o = o->next, ++count){};
-        return count;
+        return (int) (prim->children.size() + 1);
     }
     else
         return 1;
@@ -655,7 +653,7 @@ private:
     void select_svg_element(){
         Inkscape::Selection* sel = _desktop->getSelection();
         if (sel->isEmpty()) return;
-        Inkscape::XML::Node* node = sel->reprList()[0];
+        Inkscape::XML::Node* node = sel->xmlNodes().front();
         if (!node || !node->matchAttributeName("id")) return;
 
         std::ostringstream xlikhref;
@@ -1024,11 +1022,10 @@ public:
     // FuncNode can be in any order so we must search to find correct one.
     SPFeFuncNode* find_node(SPFeComponentTransfer* ct)
     {
-        SPObject* node = ct->children;
         SPFeFuncNode* funcNode = NULL;
         bool found = false;
-        for(;node;node=node->next){
-            funcNode = SP_FEFUNCNODE(node);
+        for(auto& node: ct->children) {
+            funcNode = SP_FEFUNCNODE(&node);
             if( funcNode->channel == _channel ) {
                 found = true;
                 break;
@@ -1192,7 +1189,7 @@ protected:
 
         _locked = true;
 
-        SPObject* child = o->children;
+        SPObject* child = o->firstChild();
 
         if(SP_IS_FEDISTANTLIGHT(child))
             _light_source.set_active(0);
@@ -1217,7 +1214,7 @@ private:
         if(prim) {
             _locked = true;
 
-            SPObject* child = prim->children;
+            SPObject* child = prim->firstChild();
             const int ls = _light_source.get_active_row_number();
             // Check if the light source type has changed
             if(!(ls == -1 && !child) &&
@@ -1251,8 +1248,8 @@ private:
         _light_box.show_all();
 
         SPFilterPrimitive* prim = _dialog._primitive_list.get_selected();
-        if(prim && prim->children)
-            _settings.show_and_update(_light_source.get_active_data()->id, prim->children);
+        if(prim && prim->firstChild())
+            _settings.show_and_update(_light_source.get_active_data()->id, prim->firstChild());
     }
 
     FilterEffectsDialog& _dialog;
@@ -1438,8 +1435,8 @@ void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
     }
 
     std::set<SPObject*> used;
-    std::vector<SPItem*> itemlist=sel->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; ++i) {
+    auto itemlist= sel->items();
+    for(auto i=itemlist.begin(); itemlist.end() != i; ++i) {
         SPObject *obj = *i;
         SPStyle *style = obj->style;
         if (!style || !SP_IS_ITEM(obj)) {
@@ -1519,8 +1516,8 @@ void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustri
         if((*iter)[_columns.sel] == 1)
             filter = 0;
 
-        std::vector<SPItem*> itemlist=sel->itemList();
-        for(std::vector<SPItem*>::const_iterator i=itemlist.begin(); itemlist.end() != i; ++i) {
+        auto itemlist= sel->items();
+        for(auto i=itemlist.begin(); itemlist.end() != i; ++i) {
             SPItem * item = *i;
             SPStyle *style = item->style;
             g_assert(style != NULL);
@@ -1808,26 +1805,25 @@ void FilterEffectsDialog::PrimitiveList::update()
         bool active_found = false;
         _dialog._primitive_box->set_sensitive(true);
         _dialog.update_filter_general_settings_view();
-        for(SPObject *prim_obj = f->children;
-                prim_obj && SP_IS_FILTER_PRIMITIVE(prim_obj);
-                prim_obj = prim_obj->next) {
-            SPFilterPrimitive *prim = SP_FILTER_PRIMITIVE(prim_obj);
-            if(prim) {
-                Gtk::TreeModel::Row row = *_model->append();
-                row[_columns.primitive] = prim;
+        for(auto& prim_obj: f->children) {
+            SPFilterPrimitive *prim = SP_FILTER_PRIMITIVE(&prim_obj);
+            if(!prim) {
+                break;
+            }
+            Gtk::TreeModel::Row row = *_model->append();
+            row[_columns.primitive] = prim;
 
-                //XML Tree being used directly here while it shouldn't be.
-                row[_columns.type_id] = FPConverter.get_id_from_key(prim->getRepr()->name());
-                row[_columns.type] = _(FPConverter.get_label(row[_columns.type_id]).c_str());
-                
-                if (prim->getId()) {
-                    row[_columns.id] =  Glib::ustring(prim->getId());
-                }
-                
-                if(prim == active_prim) {
-                    get_selection()->select(row);
-                    active_found = true;
-                }
+            //XML Tree being used directly here while it shouldn't be.
+            row[_columns.type_id] = FPConverter.get_id_from_key(prim->getRepr()->name());
+            row[_columns.type] = _(FPConverter.get_label(row[_columns.type_id]).c_str());
+
+            if (prim->getId()) {
+                row[_columns.id] =  Glib::ustring(prim->getId());
+            }
+
+            if(prim == active_prim) {
+                get_selection()->select(row);
+                active_found = true;
             }
         }
 
@@ -2214,11 +2210,12 @@ const Gtk::TreeIter FilterEffectsDialog::PrimitiveList::find_result(const Gtk::T
     if(SP_IS_FEMERGE(prim)) {
         int c = 0;
         bool found = false;
-        for(const SPObject* o = prim->firstChild(); o; o = o->next, ++c) {
-            if(c == attr && SP_IS_FEMERGENODE(o)) {
-                image = SP_FEMERGENODE(o)->input;
+        for (auto& o: prim->children) {
+            if(c == attr && SP_IS_FEMERGENODE(&o)) {
+                image = SP_FEMERGENODE(&o)->input;
                 found = true;
             }
+            ++c;
         }
         if(!found)
             return target;
@@ -2405,21 +2402,23 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
             if(SP_IS_FEMERGE(prim)) {
                 int c = 1;
                 bool handled = false;
-                for(SPObject* o = prim->firstChild(); o && !handled; o = o->next, ++c) {
-                    if(c == _in_drag && SP_IS_FEMERGENODE(o)) {
+                for (auto& o: prim->children) {
+                    if(c == _in_drag && SP_IS_FEMERGENODE(&o)) {
                         // If input is null, delete it
                         if(!in_val) {
 
                             //XML Tree being used directly here while it shouldn't be.
-                            sp_repr_unparent(o->getRepr());
+                            sp_repr_unparent(o.getRepr());
                             DocumentUndo::done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS,
                                                _("Remove merge node"));
                             (*get_selection()->get_selected())[_columns.primitive] = prim;
+                        } else {
+                            _dialog.set_attr(&o, SP_ATTR_IN, in_val);
                         }
-                        else
-                            _dialog.set_attr(o, SP_ATTR_IN, in_val);
                         handled = true;
+                        break;
                     }
+                    ++c;
                 }
                 // Add new input?
                 if(!handled && c == _in_drag && in_val) {
@@ -2938,7 +2937,7 @@ void FilterEffectsDialog::set_filternode_attr(const AttrWidget* input)
 
 void FilterEffectsDialog::set_child_attr_direct(const AttrWidget* input)
 {
-    set_attr(_primitive_list.get_selected()->children, input->get_attribute(), input->get_as_attribute().c_str());
+    set_attr(_primitive_list.get_selected()->firstChild(), input->get_attribute(), input->get_as_attribute().c_str());
 }
 
 void FilterEffectsDialog::set_attr(SPObject* o, const SPAttributeEnum attr, const gchar* val)

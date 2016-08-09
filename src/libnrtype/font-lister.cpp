@@ -298,8 +298,8 @@ void FontLister::update_font_list_recursive(SPObject *r, std::list<Glib::ustring
         l->push_back(Glib::ustring(font_family));
     }
 
-    for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
-        update_font_list_recursive(child, l);
+    for (auto& child: r->children) {
+        update_font_list_recursive(&child, l);
     }
 }
 

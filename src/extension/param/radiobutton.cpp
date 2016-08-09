@@ -308,7 +308,7 @@ Gtk::Widget * ParamRadioButton::get_widget(SPDocument * doc, Inkscape::XML::Node
     auto vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
     vbox->set_homogeneous(false);
 
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_text, Gtk::ALIGN_START, Gtk::ALIGN_START));
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START, Gtk::ALIGN_START));
     label->show();
     hbox->pack_start(*label, false, false, _indent);
 

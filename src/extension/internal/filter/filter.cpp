@@ -125,7 +125,7 @@ void Filter::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::Vie
     Inkscape::Selection * selection = ((SPDesktop *)document)->selection;
 
     // TODO need to properly refcount the items, at least
-    std::vector<SPItem*> items(selection->itemList());
+    std::vector<SPItem*> items(selection->items().begin(), selection->items().end());
 
 	Inkscape::XML::Document * xmldoc = document->doc()->getReprDoc();
 	Inkscape::XML::Node * defsrepr = document->doc()->getDefs()->getRepr();

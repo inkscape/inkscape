@@ -54,9 +54,9 @@ void SPDefs::modified(unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList *l = NULL;
-    for ( SPObject *child = this->firstChild() ; child; child = child->getNext() ) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
     }
 
     l = g_slist_reverse(l);
@@ -79,8 +79,8 @@ Inkscape::XML::Node* SPDefs::write(Inkscape::XML::Document *xml_doc, Inkscape::X
         }
 
         GSList *l = NULL;
-        for ( SPObject *child = this->firstChild() ; child; child = child->getNext() ) {
-            Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
+        for (auto& child: children) {
+            Inkscape::XML::Node *crepr = child.updateRepr(xml_doc, NULL, flags);
             if (crepr) {
                 l = g_slist_prepend(l, crepr);
             }
@@ -93,8 +93,8 @@ Inkscape::XML::Node* SPDefs::write(Inkscape::XML::Document *xml_doc, Inkscape::X
         }
 
     } else {
-        for ( SPObject *child = this->firstChild() ; child; child = child->getNext() ) {
-            child->updateRepr(flags);
+        for (auto& child: children) {
+            child.updateRepr(flags);
         }
     }
 

@@ -74,10 +74,11 @@ bool URIReference::_acceptObject(SPObject *obj) const
         std::vector<int> positions;
         while (owner->cloned) {
             int position = 0;
-            SPObject *c = owner->parent->firstChild();
-            while (c != owner && dynamic_cast<SPObject *>(c)) {
+            for (auto &child: owner->parent->children) {
+                if(&child == owner) {
+                    break;
+                }
                 position++;
-                c = c->next;
             }
             positions.push_back(position);
             owner = owner->parent;
@@ -90,7 +91,7 @@ bool URIReference::_acceptObject(SPObject *obj) const
             g_warning("cloned object with no known type\n");
             return false;
         }
-        for (int i = positions.size() - 2; i >= 0; i--)
+        for (int i = (int) (positions.size() - 2); i >= 0; i--)
             owner = owner->childList(false)[positions[i]];
     }
     // once we have the "original" object (hopefully) we look at who is referencing it

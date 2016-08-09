@@ -117,8 +117,8 @@ void gr_apply_gradient(Inkscape::Selection *selection, GrDrag *drag, SPGradient 
     }
 
    // If no drag or no dragger selected, act on selection
-    std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    auto itemlist= selection->items();
+    for(auto i=itemlist.begin();i!=itemlist.end();++i){
        gr_apply_gradient_to_item(*i, gr, initialType, initialMode, initialMode);
    }
 }
@@ -217,8 +217,8 @@ void gr_get_dt_selected_gradient(Inkscape::Selection *selection, SPGradient *&gr
 {
     SPGradient *gradient = 0;
 
-    std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    auto itemlist= selection->items();
+    for(auto i=itemlist.begin();i!=itemlist.end();++i){
         SPItem *item = *i;// get the items gradient, not the getVector() version
          SPStyle *style = item->style;
          SPPaintServer *server = 0;
@@ -285,8 +285,8 @@ void gr_read_selection( Inkscape::Selection *selection,
     }
 
    // If no selected dragger, read desktop selection
-    std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    auto itemlist= selection->items();
+    for(auto i=itemlist.begin();i!=itemlist.end();++i){
         SPItem *item = *i;
         SPStyle *style = item->style;
 
@@ -721,9 +721,9 @@ static void select_stop_by_drag(GtkWidget *combo_box, SPGradient *gradient, Tool
 static void select_stop_in_list( GtkWidget *combo_box, SPGradient *gradient, SPStop *new_stop, GtkWidget *data, gboolean block)
 {
     int i = 0;
-    for ( SPObject *ochild = gradient->firstChild() ; ochild ; ochild = ochild->getNext() ) {
-        if (SP_IS_STOP(ochild)) {
-            if (ochild == new_stop) {
+    for (auto& ochild: gradient->children) {
+        if (SP_IS_STOP(&ochild)) {
+            if (&ochild == new_stop) {
                 blocked = block;
                 gtk_combo_box_set_active(GTK_COMBO_BOX(combo_box) , i);
                 gr_stop_set_offset(GTK_COMBO_BOX(combo_box), data);
@@ -766,9 +766,9 @@ static gboolean update_stop_list( GtkWidget *stop_combo, SPGradient *gradient, S
     /* Populate the combobox store */
     std::vector<SPObject *> sl;
     if ( gradient->hasStops() ) {
-        for ( SPObject *ochild = gradient->firstChild() ; ochild ; ochild = ochild->getNext() ) {
-            if (SP_IS_STOP(ochild)) {
-                sl.push_back(ochild);
+        for (auto& ochild: gradient->children) {
+            if (SP_IS_STOP(&ochild)) {
+                sl.push_back(&ochild);
             }
         }
     }

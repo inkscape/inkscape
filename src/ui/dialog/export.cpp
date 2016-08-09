@@ -543,7 +543,7 @@ void Export::onBatchClicked ()
 
 void Export::updateCheckbuttons ()
 {
-    gint num = SP_ACTIVE_DESKTOP->getSelection()->itemList().size();
+    gint num = (gint) boost::distance(SP_ACTIVE_DESKTOP->getSelection()->items());
     if (num >= 2) {
         batch_export.set_sensitive(true);
         batch_export.set_label(g_strdup_printf (ngettext("B_atch export %d selected object","B_atch export %d selected objects",num), num));
@@ -749,14 +749,14 @@ void Export::onAreaToggled ()
         case SELECTION_SELECTION:
             if ((SP_ACTIVE_DESKTOP->getSelection())->isEmpty() == false) {
 
-                sp_selection_get_export_hints (SP_ACTIVE_DESKTOP->getSelection(), filename, &xdpi, &ydpi);
+                sp_object_set_get_export_hints(SP_ACTIVE_DESKTOP->getSelection(), filename, &xdpi, &ydpi);
 
                 /* If we still don't have a filename -- let's build
                    one that's nice */
                 if (filename.empty()) {
                     const gchar * id = "object";
-                    const std::vector<XML::Node*> reprlst = SP_ACTIVE_DESKTOP->getSelection()->reprList();
-                    for(std::vector<XML::Node*>::const_iterator i=reprlst.begin(); reprlst.end() != i; ++i) {
+                    auto reprlst = SP_ACTIVE_DESKTOP->getSelection()->xmlNodes();
+                    for(auto i=reprlst.begin(); reprlst.end() != i; ++i) {
                         Inkscape::XML::Node * repr = *i;
                         if (repr->attribute("id")) {
                             id = repr->attribute("id");
@@ -946,7 +946,7 @@ void Export::onExport ()
     if (batch_export.get_active ()) {
         // Batch export of selected objects
 
-        gint num = (desktop->getSelection()->itemList()).size();
+        gint num = (gint) boost::distance(desktop->getSelection()->items());
         gint n = 0;
 
         if (num < 1) {
@@ -960,8 +960,8 @@ void Export::onExport ()
 
         gint export_count = 0;
 
-        std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
-        for(std::vector<SPItem*>::const_iterator i = itemlist.begin();i!=itemlist.end() && !interrupted ;++i){
+        auto itemlist= desktop->getSelection()->items();
+        for(auto i = itemlist.begin();i!=itemlist.end() && !interrupted ;++i){
             SPItem *item = *i;
 
             prog_dlg->set_data("current", GINT_TO_POINTER(n));
@@ -1001,12 +1001,13 @@ void Export::onExport ()
                     MessageCleaner msgFlashCleanup(desktop->messageStack()->flashF(Inkscape::IMMEDIATE_MESSAGE,
                                                    _("Exporting file <b>%s</b>..."), safeFile), desktop);
                     std::vector<SPItem*> x;
+                    std::vector<SPItem*> selected(desktop->getSelection()->items().begin(), desktop->getSelection()->items().end());
                     if (!sp_export_png_file (doc, path.c_str(),
                                              *area, width, height, dpi, dpi,
                                              nv->pagecolor,
                                              onProgressCallback, (void*)prog_dlg,
                                              TRUE,  // overwrite without asking
-                                             hide ? (desktop->getSelection()->itemList()) : x
+                                             hide ? selected : x
                                             )) {
                         gchar * error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
 
@@ -1091,12 +1092,13 @@ void Export::onExport ()
 
         /* Do export */
         std::vector<SPItem*> x;
+        std::vector<SPItem*> selected(desktop->getSelection()->items().begin(), desktop->getSelection()->items().end());
         ExportResult status = sp_export_png_file(desktop->getDocument(), path.c_str(),
                               Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
                               nv->pagecolor,
                               onProgressCallback, (void*)prog_dlg,
                               FALSE,
-                              hide ? (desktop->getSelection()->itemList()) : x
+                              hide ? selected : x
                                                 );
         if (status == EXPORT_ERROR) {
             gchar * safeFile = Inkscape::IO::sanitizeString(path.c_str());
@@ -1162,15 +1164,14 @@ void Export::onExport ()
             break;
         }
         case SELECTION_SELECTION: {
-        	std::vector<XML::Node*> reprlst;
             SPDocument * doc = SP_ACTIVE_DOCUMENT;
             bool modified = false;
 
             bool saved = DocumentUndo::getUndoSensitive(doc);
             DocumentUndo::setUndoSensitive(doc, false);
-            reprlst = desktop->getSelection()->reprList();
+            auto reprlst = desktop->getSelection()->xmlNodes();
 
-            for(std::vector<Inkscape::XML::Node*>::const_iterator i=reprlst.begin(); reprlst.end() != i; ++i) {
+            for(auto i=reprlst.begin(); reprlst.end() != i; ++i) {
                 Inkscape::XML::Node * repr = *i;
                 const gchar * temp_string;
                 Glib::ustring dir = Glib::path_get_dirname(filename.c_str());

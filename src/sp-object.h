@@ -6,8 +6,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
+ *   Adrian Boguszewski
  *
- * Copyright (C) 1999-2002 authors
+ * Copyright (C) 1999-2016 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -53,6 +54,7 @@ class SPObject;
 #include <sigc++/functors/slot.h>
 #include <sigc++/signal.h>
 #include <vector>
+#include <boost/intrusive/list.hpp>
 
 #include "version.h"
 #include "util/forward-pointer-iterator.h"
@@ -206,9 +208,6 @@ public:
     unsigned int _total_hrefcount; /* our hrefcount + total descendants */
     SPDocument *document; /* Document we are part of */
     SPObject *parent; /* Our parent (only one allowed) */
-    SPObject *children; /* Our children */
-    SPObject *_last_child; /* Remembered last child */
-    SPObject *next; /* Next object in linked list */
 
 private:
     SPObject(const SPObject&);
@@ -216,6 +215,7 @@ private:
 
     char *id; /* Our very own unique id */
     Inkscape::XML::Node *repr; /* Our xml representation */
+
 public:
     int refCount;
     std::list<SPObject*> hrefList;
@@ -279,17 +279,9 @@ public:
             return object->parent;
         }
     };
-    /// Switch containing next() method.
-    struct SiblingIteratorStrategy {
-        static SPObject const *next(SPObject const *object) {
-            return object->next;
-        }
-    };
 
     typedef Inkscape::Util::ForwardPointerIterator<SPObject, ParentIteratorStrategy> ParentIterator;
     typedef Inkscape::Util::ForwardPointerIterator<SPObject const, ParentIteratorStrategy> ConstParentIterator;
-    typedef Inkscape::Util::ForwardPointerIterator<SPObject, SiblingIteratorStrategy> SiblingIterator;
-    typedef Inkscape::Util::ForwardPointerIterator<SPObject const, SiblingIteratorStrategy> ConstSiblingIterator;
 
     bool isSiblingOf(SPObject const *object) const {
         if (object == NULL) return false;
@@ -306,24 +298,21 @@ public:
      */
     SPObject const *nearestCommonAncestor(SPObject const *object) const;
 
-    /* A non-const version can be similarly constructed if you want one.
-     * (Don't just cast away the constness, which would be ill-formed.) */
-    SPObject *getNext() {return next;}
-
-    SPObject const *getNext() const {return next;}
+    /* Returns next object in sibling list or NULL. */
+    SPObject *getNext();
 
     /**
      * Returns previous object in sibling list or NULL.
      */
     SPObject *getPrev();
 
-    bool hasChildren() const { return ( children != NULL ); }
+    bool hasChildren() const { return ( children.size() > 0 ); }
 
-    SPObject *firstChild() { return children; }
-    SPObject const *firstChild() const { return children; }
+    SPObject *firstChild() { return children.empty() ? nullptr : &children.front(); }
+    SPObject const *firstChild() const { return children.empty() ? nullptr : &children.front(); }
 
-    SPObject *lastChild() { return _last_child; }
-    SPObject const *lastChild() const { return _last_child; }
+    SPObject *lastChild() { return children.empty() ? nullptr : &children.back(); }
+    SPObject const *lastChild() const { return children.empty() ? nullptr : &children.back(); }
 
     enum Action { ActionGeneral, ActionBBox, ActionUpdate, ActionShow };
 
@@ -681,9 +670,9 @@ public:
     void attach(SPObject *object, SPObject *prev);
 
     /**
-     * In list of object's siblings, move object behind prev.
+     * In list of object's children, move object behind prev.
      */
-    void reorder(SPObject *prev);
+    void reorder(SPObject* obj, SPObject *prev);
 
     /**
      * Remove object from parent's children, release and unref it.
@@ -858,7 +847,17 @@ protected:
 
 	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 
+    typedef boost::intrusive::list_member_hook<> ListHook;
+    ListHook _child_hook;
 public:
+    typedef boost::intrusive::list<
+            SPObject,
+            boost::intrusive::member_hook<
+                    SPObject,
+                    ListHook,
+                    &SPObject::_child_hook
+            >> ChildrenList;
+    ChildrenList children;
 	virtual void read_content();
 
     void recursivePrintTree(unsigned level = 0);  // For debugging

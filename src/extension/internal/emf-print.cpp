@@ -1042,8 +1042,12 @@ void  PrintEmf::do_clip_if_present(SPStyle const *style){
                 /* find the clipping path */
                 Geom::PathVector combined_pathvector;
                 Geom::Affine tfc;   // clipping transform, generally not the same as item transform
-                for(item = SP_ITEM(scp->firstChild()); item; item=SP_ITEM(item->getNext())){
-                    if (SP_IS_GROUP(item)) {      // not implemented 
+                for (auto& child: scp->children) {
+                    item = SP_ITEM(&child);
+                    if (!item) {
+                        break;
+                    }
+                    if (SP_IS_GROUP(item)) {      // not implemented
                         // return sp_group_render(item);
                         combined_pathvector = merge_PathVector_with_group(combined_pathvector, item, tfc);
                     } else if (SP_IS_SHAPE(item)) {                
@@ -1081,7 +1085,11 @@ Geom::PathVector PrintEmf::merge_PathVector_with_group(Geom::PathVector const &c
     new_combined_pathvector = combined_pathvector;
     SPGroup *group = SP_GROUP(item);
     Geom::Affine tfc = item->transform * transform;
-    for(SPItem *item = SP_ITEM(group->firstChild()); item; item=SP_ITEM(item->getNext())){
+    for (auto& child: group->children) {
+        item = SP_ITEM(&child);
+        if (!item) {
+            break;
+        }
         if (SP_IS_GROUP(item)) {
             new_combined_pathvector = merge_PathVector_with_group(new_combined_pathvector, item, tfc); // could be endlessly recursive on a badly formed SVG
         } else if (SP_IS_SHAPE(item)) {                

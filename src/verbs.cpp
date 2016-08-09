@@ -1517,7 +1517,7 @@ void ObjectVerb::perform( SPAction *action, void *data)
             sp_selection_rotate_90(dt, true);
             break;
         case SP_VERB_OBJECT_FLATTEN:
-            sp_selection_remove_transform(dt);
+            sp_object_set_remove_transform(dt);
             break;
         case SP_VERB_OBJECT_FLOW_TEXT:
             text_flow_into_shape();
@@ -1529,12 +1529,12 @@ void ObjectVerb::perform( SPAction *action, void *data)
             flowtext_to_text();
             break;
         case SP_VERB_OBJECT_FLIP_HORIZONTAL:
-            sp_selection_scale_relative(sel, center, Geom::Scale(-1.0, 1.0));
+            sp_object_set_scale_relative(sel, center, Geom::Scale(-1.0, 1.0));
             DocumentUndo::done(dt->getDocument(), SP_VERB_OBJECT_FLIP_HORIZONTAL,
                                _("Flip horizontally"));
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
-            sp_selection_scale_relative(sel, center, Geom::Scale(1.0, -1.0));
+            sp_object_set_scale_relative(sel, center, Geom::Scale(1.0, -1.0));
             DocumentUndo::done(dt->getDocument(), SP_VERB_OBJECT_FLIP_VERTICAL,
                                _("Flip vertically"));
             break;

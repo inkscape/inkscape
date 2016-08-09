@@ -921,10 +921,10 @@ void CalligraphicTool::set_to_accumulated(bool unionize, bool subtract) {
 
         if (unionize) {
             desktop->getSelection()->add(this->repr);
-            sp_selected_path_union_skip_undo(desktop->getSelection(), desktop);
+            sp_selected_path_union_skip_undo(desktop->getSelection());
         } else if (subtract) {
             desktop->getSelection()->add(this->repr);
-            sp_selected_path_diff_skip_undo(desktop->getSelection(), desktop);
+            sp_selected_path_diff_skip_undo(desktop->getSelection());
         } else {
             if (this->keep_selected) {
                 desktop->getSelection()->set(this->repr);

@@ -185,9 +185,9 @@ find_references(SPObject *elem, refmap_type &refmap)
     }
     
     // recurse
-    for (SPObject *child = elem->firstChild(); child; child = child->getNext() )
+    for (auto& child: elem->children)
     {
-        find_references(child, refmap);
+        find_references(&child, refmap);
     }
 }
 
@@ -240,9 +240,9 @@ change_clashing_ids(SPDocument *imported_doc, SPDocument *current_doc,
 
 
     // recurse
-    for (SPObject *child = elem->firstChild(); child; child = child->getNext() )
+    for (auto& child: elem->children)
     {
-        change_clashing_ids(imported_doc, current_doc, child, refmap, id_changes);
+        change_clashing_ids(imported_doc, current_doc, &child, refmap, id_changes);
     }
 }
 

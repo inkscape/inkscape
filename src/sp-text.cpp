@@ -150,9 +150,9 @@ void SPText::update(SPCtx *ctx, guint flags) {
     // Create temporary list of children
     GSList *l = NULL;
 
-    for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child, this);
-        l = g_slist_prepend (l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child, this);
+        l = g_slist_prepend (l, &child);
     }
 
     l = g_slist_reverse (l);
@@ -230,9 +230,9 @@ void SPText::modified(guint flags) {
     // Create temporary list of children
     GSList *l = NULL;
 
-    for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child, this);
-        l = g_slist_prepend (l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child, this);
+        l = g_slist_prepend (l, &child);
     }
 
     l = g_slist_reverse (l);
@@ -257,17 +257,17 @@ Inkscape::XML::Node *SPText::write(Inkscape::XML::Document *xml_doc, Inkscape::X
 
         GSList *l = NULL;
 
-        for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
+        for (auto& child: children) {
+            if (SP_IS_TITLE(&child) || SP_IS_DESC(&child)) {
                 continue;
             }
 
             Inkscape::XML::Node *crepr = NULL;
 
-            if (SP_IS_STRING(child)) {
-                crepr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
+            if (SP_IS_STRING(&child)) {
+                crepr = xml_doc->createTextNode(SP_STRING(&child)->string.c_str());
             } else {
-                crepr = child->updateRepr(xml_doc, NULL, flags);
+                crepr = child.updateRepr(xml_doc, NULL, flags);
             }
 
             if (crepr) {
@@ -281,15 +281,15 @@ Inkscape::XML::Node *SPText::write(Inkscape::XML::Document *xml_doc, Inkscape::X
             l = g_slist_remove (l, l->data);
         }
     } else {
-        for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) {
+        for (auto& child: children) {
+            if (SP_IS_TITLE(&child) || SP_IS_DESC(&child)) {
                 continue;
             }
 
-            if (SP_IS_STRING(child)) {
-                child->getRepr()->setContent(SP_STRING(child)->string.c_str());
+            if (SP_IS_STRING(&child)) {
+                child.getRepr()->setContent(SP_STRING(&child)->string.c_str());
             } else {
-                child->updateRepr(flags);
+                child.updateRepr(flags);
             }
         }
     }
@@ -601,16 +601,16 @@ unsigned SPText::_buildLayoutInput(SPObject *root, Inkscape::Text::Layout::Optio
         }
     }
 
-    for (SPObject *child = root->firstChild() ; child ; child = child->getNext() ) {
-        SPString *str = dynamic_cast<SPString *>(child);
+    for (auto& child: root->children) {
+        SPString *str = dynamic_cast<SPString *>(&child);
         if (str) {
             Glib::ustring const &string = str->string;
             // std::cout << "  Appending: >" << string << "<" << std::endl;
-            layout.appendText(string, root->style, child, &optional_attrs, child_attrs_offset + length);
+            layout.appendText(string, root->style, &child, &optional_attrs, child_attrs_offset + length);
             length += string.length();
-        } else if (!sp_repr_is_meta_element(child->getRepr())) {
+        } else if (!sp_repr_is_meta_element(child.getRepr())) {
             /*      ^^^^ XML Tree being directly used here while it shouldn't be.*/
-            length += _buildLayoutInput(child, optional_attrs, child_attrs_offset + length, in_textpath);
+            length += _buildLayoutInput(&child, optional_attrs, child_attrs_offset + length, in_textpath);
         }
     }
 
@@ -623,9 +623,9 @@ void SPText::rebuildLayout()
     Inkscape::Text::Layout::OptionalTextTagAttrs optional_attrs;
     _buildLayoutInput(this, optional_attrs, 0, false);
     layout.calculateFlow();
-    for (SPObject *child = firstChild() ; child ; child = child->getNext() ) {
-        if (SP_IS_TEXTPATH(child)) {
-            SPTextPath const *textpath = SP_TEXTPATH(child);
+    for (auto& child: children) {
+        if (SP_IS_TEXTPATH(&child)) {
+            SPTextPath const *textpath = SP_TEXTPATH(&child);
             if (textpath->originalPath != NULL) {
                 //g_print("%s", layout.dumpAsText().c_str());
                 layout.fitToPathAlign(textpath->startOffset, *textpath->originalPath);
@@ -635,9 +635,9 @@ void SPText::rebuildLayout()
     //g_print("%s", layout.dumpAsText().c_str());
 
     // set the x,y attributes on role:line spans
-    for (SPObject *child = firstChild() ; child ; child = child->getNext() ) {
-        if (SP_IS_TSPAN(child)) {
-            SPTSpan *tspan = SP_TSPAN(child);
+    for (auto& child: children) {
+        if (SP_IS_TSPAN(&child)) {
+            SPTSpan *tspan = SP_TSPAN(&child);
             if ( (tspan->role != SP_TSPAN_ROLE_UNSPECIFIED)
                  && tspan->attributes.singleXYCoordinates() ) {
                 Inkscape::Text::Layout::iterator iter = layout.sourceToIterator(tspan);
@@ -671,9 +671,9 @@ void SPText::_adjustFontsizeRecursive(SPItem *item, double ex, bool is_root)
         item->updateRepr();
     }
 
-    for (SPObject *o = item->children; o != NULL; o = o->next) {
-        if (SP_IS_ITEM(o))
-            _adjustFontsizeRecursive(SP_ITEM(o), ex, false);
+    for(auto& o: item->children) {
+        if (SP_IS_ITEM(&o))
+            _adjustFontsizeRecursive(SP_ITEM(&o), ex, false);
     }
 }
 
@@ -690,9 +690,9 @@ void SPText::_adjustCoordsRecursive(SPItem *item, Geom::Affine const &m, double 
         SP_TREF(item)->attributes.transform(m, ex, ex, is_root);
     }
 
-    for (SPObject *o = item->children; o != NULL; o = o->next) {
-        if (SP_IS_ITEM(o))
-            _adjustCoordsRecursive(SP_ITEM(o), m, ex, false);
+    for(auto& o: item->children) {
+        if (SP_IS_ITEM(&o))
+            _adjustCoordsRecursive(SP_ITEM(&o), m, ex, false);
     }
 }
 

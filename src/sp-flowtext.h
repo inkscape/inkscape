@@ -8,6 +8,7 @@
 
 #include "libnrtype/Layout-TNG.h"
 #include "sp-item.h"
+#include "desktop.h"
 
 #define SP_FLOWTEXT(obj) (dynamic_cast<SPFlowtext*>((SPObject*)obj))
 #define SP_IS_FLOWTEXT(obj) (dynamic_cast<const SPFlowtext*>((SPObject*)obj) != NULL)

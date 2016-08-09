@@ -366,8 +366,8 @@ void PixelArtDialogImpl::vectorize()
         return;
     }
 
-    std::vector<SPItem*> const items = desktop->selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=items.begin(); i!=items.end();++i){
+    auto items = desktop->selection->items();
+    for(auto i=items.begin(); i!=items.end();++i){
         if ( !SP_IS_IMAGE(*i) )
             continue;
 

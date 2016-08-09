@@ -544,7 +544,7 @@ void Transformation::updatePageTransform(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
         if (_check_replace_matrix.get_active()) {
-            Geom::Affine current (selection->itemList()[0]->transform); // take from the first item in selection
+            Geom::Affine current (selection->items().front()->transform); // take from the first item in selection
 
             Geom::Affine new_displayed = current;
 
@@ -617,19 +617,19 @@ void Transformation::applyPageMove(Inkscape::Selection *selection)
     if (!prefs->getBool("/dialogs/transformation/applyseparately")) {
         // move selection as a whole
         if (_check_move_relative.get_active()) {
-            sp_selection_move_relative(selection, x, y);
+            sp_object_set_move_relative(selection, x, y);
         } else {
             Geom::OptRect bbox = selection->preferredBounds();
             if (bbox) {
-                sp_selection_move_relative(selection,
-                                           x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
+                sp_object_set_move_relative(selection,
+                                            x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
             }
         }
     } else {
 
         if (_check_move_relative.get_active()) {
             // shift each object relatively to the previous one
-            std::vector<SPItem*> selected(selection->itemList());
+            std::vector<SPItem*> selected(selection->items().begin(), selection->items().end());
             if (selected.empty()) return;
 
             if (fabs(x) > 1e-6) {
@@ -685,8 +685,8 @@ void Transformation::applyPageMove(Inkscape::Selection *selection)
         } else {
             Geom::OptRect bbox = selection->preferredBounds();
             if (bbox) {
-                sp_selection_move_relative(selection,
-                                           x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
+                sp_object_set_move_relative(selection,
+                                            x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
             }
         }
     }
@@ -704,8 +704,8 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
     bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
     bool preserve = prefs->getBool("/options/preservetransform/value", false);
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
-    	std::vector<SPItem*> tmp=selection->itemList();
-    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i){
+    	auto tmp= selection->items();
+    	for(auto i=tmp.begin();i!=tmp.end();++i){
             SPItem *item = *i;
             Geom::OptRect bbox_pref = item->desktopPreferredBounds();
             Geom::OptRect bbox_geom = item->desktopGeometricBounds();
@@ -750,7 +750,7 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
             double y1 = bbox_pref->midpoint()[Geom::Y] + new_height/2;
             Geom::Affine scaler = get_scale_transform_for_variable_stroke (*bbox_pref, *bbox_geom, transform_stroke, preserve, x0, y0, x1, y1);
 
-            sp_selection_apply_affine(selection, scaler);
+            sp_object_set_apply_affine(selection, scaler);
         }
     }
 
@@ -768,15 +768,15 @@ void Transformation::applyPageRotate(Inkscape::Selection *selection)
     }
 
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
-    	std::vector<SPItem*> tmp=selection->itemList();
-    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i){
+    	auto tmp= selection->items();
+    	for(auto i=tmp.begin();i!=tmp.end();++i){
             SPItem *item = *i;
             sp_item_rotate_rel(item, Geom::Rotate (angle*M_PI/180.0));
         }
     } else {
         boost::optional<Geom::Point> center = selection->center();
         if (center) {
-            sp_selection_rotate_relative(selection, *center, angle);
+            sp_object_set_rotate_relative(selection, *center, angle);
         }
     }
 
@@ -788,8 +788,8 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
-    	std::vector<SPItem*> items=selection->itemList();
-    	for(std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();++i){
+    	auto items = selection->items();
+    	for(auto i = items.begin();i!=items.end();++i){
             SPItem *item = *i;
 
             if (!_units_skew.isAbsolute()) { // percentage
@@ -843,7 +843,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                     getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
-                sp_selection_skew_relative(selection, *center, 0.01*skewX, 0.01*skewY);
+                sp_object_set_skew_relative(selection, *center, 0.01 * skewX, 0.01 * skewY);
             } else if (_units_skew.isRadial()) { //deg or rad
                 double angleX = _scalar_skew_horizontal.getValue("rad");
                 double angleY = _scalar_skew_vertical.getValue("rad");
@@ -856,7 +856,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                 }
                 double skewX = tan(-angleX);
                 double skewY = tan(angleY);
-                sp_selection_skew_relative(selection, *center, skewX, skewY);
+                sp_object_set_skew_relative(selection, *center, skewX, skewY);
             } else { // absolute displacement
                 double skewX = _scalar_skew_horizontal.getValue("px");
                 double skewY = _scalar_skew_vertical.getValue("px");
@@ -864,7 +864,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                     getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
-                sp_selection_skew_relative(selection, *center, skewX/height, skewY/width);
+                sp_object_set_skew_relative(selection, *center, skewX / height, skewY / width);
             }
         }
     }
@@ -890,14 +890,14 @@ void Transformation::applyPageTransform(Inkscape::Selection *selection)
     }
 
     if (_check_replace_matrix.get_active()) {
-    	std::vector<SPItem*> tmp=selection->itemList();
-    	for(std::vector<SPItem*>::const_iterator i=tmp.begin();i!=tmp.end();++i){
+    	auto tmp = selection->items();
+    	for(auto i=tmp.begin();i!=tmp.end();++i){
             SPItem *item = *i;
             item->set_item_transform(displayed);
             item->updateRepr();
         }
     } else {
-        sp_selection_apply_affine(selection, displayed); // post-multiply each object's transform
+        sp_object_set_apply_affine(selection, displayed); // post-multiply each object's transform
     }
 
     DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,
@@ -1043,7 +1043,7 @@ void Transformation::onReplaceMatrixToggled()
     double f = _scalar_transform_f.getValue();
 
     Geom::Affine displayed (a, b, c, d, e, f);
-    Geom::Affine current = selection->itemList()[0]->transform; // take from the first item in selection
+    Geom::Affine current = selection->items().front()->transform; // take from the first item in selection
 
     Geom::Affine new_displayed;
     if (_check_replace_matrix.get_active()) {

@@ -61,7 +61,7 @@ CmdLineAction::doIt (ActionContext const & context) {
 		}
 
 		Inkscape::Selection * selection = context.getSelection();
-		selection->add(obj, false);
+		selection->add(obj);
 	}
 	return;
 }

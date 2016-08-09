@@ -479,9 +479,9 @@ bool PovOutput::doTreeRecursive(SPDocument *doc, SPObject *obj)
     /**
      * Descend into children
      */
-    for (SPObject *child = obj->firstChild() ; child ; child = child->next)
+    for (auto &child: obj->children)
         {
-            if (!doTreeRecursive(doc, child))
+            if (!doTreeRecursive(doc, &child))
                 return false;
         }
 

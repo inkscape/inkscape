@@ -293,20 +293,22 @@ void PrintMetafile::brush_classify(SPObject *parent, int depth, Inkscape::Pixbuf
             }
 
             // still looking?  Look at this pattern's children, if there are any
-            SPObject *child = pat_i->firstChild();
-            while (child && !(*epixbuf) && (*hatchType == -1)) {
-                brush_classify(child, depth, epixbuf, hatchType, hatchColor, bkColor);
-                child = child->getNext();
+            for (auto& child: pat_i->children) {
+                if (*epixbuf || *hatchType != -1) {
+                    break;
+                }
+                brush_classify(&child, depth, epixbuf, hatchType, hatchColor, bkColor);
             }
         }
     } else if (SP_IS_IMAGE(parent)) {
         *epixbuf = ((SPImage *)parent)->pixbuf;
         return;
     } else { // some inkscape rearrangements pass through nodes between pattern and image which are not classified as either.
-        SPObject *child = parent->firstChild();
-        while (child && !(*epixbuf) && (*hatchType == -1)) {
-            brush_classify(child, depth, epixbuf, hatchType, hatchColor, bkColor);
-            child = child->getNext();
+        for (auto& child: parent->children) {
+            if (*epixbuf || *hatchType != -1) {
+                break;
+            }
+            brush_classify(&child, depth, epixbuf, hatchType, hatchColor, bkColor);
         }
     }
 }

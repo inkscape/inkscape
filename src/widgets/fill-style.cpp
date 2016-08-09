@@ -472,7 +472,7 @@ void FillNStroke::updateFromPaint()
     SPDocument *document = desktop->getDocument();
     Inkscape::Selection *selection = desktop->getSelection();
 
-    std::vector<SPItem*> const items = selection->itemList();
+    std::vector<SPItem*> const items(selection->items().begin(), selection->items().end());
 
     switch (psel->mode) {
         case SPPaintSelector::MODE_EMPTY:

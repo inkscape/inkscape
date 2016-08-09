@@ -681,7 +681,7 @@ void EraserTool::set_to_accumulated() {
                         }
                     }
                 } else {
-                    toWorkOn = selection->itemList();
+                    toWorkOn.insert(toWorkOn.end(), selection->items().begin(), selection->items().end());
                 }
                 wasSelection = true;
             }
@@ -697,7 +697,6 @@ void EraserTool::set_to_accumulated() {
                             item->deleteObject(true);
                             sp_object_unref(item);
                             workDone = true;
-                            workDone = true;
                         } else if (SP_IS_GROUP(item) || use ) {
                             /*Do nothing*/
                         } else {
@@ -708,7 +707,7 @@ void EraserTool::set_to_accumulated() {
                                 Inkscape::GC::release(dup); // parent takes over
                                 selection->set(dup);
                                 if (!this->nowidth) {
-                                    sp_selected_path_union_skip_undo(selection, desktop);
+                                    sp_selected_path_union_skip_undo(selection);
                                 }
                                 selection->add(item);
                                 if(item->style->fill_rule.value == SP_WIND_RULE_EVENODD){
@@ -719,9 +718,9 @@ void EraserTool::set_to_accumulated() {
                                     css = 0;
                                 }
                                 if (this->nowidth) {
-                                    sp_selected_path_cut_skip_undo(selection, desktop);
+                                    sp_selected_path_cut_skip_undo(selection);
                                 } else {
-                                    sp_selected_path_diff_skip_undo(selection, desktop);
+                                    sp_selected_path_diff_skip_undo(selection);
                                 }
                                 workDone = true; // TODO set this only if something was cut.
                                 bool break_apart = prefs->getBool("/tools/eraser/break_apart", false);
@@ -734,7 +733,7 @@ void EraserTool::set_to_accumulated() {
                                 }
                                 if ( !selection->isEmpty() ) {
                                     // If the item was not completely erased, track the new remainder.
-                                    std::vector<SPItem*> nowSel(selection->itemList());
+                                    std::vector<SPItem*> nowSel(selection->items().begin(), selection->items().end());
                                     for (std::vector<SPItem*>::const_iterator i2 = nowSel.begin();i2!=nowSel.end();++i2) {
                                         remainingItems.push_back(*i2);
                                     }

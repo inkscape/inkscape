@@ -19,6 +19,8 @@
 
 #include "ui/dialog/layer-properties.h"
 #include <glibmm/i18n.h>
+#include <boost/range/adaptor/filtered.hpp>
+#include <boost/range/adaptor/reversed.hpp>
 
 #include "desktop.h"
 
@@ -346,27 +348,17 @@ void LayerSelector::_buildSiblingEntries(
     unsigned depth, SPObject &parent,
     Inkscape::Util::List<SPObject &> hierarchy
 ) {
-    using Inkscape::Util::List;
     using Inkscape::Util::rest;
-    using Inkscape::Util::reverse_list_in_place;
-    using Inkscape::Util::filter_list;
 
-    Inkscape::Util::List<SPObject &> siblings(
-        reverse_list_in_place(
-            filter_list<SPObject::SiblingIterator>(
-                is_layer(_desktop), parent.firstChild(), NULL
-            )
-        )
-    );
+    auto siblings = parent.children | boost::adaptors::filtered(is_layer(_desktop)) | boost::adaptors::reversed;
 
     SPObject *layer( hierarchy ? &*hierarchy : NULL );
 
-    while (siblings) {
-        _buildEntry(depth, *siblings);
-        if ( &*siblings == layer ) {
+    for (auto& sib: siblings) {
+        _buildEntry(depth, sib);
+        if ( &sib == layer ) {
             _buildSiblingEntries(depth+1, *layer, rest(hierarchy));
         }
-        ++siblings;
     }
 }
 

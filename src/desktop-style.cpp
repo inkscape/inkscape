@@ -156,17 +156,17 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
         return;
     }
 
-    for ( SPObject *child = o->firstChild() ; child ; child = child->getNext() ) {
+    for (auto& child: o->children) {
         if (sp_repr_css_property(css, "opacity", NULL) != NULL) {
             // Unset properties which are accumulating and thus should not be set recursively.
             // For example, setting opacity 0.5 on a group recursively would result in the visible opacity of 0.25 for an item in the group.
             SPCSSAttr *css_recurse = sp_repr_css_attr_new();
             sp_repr_css_merge(css_recurse, css);
             sp_repr_css_set_property(css_recurse, "opacity", NULL);
-            sp_desktop_apply_css_recursive(child, css_recurse, skip_lines);
+            sp_desktop_apply_css_recursive(&child, css_recurse, skip_lines);
             sp_repr_css_attr_unref(css_recurse);
         } else {
-            sp_desktop_apply_css_recursive(child, css, skip_lines);
+            sp_desktop_apply_css_recursive(&child, css, skip_lines);
         }
     }
 }
@@ -187,8 +187,8 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
         sp_repr_css_merge(css_write, css);
         sp_css_attr_unset_uris(css_write);
         prefs->mergeStyle("/desktop/style", css_write);
-        std::vector<SPItem*> const itemlist = desktop->selection->itemList();
-        for (std::vector<SPItem*>::const_iterator i = itemlist.begin(); i!= itemlist.end(); ++i) {
+        auto itemlist = desktop->selection->items();
+        for (auto i = itemlist.begin(); i!= itemlist.end(); ++i) {
             /* last used styles for 3D box faces are stored separately */
             SPObject *obj = *i;
             Box3DSide *side = dynamic_cast<Box3DSide *>(obj);
@@ -227,8 +227,8 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
         sp_repr_css_merge(css_no_text, css);
         css_no_text = sp_css_attr_unset_text(css_no_text);
 
-        std::vector<SPItem*> const itemlist = desktop->selection->itemList();
-        for (std::vector<SPItem*>::const_iterator i = itemlist.begin(); i!= itemlist.end(); ++i) {
+        auto itemlist = desktop->selection->items();
+        for (auto i = itemlist.begin(); i!= itemlist.end(); ++i) {
             SPItem *item = *i;
 
             // If not text, don't apply text attributes (can a group have text attributes? Yes! FIXME)
@@ -1707,10 +1707,11 @@ objects_query_blend (const std::vector<SPItem*> &objects, SPStyle *style_res)
             int blendcount = 0;
 
             // determine whether filter is simple (blend and/or blur) or complex
-            for(SPObject *primitive_obj = style->getFilter()->children;
-                primitive_obj && dynamic_cast<SPFilterPrimitive *>(primitive_obj);
-                primitive_obj = primitive_obj->next) {
-                SPFilterPrimitive *primitive = dynamic_cast<SPFilterPrimitive *>(primitive_obj);
+            for(auto& primitive_obj: style->getFilter()->children) {
+                SPFilterPrimitive *primitive = dynamic_cast<SPFilterPrimitive *>(&primitive_obj);
+                if (!primitive) {
+                    break;
+                }
                 if (dynamic_cast<SPFeBlend *>(primitive)) {
                     ++blendcount;
                 } else if (dynamic_cast<SPGaussianBlur *>(primitive)) {
@@ -1723,10 +1724,12 @@ objects_query_blend (const std::vector<SPItem*> &objects, SPStyle *style_res)
 
             // simple filter
             if(blurcount == 1 || blendcount == 1) {
-                for(SPObject *primitive_obj = style->getFilter()->children;
-                    primitive_obj && dynamic_cast<SPFilterPrimitive *>(primitive_obj);
-                    primitive_obj = primitive_obj->next) {
-                    SPFeBlend *spblend = dynamic_cast<SPFeBlend *>(primitive_obj);
+                for(auto& primitive_obj: style->getFilter()->children) {
+                    SPFilterPrimitive *primitive = dynamic_cast<SPFilterPrimitive *>(&primitive_obj);
+                    if (!primitive) {
+                        break;
+                    }
+                    SPFeBlend *spblend = dynamic_cast<SPFeBlend *>(&primitive_obj);
                     if (spblend) {
                         blend = spblend->blend_mode;
                     }
@@ -1800,9 +1803,8 @@ objects_query_blur (const std::vector<SPItem*> &objects, SPStyle *style_res)
         //if object has a filter
         if (style->filter.set && style->getFilter()) {
             //cycle through filter primitives
-            SPObject *primitive_obj = style->getFilter()->children;
-            while (primitive_obj) {
-                SPFilterPrimitive *primitive = dynamic_cast<SPFilterPrimitive *>(primitive_obj);
+            for(auto& primitive_obj: style->getFilter()->children) {
+                SPFilterPrimitive *primitive = dynamic_cast<SPFilterPrimitive *>(&primitive_obj);
                 if (primitive) {
 
                     //if primitive is gaussianblur
@@ -1820,7 +1822,6 @@ objects_query_blur (const std::vector<SPItem*> &objects, SPStyle *style_res)
                         }
                     }
                 }
-                primitive_obj = primitive_obj->next;
             }
         }
     }
@@ -1910,7 +1911,8 @@ sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property)
 
     // otherwise, do querying and averaging over selection
     if (desktop->selection != NULL) {
-        return sp_desktop_query_style_from_list (desktop->selection->itemList(), style, property);
+        std::vector<SPItem *> vec(desktop->selection->items().begin(), desktop->selection->items().end());
+        return sp_desktop_query_style_from_list (vec, style, property);
     }
 
     return QUERY_STYLE_NOTHING;

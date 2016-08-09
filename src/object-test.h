@@ -115,7 +115,6 @@ public:
             prev = next;
             next = next->getNext();
         }
-        TS_ASSERT(child->lastChild() == next);
 
         // Test hrefcount
         TS_ASSERT(path->isReferenced());

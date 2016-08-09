@@ -9,7 +9,7 @@
             <_param name="desc_dir" type="description" appearance="header">Restack Direction</_param>
             <param name="nb_direction" type="notebook">
                 <page name="presets" _gui-text="Presets">
-                    <param name="direction" type="enum" gui-text="">
+                    <param name="direction" type="enum" _gui-text="">
                         <_item value="lr">Left to Right (0)</_item>
                         <_item value="bt">Bottom to Top (90)</_item>
                         <_item value="rl">Right to Left (180)</_item>
@@ -36,7 +36,7 @@
         </page>
         <page name="z_order" _gui-text="Based on Z-Order">
             <_param name="desc_zsort" type="description" appearance="header">Restack Mode</_param>
-            <param name="zsort" type="enum" gui-text="">
+            <param name="zsort" type="enum" _gui-text="">
                 <_item value="rev">Reverse Z-Order</_item>
                 <_item value="rand">Shuffle Z-Order</_item>
             </param>

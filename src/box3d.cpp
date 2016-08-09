@@ -253,8 +253,8 @@ void box3d_position_set(SPBox3D *box)
 {
     /* This draws the curve and calls requestDisplayUpdate() for each side (the latter is done in
        box3d_side_position_set() to avoid update conflicts with the parent box) */
-    for ( SPObject *obj = box->firstChild(); obj; obj = obj->getNext() ) {
-        Box3DSide *side = dynamic_cast<Box3DSide *>(obj);
+    for (auto& obj: box->children) {
+        Box3DSide *side = dynamic_cast<Box3DSide *>(&obj);
         if (side) {
             box3d_side_position_set(side);
         }
@@ -269,8 +269,8 @@ Geom::Affine SPBox3D::set_transform(Geom::Affine const &xform) {
     gdouble const sw = hypot(ret[0], ret[1]);
     gdouble const sh = hypot(ret[2], ret[3]);
 
-    for ( SPObject *child = firstChild(); child; child = child->getNext() ) {
-        SPItem *childitem = dynamic_cast<SPItem *>(child);
+    for (auto& child: children) {
+        SPItem *childitem = dynamic_cast<SPItem *>(&child);
         if (childitem) {
             // Adjust stroke width
             childitem->adjust_stroke(sqrt(fabs(sw * sh)));
@@ -1068,8 +1068,8 @@ box3d_recompute_z_orders (SPBox3D *box) {
 static std::map<int, Box3DSide *> box3d_get_sides(SPBox3D *box)
 {
     std::map<int, Box3DSide *> sides;
-    for ( SPObject *obj = box->firstChild(); obj; obj = obj->getNext() ) {
-        Box3DSide *side = dynamic_cast<Box3DSide *>(obj);
+    for (auto& obj: box->children) {
+        Box3DSide *side = dynamic_cast<Box3DSide *>(&obj);
         if (side) {
             sides[Box3D::face_to_int(side->getFaceId())] = side;
         }
@@ -1211,8 +1211,8 @@ static void box3d_extract_boxes_rec(SPObject *obj, std::list<SPBox3D *> &boxes) 
     if (box) {
         boxes.push_back(box);
     } else if (dynamic_cast<SPGroup *>(obj)) {
-        for ( SPObject *child = obj->firstChild(); child; child = child->getNext() ) {
-            box3d_extract_boxes_rec(child, boxes);
+        for (auto& child: obj->children) {
+            box3d_extract_boxes_rec(&child, boxes);
         }
     }
 }
@@ -1270,8 +1270,8 @@ SPGroup *box3d_convert_to_group(SPBox3D *box)
     // create a new group and add the sides (converted to ordinary paths) as its children
     Inkscape::XML::Node *grepr = xml_doc->createElement("svg:g");
 
-    for ( SPObject *obj = box->firstChild(); obj; obj = obj->getNext() ) {
-        Box3DSide *side = dynamic_cast<Box3DSide *>(obj);
+    for (auto& obj: box->children) {
+        Box3DSide *side = dynamic_cast<Box3DSide *>(&obj);
         if (side) {
             Inkscape::XML::Node *repr = box3d_side_convert_to_path(side);
             grepr->appendChild(repr);

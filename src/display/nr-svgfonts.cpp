@@ -203,14 +203,19 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t  */*scaled_font*/,
             //check whether is there a glyph declared on the SVG document
             // that matches with the text string in its current position
             if ( (len = size_of_substring(this->glyphs[i]->unicode.c_str(), _utf8)) ){
-                for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
+                for(auto& node: font->children) {
+                    if (!previous_unicode) {
+                        break;
+                    }
                     //apply glyph kerning if appropriate
-                    SPHkern *hkern = dynamic_cast<SPHkern *>(node);
-                    if (hkern && is_horizontal_text && MatchHKerningRule(hkern, this->glyphs[i], previous_unicode, previous_glyph_name) ){
+                    SPHkern *hkern = dynamic_cast<SPHkern *>(&node);
+                    if (hkern && is_horizontal_text &&
+                        MatchHKerningRule(hkern, this->glyphs[i], previous_unicode, previous_glyph_name)) {
                         x -= (hkern->k / 1000.0);//TODO: use here the height of the font
                     }
-                    SPVkern *vkern = dynamic_cast<SPVkern *>(node);
-                    if (vkern && !is_horizontal_text && MatchVKerningRule(vkern, this->glyphs[i], previous_unicode, previous_glyph_name) ){
+                    SPVkern *vkern = dynamic_cast<SPVkern *>(&node);
+                    if (vkern && !is_horizontal_text &&
+                        MatchVKerningRule(vkern, this->glyphs[i], previous_unicode, previous_glyph_name)) {
                         y -= (vkern->k / 1000.0);//TODO: use here the "height" of the font
                     }
                 }
@@ -271,10 +276,10 @@ SvgFont::glyph_modified(SPObject* /* blah */, unsigned int /* bleh */){
 Geom::PathVector
 SvgFont::flip_coordinate_system(SPFont* spfont, Geom::PathVector pathv){
     double units_per_em = 1000;
-    for (SPObject *obj = spfont->children; obj; obj = obj->next){
-        if (dynamic_cast<SPFontFace *>(obj)) {
+    for(auto& obj: spfont->children) {
+        if (dynamic_cast<SPFontFace *>(&obj)) {
             //XML Tree being directly used here while it shouldn't be.
-            sp_repr_get_double(obj->getRepr(), "units_per_em", &units_per_em);
+            sp_repr_get_double(obj.getRepr(), "units_per_em", &units_per_em);
         }
     }
 
@@ -339,19 +344,19 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
 
     if (node->hasChildren()){
         //render the SVG described on this glyph's child nodes.
-        for(node = node->children; node; node=node->next){
+        for(auto& child: node->children) {
             {
-                SPPath *path = dynamic_cast<SPPath *>(node);
+                SPPath *path = dynamic_cast<SPPath *>(&child);
                 if (path) {
                     pathv = path->_curve->get_pathvector();
                     pathv = flip_coordinate_system(spfont, pathv);
                     render_glyph_path(cr, &pathv);
                 }
             }
-            if (dynamic_cast<SPObjectGroup *>(node)) {
+            if (dynamic_cast<SPObjectGroup *>(&child)) {
                 g_warning("TODO: svgfonts: render OBJECTGROUP");
             }
-            SPUse *use = dynamic_cast<SPUse *>(node);
+            SPUse *use = dynamic_cast<SPUse *>(&child);
             if (use) {
                 SPItem* item = use->ref->getObject();
                 SPPath *path = dynamic_cast<SPPath *>(item);
@@ -374,12 +379,12 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
 cairo_font_face_t*
 SvgFont::get_font_face(){
     if (!this->userfont) {
-        for(SPObject* node = this->font->children;node;node=node->next){
-            SPGlyph *glyph = dynamic_cast<SPGlyph *>(node);
+        for(auto& node: font->children) {
+            SPGlyph *glyph = dynamic_cast<SPGlyph *>(&node);
             if (glyph) {
                 glyphs.push_back(glyph);
             }
-            SPMissingGlyph *missing = dynamic_cast<SPMissingGlyph *>(node);
+            SPMissingGlyph *missing = dynamic_cast<SPMissingGlyph *>(&node);
             if (missing) {
                 missingglyph = missing;
             }

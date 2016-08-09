@@ -107,7 +107,7 @@ void persp3d_absorb(Persp3D *persp1, Persp3D *persp2);
 Persp3D * persp3d_create_xml_element (SPDocument *document, Persp3DImpl *dup = NULL);
 Persp3D * persp3d_document_first_persp (SPDocument *document);
 
-bool persp3d_has_all_boxes_in_selection (Persp3D *persp, Inkscape::Selection *selection);
+bool persp3d_has_all_boxes_in_selection (Persp3D *persp, Inkscape::ObjectSet *set);
 
 void persp3d_print_debugging_info (Persp3D *persp);
 void persp3d_print_debugging_info_all(SPDocument *doc);

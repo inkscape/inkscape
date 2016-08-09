@@ -246,9 +246,9 @@ void SPNamedView::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "inkscape:lockguides" );
 
     /* Construct guideline list */
-    for (SPObject *o = this->firstChild() ; o; o = o->getNext() ) {
-        if (SP_IS_GUIDE(o)) {
-            SPGuide * g = SP_GUIDE(o);
+    for (auto& o: children) {
+        if (SP_IS_GUIDE(&o)) {
+            SPGuide * g = SP_GUIDE(&o);
             this->guides.push_back(g);
             //g_object_set(G_OBJECT(g), "color", nv->guidecolor, "hicolor", nv->guidehicolor, NULL);
             g->setColor(this->guidecolor);
@@ -856,9 +856,9 @@ void sp_namedview_update_layers_from_document (SPDesktop *desktop)
     }
     // if that didn't work out, look for the topmost layer
     if (!layer) {
-        for ( SPObject *iter = document->getRoot()->firstChild(); iter ; iter = iter->getNext() ) {
-            if (desktop->isLayer(iter)) {
-                layer = iter;
+        for (auto& iter: document->getRoot()->children) {
+            if (desktop->isLayer(&iter)) {
+                layer = &iter;
             }
         }
     }

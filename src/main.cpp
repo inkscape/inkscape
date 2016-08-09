@@ -1209,8 +1209,8 @@ static int sp_process_file_list(GSList *fl)
                 	std::vector<SPItem*> items;
                     SPRoot *root = doc->getRoot();
                     doc->ensureUpToDate();
-                    for ( SPObject *iter = root->firstChild(); iter ; iter = iter->getNext()) {
-                        SPItem* item = (SPItem*) iter;
+                    for (auto& iter: root->children) {
+                        SPItem* item = (SPItem*) &iter;
                         if (! (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item) || SP_IS_GROUP(item))) {
                             continue;
                         }
@@ -1464,10 +1464,8 @@ do_query_all_recurse (SPObject *o)
         }
     }
 
-    SPObject *child = o->children;
-    while (child) {
-        do_query_all_recurse (child);
-        child = child->next;
+    for(auto& child: o->children) {
+        do_query_all_recurse (&child);
     }
 }
 

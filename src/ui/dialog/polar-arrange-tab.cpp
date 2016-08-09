@@ -264,7 +264,7 @@ static void moveToPoint(int anchor, SPItem *item, Geom::Point p)
 void PolarArrangeTab::arrange()
 {
 	Inkscape::Selection *selection = parent->getDesktop()->getSelection();
-	const std::vector<SPItem*> tmp(selection->itemList());
+	const std::vector<SPItem*> tmp(selection->items().begin(), selection->items().end());
 	SPGenericEllipse *referenceEllipse = NULL; // Last ellipse in selection
 
 	bool arrangeOnEllipse = !arrangeOnParametersRadio.get_active();

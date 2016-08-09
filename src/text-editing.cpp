@@ -89,8 +89,8 @@ bool sp_te_input_is_empty(SPObject const *item)
     if (SP_IS_STRING(item)) {
         empty = SP_STRING(item)->string.empty();
     } else {
-        for (SPObject const *child = item->firstChild() ; child ; child = child->getNext()) {
-            if (!sp_te_input_is_empty(child)) {
+        for (auto& child: item->children) {
+            if (!sp_te_input_is_empty(&child)) {
                 empty = false;
                 break;
             }
@@ -235,11 +235,11 @@ unsigned sp_text_get_length(SPObject const *item)
             length++;
         }
     
-        for (SPObject const *child = item->firstChild() ; child ; child = child->getNext()) {
-            if (SP_IS_STRING(child)) {
-                length += SP_STRING(child)->string.length();
+        for (auto& child: item->children) {
+            if (SP_IS_STRING(&child)) {
+                length += SP_STRING(&child)->string.length();
             } else {
-                length += sp_text_get_length(child);
+                length += sp_text_get_length(&child);
             }
         }
     }
@@ -265,22 +265,22 @@ unsigned sp_text_get_length_upto(SPObject const *item, SPObject const *upto)
     }
     
     // Count the length of the children
-    for (SPObject const *child = item->firstChild() ; child ; child = child->getNext()) {
-        if (upto && child == upto) {
+    for (auto& child: item->children) {
+        if (upto && &child == upto) {
             // hit upto, return immediately
             return length;
         }
-        if (SP_IS_STRING(child)) {
-            length += SP_STRING(child)->string.length();
+        if (SP_IS_STRING(&child)) {
+            length += SP_STRING(&child)->string.length();
         }
         else {
-            if (upto && child->isAncestorOf(upto)) {
+            if (upto && child.isAncestorOf(upto)) {
                 // upto is below us, recurse and break loop
-                length += sp_text_get_length_upto(child, upto);
+                length += sp_text_get_length_upto(&child, upto);
                 return length;
             } else {
                 // recurse and go to the next sibling
-                length += sp_text_get_length_upto(child, upto);
+                length += sp_text_get_length_upto(&child, upto);
             }
         }
     }
@@ -321,8 +321,11 @@ to \a item at the same level. */
 static unsigned sum_sibling_text_lengths_before(SPObject const *item)
 {
     unsigned char_index = 0;
-    for (SPObject *sibling = item->parent->firstChild() ; sibling && sibling != item ; sibling = sibling->getNext()) {
-        char_index += sp_text_get_length(sibling);
+    for (auto& sibling: item->parent->children) {
+        if (&sibling == item) {
+            break;
+        }
+        char_index += sp_text_get_length(&sibling);
     }
     return char_index;
 }
@@ -855,11 +858,11 @@ static void sp_te_get_ustring_multiline(SPObject const *root, Glib::ustring *str
     if (*pending_line_break) {
         *string += '\n';
     }
-    for (SPObject const *child = root->firstChild() ; child ; child = child->getNext()) {
-        if (SP_IS_STRING(child)) {
-            *string += SP_STRING(child)->string;
+    for (auto& child: root->children) {
+        if (SP_IS_STRING(&child)) {
+            *string += SP_STRING(&child)->string;
         } else {
-            sp_te_get_ustring_multiline(child, string, pending_line_break);
+            sp_te_get_ustring_multiline(&child, string, pending_line_break);
         }
     }
     if (!SP_IS_TEXT(root) && !SP_IS_TEXTPATH(root) && is_line_break_object(root)) {
@@ -939,13 +942,10 @@ sp_te_set_repr_text_multiline(SPItem *text, gchar const *str)
     gchar *content = g_strdup (str);
 
     repr->setContent("");
-    SPObject *child = object->firstChild();
-    while (child) {
-        SPObject *next = child->getNext();
-        if (!SP_IS_FLOWREGION(child) && !SP_IS_FLOWREGIONEXCLUDE(child)) {
-            repr->removeChild(child->getRepr());
+    for (auto& child: object->children) {
+        if (!SP_IS_FLOWREGION(&child) && !SP_IS_FLOWREGIONEXCLUDE(&child)) {
+            repr->removeChild(child.getRepr());
         }
-        child = next;
     }
 
     gchar *p = content;
@@ -1403,17 +1403,17 @@ static void apply_css_recursive(SPObject *o, SPCSSAttr const *css)
 {
     sp_repr_css_change(o->getRepr(), const_cast<SPCSSAttr*>(css), "style");
 
-    for (SPObject *child = o->firstChild() ; child ; child = child->getNext() ) {
+    for (auto& child: o->children) {
         if (sp_repr_css_property(const_cast<SPCSSAttr*>(css), "opacity", NULL) != NULL) {
             // Unset properties which are accumulating and thus should not be set recursively.
             // For example, setting opacity 0.5 on a group recursively would result in the visible opacity of 0.25 for an item in the group.
             SPCSSAttr *css_recurse = sp_repr_css_attr_new();
             sp_repr_css_merge(css_recurse, const_cast<SPCSSAttr*>(css));
             sp_repr_css_set_property(css_recurse, "opacity", NULL);
-            apply_css_recursive(child, css_recurse);
+            apply_css_recursive(&child, css_recurse);
             sp_repr_css_attr_unref(css_recurse);
         } else {
-            apply_css_recursive(child, const_cast<SPCSSAttr*>(css));
+            apply_css_recursive(&child, const_cast<SPCSSAttr*>(css));
         }
     }
 }
@@ -1427,7 +1427,7 @@ static void recursively_apply_style(SPObject *common_ancestor, SPCSSAttr const *
 {
     bool passed_start = start_item == NULL ? true : false;
     Inkscape::XML::Document *xml_doc = common_ancestor->document->getReprDoc();
-    
+
     for (SPObject *child = common_ancestor->firstChild() ; child ; child = child->getNext()) {
         if (start_item == child) {
             passed_start = true;
@@ -2071,8 +2071,8 @@ bool has_visible_text(SPObject *obj)
     if (SP_IS_STRING(obj) && !SP_STRING(obj)->string.empty()) {
         hasVisible = true; // maybe we should also check that it's not all whitespace?
     } else {
-        for (SPObject const *child = obj->firstChild() ; child ; child = child->getNext()) {
-            if (has_visible_text(const_cast<SPObject *>(child))) {
+        for (auto& child: obj->children) {
+            if (has_visible_text(const_cast<SPObject *>(&child))) {
                 hasVisible = true;
                 break;
             }

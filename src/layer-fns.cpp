@@ -36,11 +36,9 @@ bool is_layer(SPObject &object) {
  *  @returns NULL if there are no further layers under a parent
  */
 SPObject *next_sibling_layer(SPObject *layer) {
-    using std::find_if;
-
-    return find_if<SPObject::SiblingIterator>(
-        layer->getNext(), NULL, &is_layer
-    );
+    SPObject::ChildrenList &list = layer->parent->children;
+    auto l = std::find_if(++list.iterator_to(*layer), list.end(), &is_layer);
+    return l != list.end() ? &*l : nullptr;
 }
 
 /** Finds the previous sibling layer for a \a layer
@@ -50,11 +48,9 @@ SPObject *next_sibling_layer(SPObject *layer) {
 SPObject *previous_sibling_layer(SPObject *layer) {
     using Inkscape::Algorithms::find_last_if;
 
-    SPObject *sibling(find_last_if<SPObject::SiblingIterator>(
-        layer->parent->firstChild(), layer, &is_layer
-    ));
-
-    return ( sibling != layer ) ? sibling : NULL;
+    SPObject::ChildrenList &list = layer->parent->children;
+    auto l = find_last_if(list.begin(), list.iterator_to(*layer), &is_layer);
+    return l != list.iterator_to(*layer) ? &*(l) : nullptr;
 }
 
 /** Finds the first child of a \a layer
@@ -62,16 +58,15 @@ SPObject *previous_sibling_layer(SPObject *layer) {
  *  @returns NULL if layer has no sublayers
  */
 SPObject *first_descendant_layer(SPObject *layer) {
-    using std::find_if;
-
-    SPObject *first_descendant=NULL;
-    while (layer) {
-        layer = find_if<SPObject::SiblingIterator>(
-            layer->firstChild(), NULL, &is_layer
-        );
-        if (layer) {
+    SPObject *first_descendant = nullptr;
+    while (true) {
+        auto tmp = std::find_if(layer->children.begin(), layer->children.end(), &is_layer);
+        if (tmp != layer->children.end()) {
             first_descendant = layer;
+        } else {
+            break;
         }
+        layer = &*tmp;
     }
 
     return first_descendant;
@@ -84,9 +79,8 @@ SPObject *first_descendant_layer(SPObject *layer) {
 SPObject *last_child_layer(SPObject *layer) {
     using Inkscape::Algorithms::find_last_if;
 
-    return find_last_if<SPObject::SiblingIterator>(
-        layer->firstChild(), NULL, &is_layer
-    );
+    auto l = find_last_if(layer->children.begin(), layer->children.end(), &is_layer);
+    return l != layer->children.end() ? &*l : nullptr;
 }
 
 SPObject *last_elder_layer(SPObject *root, SPObject *layer) {

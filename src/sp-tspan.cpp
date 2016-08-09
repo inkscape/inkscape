@@ -94,9 +94,9 @@ void SPTSpan::update(SPCtx *ctx, guint flags) {
     }
     childflags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    for ( SPObject *ochild = this->firstChild() ; ochild ; ochild = ochild->getNext() ) {
-        if ( flags || ( ochild->uflags & SP_OBJECT_MODIFIED_FLAG )) {
-        	ochild->updateDisplay(ctx, childflags);
+    for (auto& ochild: children) {
+        if ( flags || ( ochild.uflags & SP_OBJECT_MODIFIED_FLAG )) {
+        	ochild.updateDisplay(ctx, childflags);
         }
     }
 
@@ -126,9 +126,9 @@ void SPTSpan::modified(unsigned int flags) {
     
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    for ( SPObject *ochild = this->firstChild() ; ochild ; ochild = ochild->getNext() ) {
-        if (flags || (ochild->mflags & SP_OBJECT_MODIFIED_FLAG)) {
-            ochild->emitModified(flags);
+    for (auto& ochild: children) {
+        if (flags || (ochild.mflags & SP_OBJECT_MODIFIED_FLAG)) {
+            ochild.emitModified(flags);
         }
     }
 }
@@ -173,15 +173,15 @@ Inkscape::XML::Node* SPTSpan::write(Inkscape::XML::Document *xml_doc, Inkscape::
     if ( flags&SP_OBJECT_WRITE_BUILD ) {
         GSList *l = NULL;
 
-        for (SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
+        for (auto& child: children) {
             Inkscape::XML::Node* c_repr=NULL;
 
-            if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
-                c_repr = child->updateRepr(xml_doc, NULL, flags);
-            } else if ( SP_IS_TEXTPATH(child) ) {
-                //c_repr = child->updateRepr(xml_doc, NULL, flags); // shouldn't happen
-            } else if ( SP_IS_STRING(child) ) {
-                c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
+            if ( SP_IS_TSPAN(&child) || SP_IS_TREF(&child) ) {
+                c_repr = child.updateRepr(xml_doc, NULL, flags);
+            } else if ( SP_IS_TEXTPATH(&child) ) {
+                //c_repr = child.updateRepr(xml_doc, NULL, flags); // shouldn't happen
+            } else if ( SP_IS_STRING(&child) ) {
+                c_repr = xml_doc->createTextNode(SP_STRING(&child)->string.c_str());
             }
 
             if ( c_repr ) {
@@ -195,13 +195,13 @@ Inkscape::XML::Node* SPTSpan::write(Inkscape::XML::Document *xml_doc, Inkscape::
             l = g_slist_remove(l, l->data);
         }
     } else {
-        for (SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
-            if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
-                child->updateRepr(flags);
-            } else if ( SP_IS_TEXTPATH(child) ) {
+        for (auto& child: children) {
+            if ( SP_IS_TSPAN(&child) || SP_IS_TREF(&child) ) {
+                child.updateRepr(flags);
+            } else if ( SP_IS_TEXTPATH(&child) ) {
                 //c_repr = child->updateRepr(xml_doc, NULL, flags); // shouldn't happen
-            } else if ( SP_IS_STRING(child) ) {
-                child->getRepr()->setContent(SP_STRING(child)->string.c_str());
+            } else if ( SP_IS_STRING(&child) ) {
+                child.getRepr()->setContent(SP_STRING(&child)->string.c_str());
             }
         }
     }
@@ -311,9 +311,9 @@ void SPTextPath::update(SPCtx *ctx, guint flags) {
 
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    for ( SPObject *ochild = this->firstChild() ; ochild ; ochild = ochild->getNext() ) {
-        if ( flags || ( ochild->uflags & SP_OBJECT_MODIFIED_FLAG )) {
-            ochild->updateDisplay(ctx, flags);
+    for (auto& ochild: children) {
+        if ( flags || ( ochild.uflags & SP_OBJECT_MODIFIED_FLAG )) {
+            ochild.updateDisplay(ctx, flags);
         }
     }
 
@@ -365,9 +365,9 @@ void SPTextPath::modified(unsigned int flags) {
 
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    for ( SPObject *ochild = this->firstChild() ; ochild ; ochild = ochild->getNext() ) {
-        if (flags || (ochild->mflags & SP_OBJECT_MODIFIED_FLAG)) {
-            ochild->emitModified(flags);
+    for (auto& ochild: children) {
+        if (flags || (ochild.mflags & SP_OBJECT_MODIFIED_FLAG)) {
+            ochild.emitModified(flags);
         }
     }
 }
@@ -397,15 +397,15 @@ Inkscape::XML::Node* SPTextPath::write(Inkscape::XML::Document *xml_doc, Inkscap
     if ( flags & SP_OBJECT_WRITE_BUILD ) {
         GSList *l = NULL;
 
-        for (SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
+        for (auto& child: children) {
             Inkscape::XML::Node* c_repr=NULL;
 
-            if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
-                c_repr = child->updateRepr(xml_doc, NULL, flags);
-            } else if ( SP_IS_TEXTPATH(child) ) {
+            if ( SP_IS_TSPAN(&child) || SP_IS_TREF(&child) ) {
+                c_repr = child.updateRepr(xml_doc, NULL, flags);
+            } else if ( SP_IS_TEXTPATH(&child) ) {
                 //c_repr = child->updateRepr(xml_doc, NULL, flags); // shouldn't happen
-            } else if ( SP_IS_STRING(child) ) {
-                c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
+            } else if ( SP_IS_STRING(&child) ) {
+                c_repr = xml_doc->createTextNode(SP_STRING(&child)->string.c_str());
             }
 
             if ( c_repr ) {
@@ -419,13 +419,13 @@ Inkscape::XML::Node* SPTextPath::write(Inkscape::XML::Document *xml_doc, Inkscap
             l = g_slist_remove(l, l->data);
         }
     } else {
-        for (SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
-            if ( SP_IS_TSPAN(child) || SP_IS_TREF(child) ) {
-                child->updateRepr(flags);
-            } else if ( SP_IS_TEXTPATH(child) ) {
-                //c_repr = child->updateRepr(xml_doc, NULL, flags); // shouldn't happen
-            } else if ( SP_IS_STRING(child) ) {
-                child->getRepr()->setContent(SP_STRING(child)->string.c_str());
+        for (auto& child: children) {
+            if ( SP_IS_TSPAN(&child) || SP_IS_TREF(&child) ) {
+                child.updateRepr(flags);
+            } else if ( SP_IS_TEXTPATH(&child) ) {
+                //c_repr = child.updateRepr(xml_doc, NULL, flags); // shouldn't happen
+            } else if ( SP_IS_STRING(&child) ) {
+                child.getRepr()->setContent(SP_STRING(&child)->string.c_str());
             }
         }
     }
@@ -464,8 +464,8 @@ void sp_textpath_to_text(SPObject *tp)
     // make a list of textpath children
     GSList *tp_reprs = NULL;
 
-    for (SPObject *o = tp->firstChild() ; o != NULL; o = o->next) {
-        tp_reprs = g_slist_prepend(tp_reprs, o->getRepr());
+    for (auto& o: tp->children) {
+        tp_reprs = g_slist_prepend(tp_reprs, o.getRepr());
     }
 
     for ( GSList *i = tp_reprs ; i ; i = i->next ) {

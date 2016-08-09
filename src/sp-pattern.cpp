@@ -219,8 +219,8 @@ void SPPattern::_getChildren(std::list<SPObject *> &l)
 {
     for (SPPattern *pat_i = this; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         if (pat_i->firstChild()) { // find the first one with children
-            for (SPObject *child = pat_i->firstChild(); child; child = child->getNext()) {
-                l.push_back(child);
+            for (auto& child: pat_i->children) {
+                l.push_back(&child);
             }
             break; // do not go further up the chain if children are found
         }
@@ -315,8 +315,8 @@ guint SPPattern::_countHrefs(SPObject *o) const
         i++;
     }
 
-    for (SPObject *child = o->firstChild(); child != NULL; child = child->next) {
-        i += _countHrefs(child);
+    for (auto& child: o->children) {
+        i += _countHrefs(&child);
     }
 
     return i;
@@ -504,13 +504,13 @@ Geom::OptRect SPPattern::viewbox() const
 
 bool SPPattern::_hasItemChildren() const
 {
-    bool hasChildren = false;
-    for (SPObject const *child = firstChild(); child && !hasChildren; child = child->getNext()) {
-        if (SP_IS_ITEM(child)) {
-            hasChildren = true;
+    for (auto& child: children) {
+        if (SP_IS_ITEM(&child)) {
+            return true;
         }
     }
-    return hasChildren;
+
+    return false;
 }
 
 bool SPPattern::isValid() const
@@ -554,12 +554,12 @@ cairo_pattern_t *SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
     Inkscape::DrawingGroup *root = new Inkscape::DrawingGroup(drawing);
     drawing.setRoot(root);
 
-    for (SPObject *child = shown->firstChild(); child != NULL; child = child->getNext()) {
-        if (SP_IS_ITEM(child)) {
+    for (auto& child: shown->children) {
+        if (SP_IS_ITEM(&child)) {
             // for each item in pattern, show it on our drawing, add to the group,
             // and connect to the release signal in case the item gets deleted
             Inkscape::DrawingItem *cai;
-            cai = SP_ITEM(child)->invoke_show(drawing, dkey, SP_ITEM_SHOW_DISPLAY);
+            cai = SP_ITEM(&child)->invoke_show(drawing, dkey, SP_ITEM_SHOW_DISPLAY);
             root->appendChild(cai);
         }
     }
@@ -650,9 +650,9 @@ cairo_pattern_t *SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
     // Render drawing to pattern_surface via drawing context, this calls root->render
     // which is really DrawingItem->render().
     drawing.render(dc, one_tile);
-    for (SPObject *child = shown->firstChild(); child != NULL; child = child->getNext()) {
-        if (SP_IS_ITEM(child)) {
-            SP_ITEM(child)->invoke_hide(dkey);
+    for (auto& child: shown->children) {
+        if (SP_IS_ITEM(&child)) {
+            SP_ITEM(&child)->invoke_hide(dkey);
         }
     }
 

@@ -99,7 +99,7 @@ void GradientTool::selection_changed(Inkscape::Selection*) {
     if (selection == NULL) {
         return;
     }
-    guint n_obj = selection->itemList().size();
+    guint n_obj = (guint) boost::distance(selection->items());
 
     if (!drag->isNonEmpty() || selection->isEmpty())
         return;
@@ -485,10 +485,10 @@ bool GradientTool::root_handler(GdkEvent* event) {
             if (over_line) {
                 // we take the first item in selection, because with doubleclick, the first click
                 // always resets selection to the single object under cursor
-                sp_gradient_context_add_stop_near_point(this, SP_ITEM(selection->itemList().front()), this->mousepoint_doc, event->button.time);
+                sp_gradient_context_add_stop_near_point(this, SP_ITEM(selection->items().front()), this->mousepoint_doc, event->button.time);
             } else {
-            	std::vector<SPItem*>  items=selection->itemList();
-                for (std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();++i) {
+            	auto items= selection->items();
+                for (auto i = items.begin();i!=items.end();++i) {
                     SPItem *item = *i;
                     SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
                     Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
@@ -890,7 +890,7 @@ static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*sta
         } else {
             // Starting from empty space:
             // Sort items so that the topmost comes last
-        	std::vector<SPItem*> items(selection->itemList());
+        	std::vector<SPItem*> items(selection->items().begin(), selection->items().end());
             sort(items.begin(),items.end(),sp_item_repr_compare_position);
             // take topmost
             vector = sp_gradient_vector_for_object(document, desktop, SP_ITEM(items.back()), fill_or_stroke);
@@ -900,8 +900,8 @@ static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*sta
         SPCSSAttr *css = sp_repr_css_attr_new();
         sp_repr_css_set_property(css, "fill-opacity", "1.0");
 
-        std::vector<SPItem*> itemlist = selection->itemList();
-        for (std::vector<SPItem*>::const_iterator i = itemlist.begin();i!=itemlist.end();++i) {
+        auto itemlist = selection->items();
+        for (auto i = itemlist.begin();i!=itemlist.end();++i) {
 
             //FIXME: see above
             sp_repr_css_change_recursive((*i)->getRepr(), css, "style");
@@ -924,7 +924,7 @@ static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*sta
             ec->_grdrag->local_change = true;
             // give the grab out-of-bounds values of xp/yp because we're already dragging
             // and therefore are already out of tolerance
-            ec->_grdrag->grabKnot (selection->itemList()[0],
+            ec->_grdrag->grabKnot (selection->items().front(),
                                    type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_END : POINT_RG_R1,
                                    -1, // ignore number (though it is always 1)
                                    fill_or_stroke, 99999, 99999, etime);
@@ -933,7 +933,7 @@ static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*sta
 
         // status text; we do not track coords because this branch is run once, not all the time
         // during drag
-        int n_objects = selection->itemList().size();
+        int n_objects = (int) boost::distance(selection->items());
         rc.message_context->setF(Inkscape::NORMAL_MESSAGE,
                                   ngettext("<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle",
                                            "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle", n_objects),

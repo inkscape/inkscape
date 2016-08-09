@@ -193,11 +193,11 @@ Inkscape::XML::Node* SPFeDisplacementMap::write(Inkscape::XML::Document *doc, In
     if( !in2_name ) {
 
         // This code is very similar to sp_filter_primtive_name_previous_out()
-        SPObject *i = parent->children;
+        SPObject *i = parent->firstChild();
 
         // Find previous filter primitive
-        while (i && i->next != this) {
-        	i = i->next;
+        while (i && i->getNext() != this) {
+        	i = i->getNext();
         }
 
         if( i ) {

@@ -264,8 +264,8 @@ Inkscape::XML::Node* SPFilter::write(Inkscape::XML::Document *doc, Inkscape::XML
         }
 
         GSList *l = NULL;
-        for ( SPObject *child = this->firstChild(); child; child = child->getNext() ) {
-            Inkscape::XML::Node *crepr = child->updateRepr(doc, NULL, flags);
+        for (auto& child: children) {
+            Inkscape::XML::Node *crepr = child.updateRepr(doc, NULL, flags);
 
             if (crepr) {
                 l = g_slist_prepend (l, crepr);
@@ -278,8 +278,8 @@ Inkscape::XML::Node* SPFilter::write(Inkscape::XML::Document *doc, Inkscape::XML
             l = g_slist_remove (l, l->data);
         }
     } else {
-        for ( SPObject *child = this->firstChild() ; child; child = child->getNext() ) {
-            child->updateRepr(flags);
+        for (auto& child: children) {
+            child.updateRepr(flags);
         }
     }
 
@@ -416,10 +416,9 @@ void sp_filter_build_renderer(SPFilter *sp_filter, Inkscape::Filters::Filter *nr
     }
 
     nr_filter->clear_primitives();
-    SPObject *primitive_obj = sp_filter->children;
-    while (primitive_obj) {
-        if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
-            SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
+    for(auto& primitive_obj: sp_filter->children) {
+        if (SP_IS_FILTER_PRIMITIVE(&primitive_obj)) {
+            SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(&primitive_obj);
             g_assert(primitive != NULL);
 
 //            if (((SPFilterPrimitiveClass*) G_OBJECT_GET_CLASS(primitive))->build_renderer) {
@@ -429,7 +428,6 @@ void sp_filter_build_renderer(SPFilter *sp_filter, Inkscape::Filters::Filter *nr
 //            }  // CPPIFY: => FilterPrimitive should be abstract.
             primitive->build_renderer(nr_filter);
         }
-        primitive_obj = primitive_obj->next;
     }
 }
 
@@ -437,11 +435,12 @@ int sp_filter_primitive_count(SPFilter *filter) {
     g_assert(filter != NULL);
     int count = 0;
 
-    SPObject *primitive_obj = filter->children;
-    while (primitive_obj) {
-        if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) count++;
-        primitive_obj = primitive_obj->next;
+    for(auto& primitive_obj: filter->children) {
+        if (SP_IS_FILTER_PRIMITIVE(&primitive_obj)) {
+            count++;
+        }
     }
+
     return count;
 }
 
@@ -509,10 +508,9 @@ Glib::ustring sp_filter_get_new_result_name(SPFilter *filter) {
     g_assert(filter != NULL);
     int largest = 0;
 
-    SPObject *primitive_obj = filter->children;
-    while (primitive_obj) {
-        if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
-            Inkscape::XML::Node *repr = primitive_obj->getRepr();
+    for(auto& primitive_obj: filter->children) {
+        if (SP_IS_FILTER_PRIMITIVE(&primitive_obj)) {
+            Inkscape::XML::Node *repr = primitive_obj.getRepr();
             char const *result = repr->attribute("result");
             int index;
             if (result)
@@ -526,7 +524,6 @@ Glib::ustring sp_filter_get_new_result_name(SPFilter *filter) {
                 }
             }
         }
-        primitive_obj = primitive_obj->next;
     }
 
     return "result" + Glib::Ascii::dtostr(largest + 1);

@@ -58,16 +58,6 @@ Parameter *Parameter::make(Inkscape::XML::Node *in_repr, Inkscape::Extension::Ex
     const char *guitext = in_repr->attribute("gui-text");
     if (guitext == NULL) {
         guitext = in_repr->attribute("_gui-text");
-        if (guitext == NULL) {
-            // guitext = ""; // propably better to require devs to explicitly set an empty gui-text if this is what they want
-        } else {
-            const char *context = in_repr->attribute("msgctxt");
-            if (context != NULL) {
-                guitext = g_dpgettext2(NULL, context, guitext);
-            } else {
-                guitext = _(guitext);
-            }
-        }
     }
     const char *gui_tip = in_repr->attribute("gui-tip");
     if (gui_tip == NULL) {

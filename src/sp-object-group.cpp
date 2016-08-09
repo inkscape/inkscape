@@ -50,8 +50,8 @@ Inkscape::XML::Node *SPObjectGroup::write(Inkscape::XML::Document *xml_doc, Inks
         }
 
         GSList *l = 0;
-        for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-            Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
+        for (auto& child: children) {
+            Inkscape::XML::Node *crepr = child.updateRepr(xml_doc, NULL, flags);
 
             if (crepr) {
                 l = g_slist_prepend(l, crepr);
@@ -64,8 +64,8 @@ Inkscape::XML::Node *SPObjectGroup::write(Inkscape::XML::Document *xml_doc, Inks
             l = g_slist_remove(l, l->data);
         }
     } else {
-        for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-            child->updateRepr(flags);
+        for (auto& child: children) {
+            child.updateRepr(flags);
         }
     }
 

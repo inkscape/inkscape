@@ -372,8 +372,8 @@ static void hide_other_items_recursively(SPObject *o, const std::vector<SPItem*>
 
     // recurse
     if (list.end()==find(list.begin(),list.end(),o)) {
-        for ( SPObject *child = o->firstChild() ; child; child = child->getNext() ) {
-            hide_other_items_recursively(child, list, dkey);
+        for (auto& child: o->children) {
+            hide_other_items_recursively(&child, list, dkey);
         }
     }
 }

@@ -204,37 +204,37 @@ SPObject *get_stock_item(gchar const *urn, gboolean stock)
         }
         SPObject *object = NULL;
         if (!strcmp(base, "marker") && !stock) {
-            for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
+            for (auto& child: defs->children)
             {
-                if (child->getRepr()->attribute("inkscape:stockid") &&
-                    !strcmp(name_p, child->getRepr()->attribute("inkscape:stockid")) &&
-                    SP_IS_MARKER(child))
+                if (child.getRepr()->attribute("inkscape:stockid") &&
+                    !strcmp(name_p, child.getRepr()->attribute("inkscape:stockid")) &&
+                    SP_IS_MARKER(&child))
                 {
-                    object = child;
+                    object = &child;
                 }
             }
             
         }
         else if (!strcmp(base,"pattern") && !stock)  {
-            for ( SPObject *child = defs->firstChild() ; child; child = child->getNext() )
+            for (auto& child: defs->children)
             {
-                if (child->getRepr()->attribute("inkscape:stockid") &&
-                    !strcmp(name_p, child->getRepr()->attribute("inkscape:stockid")) &&
-                    SP_IS_PATTERN(child))
+                if (child.getRepr()->attribute("inkscape:stockid") &&
+                    !strcmp(name_p, child.getRepr()->attribute("inkscape:stockid")) &&
+                    SP_IS_PATTERN(&child))
                 {
-                    object = child;
+                    object = &child;
                 }
             }
             
         }
         else if (!strcmp(base,"gradient") && !stock)  {
-            for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
+            for (auto& child: defs->children)
             {
-                if (child->getRepr()->attribute("inkscape:stockid") &&
-                    !strcmp(name_p, child->getRepr()->attribute("inkscape:stockid")) &&
-                    SP_IS_GRADIENT(child))
+                if (child.getRepr()->attribute("inkscape:stockid") &&
+                    !strcmp(name_p, child.getRepr()->attribute("inkscape:stockid")) &&
+                    SP_IS_GRADIENT(&child))
                 {
-                    object = child;
+                    object = &child;
                 }
             }
             

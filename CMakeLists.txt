@@ -85,7 +85,6 @@ endif()
 include(CMakeScripts/DefineDependsandFlags.cmake) # Includes, Compiler Flags, and Link Libraries
 include(CMakeScripts/HelperMacros.cmake) # Misc Utility Macros
 
-
 # -----------------------------------------------------------------------------
 # BAD HACKS, NEED TO INVESTIGATE MAKING THESE LESS BAD
 add_definitions(-D_FORTIFY_SOURCE=2)

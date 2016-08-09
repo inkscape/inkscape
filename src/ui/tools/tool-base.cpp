@@ -1051,9 +1051,8 @@ void sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event)
     item = sp_event_context_find_item (desktop,
                               Geom::Point(event->button.x, event->button.y), FALSE, FALSE);
 
-    /* fixme: This is not what I want but works for now (Lauris) */
-    if (event->type == GDK_KEY_PRESS) {
-        item = desktop->getSelection()->itemList().front();
+    if (event->type == GDK_KEY_PRESS && !desktop->getSelection()->isEmpty()) {
+        item = desktop->getSelection()->items().front();
     }
 
     ContextMenu* CM = new ContextMenu(desktop, item);
@@ -1127,8 +1126,9 @@ SPItem *sp_event_context_find_item(SPDesktop *desktop, Geom::Point const &p,
     SPItem *item = 0;
 
     if (select_under) {
-        SPItem *selected_at_point = desktop->getItemFromListAtPointBottom(
-                desktop->selection->itemList(), p);
+        auto tmp = desktop->selection->items();
+        std::vector<SPItem *> vec(tmp.begin(), tmp.end());
+        SPItem *selected_at_point = desktop->getItemFromListAtPointBottom(vec, p);
         item = desktop->getItemAtPoint(p, into_groups, selected_at_point);
         if (item == NULL) { // we may have reached bottom, flip over to the top
             item = desktop->getItemAtPoint(p, into_groups, NULL);

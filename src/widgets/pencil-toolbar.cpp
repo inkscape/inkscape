@@ -237,8 +237,8 @@ static void sp_pencil_tb_defaults(GtkWidget * /*widget*/, GObject *obj)
 static void sp_simplify_flatten(GtkWidget * /*widget*/, GObject *obj)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(obj, "desktop"));
-    std::vector<SPItem *> selected = desktop->getSelection()->itemList();
-    for (std::vector<SPItem *>::iterator it(selected.begin()); it != selected.end(); ++it){
+    auto selected = desktop->getSelection()->items();
+    for (auto it(selected.begin()); it != selected.end(); ++it){
         SPLPEItem* lpeitem = dynamic_cast<SPLPEItem*>(*it);
         if (lpeitem && lpeitem->hasPathEffect()){
             PathEffectList lpelist = lpeitem->getEffectList();
@@ -282,8 +282,8 @@ static void sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tb
             gtk_adjustment_get_value(adj));
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(tbl, "desktop"));
-    std::vector<SPItem *> selected = desktop->getSelection()->itemList();
-    for (std::vector<SPItem *>::iterator it(selected.begin()); it != selected.end(); ++it){
+    auto selected = desktop->getSelection()->items();
+    for (auto it(selected.begin()); it != selected.end(); ++it){
         SPLPEItem* lpeitem = dynamic_cast<SPLPEItem*>(*it);
         if (lpeitem && lpeitem->hasPathEffect()){
             Inkscape::LivePathEffect::Effect* simplify = lpeitem->getPathEffectOfType(Inkscape::LivePathEffect::SIMPLIFY);

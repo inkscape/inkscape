@@ -372,8 +372,8 @@ void gather_items(NodeTool *nt, SPItem *base, SPObject *obj, Inkscape::UI::Shape
         r.role = role;
         s.insert(r);
     } else if (role != SHAPE_ROLE_NORMAL && (SP_IS_GROUP(obj) || SP_IS_OBJECTGROUP(obj))) {
-        for (SPObject *c = obj->children; c; c = c->next) {
-            gather_items(nt, base, c, role, s);
+        for (auto& c: obj->children) {
+            gather_items(nt, base, &c, role, s);
         }
     } else if (SP_IS_ITEM(obj)) {
         SPItem *item = static_cast<SPItem*>(obj);
@@ -401,8 +401,8 @@ void NodeTool::selection_changed(Inkscape::Selection *sel) {
 
     std::set<ShapeRecord> shapes;
 
-    std::vector<SPItem*> items=sel->itemList();
-    for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();++i){
+    auto items= sel->items();
+    for(auto i=items.begin();i!=items.end();++i){
         SPObject *obj = *i;
 
         if (SP_IS_ITEM(obj)) {
@@ -437,8 +437,9 @@ void NodeTool::selection_changed(Inkscape::Selection *sel) {
         }
     }
 
+    std::vector<SPItem *> vec(sel->items().begin(), sel->items().end());
     _previous_selection = _current_selection;
-    _current_selection = sel->itemList();
+    _current_selection = vec;
 
     this->_multipath->setItems(shapes);
     this->update_tip(NULL);

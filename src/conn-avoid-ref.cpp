@@ -328,19 +328,19 @@ static Avoid::Polygon avoid_item_poly(SPItem const *item)
 std::vector<SPItem *> get_avoided_items(std::vector<SPItem *> &list, SPObject *from, SPDesktop *desktop,
         bool initialised)
 {
-    for (SPObject *child = from->firstChild() ; child != NULL; child = child->next ) {
-        if (SP_IS_ITEM(child) &&
-            !desktop->isLayer(SP_ITEM(child)) &&
-            !SP_ITEM(child)->isLocked() &&
-            !desktop->itemIsHidden(SP_ITEM(child)) &&
-            (!initialised || SP_ITEM(child)->avoidRef->shapeRef)
+    for (auto& child: from->children) {
+        if (SP_IS_ITEM(&child) &&
+            !desktop->isLayer(SP_ITEM(&child)) &&
+            !SP_ITEM(&child)->isLocked() &&
+            !desktop->itemIsHidden(SP_ITEM(&child)) &&
+            (!initialised || SP_ITEM(&child)->avoidRef->shapeRef)
             )
         {
-            list.push_back(SP_ITEM(child));
+            list.push_back(SP_ITEM(&child));
         }
 
-        if (SP_IS_ITEM(child) && desktop->isLayer(SP_ITEM(child))) {
-            list = get_avoided_items(list, child, desktop, initialised);
+        if (SP_IS_ITEM(&child) && desktop->isLayer(SP_ITEM(&child))) {
+            list = get_avoided_items(list, &child, desktop, initialised);
         }
     }
 

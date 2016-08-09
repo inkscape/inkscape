@@ -1210,7 +1210,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 Geom::OptRect sel_bbox = selection->visualBounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
-                    sp_selection_move_relative(selection, m, false);
+                    sp_object_set_move_relative(selection, m, false);
                 }
             }
 
@@ -2056,8 +2056,8 @@ void ContextMenu::ImageEdit(void)
     }
 #endif
 
-    std::vector<SPItem*> itemlist=_desktop->selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    auto itemlist= _desktop->selection->items();
+    for(auto i=itemlist.begin();i!=itemlist.end();++i){
         Inkscape::XML::Node *ir = (*i)->getRepr();
         const gchar *href = ir->attribute("xlink:href");
         

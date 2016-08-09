@@ -329,10 +329,10 @@ GSList *MarkerComboBox::get_marker_list (SPDocument *source)
         return NULL;
     }
 
-    for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
+    for (auto& child: defs->children)
     {
-        if (SP_IS_MARKER(child)) {
-            ml = g_slist_prepend (ml, child);
+        if (SP_IS_MARKER(&child)) {
+            ml = g_slist_prepend (ml, &child);
         }
     }
     return ml;

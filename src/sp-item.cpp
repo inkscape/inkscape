@@ -298,50 +298,35 @@ bool is_item(SPObject const &object) {
 void SPItem::raiseToTop() {
     using Inkscape::Algorithms::find_last_if;
 
-    SPObject *topmost=find_last_if<SPObject::SiblingIterator>(
-        next, NULL, &is_item
-    );
-    if (topmost) {
+    auto topmost = find_last_if(++parent->children.iterator_to(*this), parent->children.end(), &is_item);
+    if (topmost != parent->children.end()) {
         getRepr()->parent()->changeOrder( getRepr(), topmost->getRepr() );
     }
 }
 
 void SPItem::raiseOne() {
-    SPObject *next_higher=std::find_if<SPObject::SiblingIterator>(
-        next, NULL, &is_item
-    );
-    if (next_higher) {
+    auto next_higher = std::find_if(++parent->children.iterator_to(*this), parent->children.end(), &is_item);
+    if (next_higher != parent->children.end()) {
         Inkscape::XML::Node *ref = next_higher->getRepr();
         getRepr()->parent()->changeOrder(getRepr(), ref);
     }
 }
 
 void SPItem::lowerOne() {
-    using Inkscape::Util::MutableList;
-    using Inkscape::Util::reverse_list;
+    using Inkscape::Algorithms::find_last_if;
 
-    MutableList<SPObject &> next_lower=std::find_if(
-        reverse_list<SPObject::SiblingIterator>(
-            parent->firstChild(), this
-        ),
-        MutableList<SPObject &>(),
-        &is_item
-    );
-    if (next_lower) {
-        ++next_lower;
-        Inkscape::XML::Node *ref = ( next_lower ? next_lower->getRepr() : NULL );
+    auto next_lower = find_last_if(parent->children.begin(), parent->children.iterator_to(*this), &is_item);
+    if (next_lower != parent->children.iterator_to(*this)) {
+        next_lower--;
+        Inkscape::XML::Node *ref = next_lower->getRepr();
         getRepr()->parent()->changeOrder(getRepr(), ref);
     }
 }
 
 void SPItem::lowerToBottom() {
-    using Inkscape::Algorithms::find_last_if;
-    using Inkscape::Util::MutableList;
-    using Inkscape::Util::reverse_list;
-
-    SPObject * bottom=parent->firstChild();
-    while(dynamic_cast<SPObject*>(bottom) && dynamic_cast<SPObject*>(bottom->next) && bottom!=this && !is_item(*(bottom->next))) bottom=bottom->next;
-    if (bottom && bottom != this) {
+    auto bottom = std::find_if(parent->children.begin(), parent->children.iterator_to(*this), &is_item);
+    if (bottom != parent->children.iterator_to(*this)) {
+        bottom--;
         Inkscape::XML::Node *ref = bottom->getRepr() ;
         parent->getRepr()->changeOrder(getRepr(), ref);
     }
@@ -356,8 +341,8 @@ void SPItem::moveTo(SPItem *target, bool intoafter) {
         // Assume move to the "first" in the top node, find the top node
         intoafter = false;
         SPObject* bottom = this->document->getObjectByRepr(our_ref->root())->firstChild();
-        while(!dynamic_cast<SPItem*>(bottom->next)){
-        	bottom=bottom->next;
+        while(!dynamic_cast<SPItem*>(bottom->getNext())){
+        	bottom = bottom->getNext();
         }
         target_ref = bottom->getRepr();
     }
@@ -710,9 +695,9 @@ Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     // so we need to add any children from the underlying object to the new repr
     if (flags & SP_OBJECT_WRITE_BUILD) {
         GSList *l = NULL;
-        for (SPObject *child = object->firstChild(); child != NULL; child = child->next ) {
-            if (dynamic_cast<SPTitle *>(child) || dynamic_cast<SPDesc *>(child)) {
-                Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
+        for (auto& child: object->children) {
+            if (dynamic_cast<SPTitle *>(&child) || dynamic_cast<SPDesc *>(&child)) {
+                Inkscape::XML::Node *crepr = child.updateRepr(xml_doc, NULL, flags);
                 if (crepr) {
                     l = g_slist_prepend (l, crepr);
                 }
@@ -724,9 +709,9 @@ Inkscape::XML::Node* SPItem::write(Inkscape::XML::Document *xml_doc, Inkscape::X
             l = g_slist_remove (l, l->data);
         }
     } else {
-        for (SPObject *child = object->firstChild() ; child != NULL; child = child->next ) {
-            if (dynamic_cast<SPTitle *>(child) || dynamic_cast<SPDesc *>(child)) {
-                child->updateRepr(flags);
+        for (auto& child: object->children) {
+            if (dynamic_cast<SPTitle *>(&child) || dynamic_cast<SPDesc *>(&child)) {
+                child.updateRepr(flags);
             }
         }
     }
@@ -933,12 +918,12 @@ unsigned int SPItem::pos_in_parent() const {
 
     unsigned int pos = 0;
 
-    for ( SPObject *iter = parent->firstChild() ; iter ; iter = iter->next) {
-        if (iter == this) {
+    for (auto& iter: parent->children) {
+        if (&iter == this) {
             return pos;
         }
 
-        if (dynamic_cast<SPItem *>(iter)) {
+        if (dynamic_cast<SPItem *>(&iter)) {
             pos++;
         }
     }
@@ -979,8 +964,8 @@ void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscap
     for (std::list<SPObject const *>::const_iterator o = clips_and_masks.begin(); o != clips_and_masks.end(); ++o) {
         if (*o) {
             // obj is a group object, the children are the actual clippers
-            for (SPObject *child = (*o)->children ; child ; child = child->next) {
-                SPItem *item = dynamic_cast<SPItem *>(child);
+            for(auto& child: (*o)->children) {
+                SPItem *item = dynamic_cast<SPItem *>(const_cast<SPObject*>(&child));
                 if (item) {
                     std::vector<Inkscape::SnapCandidatePoint> p_clip_or_mask;
                     // Please note the recursive call here!
@@ -1307,8 +1292,8 @@ void SPItem::adjust_stroke_width_recursive(double expansion)
 
 // A clone's child is the ghost of its original - we must not touch it, skip recursion
     if ( !dynamic_cast<SPUse *>(this) ) {
-        for ( SPObject *o = children; o; o = o->getNext() ) {
-            SPItem *item = dynamic_cast<SPItem *>(o);
+        for (auto& o: children) {
+            SPItem *item = dynamic_cast<SPItem *>(&o);
             if (item) {
                 item->adjust_stroke_width_recursive(expansion);
             }
@@ -1322,8 +1307,8 @@ void SPItem::freeze_stroke_width_recursive(bool freeze)
 
 // A clone's child is the ghost of its original - we must not touch it, skip recursion
     if ( !dynamic_cast<SPUse *>(this) ) {
-        for ( SPObject *o = children; o; o = o->getNext() ) {
-            SPItem *item = dynamic_cast<SPItem *>(o);
+        for (auto& o: children) {
+            SPItem *item = dynamic_cast<SPItem *>(&o);
             if (item) {
                 item->freeze_stroke_width_recursive(freeze);
             }
@@ -1342,10 +1327,10 @@ sp_item_adjust_rects_recursive(SPItem *item, Geom::Affine advertized_transform)
     	rect->compensateRxRy(advertized_transform);
     }
 
-    for (SPObject *o = item->children; o != NULL; o = o->next) {
-        SPItem *item = dynamic_cast<SPItem *>(o);
-        if (item) {
-            sp_item_adjust_rects_recursive(item, advertized_transform);
+    for(auto& o: item->children) {
+        SPItem *itm = dynamic_cast<SPItem *>(&o);
+        if (itm) {
+            sp_item_adjust_rects_recursive(itm, advertized_transform);
         }
     }
 }
@@ -1362,8 +1347,8 @@ void SPItem::adjust_paint_recursive (Geom::Affine advertized_transform, Geom::Af
 // also we do not recurse into clones, because a clone's child is the ghost of its original -
 // we must not touch it
     if (!(this && (dynamic_cast<SPText *>(this) || dynamic_cast<SPUse *>(this)))) {
-        for (SPObject *o = children; o != NULL; o = o->next) {
-            SPItem *item = dynamic_cast<SPItem *>(o);
+        for (auto& o: children) {
+            SPItem *item = dynamic_cast<SPItem *>(&o);
             if (item) {
 // At the level of the transformed item, t_ancestors is identity;
 // below it, it is the accmmulated chain of transforms from this level to the top level
@@ -1671,8 +1656,8 @@ SPItem const *sp_item_first_item_child(SPObject const *obj)
 SPItem *sp_item_first_item_child(SPObject *obj)
 {
     SPItem *child = 0;
-    for ( SPObject *iter = obj->firstChild() ; iter ; iter = iter->next ) {
-        SPItem *tmp = dynamic_cast<SPItem *>(iter);
+    for (auto& iter: obj->children) {
+        SPItem *tmp = dynamic_cast<SPItem *>(&iter);
         if ( tmp ) {
             child = tmp;
             break;

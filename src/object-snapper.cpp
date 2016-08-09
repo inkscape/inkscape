@@ -84,9 +84,9 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
     Geom::Rect bbox_to_snap_incl = bbox_to_snap; // _incl means: will include the snapper tolerance
     bbox_to_snap_incl.expandBy(getSnapperTolerance()); // see?
 
-    for ( SPObject *o = parent->firstChild(); o; o = o->getNext() ) {
+    for (auto& o: parent->children) {
         g_assert(dt != NULL);
-        SPItem *item = dynamic_cast<SPItem *>(o);
+        SPItem *item = dynamic_cast<SPItem *>(&o);
         if (item && !(dt->itemIsHidden(item) && !clip_or_mask)) {
             // Snapping to items in a locked layer is allowed
             // Don't snap to hidden objects, unless they're a clipped path or a mask
@@ -94,7 +94,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
             std::vector<SPItem const *>::const_iterator i;
             if (it != NULL) {
                 i = it->begin();
-                while (i != it->end() && *i != o) {
+                while (i != it->end() && *i != &o) {
                     ++i;
                 }
             }
@@ -116,7 +116,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                     }
 
                     if (dynamic_cast<SPGroup *>(item)) {
-                        _findCandidates(o, it, false, bbox_to_snap, clip_or_mask, additional_affine);
+                        _findCandidates(&o, it, false, bbox_to_snap, clip_or_mask, additional_affine);
                     } else {
                         Geom::OptRect bbox_of_item;
                         Preferences *prefs = Preferences::get();

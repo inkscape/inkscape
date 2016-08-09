@@ -186,10 +186,10 @@ Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View
 {
     SPDocument * current_document = view->doc();
 
-    std::vector<SPItem*> selected = ((SPDesktop *)view)->getSelection()->itemList();
+    auto selected = ((SPDesktop *) view)->getSelection()->items();
     Inkscape::XML::Node * first_select = NULL;
     if (!selected.empty()) {
-        first_select = selected[0]->getRepr();
+        first_select = selected.front()->getRepr();
     }
 
     return module->autogui(current_document, first_select, changeSignal);

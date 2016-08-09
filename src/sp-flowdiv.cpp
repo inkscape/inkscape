@@ -27,9 +27,9 @@ void SPFlowdiv::update(SPCtx *ctx, unsigned int flags) {
     childflags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList* l = NULL;
-    for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
     }
 
     l = g_slist_reverse(l);
@@ -65,9 +65,9 @@ void SPFlowdiv::modified(unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList *l = NULL;
-    for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
     }
 
     l = g_slist_reverse (l);
@@ -104,15 +104,15 @@ Inkscape::XML::Node* SPFlowdiv::write(Inkscape::XML::Document *xml_doc, Inkscape
 
         GSList *l = NULL;
 
-        for (SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
+        for (auto& child: children) {
             Inkscape::XML::Node* c_repr = NULL;
 
-            if ( SP_IS_FLOWTSPAN (child) ) {
-                c_repr = child->updateRepr(xml_doc, NULL, flags);
-            } else if ( SP_IS_FLOWPARA(child) ) {
-                c_repr = child->updateRepr(xml_doc, NULL, flags);
-            } else if ( SP_IS_STRING(child) ) {
-                c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
+            if ( SP_IS_FLOWTSPAN (&child) ) {
+                c_repr = child.updateRepr(xml_doc, NULL, flags);
+            } else if ( SP_IS_FLOWPARA(&child) ) {
+                c_repr = child.updateRepr(xml_doc, NULL, flags);
+            } else if ( SP_IS_STRING(&child) ) {
+                c_repr = xml_doc->createTextNode(SP_STRING(&child)->string.c_str());
             }
 
             if ( c_repr ) {
@@ -126,13 +126,13 @@ Inkscape::XML::Node* SPFlowdiv::write(Inkscape::XML::Document *xml_doc, Inkscape
             l = g_slist_remove(l, l->data);
         }
     } else {
-        for ( SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
-            if ( SP_IS_FLOWTSPAN (child) ) {
-                child->updateRepr(flags);
-            } else if ( SP_IS_FLOWPARA(child) ) {
-                child->updateRepr(flags);
-            } else if ( SP_IS_STRING(child) ) {
-                child->getRepr()->setContent(SP_STRING(child)->string.c_str());
+        for (auto& child: children) {
+            if ( SP_IS_FLOWTSPAN (&child) ) {
+                child.updateRepr(flags);
+            } else if ( SP_IS_FLOWPARA(&child) ) {
+                child.updateRepr(flags);
+            } else if ( SP_IS_STRING(&child) ) {
+                child.getRepr()->setContent(SP_STRING(&child)->string.c_str());
             }
         }
     }
@@ -168,9 +168,9 @@ void SPFlowtspan::update(SPCtx *ctx, unsigned int flags) {
     childflags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList* l = NULL;
-    for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
     }
 
     l = g_slist_reverse (l);
@@ -206,9 +206,9 @@ void SPFlowtspan::modified(unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList *l = NULL;
-    for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
     }
 
     l = g_slist_reverse (l);
@@ -242,15 +242,15 @@ Inkscape::XML::Node *SPFlowtspan::write(Inkscape::XML::Document *xml_doc, Inksca
 
         GSList *l = NULL;
 
-        for ( SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
+        for (auto& child: children) {
             Inkscape::XML::Node* c_repr = NULL;
 
-            if ( SP_IS_FLOWTSPAN(child) ) {
-                c_repr = child->updateRepr(xml_doc, NULL, flags);
-            } else if ( SP_IS_FLOWPARA(child) ) {
-                c_repr = child->updateRepr(xml_doc, NULL, flags);
-            } else if ( SP_IS_STRING(child) ) {
-                c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
+            if ( SP_IS_FLOWTSPAN(&child) ) {
+                c_repr = child.updateRepr(xml_doc, NULL, flags);
+            } else if ( SP_IS_FLOWPARA(&child) ) {
+                c_repr = child.updateRepr(xml_doc, NULL, flags);
+            } else if ( SP_IS_STRING(&child) ) {
+                c_repr = xml_doc->createTextNode(SP_STRING(&child)->string.c_str());
             }
 
             if ( c_repr ) {
@@ -264,13 +264,13 @@ Inkscape::XML::Node *SPFlowtspan::write(Inkscape::XML::Document *xml_doc, Inksca
             l = g_slist_remove(l, l->data);
         }
     } else {
-        for ( SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
-            if ( SP_IS_FLOWTSPAN(child) ) {
-                child->updateRepr(flags);
-            } else if ( SP_IS_FLOWPARA(child) ) {
-                child->updateRepr(flags);
-            } else if ( SP_IS_STRING(child) ) {
-                child->getRepr()->setContent(SP_STRING(child)->string.c_str());
+        for (auto& child: children) {
+            if ( SP_IS_FLOWTSPAN(&child) ) {
+                child.updateRepr(flags);
+            } else if ( SP_IS_FLOWPARA(&child) ) {
+                child.updateRepr(flags);
+            } else if ( SP_IS_STRING(&child) ) {
+                child.getRepr()->setContent(SP_STRING(&child)->string.c_str());
             }
         }
     }
@@ -307,9 +307,9 @@ void SPFlowpara::update(SPCtx *ctx, unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList* l = NULL;
-    for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
     }
 
     l = g_slist_reverse (l);
@@ -343,9 +343,9 @@ void SPFlowpara::modified(unsigned int flags) {
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     GSList *l = NULL;
-    for ( SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
     }
 
     l = g_slist_reverse (l);
@@ -379,15 +379,15 @@ Inkscape::XML::Node *SPFlowpara::write(Inkscape::XML::Document *xml_doc, Inkscap
 
         GSList *l = NULL;
 
-        for ( SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
+        for (auto& child: children) {
             Inkscape::XML::Node* c_repr = NULL;
 
-            if ( SP_IS_FLOWTSPAN(child) ) {
-                c_repr = child->updateRepr(xml_doc, NULL, flags);
-            } else if ( SP_IS_FLOWPARA(child) ) {
-                c_repr = child->updateRepr(xml_doc, NULL, flags);
-            } else if ( SP_IS_STRING(child) ) {
-                c_repr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
+            if ( SP_IS_FLOWTSPAN(&child) ) {
+                c_repr = child.updateRepr(xml_doc, NULL, flags);
+            } else if ( SP_IS_FLOWPARA(&child) ) {
+                c_repr = child.updateRepr(xml_doc, NULL, flags);
+            } else if ( SP_IS_STRING(&child) ) {
+                c_repr = xml_doc->createTextNode(SP_STRING(&child)->string.c_str());
             }
 
             if ( c_repr ) {
@@ -401,13 +401,13 @@ Inkscape::XML::Node *SPFlowpara::write(Inkscape::XML::Document *xml_doc, Inkscap
             l = g_slist_remove(l, l->data);
         }
     } else {
-        for ( SPObject* child = this->firstChild() ; child ; child = child->getNext() ) {
-            if ( SP_IS_FLOWTSPAN(child) ) {
-                child->updateRepr(flags);
-            } else if ( SP_IS_FLOWPARA(child) ) {
-                child->updateRepr(flags);
-            } else if ( SP_IS_STRING(child) ) {
-                child->getRepr()->setContent(SP_STRING(child)->string.c_str());
+        for (auto& child: children) {
+            if ( SP_IS_FLOWTSPAN(&child) ) {
+                child.updateRepr(flags);
+            } else if ( SP_IS_FLOWPARA(&child) ) {
+                child.updateRepr(flags);
+            } else if ( SP_IS_STRING(&child) ) {
+                child.getRepr()->setContent(SP_STRING(&child)->string.c_str());
             }
         }
     }

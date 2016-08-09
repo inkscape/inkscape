@@ -137,12 +137,8 @@ void SPMask::update(SPCtx* ctx, unsigned int flags) {
 	
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    std::vector<SPObject *> children = this->childList(false);
-    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();++child) {
-        sp_object_ref(*child);
-    }
-    
-    
+    std::vector<SPObject *> children = this->childList(true);
+
     for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();++child) {
         if (flags || ((*child)->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             (*child)->updateDisplay(ctx, flags);
@@ -171,11 +167,8 @@ void SPMask::modified(unsigned int flags) {
 	
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    std::vector<SPObject *> children = this->childList(false);
-    for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();++child) {
-        sp_object_ref(*child);
-    }
-    
+    std::vector<SPObject *> children = this->childList(true);
+
     for (std::vector<SPObject *>::const_iterator child = children.begin();child != children.end();++child) {
         if (flags || ((*child)->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             (*child)->emitModified(flags);
@@ -233,9 +226,9 @@ Inkscape::DrawingItem *SPMask::sp_mask_show(Inkscape::Drawing &drawing, unsigned
 	Inkscape::DrawingGroup *ai = new Inkscape::DrawingGroup(drawing);
 	this->display = sp_mask_view_new_prepend (this->display, key, ai);
 
-	for ( SPObject *child = this->firstChild() ; child; child = child->getNext() ) {
-		if (SP_IS_ITEM (child)) {
-			Inkscape::DrawingItem *ac = SP_ITEM (child)->invoke_show (drawing, key, SP_ITEM_REFERENCE_FLAGS);
+	for (auto& child: children) {
+		if (SP_IS_ITEM (&child)) {
+			Inkscape::DrawingItem *ac = SP_ITEM (&child)->invoke_show (drawing, key, SP_ITEM_REFERENCE_FLAGS);
 
 			if (ac) {
 				ai->prependChild(ac);
@@ -256,9 +249,9 @@ void SPMask::sp_mask_hide(unsigned int key) {
 	g_return_if_fail (this != NULL);
 	g_return_if_fail (SP_IS_MASK (this));
 
-	for ( SPObject *child = this->firstChild(); child; child = child->getNext()) {
-		if (SP_IS_ITEM (child)) {
-			SP_ITEM(child)->invoke_hide (key);
+	for (auto& child: children) {
+		if (SP_IS_ITEM (&child)) {
+			SP_ITEM(&child)->invoke_hide (key);
 		}
 	}
 

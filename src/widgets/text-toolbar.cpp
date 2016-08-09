@@ -374,8 +374,8 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 
     // move the x of all texts to preserve the same bbox
     Inkscape::Selection *selection = desktop->getSelection();
-    std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+    auto itemlist= selection->items();
+    for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
         if (SP_IS_TEXT(*i)) {
             SPItem *item = *i;
 
@@ -556,8 +556,8 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     // Only need to save for undo if a text item has been changed.
     Inkscape::Selection *selection = desktop->getSelection();
     bool modmade = false;
-    std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+    auto itemlist= selection->items();
+    for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
         if (SP_IS_TEXT (*i)) {
             modmade = true;
         }
@@ -621,7 +621,7 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::Selection *selection = desktop->getSelection();
-    std::vector<SPItem*> itemlist=selection->itemList();
+    auto itemlist = selection->items();
 
     // Convert between units
     if        ((unit->abbr == "" || unit->abbr == "em") && old_unit == SP_CSS_UNIT_EX) {
@@ -640,7 +640,7 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         // Convert absolute to relative... for the moment use average font-size
         double font_size = 0;
         int count = 0;
-        for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+        for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
             if (SP_IS_TEXT (*i)) {
                 double doc_scale = Geom::Affine((*i)->i2dt_affine()).descrim();
                 font_size += (*i)->style->font_size.computed * doc_scale;
@@ -669,7 +669,7 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         // Convert relative to absolute... for the moment use average font-size
         double font_size = 0;
         int count = 0;
-        for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+        for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
             if (SP_IS_TEXT (*i)) {
                 double doc_scale = Geom::Affine((*i)->i2dt_affine()).descrim();
                 font_size += (*i)->style->font_size.computed * doc_scale;
@@ -712,7 +712,7 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
 
     // Only need to save for undo if a text item has been changed.
     bool modmade = false;
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+    for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
         if (SP_IS_TEXT (*i)) {
             modmade = true;
         }
@@ -1116,8 +1116,8 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     // Only flowed text can be justified, only normal text can be kerned...
     // Find out if we have flowed text now so we can use it several places
     gboolean isFlow = false;
-    std::vector<SPItem*> itemlist=SP_ACTIVE_DESKTOP->getSelection()->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end(); ++i){
+    auto itemlist= SP_ACTIVE_DESKTOP->getSelection()->items();
+    for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
         // const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
         // std::cout << "    " << id << std::endl;
         if( SP_IS_FLOWTEXT(*i)) {

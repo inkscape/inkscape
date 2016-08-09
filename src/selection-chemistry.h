@@ -26,6 +26,7 @@ class SPDesktop;
 namespace Inkscape {
 
 class Selection;
+class ObjectSet;
 
 namespace LivePathEffect {
     class PathParam;
@@ -78,6 +79,11 @@ void sp_selection_group(Inkscape::Selection *selection, SPDesktop *desktop);
 void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop);
 void sp_selection_ungroup_pop_selection(Inkscape::Selection *selection, SPDesktop *desktop);
 
+void sp_object_set_raise(Inkscape::ObjectSet *set);
+void sp_object_set_raise_to_top(Inkscape::ObjectSet *set);
+void sp_object_set_lower(Inkscape::ObjectSet *set);
+void sp_object_set_lower_to_bottom(Inkscape::ObjectSet *set);
+
 void sp_selection_raise(Inkscape::Selection *selection, SPDesktop *desktop);
 void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *desktop);
 void sp_selection_lower(Inkscape::Selection *selection, SPDesktop *desktop);
@@ -103,14 +109,15 @@ void sp_selection_to_next_layer( SPDesktop *desktop, bool suppressDone = false )
 void sp_selection_to_prev_layer( SPDesktop *desktop, bool suppressDone = false );
 void sp_selection_to_layer( SPDesktop *desktop, SPObject *layer, bool suppressDone = false );
 
-void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine const &affine, bool set_i2d = true, bool compensate = true, bool adjust_transf_center = true);
-void sp_selection_remove_transform (SPDesktop *desktop);
-void sp_selection_scale_absolute (Inkscape::Selection *selection, double x0, double x1, double y0, double y1);
-void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point const &align, Geom::Scale const &scale);
-void sp_selection_rotate_relative (Inkscape::Selection *selection, Geom::Point const &center, double angle);
-void sp_selection_skew_relative (Inkscape::Selection *selection, Geom::Point const &align, double dx, double dy);
-void sp_selection_move_relative (Inkscape::Selection *selection, Geom::Point const &move, bool compensate = true);
-void sp_selection_move_relative (Inkscape::Selection *selection, double dx, double dy);
+void sp_object_set_apply_affine(Inkscape::ObjectSet *set, Geom::Affine const &affine, bool set_i2d = true,
+                                bool compensate = true, bool adjust_transf_center = true);
+void sp_object_set_remove_transform(SPDesktop *desktop);
+void sp_object_set_scale_absolute(Inkscape::ObjectSet *set, double x0, double x1, double y0, double y1);
+void sp_object_set_scale_relative(Inkscape::ObjectSet *set, Geom::Point const &align, Geom::Scale const &scale);
+void sp_object_set_rotate_relative(Inkscape::ObjectSet *set, Geom::Point const &center, double angle);
+void sp_object_set_skew_relative(Inkscape::ObjectSet *set, Geom::Point const &align, double dx, double dy);
+void sp_object_set_move_relative(Inkscape::ObjectSet *set, Geom::Point const &move, bool compensate = true);
+void sp_object_set_move_relative(Inkscape::ObjectSet *set, double dx, double dy);
 
 void sp_selection_rotate_90 (SPDesktop *desktop, bool ccw);
 void sp_selection_rotate (Inkscape::Selection *selection, double angle);
@@ -151,7 +158,7 @@ void scroll_to_show_item(SPDesktop *desktop, SPItem *item);
 void sp_undo (SPDesktop *desktop, SPDocument *doc);
 void sp_redo (SPDesktop *desktop, SPDocument *doc);
 
-void sp_selection_get_export_hints (Inkscape::Selection *selection, Glib::ustring &filename, float *xdpi, float *ydpi);
+void sp_object_set_get_export_hints(Inkscape::ObjectSet *set, Glib::ustring &filename, float *xdpi, float *ydpi);
 void sp_document_get_export_hints (SPDocument * doc, Glib::ustring &filename, float *xdpi, float *ydpi);
 
 void sp_selection_create_bitmap_copy (SPDesktop *desktop);

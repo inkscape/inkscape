@@ -102,7 +102,7 @@ void MeshTool::selection_changed(Inkscape::Selection* /*sel*/) {
         return;
     }
 
-    guint n_obj = selection->itemList().size();
+    guint n_obj = (guint) boost::distance(selection->items());
 
     if (!drag->isNonEmpty() || selection->isEmpty()) {
         return;
@@ -466,11 +466,11 @@ bool MeshTool::root_handler(GdkEvent* event) {
             if (over_line) {
                 // We take the first item in selection, because with doubleclick, the first click
                 // always resets selection to the single object under cursor
-                sp_mesh_context_split_near_point(this, selection->itemList()[0], this->mousepoint_doc, event->button.time);
+                sp_mesh_context_split_near_point(this, selection->items().front(), this->mousepoint_doc, event->button.time);
             } else {
                 // Create a new gradient with default coordinates.
-            	std::vector<SPItem*> items=selection->itemList();
-                for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();++i){
+            	auto items= selection->items();
+                for(auto i=items.begin();i!=items.end();++i){
                     SPItem *item = *i;
                     SPGradientType new_type = SP_GRADIENT_TYPE_MESH;
                     Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
@@ -944,7 +944,7 @@ static void sp_mesh_end_drag(MeshTool &rc) {
         } else {
             // Starting from empty space:
             // Sort items so that the topmost comes last
-        	std::vector<SPItem*> items(selection->itemList());
+        	std::vector<SPItem*> items(selection->items().begin(), selection->items().end());
             sort(items.begin(),items.end(),sp_item_repr_compare_position);
             // take topmost
             vector = sp_gradient_vector_for_object(document, desktop, SP_ITEM(items.back()), fill_or_stroke);
@@ -954,8 +954,8 @@ static void sp_mesh_end_drag(MeshTool &rc) {
         SPCSSAttr *css = sp_repr_css_attr_new();
         sp_repr_css_set_property(css, "fill-opacity", "1.0");
 
-        std::vector<SPItem*> items=selection->itemList();
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();++i){
+        auto items= selection->items();
+        for(auto i=items.begin();i!=items.end();++i){
 
             //FIXME: see above
             sp_repr_css_change_recursive((*i)->getRepr(), css, "style");
@@ -971,7 +971,7 @@ static void sp_mesh_end_drag(MeshTool &rc) {
 
         // status text; we do not track coords because this branch is run once, not all the time
         // during drag
-        int n_objects = selection->itemList().size();
+        int n_objects = (int) boost::distance(selection->items());
         rc.message_context->setF(Inkscape::NORMAL_MESSAGE,
                                   ngettext("<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle",
                                            "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle", n_objects),

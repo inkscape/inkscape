@@ -227,14 +227,14 @@ GSList *SpellCheck::allTextItems (SPObject *r, GSList *l, bool hidden, bool lock
         return l; // we're not interested in metadata
     }
 
-    for (SPObject *child = r->firstChild(); child; child = child->next) {
-        if (SP_IS_ITEM (child) && !child->cloned && !desktop->isLayer(SP_ITEM(child))) {
-                if ((hidden || !desktop->itemIsHidden(SP_ITEM(child))) && (locked || !SP_ITEM(child)->isLocked())) {
-                    if (SP_IS_TEXT(child) || SP_IS_FLOWTEXT(child))
-                        l = g_slist_prepend (l, child);
+    for (auto& child: r->children) {
+        if (SP_IS_ITEM (&child) && !child.cloned && !desktop->isLayer(SP_ITEM(&child))) {
+                if ((hidden || !desktop->itemIsHidden(SP_ITEM(&child))) && (locked || !SP_ITEM(&child)->isLocked())) {
+                    if (SP_IS_TEXT(&child) || SP_IS_FLOWTEXT(&child))
+                        l = g_slist_prepend (l, &child);
                 }
         }
-        l = allTextItems (child, l, hidden, locked);
+        l = allTextItems (&child, l, hidden, locked);
     }
     return l;
 }

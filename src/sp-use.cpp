@@ -435,27 +435,23 @@ void SPUse::move_compensate(Geom::Affine const *mp) {
     	//BUT move clippaths accordingly.
         //if clone has a clippath, move it accordingly
         if(clip_ref->getObject()){
-            SPObject *clip = clip_ref->getObject()->firstChild() ;
-            while(clip){
-            	SPItem *item = (SPItem*) clip;
+            for(auto& clip: clip_ref->getObject()->children){
+            	SPItem *item = (SPItem*) &clip;
             	if(item){
                     item->transform *= m;
                     Geom::Affine identity;
-                    item->doWriteTransform(clip->getRepr(),item->transform, &identity);
+                    item->doWriteTransform(clip.getRepr(),item->transform, &identity);
             	}
-                clip = clip->getNext();
             }
         }
         if(mask_ref->getObject()){
-            SPObject *mask = mask_ref->getObject()->firstChild() ;
-            while(mask){
-            	SPItem *item = (SPItem*) mask;
+            for(auto& mask: mask_ref->getObject()->children){
+            	SPItem *item = (SPItem*) &mask;
             	if(item){
                     item->transform *= m;
                     Geom::Affine identity;
-                    item->doWriteTransform(mask->getRepr(),item->transform, &identity);
+                    item->doWriteTransform(mask.getRepr(),item->transform, &identity);
             	}
-                mask = mask->getNext();
             }
         }
         return;
@@ -479,27 +475,23 @@ void SPUse::move_compensate(Geom::Affine const *mp) {
 
     //if clone has a clippath, move it accordingly
     if(clip_ref->getObject()){
-        SPObject *clip = clip_ref->getObject()->firstChild() ;
-        while(clip){
-        	SPItem *item = (SPItem*) clip;
+        for(auto& clip: clip_ref->getObject()->children){
+        	SPItem *item = (SPItem*) &clip;
         	if(item){
                 item->transform *= clone_move.inverse();
                 Geom::Affine identity;
-                item->doWriteTransform(clip->getRepr(),item->transform, &identity);
+                item->doWriteTransform(clip.getRepr(),item->transform, &identity);
         	}
-            clip = clip->getNext();
         }
     }
     if(mask_ref->getObject()){
-        SPObject *mask = mask_ref->getObject()->firstChild() ;
-        while(mask){
-        	SPItem *item = (SPItem*) mask;
+        for(auto& mask: mask_ref->getObject()->children){
+        	SPItem *item = (SPItem*) &mask;
         	if(item){
                 item->transform *= clone_move.inverse();
                 Geom::Affine identity;
-                item->doWriteTransform(mask->getRepr(),item->transform, &identity);
+                item->doWriteTransform(mask.getRepr(),item->transform, &identity);
         	}
-            mask = mask->getNext();
         }
     }
 

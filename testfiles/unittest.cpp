@@ -16,19 +16,6 @@
 #include "inkgc/gc-core.h"
 #include "inkscape.h"
 
-namespace {
-
-// Ensure that a known positive test works
-TEST(PreTest, WorldIsSane)
-{
-    EXPECT_EQ(4, 2 + 2);
-}
-
-// Example of type casting to avoid compile warnings.
-
-
-} // namespace
-
 int main(int argc, char **argv) {
 
     // setup general environment

@@ -67,9 +67,9 @@ void SPFlowtext::update(SPCtx* ctx, unsigned int flags) {
 
     GSList *l = NULL;
 
-    for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-        sp_object_ref(child);
-        l = g_slist_prepend(l, child);
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
     }
 
     l = g_slist_reverse(l);
@@ -130,9 +130,9 @@ void SPFlowtext::modified(unsigned int flags) {
         }
     }
 
-    for ( SPObject *o = this->firstChild() ; o ; o = o->getNext() ) {
-        if (dynamic_cast<SPFlowregion *>(o)) {
-            region = o;
+    for (auto& o: children) {
+        if (dynamic_cast<SPFlowregion *>(&o)) {
+            region = &o;
             break;
         }
     }
@@ -218,11 +218,11 @@ Inkscape::XML::Node* SPFlowtext::write(Inkscape::XML::Document* doc, Inkscape::X
 
         GSList *l = NULL;
 
-        for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
+        for (auto& child: children) {
             Inkscape::XML::Node *c_repr = NULL;
 
-            if ( dynamic_cast<SPFlowdiv *>(child) || dynamic_cast<SPFlowpara *>(child) || dynamic_cast<SPFlowregion *>(child) || dynamic_cast<SPFlowregionExclude *>(child)) {
-                c_repr = child->updateRepr(doc, NULL, flags);
+            if ( dynamic_cast<SPFlowdiv *>(&child) || dynamic_cast<SPFlowpara *>(&child) || dynamic_cast<SPFlowregion *>(&child) || dynamic_cast<SPFlowregionExclude *>(&child)) {
+                c_repr = child.updateRepr(doc, NULL, flags);
             }
 
             if ( c_repr ) {
@@ -236,9 +236,9 @@ Inkscape::XML::Node* SPFlowtext::write(Inkscape::XML::Document* doc, Inkscape::X
             l = g_slist_remove(l, l->data);
         }
     } else {
-        for (SPObject *child = this->firstChild() ; child ; child = child->getNext() ) {
-            if ( dynamic_cast<SPFlowdiv *>(child) || dynamic_cast<SPFlowpara *>(child) || dynamic_cast<SPFlowregion *>(child) || dynamic_cast<SPFlowregionExclude *>(child)) {
-                child->updateRepr(flags);
+        for (auto& child: children) {
+            if ( dynamic_cast<SPFlowdiv *>(&child) || dynamic_cast<SPFlowpara *>(&child) || dynamic_cast<SPFlowregion *>(&child) || dynamic_cast<SPFlowregionExclude *>(&child)) {
+                child.updateRepr(flags);
             }
         }
     }
@@ -385,8 +385,8 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
         *pending_line_break_object = NULL;
     }
 
-    for (SPObject *child = root->firstChild() ; child ; child = child->getNext() ) {
-        SPString *str = dynamic_cast<SPString *>(child);
+    for (auto& child: root->children) {
+        SPString *str = dynamic_cast<SPString *>(&child);
         if (str) {
             if (*pending_line_break_object) {
                 if (dynamic_cast<SPFlowregionbreak *>(*pending_line_break_object))
@@ -397,12 +397,12 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
                 *pending_line_break_object = NULL;
             }
             if (with_indent) {
-                layout.appendText(str->string, root->style, child, &pi);
+                layout.appendText(str->string, root->style, &child, &pi);
             } else {
-                layout.appendText(str->string, root->style, child);
+                layout.appendText(str->string, root->style, &child);
             }
         } else {
-            SPFlowregion *region = dynamic_cast<SPFlowregion *>(child);
+            SPFlowregion *region = dynamic_cast<SPFlowregion *>(&child);
             if (region) {
                 std::vector<Shape*> const &computed = region->computed;
                 for (std::vector<Shape*>::const_iterator it = computed.begin() ; it != computed.end() ; ++it) {
@@ -416,8 +416,8 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
                 }
             }
             //Xml Tree is being directly used while it shouldn't be.
-            else if (!dynamic_cast<SPFlowregionExclude *>(child) && !sp_repr_is_meta_element(child->getRepr())) {
-                _buildLayoutInput(child, exclusion_shape, shapes, pending_line_break_object);
+            else if (!dynamic_cast<SPFlowregionExclude *>(&child) && !sp_repr_is_meta_element(child.getRepr())) {
+                _buildLayoutInput(&child, exclusion_shape, shapes, pending_line_break_object);
             }
         }
     }
@@ -435,9 +435,9 @@ Shape* SPFlowtext::_buildExclusionShape() const
     Shape *shape = new Shape();
     Shape *shape_temp = new Shape();
 
-    for (SPObject *child = children ; child ; child = child->getNext() ) {
+    for (auto& child: children) {
         // RH: is it right that this shouldn't be recursive?
-        SPFlowregionExclude *c_child = dynamic_cast<SPFlowregionExclude *>(child);
+        SPFlowregionExclude *c_child = dynamic_cast<SPFlowregionExclude *>(const_cast<SPObject*>(&child));
         if ( c_child && c_child->computed && c_child->computed->hasEdges() ) {
             if (shape->hasEdges()) {
                 shape_temp->Booleen(shape, c_child->computed, bool_op_union);
@@ -588,9 +588,9 @@ SPItem *SPFlowtext::get_frame(SPItem const *after)
     SPItem *frame = 0;
 
     SPObject *region = 0;
-    for (SPObject *o = firstChild() ; o ; o = o->getNext() ) {
-        if (dynamic_cast<SPFlowregion *>(o)) {
-            region = o;
+    for (auto& o: children) {
+        if (dynamic_cast<SPFlowregion *>(&o)) {
+            region = &o;
             break;
         }
     }
@@ -598,8 +598,8 @@ SPItem *SPFlowtext::get_frame(SPItem const *after)
     if (region) {
         bool past = false;
 
-        for (SPObject *o = region->firstChild() ; o ; o = o->getNext() ) {
-            SPItem *item = dynamic_cast<SPItem *>(o);
+        for (auto& o: region->children) {
+            SPItem *item = dynamic_cast<SPItem *>(&o);
             if (item) {
                 if ( (after == NULL) || past ) {
                     frame = item;
@@ -702,9 +702,9 @@ Geom::Affine SPFlowtext::set_transform (Geom::Affine const &xform)
     }
 
     SPObject *region = NULL;
-    for ( SPObject *o = this->firstChild() ; o ; o = o->getNext() ) {
-        if (dynamic_cast<SPFlowregion *>(o)) {
-            region = o;
+    for (auto& o: children) {
+        if (dynamic_cast<SPFlowregion *>(&o)) {
+            region = &o;
             break;
         }
     }

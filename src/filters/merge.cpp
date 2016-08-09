@@ -92,17 +92,14 @@ void SPFeMerge::build_renderer(Inkscape::Filters::Filter* filter) {
 
     sp_filter_primitive_renderer_common(this, nr_primitive);
 
-    SPObject *input = this->children;
     int in_nr = 0;
 
-    while (input) {
-        if (SP_IS_FEMERGENODE(input)) {
-            SPFeMergeNode *node = SP_FEMERGENODE(input);
+    for(auto& input: children) {
+        if (SP_IS_FEMERGENODE(&input)) {
+            SPFeMergeNode *node = SP_FEMERGENODE(&input);
             nr_merge->set_input(in_nr, node->input);
             in_nr++;
         }
-
-        input = input->next;
     }
 }
 

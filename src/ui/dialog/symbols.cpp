@@ -432,11 +432,6 @@ void SymbolsDialog::iconChanged() {
   SPObject* symbol = symbolDocument->getObjectById(symbol_id);
 
   if( symbol ) {
-    if( symbolDocument == currentDocument ) {
-      // Select the symbol on the canvas so it can be manipulated
-      currentDesktop->selection->set( symbol, false );
-    }
-
     // Find style for use in <use>
     // First look for default style stored in <symbol>
     gchar const* style = symbol->getAttribute("inkscape:symbol-style");
@@ -619,8 +614,8 @@ GSList* SymbolsDialog::symbols_in_doc_recursive (SPObject *r, GSList *l)
     l = g_slist_prepend (l, r);
   }
 
-  for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
-    l = symbols_in_doc_recursive( child, l );
+  for (auto& child: r->children) {
+    l = symbols_in_doc_recursive( &child, l );
   }
 
   return l;
@@ -641,8 +636,8 @@ GSList* SymbolsDialog::use_in_doc_recursive (SPObject *r, GSList *l)
     l = g_slist_prepend (l, r);
   }
 
-  for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
-    l = use_in_doc_recursive( child, l );
+  for (auto& child: r->children) {
+    l = use_in_doc_recursive( &child, l );
   }
 
   return l;

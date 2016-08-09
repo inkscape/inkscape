@@ -986,13 +986,12 @@ void CairoRenderContext::popState(void)
 
 static bool pattern_hasItemChildren(SPPattern *pat)
 {
-    bool hasItems = false;
-    for ( SPObject *child = pat->firstChild() ; child && !hasItems; child = child->getNext() ) {
-        if (SP_IS_ITEM (child)) {
-            hasItems = true;
+    for (auto& child: pat->children) {
+        if (SP_IS_ITEM (&child)) {
+            return true;
         }
     }
-    return hasItems;
+    return false;
 }
 
 cairo_pattern_t*
@@ -1087,10 +1086,10 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     // show items and render them
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         if (pat_i && SP_IS_OBJECT(pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
-            for ( SPObject *child = pat_i->firstChild() ; child; child = child->getNext() ) {
-                if (SP_IS_ITEM(child)) {
-                    SP_ITEM(child)->invoke_show(drawing, dkey, SP_ITEM_REFERENCE_FLAGS);
-                    _renderer->renderItem(pattern_ctx, SP_ITEM(child));
+            for (auto& child: pat_i->children) {
+                if (SP_IS_ITEM(&child)) {
+                    SP_ITEM(&child)->invoke_show(drawing, dkey, SP_ITEM_REFERENCE_FLAGS);
+                    _renderer->renderItem(pattern_ctx, SP_ITEM(&child));
                 }
             }
             break; // do not go further up the chain if children are found
@@ -1116,9 +1115,9 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     // hide all items
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         if (pat_i && SP_IS_OBJECT(pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
-            for ( SPObject *child = pat_i->firstChild() ; child; child = child->getNext() ) {
-                if (SP_IS_ITEM(child)) {
-                    SP_ITEM(child)->invoke_hide(dkey);
+            for (auto& child: pat_i->children) {
+                if (SP_IS_ITEM(&child)) {
+                    SP_ITEM(&child)->invoke_hide(dkey);
                 }
             }
             break; // do not go further up the chain if children are found

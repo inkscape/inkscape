@@ -740,22 +740,22 @@ std::vector<SPItem*> &Find::all_items (SPObject *r, std::vector<SPItem*> &l, boo
         return l; // we're not interested in metadata
     }
 
-    for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
-        SPItem *item = dynamic_cast<SPItem *>(child);
-        if (item && !child->cloned && !desktop->isLayer(item)) {
+    for (auto& child: r->children) {
+        SPItem *item = dynamic_cast<SPItem *>(&child);
+        if (item && !child.cloned && !desktop->isLayer(item)) {
             if ((hidden || !desktop->itemIsHidden(item)) && (locked || !item->isLocked())) {
-                l.insert(l.begin(),(SPItem*)child);
+                l.insert(l.begin(),(SPItem*)&child);
             }
         }
-        l = all_items (child, l, hidden, locked);
+        l = all_items (&child, l, hidden, locked);
     }
     return l;
 }
 
 std::vector<SPItem*> &Find::all_selection_items (Inkscape::Selection *s, std::vector<SPItem*> &l, SPObject *ancestor, bool hidden, bool locked)
 {
-	std::vector<SPItem*> itemlist=s->itemList();
-    for(std::vector<SPItem*>::const_reverse_iterator i=itemlist.rbegin(); itemlist.rend() != i; ++i) {
+	auto itemlist= s->items();
+    for(auto i=boost::rbegin(itemlist); boost::rend(itemlist) != i; ++i) {
         SPObject *obj = *i;
         SPItem *item = dynamic_cast<SPItem *>(obj);
         g_assert(item != NULL);

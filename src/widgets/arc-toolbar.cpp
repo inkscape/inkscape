@@ -96,8 +96,8 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name, NULL);
 
     bool modmade = false;
-    std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    auto itemlist= desktop->getSelection()->items();
+    for(auto i=itemlist.begin();i!=itemlist.end();++i){
         SPItem *item = *i;
         if (SP_IS_GENERICELLIPSE(item)) {
 
@@ -162,8 +162,8 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
     bool modmade = false;
 
     if ( ege_select_one_action_get_active(act) != 0 ) {
-    	std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
-        for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    	auto itemlist= desktop->getSelection()->items();
+        for(auto i=itemlist.begin();i!=itemlist.end();++i){
             SPItem *item = *i;
             if (SP_IS_GENERICELLIPSE(item)) {
                 Inkscape::XML::Node *repr = item->getRepr();
@@ -173,8 +173,8 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
             }
         }
     } else {
-    	std::vector<SPItem*> itemlist=desktop->getSelection()->itemList();
-        for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    	auto itemlist= desktop->getSelection()->items();
+        for(auto i=itemlist.begin();i!=itemlist.end();++i){
             SPItem *item = *i;
             if (SP_IS_GENERICELLIPSE(item)) {
                 Inkscape::XML::Node *repr = item->getRepr();
@@ -263,8 +263,8 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
 
     purge_repr_listener( tbl, tbl );
 
-    std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    auto itemlist= selection->items();
+    for(auto i=itemlist.begin();i!=itemlist.end();++i){
         SPItem *item = *i;
         if (SP_IS_GENERICELLIPSE(item)) {
             n_selected++;

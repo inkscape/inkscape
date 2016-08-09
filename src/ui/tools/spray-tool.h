@@ -13,6 +13,7 @@
  *   Vincent MONTAGNE
  *   Pierre BARBRY-BLOT
  *   Jabiertxo ARRAIZA
+ *   Adrian Boguszewski
  *
  * Copyright (C) 2009 authors
  *
@@ -120,8 +121,14 @@ public:
 
     virtual const std::string& getPrefsPath();
 
-
     void update_cursor(bool /*with_shift*/);
+
+    ObjectSet* objectSet() {
+        return &object_set;
+    }
+
+private:
+    ObjectSet object_set;
 };
 
 }

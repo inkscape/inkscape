@@ -632,16 +632,16 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
 
     guint max_column = 0;
     guint irow = 0; // Corresponds to top of patch being read in.
-    for ( SPObject *ro = mg->firstChild() ; ro ; ro = ro->getNext() ) {
+    for (auto& ro: mg->children) {
 
-        if (SP_IS_MESHROW(ro)) {
+        if (SP_IS_MESHROW(&ro)) {
 
             guint icolumn = 0; // Corresponds to left of patch being read in.
-            for ( SPObject *po = ro->firstChild() ; po ; po = po->getNext() ) {
+            for (auto& po: ro.children) {
 
-                if (SP_IS_MESHPATCH(po)) {
+                if (SP_IS_MESHPATCH(&po)) {
 
-                    SPMeshpatch *patch = SP_MESHPATCH(po);
+                    SPMeshpatch *patch = SP_MESHPATCH(&po);
 
                     // std::cout << "SPMeshNodeArray::read: row size: " << nodes.size() << std::endl;
                     SPMeshPatchI new_patch( &nodes, irow, icolumn ); // Adds new nodes.
@@ -652,15 +652,15 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
                     // Only 'top' side defined for first row.
                     if( irow != 0 ) ++istop;
 
-                    for ( SPObject *so = po->firstChild() ; so ; so = so->getNext() ) {
-                        if (SP_IS_STOP(so)) {
+                    for (auto& so: po.children) {
+                        if (SP_IS_STOP(&so)) {
 
                             if( istop > 3 ) {
                                 // std::cout << " Mesh Gradient: Too many stops: " << istop << std::endl;
                                 break;
                             }
 
-                            SPStop *stop = SP_STOP(so);
+                            SPStop *stop = SP_STOP(&so);
 
                             // Handle top of first row.
                             if( istop == 0 && icolumn == 0 ) {
@@ -848,15 +848,15 @@ void SPMeshNodeArray::write( SPMesh *mg ) {
     // First we must delete reprs for old mesh rows and patches.
     GSList *descendant_reprs = NULL;
     GSList *descendant_objects = NULL;
-    for ( SPObject *row = mg->firstChild(); row; row = row->getNext() ) {
-        descendant_reprs   = g_slist_prepend (descendant_reprs,   row->getRepr());
-        descendant_objects = g_slist_prepend (descendant_objects, row           );
-        for ( SPObject *patch = row->firstChild(); patch; patch = patch->getNext() ) {
-            descendant_reprs   = g_slist_prepend (descendant_reprs,   patch->getRepr());
-            descendant_objects = g_slist_prepend (descendant_objects, patch           );
-            for ( SPObject *stop = patch->firstChild(); stop; stop = stop->getNext() ) {
-                descendant_reprs   = g_slist_prepend (descendant_reprs,   stop->getRepr());
-                descendant_objects = g_slist_prepend (descendant_objects, stop           );
+    for (auto& row: mg->children) {
+        descendant_reprs = g_slist_prepend (descendant_reprs, row.getRepr());
+        descendant_objects = g_slist_prepend (descendant_objects, &row);
+        for (auto& patch: row.children) {
+            descendant_reprs = g_slist_prepend (descendant_reprs, patch.getRepr());
+            descendant_objects = g_slist_prepend (descendant_objects, &patch);
+            for (auto& stop: patch.children) {
+                descendant_reprs = g_slist_prepend (descendant_reprs, stop.getRepr());
+                descendant_objects = g_slist_prepend (descendant_objects, &stop);
             }
         }
     }

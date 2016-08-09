@@ -501,9 +501,9 @@ sp_tref_convert_to_tspan(SPObject *obj)
     ////////////////////
     else {
         GSList *l = NULL;
-        for (SPObject *child = obj->firstChild() ; child != NULL ; child = child->getNext() ) {
-            sp_object_ref(child, obj);
-            l = g_slist_prepend (l, child);
+        for (auto& child: obj->children) {
+            sp_object_ref(&child, obj);
+            l = g_slist_prepend (l, &child);
         }
         l = g_slist_reverse (l);
         while (l) {

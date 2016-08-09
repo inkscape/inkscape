@@ -242,8 +242,10 @@ int sp_filter_primitive_read_result(SPFilterPrimitive *prim, gchar const *name)
  */
 int sp_filter_primitive_name_previous_out(SPFilterPrimitive *prim) {
     SPFilter *parent = SP_FILTER(prim->parent);
-    SPObject *i = parent->children;
-    while (i && i->next != prim) i = i->next;
+    SPObject *i = parent->firstChild();
+    while (i && i->getNext() != prim) {
+        i = i->getNext();
+    }
     if (i) {
         SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
         if (i_prim->image_out < 0) {

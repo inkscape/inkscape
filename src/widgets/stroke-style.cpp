@@ -473,8 +473,8 @@ void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw,
     //spw->updateMarkerHist(which);
 
     Inkscape::Selection *selection = spw->desktop->getSelection();
-    std::vector<SPItem*> itemlist=selection->itemList();
-    for(std::vector<SPItem*>::const_iterator i=itemlist.begin();i!=itemlist.end();++i){
+    auto itemlist= selection->items();
+    for(auto i=itemlist.begin();i!=itemlist.end();++i){
         SPItem *item = *i;
         if (!SP_IS_SHAPE(item) || SP_IS_RECT(item)) { // can't set marker to rect, until it's converted to using <path>
             continue;
@@ -934,7 +934,7 @@ StrokeStyle::updateLine()
     if (!sel || sel->isEmpty())
         return;
 
-    std::vector<SPItem*> const objects = sel->itemList();
+    std::vector<SPItem*> const objects(sel->items().begin(), sel->items().end());
     SPObject * const object = objects[0];
     SPStyle * const style = object->style;
 
@@ -990,7 +990,7 @@ StrokeStyle::scaleLine()
     
     SPDocument *document = desktop->getDocument();
     Inkscape::Selection *selection = desktop->getSelection();
-    std::vector<SPItem*> items=selection->itemList();
+    auto items= selection->items();
 
     /* TODO: Create some standardized method */
     SPCSSAttr *css = sp_repr_css_attr_new();
@@ -1005,7 +1005,7 @@ StrokeStyle::scaleLine()
         int ndash;
         dashSelector->get_dash(&ndash, &dash, &offset);
 
-        for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end();++i){
+        for(auto i=items.begin();i!=items.end();++i){
             /* Set stroke width */
             double width;
             if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {

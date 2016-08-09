@@ -73,9 +73,9 @@ void SPRoot::build(SPDocument *document, Inkscape::XML::Node *repr)
     SPGroup::build(document, repr);
 
     // Search for first <defs> node
-    for (SPObject *o = this->firstChild() ; o ; o = o->getNext()) {
-        if (SP_IS_DEFS(o)) {
-            this->defs = SP_DEFS(o);
+    for (auto& o: children) {
+        if (SP_IS_DEFS(&o)) {
+            this->defs = SP_DEFS(&o);
             break;
         }
     }
@@ -174,9 +174,9 @@ void SPRoot::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 
     if (co && SP_IS_DEFS(co)) {
         // We search for first <defs> node - it is not beautiful, but works
-        for (SPObject *c = this->firstChild() ; c ; c = c->getNext()) {
-            if (SP_IS_DEFS(c)) {
-                this->defs = SP_DEFS(c);
+        for (auto& c: children) {
+            if (SP_IS_DEFS(&c)) {
+                this->defs = SP_DEFS(&c);
                 break;
             }
         }
@@ -189,7 +189,8 @@ void SPRoot::remove_child(Inkscape::XML::Node *child)
         SPObject *iter = 0;
 
         // We search for first remaining <defs> node - it is not beautiful, but works
-        for (iter = this->firstChild() ; iter ; iter = iter->getNext()) {
+        for (auto& child: children) {
+            iter = &child;
             if (SP_IS_DEFS(iter) && (SPDefs *)iter != this->defs) {
                 this->defs = (SPDefs *)iter;
                 break;
