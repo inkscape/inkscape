@@ -66,7 +66,6 @@ static SPDocument *trace_doc = NULL;
 
 CloneTiler::CloneTiler () :
     UI::Widget::Panel ("", "/dialogs/clonetiler/", SP_VERB_DIALOG_CLONETILER),
-    dlg(NULL),
     desktop(NULL),
     deskTrack(),
     table_row_labels(NULL)
@@ -75,9 +74,7 @@ CloneTiler::CloneTiler () :
     contents->set_spacing(0);
     
     {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-
-        dlg = GTK_WIDGET(gobj());
+        auto prefs = Inkscape::Preferences::get();
 
         auto mainbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
         gtk_box_set_homogeneous(GTK_BOX(mainbox), FALSE);
@@ -769,15 +766,14 @@ CloneTiler::CloneTiler () :
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
 
             g_signal_connect(G_OBJECT(b), "toggled",
-                               G_CALLBACK(clonetiler_do_pick_toggled), (gpointer)dlg);
+                               G_CALLBACK(clonetiler_do_pick_toggled), (gpointer)this);
         }
 
         {
             auto vvb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
             gtk_box_set_homogeneous(GTK_BOX(vvb), FALSE);
             gtk_box_pack_start (GTK_BOX (vb), vvb, FALSE, FALSE, 0);
-            g_object_set_data (G_OBJECT(dlg), "dotrace", (gpointer) vvb);
-
+            _dotrace = vvb;
 
             {
                 GtkWidget *frame = gtk_frame_new (_("1. Pick from the drawing:"));
@@ -973,7 +969,7 @@ CloneTiler::CloneTiler () :
             {
                 auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
                 gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-                g_object_set_data (G_OBJECT(dlg), "rowscols", (gpointer) hb);
+                _rowscols = hb;
 
                 {
                     auto a = Gtk::Adjustment::create(0.0, 1, 500, 1, 10, 0);
@@ -1018,7 +1014,7 @@ CloneTiler::CloneTiler () :
             {
                 auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
                 gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-                g_object_set_data (G_OBJECT(dlg), "widthheight", (gpointer) hb);
+                _widthheight = hb;
 
                 // unitmenu
                 unit_menu = new Inkscape::UI::Widget::UnitMenu();
@@ -1081,7 +1077,7 @@ CloneTiler::CloneTiler () :
                 radio = gtk_radio_button_new_with_label (NULL, _("Rows, columns: "));
                 gtk_widget_set_tooltip_text (radio, _("Create the specified number of rows and columns"));
                 clonetiler_table_attach (table, radio, 0.0, 1, 1);
-                g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (clonetiler_switch_to_create), (gpointer) dlg);
+                g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (clonetiler_switch_to_create), (gpointer) this);
             }
             if (!prefs->getBool(prefs_path + "fillrect")) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
@@ -1091,7 +1087,7 @@ CloneTiler::CloneTiler () :
                 radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("Width, height: "));
                 gtk_widget_set_tooltip_text (radio, _("Fill the specified width and height with the tiling"));
                 clonetiler_table_attach (table, radio, 0.0, 2, 1);
-                g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (clonetiler_switch_to_fill), (gpointer) dlg);
+                g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (clonetiler_switch_to_fill), (gpointer) this);
             }
             if (prefs->getBool(prefs_path + "fillrect")) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
@@ -1122,7 +1118,7 @@ CloneTiler::CloneTiler () :
             gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
             gtk_box_pack_end (GTK_BOX (mainbox), hb, FALSE, FALSE, 0);
             GtkWidget *l = gtk_label_new("");
-            g_object_set_data (G_OBJECT(dlg), "status", (gpointer) l);
+            _status = l;
             gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
         }
 
@@ -1133,20 +1129,20 @@ CloneTiler::CloneTiler () :
             gtk_box_pack_start (GTK_BOX (mainbox), hb, FALSE, FALSE, 0);
 
             {
-                GtkWidget *b = gtk_button_new ();
-                GtkWidget *l = gtk_label_new ("");
-                gtk_label_set_markup_with_mnemonic (GTK_LABEL(l), _(" <b>_Create</b> "));
-                gtk_container_add (GTK_CONTAINER(b), l);
-                gtk_widget_set_tooltip_text (b, _("Create and tile the clones of the selection"));
-                g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (clonetiler_apply), dlg);
-                gtk_box_pack_end (GTK_BOX (hb), b, FALSE, FALSE, 0);
+                auto b = Gtk::manage(new Gtk::Button());
+                auto l = Gtk::manage(new Gtk::Label(""));
+                l->set_markup_with_mnemonic(_(" <b>_Create</b> "));
+                b->add(*l);
+                b->set_tooltip_text(_("Create and tile the clones of the selection"));
+                b->signal_clicked().connect(sigc::mem_fun(*this, &CloneTiler::apply));
+                gtk_box_pack_end (GTK_BOX (hb), GTK_WIDGET(b->gobj()), FALSE, FALSE, 0);
             }
 
             { // buttons which are enabled only when there are tiled clones
                 auto sb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
                 gtk_box_set_homogeneous(GTK_BOX(sb), FALSE);
                 gtk_box_pack_end (GTK_BOX (hb), sb, FALSE, FALSE, 0);
-                g_object_set_data (G_OBJECT(dlg), "buttons_on_tiles", (gpointer) sb);
+                _buttons_on_tiles = sb;
                 {
                     // TRANSLATORS: if a group of objects are "clumped" together, then they
                     //  are unevenly spread in the given amount of space - as shown in the
@@ -1160,28 +1156,26 @@ CloneTiler::CloneTiler () :
                 }
 
                 {
-                    GtkWidget *b = gtk_button_new_with_mnemonic (_(" Re_move "));
-                    gtk_widget_set_tooltip_text (b, _("Remove existing tiled clones of the selected object (siblings only)"));
-                    g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (clonetiler_remove), gpointer(dlg));
-                    gtk_box_pack_end (GTK_BOX (sb), b, FALSE, FALSE, 0);
+                    auto b = Gtk::manage(new Gtk::Button(_(" Re_move "), true));
+                    b->set_tooltip_text(_("Remove existing tiled clones of the selected object (siblings only)"));
+                    b->signal_clicked().connect(sigc::mem_fun(*this, &CloneTiler::on_remove_button_clicked));
+                    gtk_box_pack_end (GTK_BOX (sb), GTK_WIDGET(b->gobj()), FALSE, FALSE, 0);
                 }
 
                 // connect to global selection changed signal (so we can change desktops) and
                 // external_change (so we're not fooled by undo)
-                selectChangedConn = INKSCAPE.signal_selection_changed.connect(sigc::bind(sigc::ptr_fun(&CloneTiler::clonetiler_change_selection), dlg));
-                externChangedConn = INKSCAPE.signal_external_change.connect   (sigc::bind(sigc::ptr_fun(&CloneTiler::clonetiler_external_change), dlg));
-
-                g_signal_connect(G_OBJECT(dlg), "destroy", G_CALLBACK(clonetiler_disconnect_gsignal), this);
+                selectChangedConn = INKSCAPE.signal_selection_changed.connect(sigc::mem_fun(*this, &CloneTiler::change_selection));
+                externChangedConn = INKSCAPE.signal_external_change.connect(sigc::mem_fun(*this, &CloneTiler::external_change));
 
                 // update now
-                clonetiler_change_selection (SP_ACTIVE_DESKTOP->getSelection(), dlg);
+                change_selection(SP_ACTIVE_DESKTOP->getSelection());
             }
 
             {
                 GtkWidget *b = gtk_button_new_with_mnemonic (_(" R_eset "));
                 // TRANSLATORS: "change" is a noun here
                 gtk_widget_set_tooltip_text (b, _("Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"));
-                g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (clonetiler_reset), dlg);
+                g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (clonetiler_reset), this);
                 gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
             }
         }
@@ -1199,8 +1193,9 @@ CloneTiler::CloneTiler () :
 CloneTiler::~CloneTiler (void)
 {
     //subselChangedConn.disconnect();
-    //selectChangedConn.disconnect();
     //selectModifiedConn.disconnect();
+    selectChangedConn.disconnect();
+    externChangedConn.disconnect();
     desktopChangeConn.disconnect();
     deskTrack.disconnect();
     color_changed_connection.disconnect();
@@ -1215,17 +1210,7 @@ void CloneTiler::setDesktop(SPDesktop *desktop)
 void CloneTiler::setTargetDesktop(SPDesktop *desktop)
 {
     if (this->desktop != desktop) {
-        if (this->desktop) {
-            //selectModifiedConn.disconnect();
-            //subselChangedConn.disconnect();
-            //selectChangedConn.disconnect();
-        }
         this->desktop = desktop;
-        if (desktop && desktop->selection) {
-            //selectChangedConn = desktop->selection->connectChanged(sigc::hide(sigc::mem_fun(*this, &CloneTiler::clonetiler_change_selection)));
-            //subselChangedConn = desktop->connectToolSubselectionChanged(sigc::hide(sigc::mem_fun(*this, &CloneTiler::clonetiler_change_selection)));
-            //selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &CloneTiler::clonetiler_change_selection)));
-        }
     }
 }
 
@@ -1245,47 +1230,35 @@ void CloneTiler::on_picker_color_changed(guint rgba)
     is_updating = false;
 }
 
-void CloneTiler::clonetiler_change_selection(Inkscape::Selection *selection, GtkWidget *dlg)
+void CloneTiler::change_selection(Inkscape::Selection *selection)
 {
-    GtkWidget *buttons = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "buttons_on_tiles"));
-    GtkWidget *status = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "status"));
-
     if (selection->isEmpty()) {
-        gtk_widget_set_sensitive (buttons, FALSE);
-        gtk_label_set_markup (GTK_LABEL(status), _("<small>Nothing selected.</small>"));
+        gtk_widget_set_sensitive (_buttons_on_tiles, FALSE);
+        gtk_label_set_markup (GTK_LABEL(_status), _("<small>Nothing selected.</small>"));
         return;
     }
 
     if (boost::distance(selection->items()) > 1) {
-        gtk_widget_set_sensitive (buttons, FALSE);
-        gtk_label_set_markup (GTK_LABEL(status), _("<small>More than one object selected.</small>"));
+        gtk_widget_set_sensitive (_buttons_on_tiles, FALSE);
+        gtk_label_set_markup (GTK_LABEL(_status), _("<small>More than one object selected.</small>"));
         return;
     }
 
     guint n = clonetiler_number_of_clones(selection->singleItem());
     if (n > 0) {
-        gtk_widget_set_sensitive (buttons, TRUE);
+        gtk_widget_set_sensitive (_buttons_on_tiles, TRUE);
         gchar *sta = g_strdup_printf (_("<small>Object has <b>%d</b> tiled clones.</small>"), n);
-        gtk_label_set_markup (GTK_LABEL(status), sta);
+        gtk_label_set_markup (GTK_LABEL(_status), sta);
         g_free (sta);
     } else {
-        gtk_widget_set_sensitive (buttons, FALSE);
-        gtk_label_set_markup (GTK_LABEL(status), _("<small>Object has no tiled clones.</small>"));
+        gtk_widget_set_sensitive (_buttons_on_tiles, FALSE);
+        gtk_label_set_markup (GTK_LABEL(_status), _("<small>Object has no tiled clones.</small>"));
     }
 }
 
-void CloneTiler::clonetiler_external_change(GtkWidget *dlg)
+void CloneTiler::external_change()
 {
-    clonetiler_change_selection (SP_ACTIVE_DESKTOP->getSelection(), dlg);
-}
-
-void CloneTiler::clonetiler_disconnect_gsignal(GObject *, gpointer source)
-{
-    g_return_if_fail(source != NULL);
-
-    CloneTiler* dlg = reinterpret_cast<CloneTiler*>(source);
-    dlg->selectChangedConn.disconnect();
-    dlg->externChangedConn.disconnect();
+    change_selection(SP_ACTIVE_DESKTOP->getSelection());
 }
 
 Geom::Affine CloneTiler::clonetiler_get_transform(
@@ -2032,7 +2005,7 @@ guint CloneTiler::clonetiler_number_of_clones(SPObject *obj)
     return n;
 }
 
-void CloneTiler::clonetiler_remove(GtkWidget */*widget*/, GtkWidget *dlg, bool do_undo/* = true*/)
+void CloneTiler::remove(bool do_undo/* = true*/)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) {
@@ -2064,7 +2037,7 @@ void CloneTiler::clonetiler_remove(GtkWidget */*widget*/, GtkWidget *dlg, bool d
     }
     g_slist_free (to_delete);
 
-    clonetiler_change_selection (selection, dlg);
+    change_selection (selection);
 
     if (do_undo) {
         DocumentUndo::done(desktop->getDocument(), SP_VERB_DIALOG_CLONETILER,
@@ -2104,7 +2077,7 @@ double CloneTiler::randomize01(double val, double rand)
 }
 
 
-void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
+void CloneTiler::apply()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) {
@@ -2129,9 +2102,8 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     desktop->setWaitingCursor();
 
     // set statusbar text
-    GtkWidget *status = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "status"));
-    gtk_label_set_markup (GTK_LABEL(status), _("<small>Creating tiled clones...</small>"));
-    gtk_widget_queue_draw(GTK_WIDGET(status));
+    gtk_label_set_markup (GTK_LABEL(_status), _("<small>Creating tiled clones...</small>"));
+    gtk_widget_queue_draw(GTK_WIDGET(_status));
     gdk_window_process_all_updates();
 
     SPObject *obj = selection->singleItem();
@@ -2144,7 +2116,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     const char *id_href = g_strdup_printf("#%s", obj_repr->attribute("id"));
     SPObject *parent = obj->parent;
 
-    clonetiler_remove (NULL, dlg, false);
+    remove(false);
 
     Geom::Scale scale = desktop->getDocument()->getDocumentScale().inverse();
     double scale_units = scale[Geom::X]; // Use just x direction....
@@ -2542,7 +2514,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
         clonetiler_trace_finish ();
     }
 
-    clonetiler_change_selection (selection, dlg);
+    change_selection(selection);
 
     desktop->clearWaitingCursor();
 

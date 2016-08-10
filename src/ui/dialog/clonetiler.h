@@ -41,7 +41,6 @@ protected:
     void clonetiler_table_attach(GtkWidget *table, GtkWidget *widget, float align, int row, int col);
 
     static void clonetiler_symgroup_changed(GtkComboBox *cb, gpointer /*data*/);
-    static void clonetiler_remove(GtkWidget */*widget*/, GtkWidget *dlg, bool do_undo = true);
     static void on_picker_color_changed(guint rgba);
     static void clonetiler_trace_hide_tiled_clones_recursively(SPObject *from);
     static void clonetiler_checkbox_toggled(GtkToggleButton *tb, gpointer *data);
@@ -55,11 +54,7 @@ protected:
     static void clonetiler_switch_to_create(GtkToggleButton */*tb*/, GtkWidget *dlg);
     static void clonetiler_switch_to_fill(GtkToggleButton */*tb*/, GtkWidget *dlg);
     static void clonetiler_keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/);
-    static void clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg);
     static void clonetiler_unclump(GtkWidget */*widget*/, void *);
-    static void clonetiler_change_selection(Inkscape::Selection *selection, GtkWidget *dlg);
-    static void clonetiler_external_change(GtkWidget *dlg);
-    static void clonetiler_disconnect_gsignal(GObject *widget, gpointer source);
     static void clonetiler_reset(GtkWidget */*widget*/, GtkWidget *dlg);
     static guint clonetiler_number_of_clones(SPObject *obj);
     static void clonetiler_trace_setup(SPDocument *doc, gdouble zoom, SPItem *original);
@@ -70,6 +65,12 @@ protected:
     static double randomize01(double val, double rand);
     static void clonetiler_value_changed(GtkAdjustment *adj, gpointer data);
     static void clonetiler_reset_recursive(GtkWidget *w);
+
+    void apply();
+    void change_selection(Inkscape::Selection *selection);
+    void external_change();
+    void remove(bool do_undo = true);
+    void on_remove_button_clicked() {remove();}
 
     static Geom::Affine clonetiler_get_transform(    // symmetry group
             int type,
@@ -112,7 +113,6 @@ private:
     CloneTiler(CloneTiler const &d);
     CloneTiler& operator=(CloneTiler const &d);
 
-    GtkWidget *dlg;
     GtkWidget *nb;
     GtkWidget *b;
     SPDesktop *desktop;
@@ -142,6 +142,12 @@ private:
      */
     void setTargetDesktop(SPDesktop *desktop);
 
+    // Variables that used to be set using GObject
+    GtkWidget *_buttons_on_tiles;
+    GtkWidget *_dotrace;
+    GtkWidget *_status;
+    GtkWidget *_rowscols;
+    GtkWidget *_widthheight;
 };
 
 
