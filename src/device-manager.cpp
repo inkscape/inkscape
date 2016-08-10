@@ -15,12 +15,16 @@
 
 #include <glibmm/regex.h>
 
-#include <gdkmm/devicemanager.h>
+#include <gtk/gtk.h>
+
 #include <gdkmm/display.h>
+#if GTK_CHECK_VERSION(3, 20, 0)
+# include <gdkmm/seat.h>
+#else
+# include <gdkmm/devicemanager.h>
+#endif
 
 #include <gtkmm/accelkey.h>
-
-#include <gtk/gtk.h>
 
 #define noDEBUG_VERBOSE 1
 
@@ -317,8 +321,13 @@ DeviceManagerImpl::DeviceManagerImpl() :
 {
     Glib::RefPtr<Gdk::Display> display = Gdk::Display::get_default();
 
+#if GTK_CHECK_VERSION(3, 20, 0)
+    auto seat = display->get_default_seat();
+    auto devList = seat->get_slaves(Gdk::SEAT_CAPABILITY_ALL);
+#else
     auto dm = display->get_device_manager();
     auto devList = dm->list_devices(Gdk::DEVICE_TYPE_SLAVE);	
+#endif
 
     if (fakeList.empty()) {
         createFakeList();
@@ -649,8 +658,13 @@ static void createFakeList() {
 
         // try to find the first *real* core pointer
         Glib::RefPtr<Gdk::Display> display = Gdk::Display::get_default();
+#if GTK_CHECK_VERSION(3, 20, 0)
+        auto seat = display->get_default_seat();
+        auto devList = seat->get_slaves(Gdk::SEAT_CAPABILITY_ALL);
+#else
         auto dm = display->get_device_manager();
         auto devList = dm->list_devices(Gdk::DEVICE_TYPE_SLAVE);	
+#endif
 
         // Set iterator to point at beginning of device list
         std::vector< Glib::RefPtr<Gdk::Device> >::iterator dev = devList.begin();

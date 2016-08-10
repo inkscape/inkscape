@@ -21,7 +21,12 @@
 #include "ui/dialog/guides.h"
 #include "desktop-events.h"
 
-#include <gdkmm/devicemanager.h>
+#include <gdkmm/display.h>
+#if GTK_CHECK_VERSION(3, 20, 0)
+# include <gdkmm/seat.h>
+#else
+# include <gdkmm/devicemanager.h>
+#endif
 
 #include <2geom/line.h>
 #include <2geom/angle.h>
@@ -596,8 +601,13 @@ static void init_extended()
     Glib::ustring avoidName("pad");
     auto display = Gdk::Display::get_default();
 
+#if GTK_CHECK_VERSION(3, 20, 0)
+    auto seat = display->get_default_seat();
+    auto const devices = seat->get_slaves(Gdk::SEAT_CAPABILITY_ALL);
+#else
     auto dm = display->get_device_manager();
     auto const devices = dm->list_devices(Gdk::DEVICE_TYPE_SLAVE);	
+#endif
     
     if ( !devices.empty() ) {
         for (auto const dev : devices) {

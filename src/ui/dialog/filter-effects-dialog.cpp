@@ -22,7 +22,12 @@
 #include "dialog-manager.h"
 #include <gtkmm/imagemenuitem.h>
 
-#include <gdkmm/devicemanager.h>
+#include <gdkmm/display.h>
+#if GTK_CHECK_VERSION(3, 20, 0)
+# include <gdkmm/seat.h>
+#else
+# include <gdkmm/devicemanager.h>
+#endif
 
 #include "ui/widget/spinbutton.h"
 
@@ -1966,8 +1971,13 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
         Gdk::ModifierType mask;
 
         auto display = get_bin_window()->get_display();
+#if GTK_CHECK_VERSION(3, 20, 0)
+        auto seat = display->get_default_seat();
+        auto device = seat->get_pointer();
+#else
         auto dm = display->get_device_manager();
         auto device = dm->get_client_pointer();
+#endif
         get_bin_window()->get_device_position(device, mx, my, mask);
 
         // Outline the bottom of the connection area
