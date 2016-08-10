@@ -16,6 +16,11 @@
 #include "ui/widget/color-picker.h"
 #include "sp-root.h"
 
+namespace Gtk {
+    class CheckButton;
+    class ToggleButton;
+}
+
 namespace Inkscape {
 namespace UI {
 
@@ -34,45 +39,47 @@ public:
     void show_page_trace();
 protected:
 
-    GtkWidget * clonetiler_new_tab(GtkWidget *nb, const gchar *label);
-    GtkWidget * clonetiler_table_x_y_rand(int values);
-    GtkWidget * clonetiler_spinbox(const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent = false);
-    GtkWidget * clonetiler_checkbox(const char *tip, const char *attr);
-    void clonetiler_table_attach(GtkWidget *table, GtkWidget *widget, float align, int row, int col);
+    GtkWidget * new_tab(GtkWidget *nb, const gchar *label);
+    GtkWidget * table_x_y_rand(int values);
+    GtkWidget * spinbox(const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent = false);
+    GtkWidget * checkbox(const char *tip, const char *attr);
+    void table_attach(GtkWidget *table, GtkWidget *widget, float align, int row, int col);
 
-    static void clonetiler_symgroup_changed(GtkComboBox *cb, gpointer /*data*/);
+    // TODO: Improve encapsulation by using SigC++ signal handling, and convert all of these into
+    // non-static member functions
+    static void symgroup_changed(GtkComboBox *cb, gpointer /*data*/);
     static void on_picker_color_changed(guint rgba);
-    static void clonetiler_trace_hide_tiled_clones_recursively(SPObject *from);
-    static void clonetiler_checkbox_toggled(GtkToggleButton *tb, gpointer *data);
-    static void clonetiler_pick_switched(GtkToggleButton */*tb*/, gpointer data);
-    static void clonetiler_do_pick_toggled(GtkToggleButton *tb, GtkWidget *dlg);
-    static void clonetiler_pick_to(GtkToggleButton *tb, gpointer data);
-    static void clonetiler_xy_changed(GtkAdjustment *adj, gpointer data);
-    static void clonetiler_fill_width_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u);
-    static void clonetiler_fill_height_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u);
-    void clonetiler_unit_changed();
-    static void clonetiler_switch_to_create(GtkToggleButton */*tb*/, GtkWidget *dlg);
-    static void clonetiler_switch_to_fill(GtkToggleButton */*tb*/, GtkWidget *dlg);
-    static void clonetiler_keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/);
-    static void clonetiler_unclump(GtkWidget */*widget*/, void *);
-    static void clonetiler_reset(GtkWidget */*widget*/, GtkWidget *dlg);
-    static guint clonetiler_number_of_clones(SPObject *obj);
-    static void clonetiler_trace_setup(SPDocument *doc, gdouble zoom, SPItem *original);
-    static guint32 clonetiler_trace_pick(Geom::Rect box);
-    static void clonetiler_trace_finish();
-    static bool clonetiler_is_a_clone_of(SPObject *tile, SPObject *obj);
+    static void trace_hide_tiled_clones_recursively(SPObject *from);
+    static void checkbox_toggled(GtkToggleButton *tb, gpointer *data);
+    static void pick_switched(GtkToggleButton */*tb*/, gpointer data);
+    static void pick_to(GtkToggleButton *tb, gpointer data);
+    static void xy_changed(GtkAdjustment *adj, gpointer data);
+    static void fill_width_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u);
+    static void fill_height_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u);
+    static void switch_to_create(GtkToggleButton */*tb*/, GtkWidget *dlg);
+    static void switch_to_fill(GtkToggleButton */*tb*/, GtkWidget *dlg);
+    static void keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/);
+    static void unclump(GtkWidget */*widget*/, void *);
+    static void reset(GtkWidget */*widget*/, GtkWidget *dlg);
+    static guint number_of_clones(SPObject *obj);
+    static void trace_setup(SPDocument *doc, gdouble zoom, SPItem *original);
+    static guint32 trace_pick(Geom::Rect box);
+    static void trace_finish();
+    static bool is_a_clone_of(SPObject *tile, SPObject *obj);
     static Geom::Rect transform_rect(Geom::Rect const &r, Geom::Affine const &m);
     static double randomize01(double val, double rand);
-    static void clonetiler_value_changed(GtkAdjustment *adj, gpointer data);
-    static void clonetiler_reset_recursive(GtkWidget *w);
+    static void value_changed(GtkAdjustment *adj, gpointer data);
+    static void reset_recursive(GtkWidget *w);
 
     void apply();
     void change_selection(Inkscape::Selection *selection);
+    void do_pick_toggled(Gtk::ToggleButton *tb);
     void external_change();
     void remove(bool do_undo = true);
     void on_remove_button_clicked() {remove();}
+    void unit_changed();
 
-    static Geom::Affine clonetiler_get_transform(    // symmetry group
+    static Geom::Affine get_transform(    // symmetry group
             int type,
 
             // row, column
@@ -113,8 +120,8 @@ private:
     CloneTiler(CloneTiler const &d);
     CloneTiler& operator=(CloneTiler const &d);
 
+    Gtk::CheckButton *_b;
     GtkWidget *nb;
-    GtkWidget *b;
     SPDesktop *desktop;
     DesktopTracker deskTrack;
     Inkscape::UI::Widget::ColorPicker *color_picker;
