@@ -57,7 +57,7 @@ protected:
     void switch_to_create();
     void switch_to_fill();
     void keep_bbox_toggled();
-    static void unclump(GtkWidget */*widget*/, void *);
+    void unclump();
     static void reset(GtkWidget */*widget*/, GtkWidget *dlg);
     static guint number_of_clones(SPObject *obj);
     static void trace_setup(SPDocument *doc, gdouble zoom, SPItem *original);

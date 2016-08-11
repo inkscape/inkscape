@@ -1141,10 +1141,10 @@ CloneTiler::CloneTiler () :
                     //  diagrams on the left in the following screenshot:
                     //  http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
                     //  So unclumping is the process of spreading a number of objects out more evenly.
-                    GtkWidget *b = gtk_button_new_with_mnemonic (_(" _Unclump "));
-                    gtk_widget_set_tooltip_text (b, _("Spread out clones to reduce clumping; can be applied repeatedly"));
-                    g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (unclump), NULL);
-                    gtk_box_pack_end (GTK_BOX (sb), b, FALSE, FALSE, 0);
+                    auto b = Gtk::manage(new Gtk::Button(_(" _Unclump "), true));
+                    b->set_tooltip_text(_("Spread out clones to reduce clumping; can be applied repeatedly"));
+                    b->signal_clicked().connect(sigc::mem_fun(*this, &CloneTiler::unclump));
+                    gtk_box_pack_end (GTK_BOX (sb), GTK_WIDGET(b->gobj()), FALSE, FALSE, 0);
                 }
 
                 {
@@ -1948,14 +1948,14 @@ void CloneTiler::trace_finish()
     }
 }
 
-void CloneTiler::unclump(GtkWidget */*widget*/, void *)
+void CloneTiler::unclump()
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    auto desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) {
         return;
     }
 
-    Inkscape::Selection *selection = desktop->getSelection();
+    auto selection = desktop->getSelection();
 
     // check if something is selected
     if (selection->isEmpty() || boost::distance(selection->items()) > 1) {
@@ -1963,8 +1963,8 @@ void CloneTiler::unclump(GtkWidget */*widget*/, void *)
         return;
     }
 
-    SPObject *obj = selection->singleItem();
-    SPObject *parent = obj->parent;
+    auto obj = selection->singleItem();
+    auto parent = obj->parent;
 
     std::vector<SPItem*> to_unclump; // not including the original
 
