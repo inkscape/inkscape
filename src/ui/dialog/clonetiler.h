@@ -54,11 +54,9 @@ protected:
     static void pick_switched(GtkToggleButton */*tb*/, gpointer data);
     static void pick_to(GtkToggleButton *tb, gpointer data);
     static void xy_changed(GtkAdjustment *adj, gpointer data);
-    static void fill_width_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u);
-    static void fill_height_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u);
-    static void switch_to_create(GtkToggleButton */*tb*/, GtkWidget *dlg);
-    static void switch_to_fill(GtkToggleButton */*tb*/, GtkWidget *dlg);
-    static void keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/);
+    void switch_to_create();
+    void switch_to_fill();
+    void keep_bbox_toggled();
     static void unclump(GtkWidget */*widget*/, void *);
     static void reset(GtkWidget */*widget*/, GtkWidget *dlg);
     static guint number_of_clones(SPObject *obj);
@@ -73,8 +71,10 @@ protected:
 
     void apply();
     void change_selection(Inkscape::Selection *selection);
-    void do_pick_toggled(Gtk::ToggleButton *tb);
+    void do_pick_toggled();
     void external_change();
+    void fill_width_changed();
+    void fill_height_changed();
     void remove(bool do_undo = true);
     void on_remove_button_clicked() {remove();}
     void unit_changed();
@@ -121,6 +121,7 @@ private:
     CloneTiler& operator=(CloneTiler const &d);
 
     Gtk::CheckButton *_b;
+    Gtk::CheckButton *_cb_keep_bbox;
     GtkWidget *nb;
     SPDesktop *desktop;
     DesktopTracker deskTrack;
@@ -153,8 +154,8 @@ private:
     GtkWidget *_buttons_on_tiles;
     GtkWidget *_dotrace;
     GtkWidget *_status;
-    GtkWidget *_rowscols;
-    GtkWidget *_widthheight;
+    Gtk::Box *_rowscols;
+    Gtk::Box *_widthheight;
 };
 
 

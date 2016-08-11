@@ -25,6 +25,7 @@
 
 #include <gtkmm/adjustment.h>
 #include <gtkmm/checkbutton.h>
+#include <gtkmm/radiobutton.h>
 
 #include "desktop.h"
 
@@ -766,7 +767,7 @@ CloneTiler::CloneTiler () :
             _b->set_active(old);
             _b->set_tooltip_text(_("For each clone/sprayed item, pick a value from the drawing in its location and apply it"));
             gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(_b->gobj()), FALSE, FALSE, 0);
-            _b->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::do_pick_toggled),_b));
+            _b->signal_toggled().connect(sigc::mem_fun(*this, &CloneTiler::do_pick_toggled));
         }
 
         {
@@ -967,9 +968,7 @@ CloneTiler::CloneTiler () :
             gtk_box_pack_start (GTK_BOX (mainbox), table, FALSE, FALSE, 0);
 
             {
-                auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
-                gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-                _rowscols = hb;
+                _rowscols = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, VB_MARGIN));
 
                 {
                     auto a = Gtk::Adjustment::create(0.0, 1, 500, 1, 10, 0);
@@ -979,7 +978,7 @@ CloneTiler::CloneTiler () :
                     auto sb = new Inkscape::UI::Widget::SpinButton(a, 1.0, 0);
                     sb->set_tooltip_text (_("How many rows in the tiling"));
                     sb->set_width_chars (7);
-                    gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(sb->gobj()), TRUE, TRUE, 0);
+                    _rowscols->pack_start(*sb, true, true, 0);
 
                     // TODO: C++ification
                     g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
@@ -987,10 +986,10 @@ CloneTiler::CloneTiler () :
                 }
 
                 {
-                    GtkWidget *l = gtk_label_new ("");
-                    gtk_label_set_markup (GTK_LABEL(l), "&#215;");
-                    gtk_widget_set_halign(l, GTK_ALIGN_END);
-                    gtk_box_pack_start (GTK_BOX (hb), l, TRUE, TRUE, 0);
+                    auto l = Gtk::manage(new Gtk::Label(""));
+                    l->set_markup("&#215;");
+                    l->set_halign(Gtk::ALIGN_END);
+                    _rowscols->pack_start(*l, true, true, 0);
                 }
 
                 {
@@ -1001,20 +1000,18 @@ CloneTiler::CloneTiler () :
                     auto sb = new Inkscape::UI::Widget::SpinButton(a, 1.0, 0);
                     sb->set_tooltip_text (_("How many columns in the tiling"));
                     sb->set_width_chars (7);
-                    gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(sb->gobj()), TRUE, TRUE, 0);
+                    _rowscols->pack_start(*sb, true, true, 0);
 
                     // TODO: C++ification
                     g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
                                        G_CALLBACK(xy_changed), (gpointer) "imax");
                 }
 
-                table_attach (table, hb, 0.0, 1, 2);
+                table_attach (table, GTK_WIDGET(_rowscols->gobj()), 0.0, 1, 2);
             }
 
             {
-                auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
-                gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-                _widthheight = hb;
+                _widthheight = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, VB_MARGIN));
 
                 // unitmenu
                 unit_menu = new Inkscape::UI::Widget::UnitMenu();
@@ -1035,16 +1032,14 @@ CloneTiler::CloneTiler () :
                     e->set_tooltip_text (_("Width of the rectangle to be filled"));
                     e->set_width_chars (7);
                     e->set_digits (4);
-                    gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(e->gobj()), TRUE, TRUE, 0);
-                    // TODO: C++ification
-		    g_signal_connect(G_OBJECT(fill_width->gobj()), "value_changed",
-                                       G_CALLBACK(fill_width_changed), unit_menu);
+                    _widthheight->pack_start(*e, true, true, 0);
+                    fill_width->signal_value_changed().connect(sigc::mem_fun(*this, &CloneTiler::fill_width_changed));
                 }
                 {
-                    GtkWidget *l = gtk_label_new ("");
-                    gtk_label_set_markup (GTK_LABEL(l), "&#215;");
-                    gtk_widget_set_halign(l, GTK_ALIGN_END);
-                    gtk_box_pack_start (GTK_BOX (hb), l, TRUE, TRUE, 0);
+                    auto l = Gtk::manage(new Gtk::Label(""));
+                    l->set_markup("&#215;");
+                    l->set_halign(Gtk::ALIGN_END);
+                    _widthheight->pack_start(*l, true, true, 0);
                 }
 
                 {
@@ -1060,56 +1055,53 @@ CloneTiler::CloneTiler () :
                     e->set_tooltip_text (_("Height of the rectangle to be filled"));
                     e->set_width_chars (7);
                     e->set_digits (4);
-                    gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(e->gobj()), TRUE, TRUE, 0);
-                    // TODO: C++ification
-            g_signal_connect(G_OBJECT(fill_height->gobj()), "value_changed",
-                                       G_CALLBACK(fill_height_changed), unit_menu);
+                    _widthheight->pack_start(*e, true, true, 0);
+                    fill_height->signal_value_changed().connect(sigc::mem_fun(*this, &CloneTiler::fill_height_changed));
                 }
 
-                gtk_box_pack_start (GTK_BOX (hb), (GtkWidget*) unit_menu->gobj(), TRUE, TRUE, 0);
-                table_attach (table, hb, 0.0, 2, 2);
+                _widthheight->pack_start(*unit_menu, true, true, 0);
+                table_attach (table, GTK_WIDGET(_widthheight->gobj()), 0.0, 2, 2);
 
             }
 
             // Switch
-            GtkWidget* radio;
+            Gtk::RadioButtonGroup rb_group;
             {
-                radio = gtk_radio_button_new_with_label (NULL, _("Rows, columns: "));
-                gtk_widget_set_tooltip_text (radio, _("Create the specified number of rows and columns"));
-                table_attach (table, radio, 0.0, 1, 1);
-                g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (switch_to_create), (gpointer) this);
-            }
-            if (!prefs->getBool(prefs_path + "fillrect")) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
-                gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (radio));
+                auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, _("Rows, columns: ")));
+                radio->set_tooltip_text(_("Create the specified number of rows and columns"));
+                table_attach (table, GTK_WIDGET(radio->gobj()), 0.0, 1, 1);
+                radio->signal_toggled().connect(sigc::mem_fun(*this, &CloneTiler::switch_to_create));
+
+                if (!prefs->getBool(prefs_path + "fillrect")) {
+                    radio->set_active(true);
+                }
             }
             {
-                radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("Width, height: "));
-                gtk_widget_set_tooltip_text (radio, _("Fill the specified width and height with the tiling"));
-                table_attach (table, radio, 0.0, 2, 1);
-                g_signal_connect (G_OBJECT (radio), "toggled", G_CALLBACK (switch_to_fill), (gpointer) this);
-            }
-            if (prefs->getBool(prefs_path + "fillrect")) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
-                gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (radio));
+                auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, _("Width, height: ")));
+                radio->set_tooltip_text(_("Fill the specified width and height with the tiling"));
+                table_attach (table, GTK_WIDGET(radio->gobj()), 0.0, 2, 1);
+                radio->signal_toggled().connect(sigc::mem_fun(*this, &CloneTiler::switch_to_fill));
+            
+                if (prefs->getBool(prefs_path + "fillrect")) {
+                    radio->set_active(true);
+                }
             }
         }
 
 
         // Use saved pos
         {
-            auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
-            gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-            gtk_box_pack_start (GTK_BOX (mainbox), hb, FALSE, FALSE, 0);
+            auto hb = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, VB_MARGIN));
+            gtk_box_pack_start (GTK_BOX (mainbox), GTK_WIDGET(hb->gobj()), FALSE, FALSE, 0);
 
-            GtkWidget *b  = gtk_check_button_new_with_label (_("Use saved size and position of the tile"));
-            bool keepbbox = prefs->getBool(prefs_path + "keepbbox", true);
-            gtk_toggle_button_set_active ((GtkToggleButton *) b, keepbbox);
-            gtk_widget_set_tooltip_text (b, _("Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"));
-            gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
-
-            g_signal_connect(G_OBJECT(b), "toggled",
-                               G_CALLBACK(keep_bbox_toggled), NULL);
+            _cb_keep_bbox = Gtk::manage(new Gtk::CheckButton(_("Use saved size and position of the tile")));
+            auto keepbbox = prefs->getBool(prefs_path + "keepbbox", true);
+            _cb_keep_bbox->set_active(keepbbox);
+            _cb_keep_bbox->set_tooltip_text(_("Pretend that the size and position of the tile are the same "
+                                              "as the last time you tiled it (if any), instead of using the "
+                                              "current size"));
+            hb->pack_start(*_cb_keep_bbox, false, false, 0);
+            _cb_keep_bbox->signal_toggled().connect(sigc::mem_fun(*this, &CloneTiler::keep_bbox_toggled));
         }
 
         // Statusbar
@@ -2631,10 +2623,10 @@ void CloneTiler::xy_changed(GtkAdjustment *adj, gpointer data)
     prefs->setInt(prefs_path + pref, (int) floor(gtk_adjustment_get_value (adj) + 0.5));
 }
 
-void CloneTiler::keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/)
+void CloneTiler::keep_bbox_toggled()
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setBool(prefs_path + "keepbbox", gtk_toggle_button_get_active(tb));
+    auto prefs = Inkscape::Preferences::get();
+    prefs->setBool(prefs_path + "keepbbox", _cb_keep_bbox->get_active());
 }
 
 void CloneTiler::pick_to(GtkToggleButton *tb, gpointer data)
@@ -2744,59 +2736,50 @@ void CloneTiler::pick_switched(GtkToggleButton */*tb*/, gpointer data)
 }
 
 
-void CloneTiler::switch_to_create(GtkToggleButton * /*tb*/, GtkWidget *dlg)
+void CloneTiler::switch_to_create()
 {
-    GtkWidget *rowscols = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "rowscols"));
-    GtkWidget *widthheight = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "widthheight"));
-
-    if (rowscols) {
-        gtk_widget_set_sensitive (rowscols, TRUE);
+    if (_rowscols) {
+        _rowscols->set_sensitive(true);
     }
-    if (widthheight) {
-        gtk_widget_set_sensitive (widthheight, FALSE);
+    if (_widthheight) {
+        _widthheight->set_sensitive(false);
     }
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    auto prefs = Inkscape::Preferences::get();
     prefs->setBool(prefs_path + "fillrect", false);
 }
 
 
-void CloneTiler::switch_to_fill(GtkToggleButton * /*tb*/, GtkWidget *dlg)
+void CloneTiler::switch_to_fill()
 {
-    GtkWidget *rowscols = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "rowscols"));
-    GtkWidget *widthheight = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "widthheight"));
-
-    if (rowscols) {
-        gtk_widget_set_sensitive (rowscols, FALSE);
+    if (_rowscols) {
+        _rowscols->set_sensitive(false);
     }
-    if (widthheight) {
-        gtk_widget_set_sensitive (widthheight, TRUE);
+    if (_widthheight) {
+        _widthheight->set_sensitive(true);
     }
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    auto prefs = Inkscape::Preferences::get();
     prefs->setBool(prefs_path + "fillrect", true);
 }
 
-
-
-
-void CloneTiler::fill_width_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u)
+void CloneTiler::fill_width_changed()
 {
-    gdouble const raw_dist = gtk_adjustment_get_value (adj);
-    Inkscape::Util::Unit const *unit = u->getUnit();
-    gdouble const pixels = Inkscape::Util::Quantity::convert(raw_dist, unit, "px");
+    auto const raw_dist = fill_width->get_value();
+    auto const unit     = unit_menu->getUnit();
+    auto const pixels   = Inkscape::Util::Quantity::convert(raw_dist, unit, "px");
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    auto prefs = Inkscape::Preferences::get();
     prefs->setDouble(prefs_path + "fillwidth", pixels);
 }
 
-void CloneTiler::fill_height_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u)
+void CloneTiler::fill_height_changed()
 {
-    gdouble const raw_dist = gtk_adjustment_get_value (adj);
-    Inkscape::Util::Unit const *unit = u->getUnit();
-    gdouble const pixels = Inkscape::Util::Quantity::convert(raw_dist, unit, "px");
+    auto const raw_dist = fill_height->get_value();
+    auto const unit     = unit_menu->getUnit();
+    auto const pixels   = Inkscape::Util::Quantity::convert(raw_dist, unit, "px");
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    auto prefs = Inkscape::Preferences::get();
     prefs->setDouble(prefs_path + "fillheight", pixels);
 }
 
@@ -2814,16 +2797,14 @@ void CloneTiler::unit_changed()
     gtk_adjustment_set_value(fill_height->gobj(), height_value);
 }
 
-void CloneTiler::do_pick_toggled(Gtk::ToggleButton *tb)
+void CloneTiler::do_pick_toggled()
 {
-    GtkWidget *vvb = GTK_WIDGET(_dotrace);
-
-    auto prefs = Inkscape::Preferences::get();
-    auto active = tb->get_active();
+    auto prefs  = Inkscape::Preferences::get();
+    auto active = _b->get_active();
     prefs->setBool(prefs_path + "dotrace", active);
 
-    if (vvb) {
-        gtk_widget_set_sensitive (vvb, active);
+    if (_dotrace) {
+        gtk_widget_set_sensitive (_dotrace, active);
     }
 }
 
