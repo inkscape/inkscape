@@ -21,28 +21,33 @@
 //#endif /* __cplusplus */
 
 #ifdef ENABLE_BINRELOC
-#  define INKSCAPE_APPICONDIR     BR_DATADIR( "/pixmaps" )
-#  define INKSCAPE_ATTRRELDIR     BR_DATADIR( "/inkscape/attributes" )
-#  define INKSCAPE_BINDDIR        BR_DATADIR( "/inkscape/bind" )
-#  define INKSCAPE_EXAMPLESDIR    BR_DATADIR( "/inkscape/examples" )
-#  define INKSCAPE_EXTENSIONDIR   BR_DATADIR( "/inkscape/extensions" )
-#  define INKSCAPE_FILTERDIR      BR_DATADIR( "/inkscape/filters" )
-#  define INKSCAPE_GRADIENTSDIR   BR_DATADIR( "/inkscape/gradients" )
-#  define INKSCAPE_KEYSDIR        BR_DATADIR( "/inkscape/keys" )
-#  define INKSCAPE_PIXMAPDIR      BR_DATADIR( "/inkscape/icons" )
-#  define INKSCAPE_MARKERSDIR     BR_DATADIR( "/inkscape/markers" )
-#  define INKSCAPE_PALETTESDIR    BR_DATADIR( "/inkscape/palettes" )
-#  define INKSCAPE_PATTERNSDIR    BR_DATADIR( "/inkscape/patterns" )
-#  define INKSCAPE_SCREENSDIR     BR_DATADIR( "/inkscape/screens" )
-#  define INKSCAPE_SYMBOLSDIR     BR_DATADIR( "/inkscape/symbols" )
-#  define INKSCAPE_THEMEDIR       BR_DATADIR( "/icons" )
-#  define INKSCAPE_TUTORIALSDIR   BR_DATADIR( "/inkscape/tutorials" )
-#  define INKSCAPE_TEMPLATESDIR   BR_DATADIR( "/inkscape/templates" )
-#  define INKSCAPE_UIDIR          BR_DATADIR( "/inkscape/ui" )
+/* The way that we're building now is with a shared library between Inkscape
+   and Inkview, and the code will find the path to the library then. But we
+   don't really want that. This prefix then pulls things out of the lib directory
+   and back into the root install dir. */
+#  define INKSCAPE_LIBPREFIX      "/../.."
+#  define INKSCAPE_APPICONDIR     BR_DATADIR( INKSCAPE_LIBPREFIX "/share/pixmaps" )
+#  define INKSCAPE_ATTRRELDIR     BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/attributes" )
+#  define INKSCAPE_BINDDIR        BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/bind" )
+#  define INKSCAPE_EXAMPLESDIR    BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/examples" )
+#  define INKSCAPE_EXTENSIONDIR   BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/extensions" )
+#  define INKSCAPE_FILTERDIR      BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/filters" )
+#  define INKSCAPE_GRADIENTSDIR   BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/gradients" )
+#  define INKSCAPE_KEYSDIR        BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/keys" )
+#  define INKSCAPE_PIXMAPDIR      BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/icons" )
+#  define INKSCAPE_MARKERSDIR     BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/markers" )
+#  define INKSCAPE_PALETTESDIR    BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/palettes" )
+#  define INKSCAPE_PATTERNSDIR    BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/patterns" )
+#  define INKSCAPE_SCREENSDIR     BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/screens" )
+#  define INKSCAPE_SYMBOLSDIR     BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/symbols" )
+#  define INKSCAPE_THEMEDIR       BR_DATADIR( INKSCAPE_LIBPREFIX "/share/icons" )
+#  define INKSCAPE_TUTORIALSDIR   BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/tutorials" )
+#  define INKSCAPE_TEMPLATESDIR   BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/templates" )
+#  define INKSCAPE_UIDIR          BR_DATADIR( INKSCAPE_LIBPREFIX "/share/inkscape/ui" )
 //CREATE V0.1 support
-#    define CREATE_GRADIENTSDIR   BR_DATADIR( "/create/gradients/gimp" )
-#    define CREATE_PALETTESDIR    BR_DATADIR( "/create/swatches" )
-#    define CREATE_PATTERNSDIR    BR_DATADIR( "/create/patterns/vector" )
+#    define CREATE_GRADIENTSDIR   BR_DATADIR( INKSCAPE_LIBPREFIX "/share/create/gradients/gimp" )
+#    define CREATE_PALETTESDIR    BR_DATADIR( INKSCAPE_LIBPREFIX "/share/create/swatches" )
+#    define CREATE_PATTERNSDIR    BR_DATADIR( INKSCAPE_LIBPREFIX "/share/create/patterns/vector" )
 #else
 #  ifdef WIN32
 #    define INKSCAPE_APPICONDIR   WIN32_DATADIR("pixmaps")

@@ -1,0 +1,103 @@
+name: inkscape
+version: 0.92+devel
+summary: Vector Graphics Editor
+description: |
+ An Open Source vector graphics editor, with capabilities similar to
+ Illustrator, CorelDraw, or Xara X, using the W3C standard Scalable Vector
+ Graphics (SVG) file format.
+
+ Inkscape supports many advanced SVG features (markers, clones, alpha blending,
+ etc.) and great care is taken in designing a streamlined interface.
+ It is very easy to edit nodes, perform complex path operations, trace
+ bitmaps and much more.
+ 
+ We also aim to maintain a thriving user and developer community by using
+ open, community-oriented development.
+confinement: strict
+
+parts:
+  inkscape:
+    plugin: cmake
+    source: .
+    configflags: ['-DENABLE_BINRELOC=ON']
+    build-packages:
+      - cmake
+      - intltool
+      - libart-2.0-dev
+      - libaspell-dev
+      - libboost-dev
+      - libcdr-dev
+      - libgc-dev
+      - libgdl-3-dev
+      - libglib2.0-dev
+      - libgnomevfs2-dev
+      - libgsl-dev
+      - libgtk-3-dev
+      - libgtkmm-3.0-dev
+      - libgtkspell-dev
+      - liblcms2-dev
+      - libmagick++-dev
+      - libpango1.0-dev
+      - libpng12-dev
+      - libpoppler-glib-dev
+      - libpoppler-private-dev
+      - libpopt-dev
+      - libpotrace-dev
+      - librevenge-dev
+      - libsigc++-2.0-dev
+      - libtool
+      - libvisio-dev
+      - libwpg-dev
+      - libxml-parser-perl
+      - libxml2-dev
+      - libxslt1-dev
+      - pkg-config
+      - python-dev
+      - python-lxml
+      - zlib1g-dev
+    stage-packages:
+      - libaspell15
+      - libatkmm-1.6-1v5
+      - libcairomm-1.0-1v5
+      - libcdr-0.1-1
+      - libgdk-pixbuf2.0-0
+      - libglibmm-2.4-1v5
+      - libgnomevfs2-0
+      - libgtkmm-2.4-1v5
+      - libgtkspell0
+      - liblcms2-2
+      - libmagick++-6.q16-5v5
+      - libpangomm-1.4-1v5
+      - libpoppler-glib8
+      - librevenge-0.0-0
+      - libvisio-0.1-1
+      - libwpg-0.3-3
+      - libglib2.0-bin
+      - aspell
+      - imagemagick
+      - libimage-magick-perl
+      - libwmf-bin
+      - python-lxml
+      - python-numpy
+      - transfig
+      - pstoedit
+      - libsvg-perl
+      - libxml-xql-perl
+      - python-uniconvertor
+      - ruby
+    snap:
+      - -lib/inkscape/*.a
+    after: [desktop/gtk3]
+  snapcraft-wrapper:
+    plugin: copy
+    files:
+      packaging/snappy/snapcraft.sh: snapcraft.sh
+      README: lib/share/README
+
+apps:
+  inkscape:
+    command: snapcraft.sh desktop-launch inkscape
+    plugs: [home, unity7, gsettings]
+  viewer:
+    command: snapcraft.sh desktop-launch inkview
+    plugs: [home, unity7, gsettings]
