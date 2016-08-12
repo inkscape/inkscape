@@ -25,6 +25,8 @@
 
 #include <gtkmm/adjustment.h>
 #include <gtkmm/checkbutton.h>
+#include <gtkmm/combobox.h>
+#include <gtkmm/liststore.h>
 #include <gtkmm/radiobutton.h>
 
 #include "desktop.h"
@@ -66,7 +68,6 @@ static unsigned trace_visionkey;
 static gdouble trace_zoom;
 static SPDocument *trace_doc = NULL;
 
-
 CloneTiler::CloneTiler () :
     UI::Widget::Panel ("", "/dialogs/clonetiler/", SP_VERB_DIALOG_CLONETILER),
     desktop(NULL),
@@ -100,7 +101,7 @@ CloneTiler::CloneTiler () :
              */
             struct SymGroups {
                 gint group;
-                gchar const *label;
+                Glib::ustring label;
             } const sym_groups[] = {
                 // TRANSLATORS: "translation" means "shift" / "displacement" here.
                 {TILE_P1, _("<b>P1</b>: simple translation")},
@@ -126,33 +127,27 @@ CloneTiler::CloneTiler () :
 
             gint current = prefs->getInt(prefs_path + "symmetrygroup", 0);
 
-        // Create a list structure containing all the data to be displayed in
-        // the symmetry group combo box.
-        GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
-        GtkTreeIter iter;
+            // Add a new combo box widget with the list of symmetry groups to the vbox
+            auto combo = Gtk::manage(new Gtk::ComboBoxText());
+            combo->set_tooltip_text(_("Select one of the 17 symmetry groups for the tiling"));
 
-        for (unsigned j = 0; j < G_N_ELEMENTS(sym_groups); ++j) {
-            SymGroups const &sg = sym_groups[j];
+            // Hack to add markup support
+            auto cell_list = gtk_cell_layout_get_cells(GTK_CELL_LAYOUT(combo->gobj()));
+            gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(combo->gobj()),
+                                           GTK_CELL_RENDERER(cell_list->data),
+                                           "markup", 0, NULL);
 
-            // Add the description of the symgroup to a new row
-            gtk_list_store_append(store, &iter);
-            gtk_list_store_set(store, &iter, 0, sg.label, -1);
-        }
+            for (unsigned j = 0; j < G_N_ELEMENTS(sym_groups); ++j) {
+                SymGroups const &sg = sym_groups[j];
 
-        // Add a new combo box widget with the list of symmetry groups to the vbox
-        GtkWidget *combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
-        gtk_widget_set_tooltip_text (combo, _("Select one of the 17 symmetry groups for the tiling"));
-        gtk_box_pack_start (GTK_BOX (vb), combo, FALSE, FALSE, SB_MARGIN);
+                // Add the description of the symgroup to a new row
+                combo->append(sg.label);
+            }
 
-        // Specify the rendering of data from the list in a combo box cell
-        GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
-        gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), renderer, FALSE);
-        gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(combo), renderer, "markup", 0, NULL);
+            gtk_box_pack_start (GTK_BOX (vb), GTK_WIDGET(combo->gobj()), FALSE, FALSE, SB_MARGIN);
 
-        gtk_combo_box_set_active (GTK_COMBO_BOX (combo), current);
-
-        g_signal_connect(G_OBJECT(combo), "changed",
-                    G_CALLBACK(symgroup_changed), NULL);
+            combo->set_active(current);
+            combo->signal_changed().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::symgroup_changed), combo));
         }
 
         table_row_labels = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
@@ -175,7 +170,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                    _("Horizontal shift per row (in % of tile width)"), "shiftx_per_j",
                    -10000, 10000, "%");
@@ -183,7 +178,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                    _("Horizontal shift per column (in % of tile width)"), "shiftx_per_i",
                    -10000, 10000, "%");
@@ -191,7 +186,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the horizontal shift by this percentage"), "shiftx_rand",
+                auto l = spinbox (_("Randomize the horizontal shift by this percentage"), "shiftx_rand",
                                                    0, 1000, "%");
                 table_attach (table, l, 0, 2, 4);
             }
@@ -207,7 +202,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                                                    _("Vertical shift per row (in % of tile height)"), "shifty_per_j",
                                                    -10000, 10000, "%");
@@ -215,7 +210,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                                                    _("Vertical shift per column (in % of tile height)"), "shifty_per_i",
                                                    -10000, 10000, "%");
@@ -223,7 +218,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                                                    _("Randomize the vertical shift by this percentage"), "shifty_rand",
                                                    0, 1000, "%");
                 table_attach (table, l, 0, 3, 4);
@@ -238,14 +233,14 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                                                    _("Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"), "shifty_exp",
                                                    0, 10, "", true);
                 table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                                                    _("Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"), "shiftx_exp",
                                                    0, 10, "", true);
                 table_attach (table, l, 0, 4, 3);
@@ -260,12 +255,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of shifts for each row"), "shifty_alternate");
+                auto l = checkbox (_("Alternate the sign of shifts for each row"), "shifty_alternate");
                 table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of shifts for each column"), "shiftx_alternate");
+                auto l = checkbox (_("Alternate the sign of shifts for each column"), "shiftx_alternate");
                 table_attach (table, l, 0, 5, 3);
             }
 
@@ -278,12 +273,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Cumulate the shifts for each row"), "shifty_cumulate");
+                auto l = checkbox (_("Cumulate the shifts for each row"), "shifty_cumulate");
                 table_attach (table, l, 0, 6, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Cumulate the shifts for each column"), "shiftx_cumulate");
+                auto l = checkbox (_("Cumulate the shifts for each column"), "shiftx_cumulate");
                 table_attach (table, l, 0, 6, 3);
             }
 
@@ -296,12 +291,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Exclude tile height in shift"), "shifty_excludeh");
+                auto l = checkbox (_("Exclude tile height in shift"), "shifty_excludeh");
                 table_attach (table, l, 0, 7, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Exclude tile width in shift"), "shiftx_excludew");
+                auto l = checkbox (_("Exclude tile width in shift"), "shiftx_excludew");
                 table_attach (table, l, 0, 7, 3);
             }
 
@@ -324,7 +319,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                                                    _("Horizontal scale per row (in % of tile width)"), "scalex_per_j",
                                                    -100, 1000, "%");
@@ -332,7 +327,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                                                    _("Horizontal scale per column (in % of tile width)"), "scalex_per_i",
                                                    -100, 1000, "%");
@@ -340,7 +335,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the horizontal scale by this percentage"), "scalex_rand",
+                auto l = spinbox (_("Randomize the horizontal scale by this percentage"), "scalex_rand",
                                                    0, 1000, "%");
                 table_attach (table, l, 0, 2, 4);
             }
@@ -354,7 +349,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                                                    _("Vertical scale per row (in % of tile height)"), "scaley_per_j",
                                                    -100, 1000, "%");
@@ -362,7 +357,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                                                    _("Vertical scale per column (in % of tile height)"), "scaley_per_i",
                                                    -100, 1000, "%");
@@ -370,7 +365,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the vertical scale by this percentage"), "scaley_rand",
+                auto l = spinbox (_("Randomize the vertical scale by this percentage"), "scaley_rand",
                                                    0, 1000, "%");
                 table_attach (table, l, 0, 3, 4);
             }
@@ -384,13 +379,13 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Whether row scaling is uniform (1), converge (<1) or diverge (>1)"), "scaley_exp",
+                auto l = spinbox (_("Whether row scaling is uniform (1), converge (<1) or diverge (>1)"), "scaley_exp",
                                                    0, 10, "", true);
                 table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = spinbox (_("Whether column scaling is uniform (1), converge (<1) or diverge (>1)"), "scalex_exp",
+                auto l = spinbox (_("Whether column scaling is uniform (1), converge (<1) or diverge (>1)"), "scalex_exp",
                                                    0, 10, "", true);
                 table_attach (table, l, 0, 4, 3);
             }
@@ -404,13 +399,13 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scaley_log",
+                auto l = spinbox (_("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scaley_log",
                                                    0, 10, "", false);
                 table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = spinbox (_("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scalex_log",
+                auto l = spinbox (_("Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"), "scalex_log",
                                                    0, 10, "", false);
                 table_attach (table, l, 0, 5, 3);
             }
@@ -424,12 +419,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of scales for each row"), "scaley_alternate");
+                auto l = checkbox (_("Alternate the sign of scales for each row"), "scaley_alternate");
                 table_attach (table, l, 0, 6, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of scales for each column"), "scalex_alternate");
+                auto l = checkbox (_("Alternate the sign of scales for each column"), "scalex_alternate");
                 table_attach (table, l, 0, 6, 3);
             }
 
@@ -442,12 +437,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Cumulate the scales for each row"), "scaley_cumulate");
+                auto l = checkbox (_("Cumulate the scales for each row"), "scaley_cumulate");
                 table_attach (table, l, 0, 7, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Cumulate the scales for each column"), "scalex_cumulate");
+                auto l = checkbox (_("Cumulate the scales for each column"), "scalex_cumulate");
                 table_attach (table, l, 0, 7, 3);
             }
 
@@ -470,7 +465,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                                                    _("Rotate tiles by this angle for each row"), "rotate_per_j",
                                                    -180, 180, "&#176;");
@@ -478,7 +473,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (
+                auto l = spinbox (
                     // xgettext:no-c-format
                                                    _("Rotate tiles by this angle for each column"), "rotate_per_i",
                                                    -180, 180, "&#176;");
@@ -486,7 +481,7 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the rotation angle by this percentage"), "rotate_rand",
+                auto l = spinbox (_("Randomize the rotation angle by this percentage"), "rotate_rand",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 2, 4);
             }
@@ -500,12 +495,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the rotation direction for each row"), "rotate_alternatej");
+                auto l = checkbox (_("Alternate the rotation direction for each row"), "rotate_alternatej");
                 table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the rotation direction for each column"), "rotate_alternatei");
+                auto l = checkbox (_("Alternate the rotation direction for each column"), "rotate_alternatei");
                 table_attach (table, l, 0, 3, 3);
             }
 
@@ -518,12 +513,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Cumulate the rotation for each row"), "rotate_cumulatej");
+                auto l = checkbox (_("Cumulate the rotation for each row"), "rotate_cumulatej");
                 table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Cumulate the rotation for each column"), "rotate_cumulatei");
+                auto l = checkbox (_("Cumulate the rotation for each column"), "rotate_cumulatei");
                 table_attach (table, l, 0, 4, 3);
             }
 
@@ -547,19 +542,19 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Blur tiles by this percentage for each row"), "blur_per_j",
+                auto l = spinbox (_("Blur tiles by this percentage for each row"), "blur_per_j",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 2, 2);
             }
 
             {
-                GtkWidget *l = spinbox (_("Blur tiles by this percentage for each column"), "blur_per_i",
+                auto l = spinbox (_("Blur tiles by this percentage for each column"), "blur_per_i",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 2, 3);
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the tile blur by this percentage"), "blur_rand",
+                auto l = spinbox (_("Randomize the tile blur by this percentage"), "blur_rand",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 2, 4);
             }
@@ -573,12 +568,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of blur change for each row"), "blur_alternatej");
+                auto l = checkbox (_("Alternate the sign of blur change for each row"), "blur_alternatej");
                 table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of blur change for each column"), "blur_alternatei");
+                auto l = checkbox (_("Alternate the sign of blur change for each column"), "blur_alternatei");
                 table_attach (table, l, 0, 3, 3);
             }
 
@@ -593,19 +588,19 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Decrease tile opacity by this percentage for each row"), "opacity_per_j",
+                auto l = spinbox (_("Decrease tile opacity by this percentage for each row"), "opacity_per_j",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = spinbox (_("Decrease tile opacity by this percentage for each column"), "opacity_per_i",
+                auto l = spinbox (_("Decrease tile opacity by this percentage for each column"), "opacity_per_i",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 4, 3);
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the tile opacity by this percentage"), "opacity_rand",
+                auto l = spinbox (_("Randomize the tile opacity by this percentage"), "opacity_rand",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 4, 4);
             }
@@ -619,12 +614,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of opacity change for each row"), "opacity_alternatej");
+                auto l = checkbox (_("Alternate the sign of opacity change for each row"), "opacity_alternatej");
                 table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of opacity change for each column"), "opacity_alternatei");
+                auto l = checkbox (_("Alternate the sign of opacity change for each column"), "opacity_alternatei");
                 table_attach (table, l, 0, 5, 3);
             }
         }
@@ -643,7 +638,7 @@ CloneTiler::CloneTiler () :
 
             guint32 rgba = 0x000000ff | sp_svg_read_color (prefs->getString(prefs_path + "initial_color").data(), 0x000000ff);
             color_picker = new Inkscape::UI::Widget::ColorPicker (*new Glib::ustring(_("Initial color of tiled clones")), *new Glib::ustring(_("Initial color for clones (works only if the original has unset fill or stroke or on spray tool in copy mode)")), rgba, false);
-            color_changed_connection = color_picker->connectChanged (sigc::ptr_fun(on_picker_color_changed));
+            color_changed_connection = color_picker->connectChanged(sigc::mem_fun(*this, &CloneTiler::on_picker_color_changed));
 
             gtk_box_pack_start (GTK_BOX (hb), reinterpret_cast<GtkWidget*>(color_picker->gobj()), FALSE, FALSE, 0);
 
@@ -663,19 +658,19 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Change the tile hue by this percentage for each row"), "hue_per_j",
+                auto l = spinbox (_("Change the tile hue by this percentage for each row"), "hue_per_j",
                                                    -100, 100, "%");
                 table_attach (table, l, 0, 2, 2);
             }
 
             {
-                GtkWidget *l = spinbox (_("Change the tile hue by this percentage for each column"), "hue_per_i",
+                auto l = spinbox (_("Change the tile hue by this percentage for each column"), "hue_per_i",
                                                    -100, 100, "%");
                 table_attach (table, l, 0, 2, 3);
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the tile hue by this percentage"), "hue_rand",
+                auto l = spinbox (_("Randomize the tile hue by this percentage"), "hue_rand",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 2, 4);
             }
@@ -690,19 +685,19 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Change the color saturation by this percentage for each row"), "saturation_per_j",
+                auto l = spinbox (_("Change the color saturation by this percentage for each row"), "saturation_per_j",
                                                    -100, 100, "%");
                 table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = spinbox (_("Change the color saturation by this percentage for each column"), "saturation_per_i",
+                auto l = spinbox (_("Change the color saturation by this percentage for each column"), "saturation_per_i",
                                                    -100, 100, "%");
                 table_attach (table, l, 0, 3, 3);
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the color saturation by this percentage"), "saturation_rand",
+                auto l = spinbox (_("Randomize the color saturation by this percentage"), "saturation_rand",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 3, 4);
             }
@@ -716,19 +711,19 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = spinbox (_("Change the color lightness by this percentage for each row"), "lightness_per_j",
+                auto l = spinbox (_("Change the color lightness by this percentage for each row"), "lightness_per_j",
                                                    -100, 100, "%");
                 table_attach (table, l, 0, 4, 2);
             }
 
             {
-                GtkWidget *l = spinbox (_("Change the color lightness by this percentage for each column"), "lightness_per_i",
+                auto l = spinbox (_("Change the color lightness by this percentage for each column"), "lightness_per_i",
                                                    -100, 100, "%");
                 table_attach (table, l, 0, 4, 3);
             }
 
             {
-                GtkWidget *l = spinbox (_("Randomize the color lightness by this percentage"), "lightness_rand",
+                auto l = spinbox (_("Randomize the color lightness by this percentage"), "lightness_rand",
                                                    0, 100, "%");
                 table_attach (table, l, 0, 4, 4);
             }
@@ -742,12 +737,12 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of color changes for each row"), "color_alternatej");
+                auto l = checkbox (_("Alternate the sign of color changes for each row"), "color_alternatej");
                 table_attach (table, l, 0, 5, 2);
             }
 
             {
-                GtkWidget *l = checkbox (_("Alternate the sign of color changes for each column"), "color_alternatei");
+                auto l = checkbox (_("Alternate the sign of color changes for each column"), "color_alternatei");
                 table_attach (table, l, 0, 5, 3);
             }
 
@@ -785,71 +780,62 @@ CloneTiler::CloneTiler () :
                 gtk_grid_set_column_spacing(GTK_GRID(table), 6);
                 gtk_container_add(GTK_CONTAINER(frame), table);
 
-
-                GtkWidget* radio;
+                Gtk::RadioButtonGroup rb_group;
                 {
-                    radio = gtk_radio_button_new_with_label (NULL, _("Color"));
-                    gtk_widget_set_tooltip_text (radio, _("Pick the visible color and opacity"));
-                    table_attach (table, radio, 0.0, 1, 1);
-                    g_signal_connect (G_OBJECT (radio), "toggled",
-                                        G_CALLBACK (pick_switched), GINT_TO_POINTER(PICK_COLOR));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_COLOR);
+                    auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, _("Color")));
+                    radio->set_tooltip_text(_("Pick the visible color and opacity"));
+                    table_attach(table, radio, 0.0, 1, 1);
+                    radio->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_switched), PICK_COLOR));
+                    radio->set_active(prefs->getInt(prefs_path + "pick", 0) == PICK_COLOR);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("Opacity"));
-                    gtk_widget_set_tooltip_text (radio, _("Pick the total accumulated opacity"));
+                    auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, _("Opacity")));
+                    radio->set_tooltip_text(_("Pick the total accumulated opacity"));
                     table_attach (table, radio, 0.0, 2, 1);
-                    g_signal_connect (G_OBJECT (radio), "toggled",
-                                        G_CALLBACK (pick_switched), GINT_TO_POINTER(PICK_OPACITY));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_OPACITY);
+                    radio->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_switched), PICK_OPACITY));
+                    radio->set_active(prefs->getInt(prefs_path + "pick", 0) == PICK_OPACITY);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("R"));
-                    gtk_widget_set_tooltip_text (radio, _("Pick the Red component of the color"));
+                    auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, _("R")));
+                    radio->set_tooltip_text(_("Pick the Red component of the color"));
                     table_attach (table, radio, 0.0, 1, 2);
-                    g_signal_connect (G_OBJECT (radio), "toggled",
-                                        G_CALLBACK (pick_switched), GINT_TO_POINTER(PICK_R));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_R);
+                    radio->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_switched), PICK_R));
+                    radio->set_active(prefs->getInt(prefs_path + "pick", 0) == PICK_R);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("G"));
-                    gtk_widget_set_tooltip_text (radio, _("Pick the Green component of the color"));
+                    auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, _("G")));
+                    radio->set_tooltip_text(_("Pick the Green component of the color"));
                     table_attach (table, radio, 0.0, 2, 2);
-                    g_signal_connect (G_OBJECT (radio), "toggled",
-                                        G_CALLBACK (pick_switched), GINT_TO_POINTER(PICK_G));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_G);
+                    radio->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_switched), PICK_G));
+                    radio->set_active(prefs->getInt(prefs_path + "pick", 0) == PICK_G);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), _("B"));
-                    gtk_widget_set_tooltip_text (radio, _("Pick the Blue component of the color"));
+                    auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, _("B")));
+                    radio->set_tooltip_text(_("Pick the Blue component of the color"));
                     table_attach (table, radio, 0.0, 3, 2);
-                    g_signal_connect (G_OBJECT (radio), "toggled",
-                                        G_CALLBACK (pick_switched), GINT_TO_POINTER(PICK_B));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_B);
+                    radio->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_switched), PICK_B));
+                    radio->set_active(prefs->getInt(prefs_path + "pick", 0) == PICK_B);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color hue", "H"));
-                    gtk_widget_set_tooltip_text (radio, _("Pick the hue of the color"));
+                    auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, C_("Clonetiler color hue", "H")));
+                    radio->set_tooltip_text(_("Pick the hue of the color"));
                     table_attach (table, radio, 0.0, 1, 3);
-                    g_signal_connect (G_OBJECT (radio), "toggled",
-                                        G_CALLBACK (pick_switched), GINT_TO_POINTER(PICK_H));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_H);
+                    radio->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_switched), PICK_H));
+                    radio->set_active(prefs->getInt(prefs_path + "pick", 0) == PICK_H);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color saturation", "S"));
-                    gtk_widget_set_tooltip_text (radio, _("Pick the saturation of the color"));
+                    auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, C_("Clonetiler color saturation", "S")));
+                    radio->set_tooltip_text(_("Pick the saturation of the color"));
                     table_attach (table, radio, 0.0, 2, 3);
-                    g_signal_connect (G_OBJECT (radio), "toggled",
-                                        G_CALLBACK (pick_switched), GINT_TO_POINTER(PICK_S));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_S);
+                    radio->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_switched), PICK_S));
+                    radio->set_active(prefs->getInt(prefs_path + "pick", 0) == PICK_S);
                 }
                 {
-                    radio = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio)), C_("Clonetiler color lightness", "L"));
-                    gtk_widget_set_tooltip_text (radio, _("Pick the lightness of the color"));
+                    auto radio = Gtk::manage(new Gtk::RadioButton(rb_group, C_("Clonetiler color lightness", "L")));
+                    radio->set_tooltip_text(_("Pick the lightness of the color"));
                     table_attach (table, radio, 0.0, 3, 3);
-                    g_signal_connect (G_OBJECT (radio), "toggled",
-                                        G_CALLBACK (pick_switched), GINT_TO_POINTER(PICK_L));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path + "pick", 0) == PICK_L);
+                    radio->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_switched), PICK_L));
+                    radio->set_active(prefs->getInt(prefs_path + "pick", 0) == PICK_L);
                 }
 
             }
@@ -870,7 +856,7 @@ CloneTiler::CloneTiler () :
                     table_attach (table, l, 1.0, 1, 1);
                 }
                 {
-                    GtkWidget *l = spinbox (_("Shift the mid-range of the picked value upwards (>0) or downwards (<0)"), "gamma_picked",
+                    auto l = spinbox (_("Shift the mid-range of the picked value upwards (>0) or downwards (<0)"), "gamma_picked",
                                                        -10, 10, "");
                     table_attach (table, l, 0.0, 1, 2);
                 }
@@ -881,7 +867,7 @@ CloneTiler::CloneTiler () :
                     table_attach (table, l, 1.0, 1, 3);
                 }
                 {
-                    GtkWidget *l = spinbox (_("Randomize the picked value by this percentage"), "rand_picked",
+                    auto l = spinbox (_("Randomize the picked value by this percentage"), "rand_picked",
                                                        0, 100, "%");
                     table_attach (table, l, 0.0, 1, 4);
                 }
@@ -892,7 +878,7 @@ CloneTiler::CloneTiler () :
                     table_attach (table, l, 1.0, 2, 1);
                 }
                 {
-                    GtkWidget *l = checkbox (_("Invert the picked value"), "invert_picked");
+                    auto l = checkbox (_("Invert the picked value"), "invert_picked");
                     table_attach (table, l, 0.0, 2, 2);
                 }
             }
@@ -907,43 +893,39 @@ CloneTiler::CloneTiler () :
                 gtk_container_add(GTK_CONTAINER(frame), table);
 
                 {
-                    GtkWidget *b  = gtk_check_button_new_with_label (_("Presence"));
+                    auto b = Gtk::manage(new Gtk::CheckButton(_("Presence")));
                     bool old = prefs->getBool(prefs_path + "pick_to_presence", true);
-                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-                    gtk_widget_set_tooltip_text (b, _("Each clone is created with the probability determined by the picked value in that point"));
+                    b->set_active(old);
+                    b->set_tooltip_text(_("Each clone is created with the probability determined by the picked value in that point"));
                     table_attach (table, b, 0.0, 1, 1);
-                    g_signal_connect(G_OBJECT(b), "toggled",
-                                       G_CALLBACK(pick_to), (gpointer) "pick_to_presence");
+                    b->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_to), b, "pick_to_presence"));
                 }
 
                 {
-                    GtkWidget *b  = gtk_check_button_new_with_label (_("Size"));
+                    auto b = Gtk::manage(new Gtk::CheckButton(_("Size")));
                     bool old = prefs->getBool(prefs_path + "pick_to_size");
-                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-                    gtk_widget_set_tooltip_text (b, _("Each clone's size is determined by the picked value in that point"));
+                    b->set_active(old);
+                    b->set_tooltip_text(_("Each clone's size is determined by the picked value in that point"));
                     table_attach (table, b, 0.0, 2, 1);
-                    g_signal_connect(G_OBJECT(b), "toggled",
-                                       G_CALLBACK(pick_to), (gpointer) "pick_to_size");
+                    b->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_to), b, "pick_to_size"));
                 }
 
                 {
-                    GtkWidget *b  = gtk_check_button_new_with_label (_("Color"));
+                    auto b = Gtk::manage(new Gtk::CheckButton(_("Color")));
                     bool old = prefs->getBool(prefs_path + "pick_to_color", 0);
-                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-                    gtk_widget_set_tooltip_text (b, _("Each clone is painted by the picked color (the original must have unset fill or stroke)"));
+                    b->set_active(old);
+                    b->set_tooltip_text(_("Each clone is painted by the picked color (the original must have unset fill or stroke)"));
                     table_attach (table, b, 0.0, 1, 2);
-                    g_signal_connect(G_OBJECT(b), "toggled",
-                                       G_CALLBACK(pick_to), (gpointer) "pick_to_color");
+                    b->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_to), b, "pick_to_color"));
                 }
 
                 {
-                    GtkWidget *b  = gtk_check_button_new_with_label (_("Opacity"));
+                    auto b = Gtk::manage(new Gtk::CheckButton(_("Opacity")));
                     bool old = prefs->getBool(prefs_path + "pick_to_opacity", 0);
-                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
-                    gtk_widget_set_tooltip_text (b, _("Each clone's opacity is determined by the picked value in that point"));
+                    b->set_active(old);
+                    b->set_tooltip_text(_("Each clone's opacity is determined by the picked value in that point"));
                     table_attach (table, b, 0.0, 2, 2);
-                    g_signal_connect(G_OBJECT(b), "toggled",
-                                       G_CALLBACK(pick_to), (gpointer) "pick_to_opacity");
+                    b->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::pick_to), b, "pick_to_opacity"));
                 }
             }
            gtk_widget_set_sensitive (vvb, prefs->getBool(prefs_path + "dotrace"));
@@ -980,9 +962,7 @@ CloneTiler::CloneTiler () :
                     sb->set_width_chars (7);
                     _rowscols->pack_start(*sb, true, true, 0);
 
-                    // TODO: C++ification
-                    g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
-                                       G_CALLBACK(xy_changed), (gpointer) "jmax");
+                    a->signal_value_changed().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::xy_changed), a, "jmax"));
                 }
 
                 {
@@ -1002,9 +982,7 @@ CloneTiler::CloneTiler () :
                     sb->set_width_chars (7);
                     _rowscols->pack_start(*sb, true, true, 0);
 
-                    // TODO: C++ification
-                    g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
-                                       G_CALLBACK(xy_changed), (gpointer) "imax");
+                    a->signal_value_changed().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::xy_changed), a, "imax"));
                 }
 
                 table_attach (table, GTK_WIDGET(_rowscols->gobj()), 0.0, 1, 2);
@@ -1164,11 +1142,11 @@ CloneTiler::CloneTiler () :
             }
 
             {
-                GtkWidget *b = gtk_button_new_with_mnemonic (_(" R_eset "));
+                auto b = Gtk::manage(new Gtk::Button(_(" R_eset "), true));
                 // TRANSLATORS: "change" is a noun here
-                gtk_widget_set_tooltip_text (b, _("Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"));
-                g_signal_connect (G_OBJECT (b), "clicked", G_CALLBACK (reset), this);
-                gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
+                b->set_tooltip_text(_("Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"));
+                b->signal_clicked().connect(sigc::mem_fun(*this, &CloneTiler::reset));
+                gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(b->gobj()), FALSE, FALSE, 0);
             }
         }
 
@@ -2197,7 +2175,7 @@ void CloneTiler::apply()
 
     SPItem *item = dynamic_cast<SPItem *>(obj);
     if (dotrace) {
-        trace_setup (desktop->getDocument(), 1.0, item);
+        trace_setup(desktop->getDocument(), 1.0, item);
     }
 
     Geom::Point center;
@@ -2524,72 +2502,74 @@ GtkWidget * CloneTiler::new_tab(GtkWidget *nb, const gchar *label)
     return vb;
 }
 
-void CloneTiler::checkbox_toggled(GtkToggleButton *tb, gpointer *data)
+void CloneTiler::checkbox_toggled(Gtk::ToggleButton   *tb,
+                                  const Glib::ustring &attr)
 {
-    const gchar *attr = (const gchar *) data;
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setBool(prefs_path + attr, gtk_toggle_button_get_active(tb));
+    auto prefs = Inkscape::Preferences::get();
+    prefs->setBool(prefs_path + attr, tb->get_active());
 }
 
-GtkWidget * CloneTiler::checkbox(const char *tip, const char *attr)
+Gtk::Widget * CloneTiler::checkbox(const char          *tip,
+                                   const Glib::ustring &attr)
 {
-    auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
-    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+    auto hb = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, VB_MARGIN));
+    auto b  = Gtk::manage(new Gtk::CheckButton());
+    b->set_tooltip_text(tip);
 
-    GtkWidget *b = gtk_check_button_new ();
-    gtk_widget_set_tooltip_text (b, tip);
+    auto const prefs = Inkscape::Preferences::get();
+    auto const value = prefs->getBool(prefs_path + attr);
+    b->set_active(value);
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool value = prefs->getBool(prefs_path + attr);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(b), value);
+    hb->pack_end(*b, false, true);
+    b->signal_clicked().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::checkbox_toggled), b, attr));
 
-    gtk_box_pack_end (GTK_BOX (hb), b, FALSE, TRUE, 0);
-    g_signal_connect ( G_OBJECT (b), "clicked",
-                         G_CALLBACK (checkbox_toggled), (gpointer) attr);
-
-    g_object_set_data (G_OBJECT(b), "uncheckable", GINT_TO_POINTER(TRUE));
+    b->set_data("uncheckable", GINT_TO_POINTER(true));
 
     return hb;
 }
 
-void CloneTiler::value_changed(GtkAdjustment *adj, gpointer data)
+void CloneTiler::value_changed(Glib::RefPtr<Gtk::Adjustment> &adj,
+                               Glib::ustring const           &pref)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    const gchar *pref = (const gchar *) data;
-    prefs->setDouble(prefs_path + pref, gtk_adjustment_get_value (adj));
+    auto prefs = Inkscape::Preferences::get();
+    prefs->setDouble(prefs_path + pref, adj->get_value());
 }
 
-GtkWidget * CloneTiler::spinbox(const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent/* = false*/)
+Gtk::Widget * CloneTiler::spinbox(const char          *tip,
+                                  const Glib::ustring &attr,
+                                  double               lower,
+                                  double               upper,
+                                  const gchar         *suffix,
+                                  bool                 exponent/* = false*/)
 {
-    auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+    auto hb = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 0));
 
     {
-        Glib::RefPtr<Gtk::Adjustment> a;
-        if (exponent) {
-            a = Gtk::Adjustment::create(1.0, lower, upper, 0.01, 0.05, 0);
-        } else {
-            a = Gtk::Adjustment::create(0.0, lower, upper, 0.1, 0.5, 0);
-        }
+        // Parameters for adjustment
+        auto const initial_value  = (exponent ? 1.0 : 0.0);
+        auto const step_increment = (exponent ? 0.01 : 0.1);
+        auto const page_increment = (exponent ? 0.05 : 0.4);
 
-        Inkscape::UI::Widget::SpinButton *sb;
-        if (exponent) {
-            sb = new Inkscape::UI::Widget::SpinButton(a, 0.01, 2);
-        } else {
-            sb = new Inkscape::UI::Widget::SpinButton(a, 0.1, 1);
-	}
+        auto a = Gtk::Adjustment::create(initial_value,
+                                         lower,
+                                         upper,
+                                         step_increment,
+                                         page_increment);
+
+        auto const climb_rate = (exponent ? 0.01 : 0.1);
+        auto const digits = (exponent ? 2 : 1);
+
+        auto sb = new Inkscape::UI::Widget::SpinButton(a, climb_rate, digits);
 
         sb->set_tooltip_text (tip);
         sb->set_width_chars (5);
         sb->set_digits(3);
-        gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(sb->gobj()), FALSE, FALSE, SB_MARGIN);
+        hb->pack_start(*sb, false, false, SB_MARGIN);
 
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        double value = prefs->getDoubleLimited(prefs_path + attr, exponent? 1.0 : 0.0, lower, upper);
+        auto prefs = Inkscape::Preferences::get();
+        auto value = prefs->getDoubleLimited(prefs_path + attr, exponent? 1.0 : 0.0, lower, upper);
         a->set_value (value);
-        // TODO: C++ification
-        g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
-                           G_CALLBACK(value_changed), (gpointer) attr);
+        a->signal_value_changed().connect(sigc::bind(sigc::mem_fun(*this, &CloneTiler::value_changed), a, attr));
 
         if (exponent) {
             sb->set_data ("oneable", GINT_TO_POINTER(TRUE));
@@ -2599,28 +2579,27 @@ GtkWidget * CloneTiler::spinbox(const char *tip, const char *attr, double lower,
     }
 
     {
-        GtkWidget *l = gtk_label_new ("");
-        gtk_label_set_markup (GTK_LABEL(l), suffix);
-        gtk_widget_set_halign(l, GTK_ALIGN_END);
-        gtk_widget_set_valign(l, GTK_ALIGN_START);
-        gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
+        auto l = Gtk::manage(new Gtk::Label(""));
+        l->set_markup(suffix);
+        l->set_halign(Gtk::ALIGN_END);
+        l->set_valign(Gtk::ALIGN_START);
+        hb->pack_start(*l);
     }
 
     return hb;
 }
 
-void CloneTiler::symgroup_changed(GtkComboBox *cb, gpointer /*data*/)
+void CloneTiler::symgroup_changed(Gtk::ComboBox *cb)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gint group_new = gtk_combo_box_get_active (cb);
+    auto prefs = Inkscape::Preferences::get();
+    auto group_new = cb->get_active_row_number();
     prefs->setInt(prefs_path + "symmetrygroup", group_new);
 }
 
-void CloneTiler::xy_changed(GtkAdjustment *adj, gpointer data)
+void CloneTiler::xy_changed(Glib::RefPtr<Gtk::Adjustment> &adj, Glib::ustring const &pref)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    const gchar *pref = (const gchar *) data;
-    prefs->setInt(prefs_path + pref, (int) floor(gtk_adjustment_get_value (adj) + 0.5));
+    auto prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path + pref, (int) floor(adj->get_value() + 0.5));
 }
 
 void CloneTiler::keep_bbox_toggled()
@@ -2629,11 +2608,10 @@ void CloneTiler::keep_bbox_toggled()
     prefs->setBool(prefs_path + "keepbbox", _cb_keep_bbox->get_active());
 }
 
-void CloneTiler::pick_to(GtkToggleButton *tb, gpointer data)
+void CloneTiler::pick_to(Gtk::ToggleButton *tb, Glib::ustring const &pref)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    const gchar *pref = (const gchar *) data;
-    prefs->setBool(prefs_path + pref, gtk_toggle_button_get_active(tb));
+    auto prefs = Inkscape::Preferences::get();
+    prefs->setBool(prefs_path + pref, tb->get_active());
 }
 
 
@@ -2671,9 +2649,14 @@ void CloneTiler::reset_recursive(GtkWidget *w)
     }
 }
 
-void CloneTiler::reset(GtkWidget */*widget*/, GtkWidget *dlg)
+void CloneTiler::reset()
 {
-    reset_recursive (dlg);
+    reset_recursive(GTK_WIDGET(this->gobj()));
+}
+
+void CloneTiler::table_attach(GtkWidget *table, Gtk::Widget *widget, float align, int row, int col)
+{
+    table_attach(table, GTK_WIDGET(widget->gobj()), align, row, col);
 }
 
 void CloneTiler::table_attach(GtkWidget *table, GtkWidget *widget, float align, int row, int col)
@@ -2728,13 +2711,11 @@ GtkWidget * CloneTiler::table_x_y_rand(int values)
     return table;
 }
 
-void CloneTiler::pick_switched(GtkToggleButton */*tb*/, gpointer data)
+void CloneTiler::pick_switched(PickType v)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    guint v = GPOINTER_TO_INT (data);
+    auto prefs = Inkscape::Preferences::get();
     prefs->setInt(prefs_path + "pick", v);
 }
-
 
 void CloneTiler::switch_to_create()
 {

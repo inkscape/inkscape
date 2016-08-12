@@ -18,6 +18,7 @@
 
 namespace Gtk {
     class CheckButton;
+    class ComboBox;
     class ToggleButton;
 }
 
@@ -38,48 +39,66 @@ public:
     static CloneTiler &getInstance() { return *new CloneTiler(); }
     void show_page_trace();
 protected:
+    enum PickType {
+        PICK_COLOR,
+        PICK_OPACITY,
+        PICK_R,
+        PICK_G,
+        PICK_B,
+        PICK_H,
+        PICK_S,
+        PICK_L
+    };
 
     GtkWidget * new_tab(GtkWidget *nb, const gchar *label);
     GtkWidget * table_x_y_rand(int values);
-    GtkWidget * spinbox(const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent = false);
-    GtkWidget * checkbox(const char *tip, const char *attr);
+    Gtk::Widget * spinbox(const char          *tip,
+                          const Glib::ustring &attr,
+                          double               lower,
+                          double               upper,
+                          const gchar         *suffix,
+                          bool                 exponent = false);
+    Gtk::Widget * checkbox(const char          *tip,
+                           const Glib::ustring &attr);
     void table_attach(GtkWidget *table, GtkWidget *widget, float align, int row, int col);
+    void table_attach(GtkWidget *table, Gtk::Widget *widget, float align, int row, int col);
 
-    // TODO: Improve encapsulation by using SigC++ signal handling, and convert all of these into
-    // non-static member functions
-    static void symgroup_changed(GtkComboBox *cb, gpointer /*data*/);
-    static void on_picker_color_changed(guint rgba);
-    static void trace_hide_tiled_clones_recursively(SPObject *from);
-    static void checkbox_toggled(GtkToggleButton *tb, gpointer *data);
-    static void pick_switched(GtkToggleButton */*tb*/, gpointer data);
-    static void pick_to(GtkToggleButton *tb, gpointer data);
-    static void xy_changed(GtkAdjustment *adj, gpointer data);
-    void switch_to_create();
-    void switch_to_fill();
-    void keep_bbox_toggled();
-    void unclump();
-    static void reset(GtkWidget */*widget*/, GtkWidget *dlg);
-    static guint number_of_clones(SPObject *obj);
-    static void trace_setup(SPDocument *doc, gdouble zoom, SPItem *original);
-    static guint32 trace_pick(Geom::Rect box);
-    static void trace_finish();
-    static bool is_a_clone_of(SPObject *tile, SPObject *obj);
-    static Geom::Rect transform_rect(Geom::Rect const &r, Geom::Affine const &m);
-    static double randomize01(double val, double rand);
-    static void value_changed(GtkAdjustment *adj, gpointer data);
-    static void reset_recursive(GtkWidget *w);
+    void       symgroup_changed(Gtk::ComboBox *cb);
+    void       on_picker_color_changed(guint rgba);
+    void       trace_hide_tiled_clones_recursively(SPObject *from);
+    guint      number_of_clones(SPObject *obj);
+    void       trace_setup(SPDocument *doc, gdouble zoom, SPItem *original);
+    guint32    trace_pick(Geom::Rect box);
+    void       trace_finish();
+    bool       is_a_clone_of(SPObject *tile, SPObject *obj);
+    Geom::Rect transform_rect(Geom::Rect const &r, Geom::Affine const &m);
+    double     randomize01(double val, double rand);
 
     void apply();
     void change_selection(Inkscape::Selection *selection);
+    void checkbox_toggled(Gtk::ToggleButton   *tb,
+                          Glib::ustring const &attr);
     void do_pick_toggled();
     void external_change();
     void fill_width_changed();
     void fill_height_changed();
-    void remove(bool do_undo = true);
+    void keep_bbox_toggled();
     void on_remove_button_clicked() {remove();}
+    void pick_switched(PickType);
+    void pick_to(Gtk::ToggleButton   *tb,
+                 Glib::ustring const &pref);
+    void remove(bool do_undo = true);
+    void reset();
+    void reset_recursive(GtkWidget *w);
+    void switch_to_create();
+    void switch_to_fill();
+    void unclump();
     void unit_changed();
+    void value_changed(Glib::RefPtr<Gtk::Adjustment> &adj, Glib::ustring const &pref);
+    void xy_changed(Glib::RefPtr<Gtk::Adjustment> &adj, Glib::ustring const &pref);
 
-    static Geom::Affine get_transform(    // symmetry group
+    Geom::Affine get_transform(
+            // symmetry group
             int type,
 
             // row, column
@@ -156,19 +175,9 @@ private:
     GtkWidget *_status;
     Gtk::Box *_rowscols;
     Gtk::Box *_widthheight;
+    
 };
 
-
-enum {
-    PICK_COLOR,
-    PICK_OPACITY,
-    PICK_R,
-    PICK_G,
-    PICK_B,
-    PICK_H,
-    PICK_S,
-    PICK_L
-};
 
 enum {
     TILE_P1,
