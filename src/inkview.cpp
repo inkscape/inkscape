@@ -34,6 +34,7 @@
 #include <sys/stat.h>
 #include <locale.h>
 
+#include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
 #include <gtkmm/image.h>
 #include <gtkmm/main.h>
@@ -68,15 +69,19 @@
 extern char *optarg;
 extern int  optind, opterr;
 
-class SPSlideShow {
+/**
+ * The main application window for the slideshow
+ */
+class SPSlideShow : public Gtk::ApplicationWindow {
 public:
-    std::vector<std::string> slides;
-    int current;
-    SPDocument *doc;
-    GtkWidget *view;
-    GtkWidget *window;
-    bool fullscreen;
-    int timer;
+    std::vector<std::string>  slides;  ///< List of filenames for each slide
+    int                       current; ///< Index of the currently displayed slide
+    SPDocument               *doc;     ///< The currently displayed slide
+    GtkWidget                *view;
+    int                       timer;
+    
+    /// Current state of application (full-screen or windowed)
+    bool is_fullscreen;
 
     SPSlideShow()
         :
@@ -84,20 +89,20 @@ public:
             current(0),
             doc(NULL),
             view(NULL),
-            fullscreen(false)
+            is_fullscreen(false)
     {}
 
-    GtkWidget *control_show();
-    void       show_next();
-    void       show_prev();
-    void       goto_first();
-    void       goto_last();
+    void control_show();
+    void show_next();
+    void show_prev();
+    void goto_first();
+    void goto_last();
 
 protected:
-    void       waiting_cursor();
-    void       normal_cursor();
-    void       set_document(SPDocument *doc,
-                            int         current);
+    void waiting_cursor();
+    void normal_cursor();
+    void set_document(SPDocument *doc,
+                      int         current);
 };
 
 #ifdef WITH_INKJAR
@@ -133,12 +138,12 @@ static int sp_svgview_main_key_press (GtkWidget */*widget*/,
             ss->goto_last();
             break;
         case GDK_KEY_F11:
-            if (ss->fullscreen) {
-                gtk_window_unfullscreen (GTK_WINDOW(ss->window));
-                ss->fullscreen = false;
+            if (ss->is_fullscreen) {
+                ss->unfullscreen();
+                ss->is_fullscreen = false;
             } else {
-                gtk_window_fullscreen (GTK_WINDOW(ss->window));
-                ss->fullscreen = true;
+                ss->fullscreen();
+                ss->is_fullscreen = true;
             }
             break;
         case GDK_KEY_Return:
@@ -164,7 +169,8 @@ static int sp_svgview_main_key_press (GtkWidget */*widget*/,
         default:
             break;
     }
-    gtk_window_set_title(GTK_WINDOW(ss->window), ss->doc->getName());
+
+    ss->set_title(ss->doc->getName());
     return TRUE;
 }
 
@@ -202,7 +208,6 @@ int main (int argc, const char **argv)
         }
     }
 
-    GtkWidget *w;
     int i;
 
     bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -213,8 +218,6 @@ int main (int argc, const char **argv)
 
     Inkscape::GC::init();
     Inkscape::Preferences::get(); // ensure preferences are initialized
-
-    gtk_init (&argc, (char ***) &argv);
 
 #ifdef lalaWITH_MODULES
     g_warning ("Have to autoinit modules (lauris)");
@@ -291,24 +294,21 @@ int main (int argc, const char **argv)
        return 1; /* none of the slides loadable */
     }
     
-    w = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title( GTK_WINDOW(w), ss.doc->getName() );
-    gtk_window_set_default_size (GTK_WINDOW (w),
-                MIN ((int)(ss.doc)->getWidth().value("px"), (int)gdk_screen_width() - 64),
-                MIN ((int)(ss.doc)->getHeight().value("px"), (int)gdk_screen_height() - 64));
-    ss.window = w;
+    ss.set_title(ss.doc->getName() );
+    ss.set_default_size(MIN ((int)(ss.doc)->getWidth().value("px"), (int)gdk_screen_width() - 64),
+                        MIN ((int)(ss.doc)->getHeight().value("px"), (int)gdk_screen_height() - 64));
 
-    g_signal_connect (G_OBJECT (w), "delete_event", (GCallback) sp_svgview_main_delete, &ss);
-    g_signal_connect (G_OBJECT (w), "key_press_event", (GCallback) sp_svgview_main_key_press, &ss);
+    g_signal_connect (G_OBJECT (ss.gobj()), "delete_event", (GCallback) sp_svgview_main_delete, &ss);
+    g_signal_connect (G_OBJECT (ss.gobj()), "key_press_event", (GCallback) sp_svgview_main_key_press, &ss);
 
     (ss.doc)->ensureUpToDate();
     ss.view = sp_svg_view_widget_new (ss.doc);
     (ss.doc)->doUnref ();
     SP_SVG_VIEW_WIDGET(ss.view)->setResize( false, ss.doc->getWidth().value("px"), ss.doc->getHeight().value("px") );
     gtk_widget_show (ss.view);
-    gtk_container_add (GTK_CONTAINER (w), ss.view);
+    ss.add(*Glib::wrap(ss.view));
 
-    gtk_widget_show (w);
+    ss.show();
 
     gtk_main ();
 
@@ -326,12 +326,12 @@ static int sp_svgview_ctrlwin_delete (GtkWidget */*widget*/,
 /**
  * @brief Show the control buttons (next, previous etc) for the application
  */
-GtkWidget* SPSlideShow::control_show()
+void SPSlideShow::control_show()
 {
     if (!ctrlwin) {
         ctrlwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable(GTK_WINDOW(ctrlwin), FALSE);
-        gtk_window_set_transient_for(GTK_WINDOW(ctrlwin), GTK_WINDOW(window));
+        gtk_window_set_transient_for(GTK_WINDOW(ctrlwin), GTK_WINDOW(this->gobj()));
         g_signal_connect(G_OBJECT (ctrlwin), "key_press_event", (GCallback) sp_svgview_main_key_press, this);
         g_signal_connect(G_OBJECT (ctrlwin), "delete_event", (GCallback) sp_svgview_ctrlwin_delete, NULL);
         auto t = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
@@ -369,20 +369,16 @@ GtkWidget* SPSlideShow::control_show()
     } else {
         gtk_window_present(GTK_WINDOW(ctrlwin));
     }
-
-    return NULL;
 }
 
 void SPSlideShow::waiting_cursor()
 {
-    GdkDisplay *display = gdk_display_get_default();
-    GdkCursor  *waiting = gdk_cursor_new_for_display(display, GDK_WATCH);
-    gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(window)), waiting);
-    g_object_unref(waiting);
+    auto display = Gdk::Display::get_default();
+    auto waiting = Gdk::Cursor::create(display, Gdk::WATCH);
+    get_window()->set_cursor(waiting);
+    
     if (ctrlwin) {
-        GdkCursor *waiting = gdk_cursor_new_for_display(display, GDK_WATCH);
-        gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ctrlwin)), waiting);
-        g_object_unref(waiting);
+        gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ctrlwin)), waiting->gobj());
     }
     while(gtk_events_pending()) {
        gtk_main_iteration();
@@ -391,7 +387,7 @@ void SPSlideShow::waiting_cursor()
 
 void SPSlideShow::normal_cursor()
 {
-    gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(window)), NULL);
+    get_window()->set_cursor();
     if (ctrlwin) {
         gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ctrlwin)), NULL);
     }
