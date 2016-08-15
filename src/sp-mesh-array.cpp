@@ -1046,11 +1046,12 @@ void SPMeshNodeArray::create( SPMesh *mg, SPItem *item, Geom::OptRect bbox ) {
     if( !bbox ) {
         // Set default size to bounding box if size not given.
         std::cout << "SPMeshNodeArray::create(): bbox empty" << std::endl;
-        Geom::OptRect bbox = item->geometricBounds();
-    }
-    if( !bbox ) {
-        std::cout << "SPMeshNodeArray::create: ERROR: No bounding box!" << std::endl;
-        return;
+        bbox = item->geometricBounds();
+
+        if( !bbox ) {
+            std::cout << "SPMeshNodeArray::create: ERROR: No bounding box!" << std::endl;
+            return;
+        }
     }
 
     Geom::Coord const width = bbox->dimensions()[Geom::X];
