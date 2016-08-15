@@ -702,8 +702,8 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
 
                         PangoOTTag* features =
                             pango_ot_info_list_features( info, PANGO_OT_TABLE_GSUB, 0, i, j );
-                        if( features[0] != 0 )
-                            // std::cout << "          features: " << std::endl;
+                        // if( features[0] != 0 )
+                        //   std::cout << "          features: " << std::endl;
 
                         for( unsigned k = 0; features[k] != 0; ++k ) {
                             // dump_tag( &features[k], "            feature: ");

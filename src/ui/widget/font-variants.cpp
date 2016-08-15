@@ -629,7 +629,7 @@ namespace Widget {
           } else if( _caps_all_small.get_active() ) {
               css_string = "all-small-caps";
               caps_new = SP_CSS_FONT_VARIANT_CAPS_ALL_SMALL;
-          } else if( _caps_all_petite.get_active() ) {
+          } else if( _caps_petite.get_active() ) {
               css_string = "petite";
               caps_new = SP_CSS_FONT_VARIANT_CAPS_PETITE;
           } else if( _caps_all_petite.get_active() ) {

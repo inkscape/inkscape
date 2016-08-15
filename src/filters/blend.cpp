@@ -78,7 +78,7 @@ static Inkscape::Filters::FilterBlendMode sp_feBlend_readmode(gchar const *value
         case 's':
             if (strncmp(value, "screen", 6) == 0)
                 return Inkscape::Filters::BLEND_SCREEN;
-            if (strncmp(value, "saturation", 6) == 0)
+            if (strncmp(value, "saturation", 10) == 0)
                 return Inkscape::Filters::BLEND_SATURATION;
             break;
         case 'd':
@@ -106,7 +106,7 @@ static Inkscape::Filters::FilterBlendMode sp_feBlend_readmode(gchar const *value
                 return Inkscape::Filters::BLEND_COLOR;
             break;
         case 'h':
-            if (strncmp(value, "hard-light", 7) == 0)
+            if (strncmp(value, "hard-light", 10) == 0)
                 return Inkscape::Filters::BLEND_HARDLIGHT;
             if (strncmp(value, "hue", 3) == 0)
                 return Inkscape::Filters::BLEND_HUE;

@@ -656,6 +656,7 @@ Application::crash_handler (int /*signum*/)
         repr = doc->getReprRoot();
         if (doc->isModifiedSinceSave()) {
             const gchar *docname;
+            char n[64];
 
             /* originally, the document name was retrieved from
              * the sodipod:docname attribute */
@@ -671,7 +672,6 @@ Application::crash_handler (int /*signum*/)
                         if (*d=='.') dots++;
                     }
                     if (*d=='.' && d>docname && dots==2) {
-                        char n[64];
                         size_t len = MIN (d - docname, 63);
                         memcpy (n, docname, len);
                         n[len] = '\0';

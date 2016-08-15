@@ -1842,7 +1842,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble zoom_inc =
-        prefs->getDoubleLimited( "/options/zoomincrement/value", 1.414213562, 1.01, 10 );
+        prefs->getDoubleLimited( "/options/zoomincrement/value", M_SQRT2, 1.01, 10 );
 
     double zcorr = 1.0;
     Glib::ustring abbr = prefs->getString("/options/zoomcorrection/unit");

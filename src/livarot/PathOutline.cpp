@@ -1195,7 +1195,7 @@ Path::OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point 
             if ((dest->descr_cmd[dest->descr_cmd.size() - 1]->getType() == descr_lineto) && (nType == descr_lineto)) {
                 Geom::Point const biss = unit_vector(Geom::rot90( stNor - enNor ));
                 double c2 = Geom::dot (biss, enNor);
-                if (fabs(c2) > 0.707107) {    // apply only to obtuse angles
+                if (fabs(c2) > M_SQRT1_2) {    // apply only to obtuse angles
                     double l = width / c2;
                     PathDescrLineTo* nLine = dynamic_cast<PathDescrLineTo*>(dest->descr_cmd[dest->descr_cmd.size() - 1]);
                     nLine->p = pos + l*biss;  // relocate to bisector
