@@ -795,8 +795,11 @@ sp_genericellipse_side(SPGenericEllipse *ellipse, Geom::Point const &p)
     gdouble dy = (p[Geom::Y] - ellipse->cy.computed) / ellipse->ry.computed;
 
     gdouble s = dx * dx + dy * dy;
-    if (s < 1.0) return 1;
-    if (s > 1.0) return -1;
+    // We add a bit of a buffer, so there's a decent chance the user will
+    // be able to adjust the arc without the closed status flipping between
+    // open and closed during micro mouse movements.
+    if (s < 0.75) return 1;
+    if (s > 1.25) return -1;
     return 0;
 }
 
@@ -808,15 +811,20 @@ ArcKnotHolderEntityStart::knot_set(Geom::Point const &p, Geom::Point const &/*or
     SPGenericEllipse *arc = dynamic_cast<SPGenericEllipse *>(item);
     g_assert(arc != NULL);
 
-    arc->setClosed(sp_genericellipse_side(arc, p) == -1);
+    gint side = sp_genericellipse_side(arc, p);
+    if(side != 0) { arc->setClosed(side == -1); }
 
     Geom::Point delta = p - Geom::Point(arc->cx.computed, arc->cy.computed);
     Geom::Scale sc(arc->rx.computed, arc->ry.computed);
 
-    arc->start = atan2(delta * sc.inverse());
+    double offset = arc->start - atan2(delta * sc.inverse());
+    arc->start -= offset;
 
     if ((state & GDK_CONTROL_MASK) && snaps) {
         arc->start = sp_round(arc->start, M_PI / snaps);
+    }
+    if (state & GDK_SHIFT_MASK) {
+        arc->end -= offset;
     }
 
     arc->normalize();
@@ -852,15 +860,20 @@ ArcKnotHolderEntityEnd::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     SPGenericEllipse *arc = dynamic_cast<SPGenericEllipse *>(item);
     g_assert(arc != NULL);
 
-    arc->setClosed(sp_genericellipse_side(arc, p) == -1);
+    gint side = sp_genericellipse_side(arc, p);
+    if(side != 0) { arc->setClosed(side == -1); }
 
     Geom::Point delta = p - Geom::Point(arc->cx.computed, arc->cy.computed);
     Geom::Scale sc(arc->rx.computed, arc->ry.computed);
 
-    arc->end = atan2(delta * sc.inverse());
+    double offset = arc->end - atan2(delta * sc.inverse());
+    arc->end -= offset;
 
     if ((state & GDK_CONTROL_MASK) && snaps) {
         arc->end = sp_round(arc->end, M_PI/snaps);
+    }
+    if (state & GDK_SHIFT_MASK) {
+        arc->start -= offset;
     }
 
     arc->normalize();
@@ -983,13 +996,15 @@ ArcKnotHolder::ArcKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderRelea
                       SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
 
     entity_start->create(desktop, item, this, Inkscape::CTRL_TYPE_ROTATE,
-                         _("Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> "
-                           "to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"),
+                         _("Position the <b>start point</b> of the arc or segment; with <b>Shift</b> to move "
+                           "with <b>end point</b>; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the "
+                           "ellipse for arc, <b>outside</b> for segment"),
                          SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
 
     entity_end->create(desktop, item, this, Inkscape::CTRL_TYPE_ROTATE,
-                       _("Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; "
-                         "drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"),
+                       _("Position the <b>end point</b> of the arc or segment; with <b>Shift</b> to move "
+                         "with <b>start point</b>; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the "
+                         "ellipse for arc, <b>outside</b> for segment"),
                        SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
 
     entity.push_back(entity_rx);
