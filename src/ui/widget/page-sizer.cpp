@@ -406,7 +406,7 @@ PageSizer::PageSizer(Registry & _wr)
     _fitPageButtonAlign.set(0.5, 0.5, 0.0, 1.0);
     _fitPageButtonAlign.add(_fitPageButton);
     _fitPageButton.set_use_underline();
-    _fitPageButton.set_label(_("_Resize page to drawing or selection"));
+    _fitPageButton.set_label(_("_Resize page to drawing or selection (Ctrl+Shift+R)"));
     _fitPageButton.set_tooltip_text(_("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
 
     _scaleFrame.set_label(_("Scale"));
