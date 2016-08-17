@@ -703,7 +703,7 @@ SPLPEItem::apply_to_clip_or_mask(SPItem *clip_mask, SPItem *item)
                 // LPE was unsuccesfull. Read the old 'd'-attribute.
                 if (gchar const * value = repr->attribute("d")) {
                     Geom::PathVector pv = sp_svg_read_pathv(value);
-                    SPCurve *oldcurve = new SPCurve(pv);
+                    SPCurve *oldcurve = new (std::nothrow) SPCurve(pv);
                     if (oldcurve) {
                         SP_SHAPE(clip_mask)->setCurve(oldcurve, TRUE);
                         oldcurve->unref();

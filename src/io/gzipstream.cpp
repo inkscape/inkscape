@@ -171,12 +171,12 @@ bool GzipInputStream::load()
         }
 
     srcLen = inputBuf.size();
-    srcBuf = new Byte [srcLen];
+    srcBuf = new (std::nothrow) Byte [srcLen];
     if (!srcBuf) {
         return false;
     }
 
-    outputBuf = new unsigned char [OUT_SIZE];
+    outputBuf = new (std::nothrow) unsigned char [OUT_SIZE];
     if ( !outputBuf ) {
         delete[] srcBuf;
         srcBuf = NULL;
@@ -386,14 +386,14 @@ void GzipOutputStream::flush()
     }
 	
     uLong srclen = inputBuf.size();
-    Bytef *srcbuf = new Bytef [srclen];
+    Bytef *srcbuf = new (std::nothrow) Bytef [srclen];
     if (!srcbuf)
         {
         return;
         }
         
     uLong destlen = srclen;
-    Bytef *destbuf = new Bytef [(destlen + (srclen/100) + 13)];
+    Bytef *destbuf = new (std::nothrow) Bytef [(destlen + (srclen/100) + 13)];
     if (!destbuf)
         {
         delete[] srcbuf;
