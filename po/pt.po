@@ -26250,46 +26250,46 @@ msgstr "Criar novo conjunto de seleção"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:2175
 msgid "tutorial-basic.svg"
-msgstr "tutorial-basic.pt_BR.svg"
+msgstr "tutorial-basic.pt.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2179
 msgid "tutorial-shapes.svg"
-msgstr "tutorial-shapes.pt_BR.svg"
+msgstr "tutorial-shapes.pt.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2183
 msgid "tutorial-advanced.svg"
-msgstr "tutorial-advanced.pt_BR.svg"
+msgstr "tutorial-advanced.pt.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2189
 msgid "tutorial-tracing.svg"
-msgstr "tutorial-tracing.pt_BR.svg"
+msgstr "tutorial-tracing.pt.svg"
 
 #: ../src/verbs.cpp:2194
 msgid "tutorial-tracing-pixelart.svg"
-msgstr "tutorial-tracing-pixelart.svg"
+msgstr "tutorial-tracing-pixelart.pt.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2198
 msgid "tutorial-calligraphy.svg"
-msgstr "tutorial-calligraphy.pt_BR.svg"
+msgstr "tutorial-calligraphy.pt.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2202
 msgid "tutorial-interpolate.svg"
-msgstr "tutorial-interpolate.pt_BR.svg"
+msgstr "tutorial-interpolate.pt.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2206
 msgid "tutorial-elements.svg"
-msgstr "tutorial-elements.pt_BR.svg"
+msgstr "tutorial-elements.pt.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:2210
 msgid "tutorial-tips.svg"
-msgstr "tutorial-tips.pt_BR.svg"
+msgstr "tutorial-tips.pt.svg"
 
 #: ../src/verbs.cpp:2396 ../src/verbs.cpp:3012
 msgid "Unlock all objects in the current layer"
