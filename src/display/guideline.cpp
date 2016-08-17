@@ -48,7 +48,7 @@ static void sp_guideline_init(SPGuideLine *gl)
 
     gl->locked = false;
     gl->normal_to_line = Geom::Point(0,1);
-    gl->angle = 3.14159265358979323846/2;
+    gl->angle = M_PI_2;
     gl->point_on_line = Geom::Point(0,0);
     gl->sensitive = 0;
 

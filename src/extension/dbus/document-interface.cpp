@@ -405,7 +405,7 @@ document_interface_polygon (DocumentInterface *doc_interface, int cx, int cy,
                             int radius, int rotation, int sides, 
                             GError **error)
 {
-    gdouble rot = ((rotation / 180.0) * 3.14159265) - ( 3.14159265 / 2.0);
+    gdouble rot = ((rotation / 180.0) * M_PI) - M_PI_2;
     Inkscape::XML::Node *newNode = dbus_create_node(doc_interface->target.getDocument(), "svg:path");
     newNode->setAttribute("inkscape:flatsided", "true");
     newNode->setAttribute("sodipodi:type", "star");
