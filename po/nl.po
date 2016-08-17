@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-06-08 09:06+0200\n"
-"PO-Revision-Date: 2016-07-08 23:37+0100\n"
+"PO-Revision-Date: 2016-08-13 11:42+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -9510,7 +9510,7 @@ msgstr "BSpline"
 
 #: ../src/live_effects/effect.cpp:144
 msgid "Join type"
-msgstr "Type samenvoeging"
+msgstr "Samenvoeging"
 
 #: ../src/live_effects/effect.cpp:145
 msgid "Taper stroke"
@@ -11238,6 +11238,8 @@ msgid ""
 "The \"show handles\" path effect will remove any custom style on the object "
 "you are applying it to. If this is not what you want, click Cancel."
 msgstr ""
+"Het padeffect \"Handvatten tonen\" verwijdert alle aangepaste stijlen op het "
+"toegepaste object. Indien je dit niet wil, klik Annuleren."
 
 #: ../src/live_effects/lpe-simplify.cpp:30
 msgid "Steps:"
@@ -11429,7 +11431,7 @@ msgstr "Lijnbreedte:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:73
 msgid "The (non-tapered) width of the path"
-msgstr ""
+msgstr "De (niet-scherp toelopende) breedte van het pad"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:74
 msgid "Start offset:"
@@ -11437,7 +11439,7 @@ msgstr "Begin verplaatsing:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:74
 msgid "Taper distance from path start"
-msgstr ""
+msgstr "Tapafstand van padbegin"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:75
 msgid "End offset:"
@@ -11445,15 +11447,15 @@ msgstr "Einde verplaatsing:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:75
 msgid "The ending position of the taper"
-msgstr ""
+msgstr "Eindpositie tap"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:76
 msgid "Taper smoothing:"
-msgstr ""
+msgstr "Afronding tap:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:76
 msgid "Amount of smoothing to apply to the tapers"
-msgstr ""
+msgstr "Mate van afronding voor de taps"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:77
 msgid "Join type:"
@@ -11465,15 +11467,15 @@ msgstr "Samenvoeging voor niet-gladde knooppunten"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:78
 msgid "Limit for miter joins"
-msgstr ""
+msgstr "Limiet voor verstek"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:447
 msgid "Start point of the taper"
-msgstr ""
+msgstr "Beginpunt tap"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:451
 msgid "End point of the taper"
-msgstr ""
+msgstr "Eindpunt tap"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:31
 msgid "Elastic"
@@ -11485,7 +11487,7 @@ msgstr "Elastische modus"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:32
 msgid "From original width"
-msgstr "Van originelr breedte"
+msgstr "Van originele breedte"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:33
 msgid "Lock length"
@@ -11517,11 +11519,11 @@ msgstr "Eindpad"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
 msgid "Stretch"
-msgstr ""
+msgstr "Uitrekken"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:39
 msgid "Stretch the result"
-msgstr ""
+msgstr "Resultaat uitrekken"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:40
 msgid "Offset from knots"
@@ -11624,6 +11626,8 @@ msgid ""
 "<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
+"<b>Afschuining</b>: <b>Ctrl+klik</b> type veranderen, <b>Shift+klik</"
+"b>dialoog openen, <b>Alt+Ctrl+klik</b> resetten"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:782
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
@@ -11631,6 +11635,8 @@ msgid ""
 "<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
+"<b>Omgekeerde afschuining</b>: <b>Ctrl+klik</b> type veranderen, <b>Shift"
+"+klik</b>dialoog openen, <b>Alt+Ctrl+klik</b> resetten"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:786
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
@@ -11638,6 +11644,8 @@ msgid ""
 "<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
+"<b>Omgekeerde omlijsting</b>: <b>Ctrl+klik</b> type veranderen, <b>Shift"
+"+klik</b>dialoog openen, <b>Alt+Ctrl+klik</b> resetten"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:790
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:851
@@ -11645,6 +11653,8 @@ msgid ""
 "<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
+"<b>Omlijsting</b>: <b>Ctrl+klik</b> type veranderen, <b>Shift+klik</"
+"b>dialoog openen, <b>Alt+Ctrl+klik</b> resetten"
 
 #: ../src/live_effects/parameter/originalpath.cpp:67
 #: ../src/live_effects/parameter/originalpatharray.cpp:155
@@ -17626,7 +17636,7 @@ msgstr "Ver_grendeld"
 
 #: ../src/ui/dialog/guides.cpp:47
 msgid "Lock the movement of guides"
-msgstr ""
+msgstr "Beweging hulplijnen vastzetten"
 
 #: ../src/ui/dialog/guides.cpp:48
 msgid "Rela_tive change"
@@ -18379,7 +18389,7 @@ msgstr "Deens (da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid "Dogri (doi)"
-msgstr ""
+msgstr "Dogri (doi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid "Dutch (nl)"
@@ -19678,11 +19688,11 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1189
 msgid "Color stock markers the same color as object"
-msgstr "Kleur standaardmarkering is deze van object"
+msgstr "Kleur standaardmarkering is kleur object"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1190
 msgid "Color custom markers the same color as object"
-msgstr "Kleur aangepaste markering is deze van object"
+msgstr "Kleur aangepaste markering is kleur object"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1191
 #: ../src/ui/dialog/inkscape-preferences.cpp:1411
@@ -21050,7 +21060,7 @@ msgstr "Onderverdelingen:"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:136
 msgid "Modify Fillet-Chamfer"
-msgstr ""
+msgstr "Omlijsting/afschuining aanpassen"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:137
 msgid "_Modify"
@@ -21078,7 +21088,7 @@ msgstr "%1:"
 
 #: ../src/ui/dialog/lpe-powerstroke-properties.cpp:122
 msgid "Modify Node Position"
-msgstr ""
+msgstr "Knooppositie aanpassen"
 
 #: ../src/ui/dialog/memory.cpp:96
 msgid "Heap"
@@ -21393,22 +21403,28 @@ msgid ""
 "Type: Layer, Group, or Object. Clicking on Layer or Group icon, toggles "
 "between the two types."
 msgstr ""
+"Type: laag, groep of object. Klikken op het laag- of groepsicoon wisselt "
+"tussen de types."
 
 #: ../src/ui/dialog/objects.cpp:1712
 msgid "Is object clipped and/or masked?"
-msgstr "Is het obejct afgesneden of gemaskerd?"
+msgstr "Is het object afgesneden of gemaskerd?"
 
 #: ../src/ui/dialog/objects.cpp:1723
 msgid ""
 "Highlight color of outline in Node tool. Click to set. If alpha is zero, use "
 "inherited color."
 msgstr ""
+"Kleur padindicator in het knooppuntgereedschap. Klik om in te stellen. "
+"Indien alfa nul is, wordt de overgeërfde kleur gebruikt."
 
 #: ../src/ui/dialog/objects.cpp:1734
 msgid ""
 "Layer/Group/Object label (inkscape:label). Double-click to set. Default "
 "value is object 'id'."
 msgstr ""
+"Label laag/groep/object (inkscape:label). Dubbelklik om in te stellen. De "
+"standaardwaarde is het object'id'."
 
 #: ../src/ui/dialog/objects.cpp:1831
 msgid "Add layer..."
@@ -24087,11 +24103,11 @@ msgstr "Kies een gereedschap van de gereedschappenbalk."
 #. create the knots
 #: ../src/ui/tools/measure-tool.cpp:349
 msgid "Measure start, <b>Shift+Click</b> for position dialog"
-msgstr ""
+msgstr "Begin meting, <b>Shift+Klik</b> voor dialoogvenster positie"
 
 #: ../src/ui/tools/measure-tool.cpp:355
 msgid "Measure end, <b>Shift+Click</b> for position dialog"
-msgstr ""
+msgstr "Einde meting, <b>Shift+Klik</b> voor dialoogvenster positie"
 
 #: ../src/ui/tools/measure-tool.cpp:747 ../share/extensions/measure.inx.h:2
 msgid "Measure"
@@ -24107,7 +24123,7 @@ msgstr "Hulplijnen van meetlat toevoegen"
 
 #: ../src/ui/tools/measure-tool.cpp:781
 msgid "Keep last measure on the canvas, for reference"
-msgstr ""
+msgstr "De laatste meting als referentie behouden op het canvas"
 
 #: ../src/ui/tools/measure-tool.cpp:801
 msgid "Convert measure to items"
@@ -25234,28 +25250,34 @@ msgstr "Kleine hoofdletters (onderkast). OpenType: 'smcp'"
 #: ../src/ui/widget/font-variants.cpp:140
 msgid ""
 "All small-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'smcp'"
-msgstr "Alle onderkast (hoofdletters en onderkast). OpenType: 'c2sc' en 'smcp'"
+msgstr "Onderkast (hoofdletters en onderkast). OpenType: 'c2sc' en 'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:141
 msgid "Petite-caps (lowercase). OpenType table: 'pcap'"
-msgstr ""
+msgstr "Kleine hoofdletters (voor onderkast). OpenType: 'pcap'"
 
 #: ../src/ui/widget/font-variants.cpp:142
 msgid ""
 "All petite-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'pcap'"
 msgstr ""
+"Alles kleine hoofdletters (hoofdletters en onderkast). OpenType: 'c2sc' and "
+"'pcap'"
 
 #: ../src/ui/widget/font-variants.cpp:143
 msgid ""
 "Unicase (small caps for uppercase, normal for lowercase). OpenType table: "
 "'unic'"
 msgstr ""
+"Unicase (Kleine hoofdletters voor hoofdletters, normaal voor onderkast). "
+"OpenType: 'unic'"
 
 #: ../src/ui/widget/font-variants.cpp:144
 msgid ""
 "Titling caps (lighter-weight uppercase for use in titles). OpenType table: "
 "'titl'"
 msgstr ""
+"Titelhoofdletters (lichtere hoofdletters voor gebruik in titels). OpenType: "
+"'titl'"
 
 #. Numeric ------------------------------
 #. Add tooltips
@@ -25297,17 +25319,19 @@ msgstr "Gestapelde breuken. OpenType: 'afrc'"
 
 #: ../src/ui/widget/font-variants.cpp:189
 msgid "Ordinals (raised 'th', etc.). OpenType table: 'ordn'"
-msgstr ""
+msgstr "Rangtelwoorden (verhoogd 'de', etc. OpenType: 'ordn'"
 
 #: ../src/ui/widget/font-variants.cpp:190
 msgid "Slashed zeros. OpenType table: 'zero'"
-msgstr ""
+msgstr "Doorstreepte nullen. OpenType: 'zero'"
 
 #. Feature settings ---------------------
 #. Add tooltips
 #: ../src/ui/widget/font-variants.cpp:240
 msgid "Feature settings in CSS form. No sanity checking is performed."
 msgstr ""
+"Featureinstellingen in CSS-vorm. Er wordt geen correctheidscontrole "
+"uitgevoerd."
 
 #: ../src/ui/widget/layer-selector.cpp:118
 msgid "Toggle current layer visibility"
@@ -29458,23 +29482,23 @@ msgstr "Afbeeldingswidget"
 
 #: ../src/widgets/image-menu-item.c:152
 msgid "Child widget to appear next to the menu text"
-msgstr ""
+msgstr "Dochterwidget verschijnt naast menutekst"
 
 #: ../src/widgets/image-menu-item.c:167
 msgid "Use stock"
-msgstr ""
+msgstr "Stock gebruiken"
 
 #: ../src/widgets/image-menu-item.c:168
 msgid "Whether to use the label text to create a stock menu item"
-msgstr ""
+msgstr "Al dan niet labeltekst gebruiken om een standaardmenuitem te maken"
 
 #: ../src/widgets/image-menu-item.c:183
 msgid "Accel Group"
-msgstr ""
+msgstr "Sneltoetsgroep"
 
 #: ../src/widgets/image-menu-item.c:184
 msgid "The Accel Group to use for stock accelerator keys"
-msgstr ""
+msgstr "Sneltoetsgroep voor standaard sneltoetsen"
 
 #: ../src/widgets/lpe-toolbar.cpp:233
 msgid "Closed"
@@ -29651,7 +29675,7 @@ msgstr "Meting omkeren"
 #: ../src/widgets/measure-toolbar.cpp:395
 #: ../src/widgets/measure-toolbar.cpp:396
 msgid "Phantom measure"
-msgstr ""
+msgstr "Fantoommeting"
 
 #: ../src/widgets/measure-toolbar.cpp:405
 #: ../src/widgets/measure-toolbar.cpp:406
@@ -31086,27 +31110,27 @@ msgstr "Vierkant uiteinde"
 
 #: ../src/widgets/stroke-style.cpp:392
 msgid "Fill, Stroke, Markers"
-msgstr ""
+msgstr "Vulling, lijn, markering"
 
 #: ../src/widgets/stroke-style.cpp:396
 msgid "Stroke, Fill, Markers"
-msgstr ""
+msgstr "Lijn, vulling, markering"
 
 #: ../src/widgets/stroke-style.cpp:400
 msgid "Fill, Markers, Stroke"
-msgstr ""
+msgstr "Vulling, markering, lijn"
 
 #: ../src/widgets/stroke-style.cpp:408
 msgid "Markers, Fill, Stroke"
-msgstr ""
+msgstr "Markering, vulling, lijn"
 
 #: ../src/widgets/stroke-style.cpp:412
 msgid "Stroke, Markers, Fill"
-msgstr ""
+msgstr "Lijn, markering, vulling"
 
 #: ../src/widgets/stroke-style.cpp:416
 msgid "Markers, Stroke, Fill"
-msgstr ""
+msgstr "Markering, lijn, vulling"
 
 #: ../src/widgets/stroke-style.cpp:534
 msgid "Set markers"
@@ -31298,7 +31322,7 @@ msgstr "Tekstoriëntatie"
 #. Label
 #: ../src/widgets/text-toolbar.cpp:1812
 msgid "Text (glyph) orientation in vertical text."
-msgstr ""
+msgstr "Tekst (karakter) oriëntatie in vertikale tekst."
 
 #. Drop down menu
 #: ../src/widgets/text-toolbar.cpp:1845
@@ -31806,7 +31830,7 @@ msgstr ""
 
 #: ../share/extensions/convert2dashes.py:56
 msgid "Total number of objects not converted: {}\n"
-msgstr ""
+msgstr "Totaal aantal niet geconverteerde objecten: {}\n"
 
 #: ../share/extensions/dimension.py:108
 msgid "Please select an object."
@@ -32638,26 +32662,27 @@ msgstr ""
 
 #: ../share/extensions/plotter.py:146
 msgid "pySerial is not installed. Please follow these steps:"
-msgstr ""
+msgstr "pySerial is niet geïnstalleerd. Volg deze stappen:"
 
 #: ../share/extensions/plotter.py:147
 msgid "1. Download and extract (unzip) this file to your local harddisk:"
 msgstr ""
+"1. Download en pak dit bestand uit (unzip) naar je lokale harde schijf:"
 
 #: ../share/extensions/plotter.py:149
 msgid ""
 "2. Copy the \"serial\" folder (Can be found inside the just extracted folder)"
-msgstr ""
+msgstr "Kopiëer de map \"serial\" (in de zonet uitgepakte map)"
 
 #: ../share/extensions/plotter.py:150
 msgid ""
 "   into the following Inkscape folder: C:\\[Program files]\\inkscape\\python"
 "\\Lib\\"
-msgstr ""
+msgstr "   in de volgende Inkscape map: C:\\[Program files]\\inkscape\\python"
 
 #: ../share/extensions/plotter.py:151
 msgid "3. Close and restart Inkscape."
-msgstr ""
+msgstr "3. Sluit en herstart Inkscape."
 
 #: ../share/extensions/plotter.py:200
 msgid ""
@@ -32814,6 +32839,11 @@ msgid ""
 "http://sk1project.org/modules.php?name=Products&product=uniconvertor\n"
 "and install into your Inkscape's Python location\n"
 msgstr ""
+"Je moet UniConvertor installeren.\n"
+"GNU/Linux: installeer het pakket python-uniconvertor.\n"
+"Windows: download van\n"
+"http://sk1project.org/modules.php?name=Products&product=uniconvertor\n"
+"en installeer het in Inkscape's Pythonlocatie.\n"
 
 #: ../share/extensions/voronoi2svg.py:205
 msgid "Please select objects!"
@@ -33176,6 +33206,9 @@ msgid ""
 "only for objects and groups). Change the range values to limit the distance "
 "between the original color and the randomized one."
 msgstr ""
+"Tint, verzadiging, helderheid en/of ondoorzichtigheid randomiseren "
+"(ondoorzichtigheid enkel voor objecten en groepen). Pas het bereik aan om "
+"het verschil tussen originele en gerandomiseerde kleur te beperken."
 
 #: ../share/extensions/color_removeblue.inx.h:1
 msgid "Remove Blue"
@@ -34627,7 +34660,7 @@ msgstr "Grootte voorvertoning (px):"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:8
 msgid "Preview's paint emmit (pts/s):"
-msgstr ""
+msgstr "Verfsnelheid tonen (pt/s):"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:10
 #: ../share/extensions/gcodetools_orientation_points.inx.h:3
@@ -35586,6 +35619,9 @@ msgid ""
 "each pen, name the layers \"Pen 1\", \"Pen 2\", etc., and put your drawings "
 "in the corresponding layers. This overrules the pen number option above."
 msgstr ""
+"Indien je meerdere pennen op je plotter gebruikt, neem één laag per pen en "
+"noem ze \"Pen 1\", \"Pen 2\", etc.Plaats je afbeeldingen in de "
+"overeenkomstige lagen. Dit overschrijft de bovenstaande optie met pennummer."
 
 #: ../share/extensions/hpgl_output.inx.h:23
 #: ../share/extensions/plotter.inx.h:51
@@ -36453,7 +36489,7 @@ msgstr "Knooppunthandvatten verschuiven"
 
 #: ../share/extensions/jitternodes.inx.h:7
 msgid "Distribution of the displacements:"
-msgstr ""
+msgstr "Distributie verplaatsingen:"
 
 #: ../share/extensions/jitternodes.inx.h:8
 msgid "Uniform"
@@ -36461,7 +36497,7 @@ msgstr "Uniform"
 
 #: ../share/extensions/jitternodes.inx.h:9
 msgid "Pareto"
-msgstr ""
+msgstr "Pareto"
 
 #: ../share/extensions/jitternodes.inx.h:10
 msgid "Gaussian"
@@ -38423,7 +38459,7 @@ msgstr "Deze uitbreiding overschrijft het huidig document"
 
 #: ../share/extensions/seamless_pattern_procedural.inx.h:1
 msgid "Seamless Pattern Procedural"
-msgstr ""
+msgstr "Procedureel naadloos patroon"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
 msgid "1 - Setup Typography Canvas"
