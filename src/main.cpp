@@ -856,7 +856,7 @@ static int sp_common_main( int argc, char const **argv, GSList **flDest )
     std::string charset;
     Glib::get_charset(charset);
 
-    bind_textdomain_codeset(GETTEXT_PACKAGE, charset);
+    bind_textdomain_codeset(GETTEXT_PACKAGE, charset.c_str());
 
     poptContext ctx = poptGetContext(NULL, argc, argv, options, 0);
     poptSetOtherOptionHelp(ctx, _("[OPTIONS...] [FILE...]\n\nAvailable options:"));
