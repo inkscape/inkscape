@@ -67,29 +67,64 @@
 
 #include "ui/icon-names.h"
 
+class SPSlideShow;
+
+static int sp_svgview_main_delete (GtkWidget *widget,
+                                   GdkEvent *event,
+                                   struct SPSlideShow *ss);
+
+static int sp_svgview_main_key_press (GtkWidget *widget, 
+                                      GdkEventKey *event,
+                                      struct SPSlideShow *ss);
+
 /**
  * The main application window for the slideshow
  */
 class SPSlideShow : public Gtk::ApplicationWindow {
+    std::vector<Glib::ustring>  _slides;  ///< List of filenames for each slide
+    int                         _current; ///< Index of the currently displayed slide
+    SPDocument                 *_doc;     ///< The currently displayed slide
+    int                         _timer;
+    GtkWidget                  *_view;
+
 public:
-    std::vector<std::string>  slides;  ///< List of filenames for each slide
-    int                       current; ///< Index of the currently displayed slide
-    SPDocument               *doc;     ///< The currently displayed slide
-    GtkWidget                *view;
-    int                       timer;
-    
     /// Current state of application (full-screen or windowed)
     bool is_fullscreen;
 
-    SPSlideShow()
-        :
-            slides(),
-            current(0),
-            doc(NULL),
-            view(NULL),
-            is_fullscreen(false)
-    {}
+    /// Update the window title with current document name
+    void update_title()
+    {
+        set_title(_doc->getName());
+    }
 
+    SPSlideShow(std::vector<Glib::ustring> &slides)
+        :
+            _slides(slides),
+            _current(0),
+            _doc(SPDocument::createNewDoc(_slides[0].c_str(), true, false)),
+            _view(NULL),
+            is_fullscreen(false),
+            _timer(0)
+    {
+        update_title();
+
+        set_default_size(MIN ((int)_doc->getWidth().value("px"), (int)gdk_screen_width() - 64),
+                         MIN ((int)_doc->getHeight().value("px"), (int)gdk_screen_height() - 64));
+        
+        g_signal_connect (G_OBJECT (gobj()), "delete_event",    (GCallback) sp_svgview_main_delete,    this);
+        g_signal_connect (G_OBJECT (gobj()), "key_press_event", (GCallback) sp_svgview_main_key_press, this);
+
+        _doc->ensureUpToDate();
+        _view = sp_svg_view_widget_new (_doc);
+        _doc->doUnref ();
+        SP_SVG_VIEW_WIDGET(_view)->setResize( false, _doc->getWidth().value("px"), _doc->getHeight().value("px") );
+        gtk_widget_show (_view);
+        add(*Glib::wrap(_view));
+
+        show();
+    }
+
+    void set_timer(int timer) {_timer = timer;}
     void control_show();
     void show_next();
     void show_prev();
@@ -118,7 +153,7 @@ static int sp_svgview_main_delete (GtkWidget */*widget*/,
                                    GdkEvent */*event*/,
                                    struct SPSlideShow */*ss*/)
 {
-    gtk_main_quit ();
+    Gtk::Main::quit();
     return FALSE;
 }
 
@@ -168,7 +203,7 @@ static int sp_svgview_main_key_press (GtkWidget */*widget*/,
             break;
     }
 
-    ss->set_title(ss->doc->getName());
+    ss->update_title();
     return TRUE;
 }
 
@@ -220,9 +255,6 @@ int main (int argc, char **argv)
     Gtk::Main::init_gtkmm_internals();
     Gtk::Main main_instance (argc, argv, opt);
 
-    SPSlideShow ss;
-    ss.timer=timer;
-
     bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     textdomain (GETTEXT_PACKAGE);
@@ -243,13 +275,14 @@ int main (int argc, char **argv)
     setlocale (LC_NUMERIC, "C");
 
     Inkscape::Application::create(argv[0], true);
-    //Inkscape::Application &inkscape = Inkscape::Application::instance();
 
     if(filenames.empty())
     {
         std::cout << opt.get_help();
         exit(EXIT_FAILURE);
     }
+
+    std::vector<Glib::ustring> valid_files;
 
     for(auto file : filenames)
     {
@@ -277,13 +310,13 @@ int main (int argc, char **argv)
                             }
                         }
                     } else if (gba->len > 0) {
-                        ss.doc = SPDocument::createNewDocFromMem ((const gchar *)gba->data,
-                                           gba->len,
-                                           TRUE);
+                        // Try opening the document
+                        auto doc = SPDocument::createNewDocFromMem ((const gchar *)gba->data,
+                                                                    gba->len,
+                                                                    TRUE);
                         gchar *last_filename = jar_file_reader.get_last_filename();
-                        if (ss.doc) {
-                            ss.slides.push_back(strdup(last_filename));
-                            (ss.doc)->setUri(last_filename);
+                        if (doc) {
+                            valid_files.push_back(strdup(last_filename));
                         }
                         g_byte_array_free(gba, TRUE);
                         g_free(last_filename);
@@ -293,14 +326,12 @@ int main (int argc, char **argv)
                 }
             } else {
     #endif /* WITH_INKJAR */
-            /* Append to list */
-            ss.slides.push_back(file);
+            auto doc = SPDocument::createNewDoc(file.c_str(), TRUE, false);
 
-            if (!ss.doc) {
-                ss.doc = SPDocument::createNewDoc((ss.slides[ss.current]).c_str(), TRUE, false);
-                if (!ss.doc) {
-                    ++ss.current;
-                }
+            if(doc)
+            {
+                /* Append to list */
+                valid_files.push_back(file);
             }
     #ifdef WITH_INKJAR
             }
@@ -308,27 +339,13 @@ int main (int argc, char **argv)
         }
     }
 
-    if(!ss.doc) {
+    if(valid_files.empty()) {
        return 1; /* none of the slides loadable */
     }
     
-    ss.set_title(ss.doc->getName() );
-    ss.set_default_size(MIN ((int)(ss.doc)->getWidth().value("px"), (int)gdk_screen_width() - 64),
-                        MIN ((int)(ss.doc)->getHeight().value("px"), (int)gdk_screen_height() - 64));
-
-    g_signal_connect (G_OBJECT (ss.gobj()), "delete_event", (GCallback) sp_svgview_main_delete, &ss);
-    g_signal_connect (G_OBJECT (ss.gobj()), "key_press_event", (GCallback) sp_svgview_main_key_press, &ss);
-
-    (ss.doc)->ensureUpToDate();
-    ss.view = sp_svg_view_widget_new (ss.doc);
-    (ss.doc)->doUnref ();
-    SP_SVG_VIEW_WIDGET(ss.view)->setResize( false, ss.doc->getWidth().value("px"), ss.doc->getHeight().value("px") );
-    gtk_widget_show (ss.view);
-    ss.add(*Glib::wrap(ss.view));
-
-    ss.show();
-
-    gtk_main ();
+    SPSlideShow ss(valid_files);
+    ss.set_timer(timer);
+    main_instance.run();
 
     return 0;
 }
@@ -414,11 +431,11 @@ void SPSlideShow::normal_cursor()
 void SPSlideShow::set_document(SPDocument *doc,
                                int         current)
 {
-    if (doc && doc != this->doc) {
+    if (doc && doc != _doc) {
         doc->ensureUpToDate();
-        reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (view))->setDocument (doc);
-        this->doc = doc;
-        this->current = current;
+        reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (_view))->setDocument (doc);
+        _doc = doc;
+        _current = current;
     }
 }
 
@@ -430,11 +447,11 @@ void SPSlideShow::show_next()
     waiting_cursor();
 
     SPDocument *doc = NULL;
-    while (!doc && (current < slides.size() - 1)) {
-        doc = SPDocument::createNewDoc ((slides[++current]).c_str(), TRUE, false);
+    while (!doc && (_current < _slides.size() - 1)) {
+        doc = SPDocument::createNewDoc ((_slides[++_current]).c_str(), TRUE, false);
     }
 
-    set_document(doc, current);
+    set_document(doc, _current);
     normal_cursor();
 }
 
@@ -446,11 +463,11 @@ void SPSlideShow::show_prev()
     waiting_cursor();
 
     SPDocument *doc = NULL;
-    while (!doc && (current > 0)) {
-        doc = SPDocument::createNewDoc ((slides[--current]).c_str(), TRUE, false);
+    while (!doc && (_current > 0)) {
+        doc = SPDocument::createNewDoc ((_slides[--_current]).c_str(), TRUE, false);
     }
 
-    set_document(doc, current);
+    set_document(doc, _current);
     normal_cursor();
 }
 
@@ -463,8 +480,8 @@ void SPSlideShow::goto_first()
 
     SPDocument *doc = NULL;
     int current = 0;
-    while ( !doc && (current < slides.size() - 1)) {
-        doc = SPDocument::createNewDoc((slides[current++]).c_str(), TRUE, false);
+    while ( !doc && (current < _slides.size() - 1)) {
+        doc = SPDocument::createNewDoc((_slides[current++]).c_str(), TRUE, false);
     }
 
     set_document(doc, current - 1);
@@ -480,9 +497,9 @@ void SPSlideShow::goto_last()
     waiting_cursor();
 
     SPDocument *doc = NULL;
-    int current = slides.size() - 1;
+    int current = _slides.size() - 1;
     while (!doc && (current >= 0)) {
-        doc = SPDocument::createNewDoc((slides[current--]).c_str(), TRUE, false);
+        doc = SPDocument::createNewDoc((_slides[current--]).c_str(), TRUE, false);
     }
 
     set_document(doc, current + 1);
