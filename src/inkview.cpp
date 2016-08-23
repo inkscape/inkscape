@@ -34,6 +34,8 @@
 #include <sys/stat.h>
 #include <locale.h>
 
+#include <glibmm/optionentry.h>
+
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
 #include <gtkmm/image.h>
@@ -43,7 +45,6 @@
 
 #include <libxml/tree.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtk.h>
 
 #include "inkgc/gc-core.h"
 #include "preferences.h"
@@ -65,9 +66,6 @@
 #endif
 
 #include "ui/icon-names.h"
-
-extern char *optarg;
-extern int  optind, opterr;
 
 /**
  * The main application window for the slideshow
@@ -174,41 +172,56 @@ static int sp_svgview_main_key_press (GtkWidget */*widget*/,
     return TRUE;
 }
 
-int main (int argc, const char **argv)
+/// List of all input filenames
+static Glib::OptionGroup::vecustrings filenames;
+
+/// Input timer option
+static int timer = 0;
+
+/**
+ * \brief Set of command-line options for Inkview
+ */
+class InkviewOptionsGroup : public Glib::OptionGroup
 {
-    if (argc == 1) {
-        usage();
+public:
+    InkviewOptionsGroup()
+        :
+            Glib::OptionGroup(_("Inkscape Options"),
+                              _("Default program options")),
+            _entry_timer(),
+            _entry_args()
+    {
+        // Entry for the "timer" option
+        _entry_timer.set_short_name('t');
+        _entry_timer.set_long_name("timer");
+        _entry_timer.set_arg_description(_("NUM"));
+        add_entry(_entry_timer, timer);
+
+        // Entry for the remaining non-option arguments
+        _entry_args.set_short_name('\0');
+        _entry_args.set_long_name(G_OPTION_REMAINING);
+        _entry_args.set_arg_description(_("FILES..."));
+
+        add_entry(_entry_args, filenames);
     }
 
+private:
+    Glib::OptionEntry _entry_timer;
+    Glib::OptionEntry _entry_args;
+};
+
+int main (int argc, char **argv)
+{
+    Glib::OptionContext opt(_("Open SVG files"));
+    InkviewOptionsGroup grp;
+    opt.set_main_group(grp);
+    
     // Prevents errors like "Unable to wrap GdkPixbuf..." (in nr-filter-image.cpp for example)
     Gtk::Main::init_gtkmm_internals();
+    Gtk::Main main_instance (argc, argv, opt);
 
-    Gtk::Main main_instance (&argc, const_cast<char ***>(&argv));
-
-    int num_parsed_options = 0;
     SPSlideShow ss;
-
-    // the list of arguments is in the net line
-    for (int i = 1; i < argc; i++) {
-        if ((argv[i][0] == '-')) {
-            if (!strcmp(argv[i], "--")) {
-                break;
-            }
-            else if ((!strcmp(argv[i], "-t"))) {
-                if (i + 1 >= argc) {
-                    usage();
-                }
-                ss.timer = atoi(argv[i+1]);
-                num_parsed_options = i+1;
-                i++;
-            }
-            else {
-                usage();
-            }
-        }
-    }
-
-    int i;
+    ss.timer=timer;
 
     bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -232,19 +245,24 @@ int main (int argc, const char **argv)
     Inkscape::Application::create(argv[0], true);
     //Inkscape::Application &inkscape = Inkscape::Application::instance();
 
-    // starting at where the commandline options stopped parsing because
-    // we want all the files to be in the list
-    for (i = num_parsed_options + 1 ; i < argc; i++) {
+    if(filenames.empty())
+    {
+        std::cout << opt.get_help();
+        exit(EXIT_FAILURE);
+    }
+
+    for(auto file : filenames)
+    {
         struct stat st;
-        if (stat (argv[i], &st)
-              || !S_ISREG (st.st_mode)
-              || (st.st_size < 64)) {
-            fprintf(stderr, "could not open file %s\n", argv[i]);
+        if (stat(file.c_str(), &st)
+                || !S_ISREG (st.st_mode)
+                || (st.st_size < 64)) {
+                fprintf(stderr, "could not open file %s\n", file.c_str());
         } else {
 
     #ifdef WITH_INKJAR
-            if (is_jar(argv[i])) {
-                Inkjar::JarFileReader jar_file_reader(argv[i]);
+            if (is_jar(file.c_str())) {
+                Inkjar::JarFileReader jar_file_reader(file.c_str());
                 for (;;) {
                     GByteArray *gba = jar_file_reader.get_next_file();
                     if (gba == NULL) {
@@ -276,7 +294,7 @@ int main (int argc, const char **argv)
             } else {
     #endif /* WITH_INKJAR */
             /* Append to list */
-            ss.slides.push_back(strdup (argv[i]));
+            ss.slides.push_back(file);
 
             if (!ss.doc) {
                 ss.doc = SPDocument::createNewDoc((ss.slides[ss.current]).c_str(), TRUE, false);
@@ -486,18 +504,6 @@ static bool is_jar(char const *filename)
             (memcmp(extension, ".sxw", 4) == 0)   );
 }
 #endif /* WITH_INKJAR */
-
-static void usage()
-{
-    fprintf(stderr,
-        "Usage: inkview [OPTIONS...] [FILES ...]\n"
-        "\twhere FILES are SVG (.svg or .svgz)"
-#ifdef WITH_INKJAR
-        " or archives of SVGs (.sxw, .jar)"
-#endif
-        "\n");
-    exit(1);
-}
 
 /*
   Local Variables:
