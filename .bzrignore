@@ -134,7 +134,6 @@ src/filters/makefile
 src/helper/makefile
 src/helper/sp-marshal.cpp
 src/helper/sp-marshal.h
-src/inkjar/makefile
 src/inkscape
 src/inkscape-version.cpp
 src/inkview

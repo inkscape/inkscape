@@ -55,10 +55,6 @@
 #include "svg-view-widget.h"
 #include "util/units.h"
 
-#ifdef WITH_INKJAR
-#include "io/inkjar.h"
-#endif
-
 #include "inkscape.h"
 
 #ifndef HAVE_BIND_TEXTDOMAIN_CODESET
@@ -138,9 +134,6 @@ protected:
                       int         current);
 };
 
-#ifdef WITH_INKJAR
-static bool is_jar(char const *filename);
-#endif
 static void usage();
 
 static GtkWidget *ctrlwin = NULL;
@@ -292,40 +285,6 @@ int main (int argc, char **argv)
                 || (st.st_size < 64)) {
                 fprintf(stderr, "could not open file %s\n", file.c_str());
         } else {
-
-    #ifdef WITH_INKJAR
-            if (is_jar(file.c_str())) {
-                Inkjar::JarFileReader jar_file_reader(file.c_str());
-                for (;;) {
-                    GByteArray *gba = jar_file_reader.get_next_file();
-                    if (gba == NULL) {
-                        char *c_ptr;
-                        gchar *last_filename = jar_file_reader.get_last_filename();
-                        if (last_filename == NULL)
-                            break;
-                        if ((c_ptr = std::strrchr(last_filename, '/')) != NULL) {
-                            if (*(++c_ptr) == '\0') {
-                                g_free(last_filename);
-                                continue;
-                            }
-                        }
-                    } else if (gba->len > 0) {
-                        // Try opening the document
-                        auto doc = SPDocument::createNewDocFromMem ((const gchar *)gba->data,
-                                                                    gba->len,
-                                                                    TRUE);
-                        gchar *last_filename = jar_file_reader.get_last_filename();
-                        if (doc) {
-                            valid_files.push_back(strdup(last_filename));
-                        }
-                        g_byte_array_free(gba, TRUE);
-                        g_free(last_filename);
-                    } else {
-                        break;
-                    }
-                }
-            } else {
-    #endif /* WITH_INKJAR */
             auto doc = SPDocument::createNewDoc(file.c_str(), TRUE, false);
 
             if(doc)
@@ -333,9 +292,6 @@ int main (int argc, char **argv)
                 /* Append to list */
                 valid_files.push_back(file);
             }
-    #ifdef WITH_INKJAR
-            }
-    #endif
         }
     }
 
@@ -506,21 +462,6 @@ void SPSlideShow::goto_last()
 
     normal_cursor();
 }
-
-#ifdef WITH_INKJAR
-static bool is_jar(char const *filename)
-{
-    /* fixme: Check MIME type or something.  /usr/share/misc/file/magic suggests that checking for
-       initial string "PK\003\004" in content should suffice. */
-    size_t const filename_len = strlen(filename);
-    if (filename_len < 5) {
-        return false;
-    }
-    char const *extension = filename + filename_len - 4;
-    return ((memcmp(extension, ".jar", 4) == 0) ||
-            (memcmp(extension, ".sxw", 4) == 0)   );
-}
-#endif /* WITH_INKJAR */
 
 /*
   Local Variables:

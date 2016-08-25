@@ -3,7 +3,6 @@ set(io_SRC
 	base64stream.cpp
 	bufferstream.cpp
 	gzipstream.cpp
-	inkjar.cpp
 	inkscapestream.cpp
 	resource.cpp
 	stringstream.cpp
@@ -16,7 +15,6 @@ set(io_SRC
 	base64stream.h
 	bufferstream.h
 	gzipstream.h
-	inkjar.h
 	inkscapestream.h
 	resource.h
 	stringstream.h

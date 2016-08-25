@@ -301,9 +301,6 @@
 /* Build in SSL support for Inkboard */
 #cmakedefine WITH_INKBOARD_SSL 1
 
-/* enable openoffice files (SVG jars) */
-#cmakedefine WITH_INKJAR 1
-
 /* Build in libcdr */
 #cmakedefine WITH_LIBCDR 1
 
