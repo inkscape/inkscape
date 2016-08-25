@@ -38,10 +38,9 @@
 
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
+#include <gtkmm/buttonbox.h>
 #include <gtkmm/image.h>
 #include <gtkmm/main.h>
-
-// #include <stropts.h>
 
 #include <libxml/tree.h>
 #include <gdk/gdkkeysyms.h>
@@ -93,33 +92,8 @@ public:
         set_title(_doc->getName());
     }
 
-    SPSlideShow(std::vector<Glib::ustring> &slides)
-        :
-            _slides(slides),
-            _current(0),
-            _doc(SPDocument::createNewDoc(_slides[0].c_str(), true, false)),
-            _view(NULL),
-            is_fullscreen(false),
-            _timer(0)
-    {
-        update_title();
-
-        set_default_size(MIN ((int)_doc->getWidth().value("px"), (int)gdk_screen_width() - 64),
-                         MIN ((int)_doc->getHeight().value("px"), (int)gdk_screen_height() - 64));
-        
-        g_signal_connect (G_OBJECT (gobj()), "delete_event",    (GCallback) sp_svgview_main_delete,    this);
-        g_signal_connect (G_OBJECT (gobj()), "key_press_event", (GCallback) sp_svgview_main_key_press, this);
-
-        _doc->ensureUpToDate();
-        _view = sp_svg_view_widget_new (_doc);
-        _doc->doUnref ();
-        SP_SVG_VIEW_WIDGET(_view)->setResize( false, _doc->getWidth().value("px"), _doc->getHeight().value("px") );
-        gtk_widget_show (_view);
-        add(*Glib::wrap(_view));
-
-        show();
-    }
-
+    SPSlideShow(std::vector<Glib::ustring> const &slides);
+    
     void set_timer(int timer) {_timer = timer;}
     void control_show();
     void show_next();
@@ -134,9 +108,38 @@ protected:
                       int         current);
 };
 
+SPSlideShow::SPSlideShow(std::vector<Glib::ustring> const &slides)
+    :
+        _slides(slides),
+        _current(0),
+        _doc(SPDocument::createNewDoc(_slides[0].c_str(), true, false)),
+        _view(NULL),
+        is_fullscreen(false),
+        _timer(0)
+{
+    update_title();
+
+    auto default_screen = Gdk::Screen::get_default();
+
+    set_default_size(MIN ((int)_doc->getWidth().value("px"),  default_screen->get_width()  - 64),
+            MIN ((int)_doc->getHeight().value("px"), default_screen->get_height() - 64));
+
+    g_signal_connect (G_OBJECT (gobj()), "delete_event",    (GCallback) sp_svgview_main_delete,    this);
+    g_signal_connect (G_OBJECT (gobj()), "key_press_event", (GCallback) sp_svgview_main_key_press, this);
+
+    _doc->ensureUpToDate();
+    _view = sp_svg_view_widget_new (_doc);
+    _doc->doUnref ();
+    SP_SVG_VIEW_WIDGET(_view)->setResize( false, _doc->getWidth().value("px"), _doc->getHeight().value("px") );
+    gtk_widget_show (_view);
+    add(*Glib::wrap(_view));
+
+    show();
+}
+
 static void usage();
 
-static GtkWidget *ctrlwin = NULL;
+static Gtk::Window *ctrlwin = NULL;
 
 // Dummy functions to keep linker happy
 int sp_main_gui (int, char const**) { return 0; }
@@ -190,7 +193,7 @@ static int sp_svgview_main_key_press (GtkWidget */*widget*/,
         case GDK_KEY_Escape:
         case GDK_KEY_q:
         case GDK_KEY_Q:
-            gtk_main_quit();
+            Gtk::Main::quit();
             break;
         default:
             break;
@@ -283,7 +286,7 @@ int main (int argc, char **argv)
         if (stat(file.c_str(), &st)
                 || !S_ISREG (st.st_mode)
                 || (st.st_size < 64)) {
-                fprintf(stderr, "could not open file %s\n", file.c_str());
+            std::cerr << "could not open file " << file << std::endl;
         } else {
             auto doc = SPDocument::createNewDoc(file.c_str(), TRUE, false);
 
@@ -310,6 +313,8 @@ static int sp_svgview_ctrlwin_delete (GtkWidget */*widget*/,
                                       GdkEvent */*event*/,
                                       void */*data*/)
 {
+    if(ctrlwin) delete ctrlwin;
+
     ctrlwin = NULL;
     return FALSE;
 }
@@ -320,45 +325,45 @@ static int sp_svgview_ctrlwin_delete (GtkWidget */*widget*/,
 void SPSlideShow::control_show()
 {
     if (!ctrlwin) {
-        ctrlwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_resizable(GTK_WINDOW(ctrlwin), FALSE);
-        gtk_window_set_transient_for(GTK_WINDOW(ctrlwin), GTK_WINDOW(this->gobj()));
-        g_signal_connect(G_OBJECT (ctrlwin), "key_press_event", (GCallback) sp_svgview_main_key_press, this);
-        g_signal_connect(G_OBJECT (ctrlwin), "delete_event", (GCallback) sp_svgview_ctrlwin_delete, NULL);
-        auto t = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-        gtk_container_add(GTK_CONTAINER(ctrlwin), t);
+        ctrlwin = new Gtk::Window();
+        ctrlwin->set_resizable(false);
+        ctrlwin->set_transient_for(*this);
+        g_signal_connect(G_OBJECT (ctrlwin->gobj()), "key_press_event", (GCallback) sp_svgview_main_key_press, this);
+        g_signal_connect(G_OBJECT (ctrlwin->gobj()), "delete_event",    (GCallback) sp_svgview_ctrlwin_delete, NULL);
+        auto t = Gtk::manage(new Gtk::ButtonBox());
+        ctrlwin->add(*t);
 
         auto btn_go_first = Gtk::manage(new Gtk::Button());
         auto img_go_first = Gtk::manage(new Gtk::Image());
         img_go_first->set_from_icon_name(INKSCAPE_ICON("go-first"), Gtk::ICON_SIZE_BUTTON);
         btn_go_first->set_image(*img_go_first);
-        gtk_container_add(GTK_CONTAINER(t), GTK_WIDGET(btn_go_first->gobj()));
+        t->add(*btn_go_first);
         btn_go_first->signal_clicked().connect(sigc::mem_fun(*this, &SPSlideShow::goto_first));
         
         auto btn_go_prev = Gtk::manage(new Gtk::Button());
         auto img_go_prev = Gtk::manage(new Gtk::Image());
         img_go_prev->set_from_icon_name(INKSCAPE_ICON("go-previous"), Gtk::ICON_SIZE_BUTTON);
         btn_go_prev->set_image(*img_go_prev);
-        gtk_container_add(GTK_CONTAINER(t), GTK_WIDGET(btn_go_prev->gobj()));
+        t->add(*btn_go_prev);
         btn_go_prev->signal_clicked().connect(sigc::mem_fun(*this, &SPSlideShow::show_prev));
         
         auto btn_go_next = Gtk::manage(new Gtk::Button());
         auto img_go_next = Gtk::manage(new Gtk::Image());
         img_go_next->set_from_icon_name(INKSCAPE_ICON("go-next"), Gtk::ICON_SIZE_BUTTON);
         btn_go_next->set_image(*img_go_next);
-        gtk_container_add(GTK_CONTAINER(t), GTK_WIDGET(btn_go_next->gobj()));
+        t->add(*btn_go_next);
         btn_go_next->signal_clicked().connect(sigc::mem_fun(*this, &SPSlideShow::show_next));
         
         auto btn_go_last = Gtk::manage(new Gtk::Button());
         auto img_go_last = Gtk::manage(new Gtk::Image());
         img_go_last->set_from_icon_name(INKSCAPE_ICON("go-last"), Gtk::ICON_SIZE_BUTTON);
         btn_go_last->set_image(*img_go_last);
-        gtk_container_add(GTK_CONTAINER(t), GTK_WIDGET(btn_go_last->gobj()));
+        t->add(*btn_go_last);
         btn_go_last->signal_clicked().connect(sigc::mem_fun(*this, &SPSlideShow::goto_last));
 
-        gtk_widget_show_all(ctrlwin);
+        ctrlwin->show_all();
     } else {
-        gtk_window_present(GTK_WINDOW(ctrlwin));
+        ctrlwin->present();
     }
 }
 
@@ -369,10 +374,10 @@ void SPSlideShow::waiting_cursor()
     get_window()->set_cursor(waiting);
     
     if (ctrlwin) {
-        gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ctrlwin)), waiting->gobj());
+        ctrlwin->get_window()->set_cursor(waiting);
     }
-    while(gtk_events_pending()) {
-       gtk_main_iteration();
+    while(Gtk::Main::events_pending()) {
+        Gtk::Main::iteration();
     }
 }
 
@@ -380,7 +385,7 @@ void SPSlideShow::normal_cursor()
 {
     get_window()->set_cursor();
     if (ctrlwin) {
-        gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ctrlwin)), NULL);
+        ctrlwin->get_window()->set_cursor();
     }
 }
 
