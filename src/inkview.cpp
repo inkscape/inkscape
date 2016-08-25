@@ -76,11 +76,13 @@ static int sp_svgview_main_key_press (GtkWidget *widget,
  * The main application window for the slideshow
  */
 class SPSlideShow : public Gtk::ApplicationWindow {
+private:
     std::vector<Glib::ustring>  _slides;  ///< List of filenames for each slide
     int                         _current; ///< Index of the currently displayed slide
     SPDocument                 *_doc;     ///< The currently displayed slide
     int                         _timer;
     GtkWidget                  *_view;
+    Gtk::Window                *_ctrlwin; ///< Window containing slideshow control buttons
 
 public:
     /// Current state of application (full-screen or windowed)
@@ -101,6 +103,9 @@ public:
     void goto_first();
     void goto_last();
 
+    static int ctrlwin_delete (GtkWidget *widget,
+                               GdkEvent  *event,
+                               void      *data);
 protected:
     void waiting_cursor();
     void normal_cursor();
@@ -115,7 +120,8 @@ SPSlideShow::SPSlideShow(std::vector<Glib::ustring> const &slides)
         _doc(SPDocument::createNewDoc(_slides[0].c_str(), true, false)),
         _view(NULL),
         is_fullscreen(false),
-        _timer(0)
+        _timer(0),
+        _ctrlwin(NULL)
 {
     update_title();
 
@@ -139,7 +145,6 @@ SPSlideShow::SPSlideShow(std::vector<Glib::ustring> const &slides)
 
 static void usage();
 
-static Gtk::Window *ctrlwin = NULL;
 
 // Dummy functions to keep linker happy
 int sp_main_gui (int, char const**) { return 0; }
@@ -309,13 +314,14 @@ int main (int argc, char **argv)
     return 0;
 }
 
-static int sp_svgview_ctrlwin_delete (GtkWidget */*widget*/,
-                                      GdkEvent */*event*/,
-                                      void */*data*/)
+int SPSlideShow::ctrlwin_delete (GtkWidget */*widget*/,
+                                 GdkEvent  */*event*/,
+                                 void      *data)
 {
-    if(ctrlwin) delete ctrlwin;
+    auto ss = reinterpret_cast<SPSlideShow *>(data);
+    if(ss->_ctrlwin) delete ss->_ctrlwin;
 
-    ctrlwin = NULL;
+    ss->_ctrlwin = NULL;
     return FALSE;
 }
 
@@ -324,14 +330,14 @@ static int sp_svgview_ctrlwin_delete (GtkWidget */*widget*/,
  */
 void SPSlideShow::control_show()
 {
-    if (!ctrlwin) {
-        ctrlwin = new Gtk::Window();
-        ctrlwin->set_resizable(false);
-        ctrlwin->set_transient_for(*this);
-        g_signal_connect(G_OBJECT (ctrlwin->gobj()), "key_press_event", (GCallback) sp_svgview_main_key_press, this);
-        g_signal_connect(G_OBJECT (ctrlwin->gobj()), "delete_event",    (GCallback) sp_svgview_ctrlwin_delete, NULL);
+    if (!_ctrlwin) {
+        _ctrlwin = new Gtk::Window();
+        _ctrlwin->set_resizable(false);
+        _ctrlwin->set_transient_for(*this);
+        g_signal_connect(G_OBJECT (_ctrlwin->gobj()), "key_press_event", (GCallback) sp_svgview_main_key_press, this);
+        g_signal_connect(G_OBJECT (_ctrlwin->gobj()), "delete_event",    (GCallback) SPSlideShow::ctrlwin_delete, this);
         auto t = Gtk::manage(new Gtk::ButtonBox());
-        ctrlwin->add(*t);
+        _ctrlwin->add(*t);
 
         auto btn_go_first = Gtk::manage(new Gtk::Button());
         auto img_go_first = Gtk::manage(new Gtk::Image());
@@ -361,9 +367,9 @@ void SPSlideShow::control_show()
         t->add(*btn_go_last);
         btn_go_last->signal_clicked().connect(sigc::mem_fun(*this, &SPSlideShow::goto_last));
 
-        ctrlwin->show_all();
+        _ctrlwin->show_all();
     } else {
-        ctrlwin->present();
+        _ctrlwin->present();
     }
 }
 
@@ -373,8 +379,8 @@ void SPSlideShow::waiting_cursor()
     auto waiting = Gdk::Cursor::create(display, Gdk::WATCH);
     get_window()->set_cursor(waiting);
     
-    if (ctrlwin) {
-        ctrlwin->get_window()->set_cursor(waiting);
+    if (_ctrlwin) {
+        _ctrlwin->get_window()->set_cursor(waiting);
     }
     while(Gtk::Main::events_pending()) {
         Gtk::Main::iteration();
@@ -384,8 +390,8 @@ void SPSlideShow::waiting_cursor()
 void SPSlideShow::normal_cursor()
 {
     get_window()->set_cursor();
-    if (ctrlwin) {
-        ctrlwin->get_window()->set_cursor();
+    if (_ctrlwin) {
+        _ctrlwin->get_window()->set_cursor();
     }
 }
 
