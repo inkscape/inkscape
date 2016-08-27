@@ -40,57 +40,57 @@
   <text id="text7519" opacity=".5" line-height="125%" xml:space="preserve" transform="rotate(90)" font-size="6.9693px" y="-326.81229" x="3.6203015" font-family="sans-serif" sodipodi:linespacing="125%" fill="#000000"><tspan id="tspan7521" sodipodi:role="line" x="3.6203015" style="letter-spacing:.29056" y="-326.81229">Χρήση <tspan id="tspan7523" font-weight="bold">Ctrl+κάτω βέλος</tspan> για κύλιση </tspan></text>
   <path id="path7527" opacity=".5" style="color:#000000" d="m338.53 197.82-13.108-1.2709 7.6547-10.717z" fill-rule="evenodd" transform="matrix(.61496 .045496 .061919 -.45186 112.46 216.6)"/>
  </g>
- <text id="text1920" font-family="sans-serif" font-size="7" transform="scale(1.1307)" y="18.25828" x="176.24451" fill="#ffffff">
-  <tspan id="tspan1668" style="letter-spacing:2.1813" fill="#ffffff" dx="0 -0.57057059 0 0 0 0 0">::ΣΤΟΙΧΕΊΑ</tspan>
+ <text id="text1920" font-family="sans-serif" font-size="7" transform="scale(1.1307)" y="30" x="35" fill="#ffffff">
+  <tspan id="tspan1668" style="letter-spacing:2.1813" fill="#ffffff" dx="0 -0.57057059 0 0 0 0 0">::ELEMENTS OF DESIGN</tspan>
  </text>
- <rect id="d0e10" display="none" height="1e3px" width="264" y="36" x="35"/>
+ <rect id="d0e10" display="none" height="1e3px" width="264" y="46" x="35"/>
  <flowRoot font-family="sans-serif" font-size="7.2" font-style="italic" line-height="150%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e10"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Αυτό το μάθημα θα δείξει τα στοιχεία και τις αρχές σχεδίασης που συνήθως διδάσκονται σε αρχάριους σπουδαστές τέχνης για να καταλάβουν ποικίλες ιδιότητες που χρησιμοποιούνται στην τέχνη. Αυτή δεν είναι μια πλήρης λίστα, έτσι παρακαλώ προσθέστε, αφαιρέστε και συνδυάστε για να κάνετε αυτό το μάθημα πιο κατανοητό.</flowDiv>
  </flowRoot>
- <rect id="elements-f01-el.svgrect1801" fill-rule="evenodd" transform="translate(10 106.46)" height="167.44" width="305.16" stroke="#000" y=".32084" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".64164" fill="#e1e1e1"/>
- <path id="elements-f01-el.svgpath1721" d="m-40.289 236.82c0 25.429-20.615 46.044-46.044 46.044s-46.044-20.615-46.044-46.044 20.615-46.044 46.044-46.044 46.044 20.615 46.044 46.044z" stroke-opacity="0.33" fill-rule="evenodd" fill-opacity=".30460" transform="translate(10 106.46) matrix(1.3533 -4.2587e-17 4.2587e-17 1.3533 309.86 -242.92)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.25" fill="#00f"/>
- <path id="elements-f01-el.svgpath1722" d="m-40.289 236.82c0 25.429-20.615 46.044-46.044 46.044s-46.044-20.615-46.044-46.044 20.615-46.044 46.044-46.044 46.044 20.615 46.044 46.044z" stroke-opacity=".32759" fill-rule="evenodd" fill-opacity=".28161" transform="translate(10 106.46) matrix(1.3533 4.2587e-17 4.2587e-17 -1.3533 248.67 398.05)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.25" fill="#ff00f5"/>
- <text id="elements-f01-el.svgtext1752" font-weight="bold" fill-opacity=".59770" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="10" y="154.377" x="102.01891" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#ff00f7"><tspan id="elements-f01-el.svgtspan1732" sodipodi:role="line" fill-opacity=".59770" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="154.37700" x="102.01891" fill="#ff00f7">Στοιχεία</tspan></text>
- <text id="elements-f01-el.svgtext1755" font-weight="bold" fill-opacity="0.6" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="10" y="154.377" x="168.60974" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#0000ff"><tspan id="elements-f01-el.svgtspan1738" sodipodi:role="line" fill-opacity="0.6" dx="0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0" y="154.37700" x="168.60974" fill="#0000ff">Αρχές</tspan></text>
- <text id="elements-f01-el.svgtext1758" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="100.13462" x="90.54583" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1741" sodipodi:role="line" dx="0 0 0 0" dy="0 0 0 0" y="100.13462" x="90.545830">Χρώμα</tspan></text>
- <text id="elements-f01-el.svgtext1761" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="32.645866" x="116.87344" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1744" sodipodi:role="line" dx="0 0 0 0" dy="0 0 0 0" y="32.645866" x="116.87344">Γραμμή</tspan></text>
- <text id="elements-f01-el.svgtext1764" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="47.565285" x="95.306877" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1747" sodipodi:role="line" dx="0 0 0 0" dy="0 0 0 0" y="47.565285" x="95.306877">Σχήμα</tspan></text>
- <text id="elements-f01-el.svgtext1767" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="83.103767" x="83.459221" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1750" sodipodi:role="line" dx="0 0 0 0 0" dy="0 0 0 0 0" y="83.103767" x="83.459221">Χώρος</tspan></text>
- <text id="elements-f01-el.svgtext1770" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="114.99348" x="101.17574" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1753" sodipodi:role="line" dx="0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0" y="114.99348" x="101.17574">Υφή</tspan></text>
- <text id="elements-f01-el.svgtext1773" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="129.16661" x="118.89227" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1756" sodipodi:role="line" dx="0 0 0 0 0" dy="0 0 0 0 0" y="129.16661" x="118.89227">Τιμή</tspan></text>
- <text id="elements-f01-el.svgtext1776" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="65.387245" x="83.459221" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1759" sodipodi:role="line" dx="0 0 0 0" dy="0 0 0 0" y="65.387245" x="83.459221">Μέγεθος</tspan></text>
- <text id="elements-f01-el.svgtext1779" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="34.637756" x="184.08173" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1762" sodipodi:role="line" dx="0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0" y="34.637756" x="184.08173">Ισορροπία</tspan></text>
- <text id="elements-f01-el.svgtext1782" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="51.614323" x="194.48068" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1765" sodipodi:role="line" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="51.614323" x="194.48068">Αντίθεση</tspan></text>
- <text id="elements-f01-el.svgtext1785" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="71.448875" x="199.68022" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1768" sodipodi:role="line" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="71.448875" x="199.68022">Έμφαση</tspan></text>
- <text id="elements-f01-el.svgtext1788" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="91.283318" x="199.44937" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1771" sodipodi:role="line" dx="0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0" y="91.283318" x="199.44937">Αναλογία</tspan></text>
- <text id="elements-f01-el.svgtext1791" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="111.11781" x="193.78815" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1774" sodipodi:role="line" dx="0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0" y="111.11781" x="193.78815">Μοτίβο</tspan></text>
- <text id="elements-f01-el.svgtext1803" sodipodi:linespacing="100.00000%" transform="translate(10 106.46) scale(1 .99998)" xml:space="preserve" line-height="100.00000%" font-size="7.9998" y="129.04839" x="178.64687" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1786" sodipodi:role="line" dx="0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0" y="129.04839" x="178.64687">Διαβάθμιση</tspan></text>
- <text id="elements-f01-el.svgtext1806" font-weight="bold" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" line-height="100.00000%" xml:space="preserve" font-size="8" y="80.613045" x="133.85378" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#ffffff"><tspan id="elements-f01-el.svgtspan1792" sodipodi:role="line" dx="0 0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0 0" y="80.613045" x="133.85378" fill="#ffffff">Σύνθεση</tspan></text>
- <text id="elements-f01-el.svgtext1809" font-weight="bold" fill-opacity=".21476" sodipodi:linespacing="100.00000%" transform="translate(10 106.46)" xml:space="preserve" line-height="100.00000%" font-size="10" y="12.44677" x="12.456144" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1803" sodipodi:role="line" fill-opacity=".21476" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="12.446770" x="12.456144" fill="#000000">Επισκόπηση</tspan></text>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="299.339747" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="299.339747" x="10">Στοιχεία σχεδίασης</tspan>
+ <rect id="elements-f01-el.svgrect1801" fill-rule="evenodd" transform="translate(10 116.46)" height="167.44" width="305.16" stroke="#000" y=".32084" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".64164" fill="#e1e1e1"/>
+ <path id="elements-f01-el.svgpath1721" d="m-40.289 236.82c0 25.429-20.615 46.044-46.044 46.044s-46.044-20.615-46.044-46.044 20.615-46.044 46.044-46.044 46.044 20.615 46.044 46.044z" stroke-opacity="0.33" fill-rule="evenodd" fill-opacity=".30460" transform="translate(10 116.46) matrix(1.3533 -4.2587e-17 4.2587e-17 1.3533 309.86 -242.92)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.25" fill="#00f"/>
+ <path id="elements-f01-el.svgpath1722" d="m-40.289 236.82c0 25.429-20.615 46.044-46.044 46.044s-46.044-20.615-46.044-46.044 20.615-46.044 46.044-46.044 46.044 20.615 46.044 46.044z" stroke-opacity=".32759" fill-rule="evenodd" fill-opacity=".28161" transform="translate(10 116.46) matrix(1.3533 4.2587e-17 4.2587e-17 -1.3533 248.67 398.05)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.25" fill="#ff00f5"/>
+ <text id="elements-f01-el.svgtext1752" font-weight="bold" fill-opacity=".59770" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="10" y="154.377" x="102.01891" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#ff00f7"><tspan id="elements-f01-el.svgtspan1732" sodipodi:role="line" fill-opacity=".59770" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="154.37700" x="102.01891" fill="#ff00f7">Στοιχεία</tspan></text>
+ <text id="elements-f01-el.svgtext1755" font-weight="bold" fill-opacity="0.6" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="10" y="154.377" x="168.60974" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#0000ff"><tspan id="elements-f01-el.svgtspan1738" sodipodi:role="line" fill-opacity="0.6" dx="0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0" y="154.37700" x="168.60974" fill="#0000ff">Αρχές</tspan></text>
+ <text id="elements-f01-el.svgtext1758" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="100.13462" x="90.54583" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1741" sodipodi:role="line" dx="0 0 0 0" dy="0 0 0 0" y="100.13462" x="90.545830">Χρώμα</tspan></text>
+ <text id="elements-f01-el.svgtext1761" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="32.645866" x="116.87344" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1744" sodipodi:role="line" dx="0 0 0 0" dy="0 0 0 0" y="32.645866" x="116.87344">Γραμμή</tspan></text>
+ <text id="elements-f01-el.svgtext1764" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="47.565285" x="95.306877" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1747" sodipodi:role="line" dx="0 0 0 0" dy="0 0 0 0" y="47.565285" x="95.306877">Σχήμα</tspan></text>
+ <text id="elements-f01-el.svgtext1767" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="83.103767" x="83.459221" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1750" sodipodi:role="line" dx="0 0 0 0 0" dy="0 0 0 0 0" y="83.103767" x="83.459221">Χώρος</tspan></text>
+ <text id="elements-f01-el.svgtext1770" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="114.99348" x="101.17574" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1753" sodipodi:role="line" dx="0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0" y="114.99348" x="101.17574">Υφή</tspan></text>
+ <text id="elements-f01-el.svgtext1773" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="129.16661" x="118.89227" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1756" sodipodi:role="line" dx="0 0 0 0 0" dy="0 0 0 0 0" y="129.16661" x="118.89227">Τιμή</tspan></text>
+ <text id="elements-f01-el.svgtext1776" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="65.387245" x="83.459221" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1759" sodipodi:role="line" dx="0 0 0 0" dy="0 0 0 0" y="65.387245" x="83.459221">Μέγεθος</tspan></text>
+ <text id="elements-f01-el.svgtext1779" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="34.637756" x="184.08173" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1762" sodipodi:role="line" dx="0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0" y="34.637756" x="184.08173">Ισορροπία</tspan></text>
+ <text id="elements-f01-el.svgtext1782" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="51.614323" x="194.48068" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1765" sodipodi:role="line" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="51.614323" x="194.48068">Αντίθεση</tspan></text>
+ <text id="elements-f01-el.svgtext1785" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="71.448875" x="199.68022" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1768" sodipodi:role="line" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="71.448875" x="199.68022">Έμφαση</tspan></text>
+ <text id="elements-f01-el.svgtext1788" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="91.283318" x="199.44937" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1771" sodipodi:role="line" dx="0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0" y="91.283318" x="199.44937">Αναλογία</tspan></text>
+ <text id="elements-f01-el.svgtext1791" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="8" y="111.11781" x="193.78815" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1774" sodipodi:role="line" dx="0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0" y="111.11781" x="193.78815">Μοτίβο</tspan></text>
+ <text id="elements-f01-el.svgtext1803" sodipodi:linespacing="100.00000%" transform="translate(10 116.46) scale(1 .99998)" xml:space="preserve" line-height="100.00000%" font-size="7.9998" y="129.04839" x="178.64687" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1786" sodipodi:role="line" dx="0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0" y="129.04839" x="178.64687">Διαβάθμιση</tspan></text>
+ <text id="elements-f01-el.svgtext1806" font-weight="bold" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" line-height="100.00000%" xml:space="preserve" font-size="8" y="80.613045" x="133.85378" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#ffffff"><tspan id="elements-f01-el.svgtspan1792" sodipodi:role="line" dx="0 0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0 0" y="80.613045" x="133.85378" fill="#ffffff">Σύνθεση</tspan></text>
+ <text id="elements-f01-el.svgtext1809" font-weight="bold" fill-opacity=".21476" sodipodi:linespacing="100.00000%" transform="translate(10 116.46)" xml:space="preserve" line-height="100.00000%" font-size="10" y="12.44677" x="12.456144" xmlns:cc="http://creativecommons.org/ns#" font-family="sans-serif" fill="#000000"><tspan id="elements-f01-el.svgtspan1803" sodipodi:role="line" fill-opacity=".21476" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="12.446770" x="12.456144" fill="#000000">Επισκόπηση</tspan></text>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="309.339747" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="309.339747" x="10">Στοιχεία σχεδίασης</tspan>
  </text>
- <rect id="d0e29" display="none" height="1e3px" width="288" y="304.54" x="10"/>
+ <rect id="d0e29" display="none" height="1e3px" width="288" y="314.54" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e29"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Τα πιο κάτω στοιχεία είναι οι κατασκευαστικές ομάδες σχεδίασης.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="334.7155282" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="334.7155282" x="10">Γραμμή</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="344.7155282" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="344.7155282" x="10">Γραμμή</tspan>
  </text>
- <rect id="d0e37" display="none" height="1e3px" width="288" y="340.22" x="10"/>
+ <rect id="d0e37" display="none" height="1e3px" width="288" y="350.22" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e37"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Μια γραμμή ορίζεται ως σημείο με μήκος και κατεύθυνση, δημιουργημένο από ένα σημείο που μετακινείται κατά μήκος της επιφάνειας. Μια γραμμή μπορεί να ποικίλει σε μήκος, πλάτος, κατεύθυνση, καμπυλότητα και χρώμα. Η γραμμή μπορεί να είναι δισδιάστατη (μια γραμμή μολυβιού σε χαρτί), ή υπονοούμενη τρισδιάστατη.</flowDiv>
  </flowRoot>
- <g id="elements-f02-el.svgg2037" transform="translate(10 -4.69)">
+ <g id="elements-f02-el.svgg2037" transform="translate(10 5.31)">
   <rect id="elements-f02-el.svgrect1933" height="100.99" width="305.16" stroke="#000" y="424.42" x="7.5753" stroke-width=".49832" fill="none"/>
   <path id="elements-f02-el.svgpath1920" d="m18.77 434.05h76.604" stroke="#000" stroke-width=".94529pt" fill="none"/>
   <path id="elements-f02-el.svgpath1921" d="m18.77 446.55h172.36" sodipodi:nodetypes="cc" stroke="#000" stroke-width=".94529pt" fill="none"/>
@@ -102,53 +102,53 @@
   <path id="elements-f02-el.svgpath2551" d="m307.64 433.78l-60.48 66.22-0.1-15.79 60.57-55.54 0.01 5.11z" fill-rule="evenodd" sodipodi:nodetypes="ccccc"/>
   <path id="elements-f02-el.svgpath2552" d="m307.64 440.1l-60.48 79.04-0.1-15.79 60.57-68.36 0.01 5.11z" fill-rule="evenodd" sodipodi:nodetypes="ccccc"/>
  </g>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="544.9701092" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="544.9701092" x="10">Σχήμα</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="554.9701092" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="554.9701092" x="10">Σχήμα</tspan>
  </text>
- <rect id="d0e56" display="none" height="1e3px" width="288" y="550.47" x="10"/>
+ <rect id="d0e56" display="none" height="1e3px" width="288" y="560.47" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e56"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Μια επίπεδη μορφή δημιουργείται όταν ενεργές ή υπονοούμενες γραμμές συναντώνται και περικλείουν ένα χώρο. Μια αλλαγή στο χρώμα ή την απόχρωση μπορεί να ορίσει ένα σχήμα. Τα σχήματα μπορούν να διαιρεθούν σε πολλούς τύπους: γεωμετρικά (τετράγωνα, τρίγωνα, κύκλους) και οργανικά (ανώμαλα στο περίγραμμα).</flowDiv>
  </flowRoot>
- <g id="elements-f03-el.svgg2063" xmlns:cc="http://creativecommons.org/ns#" transform="translate(10 7.14)" stroke="#000">
+ <g id="elements-f03-el.svgg2063" xmlns:cc="http://creativecommons.org/ns#" transform="translate(10 17.14)" stroke="#000">
   <rect id="elements-f03-el.svgrect1943" height="100.99" width="305.16" y="612.21" x="7.5753" stroke-width=".49832" fill="none"/>
   <path id="elements-f03-el.svgpolygon1952" d="m97.81 689.54-18.405 68.69-50.281-50.29z" fill-rule="evenodd" transform="matrix(.70711 -.70711 .70711 .70711 -391.84 213.7)" stroke-width="1pt"/>
   <rect id="elements-f03-el.svgrect1953" fill-rule="evenodd" height="65.282" width="65.282" y="628.75" x="28.147" stroke-width="1pt"/>
   <path id="elements-f03-el.svgpath1954" d="m175.45 733.14c0 14.808-12.004 26.812-26.812 26.812s-26.812-12.004-26.812-26.812 12.004-26.812 26.812-26.812 26.812 12.004 26.812 26.812z" fill-rule="evenodd" transform="matrix(1.1957 0 0 1.1957 83.878 -215.2)" stroke-width="1pt"/>
  </g>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="744.5928352" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="744.5928352" x="10">Μέγεθος</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="754.5928352" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="754.5928352" x="10">Μέγεθος</tspan>
  </text>
- <rect id="d0e75" display="none" height="1e3px" width="288" y="750.09" x="10"/>
+ <rect id="d0e75" display="none" height="1e3px" width="288" y="760.09" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e75"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Αυτό αναφέρεται στις ποικιλίες στις αναλογίες των αντικειμένων, γραμμών ή σχημάτων. Υπάρχει μια ποικιλία μεγεθών στα αντικείμενα είτε πραγματικά είτε φανταστικά.</flowDiv>
  </flowRoot>
- <rect id="elements-f04-el.svgrect1955" transform="translate(10 797.44)" height="100.99" width="305.16" stroke="#000" y=".24915" x="7.5753" stroke-width=".49832" fill="none"/>
- <text id="elements-f04-el.svgtext3148" font-family="sans-serif" font-weight="bold" sodipodi:linespacing="100.00000%" transform="translate(10 797.44) scale(.99998 1)" xml:space="preserve" line-height="100.00000%" font-size="122.3" y="95.748199" x="76.186218" stroke-width="3pt" fill="#000000"><tspan id="elements-f04-el.svgtspan3149" sodipodi:role="line" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="95.748199" x="76.186218" fill="#000000">ΜΕΓΑΛΟ</tspan></text>
- <text id="elements-f04-el.svgtext3154" font-family="sans-serif" font-weight="bold" sodipodi:linespacing="100.00000%" transform="translate(10 797.44) scale(.99998 1)" xml:space="preserve" line-height="100.00000%" font-size="10.077" y="95.652267" x="50.097645" stroke-width="3pt" fill="#000000"><tspan id="elements-f04-el.svgtspan3155" sodipodi:role="line" dx="0 0 0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0 0 0" y="95.652267" x="50.097645" fill="#000000">μικρό</tspan></text>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="922.9355601999999" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="922.9355601999999" x="10">Χώρος</tspan>
+ <rect id="elements-f04-el.svgrect1955" transform="translate(10 807.44)" height="100.99" width="305.16" stroke="#000" y=".24915" x="7.5753" stroke-width=".49832" fill="none"/>
+ <text id="elements-f04-el.svgtext3148" font-family="sans-serif" font-weight="bold" sodipodi:linespacing="100.00000%" transform="translate(10 807.44) scale(.99998 1)" xml:space="preserve" line-height="100.00000%" font-size="122.3" y="95.748199" x="76.186218" stroke-width="3pt" fill="#000000"><tspan id="elements-f04-el.svgtspan3149" sodipodi:role="line" dx="0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0" y="95.748199" x="76.186218" fill="#000000">ΜΕΓΑΛΟ</tspan></text>
+ <text id="elements-f04-el.svgtext3154" font-family="sans-serif" font-weight="bold" sodipodi:linespacing="100.00000%" transform="translate(10 807.44) scale(.99998 1)" xml:space="preserve" line-height="100.00000%" font-size="10.077" y="95.652267" x="50.097645" stroke-width="3pt" fill="#000000"><tspan id="elements-f04-el.svgtspan3155" sodipodi:role="line" dx="0 0 0 0 0 0 0 0 0 0 0 0" dy="0 0 0 0 0 0 0 0 0 0 0 0" y="95.652267" x="50.097645" fill="#000000">μικρό</tspan></text>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="932.9355601999999" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="932.9355601999999" x="10">Χώρος</tspan>
  </text>
- <rect id="d0e94" display="none" height="1e3px" width="288" y="928.44" x="10"/>
+ <rect id="d0e94" display="none" height="1e3px" width="288" y="938.44" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e94"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Χώρος είναι η κενή ή ανοικτή περιοχή μεταξύ, γύρω, πάνω από, κάτω από ή μέσα στα αντικείμενα. Σχήματα και μορφές δημιουργούνται από το χώρο γύρω και μέσα τους. Ο χώρος αποκαλείται συχνά τρισδιάστατος ή δισδιάστατος. Ο θετικός χώρος γεμίζεται από ένα σχήμα ή μορφή. Ο αρνητικός χώρος περιβάλλει ένα σχήμα ή μορφή.</flowDiv>
  </flowRoot>
- <rect id="elements-f05-el.svgrect1991" transform="translate(10 997.17)" height="100.99" width="305.16" stroke="#000" y=".24914" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="none"/>
- <rect id="elements-f05-el.svgrect2044" fill-rule="evenodd" transform="translate(10 997.17)" height="90.929" width="100.6" y="3.9333" x="36.104" xmlns:cc="http://creativecommons.org/ns#"/>
- <path id="elements-f05-el.svgpath2606" d="m175.45 733.14c0 14.808-12.004 26.812-26.812 26.812s-26.812-12.004-26.812-26.812 12.004-26.812 26.812-26.812 26.812 12.004 26.812 26.812z" fill-rule="evenodd" transform="translate(10 997.17) matrix(1.5435 0 0 1.5435 6.8499 -1082.8)" xmlns:cc="http://creativecommons.org/ns#"/>
- <path id="elements-f05-el.svgpath2607" d="m175.45 733.14c0 14.808-12.004 26.812-26.812 26.812s-26.812-12.004-26.812-26.812 12.004-26.812 26.812-26.812 26.812 12.004 26.812 26.812z" fill-rule="evenodd" transform="translate(10 997.17) matrix(1.5435 0 0 1.5435 -142.84 -1082.8)" xmlns:cc="http://creativecommons.org/ns#" fill="#fff"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1122.6634232" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="1122.6634232" x="10">Χρώμα</tspan>
+ <rect id="elements-f05-el.svgrect1991" transform="translate(10 1007.2)" height="100.99" width="305.16" stroke="#000" y=".24914" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="none"/>
+ <rect id="elements-f05-el.svgrect2044" fill-rule="evenodd" transform="translate(10 1007.2)" height="90.929" width="100.6" y="3.9333" x="36.104" xmlns:cc="http://creativecommons.org/ns#"/>
+ <path id="elements-f05-el.svgpath2606" d="m175.45 733.14c0 14.808-12.004 26.812-26.812 26.812s-26.812-12.004-26.812-26.812 12.004-26.812 26.812-26.812 26.812 12.004 26.812 26.812z" fill-rule="evenodd" transform="translate(10 1007.2) matrix(1.5435 0 0 1.5435 6.8499 -1082.8)" xmlns:cc="http://creativecommons.org/ns#"/>
+ <path id="elements-f05-el.svgpath2607" d="m175.45 733.14c0 14.808-12.004 26.812-26.812 26.812s-26.812-12.004-26.812-26.812 12.004-26.812 26.812-26.812 26.812 12.004 26.812 26.812z" fill-rule="evenodd" transform="translate(10 1007.2) matrix(1.5435 0 0 1.5435 -142.84 -1082.8)" xmlns:cc="http://creativecommons.org/ns#" fill="#fff"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1132.6634232" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="1132.6634232" x="10">Χρώμα</tspan>
  </text>
- <rect id="d0e113" display="none" height="1e3px" width="288" y="1128.2" x="10"/>
+ <rect id="d0e113" display="none" height="1e3px" width="288" y="1138.2" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e113"/>
@@ -166,11 +166,11 @@
    <stop id="elements-f06-el.svgstop2560" stop-color="#f00" offset="1"/>
   </linearGradient>
  </defs>
- <rect id="elements-f06-el.svgrect2045" fill-rule="evenodd" transform="translate(10 1207.4)" height="100.99" width="305.16" stroke="#000" y=".24916" x="7.5753" stroke-width=".49832" fill="url(#elements-f06-el.svglinearGradient2620)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1332.9180041999998" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="1332.9180041999998" x="10">Υφή</tspan>
+ <rect id="elements-f06-el.svgrect2045" fill-rule="evenodd" transform="translate(10 1217.4)" height="100.99" width="305.16" stroke="#000" y=".24916" x="7.5753" stroke-width=".49832" fill="url(#elements-f06-el.svglinearGradient2620)"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1342.9180041999998" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="1342.9180041999998" x="10">Υφή</tspan>
  </text>
- <rect id="d0e132" display="none" height="1e3px" width="288" y="1338.4" x="10"/>
+ <rect id="d0e132" display="none" height="1e3px" width="288" y="1348.4" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e132"/>
@@ -188,14 +188,14 @@
   <pattern id="elements-f07-el.svgpattern2664" inkscape:collect="always" xlink:href="#elements-f07-el.svgpattern2655" patternTransform="matrix(.19371 .13459 -.13459 .19371 0 0)"/>
   <pattern id="elements-f07-el.svgpattern2666" inkscape:collect="always" xlink:href="#elements-f07-el.svgpattern2664" patternTransform="matrix(.036022 -.062902 .062902 .036022 0 0)"/>
  </defs>
- <rect id="elements-f07-el.svgrect2067" transform="translate(10 1385.8)" height="100.99" width="305.16" stroke="#000" y=".24922" x="7.5753" stroke-width=".49832" fill="none"/>
- <rect id="elements-f07-el.svgrect2652" transform="translate(10 1385.8)" height="54.241" width="304.83" y=".83906" x="7.4039" fill="url(#elements-f07-el.svgpattern2172)"/>
- <rect id="elements-f07-el.svgrect2663" transform="translate(10 1385.8)" height="54.241" width="304.83" y="23.339" x="7.4039" fill="url(#elements-f07-el.svgpattern2169)"/>
- <rect id="elements-f07-el.svgrect2665" transform="translate(10 1385.8)" height="54.241" width="304.83" y="46.636" x="7.4039" fill="url(#elements-f07-el.svgpattern2166)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1511.2607291999998" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="1511.2607291999998" x="10">Τιμή</tspan>
+ <rect id="elements-f07-el.svgrect2067" transform="translate(10 1395.8)" height="100.99" width="305.16" stroke="#000" y=".24922" x="7.5753" stroke-width=".49832" fill="none"/>
+ <rect id="elements-f07-el.svgrect2652" transform="translate(10 1395.8)" height="54.241" width="304.83" y=".83906" x="7.4039" fill="url(#elements-f07-el.svgpattern2172)"/>
+ <rect id="elements-f07-el.svgrect2663" transform="translate(10 1395.8)" height="54.241" width="304.83" y="23.339" x="7.4039" fill="url(#elements-f07-el.svgpattern2169)"/>
+ <rect id="elements-f07-el.svgrect2665" transform="translate(10 1395.8)" height="54.241" width="304.83" y="46.636" x="7.4039" fill="url(#elements-f07-el.svgpattern2166)"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1521.2607291999998" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="1521.2607291999998" x="10">Τιμή</tspan>
  </text>
- <rect id="d0e151" display="none" height="1e3px" width="288" y="1516.8" x="10"/>
+ <rect id="d0e151" display="none" height="1e3px" width="288" y="1526.8" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e151"/>
@@ -222,70 +222,70 @@
    <stop id="elements-f08-el.svgstop843" stop-color="#0082ab" stop-opacity="0" offset="1"/>
   </linearGradient>
  </defs>
- <rect id="elements-f08-el.svgrect2122" transform="translate(10 1574.7)" height="100.99" width="305.16" stroke="#000" y=".24881" x="7.5753" stroke-width=".49832" fill="none"/>
- <rect id="elements-f08-el.svgrect2151" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1574.7)" height="20.984" width="287.36" y="71.546" x="15.738" fill="url(#elements-f08-el.svglinearGradient2233)"/>
- <rect id="elements-f08-el.svgrect2152" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1574.7)" height="20.984" width="287.36" y="50.563" x="15.738" fill="url(#elements-f08-el.svglinearGradient2230)"/>
- <rect id="elements-f08-el.svgrect2156" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1574.7)" height="20.984" width="287.36" y="29.579" x="15.738" fill="url(#elements-f08-el.svglinearGradient2227)"/>
- <rect id="elements-f08-el.svgrect2157" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1574.7)" height="20.984" width="287.36" y="8.5956" x="15.738" fill="url(#elements-f08-el.svglinearGradient2224)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1701.0392171999997" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="1701.0392171999997" x="10">Αρχές σχεδίασης</tspan>
+ <rect id="elements-f08-el.svgrect2122" transform="translate(10 1584.7)" height="100.99" width="305.16" stroke="#000" y=".24881" x="7.5753" stroke-width=".49832" fill="none"/>
+ <rect id="elements-f08-el.svgrect2151" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1584.7)" height="20.984" width="287.36" y="71.546" x="15.738" fill="url(#elements-f08-el.svglinearGradient2233)"/>
+ <rect id="elements-f08-el.svgrect2152" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1584.7)" height="20.984" width="287.36" y="50.563" x="15.738" fill="url(#elements-f08-el.svglinearGradient2230)"/>
+ <rect id="elements-f08-el.svgrect2156" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1584.7)" height="20.984" width="287.36" y="29.579" x="15.738" fill="url(#elements-f08-el.svglinearGradient2227)"/>
+ <rect id="elements-f08-el.svgrect2157" fill-rule="evenodd" fill-opacity=".75" transform="translate(10 1584.7)" height="20.984" width="287.36" y="8.5956" x="15.738" fill="url(#elements-f08-el.svglinearGradient2224)"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="1711.0392171999997" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="1711.0392171999997" x="10">Αρχές σχεδίασης</tspan>
  </text>
- <rect id="d0e171" display="none" height="1e3px" width="288" y="1706.2" x="10"/>
+ <rect id="d0e171" display="none" height="1e3px" width="288" y="1716.2" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e171"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Οι αρχές χρησιμοποιούν τα στοιχεία σχεδίασης για δημιουργία μιας σύνθεσης.</flowDiv>
  </flowRoot>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1746.9456241999997" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="1746.9456241999997" x="10">Ισορροπία</tspan>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1756.9456241999997" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="1756.9456241999997" x="10">Ισορροπία</tspan>
  </text>
- <rect id="d0e179" display="none" height="1e3px" width="288" y="1752.4" x="10"/>
+ <rect id="d0e179" display="none" height="1e3px" width="288" y="1762.4" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e179"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Ισορροπία είναι μια αίσθηση οπτικής ισότητας στο σχήμα, μορφή, τιμή, χρώμα κλ. Η ισορροπία μπορεί να είναι συμμετρική ή ομοιόμορφα ισορροπημένη ή ασύμμετρη και ανομοιόμορφα ισορροπημένη. Αντικείμενα, τιμές, χρώματα, υφές, σχήματα, μορφές, κλ., μπορούν να χρησιμοποιηθούν στη δημιουργία ισορροπίας σε μια σύνθεση.</flowDiv>
  </flowRoot>
- <rect id="elements-f09-el.svgrect2170" transform="translate(10 1831.7)" height="100.99" width="305.16" stroke="#000" y=".24922" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="none"/>
- <path id="elements-f09-el.svgrect2562" d="m160.08 0.2492v100.99-100.99z" sodipodi:nodetypes="ccc" transform="translate(10 1831.7)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="none"/>
- <path id="elements-f09-el.svgpath2564" d="m55.207 1809.3c0 11.466-9.2954 20.762-20.762 20.762-11.466 0-20.762-9.2954-20.762-20.762 0-11.466 9.2954-20.762 20.762-20.762 11.466 0 20.762 9.2954 20.762 20.762z" fill-rule="evenodd" transform="translate(10 1831.7) matrix(.82353 0 0 .82353 65.313 -1470.5)" xmlns:cc="http://creativecommons.org/ns#"/>
- <path id="elements-f09-el.svgpath2565" d="m55.207 1809.3c0 11.466-9.2954 20.762-20.762 20.762-11.466 0-20.762-9.2954-20.762-20.762 0-11.466 9.2954-20.762 20.762-20.762 11.466 0 20.762 9.2954 20.762 20.762z" fill-rule="evenodd" transform="translate(10 1831.7) matrix(1.6818 0 0 1.6818 -14.992 -3007.5)" xmlns:cc="http://creativecommons.org/ns#"/>
- <path id="elements-f09-el.svgpath2566" d="m55.207 1809.3c0 11.466-9.2954 20.762-20.762 20.762-11.466 0-20.762-9.2954-20.762-20.762 0-11.466 9.2954-20.762 20.762-20.762 11.466 0 20.762 9.2954 20.762 20.762z" fill-rule="evenodd" transform="translate(10 1831.7) matrix(.82353 0 0 .82353 240.23 -1414.1)" xmlns:cc="http://creativecommons.org/ns#"/>
- <path id="elements-f09-el.svgpath2567" d="m55.207 1809.3c0 11.466-9.2954 20.762-20.762 20.762-11.466 0-20.762-9.2954-20.762-20.762 0-11.466 9.2954-20.762 20.762-20.762 11.466 0 20.762 9.2954 20.762 20.762z" fill-rule="evenodd" transform="translate(10 1831.7) matrix(1.6818 0 0 1.6818 163.04 -3001.2)" xmlns:cc="http://creativecommons.org/ns#"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1957.2002051999996" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="1957.2002051999996" x="10">Αντίθεση</tspan>
+ <rect id="elements-f09-el.svgrect2170" transform="translate(10 1841.7)" height="100.99" width="305.16" stroke="#000" y=".24922" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="none"/>
+ <path id="elements-f09-el.svgrect2562" d="m160.08 0.2492v100.99-100.99z" sodipodi:nodetypes="ccc" transform="translate(10 1841.7)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="none"/>
+ <path id="elements-f09-el.svgpath2564" d="m55.207 1809.3c0 11.466-9.2954 20.762-20.762 20.762-11.466 0-20.762-9.2954-20.762-20.762 0-11.466 9.2954-20.762 20.762-20.762 11.466 0 20.762 9.2954 20.762 20.762z" fill-rule="evenodd" transform="translate(10 1841.7) matrix(.82353 0 0 .82353 65.313 -1470.5)" xmlns:cc="http://creativecommons.org/ns#"/>
+ <path id="elements-f09-el.svgpath2565" d="m55.207 1809.3c0 11.466-9.2954 20.762-20.762 20.762-11.466 0-20.762-9.2954-20.762-20.762 0-11.466 9.2954-20.762 20.762-20.762 11.466 0 20.762 9.2954 20.762 20.762z" fill-rule="evenodd" transform="translate(10 1841.7) matrix(1.6818 0 0 1.6818 -14.992 -3007.5)" xmlns:cc="http://creativecommons.org/ns#"/>
+ <path id="elements-f09-el.svgpath2566" d="m55.207 1809.3c0 11.466-9.2954 20.762-20.762 20.762-11.466 0-20.762-9.2954-20.762-20.762 0-11.466 9.2954-20.762 20.762-20.762 11.466 0 20.762 9.2954 20.762 20.762z" fill-rule="evenodd" transform="translate(10 1841.7) matrix(.82353 0 0 .82353 240.23 -1414.1)" xmlns:cc="http://creativecommons.org/ns#"/>
+ <path id="elements-f09-el.svgpath2567" d="m55.207 1809.3c0 11.466-9.2954 20.762-20.762 20.762-11.466 0-20.762-9.2954-20.762-20.762 0-11.466 9.2954-20.762 20.762-20.762 11.466 0 20.762 9.2954 20.762 20.762z" fill-rule="evenodd" transform="translate(10 1841.7) matrix(1.6818 0 0 1.6818 163.04 -3001.2)" xmlns:cc="http://creativecommons.org/ns#"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="1967.2002051999996" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="1967.2002051999996" x="10">Αντίθεση</tspan>
  </text>
- <rect id="d0e198" display="none" height="1e3px" width="288" y="1962.7" x="10"/>
+ <rect id="d0e198" display="none" height="1e3px" width="288" y="1972.7" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e198"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Αντίθεση είναι η παράθεση αντιτιθέμενων στοιχείων</flowDiv>
  </flowRoot>
- <rect id="elements-f10-el.svgrect2578" fill-rule="evenodd" transform="translate(10 1988.9)" height="100.99" width="152.52" stroke="#000" y=".24905" x="159.95" stroke-width=".49832"/>
- <rect id="elements-f10-el.svgrect2579" fill-rule="evenodd" transform="translate(10 1988.9)" height="58.64" width="88.56" y="21.426" x="191.93" fill="#fff"/>
- <rect id="elements-f10-el.svgrect2574" fill-rule="evenodd" transform="translate(10 1988.9)" height="100.99" width="152.52" stroke="#000" y=".24905" x="7.4506" stroke-width=".49832" fill="#c8c8c8"/>
- <rect id="elements-f10-el.svgrect2576" fill-rule="evenodd" transform="translate(10 1988.9)" height="58.64" width="88.56" y="21.426" x="39.433" fill="#d4d4d4"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="2114.3680664" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="2114.3680664" x="10">Έμφαση</tspan>
+ <rect id="elements-f10-el.svgrect2578" fill-rule="evenodd" transform="translate(10 1998.9)" height="100.99" width="152.52" stroke="#000" y=".24905" x="159.95" stroke-width=".49832"/>
+ <rect id="elements-f10-el.svgrect2579" fill-rule="evenodd" transform="translate(10 1998.9)" height="58.64" width="88.56" y="21.426" x="191.93" fill="#fff"/>
+ <rect id="elements-f10-el.svgrect2574" fill-rule="evenodd" transform="translate(10 1998.9)" height="100.99" width="152.52" stroke="#000" y=".24905" x="7.4506" stroke-width=".49832" fill="#c8c8c8"/>
+ <rect id="elements-f10-el.svgrect2576" fill-rule="evenodd" transform="translate(10 1998.9)" height="58.64" width="88.56" y="21.426" x="39.433" fill="#d4d4d4"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="2124.3680664" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="2124.3680664" x="10">Έμφαση</tspan>
  </text>
- <rect id="d0e217" display="none" height="1e3px" width="288" y="2119.9" x="10"/>
+ <rect id="d0e217" display="none" height="1e3px" width="288" y="2129.9" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e217"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Έμφαση χρησιμοποιείται ώστε κάποια μέρη των καλλιτεχνικών εργασιών να ξεχωρίζουν και να τραβούν την προσοχή σας. Το κέντρο του ενδιαφέροντος ή σημείο εστίασης είναι ο θέση που μια δουλειά έλκει το μάτι σας πρώτα.</flowDiv>
  </flowRoot>
- <rect id="elements-f11-el.svgrect2584" fill-rule="evenodd" transform="translate(10 2177.9)" height="100.99" width="152.52" stroke="#000" y=".24905" x="159.95" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="#c8c8c8"/>
- <rect id="elements-f11-el.svgrect2585" fill-rule="evenodd" transform="translate(10 2177.9)" height="58.64" width="88.56" y="21.426" x="191.93" xmlns:cc="http://creativecommons.org/ns#" fill="#d4d4d4"/>
- <rect id="elements-f11-el.svgrect2582" fill-rule="evenodd" transform="translate(10 2177.9)" height="100.99" width="152.52" stroke="#000" y=".24905" x="7.4506" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="#c8c8c8"/>
- <rect id="elements-f11-el.svgrect2583" fill-rule="evenodd" transform="translate(10 2177.9)" height="58.64" width="88.56" y="21.426" x="39.433" xmlns:cc="http://creativecommons.org/ns#" fill="#d4d4d4"/>
- <path id="elements-f11-el.svgpath2587" d="m68.891 2183c0 6.2545-5.0702 11.325-11.325 11.325-6.2544 0-11.325-5.0702-11.325-11.325 0-6.2544 5.0702-11.325 11.325-11.325 6.2544 0 11.325 5.0702 11.325 11.325z" fill-rule="evenodd" transform="translate(220.23 62.8)" xmlns:cc="http://creativecommons.org/ns#" fill="#f00"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="2303.3465544" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="2303.3465544" x="10">Αναλογία</tspan>
+ <rect id="elements-f11-el.svgrect2584" fill-rule="evenodd" transform="translate(10 2187.9)" height="100.99" width="152.52" stroke="#000" y=".24905" x="159.95" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="#c8c8c8"/>
+ <rect id="elements-f11-el.svgrect2585" fill-rule="evenodd" transform="translate(10 2187.9)" height="58.64" width="88.56" y="21.426" x="191.93" xmlns:cc="http://creativecommons.org/ns#" fill="#d4d4d4"/>
+ <rect id="elements-f11-el.svgrect2582" fill-rule="evenodd" transform="translate(10 2187.9)" height="100.99" width="152.52" stroke="#000" y=".24905" x="7.4506" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="#c8c8c8"/>
+ <rect id="elements-f11-el.svgrect2583" fill-rule="evenodd" transform="translate(10 2187.9)" height="58.64" width="88.56" y="21.426" x="39.433" xmlns:cc="http://creativecommons.org/ns#" fill="#d4d4d4"/>
+ <path id="elements-f11-el.svgpath2587" d="m68.891 2183c0 6.2545-5.0702 11.325-11.325 11.325-6.2544 0-11.325-5.0702-11.325-11.325 0-6.2544 5.0702-11.325 11.325-11.325 6.2544 0 11.325 5.0702 11.325 11.325z" fill-rule="evenodd" transform="translate(220.23 72.8)" xmlns:cc="http://creativecommons.org/ns#" fill="#f00"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="2313.3465544" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="2313.3465544" x="10">Αναλογία</tspan>
  </text>
- <rect id="d0e236" display="none" height="1e3px" width="288" y="2308.8" x="10"/>
+ <rect id="d0e236" display="none" height="1e3px" width="288" y="2318.8" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e236"/>
@@ -342,9 +342,9 @@
   </radialGradient>
   <linearGradient id="elements-f12-el.svglinearGradient2195" y2="42.421" xlink:href="#elements-f12-el.svglinearGradient1516" gradientUnits="userSpaceOnUse" y1="74.473" gradientTransform="scale(.94610 1.057)" x2="54.702" x1="52.397" inkscape:collect="always"/>
  </defs>
- <rect id="elements-f12-el.svgrect2588" fill-rule="evenodd" transform="translate(10 2345.6)" height="100.99" width="152.52" stroke="#000" y="1.658" x="159.95" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="#fff"/>
- <rect id="elements-f12-el.svgrect2590" fill-rule="evenodd" transform="translate(10 2345.6)" height="100.99" width="152.52" stroke="#000" y="1.658" x="7.4506" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="#fff"/>
- <g id="elements-f12-el.svgg2952" xmlns:cc="http://creativecommons.org/ns#" fill-rule="evenodd" transform="translate(10 2345.6) matrix(.51988 0 0 .51988 27.077 -1681.3)">
+ <rect id="elements-f12-el.svgrect2588" fill-rule="evenodd" transform="translate(10 2355.6)" height="100.99" width="152.52" stroke="#000" y="1.658" x="159.95" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="#fff"/>
+ <rect id="elements-f12-el.svgrect2590" fill-rule="evenodd" transform="translate(10 2355.6)" height="100.99" width="152.52" stroke="#000" y="1.658" x="7.4506" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="#fff"/>
+ <g id="elements-f12-el.svgg2952" xmlns:cc="http://creativecommons.org/ns#" fill-rule="evenodd" transform="translate(10 2355.6) matrix(.51988 0 0 .51988 27.077 -1681.3)">
   <path id="elements-f12-el.svgpath3277" d="m82.055 175.84c0 31.007-25.136 56.143-56.143 56.143s-56.143-25.136-56.143-56.143 25.136-56.143 56.143-56.143 56.143 25.136 56.143 56.143z" fill-opacity=".75" transform="matrix(.96674 0 0 .23354 113.96 3337.1)" stroke-width="1pt" fill="url(#elements-f12-el.svgradialGradient2163)"/>
   <path id="elements-f12-el.svgpath1809" d="m82.055 175.84c0 31.007-25.136 56.143-56.143 56.143s-56.143-25.136-56.143-56.143 25.136-56.143 56.143-56.143 56.143 25.136 56.143 56.143z" fill-opacity=".75" transform="matrix(1.0809 0 0 .28699 162.89 3326.4)" stroke-width="1pt" fill="url(#elements-f12-el.svgradialGradient2165)"/>
   <g id="elements-f12-el.svgg1682" transform="matrix(1.202 0 0 1.202 73.323 3220.8)">
@@ -381,9 +381,9 @@
   </g>
   <path id="elements-f12-el.svgpath1714" d="m82.055 175.84c0 31.007-25.136 56.143-56.143 56.143s-56.143-25.136-56.143-56.143 25.136-56.143 56.143-56.143 56.143 25.136 56.143 56.143z" fill-opacity=".75" transform="matrix(1.0809 0 0 .28699 146.76 3332.9)" stroke-width="1pt" fill="url(#elements-f12-el.svgradialGradient2185)"/>
  </g>
- <text id="elements-f12-el.svgtext1232" font-family="sans-serif" xml:space="preserve" transform="translate(10 2345.6)" font-size="5.1805" y="109.55157" x="7.0871472" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt"><tspan id="elements-f12-el.svgtspan1233">Τυχαίο μυρμήγκι &amp; 4x4</tspan></text>
- <text id="elements-f12-el.svgtext1235" font-family="sans-serif" xml:space="preserve" transform="translate(10 2345.6)" font-size="1.2782" y="111.84713" x="7.7085347" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt"><tspan id="elements-f12-el.svgtspan1236">Εικόνα SVG που δημιουργήθηκε από τον Andrew Fitzsimon</tspan><tspan id="elements-f12-el.svgtspan2442" y="113.44485" x="7.7085347" sodipodi:role="line">Προσφορά της βιβλιοθήκης Open Clip Art</tspan><tspan id="elements-f12-el.svgtspan2444" y="115.04258" x="7.7085347" sodipodi:role="line">http://www.openclipart.org/</tspan><tspan id="elements-f12-el.svgtspan2950" y="116.64030" x="7.7085347" sodipodi:role="line"/></text>
- <g id="elements-f12-el.svgg2864" xmlns:cc="http://creativecommons.org/ns#" transform="translate(10 2345.6) matrix(1.1201 0 0 1.1201 -199.55 -2562.7)">
+ <text id="elements-f12-el.svgtext1232" font-family="sans-serif" xml:space="preserve" transform="translate(10 2355.6)" font-size="5.1805" y="109.55157" x="7.0871472" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt"><tspan id="elements-f12-el.svgtspan1233">Τυχαίο μυρμήγκι &amp; 4x4</tspan></text>
+ <text id="elements-f12-el.svgtext1235" font-family="sans-serif" xml:space="preserve" transform="translate(10 2355.6)" font-size="1.2782" y="111.84713" x="7.7085347" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1pt"><tspan id="elements-f12-el.svgtspan1236">Εικόνα SVG που δημιουργήθηκε από τον Andrew Fitzsimon</tspan><tspan id="elements-f12-el.svgtspan2442" y="113.44485" x="7.7085347" sodipodi:role="line">Προσφορά της βιβλιοθήκης Open Clip Art</tspan><tspan id="elements-f12-el.svgtspan2444" y="115.04258" x="7.7085347" sodipodi:role="line">http://www.openclipart.org/</tspan><tspan id="elements-f12-el.svgtspan2950" y="116.64030" x="7.7085347" sodipodi:role="line"/></text>
+ <g id="elements-f12-el.svgg2864" xmlns:cc="http://creativecommons.org/ns#" transform="translate(10 2355.6) matrix(1.1201 0 0 1.1201 -199.55 -2562.7)">
   <path id="elements-f12-el.svgpath924" d="m147.45 91.908l-16.76-7.699 28.54-4.076 2.26 3.17" transform="matrix(.31191 0 0 .31191 184.83 2289.2)" stroke="#000" stroke-width="4.5308" fill="none"/>
   <path id="elements-f12-el.svgpath923" d="m155.46 108.55l4.98 18.12 14.49-24.46" transform="matrix(.31191 0 0 .31191 184.83 2289.2)" stroke="#000" stroke-width="4.5308" fill="none"/>
   <path id="elements-f12-el.svgpath909" d="m97.069 145.26s-17.933-7.68-25.939 4.81c-8.005 12.49-10.247 28.82-4.163 35.22 6.085 6.41 25.939 1.92 30.102-6.4 4.161-8.33 8.321-25.3 6.401-29.46-1.92-4.17-6.401-4.17-6.401-4.17z" fill-rule="evenodd" transform="matrix(.31191 0 0 .31191 184.83 2289.2)" stroke-width="1pt" fill="#7c5a08"/>
@@ -403,12 +403,12 @@
   <path id="elements-f12-el.svgpath2381" d="m43.043 81.71s-5.562 15.032 0.059 19.91c5.445 4.72 19.409 6.16 27.361-10.861 7.951-17.021-18.303-32.734-27.42-9.049z" fill-opacity=".75" sodipodi:nodetypes="czzc" fill-rule="evenodd" transform="matrix(.37256 0 0 .37256 189.99 2308.3)" stroke-width="1pt" fill="url(#elements-f12-el.svgradialGradient2193)"/>
   <path id="elements-f12-el.svgpath910" d="m58.62 74.099c-6.02 0.577-10.181 9.231-12.36 16.012-1.21 0.518-1.048-6.826-0.53-8.036 0.519-1.209 2.323-7.98 5.205-9.962 2.765-1.9 6.655-2 9.677-0.916 2.994 1.073 3.766 2.351-1.992 2.902z" fill-opacity=".75" sodipodi:nodetypes="ccczzz" fill-rule="evenodd" transform="matrix(.37256 0 0 .37256 189.99 2308.3)" stroke-width="1pt" fill="url(#elements-f12-el.svglinearGradient2195)"/>
  </g>
- <use id="elements-f12-el.svguse1" xlink:href="#elements-f12-el.svgg2864" transform="translate(10 2345.6) matrix(1.7586 0 0 1.7586 137.33 -45.691) translate(-10 -2345.6)" height="3146.2500" width="320.00000" y="0.0000000" x="0.0000000" xmlns:cc="http://creativecommons.org/ns#"/>
- <use id="elements-f12-el.svguse7" xlink:href="#elements-f12-el.svgg2952" transform="translate(10 2345.6) matrix(0.25 0 0 0.25 251.88 41.637) translate(-10 -2345.6)" height="3146.2500" width="320.00000" y="0.0000000" x="0.0000000" xmlns:cc="http://creativecommons.org/ns#"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="2484.8660594000003" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="2484.8660594000003" x="10">Μοτίβο</tspan>
+ <use id="elements-f12-el.svguse1" xlink:href="#elements-f12-el.svgg2864" transform="translate(10 2355.6) matrix(1.7586 0 0 1.7586 137.33 -45.691) translate(-10 -2355.6)" height="3146.2500" width="320.00000" y="0.0000000" x="0.0000000" xmlns:cc="http://creativecommons.org/ns#"/>
+ <use id="elements-f12-el.svguse7" xlink:href="#elements-f12-el.svgg2952" transform="translate(10 2355.6) matrix(0.25 0 0 0.25 251.88 41.637) translate(-10 -2355.6)" height="3146.2500" width="320.00000" y="0.0000000" x="0.0000000" xmlns:cc="http://creativecommons.org/ns#"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="2494.8660594000003" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="2494.8660594000003" x="10">Μοτίβο</tspan>
  </text>
- <rect id="d0e255" display="none" height="1e3px" width="288" y="2490.4" x="10"/>
+ <rect id="d0e255" display="none" height="1e3px" width="288" y="2500.4" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e255"/>
@@ -425,13 +425,13 @@
    <path id="elements-f13-el.svgpath3031" stroke-width="1.8799pt" d="m12.4 2503.1l-9.0646-2.3-6.6401 5.6-3.354-10.9-12.632-2.3 14.957-6.1-2.5392-12 11.15 5.8 8.3942 0.5-2.7638 7.8 2.4928 13.9z" fill-rule="evenodd" inkscape:flatsided="false" fill-opacity=".75" transform="matrix(.16492 -.50572 .50572 .16492 -1249.9 -402.18)" inkscape:randomized="0.19700000" stroke="#bdbb00" inkscape:rounded="0.0000000" fill="#ff0"/>
   </pattern>
  </defs>
- <rect id="elements-f13-el.svgrect3038" transform="translate(10 2527.2)" height="100.75" width="305.3" y=".35476" x="7.4959" fill="url(#elements-f13-el.svgpattern2289)"/>
- <rect id="elements-f13-el.svgrect3018" transform="translate(10 2527.2)" height="100.61" width="304.98" y=".32448" x="7.6676" fill="none"/>
- <rect id="elements-f13-el.svgrect2174" transform="translate(10 2527.2)" height="100.99" width="305.16" stroke="#000" y=".24929" x="7.5753" stroke-width=".49832" fill="none"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="2652.6739214000004" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
-  <tspan y="2652.6739214000004" x="10">Διαβάθμιση</tspan>
+ <rect id="elements-f13-el.svgrect3038" transform="translate(10 2537.2)" height="100.75" width="305.3" y=".35476" x="7.4959" fill="url(#elements-f13-el.svgpattern2289)"/>
+ <rect id="elements-f13-el.svgrect3018" transform="translate(10 2537.2)" height="100.61" width="304.98" y=".32448" x="7.6676" fill="none"/>
+ <rect id="elements-f13-el.svgrect2174" transform="translate(10 2537.2)" height="100.99" width="305.16" stroke="#000" y=".24929" x="7.5753" stroke-width=".49832" fill="none"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="7.5" y="2662.6739214000004" x="10" font-family="sans-serif" font-style="italic" fill="#000000">
+  <tspan y="2662.6739214000004" x="10">Διαβάθμιση</tspan>
  </text>
- <rect id="d0e274" display="none" height="1e3px" width="288" y="2658.2" x="10"/>
+ <rect id="d0e274" display="none" height="1e3px" width="288" y="2668.2" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e274"/>
@@ -448,16 +448,16 @@
   <linearGradient id="elements-f14-el.svglinearGradient2337" y2="2897.7" xlink:href="#elements-f14-el.svglinearGradient3164" gradientUnits="userSpaceOnUse" y1="2898.4" gradientTransform="matrix(1.0731 0 0 .93188 0 -2631.7)" x2="316.21" x1="182.07" inkscape:collect="always"/>
   <linearGradient id="elements-f14-el.svglinearGradient2340" y2="2874.8" xlink:href="#elements-f14-el.svglinearGradient3164" gradientUnits="userSpaceOnUse" y1="2874.8" gradientTransform="matrix(1.0731 0 0 .93188 0 -2631.7)" x2="-14.463" x1="114.03" inkscape:collect="always"/>
  </defs>
- <rect id="elements-f14-el.svgrect3127" transform="translate(10 2737.5)" height="100.99" width="305.16" stroke="#000" y=".24891" x="7.5753" stroke-width=".49832" fill="none"/>
- <rect id="elements-f14-el.svgrect3129" fill-rule="evenodd" transform="translate(10 2737.5)" height="23.974" width="72.439" stroke="#000" y="38.759" x="123.93" stroke-width="1.25"/>
- <path id="elements-f14-el.svgpath3130" d="m7.7108 0.4123l116.17 38.318v24.182l-116.17 38.318" fill-rule="evenodd" sodipodi:nodetypes="cccc" transform="translate(10 2737.5)" stroke="#000" stroke-width=".5" fill="url(#elements-f14-el.svglinearGradient2340)"/>
- <path id="elements-f14-el.svgpath3133" d="m196.38 62.912v-24.182l116.17-38.318v100.82l-116.17-38.318z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2737.5)" stroke="#000" stroke-width=".5" fill="url(#elements-f14-el.svglinearGradient2337)"/>
- <path id="elements-f14-el.svgpath3145" d="m312.55 0.4123h-304.84l116.17 38.318h72.5l116.17-38.318z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2737.5)" stroke="#000" stroke-width=".5" fill="url(#elements-f14-el.svglinearGradient2334)"/>
- <path id="elements-f14-el.svgpath3147" d="m312.55 101.23h-304.84l116.17-38.318h72.5l116.17 38.318z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2737.5)" stroke="#000" stroke-width=".5" fill="url(#elements-f14-el.svglinearGradient2331)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2863.9252634000004" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="2863.9252634000004" x="10">Σύνθεση</tspan>
+ <rect id="elements-f14-el.svgrect3127" transform="translate(10 2747.5)" height="100.99" width="305.16" stroke="#000" y=".24891" x="7.5753" stroke-width=".49832" fill="none"/>
+ <rect id="elements-f14-el.svgrect3129" fill-rule="evenodd" transform="translate(10 2747.5)" height="23.974" width="72.439" stroke="#000" y="38.759" x="123.93" stroke-width="1.25"/>
+ <path id="elements-f14-el.svgpath3130" d="m7.7108 0.4123l116.17 38.318v24.182l-116.17 38.318" fill-rule="evenodd" sodipodi:nodetypes="cccc" transform="translate(10 2747.5)" stroke="#000" stroke-width=".5" fill="url(#elements-f14-el.svglinearGradient2340)"/>
+ <path id="elements-f14-el.svgpath3133" d="m196.38 62.912v-24.182l116.17-38.318v100.82l-116.17-38.318z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2747.5)" stroke="#000" stroke-width=".5" fill="url(#elements-f14-el.svglinearGradient2337)"/>
+ <path id="elements-f14-el.svgpath3145" d="m312.55 0.4123h-304.84l116.17 38.318h72.5l116.17-38.318z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2747.5)" stroke="#000" stroke-width=".5" fill="url(#elements-f14-el.svglinearGradient2334)"/>
+ <path id="elements-f14-el.svgpath3147" d="m312.55 101.23h-304.84l116.17-38.318h72.5l116.17 38.318z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2747.5)" stroke="#000" stroke-width=".5" fill="url(#elements-f14-el.svglinearGradient2331)"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="2873.9252634000004" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="2873.9252634000004" x="10">Σύνθεση</tspan>
  </text>
- <rect id="d0e294" display="none" height="1e3px" width="288" y="2869.1" x="10"/>
+ <rect id="d0e294" display="none" height="1e3px" width="288" y="2879.1" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e294"/>
@@ -544,48 +544,48 @@
    <stop id="elements-f15-el.svgstop2366" stop-color="#00ff1a" offset="1"/>
   </linearGradient>
  </defs>
- <rect id="elements-f15-el.svgrect2359" fill-rule="evenodd" transform="translate(10 2904.3)" height="55.704" width="305.45" y="45.539" x="7.5522" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svglinearGradient2549)"/>
- <path id="elements-f15-el.svgpath2373" d="m175.12 48.594l-3.4 52.836h-157.19l160.59-52.836z" fill-rule="evenodd" sodipodi:nodetypes="cccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svglinearGradient2546)"/>
- <rect id="elements-f15-el.svgrect1734" fill-rule="evenodd" transform="translate(10 2904.3)" height="48.419" width="305.16" y=".11732" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svglinearGradient2543)"/>
- <rect id="elements-f15-el.svgrect2396" transform="translate(10 2904.3)" height="52.932" width="304.85" y="48.268" x="7.8698" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2540)"/>
- <path id="elements-f15-el.svgpath2382" d="m103.54 100.43l70.72-50.836" sodipodi:nodetypes="cc" transform="translate(10 2904.3)" stroke="#b0af00" stroke-dasharray="5.0000000 2.5000000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.25" fill="none"/>
- <path id="elements-f15-el.svgpath2384" d="m175.12 48.594l-3.4 52.836h-157.19l160.59-52.836z" sodipodi:nodetypes="cccc" transform="translate(10 2904.3)" stroke="url(#elements-f15-el.svglinearGradient2536)" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".375" fill="none"/>
- <path id="elements-f15-el.svgpath2387" d="m66.375 5.766l-29.375 21.344-10.656-10.688-18.782 15.032-0.0308 17h126.44 4.47 173.59l-0.03-38.594-15.5 14-22.06-2.5-18.6-12-15.75 18.906-25.18-13.219-23.29 18.875-21.4-5.656-33.66 18.75-32.84-25.25-10.658 10.688-26.687-26.688z" fill-rule="evenodd" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svglinearGradient2533)"/>
- <path id="elements-f15-el.svgrect2398" d="m12.724 100.91l156.86-0.85 3.14-51.436-160 52.286z" sodipodi:nodetypes="cccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2530)"/>
- <path id="elements-f15-el.svgpath3707" d="m75.087 78.225l66.733-19.439-4.97-3.222-9.95 2.604-12.87 6.372-4.12-6.99-8.49 5.518-7.037-7.592-8.492 5.518-9.95-3.222-11.406 6.974-8.493-4.679-4.122-7.592-11.406 5.518-4.123-6.136-11.406 2.604-9.949 2.605-7.0365-3.222-0.8208 16.812 12.237-3.273 6.41 5.467 2.04 12.751 19.521-17.841 0.583 14.208 9.323-1.816 9.324-6.187 8.47 4.26z" sodipodi:nodetypes="ccccccccccccccccccccccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2527)"/>
- <path id="elements-f15-el.svgrect3704" d="m7.5099 67.447v34.993l16.378-3.679 21.136-10.237 16.366-3.082 6.826-7.851 6.827-0.697 13.981-3.083 6.827-0.697 16.369-5.467 16.36-3.082-28.55 7.217-3.709-11.453-36.691-0.347 6.525 13.962-15.926-6.683-10.867-6.683-17.302-1.352-14.55 8.221z" sodipodi:nodetypes="ccccccccccccccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2524)"/>
- <path id="elements-f15-el.svgpath3711" d="m151.66 54.474l-11.57-1.502-9.34 2.087-29.24 9.225-14.914 1.587-5.471-11.023-17.833 2.69-9.945-0.472-21.599-3.386-24.062-1.474 0.4461-4.122 16.927-1.032 5.597 1.029 4.566-0.002 6.627 1.029 4.566-1.032 6.627-2.062 5.596 1.029 5.596 2.058 6.627-1.031 4.566-1.032 5.597 1.028 6.626 1.029 5.082-1.032 5.081-1.032 5.597-0.001 5.63 1.017 6.66-0.013 5.11-0.528 6.14 1.532 5.12-1.558 4.08 0.501 8.17-0.026 7.65 1.004 11.77-1.056 8.69 1.004-20.77 5.567z" sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2521)"/>
- <path id="elements-f15-el.svgpath3709" d="m7.686 55.504l17.229-0.472 11.401 8.267 23.056 0.985 12.859-0.473 15.772-4.843 15.767 6.811 9.95-0.473 13.36-3.386 28.18-8.684-3.02-4.146-31.86 6.154-16.4-1.056-22.592-0.026-15.672-4.906-16.702 1.274-11.772 3.58-16.408-6.207-12.288 1.004-0.86 6.597z" sodipodi:nodetypes="cccccccccccccccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2518)"/>
- <rect id="elements-f15-el.svgrect2179" transform="translate(10 2904.3)" height="100.99" width="305.16" stroke="#000" y=".24891" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="none"/>
- <path id="elements-f15-el.svgpath1875" d="m173.68 67.447l-2.48 32.511 36.22 1.282 105.46-0.31-2.25-33.283-15.88-3.082-32.26-4.236-36.69-0.347-13.32 13.962 1.44-19.084-28.23-1.722-9.86 3.608-2.15 10.701z" sodipodi:nodetypes="ccccccccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2514)"/>
- <path id="elements-f15-el.svgpath1877" d="m173.85 55.504l17.23-0.472 11.4 8.267 13.14 0.985 12.86-0.473 25.69-4.843 5.85 6.811 19.87-0.473 13.36-3.386 18.26-8.684-3.02-4.146-21.94 6.154-16.4-1.056-22.59-0.026-15.68-4.906-16.7 1.274-11.77 3.58-16.41-6.207-12.29 1.004-0.86 6.597z" sodipodi:nodetypes="cccccccccccccccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2511)"/>
- <path id="elements-f15-el.svgpath1885" d="m230.21 62.78l6.2 6.384 44.52 10.788 31.49 11.254-1.54-23.111 1.27-12.171-62.03 5.828-19.91 1.028z" sodipodi:nodetypes="cccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2508)"/>
- <path id="elements-f15-el.svgpath1876" d="m306.26 52.972l-9.34 2.087-29.24 9.225-14.92 1.587-5.47-13.503-17.83 5.17-9.94-0.472-21.6-3.386-24.07-1.474 0.45-4.122 16.93-1.032 5.59 1.029 4.57-0.002 6.63 1.029 4.56-1.032 6.63-2.062 5.6 1.029 5.59 2.058 6.63-1.031 4.57-1.032 5.59 1.028 6.63 1.029 5.08-1.032 5.08-1.032 5.6-0.001 5.63 1.017 6.66-0.013 5.11-0.528 6.14 1.532 5.12-1.558 4.08 0.501 8.17-0.026-4.23 5.017z" sodipodi:nodetypes="ccccccccccccccccccccccccccccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2505)"/>
- <path id="elements-f15-el.svgpath1883" d="m173.87 62.414l-0.46 21.414 20.91-1.348 23.19-1.005 7.47-3.487-0.9-23.709-39.61-0.571-10.6 8.706z" sodipodi:nodetypes="cccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2502)"/>
- <path id="elements-f15-el.svgpath3143" stroke-linejoin="round" d="m198.16 59.687v10.019l47.91 27.683 1.09-20.324-49-17.378z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2904.3)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.0557pt" fill="#845206"/>
- <path id="elements-f15-el.svgpath3144" stroke-linejoin="round" d="m246.07 97.389l1.09-20.689 43.34-11.978v19.6l-44.43 13.067z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2904.3)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.0557pt" fill="#734805"/>
- <path id="elements-f15-el.svgpath3141" stroke-linejoin="round" d="m195.95 58.853l17.52-12.248 56.2 5.412-24.68 25.771-49.04-18.935z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2904.3)" stroke="#000" stroke-linecap="round" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.0557pt" fill="#950f06"/>
- <path id="elements-f15-el.svgpath3517" stroke-linejoin="round" d="m256.02 94.521l0.64-14.679 25.6-7.074v14.036l-26.24 7.717z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2904.3)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".62353pt" fill="#8a5606"/>
- <path id="elements-f15-el.svgpath3142" stroke-linejoin="round" d="m270.03 52.017l22.86 12.705-47.54 13.066 24.68-25.771z" fill-rule="evenodd" sodipodi:nodetypes="cccc" transform="translate(10 2904.3)" stroke="#000" stroke-linecap="round" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.0557pt" fill="#7f3e06"/>
- <g id="elements-f15-el.svgg2600" xmlns:cc="http://creativecommons.org/ns#" transform="translate(10 40.7)">
+ <rect id="elements-f15-el.svgrect2359" fill-rule="evenodd" transform="translate(10 2914.3)" height="55.704" width="305.45" y="45.539" x="7.5522" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svglinearGradient2549)"/>
+ <path id="elements-f15-el.svgpath2373" d="m175.12 48.594l-3.4 52.836h-157.19l160.59-52.836z" fill-rule="evenodd" sodipodi:nodetypes="cccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svglinearGradient2546)"/>
+ <rect id="elements-f15-el.svgrect1734" fill-rule="evenodd" transform="translate(10 2914.3)" height="48.419" width="305.16" y=".11732" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svglinearGradient2543)"/>
+ <rect id="elements-f15-el.svgrect2396" transform="translate(10 2914.3)" height="52.932" width="304.85" y="48.268" x="7.8698" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2540)"/>
+ <path id="elements-f15-el.svgpath2382" d="m103.54 100.43l70.72-50.836" sodipodi:nodetypes="cc" transform="translate(10 2914.3)" stroke="#b0af00" stroke-dasharray="5.0000000 2.5000000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.25" fill="none"/>
+ <path id="elements-f15-el.svgpath2384" d="m175.12 48.594l-3.4 52.836h-157.19l160.59-52.836z" sodipodi:nodetypes="cccc" transform="translate(10 2914.3)" stroke="url(#elements-f15-el.svglinearGradient2536)" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".375" fill="none"/>
+ <path id="elements-f15-el.svgpath2387" d="m66.375 5.766l-29.375 21.344-10.656-10.688-18.782 15.032-0.0308 17h126.44 4.47 173.59l-0.03-38.594-15.5 14-22.06-2.5-18.6-12-15.75 18.906-25.18-13.219-23.29 18.875-21.4-5.656-33.66 18.75-32.84-25.25-10.658 10.688-26.687-26.688z" fill-rule="evenodd" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svglinearGradient2533)"/>
+ <path id="elements-f15-el.svgrect2398" d="m12.724 100.91l156.86-0.85 3.14-51.436-160 52.286z" sodipodi:nodetypes="cccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2530)"/>
+ <path id="elements-f15-el.svgpath3707" d="m75.087 78.225l66.733-19.439-4.97-3.222-9.95 2.604-12.87 6.372-4.12-6.99-8.49 5.518-7.037-7.592-8.492 5.518-9.95-3.222-11.406 6.974-8.493-4.679-4.122-7.592-11.406 5.518-4.123-6.136-11.406 2.604-9.949 2.605-7.0365-3.222-0.8208 16.812 12.237-3.273 6.41 5.467 2.04 12.751 19.521-17.841 0.583 14.208 9.323-1.816 9.324-6.187 8.47 4.26z" sodipodi:nodetypes="ccccccccccccccccccccccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2527)"/>
+ <path id="elements-f15-el.svgrect3704" d="m7.5099 67.447v34.993l16.378-3.679 21.136-10.237 16.366-3.082 6.826-7.851 6.827-0.697 13.981-3.083 6.827-0.697 16.369-5.467 16.36-3.082-28.55 7.217-3.709-11.453-36.691-0.347 6.525 13.962-15.926-6.683-10.867-6.683-17.302-1.352-14.55 8.221z" sodipodi:nodetypes="ccccccccccccccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2524)"/>
+ <path id="elements-f15-el.svgpath3711" d="m151.66 54.474l-11.57-1.502-9.34 2.087-29.24 9.225-14.914 1.587-5.471-11.023-17.833 2.69-9.945-0.472-21.599-3.386-24.062-1.474 0.4461-4.122 16.927-1.032 5.597 1.029 4.566-0.002 6.627 1.029 4.566-1.032 6.627-2.062 5.596 1.029 5.596 2.058 6.627-1.031 4.566-1.032 5.597 1.028 6.626 1.029 5.082-1.032 5.081-1.032 5.597-0.001 5.63 1.017 6.66-0.013 5.11-0.528 6.14 1.532 5.12-1.558 4.08 0.501 8.17-0.026 7.65 1.004 11.77-1.056 8.69 1.004-20.77 5.567z" sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2521)"/>
+ <path id="elements-f15-el.svgpath3709" d="m7.686 55.504l17.229-0.472 11.401 8.267 23.056 0.985 12.859-0.473 15.772-4.843 15.767 6.811 9.95-0.473 13.36-3.386 28.18-8.684-3.02-4.146-31.86 6.154-16.4-1.056-22.592-0.026-15.672-4.906-16.702 1.274-11.772 3.58-16.408-6.207-12.288 1.004-0.86 6.597z" sodipodi:nodetypes="cccccccccccccccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2518)"/>
+ <rect id="elements-f15-el.svgrect2179" transform="translate(10 2914.3)" height="100.99" width="305.16" stroke="#000" y=".24891" x="7.5753" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".49832" fill="none"/>
+ <path id="elements-f15-el.svgpath1875" d="m173.68 67.447l-2.48 32.511 36.22 1.282 105.46-0.31-2.25-33.283-15.88-3.082-32.26-4.236-36.69-0.347-13.32 13.962 1.44-19.084-28.23-1.722-9.86 3.608-2.15 10.701z" sodipodi:nodetypes="ccccccccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2514)"/>
+ <path id="elements-f15-el.svgpath1877" d="m173.85 55.504l17.23-0.472 11.4 8.267 13.14 0.985 12.86-0.473 25.69-4.843 5.85 6.811 19.87-0.473 13.36-3.386 18.26-8.684-3.02-4.146-21.94 6.154-16.4-1.056-22.59-0.026-15.68-4.906-16.7 1.274-11.77 3.58-16.41-6.207-12.29 1.004-0.86 6.597z" sodipodi:nodetypes="cccccccccccccccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2511)"/>
+ <path id="elements-f15-el.svgpath1885" d="m230.21 62.78l6.2 6.384 44.52 10.788 31.49 11.254-1.54-23.111 1.27-12.171-62.03 5.828-19.91 1.028z" sodipodi:nodetypes="cccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2508)"/>
+ <path id="elements-f15-el.svgpath1876" d="m306.26 52.972l-9.34 2.087-29.24 9.225-14.92 1.587-5.47-13.503-17.83 5.17-9.94-0.472-21.6-3.386-24.07-1.474 0.45-4.122 16.93-1.032 5.59 1.029 4.57-0.002 6.63 1.029 4.56-1.032 6.63-2.062 5.6 1.029 5.59 2.058 6.63-1.031 4.57-1.032 5.59 1.028 6.63 1.029 5.08-1.032 5.08-1.032 5.6-0.001 5.63 1.017 6.66-0.013 5.11-0.528 6.14 1.532 5.12-1.558 4.08 0.501 8.17-0.026-4.23 5.017z" sodipodi:nodetypes="ccccccccccccccccccccccccccccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2505)"/>
+ <path id="elements-f15-el.svgpath1883" d="m173.87 62.414l-0.46 21.414 20.91-1.348 23.19-1.005 7.47-3.487-0.9-23.709-39.61-0.571-10.6 8.706z" sodipodi:nodetypes="cccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2502)"/>
+ <path id="elements-f15-el.svgpath3143" stroke-linejoin="round" d="m198.16 59.687v10.019l47.91 27.683 1.09-20.324-49-17.378z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2914.3)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.0557pt" fill="#845206"/>
+ <path id="elements-f15-el.svgpath3144" stroke-linejoin="round" d="m246.07 97.389l1.09-20.689 43.34-11.978v19.6l-44.43 13.067z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2914.3)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.0557pt" fill="#734805"/>
+ <path id="elements-f15-el.svgpath3141" stroke-linejoin="round" d="m195.95 58.853l17.52-12.248 56.2 5.412-24.68 25.771-49.04-18.935z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2914.3)" stroke="#000" stroke-linecap="round" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.0557pt" fill="#950f06"/>
+ <path id="elements-f15-el.svgpath3517" stroke-linejoin="round" d="m256.02 94.521l0.64-14.679 25.6-7.074v14.036l-26.24 7.717z" fill-rule="evenodd" sodipodi:nodetypes="ccccc" transform="translate(10 2914.3)" stroke="#000" xmlns:cc="http://creativecommons.org/ns#" stroke-width=".62353pt" fill="#8a5606"/>
+ <path id="elements-f15-el.svgpath3142" stroke-linejoin="round" d="m270.03 52.017l22.86 12.705-47.54 13.066 24.68-25.771z" fill-rule="evenodd" sodipodi:nodetypes="cccc" transform="translate(10 2914.3)" stroke="#000" stroke-linecap="round" xmlns:cc="http://creativecommons.org/ns#" stroke-width="1.0557pt" fill="#7f3e06"/>
+ <g id="elements-f15-el.svgg2600" xmlns:cc="http://creativecommons.org/ns#" transform="translate(10 50.7)">
   <path id="elements-f15-el.svgrect3172" sodipodi:nodetypes="ccccc" fill="url(#elements-f15-el.svgpattern2597)" d="m196.36 2926.7v11l47.76 27.6 2.68-20.7-50.44-17.9z"/>
   <path id="elements-f15-el.svgpath3175" sodipodi:nodetypes="ccccc" fill="url(#elements-f15-el.svgpattern2596)" d="m246.72 2963.6l-1.23-17.9 44.25-12.4v17.3l-43.02 13z"/>
   <path id="elements-f15-el.svgpath3177" sodipodi:nodetypes="ccccc" fill="url(#elements-f15-el.svgpattern2599)" d="m196.31 2925.2l17.82-11.5 53.31 6.4-21 22.8-50.13-17.7z"/>
   <path id="elements-f15-el.svgpath3179" sodipodi:nodetypes="cccc" fill="url(#elements-f15-el.svgpattern2598)" d="m247.23 2943.6l22.68-24.9 21.72 12.6-44.4 12.3z"/>
  </g>
- <path id="elements-f15-el.svgpath1888" d="m194.7 68.832l-6.72 24.773 15.43 4.409 11.91-0.853 11.03 3.529 16.3 0.03 28.12-2.06 21.9-9.481-5.44-4.001-2.72-1.562-3.6 0.192-4.47 3.26-1.85 1.507-4.56 2.137-8.07 2.137-7.19-1.37-8.95 5.644-1.93-4.878-3.57 0.008-4.45-1.747-0.06-4.377-2.69-4.377-7.27 3.537-4.63-2.601-1.13-7.862-3.56-1.954-3.56 0.676-2.73 3.105-3.72-4.31-6.35-1.317-5.47-2.194z" sodipodi:nodetypes="ccccccccccccccccccccccccccccccc" transform="translate(10 2904.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2489)"/>
- <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3031.5157324" x="10" font-family="sans-serif" fill="#000000">
-  <tspan y="3031.5157324" x="10">Βιβλιογραφία</tspan>
+ <path id="elements-f15-el.svgpath1888" d="m194.7 68.832l-6.72 24.773 15.43 4.409 11.91-0.853 11.03 3.529 16.3 0.03 28.12-2.06 21.9-9.481-5.44-4.001-2.72-1.562-3.6 0.192-4.47 3.26-1.85 1.507-4.56 2.137-8.07 2.137-7.19-1.37-8.95 5.644-1.93-4.878-3.57 0.008-4.45-1.747-0.06-4.377-2.69-4.377-7.27 3.537-4.63-2.601-1.13-7.862-3.56-1.954-3.56 0.676-2.73 3.105-3.72-4.31-6.35-1.317-5.47-2.194z" sodipodi:nodetypes="ccccccccccccccccccccccccccccccc" transform="translate(10 2914.3)" xmlns:cc="http://creativecommons.org/ns#" fill="url(#elements-f15-el.svgpattern2489)"/>
+ <text style="writing-mode:lr" font-weight="bold" font-size="8" y="3041.5157324" x="10" font-family="sans-serif" fill="#000000">
+  <tspan y="3041.5157324" x="10">Βιβλιογραφία</tspan>
  </text>
- <rect id="d0e313" display="none" height="1e3px" width="288" y="3036.7" x="10"/>
+ <rect id="d0e313" display="none" height="1e3px" width="288" y="3046.7" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e313"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Αυτή είναι μερική βιβλιογραφία που χρησιμοποιήθηκε για το χτίσιμο αυτού του εγγράφου.</flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 3071.4)"/>
- <rect id="d0e319" display="none" height="1e3px" width="258" y="3065.4" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 3081.4)"/>
+ <rect id="d0e319" display="none" height="1e3px" width="258" y="3075.4" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e319"/>
@@ -593,8 +593,8 @@
   <flowDiv xml:space="preserve"><flowSpan font-weight="bold" font-family="sans-serif">http://www.makart.com/resources/artclass/EPlist.html</flowSpan>
 </flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 3089.2)"/>
- <rect id="d0e326" display="none" height="1e3px" width="258" y="3083.2" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 3099.2)"/>
+ <rect id="d0e326" display="none" height="1e3px" width="258" y="3093.2" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e326"/>
@@ -602,8 +602,8 @@
   <flowDiv xml:space="preserve"><flowSpan font-weight="bold" font-family="sans-serif">http://www.princetonol.com/groups/iad/Files/elements2.htm</flowSpan>
 </flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 3116)"/>
- <rect id="d0e333" display="none" height="1e3px" width="258" y="3110" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 3126)"/>
+ <rect id="d0e333" display="none" height="1e3px" width="258" y="3120" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e333"/>
@@ -611,8 +611,8 @@
   <flowDiv xml:space="preserve"><flowSpan font-weight="bold" font-family="sans-serif">http://www.johnlovett.com/test.htm</flowSpan>
 </flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 3133.8)"/>
- <rect id="d0e340" display="none" height="1e3px" width="258" y="3127.8" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 3143.8)"/>
+ <rect id="d0e340" display="none" height="1e3px" width="258" y="3137.8" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e340"/>
@@ -620,8 +620,8 @@
   <flowDiv xml:space="preserve"><flowSpan font-weight="bold" font-family="sans-serif">http://digital-web.com/articles/elements_of_design/</flowSpan>
 </flowDiv>
  </flowRoot>
- <circle cy="0" cx="0" r="2" transform="translate(15 3151.8)"/>
- <rect id="d0e347" display="none" height="1e3px" width="258" y="3145.8" x="20"/>
+ <circle cy="0" cx="0" r="2" transform="translate(15 3161.8)"/>
+ <rect id="d0e347" display="none" height="1e3px" width="258" y="3155.8" x="20"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e347"/>
@@ -629,14 +629,14 @@
   <flowDiv xml:space="preserve"><flowSpan font-weight="bold" font-family="sans-serif">http://digital-web.com/articles/principles_of_design/</flowSpan>
 </flowDiv>
  </flowRoot>
- <rect id="d0e354" display="none" height="1e3px" width="288" y="3163.7" x="10"/>
+ <rect id="d0e354" display="none" height="1e3px" width="288" y="3173.7" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
    <use y="0" x="0" xlink:href="#d0e354"/>
   </flowRegion>
   <flowDiv xml:space="preserve">Πολλές ευχαριστίες στη Linda Kim (<flowSpan font-weight="bold" font-family="sans-serif">http://www.coroflot.com/redlucite/</flowSpan>) για τη βοήθεια της (<flowSpan font-weight="bold" font-family="sans-serif">http://www.rejon.org/</flowSpan>) σε αυτό το μάθημα. Επίσης, ευχαριστώ το Open Clip Art Library (<flowSpan font-weight="bold" font-family="sans-serif">http://www.openclipart.org/</flowSpan>) και τα άτομα των γραφικών για αυτό το έργο.</flowDiv>
  </flowRoot>
- <g transform="translate(0 3224.4)">
+ <g transform="translate(0 3234.4)">
   <defs id="defs3" xmlns:cc="http://creativecommons.org/ns#">
    <linearGradient id="linearGradient2465" y2="-7528.7" xlink:href="#linearGradient841" gradientUnits="userSpaceOnUse" x2="76.847" gradientTransform="matrix(2.1496 0 0 .46519 -.13015 3495.4)" y1="-7656.4" x1="76.847" inkscape:collect="always"/>
    <filter id="filter56" height="1.2" width="1.2" color-interpolation-filters="sRGB" y="-.1" x="-.1" inkscape:label="Drop shadow, custom">
