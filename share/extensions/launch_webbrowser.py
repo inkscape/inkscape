@@ -11,7 +11,7 @@ class VisitWebSiteWithoutLockingInkscape(threading.Thread):
         threading.Thread.__init__ (self)
         parser = OptionParser()
         parser.add_option("-u", "--url", action="store", type="string",
-                          default="http://www.inkscape.org/",
+                          default="https://www.inkscape.org/",
                           dest="url", help="The URL to open in web browser")
         (self.options, args) = parser.parse_args()
 
