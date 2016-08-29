@@ -274,7 +274,7 @@ void NodeTool::setup() {
     }
 
     this->desktop->emitToolSubselectionChanged(NULL); // sets the coord entry fields to inactive
-    update_helperpath();
+    this->update_helperpath();
 }
 
 // show helper paths of the applied LPE, if any
