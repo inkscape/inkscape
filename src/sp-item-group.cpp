@@ -132,7 +132,7 @@ void SPGroup::remove_child(Inkscape::XML::Node *child) {
 
 void SPGroup::order_changed (Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref)
 {
-	SPLPEItem::order_changed(child, old_ref, new_ref);
+    SPLPEItem::order_changed(child, old_ref, new_ref);
 
     SPItem *item = dynamic_cast<SPItem *>(get_child_by_repr(child));
     if ( item ) {
@@ -199,7 +199,7 @@ void SPGroup::modified(guint flags) {
     // std::cout << "SPGroup::modified(): " << (getId()?getId():"null") << std::endl;
     SPLPEItem::modified(flags);
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-    	flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+        flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
 
     flags &= SP_OBJECT_MODIFIED_CASCADE;
@@ -352,7 +352,7 @@ Inkscape::DrawingItem *SPGroup::show (Inkscape::Drawing &drawing, unsigned int k
 }
 
 void SPGroup::hide (unsigned int key) {
-	std::vector<SPObject*> l=this->childList(false, SPObject::ActionShow);
+    std::vector<SPObject*> l=this->childList(false, SPObject::ActionShow);
     for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *o = *i;
 
@@ -402,7 +402,7 @@ sp_recursive_scale_text_size(Inkscape::XML::Node *repr, double scale){
     }
     SPCSSAttr * css = sp_repr_css_attr(repr,"style");
     Glib::ustring element = g_quark_to_string(repr->code());
-    if (css && element == "svg:text" || element == "svg:tspan") {
+    if ((css && element == "svg:text") || element == "svg:tspan") {
         gchar const *w = sp_repr_css_property(css, "font-size", NULL);
         if (w) {
             gchar *units = NULL;
