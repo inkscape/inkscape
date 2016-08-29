@@ -847,7 +847,7 @@ void PencilTool::_fitAndSplit() {
         SPCurve *curve = this->red_curve->copy();
 
         /// \todo fixme:
-        SPCanvasItem *cshape = sp_canvas_bpath_new(this->desktop->getSketch(), curve);
+        SPCanvasItem *cshape = sp_canvas_bpath_new(this->desktop->getSketch(), curve, true);
         curve->unref();
 
         this->highlight_color = SP_ITEM(this->desktop->currentLayer())->highlight_color();

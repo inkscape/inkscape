@@ -865,7 +865,7 @@ void PenTool::_redrawAll() {
             this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
         }
         // one canvas bpath for all of green_curve
-        SPCanvasItem *canvas_shape = sp_canvas_bpath_new(this->desktop->getSketch(), this->green_curve);
+        SPCanvasItem *canvas_shape = sp_canvas_bpath_new(this->desktop->getSketch(), this->green_curve, true);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvas_shape), this->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvas_shape), 0, SP_WIND_RULE_NONZERO);
 
@@ -877,7 +877,7 @@ void PenTool::_redrawAll() {
     this->red_curve->reset();
     this->red_curve->moveto(this->p[0]);
     this->red_curve->curveto(this->p[1], this->p[2], this->p[3]);
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve, true);
 
     // handles
     // hide the handlers in bspline and spiro modes
@@ -1251,10 +1251,10 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
 void PenTool::_resetColors() {
     // Red
     this->red_curve->reset();
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), NULL);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), NULL, true);
     // Blue
     this->blue_curve->reset();
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->blue_bpath), NULL);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->blue_bpath), NULL, true);
     // Green
     while (this->green_bpaths) {
         sp_canvas_item_destroy(SP_CANVAS_ITEM(this->green_bpaths->data));
@@ -1277,7 +1277,7 @@ void PenTool::_setInitialPoint(Geom::Point const p) {
     this->p[0] = p;
     this->p[1] = p;
     this->npoints = 2;
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), NULL);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), NULL, true);
 
     this->desktop->canvas->forceFullRedrawAfterInterruptions(5);
 }
@@ -1343,7 +1343,7 @@ void PenTool::_bsplineSpiroColor()
             this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
         }
         // one canvas bpath for all of green_curve
-        SPCanvasItem *canvas_shape = sp_canvas_bpath_new(this->desktop->getSketch(), this->green_curve);
+        SPCanvasItem *canvas_shape = sp_canvas_bpath_new(this->desktop->getSketch(), this->green_curve, true);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvas_shape), this->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvas_shape), 0, SP_WIND_RULE_NONZERO);
         this->green_bpaths = g_slist_prepend(this->green_bpaths, canvas_shape);
@@ -1701,7 +1701,7 @@ void PenTool::_bsplineSpiroBuild()
         }else{
             this->red_curve->curveto(this->p[1],this->p[2],this->p[3]);
         }
-        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
+        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve, true);
         curve->append_continuous(this->red_curve, 0.0625);
     }
 
@@ -1722,7 +1722,7 @@ void PenTool::_bsplineSpiroBuild()
             LivePathEffect::sp_spiro_do_effect(curve);
         }
 
-        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->blue_bpath), curve);   
+        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->blue_bpath), curve, true);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(this->blue_bpath), this->blue_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
         sp_canvas_item_show(this->blue_bpath);
         curve->unref();
@@ -1778,7 +1778,7 @@ void PenTool::_setSubsequentPoint(Geom::Point const p, bool statusbar, guint sta
         }
     }
 
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve, true);
 
     if (statusbar) {
         gchar *message = is_curve ?
@@ -1818,7 +1818,7 @@ void PenTool::_setCtrl(Geom::Point const p, guint const state) {
             this->red_curve->reset();
             this->red_curve->moveto(this->p[0]);
             this->red_curve->curveto(this->p[1], this->p[2], this->p[3]);
-            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
+            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve, true);
         }
         SP_CTRL(this->c0)->moveto(this->p[2]);
         this->cl0 ->setCoords(this->p[3], this->p[2]);
@@ -1850,7 +1850,7 @@ void PenTool::_finishSegment(Geom::Point const p, guint const state) {
         SPCurve *curve = this->red_curve->copy();
 
         /// \todo fixme:
-        SPCanvasItem *canvas_shape = sp_canvas_bpath_new(this->desktop->getSketch(), curve);
+        SPCanvasItem *canvas_shape = sp_canvas_bpath_new(this->desktop->getSketch(), curve, true);
         curve->unref();
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvas_shape), this->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 

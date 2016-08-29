@@ -148,7 +148,7 @@ ControlManagerImpl::ControlManagerImpl(ControlManager &manager) :
     _ctrlToShape[CTRL_TYPE_NODE_AUTO] = SP_CTRL_SHAPE_CIRCLE;
     _ctrlToShape[CTRL_TYPE_NODE_SYMETRICAL] = SP_CTRL_SHAPE_SQUARE;
 
-    _ctrlToShape[CTRL_TYPE_ADJ_HANDLE] = SP_CTRL_SHAPE_CIRCLE;
+    _ctrlToShape[CTRL_TYPE_ADJ_HANDLE] =SP_CTRL_SHAPE_CIRCLE;
     _ctrlToShape[CTRL_TYPE_INVISIPOINT] = SP_CTRL_SHAPE_SQUARE;
 
     // -------
@@ -222,10 +222,10 @@ SPCanvasItem *ControlManagerImpl::createControl(SPCanvasGroup *parent, ControlTy
     {
         case CTRL_TYPE_ADJ_HANDLE:
             item = sp_canvas_item_new(parent, SP_TYPE_CTRL,
-                                      "shape", SP_CTRL_SHAPE_CIRCLE,
+                                      "shape",SP_CTRL_SHAPE_CIRCLE,
                                       "size", targetSize,
-                                      "filled", 0,
-                                      "fill_color", 0xff00007f,
+                                      "filled", 1,
+                                      "fill_color", 0xffffff7f,
                                       "stroked", 1,
                                       "stroke_color", 0x0000ff7f,
                                       NULL);

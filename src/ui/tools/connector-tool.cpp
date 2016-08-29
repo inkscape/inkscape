@@ -620,7 +620,7 @@ bool ConnectorTool::_handleMotionNotify(GdkEventMotion const &mevent) {
                 this->red_curve = path->get_curve_for_edit();
                 this->red_curve->transform(i2d);
 
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve, true);
                 ret = true;
                 break;
             }
@@ -811,7 +811,7 @@ void ConnectorTool::_setSubsequentPoint(Geom::Point const p) {
     // Recreate curve from libavoid route.
     recreateCurve( this->red_curve, this->newConnRef, this->curvature );
     this->red_curve->transform(desktop->doc2dt());
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), this->red_curve, true);
 }
 
 
@@ -1035,7 +1035,7 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, ConnectorTool *cc)
                 cc->red_curve = SP_PATH(cc->clickeditem)->get_curve_for_edit();
                 Geom::Affine i2d = (cc->clickeditem)->i2dt_affine();
                 cc->red_curve->transform(i2d);
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve, true);
 
                 cc->clickeditem->setHidden(true);
 

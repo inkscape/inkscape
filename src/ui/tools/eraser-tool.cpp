@@ -943,7 +943,7 @@ void EraserTool::fit_and_split(bool release) {
                 }
 
                 this->currentcurve->closepath();
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve);
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve, true);
             }
 
             /* Current eraser */
@@ -980,7 +980,7 @@ void EraserTool::fit_and_split(bool release) {
 
             SPCanvasItem *cbp = sp_canvas_item_new(desktop->getSketch(), SP_TYPE_CANVAS_BPATH, NULL);
             SPCurve *curve = this->currentcurve->copy();
-            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
+            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve, true);
             curve->unref();
 
             guint32 fillColor = sp_desktop_get_color_tool (desktop, "/tools/eraser", true);
@@ -1029,7 +1029,7 @@ void EraserTool::draw_temporary_box() {
     }
 
     this->currentcurve->closepath();
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve, true);
 }
 
 }

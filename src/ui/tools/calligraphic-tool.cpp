@@ -135,7 +135,7 @@ void CalligraphicTool::setup() {
 
         SPCurve *c = new SPCurve(path);
 
-        this->hatch_area = sp_canvas_bpath_new(this->desktop->getControls(), c);
+        this->hatch_area = sp_canvas_bpath_new(this->desktop->getControls(), c, true);
 
         c->unref();
 
@@ -1090,7 +1090,7 @@ void CalligraphicTool::fit_and_split(bool release) {
                     add_cap(this->currentcurve, b2[0], b1[0], this->cap_rounding);
                 }
                 this->currentcurve->closepath();
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve);
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve, true);
             }
 
             /* Current calligraphic */
@@ -1126,7 +1126,7 @@ void CalligraphicTool::fit_and_split(bool release) {
                                                    SP_TYPE_CANVAS_BPATH,
                                                    NULL);
             SPCurve *curve = this->currentcurve->copy();
-            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
+            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve, true);
             curve->unref();
 
             guint32 fillColor = sp_desktop_get_color_tool (desktop, "/tools/calligraphic", true);
@@ -1170,7 +1170,7 @@ void CalligraphicTool::draw_temporary_box() {
     }
 
     this->currentcurve->closepath();
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->currentshape), this->currentcurve, true);
 }
 
 }
