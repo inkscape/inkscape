@@ -204,6 +204,13 @@ void SPGroup::modified(guint flags) {
 
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+        for (SPItemView *v = this->display; v != NULL; v = v->next) {
+            Inkscape::DrawingGroup *group = dynamic_cast<Inkscape::DrawingGroup *>(v->arenaitem);
+            group->setStyle(this->style);
+        }
+    }
+
     std::vector<SPObject*> l=this->childList(true);
     for(std::vector<SPObject*>::const_iterator i=l.begin();i!=l.end();++i){
         SPObject *child = *i;
