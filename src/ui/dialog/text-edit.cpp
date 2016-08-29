@@ -505,9 +505,7 @@ SPCSSAttr *TextEdit::fillTextStyle ()
             sp_repr_css_set_property (css, "writing-mode", "tb");
         }
 
-        // Note that SVG 1.1 does not support line-height; we set it for consistency, but also set
-        // sodipodi:linespacing for backwards compatibility; in 1.2 we use line-height for flowtext
-
+        // Note that SVG 1.1 does not support line-height but we use it.
         const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) spacing_combo);
         sp_repr_css_set_property (css, "line-height", sstr);
 
@@ -542,18 +540,11 @@ void TextEdit::onApply()
     SPCSSAttr *css = fillTextStyle ();
     sp_desktop_set_style(desktop, css, true);
 
-	for(auto i=item_list.begin();i!=item_list.end();++i){
+    for(auto i=item_list.begin();i!=item_list.end();++i){
         // apply style to the reprs of all text objects in the selection
-        if (SP_IS_TEXT (*i)) {
-
-            // backwards compatibility:
-            (*i)->getRepr()->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
-
+        if (SP_IS_TEXT (*i) || (SP_IS_FLOWTEXT (*i)) ) {
             ++items;
         }
-        else if (SP_IS_FLOWTEXT (*i))
-            // no need to set sodipodi:linespacing, because Inkscape never supported it on flowtext
-            ++items;
     }
 
     if (items == 0) {

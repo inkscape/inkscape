@@ -93,14 +93,16 @@ void SPText::set(unsigned int key, const gchar* value) {
     } else {
         switch (key) {
             case SP_ATTR_SODIPODI_LINESPACING:
-                // convert deprecated tag to css
-                if (value) {
+                // convert deprecated tag to css... but only if 'line-height' missing.
+                if (value && !this->style->line_height.set) {
                     this->style->line_height.set = TRUE;
                     this->style->line_height.inherit = FALSE;
                     this->style->line_height.normal = FALSE;
                     this->style->line_height.unit = SP_CSS_UNIT_PERCENT;
                     this->style->line_height.value = this->style->line_height.computed = sp_svg_read_percentage (value, 1.0);
                 }
+                // Remove deprecated attribute
+                this->getRepr()->setAttribute("sodipodi:linespacing", NULL);
 
                 this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
                 break;
@@ -296,15 +298,6 @@ Inkscape::XML::Node *SPText::write(Inkscape::XML::Document *xml_doc, Inkscape::X
 
     this->attributes.writeTo(repr);
     this->rebuildLayout();  // copied from update(), see LP Bug 1339305
-
-    // deprecated attribute, but keep it around for backwards compatibility
-    if (this->style->line_height.set && !this->style->line_height.inherit && !this->style->line_height.normal && this->style->line_height.unit == SP_CSS_UNIT_PERCENT) {
-        Inkscape::SVGOStringStream os;
-        os << (this->style->line_height.value * 100.0) << "%";
-        this->getRepr()->setAttribute("sodipodi:linespacing", os.str().c_str());
-    } else {
-        this->getRepr()->setAttribute("sodipodi:linespacing", NULL);
-    }
 
     // SVG 2 Auto-wrapped text
     if( this->width.computed > 0.0 ) {
