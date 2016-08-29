@@ -523,7 +523,7 @@ bool NodeTool::root_handler(GdkEvent* event) {
             }
 
             c->transform(over_item->i2dt_affine());
-            SPCanvasItem *flash = sp_canvas_bpath_new(desktop->getTempGroup(), c);
+            SPCanvasItem *flash = sp_canvas_bpath_new(desktop->getTempGroup(), c, true);
 
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(flash),
                 //prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff), 1.0,
