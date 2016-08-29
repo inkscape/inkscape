@@ -66,6 +66,7 @@
 #include "message-stack.h"
 #include "document-private.h"
 #include "ui/tools/pen-tool.h"
+#include "ui/tools/node-tool.h"
 #include "ui/tools-switch.h"
 #include "knotholder.h"
 #include "live_effects/lpeobject.h"
@@ -454,6 +455,7 @@ void Effect::doBeforeEffect_impl(SPLPEItem const* lpeitem)
         sp_lpe_item->apply_to_clippath(sp_lpe_item);
         sp_lpe_item->apply_to_mask(sp_lpe_item);
     }
+    update_helperpath();
 }
 
 /**
@@ -643,6 +645,17 @@ Effect::addCanvasIndicators(SPLPEItem const*/*lpeitem*/, std::vector<Geom::PathV
 {
 }
 
+void
+Effect::update_helperpath() {
+    using namespace Inkscape::UI;
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop) {
+        if (tools_isactive(desktop, TOOLS_NODES)) {
+            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(desktop->event_context);
+            nt->update_helperpath();
+        }
+    }
+}
 
 /**
  * This *creates* a new widget, management of deletion should be done by the caller

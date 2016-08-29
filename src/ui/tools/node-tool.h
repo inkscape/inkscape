@@ -69,6 +69,7 @@ private:
 
     SPItem *flashed_item;
     Inkscape::Display::TemporaryItem *helperpath_tmpitem;
+    Inkscape::Display::TemporaryItem *helperpath_tmpitem_highlight;
     Inkscape::Display::TemporaryItem *flash_tempitem;
     Inkscape::UI::Selector* _selector;
     Inkscape::UI::PathSharedData* _path_data;
