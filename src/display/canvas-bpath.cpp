@@ -133,7 +133,7 @@ sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf)
     }
 
     if (dostroke && cbp->phantom_line) {
-        ink_cairo_set_source_rgba32(buf->ct, 0xffffff7f);
+        ink_cairo_set_source_rgba32(buf->ct, 0xffffff4d);
         cairo_set_line_width(buf->ct, 2);
         if (cbp->dashes[0] != 0 && cbp->dashes[1] != 0) {
             cairo_set_dash (buf->ct, cbp->dashes, 2, 0);
