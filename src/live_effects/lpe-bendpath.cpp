@@ -67,6 +67,7 @@ LPEBendPath::LPEBendPath(LivePathEffectObject *lpeobject) :
     _provides_knotholder_entities = true;
     apply_to_clippath_and_mask = true;
     concatenate_before_pwd2 = true;
+    _prop_scale_store = prop_scale;
 }
 
 LPEBendPath::~LPEBendPath()
@@ -80,6 +81,9 @@ LPEBendPath::doBeforeEffect (SPLPEItem const* lpeitem)
     // get the item bounding box
     original_bbox(lpeitem);
     original_height = boundingbox_Y.max() - boundingbox_Y.min();
+    if(_prop_scale_store != prop_scale) {
+        prop_scale.param_set_value(_prop_scale_store);
+    }
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
@@ -120,9 +124,9 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     }
 
     if ( scale_y_rel.get_value() ) {
-        y*=(scaling*prop_scale);
+        y*=(scaling*_prop_scale_store);
     } else {
-        if (prop_scale != 1.0) y *= prop_scale;
+        if (_prop_scale_store != 1.0) y *= _prop_scale_store;
     }
 
     Piecewise<D2<SBasis> > output = compose(uskeleton,x) + y*compose(n,x);
@@ -184,9 +188,9 @@ KnotHolderEntityWidthBendPath::knot_set(Geom::Point const &p, Geom::Point const&
     Geom::Point knot_pos = this->knot->pos * item->i2dt_affine().inverse();
     Geom::Coord nearest_to_ray = ray.nearestTime(knot_pos);
     if(nearest_to_ray == 0){
-        lpe->prop_scale.param_set_value(-Geom::distance(s , ptA)/(lpe->original_height/2.0));
+        lpe->_prop_scale_store = -Geom::distance(s , ptA)/(lpe->original_height/2.0);
     } else {
-        lpe->prop_scale.param_set_value(Geom::distance(s , ptA)/(lpe->original_height/2.0));
+        lpe->_prop_scale_store = Geom::distance(s , ptA)/(lpe->original_height/2.0);
     }
 
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
@@ -207,7 +211,7 @@ KnotHolderEntityWidthBendPath::knot_get() const
         ray.setPoints(ptA,(*cubic)[1]);
     }
     ray.setAngle(ray.angle() + Geom::rad_from_deg(90));
-    Geom::Point result_point = Geom::Point::polar(ray.angle(), (lpe->original_height/2.0) * lpe->prop_scale) + ptA;
+    Geom::Point result_point = Geom::Point::polar(ray.angle(), (lpe->original_height/2.0) * lpe->_prop_scale_store) + ptA;
 
     bp_helper_path.clear();
     Geom::Path hp(result_point);

@@ -58,7 +58,7 @@ private:
     BoolParam vertical_pattern;
     Geom::Piecewise<Geom::D2<Geom::SBasis> > uskeleton;
     Geom::Piecewise<Geom::D2<Geom::SBasis> > n;
-
+    double _prop_scale_store;
     void on_pattern_pasted();
 
     LPEBendPath(const LPEBendPath&);

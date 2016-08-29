@@ -212,6 +212,19 @@ static void spdc_paste_curve_as_freehand_shape(Geom::PathVector const &newpath, 
     Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
     Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
     static_cast<LPEPatternAlongPath*>(lpe)->pattern.set_new_value(newpath,true);
+    
+    // write pattern along path parameters:
+    lpe->getRepr()->setAttribute("copytype", "single_stretched");
+    lpe->getRepr()->setAttribute("fuse_tolerance", "0");
+    lpe->getRepr()->setAttribute("is_visible", "true");
+    lpe->getRepr()->setAttribute("normal_offset", "0");
+    lpe->getRepr()->setAttribute("prop_scale", "1");
+    lpe->getRepr()->setAttribute("prop_units", "false");
+    lpe->getRepr()->setAttribute("scale_y_rel", "false");
+    lpe->getRepr()->setAttribute("spacing", "0");
+    lpe->getRepr()->setAttribute("tang_offset", "0");
+    lpe->getRepr()->setAttribute("vertical_pattern", "false");
+    
 }
 
 static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points, FreehandBase *dc, SPItem *item)

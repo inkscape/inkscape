@@ -95,7 +95,7 @@ LPEPatternAlongPath::LPEPatternAlongPath(LivePathEffectObject *lpeobject) :
     prop_scale.param_set_increments(0.01, 0.10);
 
     _provides_knotholder_entities = true;
-
+    _prop_scale_store = prop_scale;
 }
 
 LPEPatternAlongPath::~LPEPatternAlongPath()
@@ -110,6 +110,9 @@ LPEPatternAlongPath::doBeforeEffect (SPLPEItem const* lpeitem)
     Geom::OptRect bbox = pattern.get_pathvector().boundsFast();
     if (bbox) {
         original_height = (*bbox)[Geom::Y].max() - (*bbox)[Geom::Y].min();
+    }
+    if(_prop_scale_store != prop_scale) {
+        prop_scale.param_set_value(_prop_scale_store);
     }
 }
 
@@ -213,9 +216,9 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
                 x*=scaling;
             }
             if ( scale_y_rel.get_value() ) {
-                y*=(scaling*prop_scale);
+                y*=(scaling*_prop_scale_store);
             } else {
-                if (prop_scale != 1.0) y *= prop_scale;
+                if (_prop_scale_store != 1.0) y *= _prop_scale_store;
             }
             x += toffset;
             
@@ -253,7 +256,7 @@ LPEPatternAlongPath::transform_multiply(Geom::Affine const& postmul, bool set)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool transform_stroke = prefs ? prefs->getBool("/options/transform/stroke", true) : true;
     if (transform_stroke && !scale_y_rel) {
-        prop_scale.param_set_value(prop_scale * ((postmul.expansionX() + postmul.expansionY()) / 2));
+        prop_scale.param_set_value(_prop_scale_store * ((postmul.expansionX() + postmul.expansionY()) / 2));
     } 	
     if (postmul.isTranslation()) {
         pattern.param_transform_multiply(postmul, set);
@@ -299,9 +302,9 @@ KnotHolderEntityWidthPatternAlongPath::knot_set(Geom::Point const &p, Geom::Poin
         Geom::Point knot_pos = this->knot->pos * item->i2dt_affine().inverse();
         Geom::Coord nearest_to_ray = ray.nearestTime(knot_pos);
         if(nearest_to_ray == 0){
-            lpe->prop_scale.param_set_value(-Geom::distance(s , ptA)/(lpe->original_height/2.0));
+            lpe->_prop_scale_store = -Geom::distance(s , ptA)/(lpe->original_height/2.0);
         } else {
-            lpe->prop_scale.param_set_value(Geom::distance(s , ptA)/(lpe->original_height/2.0));
+            lpe->_prop_scale_store = Geom::distance(s , ptA)/(lpe->original_height/2.0);
         }
         
     }
@@ -325,7 +328,7 @@ KnotHolderEntityWidthPatternAlongPath::knot_get() const
             ray.setPoints(ptA, (*cubic)[1]);
         }
         ray.setAngle(ray.angle() + Geom::rad_from_deg(90));
-        Geom::Point result_point = Geom::Point::polar(ray.angle(), (lpe->original_height/2.0) * lpe->prop_scale) + ptA;
+        Geom::Point result_point = Geom::Point::polar(ray.angle(), (lpe->original_height/2.0) * lpe->_prop_scale_store) + ptA;
 
         pap_helper_path.clear();
         Geom::Path hp(result_point);
