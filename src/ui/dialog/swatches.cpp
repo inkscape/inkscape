@@ -598,7 +598,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
     }
 
     loadEmUp();
-    if ( !systemSwatchPages.empty() ) {
+    if ( !systemSwatchPages.empty() || !userSwatchPages.empty()) {
         SwatchPage* first = 0;
         int index = 0;
         Glib::ustring targetName;
