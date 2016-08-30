@@ -44,7 +44,14 @@ if(WIN32)
 	endif()
 endif()
 
-pkg_check_modules(INKSCAPE_DEP REQUIRED pangocairo pangoft2 fontconfig gthread-2.0 gsl gmodule-2.0)
+pkg_check_modules(INKSCAPE_DEP REQUIRED
+	          harfbuzz
+	          pangocairo
+		  pangoft2
+		  fontconfig
+		  gthread-2.0
+		  gsl
+		  gmodule-2.0)
 
 list(APPEND INKSCAPE_LIBS ${INKSCAPE_DEP_LDFLAGS})
 list(APPEND INKSCAPE_INCS_SYS ${INKSCAPE_DEP_INCLUDE_DIRS})
