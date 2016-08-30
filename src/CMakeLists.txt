@@ -112,7 +112,6 @@ set(sp_SRC
   sp-glyph.h
   sp-gradient-reference.h
   sp-gradient-spread.h
-  sp-gradient-test.h
   sp-gradient-units.h
   sp-gradient-vector.h
   sp-gradient.h
@@ -160,7 +159,6 @@ set(sp_SRC
   sp-star.h
   sp-stop.h
   sp-string.h
-  sp-style-elem-test.h
   sp-style-elem.h
   sp-switch.h
   sp-symbol.h
@@ -278,7 +276,6 @@ set(inkscape_SRC
   MultiPrinter.h
   PylogFormatter.h
   TRPIFormatter.h
-  attributes-test.h
   attributes.h
   axis-manip.h
   bad-uri-exception.h
@@ -287,7 +284,6 @@ set(inkscape_SRC
   cms-color-types.h
   cms-system.h
   color-profile-cms-fns.h
-  color-profile-test.h
   color-profile.h
   color-rgba.h
   color.h
@@ -302,7 +298,6 @@ set(inkscape_SRC
   desktop-style.h
   desktop.h
   device-manager.h
-  dir-util-test.h
   dir-util.h
   document-private.h
   document-subset.h
@@ -312,7 +307,6 @@ set(inkscape_SRC
   enums.h
   event-log.h
   event.h
-  extract-uri-test.h
   extract-uri.h
   file.h
   fill-or-stroke.h
@@ -343,26 +337,22 @@ set(inkscape_SRC
   line-snapper.h
   macros.h
   main-cmdlineact.h
-  marker-test.h
   media.h
   menus-skeleton.h
   message-context.h
   message-stack.h
   message.h
-  mod360-test.h
   mod360.h
   number-opt-number.h
   object-hierarchy.h
   object-set.h
   object-snapper.h
-  object-test.h
   path-chemistry.h
   path-prefix.h
   persp3d-reference.h
   persp3d.h
   perspective-line.h
   preferences-skeleton.h
-  preferences-test.h
   preferences.h
   prefix.h
   print.h
@@ -374,7 +364,6 @@ set(inkscape_SRC
   removeoverlap.h
   require-config.h
   resource-manager.h
-  round-test.h
   round.h
   rubberband.h
   satisfied-guide-cns.h
@@ -398,13 +387,11 @@ set(inkscape_SRC
   strneq.h
   style-enums.h
   style-internal.h
-  style-test.h
   style.h
   svg-profile.h
   svg-view-widget.h
   svg-view.h
   syseq.h
-  test-helpers.h
   text-chemistry.h
   text-editing.h
   text-tag-attributes.h
@@ -413,10 +400,8 @@ set(inkscape_SRC
   undo-stack-observer.h
   unicoderange.h
   uri-references.h
-  uri-test.h
   uri.h
   vanishing-point.h
-  verbs-test.h
   verbs.h
   version.h
 )
