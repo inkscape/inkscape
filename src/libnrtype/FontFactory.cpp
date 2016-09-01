@@ -295,6 +295,7 @@ void font_factory::GetUIFamilies(std::vector<PangoFontFamily *>& out)
         const char* displayName = pango_font_family_get_name(families[currentFamily]);
         
         if (displayName == 0 || *displayName == '\0') {
+            std::cerr << "font_factory::GetUIFamilies: Missing displayName! " << std::endl;
             continue;
         }
         sorted.push_back(std::make_pair(families[currentFamily], displayName));
@@ -313,6 +314,10 @@ GList* font_factory::GetUIStyles(PangoFontFamily * in)
     // Gather the styles for this family
     PangoFontFace** faces = NULL;
     int numFaces = 0;
+    if (in == NULL) {
+        std::cerr << "font_factory::GetUIStyles(): PangoFontFamily is NULL" << std::endl;
+        return ret;
+    }
     pango_font_family_list_faces(in, &faces, &numFaces);
 
     for (int currentFace = 0; currentFace < numFaces; currentFace++) {
@@ -322,6 +327,7 @@ GList* font_factory::GetUIStyles(PangoFontFamily * in)
         const gchar* displayName = pango_font_face_get_face_name(faces[currentFace]);
         // std::cout << "Display Name: " << displayName << std::endl;
         if (displayName == NULL || *displayName == '\0') {
+            std::cerr << "font_factory::GetUIStyles: Missing displayName! " << std::endl;
             continue;
         }
 

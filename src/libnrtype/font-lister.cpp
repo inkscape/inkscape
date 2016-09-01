@@ -135,6 +135,8 @@ void FontLister::ensureRowStyles(GtkTreeModel* model, GtkTreeIter const* iterato
     if (!row[FontList.styles]) {
         if (row[FontList.pango_family]) {
             row[FontList.styles] = font_factory::Default()->GetUIStyles(row[FontList.pango_family]);
+        } else {
+            row[FontList.styles] = default_styles;
         }
     }
 }
@@ -177,6 +179,7 @@ void FontLister::insert_font_family(Glib::ustring new_family)
     (*treeModelIter)[FontList.family] = new_family;
     (*treeModelIter)[FontList.styles] = styles;
     (*treeModelIter)[FontList.onSystem] = false;
+    (*treeModelIter)[FontList.pango_family] = NULL;
 }
 
 void FontLister::update_font_list(SPDocument *document)
@@ -256,7 +259,8 @@ void FontLister::update_font_list(SPDocument *document)
         Gtk::TreeModel::iterator treeModelIter = font_list_store->prepend();
         (*treeModelIter)[FontList.family] = reinterpret_cast<const char *>(g_strdup((*i).c_str()));
         (*treeModelIter)[FontList.styles] = styles;
-        (*treeModelIter)[FontList.onSystem] = false;
+        (*treeModelIter)[FontList.onSystem] = false;    // false if document font
+        (*treeModelIter)[FontList.pango_family] = NULL; // CHECK ME (set to pango_family if on system?)
 
     }
 
@@ -993,7 +997,7 @@ Glib::ustring FontLister::get_best_style_match(Glib::ustring family, Glib::ustri
     }
     catch (...)
     {
-        //std::cout << "  ERROR: can't find family: " << family << std::endl;
+        std::cerr << "FontLister::get_best_style_match(): can't find family: " << family << std::endl;
         return (target_style);
     }
 
@@ -1002,10 +1006,12 @@ Glib::ustring FontLister::get_best_style_match(Glib::ustring family, Glib::ustri
 
     //font_description_dump( target );
 
-    if (!row[FontList.styles]) {
+    GList *styles = default_styles;
+    if (row[FontList.onSystem] && !row[FontList.styles]) {
         row[FontList.styles] = font_factory::Default()->GetUIStyles(row[FontList.pango_family]);
+        styles = row[FontList.styles];
     }
-    GList *styles = row[FontList.styles];
+
     for (GList *l = styles; l; l = l->next) {
         Glib::ustring fontspec = family + ", " + ((StyleNames *)l->data)->CssName;
         PangoFontDescription *candidate = pango_font_description_from_string(fontspec.c_str());
