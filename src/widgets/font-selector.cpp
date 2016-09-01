@@ -110,8 +110,8 @@ static void sp_font_selector_set_size_tooltip(SPFontSelector *fsel)
  */
 static void sp_font_selector_init(SPFontSelector *fsel)
 {
-        gtk_box_set_homogeneous(GTK_BOX(fsel), TRUE);
-        gtk_box_set_spacing(GTK_BOX(fsel), 4);
+    //gtk_box_set_homogeneous(GTK_BOX(fsel), TRUE);
+    //gtk_box_set_spacing(GTK_BOX(fsel), 4);
 
         /* Family frame */
         GtkWidget *f = gtk_frame_new(_("Font family"));
@@ -133,6 +133,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         GtkTreeViewColumn *column = gtk_tree_view_column_new ();
         GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
         gtk_tree_view_column_pack_start (column, cell, FALSE);
+        gtk_tree_view_column_set_fixed_width (column, 200);
         gtk_tree_view_column_set_attributes (column, cell, "text", 0, NULL);
         gtk_tree_view_column_set_cell_data_func (column, cell,
                                                  GtkTreeCellDataFunc (font_lister_cell_data_func),
@@ -171,7 +172,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         /* Style frame */
         f = gtk_frame_new(C_("Font selector", "Style"));
         gtk_widget_show(f);
-        gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX (fsel), f, FALSE, TRUE, 0);
 
         auto vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
         gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
