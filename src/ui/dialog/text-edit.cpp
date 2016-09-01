@@ -105,6 +105,7 @@ TextEdit::TextEdit()
     layout_hbox.pack_start(text_sep, false, false, 10);
 
     /* Line Spacing */
+    /* Commented out as this does not handle non-percentage values
     GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("text_line_spacing") );
     layout_hbox.pack_start(*Gtk::manage(Glib::wrap(px)), false, false);
 
@@ -121,6 +122,7 @@ TextEdit::TextEdit()
     layout_hbox.pack_start(*Gtk::manage(Glib::wrap(spacing_combo)), false, false);
     layout_frame.set_padding(4,4,4,4);
     layout_frame.add(layout_hbox);
+    */
 
     // Text start Offset
     {
@@ -196,7 +198,7 @@ TextEdit::TextEdit()
 
     /* Signal handlers */
     g_signal_connect ( G_OBJECT (fontsel), "font_set", G_CALLBACK (onFontChange), this );
-    g_signal_connect ( G_OBJECT (spacing_combo), "changed", G_CALLBACK (onLineSpacingChange), this );
+    // g_signal_connect ( G_OBJECT (spacing_combo), "changed", G_CALLBACK (onLineSpacingChange), this );
     g_signal_connect ( G_OBJECT (text_buffer), "changed", G_CALLBACK (onTextChange), this );
     g_signal_connect(startOffset, "changed", G_CALLBACK(onStartOffsetChange), this);
     setasdefault_button.signal_clicked().connect(sigc::mem_fun(*this, &TextEdit::onSetDefault));
@@ -362,6 +364,7 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
             text_vertical.set_active();
         }
 
+        /*
         double height;
         if (query.line_height.normal) height = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
         else if (query.line_height.unit == SP_CSS_UNIT_PERCENT)
@@ -371,6 +374,7 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
 
         gtk_entry_set_text ((GtkEntry *) gtk_bin_get_child ((GtkBin *) spacing_combo), sstr);
         g_free(sstr);
+        */
 
         // Update font variant widget
         //int result_variants =
@@ -506,8 +510,8 @@ SPCSSAttr *TextEdit::fillTextStyle ()
         }
 
         // Note that SVG 1.1 does not support line-height but we use it.
-        const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) spacing_combo);
-        sp_repr_css_set_property (css, "line-height", sstr);
+        // const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) spacing_combo);
+        // sp_repr_css_set_property (css, "line-height", sstr);
 
         // Font variants
         vari_vbox.fill_css( css );
