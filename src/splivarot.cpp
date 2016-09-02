@@ -1197,6 +1197,8 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop, bool legacy)
 {
     bool did = false;
     Inkscape::Selection *selection = desktop->getSelection();
+    SPDocument * doc = desktop->getDocument();
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
     SPLPEItem *lpeitem = SP_LPE_ITEM(item);
     if (lpeitem) {
         lpeitem->removeAllPathEffects(true);
@@ -1422,8 +1424,6 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop, bool legacy)
             }
 
             if (SP_IS_SHAPE(item)) {
-                SPDocument * doc = desktop->getDocument();
-                Inkscape::XML::Document *xml_doc = doc->getReprDoc();
                 Inkscape::XML::Node *g_repr = xml_doc->createElement("svg:g");
 
                 // add the group to the parent
@@ -1435,7 +1435,7 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop, bool legacy)
                 Inkscape::XML::Node *fill = NULL;
                 if (!legacy) {
                     gchar const *f_val = sp_repr_css_property(ncsf, "fill", NULL);
-                    if (f_val) {
+                    if( !item->style->fill.noneSet ){
                         fill = xml_doc->createElement("svg:path");
                         sp_repr_css_change(fill, ncsf, "style");
 
@@ -1637,14 +1637,21 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop, bool legacy)
                 if( fill || stroke || markers ) {
                     did = true;
                 }
+                Inkscape::XML::Node *out = NULL;
                 if (!fill && !markers) {
-                    g_repr = stroke;
-                }
-                if (!fill && !stroke) {
-                    g_repr = markers;
-                }
-                if (!markers && !stroke) {
-                    g_repr = fill;
+                    out = stroke;
+                    parent->mergeFrom(g_repr, "");
+                    parent->removeChild(g_repr);
+                } else if (!fill && !stroke) {
+                    out = markers;
+                    parent->mergeFrom(g_repr, "");
+                    parent->removeChild(g_repr);
+                } else if (!markers && !stroke) {
+                    out = fill;
+                    parent->mergeFrom(g_repr, "");
+                    parent->removeChild(g_repr);
+                } else {
+                    out = g_repr;
                 }
                 
                 //bug lp:1290573 : completely destroy the old object first
@@ -1653,7 +1660,7 @@ sp_item_path_outline(SPItem *item, SPDesktop *desktop, bool legacy)
                 if( selection->includes(item) ){
                     selection->remove(item);
                     item->deleteObject(false);
-                    selection->add(g_repr);
+                    selection->add(out);
                 } else {
                     item->deleteObject(false);
                 }
