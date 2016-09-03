@@ -246,6 +246,7 @@ set(ui_SRC
 	dialog/template-widget.h
 	dialog/text-edit.h
 	dialog/tile.h
+	dialog/tracedialog.h
 	dialog/transformation.h
 	dialog/undo-history.h
 	dialog/xml-tree.h
@@ -273,14 +274,15 @@ set(ui_SRC
 	tools/dropper-tool.h
 	tools/dynamic-base.h
 	tools/eraser-tool.h
+	tools/flood-tool.h
 	tools/freehand-base.h
 	tools/gradient-tool.h
 	tools/lpe-tool.h
 	tools/measure-tool.h
 	tools/mesh-tool.h
 	tools/node-tool.h
-	tools/pencil-tool.h
 	tools/pen-tool.h
+	tools/pencil-tool.h
 	tools/rect-tool.h
 	tools/select-tool.h
 	tools/spiral-tool.h

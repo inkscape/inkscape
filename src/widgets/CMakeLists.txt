@@ -1,32 +1,20 @@
 add_subdirectory(gimp)
 
 set(widgets_SRC
-	button.cpp
 	arc-toolbar.cpp
 	box3d-toolbar.cpp
+	button.cpp
 	calligraphy-toolbar.cpp
 	connector-toolbar.cpp
-	dropper-toolbar.cpp
-	eraser-toolbar.cpp
-	lpe-toolbar.cpp
-	measure-toolbar.cpp
-	mesh-toolbar.cpp
-	node-toolbar.cpp
-	pencil-toolbar.cpp
-	rect-toolbar.cpp
-	spiral-toolbar.cpp
-	spray-toolbar.cpp
-	star-toolbar.cpp
-	text-toolbar.cpp
-	tweak-toolbar.cpp
-	zoom-toolbar.cpp		
 	dash-selector.cpp
 	desktop-widget.cpp
+	dropper-toolbar.cpp
 	eek-preview.cpp
+	ege-adjustment-action.cpp
+	ege-output-action.cpp
 	ege-paint-def.cpp
-        ege-adjustment-action.cpp
-        ege-output-action.cpp
-        ege-select-one-action.cpp
+	ege-select-one-action.cpp
+	eraser-toolbar.cpp
 	fill-style.cpp
 	font-selector.cpp
 	gradient-image.cpp
@@ -40,7 +28,13 @@ set(widgets_SRC
 	ink-radio-action.cpp
 	ink-toggle-action.cpp
 	ink-tool-menu-action.cpp
+	lpe-toolbar.cpp
+	measure-toolbar.cpp
+	mesh-toolbar.cpp
+	node-toolbar.cpp
 	paint-selector.cpp
+	pencil-toolbar.cpp
+	rect-toolbar.cpp
 	select-toolbar.cpp
 	sp-attribute-widget.cpp
 	sp-color-selector.cpp
@@ -49,41 +43,35 @@ set(widgets_SRC
 	sp-xmlview-content.cpp
 	sp-xmlview-tree.cpp
 	spinbutton-events.cpp
+	spiral-toolbar.cpp
+	spray-toolbar.cpp
 	spw-utilities.cpp
+	star-toolbar.cpp
 	stroke-marker-selector.cpp
 	stroke-style.cpp
 	swatch-selector.cpp
+	text-toolbar.cpp
 	toolbox.cpp
+	tweak-toolbar.cpp
+	zoom-toolbar.cpp
 
 
 	# -------
 	# Headers
-	button.h
 	arc-toolbar.h
 	box3d-toolbar.h
+	button.h
 	calligraphy-toolbar.h
 	connector-toolbar.h
-	dropper-toolbar.h
-	eraser-toolbar.h
-	lpe-toolbar.h
-	measure-toolbar.h
-	mesh-toolbar.h
-	node-toolbar.h
-	pencil-toolbar.h
-	rect-toolbar.h
-	spiral-toolbar.h
-	spray-toolbar.h
-	star-toolbar.h
-	text-toolbar.h
-	tweak-toolbar.h
-	zoom-toolbar.h	
 	dash-selector.h
 	desktop-widget.h
+	dropper-toolbar.h
 	eek-preview.h
+	ege-adjustment-action.h
+	ege-output-action.h
 	ege-paint-def.h
-        ege-adjustment-action.h
-        ege-output-action.h
-        ege-select-one-action.h
+	ege-select-one-action.h
+	eraser-toolbar.h
 	fill-n-stroke-factory.h
 	fill-style.h
 	font-selector.h
@@ -93,12 +81,18 @@ set(widgets_SRC
 	gradient-vector.h
 	icon.h
 	image-menu-item.h
-        ink-action.h
-        ink-comboboxentry-action.h
+	ink-action.h
+	ink-comboboxentry-action.h
 	ink-radio-action.h
-        ink-toggle-action.h
-        ink-tool-menu-action.h
+	ink-toggle-action.h
+	ink-tool-menu-action.h
+	lpe-toolbar.h
+	measure-toolbar.h
+	mesh-toolbar.h
+	node-toolbar.h
 	paint-selector.h
+	pencil-toolbar.h
+	rect-toolbar.h
 	select-toolbar.h
 	sp-attribute-widget.h
 	sp-color-selector.h
@@ -107,25 +101,29 @@ set(widgets_SRC
 	sp-xmlview-content.h
 	sp-xmlview-tree.h
 	spinbutton-events.h
+	spiral-toolbar.h
+	spray-toolbar.h
 	spw-utilities.h
+	star-toolbar.h
 	stroke-marker-selector.h
 	stroke-style.h
 	swatch-selector.h
+	text-toolbar.h
 	toolbox.h
+	tweak-toolbar.h
 	widget-sizes.h
+	zoom-toolbar.h
 )
 
 # add_inkscape_lib(widgets_LIB "${widgets_SRC}")
 add_inkscape_source("${widgets_SRC}")
 
-set ( widgets_paintbucket_SRC
-	  paintbucket-toolbar.cpp
-	  paintbucket-toolbar.h
+set(widgets_paintbucket_SRC
+	paintbucket-toolbar.cpp
+	paintbucket-toolbar.h
 )
 
 if ("${HAVE_POTRACE}")
 	add_inkscape_source("${widgets_paintbucket_SRC}")
 endif()
-
-
 
