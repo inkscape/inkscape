@@ -248,6 +248,9 @@ LPEGears::doEffect_path (Geom::PathVector const &path_in)
     path_out.push_back( gear->path());
 
     for (++it; it != gearpath.end() ; ++it) {
+        if (are_near((*it).initialPoint(), (*it).finalPoint())) {
+            continue;
+        }
         // iterate through Geom::Curve in path_in
         Gear* gearnew = new Gear(gear->spawn( (*it).finalPoint() ));
         path_out.push_back( gearnew->path() );
