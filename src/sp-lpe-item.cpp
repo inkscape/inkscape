@@ -460,7 +460,7 @@ void SPLPEItem::addPathEffect(std::string value, bool reset)
         if (SP_ACTIVE_DESKTOP ) {
         Inkscape::UI::Tools::ToolBase *ec = SP_ACTIVE_DESKTOP->event_context;
             if (INK_IS_NODE_TOOL(ec)) {
-                tools_switch(SP_ACTIVE_DESKTOP, TOOLS_LPETOOL); //mhh
+                tools_switch(SP_ACTIVE_DESKTOP, TOOLS_SELECT); //mhh
                 tools_switch(SP_ACTIVE_DESKTOP, TOOLS_NODES);
             }
         }
