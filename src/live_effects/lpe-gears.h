@@ -27,6 +27,7 @@ public:
 private:
     ScalarParam teeth;
     ScalarParam phi;
+    ScalarParam min_radius;
 
     LPEGears(const LPEGears&);
     LPEGears& operator=(const LPEGears&);
