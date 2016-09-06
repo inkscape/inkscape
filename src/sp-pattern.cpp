@@ -670,10 +670,20 @@ cairo_pattern_t *SPPattern::pattern_new(cairo_t *base_ct, Geom::OptRect const &b
         dc.paint(opacity);     // apply opacity
     }
 
-    cairo_pattern_t *cp = cairo_pattern_create_for_surface(pattern_surface.raw());
     // Apply transformation to user space. Also compensate for oversampling.
-    ink_cairo_pattern_set_matrix(cp, ps2user.inverse() * pattern_surface.drawingTransform());
+    Geom::Affine raw_transform = ps2user.inverse() * pattern_surface.drawingTransform();
 
+    // Cairo doesn't like large values of x0 and y0. We can replace x0 and y0 by equivalent
+    // values close to zero (since one tile on a grid is the same as another it doesn't
+    // matter which tile is used as the base tile).
+    int w = one_tile[Geom::X].extent();
+    int h = one_tile[Geom::Y].extent();
+    int m = raw_transform[4] / w;
+    int n = raw_transform[5] / h;
+    raw_transform *= Geom::Translate( -m*w, -n*h );
+
+    cairo_pattern_t *cp = cairo_pattern_create_for_surface(pattern_surface.raw());
+    ink_cairo_pattern_set_matrix(cp, raw_transform);
     cairo_pattern_set_extend(cp, CAIRO_EXTEND_REPEAT);
 
     return cp;
