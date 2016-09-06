@@ -52,7 +52,8 @@ private:
     SPMissingGlyph* missingglyph;
     sigc::connection glyph_modified_connection;
 
-    bool drawing_expose_cb (Gtk::Widget *widget, GdkEventExpose *event, void* data);
+    double units_per_em();
+    //bool drawing_expose_cb (Gtk::Widget *widget, GdkEventExpose *event, void* data);
 };
 
 #endif //#ifndef NR_SVGFONTS_H_SEEN

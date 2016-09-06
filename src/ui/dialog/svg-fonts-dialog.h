@@ -82,8 +82,9 @@ public:
     void on_setfontdata_changed();
     void add_font();
     Geom::PathVector flip_coordinate_system(Geom::PathVector pathv);
+    bool updating;
 
-    //TODO: AttrEntry is currently unused. Should we remove it?
+    // Used for font-family
     class AttrEntry : public Gtk::HBox
     {
     public:
@@ -93,6 +94,20 @@ public:
         SvgFontsDialog* dialog;
         void on_attr_changed();
         Gtk::Entry entry;
+        SPAttributeEnum attr;
+    };
+
+    class AttrSpin : public Gtk::HBox
+    {
+    public:
+        AttrSpin(SvgFontsDialog* d, gchar* lbl, const SPAttributeEnum attr);
+        void set_value(double v);
+        void set_range(double low, double high);
+        Inkscape::UI::Widget::SpinButton* getSpin() { return &spin; }
+    private:
+        SvgFontsDialog* dialog;
+        void on_attr_changed();
+        Inkscape::UI::Widget::SpinButton spin;
         SPAttributeEnum attr;
     };
 
@@ -107,7 +122,8 @@ private:
     void reset_missing_glyph_description();
     void add_glyph();
     void glyph_unicode_edit(const Glib::ustring&, const Glib::ustring&);
-    void glyph_name_edit(const Glib::ustring&, const Glib::ustring&);
+    void glyph_name_edit(   const Glib::ustring&, const Glib::ustring&);
+    void glyph_advance_edit(const Glib::ustring&, const Glib::ustring&);
     void remove_selected_glyph();
     void remove_selected_font();
     void remove_selected_kerning_pair();
@@ -129,7 +145,21 @@ private:
     Gtk::HBox* AttrCombo(gchar* lbl, const SPAttributeEnum attr);
 //    Gtk::HBox* AttrSpin(gchar* lbl, const SPAttributeEnum attr);
     Gtk::VBox* global_settings_tab();
+
+    // <font>
+    Gtk::Label* _font_label;
+    AttrSpin*  _horiz_adv_x_spin;
+    AttrSpin*  _horiz_origin_x_spin;
+    AttrSpin*  _horiz_origin_y_spin;
+
+    // <font-face>
+    Gtk::Label* _font_face_label;
     AttrEntry* _familyname_entry;
+    AttrSpin*  _units_per_em_spin;
+    AttrSpin*  _ascent_spin;
+    AttrSpin*  _descent_spin;
+    AttrSpin*  _cap_height_spin;
+    AttrSpin*  _x_height_spin;
 
     Gtk::VBox* kerning_tab();
     Gtk::VBox* glyphs_tab();
@@ -165,11 +195,13 @@ private:
             add(glyph_node);
             add(glyph_name);
             add(unicode);
+            add(advance);
 	}
 
         Gtk::TreeModelColumn<SPGlyph*> glyph_node;
         Gtk::TreeModelColumn<Glib::ustring> glyph_name;
         Gtk::TreeModelColumn<Glib::ustring> unicode;
+        Gtk::TreeModelColumn<double> advance;
     };
     GlyphsColumns _GlyphsListColumns;
     Glib::RefPtr<Gtk::ListStore> _GlyphsListStore;

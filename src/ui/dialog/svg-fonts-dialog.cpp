@@ -29,6 +29,7 @@
 #include "sp-font-face.h"
 #include "desktop.h"
 
+#include <sstream>
 #include "display/nr-svgfonts.h"
 #include "verbs.h"
 #include "sp-glyph.h"
@@ -74,6 +75,15 @@ bool SvgFontDrawingArea::on_expose_event (GdkEventExpose */*event*/){
     cr->set_font_size (_y-20);
     cr->move_to (10, 10);
     cr->show_text (_text.c_str());
+
+    // Draw some lines to show line area.
+    cr->set_source_rgb( 0.5, 0.5, 0.5 );
+    cr->move_to ( 0, 10);
+    cr->line_to (_x, 10);
+    cr->stroke();
+    cr->move_to ( 0, _y-10);
+    cr->line_to (_x, _y-10);
+    cr->stroke();
   }
   return TRUE;
 }
@@ -110,6 +120,7 @@ void SvgFontsDialog::AttrEntry::set_text(char* t){
     entry.set_text(t);
 }
 
+// 'font-family' has a problem as it is also a presentation attribute for <text>
 void SvgFontsDialog::AttrEntry::on_attr_changed(){
 
     SPObject* o = NULL;
@@ -129,6 +140,74 @@ void SvgFontsDialog::AttrEntry::on_attr_changed(){
     const gchar* name = (const gchar*)sp_attribute_name(this->attr);
     if(name && o) {
         o->getRepr()->setAttribute((const gchar*) name, this->entry.get_text().c_str());
+        o->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+        Glib::ustring undokey = "svgfonts:";
+        undokey += name;
+        DocumentUndo::maybeDone(o->document, undokey.c_str(), SP_VERB_DIALOG_SVG_FONTS,
+                                _("Set SVG Font attribute"));
+    }
+
+}
+
+SvgFontsDialog::AttrSpin::AttrSpin(SvgFontsDialog* d, gchar* lbl, const SPAttributeEnum attr) {
+
+    this->dialog = d;
+    this->attr = attr;
+    this->add(* Gtk::manage(new Gtk::Label(lbl)) );
+    this->add(spin);
+    this->show_all();
+    spin.set_range(0, 4096);
+    spin.set_increments(16, 0);
+    spin.signal_value_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::AttrSpin::on_attr_changed));
+}
+
+void SvgFontsDialog::AttrSpin::set_range(double low, double high){
+    spin.set_range(low, high);
+}
+
+void SvgFontsDialog::AttrSpin::set_value(double v){
+    spin.set_value(v);
+}
+
+void SvgFontsDialog::AttrSpin::on_attr_changed(){
+
+    SPObject* o = NULL;
+    switch (this->attr) {
+
+        // <font> attributes
+        case SP_ATTR_HORIZ_ORIGIN_X:
+        case SP_ATTR_HORIZ_ORIGIN_Y:
+        case SP_ATTR_HORIZ_ADV_X:
+        case SP_ATTR_VERT_ORIGIN_X:
+        case SP_ATTR_VERT_ORIGIN_Y:
+        case SP_ATTR_VERT_ADV_Y:
+            o = this->dialog->get_selected_spfont();
+            break;
+
+        // <font-face> attributes
+        case SP_ATTR_UNITS_PER_EM:
+        case SP_ATTR_ASCENT:
+        case SP_ATTR_DESCENT:
+        case SP_ATTR_CAP_HEIGHT:
+        case SP_ATTR_X_HEIGHT:
+            for (auto& node: dialog->get_selected_spfont()->children){
+                if (SP_IS_FONTFACE(&node)){
+                    o = &node;
+                    continue;
+                }
+            }
+            break;
+
+        default:
+            o = NULL;
+    }
+
+    const gchar* name = (const gchar*)sp_attribute_name(this->attr);
+    if(name && o) {
+        std::ostringstream temp;
+        temp << this->spin.get_value();
+        o->getRepr()->setAttribute((const gchar*) name, temp.str().c_str() );
         o->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
         Glib::ustring undokey = "svgfonts:";
@@ -279,7 +358,6 @@ void SvgFontsDialog::update_fonts()
 }
 
 void SvgFontsDialog::on_preview_text_changed(){
-    _font_da.set_text((gchar*) _preview_entry.get_text().c_str());
     _font_da.set_text(_preview_entry.get_text());
 }
 
@@ -304,9 +382,18 @@ void SvgFontsDialog::update_global_settings_tab(){
     SPFont* font = get_selected_spfont();
     if (!font) return;
 
+    _horiz_adv_x_spin->set_value(font->horiz_adv_x);
+    _horiz_origin_x_spin->set_value(font->horiz_origin_x);
+    _horiz_origin_y_spin->set_value(font->horiz_origin_y);
+
     for (auto& obj: font->children) {
         if (SP_IS_FONTFACE(&obj)){
             _familyname_entry->set_text((SP_FONTFACE(&obj))->font_family);
+            _units_per_em_spin->set_value((SP_FONTFACE(&obj))->units_per_em);
+            _ascent_spin->set_value((SP_FONTFACE(&obj))->ascent);
+            _descent_spin->set_value((SP_FONTFACE(&obj))->descent);
+            _x_height_spin->set_value((SP_FONTFACE(&obj))->x_height);
+            _cap_height_spin->set_value((SP_FONTFACE(&obj))->cap_height);
         }
     }
 }
@@ -321,11 +408,8 @@ void SvgFontsDialog::on_font_selection_changed(){
     kerning_preview.set_svgfont(svgfont);
     _font_da.set_svgfont(svgfont);
     _font_da.redraw();
-
-    double set_width = spfont->horiz_adv_x;
-    setwidth_spin.set_value(set_width);
-
-    kerning_slider->set_range(0, set_width);
+    
+    kerning_slider->set_range(0, spfont->horiz_adv_x);
     kerning_slider->set_draw_value(false);
     kerning_slider->set_value(0);
 
@@ -333,17 +417,6 @@ void SvgFontsDialog::on_font_selection_changed(){
     populate_glyphs_box();
     populate_kerning_pairs_box();
     update_sensitiveness();
-}
-
-void SvgFontsDialog::on_setfontdata_changed(){
-    SPFont* spfont = this->get_selected_spfont();
-    if (spfont){
-        spfont->horiz_adv_x = setwidth_spin.get_value();
-        //TODO: tell cairo that the glyphs cache has to be invalidated
-        //    The current solution is to recreate the whole cairo svgfont.
-        //    This is not a good solution to the issue because big fonts will result in poor performance.
-        update_glyphs();
-    }
 }
 
 SPGlyphKerning* SvgFontsDialog::get_selected_kerning_pair()
@@ -379,23 +452,36 @@ SPGlyph* SvgFontsDialog::get_selected_glyph()
 }
 
 Gtk::VBox* SvgFontsDialog::global_settings_tab(){
-    _familyname_entry = new AttrEntry(this, (gchar*) _("Family Name:"), SP_PROP_FONT_FAMILY);
+    _font_label          = new Gtk::Label( _("Font Attributes") );
+    _horiz_adv_x_spin    = new AttrSpin( this, (gchar*) _("Horiz. Advance X"), SP_ATTR_HORIZ_ADV_X);
+    _horiz_origin_x_spin = new AttrSpin( this, (gchar*) _("Horiz. Origin X "), SP_ATTR_HORIZ_ORIGIN_X);
+    _horiz_origin_y_spin = new AttrSpin( this, (gchar*) _("Horiz. Origin Y "), SP_ATTR_HORIZ_ORIGIN_Y);
+    _font_face_label     = new Gtk::Label( _("Font Face Attributes") );
+    _familyname_entry    = new AttrEntry(this, (gchar*) _("Family Name:"), SP_PROP_FONT_FAMILY);
+    _units_per_em_spin   = new AttrSpin( this, (gchar*) _("Units per em"), SP_ATTR_UNITS_PER_EM);
+    _ascent_spin         = new AttrSpin( this, (gchar*) _("Ascent:"),      SP_ATTR_ASCENT);
+    _descent_spin        = new AttrSpin( this, (gchar*) _("Descent:"),     SP_ATTR_DESCENT);
+    _cap_height_spin     = new AttrSpin( this, (gchar*) _("Cap Height:"),  SP_ATTR_CAP_HEIGHT);
+    _x_height_spin       = new AttrSpin( this, (gchar*) _("x Height:"),    SP_ATTR_X_HEIGHT);
 
-    global_vbox.pack_start(*_familyname_entry, false, false);
+    //_descent_spin->set_range(-4096,0);
+
+    global_vbox.pack_start(*_font_label,          false, false);
+    global_vbox.pack_start(*_horiz_adv_x_spin,    false, false);
+    global_vbox.pack_start(*_horiz_origin_x_spin, false, false);
+    global_vbox.pack_start(*_horiz_origin_y_spin, false, false);
+    global_vbox.pack_start(*_font_face_label,     false, false);
+    global_vbox.pack_start(*_familyname_entry,    false, false);
+    global_vbox.pack_start(*_units_per_em_spin,   false, false);
+    global_vbox.pack_start(*_ascent_spin,         false, false);
+    global_vbox.pack_start(*_descent_spin,        false, false);
+    global_vbox.pack_start(*_cap_height_spin,     false, false);
+    global_vbox.pack_start(*_x_height_spin,       false, false);
+
 /*    global_vbox->add(*AttrCombo((gchar*) _("Style:"), SP_PROP_FONT_STYLE));
     global_vbox->add(*AttrCombo((gchar*) _("Variant:"), SP_PROP_FONT_VARIANT));
     global_vbox->add(*AttrCombo((gchar*) _("Weight:"), SP_PROP_FONT_WEIGHT));
 */
-
-//Set Width (horiz_adv_x):
-    Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
-    setwidth_hbox->add(*Gtk::manage(new Gtk::Label(_("Set width:"))));
-    setwidth_hbox->add(setwidth_spin);
-
-    setwidth_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_setfontdata_changed));
-    setwidth_spin.set_range(0, 4096);
-    setwidth_spin.set_increments(10, 0);
-    global_vbox.pack_start(*setwidth_hbox, false, false);
 
     return &global_vbox;
 }
@@ -412,9 +498,10 @@ SvgFontsDialog::populate_glyphs_box()
     for (auto& node: spfont->children) {
         if (SP_IS_GLYPH(&node)){
             Gtk::TreeModel::Row row = *(_GlyphsListStore->append());
-            row[_GlyphsListColumns.glyph_node] = static_cast<SPGlyph*>(&node);
+            row[_GlyphsListColumns.glyph_node] =  static_cast<SPGlyph*>(&node);
             row[_GlyphsListColumns.glyph_name] = (static_cast<SPGlyph*>(&node))->glyph_name;
-            row[_GlyphsListColumns.unicode] = (static_cast<SPGlyph*>(&node))->unicode;
+            row[_GlyphsListColumns.unicode]    = (static_cast<SPGlyph*>(&node))->unicode;
+            row[_GlyphsListColumns.advance]    = (static_cast<SPGlyph*>(&node))->horiz_adv_x;
         }
     }
 }
@@ -487,16 +574,14 @@ void SvgFontsDialog::add_glyph(){
 
 Geom::PathVector
 SvgFontsDialog::flip_coordinate_system(Geom::PathVector pathv){
-    double units_per_em = 1000;
+    double units_per_em = 1024;
     for (auto& obj: get_selected_spfont()->children) {
         if (SP_IS_FONTFACE(&obj)){
             //XML Tree being directly used here while it shouldn't be.
             sp_repr_get_double(obj.getRepr(), "units-per-em", &units_per_em);
         }
     }
-
     double baseline_offset = units_per_em - get_selected_spfont()->horiz_origin_y;
-
     //This matrix flips y-axis and places the origin at baseline
     Geom::Affine m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(baseline_offset));
     return pathv*m;
@@ -631,6 +716,26 @@ void SvgFontsDialog::glyph_unicode_edit(const Glib::ustring&, const Glib::ustrin
     update_glyphs();
 }
 
+void SvgFontsDialog::glyph_advance_edit(const Glib::ustring&, const Glib::ustring& str){
+    Gtk::TreeModel::iterator i = _GlyphsList.get_selection()->get_selected();
+    if (!i) return;
+
+    SPGlyph* glyph = (*i)[_GlyphsListColumns.glyph_node];
+    //XML Tree being directly used here while it shouldn't be.
+    std::istringstream is(str);
+    double value;
+    // Check if input valid
+    if ((is >> value)) {
+        glyph->getRepr()->setAttribute("horiz-adv-x", str.c_str());
+        SPDocument* doc = this->getDesktop()->getDocument();
+        DocumentUndo::done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph advance"));
+
+        update_glyphs();
+    } else {
+        std::cerr << "SvgFontDialog::glyph_advance_edit: Error in input: " << str << std::endl;
+    }
+}
+
 void SvgFontsDialog::remove_selected_font(){
     SPFont* font = get_selected_spfont();
     if (!font) return;
@@ -699,9 +804,9 @@ Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     _GlyphsListScroller.add(_GlyphsList);
     _GlyphsListStore = Gtk::ListStore::create(_GlyphsListColumns);
     _GlyphsList.set_model(_GlyphsListStore);
-    _GlyphsList.append_column_editable(_("Glyph name"), _GlyphsListColumns.glyph_name);
+    _GlyphsList.append_column_editable(_("Glyph name"),      _GlyphsListColumns.glyph_name);
     _GlyphsList.append_column_editable(_("Matching string"), _GlyphsListColumns.unicode);
-
+    _GlyphsList.append_column_numeric_editable(_("Advance"), _GlyphsListColumns.advance, "%.2f");
     Gtk::HBox* hb = Gtk::manage(new Gtk::HBox());
     add_glyph_button.set_label(_("Add Glyph"));
     add_glyph_button.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::add_glyph));
@@ -718,6 +823,9 @@ Gtk::VBox* SvgFontsDialog::glyphs_tab(){
 
     dynamic_cast<Gtk::CellRendererText*>( _GlyphsList.get_column_cell_renderer(1))->signal_edited().connect(
         sigc::mem_fun(*this, &SvgFontsDialog::glyph_unicode_edit));
+
+    dynamic_cast<Gtk::CellRendererText*>( _GlyphsList.get_column_cell_renderer(2))->signal_edited().connect(
+        sigc::mem_fun(*this, &SvgFontsDialog::glyph_advance_edit));
 
     _glyphs_observer.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::update_glyphs));
 
@@ -798,7 +906,7 @@ Gtk::VBox* SvgFontsDialog::kerning_tab(){
     kerning_amount_hbox->add(*kerning_slider);
 
     kerning_preview.set_size(300 + 20, 150 + 20);
-    _font_da.set_size(150 + 20, 50 + 20);
+    _font_da.set_size(300 + 50 + 20, 60 + 20);
 
     return &kerning_vbox;
 }

@@ -25,9 +25,9 @@
 //I think we should have extra stuff here and in the set method in order to set default value as specified at http://www.w3.org/TR/SVG/fonts.html
 
 // TODO determine better values and/or make these dynamic:
-double FNT_DEFAULT_ADV = 90; // TODO determine proper default
-double FNT_DEFAULT_ASCENT = 90; // TODO determine proper default
-double FNT_UNITS_PER_EM = 90; // TODO determine proper default
+double FNT_DEFAULT_ADV = 1024;   // TODO determine proper default
+double FNT_DEFAULT_ASCENT = 768; // TODO determine proper default
+double FNT_UNITS_PER_EM = 1024;  // TODO determine proper default
 
 SPFont::SPFont() : SPObject() {
     this->horiz_origin_x = 0;
