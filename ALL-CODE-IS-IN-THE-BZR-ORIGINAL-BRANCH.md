@@ -3,6 +3,12 @@
 All code is in the `bzr-original` branch. This is a mirror of Inkscape's code
 in Launchpad.
 
+You can easily clone the repository with:
+
+  ```bash
+  git clone --single-branch -b bzr-original https://github.com/inkscape/inkscape.git
+  ```
+
 ## Is this official
 
 Inkscape [does have plans to move to git](https://sourceforge.net/p/inkscape/mailman/message/31809342/)
