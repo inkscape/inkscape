@@ -1,4 +1,4 @@
-if(UNIX)  
+if(UNIX)
     #The install directive for the binaries and libraries are found in src/CMakeList.txt
     install(FILES
       ${CMAKE_BINARY_DIR}/inkscape.desktop
@@ -11,7 +11,7 @@ if(WIN32)
     ${EXECUTABLE_OUTPUT_PATH}/inkview.exe
     DESTINATION ${CMAKE_INSTALL_PREFIX}
   )
-  
+
   install(PROGRAMS
 	${EXECUTABLE_OUTPUT_PATH}/inkscape_com.exe
 	DESTINATION ${CMAKE_INSTALL_PREFIX}
@@ -22,8 +22,7 @@ if(WIN32)
     ${LIBRARY_OUTPUT_PATH}/libinkscape_base.dll
     DESTINATION ${CMAKE_INSTALL_PREFIX}
   )
-    
-  # devlibs and mingw dlls
+
   install(FILES
     AUTHORS
     COPYING
@@ -34,7 +33,9 @@ if(WIN32)
 	GPL3.txt
 	LGPL2.1.txt
     DESTINATION ${CMAKE_INSTALL_PREFIX})
-    
+
+  # devlibs and mingw dlls
+
   # There are differences in the devlibs for 64-Bit and 32-Bit build environments.
   if(HAVE_MINGW64)
     install(FILES
@@ -49,9 +50,11 @@ if(WIN32)
       ${DEVLIBS_BIN}/libatk-1.0-0.dll
       ${DEVLIBS_BIN}/libatkmm-1.6-1.dll
       ${DEVLIBS_BIN}/libcairo-2.dll
+      ${DEVLIBS_BIN}/libcairo-gobject-2.dll
       ${DEVLIBS_BIN}/libcairomm-1.0-1.dll
       ${DEVLIBS_BIN}/libcdr-0.1.dll
       ${DEVLIBS_BIN}/libcurl-4.dll
+      ${DEVLIBS_BIN}/libepoxy-0.dll
       ${DEVLIBS_BIN}/libexif-12.dll
       ${DEVLIBS_BIN}/libexpat-1.dll
       ${DEVLIBS_BIN}/libexslt-0.dll
@@ -59,9 +62,10 @@ if(WIN32)
       ${DEVLIBS_BIN}/libfontconfig-1.dll
       ${DEVLIBS_BIN}/libfreetype-6.dll
       ${DEVLIBS_BIN}/libgc-1.dll
-      ${DEVLIBS_BIN}/libgdk-win32-2.0-0.dll
+      ${DEVLIBS_BIN}/libgdk-3-0.dll
       ${DEVLIBS_BIN}/libgdk_pixbuf-2.0-0.dll
-      ${DEVLIBS_BIN}/libgdkmm-2.4-1.dll
+      ${DEVLIBS_BIN}/libgdkmm-3.0-1.dll
+      ${DEVLIBS_BIN}/libgdl-3-5.dll
       ${DEVLIBS_BIN}/libgio-2.0-0.dll
       ${DEVLIBS_BIN}/libgiomm-2.4-1.dll
       ${DEVLIBS_BIN}/libglib-2.0-0.dll
@@ -71,8 +75,8 @@ if(WIN32)
       ${DEVLIBS_BIN}/libgsl-19.dll
       ${DEVLIBS_BIN}/libgslcblas-0.dll
       ${DEVLIBS_BIN}/libgthread-2.0-0.dll
-      ${DEVLIBS_BIN}/libgtk-win32-2.0-0.dll
-      ${DEVLIBS_BIN}/libgtkmm-2.4-1.dll
+      ${DEVLIBS_BIN}/libgtk-3-0.dll
+      ${DEVLIBS_BIN}/libgtkmm-3.0-1.dll
       ${DEVLIBS_BIN}/libharfbuzz-0.dll
       ${DEVLIBS_BIN}/libiconv-2.dll
       ${DEVLIBS_BIN}/libintl-8.dll
@@ -103,7 +107,7 @@ if(WIN32)
       ${MINGW_BIN}/libstdc++-6.dll
       ${MINGW_BIN}/libwinpthread-1.dll
       ${MINGW_BIN}/libgcc_s_seh-1.dll
-      ${MINGW_BIN}/libgomp-1.dll 
+      ${MINGW_BIN}/libgomp-1.dll
       DESTINATION ${CMAKE_INSTALL_PREFIX})
   else()
     install(FILES
@@ -170,7 +174,7 @@ if(WIN32)
       ${DEVLIBS_BIN}/pthreadGC2.dll
       ${DEVLIBS_BIN}/zlib1.dll
       ${MINGW_BIN}/mingwm10.dll
-      ${MINGW_BIN}/libgomp-1.dll 
+      ${MINGW_BIN}/libgomp-1.dll
       DESTINATION ${CMAKE_INSTALL_PREFIX})
   endif()
 
@@ -188,43 +192,46 @@ if(WIN32)
     plugins
     share
     DESTINATION ${CMAKE_INSTALL_PREFIX}
-    PATTERN Adwaita EXCLUDE          # NOTE: The theme is not used on Windows.
     PATTERN hicolor/index.theme EXCLUDE   # NOTE: Empty index.theme in hicolor icon theme causes SIGSEGV.
     PATTERN CMakeLists.txt EXCLUDE
     PATTERN *.am EXCLUDE)
-    
+
+  install(DIRECTORY ${DEVLIBS_PATH}/share/icons/Adwaita
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons)
+
   install(DIRECTORY ${DEVLIBS_PATH}/share/themes
     DESTINATION ${CMAKE_INSTALL_PREFIX}/share)
-    
+
   install(DIRECTORY ${DEVLIBS_PATH}/share/locale
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/share)
-    
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/share
+    PATTERN "*gtk20.mo" EXCLUDE)
+
   install(DIRECTORY ${DEVLIBS_PATH}/share/poppler
     DESTINATION ${CMAKE_INSTALL_PREFIX}/share)
-    
+
   install(DIRECTORY ${DEVLIBS_PATH}/etc/fonts
     DESTINATION ${CMAKE_INSTALL_PREFIX}/etc)
-    
-  install(DIRECTORY ${DEVLIBS_PATH}/etc/gtk-2.0
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/etc)
-    
-  # GTK 2.0
-  install(DIRECTORY ${DEVLIBS_LIB}/gtk-2.0
+
+  # GTK 3.0
+  install(DIRECTORY ${DEVLIBS_LIB}/gtk-3.0
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
     FILES_MATCHING
     PATTERN "*.dll"
     PATTERN "*.cache")
+
+  install(DIRECTORY ${DEVLIBS_PATH}/etc/gtk-3.0
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/etc)
 
   install(DIRECTORY ${DEVLIBS_LIB}/gdk-pixbuf-2.0
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
     FILES_MATCHING
     PATTERN "*.dll"
     PATTERN "*.cache")
-    
+
   # Aspell dictionaries
   install(DIRECTORY ${DEVLIBS_LIB}/aspell-0.60
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
-    
+
   # Necessary to run extensions on windows if it is not in the path
   if (HAVE_MINGW64)
     install(FILES
@@ -237,31 +244,16 @@ if(WIN32)
       ${DEVLIBS_BIN}/gspawn-win32-helper-console.exe
       DESTINATION ${CMAKE_INSTALL_PREFIX})
   endif()
-    
+
   # Perl
   install(FILES
     ${DEVLIBS_PATH}/perl/bin/perl58.dll
     DESTINATION ${CMAKE_INSTALL_PREFIX})
 
   # Python
-  install(FILES
-    ${DEVLIBS_PATH}/python/python.exe
-    ${DEVLIBS_PATH}/python/pythonw.exe
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/python)
-    
-  if(HAVE_MINGW64)
-    install(FILES
-      ${DEVLIBS_PATH}/python/python27.dll
-      DESTINATION ${CMAKE_INSTALL_PREFIX}/python)
-  else()
-    install(FILES
-      ${DEVLIBS_PATH}/python/python26.dll
-      DESTINATION ${CMAKE_INSTALL_PREFIX}/python)
-  endif()
-    
-  install(DIRECTORY ${DEVLIBS_PATH}/python/lib
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/python)
-    
-  install(DIRECTORY ${DEVLIBS_PATH}/python/dlls
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/python)
+  install(DIRECTORY ${DEVLIBS_PATH}/python
+    DESTINATION ${CMAKE_INSTALL_PREFIX}
+    PATTERN "python/include" EXCLUDE
+    PATTERN "python/libs" EXCLUDE
+    PATTERN "*.pyc" EXCLUDE)
 endif()
