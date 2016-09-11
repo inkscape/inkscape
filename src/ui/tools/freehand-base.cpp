@@ -790,7 +790,7 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
                 shape_selected == BEND_CLIPBOARD)
             {
                 spdc_check_for_and_apply_waiting_LPE(dc, item, c);
-                previous_shape_type == BEND_CLIPBOARD;
+                previous_shape_type = BEND_CLIPBOARD;
             }
             Inkscape::GC::release(repr);
             item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
