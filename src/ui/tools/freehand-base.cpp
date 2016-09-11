@@ -212,19 +212,10 @@ static void spdc_paste_curve_as_freehand_shape(Geom::PathVector const &newpath, 
     Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
     Effect* lpe = SP_LPE_ITEM(item)->getCurrentLPE();
     static_cast<LPEPatternAlongPath*>(lpe)->pattern.set_new_value(newpath,true);
-    
-    // write pattern along path parameters:
-    lpe->getRepr()->setAttribute("copytype", "single_stretched");
-    lpe->getRepr()->setAttribute("fuse_tolerance", "0");
-    lpe->getRepr()->setAttribute("is_visible", "true");
-    lpe->getRepr()->setAttribute("normal_offset", "0");
-    lpe->getRepr()->setAttribute("prop_scale", "1");
-    lpe->getRepr()->setAttribute("prop_units", "false");
-    lpe->getRepr()->setAttribute("scale_y_rel", "false");
-    lpe->getRepr()->setAttribute("spacing", "0");
-    lpe->getRepr()->setAttribute("tang_offset", "0");
-    lpe->getRepr()->setAttribute("vertical_pattern", "false");
-    
+    double scale_doc = 1 / dc->desktop->doc()->getDocumentScale()[0];
+    Inkscape::SVGOStringStream os;
+    os << scale_doc;
+    lpe->getRepr()->setAttribute("prop_scale", os.str().c_str());
 }
 
 static void spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points, FreehandBase *dc, SPItem *item)
@@ -341,7 +332,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 // "triangle in"
                 std::vector<Geom::Point> points(1);
                 points[0] = Geom::Point(0., swidth/2);
-                points[0] *= i2anc_affine(static_cast<SPItem *>(item->parent), NULL).inverse();
+                //points[0] *= i2anc_affine(static_cast<SPItem *>(item->parent), NULL).inverse();
                 spdc_apply_powerstroke_shape(points, dc, item);
 
                 shape_applied = true;
@@ -353,7 +344,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                 guint curve_length = curve->get_segment_count();
                 std::vector<Geom::Point> points(1);
                 points[0] = Geom::Point(0, swidth/2);
-                points[0] *= i2anc_affine(static_cast<SPItem *>(item->parent), NULL).inverse();
+                //points[0] *= i2anc_affine(static_cast<SPItem *>(item->parent), NULL).inverse();
                 points[0][Geom::X] = (double)curve_length;
                 spdc_apply_powerstroke_shape(points, dc, item);
 
@@ -791,16 +782,26 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
 
         if (!dc->white_item) {
             // Attach repr
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            shapeType shape_selected = (shapeType)prefs->getInt(tool_name(dc) + "/shape", 0);
             SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
-
-            spdc_check_for_and_apply_waiting_LPE(dc, item, c);
-            if(previous_shape_type != BEND_CLIPBOARD){
-                dc->selection->set(repr);
+            //Bend needs the transforms applied after, Other effects best before
+            if((previous_shape_type == BEND_CLIPBOARD && shape_selected == LAST_APPLIED) ||
+                shape_selected == BEND_CLIPBOARD)
+            {
+                spdc_check_for_and_apply_waiting_LPE(dc, item, c);
+                previous_shape_type == BEND_CLIPBOARD;
             }
             Inkscape::GC::release(repr);
             item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
             item->updateRepr();
             item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
+            if((previous_shape_type != BEND_CLIPBOARD || shape_selected != LAST_APPLIED) &&
+                shape_selected != BEND_CLIPBOARD)
+            {
+                spdc_check_for_and_apply_waiting_LPE(dc, item, c);
+                dc->selection->set(repr);
+            }
             if(previous_shape_type == BEND_CLIPBOARD){
                 repr->parent()->removeChild(repr);
             }

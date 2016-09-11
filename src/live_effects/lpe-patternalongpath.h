@@ -61,7 +61,6 @@ private:
     BoolParam    prop_units;
     BoolParam    vertical_pattern;
     ScalarParam  fuse_tolerance;
-    double _prop_scale_store;
     void on_pattern_pasted();
 
     LPEPatternAlongPath(const LPEPatternAlongPath&);
