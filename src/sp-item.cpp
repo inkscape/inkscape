@@ -317,8 +317,11 @@ void SPItem::lowerOne() {
 
     auto next_lower = find_last_if(parent->children.begin(), parent->children.iterator_to(*this), &is_item);
     if (next_lower != parent->children.iterator_to(*this)) {
-        next_lower--;
-        Inkscape::XML::Node *ref = next_lower->getRepr();
+        Inkscape::XML::Node *ref = nullptr;
+        if (next_lower != parent->children.begin()) {
+            next_lower--;
+            ref = next_lower->getRepr();
+        }
         getRepr()->parent()->changeOrder(getRepr(), ref);
     }
 }
@@ -326,8 +329,11 @@ void SPItem::lowerOne() {
 void SPItem::lowerToBottom() {
     auto bottom = std::find_if(parent->children.begin(), parent->children.iterator_to(*this), &is_item);
     if (bottom != parent->children.iterator_to(*this)) {
-        bottom--;
-        Inkscape::XML::Node *ref = bottom->getRepr() ;
+        Inkscape::XML::Node *ref = nullptr;
+        if (bottom != parent->children.begin()) {
+            bottom--;
+            ref = bottom->getRepr();
+        }
         parent->getRepr()->changeOrder(getRepr(), ref);
     }
 }
