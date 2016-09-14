@@ -84,6 +84,7 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     if (!buf->ct)
         return;
 
+    cairo_select_font_face(buf->ct, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
     cairo_set_font_size(buf->ct, cl->fontsize);
 
     if (cl->background){
@@ -138,6 +139,7 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
     cairo_surface_t *tmp_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* tmp_buf = cairo_create(tmp_surface);
 
+    cairo_select_font_face(tmp_buf, "sans-serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
     cairo_set_font_size(tmp_buf, cl->fontsize);
     cairo_text_extents_t extents;
     cairo_text_extents(tmp_buf, cl->text, &extents);
