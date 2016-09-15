@@ -497,6 +497,8 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone, bool duplicat
             const gchar *id = old_ids[i];
             SPObject *old_clone = doc->getObjectById(id);
             SPUse *use = dynamic_cast<SPUse *>(old_clone);
+            SPOffset *offset = dynamic_cast<SPOffset *>(old_clone);
+            SPText *text = dynamic_cast<SPText *>(old_clone);
             if (use) {
                 SPItem *orig = use->get_original();
                 if (!orig) // orphaned
@@ -510,14 +512,20 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone, bool duplicat
                         new_clone->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
                     }
                 }
-            } else {
-                SPOffset *offset = dynamic_cast<SPOffset *>(old_clone);
-                if (offset) {
-                    for (guint j = 0; j < old_ids.size(); j++) {
-                        gchar *source_href = offset->sourceHref;
-                        if (source_href && source_href[0]=='#' && !strcmp(source_href+1, old_ids[j])) {
-                            doc->getObjectById(new_ids[i])->getRepr()->setAttribute("xlink:href", Glib::ustring("#") + new_ids[j]);
-                        }
+            } else if (offset) {
+                gchar *source_href = offset->sourceHref;
+                for (guint j = 0; j < old_ids.size(); j++) {
+                    if (source_href && source_href[0]=='#' && !strcmp(source_href+1, old_ids[j])) {
+                        doc->getObjectById(new_ids[i])->getRepr()->setAttribute("xlink:href", Glib::ustring("#") + new_ids[j]);
+                    }
+                }
+            } else if (text) {
+                SPTextPath *textpath = dynamic_cast<SPTextPath *>(text->firstChild());
+                if (!textpath) continue;
+                const gchar *source_href = sp_textpath_get_path_item(textpath)->getId();
+                for (guint j = 0; j < old_ids.size(); j++) {
+                    if (!strcmp(source_href, old_ids[j])) {
+                        textpath->getRepr()->setAttribute("xlink:href", Glib::ustring("#") + new_ids[j]);
                     }
                 }
             }
