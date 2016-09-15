@@ -525,7 +525,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone, bool duplicat
                 const gchar *source_href = sp_textpath_get_path_item(textpath)->getId();
                 for (guint j = 0; j < old_ids.size(); j++) {
                     if (!strcmp(source_href, old_ids[j])) {
-                        textpath->getRepr()->setAttribute("xlink:href", Glib::ustring("#") + new_ids[j]);
+                        doc->getObjectById(new_ids[i])->firstChild()->getRepr()->setAttribute("xlink:href", Glib::ustring("#") + new_ids[j]);
                     }
                 }
             }
