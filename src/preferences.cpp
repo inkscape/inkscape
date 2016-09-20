@@ -24,6 +24,7 @@
 #include "xml/node-iterators.h"
 #include "xml/attribute-record.h"
 #include "util/units.h"
+#include "attribute-rel-util.h"
 
 #define PREFERENCES_FILE_NAME "preferences.xml"
 
@@ -495,6 +496,7 @@ void Preferences::mergeStyle(Glib::ustring const &pref_path, SPCSSAttr *style)
 {
     SPCSSAttr *current = getStyle(pref_path);
     sp_repr_css_merge(current, style);
+    sp_attribute_purge_default_style(current, SP_ATTR_CLEAN_DEFAULT_REMOVE);
     Glib::ustring css_str;
     sp_repr_css_write_string(current, css_str);
     _setRawValue(pref_path, css_str);
