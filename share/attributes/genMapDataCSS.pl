@@ -207,7 +207,7 @@ $properties{ "solid-color" }->{inherit} = "no";
 
 push @{$properties{ "solid-opacity" }->{elements}}, @container_elements;
 push @{$properties{ "solid-opacity" }->{elements}}, @graphics_elements;
-$properties{ "solid-opacity" }->{default} = "1.0";
+$properties{ "solid-opacity" }->{default} = "1";
 $properties{ "solid-opacity" }->{inherit} = "no";
 
 push @{$properties{ "white-space" }->{elements}}, @container_elements;
@@ -230,6 +230,18 @@ $properties{ "shape-padding" }->{inherit} = "no";
 push @{$properties{ "shape-margin" }->{elements}}, @text_content_elements;
 $properties{ "shape-margin" }->{default} = "0";
 $properties{ "shape-margin" }->{inherit} = "no";
+
+
+#CSS Text Level 3
+push @{$properties{ "text-indent" }->{elements}}, @container_elements;
+push @{$properties{ "text-indent" }->{elements}}, @text_content_elements;
+$properties{ "text-indent" }->{default} = "0";
+$properties{ "text-indent" }->{inherit} = "yes";
+
+push @{$properties{ "text-transform" }->{elements}}, @container_elements;
+push @{$properties{ "text-transform" }->{elements}}, @text_content_elements;
+$properties{ "text-transform" }->{default} = "none";
+$properties{ "text-transform" }->{inherit} = "yes";
 
 
 # CSS Text Decoration
@@ -257,6 +269,49 @@ push @{$properties{ "text-decoration-stroke" }->{elements}}, @container_elements
 push @{$properties{ "text-decoration-stroke" }->{elements}}, @text_content_elements;
 $properties{ "text-decoration-stroke" }->{default} = "NO_DEFAULT";
 $properties{ "text-decoration-stroke" }->{inherit} = "no";
+
+
+# CSS Fonts
+push @{$properties{ "font-variant-ligatures" }->{elements}}, @container_elements;
+push @{$properties{ "font-variant-ligatures" }->{elements}}, @text_content_elements;
+$properties{ "font-variant-ligatures" }->{default} = "normal";
+$properties{ "font-variant-ligatures" }->{inherit} = "yes";
+
+push @{$properties{ "font-variant-position" }->{elements}}, @container_elements;
+push @{$properties{ "font-variant-position" }->{elements}}, @text_content_elements;
+$properties{ "font-variant-position" }->{default} = "normal";
+$properties{ "font-variant-position" }->{inherit} = "yes";
+
+push @{$properties{ "font-variant-caps" }->{elements}}, @container_elements;
+push @{$properties{ "font-variant-caps" }->{elements}}, @text_content_elements;
+$properties{ "font-variant-caps" }->{default} = "normal";
+$properties{ "font-variant-caps" }->{inherit} = "yes";
+
+push @{$properties{ "font-variant-numeric" }->{elements}}, @container_elements;
+push @{$properties{ "font-variant-numeric" }->{elements}}, @text_content_elements;
+$properties{ "font-variant-numeric" }->{default} = "normal";
+$properties{ "font-variant-numeric" }->{inherit} = "yes";
+
+push @{$properties{ "font-variant-alternates" }->{elements}}, @container_elements;
+push @{$properties{ "font-variant-alternates" }->{elements}}, @text_content_elements;
+$properties{ "font-variant-alternates" }->{default} = "normal";
+$properties{ "font-variant-alternates" }->{inherit} = "yes";
+
+push @{$properties{ "font-variant-east-asian" }->{elements}}, @container_elements;
+push @{$properties{ "font-variant-east-asian" }->{elements}}, @text_content_elements;
+$properties{ "font-variant-east-asian" }->{default} = "normal";
+$properties{ "font-variant-east-asian" }->{inherit} = "yes";
+
+push @{$properties{ "font-variant" }->{elements}}, @container_elements;
+push @{$properties{ "font-variant" }->{elements}}, @text_content_elements;
+$properties{ "font-variant" }->{default} = "normal";
+$properties{ "font-variant" }->{inherit} = "yes";
+
+push @{$properties{ "font-feature-settings" }->{elements}}, @container_elements;
+push @{$properties{ "font-feature-settings" }->{elements}}, @text_content_elements;
+$properties{ "font-feature-settings" }->{default} = "normal";
+$properties{ "font-feature-settings" }->{inherit} = "yes";
+
 
 # CSS Writing Modes
 push @{$properties{ "text-orientation" }->{elements}}, @container_elements;

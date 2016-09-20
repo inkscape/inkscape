@@ -46,6 +46,8 @@
 
 "font-family" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
+"font-feature-settings" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
 "font-size" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "font-size-adjust" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
@@ -54,7 +56,19 @@
 
 "font-style" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
-"font-variant" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+"font-variant" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
+"font-variant-alternates" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
+"font-variant-caps" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
+"font-variant-east-asian" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
+"font-variant-ligatures" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
+"font-variant-numeric" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
+"font-variant-position" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "font-weight" - "altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
@@ -148,9 +162,13 @@
 
 "text-decoration-style" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan"
 
+"text-indent" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
 "text-orientation" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "text-rendering" - "text","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
+
+"text-transform" - "a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use","altGlyph","textPath","text","tref","tspan","flowRoot","flowPara","flowSpan","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 
 "title" - "circle","ellipse","image","line","path","polygon","polyline","rect","text","flowRoot","use","g"
 

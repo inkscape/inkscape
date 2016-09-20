@@ -46,6 +46,8 @@
 
 "font-family" - "NO_DEFAULT" - "yes"
 
+"font-feature-settings" - "normal" - "yes"
+
 "font-size" - "medium" - "yes, the computed value is inherited"
 
 "font-size-adjust" - "none" - "yes"
@@ -55,6 +57,18 @@
 "font-style" - "normal" - "yes"
 
 "font-variant" - "normal" - "yes"
+
+"font-variant-alternates" - "normal" - "yes"
+
+"font-variant-caps" - "normal" - "yes"
+
+"font-variant-east-asian" - "normal" - "yes"
+
+"font-variant-ligatures" - "normal" - "yes"
+
+"font-variant-numeric" - "normal" - "yes"
+
+"font-variant-position" - "normal" - "yes"
 
 "font-weight" - "normal" - "yes"
 
@@ -110,7 +124,7 @@
 
 "solid-color" - "#000000" - "no"
 
-"solid-opacity" - "1.0" - "no"
+"solid-opacity" - "1" - "no"
 
 "stop-color" - "black" - "no"
 
@@ -148,9 +162,13 @@
 
 "text-decoration-style" - "solid" - "no"
 
+"text-indent" - "0" - "yes"
+
 "text-orientation" - "mixed" - "yes"
 
 "text-rendering" - "auto" - "yes"
+
+"text-transform" - "none" - "yes"
 
 "title" - "NO DEFAULT" - "no"
 
