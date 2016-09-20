@@ -263,6 +263,42 @@ void sp_attribute_clean_style(Node* repr, SPCSSAttr *css, unsigned int flags) {
 }
 
 /**
+ * Remove CSS style properties with default values.
+ */
+void sp_attribute_purge_default_style(SPCSSAttr *css, unsigned int flags) {
+
+  g_return_if_fail (css != NULL);
+
+  // Loop over all properties in "style" node, keeping track of which to delete.
+  std::set<Glib::ustring> toDelete;
+  for ( List<AttributeRecord const> iter = css->attributeList() ; iter ; ++iter ) {
+
+    gchar const * property = g_quark_to_string(iter->key);
+    gchar const * value = iter->value;
+
+    // If property value is same as default mark for deletion.
+    if ( SPAttributeRelCSS::findIfDefault( property, value ) ) {
+
+        if ( flags & SP_ATTR_CLEAN_DEFAULT_WARN ) {
+            g_warning( "Preferences CSS Style property: \"%s\" with default value (%s) not needed.",
+                       property, value );
+        }
+        if ( flags & SP_ATTR_CLEAN_DEFAULT_REMOVE ) {
+            toDelete.insert( property );
+        }
+        continue;
+    }
+
+  } // End loop over style properties
+
+  // Delete unneeded style properties. Do this at the end so as to not perturb List iterator.
+  for( std::set<Glib::ustring>::const_iterator iter_d = toDelete.begin(); iter_d != toDelete.end(); ++iter_d ) {
+    sp_repr_css_set_property( css, (*iter_d).c_str(), NULL );
+  }
+
+}
+
+/**
  * Check one attribute on an element
  */
 bool sp_attribute_check_attribute(Glib::ustring element, Glib::ustring id, Glib::ustring attribute, bool warn) {

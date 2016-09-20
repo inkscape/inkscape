@@ -68,6 +68,11 @@ Glib::ustring sp_attribute_clean_style(Node *repr, gchar const *string, unsigned
 void sp_attribute_clean_style(Node* repr, SPCSSAttr *css, unsigned int flags);
 
 /**
+ * Remove CSS style properties with default values.
+ */
+void sp_attribute_purge_default_style(SPCSSAttr *css, unsigned int flags);
+
+/**
  * Check one attribute on an element
  */
 bool sp_attribute_check_attribute(Glib::ustring element, Glib::ustring id, Glib::ustring attribute, bool warn);
