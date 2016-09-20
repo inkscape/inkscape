@@ -110,7 +110,7 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     font_variant_caps(      "font-variant-caps",       enum_font_variant_caps,       SP_CSS_FONT_VARIANT_CAPS_NORMAL       ),
     font_variant_numeric(   "font-variant-numeric",    enum_font_variant_numeric ),
     font_variant_alternates("font-variant-alternates", enum_font_variant_alternates, SP_CSS_FONT_VARIANT_ALTERNATES_NORMAL ),
-    font_variant_east_asian("font-variant-east_asian", enum_font_variant_east_asian, SP_CSS_FONT_VARIANT_EAST_ASIAN_NORMAL ),
+    font_variant_east_asian("font-variant-east-asian", enum_font_variant_east_asian, SP_CSS_FONT_VARIANT_EAST_ASIAN_NORMAL ),
     font_feature_settings(  "font-feature-settings",   "normal" ),
 
     // Text related properties
