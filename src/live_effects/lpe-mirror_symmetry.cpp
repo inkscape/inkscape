@@ -25,11 +25,11 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 static const Util::EnumData<ModeType> ModeTypeData[MT_END] = {
-    { MT_V, N_("Vertical Page Center"), "Vertical Page Center, use select tool to move item instead line" },
-    { MT_H, N_("Horizontal Page Center"), "Horizontal Page Center, use select tool to move item instead line" },
-    { MT_FREE, N_("Free from reflection line"), "Free from path" },
-    { MT_X, N_("X from middle knot"), "X from middle knot" },
-    { MT_Y, N_("Y from middle knot"), "Y from middle knot" }
+    { MT_V, N_("Vertical Page Center"), "vertical" },
+    { MT_H, N_("Horizontal Page Center"), "horizontale" },
+    { MT_FREE, N_("Free from reflection line"), "free" },
+    { MT_X, N_("X from middle knot"), "X" },
+    { MT_Y, N_("Y from middle knot"), "Y" }
 };
 static const Util::EnumDataConverter<ModeType>
 MTConverter(ModeTypeData, MT_END);
@@ -178,6 +178,9 @@ LPEMirrorSymmetry::doEffect_path (Geom::PathVector const & path_in)
 
     Geom::Translate m1(point_a[0], point_a[1]);
     double hyp = Geom::distance(point_a, point_b);
+    if (hyp == 0) {
+        hyp = 0.000001;
+    }
     double c = (point_b[0] - point_a[0]) / hyp; // cos(alpha)
     double s = (point_b[1] - point_a[1]) / hyp; // sin(alpha)
 
@@ -292,8 +295,8 @@ LPEMirrorSymmetry::doEffect_path (Geom::PathVector const & path_in)
     }
 
     if (!fuse_paths || discard_orig_path) {
-        for (int i = 0; i < static_cast<int>(path_in.size()); ++i) {
-            path_out.push_back(path_in[i] * m);
+        for (size_t i = 0; i < original_pathv.size(); ++i) {
+            path_out.push_back(original_pathv[i] * m);
         }
     }
 
