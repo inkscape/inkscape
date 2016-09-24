@@ -87,7 +87,7 @@ void
 LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     using namespace Geom;
-
+    original_bbox(lpeitem);
     Point point_a(boundingbox_X.max(), boundingbox_Y.min());
     Point point_b(boundingbox_X.max(), boundingbox_Y.max());
     Point point_c(boundingbox_X.max(), boundingbox_Y.middle());
@@ -142,6 +142,18 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
         }
     }
     previous_center = center_point;
+}
+
+void
+LPEMirrorSymmetry::transform_multiply(Geom::Affine const& postmul, bool set)
+{
+    center_point *= postmul;
+    previous_center = center_point;
+    // cycle through all parameters. Most parameters will not need transformation, but path and point params do.
+    for (std::vector<Parameter *>::iterator it = param_vector.begin(); it != param_vector.end(); ++it) {
+        Parameter * param = *it;
+        param->param_transform_multiply(postmul, set);
+    }
 }
 
 void

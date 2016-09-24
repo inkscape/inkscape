@@ -46,6 +46,7 @@ public:
     virtual ~LPEMirrorSymmetry();
     virtual void doOnApply (SPLPEItem const* lpeitem);
     virtual void doBeforeEffect (SPLPEItem const* lpeitem);
+    virtual void transform_multiply(Geom::Affine const& postmul, bool set);
     virtual Geom::PathVector doEffect_path (Geom::PathVector const & path_in);
     /* the knotholder entity classes must be declared friends */
     friend class MS::KnotHolderEntityCenterMirrorSymmetry;
