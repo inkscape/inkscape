@@ -178,13 +178,13 @@ LPEMirrorSymmetry::doEffect_path (Geom::PathVector const & path_in)
 
     Geom::Translate m1(point_a[0], point_a[1]);
     double hyp = Geom::distance(point_a, point_b);
-    if (hyp == 0) {
-        hyp = 0.000001;
+    double cos = 0;
+    double sen = 0;
+    if (hyp > 0) {
+        cos = (point_b[0] - point_a[0]) / hyp;
+        sen = (point_b[1] - point_a[1]) / hyp;
     }
-    double c = (point_b[0] - point_a[0]) / hyp; // cos(alpha)
-    double s = (point_b[1] - point_a[1]) / hyp; // sin(alpha)
-
-    Geom::Affine m2(c, -s, s, c, 0.0, 0.0);
+    Geom::Affine m2(cos, -sen, sen, cos, 0.0, 0.0);
     Geom::Scale sca(1.0, -1.0);
 
     Geom::Affine m = m1.inverse() * m2;
