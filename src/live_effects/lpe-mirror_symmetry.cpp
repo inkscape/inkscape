@@ -26,7 +26,7 @@ namespace LivePathEffect {
 
 static const Util::EnumData<ModeType> ModeTypeData[MT_END] = {
     { MT_V, N_("Vertical Page Center"), "vertical" },
-    { MT_H, N_("Horizontal Page Center"), "horizontale" },
+    { MT_H, N_("Horizontal Page Center"), "horizontal" },
     { MT_FREE, N_("Free from reflection line"), "free" },
     { MT_X, N_("X from middle knot"), "X" },
     { MT_Y, N_("Y from middle knot"), "Y" }
