@@ -790,7 +790,8 @@ void XmlTree::on_attr_row_changed(SPXMLViewAttrList *attributes, const gchar * n
 void XmlTree::on_attr_unselect_row_clear_text()
 {
     attr_name.set_text("");
-    attr_value.get_buffer()->set_text("", 0);
+    // Set text with empty Glib::ustring
+    attr_value.get_buffer()->set_text( Glib::ustring() );
 }
 
 void XmlTree::onNameChanged()
