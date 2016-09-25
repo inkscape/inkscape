@@ -178,6 +178,8 @@ void convert_pixels_argb32_to_pixbuf(guchar *data, int w, int h, int rs);
 
 G_GNUC_CONST guint32 argb32_from_pixbuf(guint32 in);
 G_GNUC_CONST guint32 pixbuf_from_argb32(guint32 in);
+const guchar* pixbuf_to_png(guchar const**rows, guchar* px, int nrows, int ncols, int stride, int color_type, int bit_depth);
+
 /** Convert a pixel in 0xRRGGBBAA format to Cairo ARGB32 format. */
 G_GNUC_CONST guint32 argb32_from_rgba(guint32 in);
 

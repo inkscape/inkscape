@@ -34,12 +34,14 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
 				double x0, double y0, double x1, double y1,
 				unsigned long int width, unsigned long int height, double xdpi, double ydpi,
 				unsigned long bgcolor,
-				unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, const std::vector<SPItem*> &items_only = std::vector<SPItem*>());
+				unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, const std::vector<SPItem*> &items_only = std::vector<SPItem*>(), 
+                                bool interlace = false, int color_type = 6, int bit_depth = 8, int zlib = 6);
 
 ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
 				Geom::Rect const &area,
 				unsigned long int width, unsigned long int height, double xdpi, double ydpi,
 				unsigned long bgcolor,
-				unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, const std::vector<SPItem*> &items_only = std::vector<SPItem*>());
+				unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, const std::vector<SPItem*> &items_only = std::vector<SPItem*>(), 
+                                bool interlace = false, int color_type = 6, int bit_depth = 8, int zlib = 6);
 
 #endif // SEEN_SP_PNG_WRITE_H

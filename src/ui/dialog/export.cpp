@@ -145,6 +145,12 @@ Export::Export (void) :
     browse_image(Gtk::StockID(Gtk::Stock::INDEX), Gtk::ICON_SIZE_BUTTON),
     batch_box(false, 5),
     batch_export(_("B_atch export all selected objects"), _("Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)")),
+    interlacing(_("Use interlacing"),_("Enables ADAM7 interlacing for PNG output. This results in slightly heavier images, but big images will look better sooner when loading the file")),
+    bitdepth_label(_("Bit depth")),
+    bitdepth_cb(),
+    zlib_label(_("Compression")),
+    zlib_compression(),
+    phys_label(_("pHYs dpi")),
     hide_box(false, 5),
     hide_export(_("Hide a_ll except selected"), _("In the exported image, hide all objects except those that are selected")),
     closeWhenDone(_("Close when complete"), _("Once the export completes, close this dialog")),
@@ -321,6 +327,34 @@ Export::Export (void) :
     button_box.pack_start(closeWhenDone, true, true, 0 );
     button_box.pack_end(export_button, false, false, 0);
 
+    /*Advanced*/
+    Gtk::Label *label_advanced = Gtk::manage(new Gtk::Label(_("Advanced"),1));
+    expander.set_label_widget(*label_advanced);
+    const char* const modes_list[]={"Gray_1", "Gray_2","Gray_4","Gray_8","Gray_16","RGB_8","RGB_16","GrayAlpha_8","GrayAlpha_16","RGBA_8","RGBA_16"};
+    for(int i=0; i<11; ++i)
+        bitdepth_cb.append(modes_list[i]);
+    bitdepth_cb.set_active_text("RGBA_8");
+    bitdepth_cb.set_hexpand();
+    const char* const zlist[]={"Z_NO_COMPRESSION","Z_BEST_SPEED","2","3","4","5","Z_DEFAULT_COMPRESSION","7","8","Z_BEST_COMPRESSION"};
+    for(int i=0; i<10; ++i)
+        zlib_compression.append(zlist[i]);
+    zlib_compression.set_active_text("Z_DEFAULT_COMPRESSION");
+    pHYs_adj = Gtk::Adjustment::create(0, 0, 100000, 0.1, 1.0, 0);
+    pHYs_sb = Gtk::SpinButton(pHYs_adj, 1.0, 2);
+    pHYs_sb.set_width_chars(7);
+    pHYs_sb.set_tooltip_text( _("Will force-set the physical dpi for the png file. Set this to 72 if you're planning to work on your png with Photoshop") );
+    zlib_compression.set_hexpand();
+    auto table = new Gtk::Grid();
+    gtk_container_add(GTK_CONTAINER(expander.gobj()), (GtkWidget*)(table->gobj()));
+    table->attach(interlacing,0,0,1,1);
+    table->attach(bitdepth_label,0,1,1,1);
+    table->attach(bitdepth_cb,1,1,1,1);
+    table->attach(zlib_label,0,2,1,1);
+    table->attach(zlib_compression,1,2,1,1);
+    table->attach(phys_label,0,3,1,1);
+    table->attach(pHYs_sb,1,3,1,1);
+    table->show();
+
     /* Main dialog */
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);
@@ -329,6 +363,7 @@ Export::Export (void) :
     contents->pack_start(hide_box);
     contents->pack_end(button_box, false, 0);
     contents->pack_end(_prog, Gtk::PACK_EXPAND_WIDGET);
+    contents->pack_end(expander, FALSE, FALSE,0);
 
     /* Signal handlers */
     filename_entry.signal_changed().connect( sigc::mem_fun(*this, &Export::onFilenameModified) );
@@ -943,6 +978,18 @@ void Export::onExport ()
     bool exportSuccessful = false;
 
     bool hide = hide_export.get_active ();
+
+    // Advanced parameters
+    bool do_interlace = (interlacing.get_active());
+    float pHYs = 0;
+    int zlib = zlib_compression.get_active_row_number() ;
+    const char* const modes_list[]={"Gray_1", "Gray_2","Gray_4","Gray_8","Gray_16","RGB_8","RGB_16","GrayAlpha_8","GrayAlpha_16","RGBA_8","RGBA_16"};
+    int colortypes[] = {0,0,0,0,0,2,2,4,4,6,6}; //keep in sync with modes_list in Export constructor. values are from libpng doc.
+    int bitdepths[] = {1,2,4,8,16,8,16,8,16,8,16};
+    int color_type = colortypes[bitdepth_cb.get_active_row_number()] ;
+    int bit_depth = bitdepths[bitdepth_cb.get_active_row_number()] ;
+
+
     if (batch_export.get_active ()) {
         // Batch export of selected objects
 
@@ -987,6 +1034,7 @@ void Export::onExport ()
             if (dpi == 0.0) {
                 dpi = getValue(xdpi_adj);
             }
+            pHYs = (pHYs_adj->get_value() > 0.01) ? pHYs_adj->get_value() : dpi;
 
             Geom::OptRect area = item->desktopVisualBounds();
             if (area) {
@@ -1003,11 +1051,12 @@ void Export::onExport ()
                     std::vector<SPItem*> x;
                     std::vector<SPItem*> selected(desktop->getSelection()->items().begin(), desktop->getSelection()->items().end());
                     if (!sp_export_png_file (doc, path.c_str(),
-                                             *area, width, height, dpi, dpi,
+                                             *area, width, height, pHYs, pHYs,
                                              nv->pagecolor,
                                              onProgressCallback, (void*)prog_dlg,
                                              TRUE,  // overwrite without asking
-                                             hide ? selected : x
+                                             hide ? selected : x, 
+                                             do_interlace, color_type, bit_depth, zlib
                                             )) {
                         gchar * error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
 
@@ -1049,6 +1098,7 @@ void Export::onExport ()
         float const y1 = getValuePx(y1_adj);
         float const xdpi = getValue(xdpi_adj);
         float const ydpi = getValue(ydpi_adj);
+        pHYs = (pHYs_adj->get_value() > 0.01) ? pHYs_adj->get_value() : xdpi;
         unsigned long int const width = int(getValue(bmwidth_adj) + 0.5);
         unsigned long int const height = int(getValue(bmheight_adj) + 0.5);
 
@@ -1094,12 +1144,13 @@ void Export::onExport ()
         std::vector<SPItem*> x;
         std::vector<SPItem*> selected(desktop->getSelection()->items().begin(), desktop->getSelection()->items().end());
         ExportResult status = sp_export_png_file(desktop->getDocument(), path.c_str(),
-                              Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
+                              Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, pHYs, pHYs, //previously xdpi, ydpi. 
                               nv->pagecolor,
                               onProgressCallback, (void*)prog_dlg,
                               FALSE,
-                              hide ? selected : x
-                                                );
+                              hide ? selected : x, 
+                              do_interlace, color_type, bit_depth, zlib
+                              );
         if (status == EXPORT_ERROR) {
             gchar * safeFile = Inkscape::IO::sanitizeString(path.c_str());
             gchar * error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);

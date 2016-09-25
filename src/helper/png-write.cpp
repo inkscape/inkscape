@@ -123,8 +123,8 @@ void PngTextList::add(gchar const* key, gchar const* text)
 static bool
 sp_png_write_rgba_striped(SPDocument *doc,
                           gchar const *filename, unsigned long int width, unsigned long int height, double xdpi, double ydpi,
-                          int (* get_rows)(guchar const **rows, void **to_free, int row, int num_rows, void *data),
-                          void *data)
+                          int (* get_rows)(guchar const **rows, void **to_free, int row, int num_rows, void *data, int color_type, int bit_depth),
+                          void *data, bool interlace, int color_type, int bit_depth, int zlib)
 {
     g_return_val_if_fail(filename != NULL, false);
     g_return_val_if_fail(data != NULL, false);
@@ -184,22 +184,28 @@ sp_png_write_rgba_striped(SPDocument *doc,
      * PNG_INTERLACE_ADAM7, and the compression_type and filter_type MUST
      * currently be PNG_COMPRESSION_TYPE_BASE and PNG_FILTER_TYPE_BASE. REQUIRED
      */
+
+    png_set_compression_level(png_ptr, zlib);
+
     png_set_IHDR(png_ptr, info_ptr,
                  width,
                  height,
-                 8, /* bit_depth */
-                 PNG_COLOR_TYPE_RGB_ALPHA,
-                 PNG_INTERLACE_NONE,
+                 bit_depth,
+                 color_type,
+                 interlace ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
                  PNG_COMPRESSION_TYPE_BASE,
                  PNG_FILTER_TYPE_BASE);
 
-    /* otherwise, if we are dealing with a color image then */
-    sig_bit.red = 8;
-    sig_bit.green = 8;
-    sig_bit.blue = 8;
-    /* if the image has an alpha channel then */
-    sig_bit.alpha = 8;
-    png_set_sBIT(png_ptr, info_ptr, &sig_bit);
+    if ((color_type&2) && bit_depth == 16) {
+        // otherwise, if we are dealing with a color image then
+        sig_bit.red = 8;
+        sig_bit.green = 8;
+        sig_bit.blue = 8;
+        // if the image has an alpha channel then
+        if (color_type&4)
+            sig_bit.alpha = 8;
+        png_set_sBIT(png_ptr, info_ptr, &sig_bit);
+    }
 
     PngTextList textList;
 
@@ -248,7 +254,10 @@ sp_png_write_rgba_striped(SPDocument *doc,
     /* other optional chunks like cHRM, bKGD, tRNS, tIME, oFFs, pHYs, */
     /* note that if sRGB is present the cHRM chunk must be ignored
      * on read and must be written in accordance with the sRGB profile */
-    png_set_pHYs(png_ptr, info_ptr, unsigned(xdpi / 0.0254 + 0.5), unsigned(ydpi / 0.0254 + 0.5), PNG_RESOLUTION_METER);
+    if(xdpi < 0.0254 ) xdpi = 0.0255;
+    if(ydpi < 0.0254 ) ydpi = 0.0255;
+
+    png_set_pHYs(png_ptr, info_ptr, unsigned(xdpi / 0.0254 ), unsigned(ydpi / 0.0254 ), PNG_RESOLUTION_METER);
 
     /* Write the file header information.  REQUIRED */
     png_write_info(png_ptr, info_ptr);
@@ -271,15 +280,18 @@ sp_png_write_rgba_striped(SPDocument *doc,
      */
 
     png_bytep* row_pointers = new png_bytep[ebp->sheight];
+    int number_of_passes = interlace ? png_set_interlace_handling(png_ptr) : 1;
 
-    r = 0;
-    while (r < static_cast<png_uint_32>(height)) {
-        void *to_free;
-        int n = get_rows((unsigned char const **) row_pointers, &to_free, r, height-r, data);
-        if (!n) break;
-        png_write_rows(png_ptr, row_pointers, n);
-        g_free(to_free);
-        r += n;
+    for(int i=0;i<number_of_passes; ++i){
+        r = 0;
+        while (r < static_cast<png_uint_32>(height)) {
+            void *to_free;
+            int n = get_rows((unsigned char const **) row_pointers, &to_free, r, height-r, data, color_type, bit_depth);
+            if (!n) break;
+            png_write_rows(png_ptr, row_pointers, n);
+            g_free(to_free);
+            r += n;
+        }
     }
 
     delete[] row_pointers;
@@ -308,7 +320,7 @@ sp_png_write_rgba_striped(SPDocument *doc,
  *
  */
 static int
-sp_export_get_rows(guchar const **rows, void **to_free, int row, int num_rows, void *data)
+sp_export_get_rows(guchar const **rows, void **to_free, int row, int num_rows, void *data, int color_type, int bit_depth)
 {
     struct SPEBP *ebp = (struct SPEBP *) data;
 
@@ -343,14 +355,17 @@ sp_export_get_rows(guchar const **rows, void **to_free, int row, int num_rows, v
     ebp->drawing->render(dc, bbox);
     cairo_surface_destroy(s);
 
-    *to_free = px;
-
     // PNG stores data as unpremultiplied big-endian RGBA, which means
     // it's identical to the GdkPixbuf format.
     convert_pixels_argb32_to_pixbuf(px, ebp->width, num_rows, stride);
+    
+    *to_free = px;
 
-    for (int r = 0; r < num_rows; r++) {
-        rows[r] = px + r * stride;
+    // If a custom bit depth or color type is asked, then convert rgb to grayscale, etc.
+    if(color_type !=6 || bit_depth != 8){
+        const guchar* new_data = pixbuf_to_png(rows, px, num_rows, ebp->width, stride, color_type, bit_depth);
+        *to_free = (void*) new_data;
+        free(px);
     }
 
     return num_rows;
@@ -385,10 +400,10 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
                                 unsigned long bgcolor,
                                 unsigned int (*status) (float, void *),
                                 void *data, bool force_overwrite,
-                                const std::vector<SPItem*> &items_only)
+                                const std::vector<SPItem*> &items_only, bool interlace, int color_type, int bit_depth, int zlib)
 {
     return sp_export_png_file(doc, filename, Geom::Rect(Geom::Point(x0,y0),Geom::Point(x1,y1)),
-                              width, height, xdpi, ydpi, bgcolor, status, data, force_overwrite, items_only);
+                              width, height, xdpi, ydpi, bgcolor, status, data, force_overwrite, items_only, interlace, color_type, bit_depth, zlib);
 }
 
 ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
@@ -397,7 +412,7 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
                                 unsigned long bgcolor,
                                 unsigned (*status)(float, void *),
                                 void *data, bool force_overwrite,
-                                const std::vector<SPItem*> &items_only)
+                                const std::vector<SPItem*> &items_only, bool interlace, int color_type, int bit_depth, int zlib)
 {
     g_return_val_if_fail(doc != NULL, EXPORT_ERROR);
     g_return_val_if_fail(filename != NULL, EXPORT_ERROR);
@@ -468,7 +483,7 @@ ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
     ebp.px = g_try_new(guchar, 4 * ebp.sheight * width);
 
     if (ebp.px) {
-        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp, interlace, color_type, bit_depth, zlib);
         g_free(ebp.px);
     }
 

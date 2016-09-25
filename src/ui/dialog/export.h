@@ -13,6 +13,9 @@
 #define SP_EXPORT_H
 
 #include <gtkmm/progressbar.h>
+#include <gtkmm/expander.h>
+#include <gtkmm/grid.h>
+#include <gtkmm/comboboxtext.h>
 
 #include "ui/dialog/desktop-tracker.h"
 #include "ui/widget/panel.h"
@@ -313,6 +316,17 @@ private:
     Inkscape::UI::Widget::CheckButton    hide_export;
 
     Inkscape::UI::Widget::CheckButton closeWhenDone;
+
+    /* Advanced */
+    Gtk::Expander expander;
+    Inkscape::UI::Widget::CheckButton interlacing;
+    Gtk::Label                        bitdepth_label;
+    Gtk::ComboBoxText                 bitdepth_cb;
+    Gtk::Label                        zlib_label;
+    Gtk::ComboBoxText                 zlib_compression;
+    Gtk::Label                        phys_label;
+    Glib::RefPtr<Gtk::Adjustment>     pHYs_adj;
+    Gtk::SpinButton                   pHYs_sb;
 
     /* Export Button widgets */
     Gtk::HBox button_box;
