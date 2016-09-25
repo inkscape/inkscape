@@ -359,14 +359,10 @@ sp_export_get_rows(guchar const **rows, void **to_free, int row, int num_rows, v
     // it's identical to the GdkPixbuf format.
     convert_pixels_argb32_to_pixbuf(px, ebp->width, num_rows, stride);
     
-    *to_free = px;
-
     // If a custom bit depth or color type is asked, then convert rgb to grayscale, etc.
-    if(color_type !=6 || bit_depth != 8){
-        const guchar* new_data = pixbuf_to_png(rows, px, num_rows, ebp->width, stride, color_type, bit_depth);
-        *to_free = (void*) new_data;
-        free(px);
-    }
+    const guchar* new_data = pixbuf_to_png(rows, px, num_rows, ebp->width, stride, color_type, bit_depth);
+    *to_free = (void*) new_data;
+    free(px);
 
     return num_rows;
 }

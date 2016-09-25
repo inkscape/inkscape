@@ -150,7 +150,8 @@ Export::Export (void) :
     bitdepth_cb(),
     zlib_label(_("Compression")),
     zlib_compression(),
-    phys_label(_("pHYs dpi")),
+    pHYs_label(_("pHYs dpi")),
+    pHYs_sb(pHYs_adj, 1.0, 2),
     hide_box(false, 5),
     hide_export(_("Hide a_ll except selected"), _("In the exported image, hide all objects except those that are selected")),
     closeWhenDone(_("Close when complete"), _("Once the export completes, close this dialog")),
@@ -340,7 +341,7 @@ Export::Export (void) :
         zlib_compression.append(zlist[i]);
     zlib_compression.set_active_text("Z_DEFAULT_COMPRESSION");
     pHYs_adj = Gtk::Adjustment::create(0, 0, 100000, 0.1, 1.0, 0);
-    pHYs_sb = Gtk::SpinButton(pHYs_adj, 1.0, 2);
+    pHYs_sb.set_adjustment(pHYs_adj);
     pHYs_sb.set_width_chars(7);
     pHYs_sb.set_tooltip_text( _("Will force-set the physical dpi for the png file. Set this to 72 if you're planning to work on your png with Photoshop") );
     zlib_compression.set_hexpand();
@@ -351,7 +352,7 @@ Export::Export (void) :
     table->attach(bitdepth_cb,1,1,1,1);
     table->attach(zlib_label,0,2,1,1);
     table->attach(zlib_compression,1,2,1,1);
-    table->attach(phys_label,0,3,1,1);
+    table->attach(pHYs_label,0,3,1,1);
     table->attach(pHYs_sb,1,3,1,1);
     table->show();
 

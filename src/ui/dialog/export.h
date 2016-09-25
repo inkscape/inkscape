@@ -324,7 +324,7 @@ private:
     Gtk::ComboBoxText                 bitdepth_cb;
     Gtk::Label                        zlib_label;
     Gtk::ComboBoxText                 zlib_compression;
-    Gtk::Label                        phys_label;
+    Gtk::Label                        pHYs_label;
     Glib::RefPtr<Gtk::Adjustment>     pHYs_adj;
     Gtk::SpinButton                   pHYs_sb;
 
