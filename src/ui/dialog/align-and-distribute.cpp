@@ -134,10 +134,10 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
     switch (AlignTarget(prefs->getInt("/dialogs/align/align-to", 6)))
     {
     case LAST:
-        focus = SP_ITEM(*selected.begin());
+        focus = SP_ITEM(*--(selected.end()));
         break;
     case FIRST:
-        focus = SP_ITEM(*--(selected.end()));
+        focus = SP_ITEM(*selected.begin());
         break;
     case BIGGEST:
         focus = selection->largestItem(horiz);
