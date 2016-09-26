@@ -459,7 +459,6 @@ bool MeshTool::root_handler(GdkEvent* event) {
         if ( event->button.button == 1 ) {
             // Are we over a mesh line?
             bool over_line = false;
-            SPCtrlCurve *line = NULL;
 
             if (! drag->lines.empty()) {
                 for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
