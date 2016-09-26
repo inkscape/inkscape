@@ -271,7 +271,7 @@ static SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradi
             repr_new->setAttribute("x2", repr->attribute("x2"));
             repr_new->setAttribute("y2", repr->attribute("y2"));
         } else {
-            std::cout << "sp_gradient_fork_private_if_necessary: mesh not implemented" << std::endl;
+            std::cerr << "sp_gradient_fork_private_if_necessary: mesh not implemented" << std::endl;
         }
 
         return gr_new;
@@ -861,6 +861,7 @@ void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint
         switch (point_type) {
             case POINT_MG_CORNER: {
 
+                // Update mesh array (which is not updated automatically when stop is changed?)
                 gchar const* color_str = sp_repr_css_property( stop, "stop-color", NULL );
                 if( color_str ) {
                     SPColor color( 0 );
@@ -880,9 +881,14 @@ void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint
                     mg->array.corners[ point_i ]->opacity = opacity;
                     changed = true;
                 }
+                // Update stop
                 if( changed ) {
-                    gradient->requestModified(SP_OBJECT_MODIFIED_FLAG);
-                    mg->array.write( mg );
+                    SPStop *stopi = mg->array.corners[ point_i ]->stop;
+                    if (stopi) {
+                        sp_repr_css_change(stopi->getRepr(), stop, "style");
+                    } else {
+                        std::cerr << "sp_item_gradient_stop_set_style: null stopi" << std::endl;
+                    }
                 }
                 break;
             }

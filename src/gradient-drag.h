@@ -105,7 +105,7 @@ struct GrDragger {
     void updateDependencies(bool write_repr);
 
     /* Update handles/tensors when mesh corner moved */
-    void updateHandles( Geom::Point pc_old,  MeshNodeOperation op );
+    void moveMeshHandles( Geom::Point pc_old,  MeshNodeOperation op );
 
     bool mayMerge(GrDragger *other);
     bool mayMerge(GrDraggable *da2);

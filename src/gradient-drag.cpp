@@ -901,7 +901,7 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
         dragger->point = p;
         dragger->fireDraggables (false, scale_radial);
         dragger->updateDependencies(false);
-        dragger->updateHandles( p_old, MG_NODE_NO_SCALE );
+        dragger->moveMeshHandles( p_old, MG_NODE_NO_SCALE );
     }
 }
 
@@ -1076,7 +1076,7 @@ static void gr_knot_ungrabbed_handler(SPKnot *knot, unsigned int state, gpointer
     } else {
         dragger->fireDraggables (true);
     }
-    dragger->updateHandles( dragger->point_original, MG_NODE_NO_SCALE );
+    dragger->moveMeshHandles( dragger->point_original, MG_NODE_NO_SCALE );
     
     for (std::set<GrDragger *>::const_iterator it = dragger->parent->selected.begin(); it != dragger->parent->selected.end() ; ++it ) {
         if (*it == dragger)
@@ -1306,9 +1306,8 @@ bool GrDragger::mayMerge(GrDraggable *da2)
  * Ooops, needs to be reimplemented.
  */
 void
-GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
+GrDragger::moveMeshHandles ( Geom::Point pc_old,  MeshNodeOperation op )
 {
-
     // This routine might more properly be in mesh-context.cpp but moving knots is
     // handled here rather than there.
 
@@ -1946,6 +1945,7 @@ void GrDrag::addDraggersLinear(SPLinearGradient *lg, SPItem *item, Inkscape::Pai
  */
 void GrDrag::addDraggersMesh(SPMesh *mg, SPItem *item, Inkscape::PaintTarget fill_or_stroke)
 {
+    mg->ensureArray();
     std::vector< std::vector< SPMeshNode* > > nodes = mg->array.nodes;
 
     // Show/hide mesh on fill/stroke. This doesn't work at the moment... and prevents node color updating.
@@ -1963,7 +1963,7 @@ void GrDrag::addDraggersMesh(SPMesh *mg, SPItem *item, Inkscape::PaintTarget fil
     // Make sure we have at least one patch defined.
     if( mg->array.patch_rows() == 0 || mg->array.patch_columns() == 0 ) {
 
-        std::cout << "Empty Mesh, No Draggers to Add" << std::endl;
+        std::cerr << "Empty Mesh, No Draggers to Add" << std::endl;
         return;
     }
 
@@ -2018,14 +2018,14 @@ void GrDrag::addDraggersMesh(SPMesh *mg, SPItem *item, Inkscape::PaintTarget fil
                     }
 
                     default:
-                        std::cout << "Bad Mesh draggable type" << std::endl;
+                        std::cerr << "Bad Mesh draggable type" << std::endl;
                         break;
                 }
             }
         }
     }
 
-    mg->array.drag_valid = true;
+    mg->array.draggers_valid = true;
 }
 
 /**
@@ -2348,7 +2348,7 @@ void GrDrag::selected_move(double x, double y, bool write_repr, bool scale_radia
             d->knot->moveto(d->point);
 
             d->fireDraggables (write_repr, scale_radial);
-            d->updateHandles( p_old, MG_NODE_NO_SCALE );
+            d->moveMeshHandles( p_old, MG_NODE_NO_SCALE );
             d->updateDependencies(write_repr);
         }
     }

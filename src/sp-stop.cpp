@@ -114,6 +114,7 @@ void SPStop::set(unsigned int key, const gchar* value) {
                     // std::cout << "Got Curve" << std::endl;
                     //curve->unref();
                 //}
+                this->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }

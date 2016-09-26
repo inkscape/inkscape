@@ -9,16 +9,34 @@
  * Mesh Gradient
  */
 //#define MESH_DEBUG
+//#define OBJECT_TRACE
+
 SPMesh::SPMesh() : SPGradient(), type( SP_MESH_TYPE_COONS ), type_set(false) {
+#ifdef OBJECT_TRACE
+  objectTrace( "SPMesh::SPMesh" );
+#endif
+
     // Start coordinate of mesh
     this->x.unset(SVGLength::NONE, 0.0, 0.0);
     this->y.unset(SVGLength::NONE, 0.0, 0.0);
+
+#ifdef OBJECT_TRACE
+  objectTrace( "SPMesh::SPMesh", false );
+#endif
 }
 
 SPMesh::~SPMesh() {
+#ifdef OBJECT_TRACE
+  objectTrace( "SPMesh::~SPMesh (empty function)" );
+  objectTrace( "SPMesh::~SPMesh", false );
+#endif
 }
 
 void SPMesh::build(SPDocument *document, Inkscape::XML::Node *repr) {
+#ifdef OBJECT_TRACE
+  objectTrace( "SPMesh::build" );
+#endif
+
     SPGradient::build(document, repr);
 
     // Start coordinate of mesh
@@ -26,10 +44,18 @@ void SPMesh::build(SPDocument *document, Inkscape::XML::Node *repr) {
     this->readAttr( "y" );
 
     this->readAttr( "type" );
+
+#ifdef OBJECT_TRACE
+    objectTrace( "SPMesh::build", false );
+#endif
 }
 
 
 void SPMesh::set(unsigned key, gchar const *value) {
+#ifdef OBJECT_TRACE
+  objectTrace( "SPMesh::set" );
+#endif
+
     switch (key) {
         case SP_ATTR_X:
             if (!this->x.read(value)) {
@@ -70,14 +96,18 @@ void SPMesh::set(unsigned key, gchar const *value) {
             SPGradient::set(key, value);
             break;
     }
+
+#ifdef OBJECT_TRACE
+    objectTrace( "SPMesh::set", false );
+#endif
 }
 
 /**
  * Write mesh gradient attributes to associated repr.
  */
 Inkscape::XML::Node* SPMesh::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
-#ifdef MESH_DEBUG
-    std::cout << "sp_mesh_write() ***************************" << std::endl;
+#ifdef OBJECT_TRACE
+    objectTrace( "SPMesh::write", false );
 #endif
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
@@ -108,6 +138,9 @@ Inkscape::XML::Node* SPMesh::write(Inkscape::XML::Document *xml_doc, Inkscape::X
 
     SPGradient::write(xml_doc, repr, flags);
 
+#ifdef OBJECT_TRACE
+    objectTrace( "SPMesh::write", false );
+#endif
     return repr;
 }
 
@@ -132,7 +165,7 @@ cairo_pattern_t* SPMesh::pattern_new(cairo_t * /*ct*/,
   using Geom::Y;
 
 #ifdef MESH_DEBUG
-  std::cout << "sp_mesh_create_pattern: (" << bbox->x0 << "," <<  bbox->y0 << ") (" <<  bbox->x1 << "," << bbox->y1 << ")  " << opacity << std::endl;
+  std::cout << "sp_mesh_create_pattern: " << (*bbox) << " " << opacity << std::endl;
 #endif
 
   this->ensureArray();

@@ -57,7 +57,6 @@ SPMeshpatch* SPMeshpatch::getPrevMeshpatch()
 /*
  * Mesh Patch
  */
-
 SPMeshpatch::SPMeshpatch() : SPObject() {
     this->tensor_string = NULL;
 }
@@ -74,7 +73,6 @@ void SPMeshpatch::build(SPDocument* doc, Inkscape::XML::Node* repr) {
 /**
  * Virtual build: set meshpatch attributes from its associated XML node.
  */
-
 void SPMeshpatch::set(unsigned int key, const gchar* value) {
     switch (key) {
         case SP_ATTR_TENSOR: {
@@ -91,9 +89,36 @@ void SPMeshpatch::set(unsigned int key, const gchar* value) {
 }
 
 /**
+ * modified
+ */
+void SPMeshpatch::modified(unsigned int flags) {
+
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
+    GSList *l = NULL;
+
+    for (auto& child: children) {
+        sp_object_ref(&child);
+        l = g_slist_prepend(l, &child);
+    }
+
+    l = g_slist_reverse(l);
+
+    while (l) {
+        SPObject *child = SP_OBJECT(l->data);
+        l = g_slist_remove(l, child);
+
+        if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            child->emitModified(flags);
+        }
+
+        sp_object_unref(child);
+    }
+}
+
+
+/**
  * Virtual set: set attribute to value.
  */
-
 Inkscape::XML::Node* SPMeshpatch::write(Inkscape::XML::Document* xml_doc, Inkscape::XML::Node* repr, guint flags) {
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:meshpatch");

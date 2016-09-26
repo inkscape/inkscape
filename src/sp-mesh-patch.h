@@ -21,8 +21,8 @@
 /** Gradient Meshpatch. */
 class SPMeshpatch : public SPObject {
 public:
-	SPMeshpatch();
-	virtual ~SPMeshpatch();
+    SPMeshpatch();
+    virtual ~SPMeshpatch();
 
     SPMeshpatch* getNextMeshpatch();
     SPMeshpatch* getPrevMeshpatch();
@@ -31,9 +31,10 @@ public:
     //SVGLength ty[4];  // Tensor points
 
 protected:
-	virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
-	virtual void set(unsigned int key, const char* value);
-	virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
+    virtual void build(SPDocument* doc, Inkscape::XML::Node* repr);
+    virtual void set(unsigned int key, const char* value);
+    virtual void modified(unsigned int flags);
+    virtual Inkscape::XML::Node* write(Inkscape::XML::Document* doc, Inkscape::XML::Node* repr, unsigned int flags);
 };
 
 #endif /* !SEEN_SP_MESHPATCH_H */

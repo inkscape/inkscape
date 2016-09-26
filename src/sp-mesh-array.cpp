@@ -574,6 +574,59 @@ void SPMeshPatchI::setOpacity( guint i, gdouble opacity ) {
 };
 
 
+/**
+   Return stop pointer for corner of patch.
+*/
+SPStop* SPMeshPatchI::getStopPtr( guint i ) {
+
+    assert( i < 4 );
+
+    SPStop* stop = nullptr;
+    switch ( i ) {
+        case 0:
+            stop = (*nodes)[ row   ][ col   ]->stop;
+            break;
+        case 1:
+            stop = (*nodes)[ row   ][ col+3 ]->stop;
+            break;
+        case 2:
+            stop = (*nodes)[ row+3 ][ col+3 ]->stop;
+            break;
+        case 3:
+            stop = (*nodes)[ row+3 ][ col   ]->stop;
+            break;
+    }
+
+    return stop;
+};
+
+
+/**
+   Set stop pointer for corner of patch.
+*/
+void SPMeshPatchI::setStopPtr( guint i, SPStop* stop ) {
+
+    assert( i < 4 );
+
+    switch ( i ) {
+        case 0:
+            (*nodes)[ row   ][ col   ]->stop = stop;
+            break;                         
+        case 1:                            
+            (*nodes)[ row   ][ col+3 ]->stop = stop;
+            break;                         
+        case 2:                            
+            (*nodes)[ row+3 ][ col+3 ]->stop = stop;
+            break;                         
+        case 3:                            
+            (*nodes)[ row+3 ][ col   ]->stop = stop;
+            break;
+
+    }
+
+};
+
+
 SPMeshNodeArray::SPMeshNodeArray( SPMesh *mg ) {
 
     read( mg );
@@ -586,7 +639,7 @@ SPMeshNodeArray::SPMeshNodeArray( const SPMeshNodeArray& rhs ) {
 
     built = false;
     mg = NULL;
-    drag_valid = false;
+    draggers_valid = false;
 
     nodes = rhs.nodes; // This only copies the pointers but it does size the vector of vectors.
 
@@ -607,7 +660,7 @@ SPMeshNodeArray& SPMeshNodeArray::operator=( const SPMeshNodeArray& rhs ) {
 
     built = false;
     mg = NULL;
-    drag_valid = false;
+    draggers_valid = false;
 
     nodes = rhs.nodes; // This only copies the pointers but it does size the vector of vectors.
 
@@ -620,12 +673,34 @@ SPMeshNodeArray& SPMeshNodeArray::operator=( const SPMeshNodeArray& rhs ) {
     return *this;
 };
 
-
-void SPMeshNodeArray::read( SPMesh *mg_in ) {
+// Fill array with data from mesh objects.
+// Returns true of array's dimensions unchanged.
+bool SPMeshNodeArray::read( SPMesh *mg_in ) {
 
     mg = mg_in;
 
-    clear();
+    // Count rows and columns, if unchanged reuse array to keep draggers valid.
+    unsigned cols = 0;
+    unsigned rows = 0;
+    for (auto& ro: mg->children) {
+        if (SP_IS_MESHROW(&ro)) {
+            ++rows;
+            if (rows == 1 ) {
+                for (auto& po: ro.children) {
+                    if (SP_IS_MESHPATCH(&po)) {
+                        ++cols;
+                    }
+                }
+            }
+        }
+    }
+    bool same_size = true;
+    if (cols != patch_columns() || rows != patch_rows() ) {
+        // Draggers will be invalidated.
+        same_size = false;
+        clear();
+        draggers_valid = false;
+    }
 
     Geom::Point current_p( mg->x.computed, mg->y.computed );
     // std::cout << "SPMeshNodeArray::read: p: " << current_p << std::endl;
@@ -701,7 +776,7 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
                                             dp = Geom::Point( x, y ); 
                                             new_patch.setPoint( istop, 3, current_p + dp );
                                         } else {
-                                            std::cout << "Failed to read l" << std::endl;
+                                            std::cerr << "Failed to read l" << std::endl;
                                         }
                                     }
                                     // To facilitate some side operations, set handles to 1/3 and
@@ -723,7 +798,7 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
                                             p = Geom::Point( x, y );
                                             new_patch.setPoint( istop, 3, p );
                                         } else {
-                                            std::cout << "Failed to read L" << std::endl;
+                                            std::cerr << "Failed to read L" << std::endl;
                                         }
                                     }
                                     // To facilitate some side operations, set handles to 1/3 and
@@ -743,7 +818,7 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
                                             p += current_p;
                                             new_patch.setPoint( istop, i, p );
                                         } else {
-                                            std::cout << "Failed to read c: " << i << std::endl;
+                                            std::cerr << "Failed to read c: " << i << std::endl;
                                         }
                                     }
                                     break;
@@ -756,13 +831,13 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
                                             p = Geom::Point( x, y );
                                             new_patch.setPoint( istop, i, p );
                                         } else {
-                                            std::cout << "Failed to read C: " << i << std::endl;
+                                            std::cerr << "Failed to read C: " << i << std::endl;
                                         }
                                     }
                                     break;
                                 default:
                                     // should not reach
-                                    std::cout << "Path Error: unhandled path type: " << path_type << std::endl;
+                                    std::cerr << "Path Error: unhandled path type: " << path_type << std::endl;
                             }
                             current_p = new_patch.getPoint( istop, 3 );
 
@@ -774,6 +849,7 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
                                 double opacity  = stop->opacity;
                                 new_patch.setColor( istop, color );
                                 new_patch.setOpacity( istop, opacity );
+                                new_patch.setStopPtr( istop, stop );
                             }
 
                         }
@@ -797,7 +873,7 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
                             if( !os.fail() ) {
                                 new_patch.setTensorPoint( i, new_patch.getPoint( i, 0 ) + Geom::Point( x, y ) );
                             } else {
-                                std::cout << "Failed to read p: " << i << std::endl;
+                                std::cerr << "Failed to read p: " << i << std::endl;
                                 break;
                             }
                         }
@@ -830,9 +906,9 @@ void SPMeshNodeArray::read( SPMesh *mg_in ) {
     // std::cout << "SPMeshNodeArray::Read: result:" << std::endl;
     // print();
 
-    drag_valid = false;
     built = true;
 
+    return same_size;
 };
 
 /**
@@ -967,10 +1043,10 @@ void SPMeshNodeArray::write( SPMesh *mg ) {
                         break;
                     case 'z':
                     case 'Z':
-                        std::cout << "sp_mesh_repr_write: bad path type" << path_type << std::endl;
+                        std::cout << "SPMeshNodeArray::write(): bad path type" << path_type << std::endl;
                         break;
                     default:
-                        std::cout << "sp_mesh_repr_write: unhandled path type" << path_type << std::endl;
+                        std::cout << "SPMeshNodeArray::write(): unhandled path type" << path_type << std::endl;
                 }
                 stop->setAttribute("path", is.str().c_str());
                 // std::cout << "SPMeshNodeArray::write: path:  " << is.str().c_str() << std::endl;
@@ -1415,6 +1491,7 @@ void SPMeshNodeArray::print() {
                           << "  Node edge: " << nodes[i][j]->node_edge
                           << "  Set: "  << nodes[i][j]->set
                           << "  Path type: " << nodes[i][j]->path_type
+                          << "  Stop: " << nodes[i][j]->stop
                           << std::endl;
             } else {
                 std::cout << "Error: missing mesh node." << std::endl;
@@ -1776,7 +1853,9 @@ guint SPMeshNodeArray::patch_rows() {
    Number of patch columns.
 */
 guint SPMeshNodeArray::patch_columns() {
-
+    if (nodes.empty()) {
+        return 0;
+    }
     return nodes[0].size()/3;
 }
 
@@ -2345,7 +2424,11 @@ guint SPMeshNodeArray::color_pick( std::vector<guint> icorners, SPItem* item ) {
 */
 void SPMeshNodeArray::update_handles( guint corner, std::vector< guint > /*selected*/, Geom::Point p_old, MeshNodeOperation /*op*/ )
 {
-    assert( drag_valid );
+    if (!draggers_valid) {
+        std::cerr << "SPMeshNodeArray::update_handles: Draggers not valid!" << std::endl;
+        return;
+    }
+    // assert( draggers_valid );
 
     // std::cout << "SPMeshNodeArray::update_handles: "
     //           << "  corner: " << corner
