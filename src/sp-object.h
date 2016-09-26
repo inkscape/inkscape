@@ -861,6 +861,8 @@ public:
 	virtual void read_content();
 
     void recursivePrintTree(unsigned level = 0);  // For debugging
+    static unsigned indent_level;
+    void objectTrace( std::string, bool in=true, unsigned flags=0 );
 };
 
 
