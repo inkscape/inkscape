@@ -871,6 +871,7 @@ bool GradientTool::root_handler(GdkEvent* event) {
     return ret;
 }
 
+// Creates a new linear or radial gradient.
 static void sp_gradient_drag(GradientTool &rc, Geom::Point const pt, guint /*state*/, guint32 etime)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;

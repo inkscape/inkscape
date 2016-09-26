@@ -265,14 +265,18 @@ sp_mesh_context_select_prev (ToolBase *event_context)
 Returns true if mouse cursor over mesh edge.
 */
 static bool
-sp_mesh_context_is_over_line (MeshTool *rc, SPItem *item, Geom::Point event_p)
+sp_mesh_context_is_over_line (MeshTool *rc, SPCtrlLine *line, Geom::Point event_p)
 {
+    if (!SP_IS_CTRLCURVE(line) ) {
+        return false;
+    }
+
     SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
 
     //Translate mouse point into proper coord system
     rc->mousepoint_doc = desktop->w2d(event_p);
 
-    SPCtrlCurve *curve = SP_CTRLCURVE(item);
+    SPCtrlCurve *curve = SP_CTRLCURVE(line);
     Geom::BezierCurveN<3> b( curve->p0, curve->p1, curve->p2, curve->p3 );
     Geom::Coord coord = b.nearestTime( rc->mousepoint_doc ); // Coord == double
     Geom::Point nearest = b( coord );
@@ -425,6 +429,7 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
 
 /**
 Handles all keyboard and mouse input for meshs.
+Note: node/handle events are take care of elsewhere.
 */
 bool MeshTool::root_handler(GdkEvent* event) {
     static bool dragging;
@@ -458,8 +463,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
 
             if (! drag->lines.empty()) {
                 for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
-                    line = (SPCtrlCurve*) (*l);
-                    over_line |= sp_mesh_context_is_over_line (this, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
+                    over_line |= sp_mesh_context_is_over_line (this, *l, Geom::Point(event->motion.x, event->motion.y));
                 }
             }
 
@@ -594,7 +598,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
 
             if (!drag->lines.empty()) {
                 for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() ; ++l) {
-                    over_line |= sp_mesh_context_is_over_line (this, (SPItem*)(*l), Geom::Point(event->motion.x, event->motion.y));
+                    over_line |= sp_mesh_context_is_over_line (this, *l, Geom::Point(event->motion.x, event->motion.y));
                 }
             }
 
@@ -625,8 +629,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
 
             if (!drag->lines.empty()) {
                 for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
-                    line = (SPCtrlLine*)(*l);
-                    over_line = sp_mesh_context_is_over_line (this, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
+                    over_line = sp_mesh_context_is_over_line (this, *l, Geom::Point(event->motion.x, event->motion.y));
 
                     if (over_line) {
                         break;
@@ -925,6 +928,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
     return ret;
 }
 
+// Creates a new mesh gradient.
 static void sp_mesh_end_drag(MeshTool &rc) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = desktop->getSelection();
