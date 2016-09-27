@@ -25,7 +25,7 @@
 #include "sp-namedview.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
-#include "sp-mesh.h"
+#include "sp-mesh-gradient.h"
 #include "sp-pattern.h"
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/fill-and-stroke.h"
@@ -1010,7 +1010,7 @@ SelectedStyle::update()
                         place->set_tooltip_text(__rgradient[i]);
                         _mode[i] = SS_RGRADIENT;
 #ifdef WITH_MESH
-                    } else if (SP_IS_MESH(server)) {
+                    } else if (SP_IS_MESHGRADIENT(server)) {
                         SPGradient *vector = SP_GRADIENT(server)->getVector();
                         sp_gradient_image_set_gradient(SP_GRADIENT_IMAGE(_gradient_preview_m[i]), vector);
                         place->add(_gradient_box_m[i]);

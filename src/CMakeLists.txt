@@ -44,9 +44,9 @@ set(sp_SRC
   sp-marker.cpp
   sp-mask.cpp
   sp-mesh-array.cpp
+  sp-mesh-gradient.cpp
   sp-mesh-patch.cpp
   sp-mesh-row.cpp
-  sp-mesh.cpp
   sp-metadata.cpp
   sp-missing-glyph.cpp
   sp-namedview.cpp
@@ -134,9 +134,9 @@ set(sp_SRC
   sp-marker.h
   sp-mask.h
   sp-mesh-array.h
+  sp-mesh-gradient.h
   sp-mesh-patch.h
   sp-mesh-row.h
-  sp-mesh.h
   sp-metadata.h
   sp-missing-glyph.h
   sp-namedview.h

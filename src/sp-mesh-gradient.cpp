@@ -3,7 +3,7 @@
 #include "attributes.h"
 #include "display/cairo-utils.h"
 
-#include "sp-mesh.h"
+#include "sp-mesh-gradient.h"
 
 /*
  * Mesh Gradient
@@ -11,9 +11,9 @@
 //#define MESH_DEBUG
 //#define OBJECT_TRACE
 
-SPMesh::SPMesh() : SPGradient(), type( SP_MESH_TYPE_COONS ), type_set(false) {
+SPMeshGradient::SPMeshGradient() : SPGradient(), type( SP_MESH_TYPE_COONS ), type_set(false) {
 #ifdef OBJECT_TRACE
-  objectTrace( "SPMesh::SPMesh" );
+  objectTrace( "SPMeshGradient::SPMeshGradient" );
 #endif
 
     // Start coordinate of mesh
@@ -21,39 +21,39 @@ SPMesh::SPMesh() : SPGradient(), type( SP_MESH_TYPE_COONS ), type_set(false) {
     this->y.unset(SVGLength::NONE, 0.0, 0.0);
 
 #ifdef OBJECT_TRACE
-  objectTrace( "SPMesh::SPMesh", false );
+  objectTrace( "SPMeshGradient::SPMeshGradient", false );
 #endif
 }
 
-SPMesh::~SPMesh() {
+SPMeshGradient::~SPMeshGradient() {
 #ifdef OBJECT_TRACE
-  objectTrace( "SPMesh::~SPMesh (empty function)" );
-  objectTrace( "SPMesh::~SPMesh", false );
+  objectTrace( "SPMeshGradient::~SPMeshGradient (empty function)" );
+  objectTrace( "SPMeshGradient::~SPMeshGradient", false );
 #endif
 }
 
-void SPMesh::build(SPDocument *document, Inkscape::XML::Node *repr) {
+void SPMeshGradient::build(SPDocument *document, Inkscape::XML::Node *repr) {
 #ifdef OBJECT_TRACE
-  objectTrace( "SPMesh::build" );
+  objectTrace( "SPMeshGradient::build" );
 #endif
 
     SPGradient::build(document, repr);
 
-    // Start coordinate of mesh
+    // Start coordinate of meshgradient
     this->readAttr( "x" );
     this->readAttr( "y" );
 
     this->readAttr( "type" );
 
 #ifdef OBJECT_TRACE
-    objectTrace( "SPMesh::build", false );
+    objectTrace( "SPMeshGradient::build", false );
 #endif
 }
 
 
-void SPMesh::set(unsigned key, gchar const *value) {
+void SPMeshGradient::set(unsigned key, gchar const *value) {
 #ifdef OBJECT_TRACE
-  objectTrace( "SPMesh::set" );
+  objectTrace( "SPMeshGradient::set" );
 #endif
 
     switch (key) {
@@ -80,11 +80,11 @@ void SPMesh::set(unsigned key, gchar const *value) {
 	      } else if (!strcmp(value, "bicubic")) {
 		this->type = SP_MESH_TYPE_BICUBIC;
 	      } else {
-		std::cerr << "SPMesh::set(): invalid value " << value << std::endl;
+		std::cerr << "SPMeshGradient::set(): invalid value " << value << std::endl;
 	      }
 	      this->type_set = TRUE;
 	    } else {
-	      // std::cout << "SPMesh::set() No value " << std::endl;
+	      // std::cout << "SPMeshGradient::set() No value " << std::endl;
 	      this->type = SP_MESH_TYPE_COONS;
 	      this->type_set = FALSE;
 	    }
@@ -98,20 +98,20 @@ void SPMesh::set(unsigned key, gchar const *value) {
     }
 
 #ifdef OBJECT_TRACE
-    objectTrace( "SPMesh::set", false );
+    objectTrace( "SPMeshGradient::set", false );
 #endif
 }
 
 /**
  * Write mesh gradient attributes to associated repr.
  */
-Inkscape::XML::Node* SPMesh::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
+Inkscape::XML::Node* SPMeshGradient::write(Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags) {
 #ifdef OBJECT_TRACE
-    objectTrace( "SPMesh::write", false );
+    objectTrace( "SPMeshGradient::write", false );
 #endif
 
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-        repr = xml_doc->createElement("svg:mesh");
+        repr = xml_doc->createElement("svg:meshgradient");
     }
 
     if ((flags & SP_OBJECT_WRITE_ALL) || this->x._set) {
@@ -139,19 +139,12 @@ Inkscape::XML::Node* SPMesh::write(Inkscape::XML::Document *xml_doc, Inkscape::X
     SPGradient::write(xml_doc, repr, flags);
 
 #ifdef OBJECT_TRACE
-    objectTrace( "SPMesh::write", false );
+    objectTrace( "SPMeshGradient::write", false );
 #endif
     return repr;
 }
 
-void
-sp_mesh_repr_write(SPMesh *mg)
-{
-    mg->array.write( mg );
-}
-
-
-cairo_pattern_t* SPMesh::pattern_new(cairo_t * /*ct*/,
+cairo_pattern_t* SPMeshGradient::pattern_new(cairo_t * /*ct*/,
 #if defined(MESH_DEBUG) || (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 4))
 				     Geom::OptRect const &bbox,
 				     double opacity
@@ -165,7 +158,7 @@ cairo_pattern_t* SPMesh::pattern_new(cairo_t * /*ct*/,
   using Geom::Y;
 
 #ifdef MESH_DEBUG
-  std::cout << "sp_mesh_create_pattern: " << (*bbox) << " " << opacity << std::endl;
+  std::cout << "sp_meshgradient_create_pattern: " << (*bbox) << " " << opacity << std::endl;
 #endif
 
   this->ensureArray();
@@ -178,7 +171,7 @@ cairo_pattern_t* SPMesh::pattern_new(cairo_t * /*ct*/,
   if( type_set ) {
     switch (type) {
     case SP_MESH_TYPE_COONS:
-      // std::cout << "SPMesh::pattern_new: Coons" << std::endl;
+      // std::cout << "SPMeshGradient::pattern_new: Coons" << std::endl;
       break;
     case SP_MESH_TYPE_BICUBIC:
       array.bicubic( &array_smoothed, type );

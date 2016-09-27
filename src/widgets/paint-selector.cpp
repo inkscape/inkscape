@@ -33,7 +33,7 @@
 
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
-#include "sp-mesh.h"
+#include "sp-mesh-gradient.h"
 #include "sp-stop.h"
 /* fixme: Move it from dialogs to here */
 #include "gradient-selector.h"
@@ -1221,7 +1221,7 @@ SPPaintSelector::Mode SPPaintSelector::getModeForStyle(SPStyle const & style, Fi
         } else if (SP_IS_RADIALGRADIENT(server)) {
             mode = MODE_GRADIENT_RADIAL;
 #ifdef WITH_MESH
-        } else if (SP_IS_MESH(server)) {
+        } else if (SP_IS_MESHGRADIENT(server)) {
             mode = MODE_GRADIENT_MESH;
 #endif
         } else if (SP_IS_PATTERN(server)) {

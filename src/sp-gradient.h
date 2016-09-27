@@ -210,8 +210,6 @@ sp_gradient_pattern_common_setup(cairo_pattern_t *cp,
 void sp_gradient_repr_write_vector(SPGradient *gr);
 void sp_gradient_repr_clear_vector(SPGradient *gr);
 
-void sp_mesh_repr_write(SPMesh *mg);
-
 cairo_pattern_t *sp_gradient_create_preview_pattern(SPGradient *gradient, double width);
 
 /** Transforms to/from gradient position space in given environment */

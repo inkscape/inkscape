@@ -46,7 +46,7 @@
 #include "document.h"
 #include "sp-root.h"
 
-#include "sp-mesh.h"
+#include "sp-mesh-gradient.h"
 #include "sp-mesh-array.h"
 #include "sp-mesh-row.h"
 #include "sp-mesh-patch.h"
@@ -627,7 +627,7 @@ void SPMeshPatchI::setStopPtr( guint i, SPStop* stop ) {
 };
 
 
-SPMeshNodeArray::SPMeshNodeArray( SPMesh *mg ) {
+SPMeshNodeArray::SPMeshNodeArray( SPMeshGradient *mg ) {
 
     read( mg );
 
@@ -675,7 +675,7 @@ SPMeshNodeArray& SPMeshNodeArray::operator=( const SPMeshNodeArray& rhs ) {
 
 // Fill array with data from mesh objects.
 // Returns true of array's dimensions unchanged.
-bool SPMeshNodeArray::read( SPMesh *mg_in ) {
+bool SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
 
     mg = mg_in;
 
@@ -914,7 +914,7 @@ bool SPMeshNodeArray::read( SPMesh *mg_in ) {
 /**
    Write repr using our array.
 */
-void SPMeshNodeArray::write( SPMesh *mg ) {
+void SPMeshNodeArray::write( SPMeshGradient *mg ) {
 
     // std::cout << "SPMeshNodeArray::write: entrance:" << std::endl;
     // print();
@@ -1115,7 +1115,7 @@ static SPColor default_color( SPItem *item ) {
 /**
    Create a default mesh.
 */
-void SPMeshNodeArray::create( SPMesh *mg, SPItem *item, Geom::OptRect bbox ) {
+void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bbox ) {
 
     // std::cout << "SPMeshNodeArray::create: Entrance" << std::endl;
 

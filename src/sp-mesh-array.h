@@ -140,14 +140,14 @@ public:
   void    setStopPtr( unsigned int i, SPStop* );
 };
 
-class SPMesh;
+class SPMeshGradient;
 
 // An array of mesh nodes.
 class SPMeshNodeArray {
 
 // Should be private
 public:
-  SPMesh *mg;
+  SPMeshGradient *mg;
   std::vector< std::vector< SPMeshNode* > > nodes;
 
 public:
@@ -162,16 +162,16 @@ public:
   friend class SPMeshPatchI;
 
   SPMeshNodeArray() { built = false; mg = NULL; draggers_valid = false; };
-  SPMeshNodeArray( SPMesh *mg );
+  SPMeshNodeArray( SPMeshGradient *mg );
   SPMeshNodeArray( const SPMeshNodeArray& rhs );
   SPMeshNodeArray& operator=(const SPMeshNodeArray& rhs);
 
   ~SPMeshNodeArray() { clear(); };
   bool built;
 
-  bool read( SPMesh *mg );
-  void write( SPMesh *mg );
-  void create( SPMesh *mg, SPItem *item, Geom::OptRect bbox );
+  bool read( SPMeshGradient *mg );
+  void write( SPMeshGradient *mg );
+  void create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bbox );
   void clear();
   void print();
 

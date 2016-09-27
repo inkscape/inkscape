@@ -34,7 +34,7 @@ class SPKnot;
 class SPDesktop;
 class SPCSSAttr;
 class SPLinearGradient;
-class SPMesh;
+class SPMeshGradient;
 class SPItem;
 class SPObject;
 class SPRadialGradient;
@@ -209,7 +209,7 @@ private:
 
     void addDraggersRadial(SPRadialGradient *rg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
     void addDraggersLinear(SPLinearGradient *lg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
-    void addDraggersMesh(  SPMesh           *mg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+    void addDraggersMesh(  SPMeshGradient   *mg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
     bool styleSet( const SPCSSAttr *css );
 
