@@ -86,16 +86,16 @@ push @{$attributes{ "transform" }->{elements}}, "flowRoot","flowPara","flowSpan"
 push @{$attributes{ "fr" }->{elements}}, "radialGradient";
 
 # Mesh gradients
-push @{$attributes{ "id"    }->{elements}}, "mesh","meshrow","meshpatch";
+push @{$attributes{ "id"    }->{elements}}, "meshgradient","mesh","meshrow","meshpatch";
 push @{$attributes{ "path" }->{elements}}, "stop";
-push @{$attributes{ "gradientUnits" }->{elements}}, "mesh";
-push @{$attributes{ "gradientTransform" }->{elements}}, "mesh";
+push @{$attributes{ "gradientUnits" }->{elements}}, "meshgradient","mesh";
+push @{$attributes{ "gradientTransform" }->{elements}}, "meshgradient","mesh";
 #push @{$attributes{ "transform" }->{elements}}, "mesh";
-push @{$attributes{ "href" }->{elements}}, "mesh";
-push @{$attributes{ "type" }->{elements}}, "mesh";
-push @{$attributes{ "x" }->{elements}}, "mesh";
-push @{$attributes{ "y" }->{elements}}, "mesh";
-push @{$attributes{ "xlink:href" }->{elements}}, "mesh";
+push @{$attributes{ "href" }->{elements}}, "meshgradient","mesh";
+push @{$attributes{ "type" }->{elements}}, "meshgradient","mesh";
+push @{$attributes{ "x" }->{elements}}, "meshgradient","mesh";
+push @{$attributes{ "y" }->{elements}}, "meshgradient","mesh";
+push @{$attributes{ "xlink:href" }->{elements}}, "meshgradient","mesh";
 
 # Hatches
 push @{$attributes{ "id"    }->{elements}}, "hatch","hatchpath";
