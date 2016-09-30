@@ -742,8 +742,6 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
                             if (endpoint != startpoint) {
                                 tangent = endpoint - startpoint;
                                 tangent.normalize();
-                            } else {
-                                tangent = Geom::Point (0,0);
                             }
                         }
                         g_free(end_otp);
