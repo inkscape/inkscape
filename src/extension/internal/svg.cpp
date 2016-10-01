@@ -78,6 +78,28 @@ static void pruneExtendedNamespaces( Inkscape::XML::Node *repr )
     }
 }
 
+/*
+ * Similar to the above sodipodi and inkscape prune, but used on all documents
+ * to remove problematic elements (for example Adobe's i:pgf tag) only removes
+ * known garbage tags.
+ */
+static void pruneProprietaryGarbage( Inkscape::XML::Node *repr )
+{
+    if (repr) {
+        std::vector<Inkscape::XML::Node *> nodesRemoved;
+        for ( Node *child = repr->firstChild(); child; child = child->next() ) { 
+            if((strncmp("i:pgf", child->name(), 5) == 0)) {
+                nodesRemoved.push_back(child);
+                g_warning( "An Adobe proprietary tag was found which is known to cause issues. It was removed before saving.");
+            } else {
+                pruneProprietaryGarbage(child);
+            }
+        }
+        for ( std::vector<Inkscape::XML::Node *>::iterator it = nodesRemoved.begin(); it != nodesRemoved.end(); ++it ) { 
+            repr->removeChild(*it);
+        }
+    }
+}
 
 /**
     \return   None
@@ -245,6 +267,10 @@ Svg::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
     bool const exportExtensions = ( !mod->get_id()
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE)
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE));
+
+    // We prune the in-use document and deliberately loose data, because there
+    // is no known use for this data at the present time.
+    pruneProprietaryGarbage(rdoc->root());
 
     if (!exportExtensions) {
         // We make a duplicate document so we don't prune the in-use document
