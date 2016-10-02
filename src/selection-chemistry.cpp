@@ -1021,6 +1021,7 @@ void sp_selection_raise(Inkscape::Selection *selection, SPDesktop *desktop)
                        C_("Undo action", "Raise"));
 }
 
+
 void sp_object_set_raise_to_top(ObjectSet *set) {
     std::vector<Inkscape::XML::Node*> rl(set->xmlNodes().begin(), set->xmlNodes().end());
     sort(rl.begin(),rl.end(),sp_repr_compare_position_bool);
@@ -1031,7 +1032,7 @@ void sp_object_set_raise_to_top(ObjectSet *set) {
     }
 }
 
-void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *desktop)
+void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *desktop, bool skip_undo)
 {
     SPDocument *document = selection->layers()->getDocument();
 
@@ -1048,8 +1049,10 @@ void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *deskto
 
     sp_object_set_raise_to_top(selection);
 
-    DocumentUndo::done(document, SP_VERB_SELECTION_TO_FRONT,
-                       _("Raise to top"));
+    if (!skip_undo) {
+        DocumentUndo::done(document, SP_VERB_SELECTION_TO_FRONT,
+                         _("Raise to top"));
+    }
 }
 
 void sp_object_set_lower(ObjectSet *set) {
@@ -1111,6 +1114,7 @@ void sp_selection_lower(Inkscape::Selection *selection, SPDesktop *desktop)
                        C_("Undo action", "Lower"));
 }
 
+
 void sp_object_set_lower_to_bottom(ObjectSet *set) {
     std::vector<Inkscape::XML::Node*> rl(set->xmlNodes().begin(), set->xmlNodes().end());
     sort(rl.begin(),rl.end(),sp_repr_compare_position_bool);
@@ -1132,7 +1136,7 @@ void sp_object_set_lower_to_bottom(ObjectSet *set) {
     }
 }
 
-void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *desktop)
+void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *desktop, bool skip_undo)
 {
     if (selection->isEmpty()) {
         selection_display_message(desktop, Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to lower to bottom."));
@@ -1146,9 +1150,10 @@ void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *des
     }
 
     sp_object_set_lower_to_bottom(selection);
-
-    DocumentUndo::done(selection->layers()->getDocument(), SP_VERB_SELECTION_TO_BACK,
-                       _("Lower to bottom"));
+    if (!skip_undo) {
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_TO_BACK,
+                           _("Lower to bottom"));
+    }
 }
 
 void
@@ -3859,7 +3864,7 @@ void sp_selection_set_clipgroup(SPDesktop *desktop)
  * If \a apply_clip_path parameter is true, clipPath is created, otherwise mask
  *
  */
-void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_layer)
+void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_layer, bool skip_undo)
 {
     if (desktop == NULL) {
         return;
@@ -4017,11 +4022,12 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
     }
 
     selection->addList(items_to_select);
-
-    if (apply_clip_path) {
-        DocumentUndo::done(doc, SP_VERB_OBJECT_SET_CLIPPATH, _("Set clipping path"));
-    } else {
-        DocumentUndo::done(doc, SP_VERB_OBJECT_SET_MASK, _("Set mask"));
+    if (!skip_undo) {
+        if (apply_clip_path) {
+            DocumentUndo::done(doc, SP_VERB_OBJECT_SET_CLIPPATH, _("Set clipping path"));
+        } else {
+            DocumentUndo::done(doc, SP_VERB_OBJECT_SET_MASK, _("Set mask"));
+        }
     }
 }
 

@@ -85,9 +85,9 @@ void sp_object_set_lower(Inkscape::ObjectSet *set);
 void sp_object_set_lower_to_bottom(Inkscape::ObjectSet *set);
 
 void sp_selection_raise(Inkscape::Selection *selection, SPDesktop *desktop);
-void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *desktop, bool skip_undo = false);
 void sp_selection_lower(Inkscape::Selection *selection, SPDesktop *desktop);
-void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *desktop, bool skip_undo = false);
 
 SPCSSAttr *take_style_from_item (SPObject *object);
 
@@ -164,7 +164,7 @@ void sp_document_get_export_hints (SPDocument * doc, Glib::ustring &filename, fl
 void sp_selection_create_bitmap_copy (SPDesktop *desktop);
 
 void sp_selection_set_clipgroup(SPDesktop *desktop);
-void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_layer);
+void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_layer, bool skip_undo = false);
 void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path);
 
 bool fit_canvas_to_selection(SPDesktop *, bool with_margins = false);

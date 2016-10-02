@@ -42,6 +42,7 @@
 #include "ink-toggle-action.h"
 #include "toolbox.h"
 #include "ui/icon-names.h"
+#include "ui/tools/eraser-tool.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -65,22 +66,60 @@ static void sp_erc_mass_value_changed( GtkAdjustment *adj, GObject* tbl )
     update_presets_list(tbl);
 }
 
+static void sp_erc_velthin_value_changed( GtkAdjustment *adj, GObject* tbl )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble("/tools/eraser/thinning", gtk_adjustment_get_value(adj) );
+    update_presets_list(tbl);
+}
+
+static void sp_erc_cap_rounding_value_changed( GtkAdjustment *adj, GObject* tbl )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble( "/tools/eraser/cap_rounding", gtk_adjustment_get_value(adj) );
+    update_presets_list(tbl);
+}
+
+static void sp_erc_tremor_value_changed( GtkAdjustment *adj, GObject* tbl )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble( "/tools/eraser/tremor", gtk_adjustment_get_value(adj) );
+    update_presets_list(tbl);
+}
+
+
 static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
-    bool eraserMode = ege_select_one_action_get_active( act ) != 0;
+    guint eraser_mode = ege_select_one_action_get_active( act );
     if (DocumentUndo::getUndoSensitive(desktop->getDocument())) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setBool( "/tools/eraser/mode", eraserMode );
+        prefs->setInt( "/tools/eraser/mode", eraser_mode );
     }
     GtkAction *split = GTK_ACTION( g_object_get_data(tbl, "split") );
     GtkAction *mass = GTK_ACTION( g_object_get_data(tbl, "mass") );
     GtkAction *width = GTK_ACTION( g_object_get_data(tbl, "width") );
-    if(eraserMode == TRUE){
-        gtk_action_set_visible( split, TRUE );
+    GtkAction *usepressure = GTK_ACTION( g_object_get_data(tbl, "usepressure") );
+    GtkAction *cap_rounding = GTK_ACTION( g_object_get_data(tbl, "cap_rounding") );
+    GtkAction *thinning = GTK_ACTION( g_object_get_data(tbl, "thinning") );
+    GtkAction *tremor = GTK_ACTION( g_object_get_data(tbl, "tremor") );
+    if (eraser_mode != ERASER_MODE_DELETE) {
+        if(eraser_mode == ERASER_MODE_CUT) {
+            gtk_action_set_visible( split, TRUE );
+        } else {
+            gtk_action_set_visible( split, FALSE );
+        }
+        gtk_action_set_visible(usepressure, TRUE );
+        gtk_action_set_visible(tremor, TRUE );
+        gtk_action_set_visible(cap_rounding, TRUE );
+        gtk_action_set_visible(thinning, TRUE );
         gtk_action_set_visible( mass, TRUE );
         gtk_action_set_visible( width, TRUE );
     } else {
+        gtk_action_set_visible(usepressure, FALSE );
+        gtk_action_set_visible(tremor, FALSE );
+        gtk_action_set_visible(cap_rounding, FALSE );
+        gtk_action_set_visible(thinning, FALSE );
         gtk_action_set_visible( split, FALSE );
         gtk_action_set_visible( mass, FALSE );
         gtk_action_set_visible( width, FALSE );
@@ -91,7 +130,7 @@ static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
         /*
-        if ( eraserMode != 0 ) {
+        if ( eraser_mode != ERASER_MODE_DELETE ) {
         } else {
         }
         */
@@ -112,7 +151,7 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
 {
     Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gint eraserMode = FALSE;
+    gint eraser_mode = FALSE;
     {
         GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
         GtkTreeIter iter;
@@ -126,8 +165,15 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Cut"),
-                            1, _("Cut out from objects"),
+                            1, _("Cut out from paths and shapes"),
                             2, INKSCAPE_ICON("path-difference"),
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Clip"),
+                            1, _("Clip from objects"),
+                            2, INKSCAPE_ICON("path-intersection"),
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "EraserModeAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
@@ -138,12 +184,13 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         ege_select_one_action_set_appearance( act, "full" );
         ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
         g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
-        ege_select_one_action_set_icon_column( act, 2 );
-        ege_select_one_action_set_tooltip_column( act, 1  );
+        ege_select_one_action_set_icon_column( act, 2);
+        ege_select_one_action_set_icon_size( act, secondarySize );
+        ege_select_one_action_set_tooltip_column( act, 1);
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        eraserMode = prefs->getBool("/tools/eraser/mode") ? TRUE : FALSE;
-        ege_select_one_action_set_active( act, eraserMode );
+        eraser_mode = prefs->getInt("/tools/eraser/mode", ERASER_MODE_CLIP);
+        ege_select_one_action_set_active( act, eraser_mode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_erasertb_mode_changed), holder );
     }
 
@@ -164,6 +211,71 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         g_object_set_data( holder, "width", eact );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
     }
+    /* Use Pressure button */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "EraserPressureAction",
+                                                      _("Eraser Pressure"),
+                                                      _("Use the pressure of the input device to alter the width of the pen"),
+                                                      INKSCAPE_ICON("draw-use-pressure"),
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/eraser/usepressure", update_presets_list, holder);
+        g_signal_connect( holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
+        g_object_set_data( holder, "usepressure", act );
+    }
+    {
+    
+    /* Thinning */
+        gchar const* labels[] = {_("(speed blows up stroke)"), 0, 0, _("(slight widening)"), _("(constant width)"), _("(slight thinning, default)"), 0, 0, _("(speed deflates stroke)")};
+            gdouble values[] = {-100, -40, -20, -10, 0, 10, 20, 40, 100};
+        EgeAdjustmentAction* eact = create_adjustment_action( "EraserThinningAction",
+                                                              _("Eraser Stroke Thinning"), _("Thinning:"),
+                                                              _("How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"),
+                                                              "/tools/eraser/thinning", 10,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
+                                                              -100, 100, 1, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_erc_velthin_value_changed, NULL /*unit tracker*/, 1, 0);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        g_object_set_data( holder, "thinning", eact );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        }
+        {
+        /* Cap Rounding */
+            gchar const* labels[] = {_("(blunt caps, default)"), _("(slightly bulging)"), 0, 0, _("(approximately round)"), _("(long protruding caps)")};
+        gdouble values[] = {0, 0.3, 0.5, 1.0, 1.4, 5.0};
+        // TRANSLATORS: "cap" means "end" (both start and finish) here
+        EgeAdjustmentAction* eact = create_adjustment_action( "EraserCapRoundingAction",
+                                                              _("Eraser Cap rounding"), _("Caps:"),
+                                                              _("Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"),
+                                                              "/tools/eraser/cap_rounding", 0.0,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
+                                                              0.0, 5.0, 0.01, 0.1,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_erc_cap_rounding_value_changed, NULL /*unit tracker*/, 0.01, 2 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        g_object_set_data( holder, "cap_rounding", eact );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        }
+
+        {
+        /* Tremor */
+            gchar const* labels[] = {_("(smooth line)"), _("(slight tremor)"), _("(noticeable tremor)"), 0, 0, _("(maximum tremor)")};
+        gdouble values[] = {0, 10, 20, 40, 60, 100};
+        EgeAdjustmentAction* eact = create_adjustment_action( "EraserTremorAction",
+                                                              _("EraserStroke Tremor"), _("Tremor:"),
+                                                              _("Increase to make strokes rugged and trembling"),
+                                                              "/tools/eraser/tremor", 0.0,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
+                                                              0.0, 100, 1, 10.0,
+                                                              labels, values, G_N_ELEMENTS(labels),
+                                                              sp_erc_tremor_value_changed, NULL /*unit tracker*/, 1, 0);
+
+        ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
+        g_object_set_data( holder, "tremor", eact );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        }
     {
         /* Mass */
             gchar const* labels[] = {_("(no inertia)"), _("(slight smoothing, default)"), _("(noticeable lagging)"), 0, 0, _("(maximum inertia)")};
@@ -196,11 +308,27 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     GtkAction *split = GTK_ACTION( g_object_get_data(holder, "split") );
     GtkAction *mass = GTK_ACTION( g_object_get_data(holder, "mass") );
     GtkAction *width = GTK_ACTION( g_object_get_data(holder, "width") );
-    if(eraserMode == TRUE){
-        gtk_action_set_visible( split, TRUE );
+    GtkAction *usepressure = GTK_ACTION( g_object_get_data(holder, "usepressure") );
+    GtkAction *cap_rounding = GTK_ACTION( g_object_get_data(holder, "cap_rounding") );
+    GtkAction *thinning = GTK_ACTION( g_object_get_data(holder, "thinning") );
+    GtkAction *tremor = GTK_ACTION( g_object_get_data(holder, "tremor") );
+    if (eraser_mode != ERASER_MODE_DELETE) {
+        if(eraser_mode == ERASER_MODE_CUT) {
+            gtk_action_set_visible( split, TRUE );
+        } else {
+            gtk_action_set_visible( split, FALSE );
+        }
+        gtk_action_set_visible(usepressure, TRUE );
+        gtk_action_set_visible(tremor, TRUE );
+        gtk_action_set_visible(cap_rounding, TRUE );
+        gtk_action_set_visible(thinning, TRUE );
         gtk_action_set_visible( mass, TRUE );
         gtk_action_set_visible( width, TRUE );
     } else {
+        gtk_action_set_visible(usepressure, FALSE );
+        gtk_action_set_visible(tremor, FALSE );
+        gtk_action_set_visible(cap_rounding, FALSE );
+        gtk_action_set_visible(thinning, FALSE );
         gtk_action_set_visible( split, FALSE );
         gtk_action_set_visible( mass, FALSE );
         gtk_action_set_visible( width, FALSE );

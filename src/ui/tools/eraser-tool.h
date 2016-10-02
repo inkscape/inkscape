@@ -31,6 +31,10 @@
 #define ERC_MAX_TILT          1.0
 #define ERC_DEFAULT_TILT      0.0
 
+#define ERASER_MODE_DELETE    0
+#define ERASER_MODE_CUT       1
+#define ERASER_MODE_CLIP      2
+
 namespace Inkscape {
 namespace UI {
 namespace Tools {
