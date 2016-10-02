@@ -307,12 +307,19 @@ sp_desktop_widget_class_init (SPDesktopWidgetClass *klass)
  * This adjusts the range of the rulers when the dock container is adjusted
  * (fixes lp:950552)
  */
-static void canvas_tbl_size_allocate(GtkWidget    * /*widget*/,
+static void canvas_tbl_size_allocate(GtkWidget    * widget,
                                      GdkRectangle * /*allocation*/,
                                      gpointer      data)
 {
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data); 
     sp_desktop_widget_update_rulers(dtw);
+    
+    GtkWidget* parent = gtk_widget_get_parent(widget);
+    if(GTK_IS_PANED(parent)) {
+        GtkPaned *paned = GTK_PANED(parent);
+        // Could use gtk paned property 'max-position' here
+        gtk_paned_set_position(paned, 10000);
+    }
 }
 
 /**
@@ -527,8 +534,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
             paned_class->cycle_handle_focus = NULL;
         }
 
-        gtk_widget_set_hexpand(GTK_WIDGET(paned->gobj()), TRUE);
-        gtk_widget_set_vexpand(GTK_WIDGET(paned->gobj()), TRUE);
+        paned->set_hexpand(true);
+        paned->set_vexpand(true);
         gtk_grid_attach(GTK_GRID(tbl_wrapper), GTK_WIDGET (paned->gobj()), 1, 1, 1, 1);
     } else {
         gtk_widget_set_hexpand(GTK_WIDGET(dtw->canvas_tbl), TRUE);
