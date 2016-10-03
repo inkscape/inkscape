@@ -378,6 +378,10 @@ MeasureTool::~MeasureTool()
         sp_canvas_item_destroy(measure_tmp_items[idx]);
     }
     measure_tmp_items.clear();
+    for (size_t idx = 0; idx < measure_item.size(); ++idx) {
+        sp_canvas_item_destroy(measure_item[idx]);
+    }
+    measure_item.clear();
     for (size_t idx = 0; idx < measure_phantom_items.size(); ++idx) {
         sp_canvas_item_destroy(measure_phantom_items[idx]);
     }
@@ -590,6 +594,12 @@ bool MeasureTool::root_handler(GdkEvent* event)
 
                 snap_manager.preSnap(scp);
                 snap_manager.unSetup();
+            }
+            Geom::Point const motion_w(event->motion.x, event->motion.y);
+            if(event->motion.state & GDK_SHIFT_MASK) {
+                showInfoBox(motion_w, true);
+            } else {
+                showInfoBox(motion_w, false);
             }
         } else {
             ret = TRUE;
@@ -1109,6 +1119,108 @@ void MeasureTool::setMeasureCanvasControlLine(Geom::Point start, Geom::Point end
                     color,
                     measure_repr);
         }
+}
+
+void MeasureTool::showItemInfoText(Geom::Point pos, gchar *measure_str, double fontsize)
+{
+    SPCanvasText *canvas_tooltip = sp_canvastext_new(desktop->getTempGroup(),
+                                                     desktop,
+                                                     pos,
+                                                     measure_str);
+    sp_canvastext_set_fontsize(canvas_tooltip, fontsize);
+    canvas_tooltip->rgba = 0xffffffff;
+    canvas_tooltip->outline = false;
+    canvas_tooltip->background = true;
+    canvas_tooltip->anchor_position = TEXT_ANCHOR_LEFT;
+    canvas_tooltip->rgba_background = 0x00000099;
+    measure_item.push_back(SP_CANVAS_ITEM(canvas_tooltip));
+    sp_canvas_item_show(SP_CANVAS_ITEM(canvas_tooltip));
+}
+
+void MeasureTool::showInfoBox(Geom::Point cursor, bool into_groups)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    Inkscape::Util::Unit const * unit = desktop->getNamedView()->getDisplayUnit();
+    for (size_t idx = 0; idx < measure_item.size(); ++idx) {
+        sp_canvas_item_destroy(measure_item[idx]);
+    }
+    measure_item.clear();
+    
+    SPItem *newover = desktop->getItemAtPoint(cursor, into_groups); 
+    if (newover) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        double fontsize = prefs->getDouble("/tools/measure/fontsize", 10.0);
+        double scale = prefs->getDouble("/tools/measure/scale", 100.0) / 100.0;
+        int precision = prefs->getInt("/tools/measure/precision", 2);
+        Glib::ustring unit_name = prefs->getString("/tools/measure/unit");
+        if (!unit_name.compare("")) {
+            unit_name = "px";
+        }
+        Geom::Scale zoom = Geom::Scale(Inkscape::Util::Quantity::convert(desktop->current_zoom(), "px", unit->abbr)).inverse();
+        if(newover != over){
+            over = newover;
+            Preferences *prefs = Preferences::get();
+            int prefs_bbox = prefs->getBool("/tools/bounding_box", 0);
+            SPItem::BBoxType bbox_type = !prefs_bbox ? SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
+            Geom::OptRect bbox = over->bounds(bbox_type);
+            if (bbox) {
+                
+                item_width = Inkscape::Util::Quantity::convert((*bbox).width() * scale, unit->abbr, unit_name);
+                item_height = Inkscape::Util::Quantity::convert((*bbox).height() * scale, unit->abbr, unit_name);
+                item_x = Inkscape::Util::Quantity::convert((*bbox).left(), unit->abbr, unit_name);
+                Geom::Point y_point(0,Inkscape::Util::Quantity::convert((*bbox).bottom() * scale, unit->abbr, "px"));
+                y_point *= desktop->doc2dt();
+                item_y = Inkscape::Util::Quantity::convert(y_point[Geom::Y] * scale, "px", unit_name);
+                if (SP_IS_SHAPE(over)) {
+                    Geom::PathVector shape = SP_SHAPE(over)->getCurve()->get_pathvector();
+                    item_length = Geom::length(paths_to_pw(shape));
+                    item_length = Inkscape::Util::Quantity::convert(item_length * scale, unit->abbr, unit_name);
+                }
+            }
+        }
+        gchar *measure_str = NULL;
+        std::stringstream precision_str;
+        precision_str.imbue(std::locale::classic());
+        double origin = Inkscape::Util::Quantity::convert(14, "px", unit->abbr);
+        Geom::Point rel_position = Geom::Point(origin, origin);
+        Geom::Point pos = desktop->w2d(cursor);
+        double gap = Inkscape::Util::Quantity::convert(7 + fontsize, "px", unit->abbr);
+        if (SP_IS_SHAPE(over)) {
+            precision_str << _("Length") <<  ": %." << precision << "f %s";
+            measure_str = g_strdup_printf(precision_str.str().c_str(), item_length, unit_name.c_str());
+            precision_str.str("");
+            showItemInfoText(pos + (rel_position * zoom),measure_str,fontsize);
+            rel_position = Geom::Point(rel_position[Geom::X], rel_position[Geom::Y] + gap);
+        } else if (SP_IS_GROUP(over)) {
+            measure_str = _("Shift to measure into group");
+            showItemInfoText(pos + (rel_position * zoom),measure_str,fontsize);
+            rel_position = Geom::Point(rel_position[Geom::X], rel_position[Geom::Y] + gap);
+        }
+
+        precision_str <<  "Y: %." << precision << "f %s";
+        measure_str = g_strdup_printf(precision_str.str().c_str(), item_y, unit_name.c_str());
+        precision_str.str("");
+        showItemInfoText(pos + (rel_position * zoom),measure_str,fontsize);
+        rel_position = Geom::Point(rel_position[Geom::X], rel_position[Geom::Y] + gap);
+
+        precision_str <<  "X: %." << precision << "f %s";
+        measure_str = g_strdup_printf(precision_str.str().c_str(), item_x, unit_name.c_str());
+        precision_str.str("");
+        showItemInfoText(pos + (rel_position * zoom),measure_str,fontsize);
+        rel_position = Geom::Point(rel_position[Geom::X], rel_position[Geom::Y] + gap);
+
+        precision_str << _("Height") << ": %." << precision << "f %s";
+        measure_str = g_strdup_printf(precision_str.str().c_str(), item_height, unit_name.c_str());
+        precision_str.str("");
+        showItemInfoText(pos + (rel_position * zoom),measure_str,fontsize);
+        rel_position = Geom::Point(rel_position[Geom::X], rel_position[Geom::Y] + gap);
+
+        precision_str << _("Width") << ": %." << precision << "f %s";
+        measure_str = g_strdup_printf(precision_str.str().c_str(), item_width, unit_name.c_str());
+        precision_str.str("");
+        showItemInfoText(pos + (rel_position * zoom),measure_str,fontsize);
+        g_free(measure_str);
+    }
 }
 
 void MeasureTool::showCanvasItems(bool to_guides, bool to_item, bool to_phantom, Inkscape::XML::Node *measure_repr)

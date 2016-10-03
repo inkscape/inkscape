@@ -54,6 +54,8 @@ public:
     virtual void setMarker(bool isStart);
     virtual const std::string& getPrefsPath();
     Geom::Point readMeasurePoint(bool is_start);
+    void showInfoBox(Geom::Point cursor, bool into_groups);
+    void showItemInfoText(Geom::Point pos, gchar *measure_str, double fontsize);
     void writeMeasurePoint(Geom::Point point, bool is_start);
     void setGuide(Geom::Point origin, double angle, const char *label);
     void setPoint(Geom::Point origin, Inkscape::XML::Node *measure_repr);
@@ -77,6 +79,13 @@ private:
     Geom::Point end_p;
     std::vector<SPCanvasItem *> measure_tmp_items;
     std::vector<SPCanvasItem *> measure_phantom_items;
+    std::vector<SPCanvasItem *> measure_item;
+    double item_width;
+    double item_height;
+    double item_x;
+    double item_y;
+    double item_length;
+    SPItem *over;
     sigc::connection _knot_start_moved_connection;
     sigc::connection _knot_start_ungrabbed_connection;
     sigc::connection _knot_start_click_connection;
