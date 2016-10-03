@@ -434,6 +434,11 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
         return gr;
     }
 
+    // FIXME  Transforming a mesh gradient is more complicated... probably need to add function to SPMeshArray.wq
+    if ( gr && SP_IS_MESHGRADIENT( gr ) ) {
+        return gr;
+    }
+
     // First, fork it if it is shared
     gr = sp_gradient_fork_private_if_necessary(gr, gr->getVector(),
                                                SP_IS_RADIALGRADIENT(gr) ? SP_GRADIENT_TYPE_RADIAL : SP_GRADIENT_TYPE_LINEAR, item);
