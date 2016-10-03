@@ -766,9 +766,17 @@ void EraserTool::set_to_accumulated() {
                             if (bbox && bbox->intersects(*eraserBbox)) {
                                 SPClipPath *clip_path = item->clip_ref->getObject();
                                 if (clip_path) {
-                                    SPPath *clip_data = SP_PATH(clip_path->firstChild());
+                                    std::vector<SPItem*> selected;
+                                    selected.push_back(SP_ITEM(clip_path->firstChild()));
+                                    std::vector<Inkscape::XML::Node*> to_select;
+                                    std::vector<SPItem*> items(selected);
+                                    sp_item_list_to_curves(items, selected, to_select);
+                                    Inkscape::XML::Node * clip_data = SP_ITEM(clip_path->firstChild())->getRepr();
+                                    if (!clip_data && !to_select.empty()) {
+                                        clip_data = *(to_select.begin());
+                                    }
                                     if (clip_data) {
-                                        Inkscape::XML::Node *dup_clip = SP_OBJECT(clip_data)->getRepr()->duplicate(xml_doc);
+                                        Inkscape::XML::Node *dup_clip = clip_data->duplicate(xml_doc);
                                         if (dup_clip) {
                                             SPItem * dup_clip_obj = SP_ITEM(item_repr->parent->appendChildRepr(dup_clip));
                                             if (dup_clip_obj) {
