@@ -67,6 +67,7 @@ option(WITH_LIBCDR "Compile with support of libcdr for CorelDRAW Diagrams" ON)
 option(WITH_LIBVISIO "Compile with support of libvisio for Microsoft Visio Diagrams" ON)
 option(WITH_LIBWPG "Compile with support of libwpg for WordPerfect Graphics" ON)
 option(WITH_NLS "Compile with Native Language Support (using gettext)" ON)
+option(WITH_YAML "Compile with YAML support (enables xverbs)" ON)
 
 option(ENABLE_BINRELOC "Enable relocatable binaries" OFF)
 
@@ -255,6 +256,7 @@ message("WITH_LIBWPG:             ${WITH_LIBWPG}")
 message("WITH_NLS:                ${WITH_NLS}")
 message("WITH_OPENMP:             ${WITH_OPENMP}")
 message("WITH_PROFILING:          ${WITH_PROFILING}")
+message("WITH_YAML:               ${WITH_YAML}")
 
 if(WIN32)
 message("")

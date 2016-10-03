@@ -221,6 +221,7 @@ set(inkscape_SRC
   line-geometry.cpp
   line-snapper.cpp
   main-cmdlineact.cpp
+  main-cmdlinexact.cpp
   media.cpp
   message-context.cpp
   message-stack.cpp
@@ -337,6 +338,7 @@ set(inkscape_SRC
   line-snapper.h
   macros.h
   main-cmdlineact.h
+  main-cmdlinexact.h
   media.h
   menus-skeleton.h
   message-context.h

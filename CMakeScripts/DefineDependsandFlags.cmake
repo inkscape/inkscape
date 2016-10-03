@@ -387,6 +387,17 @@ list(APPEND INKSCAPE_LIBS ${SIGC++_LDFLAGS})
 
 list(APPEND INKSCAPE_CXX_FLAGS ${SIGC++_CFLAGS_OTHER})
 
+find_package(yaml)
+if(YAML_FOUND)
+    set (WITH_YAML ON)
+    list(APPEND INKSCAPE_INCS_SYS ${YAML_INCLUDE_DIRS})
+    list(APPEND INKSCAPE_LIBS ${YAML_LIBRARIES})
+    add_definitions(-DWITH_YAML)
+else(YAML_FOUND)
+    set(WITH_YAML OFF)
+    message(STATUS "Could not locate the yaml library headers: xverb feature will be disabled")
+endif()
+
 list(REMOVE_DUPLICATES INKSCAPE_CXX_FLAGS)
 foreach(flag ${INKSCAPE_CXX_FLAGS})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" CACHE STRING "" FORCE)

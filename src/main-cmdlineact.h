@@ -21,18 +21,23 @@ class ActionContext;
 
 class CmdLineAction {
     bool _isVerb;
-    char *_arg;
-
     static std::list <CmdLineAction *> _list;
+    static bool _requestQuit;
+
+protected:
+    char * _arg;
 
 public:
-    CmdLineAction(bool isVerb, char const *arg);
-    virtual ~CmdLineAction();
+    CmdLineAction (bool isVerb, char const * arg);
+    virtual ~CmdLineAction ();
+    virtual bool isExtended();
+    virtual void doItX (ActionContext const & context);
 
-    void doIt(ActionContext const &context);
+    void doIt (ActionContext const & context);
+
     /** Return true if any actions were performed */
-    static bool doList(ActionContext const &context);
-    static bool idle(void);
+    static bool doList (ActionContext const & context);
+    static bool idle (void);
 };
 
 } // Inkscape

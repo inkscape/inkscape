@@ -575,7 +575,7 @@ public:
             return get_search(code);
         }
     }
-    static Verb * getbyid (gchar const * id);
+    static Verb * getbyid (gchar const * id, bool verbose = true);
     
     /**
      * Print a message to stderr indicating that this verb needs a GUI to run

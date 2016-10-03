@@ -14,6 +14,7 @@
 #include <verbs.h>
 #include <inkscape.h>
 #include <document.h>
+#include <file.h>
 
 #include <glibmm/i18n.h>
 
@@ -23,8 +24,7 @@ namespace Inkscape {
 
 std::list <CmdLineAction *> CmdLineAction::_list;
 
-CmdLineAction::CmdLineAction(bool isVerb, gchar const *arg) : _isVerb(isVerb), _arg(NULL)
-{
+CmdLineAction::CmdLineAction (bool isVerb, gchar const * arg) : _isVerb(isVerb), _arg(NULL) {
     if (arg != NULL) {
         _arg = g_strdup(arg);
     }
@@ -34,58 +34,68 @@ CmdLineAction::CmdLineAction(bool isVerb, gchar const *arg) : _isVerb(isVerb), _
     return;
 }
 
-CmdLineAction::~CmdLineAction()
-{
+CmdLineAction::~CmdLineAction () {
     if (_arg != NULL) {
         g_free(_arg);
     }
 }
 
+bool
+CmdLineAction::isExtended() {
+    return false;
+}
+
 void
-CmdLineAction::doIt(ActionContext const &context)
+CmdLineAction::doItX (ActionContext const & context)
 {
+    (void)context;
+    printf("CmdLineAction::doItX() %s\n", _arg);
+}
+
+void
+CmdLineAction::doIt (ActionContext const & context) {
     //printf("Doing: %s\n", _arg);
     if (_isVerb) {
-        Inkscape::Verb *verb = Inkscape::Verb::getbyid(_arg);
+        if (isExtended()) {
+            doItX(context);
+            return;
+        }
+
+        Inkscape::Verb * verb = Inkscape::Verb::getbyid(_arg);
         if (verb == NULL) {
             printf(_("Unable to find verb ID '%s' specified on the command line.\n"), _arg);
             return;
         }
-        SPAction *action = verb->get_action(context);
+        SPAction * action = verb->get_action(context);
         sp_action_perform(action, NULL);
     } else {
-        if (context.getDocument() == NULL || context.getSelection() == NULL) {
-            return;
-        }
+        if (context.getDocument() == NULL || context.getSelection() == NULL) { return; }
 
-        SPDocument *doc = context.getDocument();
-        SPObject *obj = doc->getObjectById(_arg);
+        SPDocument * doc = context.getDocument();
+        SPObject * obj = doc->getObjectById(_arg);
         if (obj == NULL) {
             printf(_("Unable to find node ID: '%s'\n"), _arg);
             return;
         }
 
-        Inkscape::Selection *selection = context.getSelection();
+        Inkscape::Selection * selection = context.getSelection();
         selection->add(obj);
     }
     return;
 }
 
 bool
-CmdLineAction::doList(ActionContext const &context)
-{
+CmdLineAction::doList (ActionContext const & context) {
     bool hasActions = !_list.empty();
-    for (std::list<CmdLineAction *>::iterator i = _list.begin();
-            i != _list.end(); ++i) {
-        CmdLineAction *entry = *i;
+    for (std::list<CmdLineAction *>::iterator i = _list.begin(); i != _list.end(); ++i) {
+        CmdLineAction * entry = *i;
         entry->doIt(context);
     }
     return hasActions;
 }
 
 bool
-CmdLineAction::idle(void)
-{
+CmdLineAction::idle (void) {
     std::list<SPDesktop *> desktops;
     INKSCAPE.get_all_desktops(desktops);
 
@@ -93,8 +103,8 @@ CmdLineAction::idle(void)
     // should have had time to make more at this point.
     for (std::list<SPDesktop *>::iterator i = desktops.begin();
             i != desktops.end(); ++i) {
-        SPDesktop *desktop = *i;
-        //Inkscape::UI::View::View * view = dynamic_cast<Inkscape::UI::View::View *>(desktop);
+        SPDesktop * desktop = *i;
+        //Inkscape::UI::View::View * view = dynamic_cast<Inkscape::UI::View::View *>(desktop);    
         doList(ActionContext(desktop));
     }
     return false;

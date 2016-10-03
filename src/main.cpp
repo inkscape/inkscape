@@ -112,6 +112,7 @@
 #endif
 
 #include "main-cmdlineact.h"
+#include "main-cmdlinexact.h"
 #include "widgets/icon.h"
 
 #include <errno.h>
@@ -127,6 +128,7 @@ enum {
     SP_ARG_NOGUI,
     SP_ARG_GUI,
     SP_ARG_FILE,
+    SP_ARG_XVERBS,
     SP_ARG_PRINT,
     SP_ARG_EXPORT_PNG,
     SP_ARG_EXPORT_DPI,
@@ -227,6 +229,11 @@ static gchar *sp_export_png_utf8 = NULL;
 static gchar *sp_export_svg_utf8 = NULL;
 static gchar *sp_global_printer_utf8 = NULL;
 
+#ifdef WITH_YAML
+static gchar *sp_xverbs_yaml_utf8 = NULL;
+static gchar *sp_xverbs_yaml = NULL;
+#endif // WITH_YAML
+
 
 /**
  *  Reset variables to default values.
@@ -300,7 +307,12 @@ struct poptOption options[] = {
      POPT_ARG_STRING, NULL, SP_ARG_FILE,
      N_("Open specified document(s) (option string may be excluded)"),
      N_("FILENAME")},
-
+#ifdef WITH_YAML
+    {"xverbs", 0,
+     POPT_ARG_STRING, &sp_xverbs_yaml, SP_ARG_XVERBS,
+     N_("xverbs command"),
+     N_("XVERBS_FILENAME")},
+#endif // WITH_YAML
     {"print", 'p',
      POPT_ARG_STRING, &sp_global_printer, SP_ARG_PRINT,
      N_("Print document(s) to specified output file (use '| program' for pipe)"),
@@ -881,6 +893,9 @@ static int sp_common_main( int argc, char const **argv, GSList **flDest )
         fixupSingleFilename( &sp_export_png, &sp_export_png_utf8 );
         fixupSingleFilename( &sp_export_svg, &sp_export_svg_utf8 );
         fixupSingleFilename( &sp_global_printer, &sp_global_printer_utf8 );
+#ifdef WITH_YAML
+        fixupSingleFilename( &sp_xverbs_yaml, &sp_xverbs_yaml_utf8 );
+#endif // WITH_YAML
     }
     else
     {
@@ -890,6 +905,10 @@ static int sp_common_main( int argc, char const **argv, GSList **flDest )
             sp_export_svg_utf8 = g_strdup( sp_export_svg );
         if ( sp_global_printer )
             sp_global_printer_utf8 = g_strdup( sp_global_printer );
+#ifdef WITH_YAML
+        if ( sp_xverbs_yaml )
+            sp_xverbs_yaml_utf8 = g_strdup( sp_xverbs_yaml );
+#endif // WITH_YAML
     }
 
 #ifdef WITH_DBUS
@@ -2131,6 +2150,16 @@ sp_process_args(poptContext ctx)
                 }
                 break;
             }
+#ifdef WITH_YAML
+            case SP_ARG_XVERBS: {
+                gchar const *fn = poptGetOptArg(ctx);
+                if (fn != NULL) {
+                    sp_xverbs_yaml = g_strdup(fn);
+                    Inkscape::CmdLineXAction::createActionsFromYAML((const char *)sp_xverbs_yaml);
+                }
+                break;
+            }
+#endif // WITH_YAML
             case SP_ARG_VERSION: {
                 printf("Inkscape %s (%s)\n", Inkscape::version_string, __DATE__);
                 exit(0);

@@ -817,7 +817,7 @@ Verb *Verb::get_search(unsigned int code)
  *
  * @param  id  Which id to search for.
  */
-Verb *Verb::getbyid(gchar const *id)
+Verb *Verb::getbyid(gchar const *id, bool verbose)
 {
     Verb *verb = NULL;
     VerbIDTable::iterator verb_found = _verb_ids.find(id);
@@ -833,8 +833,10 @@ Verb *Verb::getbyid(gchar const *id)
                 && strcmp(id, "SelectionTrace")   != 0
                 && strcmp(id, "PaintBucketPrefs") != 0
 #endif
-            )
-        printf("Unable to find: %s\n", id);
+            ) {
+        if (verbose)
+            printf("Unable to find: %s\n", id);
+    }
 
     return verb;
 }
