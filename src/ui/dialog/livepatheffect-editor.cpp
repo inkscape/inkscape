@@ -52,7 +52,7 @@ void lpeeditor_selection_changed (Inkscape::Selection * selection, gpointer data
 {
     LivePathEffectEditor *lpeeditor = static_cast<LivePathEffectEditor *>(data);
     lpeeditor->lpe_list_locked = false;
-    lpeeditor->onSelectionChanged(selection);
+    lpeeditor->onSelectionChanged(selection, true);
 }
 
 static void lpeeditor_selection_modified (Inkscape::Selection * selection, guint /*flags*/, gpointer data)
@@ -89,7 +89,8 @@ LivePathEffectEditor::LivePathEffectEditor()
       button_up(),
       button_down(),
       current_desktop(NULL),
-      current_lpeitem(NULL)
+      current_lpeitem(NULL),
+      current_lperef(NULL)
 {
     Gtk::Box *contents = _getContents();
     contents->set_spacing(4);
@@ -190,6 +191,10 @@ LivePathEffectEditor::~LivePathEffectEditor()
 void
 LivePathEffectEditor::showParams(LivePathEffect::Effect& effect)
 {
+    if ( ! effect.upd_params ) {
+        return;
+    }
+
     if (effectwidget) {
         effectcontrol_vbox.remove(*effectwidget);
         delete effectwidget;
@@ -249,9 +254,8 @@ LivePathEffectEditor::set_sensitize_all(bool sensitive)
     button_down.set_sensitive(sensitive);
 }
 
-
 void
-LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
+LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel, bool upd_params)
 {
     if (lpe_list_locked) {
         // this was triggered by selecting a row in the list, so skip reloading
@@ -275,6 +279,9 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                 if ( lpeitem->hasPathEffect() ) {
                     Inkscape::LivePathEffect::Effect *lpe = lpeitem->getCurrentLPE();
                     if (lpe) {
+                        if (upd_params) {
+                            lpe->upd_params = true;
+                        }
                         showParams(*lpe);
                         lpe_list_locked = true;
                         selectInList(lpe);
@@ -478,6 +485,12 @@ LivePathEffectEditor::onRemove()
         SPItem *item = sel->singleItem();
         SPLPEItem *lpeitem  = dynamic_cast<SPLPEItem *>(item);
         if ( lpeitem ) {
+            if (current_lperef && current_lperef->lpeobject) {
+                LivePathEffect::Effect * effect = current_lperef->lpeobject->get_lpe();
+                if (effect) {
+                    effect->upd_params = true;
+                }
+            }
             lpeitem->removeCurrentPathEffect(false);
 
             DocumentUndo::done( current_desktop->getDocument(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
@@ -532,11 +545,17 @@ void LivePathEffectEditor::on_effect_selection_changed()
     Gtk::TreeModel::iterator it = sel->get_selected();
     LivePathEffect::LPEObjectReference * lperef = (*it)[columns.lperef];
 
-    if (lperef && current_lpeitem) {
+    if (lperef && current_lpeitem && current_lperef != lperef) {
+    //The last condition ignore Gtk::TreeModel may occasionally be changed emitted when nothing has happened
         if (lperef->lpeobject->get_lpe()) {
             lpe_list_locked = true; // prevent reload of the list which would lose selection
             current_lpeitem->setCurrentPathEffect(lperef);
-            showParams(*lperef->lpeobject->get_lpe());
+            current_lperef = lperef;
+            LivePathEffect::Effect * effect = lperef->lpeobject->get_lpe();
+            if (effect) {
+                effect->upd_params = true;
+                showParams(*effect);
+            }
         }
     }
 }
@@ -554,6 +573,14 @@ void LivePathEffectEditor::on_visibility_toggled( Glib::ustring const& str )
         /* FIXME: this explicit writing to SVG is wrong. The lpe_item should have a method to disable/enable an effect within its stack.
          * So one can call:  lpe_item->setActive(lpeobjref->lpeobject); */
         lpeobjref->lpeobject->get_lpe()->getRepr()->setAttribute("is_visible", newValue ? "true" : "false");
+        Inkscape::Selection *sel = _getSelection();
+        if ( sel && !sel->isEmpty() ) {
+            SPItem *item = sel->singleItem();
+            SPLPEItem *lpeitem  = dynamic_cast<SPLPEItem *>(item);
+            if ( lpeitem ) {
+                lpeobjref->lpeobject->get_lpe()->doOnVisibilityToggled(lpeitem);
+            }
+        }
         DocumentUndo::done( current_desktop->getDocument(), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                             newValue ? _("Activate path effect") : _("Deactivate path effect"));
     }

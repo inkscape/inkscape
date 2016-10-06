@@ -33,11 +33,11 @@ public:
                 const Util::EnumDataConverter<E>& c,
                 Registry& wr,
                 Inkscape::XML::Node* repr_in = NULL,
-                SPDocument *doc_in = NULL )
-        : RegisteredWidget< LabelledComboBoxEnum<E> >(label, tip, c)
+                SPDocument *doc_in = NULL,
+                bool sorted = true )
+        : RegisteredWidget< LabelledComboBoxEnum<E> >(label, tip, c, (const Glib::ustring &)"", (const Glib::ustring &)"", true, sorted)
     {
         RegisteredWidget< LabelledComboBoxEnum<E> >::init_parent(key, wr, repr_in, doc_in);
-
         _changed_connection = combobox()->signal_changed().connect (sigc::mem_fun (*this, &RegisteredEnum::on_changed));
     }
 

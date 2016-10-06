@@ -28,13 +28,13 @@ Text::Text(Glib::ustring const &label, Glib::ustring const &tooltip,
 {
 }
 
-const char *Text::getText() const
+Glib::ustring const Text::getText() const
 {
     g_assert(_widget != NULL);
-    return static_cast<Gtk::Entry*>(_widget)->get_text().c_str();
+    return static_cast<Gtk::Entry*>(_widget)->get_text();
 }
 
-void Text::setText(const char* text)
+void Text::setText(Glib::ustring const text)
 {
     g_assert(_widget != NULL);
     setProgrammatically = true; // callback is supposed to reset back, if it cares

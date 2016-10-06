@@ -170,7 +170,7 @@ LPEEllipse5Pts::doEffect_path (Geom::PathVector const & path_in)
 
     // figure out if we have a slice, guarding against rounding errors
 
-    Path p(Geom::Point(cos(0), sin(0)));
+    Geom::Path p(Geom::Point(cos(0), sin(0)));
 
     double end = 2 * M_PI;
     for (s = 0; s < end; s += M_PI_2) {

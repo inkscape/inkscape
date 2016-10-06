@@ -39,6 +39,7 @@
 #include "live_effects/lpe-lattice2.h"
 #include "live_effects/lpe-lattice.h"
 #include "live_effects/lpe-line_segment.h"
+#include "live_effects/lpe-measure-line.h"
 #include "live_effects/lpe-mirror_symmetry.h"
 #include "live_effects/lpe-offset.h"
 #include "live_effects/lpe-parallel.h"
@@ -135,6 +136,8 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {FILL_BETWEEN_MANY,     N_("Fill between many"),       "fill_between_many"},
     {ELLIPSE_5PTS,          N_("Ellipse by 5 points"),     "ellipse_5pts"},
     {BOUNDING_BOX,          N_("Bounding Box"),            "bounding_box"},
+/* 9.93 */
+    {MEASURE_LINE,          N_("Measure Line"),            "measure-line"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
@@ -303,6 +306,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case TRANSFORM_2PTS:
             neweffect = static_cast<Effect*> ( new LPETransform2Pts(lpeobj) );
             break;
+        case MEASURE_LINE:
+            neweffect = static_cast<Effect*> ( new LPEMeasureLine(lpeobj) );
+            break;
         default:
             g_warning("LivePathEffect::Effect::New called with invalid patheffect type (%d)", lpenr);
             neweffect = NULL;
@@ -348,6 +354,7 @@ Effect::Effect(LivePathEffectObject *lpeobject)
       concatenate_before_pwd2(false),
       sp_lpe_item(NULL),
       current_zoom(1),
+      upd_params(true),
       sp_curve(NULL),
       provides_own_flash_paths(true), // is automatically set to false if providesOwnFlashPaths() is not overridden
       is_ready(false) // is automatically set to false if providesOwnFlashPaths() is not overridden
@@ -431,7 +438,9 @@ void Effect::doAfterEffect (SPLPEItem const* /*lpeitem*/)
 void Effect::doOnRemove (SPLPEItem const* /*lpeitem*/)
 {
 }
-
+void Effect::doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/)
+{
+}
 //secret impl methods (shhhh!)
 void Effect::doOnApply_impl(SPLPEItem const* lpeitem)
 {
@@ -690,7 +699,7 @@ Effect::newWidget()
 
         ++it;
     }
-
+    upd_params = false;
     return dynamic_cast<Gtk::Widget *>(vbox);
 }
 

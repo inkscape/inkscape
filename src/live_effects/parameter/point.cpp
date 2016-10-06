@@ -4,7 +4,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "ui/widget/registered-widget.h"
 #include "live_effects/parameter/point.h"
 #include "live_effects/effect.h"
 #include "svg/svg.h"
@@ -30,7 +29,8 @@ PointParam::PointParam( const Glib::ustring& label, const Glib::ustring& tip,
     :   Parameter(label, tip, key, wr, effect), 
         defvalue(default_value),
         liveupdate(live_update),
-        knoth(NULL)
+        knoth(NULL),
+        _pointwdg(NULL)
 {
     knot_shape = SP_KNOT_SHAPE_DIAMOND;
     knot_mode  = SP_KNOT_MODE_XOR;
@@ -62,9 +62,9 @@ PointParam::param_get_default() const{
 }
 
 void
-PointParam::param_update_default(Geom::Point newpoint)
+PointParam::param_update_default(const Geom::Point default_point)
 {
-    defvalue = newpoint;
+    defvalue = default_point;
 }
 
 void
@@ -80,6 +80,9 @@ PointParam::param_setValue(Geom::Point newpoint, bool write)
     }
     if(knoth && liveupdate){
         knoth->update_knots();
+    }
+    if (_pointwdg) {
+        _pointwdg->setValue( newpoint );
     }
 }
 
@@ -116,7 +119,7 @@ PointParam::param_transform_multiply(Geom::Affine const& postmul, bool /*set*/)
 Gtk::Widget *
 PointParam::param_newWidget()
 {
-    Inkscape::UI::Widget::RegisteredTransformedPoint * pointwdg = Gtk::manage(
+    _pointwdg = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredTransformedPoint( param_label,
                                                               param_tooltip,
                                                               param_key,
@@ -126,15 +129,15 @@ PointParam::param_newWidget()
     // TODO: fix to get correct desktop (don't use SP_ACTIVE_DESKTOP)
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Geom::Affine transf = desktop->doc2dt();
-    pointwdg->setTransform(transf);
-    pointwdg->setValue( *this );
-    pointwdg->clearProgrammatically();
-    pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
+    _pointwdg->setTransform(transf);
+    _pointwdg->setValue( *this );
+    _pointwdg->clearProgrammatically();
+    _pointwdg->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change point parameter"));
 
     Gtk::HBox * hbox = Gtk::manage( new Gtk::HBox() );
-    static_cast<Gtk::HBox*>(hbox)->pack_start(*pointwdg, true, true);
+    static_cast<Gtk::HBox*>(hbox)->pack_start(*_pointwdg, true, true);
     static_cast<Gtk::HBox*>(hbox)->show_all_children();
-
+    param_effect->upd_params = false;
     return dynamic_cast<Gtk::Widget *> (hbox);
 }
 
@@ -191,13 +194,13 @@ void
 PointParamKnotHolderEntity::knot_click(guint state)
 {
     if (state & GDK_CONTROL_MASK) {
-            if (state & GDK_MOD1_MASK) {
-                this->pparam->param_set_default();
-                SPLPEItem * splpeitem = dynamic_cast<SPLPEItem *>(item);
-                if(splpeitem){
-                    sp_lpe_item_update_patheffect(splpeitem, false, false);
-                }
+        if (state & GDK_MOD1_MASK) {
+            this->pparam->param_set_default();
+            SPLPEItem * splpeitem = dynamic_cast<SPLPEItem *>(item);
+            if(splpeitem){
+                sp_lpe_item_update_patheffect(splpeitem, false, false);
             }
+        }
     }
 }
 

@@ -94,7 +94,7 @@ findShadowedTime(Geom::Path const &patha, std::vector<Geom::Point> const &pt_and
 
     Affine mat = from_basis( T, N, pt_and_dir[0] );
     mat = mat.inverse();
-    Path p = patha * mat;
+    Geom::Path p = patha * mat;
     
     std::vector<double> times;
     
@@ -477,7 +477,7 @@ LPEKnot::doEffect_path (Geom::PathVector const &path_in)
 //                std::cout<<"fusing first and last component\n";
                 ++beg_comp;
                 --end_comp;
-                Path first = gpaths[i0].portion(dom.back());
+                Geom::Path first = gpaths[i0].portion(dom.back());
                 //FIXME: stitching should not be necessary (?!?)
                 first.setStitching(true);
                 first.append(gpaths[i0].portion(dom.front()));

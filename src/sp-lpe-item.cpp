@@ -73,6 +73,7 @@ void SPLPEItem::build(SPDocument *document, Inkscape::XML::Node *repr) {
 
 void SPLPEItem::release() {
     // disconnect all modified listeners:
+    
     for (std::list<sigc::connection>::iterator mod_it = this->lpe_modified_connection_list->begin();
          mod_it != this->lpe_modified_connection_list->end(); ++mod_it)
     {
@@ -83,7 +84,7 @@ void SPLPEItem::release() {
     this->lpe_modified_connection_list = NULL;
 
     PathEffectList::iterator it = this->path_effect_list->begin();
-
+    
     while ( it != this->path_effect_list->end() ) {
         // unlink and delete all references in the list
         (*it)->unlink();
@@ -121,8 +122,10 @@ void SPLPEItem::set(unsigned int key, gchar const* value) {
 
                 while ( it != this->path_effect_list->end() )
                 {
+                    LivePathEffectObject *lpeobj = (*it)->lpeobject;
+                    lpeobj->get_lpe()->doOnRemove(this);
                     (*it)->unlink();
-                    delete *it;
+                    delete (*it);
                     it = this->path_effect_list->erase(it);
                 }
 

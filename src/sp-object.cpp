@@ -485,13 +485,16 @@ void SPObject::_sendDeleteSignalRecursive() {
 void SPObject::deleteObject(bool propagate, bool propagate_descendants)
 {
     sp_object_ref(this, NULL);
+    if ( SP_IS_LPE_ITEM(this) ) {
+        SP_LPE_ITEM(this)->removeAllPathEffects(false);
+    }
     if (propagate) {
         _delete_signal.emit(this);
     }
     if (propagate_descendants) {
         this->_sendDeleteSignalRecursive();
     }
-
+    
     Inkscape::XML::Node *repr = getRepr();
     if (repr && repr->parent()) {
         sp_repr_unparent(repr);

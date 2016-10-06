@@ -61,7 +61,7 @@ LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
     using namespace Geom;
 
     // generate connecting lines (the 'sides' of the extrusion)
-    Path path(Point(0.,0.));
+    Geom::Path path(Point(0.,0.));
     path.appendNew<Geom::LineSegment>( extrude_vector.getVector() );
     Piecewise<D2<SBasis> > connector = path.toPwSb();
 

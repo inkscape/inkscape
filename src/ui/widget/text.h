@@ -44,12 +44,12 @@ public:
     /**
      * Get the text in the entry.
      */
-    const char* getText() const;
+    Glib::ustring const getText() const;
 
     /**
      * Sets the text of the text entry.
      */
-    void setText(const char* text);
+    void setText(Glib::ustring const text);
 
     void update();
 

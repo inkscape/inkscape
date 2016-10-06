@@ -16,7 +16,6 @@
 #include <gtkmm/liststore.h>
 #include "attr-widget.h"
 #include "util/enums.h"
-
 #include <glibmm/i18n.h>
 
 namespace Inkscape {
@@ -190,9 +189,11 @@ public:
                           const Util::EnumDataConverter<E>& c,
                           Glib::ustring const &suffix = "",
                           Glib::ustring const &icon = "",
-                          bool mnemonic = true)
-        : Labelled(label, tooltip, new ComboBoxEnum<E>(c), suffix, icon, mnemonic)
-    { }
+                          bool mnemonic = true,
+                          bool sorted = true)
+        : Labelled(label, tooltip, new ComboBoxEnum<E>(c, SP_ATTR_INVALID, sorted), suffix, icon, mnemonic)
+    { 
+    }
 
     ComboBoxEnum<E>* getCombobox() {
         return static_cast< ComboBoxEnum<E>* > (_widget);

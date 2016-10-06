@@ -27,6 +27,7 @@ set(live_effects_SRC
 	lpe-lattice.cpp
 	lpe-lattice2.cpp
 	lpe-line_segment.cpp
+	lpe-measure-line.cpp
 	lpe-mirror_symmetry.cpp
 	lpe-offset.cpp
 	lpe-parallel.cpp
@@ -68,6 +69,7 @@ set(live_effects_SRC
 	parameter/powerstrokepointarray.cpp
 	parameter/random.cpp
 	parameter/text.cpp
+	parameter/fontbutton.cpp
 	parameter/togglebutton.cpp
 	parameter/transformedpoint.cpp
 	parameter/unit.cpp
@@ -105,6 +107,7 @@ set(live_effects_SRC
 	lpe-lattice.h
 	lpe-lattice2.h
 	lpe-line_segment.h
+	lpe-measure-line.h
 	lpe-mirror_symmetry.h
 	lpe-offset.h
 	lpe-parallel.h
@@ -148,6 +151,7 @@ set(live_effects_SRC
 	parameter/powerstrokepointarray.h
 	parameter/random.h
 	parameter/text.h
+	parameter/fontbutton.h
 	parameter/togglebutton.h
 	parameter/transformedpoint.h
 	parameter/unit.h

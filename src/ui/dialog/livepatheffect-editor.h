@@ -45,7 +45,8 @@ public:
 
     static LivePathEffectEditor &getInstance() { return *new LivePathEffectEditor(); }
 
-    void onSelectionChanged(Inkscape::Selection *sel);
+    void onSelectionChanged(Inkscape::Selection *sel, bool upd_params = false);
+    void onSelectionModified(Inkscape::Selection *sel);
     virtual void on_effect_selection_changed();
     void setDesktop(SPDesktop *desktop);
 
@@ -121,6 +122,8 @@ private:
     SPDesktop * current_desktop;
     
     SPLPEItem * current_lpeitem;
+
+    LivePathEffect::LPEObjectReference * current_lperef;
 
     friend void lpeeditor_selection_changed (Inkscape::Selection * selection, gpointer data);
 

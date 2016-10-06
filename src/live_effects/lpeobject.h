@@ -38,8 +38,14 @@ public:
 
     /* Note that the returned pointer can be NULL in a valid LivePathEffectObject contained in a valid list of lpeobjects in an lpeitem!
      * So one should always check whether the returned value is NULL or not */
-    Inkscape::LivePathEffect::Effect * get_lpe() { return lpe; };
-    Inkscape::LivePathEffect::Effect const * get_lpe() const { return lpe; };
+    Inkscape::LivePathEffect::Effect * get_lpe() {
+        if(this) return lpe;
+        else return NULL;
+    }
+    Inkscape::LivePathEffect::Effect const * get_lpe() const {
+        if(this) return lpe;
+        else return NULL;
+    };
 
     Inkscape::LivePathEffect::Effect *lpe; // this can be NULL in a valid LivePathEffectObject
 

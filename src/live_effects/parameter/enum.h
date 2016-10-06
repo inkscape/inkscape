@@ -27,12 +27,14 @@ public:
                 const Util::EnumDataConverter<E>& c,
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
-                E default_value)
+                E default_value,
+                bool sort = true)
         : Parameter(label, tip, key, wr, effect)
     {
         enumdataconv = &c;
         defvalue = default_value;
         value = defvalue;
+        sorted = sort;
     };
 
     virtual ~EnumParam() { };
@@ -40,12 +42,11 @@ public:
     virtual Gtk::Widget * param_newWidget() {
         Inkscape::UI::Widget::RegisteredEnum<E> *regenum = Gtk::manage ( 
             new Inkscape::UI::Widget::RegisteredEnum<E>( param_label, param_tooltip,
-                       param_key, *enumdataconv, *param_wr, param_effect->getRepr(), param_effect->getSPDoc() ) );
+                       param_key, *enumdataconv, *param_wr, param_effect->getRepr(), param_effect->getSPDoc(), sorted ) );
 
         regenum->set_active_by_id(value);
         regenum->combobox()->setProgrammatically = false;
         regenum->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change enumeration parameter"));
-
         return dynamic_cast<Gtk::Widget *> (regenum);
     };
 
@@ -86,6 +87,7 @@ private:
 
     E value;
     E defvalue;
+    bool sorted;
 
     const Util::EnumDataConverter<E> * enumdataconv;
 };

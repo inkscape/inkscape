@@ -66,7 +66,7 @@ public:
     
     virtual void doAfterEffect (SPLPEItem const* lpeitem);
     virtual void doOnRemove (SPLPEItem const* lpeitem);
-
+    virtual void doOnVisibilityToggled(SPLPEItem const* lpeitem);
     void writeParamsToSVG();
 
     virtual void acceptParamPath (SPPath const* param_path);
@@ -123,6 +123,7 @@ public:
 
     void editNextParamOncanvas(SPItem * item, SPDesktop * desktop);
     bool apply_to_clippath_and_mask;
+    bool upd_params;
 
 protected:
     Effect(LivePathEffectObject *lpeobject);

@@ -135,7 +135,7 @@ public:
     /**
      * Sets the value of the spin button.
      */
-    void    setValue(double value);
+    void    setValue(double value, bool setProg = true);
 
     /**
      * Manually forces an update of the spin button.

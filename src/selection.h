@@ -134,6 +134,7 @@ public:
      */
     void setReprList(std::vector<XML::Node*> const &reprs);
 
+
     using ObjectSet::includes;
 
     /**
@@ -166,6 +167,7 @@ public:
      *
      * @return the resulting connection
      */
+    void emitModified(){ _emitModified(this->_flags); };
     sigc::connection connectChanged(sigc::slot<void, Selection *> const &slot) {
         return _changed_signal.connect(slot);
     }

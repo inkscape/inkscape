@@ -40,7 +40,9 @@ public:
     virtual gchar * param_getSVGValue() const;
 
     void param_setValue(const Glib::ustring newvalue);
+    void param_hide_canvas_text();
     virtual void param_set_default();
+    void param_update_default(Glib::ustring default_value);
     void setPos(Geom::Point pos);
     void setPosAndAnchor(const Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
 			 const double t, const double length, bool use_curvature = false);
@@ -53,7 +55,7 @@ private:
     TextParam& operator=(const TextParam&);
     double anchor_x;
     double anchor_y;
-
+    bool _hide_canvas_text;
     Glib::ustring value;
     Glib::ustring defvalue;
 

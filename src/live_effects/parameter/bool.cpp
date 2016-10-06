@@ -36,6 +36,12 @@ BoolParam::param_set_default()
     param_setValue(defvalue);
 }
 
+void 
+BoolParam::param_update_default(bool const default_value)
+{
+    defvalue = default_value;
+}
+
 bool
 BoolParam::param_readSVGValue(const gchar * strvalue)
 {
