@@ -50,6 +50,7 @@
 #include "live_effects/lpe-powerstroke.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
+#include "ui/dialog/livepatheffect-editor.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::UI::ToolboxFactory;
@@ -242,7 +243,7 @@ static void sp_simplify_flatten(GtkWidget * /*widget*/, GObject *obj)
         SPLPEItem* lpeitem = dynamic_cast<SPLPEItem*>(*it);
         if (lpeitem && lpeitem->hasPathEffect()){
             PathEffectList lpelist = lpeitem->getEffectList();
-            std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
+            PathEffectList::iterator i;
             for (i = lpelist.begin(); i != lpelist.end(); ++i) {
                 LivePathEffectObject *lpeobj = (*i)->lpeobject;
                 if (lpeobj) {
@@ -260,7 +261,10 @@ static void sp_simplify_flatten(GtkWidget * /*widget*/, GObject *obj)
                                 lpeitem->removeCurrentPathEffect(false);
                                 shape->setCurve(c,0);
                             }
+                            Inkscape::UI::Dialog::LivePathEffectEditor *lpeeditor = new Inkscape::UI::Dialog::LivePathEffectEditor();
+                            lpeeditor->effect_list_reload(lpeitem);
                             break;
+                            
                         }
                     }
                 }
