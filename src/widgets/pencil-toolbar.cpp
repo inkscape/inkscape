@@ -50,7 +50,6 @@
 #include "live_effects/lpe-powerstroke.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
-#include "ui/dialog/livepatheffect-editor.h"
 
 using Inkscape::UI::UXManager;
 using Inkscape::UI::ToolboxFactory;
