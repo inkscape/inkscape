@@ -35,6 +35,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+class EntryAttr;
+//class SpinButtonAttr;
 class DualSpinButton;
 class MultiSpinButton;
 class FilterEffectsDialog : public UI::Widget::Panel {
@@ -258,6 +260,8 @@ private:
     void remove_primitive();
     void duplicate_primitive();
     void convolve_order_changed();
+    void image_x_changed();
+    void image_y_changed();
 
     void set_attr_direct(const UI::Widget::AttrWidget*);
     void set_child_attr_direct(const UI::Widget::AttrWidget*);
@@ -308,6 +312,10 @@ private:
     DualSpinButton* _convolve_order;
     MultiSpinButton* _convolve_target;
 
+    // Image
+    EntryAttr* _image_x;
+    EntryAttr* _image_y;
+    
     // For controlling setting sensitivity
     Gtk::Widget* _k1, *_k2, *_k3, *_k4;
 

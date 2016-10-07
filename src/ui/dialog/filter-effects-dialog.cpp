@@ -860,6 +860,17 @@ public:
         return dss;
     }
 
+    // SpinButton
+    SpinButtonAttr* add_spinbutton(double defalt_value, const SPAttributeEnum attr, const Glib::ustring& label,
+                                       const double lo, const double hi, const double step_inc,
+                                       const double climb, const int digits, char* tip = NULL)
+    {
+        SpinButtonAttr* sb = new SpinButtonAttr(lo, hi, step_inc, climb, digits, attr, defalt_value, tip);
+        add_widget(sb, label);
+        add_attr_widget(sb);
+        return sb;
+    }
+
     // DualSpinButton
     DualSpinButton* add_dualspinbutton(char* defalt_value, const SPAttributeEnum attr, const Glib::ustring& label,
                                        const double lo, const double hi, const double step_inc,
@@ -2785,8 +2796,14 @@ void FilterEffectsDialog::init_settings_widgets()
 
     _settings->type(NR_FILTER_IMAGE);
     _settings->add_fileorelement(SP_ATTR_XLINK_HREF, _("Source of Image:"));
-
+    _image_x = _settings->add_entry(SP_ATTR_X,_("X"),_("X"));
+    _image_x->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::image_x_changed));
+    //This commented because we want the default empty value of X or Y and couldent get it from SpinButton
+    //_image_y = _settings->add_spinbutton(0, SP_ATTR_Y, _("Y:"), -DBL_MAX, DBL_MAX, 1, 1, 5, _("Y"));
+    _image_y = _settings->add_entry(SP_ATTR_Y,_("Y"),_("Y"));
+    _image_y->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::image_y_changed));
     _settings->type(NR_FILTER_OFFSET);
+    _settings->add_checkbutton(false, SP_ATTR_PRESERVEALPHA, _("Preserve Alpha"), "true", "false", _("If set, the alpha channel won't be altered by this filter primitive."));
     _settings->add_spinscale(0, SP_ATTR_DX, _("Delta X:"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted to the right"));
     _settings->add_spinscale(0, SP_ATTR_DY, _("Delta Y:"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted downwards"));
 
@@ -2924,6 +2941,33 @@ void FilterEffectsDialog::convolve_order_changed()
     _convolve_matrix->set_from_attribute(_primitive_list.get_selected());
     _convolve_target->get_spinbuttons()[0]->get_adjustment()->set_upper(_convolve_order->get_spinbutton1().get_value() - 1);
     _convolve_target->get_spinbuttons()[1]->get_adjustment()->set_upper(_convolve_order->get_spinbutton2().get_value() - 1);
+}
+
+bool number_or_empy(const Glib::ustring& text) { 
+    if (text.empty()) {
+        return true;
+    }
+    double n = atof( text.c_str() );
+    if (n == 0.0 && strcmp(text.c_str(), "0") != 0 && strcmp(text.c_str(), "0.0") != 0) {
+        return false; 
+    }
+    else {
+        return true; 
+    }
+}
+
+void FilterEffectsDialog::image_x_changed()
+{
+    if (number_or_empy(_image_x->get_text())) {
+        _image_x->set_from_attribute(_primitive_list.get_selected());
+    }
+}
+
+void FilterEffectsDialog::image_y_changed()
+{
+    if (number_or_empy(_image_y->get_text())) {
+        _image_y->set_from_attribute(_primitive_list.get_selected());
+    }
 }
 
 void FilterEffectsDialog::set_attr_direct(const AttrWidget* input)
