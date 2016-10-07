@@ -239,8 +239,9 @@ static void sp_simplify_flatten(GtkWidget * /*widget*/, GObject *obj)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(obj, "desktop"));
     auto selected = desktop->getSelection()->items();
+    SPLPEItem* lpeitem = NULL;
     for (auto it(selected.begin()); it != selected.end(); ++it){
-        SPLPEItem* lpeitem = dynamic_cast<SPLPEItem*>(*it);
+        lpeitem = dynamic_cast<SPLPEItem*>(*it);
         if (lpeitem && lpeitem->hasPathEffect()){
             PathEffectList lpelist = lpeitem->getEffectList();
             PathEffectList::iterator i;
@@ -261,15 +262,16 @@ static void sp_simplify_flatten(GtkWidget * /*widget*/, GObject *obj)
                                 lpeitem->removeCurrentPathEffect(false);
                                 shape->setCurve(c,0);
                             }
-                            Inkscape::UI::Dialog::LivePathEffectEditor *lpeeditor = new Inkscape::UI::Dialog::LivePathEffectEditor();
-                            lpeeditor->effect_list_reload(lpeitem);
                             break;
-                            
                         }
                     }
                 }
             }
         }
+    }
+    if (lpeitem) {
+        desktop->getSelection()->remove(lpeitem->getRepr());
+        desktop->getSelection()->add(lpeitem->getRepr());
     }
 }
 

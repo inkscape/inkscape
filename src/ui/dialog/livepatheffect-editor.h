@@ -49,8 +49,6 @@ public:
     void onSelectionModified(Inkscape::Selection *sel);
     virtual void on_effect_selection_changed();
     void setDesktop(SPDesktop *desktop);
-    // void add_entry(const char* name );
-    void effect_list_reload(SPLPEItem *lpeitem);
 
 private:
 
@@ -65,6 +63,9 @@ private:
     sigc::connection desktopChangeConn;
     sigc::connection selection_changed_connection;
     sigc::connection selection_modified_connection;
+
+    // void add_entry(const char* name );
+    void effect_list_reload(SPLPEItem *lpeitem);
 
     void set_sensitize_all(bool sensitive);
 
