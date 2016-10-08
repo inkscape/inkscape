@@ -1045,37 +1045,7 @@ bool SelectTool::root_handler(GdkEvent* event) {
                     
                     ret = TRUE;
                     break;
-                    
-                case GDK_KEY_less:
-                case GDK_KEY_comma:
-                    if (MOD__ALT(event)) {
-                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
-                        sp_selection_scale_screen(selection, -2*mul);
-                    } else if (MOD__CTRL(event)) {
-                        sp_selection_scale_times(selection, 0.5);
-                    } else {
-                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
-                        sp_selection_scale(selection, -offset*mul);
-                    }
-                    
-                    ret = TRUE;
-                    break;
-                    
-                case GDK_KEY_greater:
-                case GDK_KEY_period:
-                    if (MOD__ALT(event)) {
-                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
-                        sp_selection_scale_screen(selection, 2*mul);
-                    } else if (MOD__CTRL(event)) {
-                        sp_selection_scale_times(selection, 2);
-                    } else {
-                        gint mul = 1 + gobble_key_events(get_group0_keyval(&event->key), 0); // with any mask
-                        sp_selection_scale(selection, offset*mul);
-                    }
-                    
-                    ret = TRUE;
-                    break;
-                    
+
                 case GDK_KEY_Return:
                     if (MOD__CTRL_ONLY(event)) {
                         if (selection->singleItem()) {

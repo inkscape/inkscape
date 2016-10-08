@@ -263,13 +263,13 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="Z" modifiers="Ctrl" action="EditUndo" display="true"/>
   <bind key="y" modifiers="Ctrl,Shift" action="EditUndo" />
   <bind key="Y" modifiers="Ctrl,Shift" action="EditUndo" />
-  <bind key="less" modifiers="Ctrl" action="EditUndo" /> <!-- FIXME: stolen by scaling, redirect that through a verb -->
-  <bind key="comma" modifiers="Ctrl" action="EditUndo" /> <!-- FIXME: stolen by scaling, redirect that through a verb -->
+  <bind key="less" modifiers="Ctrl" action="EditUndo" />
+  <bind key="comma" modifiers="Ctrl" action="EditUndo" />
 
   <bind key="y" modifiers="Ctrl" action="EditRedo" display="true"/>
   <bind key="Y" modifiers="Ctrl" action="EditRedo" />
-  <bind key="greater" modifiers="Ctrl" action="EditRedo" /> <!-- FIXME: stolen by scaling, redirect that through a verb -->
-  <bind key="period" modifiers="Ctrl" action="EditRedo" /> <!-- FIXME: stolen by scaling, redirect that through a verb -->
+  <bind key="greater" modifiers="Ctrl" action="EditRedo" />
+  <bind key="period" modifiers="Ctrl" action="EditRedo" />
 
   <bind key="x" modifiers="Ctrl" action="EditCut" display="true"/>
   <bind key="X" modifiers="Ctrl" action="EditCut" />

@@ -405,6 +405,24 @@ override) the bindings in the main default.xml.
 
   <bind key="Page_Down" action="SelectionLower" display="true" />
   <bind key="KP_Page_Down" action="SelectionLower" />
+  
+  <bind key="comma" action="SelectionShrink" display="true" />
+  <bind key="less" action="SelectionShrink" />
+  
+  <bind key="comma" modifiers="Alt" action="SelectionShrinkScreen" />
+  <bind key="less" modifiers="Alt" action="SelectionShrinkScreen" />
+  
+  <bind key="comma" modifiers="Ctrl" action="SelectionShrinkHalve" />
+  <bind key="less" modifiers="Ctrl" action="SelectionShrinkHalve" />
+  
+  <bind key="period" action="SelectionGrow" display="true" />
+  <bind key="greater" action="SelectionGrow" />
+  
+  <bind key="period" modifiers="Alt" action="SelectionGrowScreen" />
+  <bind key="greater" modifiers="Alt" action="SelectionGrowScreen" />
+  
+  <bind key="period" modifiers="Ctrl" action="SelectionGrowDouble" />
+  <bind key="greater" modifiers="Ctrl" action="SelectionGrowDouble" />
 
   <bind key="g" modifiers="Ctrl" action="SelectionGroup" display="true" />
   <bind key="G" modifiers="Ctrl" action="SelectionGroup" />

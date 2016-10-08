@@ -297,8 +297,7 @@ override) the bindings in the main default.xml.
   
   <bind key="z" modifiers="Ctrl" action="EditUndo" display="true" />
   <bind key="Z" modifiers="Ctrl" action="EditUndo" />
-  <bind key="y" modifiers="Ctrl,Shift" action="EditUndo" />
-  <bind key="Y" modifiers="Ctrl,Shift" action="EditUndo" />
+  <!--Do not put in Ctrl,Shift+Y, already used-->
 
   <bind key="z" modifiers="Ctrl,Shift" action="EditRedo" display="true" />
   <bind key="Z" modifiers="Ctrl,Shift" action="EditRedo" />
@@ -384,6 +383,9 @@ override) the bindings in the main default.xml.
 
   <bind key="7" action="EditNextPathEffectParameter" display="true" />
 
+  <bind key="r" modifiers="Ctrl,Shift" action="FitCanvasToSelectionOrDrawing" display="true" />
+  <bind key="R" modifiers="Ctrl,Shift" action="FitCanvasToSelectionOrDrawing" display="true" />
+
   <!-- Objects/selection -->
 
   <bind key="h" action="ObjectFlipHorizontally" display="true" />
@@ -403,6 +405,24 @@ override) the bindings in the main default.xml.
 
   <bind key="Page_Down" action="SelectionLower" display="true" />
   <bind key="KP_Page_Down" action="SelectionLower" />
+  
+  <bind key="comma" action="SelectionShrink" display="true" />
+  <bind key="less" action="SelectionShrink" />
+  
+  <bind key="comma" modifiers="Alt" action="SelectionShrinkScreen" />
+  <bind key="less" modifiers="Alt" action="SelectionShrinkScreen" />
+  
+  <bind key="comma" modifiers="Ctrl" action="SelectionShrinkHalve" />
+  <bind key="less" modifiers="Ctrl" action="SelectionShrinkHalve" />
+  
+  <bind key="period" action="SelectionGrow" display="true" />
+  <bind key="greater" action="SelectionGrow" />
+  
+  <bind key="period" modifiers="Alt" action="SelectionGrowScreen" />
+  <bind key="greater" modifiers="Alt" action="SelectionGrowScreen" />
+  
+  <bind key="period" modifiers="Ctrl" action="SelectionGrowDouble" />
+  <bind key="greater" modifiers="Ctrl" action="SelectionGrowDouble" />
 
   <bind key="g" modifiers="Ctrl" action="SelectionGroup" display="true" />
   <bind key="G" modifiers="Ctrl" action="SelectionGroup" />
