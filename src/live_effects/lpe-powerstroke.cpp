@@ -609,11 +609,12 @@ LPEPowerStroke::doEffect_path (Geom::PathVector const & path_in)
     // find time values for which x lies outside path domain
     // and only take portion of x and y that lies within those time values
     std::vector< double > rtsmin = roots (x - pwd2_in.domain().min());
-    std::vector< double > rtsmax = roots (x - pwd2_in.domain().max());
+    std::vector< double > rtsmax = roots (x + pwd2_in.domain().max());
     if ( !rtsmin.empty() && !rtsmax.empty() ) {
         x = portion(x, rtsmin.at(0), rtsmax.at(0));
         y = portion(y, rtsmin.at(0), rtsmax.at(0));
     }
+
     LineJoinType jointype = static_cast<LineJoinType>(linejoin_type.get_value());
 
     Piecewise<D2<SBasis> > pwd2_out   = compose(pwd2_in,x) + y*compose(n,x);
