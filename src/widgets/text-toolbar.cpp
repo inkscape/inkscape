@@ -41,6 +41,7 @@
 #include "ink-radio-action.h"
 #include "ink-toggle-action.h"
 #include "widgets/ink-comboboxentry-action.h"
+#include "widgets/style-utils.h"
 #include "inkscape.h"
 #include "selection-chemistry.h"
 #include "sp-flowtext.h"
@@ -304,7 +305,7 @@ static void sp_text_script_changed( InkToggleAction* act, GObject *tbl )
     bool setSuper = false;
     bool setSub   = false;
 
-    if(result_baseline == QUERY_STYLE_NOTHING || result_baseline == QUERY_STYLE_MULTIPLE_DIFFERENT ) {
+    if (Inkscape::is_query_style_updateable(result_baseline)) {
         // If not set or mixed, turn on superscript or subscript
         if( prop == 0 ) {
             setSuper = true;

@@ -128,7 +128,7 @@ void IntLigne::Flatten()
             i++;
         }
         midV = RemainingValAt(cur);
-        while ( i < nbBord && bords[i].pos == cur && bords[i].start == true ) {
+        while ( i < nbBord && bords[i].pos == cur && bords[i].start ) {
             rightV += bords[i].val;
             Enqueue(bords[i].other);
             i++;

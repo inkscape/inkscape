@@ -177,6 +177,7 @@ private:
     void miterLimitChangedCB();
     void lineDashChangedCB();
     void unitChangedCB();
+    bool shouldMarkersBeUpdated();
     static void markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMarkerLoc const which);
     static void buttonToggledCB(StrokeStyleButton *tb, StrokeStyle *spw);
 

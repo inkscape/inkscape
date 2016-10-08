@@ -5,7 +5,7 @@ class C(chardataeffect.CharDataEffect):
 
   word_ended = True
 
-  def process_chardata(self,text, line, par):
+  def process_chardata(self, text, line, par):
     r = ""
     for i in range(len(text)):
       c = text[i]

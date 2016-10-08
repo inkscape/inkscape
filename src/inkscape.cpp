@@ -549,7 +549,7 @@ Application::Application(const char* argv, bool use_gui) :
 #define DEFAULT_LOG_REDIRECT false
 #endif
 
-    if (use_gui == TRUE && prefs->getBool("/dialogs/debug/redirect", DEFAULT_LOG_REDIRECT))
+    if (use_gui && prefs->getBool("/dialogs/debug/redirect", DEFAULT_LOG_REDIRECT))
     {
         Inkscape::UI::Dialog::DebugDialog::getInstance()->captureLogMessages();
     }

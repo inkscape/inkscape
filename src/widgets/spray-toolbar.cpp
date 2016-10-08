@@ -211,7 +211,7 @@ static void sp_toggle_pressure_scale( GtkToggleAction* act, gpointer data)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean active = gtk_toggle_action_get_active(act);
     prefs->setBool("/tools/spray/usepressurescale", active);
-    if(active == true){
+    if(active){
         prefs->setDouble("/tools/spray/scale_variation", 0);
     }
     GObject *tbl = G_OBJECT(data);
@@ -238,7 +238,7 @@ static void sp_toggle_picker( GtkToggleAction* act, gpointer data )
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean active = gtk_toggle_action_get_active(act);
     prefs->setBool("/tools/spray/picker", active);
-    if(active == true){
+    if(active){
         prefs->setBool("/dialogs/clonetiler/dotrace", false);
         SPDesktop *dt = SP_ACTIVE_DESKTOP;
         if (Inkscape::UI::Dialog::CloneTiler *ct = get_clone_tiler_panel(dt)){

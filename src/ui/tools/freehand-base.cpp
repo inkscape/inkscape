@@ -372,7 +372,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             {
                 // take shape from clipboard;
                 Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-                if(cm->paste(SP_ACTIVE_DESKTOP,true) == true){
+                if(cm->paste(SP_ACTIVE_DESKTOP,true)){
                     SPItem * pasted_clipboard = dc->selection->singleItem();
                     if(pasted_clipboard){
                         Inkscape::XML::Node *pasted_clipboard_root = pasted_clipboard->getRepr();
@@ -401,7 +401,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             case BEND_CLIPBOARD:
             {
                 Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-                if(cm->paste(SP_ACTIVE_DESKTOP,true) == true){
+                if(cm->paste(SP_ACTIVE_DESKTOP,true)){
                     gchar const *svgd = item->getRepr()->attribute("d");
                     bend_item = dc->selection->singleItem();
                     if(bend_item && (SP_IS_SHAPE(bend_item) || SP_IS_GROUP(bend_item))){

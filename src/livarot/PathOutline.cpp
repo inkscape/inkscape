@@ -424,7 +424,7 @@ void Path::SubContractOutline(int off, int num_pd,
 		}
 		else if (nType == descr_close)
 		{
-			if (doFirst == false)
+			if (! doFirst)
 			{
 				if (Geom::LInfty (curX - firstP) < 0.0001)
 				{
@@ -810,7 +810,7 @@ void Path::SubContractOutline(int off, int num_pd,
 	}
 	if (closeIfNeeded)
 	{
-		if (doFirst == false)
+		if (! doFirst)
 		{
 		}
 	}
@@ -853,7 +853,7 @@ Path::IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, Geom::Point cons
     {
 		PathDescrArcTo* nData = dynamic_cast<PathDescrArcTo*>(cmd[curD]);
 		if ( Geom::LInfty(nData->p - curX) < 0.00001) {
-			if ((nData->large == false)
+			if ((! nData->large)
 				|| (fabs (nData->rx) < 0.00001
 					|| fabs (nData->ry) < 0.00001)) {
 				return true;
@@ -1004,7 +1004,7 @@ void Path::TangentOnArcAt(double at, const Geom::Point &iS, PathDescrArcTo const
 
 	if (wise)
 	{
-		if (large == true)
+		if (large)
 		{
 			drx = -drx;
 			dry = -dry;
@@ -1021,7 +1021,7 @@ void Path::TangentOnArcAt(double at, const Geom::Point &iS, PathDescrArcTo const
 	}
 	else
 	{
-		if (large == false)
+		if (! large)
 		{
 			drx = -drx;
 			dry = -dry;

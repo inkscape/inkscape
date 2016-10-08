@@ -6,7 +6,7 @@ class C(chardataeffect.CharDataEffect):
   sentence_start = True
   was_punctuation = False
 
-  def process_chardata(self,text, line, par):
+  def process_chardata(self, text, line, par):
     r = ""
     #inkex.debug(text+str(line)+str(par))
     for c in text:

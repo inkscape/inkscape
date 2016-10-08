@@ -479,7 +479,7 @@ void SPLPEItem::addPathEffect(LivePathEffectObject * new_lpeobj)
 }
 
 /**
- *  If keep_path == true, the item should not be updated, effectively 'flattening' the LPE.
+ *  If keep_path is true, the item should not be updated, effectively 'flattening' the LPE.
  */
 void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
 {
@@ -489,7 +489,7 @@ void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
 
     if (Inkscape::LivePathEffect::Effect* effect_ = this->getCurrentLPE()) {
         effect_->doOnRemove(this);
-    }    
+    }
     PathEffectList new_list = *this->path_effect_list;
     new_list.remove(lperef); //current lpe ref is always our 'own' pointer from the path_effect_list
     this->getRepr()->setAttribute("inkscape:path-effect", patheffectlist_svg_string(new_list));
@@ -505,7 +505,7 @@ void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
 }
 
 /**
- *  If keep_path == true, the item should not be updated, effectively 'flattening' the LPE.
+ *  If keep_path is true, the item should not be updated, effectively 'flattening' the LPE.
  */
 void SPLPEItem::removeAllPathEffects(bool keep_paths)
 {

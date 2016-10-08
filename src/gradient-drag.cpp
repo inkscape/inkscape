@@ -1326,8 +1326,10 @@ GrDragger::moveMeshHandles ( Geom::Point pc_old,  MeshNodeOperation op )
 
     // We need a list of selected corners per mesh if scaling.
     std::map<SPGradient*, std::vector<guint> > selected_corners;
-    bool scale = false;
-    if( scale == true ) {
+    // scaling was disabled so #if 0'ing out for now.
+#if 0
+    const bool scale = false;
+    if( scale ) {
 
         for( std::set<GrDragger *>::const_iterator it = drag->selected.begin(); it != drag->selected.end(); ++it ) {
             GrDragger *dragger = *it;
@@ -1345,6 +1347,7 @@ GrDragger::moveMeshHandles ( Geom::Point pc_old,  MeshNodeOperation op )
             }
         }
     }
+#endif
 
     // Now we do the handle moves.
 

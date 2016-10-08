@@ -380,24 +380,18 @@ void Path::InsertBezierTo(Geom::Point const &iPt, int iNb, int at)
 
 
 /*
- * points de la polyligne
+ * points of the polyline
  */
 void
 Path::SetBackData (bool nVal)
 {
-	if (back == false) {
-		if (nVal == true && back == false) {
+	if (! back) {
+		if (nVal) {
 			back = true;
-			ResetPoints();
-		} else if (nVal == false && back == true) {
-			back = false;
 			ResetPoints();
 		}
 	} else {
-		if (nVal == true && back == false) {
-			back = true;
-			ResetPoints();
-		} else if (nVal == false && back == true) {
+		if (! nVal) {
 			back = false;
 			ResetPoints();
 		}
@@ -417,7 +411,7 @@ int Path::AddPoint(Geom::Point const &iPt, bool mvto)
         return AddPoint (iPt, -1, 0.0, mvto);
     }
   
-    if ( !mvto && pts.empty() == false && pts.back().p == iPt ) {
+    if ( !mvto && !pts.empty() && pts.back().p == iPt ) {
         return -1;
     }
     
@@ -441,11 +435,11 @@ int Path::ReplacePoint(Geom::Point const &iPt)
 
 int Path::AddPoint(Geom::Point const &iPt, int ip, double it, bool mvto)
 {
-    if (back == false) {
+    if (! back) {
         return AddPoint (iPt, mvto);
     }
     
-    if ( !mvto && pts.empty() == false && pts.back().p == iPt ) {
+    if ( !mvto && !pts.empty() && pts.back().p == iPt ) {
         return -1;
     }
     

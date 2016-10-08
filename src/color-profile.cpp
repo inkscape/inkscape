@@ -703,7 +703,7 @@ gint Inkscape::CMSSystem::getChannelCount(ColorProfile const *profile)
 // sort home dir before the rest, and alphabetically oterhwise
 bool compareProfileBoolPair(const std::pair<Glib::ustring, bool> & a, const std::pair<Glib::ustring, bool> & b)
 {
-    if (a.second != b.second) return a.second; // a comes first iff it's home, i.e., second == true
+    if (a.second != b.second) return a.second; // a comes first iff its home, i.e., second is true
     return a.first < b.first;
 }
 

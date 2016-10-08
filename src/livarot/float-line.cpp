@@ -499,7 +499,7 @@ void FloatLigne::Flatten()
         }
         
         // then scan all boundaries that start a portion at this position
-        while ( i >= 0 && i < int(bords.size()) && bords[i].pos == cur && bords[i].start == true ) {
+        while ( i >= 0 && i < int(bords.size()) && bords[i].pos == cur && bords[i].start ) {
             rightV += bords[i].val;
             rightP += bords[i].pente;
 #ifndef faster_flatten
@@ -748,8 +748,8 @@ void FloatLigne::Split(FloatLigne *a, float tresh, FloatLigne *over)
 /** 
  * Clips the coverage runs to tresh.
  *
- * If addIt == false, it only leaves the parts that are not entirely under 
- * tresh. If addIt == true, it's the coverage clamped to tresh.
+ * If addIt is false, it only leaves the parts that are not entirely under 
+ * tresh. If addIt is true, it's the coverage clamped to tresh.
  */
 void FloatLigne::Max(FloatLigne *a, float tresh, bool addIt)
 {

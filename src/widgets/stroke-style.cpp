@@ -22,6 +22,7 @@
 #include "svg/svg-color.h"
 #include "ui/widget/unit-menu.h"
 #include "desktop-widget.h"
+#include "widgets/style-utils.h"
 
 using Inkscape::DocumentUndo;
 using Inkscape::Util::unit_table;
@@ -437,6 +438,12 @@ StrokeStyle::makeRadioButton(Gtk::RadioButtonGroup &grp,
     return tb;
 }
 
+bool StrokeStyle::shouldMarkersBeUpdated()
+{
+    return startMarkerCombo->update() || midMarkerCombo->update() ||
+                          endMarkerCombo->update();
+}
+
 /**
  * Handles when user selects one of the markers from the marker combobox.
  * Gets the marker uri string and applies it to all selected
@@ -444,11 +451,7 @@ StrokeStyle::makeRadioButton(Gtk::RadioButtonGroup &grp,
  */
 void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMarkerLoc const /*which*/)
 {
-    bool markers_update = spw->startMarkerCombo->update() ||
-                          spw->midMarkerCombo->update() ||
-                          spw->endMarkerCombo->update();
-
-    if (spw->update || markers_update) {
+    if (spw->update || spw->shouldMarkersBeUpdated()) {
         return;
     }
 
@@ -910,22 +913,20 @@ StrokeStyle::updateLine()
     if (result_ml != QUERY_STYLE_NOTHING)
         (*miterLimitAdj)->set_value(query.stroke_miterlimit.value); // TODO: reflect averagedness?
 
-    if (result_join != QUERY_STYLE_MULTIPLE_DIFFERENT &&
-        result_join != QUERY_STYLE_NOTHING ) {
+    using Inkscape::is_query_style_updateable;
+    if (! is_query_style_updateable(result_join)) {
         setJoinType(query.stroke_linejoin.value);
     } else {
         setJoinButtons(NULL);
     }
 
-    if (result_cap != QUERY_STYLE_MULTIPLE_DIFFERENT &&
-        result_cap != QUERY_STYLE_NOTHING ) {
+    if (! is_query_style_updateable(result_cap)) {
         setCapType (query.stroke_linecap.value);
     } else {
         setCapButtons(NULL);
     }
 
-    if (result_order != QUERY_STYLE_MULTIPLE_DIFFERENT &&
-        result_order != QUERY_STYLE_NOTHING ) {
+    if (! is_query_style_updateable(result_order)) {
         setPaintOrder (query.paint_order.value);
     } else {
         setPaintOrder (NULL);
@@ -976,6 +977,16 @@ StrokeStyle::setScaledDash(SPCSSAttr *css,
     }
 }
 
+static inline double calcScaleLineWidth(const double width_typed, SPItem *const item, Inkscape::Util::Unit const *const unit)
+{
+    if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
+        return Inkscape::Util::Quantity::convert(width_typed, unit, "px");
+    } else { // percentage
+        const gdouble old_w = item->style->stroke_width.computed;
+        return old_w * width_typed / 100;
+    }
+}
+
 /**
  * Sets line properties like width, dashes, markers, etc. on all currently selected items.
  */
@@ -1007,13 +1018,7 @@ StrokeStyle::scaleLine()
 
         for(auto i=items.begin();i!=items.end();++i){
             /* Set stroke width */
-            double width;
-            if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
-                width = Inkscape::Util::Quantity::convert(width_typed, unit, "px");
-            } else { // percentage
-                gdouble old_w = (*i)->style->stroke_width.computed;
-                width = old_w * width_typed / 100;
-            }
+            const double width = calcScaleLineWidth(width_typed, (*i), unit);
 
             {
                 Inkscape::CSSOStringStream os_width;

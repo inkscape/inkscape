@@ -1555,7 +1555,7 @@ SPIPaintOrder::write( guint const flags, SPIBase const *const base) const {
             css << "inherit";
         } else {
             for( unsigned i = 0; i < PAINT_ORDER_LAYERS; ++i ) {
-                if( this->layer_set[i] == true ) {
+                if( layer_set[i] ) {
                     switch (this->layer[i]) {
                         case SP_CSS_PAINT_ORDER_NORMAL:
                             css << "normal";
@@ -2787,7 +2787,7 @@ SPITextDecoration::read( gchar const *str ) {
     }
 
     // If we set text_decoration_line, then update style_td (for CSS2 text-decoration)
-    if( style->text_decoration_line.set == true ) {
+    if( style->text_decoration_line.set ) {
         style_td = style;
     }
 }

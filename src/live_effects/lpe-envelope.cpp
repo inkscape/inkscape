@@ -47,7 +47,7 @@ Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEEnvelope::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
 
-    if(xx.get_value() == false && yy.get_value() == false)
+    if(!xx.get_value() && !yy.get_value())
     {
         return pwd2_in;
     }
@@ -158,7 +158,7 @@ LPEEnvelope::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     output_y =  ybis*(compose((uskeleton1),x1) + y1*compose(n1,x1) )
             +    y*(compose((uskeleton3),x3) + y3*compose(n3,x3) );
     output_y /= (boundingbox_Y.extent());
-    if(xx.get_value() == false && yy.get_value() == true)
+    if(!xx.get_value() && yy.get_value())
     {
             return output_y;
     }
@@ -167,13 +167,13 @@ LPEEnvelope::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     output_x =    x*(compose((uskeleton2),y2) + -x2*compose(n2,y2) )
             + xbis*(compose((uskeleton4),y4) + -x4*compose(n4,y4) );
     output_x /= (boundingbox_X.extent());
-    if(xx.get_value() == true && yy.get_value() == false)
+    if(xx.get_value() && !yy.get_value())
     {
             return output_x;
     }
 
     /*output : Deformation by Up, Left, Right and Down Bend Paths*/
-    if(xx.get_value() == true && yy.get_value() == true)
+    if(xx.get_value() && yy.get_value())
     {
         Piecewise<SBasis> xsqr = x*xbis; /* xsqr = x * (BBox_X - x) */
         Piecewise<SBasis> ysqr = y*ybis; /* xsqr = y * (BBox_Y - y) */

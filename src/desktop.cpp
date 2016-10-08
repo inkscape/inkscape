@@ -902,7 +902,7 @@ void SPDesktop::zoom_quick(bool enable)
         return;
     }
 
-    if (enable == true) {
+    if (enable) {
         _quick_zoom_stored_area = get_display_area();
         bool zoomed = false;
 

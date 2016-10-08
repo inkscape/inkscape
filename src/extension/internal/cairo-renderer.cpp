@@ -541,8 +541,7 @@ static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
         return;
     }
 
-    SPStyle* style = item->style;
-    if((ctx->getFilterToBitmap() == TRUE) && (style->filter.set != 0)) {
+    if(ctx->getFilterToBitmap() && (item->style->filter.set != 0)) {
         return sp_asbitmap_render(item, ctx);
     }
 
@@ -599,8 +598,7 @@ static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 void
 CairoRenderer::setStateForItem(CairoRenderContext *ctx, SPItem const *item)
 {
-    SPStyle const *style = item->style;
-    ctx->setStateForStyle(style);
+    ctx->setStateForStyle(item->style);
 
     CairoRenderState *state = ctx->getCurrentState();
     state->clip_path = item->clip_ref->getObject();
