@@ -256,7 +256,7 @@ void PreviewHolder::on_size_allocate( Gtk::Allocation& allocation )
 //     g_message("            anchor:%d", _anchor);
     Gtk::VBox::on_size_allocate( allocation );
 
-    if ( _insides && !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == SP_ANCHOR_NORTH || _anchor == SP_ANCHOR_SOUTH) ) {
+/*    if ( _insides && !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == SP_ANCHOR_NORTH || _anchor == SP_ANCHOR_SOUTH) ) {
 	Gtk::Requisition req;
 	Gtk::Requisition req_natural;
 	_insides->get_preferred_size(req, req_natural);
@@ -267,7 +267,7 @@ void PreviewHolder::on_size_allocate( Gtk::Allocation& allocation )
         } else {
             dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER );
         }
-    }
+    }*/
 }
 
 //void PreviewHolder::on_size_request( Gtk::Requisition* requisition )

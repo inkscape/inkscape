@@ -41,8 +41,8 @@ static void sp_button_class_init(SPButtonClass *klass)
     GtkButtonClass *button_class = GTK_BUTTON_CLASS(klass);
 
     object_class->dispose = sp_button_dispose;
-    widget_class->get_preferred_width = sp_button_get_preferred_width;
-    widget_class->get_preferred_height = sp_button_get_preferred_height;
+    //widget_class->get_preferred_width = sp_button_get_preferred_width;
+    //widget_class->get_preferred_height = sp_button_get_preferred_height;
     button_class->clicked = sp_button_clicked;
 }
 
