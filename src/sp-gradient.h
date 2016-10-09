@@ -158,6 +158,12 @@ public:
  */
     SPGradient *getVector(bool force_private = false);
 
+ /**
+ * Returns private mesh of given gradient (the gradient at the end of the href chain which has
+ * patches), optionally normalizing it.
+ */
+    SPGradient *getArray(bool force_private = false);
+
     //static GType getType();
 
     /** Forces vector to be built, if not present (i.e. changed) */

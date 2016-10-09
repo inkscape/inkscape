@@ -1011,8 +1011,8 @@ SelectedStyle::update()
                         _mode[i] = SS_RGRADIENT;
 #ifdef WITH_MESH
                     } else if (SP_IS_MESHGRADIENT(server)) {
-                        SPGradient *vector = SP_GRADIENT(server)->getVector();
-                        sp_gradient_image_set_gradient(SP_GRADIENT_IMAGE(_gradient_preview_m[i]), vector);
+                        SPGradient *array = SP_GRADIENT(server)->getArray();
+                        sp_gradient_image_set_gradient(SP_GRADIENT_IMAGE(_gradient_preview_m[i]), array);
                         place->add(_gradient_box_m[i]);
                         place->set_tooltip_text(__mgradient[i]);
                         _mode[i] = SS_MGRADIENT;
