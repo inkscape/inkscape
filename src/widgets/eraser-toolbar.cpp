@@ -87,6 +87,16 @@ static void sp_erc_tremor_value_changed( GtkAdjustment *adj, GObject* tbl )
     update_presets_list(tbl);
 }
 
+static void sp_set_tbl_eraser_mode_visibility(GObject *const tbl, const guint eraser_mode)
+{
+    gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, "split") ), (eraser_mode == ERASER_MODE_CUT));
+
+    const gboolean visibility = (eraser_mode != ERASER_MODE_DELETE);
+    const std::array<const gchar *, 6> arr = {"cap_rounding", "mass", "thinning", "tremor", "usepressure", "width"};
+    for (const gchar * str : arr) {
+        gtk_action_set_visible( GTK_ACTION( g_object_get_data(tbl, str) ), visibility );
+    }
+}
 
 static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
@@ -96,34 +106,7 @@ static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setInt( "/tools/eraser/mode", eraser_mode );
     }
-    GtkAction *split = GTK_ACTION( g_object_get_data(tbl, "split") );
-    GtkAction *mass = GTK_ACTION( g_object_get_data(tbl, "mass") );
-    GtkAction *width = GTK_ACTION( g_object_get_data(tbl, "width") );
-    GtkAction *usepressure = GTK_ACTION( g_object_get_data(tbl, "usepressure") );
-    GtkAction *cap_rounding = GTK_ACTION( g_object_get_data(tbl, "cap_rounding") );
-    GtkAction *thinning = GTK_ACTION( g_object_get_data(tbl, "thinning") );
-    GtkAction *tremor = GTK_ACTION( g_object_get_data(tbl, "tremor") );
-    if (eraser_mode != ERASER_MODE_DELETE) {
-        if(eraser_mode == ERASER_MODE_CUT) {
-            gtk_action_set_visible( split, TRUE );
-        } else {
-            gtk_action_set_visible( split, FALSE );
-        }
-        gtk_action_set_visible(usepressure, TRUE );
-        gtk_action_set_visible(tremor, TRUE );
-        gtk_action_set_visible(cap_rounding, TRUE );
-        gtk_action_set_visible(thinning, TRUE );
-        gtk_action_set_visible( mass, TRUE );
-        gtk_action_set_visible( width, TRUE );
-    } else {
-        gtk_action_set_visible(usepressure, FALSE );
-        gtk_action_set_visible(tremor, FALSE );
-        gtk_action_set_visible(cap_rounding, FALSE );
-        gtk_action_set_visible(thinning, FALSE );
-        gtk_action_set_visible( split, FALSE );
-        gtk_action_set_visible( mass, FALSE );
-        gtk_action_set_visible( width, FALSE );
-    }
+    sp_set_tbl_eraser_mode_visibility(tbl, eraser_mode);
     // only take action if run by the attr_changed listener
     if (!g_object_get_data( tbl, "freeze" )) {
         // in turn, prevent listener from responding
@@ -305,35 +288,7 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_toogle_break_apart), holder) ;
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
-    GtkAction *split = GTK_ACTION( g_object_get_data(holder, "split") );
-    GtkAction *mass = GTK_ACTION( g_object_get_data(holder, "mass") );
-    GtkAction *width = GTK_ACTION( g_object_get_data(holder, "width") );
-    GtkAction *usepressure = GTK_ACTION( g_object_get_data(holder, "usepressure") );
-    GtkAction *cap_rounding = GTK_ACTION( g_object_get_data(holder, "cap_rounding") );
-    GtkAction *thinning = GTK_ACTION( g_object_get_data(holder, "thinning") );
-    GtkAction *tremor = GTK_ACTION( g_object_get_data(holder, "tremor") );
-    if (eraser_mode != ERASER_MODE_DELETE) {
-        if(eraser_mode == ERASER_MODE_CUT) {
-            gtk_action_set_visible( split, TRUE );
-        } else {
-            gtk_action_set_visible( split, FALSE );
-        }
-        gtk_action_set_visible(usepressure, TRUE );
-        gtk_action_set_visible(tremor, TRUE );
-        gtk_action_set_visible(cap_rounding, TRUE );
-        gtk_action_set_visible(thinning, TRUE );
-        gtk_action_set_visible( mass, TRUE );
-        gtk_action_set_visible( width, TRUE );
-    } else {
-        gtk_action_set_visible(usepressure, FALSE );
-        gtk_action_set_visible(tremor, FALSE );
-        gtk_action_set_visible(cap_rounding, FALSE );
-        gtk_action_set_visible(thinning, FALSE );
-        gtk_action_set_visible( split, FALSE );
-        gtk_action_set_visible( mass, FALSE );
-        gtk_action_set_visible( width, FALSE );
-    }
-
+    sp_set_tbl_eraser_mode_visibility(holder, eraser_mode);
 }
 
 /*
