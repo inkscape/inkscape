@@ -45,13 +45,22 @@ The primary bug tracker is below, requires LaunchPad/UbuntuOne setup and email c
 
 > http://www.inkscape.org/en/contribute/report-bugs/
 
-You may also fork / pull request and use the issue tracker here as a simple way to submit changes to the project.
+Pull requests on github are welcome as a way to submit changes to the project, but keep in mind that the issues remain on Launchpad
+Particularly, make sure that PR titles include a reference to the Launchpad issue number, and once they're merged the issue should be marked as fixed on Launchpad.
 
 
 This mirror
 -----------
 
-This repository is an unofficial mirror of Inkscape, which is hosted on Launchpad with Bazaar. You can checkout upstream code by:
+This repository is currently a mirror of the Inkscape source code, which is hosted on Launchpad with Bazaar.
+The mirror is kept automatically synced with the upstream code
+using the <a href="https://github.com/inkscape/inkscape/blob/master/update.bash">update.bash</a> script.
+(Please contact inkscape@phor.net if you need an immediate refresh.)
+
+There's [a plan in progress](https://github.com/inkscape/inkscape/wiki/Migrate-Launchpad-to-GitHub-%5BDRAFT%5D)
+to transition the code to git and host it primarily on github, but for now the canonical source resides on Launchpad.
+
+You can checkout the upstream code by doing the following:
 
  - Set up a <a href="https://login.ubuntu.com/+login">UbuntuOne account</a>
  - Create a [LaunchPad account](https://launchpad.net/) linked to UbuntuOne
@@ -61,9 +70,5 @@ This repository is an unofficial mirror of Inkscape, which is hosted on Launchpa
  - Confirm your email address
  - Add your account to the project
  - Download with `bzr branch lp:inkscape`
-
-This GitHub repository is for users that want easier access to the Inkscape repository. For completeness, this mirror was created with the above steps, hardlinking into a git repository and automated updates with <a href="https://github.com/inkscape/inkscape/blob/master/update.bash">update.bash</a>.
-
-Updates to this mirror are fully automated with <a href="https://github.com/inkscape/inkscape/blob/master/update.bash">update.bash</a>. Any time please contact inkscape@phor.net if you need an immediate refresh.
 
 <em>One Day in Farm</em> image CC-BY-NC-ND 3.0 <a href="http://rebirthart.deviantart.com/art/One-Day-in-Farm-47515219">rebirthart</a>
