@@ -51,7 +51,7 @@ You may also fork / pull request and use the issue tracker here as a simple way 
 This mirror
 -----------
 
-This repository is an unofficial mirror of Inkscape, which is hosted on Launchpad with Bazaar. Upstream code can be checkout out if you:
+This repository is an unofficial mirror of Inkscape, which is hosted on Launchpad with Bazaar. You can checkout upstream code by:
 
  - Set up a <a href="https://login.ubuntu.com/+login">UbuntuOne account</a>
  - Create a [LaunchPad account](https://launchpad.net/) linked to UbuntuOne
