@@ -45,7 +45,7 @@ The primary bug tracker is below, requires LaunchPad/UbuntuOne setup and email c
 
 > http://www.inkscape.org/en/contribute/report-bugs/
 
-Pull requests on github are welcome as a way to submit changes to the project, but keep in mind that the issues remain on Launchpad
+Pull requests on github are welcome as a way to submit changes to the project, but keep in mind that the issues remain on Launchpad.
 Particularly, make sure that PR titles include a reference to the Launchpad issue number, and once they're merged the issue should be marked as fixed on Launchpad.
 
 
