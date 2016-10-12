@@ -1144,15 +1144,17 @@ sp_gradient_pattern_common_setup(cairo_pattern_t *cp,
     }
 
     // add stops
-    for (std::vector<SPGradientStop>::iterator i = gr->vector.stops.begin();
-         i != gr->vector.stops.end(); ++i)
-    {
-        // multiply stop opacity by paint opacity
-        cairo_pattern_add_color_stop_rgba(cp, i->offset,
-            i->color.v.c[0], i->color.v.c[1], i->color.v.c[2], i->opacity * opacity);
+    if (!SP_IS_MESHGRADIENT(gr)) {
+        for (std::vector<SPGradientStop>::iterator i = gr->vector.stops.begin();
+             i != gr->vector.stops.end(); ++i)
+        {
+            // multiply stop opacity by paint opacity
+            cairo_pattern_add_color_stop_rgba(cp, i->offset,
+                                              i->color.v.c[0], i->color.v.c[1], i->color.v.c[2], i->opacity * opacity);
+        }
     }
 
-    // set pattern matrix
+    // set pattern transform matrix
     Geom::Affine gs2user = gr->gradientTransform;
     if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX && bbox) {
         Geom::Affine bbox2user(bbox->width(), 0, 0, bbox->height(), bbox->left(), bbox->top());

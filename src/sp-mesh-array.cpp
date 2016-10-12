@@ -678,11 +678,17 @@ SPMeshNodeArray& SPMeshNodeArray::operator=( const SPMeshNodeArray& rhs ) {
 bool SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
 
     mg = mg_in;
+    SPMeshGradient* mg_array = dynamic_cast<SPMeshGradient*>(mg->getArray());
+    if (!mg_array) {
+        std::cerr << "SPMeshNodeArray::read: No mesh array!" << std::endl;
+        return false;
+    }
+    // std::cout << "SPMeshNodeArray::read: " << mg_in << "  array: " << mg_array << std::endl;
 
     // Count rows and columns, if unchanged reuse array to keep draggers valid.
     unsigned cols = 0;
     unsigned rows = 0;
-    for (auto& ro: mg->children) {
+    for (auto& ro: mg_array->children) {
         if (SP_IS_MESHROW(&ro)) {
             ++rows;
             if (rows == 1 ) {
@@ -707,7 +713,7 @@ bool SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
 
     guint max_column = 0;
     guint irow = 0; // Corresponds to top of patch being read in.
-    for (auto& ro: mg->children) {
+    for (auto& ro: mg_array->children) {
 
         if (SP_IS_MESHROW(&ro)) {
 
@@ -921,10 +927,16 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
     using Geom::X;
     using Geom::Y;
 
+    SPMeshGradient* mg_array = dynamic_cast<SPMeshGradient*>(mg->getArray());
+    if (!mg_array) {
+        std::cerr << "SPMeshNodeArray::write: missing patches!" << std::endl;
+        mg_array = mg;
+    }
+
     // First we must delete reprs for old mesh rows and patches.
     GSList *descendant_reprs = NULL;
     GSList *descendant_objects = NULL;
-    for (auto& row: mg->children) {
+    for (auto& row: mg_array->children) {
         descendant_reprs = g_slist_prepend (descendant_reprs, row.getRepr());
         descendant_objects = g_slist_prepend (descendant_objects, &row);
         for (auto& patch: row.children) {
@@ -950,8 +962,9 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
 
     // Now we build new reprs
     Inkscape::XML::Node *mesh = mg->getRepr();
+    Inkscape::XML::Node *mesh_array = mg_array->getRepr();
 
-    SPMeshNodeArray* array = &(mg->array);
+    SPMeshNodeArray* array = &(mg_array->array);
     SPMeshPatchI patch0( &(array->nodes), 0, 0 );
     Geom::Point current_p = patch0.getPoint( 0, 0 ); // Side 0, point 0
 
@@ -966,7 +979,7 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
 
         // Write row
         Inkscape::XML::Node *row = xml_doc->createElement("svg:meshrow");
-        mesh->appendChild( row );  // No attributes
+        mesh_array->appendChild( row );  // No attributes
 
         guint columns = array->patch_columns();
         for( guint j = 0; j < columns; ++j ) {
