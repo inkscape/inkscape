@@ -98,12 +98,15 @@ struct SPPaintSelector {
     void setGradientLinear( SPGradient *vector );
     void setGradientRadial( SPGradient *vector );
 #ifdef WITH_MESH
-    void setGradientMesh(SPGradient *vector);
+    void setGradientMesh(SPGradient *array);
 #endif
     void setSwatch( SPGradient *vector );
 
     void setGradientProperties( SPGradientUnits units, SPGradientSpread spread );
     void getGradientProperties( SPGradientUnits &units, SPGradientSpread &spread ) const;
+
+    void setMeshProperties( SPGradientUnits units );
+    void getMeshProperties( SPGradientUnits &units ) const;
 
     void pushAttrsToGradient( SPGradient *gr ) const;
     SPGradient *getGradientVector();
