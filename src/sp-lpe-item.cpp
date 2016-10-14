@@ -23,6 +23,7 @@
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
+#include "live_effects/lpe-measure-line.h"
 
 #include "sp-path.h"
 #include "sp-item-group.h"
@@ -122,10 +123,14 @@ void SPLPEItem::set(unsigned int key, gchar const* value) {
 
                 while ( it != this->path_effect_list->end() )
                 {
-                    LivePathEffectObject *lpeobj = (*it)->lpeobject;
-                    lpeobj->get_lpe()->doOnRemove(this);
+                    if (!value) {
+                        LivePathEffectObject *lpeobj = (*it)->lpeobject;
+                        if (Inkscape::LivePathEffect::LPEMeasureLine * lpe = dynamic_cast<Inkscape::LivePathEffect::LPEMeasureLine *>(lpeobj->get_lpe())) {
+                            lpe->doOnRemove(this);
+                        }
+                    }
                     (*it)->unlink();
-                    delete (*it);
+                    delete *it;
                     it = this->path_effect_list->erase(it);
                 }
 
