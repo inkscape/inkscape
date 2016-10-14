@@ -929,7 +929,7 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
 
     SPMeshGradient* mg_array = dynamic_cast<SPMeshGradient*>(mg->getArray());
     if (!mg_array) {
-        std::cerr << "SPMeshNodeArray::write: missing patches!" << std::endl;
+        // std::cerr << "SPMeshNodeArray::write: missing patches!" << std::endl;
         mg_array = mg;
     }
 
@@ -1084,42 +1084,27 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
 }
 
 /**
-   Find default color based on color of first stop in "vector" gradient.
-   This should be rewritten if dependence on "vector" is removed.
-*/
+ * Find default color based on colors in existing fill.
+ */
 static SPColor default_color( SPItem *item ) {
 
-    // Set initial color to the color of the object before adding the mesh.
-    // This is a bit tricky as at the moment, a "vector" gradient is created
-    // before reaching here, replacing the original solid color. But the first
-    // stop will be that of the original object color.
     SPColor color( 0.5, 0.0, 0.5 );
+
     if ( item->style ) {
-        SPStyle const &style = *(item->style);
-        SPIPaint const &paint = ( style.fill ); // Could pick between style.fill/style.stroke
+        SPIPaint const &paint = ( item->style->fill ); // Could pick between style.fill/style.stroke
         if ( paint.isColor() ) {
             color = paint.value.color;
         } else if ( paint.isPaintserver() ) {
-            SPObject const *server = style.getFillPaintServer();
+            SPObject const *server = item->style->getFillPaintServer();
             if ( SP_IS_GRADIENT(server) ) {
-                SPGradient *vector = SP_GRADIENT( server )->getVector();
-                SPStop *firstStop = (vector) ?
-                    vector->getFirstStop() : SP_GRADIENT( server )->getFirstStop();
+                SPStop *firstStop = SP_GRADIENT(server)->getVector()->getFirstStop();
                 if ( firstStop ) {
-                    if (firstStop->currentColor) {
-                        Glib::ustring str = firstStop->getStyleProperty("color", NULL);
-                        if( !str.empty() ) {
-                            guint32 rgb = sp_svg_read_color( str.c_str(), 0 );
-                            color = SPColor( rgb );
-                        }
-                    } else {
-                        color = firstStop->specified_color;
-                    }
+                    color = firstStop->getEffectiveColor();
                 }
             }
         }
     } else {
-        std::cout << " SPMeshNodeArray: No style" << std::endl;
+        std::cerr << " SPMeshNodeArray: default_color(): No style" << std::endl;
     }
 
     return color;
