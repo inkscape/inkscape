@@ -1096,7 +1096,7 @@ static SPColor default_color( SPItem *item ) {
             color = paint.value.color;
         } else if ( paint.isPaintserver() ) {
             SPObject const *server = item->style->getFillPaintServer();
-            if ( SP_IS_GRADIENT(server) ) {
+            if ( SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector() ) {
                 SPStop *firstStop = SP_GRADIENT(server)->getVector()->getFirstStop();
                 if ( firstStop ) {
                     color = firstStop->getEffectiveColor();

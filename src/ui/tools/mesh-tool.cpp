@@ -59,7 +59,7 @@ namespace Inkscape {
 namespace UI {
 namespace Tools {
 
-static void sp_mesh_end_drag(MeshTool &rc);
+static void sp_mesh_new_default(MeshTool &rc);
 
 const std::string& MeshTool::getPrefsPath() {
 	return MeshTool::prefsPath;
@@ -474,24 +474,25 @@ bool MeshTool::root_handler(GdkEvent* event) {
                 // always resets selection to the single object under cursor
                 sp_mesh_context_split_near_point(this, selection->items().front(), this->mousepoint_doc, event->button.time);
             } else {
+                sp_mesh_new_default(*this);
                 // Create a new gradient with default coordinates.
-            	auto items= selection->items();
-                for(auto i=items.begin();i!=items.end();++i){
-                    SPItem *item = *i;
-                    SPGradientType new_type = SP_GRADIENT_TYPE_MESH;
-                    Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
+//             	auto items= selection->items();
+//                 for(auto i=items.begin();i!=items.end();++i){
+//                     SPItem *item = *i;
+//                     SPGradientType new_type = SP_GRADIENT_TYPE_MESH;
+//                     Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
-#ifdef DEBUG_MESH
-                    std::cout << "sp_mesh_context_root_handler: creating new mesh on: " << (fsmode == Inkscape::FOR_FILL ? "Fill" : "Stroke") << std::endl;
-#endif
-                    SPGradient *vector = sp_gradient_vector_for_object(desktop->getDocument(), desktop, item, fsmode);
+// #ifdef DEBUG_MESH
+//                     std::cout << "sp_mesh_context_root_handler: creating new mesh on: " << (fsmode == Inkscape::FOR_FILL ? "Fill" : "Stroke") << std::endl;
+// #endif
+//                     SPGradient *vector = sp_gradient_vector_for_object(desktop->getDocument(), desktop, item, fsmode);
 
-                    SPGradient *priv = sp_item_set_gradient(item, vector, new_type, fsmode);
-                    sp_gradient_reset_to_userspace(priv, item);
-                }
+//                     SPGradient *priv = sp_item_set_gradient(item, vector, new_type, fsmode);
+//                     sp_gradient_reset_to_userspace(priv, item);
+//                 }
 
-                DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
-                                   _("Create default mesh"));
+//                 DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
+//                                    _("Create default mesh"));
             }
 
             ret = TRUE;
@@ -666,7 +667,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
                         }
                     } else {
                         // Create a new mesh gradient
-                        sp_mesh_end_drag(*this);
+                        sp_mesh_new_default(*this);
                     }
                 } else if (this->item_to_select) {
                     if (over_line && line) {
@@ -931,7 +932,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
 }
 
 // Creates a new mesh gradient.
-static void sp_mesh_end_drag(MeshTool &rc) {
+static void sp_mesh_new_default(MeshTool &rc) {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = desktop->getSelection();
     SPDocument *document = desktop->getDocument();

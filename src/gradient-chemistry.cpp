@@ -76,9 +76,14 @@ std::vector<PaintTarget> const &allPaintTargets()
 // "vector" is a gradient that has stops but not position coords. It can be referenced by one or
 // more privates. Objects should not refer to it directly. It has no radial/linear distinction.
 //
-// "private" is a gradient that has no stops but has position coords (e.g. center, radius etc for a
-// radial). It references a vector for the actual colors. Each private is only used by one
-// object. It is either linear or radial.
+// "array" is a gradient that has mesh rows and patches. It may or may not have "x" and "y" attributes.
+// An array does have spacial information so it cannot be normalized like a "vector".
+//
+// "shared" is either a "vector" or "array" that is shared between multiple objects.
+//
+// "private" is a gradient that is not shared. A private linear or radial gradient has no stops but
+// has position coords (e.g. center, radius etc for a radial); it references a "vector" for the
+// actual colors. A mesh may or may not reference an array. Each private is only used by one object.
 
 static void sp_gradient_repr_set_link(Inkscape::XML::Node *repr, SPGradient *gr);
 
@@ -89,6 +94,7 @@ SPGradient *sp_gradient_ensure_vector_normalized(SPGradient *gr)
 #endif
     g_return_val_if_fail(gr != NULL, NULL);
     g_return_val_if_fail(SP_IS_GRADIENT(gr), NULL);
+    g_return_val_if_fail(!SP_IS_MESHGRADIENT(gr), NULL);
 
     /* If we are already normalized vector, just return */
     if (gr->state == SP_GRADIENT_STATE_VECTOR) return gr;
@@ -122,19 +128,19 @@ SPGradient *sp_gradient_ensure_vector_normalized(SPGradient *gr)
 }
 
 /**
- * Creates new private gradient for the given vector
+ * Creates new private gradient for the given shared gradient.
  */
 
-static SPGradient *sp_gradient_get_private_normalized(SPDocument *document, SPGradient *vector, SPGradientType type)
+static SPGradient *sp_gradient_get_private_normalized(SPDocument *document, SPGradient *shared, SPGradientType type)
 {
 #ifdef SP_GR_VERBOSE
-    g_message("sp_gradient_get_private_normalized(%p, %p, %d)", document, vector, type);
+    g_message("sp_gradient_get_private_normalized(%p, %p, %d)", document, shared, type);
 #endif
 
     g_return_val_if_fail(document != NULL, NULL);
-    g_return_val_if_fail(vector != NULL, NULL);
-    g_return_val_if_fail(SP_IS_GRADIENT(vector), NULL);
-    g_return_val_if_fail(vector->hasStops(), NULL);
+    g_return_val_if_fail(shared != NULL, NULL);
+    g_return_val_if_fail(SP_IS_GRADIENT(shared), NULL);
+    g_return_val_if_fail(shared->hasStops() || shared->hasPatches(), NULL);
 
     SPDefs *defs = document->getDefs();
 
@@ -146,16 +152,14 @@ static SPGradient *sp_gradient_get_private_normalized(SPDocument *document, SPGr
     } else if(type == SP_GRADIENT_TYPE_RADIAL) {
         repr = xml_doc->createElement("svg:radialGradient");
     } else {
-        // Rows/patches added in sp_gradient_reset_to_userspace for new meshes.
         repr = xml_doc->createElement("svg:meshgradient");
     }
 
     // privates are garbage-collectable
     repr->setAttribute("inkscape:collect", "always");
 
-    // link to vector
-    // MESH FIXME: Meshes don't used vector... but meshes simulating gradient across/along path might.
-    sp_gradient_repr_set_link(repr, vector);
+    // link to shared
+    sp_gradient_repr_set_link(repr, shared);
 
     /* Append the new private gradient to defs */
     defs->getRepr()->appendChild(repr);
@@ -204,21 +208,21 @@ static guint count_gradient_hrefs(SPObject *o, SPGradient *gr)
 
 
 /**
- * If gr has other users, create a new private; also check if gr links to vector, relink if not
+ * If gr has other users, create a new shared; also check if gr links to shared, relink if not
  */
-static SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *vector,
+static SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *shared,
                                                          SPGradientType type, SPObject *o)
 {
 #ifdef SP_GR_VERBOSE
-    g_message("sp_gradient_fork_private_if_necessary(%p, %p, %d, %p)", gr, vector, type, o);
+    g_message("sp_gradient_fork_private_if_necessary(%p, %p, %d, %p)", gr, shared, type, o);
 #endif
     g_return_val_if_fail(gr != NULL, NULL);
     g_return_val_if_fail(SP_IS_GRADIENT(gr), NULL);
 
-    // Orphaned gradient, no vector with stops at the end of the line; this used to be an assert
-    // but i think we should not abort on this - maybe just write a validity warning into some sort
-    // of log
-    if ( !vector || !vector->hasStops() ) {
+    // Orphaned gradient, no shared with stops or patches at the end of the line; this used to be
+    // an assert
+    if ( !shared || !(shared->hasStops() || shared->hasPatches()) ) {
+        std::cerr << "sp_gradient_fork_private_if_necessary: Orphaned gradient" << std::endl;
         return (gr);
     }
 
@@ -232,11 +236,11 @@ static SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradi
 
     // Check the number of uses of the gradient within this object;
     // if we are private and there are no other users,
-    if (!vector->isSwatch() && (gr->hrefcount <= count_gradient_hrefs(user, gr))) {
-        // check vector
-        if ( gr != vector && gr->ref->getObject() != vector ) {
-            /* our href is not the vector, and vector is different from gr; relink */
-            sp_gradient_repr_set_link(gr->getRepr(), vector);
+    if (!shared->isSwatch() && (gr->hrefcount <= count_gradient_hrefs(user, gr))) {
+        // check shared
+        if ( gr != shared && gr->ref->getObject() != shared ) {
+            /* our href is not the shared, and shared is different from gr; relink */
+            sp_gradient_repr_set_link(gr->getRepr(), shared);
         }
         return gr;
     }
@@ -245,35 +249,49 @@ static SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradi
     SPObject *defs = doc->getDefs();
 
     if ((gr->hasStops()) ||
+        (gr->hasPatches()) ||
         (gr->state != SP_GRADIENT_STATE_UNKNOWN) ||
         (gr->parent != SP_OBJECT(defs)) ||
         (gr->hrefcount > 1)) {
-        // we have to clone a fresh new private gradient for the given vector
+
+        // we have to clone a fresh new private gradient for the given shared
 
         // create an empty one
-        SPGradient *gr_new = sp_gradient_get_private_normalized(doc, vector, type);
+        SPGradient *gr_new = sp_gradient_get_private_normalized(doc, shared, type);
 
         // copy all the attributes to it
         Inkscape::XML::Node *repr_new = gr_new->getRepr();
         Inkscape::XML::Node *repr = gr->getRepr();
         repr_new->setAttribute("gradientUnits", repr->attribute("gradientUnits"));
         repr_new->setAttribute("gradientTransform", repr->attribute("gradientTransform"));
-        repr_new->setAttribute("spreadMethod", repr->attribute("spreadMethod"));
         if (SP_IS_RADIALGRADIENT(gr)) {
             repr_new->setAttribute("cx", repr->attribute("cx"));
             repr_new->setAttribute("cy", repr->attribute("cy"));
             repr_new->setAttribute("fx", repr->attribute("fx"));
             repr_new->setAttribute("fy", repr->attribute("fy"));
-            repr_new->setAttribute("r", repr->attribute("r"));
+            repr_new->setAttribute("r",  repr->attribute("r" ));
+            repr_new->setAttribute("fr", repr->attribute("fr"));
+            repr_new->setAttribute("spreadMethod", repr->attribute("spreadMethod"));
         } else if (SP_IS_LINEARGRADIENT(gr)) {
             repr_new->setAttribute("x1", repr->attribute("x1"));
             repr_new->setAttribute("y1", repr->attribute("y1"));
             repr_new->setAttribute("x2", repr->attribute("x2"));
             repr_new->setAttribute("y2", repr->attribute("y2"));
-        } else {
-            std::cerr << "sp_gradient_fork_private_if_necessary: mesh not implemented" << std::endl;
-        }
+            repr_new->setAttribute("spreadMethod", repr->attribute("spreadMethod"));
+        } else { // Mesh
+            repr_new->setAttribute("x", repr->attribute("x"));
+            repr_new->setAttribute("y", repr->attribute("y"));
+            repr_new->setAttribute("type", repr->attribute("type"));
 
+            // We probably want a completely separate mesh gradient so
+            // copy the children and unset the link to the shared.
+            for ( Inkscape::XML::Node *child = repr->firstChild() ; child ; child = child->next() ) {
+                Inkscape::XML::Node *copy = child->duplicate(doc->getReprDoc());
+                repr_new->appendChild( copy );
+                Inkscape::GC::release( copy );
+            }
+            sp_gradient_repr_set_link(repr_new, NULL);
+        }
         return gr_new;
     } else {
         return gr;
@@ -409,6 +427,8 @@ SPGradient *sp_gradient_reset_to_userspace(SPGradient *gr, SPItem *item)
         // IN SPMeshNodeArray::create()
         //sp_repr_set_svg_double(repr, "x", bbox->min()[Geom::X]);
         //sp_repr_set_svg_double(repr, "y", bbox->min()[Geom::Y]);
+
+        // We don't create a shared array gradient.
         SPMeshGradient* mg = SP_MESHGRADIENT( gr );
         mg->array.create( mg, item, bbox );
     }
@@ -434,14 +454,14 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
         return gr;
     }
 
-    // FIXME  Transforming a mesh gradient is more complicated... probably need to add function to SPMeshArray.wq
-    if ( gr && SP_IS_MESHGRADIENT( gr ) ) {
-        return gr;
-    }
-
     // First, fork it if it is shared
-    gr = sp_gradient_fork_private_if_necessary(gr, gr->getVector(),
-                                               SP_IS_RADIALGRADIENT(gr) ? SP_GRADIENT_TYPE_RADIAL : SP_GRADIENT_TYPE_LINEAR, item);
+    if (SP_IS_LINEARGRADIENT(gr)) {
+        gr = sp_gradient_fork_private_if_necessary(gr, gr->getVector(), SP_GRADIENT_TYPE_LINEAR, item);
+    } else if (SP_IS_RADIALGRADIENT(gr)) {
+        gr = sp_gradient_fork_private_if_necessary(gr, gr->getVector(), SP_GRADIENT_TYPE_RADIAL, item);
+    } else {
+        gr = sp_gradient_fork_private_if_necessary(gr, gr->getArray(),  SP_GRADIENT_TYPE_MESH,   item);
+    }
 
     if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
 
@@ -495,7 +515,24 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
         // as to cancel it out when it's applied to the gradient during rendering
         Geom::Affine point_convert = bbox2user * skew.inverse();
 
-        if (SP_IS_RADIALGRADIENT(gr)) {
+        if (SP_IS_LINEARGRADIENT(gr)) {
+            SPLinearGradient *lg = SP_LINEARGRADIENT(gr);
+
+            Geom::Point p1_b = Geom::Point(lg->x1.computed, lg->y1.computed);
+            Geom::Point p2_b = Geom::Point(lg->x2.computed, lg->y2.computed);
+
+            Geom::Point p1_u = p1_b * point_convert;
+            Geom::Point p2_u = p2_b * point_convert;
+
+            sp_repr_set_svg_double(repr, "x1", p1_u[Geom::X]);
+            sp_repr_set_svg_double(repr, "y1", p1_u[Geom::Y]);
+            sp_repr_set_svg_double(repr, "x2", p2_u[Geom::X]);
+            sp_repr_set_svg_double(repr, "y2", p2_u[Geom::Y]);
+
+            // set the gradientUnits
+            repr->setAttribute("gradientUnits", "userSpaceOnUse");
+
+        } else if (SP_IS_RADIALGRADIENT(gr)) {
             SPRadialGradient *rg = SP_RADIALGRADIENT(gr);
 
             // original points in the bbox coords
@@ -514,23 +551,12 @@ SPGradient *sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar
             sp_repr_set_svg_double(repr, "fy", f_u[Geom::Y]);
             sp_repr_set_svg_double(repr, "r", r_u);
 
+            // set the gradientUnits
+            repr->setAttribute("gradientUnits", "userSpaceOnUse");
+
         } else {
-            SPLinearGradient *lg = SP_LINEARGRADIENT(gr);
-
-            Geom::Point p1_b = Geom::Point(lg->x1.computed, lg->y1.computed);
-            Geom::Point p2_b = Geom::Point(lg->x2.computed, lg->y2.computed);
-
-            Geom::Point p1_u = p1_b * point_convert;
-            Geom::Point p2_u = p2_b * point_convert;
-
-            sp_repr_set_svg_double(repr, "x1", p1_u[Geom::X]);
-            sp_repr_set_svg_double(repr, "y1", p1_u[Geom::Y]);
-            sp_repr_set_svg_double(repr, "x2", p2_u[Geom::X]);
-            sp_repr_set_svg_double(repr, "y2", p2_u[Geom::Y]);
+            std::cerr << "sp_gradient_convert_to_userspace: Conversion of mesh to userspace not implemented" << std::endl;
         }
-
-        // set the gradientUnits
-        repr->setAttribute("gradientUnits", "userSpaceOnUse");
     }
 
     // apply the gradient to the item (may be necessary if we forked it); not recursive
@@ -1281,10 +1307,10 @@ in desktop coordinates.
 */
 Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke)
 {
-#ifdef SP_GR_VERBOSE
-    g_message("getGradientCoords(%p, %d, %d, %d)", item, point_type, point_i, fill_or_stroke);
-#endif
     SPGradient *gradient = getGradient(item, fill_or_stroke);
+#ifdef SP_GR_VERBOSE
+    g_message("getGradientCoords(%p, %d, %d, %d, %p)", item, point_type, point_i, fill_or_stroke, gradient);
+#endif
 
     Geom::Point p (0, 0);
 
