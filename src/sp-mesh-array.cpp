@@ -1159,6 +1159,10 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
     //  return if we've already constructed the mesh.
     if( !nodes.empty() ) return;
 
+    // Set 'gradientUnits'. Our calculations assume "userSpaceOnUse".
+    Inkscape::XML::Node *repr = mg->getRepr();
+    repr->setAttribute("gradientUnits", "userSpaceOnUse");
+
     // Get default color
     SPColor color = default_color( item );
  
@@ -1205,7 +1209,6 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
         // std::cout << " start: " << start << "  end: " << end << std::endl;
 
         // IS THIS NECESSARY?
-        Inkscape::XML::Node *repr = mg->getRepr();
         sp_repr_set_svg_double( repr, "x", center[Geom::X] + rx * cos(start) );
         sp_repr_set_svg_double( repr, "y", center[Geom::Y] + ry * sin(start) );
 
@@ -1275,7 +1278,6 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
             gdouble s = -3.0/2.0 * M_PI_2;
 
-            Inkscape::XML::Node *repr = mg->getRepr();
             sp_repr_set_svg_double( repr, "x", center[Geom::X] + rx * cos(s) );
             sp_repr_set_svg_double( repr, "y", center[Geom::Y] + ry * sin(s) );
 
@@ -1328,7 +1330,6 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             // std::cout << "We've got ourselves an star! Sides: " << sides << std::endl;
 
             Geom::Point p0 = sp_star_get_xy( star, SP_STAR_POINT_KNOT1, 0 );
-            Inkscape::XML::Node *repr = mg->getRepr();
             sp_repr_set_svg_double( repr, "x", p0[Geom::X] );
             sp_repr_set_svg_double( repr, "y", p0[Geom::Y] );
 
@@ -1398,7 +1399,6 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
             // Generic
 
-            Inkscape::XML::Node *repr = mg->getRepr();
             sp_repr_set_svg_double(repr, "x", bbox->min()[Geom::X]);
             sp_repr_set_svg_double(repr, "y", bbox->min()[Geom::Y]);
 
