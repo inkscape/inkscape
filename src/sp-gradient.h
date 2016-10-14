@@ -172,9 +172,6 @@ public:
     /** Forces array (mesh) to be built, if not present (i.e. changed) */
     void ensureArray();
 
-    /** Ensures that color array is populated */
-    void ensureColors();
-
     /**
      * Set spread property of gradient and emit modified.
      */
