@@ -348,6 +348,14 @@ static void ms_pick_colors(void)
     }
 }
 
+static void ms_fit_mesh(void)
+{
+    MeshTool *mt = get_mesh_tool();
+    if (mt) {
+        sp_mesh_context_fit_mesh_in_bbox( mt );
+    }
+}
+
 static void mesh_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 /**
@@ -556,6 +564,17 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
     }
 
+
+    {
+        InkAction* act = ink_action_new( "MeshFitInBoundingBoxAction",
+                                         _("Scale mesh to bounding box:"),
+                                         _("Scale mesh to fit inside bounding box."),
+                                         INKSCAPE_ICON("mesh-gradient-fit"),
+                                         secondarySize );
+        g_object_set( act, "short_label", _("Fit mesh"), NULL );
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(ms_fit_mesh), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+    }
 
 }
 

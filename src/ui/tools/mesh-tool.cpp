@@ -52,6 +52,7 @@
 #include "ui/tools/mesh-tool.h"
 #include "sp-mesh-gradient.h"
 #include "display/sp-ctrlcurve.h"
+#include "display/curve.h"
 
 using Inkscape::DocumentUndo;
 
@@ -427,6 +428,71 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
     }
     drag->updateDraggers();
 
+}
+
+
+/**
+ * Scale mesh to just fit into bbox of selected items.
+ */
+void
+sp_mesh_context_fit_mesh_in_bbox (MeshTool *rc)
+{
+
+#ifdef DEBUG_MESH
+    std::cout << "sp_mesh_context_fit_mesh_in_bbox: entrance: Entrance"<< std::endl;
+#endif
+
+    SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
+
+    Inkscape::Selection *selection = desktop->getSelection();
+    if (selection == NULL) {
+        return;
+    }
+
+    bool changed = false;
+    auto itemlist = selection->items();
+    for (auto i=itemlist.begin(); i!=itemlist.end(); ++i) {
+
+        SPItem *item = *i;
+        SPStyle *style = item->style;
+
+        if (style && (style->fill.isPaintserver())) {
+            SPPaintServer *server = item->style->getFillPaintServer();
+            if ( SP_IS_MESHGRADIENT(server) ) {
+
+                SPMeshGradient *gradient = SP_MESHGRADIENT(server);
+                SPCurve * outline = gradient->array.outline_path();
+                Geom::OptRect mesh_bbox = outline->get_pathvector().boundsExact();
+                outline->unref();
+                Geom::OptRect item_bbox = item->geometricBounds();
+
+                if ((*mesh_bbox).width() == 0) {
+                    continue;
+                }            
+                if ((*mesh_bbox).height() == 0) {
+                    continue;
+                }
+                double scale_x = (*item_bbox).width() /(*mesh_bbox).width() ;
+                double scale_y = (*item_bbox).height()/(*mesh_bbox).height();
+
+                Geom::Translate t1(-(*mesh_bbox).min());
+                Geom::Scale scale(scale_x,scale_y);
+                Geom::Translate t2((*item_bbox).min());
+                Geom::Affine transform = t1 * scale * t2;
+                if (!transform.isIdentity() ) {
+                    gradient->array.transform(transform);
+                    gradient->array.write( gradient );
+                    gradient->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    changed = true;
+                }
+            }
+        }
+   
+    }
+    if (changed) {
+        DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH,
+                           _("Fit mesh inside bounding box."));
+    }
 }
 
 

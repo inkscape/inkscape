@@ -141,6 +141,7 @@ public:
 };
 
 class SPMeshGradient;
+class SPCurve;
 
 // An array of mesh nodes.
 class SPMeshNodeArray {
@@ -194,6 +195,15 @@ public:
 
   // Update other nodes in response to a node move.
   void update_handles( unsigned int corner, std::vector< unsigned int > selected_corners, Geom::Point old_p, MeshNodeOperation op );
+
+  // Return outline path (don't forget to unref() when done with curve)
+  SPCurve * outline_path();
+
+  // Transform array
+  void transform(Geom::Affine const &m);
+
+  // Find bounding box
+  // Geom::OptRect findBoundingBox();
 
   void split_row( unsigned int i, unsigned int n );
   void split_column( unsigned int j, unsigned int n );

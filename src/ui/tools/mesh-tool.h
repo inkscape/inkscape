@@ -59,6 +59,7 @@ private:
 void sp_mesh_context_select_next(ToolBase *event_context);
 void sp_mesh_context_select_prev(ToolBase *event_context);
 void sp_mesh_context_corner_operation(MeshTool *event_context, MeshCornerOperation operation );
+void sp_mesh_context_fit_mesh_in_bbox(MeshTool *event_context);
 
 }
 }

@@ -51,6 +51,7 @@
 #include "sp-mesh-row.h"
 #include "sp-mesh-patch.h"
 #include "sp-stop.h"
+#include "display/curve.h"
 
 // For new mesh creation
 #include "preferences.h"
@@ -2698,6 +2699,49 @@ void SPMeshNodeArray::update_handles( guint corner, std::vector< guint > /*selec
     //         Geom::Point dsx1 = pnodes[0][1]->p - 
 }
 
+
+SPCurve * SPMeshNodeArray::outline_path() {
+
+    SPCurve *outline = new SPCurve();
+
+    outline->moveto( nodes[0][0]->p );
+
+    int ncol = nodes[0].size();
+    int nrow = nodes.size();
+
+    // Top
+    for (int i = 1; i < ncol; i += 3 ) {
+        outline->curveto( nodes[0][i]->p, nodes[0][i+1]->p, nodes[0][i+2]->p);
+    }
+
+    // Right
+    for (int i = 1; i < nrow; i += 3 ) {
+        outline->curveto( nodes[i][ncol-1]->p, nodes[i+1][ncol-1]->p, nodes[i+2][ncol-1]->p);
+    }
+
+    // Bottom (right to left)
+    for (int i = 1; i < nrow; i += 3 ) {
+        outline->curveto( nodes[nrow-1][ncol-i-1]->p, nodes[nrow-1][ncol-i-2]->p, nodes[nrow-1][ncol-i-3]->p);
+    }
+
+    // Left (bottom to top)
+    for (int i = 1; i < nrow; i += 3 ) {
+        outline->curveto( nodes[nrow-i-1][0]->p, nodes[nrow-i-2][0]->p, nodes[nrow-i-3][0]->p);
+    }
+
+    outline->closepath();
+
+    return outline;
+}
+
+void SPMeshNodeArray::transform(Geom::Affine const &m) {
+
+    for (int i = 0; i < nodes[0].size(); ++i) {
+        for (int j = 0; j < nodes.size(); ++j) {
+            nodes[j][i]->p *= m;
+        }
+    }
+}
 
 // Defined in gradient-chemistry.cpp
 guint32 average_color(guint32 c1, guint32 c2, gdouble p);

@@ -2509,7 +2509,7 @@ http://www.inkscape.org/</dc:description>
 <g id="paint-pattern" transform="translate(395.0006,254)" inkscape:label="#fill_pattern">
 <rect inkscape:label="#ccc" y="66" x="671" height="18" width="18" id="rect4541" style="color:#000000;fill:#99b6d4;fill-rule:evenodd;stroke-width:1.0000004" />
 <path style="fill:#ffffff;stroke:#000000;stroke-width:0;stroke-linejoin:round" d="M 676.7274,66.00001 673.4547,69.42858 677.5456,73.7143 681.6365,69.42858 678.3638,66.00001 676.7274,66.00001 Z M 681.6365,69.42858 685.7274,73.7143 689.0001,70.28572 689.0001,68.57144 686.5456,66.00001 684.9092,66.00001 681.6365,69.42858 Z M 685.7274,73.7143 681.6365,78.00001 685.7274,82.28573 689.0001,78.85715 689.0001,77.14287 685.7274,73.7143 Z M 685.7274,82.28573 684.091,84.00001 687.3638,84.00001 685.7274,82.28573 Z M 681.6365,78.00001 677.5456,73.7143 673.4547,78.00001 677.5456,82.28573 681.6365,78.00001 Z M 677.5456,82.28573 675.9092,84.00001 679.1819,84.00001 677.5456,82.28573 Z M 673.4547,78.00001 671.0001,75.42858 671.0001,80.57144 673.4547,78.00001 Z M 673.4547,69.42858 671.0001,66.85715 671.0001,72.00001 673.4547,69.42858 Z" id="rect4545" inkscape:connector-curvature="0" />
-<rect style="color:#000000;fill:none;stroke:#000000;stroke-width:0.9999989;stroke-linecap:round;stroke-linejoin:round" id="rect4381" width="19.00081" height="18.99999" x="670.4994" y="65.5" />
+<rect style="color:#000000;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round" id="rect4381" width="19" height="19" x="670.4994" y="65.5" />
 </g>
 <g id="paint-swatch" transform="translate(395.0006,282)" inkscape:label="#fill_swatch">
 <rect inkscape:label="#ccc" y="66" x="671" height="18" width="18" id="rect11473" style="color:#000000;fill:#99b6d4;fill-rule:evenodd;stroke-width:1.0000004" />
@@ -3950,11 +3950,11 @@ http://www.inkscape.org/</dc:description>
 <use transform="matrix(1,0,0,0.99644,-1.2735,13.06755)" xlink:href="#rect3568" id="use3137" x="0" y="0" width="100%" height="100%" />
 </g>
 <g id="paint-gradient-mesh" inkscape:label="#fill_mesh">
-<rect style="fill:#99b6d4" height="9.5" width="9.5" y="347" x="1095.5" id="rect3140" />
-<rect style="fill:#ffffff" height="9.5" width="9.5" y="357" x="1095.5" id="rect3142" />
-<rect style="fill:#99b6d4" height="9.5" width="9.5" y="357" x="1105" id="rect3144" />
-<rect style="fill:#ffffff" height="9.5" width="9.5" y="347" x="1105" id="rect3146" />
-<use xlink:href="#rect4381" transform="translate(425.0351,282.0202)" id="use3148" x="0" y="0" width="100%" height="100%" />
+<rect style="fill:#99b6d4" height="9.5" width="9.5" y="347.5" x="1095.5" id="rect3140" />
+<rect style="fill:#ffffff" height="9.5" width="9.5" y="357"   x="1095.5" id="rect3142" />
+<rect style="fill:#99b6d4" height="9.5" width="9.5" y="357"   x="1105"   id="rect3144" />
+<rect style="fill:#ffffff" height="9.5" width="9.5" y="347.5" x="1105"   id="rect3146" />
+<use xlink:href="#rect4381" transform="translate(425,282)" id="use3148" x="0" y="0" width="100%" height="100%" />
 </g>
 <g id="paint-gradient-conical" inkscape:label="#fill_conical">
 <path sodipodi:rx="9.5" sodipodi:ry="9.5" style="fill:#ffffff" sodipodi:type="arc" sodipodi:start="0" sodipodi:cy="357" sodipodi:cx="1135" sodipodi:end="1.047198" d="M 1144.5,357 A 9.5,9.5 0 0 1 1139.75,365.2272 L 1135,357 Z" id="path3145" />
@@ -3964,6 +3964,10 @@ http://www.inkscape.org/</dc:description>
 <path sodipodi:rx="9.5" sodipodi:ry="9.5" style="fill:#99b6d4" sodipodi:type="arc" sodipodi:start="3.141593" sodipodi:cy="357" sodipodi:cx="1135" sodipodi:end="4.18879" d="M 1125.5,357 A 9.5,9.5 0 0 1 1130.25,348.7728 L 1135,357 Z" id="path3153" />
 <path sodipodi:rx="9.5" sodipodi:ry="9.5" style="fill:#99b6d4" sodipodi:type="arc" d="M 1139.75,348.7728 A 9.5,9.5 0 0 1 1144.5,357 L 1135,357 Z" sodipodi:cy="357" sodipodi:cx="1135" sodipodi:end="6.283185" sodipodi:start="5.235988" id="path3155" />
 <circle style="fill:none;stroke:#000000" id="path3157" cx="1135" cy="357" r="9.5" />
+</g>
+<g id="mesh-gradient-fit" inkscape:label="#mesh-gradient-fit">
+<path style="fill:#99b6d4;stroke:none" d="m 1172,350 c 6,6 -4,10 0,14 -6,6 -10,-4 -14,0 -6,-6 4,-10 0,-14 6,-6 10,4 14,0 z"/>
+<rect style="fill:none;stroke:#000000;stroke-linejoin:round" id="outline" width="19" height="19" x="1155.5" y="347.5" />
 </g>
 <g id="dialog-filters" inkscape:label="#dialog-filters">
 <path sodipodi:nodetypes="cscccccc" inkscape:connector-curvature="0" id="path7138" d="M 272.415,308.6281 C 272.509,305.3138 278.0595,305.1187 279.875,305.1077 281.8707,305.0957 287.2213,305.3694 287.3348,308.5442 L 281.3157,314.8308 281.3157,319.0217 C 279.8863,319.4867 279.7151,319.5463 278.3661,319.0217 L 278.3661,314.8308 Z" style="opacity:0.909;fill:url(#linearGradient7163);stroke:#000000;stroke-width:0.9143469;stroke-linecap:round;stroke-linejoin:round;stroke-dashoffset:10" />
