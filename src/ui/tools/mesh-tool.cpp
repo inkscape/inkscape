@@ -1036,13 +1036,19 @@ static void sp_mesh_new_default(MeshTool &rc) {
 
             // Get corresponding object
             SPMeshGradient *mg = static_cast<SPMeshGradient *>(document->getObjectByRepr(repr));
-            mg->array.create(mg, *i, (*i)->visualBounds());
+            mg->array.create(mg, *i, (fill_or_stroke == Inkscape::FOR_FILL) ?
+                             (*i)->geometricBounds() : (*i)->visualBounds());
 
             bool isText = SP_IS_TEXT(*i);
             sp_style_set_property_url (*i, ((fill_or_stroke == Inkscape::FOR_FILL) ? "fill":"stroke"),
                                    mg, isText);
 
             (*i)->requestModified(SP_OBJECT_MODIFIED_FLAG|SP_OBJECT_STYLE_MODIFIED_FLAG);
+        }
+
+        if (css) {
+            sp_repr_css_attr_unref(css);
+            css = 0;
         }
 
         DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_MESH, _("Create mesh"));
