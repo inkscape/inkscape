@@ -256,6 +256,7 @@ void AboutBox::initStrings() {
 "Joshua L. Blocher\n"
 "Hanno Böck\n"
 "Tomasz Boczkowski\n"
+"Adrian Boguszewski\n"
 "Henrik Bohre\n"
 "Boldewyn\n"
 "Daniel Borgmann\n"
@@ -265,6 +266,7 @@ void AboutBox::initStrings() {
 "Christopher Brown\n"
 "Marcus Brubaker\n"
 "Luca Bruno\n"
+"Brynn (brynn@inkscapecommunity.com)\n"
 "Nicu Buculei\n"
 "Bulia Byak\n"
 "Pierre Caclin\n"
@@ -289,10 +291,12 @@ void AboutBox::initStrings() {
 "Nicolas Dufour\n"
 "Tim Dwyer\n"
 "Maxim V. Dziumanenko\n"
+"Moritz Eberl\n"
 "Johan Engelen\n"
 "Miklos Erdelyi\n"
 "Ulf Erikson\n"
 "Noé Falzon\n"
+"Sebastian Faubel\n"
 "Frank Felfe\n"
 "Andrew Fitzsimon\n"
 "Edward Flick\n"
@@ -324,6 +328,7 @@ void AboutBox::initStrings() {
 "Jean-Olivier Irisson\n"
 "Bob Jamison\n"
 "Ted Janeczko\n"
+"Marc Jeanmougin\n"
 "jEsuSdA\n"
 "Fernando Lucchesi Bastos Jurema\n"
 "Lauris Kaplinski\n"
@@ -389,6 +394,7 @@ void AboutBox::initStrings() {
 "Shivaken\n"
 "Michael Sloan\n"
 "John Smith\n"
+"Sandra Snan\n"
 "Boštjan Špetič\n"
 "Aaron Spike\n"
 "Kaushik Sridharan\n"
@@ -413,7 +419,8 @@ void AboutBox::initStrings() {
 "Gellule Xg\n"
 "Daniel Yacob\n"
 "Masatake Yamato\n"
-"David Yip";
+"David Yip"
+;
 
     //##############################
     //# T R A N S L A T O R S
