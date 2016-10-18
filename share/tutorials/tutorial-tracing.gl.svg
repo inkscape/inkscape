@@ -86,7 +86,7 @@
   <flowDiv xml:space="preserve">Para usar o vectorizador, cargue ou importe unha imaxe, selecciónea, e seleccione <flowSpan font-family="sans-serif">Camiño &gt; Vectorizar Mapa de Bits</flowSpan>, ou prema <flowSpan font-weight="bold">Shift+Alt+B</flowSpan>.</flowDiv>
  </flowRoot>
  <text id="tracing-f01-gl.svgtext7000" font-weight="bold" sodipodi:linespacing="100.00000%" display="block" transform="translate(10 393.31)" xml:space="preserve" line-height="100.00000%" font-size="5.7038" y="99.753128" x="101.47987" font-family="sans-serif" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f01-gl.svgtspan7001" sodipodi:role="line" y="99.753128" x="101.47987">Opcións principais do diálogo de Vectorización</tspan></text>
- <image id="tracing-f01-gl.svgimage2577" sodipodi:absref="/potrace-gl.png" xlink:href="potrace-gl.png" transform="translate(10 393.31)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
+ <image id="tracing-f01-gl.svgimage2577" sodipodi:absref="/potrace.gl.png" xlink:href="potrace.gl.png" transform="translate(10 393.31)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
  <rect id="d0e50" display="none" height="1e3px" width="288" y="506.3" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>

@@ -86,7 +86,7 @@
   <flowDiv xml:space="preserve">開始使用描繪功能，載入或匯入一個圖像，選取它並選擇 <flowSpan font-family="sans-serif">路徑 &gt; 描繪點陣圖</flowSpan> 項目，或者直接按 <flowSpan font-weight="bold">Shift+Alt+B</flowSpan>。</flowDiv>
  </flowRoot>
  <text id="tracing-f01-zh_TW.svgtext7000" font-weight="bold" sodipodi:linespacing="100.00000%" display="block" transform="translate(10 271.28)" xml:space="preserve" line-height="100.00000%" font-size="5.7038" y="99.753128" x="101.47987" font-family="sans-serif" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f01-zh_TW.svgtspan7001" sodipodi:role="line" y="99.753128" x="101.47987">描繪對話窗的主要選項</tspan></text>
- <image id="tracing-f01-zh_TW.svgimage2577" sodipodi:absref="/potrace-zh_TW.png" xlink:href="potrace-zh_TW.png" transform="translate(10 271.28)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
+ <image id="tracing-f01-zh_TW.svgimage2577" sodipodi:absref="/potrace.zh_TW.png" xlink:href="potrace.zh_TW.png" transform="translate(10 271.28)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
  <rect id="d0e50" display="none" height="1e3px" width="288" y="383.5" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>

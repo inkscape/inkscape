@@ -86,7 +86,7 @@
   <flowDiv xml:space="preserve">Para usar a ferramenta de vetorização, carregue ou importe uma imagem, selecione-a, e selecione o comando <flowSpan font-family="sans-serif">Caminho &gt; Traçar Bitmap</flowSpan>, ou <flowSpan font-weight="bold">Shift+Alt+B</flowSpan>.</flowDiv>
  </flowRoot>
  <text id="tracing-f01-pt_BR.svgtext7000" font-weight="bold" sodipodi:linespacing="100.00000%" display="block" transform="translate(10 393.06)" xml:space="preserve" line-height="100.00000%" font-size="5.7038" y="99.753128" x="101.47987" font-family="sans-serif" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f01-pt_BR.svgtspan7001" sodipodi:role="line" y="99.753128" x="101.47987">Main options within the Trace dialog</tspan></text>
- <image id="tracing-f01-pt_BR.svgimage2577" sodipodi:absref="/potrace-pt_BR.png" xlink:href="potrace-pt_BR.png" transform="translate(10 393.06)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
+ <image id="tracing-f01-pt_BR.svgimage2577" sodipodi:absref="/potrace.pt_BR.png" xlink:href="potrace.pt_BR.png" transform="translate(10 393.06)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
  <rect id="d0e50" display="none" height="1e3px" width="288" y="506.04" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>

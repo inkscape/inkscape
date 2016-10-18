@@ -86,7 +86,7 @@
   <flowDiv xml:space="preserve">Untuk menggunakan perunut, load atau import sebuah gambar, seleksi, kemudian pilih <flowSpan font-family="sans-serif">Path &gt; Trace Bitmap</flowSpan>, atau tekan <flowSpan font-weight="bold">Shift+Alt+B</flowSpan>.</flowDiv>
  </flowRoot>
  <text id="tracing-f01-id.svgtext7000" font-weight="bold" sodipodi:linespacing="100.00000%" display="block" transform="translate(10 364.61)" xml:space="preserve" line-height="100.00000%" font-size="5.7038" y="99.753128" x="101.47987" font-family="sans-serif" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f01-id.svgtspan7001" sodipodi:role="line" y="99.753128" x="101.47987">Opsi utama dalam dialog Trace (Runut)</tspan></text>
- <image id="tracing-f01-id.svgimage2577" sodipodi:absref="/potrace-id.png" xlink:href="potrace-id.png" transform="translate(10 364.61)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
+ <image id="tracing-f01-id.svgimage2577" sodipodi:absref="/potrace.id.png" xlink:href="potrace.id.png" transform="translate(10 364.61)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
  <rect id="d0e50" display="none" height="1e3px" width="288" y="477.6" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>

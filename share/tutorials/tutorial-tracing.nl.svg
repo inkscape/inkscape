@@ -86,7 +86,7 @@
   <flowDiv xml:space="preserve">Om de tracer te gebruiken, laad of importeer je een afbeelding, selecteer deze en klik op het commando <flowSpan font-family="sans-serif">Paden &gt; Bitmap overtrekken</flowSpan> of gebruik je <flowSpan font-weight="bold">Shift+Alt+B</flowSpan>.</flowDiv>
  </flowRoot>
  <text id="tracing-f01-nl.svgtext7000" font-weight="bold" sodipodi:linespacing="100.00000%" display="block" transform="translate(10 375.37)" xml:space="preserve" line-height="100.00000%" font-size="5.7038" y="99.753128" x="101.47987" font-family="sans-serif" sodipodi:insensitive="true" fill="#000000"><tspan id="tracing-f01-nl.svgtspan7001" sodipodi:role="line" y="99.753128" x="101.47987">Algemene opties in het dialoogvenster Bitmap overtrekken</tspan></text>
- <image id="tracing-f01-nl.svgimage2577" sodipodi:absref="/potrace-nl.png" xlink:href="potrace-nl.png" transform="translate(10 375.37)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
+ <image id="tracing-f01-nl.svgimage2577" sodipodi:absref="/potrace.nl.png" xlink:href="potrace.nl.png" transform="translate(10 375.37)" height="91.738" width="189.28" display="block" y="-.000017236" x="65.359"/>
  <rect id="d0e50" display="none" height="1e3px" width="288" y="488.35" x="10"/>
  <flowRoot font-size="8" font-family="serif" line-height="133.00000%" fill="#000000">
   <flowRegion>
