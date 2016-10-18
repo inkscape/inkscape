@@ -176,7 +176,7 @@ class MyEffect(inkex.Effect):
                 if os.name == 'nt':
                     filename = filename.replace("\\", "/")
                 pngs.append(filename)
-                names.append(name.encode('utf-8'))
+                names.append(name)
 
         if (self.valid == 0):
             self.clear_tmp()
