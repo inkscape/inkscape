@@ -9482,13 +9482,12 @@ msgid "Attach path"
 msgstr "Lega tracciato"
 
 #: ../src/live_effects/effect.cpp:150
-#, fuzzy
 msgid "Fill between strokes"
-msgstr "Riempimento e contorni"
+msgstr "Riempimento tra 2 tracciati"
 
 #: ../src/live_effects/effect.cpp:151 ../src/selection-chemistry.cpp:2906
 msgid "Fill between many"
-msgstr ""
+msgstr "Riempimento tra più tracciati"
 
 #: ../src/live_effects/effect.cpp:152
 msgid "Ellipse by 5 points"
@@ -9887,29 +9886,24 @@ msgid "Defines the direction and magnitude of the extrusion"
 msgstr ""
 
 #: ../src/live_effects/lpe-fill-between-many.cpp:25
-#, fuzzy
 msgid "Paths from which to take the original path data"
-msgstr "Tracciato da cui ottenere i dati tracciato originali"
+msgstr "Tracciati da cui ottenere i dati tracciato originali"
 
 #: ../src/live_effects/lpe-fill-between-strokes.cpp:24
-#, fuzzy
 msgid "Second path:"
-msgstr "Tracciato di piega:"
+msgstr "Secondo tracciato:"
 
 #: ../src/live_effects/lpe-fill-between-strokes.cpp:24
-#, fuzzy
 msgid "Second path from which to take the original path data"
-msgstr "Tracciato da cui ottenere i dati tracciato originali"
+msgstr "Secondo tracciato da cui ottenere i dati tracciato originali"
 
 #: ../src/live_effects/lpe-fill-between-strokes.cpp:25
-#, fuzzy
 msgid "Reverse Second"
-msgstr "Inverti gradiente"
+msgstr "Inverti secondo tracciato"
 
 #: ../src/live_effects/lpe-fill-between-strokes.cpp:25
-#, fuzzy
 msgid "Reverses the second path order"
-msgstr "Inverti la direzione del gradiente"
+msgstr "Inverte la direzione del secondo tracciato"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:41
 #: ../src/widgets/text-toolbar.cpp:1788
@@ -9962,11 +9956,12 @@ msgstr "Metodo di divisione"
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:60
 #, fuzzy
 msgid "Radius (unit or %):"
-msgstr "Raggio (px):"
+msgstr "Raggio (unità o %):"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:60
+#, fuzzy
 msgid "Radius, in unit or %"
-msgstr ""
+msgstr "Raggio, in unità o %"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
 #, fuzzy
@@ -10145,9 +10140,8 @@ msgid "Miter"
 msgstr "Vivi"
 
 #: ../src/live_effects/lpe-jointype.cpp:34
-#, fuzzy
 msgid "Miter Clip"
-msgstr "Spigolosità:"
+msgstr "Taglio retto"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
 #: ../src/live_effects/lpe-jointype.cpp:35
@@ -11002,9 +10996,8 @@ msgid "By number of segments"
 msgstr "Per numero di segmenti"
 
 #: ../src/live_effects/lpe-roughen.cpp:32
-#, fuzzy
 msgid "By max. segment size"
-msgstr "Per lunghezza massima del segmento"
+msgstr "Per lunghezza massima segmento"
 
 #: ../src/live_effects/lpe-roughen.cpp:38
 #, fuzzy
@@ -11027,34 +11020,28 @@ msgid "Method"
 msgstr "Metodo"
 
 #: ../src/live_effects/lpe-roughen.cpp:49
-#, fuzzy
 msgid "Division method"
-msgstr "Metodo di divisione:"
+msgstr "Metodo di divisione"
 
 #: ../src/live_effects/lpe-roughen.cpp:51
-#, fuzzy
 msgid "Max. segment size"
-msgstr "Per lunghezza massima del segmento"
+msgstr "Lunghezza massima segmento"
 
 #: ../src/live_effects/lpe-roughen.cpp:53
-#, fuzzy
 msgid "Number of segments"
-msgstr "Numero di segmenti:"
+msgstr "Numero di segmenti"
 
 #: ../src/live_effects/lpe-roughen.cpp:55
-#, fuzzy
 msgid "Max. displacement in X"
-msgstr "Spostamento massimo sulle X (px):"
+msgstr "Spostamento massimo sulle X"
 
 #: ../src/live_effects/lpe-roughen.cpp:57
-#, fuzzy
 msgid "Max. displacement in Y"
-msgstr "Spostamento massimo sulle Y (px):"
+msgstr "Spostamento massimo sulle Y"
 
 #: ../src/live_effects/lpe-roughen.cpp:59
-#, fuzzy
 msgid "Global randomize"
-msgstr "visibilmente casuale"
+msgstr "Casualità generale"
 
 #: ../src/live_effects/lpe-roughen.cpp:61
 #, fuzzy
@@ -11091,19 +11078,19 @@ msgstr ""
 
 #: ../src/live_effects/lpe-roughen.cpp:121
 msgid "<b>Add nodes</b> Subdivide each segment"
-msgstr ""
+msgstr "<b>Aggiungi nodi</b> Suddividi ogni segmento"
 
 #: ../src/live_effects/lpe-roughen.cpp:130
 msgid "<b>Jitter nodes</b> Move nodes/handles"
-msgstr ""
+msgstr "<b>Sfalsa nodi</b> Muovi nodi/maniglie"
 
 #: ../src/live_effects/lpe-roughen.cpp:139
 msgid "<b>Extra roughen</b> Add a extra layer of rough"
-msgstr ""
+msgstr "<b>Maggior increspatura</b> Aumenta l'irregolarità"
 
 #: ../src/live_effects/lpe-roughen.cpp:148
 msgid "<b>Options</b> Modify options to rough"
-msgstr ""
+msgstr "<b>Opzioni</b> Modifica le opzioni di irregolarità"
 
 #: ../src/live_effects/lpe-ruler.cpp:25 ../share/extensions/measure.inx.h:27
 #: ../share/extensions/restack.inx.h:16
@@ -11244,7 +11231,7 @@ msgstr ""
 #: ../src/live_effects/lpe-simplify.cpp:30
 #, fuzzy
 msgid "Steps:"
-msgstr "_Passi:"
+msgstr "Passi:"
 
 #: ../src/live_effects/lpe-simplify.cpp:30
 #, fuzzy
@@ -20859,9 +20846,8 @@ msgid "Button count:"
 msgstr "Bottone"
 
 #: ../src/ui/dialog/input.cpp:1010
-#, fuzzy
 msgid "Tablet"
-msgstr "Tabella"
+msgstr "Tablet"
 
 #: ../src/ui/dialog/input.cpp:1039 ../src/ui/dialog/input.cpp:1928
 msgid "pad"
@@ -21131,7 +21117,7 @@ msgstr "Disattiva effetto su tracciato"
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:53
 #, fuzzy
 msgid "Radius (pixels):"
-msgstr "Raggio (px):"
+msgstr "Raggio (pixel):"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:65
 #, fuzzy
@@ -21145,7 +21131,7 @@ msgstr ""
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:137
 #, fuzzy
 msgid "_Modify"
-msgstr "Modifica tracciato"
+msgstr "_Modifica"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:201
 msgid "Radius"
@@ -21819,13 +21805,11 @@ msgid "Parameterized:"
 msgstr "Parametri:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:83
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Center X/Y:"
 msgstr "Centro X/Y:"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:105
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Radius X/Y:"
 msgstr "Raggio X/Y:"
@@ -22232,7 +22216,6 @@ msgid "Set as _default"
 msgstr "Imposta come _predefinito"
 
 #: ../src/ui/dialog/text-edit.cpp:87
-#, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -25142,7 +25125,6 @@ msgid "CMYK"
 msgstr "CMYK"
 
 #: ../src/ui/widget/filter-effect-chooser.cpp:26
-#, fuzzy
 msgid "_Blur:"
 msgstr "Sfocat_ura:"
 
@@ -29285,9 +29267,8 @@ msgstr "Taglia dagli oggetti"
 
 #. Width
 #: ../src/widgets/eraser-toolbar.cpp:151
-#, fuzzy
 msgid "(no width)"
-msgstr "Larghezza zero"
+msgstr "(nessuna larghezza)"
 
 #: ../src/widgets/eraser-toolbar.cpp:155
 msgid "The width of the eraser pen (relative to the visible canvas area)"
@@ -31887,7 +31868,6 @@ msgstr "In modalità colore, agisce sulla tonalità dell'oggetto"
 
 #. TRANSLATORS:  "H" here stands for hue
 #: ../src/widgets/tweak-toolbar.cpp:291
-#, fuzzy
 msgctxt "Hue"
 msgid "H"
 msgstr "H"
@@ -31898,7 +31878,6 @@ msgstr "In modalità colore, agisce sulla saturazione dell'oggetto"
 
 #. TRANSLATORS: "S" here stands for Saturation
 #: ../src/widgets/tweak-toolbar.cpp:307
-#, fuzzy
 msgctxt "Saturation"
 msgid "S"
 msgstr "S"
@@ -31909,7 +31888,6 @@ msgstr "In modalità colore, agisce sulla luminosità dell'oggetto"
 
 #. TRANSLATORS: "L" here stands for Lightness
 #: ../src/widgets/tweak-toolbar.cpp:323
-#, fuzzy
 msgctxt "Lightness"
 msgid "L"
 msgstr "L"
@@ -31920,7 +31898,6 @@ msgstr "In modalità colore, agisce sull'opacità dell'oggetto"
 
 #. TRANSLATORS: "O" here stands for Opacity
 #: ../src/widgets/tweak-toolbar.cpp:339
-#, fuzzy
 msgctxt "Opacity"
 msgid "O"
 msgstr "O"
@@ -31970,19 +31947,16 @@ msgstr "Impossibile elaborare questo oggetto. Convertirlo prima in tracciato."
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:179
-#, fuzzy
 msgid "Side Length 'a' (px): "
-msgstr "Lunghezza lato a (px):"
+msgstr "Lunghezza lato 'a' (px): "
 
 #: ../share/extensions/draw_from_triangle.py:180
-#, fuzzy
 msgid "Side Length 'b' (px): "
-msgstr "Lunghezza lato b (px):"
+msgstr "Lunghezza lato 'b' (px): "
 
 #: ../share/extensions/draw_from_triangle.py:181
-#, fuzzy
 msgid "Side Length 'c' (px): "
-msgstr "Lunghezza lato c (px):"
+msgstr "Lunghezza lato 'c' (px): "
 
 #: ../share/extensions/draw_from_triangle.py:182
 msgid "Angle 'A' (radians): "
