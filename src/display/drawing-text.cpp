@@ -592,17 +592,24 @@ unsigned DrawingText::_renderItem(DrawingContext &dc, Geom::IntRect const &/*are
         {
             Inkscape::DrawingContext::Save save(dc);
             dc.transform(_ctm);
-
             if (has_fill && fill_first) {
                 _nrstyle.applyFill(dc);
                 dc.fillPreserve();
             }
-
+        }
+        {
+            Inkscape::DrawingContext::Save save(dc);
+            if (!_style || ! _style->vector_effect.computed == SP_VECTOR_EFFECT_NON_SCALING_STROKE) {
+                dc.transform(_ctm);
+            }
             if (has_stroke) {
                 _nrstyle.applyStroke(dc);
                 dc.strokePreserve();
             }
-
+        }
+        {
+            Inkscape::DrawingContext::Save save(dc);
+            dc.transform(_ctm);
             if (has_fill && !fill_first) {
                 _nrstyle.applyFill(dc);
                 dc.fillPreserve();

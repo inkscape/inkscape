@@ -161,6 +161,9 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     solid_color(      "solid-color"                          ), // SPIColor
     solid_opacity(    "solid-opacity",                         SP_SCALE24_MAX             ),
 
+    // Vector effects
+    vector_effect(    "vector-effect",   enum_vector_effect,   SP_VECTOR_EFFECT_NONE,   false ),
+
     // Fill properties
     fill(             "fill"                                 ),  // SPIPaint
     fill_opacity(     "fill-opacity",                          SP_SCALE24_MAX             ),
@@ -331,6 +334,8 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
     _properties.push_back( &solid_color );
     _properties.push_back( &solid_opacity );
 
+    _properties.push_back( &vector_effect );
+
     _properties.push_back( &fill );
     _properties.push_back( &fill_opacity );
     _properties.push_back( &fill_rule );
@@ -426,6 +431,8 @@ SPStyle::SPStyle(SPDocument *document_in, SPObject *object_in) :
 
     //     _propmap.insert( std::make_pair( solid_color.name,           reinterpret_cast<SPIBasePtr>(&SPStyle::solid_color           ) ) );
     //     _propmap.insert( std::make_pair( solid_opacity.name,         reinterpret_cast<SPIBasePtr>(&SPStyle::solid_opacity         ) ) );
+
+    //     _propmap.insert( std::make_pair( vector_effect.name,         reinterpret_cast<SPIBasePtr>(&SPStyle::vector_effect         ) ) );
 
     //     _propmap.insert( std::make_pair( fill.name,                  reinterpret_cast<SPIBasePtr>(&SPStyle::fill                  ) ) );
     //     _propmap.insert( std::make_pair( fill_opacity.name,          reinterpret_cast<SPIBasePtr>(&SPStyle::fill_opacity          ) ) );
@@ -910,6 +917,9 @@ SPStyle::readIfUnset( gint id, gchar const *val ) {
             break;
         case SP_PROP_SOLID_OPACITY:
             solid_opacity.readIfUnset( val );
+            break;
+        case SP_PROP_VECTOR_EFFECT:
+            vector_effect.readIfUnset( val );
             break;
         case SP_PROP_FILL:
             fill.readIfUnset( val );
@@ -1623,6 +1633,9 @@ sp_style_unset_property_attrs(SPObject *o)
     }
     if (style->solid_opacity.set) {
         repr->setAttribute("solid-opacity", NULL);
+    }
+    if (style->vector_effect.set) {
+        repr->setAttribute("vector-effect", NULL);
     }
     if (style->fill.set) {
         repr->setAttribute("fill", NULL);

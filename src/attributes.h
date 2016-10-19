@@ -450,7 +450,8 @@ enum SPAttributeEnum {
     SP_PROP_PAINT_ORDER, /* SVG2 */
     SP_PROP_SOLID_COLOR,
     SP_PROP_SOLID_OPACITY,
-
+    SP_PROP_VECTOR_EFFECT,
+    
     /* CSS Blending/Compositing */
     SP_PROP_MIX_BLEND_MODE,
     SP_PROP_ISOLATION,

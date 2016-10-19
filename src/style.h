@@ -215,6 +215,9 @@ public:
     /** solid-opacity */
     SPIScale24 solid_opacity;
 
+    /** vector effect */
+    SPIEnum vector_effect;
+
     /** fill */
     SPIPaint fill;
     /** fill-opacity */
