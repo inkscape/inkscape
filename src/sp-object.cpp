@@ -485,7 +485,7 @@ void SPObject::_sendDeleteSignalRecursive() {
 void SPObject::deleteObject(bool propagate, bool propagate_descendants)
 {
     sp_object_ref(this, NULL);
-    if ( SP_IS_LPE_ITEM(this) ) {
+    if ( SP_IS_LPE_ITEM(this) && SP_LPE_ITEM(this)->hasPathEffect()) {
         SP_LPE_ITEM(this)->removeAllPathEffects(false);
     }
     if (propagate) {

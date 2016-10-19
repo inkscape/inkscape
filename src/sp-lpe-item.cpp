@@ -588,7 +588,7 @@ bool SPLPEItem::hasBrokenPathEffect() const
 
 bool SPLPEItem::hasPathEffect() const
 {
-    if (path_effect_list->empty()) {
+    if (!path_effect_list || path_effect_list->empty()) {
         return false;
     }
 
