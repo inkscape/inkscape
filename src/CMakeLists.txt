@@ -500,7 +500,6 @@ endif()
 add_executable(inkscape ${main_SRC})
 add_executable(inkview ${view_SRC})
 
-add_dependencies(inkscape inkscape_version)
 
 
 set(INKSCAPE_TARGET_LIBS
@@ -525,6 +524,8 @@ set(INKSCAPE_TARGET_LIBS
 
 # Build everything except main and inkview.c in a shared library.
 add_library(inkscape_base SHARED ${inkscape_SRC} ${sp_SRC})
+
+add_dependencies(inkscape_base inkscape_version)
 
 if(WITH_DBUS)
     add_dependencies(inkscape_base inkscape_dbus)
