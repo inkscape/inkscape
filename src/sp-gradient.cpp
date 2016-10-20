@@ -127,7 +127,7 @@ bool SPGradient::isEquivalent(SPGradient *that)
         bool effective = true;
         while (effective && (as && bs)) {
             if (!as->getEffectiveColor().isClose(bs->getEffectiveColor(), 0.001) ||
-                    as->offset != bs->offset) {
+                    as->offset != bs->offset || as->opacity != bs->opacity ) {
                 effective = false;
                 break;
             } 
