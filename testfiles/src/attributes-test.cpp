@@ -336,6 +336,7 @@ std::vector<AttributeInfo> getKnownAttrs()
         AttributeInfo("v-ideographic", true),
         AttributeInfo("v-mathematical", true),
         AttributeInfo("values", true),
+        AttributeInfo("vector-effect", true),
         AttributeInfo("version", true),
         AttributeInfo("vert-adv-y", true),
         AttributeInfo("vert-origin-x", true),
