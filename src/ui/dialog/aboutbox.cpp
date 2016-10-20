@@ -549,6 +549,8 @@ void AboutBox::initStrings() {
 "Luca Bruno <luca.br@uno.it>, 2005.\n"
 "Lucas Vieites Fariña<lucas@codexion.com>, 2003-2013.\n"
 "Mahesh subedi <submanesh@hotmail.com>, 2006.\n"
+"Marcin Floryan <marcin.floryan+inkscape (at) gmail.com>, 2016.\n"
+"Maren Hachmann <marenhachmann@yahoo.com>, 2015-2016.\n"
 "Martin Srebotnjak, <miles@filmsi.net>, 2005, 2010.\n"
 "Masatake YAMATO <jet@gyve.org>, 2002.\n"
 "Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2009-2014.\n"
