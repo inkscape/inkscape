@@ -2,6 +2,7 @@
 # This file is distributed under the same license as the Inkscape package.
 # Copyright (C) 2000-2003, 2006, 2007 Free Software Foundation, Inc.
 #
+#: ../src/ui/dialog/clonetiler.cpp:1010
 # Kai Lahmann <kailahmann@01019freenet.de>, 2000.
 # Benedikt Roth <Benedikt.Roth@gmx.net>, 2000.
 # Christian Meyer <chrisime@gnome.org>, 2000-2002.
@@ -18,13 +19,12 @@
 # Sönke Roggatz <s.roggatz@mailing-werkstatt.de>, 2015.
 # Maren Hachmann <marenhachmann@yahoo.com>, 2015, 2016.
 # Eduard Braun <eduard.braun2@gmx.de>, 2015-2016.
-#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-06-08 09:06+0200\n"
-"PO-Revision-Date: 2016-06-18 03:02+0200\n"
+"PO-Revision-Date: 2016-10-20 22:55+0100\n"
 "Last-Translator: Maren Hachmann <marenhachmann@yahoo.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -36,7 +36,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Language: de_DE\n"
 "X-Source-Language: C\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../inkscape.appdata.xml.in.h:1 ../inkscape.desktop.in.h:1
 msgid "Inkscape"
@@ -1353,11 +1353,11 @@ msgstr "Erzeugt einen transparenten Gravureffekt mit rohen Linien und Füllung."
 msgid "Alpha Draw Liquid"
 msgstr "Alpha-Zeichnung, flüssig"
 
-# Meint "fluid drawing" tatsächlich etwas wie Wasserfarbenmalerei?
+# Der Filter scheint sowas wie Kantenerkennung (Kanten werden deckend braun) plus braunes Gekrissel im Rest zu bewirken. Das Objekt ist hinterher braun mit ungleichmäßigen Löchern, die Struktur erinnert ganz entfernt an Wellen auf dem Wasser.
 #: ../share/filters/filters.svg.h:500
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr ""
-"Erzeugt einen transparenten Wasserfarbeneffekt mit rohen Linien und Füllung"
+"Erzeugt einen transparenten Wassereffekt mit vergröberten Linien und Füllungen"
 
 #: ../share/filters/filters.svg.h:502
 msgid "Liquid Drawing"
@@ -2043,7 +2043,6 @@ msgstr "Posterisiertes Verwischen"
 msgid "Converts blurred contour to posterized steps"
 msgstr "Erzeugt eine verschwommene Kontur aus posterisierten Teilschritten"
 
-# Zeit korrekt?
 #: ../share/filters/filters.svg.h:842
 msgid "Contouring discrete"
 msgstr "Multiple Konturen"
@@ -4431,7 +4430,7 @@ msgstr "Einfache CD-Beschriftungsvorlage mit CD-Rändern"
 # key words for search
 #: ../share/templates/templates.h:1
 msgid "CD label 120x120 disc disk"
-msgstr "CD-Etikett 120x120 DVD"
+msgstr "CD Etikett 120x120 DVD"
 
 #: ../share/templates/templates.h:1
 msgid "No Layers"
@@ -7493,7 +7492,6 @@ msgstr "Zeichnung"
 msgid "Simplify"
 msgstr "Vereinfachen"
 
-# Name des Effekte-Untermenüs, dass alle Bitmap-Effekte beinhaltet.
 #: ../src/extension/internal/filter/paint.h:338
 #: ../src/extension/internal/filter/paint.h:709
 msgid "Erase"
@@ -8970,11 +8968,12 @@ msgstr ""
 msgid "Locked"
 msgstr "Gesperrt"
 
-# Was meint hier "grip"?
 #: ../src/libgdl/gdl-dock-item.c:332
 msgid ""
 "If set, the dock item cannot be dragged around and it doesn't show a grip"
-msgstr "Wenn gewählt, kann das Dock-Objekt nicht gezogen werden"
+msgstr ""
+"Wenn gewählt, kann das Dock-Objekt nicht gezogen werden und zeigt keinen"
+" Anfasser."
 
 #: ../src/libgdl/gdl-dock-item.c:340
 msgid "Preferred width"
@@ -9757,21 +9756,20 @@ msgstr "Anzahl der zu erzeugenden Pfade"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Sta_rt edge variance:"
-msgstr "Start der Kanten-Abweichung"
+msgstr "Streuung der Startabstände:"
 
-# Hier "stitches" etwa Kopien? Was ist dieser Effekt?
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
 msgstr ""
-"Mittlere Größe der Abstände, um die die Startpunkte der Kopien inner- und "
+"Mittlere Größe der Abstände, um die die Startpunkte der einzelnen Stiche"
+" inner- und "
 "außerhalb des Pfades zufällig versetzt werden."
 
-# Falschrum? Ausprobieren... Abweichung der Start-Abstände vielleicht?
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Sta_rt spacing variance:"
-msgstr "Start der Abstands-Abweichung"
+msgstr "Streuung der Anfangsabstände:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid ""
@@ -9781,10 +9779,9 @@ msgstr ""
 "Mittlere Größe der Abstände, um die die Startpunkte der Kopien entlang des "
 "Führungspfades zufällig versetzt werden."
 
-# Falschrum? Ausprobieren... Abweichung der End-Kante vielleicht?
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "End ed_ge variance:"
-msgstr "Ende der Kanten-Abweichung"
+msgstr "Streuung der Endkanten:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid ""
@@ -9794,10 +9791,9 @@ msgstr ""
 "Mittlere Größe der Abstände, um die die Endpunkte der Kopien inner- und "
 "außerhalb des Führungspfades zufällig versetzt werden."
 
-# Falschrum? Ausprobieren... Abweichung der End-Abstände vielleicht?
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End spa_cing variance:"
-msgstr "Ende der Abstands-Abweichung"
+msgstr "Streuung der Endabstände:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid ""
@@ -11086,7 +11082,7 @@ msgstr "Rechts"
 msgid "Both"
 msgstr "Beide"
 
-# CHECK
+# Randmarkierungen
 #: ../src/live_effects/lpe-ruler.cpp:32
 msgctxt "Border mark"
 msgid "None"
@@ -11181,7 +11177,7 @@ msgstr "Wählt Markierungen an Anfang und Ende des Pfades"
 
 #: ../src/live_effects/lpe-show_handles.cpp:25
 msgid "Show nodes"
-msgstr "Anfasser anzeigen"
+msgstr "Knoten zeigen"
 
 #: ../src/live_effects/lpe-show_handles.cpp:27
 msgid "Show path"
@@ -11239,7 +11235,7 @@ msgstr "Vereinfache Pfade (getrennt)"
 msgid "Just coalesce"
 msgstr "Nur verschmelzen"
 
-# I asked Jabier what this option does, but he didn't have a clue.
+# Couldn't find out what this does.
 #: ../src/live_effects/lpe-simplify.cpp:36
 msgid "Simplify just coalesce"
 msgstr "Vereinfachen verschmilzt nur"
@@ -18254,7 +18250,6 @@ msgstr "Ausgabe-Textgröße immer in Pixeln (px)"
 msgid "Spray"
 msgstr "Spray"
 
-# Name des Effekte-submenü, das alle Bitmap-Effekte beinhaltet.
 #. Eraser
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "Eraser"
@@ -21452,7 +21447,6 @@ msgctxt "Highlight"
 msgid "HL"
 msgstr "F"
 
-# New objects dialog from ponyscape: single letter to describe state of the object in header of the table: label of object, id as default, but can be changed to anything
 #: ../src/ui/dialog/objects.cpp:1626
 msgid "Label"
 msgstr "Name"
@@ -22165,7 +22159,7 @@ msgstr "Aus Auswahlgruppe entfernen"
 
 #: ../src/ui/dialog/tags.cpp:427
 msgid "Items"
-msgstr "Gegenstände"
+msgstr "Objekte"
 
 #: ../src/ui/dialog/tags.cpp:666 ../src/ui/dialog/tags.cpp:944
 msgid "Add selection to set"
@@ -24922,7 +24916,6 @@ msgstr "<b>Nichts ausgewählt!</b> Wähle Objekte zum Justieren aus."
 msgid "Move tweak"
 msgstr "Optimieren durch Verschieben"
 
-# Was bewegt sich?
 #: ../src/ui/tools/tweak-tool.cpp:1229
 msgid "Move in/out tweak"
 msgstr "Optimieren durch Zusammen-/Auseinanderbewegen"
@@ -27639,7 +27632,6 @@ msgstr "LPE bearbeiten"
 msgid "Edit Path Effect parameters"
 msgstr "Pfadeffekt-Parameter bearbeiten"
 
-# Name des Effekte-submenü, das alle Bitmap-Effekte beinhaltet.
 #: ../src/verbs.cpp:2777
 msgctxt "ContextVerb"
 msgid "Eraser"
@@ -29023,7 +29015,7 @@ msgstr "Abstand der Objektverbinder ändern"
 msgid "Avoid"
 msgstr "Ausweichen"
 
-# CHECK
+# Related to 'Make connectors ignore selected objects'
 #: ../src/widgets/connector-toolbar.cpp:317
 msgid "Ignore"
 msgstr "Ignorieren"
@@ -29285,7 +29277,6 @@ msgstr "(Nullbreite) "
 msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "Die Größe des Radierers (relativ zur sichtbaren Arbeitsfläche)"
 
-# Name des Effekte-submenü, das alle Bitmap-Effekte beinhaltet.
 #: ../src/widgets/eraser-toolbar.cpp:171
 msgid "Eraser Mass"
 msgstr "Masse des Radierers"
@@ -30916,10 +30907,11 @@ msgstr ""
 msgid "Pick from center instead average area."
 msgstr "Farbe vom Zentrum übernehmen statt über die gesamte Fläche zu mitteln."
 
-# What's the meaning of the seond part?
 #: ../src/widgets/spray-toolbar.cpp:515 ../src/widgets/spray-toolbar.cpp:516
 msgid "Inverted pick value, retaining color in advanced trace mode"
-msgstr "Übernommene Farbe invertieren"
+msgstr ""
+"Übernommene Farbe invertieren, behält die Farbe im fortgeschrittenen Modus"
+" bei."
 
 #: ../src/widgets/spray-toolbar.cpp:528 ../src/widgets/spray-toolbar.cpp:529
 msgid "Apply picked color to fill"
@@ -32079,13 +32071,13 @@ msgstr ""
 "X-Interval kann nicht Null sein. Bitte 'Startwert X' oder 'Endwert X' "
 "anpassen"
 
-# Check 'linked' translations (Y oben, Y unten).
 #: ../share/extensions/funcplot.py:58
 msgid ""
 "y-interval cannot be zero. Please modify 'Y value of rectangle's top' or 'Y "
 "value of rectangle's bottom'"
 msgstr ""
-"Y-Intervall kann nicht null sein. Bitte verändern Sie 'Y oben' oder 'Y unten'"
+"Y-Intervall kann nicht null sein. Bitte verändern Sie 'Y-Wert der oberen"
+" Kante des Rechtecks' oder 'Y-Wert der unteren Kante des Rechtecks'"
 
 #: ../share/extensions/funcplot.py:313
 msgid "Please select a rectangle"
@@ -34163,11 +34155,11 @@ msgstr "x-Werte mit 2*pi multiplizieren"
 
 #: ../share/extensions/funcplot.inx.h:6
 msgid "Y value of rectangle's bottom:"
-msgstr "y-Wert der unteren Kante des Rechtecks:"
+msgstr "Y-Wert der unteren Kante des Rechtecks:"
 
 #: ../share/extensions/funcplot.inx.h:7
 msgid "Y value of rectangle's top:"
-msgstr "y-Wert der oberen Kante des Rechtecks:"
+msgstr "Y-Wert der oberen Kante des Rechtecks:"
 
 #: ../share/extensions/funcplot.inx.h:8
 msgid "Number of samples:"
@@ -36191,7 +36183,6 @@ msgstr "JessyInk"
 msgid "Effects"
 msgstr "Effekte"
 
-# not sure here -cm-
 #: ../share/extensions/jessyInk_effects.inx.h:4
 #: ../share/extensions/jessyInk_transitions.inx.h:4
 #: ../share/extensions/jessyInk_view.inx.h:4
@@ -37192,7 +37183,6 @@ msgstr "Komma getrennte Werte eingeben:"
 msgid "(format like this: apples:3,bananas:5)"
 msgstr "(Format folgt diesem Schema: Äpfel:3,Bananen:5)"
 
-# New objects dialog from ponyscape: single letter to describe state of the object in header of the table: label of object, id as default, but can be changed to anything
 #: ../share/extensions/nicechart.inx.h:15
 msgid "Labels"
 msgstr "Beschriftungen"
@@ -37454,10 +37444,9 @@ msgstr ""
 "\"Pfades. Das Muster ist das oberste Objekt in einer Auswahl (Gruppierungen "
 "von Pfaden/Formen/Klonen... sind erlaubt)."
 
-# check
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Perfect-Bound Cover Template"
-msgstr "Taschenbuch Deckblatt"
+msgstr "Taschenbuch-Einband"
 
 # !!!
 #: ../share/extensions/perfectboundcover.inx.h:2
@@ -39235,7 +39224,6 @@ msgstr "Attribute festlegen"
 msgid "Attribute to set:"
 msgstr "Attribute:"
 
-# Was ist "set" in diesem Zusammenhang?
 #: ../share/extensions/web-set-att.inx.h:4
 msgid "When should the set be done:"
 msgstr "Wann sollen Werte gesetzt werden?"
