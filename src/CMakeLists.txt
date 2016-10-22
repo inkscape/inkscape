@@ -494,6 +494,8 @@ if(WIN32)
   
   # Build the windows MS-DOS console executable.
   add_executable(inkscape_com winconsole.cpp)
+  set_target_properties(inkscape_com
+                        PROPERTIES LINK_FLAGS "-mconsole")
 endif()
 
 # make executables for inkscape and inkview
