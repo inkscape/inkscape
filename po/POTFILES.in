@@ -134,6 +134,7 @@ src/live_effects/lpe-bendpath.cpp
 src/live_effects/lpe-bounding-box.cpp
 src/live_effects/lpe-bspline.cpp
 src/live_effects/lpe-clone-original.cpp
+src/live_effects/lpe-copy_rotate.cpp
 src/live_effects/lpe-constructgrid.cpp
 src/live_effects/lpe-curvestitch.cpp
 src/live_effects/lpe-ellipse_5pts.cpp
@@ -148,6 +149,7 @@ src/live_effects/lpe-interpolate_points.cpp
 src/live_effects/lpe-jointype.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-lattice2.cpp
+src/live_effects/lpe-mirror_symmetry.cpp
 src/live_effects/lpe-patternalongpath.cpp
 src/live_effects/lpe-perspective-envelope.cpp
 src/live_effects/lpe-powerstroke.cpp
