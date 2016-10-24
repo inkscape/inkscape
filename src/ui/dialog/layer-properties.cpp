@@ -384,7 +384,7 @@ void LayerPropertiesDialog::Move::setup(LayerPropertiesDialog &dialog) {
 void LayerPropertiesDialog::Move::perform(LayerPropertiesDialog &dialog) {
 
     SPObject *moveto = dialog._selectedLayer();
-    sp_selection_to_layer(dialog._desktop, moveto, false);
+    dialog._desktop->selection->toLayer(moveto);
 }
 
 void LayerPropertiesDialog::_setDesktop(SPDesktop *desktop) {

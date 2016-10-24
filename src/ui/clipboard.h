@@ -24,7 +24,7 @@
 // forward declarations
 class SPDesktop;
 namespace Inkscape {
-class Selection;
+class ObjectSet;
 namespace XML { class Node; }
 namespace LivePathEffect { class PathParam; }
 
@@ -42,13 +42,13 @@ namespace UI {
 
 class ClipboardManager {
 public:
-    virtual void copy(SPDesktop *desktop) = 0;
+    virtual void copy(ObjectSet *set) = 0;
     virtual void copyPathParameter(Inkscape::LivePathEffect::PathParam *) = 0;
     virtual void copySymbol(Inkscape::XML::Node* symbol, gchar const* style, bool user_symbol = true) = 0;
     virtual bool paste(SPDesktop *desktop, bool in_place = false) = 0;
-    virtual bool pasteStyle(SPDesktop *desktop) = 0;
-    virtual bool pasteSize(SPDesktop *desktop, bool separately, bool apply_x, bool apply_y) = 0;
-    virtual bool pastePathEffect(SPDesktop *desktop) = 0;
+    virtual bool pasteStyle(ObjectSet *set) = 0;
+    virtual bool pasteSize(ObjectSet *set, bool separately, bool apply_x, bool apply_y) = 0;
+    virtual bool pastePathEffect(ObjectSet *set) = 0;
     virtual Glib::ustring getPathParameter(SPDesktop* desktop) = 0;
     virtual Glib::ustring getShapeOrTextObjectId(SPDesktop *desktop) = 0;
     virtual const gchar *getFirstObjectID() = 0;

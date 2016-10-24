@@ -90,7 +90,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
 
             new_group->appendChild(new_items[i]);
             selection->add(new_items[i]);
-            sp_selected_path_to_curves(selection, static_cast<SPDesktop *>(desktop));
+            selection->toCurves();
 
             if (offset < 0.0) {
                 /* Doing an inset here folks */

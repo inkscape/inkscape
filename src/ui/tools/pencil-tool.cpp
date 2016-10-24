@@ -487,7 +487,7 @@ bool PencilTool::_handleKeyPress(GdkEventKey const &event) {
         case GDK_KEY_g:
         case GDK_KEY_G:
             if (Inkscape::UI::held_only_shift(event)) {
-                sp_selection_to_guides(this->desktop);
+                this->desktop->selection->toGuides();
                 ret = true;
             }
             break;

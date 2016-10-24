@@ -732,10 +732,10 @@ void EraserTool::set_to_accumulated() {
                                 workDone = true; // TODO set this only if something was cut.
                                 bool break_apart = prefs->getBool("/tools/eraser/break_apart", false);
                                 if(!break_apart){
-                                    sp_selected_path_combine(this->desktop, true);
+                                    selection->combine(true);
                                 } else {
                                     if(!this->nowidth){
-                                        sp_selected_path_break_apart(this->desktop, true);
+                                        selection->breakApart(true);
                                     }
                                 }
                                 if ( !selection->isEmpty() ) {
@@ -784,7 +784,7 @@ void EraserTool::set_to_accumulated() {
                                                 sp_object_ref(clip_path, 0);
                                                 clip_path->deleteObject(true);
                                                 sp_object_unref(clip_path);
-                                                sp_selection_raise_to_top(selection, this->desktop, true);
+                                                selection->raiseToTop(true);
                                                 selection->add(dup_clip);
                                                 sp_selected_path_diff_skip_undo(selection);
                                                 SPItem * clip = SP_ITEM(*(selection->items().begin()));
@@ -800,13 +800,13 @@ void EraserTool::set_to_accumulated() {
                                     rect->transform = SP_ITEM(rect->parent)->i2dt_affine().inverse();
                                     rect->updateRepr();
                                     rect->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-                                    sp_selection_raise_to_top(selection, this->desktop, true);
+                                    selection->raiseToTop(true);
                                     selection->add(rect);
                                     sp_selected_path_diff_skip_undo(selection);
                                 }
-                                sp_selection_raise_to_top(selection, this->desktop, true);
+                                selection->raiseToTop(true);
                                 selection->add(item);
-                                sp_selection_set_mask(this->desktop, true, false, true);
+                                selection->setMask(true, false, true);
                             } else {
                                 SPItem *erase_clip = selection->singleItem();
                                 if (erase_clip) {
@@ -836,7 +836,7 @@ void EraserTool::set_to_accumulated() {
                 }
 
                 if (eraser_mode == ERASER_MODE_DELETE) {
-                    sp_selection_delete(this->desktop);
+                    selection->deleteItems();
                     remainingItems.clear();
                 }
 

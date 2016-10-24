@@ -439,7 +439,7 @@ void Inkscape::SelTrans::ungrab()
         if (!_current_relative_affine.isIdentity()) { // we can have a identity affine
             // when trying to stretch a perfectly vertical line in horizontal direction, which will not be allowed by the handles;
 
-            sp_object_set_apply_affine(selection, _current_relative_affine, (_show == SHOW_OUTLINE) ? true : false);
+            selection->applyAffine(_current_relative_affine, (_show == SHOW_OUTLINE) ? true : false);
             if (_center) {
                 *_center *= _current_relative_affine;
                 _center_is_set = true;

@@ -1233,7 +1233,7 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
         case GDK_KEY_g:
         case GDK_KEY_G:
             if (MOD__SHIFT_ONLY(event)) {
-                sp_selection_to_guides(this->desktop);
+                this->desktop->selection->toGuides();
                 ret = true;
             }
             break;

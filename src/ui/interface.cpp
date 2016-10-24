@@ -1210,7 +1210,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 Geom::OptRect sel_bbox = selection->visualBounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
-                    sp_object_set_move_relative(selection, m, false);
+                    selection->moveRelative(m, false);
                 }
             }
 
@@ -1841,28 +1841,28 @@ void ContextMenu::ItemCreateLink(void)
 
 void ContextMenu::SetMask(void)
 {
-    sp_selection_set_mask(_desktop, false, false);
+    _desktop->selection->setMask(false, false);
 }
 
 void ContextMenu::ReleaseMask(void)
 {
-    sp_selection_unset_mask(_desktop, false);
+    _desktop->selection->unsetMask(false);
 }
 
 void ContextMenu::CreateGroupClip(void)
 {
-    sp_selection_set_clipgroup(_desktop);
+    _desktop->selection->setClipGroup();
 }
 
 void ContextMenu::SetClip(void)
 {
-    sp_selection_set_mask(_desktop, true, false);
+    _desktop->selection->setMask(true, false);
 }
 
 
 void ContextMenu::ReleaseClip(void)
 {
-    sp_selection_unset_mask(_desktop, true);
+    _desktop->selection->unsetMask(true);
 }
 
 void ContextMenu::MakeGroupMenu(void)
@@ -1876,7 +1876,7 @@ void ContextMenu::MakeGroupMenu(void)
 
 void ContextMenu::ActivateGroup(void)
 {
-    sp_selection_group(_desktop->selection, _desktop);
+    _desktop->selection->group();
 }
 
 void ContextMenu::ActivateUngroup(void)
@@ -1889,7 +1889,7 @@ void ContextMenu::ActivateUngroup(void)
  
 void ContextMenu::ActivateUngroupPopSelection(void)
 {
-    sp_selection_ungroup_pop_selection(_desktop->selection, _desktop);
+    _desktop->selection->popFromGroup();
 }
 
 

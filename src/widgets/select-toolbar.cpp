@@ -254,7 +254,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, GObject *tbl)
             scaler = get_scale_transform_for_uniform_stroke (*bbox_geom, 0, 0, false, false, x0, y0, x1, y1);
         }
 
-        sp_object_set_apply_affine(selection, scaler);
+        selection->applyAffine(scaler);
         DocumentUndo::maybeDone(document, actionkey, SP_VERB_CONTEXT_SELECT,
                                 _("Transform by toolbar"));
 

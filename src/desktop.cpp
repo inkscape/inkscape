@@ -1529,6 +1529,7 @@ SPDesktop::setDocument (SPDocument *doc)
     }
 
     layers->setDocument(doc);
+    selection->setDocument(doc);
 
 	// remove old EventLog if it exists (see also: bug #1071082)
 	if (event_log) {

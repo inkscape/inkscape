@@ -435,7 +435,7 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
                     if(bend_item != NULL && bend_item->getRepr() != NULL){
                         gchar const *svgd = item->getRepr()->attribute("d");
                         dc->selection->add(SP_OBJECT(bend_item));
-                        sp_selection_duplicate(dc->desktop);
+                        dc->selection->duplicate();
                         dc->selection->remove(SP_OBJECT(bend_item));
                         bend_item = dc->selection->singleItem();
                         if(bend_item){

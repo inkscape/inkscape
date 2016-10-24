@@ -713,7 +713,7 @@ document_interface_move (DocumentInterface *doc_interface, gchar *name, gdouble 
     std::vector<SPObject*> oldsel = selection_swap(doc_interface->target.getSelection(), name, error);
     if (oldsel.empty())
         return FALSE;
-    sp_selection_move (doc_interface->target.getSelection(), x, 0 - y);
+    doc_interface->target.getSelection()->move(x, 0 - y);
     selection_restore(doc_interface->target.getSelection(), oldsel);
     return TRUE;
 }
@@ -726,7 +726,7 @@ document_interface_move_to (DocumentInterface *doc_interface, gchar *name, gdoub
     if (oldsel.empty())
         return FALSE;
     Inkscape::Selection * sel = doc_interface->target.getSelection();
-    sp_selection_move (doc_interface->target.getSelection(), x - selection_get_center_x(sel),
+    doc_interface->target.getSelection()->move(x - selection_get_center_x(sel),
                                      0 - (y - selection_get_center_y(sel)));
     selection_restore(doc_interface->target.getSelection(), oldsel);
     return TRUE;
@@ -1150,7 +1150,7 @@ document_interface_selection_set_list (DocumentInterface *doc_interface,
 gboolean document_interface_selection_rotate(DocumentInterface *doc_interface, int angle, GError ** /*error*/)
 {
     Inkscape::Selection *selection = doc_interface->target.getSelection();
-    sp_selection_rotate(selection, angle);
+    selection->rotate(angle);
     return TRUE;
 }
 
@@ -1235,13 +1235,13 @@ gboolean document_interface_selection_scale(DocumentInterface *doc_interface, gd
     {
         return FALSE;
     }     
-    sp_selection_scale (selection, grow);
+    selection->scale(grow);
     return TRUE;
 }
 
 gboolean document_interface_selection_move(DocumentInterface *doc_interface, gdouble x, gdouble y, GError ** /*error*/)
 {
-    sp_selection_move(doc_interface->target.getSelection(), x, 0 - y); //switching coordinate systems.
+    doc_interface->target.getSelection()->move(x, 0 - y); //switching coordinate systems.
     return TRUE;
 }
 
@@ -1252,7 +1252,7 @@ gboolean document_interface_selection_move_to(DocumentInterface *doc_interface, 
     Geom::OptRect sel_bbox = sel->visualBounds();
     if (sel_bbox) {
         Geom::Point m( x - selection_get_center_x(sel) , 0 - (y - selection_get_center_y(sel)) );
-        sp_object_set_move_relative(sel, m, true);
+        sel->moveRelative(m, true);
     }
     return TRUE;
 }
@@ -1279,8 +1279,8 @@ document_interface_selection_move_to_layer (DocumentInterface *doc_interface,
         return FALSE;
 
     if (strcmp("layer", (next->getRepr())->attribute("inkscape:groupmode")) == 0) {
-
-        sp_selection_cut(dt);
+        
+        dt->selection->cut();
 
         doc_interface->target.getSelection()->layers()->setCurrentLayer(next);
 

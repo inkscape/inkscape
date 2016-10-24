@@ -294,7 +294,7 @@ bool RectTool::root_handler(GdkEvent* event) {
         case GDK_KEY_g:
         case GDK_KEY_G:
             if (MOD__SHIFT_ONLY(event)) {
-                sp_selection_to_guides(desktop);
+                desktop->selection->toGuides();
                 ret = true;
             }
             break;

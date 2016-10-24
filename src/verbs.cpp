@@ -956,85 +956,85 @@ void EditVerb::perform(SPAction *action, void *data)
             sp_redo(dt, dt->getDocument());
             break;
         case SP_VERB_EDIT_CUT:
-            sp_selection_cut(dt);
+            dt->selection->cut();
             break;
         case SP_VERB_EDIT_COPY:
-            sp_selection_copy(dt);
+            dt->selection->copy();
             break;
         case SP_VERB_EDIT_PASTE:
             sp_selection_paste(dt, false);
             break;
         case SP_VERB_EDIT_PASTE_STYLE:
-            sp_selection_paste_style(dt);
+            dt->selection->pasteStyle();
             break;
         case SP_VERB_EDIT_PASTE_SIZE:
-            sp_selection_paste_size(dt, true, true);
+            dt->selection->pasteSize(true,true);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_X:
-            sp_selection_paste_size(dt, true, false);
+            dt->selection->pasteSize(true, false);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_Y:
-            sp_selection_paste_size(dt, false, true);
+            dt->selection->pasteSize(false, true);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY:
-            sp_selection_paste_size_separately(dt, true, true);
+            dt->selection->pasteSizeSeparately(true, true);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY_X:
-            sp_selection_paste_size_separately(dt, true, false);
+            dt->selection->pasteSizeSeparately(true, false);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY_Y:
-            sp_selection_paste_size_separately(dt, false, true);
+            dt->selection->pasteSizeSeparately(false, true);
             break;
         case SP_VERB_EDIT_PASTE_IN_PLACE:
             sp_selection_paste(dt, true);
             break;
         case SP_VERB_EDIT_PASTE_LIVEPATHEFFECT:
-            sp_selection_paste_livepatheffect(dt);
+            dt->selection->pastePathEffect();
             break;
         case SP_VERB_EDIT_REMOVE_LIVEPATHEFFECT:
-            sp_selection_remove_livepatheffect(dt);
+            dt->selection->removeLPE();
             break;
         case SP_VERB_EDIT_REMOVE_FILTER:
-            sp_selection_remove_filter(dt);
+            dt->selection->removeFilter();
             break;
         case SP_VERB_EDIT_DELETE:
-            sp_selection_delete(dt);
+            dt->selection->deleteItems();
             break;
         case SP_VERB_EDIT_DUPLICATE:
-            sp_selection_duplicate(dt);
+            dt->selection->duplicate();
             break;
         case SP_VERB_EDIT_CLONE:
-            sp_selection_clone(dt);
+            dt->selection->clone();
             break;
         case SP_VERB_EDIT_UNLINK_CLONE:
-            sp_selection_unlink(dt);
+            dt->selection->unlink();
             break;
         case SP_VERB_EDIT_RELINK_CLONE:
-            sp_selection_relink(dt);
+            dt->selection->relink();
             break;
         case SP_VERB_EDIT_CLONE_SELECT_ORIGINAL:
-            sp_select_clone_original(dt);
+            dt->selection->cloneOriginal();
             break;
         case SP_VERB_EDIT_CLONE_ORIGINAL_PATH_LPE:
-            sp_selection_clone_original_path_lpe(dt);
+            dt->selection->cloneOriginalPathLPE();
             break;
         case SP_VERB_EDIT_SELECTION_2_MARKER:
-            sp_selection_to_marker(dt);
+            dt->selection->toMarker();
             break;
         case SP_VERB_EDIT_SELECTION_2_GUIDES:
-            sp_selection_to_guides(dt);
+            dt->selection->toGuides();
             break;
         case SP_VERB_EDIT_TILE:
-            sp_selection_tile(dt);
+            dt->selection->tile();
             break;
         case SP_VERB_EDIT_UNTILE:
-            sp_selection_untile(dt);
+            dt->selection->untile();
             break;
         case SP_VERB_EDIT_SYMBOL:
-            sp_selection_symbol(dt);
+            dt->selection->toSymbol();
             break;
         case SP_VERB_EDIT_UNSYMBOL:
-            sp_selection_unsymbol(dt);
+            dt->selection->unSymbol();
             break;
         case SP_VERB_EDIT_SELECT_ALL:
             SelectionHelper::selectAll(dt);
@@ -1133,54 +1133,54 @@ void SelectionVerb::perform(SPAction *action, void *data)
         {
             // FIXME these and the other grow/shrink they should use gobble_key_events.
             // the problem is how to get access to which key, if any, to gobble.
-            sp_selection_scale(selection, prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000));
+            selection->scale(prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000));
             break;
         }
         case SP_VERB_SELECTION_GROW_SCREEN:
         {
-            sp_selection_scale_screen(selection, 2);
+            selection->scaleScreen(2);
             break;
         }
         case SP_VERB_SELECTION_GROW_DOUBLE:
         {
-            sp_selection_scale_times(selection, 2);
+            selection->scaleTimes(2);
             break;
         }
         case SP_VERB_SELECTION_SHRINK:
         {
-            sp_selection_scale(selection, -prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000));
+            selection->scale(-prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000));
             break;
         }
         case SP_VERB_SELECTION_SHRINK_SCREEN:
         {
-            sp_selection_scale_screen(selection, -2);
+            selection->scaleScreen(-2);
             break;
         }
         case SP_VERB_SELECTION_SHRINK_HALVE:
         {
-            sp_selection_scale_times(selection, 0.5);
+            selection->scaleTimes(0.5);
             break;
         }
         case SP_VERB_SELECTION_TO_FRONT:
-            sp_selection_raise_to_top(selection, dt);
+            selection->raiseToTop();
             break;
         case SP_VERB_SELECTION_TO_BACK:
-            sp_selection_lower_to_bottom(selection, dt);
+            selection->lowerToBottom();
             break;
         case SP_VERB_SELECTION_RAISE:
-            sp_selection_raise(selection, dt);
+            selection->raise();
             break;
         case SP_VERB_SELECTION_LOWER:
-            sp_selection_lower(selection, dt);
+            selection->lower();
             break;
         case SP_VERB_SELECTION_GROUP:
-            sp_selection_group(selection, dt);
+            selection->group();
             break;
         case SP_VERB_SELECTION_UNGROUP:
-            sp_selection_ungroup(selection, dt);
+            selection->ungroup();
             break;
         case SP_VERB_SELECTION_UNGROUP_POP_SELECTION:
-            sp_selection_ungroup_pop_selection(selection, dt);
+        selection->popFromGroup();
             break;
         default:
             handled = false;
@@ -1258,14 +1258,14 @@ void SelectionVerb::perform(SPAction *action, void *data)
             dt->_dlg_mgr->showDialog("PixelArt");
             break;
         case SP_VERB_SELECTION_CREATE_BITMAP:
-            sp_selection_create_bitmap_copy(dt);
+            dt->selection->createBitmapCopy();
             break;
 
         case SP_VERB_SELECTION_COMBINE:
-            sp_selected_path_combine(dt);
+            selection->combine();
             break;
         case SP_VERB_SELECTION_BREAK_APART:
-            sp_selected_path_break_apart(dt);
+            selection->breakApart();
             break;
         case SP_VERB_SELECTION_ARRANGE:
             INKSCAPE.dialogs_unhide();
@@ -1324,11 +1324,11 @@ void LayerVerb::perform(SPAction *action, void *data)
             break;
         }
         case SP_VERB_LAYER_MOVE_TO_NEXT: {
-            sp_selection_to_next_layer(dt);
+            dt->selection->toNextLayer();
             break;
         }
         case SP_VERB_LAYER_MOVE_TO_PREV: {
-            sp_selection_to_prev_layer(dt);
+            dt->selection->toPrevLayer();
             break;
         }
         case SP_VERB_LAYER_MOVE_TO: {
@@ -1399,7 +1399,7 @@ void LayerVerb::perform(SPAction *action, void *data)
         case SP_VERB_LAYER_DUPLICATE: {
             if ( dt->currentLayer() != dt->currentRoot() ) {
 
-            	sp_selection_duplicate(dt, true, true);
+                dt->selection->duplicate(true,true);
 
                 DocumentUndo::done(dt->getDocument(), SP_VERB_LAYER_DUPLICATE,
                                    _("Duplicate layer"));
@@ -1515,7 +1515,7 @@ void ObjectVerb::perform( SPAction *action, void *data)
     bool handled = true;
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_OBJECT_TO_CURVE:
-            sp_selected_path_to_curves(sel, dt);
+            sel->toCurves();
             break;
         default:
             handled = false;
@@ -1546,13 +1546,13 @@ void ObjectVerb::perform( SPAction *action, void *data)
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_OBJECT_ROTATE_90_CW:
-            sp_selection_rotate_90(dt, false);
+            sel->rotate90(false);
             break;
         case SP_VERB_OBJECT_ROTATE_90_CCW:
-            sp_selection_rotate_90(dt, true);
+            sel->rotate90(true);
             break;
         case SP_VERB_OBJECT_FLATTEN:
-            sp_object_set_remove_transform(dt);
+            sel->removeTransform();
             break;
         case SP_VERB_OBJECT_FLOW_TEXT:
             text_flow_into_shape();
@@ -1564,35 +1564,35 @@ void ObjectVerb::perform( SPAction *action, void *data)
             flowtext_to_text();
             break;
         case SP_VERB_OBJECT_FLIP_HORIZONTAL:
-            sp_object_set_scale_relative(sel, center, Geom::Scale(-1.0, 1.0));
+            sel->setScaleRelative(center, Geom::Scale(-1.0, 1.0));
             DocumentUndo::done(dt->getDocument(), SP_VERB_OBJECT_FLIP_HORIZONTAL,
                                _("Flip horizontally"));
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
-            sp_object_set_scale_relative(sel, center, Geom::Scale(1.0, -1.0));
+            sel->setScaleRelative(center, Geom::Scale(1.0, -1.0));
             DocumentUndo::done(dt->getDocument(), SP_VERB_OBJECT_FLIP_VERTICAL,
                                _("Flip vertically"));
             break;
         case SP_VERB_OBJECT_SET_MASK:
-            sp_selection_set_mask(dt, false, false);
+            sel->setMask(false, false);
             break;
         case SP_VERB_OBJECT_EDIT_MASK:
-            sp_selection_edit_clip_or_mask(dt, false);
+            sel->editMask(false);
             break;
         case SP_VERB_OBJECT_UNSET_MASK:
-            sp_selection_unset_mask(dt, false);
+            sel->unsetMask(false);
             break;
         case SP_VERB_OBJECT_SET_CLIPPATH:
-            sp_selection_set_mask(dt, true, false);
+            sel->setMask(true, false);
             break;
         case SP_VERB_OBJECT_CREATE_CLIP_GROUP:
-            sp_selection_set_clipgroup(dt);
+            sel->setClipGroup();
             break;
         case SP_VERB_OBJECT_EDIT_CLIPPATH:
-            sp_selection_edit_clip_or_mask(dt, true);
+            sel->editMask(true);
             break;
         case SP_VERB_OBJECT_UNSET_CLIPPATH:
-            sp_selection_unset_mask(dt, true);
+            sel->unsetMask(true);
             break;
         default:
             break;

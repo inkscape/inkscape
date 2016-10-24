@@ -617,12 +617,11 @@ void Transformation::applyPageMove(Inkscape::Selection *selection)
     if (!prefs->getBool("/dialogs/transformation/applyseparately")) {
         // move selection as a whole
         if (_check_move_relative.get_active()) {
-            sp_object_set_move_relative(selection, x, y);
+            selection->moveRelative(x, y);
         } else {
             Geom::OptRect bbox = selection->preferredBounds();
             if (bbox) {
-                sp_object_set_move_relative(selection,
-                                            x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
+                selection->moveRelative(x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
             }
         }
     } else {
@@ -685,8 +684,7 @@ void Transformation::applyPageMove(Inkscape::Selection *selection)
         } else {
             Geom::OptRect bbox = selection->preferredBounds();
             if (bbox) {
-                sp_object_set_move_relative(selection,
-                                            x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
+                selection->moveRelative(x - bbox->min()[Geom::X], y - bbox->min()[Geom::Y]);
             }
         }
     }
@@ -750,7 +748,7 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
             double y1 = bbox_pref->midpoint()[Geom::Y] + new_height/2;
             Geom::Affine scaler = get_scale_transform_for_variable_stroke (*bbox_pref, *bbox_geom, transform_stroke, preserve, x0, y0, x1, y1);
 
-            sp_object_set_apply_affine(selection, scaler);
+            selection->applyAffine(scaler);
         }
     }
 
@@ -776,7 +774,7 @@ void Transformation::applyPageRotate(Inkscape::Selection *selection)
     } else {
         boost::optional<Geom::Point> center = selection->center();
         if (center) {
-            sp_object_set_rotate_relative(selection, *center, angle);
+            selection->rotateRelative(*center, angle);
         }
     }
 
@@ -843,7 +841,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                     getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
-                sp_object_set_skew_relative(selection, *center, 0.01 * skewX, 0.01 * skewY);
+                selection->skewRelative(*center, 0.01 * skewX, 0.01 * skewY);
             } else if (_units_skew.isRadial()) { //deg or rad
                 double angleX = _scalar_skew_horizontal.getValue("rad");
                 double angleY = _scalar_skew_vertical.getValue("rad");
@@ -856,7 +854,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                 }
                 double skewX = tan(-angleX);
                 double skewY = tan(angleY);
-                sp_object_set_skew_relative(selection, *center, skewX, skewY);
+                selection->skewRelative(*center, skewX, skewY);
             } else { // absolute displacement
                 double skewX = _scalar_skew_horizontal.getValue("px");
                 double skewY = _scalar_skew_vertical.getValue("px");
@@ -864,7 +862,7 @@ void Transformation::applyPageSkew(Inkscape::Selection *selection)
                     getDesktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Transform matrix is singular, <b>not used</b>."));
                     return;
                 }
-                sp_object_set_skew_relative(selection, *center, skewX / height, skewY / width);
+                selection->skewRelative(*center, skewX / height, skewY / width);
             }
         }
     }
@@ -897,7 +895,7 @@ void Transformation::applyPageTransform(Inkscape::Selection *selection)
             item->updateRepr();
         }
     } else {
-        sp_object_set_apply_affine(selection, displayed); // post-multiply each object's transform
+        selection->applyAffine(displayed); // post-multiply each object's transform
     }
 
     DocumentUndo::done(selection->desktop()->getDocument(), SP_VERB_DIALOG_TRANSFORM,

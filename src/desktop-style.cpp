@@ -174,8 +174,12 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
 /**
  * Apply style on selection on desktop.
  */
+ void sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write_current){
+    return sp_desktop_set_style(desktop->getSelection(), desktop, css, change, write_current);
+}
+ 
 void
-sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write_current)
+sp_desktop_set_style(Inkscape::ObjectSet *set, SPDesktop *desktop, SPCSSAttr *css, bool change, bool write_current)
 {
     if (write_current) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -187,7 +191,7 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
         sp_repr_css_merge(css_write, css);
         sp_css_attr_unset_uris(css_write);
         prefs->mergeStyle("/desktop/style", css_write);
-        auto itemlist = desktop->selection->items();
+        auto itemlist = set->items();
         for (auto i = itemlist.begin(); i!= itemlist.end(); ++i) {
             /* last used styles for 3D box faces are stored separately */
             SPObject *obj = *i;
@@ -227,7 +231,7 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
         sp_repr_css_merge(css_no_text, css);
         css_no_text = sp_css_attr_unset_text(css_no_text);
 
-        auto itemlist = desktop->selection->items();
+        auto itemlist = set->items();
         for (auto i = itemlist.begin(); i!= itemlist.end(); ++i) {
             SPItem *item = *i;
 

@@ -38,8 +38,10 @@
 #include "selection-chemistry.h"
 #include "path-chemistry.h"
 #include "verbs.h"
+#include "object-set.h"
 
 using Inkscape::DocumentUndo;
+using Inkscape::ObjectSet;
 
 
 inline bool less_than_items(SPItem const *first, SPItem const *second)
@@ -49,39 +51,42 @@ inline bool less_than_items(SPItem const *first, SPItem const *second)
 }
 
 void
-sp_selected_path_combine(SPDesktop *desktop, bool skip_undo)
+ObjectSet::combine(bool skip_undo)
 {
-    Inkscape::Selection *selection = desktop->getSelection();
-    SPDocument *doc = desktop->getDocument();
+    //Inkscape::Selection *selection = desktop->getSelection();
+    SPDocument *doc = document();
 
-    std::vector<SPItem*> items(selection->items().begin(), selection->items().end());
+    std::vector<SPItem*> items_copy(items().begin(), items().end());
     
-    if (items.size() < 1) {
-        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to combine."));
+    if (items_copy.size() < 1) {
+        if(desktop())
+            desktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to combine."));
         return;
     }
 
-    desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Combining paths..."));
-    // set "busy" cursor
-    desktop->setWaitingCursor();
+    if(desktop()){
+        desktop()->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Combining paths..."));
+        // set "busy" cursor
+        desktop()->setWaitingCursor();
+    }
 
-    items = sp_degroup_list (items); // descend into any groups in selection
+    items_copy = sp_degroup_list (items_copy); // descend into any groups in selection
 
     std::vector<SPItem*> to_paths;
-    for (std::vector<SPItem*>::const_reverse_iterator i = items.rbegin(); i != items.rend(); ++i) {
+    for (std::vector<SPItem*>::const_reverse_iterator i = items_copy.rbegin(); i != items_copy.rend(); ++i) {
         if (!dynamic_cast<SPPath *>(*i) && !dynamic_cast<SPGroup *>(*i)) {
             to_paths.push_back(*i);
         }
     }
     std::vector<Inkscape::XML::Node*> converted;
-    bool did = sp_item_list_to_curves(to_paths, items, converted);
+    bool did = sp_item_list_to_curves(to_paths, items_copy, converted);
     for (std::vector<Inkscape::XML::Node*>::const_iterator i = converted.begin(); i != converted.end(); ++i)
-        items.push_back((SPItem*)doc->getObjectByRepr(*i));
+        items_copy.push_back((SPItem*)doc->getObjectByRepr(*i));
 
-    items = sp_degroup_list (items); // converting to path may have added more groups, descend again
+    items_copy = sp_degroup_list (items_copy); // converting to path may have added more groups, descend again
 
-    sort(items.begin(),items.end(),less_than_items);
-    assert(!items.empty()); // cannot be NULL because of list length check at top of function
+    sort(items_copy.begin(),items_copy.end(),less_than_items);
+    assert(!items_copy.empty()); // cannot be NULL because of list length check at top of function
 
     // remember the position, id, transform and style of the topmost path, they will be assigned to the combined one
     gint position = 0;
@@ -95,10 +100,10 @@ sp_selected_path_combine(SPDesktop *desktop, bool skip_undo)
     Inkscape::XML::Node *parent = NULL; 
 
     if (did) {
-        selection->clear();
+        clear();
     }
 
-    for (std::vector<SPItem*>::const_reverse_iterator i = items.rbegin(); i != items.rend(); ++i){
+    for (std::vector<SPItem*>::const_reverse_iterator i = items_copy.rbegin(); i != items_copy.rend(); ++i){
 
         SPItem *item = *i;
         SPPath *path = dynamic_cast<SPPath *>(item);
@@ -107,7 +112,7 @@ sp_selected_path_combine(SPDesktop *desktop, bool skip_undo)
         }
 
         if (!did) {
-            selection->clear();
+            clear();
             did = true;
         }
 
@@ -142,7 +147,7 @@ sp_selected_path_combine(SPDesktop *desktop, bool skip_undo)
         first->deleteObject(false);
         // delete the topmost.
 
-        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
+        Inkscape::XML::Document *xml_doc = doc->getReprDoc();
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
         // restore id, transform, path effect, and style
@@ -170,37 +175,40 @@ sp_selected_path_combine(SPDesktop *desktop, bool skip_undo)
         // move to the position of the topmost, reduced by the number of deleted items
         repr->setPosition(position > 0 ? position : 0);
         if ( !skip_undo ) {
-            DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_COMBINE, 
+            DocumentUndo::done(doc, SP_VERB_SELECTION_COMBINE, 
                                _("Combine"));
         }
-        selection->set(repr);
+        set(repr);
 
         Inkscape::GC::release(repr);
 
     } else {
-        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to combine in the selection."));
+        if(desktop())
+            desktop()->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to combine in the selection."));
     }
 
-    desktop->clearWaitingCursor();
+    if(desktop())
+        desktop()->clearWaitingCursor();
 }
 
 void
-sp_selected_path_break_apart(SPDesktop *desktop, bool skip_undo)
+ObjectSet::breakApart(bool skip_undo)
 {
-    Inkscape::Selection *selection = desktop->getSelection();
-
-    if (selection->isEmpty()) {
-        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to break apart."));
+    if (isEmpty()) {
+        if(desktop())
+            desktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to break apart."));
         return;
     }
-
-    desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Breaking apart paths..."));
-    // set "busy" cursor
-    desktop->setWaitingCursor();
+    if(desktop()){
+        desktop()->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Breaking apart paths..."));
+        // set "busy" cursor
+        desktop()->setWaitingCursor();
+    
+    }
 
     bool did = false;
 
-    std::vector<SPItem*> itemlist(selection->items().begin(), selection->items().end());
+    std::vector<SPItem*> itemlist(items().begin(), items().end());
     for (std::vector<SPItem*>::const_iterator i = itemlist.begin(); i != itemlist.end(); ++i){
 
         SPItem *item = *i;
@@ -264,83 +272,83 @@ sp_selected_path_break_apart(SPDesktop *desktop, bool skip_undo)
 
             Inkscape::GC::release(repr);
         }
-        selection->setReprList(reprs);
+        setReprList(reprs);
 
         g_slist_free(list);
         g_free(style);
         g_free(path_effect);
     }
-
-    desktop->clearWaitingCursor();
+    
+    if(desktop())
+        desktop()->clearWaitingCursor();
 
     if (did) {
         if ( !skip_undo ) {
-            DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_BREAK_APART, 
+            DocumentUndo::done(document(), SP_VERB_SELECTION_BREAK_APART, 
                                _("Break apart"));
         }
     } else {
-        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
+        if(desktop())
+            desktop()->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
     }
 }
 
-/* This function is an entry point from GUI */
-void
-sp_selected_path_to_curves(Inkscape::Selection *selection, SPDesktop *desktop, bool interactive)
+void ObjectSet::toCurves(bool skip_undo)
 {
-    if (selection->isEmpty()) {
-        if (interactive && desktop)
-            desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to path."));
+    if (isEmpty()) {
+        if (desktop())
+            desktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to path."));
         return;
     }
 
     bool did = false;
-    if (interactive && desktop) {
-        desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Converting objects to paths..."));
+    if (desktop()) {
+        desktop()->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Converting objects to paths..."));
         // set "busy" cursor
-        desktop->setWaitingCursor();
+        desktop()->setWaitingCursor();
     }
 
-    std::vector<SPItem*> selected(selection->items().begin(), selection->items().end());
+    std::vector<SPItem*> selected(items().begin(), items().end());
     std::vector<Inkscape::XML::Node*> to_select;
-    selection->clear();
+    clear();
     std::vector<SPItem*> items(selected);
 
     did = sp_item_list_to_curves(items, selected, to_select);
 
-    selection->setReprList(to_select);
-    selection->addList(selected);
+    setReprList(to_select);
+    addList(selected);
 
-    if (interactive && desktop) {
-        desktop->clearWaitingCursor();
-        if (did) {
-            DocumentUndo::done(desktop->getDocument(), SP_VERB_OBJECT_TO_CURVE, 
+    if (desktop()) {
+        desktop()->clearWaitingCursor();
+    }
+    if (did&& !skip_undo) {
+        DocumentUndo::done(document(), SP_VERB_OBJECT_TO_CURVE, 
                                _("Object to path"));
-        } else {
-            desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
-            return;
-        }
+    } else {
+        if(desktop())
+            desktop()->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
+        return;
     }
 }
 
 /** Converts the selected items to LPEItems if they are not already so; e.g. SPRects) */
-void sp_selected_to_lpeitems(SPDesktop *desktop)
+void ObjectSet::toLPEItems()
 {
-    Inkscape::Selection *selection = desktop->getSelection();
 
-    if (selection->isEmpty()) {
+    if (isEmpty()) {
         return;
     }
 
-    std::vector<SPItem*> selected(selection->items().begin(), selection->items().end());
+    std::vector<SPItem*> selected(items().begin(), items().end());
     std::vector<Inkscape::XML::Node*> to_select;
-    selection->clear();
+    clear();
     std::vector<SPItem*> items(selected);
 
 
     sp_item_list_to_curves(items, selected, to_select, true);
 
-    selection->setReprList(to_select);
-    selection->addList(selected);
+    setReprList(to_select);
+    addList(selected);
 }
 
 bool
@@ -597,24 +605,24 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
 
 void
-sp_selected_path_reverse(SPDesktop *desktop)
+ObjectSet::pathReverse()
 {
-    Inkscape::Selection *selection = desktop->getSelection();
-    auto items = selection->items();
-
-    if (items.empty()) {
-        desktop->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to reverse."));
+    if (isEmpty()) {
+        if(desktop())
+            desktop()->getMessageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to reverse."));
         return;
     }
 
 
     // set "busy" cursor
-    desktop->setWaitingCursor();
-
+    if(desktop()){
+        desktop()->setWaitingCursor();
+        desktop()->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Reversing paths..."));
+    }
+    
     bool did = false;
-    desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Reversing paths..."));
 
-    for (auto i = items.begin(); i != items.end(); ++i){
+    for (auto i = items().begin(); i != items().end(); ++i){
 
         SPPath *path = dynamic_cast<SPPath *>(*i);
         if (!path) {
@@ -642,14 +650,15 @@ sp_selected_path_reverse(SPDesktop *desktop)
             g_free(nodetypes);
         }
     }
-
-    desktop->clearWaitingCursor();
+    if(desktop())
+        desktop()->clearWaitingCursor();
 
     if (did) {
-        DocumentUndo::done(desktop->getDocument(), SP_VERB_SELECTION_REVERSE,
+        DocumentUndo::done(document(), SP_VERB_SELECTION_REVERSE,
                            _("Reverse path"));
     } else {
-        desktop->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
+        if(desktop())
+            desktop()->getMessageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
     }
 }
 

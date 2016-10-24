@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Adrian Boguszewski
+ *   Marc Jeanmougin
  *
  * Copyright (C) 2016 Adrian Boguszewski
  *
@@ -30,10 +31,11 @@
 #include "sp-object.h"
 #include "sp-item.h"
 #include "sp-item-group.h"
+#include "desktop.h"
+#include "document.h"
 
 class SPBox3D;
 class Persp3D;
-class SPDesktop;
 
 namespace Inkscape {
 
@@ -101,9 +103,17 @@ public:
     typedef decltype(MultiIndexContainer().get<random_access>() | boost::adaptors::filtered(is_group()) | boost::adaptors::transformed(object_to_group())) SPGroupRange;
     typedef decltype(MultiIndexContainer().get<random_access>() | boost::adaptors::filtered(is_item()) | boost::adaptors::transformed(object_to_node())) XMLNodeRange;
 
-    ObjectSet(SPDesktop* desktop): _desktop(desktop) {};
-    ObjectSet(): _desktop(nullptr) {};
+    ObjectSet(SPDesktop* desktop): _desktop(desktop) {
+        _document = desktop->getDocument(); 
+    };
+    ObjectSet(SPDocument* doc): _desktop(nullptr), _document(doc) {};
+    ObjectSet(): _desktop(nullptr), _document(nullptr) {};
     virtual ~ObjectSet();
+    
+    void setDocument(SPDocument* doc){
+        _document = doc;
+    }
+    
 
     /**
      * Add an SPObject to the set of selected objects.
@@ -111,6 +121,16 @@ public:
      * @param obj the SPObject to add
      */
     bool add(SPObject* object);
+
+    /**
+     * Add an XML node's SPObject to the set of selected objects.
+     *
+     * @param the xml node of the item to add
+     */
+    void add(XML::Node *repr) {
+        if(document() && repr)
+            add(document()->getObjectById(repr->attribute("id")));
+    }
 
     /**  Add items from an STL iterator range to the selection.
      *  \param from the begin iterator
@@ -146,7 +166,10 @@ public:
      * @param obj the object to select
      */
     void set(SPObject *object);
-
+    void set(XML::Node *repr) {
+        if(document() && repr)
+            set(document()->getObjectById(repr->attribute("id")));
+    }
     /**
      * Unselects all selected objects.
      */
@@ -235,6 +258,23 @@ public:
         _clear();
         addList(objs);
     }
+    
+    /**
+     * Selects exactly the specified objects.
+     * 
+     * @param list the repr list to add
+     */
+    void setReprList(std::vector<XML::Node*> const &list) {
+        if(!document())
+            return;
+        clear();
+        for (auto iter = list.rbegin(); iter != list.rend(); ++iter) {
+            SPObject *obj = document()->getObjectById((*iter)->attribute("id"));
+            if (obj) {
+                add(obj);
+            }
+        }
+    }
 
     /**
      * Adds the specified objects to selection, without deselecting first.
@@ -287,6 +327,92 @@ public:
      */
     SPDesktop *desktop() { return _desktop; }
 
+    /**
+     * Returns the document the selection is bound to
+     *
+     * @return the document the selection is bound to, or NULL if in console mode
+     */
+    SPDocument *document() { return _document; }
+
+    //item groups operations
+    //in selection-chemistry.cpp
+    void deleteItems();
+    void duplicate(bool suppressDone = false, bool duplicateLayer = false);
+    void clone();
+    void unlink();
+    void relink();
+    void cloneOriginal();
+    void cloneOriginalPathLPE();
+    Inkscape::XML::Node* group();
+    void popFromGroup();
+    void ungroup();
+    
+    //z-order management
+    //in selection-chemistry.cpp
+    void raise(bool skip_undo = false);
+    void raiseToTop(bool skip_undo = false);
+    void lower(bool skip_undo = false);
+    void lowerToBottom(bool skip_undo = false);
+    void toNextLayer(bool skip_undo = false);
+    void toPrevLayer(bool skip_undo = false);
+    void toLayer(SPObject *layer, bool skip_undo = false);
+
+    //clipboard management
+    //in selection-chemistry.cpp
+    void copy();
+    void cut();
+    void pasteStyle();
+    void pasteSize(bool apply_x, bool apply_y);
+    void pasteSizeSeparately(bool apply_x, bool apply_y);
+    void pastePathEffect();
+    
+    //path operations
+    //in path-chemistry.cpp
+    void combine(bool skip_undo = false);
+    void breakApart(bool skip_undo = false);
+    void toCurves(bool skip_undo = false);
+    void toLPEItems();
+    void pathReverse();
+    
+    //Other path operations
+    //in selection-chemistry.cpp
+    void toMarker(bool apply = true);
+    void toGuides();
+    void toSymbol();
+    void unSymbol();
+    void tile(bool apply = true); //"Object to Pattern"
+    void untile();
+    void createBitmapCopy();
+    void setMask(bool apply_clip_path, bool apply_to_layer = false, bool skip_undo = false);
+    void editMask(bool clip);
+    void unsetMask(bool apply_clip_path);
+    void setClipGroup();
+    
+    // moves
+    // in selection-chemistry.cpp
+    void removeLPE();
+    void removeFilter();
+    void applyAffine(Geom::Affine const &affine, bool set_i2d=true,bool compensate=true, bool adjust_transf_center=true);
+    void removeTransform();
+    void setScaleAbsolute(double, double, double, double);
+    void setScaleRelative(const Geom::Point&, const Geom::Scale&);
+    void rotateRelative(const Geom::Point&, double);
+    void skewRelative(const Geom::Point&, double, double);
+    void moveRelative(const Geom::Point &move, bool compensate = true);
+    void moveRelative(double dx, double dy);
+    void rotate90(bool ccw);
+    void rotate(double);
+    void rotateScreen(double);
+    void scale(double);
+    void scaleScreen(double);
+    void scaleTimes(double);
+    void move(double dx, double dy);
+    void moveScreen(double dx, double dy);
+    
+    // various
+    void getExportHints(Glib::ustring &filename, float *xdpi, float *ydpi);
+    
+
 protected:
     virtual void _connectSignals(SPObject* object) {};
     virtual void _releaseSignals(SPObject* object) {};
@@ -304,6 +430,7 @@ protected:
 
     MultiIndexContainer _container;
     GC::soft_ptr<SPDesktop> _desktop;
+    GC::soft_ptr<SPDocument> _document;
     std::list<SPBox3D *> _3dboxes;
     std::unordered_map<SPObject*, sigc::connection> _releaseConnections;
 

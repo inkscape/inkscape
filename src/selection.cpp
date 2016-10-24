@@ -119,15 +119,7 @@ void Selection::set(SPObject *object, bool persist_selection_context) {
 }
 
 void Selection::setReprList(std::vector<XML::Node*> const &list) {
-    clear();
-
-    for (std::vector<XML::Node*>::const_reverse_iterator iter = list.rbegin(); iter != list.rend(); ++iter) {
-        SPObject *obj = _objectForXMLNode(*iter);
-        if (obj) {
-            add(obj);
-        }
-    }
-
+    ObjectSet::setReprList(list);
     _emitChanged();
 }
 
