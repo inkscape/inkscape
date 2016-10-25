@@ -59,6 +59,7 @@ class Selection : public Inkscape::GC::Managed<>,
                   public Inkscape::GC::Anchored,
                   public ObjectSet
 {
+friend class ObjectSet;
 public:
     /**
      * Constructs an selection object, bound to a particular
@@ -98,12 +99,7 @@ public:
         add(_objectForXMLNode(repr));
     }
 
-    /**
-     * Set the selection to a single specific object.
-     *
-     * @param obj the object to select
-     */
-    void set(SPObject *obj, bool persist_selection_context = false);
+     using ObjectSet::set;
 
     /**
      * Set the selection to an XML node's SPObject.
@@ -126,14 +122,6 @@ public:
     void remove(XML::Node *repr) {
         remove(_objectForXMLNode(repr));
     }
-
-    /**
-     * Clears the selection and selects the specified objects.
-     *
-     * @param repr a list of xml nodes for the items to select
-     */
-    void setReprList(std::vector<XML::Node*> const &reprs);
-
 
     using ObjectSet::includes;
 

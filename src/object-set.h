@@ -165,7 +165,7 @@ public:
      *
      * @param obj the object to select
      */
-    void set(SPObject *object);
+    void set(SPObject *object, bool persist_selection_context = false);
     void set(XML::Node *repr) {
         if(document() && repr)
             set(document()->getObjectById(repr->attribute("id")));
@@ -264,17 +264,7 @@ public:
      * 
      * @param list the repr list to add
      */
-    void setReprList(std::vector<XML::Node*> const &list) {
-        if(!document())
-            return;
-        clear();
-        for (auto iter = list.rbegin(); iter != list.rend(); ++iter) {
-            SPObject *obj = document()->getObjectById((*iter)->attribute("id"));
-            if (obj) {
-                add(obj);
-            }
-        }
-    }
+    void setReprList(std::vector<XML::Node*> const &list);
 
     /**
      * Adds the specified objects to selection, without deselecting first.

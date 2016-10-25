@@ -232,12 +232,28 @@ Inkscape::XML::Node *ObjectSet::singleRepr() {
     return obj ? obj->getRepr() : nullptr;
 }
 
-void ObjectSet::set(SPObject *object) {
+void ObjectSet::set(SPObject *object, bool persist_selection_context) {
     _clear();
     _add(object);
-    // can't emit signal here due to boolean argument in Selection
-//    _emitSignals();
+    if(dynamic_cast<Inkscape::Selection*>(this))
+        return dynamic_cast<Inkscape::Selection*>(this)->_emitChanged(persist_selection_context);
 }
+
+void ObjectSet::setReprList(std::vector<XML::Node*> const &list) {
+    if(!document())
+        return;
+    clear();
+    for (auto iter = list.rbegin(); iter != list.rend(); ++iter) {
+        SPObject *obj = document()->getObjectById((*iter)->attribute("id"));
+        if (obj) {
+            add(obj);
+        }
+    }
+    if(dynamic_cast<Inkscape::Selection*>(this))
+        return dynamic_cast<Inkscape::Selection*>(this)->_emitChanged();//
+}
+
+
 
 Geom::OptRect ObjectSet::bounds(SPItem::BBoxType type) const
 {
