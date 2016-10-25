@@ -98,7 +98,7 @@ TEST_F(ObjectSetTest, Basics) {
     EXPECT_FALSE(set->includes(A));
     set->clear();
     EXPECT_EQ(0, set->size());
-    bool resultNull = set->add(nullptr);
+    bool resultNull = set->add((SPObject*)nullptr);
     EXPECT_FALSE(resultNull);
     EXPECT_EQ(0, set->size());
     bool resultNull2 = set->remove(nullptr);
