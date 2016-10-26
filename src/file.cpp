@@ -1193,10 +1193,21 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
         // Count the number of top-level items in the imported document.
         guint items_count = 0;
+        SPObject *o = NULL;
         for (auto& child: doc->getRoot()->children) {
             if (SP_IS_ITEM(&child)) {
                 items_count++;
+                o = &child;
             }
+        }
+
+        //ungroup if necessary
+        bool did_ungroup = false;
+        while(items_count==1 && o && SP_IS_GROUP(o) && o->children.size()==1){
+            std::vector<SPItem *>v;
+            sp_item_group_ungroup(SP_GROUP(o),v,false);
+            o = v.empty() ? NULL : v[0];
+            did_ungroup=true;
         }
 
         // Create a new group if necessary.
@@ -1225,7 +1236,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         SPObject *new_obj = NULL;
         for (auto& child: doc->getRoot()->children) {
             if (SP_IS_ITEM(&child)) {
-                Inkscape::XML::Node *newitem = child.getRepr()->duplicate(xml_in_doc);
+                Inkscape::XML::Node *newitem = did_ungroup ? o->getRepr()->duplicate(xml_in_doc) : child.getRepr()->duplicate(xml_in_doc);
 
                 // convert layers to groups, and make sure they are unlocked
                 // FIXME: add "preserve layers" mode where each layer from
