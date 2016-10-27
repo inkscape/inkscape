@@ -119,7 +119,7 @@ static gchar *sp_object_get_unique_id(SPObject    *object,
  * Constructor, sets all attributes to default values.
  */
 SPObject::SPObject()
-    : cloned(0), uflags(0), mflags(0), hrefcount(0), _total_hrefcount(0),
+    : cloned(0), clone_original(NULL), uflags(0), mflags(0), hrefcount(0), _total_hrefcount(0),
       document(NULL), parent(NULL), id(NULL), repr(NULL), refCount(1), hrefList(std::list<SPObject*>()),
       _successor(NULL), _collection_policy(SPObject::COLLECT_WITH_PARENT),
       _label(NULL), _default_label(NULL)
@@ -663,6 +663,8 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
     object->readAttr("xml:space");
     object->readAttr("inkscape:label");
     object->readAttr("inkscape:collect");
+    if(object->cloned)
+        object->clone_original = document->getObjectById(repr->attribute("id"));
 
     for (Inkscape::XML::Node *rchild = repr->firstChild() ; rchild != NULL; rchild = rchild->next()) {
         const std::string typeString = NodeTraits::get_type_string(*rchild);

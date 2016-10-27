@@ -201,6 +201,7 @@ public:
     virtual ~SPObject();
 
     unsigned int cloned : 1;
+    SPObject *clone_original;
     unsigned int uflags : 8;
     unsigned int mflags : 8;
     SPIXmlSpace xml_space;
