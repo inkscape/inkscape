@@ -631,7 +631,7 @@ void InkscapePreferences::initPageUI()
     _page_ui.add_line( false, _("Maximum documents in Open _Recent:"), _misc_recent, "",
                               _("Set the maximum length of the Open Recent list in the File menu, or clear the list"), false, reset_recent);
 
-    _ui_zoom_correction.init(300, 30, 1.00, 200.0, 1.0, 10.0, 1.0);
+    _ui_zoom_correction.init(300, 30, 1.00, 500.0, 1.0, 10.0, 1.0);
     _page_ui.add_line( false, _("_Zoom correction factor (in %):"), _ui_zoom_correction, "",
                               _("Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"), true);
 
