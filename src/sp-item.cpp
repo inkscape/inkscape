@@ -868,6 +868,17 @@ Geom::OptRect SPItem::bounds(BBoxType type, Geom::Affine const &transform) const
     }
 }
 
+Geom::OptRect SPItem::documentPreferredBounds() const
+{
+    if (Inkscape::Preferences::get()->getInt("/tools/bounding_box") == 0) {
+        return documentBounds(SPItem::VISUAL_BBOX);
+    } else {
+        return documentBounds(SPItem::GEOMETRIC_BBOX);
+    }
+}
+
+
+
 Geom::OptRect SPItem::documentGeometricBounds() const
 {
     return geometricBounds(i2doc_affine());

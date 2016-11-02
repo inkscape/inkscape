@@ -129,7 +129,7 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
     SPItem *focus = NULL;
     Geom::OptRect b = Geom::OptRect();
     Selection::CompareSize horiz = (a.mx0 != 0.0) || (a.mx1 != 0.0)
-        ? Selection::HORIZONTAL : Selection::VERTICAL;
+        ? Selection::VERTICAL : Selection::HORIZONTAL;
 
     switch (AlignTarget(prefs->getInt("/dialogs/align/align-to", 6)))
     {

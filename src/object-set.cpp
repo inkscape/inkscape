@@ -204,7 +204,7 @@ SPItem *ObjectSet::_sizeistItem(bool sml, CompareSize compare) {
     SPItem *ist = NULL;
 
     for (auto i = items.begin(); i != items.end(); ++i) {
-        Geom::OptRect obox = SP_ITEM(*i)->desktopPreferredBounds();
+        Geom::OptRect obox = SP_ITEM(*i)->documentPreferredBounds();
         if (!obox || obox.empty()) {
             continue;
         }
@@ -212,7 +212,7 @@ SPItem *ObjectSet::_sizeistItem(bool sml, CompareSize compare) {
         Geom::Rect bbox = *obox;
 
         gdouble size = compare == AREA ? bbox.area() :
-                       (compare == VERTICAL ? bbox.width() : bbox.height());
+                       (compare == VERTICAL ? bbox.height() : bbox.width());
         size = sml ? size : size * -1;
         if (size < max) {
             max = size;

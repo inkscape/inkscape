@@ -258,6 +258,7 @@ public:
     Geom::OptRect documentVisualBounds() const;
 
     Geom::OptRect documentBounds(BBoxType type) const;
+    Geom::OptRect documentPreferredBounds() const;
 
     /**
      * Get item's geometric bbox in desktop coordinate system.

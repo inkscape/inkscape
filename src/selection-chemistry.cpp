@@ -946,7 +946,7 @@ enclose_items(std::vector<SPItem*> const &items)
 
     Geom::OptRect r;
     for (std::vector<SPItem*>::const_iterator i = items.begin();i!=items.end();++i) {
-        r.unionWith((*i)->desktopVisualBounds());
+        r.unionWith((*i)->documentVisualBounds());
     }
     return r;
 }
@@ -1000,7 +1000,7 @@ void ObjectSet::raise(bool skip_undo){
                 // if the sibling is an item AND overlaps our selection,
                 SPItem *newItem = dynamic_cast<SPItem *>(newref);
                 if (newItem) {
-                    Geom::OptRect newref_bbox = newItem->desktopVisualBounds();
+                    Geom::OptRect newref_bbox = newItem->documentVisualBounds();
                     if ( newref_bbox && selected->intersects(*newref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if ( std::find(items_copy.begin(),items_copy.end(),newref)==items_copy.end()) {
@@ -1077,7 +1077,7 @@ void ObjectSet::lower(bool skip_undo){
                 // if the sibling is an item AND overlaps our selection,
                 SPItem *newItem = dynamic_cast<SPItem *>(newref);
                 if (newItem) {
-                    Geom::OptRect ref_bbox = newItem->desktopVisualBounds();
+                    Geom::OptRect ref_bbox = newItem->documentVisualBounds();
                     if ( ref_bbox && selected->intersects(*ref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (items_copy.end()==std::find(items_copy.begin(),items_copy.end(),newref)) {
