@@ -2942,7 +2942,7 @@ Verb *Verb::_base_verbs[] = {
 
     // Dialogs
     new DialogVerb(SP_VERB_DIALOG_DISPLAY, "DialogPreferences", N_("P_references..."),
-                   N_("Edit global Inkscape preferences"), INKSCAPE_ICON("preferences-system")),
+                   N_("Edit global Inkscape preferences"), INKSCAPE_ICON("gtk-preferences")),
     new DialogVerb(SP_VERB_DIALOG_NAMEDVIEW, "DialogDocumentProperties", N_("_Document Properties..."),
                    N_("Edit properties of this document (to be saved with the document)"), INKSCAPE_ICON("document-properties")),
     new DialogVerb(SP_VERB_DIALOG_METADATA, "DialogMetadata", N_("Document _Metadata..."),
