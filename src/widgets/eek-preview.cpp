@@ -61,11 +61,11 @@ typedef struct
 {
     int          scaledW;
     int          scaledH;
-    
+
     int          r;
     int          g;
     int          b;
-    
+
     gboolean     hot;
     gboolean     within;
     gboolean     takesFocus;
@@ -227,7 +227,7 @@ gboolean eek_preview_draw(GtkWidget *widget,
 
     GtkAllocation allocation;
     gtk_widget_get_allocation(widget, &allocation);
-   
+
     gint insetTop = 0, insetBottom = 0;
     gint insetLeft = 0, insetRight = 0;
 
@@ -245,12 +245,12 @@ gboolean eek_preview_draw(GtkWidget *widget,
     }
 
     auto context = gtk_widget_get_style_context(widget);
-	
+
     gtk_render_frame(context,
                      cr,
                      0, 0,
                      allocation.width, allocation.height);
-	
+
     gtk_render_background(context,
                           cr,
                           0, 0,
@@ -269,26 +269,19 @@ gboolean eek_preview_draw(GtkWidget *widget,
 
     if (priv->previewPixbuf )
     {
-        GtkDrawingArea *da = &(preview->drawing);
-        GdkWindow *da_window = gtk_widget_get_window(GTK_WIDGET(da));
-        cairo_t *cr = gdk_cairo_create(da_window);
-
-        gint w = gdk_window_get_width(da_window);
-        gint h = gdk_window_get_height(da_window);
-
-        if ((w != priv->scaledW) || (h != priv->scaledH)) {
+        if ((allocation.width != priv->scaledW) || (allocation.height != priv->scaledH)) {
             if (priv->scaled)
             {
                 g_object_unref(priv->scaled);
             }
 
-            priv->scaled = gdk_pixbuf_scale_simple(priv->previewPixbuf,
-                                                   w - (insetLeft + insetRight),
-                                                   h - (insetTop + insetBottom),
-                                                   GDK_INTERP_BILINEAR);
+            priv->scaledW = allocation.width - (insetLeft + insetRight);
+            priv->scaledH = allocation.height - (insetTop + insetBottom);
 
-            priv->scaledW = w - (insetLeft + insetRight);
-            priv->scaledH = h - (insetTop + insetBottom);
+            priv->scaled = gdk_pixbuf_scale_simple(priv->previewPixbuf,
+                                                   priv->scaledW,
+                                                   priv->scaledH,
+                                                   GDK_INTERP_BILINEAR);
         }
 
         GdkPixbuf *pix = (priv->scaled) ? priv->scaled : priv->previewPixbuf;
@@ -302,7 +295,6 @@ gboolean eek_preview_draw(GtkWidget *widget,
 
         gdk_cairo_set_source_pixbuf(cr, pix, insetLeft, insetTop);
         cairo_paint(cr);
-        cairo_destroy(cr);
     }
 
     if (priv->linked)
@@ -479,7 +471,7 @@ static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton
         gtk_widget_set_state_flags( widget, GTK_STATE_FLAG_NORMAL, false );
 
         if ( priv->within &&
-            (event->button == PRIME_BUTTON_MAGIC_NUMBER || 
+            (event->button == PRIME_BUTTON_MAGIC_NUMBER ||
              event->button == 2))
         {
             gboolean isAlt = ( ((event->state & GDK_SHIFT_MASK) == GDK_SHIFT_MASK) ||
@@ -607,7 +599,7 @@ eek_preview_set_linked(EekPreview *preview,
     EekPreviewPrivate *priv = EEK_PREVIEW_GET_PRIVATE(preview);
 
     g_return_if_fail(IS_EEK_PREVIEW(preview));
-    
+
     link = (LinkType)(link & PREVIEW_LINK_ALL);
 
     if (link != (LinkType)priv->linked)
@@ -656,7 +648,7 @@ eek_preview_set_details(EekPreview   *preview,
                         guint         border)
 {
     EekPreviewPrivate *priv = EEK_PREVIEW_GET_PRIVATE(preview);
-    
+
     g_return_if_fail(IS_EEK_PREVIEW(preview));
 
     priv->view  = view;
