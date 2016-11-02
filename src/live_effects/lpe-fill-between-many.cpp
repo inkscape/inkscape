@@ -57,6 +57,9 @@ void LPEFillBetweenMany::doEffect (SPCurve * curve)
     if (!res_pathv.empty()) {
         res_pathv.front().close();
     }
+    if (res_pathv.empty()) {
+        res_pathv = curve->get_pathvector();
+    }
     curve->set_pathvector(res_pathv);
 }
 
