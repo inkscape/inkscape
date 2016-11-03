@@ -104,7 +104,8 @@ public:
     typedef decltype(MultiIndexContainer().get<random_access>() | boost::adaptors::filtered(is_item()) | boost::adaptors::transformed(object_to_node())) XMLNodeRange;
 
     ObjectSet(SPDesktop* desktop): _desktop(desktop) {
-        _document = desktop->getDocument(); 
+        if (desktop)
+            _document = desktop->getDocument(); 
     };
     ObjectSet(SPDocument* doc): _desktop(nullptr), _document(doc) {};
     ObjectSet(): _desktop(nullptr), _document(nullptr) {};
