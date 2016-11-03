@@ -217,7 +217,7 @@ DrawingShape::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
         }
         {   Inkscape::DrawingContext::Save save(dc);
             dc.setSource(rgba);
-            dc.setLineWidth(5);
+            dc.setLineWidth(0.5);
             dc.setTolerance(0.5);
             dc.stroke();
         }
@@ -234,7 +234,6 @@ DrawingShape::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
             // we assume the context has no path
             Inkscape::DrawingContext::Save save(dc);
             dc.transform(_ctm);
-            dc.path(_curve->get_pathvector());
 
 
             // update fill and stroke paints.
@@ -244,6 +243,7 @@ DrawingShape::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
             bool has_stroke = _nrstyle.prepareStroke(dc, _item_bbox, _stroke_pattern);
             has_stroke &= (_nrstyle.stroke_width != 0);
             if (has_fill || has_stroke) {
+                dc.path(_curve->get_pathvector());
                 // TODO: remove segments outside of bbox when no dashes present
                 if (has_fill) {
                     _nrstyle.applyFill(dc);
