@@ -15,6 +15,7 @@
 # Nicolas Dufour <nicoduf@yahoo.fr>, 2008-2016.
 # Sylvain Chiron <chironsylvain@orange.fr>, 2016.
 #
+#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"

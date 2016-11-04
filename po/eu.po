@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.91\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-02 12:12+0200\n"
+"POT-Creation-Date: 2016-06-08 09:06+0200\n"
 "PO-Revision-Date: 2014-11-16 13:46+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
@@ -4472,16 +4472,16 @@ msgstr "tipografiaren oihala gida-lerroekin"
 msgid "3D Box"
 msgstr "3D koadroa"
 
-#: ../src/color-profile.cpp:842
+#: ../src/color-profile.cpp:856
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr "Kolore-profilen direktorioa (%s) ez dago erabilgarri."
 
-#: ../src/color-profile.cpp:901 ../src/color-profile.cpp:918
+#: ../src/color-profile.cpp:928 ../src/color-profile.cpp:945
 msgid "(invalid UTF-8 string)"
 msgstr "(UTF-8 kate baliogabea)"
 
-#: ../src/color-profile.cpp:903
+#: ../src/color-profile.cpp:930
 msgctxt "Profile name"
 msgid "None"
 msgstr "Bat ere ez"
@@ -5056,7 +5056,7 @@ msgstr ""
 "Inkscape-ren webgunean edo galdetu posta-zerrendetan hedapen honi buruz izan "
 "ditzakezun zalantzak."
 
-#: ../src/extension/implementation/script.cpp:1108
+#: ../src/extension/implementation/script.cpp:1111
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -13308,20 +13308,20 @@ msgid_plural "(%d characters%s)"
 msgstr[0] "(karaktere %d %s)"
 msgstr[1] "(%d karaktere %s)"
 
-#: ../src/sp-guide.cpp:261
+#: ../src/sp-guide.cpp:262
 msgid "Create Guides Around the Page"
 msgstr "Sortu gidak orriaren inguruan"
 
-#: ../src/sp-guide.cpp:274 ../src/verbs.cpp:2544
+#: ../src/sp-guide.cpp:275 ../src/verbs.cpp:2544
 msgid "Delete All Guides"
 msgstr "Ezabatu gida guztiak"
 
 #. Guide has probably been deleted and no longer has an attached namedview.
-#: ../src/sp-guide.cpp:485
+#: ../src/sp-guide.cpp:486
 msgid "Deleted"
 msgstr "Ezabatuta"
 
-#: ../src/sp-guide.cpp:494
+#: ../src/sp-guide.cpp:495
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
@@ -13329,17 +13329,17 @@ msgstr ""
 "<b>Maius + arrastatu</b> biratzeko, <b>Ktrl + arrastatu</b> jatorria "
 "mugitzeko, <b>Ezab</b> ezabatzeko"
 
-#: ../src/sp-guide.cpp:498
+#: ../src/sp-guide.cpp:499
 #, c-format
 msgid "vertical, at %s"
 msgstr "bertikala hona: %s"
 
-#: ../src/sp-guide.cpp:501
+#: ../src/sp-guide.cpp:502
 #, c-format
 msgid "horizontal, at %s"
 msgstr "horizontala hona: %s"
 
-#: ../src/sp-guide.cpp:506
+#: ../src/sp-guide.cpp:507
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "%d gradutan, (%s,%s) bidez"
@@ -14970,12 +14970,12 @@ msgid "License"
 msgstr "Lizentzia"
 
 #: ../src/ui/dialog/document-metadata.cpp:126
-#: ../src/ui/dialog/document-properties.cpp:994
+#: ../src/ui/dialog/document-properties.cpp:1037
 msgid "<b>Dublin Core Entities</b>"
 msgstr "<b>Dublin Core entitateak</b>"
 
 #: ../src/ui/dialog/document-metadata.cpp:168
-#: ../src/ui/dialog/document-properties.cpp:1056
+#: ../src/ui/dialog/document-properties.cpp:1099
 msgid "<b>License</b>"
 msgstr "<b>Lizentzia</b>"
 
@@ -15280,136 +15280,136 @@ msgstr "<b>Hainbat</b>"
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:526 ../src/verbs.cpp:3020
+#: ../src/ui/dialog/document-properties.cpp:542 ../src/verbs.cpp:3020
 msgid "Link Color Profile"
 msgstr "Estekatu kolore-profila"
 
-#: ../src/ui/dialog/document-properties.cpp:623
+#: ../src/ui/dialog/document-properties.cpp:654
 msgid "Remove linked color profile"
 msgstr "Kendu estekatutako kolore-profila"
 
-#: ../src/ui/dialog/document-properties.cpp:636
+#: ../src/ui/dialog/document-properties.cpp:673
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Estekatutako kolore-profilak:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:638
+#: ../src/ui/dialog/document-properties.cpp:675
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Kolore-profil erabilgarriak:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:640
+#: ../src/ui/dialog/document-properties.cpp:677
 msgid "Link Profile"
 msgstr "Estekatu profila"
 
-#: ../src/ui/dialog/document-properties.cpp:643
+#: ../src/ui/dialog/document-properties.cpp:680
 msgid "Unlink Profile"
 msgstr "Kendu profilaren esteka"
 
-#: ../src/ui/dialog/document-properties.cpp:721
+#: ../src/ui/dialog/document-properties.cpp:764
 msgid "Profile Name"
 msgstr "Profilaren izena"
 
-#: ../src/ui/dialog/document-properties.cpp:757
+#: ../src/ui/dialog/document-properties.cpp:800
 msgid "External scripts"
 msgstr "Kanpoko script-ak"
 
-#: ../src/ui/dialog/document-properties.cpp:758
+#: ../src/ui/dialog/document-properties.cpp:801
 msgid "Embedded scripts"
 msgstr "Kapsulatutako script-ak"
 
-#: ../src/ui/dialog/document-properties.cpp:763
+#: ../src/ui/dialog/document-properties.cpp:806
 msgid "<b>External script files:</b>"
 msgstr "<b>Kanpoko script fitxategiak:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:765
+#: ../src/ui/dialog/document-properties.cpp:808
 msgid "Add the current file name or browse for a file"
 msgstr "Gehitu uneko fitxategi-izena edo arakatu fitxategi bat"
 
-#: ../src/ui/dialog/document-properties.cpp:768
-#: ../src/ui/dialog/document-properties.cpp:845
+#: ../src/ui/dialog/document-properties.cpp:811
+#: ../src/ui/dialog/document-properties.cpp:888
 #: ../src/ui/widget/selected-style.cpp:357
 msgid "Remove"
 msgstr "Kendu"
 
-#: ../src/ui/dialog/document-properties.cpp:832
+#: ../src/ui/dialog/document-properties.cpp:875
 msgid "Filename"
 msgstr "Fitxategi-izena"
 
-#: ../src/ui/dialog/document-properties.cpp:840
+#: ../src/ui/dialog/document-properties.cpp:883
 msgid "<b>Embedded script files:</b>"
 msgstr "<b>Kapsulatutako script fitxategiak:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:842
+#: ../src/ui/dialog/document-properties.cpp:885
 #: ../src/ui/dialog/objects.cpp:1894
 msgid "New"
 msgstr "Berria"
 
-#: ../src/ui/dialog/document-properties.cpp:909
+#: ../src/ui/dialog/document-properties.cpp:952
 msgid "Script id"
 msgstr "Script-aren IDa"
 
-#: ../src/ui/dialog/document-properties.cpp:915
+#: ../src/ui/dialog/document-properties.cpp:958
 msgid "<b>Content:</b>"
 msgstr "<b>Edukia</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1032
+#: ../src/ui/dialog/document-properties.cpp:1075
 msgid "_Save as default"
 msgstr "_Gorde lehenetsi gisa"
 
-#: ../src/ui/dialog/document-properties.cpp:1033
+#: ../src/ui/dialog/document-properties.cpp:1076
 msgid "Save this metadata as the default metadata"
 msgstr "Gorde metadatu hauek metadatu lehenetsi gisa"
 
-#: ../src/ui/dialog/document-properties.cpp:1034
+#: ../src/ui/dialog/document-properties.cpp:1077
 msgid "Use _default"
 msgstr "Erabili _lehenetsia"
 
-#: ../src/ui/dialog/document-properties.cpp:1035
+#: ../src/ui/dialog/document-properties.cpp:1078
 msgid "Use the previously saved default metadata here"
 msgstr "Erabili aurrez gordetako metatu lehenetsiak hemen"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1108
+#: ../src/ui/dialog/document-properties.cpp:1151
 msgid "Add external script..."
 msgstr "Gehitu kanpoko script-a..."
 
-#: ../src/ui/dialog/document-properties.cpp:1147
+#: ../src/ui/dialog/document-properties.cpp:1190
 msgid "Select a script to load"
 msgstr "Hautatu script bat kargatzeko"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1175
+#: ../src/ui/dialog/document-properties.cpp:1218
 msgid "Add embedded script..."
 msgstr "Gehitu kapsulatutako script-a..."
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1206
+#: ../src/ui/dialog/document-properties.cpp:1249
 msgid "Remove external script"
 msgstr "Kendu kanpoko script-a"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1235
+#: ../src/ui/dialog/document-properties.cpp:1278
 msgid "Remove embedded script"
 msgstr "Kendu kapsulatutako script-a"
 
 #. TODO repr->set_content(_EmbeddedContent.get_buffer()->get_text());
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1331
+#: ../src/ui/dialog/document-properties.cpp:1374
 msgid "Edit embedded script"
 msgstr "Editatu kapsulatutako script-a"
 
-#: ../src/ui/dialog/document-properties.cpp:1415
+#: ../src/ui/dialog/document-properties.cpp:1458
 msgid "<b>Creation</b>"
 msgstr "<b>Sortzea</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1416
+#: ../src/ui/dialog/document-properties.cpp:1459
 msgid "<b>Defined grids</b>"
 msgstr "<b>Definitutako saretak</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1660
+#: ../src/ui/dialog/document-properties.cpp:1703
 msgid "Remove grid"
 msgstr "Kendu sareta"
 
-#: ../src/ui/dialog/document-properties.cpp:1752
+#: ../src/ui/dialog/document-properties.cpp:1795
 #, fuzzy
 msgid "Changed default display unit"
 msgstr "Aldatu dokumentuaren unitateak"
@@ -19668,7 +19668,7 @@ msgstr "Mantendu Beltza (K) kanala CMYK -> CMYK eraldaketetan"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 #: ../src/ui/widget/color-icc-selector.cpp:394
-#: ../src/ui/widget/color-icc-selector.cpp:685
+#: ../src/ui/widget/color-icc-selector.cpp:699
 msgid "<none>"
 msgstr "<bat ere ez>"
 
@@ -24252,7 +24252,7 @@ msgid "Add guides from measure tool"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:781
-msgid "Add Stored to measure tool"
+msgid "Keep last measure on the canvas, for reference"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:801

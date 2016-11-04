@@ -20,11 +20,12 @@
 # Rui Cruz <xande6ruz@yandex.com>, 2016.
 # Tiago Santos <tiagofsantos81@sapo.pt>, 2016.
 #
+#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-02 12:12+0200\n"
+"POT-Creation-Date: 2016-06-08 09:06+0200\n"
 "PO-Revision-Date: 2016-07-26 15:30+0100\n"
 "Last-Translator: Rui Cruz <xande6ruz@yandex.com>\n"
 "Language-Team: \n"
@@ -5085,7 +5086,7 @@ msgstr ""
 "website do Inkscape ou pergunte nas listas de discussão ou fórum se tiver "
 "questões sobre esta extensão."
 
-#: ../src/extension/implementation/script.cpp:1108
+#: ../src/extension/implementation/script.cpp:1111
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -38290,7 +38291,8 @@ msgid ""
 msgstr ""
 "Remove as etiquetas de metadados e respetiva informação, que pode incluir a "
 "informação sobre a licença, autor, etc. Os metadados podem ser visualizados "
-"e editados no menu \"Ficheiro-&gt;Propriedades do Documento...-&gt;aba Metadados\""
+"e editados no menu \"Ficheiro-&gt;Propriedades do Documento...-&gt;aba "
+"Metadados\""
 
 #: ../share/extensions/scour.inx.h:24
 msgid "Remove comments"

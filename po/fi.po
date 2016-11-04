@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-02 12:12+0200\n"
+"POT-Creation-Date: 2016-06-08 09:06+0200\n"
 "PO-Revision-Date: 2013-06-21 15:30+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -4707,16 +4707,16 @@ msgstr ""
 msgid "3D Box"
 msgstr "Laatikko"
 
-#: ../src/color-profile.cpp:842
+#: ../src/color-profile.cpp:856
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr "Väriprofiilien hakemistoa (%s) ei voi käyttää."
 
-#: ../src/color-profile.cpp:901 ../src/color-profile.cpp:918
+#: ../src/color-profile.cpp:928 ../src/color-profile.cpp:945
 msgid "(invalid UTF-8 string)"
 msgstr "(virheellinen UTF-8-merkkijono)"
 
-#: ../src/color-profile.cpp:903
+#: ../src/color-profile.cpp:930
 #, fuzzy
 msgctxt "Profile name"
 msgid "None"
@@ -5304,7 +5304,7 @@ msgstr ""
 "Tälle laajennokselle ei ole ohjetta. Voit etsiä tietoa laajennoksesta "
 "Inkscapen kotisivulta tai kysyä neuvoa postituslistalta."
 
-#: ../src/extension/implementation/script.cpp:1108
+#: ../src/extension/implementation/script.cpp:1111
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -13928,39 +13928,39 @@ msgid_plural "(%d characters%s)"
 msgstr[0] "Lisää Unicode-merkki"
 msgstr[1] "Lisää Unicode-merkki"
 
-#: ../src/sp-guide.cpp:261
+#: ../src/sp-guide.cpp:262
 #, fuzzy
 msgid "Create Guides Around the Page"
 msgstr "Apuviivat sivun ympärillä"
 
-#: ../src/sp-guide.cpp:274 ../src/verbs.cpp:2544
+#: ../src/sp-guide.cpp:275 ../src/verbs.cpp:2544
 #, fuzzy
 msgid "Delete All Guides"
 msgstr "Poista apuviiva"
 
 #. Guide has probably been deleted and no longer has an attached namedview.
-#: ../src/sp-guide.cpp:485
+#: ../src/sp-guide.cpp:486
 #, fuzzy
 msgid "Deleted"
 msgstr "Poista"
 
-#: ../src/sp-guide.cpp:494
+#: ../src/sp-guide.cpp:495
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
 msgstr ""
 
-#: ../src/sp-guide.cpp:498
+#: ../src/sp-guide.cpp:499
 #, c-format
 msgid "vertical, at %s"
 msgstr "pystysuora, %s"
 
-#: ../src/sp-guide.cpp:501
+#: ../src/sp-guide.cpp:502
 #, c-format
 msgid "horizontal, at %s"
 msgstr "vaakasuora, %s"
 
-#: ../src/sp-guide.cpp:506
+#: ../src/sp-guide.cpp:507
 #, fuzzy, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "%d asteessa pisteen (%s, %s) kautta"
@@ -15600,12 +15600,12 @@ msgid "License"
 msgstr "Lisenssi"
 
 #: ../src/ui/dialog/document-metadata.cpp:126
-#: ../src/ui/dialog/document-properties.cpp:994
+#: ../src/ui/dialog/document-properties.cpp:1037
 msgid "<b>Dublin Core Entities</b>"
 msgstr "<b>Dublin Core -entiteetit</b>"
 
 #: ../src/ui/dialog/document-metadata.cpp:168
-#: ../src/ui/dialog/document-properties.cpp:1056
+#: ../src/ui/dialog/document-properties.cpp:1099
 msgid "<b>License</b>"
 msgstr "<b>Lisenssi</b>"
 
@@ -15916,148 +15916,148 @@ msgstr "Muut:"
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:526 ../src/verbs.cpp:3020
+#: ../src/ui/dialog/document-properties.cpp:542 ../src/verbs.cpp:3020
 msgid "Link Color Profile"
 msgstr "Linkitä väriprofiili"
 
-#: ../src/ui/dialog/document-properties.cpp:623
+#: ../src/ui/dialog/document-properties.cpp:654
 msgid "Remove linked color profile"
 msgstr "Poista linkitetty väriprofiili"
 
-#: ../src/ui/dialog/document-properties.cpp:636
+#: ../src/ui/dialog/document-properties.cpp:673
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Linkitetyt väriprofiilit:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:638
+#: ../src/ui/dialog/document-properties.cpp:675
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Väriprofiilit:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:640
+#: ../src/ui/dialog/document-properties.cpp:677
 msgid "Link Profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:643
+#: ../src/ui/dialog/document-properties.cpp:680
 #, fuzzy
 msgid "Unlink Profile"
 msgstr "Pura kloonin linkitys"
 
-#: ../src/ui/dialog/document-properties.cpp:721
+#: ../src/ui/dialog/document-properties.cpp:764
 msgid "Profile Name"
 msgstr "Profiilin nimi"
 
-#: ../src/ui/dialog/document-properties.cpp:757
+#: ../src/ui/dialog/document-properties.cpp:800
 #, fuzzy
 msgid "External scripts"
 msgstr "Aja skriptejä"
 
-#: ../src/ui/dialog/document-properties.cpp:758
+#: ../src/ui/dialog/document-properties.cpp:801
 #, fuzzy
 msgid "Embedded scripts"
 msgstr "Poista ruudukko"
 
-#: ../src/ui/dialog/document-properties.cpp:763
+#: ../src/ui/dialog/document-properties.cpp:806
 msgid "<b>External script files:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:765
+#: ../src/ui/dialog/document-properties.cpp:808
 msgid "Add the current file name or browse for a file"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:768
-#: ../src/ui/dialog/document-properties.cpp:845
+#: ../src/ui/dialog/document-properties.cpp:811
+#: ../src/ui/dialog/document-properties.cpp:888
 #: ../src/ui/widget/selected-style.cpp:357
 msgid "Remove"
 msgstr "Poista"
 
-#: ../src/ui/dialog/document-properties.cpp:832
+#: ../src/ui/dialog/document-properties.cpp:875
 msgid "Filename"
 msgstr "Tiedostonimi"
 
-#: ../src/ui/dialog/document-properties.cpp:840
+#: ../src/ui/dialog/document-properties.cpp:883
 #, fuzzy
 msgid "<b>Embedded script files:</b>"
 msgstr "<b>Linkitetyt väriprofiilit:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:842
+#: ../src/ui/dialog/document-properties.cpp:885
 #: ../src/ui/dialog/objects.cpp:1894
 #, fuzzy
 msgid "New"
 msgstr "Uusi"
 
-#: ../src/ui/dialog/document-properties.cpp:909
+#: ../src/ui/dialog/document-properties.cpp:952
 #, fuzzy
 msgid "Script id"
 msgstr "Skripti"
 
-#: ../src/ui/dialog/document-properties.cpp:915
+#: ../src/ui/dialog/document-properties.cpp:958
 #, fuzzy
 msgid "<b>Content:</b>"
 msgstr "<b>Hajautus:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1032
+#: ../src/ui/dialog/document-properties.cpp:1075
 #, fuzzy
 msgid "_Save as default"
 msgstr "Aseta oletukseksi"
 
-#: ../src/ui/dialog/document-properties.cpp:1033
+#: ../src/ui/dialog/document-properties.cpp:1076
 msgid "Save this metadata as the default metadata"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:1034
+#: ../src/ui/dialog/document-properties.cpp:1077
 #, fuzzy
 msgid "Use _default"
 msgstr "Järjestelmän oletus"
 
-#: ../src/ui/dialog/document-properties.cpp:1035
+#: ../src/ui/dialog/document-properties.cpp:1078
 msgid "Use the previously saved default metadata here"
 msgstr ""
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1108
+#: ../src/ui/dialog/document-properties.cpp:1151
 msgid "Add external script..."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:1147
+#: ../src/ui/dialog/document-properties.cpp:1190
 #, fuzzy
 msgid "Select a script to load"
 msgstr "Kohde ei ole polku tai kuvio"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1175
+#: ../src/ui/dialog/document-properties.cpp:1218
 msgid "Add embedded script..."
 msgstr ""
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1206
+#: ../src/ui/dialog/document-properties.cpp:1249
 msgid "Remove external script"
 msgstr ""
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1235
+#: ../src/ui/dialog/document-properties.cpp:1278
 #, fuzzy
 msgid "Remove embedded script"
 msgstr "Poista ruudukko"
 
 #. TODO repr->set_content(_EmbeddedContent.get_buffer()->get_text());
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1331
+#: ../src/ui/dialog/document-properties.cpp:1374
 #, fuzzy
 msgid "Edit embedded script"
 msgstr "Poista ruudukko"
 
-#: ../src/ui/dialog/document-properties.cpp:1415
+#: ../src/ui/dialog/document-properties.cpp:1458
 msgid "<b>Creation</b>"
 msgstr "<b>Luonti</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1416
+#: ../src/ui/dialog/document-properties.cpp:1459
 msgid "<b>Defined grids</b>"
 msgstr "<b>Määritellyt ruudukot</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1660
+#: ../src/ui/dialog/document-properties.cpp:1703
 msgid "Remove grid"
 msgstr "Poista ruudukko"
 
-#: ../src/ui/dialog/document-properties.cpp:1752
+#: ../src/ui/dialog/document-properties.cpp:1795
 #, fuzzy
 msgid "Changed default display unit"
 msgstr "Nimeämätön asiakirja %d"
@@ -20342,7 +20342,7 @@ msgstr "Säilytä K-kanava CMYK-CMYK-muunnoksissa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 #: ../src/ui/widget/color-icc-selector.cpp:394
-#: ../src/ui/widget/color-icc-selector.cpp:685
+#: ../src/ui/widget/color-icc-selector.cpp:699
 msgid "<none>"
 msgstr "<ei mitään>"
 
@@ -25071,7 +25071,7 @@ msgid "Add guides from measure tool"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:781
-msgid "Add Stored to measure tool"
+msgid "Keep last measure on the canvas, for reference"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:801

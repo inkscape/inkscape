@@ -2,7 +2,6 @@
 # This file is distributed under the same license as the Inkscape package.
 # Copyright (C) 2000-2003, 2006, 2007 Free Software Foundation, Inc.
 #
-#: ../src/ui/dialog/clonetiler.cpp:1010
 # Kai Lahmann <kailahmann@01019freenet.de>, 2000.
 # Benedikt Roth <Benedikt.Roth@gmx.net>, 2000.
 # Christian Meyer <chrisime@gnome.org>, 2000-2002.
@@ -19,6 +18,7 @@
 # Sönke Roggatz <s.roggatz@mailing-werkstatt.de>, 2015.
 # Maren Hachmann <marenhachmann@yahoo.com>, 2015, 2016.
 # Eduard Braun <eduard.braun2@gmx.de>, 2015-2016.
+#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
@@ -1357,7 +1357,8 @@ msgstr "Alpha-Zeichnung, flüssig"
 #: ../share/filters/filters.svg.h:500
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr ""
-"Erzeugt einen transparenten Wassereffekt mit vergröberten Linien und Füllungen"
+"Erzeugt einen transparenten Wassereffekt mit vergröberten Linien und "
+"Füllungen"
 
 #: ../share/filters/filters.svg.h:502
 msgid "Liquid Drawing"
@@ -8972,8 +8973,8 @@ msgstr "Gesperrt"
 msgid ""
 "If set, the dock item cannot be dragged around and it doesn't show a grip"
 msgstr ""
-"Wenn gewählt, kann das Dock-Objekt nicht gezogen werden und zeigt keinen"
-" Anfasser."
+"Wenn gewählt, kann das Dock-Objekt nicht gezogen werden und zeigt keinen "
+"Anfasser."
 
 #: ../src/libgdl/gdl-dock-item.c:340
 msgid "Preferred width"
@@ -9763,9 +9764,8 @@ msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
 msgstr ""
-"Mittlere Größe der Abstände, um die die Startpunkte der einzelnen Stiche"
-" inner- und "
-"außerhalb des Pfades zufällig versetzt werden."
+"Mittlere Größe der Abstände, um die die Startpunkte der einzelnen Stiche "
+"inner- und außerhalb des Pfades zufällig versetzt werden."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Sta_rt spacing variance:"
@@ -30910,8 +30910,8 @@ msgstr "Farbe vom Zentrum übernehmen statt über die gesamte Fläche zu mitteln
 #: ../src/widgets/spray-toolbar.cpp:515 ../src/widgets/spray-toolbar.cpp:516
 msgid "Inverted pick value, retaining color in advanced trace mode"
 msgstr ""
-"Übernommene Farbe invertieren, behält die Farbe im fortgeschrittenen Modus"
-" bei."
+"Übernommene Farbe invertieren, behält die Farbe im fortgeschrittenen Modus "
+"bei."
 
 #: ../src/widgets/spray-toolbar.cpp:528 ../src/widgets/spray-toolbar.cpp:529
 msgid "Apply picked color to fill"
@@ -32076,8 +32076,8 @@ msgid ""
 "y-interval cannot be zero. Please modify 'Y value of rectangle's top' or 'Y "
 "value of rectangle's bottom'"
 msgstr ""
-"Y-Intervall kann nicht null sein. Bitte verändern Sie 'Y-Wert der oberen"
-" Kante des Rechtecks' oder 'Y-Wert der unteren Kante des Rechtecks'"
+"Y-Intervall kann nicht null sein. Bitte verändern Sie 'Y-Wert der oberen "
+"Kante des Rechtecks' oder 'Y-Wert der unteren Kante des Rechtecks'"
 
 #: ../share/extensions/funcplot.py:313
 msgid "Please select a rectangle"

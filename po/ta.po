@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-02 12:12+0200\n"
+"POT-Creation-Date: 2016-06-08 09:06+0200\n"
 "PO-Revision-Date: 2011-06-13 10:57+0530\n"
 "Last-Translator: <kde-i18n-doc@kde.org>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -4669,16 +4669,16 @@ msgstr ""
 msgid "3D Box"
 msgstr "3D பெட்டி"
 
-#: ../src/color-profile.cpp:842
+#: ../src/color-profile.cpp:856
 #, fuzzy, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr "தட்டு அடைவு (%s) இல்லை."
 
-#: ../src/color-profile.cpp:901 ../src/color-profile.cpp:918
+#: ../src/color-profile.cpp:928 ../src/color-profile.cpp:945
 msgid "(invalid UTF-8 string)"
 msgstr "தவறான UTF-8 ஸ்டிரிங்)"
 
-#: ../src/color-profile.cpp:903
+#: ../src/color-profile.cpp:930
 #, fuzzy
 msgctxt "Profile name"
 msgid "None"
@@ -5264,7 +5264,7 @@ msgstr ""
 "இந்த விரிவாக்கத்திற்கான உதவி எதுவும் தற்போது இல்லை. Inkscape வலைத்தளத்தில் பார்க்கவும் "
 "அல்லது இந்த விரிவாக்கத்தை பற்றிய கேள்விகள் இருந்தால் அஞ்சல் குழுவில் கேட்கவும்"
 
-#: ../src/extension/implementation/script.cpp:1108
+#: ../src/extension/implementation/script.cpp:1111
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -13669,23 +13669,23 @@ msgid_plural "(%d characters%s)"
 msgstr[0] "<b>பாயப்பட்ட உரை</b> (%d எழுத்து%s)"
 msgstr[1] "<b>பாயப்பட்ட உரை</b> (%d எழுத்துக்கள்%s)"
 
-#: ../src/sp-guide.cpp:261
+#: ../src/sp-guide.cpp:262
 #, fuzzy
 msgid "Create Guides Around the Page"
 msgstr "பக்கத்தை சுற்றியுள்ள வழிகாட்டிகள்"
 
-#: ../src/sp-guide.cpp:274 ../src/verbs.cpp:2544
+#: ../src/sp-guide.cpp:275 ../src/verbs.cpp:2544
 #, fuzzy
 msgid "Delete All Guides"
 msgstr "வழிகாட்டியை அழி"
 
 #. Guide has probably been deleted and no longer has an attached namedview.
-#: ../src/sp-guide.cpp:485
+#: ../src/sp-guide.cpp:486
 #, fuzzy
 msgid "Deleted"
 msgstr "அழி"
 
-#: ../src/sp-guide.cpp:494
+#: ../src/sp-guide.cpp:495
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
@@ -13693,17 +13693,17 @@ msgstr ""
 "சுழற்றுவதற்கு <b>Shift+drag</b>, துவக்கத்திற்கு நகர்த்துவதற்கு <b>Ctrl+drag</b> , "
 "அழிப்பதற்கு <b>Del</b>"
 
-#: ../src/sp-guide.cpp:498
+#: ../src/sp-guide.cpp:499
 #, c-format
 msgid "vertical, at %s"
 msgstr "செங்குத்து, %s இல்"
 
-#: ../src/sp-guide.cpp:501
+#: ../src/sp-guide.cpp:502
 #, c-format
 msgid "horizontal, at %s"
 msgstr "கிடைமட்டம், %s இல்"
 
-#: ../src/sp-guide.cpp:506
+#: ../src/sp-guide.cpp:507
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "%d டிகிரிகளில்,  (%s,%s) வழியாக"
@@ -15342,12 +15342,12 @@ msgid "License"
 msgstr "உரிமம்"
 
 #: ../src/ui/dialog/document-metadata.cpp:126
-#: ../src/ui/dialog/document-properties.cpp:994
+#: ../src/ui/dialog/document-properties.cpp:1037
 msgid "<b>Dublin Core Entities</b>"
 msgstr "<b>டூப்ளின் கோர் உறுப்புகள்</b>"
 
 #: ../src/ui/dialog/document-metadata.cpp:168
-#: ../src/ui/dialog/document-properties.cpp:1056
+#: ../src/ui/dialog/document-properties.cpp:1099
 msgid "<b>License</b>"
 msgstr "<b>உரிமம்</b>"
 
@@ -15655,149 +15655,149 @@ msgstr "மற்றவைகள்"
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:526 ../src/verbs.cpp:3020
+#: ../src/ui/dialog/document-properties.cpp:542 ../src/verbs.cpp:3020
 msgid "Link Color Profile"
 msgstr "வண்ண விவரக்குறிப்பை இணை"
 
-#: ../src/ui/dialog/document-properties.cpp:623
+#: ../src/ui/dialog/document-properties.cpp:654
 msgid "Remove linked color profile"
 msgstr "இணைக்கப்பட்ட வண்ண விவரக்குறிப்பை நீக்கு"
 
-#: ../src/ui/dialog/document-properties.cpp:636
+#: ../src/ui/dialog/document-properties.cpp:673
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>இணைக்கப்பட்ட வண்ண விவரக்குறிப்புகள்:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:638
+#: ../src/ui/dialog/document-properties.cpp:675
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>கிடைக்கக்கூடிய வண்ண விவரக்குறிப்புகள்:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:640
+#: ../src/ui/dialog/document-properties.cpp:677
 msgid "Link Profile"
 msgstr "இணைப்பு விவரக்குறிப்பு"
 
-#: ../src/ui/dialog/document-properties.cpp:643
+#: ../src/ui/dialog/document-properties.cpp:680
 #, fuzzy
 msgid "Unlink Profile"
 msgstr "இணைப்பு விவரக்குறிப்பு"
 
-#: ../src/ui/dialog/document-properties.cpp:721
+#: ../src/ui/dialog/document-properties.cpp:764
 msgid "Profile Name"
 msgstr "விவரக்குறிப்பின் பெயர்"
 
-#: ../src/ui/dialog/document-properties.cpp:757
+#: ../src/ui/dialog/document-properties.cpp:800
 #, fuzzy
 msgid "External scripts"
 msgstr "வெளிப்புற ஸ்கிரிப்ட்டைச் சேர்க்கவும்..."
 
-#: ../src/ui/dialog/document-properties.cpp:758
+#: ../src/ui/dialog/document-properties.cpp:801
 #, fuzzy
 msgid "Embedded scripts"
 msgstr "ஸ்கிரிப்ட்டை நீக்கு"
 
-#: ../src/ui/dialog/document-properties.cpp:763
+#: ../src/ui/dialog/document-properties.cpp:806
 msgid "<b>External script files:</b>"
 msgstr "<b>வெளியார்ந்த ஸ்கிரிப்ட் கோப்புகள்:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:765
+#: ../src/ui/dialog/document-properties.cpp:808
 msgid "Add the current file name or browse for a file"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:768
-#: ../src/ui/dialog/document-properties.cpp:845
+#: ../src/ui/dialog/document-properties.cpp:811
+#: ../src/ui/dialog/document-properties.cpp:888
 #: ../src/ui/widget/selected-style.cpp:357
 msgid "Remove"
 msgstr "நீக்கு"
 
-#: ../src/ui/dialog/document-properties.cpp:832
+#: ../src/ui/dialog/document-properties.cpp:875
 msgid "Filename"
 msgstr "கோப்புபெயர்"
 
-#: ../src/ui/dialog/document-properties.cpp:840
+#: ../src/ui/dialog/document-properties.cpp:883
 #, fuzzy
 msgid "<b>Embedded script files:</b>"
 msgstr "<b>வெளியார்ந்த ஸ்கிரிப்ட் கோப்புகள்:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:842
+#: ../src/ui/dialog/document-properties.cpp:885
 #: ../src/ui/dialog/objects.cpp:1894
 #, fuzzy
 msgid "New"
 msgstr "புதிய"
 
-#: ../src/ui/dialog/document-properties.cpp:909
+#: ../src/ui/dialog/document-properties.cpp:952
 #, fuzzy
 msgid "Script id"
 msgstr "ஸ்கிரிப்ட்:"
 
-#: ../src/ui/dialog/document-properties.cpp:915
+#: ../src/ui/dialog/document-properties.cpp:958
 #, fuzzy
 msgid "<b>Content:</b>"
 msgstr "<b>அடுக்குக்குறி:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1032
+#: ../src/ui/dialog/document-properties.cpp:1075
 #, fuzzy
 msgid "_Save as default"
 msgstr "முன்னிருப்பாக அமை:"
 
-#: ../src/ui/dialog/document-properties.cpp:1033
+#: ../src/ui/dialog/document-properties.cpp:1076
 msgid "Save this metadata as the default metadata"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:1034
+#: ../src/ui/dialog/document-properties.cpp:1077
 #, fuzzy
 msgid "Use _default"
 msgstr "சிஸ்டம் முன்னிருப்பு"
 
-#: ../src/ui/dialog/document-properties.cpp:1035
+#: ../src/ui/dialog/document-properties.cpp:1078
 msgid "Use the previously saved default metadata here"
 msgstr ""
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1108
+#: ../src/ui/dialog/document-properties.cpp:1151
 msgid "Add external script..."
 msgstr "வெளிப்புற ஸ்கிரிப்ட்டைச் சேர்க்கவும்..."
 
-#: ../src/ui/dialog/document-properties.cpp:1147
+#: ../src/ui/dialog/document-properties.cpp:1190
 #, fuzzy
 msgid "Select a script to load"
 msgstr "அனைத்து பொருட்கள் அல்லது அனைத்து முனைகளையும் தேர்ந்தெடுக்கவும்"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1175
+#: ../src/ui/dialog/document-properties.cpp:1218
 #, fuzzy
 msgid "Add embedded script..."
 msgstr "வெளிப்புற ஸ்கிரிப்ட்டைச் சேர்க்கவும்..."
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1206
+#: ../src/ui/dialog/document-properties.cpp:1249
 msgid "Remove external script"
 msgstr "வெளிப்புற ஸ்கிரிப்ட்டை நீக்கவும்"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1235
+#: ../src/ui/dialog/document-properties.cpp:1278
 #, fuzzy
 msgid "Remove embedded script"
 msgstr "ஸ்கிரிப்ட்டை நீக்கு"
 
 #. TODO repr->set_content(_EmbeddedContent.get_buffer()->get_text());
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1331
+#: ../src/ui/dialog/document-properties.cpp:1374
 #, fuzzy
 msgid "Edit embedded script"
 msgstr "ஸ்கிரிப்ட்டை நீக்கு"
 
-#: ../src/ui/dialog/document-properties.cpp:1415
+#: ../src/ui/dialog/document-properties.cpp:1458
 msgid "<b>Creation</b>"
 msgstr "<b>உருவாக்கம்</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1416
+#: ../src/ui/dialog/document-properties.cpp:1459
 msgid "<b>Defined grids</b>"
 msgstr "<b>வரையறுக்கப்பட்ட கட்டங்கள்</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1660
+#: ../src/ui/dialog/document-properties.cpp:1703
 msgid "Remove grid"
 msgstr "கட்டத்தை நீக்கு"
 
-#: ../src/ui/dialog/document-properties.cpp:1752
+#: ../src/ui/dialog/document-properties.cpp:1795
 #, fuzzy
 msgid "Changed default display unit"
 msgstr "முன்னிருப்பு கிரேடியண்ட்டை உருவாக்கு"
@@ -20112,7 +20112,7 @@ msgstr "K சேனலை  CMYK -> CMYK மாற்றங்கள் என்
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 #: ../src/ui/widget/color-icc-selector.cpp:394
-#: ../src/ui/widget/color-icc-selector.cpp:685
+#: ../src/ui/widget/color-icc-selector.cpp:699
 msgid "<none>"
 msgstr "<ஒன்றுமில்லாத>"
 
@@ -24814,7 +24814,7 @@ msgid "Add guides from measure tool"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:781
-msgid "Add Stored to measure tool"
+msgid "Keep last measure on the canvas, for reference"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:801

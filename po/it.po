@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-21 22:04+0200\n"
+"POT-Creation-Date: 2016-06-08 09:06+0200\n"
 "PO-Revision-Date: 2016-06-10 15:31+0100\n"
 "Last-Translator: Firas Hanife <FirasHanife@gmail.com>\n"
 "Language-Team: \n"
@@ -2044,1177 +2044,1177 @@ msgstr "Contorno discreto"
 msgid "Sharp multiple contour for objects"
 msgstr "Contorni multipli definiti per gli oggetti"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
 msgctxt "Palette"
 msgid "Black"
 msgstr "Nero"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:3
 #, no-c-format
 msgctxt "Palette"
 msgid "90% Gray"
 msgstr "90% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:4
 #, no-c-format
 msgctxt "Palette"
 msgid "80% Gray"
 msgstr "80% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:5
 #, no-c-format
 msgctxt "Palette"
 msgid "70% Gray"
 msgstr "70% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:6
 #, no-c-format
 msgctxt "Palette"
 msgid "60% Gray"
 msgstr "60% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:7
 #, no-c-format
 msgctxt "Palette"
 msgid "50% Gray"
 msgstr "50% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:8
 #, no-c-format
 msgctxt "Palette"
 msgid "40% Gray"
 msgstr "40% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:9
 #, no-c-format
 msgctxt "Palette"
 msgid "30% Gray"
 msgstr "30% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:10
 #, no-c-format
 msgctxt "Palette"
 msgid "20% Gray"
 msgstr "20% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:11
 #, no-c-format
 msgctxt "Palette"
 msgid "10% Gray"
 msgstr "10% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:12
 #, no-c-format
 msgctxt "Palette"
 msgid "7.5% Gray"
 msgstr "7.5% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:13
 #, no-c-format
 msgctxt "Palette"
 msgid "5% Gray"
 msgstr "5% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:14
 #, no-c-format
 msgctxt "Palette"
 msgid "2.5% Gray"
 msgstr "2.5% Grigio"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:15
 msgctxt "Palette"
 msgid "White"
 msgstr "Bianco"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:16
 msgctxt "Palette"
 msgid "Maroon (#800000)"
 msgstr "Bordeaux (#800000)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:17
 msgctxt "Palette"
 msgid "Red (#FF0000)"
 msgstr "Rosso (#FF0000)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:18
 msgctxt "Palette"
 msgid "Olive (#808000)"
 msgstr "Oliva (#808000)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:19
 msgctxt "Palette"
 msgid "Yellow (#FFFF00)"
 msgstr "Giallo (#FFFF00)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:20
 msgctxt "Palette"
 msgid "Green (#008000)"
 msgstr "Verde (#008000)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:21
 msgctxt "Palette"
 msgid "Lime (#00FF00)"
 msgstr "Lime (#00FF00)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:22
 msgctxt "Palette"
 msgid "Teal (#008080)"
 msgstr "Foglia di tè (#008080)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:23
 msgctxt "Palette"
 msgid "Aqua (#00FFFF)"
 msgstr "Acqua (#00FFFF)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:24
 msgctxt "Palette"
 msgid "Navy (#000080)"
 msgstr "Blu scuro (#000080)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:25
 msgctxt "Palette"
 msgid "Blue (#0000FF)"
 msgstr "Blu (#0000FF)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:26
 msgctxt "Palette"
 msgid "Purple (#800080)"
 msgstr "Viola (#800080)"
 
-#. Palette: inkscape.gpl
+#. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:27
 msgctxt "Palette"
 msgid "Fuchsia (#FF00FF)"
 msgstr "Fucsia (#FF00FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:28
 msgctxt "Palette"
 msgid "black (#000000)"
 msgstr "nero (#000000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:29
 msgctxt "Palette"
 msgid "dimgray (#696969)"
 msgstr "grigio intenso (#696969)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:30
 msgctxt "Palette"
 msgid "gray (#808080)"
 msgstr "grigio (#808080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:31
 msgctxt "Palette"
 msgid "darkgray (#A9A9A9)"
 msgstr "grigio scuro (#A9A9A9)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:32
 msgctxt "Palette"
 msgid "silver (#C0C0C0)"
 msgstr "argento (#C0C0C0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:33
 msgctxt "Palette"
 msgid "lightgray (#D3D3D3)"
 msgstr "grigio chiaro (#D3D3D3)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:34
 msgctxt "Palette"
 msgid "gainsboro (#DCDCDC)"
 msgstr "gainsboro (#DCDCDC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:35
 msgctxt "Palette"
 msgid "whitesmoke (#F5F5F5)"
 msgstr "fumo bianco (#F5F5F5)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:36
 msgctxt "Palette"
 msgid "white (#FFFFFF)"
 msgstr "bianco (#FFFFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:37
 msgctxt "Palette"
 msgid "rosybrown (#BC8F8F)"
 msgstr "rosa-marrone (#BC8F8F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:38
 msgctxt "Palette"
 msgid "indianred (#CD5C5C)"
 msgstr "rosso indiano (#CD5C5C)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:39
 msgctxt "Palette"
 msgid "brown (#A52A2A)"
 msgstr "marrone (#A52A2A)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:40
 msgctxt "Palette"
 msgid "firebrick (#B22222)"
 msgstr "firebrick (#B22222)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:41
 msgctxt "Palette"
 msgid "lightcoral (#F08080)"
 msgstr "corallo chiaro (#F08080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:42
 msgctxt "Palette"
 msgid "maroon (#800000)"
 msgstr "bordeaux (#800000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:43
 msgctxt "Palette"
 msgid "darkred (#8B0000)"
 msgstr "rosso scuro (#8B0000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:44
 msgctxt "Palette"
 msgid "red (#FF0000)"
 msgstr "rosso (#FF0000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:45
 msgctxt "Palette"
 msgid "snow (#FFFAFA)"
 msgstr "neve (#FFFAFA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:46
 msgctxt "Palette"
 msgid "mistyrose (#FFE4E1)"
 msgstr "rosa nebbioso (#FFE4E1)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:47
 msgctxt "Palette"
 msgid "salmon (#FA8072)"
 msgstr "salmone (#FA8072)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:48
 msgctxt "Palette"
 msgid "tomato (#FF6347)"
 msgstr "pomodoro (#FF6347)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:49
 msgctxt "Palette"
 msgid "darksalmon (#E9967A)"
 msgstr "salmone scuro (#E9967A)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:50
 msgctxt "Palette"
 msgid "coral (#FF7F50)"
 msgstr "corallo (#FF7F50)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:51
 msgctxt "Palette"
 msgid "orangered (#FF4500)"
 msgstr "arancione-rosso (#FF4500)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:52
 msgctxt "Palette"
 msgid "lightsalmon (#FFA07A)"
 msgstr "salmone chiaro (#FFA07A)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:53
 msgctxt "Palette"
 msgid "sienna (#A0522D)"
 msgstr "sienna (#A0522D)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:54
 msgctxt "Palette"
 msgid "seashell (#FFF5EE)"
 msgstr "conchiglia (#FFF5EE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:55
 msgctxt "Palette"
 msgid "chocolate (#D2691E)"
 msgstr "cioccolato (#D2691E)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:56
 msgctxt "Palette"
 msgid "saddlebrown (#8B4513)"
 msgstr "marrone sella (#8B4513)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:57
 msgctxt "Palette"
 msgid "sandybrown (#F4A460)"
 msgstr "marrone sabbia (#F4A460)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:58
 msgctxt "Palette"
 msgid "peachpuff (#FFDAB9)"
 msgstr "pesca (#FFDAB9)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:59
 msgctxt "Palette"
 msgid "peru (#CD853F)"
 msgstr "peru (#CD853F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:60
 msgctxt "Palette"
 msgid "linen (#FAF0E6)"
 msgstr "lino (#FAF0E6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:61
 msgctxt "Palette"
 msgid "bisque (#FFE4C4)"
 msgstr "bisque (#FFE4C4)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:62
 msgctxt "Palette"
 msgid "darkorange (#FF8C00)"
 msgstr "arancione scuro (#FF8C00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:63
 msgctxt "Palette"
 msgid "burlywood (#DEB887)"
 msgstr "legno (#DEB887)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:64
 msgctxt "Palette"
 msgid "tan (#D2B48C)"
 msgstr "marrone chiaro (#D2B48C)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:65
 msgctxt "Palette"
 msgid "antiquewhite (#FAEBD7)"
 msgstr "bianco antico (#FAEBD7)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:66
 msgctxt "Palette"
 msgid "navajowhite (#FFDEAD)"
 msgstr "bianco navajo (#FFDEAD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:67
 msgctxt "Palette"
 msgid "blanchedalmond (#FFEBCD)"
 msgstr "mandorla sbiancata (#FFEBCD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:68
 msgctxt "Palette"
 msgid "papayawhip (#FFEFD5)"
 msgstr "arancione bruciato (#FFEFD5)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:69
 msgctxt "Palette"
 msgid "moccasin (#FFE4B5)"
 msgstr "mocassino (#FFE4B5)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:70
 msgctxt "Palette"
 msgid "orange (#FFA500)"
 msgstr "arancione (#FFA500)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:71
 msgctxt "Palette"
 msgid "wheat (#F5DEB3)"
 msgstr "grano (#F5DEB3)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:72
 msgctxt "Palette"
 msgid "oldlace (#FDF5E6)"
 msgstr "vecchio laccio (#FDF5E6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:73
 msgctxt "Palette"
 msgid "floralwhite (#FFFAF0)"
 msgstr "bianco floreale (#FFFAF0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:74
 msgctxt "Palette"
 msgid "darkgoldenrod (#B8860B)"
 msgstr "solidango scuro (#B8860B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:75
 msgctxt "Palette"
 msgid "goldenrod (#DAA520)"
 msgstr "solidango (#DAA520)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:76
 msgctxt "Palette"
 msgid "cornsilk (#FFF8DC)"
 msgstr "seta di mais (#FFF8DC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:77
 msgctxt "Palette"
 msgid "gold (#FFD700)"
 msgstr "oro (#FFD700)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:78
 msgctxt "Palette"
 msgid "khaki (#F0E68C)"
 msgstr "cachi (#F0E68C)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:79
 msgctxt "Palette"
 msgid "lemonchiffon (#FFFACD)"
 msgstr "limone crema (#FFFACD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:80
 msgctxt "Palette"
 msgid "palegoldenrod (#EEE8AA)"
 msgstr "solidango pallido (#EEE8AA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:81
 msgctxt "Palette"
 msgid "darkkhaki (#BDB76B)"
 msgstr "cachi scuro (#BDB76B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:82
 msgctxt "Palette"
 msgid "beige (#F5F5DC)"
 msgstr "beige (#F5F5DC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:83
 msgctxt "Palette"
 msgid "lightgoldenrodyellow (#FAFAD2)"
 msgstr "solidango giallo chiaro (#FAFAD2)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:84
 msgctxt "Palette"
 msgid "olive (#808000)"
 msgstr "oliva (#808000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:85
 msgctxt "Palette"
 msgid "yellow (#FFFF00)"
 msgstr "giallo (#FFFF00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:86
 msgctxt "Palette"
 msgid "lightyellow (#FFFFE0)"
 msgstr "giallo chiaro (#FFFFE0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:87
 msgctxt "Palette"
 msgid "ivory (#FFFFF0)"
 msgstr "avorio (#FFFFF0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:88
 msgctxt "Palette"
 msgid "olivedrab (#6B8E23)"
 msgstr "verde olivastro (#6B8E23)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:89
 msgctxt "Palette"
 msgid "yellowgreen (#9ACD32)"
 msgstr "giallo-verde (#9ACD32)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:90
 msgctxt "Palette"
 msgid "darkolivegreen (#556B2F)"
 msgstr "verde oliva scuro (#556B2F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:91
 msgctxt "Palette"
 msgid "greenyellow (#ADFF2F)"
 msgstr "verde-giallo (#ADFF2F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:92
 msgctxt "Palette"
 msgid "chartreuse (#7FFF00)"
 msgstr "chartreuse (#7FFF00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:93
 msgctxt "Palette"
 msgid "lawngreen (#7CFC00)"
 msgstr "verde prato (#7CFC00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:94
 msgctxt "Palette"
 msgid "darkseagreen (#8FBC8F)"
 msgstr "verde acqua scuro (#8FBC8F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:95
 msgctxt "Palette"
 msgid "forestgreen (#228B22)"
 msgstr "verde foresta (#228B22)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:96
 msgctxt "Palette"
 msgid "limegreen (#32CD32)"
 msgstr "verde lime (#32CD32)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:97
 msgctxt "Palette"
 msgid "lightgreen (#90EE90)"
 msgstr "verde chiaro (#90EE90)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:98
 msgctxt "Palette"
 msgid "palegreen (#98FB98)"
 msgstr "verde pallido (#98FB98)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:99
 msgctxt "Palette"
 msgid "darkgreen (#006400)"
 msgstr "verde scuro (#006400)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:100
 msgctxt "Palette"
 msgid "green (#008000)"
 msgstr "verde (#008000)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:101
 msgctxt "Palette"
 msgid "lime (#00FF00)"
 msgstr "lime (#00FF00)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:102
 msgctxt "Palette"
 msgid "honeydew (#F0FFF0)"
 msgstr "ambrosia (#F0FFF0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:103
 msgctxt "Palette"
 msgid "seagreen (#2E8B57)"
 msgstr "verde marino (#2E8B57)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:104
 msgctxt "Palette"
 msgid "mediumseagreen (#3CB371)"
 msgstr "verde marino medio"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:105
 msgctxt "Palette"
 msgid "springgreen (#00FF7F)"
 msgstr "verde primavera"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:106
 msgctxt "Palette"
 msgid "mintcream (#F5FFFA)"
 msgstr "crema di menta (#F5FFFA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:107
 msgctxt "Palette"
 msgid "mediumspringgreen (#00FA9A)"
 msgstr "verde primavera medio (#00FA9A)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:108
 msgctxt "Palette"
 msgid "mediumaquamarine (#66CDAA)"
 msgstr "acquamarina medio (#66CDAA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:109
 msgctxt "Palette"
 msgid "aquamarine (#7FFFD4)"
 msgstr "acquamarina (#7FFFD4)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:110
 msgctxt "Palette"
 msgid "turquoise (#40E0D0)"
 msgstr "turchese (#40E0D0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:111
 msgctxt "Palette"
 msgid "lightseagreen (#20B2AA)"
 msgstr "verde marino chiaro (#20B2AA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:112
 msgctxt "Palette"
 msgid "mediumturquoise (#48D1CC)"
 msgstr "turchese medio (#48D1CC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:113
 msgctxt "Palette"
 msgid "darkslategray (#2F4F4F)"
 msgstr "ardesia scuro (#2F4F4F)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:114
 msgctxt "Palette"
 msgid "paleturquoise (#AFEEEE)"
 msgstr "turchese pallido (#AFEEEE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:115
 msgctxt "Palette"
 msgid "teal (#008080)"
 msgstr "foglia di tè (#008080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:116
 msgctxt "Palette"
 msgid "darkcyan (#008B8B)"
 msgstr "ciano scuro (#008B8B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:117
 msgctxt "Palette"
 msgid "cyan (#00FFFF)"
 msgstr "ciano (#00FFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:118
 msgctxt "Palette"
 msgid "lightcyan (#E0FFFF)"
 msgstr "ciano chiaro (#E0FFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:119
 msgctxt "Palette"
 msgid "azure (#F0FFFF)"
 msgstr "azzurro (#F0FFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:120
 msgctxt "Palette"
 msgid "darkturquoise (#00CED1)"
 msgstr "turchese scuro (#00CED1)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:121
 msgctxt "Palette"
 msgid "cadetblue (#5F9EA0)"
 msgstr "blu cadetto (#5F9EA0)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:122
 msgctxt "Palette"
 msgid "powderblue (#B0E0E6)"
 msgstr "blu polvere (#B0E0E6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:123
 msgctxt "Palette"
 msgid "lightblue (#ADD8E6)"
 msgstr "blue chiaro (#ADD8E6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:124
 msgctxt "Palette"
 msgid "deepskyblue (#00BFFF)"
 msgstr "celeste profondo (#00BFFF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:125
 msgctxt "Palette"
 msgid "skyblue (#87CEEB)"
 msgstr "celeste (#87CEEB)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:126
 msgctxt "Palette"
 msgid "lightskyblue (#87CEFA)"
 msgstr "celeste chiaro (#87CEFA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:127
 msgctxt "Palette"
 msgid "steelblue (#4682B4)"
 msgstr "blu acciao (#4682B4)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:128
 msgctxt "Palette"
 msgid "aliceblue (#F0F8FF)"
 msgstr "blu alice (#F0F8FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:129
 msgctxt "Palette"
 msgid "dodgerblue (#1E90FF)"
 msgstr "blu dodger (#1E90FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:130
 msgctxt "Palette"
 msgid "slategray (#708090)"
 msgstr "ardesia (#708090)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:131
 msgctxt "Palette"
 msgid "lightslategray (#778899)"
 msgstr "ardesia chiaro (#778899)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:132
 msgctxt "Palette"
 msgid "lightsteelblue (#B0C4DE)"
 msgstr "blu acciao chiaro (#B0C4DE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:133
 msgctxt "Palette"
 msgid "cornflowerblue (#6495ED)"
 msgstr "blu fiordaliso (#6495ED)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:134
 msgctxt "Palette"
 msgid "royalblue (#4169E1)"
 msgstr "blu reale (#4169E1)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:135
 msgctxt "Palette"
 msgid "midnightblue (#191970)"
 msgstr "blue notte (#191970)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:136
 msgctxt "Palette"
 msgid "lavender (#E6E6FA)"
 msgstr "lavanda (#E6E6FA)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:137
 msgctxt "Palette"
 msgid "navy (#000080)"
 msgstr "blu marino (#000080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:138
 msgctxt "Palette"
 msgid "darkblue (#00008B)"
 msgstr "blu scuro (#00008B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:139
 msgctxt "Palette"
 msgid "mediumblue (#0000CD)"
 msgstr "blu medio (#0000CD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:140
 msgctxt "Palette"
 msgid "blue (#0000FF)"
 msgstr "blu (#0000FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:141
 msgctxt "Palette"
 msgid "ghostwhite (#F8F8FF)"
 msgstr "bianco riflesso (#F8F8FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:142
 msgctxt "Palette"
 msgid "slateblue (#6A5ACD)"
 msgstr "blu ardesia (#6A5ACD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:143
 msgctxt "Palette"
 msgid "darkslateblue (#483D8B)"
 msgstr "blu ardesia scuro (#483D8B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:144
 msgctxt "Palette"
 msgid "mediumslateblue (#7B68EE)"
 msgstr "blu ardesia medio (#7B68EE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:145
 msgctxt "Palette"
 msgid "mediumpurple (#9370DB)"
 msgstr "viola medio (#9370DB)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:146
 msgctxt "Palette"
 msgid "blueviolet (#8A2BE2)"
 msgstr "blu-violetto (#8A2BE2)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:147
 msgctxt "Palette"
 msgid "indigo (#4B0082)"
 msgstr "indaco (#4B0082)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:148
 msgctxt "Palette"
 msgid "darkorchid (#9932CC)"
 msgstr "orchidea scuro (#9932CC)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:149
 msgctxt "Palette"
 msgid "darkviolet (#9400D3)"
 msgstr "violetto scuro (#9400D3)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:150
 msgctxt "Palette"
 msgid "mediumorchid (#BA55D3)"
 msgstr "orchidea medio (#BA55D3)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:151
 msgctxt "Palette"
 msgid "thistle (#D8BFD8)"
 msgstr "cardo (#D8BFD8)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:152
 msgctxt "Palette"
 msgid "plum (#DDA0DD)"
 msgstr "prugna (#DDA0DD)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:153
 msgctxt "Palette"
 msgid "violet (#EE82EE)"
 msgstr "violetto (#EE82EE)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:154
 msgctxt "Palette"
 msgid "purple (#800080)"
 msgstr "viola (#800080)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:155
 msgctxt "Palette"
 msgid "darkmagenta (#8B008B)"
 msgstr "magenta scuro (#8B008B)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:156
 msgctxt "Palette"
 msgid "magenta (#FF00FF)"
 msgstr "magenta (#FF00FF)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:157
 msgctxt "Palette"
 msgid "orchid (#DA70D6)"
 msgstr "orchidea (#DA70D6)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:158
 msgctxt "Palette"
 msgid "mediumvioletred (#C71585)"
 msgstr "violetto-rosso medio (#C71585)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:159
 msgctxt "Palette"
 msgid "deeppink (#FF1493)"
 msgstr "rosa profondo (#FF1493)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:160
 msgctxt "Palette"
 msgid "hotpink (#FF69B4)"
 msgstr "rosa caldo (#FF69B4)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:161
 msgctxt "Palette"
 msgid "lavenderblush (#FFF0F5)"
 msgstr "lavanda rosata (#FFF0F5)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:162
 msgctxt "Palette"
 msgid "palevioletred (#DB7093)"
 msgstr "rosso violaceo pallido (#DB7093)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:163
 msgctxt "Palette"
 msgid "crimson (#DC143C)"
 msgstr "cremisi (#DC143C)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:164
 msgctxt "Palette"
 msgid "pink (#FFC0CB)"
 msgstr "rosa (#FFC0CB)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:165
 msgctxt "Palette"
 msgid "lightpink (#FFB6C1)"
 msgstr "rosa chiaro (#FFB6C1)"
 
-#. Palette: svg.gpl
+#. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:166
 msgctxt "Palette"
 msgid "rebeccapurple (#663399)"
 msgstr "viole rebecca (#663399)"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:167
 msgctxt "Palette"
 msgid "Butter 1"
 msgstr "Burro 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:168
 msgctxt "Palette"
 msgid "Butter 2"
 msgstr "Burro 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:169
 msgctxt "Palette"
 msgid "Butter 3"
 msgstr "Burro 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:170
 msgctxt "Palette"
 msgid "Chameleon 1"
 msgstr "Camaleonte 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:171
 msgctxt "Palette"
 msgid "Chameleon 2"
 msgstr "Camaleonte 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:172
 msgctxt "Palette"
 msgid "Chameleon 3"
 msgstr "Camaleonte 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:173
 msgctxt "Palette"
 msgid "Orange 1"
 msgstr "Arancione 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:174
 msgctxt "Palette"
 msgid "Orange 2"
 msgstr "Arancione 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:175
 msgctxt "Palette"
 msgid "Orange 3"
 msgstr "Arancione 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:176
 msgctxt "Palette"
 msgid "Sky Blue 1"
 msgstr "Celeste 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:177
 msgctxt "Palette"
 msgid "Sky Blue 2"
 msgstr "Celeste 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:178
 msgctxt "Palette"
 msgid "Sky Blue 3"
 msgstr "Celeste 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:179
 msgctxt "Palette"
 msgid "Plum 1"
 msgstr "Prugna 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:180
 msgctxt "Palette"
 msgid "Plum 2"
 msgstr "Prugna 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:181
 msgctxt "Palette"
 msgid "Plum 3"
 msgstr "Prugna 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:182
 msgctxt "Palette"
 msgid "Chocolate 1"
 msgstr "Cioccolato 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:183
 msgctxt "Palette"
 msgid "Chocolate 2"
 msgstr "Cioccolato 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:184
 msgctxt "Palette"
 msgid "Chocolate 3"
 msgstr "Cioccolato 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:185
 msgctxt "Palette"
 msgid "Scarlet Red 1"
 msgstr "Scarlatto 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:186
 msgctxt "Palette"
 msgid "Scarlet Red 2"
 msgstr "Scarlatto 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:187
 msgctxt "Palette"
 msgid "Scarlet Red 3"
 msgstr "Scarlatto 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:188
 msgctxt "Palette"
 msgid "Snowy White"
 msgstr "Bianco neve"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:189
 msgctxt "Palette"
 msgid "Aluminium 1"
 msgstr "Alluminio 1"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:190
 msgctxt "Palette"
 msgid "Aluminium 2"
 msgstr "Alluminio 2"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:191
 msgctxt "Palette"
 msgid "Aluminium 3"
 msgstr "Alluminio 3"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:192
 msgctxt "Palette"
 msgid "Aluminium 4"
 msgstr "Alluminio 4"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:193
 msgctxt "Palette"
 msgid "Aluminium 5"
 msgstr "Alluminio 5"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:194
 msgctxt "Palette"
 msgid "Aluminium 6"
 msgstr "Alluminio 6"
 
-#. Palette: Tango-Palette.gpl
+#. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:195
 msgctxt "Palette"
 msgid "Jet Black"
@@ -3384,1033 +3384,1033 @@ msgstr "Tessuto (bitmap)"
 msgid "Old paint (bitmap)"
 msgstr "Dipinto antico (bitmap)"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:2
 msgctxt "Symbol"
 msgid "AIGA Symbol Signs"
 msgstr "Segni simboli AIGA"
 
-#. Symbols: AigaSymbols.svg
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./AigaSymbols.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:3 ../share/symbols/symbols.h:4
 #: ../share/symbols/symbols.h:281 ../share/symbols/symbols.h:282
 msgctxt "Symbol"
 msgid "Telephone"
 msgstr "Telefono"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:5 ../share/symbols/symbols.h:6
 msgctxt "Symbol"
 msgid "Mail"
 msgstr "Posta"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:7 ../share/symbols/symbols.h:8
 msgctxt "Symbol"
 msgid "Currency Exchange"
 msgstr "Cambiavalute"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
 msgctxt "Symbol"
 msgid "Currency Exchange - Euro"
 msgstr "Cambiavalute - Euro"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
 msgctxt "Symbol"
 msgid "Cashier"
 msgstr "Cassiere"
 
-#. Symbols: AigaSymbols.svg
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./AigaSymbols.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
 #: ../share/symbols/symbols.h:213 ../share/symbols/symbols.h:214
 msgctxt "Symbol"
 msgid "First Aid"
 msgstr "Primo soccorso"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:15 ../share/symbols/symbols.h:16
 msgctxt "Symbol"
 msgid "Lost and Found"
 msgstr "Oggetti smarriti"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
 msgctxt "Symbol"
 msgid "Coat Check"
 msgstr "Guardaroba"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
 msgctxt "Symbol"
 msgid "Baggage Lockers"
 msgstr "Armadietti per bagaglio"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
 msgctxt "Symbol"
 msgid "Escalator"
 msgstr "Scala mobile"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:23 ../share/symbols/symbols.h:24
 msgctxt "Symbol"
 msgid "Escalator Down"
 msgstr "Scala mobile giù"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:25 ../share/symbols/symbols.h:26
 msgctxt "Symbol"
 msgid "Escalator Up"
 msgstr "Scala mobile su"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:27 ../share/symbols/symbols.h:28
 msgctxt "Symbol"
 msgid "Stairs"
 msgstr "Scale"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:29 ../share/symbols/symbols.h:30
 msgctxt "Symbol"
 msgid "Stairs Down"
 msgstr "Scale giù"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:31 ../share/symbols/symbols.h:32
 msgctxt "Symbol"
 msgid "Stairs Up"
 msgstr "Scale su"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:33 ../share/symbols/symbols.h:34
 msgctxt "Symbol"
 msgid "Elevator"
 msgstr "Ascensore"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
 msgctxt "Symbol"
 msgid "Toilets - Men"
 msgstr "Servizi - Uomo"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:37 ../share/symbols/symbols.h:38
 msgctxt "Symbol"
 msgid "Toilets - Women"
 msgstr "Servizi - Donna"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:39 ../share/symbols/symbols.h:40
 msgctxt "Symbol"
 msgid "Toilets"
 msgstr "Servizi"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:41 ../share/symbols/symbols.h:42
 msgctxt "Symbol"
 msgid "Nursery"
 msgstr "Asilo nido"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
 msgctxt "Symbol"
 msgid "Drinking Fountain"
 msgstr "Fontanella"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
 msgctxt "Symbol"
 msgid "Waiting Room"
 msgstr "Sala di attesa"
 
-#. Symbols: AigaSymbols.svg
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./AigaSymbols.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
 #: ../share/symbols/symbols.h:231 ../share/symbols/symbols.h:232
 msgctxt "Symbol"
 msgid "Information"
 msgstr "Informazioni"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:49 ../share/symbols/symbols.h:50
 msgctxt "Symbol"
 msgid "Hotel Information"
 msgstr "Informazioni hotel"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:51 ../share/symbols/symbols.h:52
 msgctxt "Symbol"
 msgid "Air Transportation"
 msgstr "Trasporto aereo"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:53 ../share/symbols/symbols.h:54
 msgctxt "Symbol"
 msgid "Heliport"
 msgstr "Eliporto"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:55 ../share/symbols/symbols.h:56
 msgctxt "Symbol"
 msgid "Taxi"
 msgstr "Taxi"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:57 ../share/symbols/symbols.h:58
 msgctxt "Symbol"
 msgid "Bus"
 msgstr "Autobus"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:59 ../share/symbols/symbols.h:60
 msgctxt "Symbol"
 msgid "Ground Transportation"
 msgstr "Trasporto via terra"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
 msgctxt "Symbol"
 msgid "Rail Transportation"
 msgstr "Trasporto ferroviario"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:63 ../share/symbols/symbols.h:64
 msgctxt "Symbol"
 msgid "Water Transportation"
 msgstr "Trasporto via mare"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:65 ../share/symbols/symbols.h:66
 msgctxt "Symbol"
 msgid "Car Rental"
 msgstr "Autonoleggio"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:67 ../share/symbols/symbols.h:68
 msgctxt "Symbol"
 msgid "Restaurant"
 msgstr "Ristorante"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
 msgctxt "Symbol"
 msgid "Coffeeshop"
 msgstr "Caffè"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
 msgctxt "Symbol"
 msgid "Bar"
 msgstr "Bar"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:73 ../share/symbols/symbols.h:74
 msgctxt "Symbol"
 msgid "Shops"
 msgstr "Negozi"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
 msgctxt "Symbol"
 msgid "Barber Shop - Beauty Salon"
 msgstr "Barbiere - Salone di bellezza"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
 msgctxt "Symbol"
 msgid "Barber Shop"
 msgstr "Barbiere"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
 msgctxt "Symbol"
 msgid "Beauty Salon"
 msgstr "Salone di bellezza"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
 msgctxt "Symbol"
 msgid "Ticket Purchase"
 msgstr "Acquisto biglietti"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:83 ../share/symbols/symbols.h:84
 msgctxt "Symbol"
 msgid "Baggage Check In"
 msgstr "Check in bagagli"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:85 ../share/symbols/symbols.h:86
 msgctxt "Symbol"
 msgid "Baggage Claim"
 msgstr "Ritiro bagagli"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:87 ../share/symbols/symbols.h:88
 msgctxt "Symbol"
 msgid "Customs"
 msgstr "Dogana"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:89 ../share/symbols/symbols.h:90
 msgctxt "Symbol"
 msgid "Immigration"
 msgstr "Immigrazione"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:91 ../share/symbols/symbols.h:92
 msgctxt "Symbol"
 msgid "Departing Flights"
 msgstr "Voli in partenza"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:93 ../share/symbols/symbols.h:94
 msgctxt "Symbol"
 msgid "Arriving Flights"
 msgstr "Voli in arrivo"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:95 ../share/symbols/symbols.h:96
 msgctxt "Symbol"
 msgid "Smoking"
 msgstr "Fumare"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:97 ../share/symbols/symbols.h:98
 msgctxt "Symbol"
 msgid "No Smoking"
 msgstr "Vietato fumare"
 
-#. Symbols: AigaSymbols.svg
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./AigaSymbols.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:99 ../share/symbols/symbols.h:100
 #: ../share/symbols/symbols.h:245 ../share/symbols/symbols.h:246
 msgctxt "Symbol"
 msgid "Parking"
 msgstr "Parcheggio"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
 msgctxt "Symbol"
 msgid "No Parking"
 msgstr "Divieto di parcheggio"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
 msgctxt "Symbol"
 msgid "No Dogs"
 msgstr "Divieto per i cani"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:105 ../share/symbols/symbols.h:106
 msgctxt "Symbol"
 msgid "No Entry"
 msgstr "Divieto di ingresso"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:107 ../share/symbols/symbols.h:108
 msgctxt "Symbol"
 msgid "Exit"
 msgstr "Uscita"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:109 ../share/symbols/symbols.h:110
 msgctxt "Symbol"
 msgid "Fire Extinguisher"
 msgstr "Estintore"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:111 ../share/symbols/symbols.h:112
 msgctxt "Symbol"
 msgid "Right Arrow"
 msgstr "Freccia destra"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:113 ../share/symbols/symbols.h:114
 msgctxt "Symbol"
 msgid "Forward and Right Arrow"
 msgstr "Freccia avanti e destra"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:115 ../share/symbols/symbols.h:116
 msgctxt "Symbol"
 msgid "Up Arrow"
 msgstr "Freccia su"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:117 ../share/symbols/symbols.h:118
 msgctxt "Symbol"
 msgid "Forward and Left Arrow"
 msgstr "Freccia avanti e sinistra"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:119 ../share/symbols/symbols.h:120
 msgctxt "Symbol"
 msgid "Left Arrow"
 msgstr "Freccia sinistra"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:121 ../share/symbols/symbols.h:122
 msgctxt "Symbol"
 msgid "Left and Down Arrow"
 msgstr "Freccia sinistra e giù"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:123 ../share/symbols/symbols.h:124
 msgctxt "Symbol"
 msgid "Down Arrow"
 msgstr "Freccia giù"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:125 ../share/symbols/symbols.h:126
 msgctxt "Symbol"
 msgid "Right and Down Arrow"
 msgstr "Freccia destra e giù"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:127 ../share/symbols/symbols.h:128
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible - 1996"
 msgstr "NPS Accessibile alle sedie a rotelle - 1996"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:129 ../share/symbols/symbols.h:130
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible"
 msgstr "NPS Accessibile alle sedie a rotelle"
 
-#. Symbols: AigaSymbols.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:131 ../share/symbols/symbols.h:132
 msgctxt "Symbol"
 msgid "New Wheelchair Accessible"
 msgstr "Nuovo Accessibile alle sedie a rotelle"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:133
 msgctxt "Symbol"
 msgid "Word Balloons"
 msgstr "Nuvolette"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:134
 msgctxt "Symbol"
 msgid "Thought Balloon"
 msgstr "Nuvoletta di pensiero"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:135
 msgctxt "Symbol"
 msgid "Dream Speaking"
 msgstr "Discorso sognante"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:136
 msgctxt "Symbol"
 msgid "Rounded Balloon"
 msgstr "Nuvoletta arrotondata"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:137
 msgctxt "Symbol"
 msgid "Squared Balloon"
 msgstr "Nuvoletta squadrata"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:138
 msgctxt "Symbol"
 msgid "Over the Phone"
 msgstr "Al telefono"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:139
 msgctxt "Symbol"
 msgid "Hip Balloon"
 msgstr "Nuvoletta sfiancata"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:140
 msgctxt "Symbol"
 msgid "Circle Balloon"
 msgstr "Nuvoletta rotonda"
 
-#. Symbols: BalloonSymbols.svg
+#. Symbols: ./BalloonSymbols.svg
 #: ../share/symbols/symbols.h:141
 msgctxt "Symbol"
 msgid "Exclaim Balloon"
 msgstr "Nuvoletta di esclamazione"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:142
 msgctxt "Symbol"
 msgid "Flow Chart Shapes"
 msgstr "Diagramma di flusso"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:143
 msgctxt "Symbol"
 msgid "Process"
 msgstr "Processo"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:144
 msgctxt "Symbol"
 msgid "Input/Output"
 msgstr "Input/Output"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:145
 msgctxt "Symbol"
 msgid "Document"
 msgstr "Documento"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:146
 msgctxt "Symbol"
 msgid "Manual Operation"
 msgstr "Operazione manuale"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:147
 msgctxt "Symbol"
 msgid "Preparation"
 msgstr "Preparazione"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:148
 msgctxt "Symbol"
 msgid "Merge"
 msgstr "Fusione"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:149
 msgctxt "Symbol"
 msgid "Decision"
 msgstr "Decisione"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:150
 msgctxt "Symbol"
 msgid "Magnetic Tape"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:151
 #, fuzzy
 msgctxt "Symbol"
 msgid "Display"
 msgstr "Modalità visualizzazione"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:152
 msgctxt "Symbol"
 msgid "Auxiliary Operation"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:153
 msgctxt "Symbol"
 msgid "Manual Input"
 msgstr "Input manuale"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:154
 msgctxt "Symbol"
 msgid "Extract"
 msgstr "Estrai"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:155
 msgctxt "Symbol"
 msgid "Terminal/Interrupt"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:156
 msgctxt "Symbol"
 msgid "Punched Card"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:157
 #, fuzzy
 msgctxt "Symbol"
 msgid "Punch Tape"
 msgstr "Buca"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:158
 msgctxt "Symbol"
 msgid "Online Storage"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:159
 msgctxt "Symbol"
 msgid "Keying"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:160
 msgctxt "Symbol"
 msgid "Sort"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:161
 msgctxt "Symbol"
 msgid "Connector"
 msgstr "Connettore"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:162
 #, fuzzy
 msgctxt "Symbol"
 msgid "Off-Page Connector"
 msgstr "Connettore"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:163
 msgctxt "Symbol"
 msgid "Transmittal Tape"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:164
 msgctxt "Symbol"
 msgid "Communication Link"
 msgstr "Collegamento di comunicazione"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:165
 #, fuzzy
 msgctxt "Symbol"
 msgid "Collate"
 msgstr "Modula"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:166
 msgctxt "Symbol"
 msgid "Comment/Annotation"
 msgstr "Commento/Annotazione"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:167
 msgctxt "Symbol"
 msgid "Core"
 msgstr "Nucleo"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:168
 msgctxt "Symbol"
 msgid "Predefined Process"
 msgstr "Processo predefinito"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:169
 msgctxt "Symbol"
 msgid "Magnetic Disk (Database)"
 msgstr "Disco magnetico (Database)"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:170
 msgctxt "Symbol"
 msgid "Magnetic Drum (Direct Access)"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:171
 msgctxt "Symbol"
 msgid "Offline Storage"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:172
 msgctxt "Symbol"
 msgid "Logical Or"
 msgstr "Or logico"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:173
 msgctxt "Symbol"
 msgid "Logical And"
 msgstr "And logico"
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:174
 msgctxt "Symbol"
 msgid "Delay"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:175
 msgctxt "Symbol"
 msgid "Loop Limit Begin"
 msgstr ""
 
-#. Symbols: FlowSymbols.svg
+#. Symbols: ./FlowSymbols.svg
 #: ../share/symbols/symbols.h:176
 msgctxt "Symbol"
 msgid "Loop Limit End"
 msgstr ""
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:177
 msgctxt "Symbol"
 msgid "Logic Symbols"
 msgstr "Simboli logici"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:178
 msgctxt "Symbol"
 msgid "Xnor Gate"
 msgstr "Xnor Gate"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:179
 msgctxt "Symbol"
 msgid "Xor Gate"
 msgstr "Xor Gate"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:180
 msgctxt "Symbol"
 msgid "Nor Gate"
 msgstr "Nor Gate"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:181
 msgctxt "Symbol"
 msgid "Or Gate"
 msgstr "Or Gate"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:182
 msgctxt "Symbol"
 msgid "Nand Gate"
 msgstr "Nand Gate"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:183
 msgctxt "Symbol"
 msgid "And Gate"
 msgstr "And Gate"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:184
 msgctxt "Symbol"
 msgid "Buffer"
 msgstr "Buffer"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:185
 msgctxt "Symbol"
 msgid "Not Gate"
 msgstr "Not Gate"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:186
 msgctxt "Symbol"
 msgid "Buffer Small"
 msgstr "Buffer piccolo"
 
-#. Symbols: LogicSymbols.svg
+#. Symbols: ./LogicSymbols.svg
 #: ../share/symbols/symbols.h:187
 msgctxt "Symbol"
 msgid "Not Gate Small"
 msgstr "Not Gate piccolo"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:188
 msgctxt "Symbol"
 msgid "United States National Park Service Map Symbols"
 msgstr "Simboli mappa parchi nazionali Stati Uniti"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:189 ../share/symbols/symbols.h:190
 msgctxt "Symbol"
 msgid "Airport"
 msgstr "Aereoporto"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:191 ../share/symbols/symbols.h:192
 msgctxt "Symbol"
 msgid "Amphitheatre"
 msgstr "Anfiteatro"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:193 ../share/symbols/symbols.h:194
 msgctxt "Symbol"
 msgid "Bicycle Trail"
 msgstr "Pista ciclabile"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:195 ../share/symbols/symbols.h:196
 msgctxt "Symbol"
 msgid "Boat Launch"
 msgstr "Rampa di alaggio barca"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:197 ../share/symbols/symbols.h:198
 msgctxt "Symbol"
 msgid "Boat Tour"
 msgstr "Viaggio in barca"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:199 ../share/symbols/symbols.h:200
 msgctxt "Symbol"
 msgid "Bus Stop"
 msgstr "Fermata dell'autobus"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:201 ../share/symbols/symbols.h:202
 msgctxt "Symbol"
 msgid "Campfire"
 msgstr "Fuoco da campo"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:203 ../share/symbols/symbols.h:204
 msgctxt "Symbol"
 msgid "Campground"
 msgstr "Campeggio"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:205 ../share/symbols/symbols.h:206
 msgctxt "Symbol"
 msgid "CanoeAccess"
 msgstr "Accesso canoa"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:207 ../share/symbols/symbols.h:208
 msgctxt "Symbol"
 msgid "Crosscountry Ski Trail"
 msgstr "Pista di sci di fondo"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:209 ../share/symbols/symbols.h:210
 msgctxt "Symbol"
 msgid "Downhill Skiing"
 msgstr "Discesa libera"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:211 ../share/symbols/symbols.h:212
 msgctxt "Symbol"
 msgid "Drinking Water"
 msgstr "Acqua potabile"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:215 ../share/symbols/symbols.h:216
 msgctxt "Symbol"
 msgid "Fishing"
 msgstr "Pesca"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:217 ../share/symbols/symbols.h:218
 msgctxt "Symbol"
 msgid "Food Service"
 msgstr "Servizio di ristorazione"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:219 ../share/symbols/symbols.h:220
 msgctxt "Symbol"
 msgid "Four Wheel Drive Road"
 msgstr "Strada per veicoli a quattro ruote motrici"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:221 ../share/symbols/symbols.h:222
 msgctxt "Symbol"
 msgid "Gas Station"
 msgstr "Distributore di benzina"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:223 ../share/symbols/symbols.h:224
 msgctxt "Symbol"
 msgid "Golfing"
 msgstr "Golf"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:225 ../share/symbols/symbols.h:226
 msgctxt "Symbol"
 msgid "Horseback Riding"
 msgstr "Equitazione"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:227 ../share/symbols/symbols.h:228
 msgctxt "Symbol"
 msgid "Hospital"
 msgstr "Ospedale"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:229 ../share/symbols/symbols.h:230
 msgctxt "Symbol"
 msgid "Ice Skating"
 msgstr "Pattinaggio sul ghiaccio"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:233 ../share/symbols/symbols.h:234
 msgctxt "Symbol"
 msgid "Litter Receptacle"
 msgstr "Cestino dei rifiuti"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:235 ../share/symbols/symbols.h:236
 msgctxt "Symbol"
 msgid "Lodging"
 msgstr "Alloggio"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:237 ../share/symbols/symbols.h:238
 msgctxt "Symbol"
 msgid "Marina"
 msgstr "Marina"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:239 ../share/symbols/symbols.h:240
 msgctxt "Symbol"
 msgid "Motorbike Trail"
 msgstr "Sentiero motocicli"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:241 ../share/symbols/symbols.h:242
 msgctxt "Symbol"
 msgid "Radiator Water"
 msgstr "Acqua radiatore"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:243 ../share/symbols/symbols.h:244
 msgctxt "Symbol"
 msgid "Recycling"
 msgstr "Riciclaggio"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:247 ../share/symbols/symbols.h:248
 msgctxt "Symbol"
 msgid "Pets On Leash"
 msgstr "Animali al guinzaglio"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:249 ../share/symbols/symbols.h:250
 msgctxt "Symbol"
 msgid "Picnic Area"
 msgstr "Area picnic"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:251 ../share/symbols/symbols.h:252
 msgctxt "Symbol"
 msgid "Post Office"
 msgstr "Ufficio postale"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:253 ../share/symbols/symbols.h:254
 msgctxt "Symbol"
 msgid "Ranger Station"
 msgstr "Stazione dei ranger"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:255 ../share/symbols/symbols.h:256
 msgctxt "Symbol"
 msgid "RV Campground"
 msgstr "Campeggio camper"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:257 ../share/symbols/symbols.h:258
 msgctxt "Symbol"
 msgid "Restrooms"
 msgstr "Servizi"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:259 ../share/symbols/symbols.h:260
 msgctxt "Symbol"
 msgid "Sailing"
 msgstr "Vela"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:261 ../share/symbols/symbols.h:262
 msgctxt "Symbol"
 msgid "Sanitary Disposal Station"
 msgstr "Stazione di smaltimento sanitario"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:263 ../share/symbols/symbols.h:264
 msgctxt "Symbol"
 msgid "Scuba Diving"
 msgstr "Immersione subacquea"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:265 ../share/symbols/symbols.h:266
 msgctxt "Symbol"
 msgid "Self Guided Trail"
 msgstr "Sentiero guidato"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:267 ../share/symbols/symbols.h:268
 msgctxt "Symbol"
 msgid "Shelter"
 msgstr "Rifugio"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:269 ../share/symbols/symbols.h:270
 msgctxt "Symbol"
 msgid "Showers"
 msgstr "Docce"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:271 ../share/symbols/symbols.h:272
 msgctxt "Symbol"
 msgid "Sledding"
 msgstr "Slitta"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:273 ../share/symbols/symbols.h:274
 msgctxt "Symbol"
 msgid "SnowmobileTrail"
 msgstr "Sentiero motoslitta"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:275 ../share/symbols/symbols.h:276
 msgctxt "Symbol"
 msgid "Stable"
 msgstr "Stalla"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:277 ../share/symbols/symbols.h:278
 msgctxt "Symbol"
 msgid "Store"
 msgstr "Negozio"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:279 ../share/symbols/symbols.h:280
 msgctxt "Symbol"
 msgid "Swimming"
 msgstr "Nuoto"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:283 ../share/symbols/symbols.h:284
 msgctxt "Symbol"
 msgid "Emergency Telephone"
 msgstr "Telefono di emergenza"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:285 ../share/symbols/symbols.h:286
 msgctxt "Symbol"
 msgid "Trailhead"
 msgstr "Sentiero"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:287 ../share/symbols/symbols.h:288
 msgctxt "Symbol"
 msgid "Wheelchair Accessible"
 msgstr "Accessibile alle sedie a rotelle"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:289 ../share/symbols/symbols.h:290
 msgctxt "Symbol"
 msgid "Wind Surfing"
 msgstr "Windsurf"
 
-#. Symbols: MapSymbolsNPS.svg
+#. Symbols: ./MapSymbolsNPS.svg
 #: ../share/symbols/symbols.h:291
 msgctxt "Symbol"
 msgid "Blank"
@@ -4427,6 +4427,18 @@ msgstr "Semplice modello di etichetta per CD."
 #: ../share/templates/templates.h:1
 msgid "CD label 120x120 disc disk"
 msgstr "CD etichetta 120x120 disco"
+
+#: ../share/templates/templates.h:1
+msgid "No Layers"
+msgstr "Nessun livello"
+
+#: ../share/templates/templates.h:1
+msgid "Empty sheet with no layers"
+msgstr "Foglio vuoto senza livelli"
+
+#: ../share/templates/templates.h:1
+msgid "no layers empty"
+msgstr "no livelli vuoto"
 
 #: ../share/templates/templates.h:1
 msgid "LaTeX Beamer"
@@ -4452,34 +4464,22 @@ msgstr "Modello canvas tipografico vuoto con guide di aiuto."
 msgid "guidelines typography canvas"
 msgstr "guide tipografia tipografico canvas"
 
-#: ../share/templates/templates.h:1
-msgid "No Layers"
-msgstr "Nessun livello"
-
-#: ../share/templates/templates.h:1
-msgid "Empty sheet with no layers"
-msgstr "Foglio vuoto senza livelli"
-
-#: ../share/templates/templates.h:1
-msgid "no layers empty"
-msgstr "no livelli vuoto"
-
 #. 3D box
 #: ../src/box3d.cpp:255 ../src/box3d.cpp:1309
 #: ../src/ui/dialog/inkscape-preferences.cpp:416
 msgid "3D Box"
 msgstr "Solido 3D"
 
-#: ../src/color-profile.cpp:860
+#: ../src/color-profile.cpp:856
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr "La cartella dei profili colore (%s) non è disponibile."
 
-#: ../src/color-profile.cpp:932 ../src/color-profile.cpp:949
+#: ../src/color-profile.cpp:928 ../src/color-profile.cpp:945
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
-#: ../src/color-profile.cpp:934
+#: ../src/color-profile.cpp:930
 msgctxt "Profile name"
 msgid "None"
 msgstr "Nessuno"
@@ -4514,11 +4514,11 @@ msgstr "Elimina guida"
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Linea guida</b>: %s"
 
-#: ../src/desktop.cpp:875
+#: ../src/desktop.cpp:870
 msgid "No previous zoom."
 msgstr "Nessuno zoom precedente."
 
-#: ../src/desktop.cpp:896
+#: ../src/desktop.cpp:891
 msgid "No next zoom."
 msgstr "Nessuno zoom successivo."
 
@@ -4891,21 +4891,21 @@ msgstr "Multiplo spaziatura griglia"
 msgid " to "
 msgstr " a "
 
-#: ../src/document.cpp:526
+#: ../src/document.cpp:531
 #, c-format
 msgid "New document %d"
 msgstr "Nuovo documento %d"
 
-#: ../src/document.cpp:531
+#: ../src/document.cpp:536
 #, c-format
 msgid "Memory document %d"
 msgstr "Documento memoria %d"
 
-#: ../src/document.cpp:560
+#: ../src/document.cpp:565
 msgid "Memory document %1"
 msgstr "Documento memoria %1"
 
-#: ../src/document.cpp:859
+#: ../src/document.cpp:864
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Documento senza nome %d"
@@ -5681,7 +5681,7 @@ msgstr "Soglia"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:40
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:46
-#: ../src/widgets/paintbucket-toolbar.cpp:148
+#: ../src/widgets/paintbucket-toolbar.cpp:147
 msgid "Threshold:"
 msgstr "Soglia:"
 
@@ -6732,7 +6732,7 @@ msgstr "Discreto"
 
 #: ../src/extension/internal/filter/color.h:505 ../src/filter-enums.cpp:113
 #: ../src/live_effects/lpe-interpolate_points.cpp:25
-#: ../src/live_effects/lpe-powerstroke.cpp:134
+#: ../src/live_effects/lpe-powerstroke.cpp:133
 msgid "Linear"
 msgstr "Lineare"
 
@@ -6914,7 +6914,7 @@ msgstr "Ombre"
 
 #: ../src/extension/internal/filter/color.h:1119
 #: ../src/extension/internal/filter/paint.h:356 ../src/filter-enums.cpp:33
-#: ../src/live_effects/effect.cpp:108
+#: ../src/live_effects/effect.cpp:107
 #: ../src/live_effects/lpe-transform_2pts.cpp:40
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1048
 #: ../src/widgets/gradient-toolbar.cpp:1159
@@ -7169,7 +7169,7 @@ msgid "Blur and displace edges of shapes and pictures"
 msgstr "Sfoca e sposta i bordi di forme e immagini"
 
 #: ../src/extension/internal/filter/distort.h:190
-#: ../src/live_effects/effect.cpp:143
+#: ../src/live_effects/effect.cpp:142
 msgid "Roughen"
 msgstr "Increspato"
 
@@ -7493,7 +7493,7 @@ msgstr "Disegno"
 #: ../src/extension/internal/filter/paint.h:496
 #: ../src/extension/internal/filter/paint.h:590
 #: ../src/extension/internal/filter/paint.h:976
-#: ../src/live_effects/effect.cpp:137 ../src/splivarot.cpp:2209
+#: ../src/live_effects/effect.cpp:136 ../src/splivarot.cpp:2209
 msgid "Simplify"
 msgstr "Semplifica"
 
@@ -7777,7 +7777,7 @@ msgstr "Sfondo"
 #: ../src/extension/internal/filter/transparency.h:59
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2879
 #: ../src/ui/dialog/input.cpp:1088 ../src/widgets/eraser-toolbar.cpp:133
-#: ../src/widgets/pencil-toolbar.cpp:140 ../src/widgets/spray-toolbar.cpp:389
+#: ../src/widgets/pencil-toolbar.cpp:141 ../src/widgets/spray-toolbar.cpp:389
 #: ../src/widgets/tweak-toolbar.cpp:254 ../share/extensions/extrude.inx.h:2
 #: ../share/extensions/triangle.inx.h:8
 msgid "Mode:"
@@ -8028,15 +8028,15 @@ msgstr "LaTeX PSTricks File"
 msgid "LaTeX Print"
 msgstr "Stampa LaTeX"
 
-#: ../src/extension/internal/odf.cpp:2138
+#: ../src/extension/internal/odf.cpp:2141
 msgid "OpenDocument Drawing Output"
 msgstr "Output OpenDocument Drawing"
 
-#: ../src/extension/internal/odf.cpp:2143
+#: ../src/extension/internal/odf.cpp:2146
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Disegno OpenDocument (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:2144
+#: ../src/extension/internal/odf.cpp:2147
 msgid "OpenDocument drawing file"
 msgstr "File di disegno OpenDocument"
 
@@ -8363,53 +8363,53 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.it.svg"
 
-#: ../src/file.cpp:338
+#: ../src/file.cpp:332
 msgid "Broken links have been changed to point to existing files."
 msgstr ""
 "I collegamenti persi sono stati cambiati per corrispondere a file esistenti."
 
-#: ../src/file.cpp:349 ../src/file.cpp:1292
+#: ../src/file.cpp:343 ../src/file.cpp:1278
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Impossibile caricare il file %s"
 
-#: ../src/file.cpp:375
+#: ../src/file.cpp:369
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Documento non ancora salvato. Impossibile ricaricarlo."
 
-#: ../src/file.cpp:381
+#: ../src/file.cpp:375
 msgid "Changes will be lost! Are you sure you want to reload document %1?"
 msgstr ""
 "Le modifiche andranno perdute! Sicuri di voler ricaricare il documento %1?"
 
-#: ../src/file.cpp:407
+#: ../src/file.cpp:401
 msgid "Document reverted."
 msgstr "Documento ricaricato."
 
-#: ../src/file.cpp:409
+#: ../src/file.cpp:403
 msgid "Document not reverted."
 msgstr "Documento non ricaricato."
 
-#: ../src/file.cpp:559
+#: ../src/file.cpp:553
 msgid "Select file to open"
 msgstr "Seleziona il file da aprire"
 
-#: ../src/file.cpp:641
+#: ../src/file.cpp:635
 msgid "Clean up document"
 msgstr "Pulisci documento"
 
-#: ../src/file.cpp:648
+#: ../src/file.cpp:642
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Rimossa <b>%i</b> definizione inutilizzata in &lt;defs&gt;."
 msgstr[1] "Rimosse <b>%i</b> definizioni inutilizzate in &lt;defs&gt;."
 
-#: ../src/file.cpp:653
+#: ../src/file.cpp:647
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Nessuna definizione inutilizzata in &lt;defs&gt;."
 
-#: ../src/file.cpp:687
+#: ../src/file.cpp:679
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -8419,66 +8419,66 @@ msgstr ""
 "(%s). Ciò potrebbe esser stato causato da un'estensione del nome del file "
 "sconosciuta."
 
-#: ../src/file.cpp:688 ../src/file.cpp:698 ../src/file.cpp:707
-#: ../src/file.cpp:714 ../src/file.cpp:720
+#: ../src/file.cpp:680 ../src/file.cpp:688 ../src/file.cpp:696
+#: ../src/file.cpp:702 ../src/file.cpp:707
 msgid "Document not saved."
 msgstr "Documento non salvato."
 
-#: ../src/file.cpp:697
+#: ../src/file.cpp:687
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
 "Il file %s è protetto dalla scrittura. Rimuovere la protezione e riprovare."
 
-#: ../src/file.cpp:706
+#: ../src/file.cpp:695
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Impossibile salvare il file %s."
 
-#: ../src/file.cpp:739 ../src/file.cpp:741
+#: ../src/file.cpp:725 ../src/file.cpp:727
 msgid "Document saved."
 msgstr "Documento salvato."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:884 ../src/file.cpp:1451
+#: ../src/file.cpp:870 ../src/file.cpp:1437
 msgid "drawing"
 msgstr "disegno"
 
-#: ../src/file.cpp:889
+#: ../src/file.cpp:875
 msgid "drawing-%1"
 msgstr "disegno-%1"
 
-#: ../src/file.cpp:906
+#: ../src/file.cpp:892
 msgid "Select file to save a copy to"
 msgstr "Seleziona il file in cui salvare una copia"
 
-#: ../src/file.cpp:908
+#: ../src/file.cpp:894
 msgid "Select file to save to"
 msgstr "Seleziona il file da salvare"
 
-#: ../src/file.cpp:1013 ../src/file.cpp:1015
+#: ../src/file.cpp:999 ../src/file.cpp:1001
 msgid "No changes need to be saved."
 msgstr "Nessuna modifica da salvare."
 
-#: ../src/file.cpp:1034
+#: ../src/file.cpp:1020
 msgid "Saving document..."
 msgstr "Salvataggio del documento..."
 
-#: ../src/file.cpp:1289 ../src/ui/dialog/inkscape-preferences.cpp:1505
+#: ../src/file.cpp:1275 ../src/ui/dialog/inkscape-preferences.cpp:1505
 #: ../src/ui/dialog/ocaldialogs.cpp:1244
 msgid "Import"
 msgstr "Importa"
 
-#: ../src/file.cpp:1339
+#: ../src/file.cpp:1325
 msgid "Select file to import"
 msgstr "Seleziona il file da importare"
 
-#: ../src/file.cpp:1472
+#: ../src/file.cpp:1458
 msgid "Select file to export to"
 msgstr "Seleziona il file su cui esportare"
 
-#: ../src/file.cpp:1725
+#: ../src/file.cpp:1711
 msgid "Import Clip Art"
 msgstr "Importa Clip Art"
 
@@ -8688,81 +8688,81 @@ msgstr "Luce puntiforme"
 msgid "Spot Light"
 msgstr "Punto luce"
 
-#: ../src/gradient-chemistry.cpp:1586
+#: ../src/gradient-chemistry.cpp:1580
 msgid "Invert gradient colors"
 msgstr "Inverti colori gradiente"
 
-#: ../src/gradient-chemistry.cpp:1613
+#: ../src/gradient-chemistry.cpp:1607
 msgid "Reverse gradient"
 msgstr "Inverti gradiente"
 
-#: ../src/gradient-chemistry.cpp:1627 ../src/widgets/gradient-selector.cpp:222
+#: ../src/gradient-chemistry.cpp:1621 ../src/widgets/gradient-selector.cpp:222
 msgid "Delete swatch"
 msgstr "Cancella campione"
 
-#: ../src/gradient-drag.cpp:95 ../src/ui/tools/gradient-tool.cpp:90
+#: ../src/gradient-drag.cpp:97 ../src/ui/tools/gradient-tool.cpp:90
 msgid "Linear gradient <b>start</b>"
 msgstr "<b>Inizio</b> del gradiente lineare"
 
 #. POINT_LG_BEGIN
-#: ../src/gradient-drag.cpp:96 ../src/ui/tools/gradient-tool.cpp:91
+#: ../src/gradient-drag.cpp:98 ../src/ui/tools/gradient-tool.cpp:91
 msgid "Linear gradient <b>end</b>"
 msgstr "<b>Fine</b> del gradiente lineare"
 
-#: ../src/gradient-drag.cpp:97 ../src/ui/tools/gradient-tool.cpp:92
+#: ../src/gradient-drag.cpp:99 ../src/ui/tools/gradient-tool.cpp:92
 msgid "Linear gradient <b>mid stop</b>"
 msgstr "<b>Passaggio intermedio</b> del gradiente lineare"
 
-#: ../src/gradient-drag.cpp:98 ../src/ui/tools/gradient-tool.cpp:93
+#: ../src/gradient-drag.cpp:100 ../src/ui/tools/gradient-tool.cpp:93
 msgid "Radial gradient <b>center</b>"
 msgstr "<b>Centro</b> del gradiente radiale"
 
-#: ../src/gradient-drag.cpp:99 ../src/gradient-drag.cpp:100
+#: ../src/gradient-drag.cpp:101 ../src/gradient-drag.cpp:102
 #: ../src/ui/tools/gradient-tool.cpp:94 ../src/ui/tools/gradient-tool.cpp:95
 msgid "Radial gradient <b>radius</b>"
 msgstr "<b>Raggio</b> del gradiente radiale"
 
-#: ../src/gradient-drag.cpp:101 ../src/ui/tools/gradient-tool.cpp:96
+#: ../src/gradient-drag.cpp:103 ../src/ui/tools/gradient-tool.cpp:96
 msgid "Radial gradient <b>focus</b>"
 msgstr "<b>Fuoco</b> del gradiente radiale"
 
 #. POINT_RG_FOCUS
-#: ../src/gradient-drag.cpp:102 ../src/gradient-drag.cpp:103
+#: ../src/gradient-drag.cpp:104 ../src/gradient-drag.cpp:105
 #: ../src/ui/tools/gradient-tool.cpp:97 ../src/ui/tools/gradient-tool.cpp:98
 msgid "Radial gradient <b>mid stop</b>"
 msgstr "<b>Passaggio intermedio</b> del gradiente lineare"
 
-#: ../src/gradient-drag.cpp:104 ../src/ui/tools/mesh-tool.cpp:93
+#: ../src/gradient-drag.cpp:106 ../src/ui/tools/mesh-tool.cpp:93
 msgid "Mesh gradient <b>corner</b>"
 msgstr "<b>Angolo</b> del gradiente a maglia"
 
-#: ../src/gradient-drag.cpp:105 ../src/ui/tools/mesh-tool.cpp:94
+#: ../src/gradient-drag.cpp:107 ../src/ui/tools/mesh-tool.cpp:94
 msgid "Mesh gradient <b>handle</b>"
 msgstr "<b>Maniglia</b> del gradiente a maglia"
 
-#: ../src/gradient-drag.cpp:106 ../src/ui/tools/mesh-tool.cpp:95
+#: ../src/gradient-drag.cpp:108 ../src/ui/tools/mesh-tool.cpp:95
 #, fuzzy
 msgid "Mesh gradient <b>tensor</b>"
 msgstr "<b>Fine</b> del gradiente a maglia"
 
-#: ../src/gradient-drag.cpp:563
+#: ../src/gradient-drag.cpp:565
 msgid "Added patch row or column"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:796
+#: ../src/gradient-drag.cpp:798
 msgid "Merge gradient handles"
 msgstr "Unisci maniglie del gradiente"
 
 #. we did an undoable action
-#: ../src/gradient-drag.cpp:1099
+#: ../src/gradient-drag.cpp:1101
 msgid "Move gradient handle"
 msgstr "Muovi maniglia del gradiente"
 
-#: ../src/gradient-drag.cpp:1158 ../src/widgets/gradient-vector.cpp:834
+#: ../src/gradient-drag.cpp:1160 ../src/widgets/gradient-vector.cpp:834
 msgid "Delete gradient stop"
 msgstr "Cancella passaggio del gradiente"
 
-#: ../src/gradient-drag.cpp:1420
+#: ../src/gradient-drag.cpp:1423
 #, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
@@ -8771,11 +8771,11 @@ msgstr ""
 "%s %d per: %s%s; trascina con <b>Ctrl</b> per far scattare l'offset; con "
 "<b>Ctrl+Alt</b> per cancellare il passaggio"
 
-#: ../src/gradient-drag.cpp:1424 ../src/gradient-drag.cpp:1431
+#: ../src/gradient-drag.cpp:1427 ../src/gradient-drag.cpp:1434
 msgid " (stroke)"
 msgstr " (contorno)"
 
-#: ../src/gradient-drag.cpp:1428
+#: ../src/gradient-drag.cpp:1431
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
@@ -8785,7 +8785,7 @@ msgstr ""
 "+Alt</b> per mantenere l'angolo; con <b>Ctrl+Maiusc</b> per ridimensionare "
 "attorno al centro"
 
-#: ../src/gradient-drag.cpp:1436
+#: ../src/gradient-drag.cpp:1439
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
@@ -8793,7 +8793,7 @@ msgstr ""
 "<b>Centro</b> e <b>fuoco</b> del gradiente radiale; trascina con <b>Maiusc</"
 "b> per separare il fuoco"
 
-#: ../src/gradient-drag.cpp:1439
+#: ../src/gradient-drag.cpp:1442
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -8808,15 +8808,15 @@ msgstr[1] ""
 "Punto di gradiente condiviso da <b>%d</b> gradienti; trascina con <b>Maiusc</"
 "b> per separare"
 
-#: ../src/gradient-drag.cpp:2362
+#: ../src/gradient-drag.cpp:2364
 msgid "Move gradient handle(s)"
 msgstr "Muovi maniglia del gradiente"
 
-#: ../src/gradient-drag.cpp:2396
+#: ../src/gradient-drag.cpp:2398
 msgid "Move gradient mid stop(s)"
 msgstr "Muovi passaggio intermedio del gradiente"
 
-#: ../src/gradient-drag.cpp:2685
+#: ../src/gradient-drag.cpp:2687
 msgid "Delete gradient stop(s)"
 msgstr "Cancella passaggio del gradiente"
 
@@ -9302,206 +9302,206 @@ msgstr "Coordinata Y per un pannello fluttuante"
 msgid "Dock #%d"
 msgstr "Pannello #%d"
 
-#: ../src/libnrtype/FontFactory.cpp:642
+#: ../src/libnrtype/FontFactory.cpp:636
 msgid "Ignoring font without family that will crash Pango"
 msgstr "I font senza famiglia che fanno andare in crash Pango vengono ignorati"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 msgid "doEffect stack test"
 msgstr "test stack doEffect"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 msgid "Angle bisector"
 msgstr "Bisettrice angolo"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 msgid "Circle (by center and radius)"
 msgstr "Cerchio (tramite centro e raggio)"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
 msgid "Circle by 3 points"
 msgstr "Cerchio per 3 punti"
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 msgid "Dynamic stroke"
 msgstr "Contorno dinamico"
 
-#: ../src/live_effects/effect.cpp:105 ../share/extensions/extrude.inx.h:1
+#: ../src/live_effects/effect.cpp:104 ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "Estrudi"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 msgid "Lattice Deformation"
 msgstr "Deformazione reticolare"
 
-#: ../src/live_effects/effect.cpp:107
+#: ../src/live_effects/effect.cpp:106
 msgid "Line Segment"
 msgstr "Segmento"
 
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 msgid "Parallel"
 msgstr "Parallelo"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Path length"
 msgstr "Lunghezza tracciato"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Perpendicular bisector"
 msgstr "Bisettrice perpendicolare"
 
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Perspective path"
 msgstr "Tracciato in prospettiva"
 
-#: ../src/live_effects/effect.cpp:113
+#: ../src/live_effects/effect.cpp:112
 msgid "Recursive skeleton"
 msgstr "Scheletro ricorsivo"
 
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "Tangent to curve"
 msgstr "Tangente alla curva"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Text label"
 msgstr "Etichetta testuale"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 msgid "Fillet/Chamfer"
 msgstr ""
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:119
+#: ../src/live_effects/effect.cpp:118
 msgid "Bend"
 msgstr "Piegatura"
 
-#: ../src/live_effects/effect.cpp:120
+#: ../src/live_effects/effect.cpp:119
 msgid "Gears"
 msgstr "Ingranaggi"
 
-#: ../src/live_effects/effect.cpp:121
+#: ../src/live_effects/effect.cpp:120
 msgid "Pattern Along Path"
 msgstr "Motivo lungo tracciato"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:122
+#: ../src/live_effects/effect.cpp:121
 msgid "Stitch Sub-Paths"
 msgstr "Cucitura sotto-tracciati"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:124
+#: ../src/live_effects/effect.cpp:123
 msgid "VonKoch"
 msgstr "VonKoch"
 
-#: ../src/live_effects/effect.cpp:125
+#: ../src/live_effects/effect.cpp:124
 msgid "Knot"
 msgstr "Nodo"
 
-#: ../src/live_effects/effect.cpp:126
+#: ../src/live_effects/effect.cpp:125
 msgid "Construct grid"
 msgstr "Costruzione griglia"
 
-#: ../src/live_effects/effect.cpp:127
+#: ../src/live_effects/effect.cpp:126
 msgid "Spiro spline"
 msgstr "Spline Spiro"
 
-#: ../src/live_effects/effect.cpp:128
+#: ../src/live_effects/effect.cpp:127
 msgid "Envelope Deformation"
 msgstr "Deformazione a busta"
 
-#: ../src/live_effects/effect.cpp:129
+#: ../src/live_effects/effect.cpp:128
 msgid "Interpolate Sub-Paths"
 msgstr "Interpola sotto-tracciati"
 
-#: ../src/live_effects/effect.cpp:130
+#: ../src/live_effects/effect.cpp:129
 msgid "Hatches (rough)"
 msgstr "Scarabocchi (grezzo)"
 
-#: ../src/live_effects/effect.cpp:131
+#: ../src/live_effects/effect.cpp:130
 msgid "Sketch"
 msgstr "Bozzetto"
 
-#: ../src/live_effects/effect.cpp:132
+#: ../src/live_effects/effect.cpp:131
 msgid "Ruler"
 msgstr "Righello"
 
 #. 0.91
-#: ../src/live_effects/effect.cpp:134
+#: ../src/live_effects/effect.cpp:133
 msgid "Power stroke"
 msgstr "Contorno evoluto"
 
-#: ../src/live_effects/effect.cpp:135
+#: ../src/live_effects/effect.cpp:134
 msgid "Clone original path"
 msgstr "Clona tracciato originale"
 
-#: ../src/live_effects/effect.cpp:138
+#: ../src/live_effects/effect.cpp:137
 msgid "Lattice Deformation 2"
 msgstr "Deformazione reticolare 2"
 
-#: ../src/live_effects/effect.cpp:139
+#: ../src/live_effects/effect.cpp:138
 msgid "Perspective/Envelope"
 msgstr "Prospettiva/Busta"
 
-#: ../src/live_effects/effect.cpp:140
+#: ../src/live_effects/effect.cpp:139
 msgid "Interpolate points"
 msgstr "Interpola punti"
 
-#: ../src/live_effects/effect.cpp:141
+#: ../src/live_effects/effect.cpp:140
 msgid "Transform by 2 points"
 msgstr "Trasforma per 2 punti"
 
-#: ../src/live_effects/effect.cpp:142
+#: ../src/live_effects/effect.cpp:141
 #: ../src/live_effects/lpe-show_handles.cpp:26
 msgid "Show handles"
 msgstr "Mostra maniglie"
 
-#: ../src/live_effects/effect.cpp:144 ../src/widgets/pencil-toolbar.cpp:117
+#: ../src/live_effects/effect.cpp:143 ../src/widgets/pencil-toolbar.cpp:118
 msgid "BSpline"
 msgstr "BSpline"
 
-#: ../src/live_effects/effect.cpp:145
+#: ../src/live_effects/effect.cpp:144
 msgid "Join type"
 msgstr "Collegamento nodi"
 
-#: ../src/live_effects/effect.cpp:146
+#: ../src/live_effects/effect.cpp:145
 #, fuzzy
 msgid "Taper stroke"
 msgstr "Motivo del contorno"
 
-#: ../src/live_effects/effect.cpp:147
+#: ../src/live_effects/effect.cpp:146
 msgid "Mirror symmetry"
 msgstr "Simmetria speculare"
 
-#: ../src/live_effects/effect.cpp:148
+#: ../src/live_effects/effect.cpp:147
 msgid "Rotate copies"
 msgstr "Ruota copie"
 
 #. Ponyscape -> Inkscape 0.92
-#: ../src/live_effects/effect.cpp:150
+#: ../src/live_effects/effect.cpp:149
 msgid "Attach path"
 msgstr "Lega tracciato"
 
-#: ../src/live_effects/effect.cpp:151
+#: ../src/live_effects/effect.cpp:150
 msgid "Fill between strokes"
 msgstr "Riempimento tra 2 tracciati"
 
-#: ../src/live_effects/effect.cpp:152 ../src/selection-chemistry.cpp:2906
+#: ../src/live_effects/effect.cpp:151 ../src/selection-chemistry.cpp:2906
 msgid "Fill between many"
 msgstr "Riempimento tra più tracciati"
 
-#: ../src/live_effects/effect.cpp:153
+#: ../src/live_effects/effect.cpp:152
 msgid "Ellipse by 5 points"
 msgstr "Ellisse per 5 punti"
 
-#: ../src/live_effects/effect.cpp:154
+#: ../src/live_effects/effect.cpp:153
 msgid "Bounding Box"
 msgstr "Riquadro di delimitazione"
 
-#: ../src/live_effects/effect.cpp:362
+#: ../src/live_effects/effect.cpp:361
 msgid "Is visible?"
 msgstr "Visibile?"
 
-#: ../src/live_effects/effect.cpp:362
+#: ../src/live_effects/effect.cpp:361
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
@@ -9509,21 +9509,21 @@ msgstr ""
 "Se non selezionato, l'effetto rimane applicato all'oggetto ma è "
 "temporaneamente disabilitato sull'area di lavoro"
 
-#: ../src/live_effects/effect.cpp:387
+#: ../src/live_effects/effect.cpp:386
 msgid "No effect"
 msgstr "Nessun effetto"
 
-#: ../src/live_effects/effect.cpp:500
+#: ../src/live_effects/effect.cpp:498
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "Specificare un tracciato parametro per l'effetto '%s' con %d clic"
 
-#: ../src/live_effects/effect.cpp:783
+#: ../src/live_effects/effect.cpp:765
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Modifica del parametro <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:788
+#: ../src/live_effects/effect.cpp:770
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 "Nessuno dei parametri dell'effetto su tracciato applicato può essere "
@@ -9599,7 +9599,7 @@ msgid "Path along which to bend the original path"
 msgstr "Tracciato secondo il quale piegare il tracciato originale"
 
 #: ../src/live_effects/lpe-bendpath.cpp:71
-#: ../src/live_effects/lpe-patternalongpath.cpp:64
+#: ../src/live_effects/lpe-patternalongpath.cpp:74
 #: ../src/ui/dialog/export.cpp:285 ../src/ui/dialog/transformation.cpp:73
 #: ../src/ui/widget/page-sizer.cpp:237
 msgid "_Width:"
@@ -9628,7 +9628,7 @@ msgstr ""
 "piegatura"
 
 #: ../src/live_effects/lpe-bendpath.cpp:178
-#: ../src/live_effects/lpe-patternalongpath.cpp:277
+#: ../src/live_effects/lpe-patternalongpath.cpp:285
 #, fuzzy
 msgid "Change the width"
 msgstr "Modifica larghezza contorno"
@@ -9663,14 +9663,14 @@ msgid "Change number of steps with CTRL pressed"
 msgstr "Modifica il numero di passi delle maniglie con CTRL premuto"
 
 #: ../src/live_effects/lpe-bspline.cpp:31
-#: ../src/live_effects/lpe-simplify.cpp:32
+#: ../src/live_effects/lpe-simplify.cpp:33
 #: ../src/live_effects/lpe-transform_2pts.cpp:43
 #, fuzzy
 msgid "Helper size:"
 msgstr "_Dimensione maniglia:"
 
 #: ../src/live_effects/lpe-bspline.cpp:31
-#: ../src/live_effects/lpe-simplify.cpp:32
+#: ../src/live_effects/lpe-simplify.cpp:33
 #, fuzzy
 msgid "Helper size"
 msgstr "_Dimensione maniglia:"
@@ -9906,7 +9906,7 @@ msgid "Reverses the second path order"
 msgstr "Inverte la direzione del secondo tracciato"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:41
-#: ../src/widgets/text-toolbar.cpp:1799
+#: ../src/widgets/text-toolbar.cpp:1788
 #: ../share/extensions/render_barcode_qrcode.inx.h:5
 msgid "Auto"
 msgstr "Automatico"
@@ -10055,15 +10055,6 @@ msgstr ""
 "Angolo di pressione dei denti (tipicamente 20-25 gradi). Il rapporto tra i "
 "denti non in contatto."
 
-#: ../src/live_effects/lpe-gears.cpp:216
-#, fuzzy
-msgid "Min Radius:"
-msgstr "Raggio:"
-
-#: ../src/live_effects/lpe-gears.cpp:216
-msgid "Minimun radius, low values can be slow"
-msgstr ""
-
 #: ../src/live_effects/lpe-interpolate.cpp:30
 msgid "Trajectory:"
 msgstr "Traiettoria:"
@@ -10095,32 +10086,32 @@ msgstr ""
 "posizione dei nodi del tracciato di sostegno."
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:26
-#: ../src/live_effects/lpe-powerstroke.cpp:135
+#: ../src/live_effects/lpe-powerstroke.cpp:134
 msgid "CubicBezierFit"
 msgstr "CubicBezierFit"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:27
-#: ../src/live_effects/lpe-powerstroke.cpp:136
+#: ../src/live_effects/lpe-powerstroke.cpp:135
 msgid "CubicBezierJohan"
 msgstr "CubicBezierJohan"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:28
-#: ../src/live_effects/lpe-powerstroke.cpp:137
+#: ../src/live_effects/lpe-powerstroke.cpp:136
 msgid "SpiroInterpolator"
 msgstr "SpiroInterpolator"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:29
-#: ../src/live_effects/lpe-powerstroke.cpp:138
+#: ../src/live_effects/lpe-powerstroke.cpp:137
 msgid "Centripetal Catmull-Rom"
 msgstr "Centripetal Catmull-Rom"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:37
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 msgid "Interpolator type:"
 msgstr "Tipo interpolazione:"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:38
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 msgid ""
 "Determines which kind of interpolator will be used to interpolate between "
 "stroke width along the path"
@@ -10129,21 +10120,21 @@ msgstr ""
 "larghezza del contorno lungo il tracciato"
 
 #: ../src/live_effects/lpe-jointype.cpp:31
-#: ../src/live_effects/lpe-powerstroke.cpp:167
+#: ../src/live_effects/lpe-powerstroke.cpp:166
 #: ../src/live_effects/lpe-taperstroke.cpp:63
 msgid "Beveled"
 msgstr "Tagliati"
 
 #: ../src/live_effects/lpe-jointype.cpp:32
 #: ../src/live_effects/lpe-jointype.cpp:43
-#: ../src/live_effects/lpe-powerstroke.cpp:168
+#: ../src/live_effects/lpe-powerstroke.cpp:167
 #: ../src/live_effects/lpe-taperstroke.cpp:64
 #: ../src/widgets/star-toolbar.cpp:534
 msgid "Rounded"
 msgstr "Arrotondati"
 
 #: ../src/live_effects/lpe-jointype.cpp:33
-#: ../src/live_effects/lpe-powerstroke.cpp:171
+#: ../src/live_effects/lpe-powerstroke.cpp:170
 #: ../src/live_effects/lpe-taperstroke.cpp:65
 msgid "Miter"
 msgstr "Vivi"
@@ -10154,7 +10145,7 @@ msgstr "Taglio retto"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
 #: ../src/live_effects/lpe-jointype.cpp:35
-#: ../src/live_effects/lpe-powerstroke.cpp:170
+#: ../src/live_effects/lpe-powerstroke.cpp:169
 msgid "Extrapolated arc"
 msgstr "Arco estrapolato"
 
@@ -10171,17 +10162,17 @@ msgid "Extrapolated arc Alt3"
 msgstr "Arco estrapolato Alt3"
 
 #: ../src/live_effects/lpe-jointype.cpp:42
-#: ../src/live_effects/lpe-powerstroke.cpp:150
+#: ../src/live_effects/lpe-powerstroke.cpp:149
 msgid "Butt"
 msgstr "Geometrica"
 
 #: ../src/live_effects/lpe-jointype.cpp:44
-#: ../src/live_effects/lpe-powerstroke.cpp:151
+#: ../src/live_effects/lpe-powerstroke.cpp:150
 msgid "Square"
 msgstr "Quadrata"
 
 #: ../src/live_effects/lpe-jointype.cpp:45
-#: ../src/live_effects/lpe-powerstroke.cpp:153
+#: ../src/live_effects/lpe-powerstroke.cpp:152
 msgid "Peak"
 msgstr "Punta"
 
@@ -10201,20 +10192,20 @@ msgstr "La forma degli estremi della linea"
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/live_effects/lpe-jointype.cpp:56
-#: ../src/live_effects/lpe-powerstroke.cpp:183
+#: ../src/live_effects/lpe-powerstroke.cpp:182
 #: ../src/widgets/stroke-style.cpp:288
 msgid "Join:"
 msgstr "Spigoli:"
 
 #: ../src/live_effects/lpe-jointype.cpp:56
-#: ../src/live_effects/lpe-powerstroke.cpp:183
+#: ../src/live_effects/lpe-powerstroke.cpp:182
 msgid "Determines the shape of the path's corners"
 msgstr "Determina la forma degli spigoli del tracciato"
 
 #. start_lean(_("Start path lean"), _("Start path lean"), "start_lean", &wr, this, 0.),
 #. end_lean(_("End path lean"), _("End path lean"), "end_lean", &wr, this, 0.),
 #: ../src/live_effects/lpe-jointype.cpp:59
-#: ../src/live_effects/lpe-powerstroke.cpp:184
+#: ../src/live_effects/lpe-powerstroke.cpp:183
 #: ../src/live_effects/lpe-taperstroke.cpp:78
 msgid "Miter limit:"
 msgstr "Spigolosità:"
@@ -10293,273 +10284,273 @@ msgstr "Trascina per selezionare un intersezione, clicca per girarla"
 msgid "Change knot crossing"
 msgstr "Cambia intersezione nodo"
 
-#: ../src/live_effects/lpe-lattice2.cpp:46
+#: ../src/live_effects/lpe-lattice2.cpp:47
 #: ../src/live_effects/lpe-perspective-envelope.cpp:43
 msgid "Mirror movements in horizontal"
 msgstr "Rispecchia i movimenti orizzontalmente"
 
-#: ../src/live_effects/lpe-lattice2.cpp:47
+#: ../src/live_effects/lpe-lattice2.cpp:48
 #: ../src/live_effects/lpe-perspective-envelope.cpp:44
 msgid "Mirror movements in vertical"
 msgstr "Rispecchia i movimenti verticalmente"
 
-#: ../src/live_effects/lpe-lattice2.cpp:48
+#: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Update while moving knots (maybe slow)"
 msgstr "Aggiorna durante lo spostamento dei punti (può rallentare)"
 
-#: ../src/live_effects/lpe-lattice2.cpp:49
+#: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 0:"
 msgstr "Controllo 0:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:49
+#: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 0 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:50
+#: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 1:"
 msgstr "Controllo 1:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:50
+#: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 1 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:51
+#: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 2:"
 msgstr "Controllo 2:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:51
+#: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 2 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:52
+#: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 3:"
 msgstr "Controllo 3:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:52
+#: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 3 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:53
+#: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 4:"
 msgstr "Controllo 4:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:53
+#: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 4 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:54
+#: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 5:"
 msgstr "Controllo 5:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:54
+#: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 5 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:55
+#: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 6:"
 msgstr "Controllo 6:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:55
+#: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 6 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:56
+#: ../src/live_effects/lpe-lattice2.cpp:57
 msgid "Control 7:"
 msgstr "Controllo 7:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:56
+#: ../src/live_effects/lpe-lattice2.cpp:57
 msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 7 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:57
+#: ../src/live_effects/lpe-lattice2.cpp:58
 msgid "Control 8x9:"
 msgstr "Controllo 8x9:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:57
+#: ../src/live_effects/lpe-lattice2.cpp:58
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 8x9 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
 "gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:58
+#: ../src/live_effects/lpe-lattice2.cpp:59
 msgid "Control 10x11:"
 msgstr "Controllo 10x11:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:58
+#: ../src/live_effects/lpe-lattice2.cpp:59
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 10x11 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
 "gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:59
+#: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 12:"
 msgstr "Controllo 12:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:59
+#: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 12 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:60
+#: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 13:"
 msgstr "Controllo 13:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:60
+#: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 13 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:61
+#: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 14:"
 msgstr "Controllo 14:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:61
+#: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 14 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:62
+#: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 15:"
 msgstr "Controllo 15:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:62
+#: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 15- <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:63
+#: ../src/live_effects/lpe-lattice2.cpp:64
 msgid "Control 16:"
 msgstr "Controllo 16:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:63
+#: ../src/live_effects/lpe-lattice2.cpp:64
 msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 16 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:64
+#: ../src/live_effects/lpe-lattice2.cpp:65
 msgid "Control 17:"
 msgstr "Controllo 17:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:64
+#: ../src/live_effects/lpe-lattice2.cpp:65
 msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 17 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:65
+#: ../src/live_effects/lpe-lattice2.cpp:66
 msgid "Control 18:"
 msgstr "Controllo 18:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:65
+#: ../src/live_effects/lpe-lattice2.cpp:66
 msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 18 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:66
+#: ../src/live_effects/lpe-lattice2.cpp:67
 msgid "Control 19:"
 msgstr "Controllo 19:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:66
+#: ../src/live_effects/lpe-lattice2.cpp:67
 msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 19 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo gli "
 "assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:67
+#: ../src/live_effects/lpe-lattice2.cpp:68
 msgid "Control 20x21:"
 msgstr "Controllo 20x21:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:67
+#: ../src/live_effects/lpe-lattice2.cpp:68
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 20x21 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
 "gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:68
+#: ../src/live_effects/lpe-lattice2.cpp:69
 msgid "Control 22x23:"
 msgstr "Controllo 22x23:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:68
+#: ../src/live_effects/lpe-lattice2.cpp:69
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 22x23 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
 "gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:69
+#: ../src/live_effects/lpe-lattice2.cpp:70
 msgid "Control 24x26:"
 msgstr "Controllo 24x26:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:69
+#: ../src/live_effects/lpe-lattice2.cpp:70
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 24x26 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
 "gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:70
+#: ../src/live_effects/lpe-lattice2.cpp:71
 msgid "Control 25x27:"
 msgstr "Controllo 25x27:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:70
+#: ../src/live_effects/lpe-lattice2.cpp:71
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 25x27 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
 "gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:71
+#: ../src/live_effects/lpe-lattice2.cpp:72
 msgid "Control 28x30:"
 msgstr "Controllo 28x30:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:71
+#: ../src/live_effects/lpe-lattice2.cpp:72
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 28x30 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
 "gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:72
+#: ../src/live_effects/lpe-lattice2.cpp:73
 msgid "Control 29x31:"
 msgstr "Controllo 29x31:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:72
+#: ../src/live_effects/lpe-lattice2.cpp:73
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 "Controllo 29x31 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi lungo "
 "gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:73
+#: ../src/live_effects/lpe-lattice2.cpp:74
 msgid "Control 32x33x34x35:"
 msgstr "Controllo 32x33x34x35:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:73
+#: ../src/live_effects/lpe-lattice2.cpp:74
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
@@ -10567,72 +10558,72 @@ msgstr ""
 "Controllo 32x33x34x35 - <b>Ctrl+Alt+Clic</b>: reimposta, <b>Ctrl</b>: muovi "
 "lungo gli assi"
 
-#: ../src/live_effects/lpe-lattice2.cpp:238
+#: ../src/live_effects/lpe-lattice2.cpp:239
 msgid "Reset grid"
 msgstr "Reimposta griglia"
 
-#: ../src/live_effects/lpe-lattice2.cpp:270
-#: ../src/live_effects/lpe-lattice2.cpp:285
+#: ../src/live_effects/lpe-lattice2.cpp:271
+#: ../src/live_effects/lpe-lattice2.cpp:286
 msgid "Show Points"
 msgstr "Mostra punti di controllo"
 
-#: ../src/live_effects/lpe-lattice2.cpp:283
+#: ../src/live_effects/lpe-lattice2.cpp:284
 msgid "Hide Points"
 msgstr "Nascondi punti"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:53
+#: ../src/live_effects/lpe-patternalongpath.cpp:63
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Single"
 msgstr "Singolo"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:54
+#: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../share/extensions/pathalongpath.inx.h:11
 msgid "Single, stretched"
 msgstr "Singolo, adattato"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:55
+#: ../src/live_effects/lpe-patternalongpath.cpp:65
 #: ../share/extensions/pathalongpath.inx.h:12
 msgid "Repeated"
 msgstr "Ripetuto"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:56
+#: ../src/live_effects/lpe-patternalongpath.cpp:66
 #: ../share/extensions/pathalongpath.inx.h:13
 msgid "Repeated, stretched"
 msgstr "Ripetuto, adattato"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:62
+#: ../src/live_effects/lpe-patternalongpath.cpp:72
 msgid "Pattern source:"
 msgstr "Motivo sorgente:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:62
+#: ../src/live_effects/lpe-patternalongpath.cpp:72
 msgid "Path to put along the skeleton path"
 msgstr "Tracciato da mettere sul tracciato scheletro"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:64
+#: ../src/live_effects/lpe-patternalongpath.cpp:74
 msgid "Width of the pattern"
 msgstr "Larghezza del motivo"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:65
+#: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid "Pattern copies:"
 msgstr "Motivi copia:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:65
+#: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid "How many pattern copies to place along the skeleton path"
 msgstr "Numero di copie del motivo da ripetere lungo il tracciato scheletro"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:67
+#: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "Wid_th in units of length"
 msgstr "Larghe_zza in unità di lunghezza"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:68
+#: ../src/live_effects/lpe-patternalongpath.cpp:78
 msgid "Scale the width of the pattern in units of its length"
 msgstr "Ridimensiona la larghezza del motivo in unità della sua lunghezza"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:70
+#: ../src/live_effects/lpe-patternalongpath.cpp:80
 msgid "Spa_cing:"
 msgstr "Spa_ziatura:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:72
+#: ../src/live_effects/lpe-patternalongpath.cpp:82
 #, no-c-format
 msgid ""
 "Space between copies of the pattern. Negative values allowed, but are "
@@ -10641,19 +10632,19 @@ msgstr ""
 "Spaziatura tra le copie del motivo. Sono permessi valori negativi, ma "
 "limitati al -90% della larghezza del motivo."
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:74
+#: ../src/live_effects/lpe-patternalongpath.cpp:84
 msgid "No_rmal offset:"
 msgstr "Spostamento no_rmale:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:75
+#: ../src/live_effects/lpe-patternalongpath.cpp:85
 msgid "Tan_gential offset:"
 msgstr "Spostamento tan_genziale:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:76
+#: ../src/live_effects/lpe-patternalongpath.cpp:86
 msgid "Offsets in _unit of pattern size"
 msgstr "Spostamento in _unita di dimensione del motivo"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:77
+#: ../src/live_effects/lpe-patternalongpath.cpp:87
 msgid ""
 "Spacing, tangential and normal offset are expressed as a ratio of width/"
 "height"
@@ -10661,19 +10652,19 @@ msgstr ""
 "Spaziatura e spostamento tangenziale e normale sono espressi come rapporto "
 "larghezza/altezza"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:79
+#: ../src/live_effects/lpe-patternalongpath.cpp:89
 msgid "Pattern is _vertical"
 msgstr "Motivo _verticale"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:79
+#: ../src/live_effects/lpe-patternalongpath.cpp:89
 msgid "Rotate pattern 90 deg before applying"
 msgstr "Ruota il motivo di 90 gradi prima di applicarlo"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:81
+#: ../src/live_effects/lpe-patternalongpath.cpp:91
 msgid "_Fuse nearby ends:"
 msgstr "_Fondi terminazioni vicine:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:81
+#: ../src/live_effects/lpe-patternalongpath.cpp:91
 msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr ""
 "Fonde terminazioni più vicine di questo numero. 0 per non fonderle mai."
@@ -10744,43 +10735,43 @@ msgstr ""
 msgid "Handles:"
 msgstr "Maniglie:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:133
+#: ../src/live_effects/lpe-powerstroke.cpp:132
 msgid "CubicBezierSmooth"
 msgstr "CubicBezierSmooth"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:152
+#: ../src/live_effects/lpe-powerstroke.cpp:151
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
 msgid "Round"
 msgstr "Arrotondata"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:154
+#: ../src/live_effects/lpe-powerstroke.cpp:153
 msgid "Zero width"
 msgstr "Larghezza zero"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:172
-#: ../src/widgets/pencil-toolbar.cpp:111
+#: ../src/live_effects/lpe-powerstroke.cpp:171
+#: ../src/widgets/pencil-toolbar.cpp:112
 msgid "Spiro"
 msgstr "Spiro"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:178
+#: ../src/live_effects/lpe-powerstroke.cpp:177
 msgid "Offset points"
 msgstr "Punti proiezione"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:178
 msgid "Sort points"
 msgstr "Ordina punti"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:178
 msgid "Sort offset points according to their time value along the curve"
 msgstr ""
 "Ordina i punti della proiezione secondo la loro posizione lungo la curva"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:181
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
 msgstr "Curvatura:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:181
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 msgid ""
 "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
 "interpolation, 1 = smooth"
@@ -10788,25 +10779,25 @@ msgstr ""
 "Imposta la curvatura per l'interpolazione CubicBezierJohan; 0 = lineare, 1 = "
 "morbida"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:182
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 msgid "Start cap:"
 msgstr "Estremità iniziale:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:182
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 msgid "Determines the shape of the path's start"
 msgstr "Determina la forma dell'estremità iniziale del tracciato"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:184
+#: ../src/live_effects/lpe-powerstroke.cpp:183
 #: ../src/widgets/stroke-style.cpp:335
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 "Lunghezza massima dello spigolo (in unità della larghezza del contorno)"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:185
+#: ../src/live_effects/lpe-powerstroke.cpp:184
 msgid "End cap:"
 msgstr "Estremità finale:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:185
+#: ../src/live_effects/lpe-powerstroke.cpp:184
 msgid "Determines the shape of the path's end"
 msgstr "Determina la forma dell'estremità finale del tracciato"
 
@@ -11126,13 +11117,13 @@ msgstr "Nessuno"
 
 #: ../src/live_effects/lpe-ruler.cpp:33
 #: ../src/live_effects/lpe-transform_2pts.cpp:37
-#: ../src/ui/tools/measure-tool.cpp:755 ../src/widgets/arc-toolbar.cpp:319
+#: ../src/ui/tools/measure-tool.cpp:756 ../src/widgets/arc-toolbar.cpp:319
 msgid "Start"
 msgstr "Inizio"
 
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/live_effects/lpe-transform_2pts.cpp:38
-#: ../src/ui/tools/measure-tool.cpp:756 ../src/widgets/arc-toolbar.cpp:332
+#: ../src/ui/tools/measure-tool.cpp:757 ../src/widgets/arc-toolbar.cpp:332
 msgid "End"
 msgstr "Fine"
 
@@ -11237,45 +11228,45 @@ msgstr ""
 "L'effetto su tracciato \"Mostra maniglie\" rimuove qualsiasi stile "
 "personalizzato a esso applicato. Per evitare ciò, premere Annulla."
 
-#: ../src/live_effects/lpe-simplify.cpp:29
+#: ../src/live_effects/lpe-simplify.cpp:30
 #, fuzzy
 msgid "Steps:"
 msgstr "Passi:"
 
-#: ../src/live_effects/lpe-simplify.cpp:29
+#: ../src/live_effects/lpe-simplify.cpp:30
 #, fuzzy
 msgid "Change number of simplify steps "
 msgstr "Stella: cambia numero di vertici"
 
-#: ../src/live_effects/lpe-simplify.cpp:30
+#: ../src/live_effects/lpe-simplify.cpp:31
 #, fuzzy
 msgid "Roughly threshold:"
 msgstr "Soglia:"
 
-#: ../src/live_effects/lpe-simplify.cpp:31
+#: ../src/live_effects/lpe-simplify.cpp:32
 msgid "Smooth angles:"
 msgstr "Smussa angoli:"
 
-#: ../src/live_effects/lpe-simplify.cpp:31
+#: ../src/live_effects/lpe-simplify.cpp:32
 msgid "Max degree difference on handles to perform a smooth"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:33
+#: ../src/live_effects/lpe-simplify.cpp:34
 #, fuzzy
 msgid "Paths separately"
 msgstr "Incolla dimensione separatamente"
 
-#: ../src/live_effects/lpe-simplify.cpp:33
+#: ../src/live_effects/lpe-simplify.cpp:34
 #, fuzzy
 msgid "Simplifying paths (separately)"
 msgstr "Semplificazione tracciati (separatamente):"
 
-#: ../src/live_effects/lpe-simplify.cpp:35
+#: ../src/live_effects/lpe-simplify.cpp:36
 #, fuzzy
 msgid "Just coalesce"
 msgstr "Giustifica righe"
 
-#: ../src/live_effects/lpe-simplify.cpp:35
+#: ../src/live_effects/lpe-simplify.cpp:36
 #, fuzzy
 msgid "Simplify just coalesce"
 msgstr "Semplifica"
@@ -11570,7 +11561,7 @@ msgstr "Cambia tipo di nodo"
 #: ../src/live_effects/lpe-transform_2pts.cpp:349
 #: ../src/ui/dialog/inkscape-preferences.cpp:1623
 #: ../src/ui/dialog/pixelartdialog.cpp:296
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:697
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:699
 #: ../src/ui/dialog/tracedialog.cpp:813
 #: ../src/ui/widget/preferences-widget.cpp:742
 msgid "Reset"
@@ -11688,7 +11679,7 @@ msgstr "Inverti"
 
 #: ../src/live_effects/parameter/originalpatharray.cpp:130
 #: ../src/live_effects/parameter/originalpatharray.cpp:315
-#: ../src/live_effects/parameter/path.cpp:508
+#: ../src/live_effects/parameter/path.cpp:486
 msgid "Link path parameter to path"
 msgstr "Lega il parametro del tracciato al parametro"
 
@@ -11718,23 +11709,23 @@ msgstr "Sposta tracciato in basso"
 msgid "Remove path"
 msgstr "Rimuovi tracciato"
 
-#: ../src/live_effects/parameter/path.cpp:184
+#: ../src/live_effects/parameter/path.cpp:170
 msgid "Edit on-canvas"
 msgstr "Modifica sul disegno"
 
-#: ../src/live_effects/parameter/path.cpp:194
+#: ../src/live_effects/parameter/path.cpp:180
 msgid "Copy path"
 msgstr "Copia tracciato"
 
-#: ../src/live_effects/parameter/path.cpp:204
+#: ../src/live_effects/parameter/path.cpp:190
 msgid "Paste path"
 msgstr "Incolla tracciato"
 
-#: ../src/live_effects/parameter/path.cpp:214
+#: ../src/live_effects/parameter/path.cpp:200
 msgid "Link to path on clipboard"
 msgstr "Collega a tracciato negli appunti"
 
-#: ../src/live_effects/parameter/path.cpp:476
+#: ../src/live_effects/parameter/path.cpp:454
 msgid "Paste path parameter"
 msgstr "Incolla parametri tracciato"
 
@@ -11761,7 +11752,7 @@ msgstr "Modifica parametri casuali"
 msgid "Change text parameter"
 msgstr "Cambia parametri testo"
 
-#: ../src/live_effects/parameter/togglebutton.cpp:114
+#: ../src/live_effects/parameter/togglebutton.cpp:112
 #, fuzzy
 msgid "Change togglebutton parameter"
 msgstr "Cambia parametri testo"
@@ -12592,7 +12583,7 @@ msgstr "Seleziona un <b>gruppo</b> da dividere."
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Nessun gruppo</b> nella selezione da dividere."
 
-#: ../src/selection-chemistry.cpp:901 ../src/sp-item-group.cpp:659
+#: ../src/selection-chemistry.cpp:901 ../src/sp-item-group.cpp:550
 #: ../src/ui/dialog/objects.cpp:1916
 msgid "Ungroup"
 msgstr "Dividi"
@@ -13181,22 +13172,22 @@ msgstr "a %s"
 msgid "without URI"
 msgstr "senza URI"
 
-#: ../src/sp-ellipse.cpp:356
+#: ../src/sp-ellipse.cpp:362
 msgid "Segment"
 msgstr "Segmento"
 
-#: ../src/sp-ellipse.cpp:358
+#: ../src/sp-ellipse.cpp:364
 msgid "Arc"
 msgstr "Arco"
 
 #. Ellipse
-#: ../src/sp-ellipse.cpp:361 ../src/sp-ellipse.cpp:368
+#: ../src/sp-ellipse.cpp:367 ../src/sp-ellipse.cpp:374
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
-#: ../src/widgets/pencil-toolbar.cpp:178
+#: ../src/widgets/pencil-toolbar.cpp:179
 msgid "Ellipse"
 msgstr "Ellisse"
 
-#: ../src/sp-ellipse.cpp:365
+#: ../src/sp-ellipse.cpp:371
 msgid "Circle"
 msgstr "Cerchio"
 
@@ -13221,7 +13212,7 @@ msgstr "Testo dinamico"
 msgid "Linked Flowed Text"
 msgstr "Testo dinamico collegato"
 
-#: ../src/sp-flowtext.cpp:292 ../src/sp-text.cpp:373
+#: ../src/sp-flowtext.cpp:292 ../src/sp-text.cpp:380
 #: ../src/ui/tools/text-tool.cpp:1556
 msgid " [truncated]"
 msgstr " [troncato]"
@@ -13283,40 +13274,40 @@ msgstr "[riferimento errato]: %s"
 msgid "%d &#215; %d: %s"
 msgstr "%d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:318 ../src/ui/dialog/objects.cpp:1915
+#: ../src/sp-item-group.cpp:307 ../src/ui/dialog/objects.cpp:1915
 msgid "Group"
 msgstr "Gruppo"
 
-#: ../src/sp-item-group.cpp:324 ../src/sp-switch.cpp:69
+#: ../src/sp-item-group.cpp:313 ../src/sp-switch.cpp:69
 #, c-format
 msgid "of <b>%d</b> object"
 msgstr "di <b>%d</b> oggetto"
 
-#: ../src/sp-item-group.cpp:324 ../src/sp-switch.cpp:69
+#: ../src/sp-item-group.cpp:313 ../src/sp-switch.cpp:69
 #, c-format
 msgid "of <b>%d</b> objects"
 msgstr "di <b>%d</b> oggetti"
 
-#: ../src/sp-item.cpp:1035 ../src/verbs.cpp:213
+#: ../src/sp-item.cpp:1031 ../src/verbs.cpp:213
 msgid "Object"
 msgstr "Oggetto"
 
-#: ../src/sp-item.cpp:1047
+#: ../src/sp-item.cpp:1043
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>con fissaggio</i>"
 
-#: ../src/sp-item.cpp:1053
+#: ../src/sp-item.cpp:1049
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>con maschera</i>"
 
-#: ../src/sp-item.cpp:1063
+#: ../src/sp-item.cpp:1059
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>con filtro (%s)</i>"
 
-#: ../src/sp-item.cpp:1065
+#: ../src/sp-item.cpp:1061
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>con filtro</i>"
@@ -13325,7 +13316,7 @@ msgstr "%s; <i>con filtro</i>"
 msgid "Line"
 msgstr "Linea"
 
-#: ../src/sp-lpe-item.cpp:255 ../src/sp-lpe-item.cpp:702
+#: ../src/sp-lpe-item.cpp:258 ../src/sp-lpe-item.cpp:705
 msgid "An exception occurred during execution of the Path Effect."
 msgstr ""
 "È occorsa un'eccezione durante l'applicazione dell'effetto su tracciato."
@@ -13380,7 +13371,7 @@ msgid "<b>Polyline</b>"
 msgstr "<b>Poligonale</b>"
 
 #. Rectangle
-#: ../src/sp-rect.cpp:197 ../src/ui/dialog/inkscape-preferences.cpp:411
+#: ../src/sp-rect.cpp:161 ../src/ui/dialog/inkscape-preferences.cpp:411
 msgid "Rectangle"
 msgstr "Rettangolo"
 
@@ -13424,7 +13415,7 @@ msgstr "con %d vertici"
 msgid "Conditional Group"
 msgstr ""
 
-#: ../src/sp-text.cpp:354 ../src/verbs.cpp:347
+#: ../src/sp-text.cpp:361 ../src/verbs.cpp:347
 #: ../share/extensions/lorem_ipsum.inx.h:8
 #: ../share/extensions/replace_font.inx.h:11 ../share/extensions/split.inx.h:10
 #: ../share/extensions/text_braille.inx.h:2
@@ -13439,12 +13430,12 @@ msgstr ""
 msgid "Text"
 msgstr "Testo"
 
-#: ../src/sp-text.cpp:377
+#: ../src/sp-text.cpp:384
 #, c-format
 msgid "on path%s (%s, %s)"
 msgstr "su tracciato%s (%s, %s)"
 
-#: ../src/sp-text.cpp:378
+#: ../src/sp-text.cpp:385
 #, c-format
 msgid "%s (%s, %s)"
 msgstr "%s (%s, %s)"
@@ -13826,7 +13817,7 @@ msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
-#: ../src/ui/dialog/aboutbox.cpp:442
+#: ../src/ui/dialog/aboutbox.cpp:438
 msgid "translator-credits"
 msgstr ""
 "Firas Hanife (FirasHanife@gmail.com)\n"
@@ -19621,7 +19612,7 @@ msgstr "Preserva il canale K nelle trasformazioni CMYK -> CMYK"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 #: ../src/ui/widget/color-icc-selector.cpp:394
-#: ../src/ui/widget/color-icc-selector.cpp:700
+#: ../src/ui/widget/color-icc-selector.cpp:699
 msgid "<none>"
 msgstr "<nessuno>"
 
@@ -21938,162 +21929,162 @@ msgstr "Correggi ortografia"
 msgid "Set SVG Font attribute"
 msgstr "Imposta attributo font SVG"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:195
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:197
 msgid "Adjust kerning value"
 msgstr "Modifica valore crenatura"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:385
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:387
 msgid "Family Name:"
 msgstr "Famiglia:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:395
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:397
 msgid "Set width:"
 msgstr "Imposta larghezza:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:454
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:456
 msgid "glyph"
 msgstr "glifo"
 
 #. SPGlyph* glyph =
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:486
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:488
 msgid "Add glyph"
 msgstr "Aggiungi glifo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:520
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:562
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:522
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:564
 msgid "Select a <b>path</b> to define the curves of a glyph"
 msgstr "Seleziona un <b>tracciato</b> per definire la forma di un glifo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:528
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:530
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:572
 msgid "The selected object does not have a <b>path</b> description."
 msgstr "L'oggetto selezionato non descrive un <b>tracciato</b>."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:535
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:537
 msgid "No glyph selected in the SVGFonts dialog."
 msgstr "Nessun glifo selezionato nella finestra SVGFonts."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:546
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:585
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:548
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:587
 msgid "Set glyph curves"
 msgstr "Imposta curve glifo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:605
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:607
 msgid "Reset missing-glyph"
 msgstr "Azzera glifi mancanti"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:621
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 msgid "Edit glyph name"
 msgstr "Modifica nome glifo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:635
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:637
 msgid "Set glyph unicode"
 msgstr "Imposta unicode glifo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:647
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:649
 msgid "Remove font"
 msgstr "Rimuovi font"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:664
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:666
 msgid "Remove glyph"
 msgstr "Rimuovi glifo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:681
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:683
 msgid "Remove kerning pair"
 msgstr "Rimuovi crenatura a coppia"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:691
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:693
 msgid "Missing Glyph:"
 msgstr "Glifi mancanti:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:695
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:697
 msgid "From selection..."
 msgstr "Dalla selezione..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:708
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:710
 msgid "Glyph name"
 msgstr "Nome del glifo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:709
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:711
 msgid "Matching string"
 msgstr "Stringa corrispondente"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:712
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:714
 msgid "Add Glyph"
 msgstr "Aggiungi glifo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:719
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:721
 msgid "Get curves from selection..."
 msgstr "Prendi forma dalla selezione..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:768
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:770
 msgid "Add kerning pair"
 msgstr "Aggiungi crenatura a coppia"
 
 #. Kerning Setup:
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:776
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:778
 msgid "Kerning Setup"
 msgstr "Impostazione crenatura"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:778
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:780
 msgid "1st Glyph:"
 msgstr "Primo glifo:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:780
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:782
 msgid "2nd Glyph:"
 msgstr "Secondo glifo:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:783
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:785
 msgid "Add pair"
 msgstr "Aggiungi coppia"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:795
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:797
 msgid "First Unicode range"
 msgstr "Primo intervallo Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:796
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:798
 msgid "Second Unicode range"
 msgstr "Secondo intervallo Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:803
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:805
 msgid "Kerning value:"
 msgstr "Valore crenatura:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:861
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:863
 msgid "Set font family"
 msgstr "Imposta famiglia font"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:870
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 msgid "font"
 msgstr "font"
 
 #. select_font(font);
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:885
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:887
 msgid "Add font"
 msgstr "Aggiungi font"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:911 ../src/ui/dialog/text-edit.cpp:69
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:913 ../src/ui/dialog/text-edit.cpp:69
 msgid "_Font"
 msgstr "_Carattere"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:919
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:921
 msgid "_Global Settings"
 msgstr "Impostazioni _globali"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:920
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:922
 msgid "_Glyphs"
 msgstr "_Glifi"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:921
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:923
 msgid "_Kerning"
 msgstr "_Crenatura"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:928
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:929
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:930
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:931
 msgid "Sample Text"
 msgstr "Testo d'esempio"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:933
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:935
 msgid "Preview Text:"
 msgstr "Anteprima testo:"
 
@@ -22229,27 +22220,27 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
 #. Align buttons
-#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1691
-#: ../src/widgets/text-toolbar.cpp:1692
+#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1680
+#: ../src/widgets/text-toolbar.cpp:1681
 msgid "Align left"
 msgstr "Allinea a sinistra"
 
-#: ../src/ui/dialog/text-edit.cpp:98 ../src/widgets/text-toolbar.cpp:1699
-#: ../src/widgets/text-toolbar.cpp:1700
+#: ../src/ui/dialog/text-edit.cpp:98 ../src/widgets/text-toolbar.cpp:1688
+#: ../src/widgets/text-toolbar.cpp:1689
 msgid "Align center"
 msgstr "Allinea al centro"
 
-#: ../src/ui/dialog/text-edit.cpp:99 ../src/widgets/text-toolbar.cpp:1707
-#: ../src/widgets/text-toolbar.cpp:1708
+#: ../src/ui/dialog/text-edit.cpp:99 ../src/widgets/text-toolbar.cpp:1696
+#: ../src/widgets/text-toolbar.cpp:1697
 msgid "Align right"
 msgstr "Allinea a destra"
 
-#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1716
+#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1705
 msgid "Justify (only flowed text)"
 msgstr "Giustificato (solo testo dinamico)"
 
 #. Direction buttons
-#: ../src/ui/dialog/text-edit.cpp:109 ../src/widgets/text-toolbar.cpp:1751
+#: ../src/ui/dialog/text-edit.cpp:109 ../src/widgets/text-toolbar.cpp:1740
 msgid "Horizontal text"
 msgstr "Testo orizzontale"
 
@@ -22257,7 +22248,12 @@ msgstr "Testo orizzontale"
 msgid "Vertical text"
 msgstr "Testo verticale"
 
-#: ../src/ui/dialog/text-edit.cpp:154
+#: ../src/ui/dialog/text-edit.cpp:130 ../src/ui/dialog/text-edit.cpp:131
+msgid "Spacing between baselines (percent of font size)"
+msgstr ""
+"Spaziatura tra le linee tipografiche (percentuale dimensione carattere)"
+
+#: ../src/ui/dialog/text-edit.cpp:147
 msgid "Text path offset"
 msgstr "Spostamento testo su tracciato"
 
@@ -23098,40 +23094,40 @@ msgstr ""
 msgid "Move the box in perspective"
 msgstr "Sposta il solido in prospettiva"
 
-#: ../src/ui/object-edit.cpp:996
+#: ../src/ui/object-edit.cpp:983
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
 msgstr ""
 "Modifica la <b>larghezza</b> dell'ellisse, con <b>Ctrl</b> per farne un "
 "cerchio"
 
-#: ../src/ui/object-edit.cpp:1000
+#: ../src/ui/object-edit.cpp:987
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr ""
 "Modifica l'<b>altezza</b> dell'ellisse, con <b>Ctrl</b> per farne un cerchio"
 
-#: ../src/ui/object-edit.cpp:1004
+#: ../src/ui/object-edit.cpp:991
 #, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Shift</b> to "
-"move with <b>end point</b>; with <b>Ctrl</b> to snap angle; drag <b>inside</"
-"b> the ellipse for arc, <b>outside</b> for segment"
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
+"snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
+"segment"
 msgstr ""
 "Posiziona il <b>punto iniziale</b> dell'arco o del segmento; con <b>Ctrl</b> "
 "per far scattare l'angolo; trascina <b>dentro</b> l'ellisse per un arco, "
 "<b>fuori</b> per un segmento"
 
-#: ../src/ui/object-edit.cpp:1010
+#: ../src/ui/object-edit.cpp:996
 #, fuzzy
 msgid ""
-"Position the <b>end point</b> of the arc or segment; with <b>Shift</b> to "
-"move with <b>start point</b>; with <b>Ctrl</b> to snap angle; drag "
-"<b>inside</b> the ellipse for arc, <b>outside</b> for segment"
+"Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to "
+"snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
+"segment"
 msgstr ""
 "Posiziona il <b>punto finale</b> dell'arco o del segmento; con <b>Ctrl</b> "
 "per far scattare l'angolo; trascina <b>dentro</b> l'ellisse per un arco, "
 "<b>fuori</b> per un segmento"
 
-#: ../src/ui/object-edit.cpp:1157
+#: ../src/ui/object-edit.cpp:1142
 msgid ""
 "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to "
 "round; with <b>Alt</b> to randomize"
@@ -23139,7 +23135,7 @@ msgstr ""
 "Modifica il <b>diametro</b> della stella o del poligono; con <b>Maiusc</b> "
 "per arrotondare; con <b>Alt</b> per avere casualità"
 
-#: ../src/ui/object-edit.cpp:1165
+#: ../src/ui/object-edit.cpp:1150
 msgid ""
 "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star "
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
@@ -23149,7 +23145,7 @@ msgstr ""
 "mantenere la direzione dei raggi (senza deformazione); con <b>Maiusc</b> per "
 "arrotondare; con <b>Alt</b> per avere casualità"
 
-#: ../src/ui/object-edit.cpp:1360
+#: ../src/ui/object-edit.cpp:1345
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
@@ -23157,7 +23153,7 @@ msgstr ""
 "Arrotola/Srotola una spirale dall'<b>interno</b>; con <b>Ctrl</b> per far "
 "scattare l'angolo; con <b>Alt</b> per far convergere/divergere"
 
-#: ../src/ui/object-edit.cpp:1364
+#: ../src/ui/object-edit.cpp:1349
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate; with <b>Alt</b> to lock radius"
@@ -23166,11 +23162,11 @@ msgstr ""
 "scattare l'angolo; con <b>Maiusc</b> per ridimensionare/ruotare; con <b>Alt</"
 "b> per bloccare il raggio"
 
-#: ../src/ui/object-edit.cpp:1413
+#: ../src/ui/object-edit.cpp:1398
 msgid "Adjust the <b>offset distance</b>"
 msgstr "Regola la <b>distanza di proiezione</b>"
 
-#: ../src/ui/object-edit.cpp:1450
+#: ../src/ui/object-edit.cpp:1435
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Trascina per ridimensionare il <b>riquadro del testo dinamico</b>"
 
@@ -24059,24 +24055,24 @@ msgstr ""
 "b> per riempire al tocco"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/ui/tools/freehand-base.cpp:661
+#: ../src/ui/tools/freehand-base.cpp:677
 msgid "Path is closed."
 msgstr "Il tracciato è chiuso."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/ui/tools/freehand-base.cpp:676
+#: ../src/ui/tools/freehand-base.cpp:692
 msgid "Closing path."
 msgstr "Chiusura tracciato."
 
-#: ../src/ui/tools/freehand-base.cpp:825
+#: ../src/ui/tools/freehand-base.cpp:831
 msgid "Draw path"
 msgstr "Disegna tracciato"
 
-#: ../src/ui/tools/freehand-base.cpp:978
+#: ../src/ui/tools/freehand-base.cpp:984
 msgid "Creating single dot"
 msgstr "Creazione singolo punto"
 
-#: ../src/ui/tools/freehand-base.cpp:979
+#: ../src/ui/tools/freehand-base.cpp:985
 msgid "Create single dot"
 msgstr "Crea singolo punto"
 
@@ -24147,7 +24143,7 @@ msgstr "Semplifica radiente"
 msgid "Create default gradient"
 msgstr "Crea gradiente predefinito"
 
-#: ../src/ui/tools/gradient-tool.cpp:569 ../src/ui/tools/mesh-tool.cpp:564
+#: ../src/ui/tools/gradient-tool.cpp:569 ../src/ui/tools/mesh-tool.cpp:561
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>Trascina</b> attorno alle maniglie per selezionarle"
 
@@ -24159,7 +24155,7 @@ msgstr "<b>Ctrl</b>: fa scattare l'angolo del gradiente"
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Maiusc</b>: disegna il gradiente attorno al punto iniziale"
 
-#: ../src/ui/tools/gradient-tool.cpp:946 ../src/ui/tools/mesh-tool.cpp:980
+#: ../src/ui/tools/gradient-tool.cpp:945 ../src/ui/tools/mesh-tool.cpp:977
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
@@ -24168,7 +24164,7 @@ msgstr[0] ""
 msgstr[1] ""
 "<b>Gradiente</b> per %d oggetti; con <b>Ctrl</b> per far scattare l'angolo"
 
-#: ../src/ui/tools/gradient-tool.cpp:950 ../src/ui/tools/mesh-tool.cpp:984
+#: ../src/ui/tools/gradient-tool.cpp:949 ../src/ui/tools/mesh-tool.cpp:981
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Seleziona l'<b>oggetto</b> su cui creare il gradiente."
 
@@ -24188,31 +24184,31 @@ msgid "Measure end, <b>Shift+Click</b> for position dialog"
 msgstr ""
 "Fine misurazione, <b>Maiusc+Clic</b> per aprire la finestra di posizionamento"
 
-#: ../src/ui/tools/measure-tool.cpp:746 ../share/extensions/measure.inx.h:2
+#: ../src/ui/tools/measure-tool.cpp:747 ../share/extensions/measure.inx.h:2
 msgid "Measure"
 msgstr "Misura"
 
-#: ../src/ui/tools/measure-tool.cpp:751
+#: ../src/ui/tools/measure-tool.cpp:752
 msgid "Base"
 msgstr ""
 
-#: ../src/ui/tools/measure-tool.cpp:760
+#: ../src/ui/tools/measure-tool.cpp:761
 msgid "Add guides from measure tool"
 msgstr "Aggiungi guide dallo strumento di misurazione"
 
-#: ../src/ui/tools/measure-tool.cpp:780
+#: ../src/ui/tools/measure-tool.cpp:781
 msgid "Keep last measure on the canvas, for reference"
 msgstr "Mantieni ultima misura fantasma sullo spazio di lavoro"
 
-#: ../src/ui/tools/measure-tool.cpp:800
+#: ../src/ui/tools/measure-tool.cpp:801
 msgid "Convert measure to items"
 msgstr "Converti misura in oggetto"
 
-#: ../src/ui/tools/measure-tool.cpp:838
+#: ../src/ui/tools/measure-tool.cpp:839
 msgid "Add global measure line"
 msgstr "Aggiungi misurazione complessiva"
 
-#: ../src/ui/tools/measure-tool.cpp:1289 ../src/ui/tools/measure-tool.cpp:1291
+#: ../src/ui/tools/measure-tool.cpp:1290 ../src/ui/tools/measure-tool.cpp:1292
 #, c-format
 msgid "Crossing %lu"
 msgstr "Intersezione %lu"
@@ -24244,51 +24240,51 @@ msgstr[1] ""
 "<b>Nessuna</b> maniglia di gradiente selezionata su %d per %d oggetti nella "
 "selezione"
 
-#: ../src/ui/tools/mesh-tool.cpp:315
+#: ../src/ui/tools/mesh-tool.cpp:311
 msgid "Split mesh row/column"
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:401
+#: ../src/ui/tools/mesh-tool.cpp:397
 msgid "Toggled mesh path type."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:405
+#: ../src/ui/tools/mesh-tool.cpp:401
 msgid "Approximated arc for mesh side."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:409
+#: ../src/ui/tools/mesh-tool.cpp:405
 msgid "Toggled mesh tensors."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:413
+#: ../src/ui/tools/mesh-tool.cpp:409
 #, fuzzy
 msgid "Smoothed mesh corner color."
 msgstr "Shader liscio contornato"
 
-#: ../src/ui/tools/mesh-tool.cpp:417
+#: ../src/ui/tools/mesh-tool.cpp:413
 #, fuzzy
 msgid "Picked mesh corner color."
 msgstr "Preleva l'opacità del colore"
 
-#: ../src/ui/tools/mesh-tool.cpp:492
+#: ../src/ui/tools/mesh-tool.cpp:489
 msgid "Create default mesh"
 msgstr "Crea maglia predefinita"
 
-#: ../src/ui/tools/mesh-tool.cpp:715
+#: ../src/ui/tools/mesh-tool.cpp:713
 msgid "FIXME<b>Ctrl</b>: snap mesh angle"
 msgstr "<b>Ctrl</b>: fa scattare l'angolo del gradiente a maglia"
 
-#: ../src/ui/tools/mesh-tool.cpp:716
+#: ../src/ui/tools/mesh-tool.cpp:714
 #, fuzzy
 msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
 msgstr "<b>Maiusc</b>: disegna attorno al punto iniziale"
 
-#: ../src/ui/tools/mesh-tool.cpp:974
+#: ../src/ui/tools/mesh-tool.cpp:971
 #, fuzzy
 msgid "Create mesh"
 msgstr "Crea maglia predefinita"
 
-#: ../src/ui/tools/node-tool.cpp:644
+#: ../src/ui/tools/node-tool.cpp:648
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
@@ -24297,19 +24293,19 @@ msgstr ""
 "<b>Maiusc</b>: trascina per aggiungere nodi alla selezione, clicca per "
 "commutare la selezione dell'oggetto"
 
-#: ../src/ui/tools/node-tool.cpp:648
+#: ../src/ui/tools/node-tool.cpp:652
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr "<b>Maiusc</b>: trascina per aggiungere nodi alla selezione"
 
-#: ../src/ui/tools/node-tool.cpp:677
+#: ../src/ui/tools/node-tool.cpp:681
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
 msgstr[0] "<b>%u di %u</b> nodo selezionato."
 msgstr[1] "<b>%u di %u</b> nodi selezionati."
 
-#: ../src/ui/tools/node-tool.cpp:684
+#: ../src/ui/tools/node-tool.cpp:688
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
@@ -24317,31 +24313,31 @@ msgstr ""
 "%s Trascina per selezionare i nodi, clicca per modificare solo questo "
 "oggetto (altro: Maiusc)"
 
-#: ../src/ui/tools/node-tool.cpp:690
+#: ../src/ui/tools/node-tool.cpp:694
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
 msgstr "%s Trascina per selezionare i nodi, clicca per annullare la selezione"
 
-#: ../src/ui/tools/node-tool.cpp:699
+#: ../src/ui/tools/node-tool.cpp:703
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr ""
 "Trascina per selezionare i nodi, clicca per modificare solo questo oggetto"
 
-#: ../src/ui/tools/node-tool.cpp:702
+#: ../src/ui/tools/node-tool.cpp:706
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr "Trascina per selezionare i nodi, clicca per annullare la selezione"
 
-#: ../src/ui/tools/node-tool.cpp:707
+#: ../src/ui/tools/node-tool.cpp:711
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 "Trascina per selezionare oggetti da modificare, clicca per modificare questo "
 "oggetto (altro: Maiusc)"
 
-#: ../src/ui/tools/node-tool.cpp:710
+#: ../src/ui/tools/node-tool.cpp:714
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr "Trascina per selezionare gli oggetti da modificare"
@@ -24540,12 +24536,12 @@ msgstr ""
 msgid "Create rectangle"
 msgstr "Crea rettangolo"
 
-#: ../src/ui/tools/select-tool.cpp:155
+#: ../src/ui/tools/select-tool.cpp:156
 msgid "Click selection to toggle scale/rotation handles"
 msgstr ""
 "Clicca la selezione per alternare le maniglie di ridimensionamento/rotazione"
 
-#: ../src/ui/tools/select-tool.cpp:156
+#: ../src/ui/tools/select-tool.cpp:157
 msgid ""
 "No objects selected. Click, Shift+click, Alt+scroll mouse on top of objects, "
 "or drag around objects to select."
@@ -24553,15 +24549,15 @@ msgstr ""
 "Nessun oggetto selezionato. Clicca, Maiusc+Clic, Alt+scorrimento mouse sugli "
 "oggetti, o trascina attorno agli oggetti per selezionare."
 
-#: ../src/ui/tools/select-tool.cpp:209
+#: ../src/ui/tools/select-tool.cpp:210
 msgid "Move canceled."
 msgstr "Spostamento cancellato."
 
-#: ../src/ui/tools/select-tool.cpp:217
+#: ../src/ui/tools/select-tool.cpp:218
 msgid "Selection canceled."
 msgstr "Selezione cancellata."
 
-#: ../src/ui/tools/select-tool.cpp:645
+#: ../src/ui/tools/select-tool.cpp:638
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
@@ -24569,7 +24565,7 @@ msgstr ""
 "<b>Disegna</b> sugli oggetti per selezionarli; rilascia <b>Alt</b> per "
 "passare alla selezione ad elastico"
 
-#: ../src/ui/tools/select-tool.cpp:647
+#: ../src/ui/tools/select-tool.cpp:640
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
@@ -24577,19 +24573,19 @@ msgstr ""
 "<b>Trascina</b> attorno agli oggetti per selezionarli; premi <b>Alt</b> per "
 "passare alla selezione col tocco"
 
-#: ../src/ui/tools/select-tool.cpp:888
+#: ../src/ui/tools/select-tool.cpp:921
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 "<b>Ctrl</b>: clicca per selezionare nei gruppi, trascina per muovere in "
 "orizzontale o verticale"
 
-#: ../src/ui/tools/select-tool.cpp:889
+#: ../src/ui/tools/select-tool.cpp:922
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 "<b>Maiusc</b>: clicca per commutare la selezione, trascina per usare la "
 "selezione ad elastico"
 
-#: ../src/ui/tools/select-tool.cpp:890
+#: ../src/ui/tools/select-tool.cpp:923
 msgid ""
 "<b>Alt</b>: click to select under; scroll mouse-wheel to cycle-select; drag "
 "to move selected or select by touch"
@@ -24597,7 +24593,7 @@ msgstr ""
 "<b>Alt</b>: clicca per selezionare sotto, scorri con il mouse per "
 "selezionare in ciclo, trascina per muovere la selezione o seleziona col tocco"
 
-#: ../src/ui/tools/select-tool.cpp:1098
+#: ../src/ui/tools/select-tool.cpp:1131
 msgid "Selected object is not a group. Cannot enter."
 msgstr "L'oggetto selezionato non è un gruppo, impossibile entrarvi."
 
@@ -24856,7 +24852,7 @@ msgstr[1] ""
 msgid "Type text"
 msgstr "Inserimento testo"
 
-#: ../src/ui/tools/tool-base.cpp:705
+#: ../src/ui/tools/tool-base.cpp:700
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr "<b>Spazio+spostamento puntatore</b> per muovere l'area di lavoro"
 
@@ -28714,7 +28710,7 @@ msgstr "(tratto finissimo)"
 #. Scale
 #: ../src/widgets/calligraphy-toolbar.cpp:427
 #: ../src/widgets/calligraphy-toolbar.cpp:460
-#: ../src/widgets/eraser-toolbar.cpp:151 ../src/widgets/pencil-toolbar.cpp:378
+#: ../src/widgets/eraser-toolbar.cpp:151 ../src/widgets/pencil-toolbar.cpp:372
 #: ../src/widgets/spray-toolbar.cpp:294 ../src/widgets/spray-toolbar.cpp:323
 #: ../src/widgets/spray-toolbar.cpp:339 ../src/widgets/spray-toolbar.cpp:408
 #: ../src/widgets/spray-toolbar.cpp:438 ../src/widgets/spray-toolbar.cpp:456
@@ -29323,8 +29319,8 @@ msgstr "Imposta motivo per il riempimento"
 msgid "Set pattern on stroke"
 msgstr "Imposta motivo per il contorno"
 
-#: ../src/widgets/font-selector.cpp:120 ../src/widgets/text-toolbar.cpp:1218
-#: ../src/widgets/text-toolbar.cpp:1617
+#: ../src/widgets/font-selector.cpp:120 ../src/widgets/text-toolbar.cpp:1207
+#: ../src/widgets/text-toolbar.cpp:1606
 msgid "Font size"
 msgstr "Dimensione carattere"
 
@@ -29658,9 +29654,9 @@ msgstr "Visualizza informazioni di misura per gli elementi selezionati"
 
 #. Add the units menu.
 #: ../src/widgets/lpe-toolbar.cpp:387 ../src/widgets/node-toolbar.cpp:613
-#: ../src/widgets/paintbucket-toolbar.cpp:168
+#: ../src/widgets/paintbucket-toolbar.cpp:167
 #: ../src/widgets/rect-toolbar.cpp:378 ../src/widgets/select-toolbar.cpp:530
-#: ../src/widgets/text-toolbar.cpp:1887
+#: ../src/widgets/text-toolbar.cpp:1876
 msgid "Units"
 msgstr "Unità"
 
@@ -29704,7 +29700,7 @@ msgstr "Calcola tutti gli oggetti."
 msgid "Compute max length."
 msgstr "Calcola la lunghezza massima."
 
-#: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1620
+#: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1609
 msgid "Font Size"
 msgstr "Dimensione carattere"
 
@@ -29887,7 +29883,7 @@ msgstr ""
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:527 ../src/widgets/pencil-toolbar.cpp:381
+#: ../src/widgets/mesh-toolbar.cpp:527 ../src/widgets/pencil-toolbar.cpp:375
 msgid "Smoothing:"
 msgstr "Smussamento:"
 
@@ -30219,19 +30215,19 @@ msgstr "<b>Motivo</b>"
 msgid "<b>Swatch fill</b>"
 msgstr "<b>Campione</b>"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:135
+#: ../src/widgets/paintbucket-toolbar.cpp:134
 msgid "Fill by"
 msgstr "Riempi con"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:136
+#: ../src/widgets/paintbucket-toolbar.cpp:135
 msgid "Fill by:"
 msgstr "Riempi con:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:148
+#: ../src/widgets/paintbucket-toolbar.cpp:147
 msgid "Fill Threshold"
 msgstr "Soglia riempimento"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:149
+#: ../src/widgets/paintbucket-toolbar.cpp:148
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -30239,36 +30235,36 @@ msgstr ""
 "La differenza massima consentita tra il pixel cliccato e i pixel vicini da "
 "contare per il riempimento"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:176
+#: ../src/widgets/paintbucket-toolbar.cpp:175
 msgid "Grow/shrink by"
 msgstr "Intrudi/Estrudi di"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:176
+#: ../src/widgets/paintbucket-toolbar.cpp:175
 msgid "Grow/shrink by:"
 msgstr "Intrudi/Estrudi di:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:177
+#: ../src/widgets/paintbucket-toolbar.cpp:176
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Di quanto estrudere (valore positivo) o intrudere (valore negativo) il "
 "riempimento creato"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:200
+#: ../src/widgets/paintbucket-toolbar.cpp:199
 msgid "Close gaps"
 msgstr "Area cuscinetto"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:201
+#: ../src/widgets/paintbucket-toolbar.cpp:200
 msgid "Close gaps:"
 msgstr "Area cuscinetto:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:212
-#: ../src/widgets/pencil-toolbar.cpp:402 ../src/widgets/spiral-toolbar.cpp:285
+#: ../src/widgets/paintbucket-toolbar.cpp:211
+#: ../src/widgets/pencil-toolbar.cpp:396 ../src/widgets/spiral-toolbar.cpp:285
 #: ../src/widgets/star-toolbar.cpp:564
 msgid "Defaults"
 msgstr "Predefiniti"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:213
+#: ../src/widgets/paintbucket-toolbar.cpp:212
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -30276,92 +30272,92 @@ msgstr ""
 "Reimposta i parametri del secchiello ai valori predefiniti (usa Preferenze "
 "di Inkscape > Strumenti per cambiare i valori predefiniti)"
 
-#: ../src/widgets/pencil-toolbar.cpp:104
+#: ../src/widgets/pencil-toolbar.cpp:105
 msgid "Bezier"
 msgstr "Bezier"
 
-#: ../src/widgets/pencil-toolbar.cpp:105
+#: ../src/widgets/pencil-toolbar.cpp:106
 msgid "Create regular Bezier path"
 msgstr "Crea tracciato Bezier normalr"
 
-#: ../src/widgets/pencil-toolbar.cpp:112
+#: ../src/widgets/pencil-toolbar.cpp:113
 msgid "Create Spiro path"
 msgstr "Crea tracciato Spiro"
 
-#: ../src/widgets/pencil-toolbar.cpp:118
+#: ../src/widgets/pencil-toolbar.cpp:119
 msgid "Create BSpline path"
 msgstr "Crea tracciato BSpline"
 
-#: ../src/widgets/pencil-toolbar.cpp:124
+#: ../src/widgets/pencil-toolbar.cpp:125
 msgid "Zigzag"
 msgstr "Zigzag"
 
-#: ../src/widgets/pencil-toolbar.cpp:125
+#: ../src/widgets/pencil-toolbar.cpp:126
 msgid "Create a sequence of straight line segments"
 msgstr "Crea una sequenza di segmenti lineari"
 
-#: ../src/widgets/pencil-toolbar.cpp:131
+#: ../src/widgets/pencil-toolbar.cpp:132
 msgid "Paraxial"
 msgstr "Parassiale"
 
-#: ../src/widgets/pencil-toolbar.cpp:132
+#: ../src/widgets/pencil-toolbar.cpp:133
 msgid "Create a sequence of paraxial line segments"
 msgstr "Crea una sequenza di segmenti parassiali"
 
-#: ../src/widgets/pencil-toolbar.cpp:140
+#: ../src/widgets/pencil-toolbar.cpp:141
 msgid "Mode of new lines drawn by this tool"
 msgstr "Modalità delle nuove linee disegnate da questo strumento"
 
-#: ../src/widgets/pencil-toolbar.cpp:175
+#: ../src/widgets/pencil-toolbar.cpp:176
 msgctxt "Freehand shape"
 msgid "None"
 msgstr "Nessuna"
 
-#: ../src/widgets/pencil-toolbar.cpp:176
+#: ../src/widgets/pencil-toolbar.cpp:177
 msgid "Triangle in"
 msgstr "Triangolo crescente"
 
-#: ../src/widgets/pencil-toolbar.cpp:177
+#: ../src/widgets/pencil-toolbar.cpp:178
 msgid "Triangle out"
 msgstr "Triangolo decrescente"
 
-#: ../src/widgets/pencil-toolbar.cpp:179
+#: ../src/widgets/pencil-toolbar.cpp:180
 msgid "From clipboard"
 msgstr "Dagli appunti"
 
-#: ../src/widgets/pencil-toolbar.cpp:180
+#: ../src/widgets/pencil-toolbar.cpp:181
 msgid "Bend from clipboard"
 msgstr "Piega dagli appunti"
 
-#: ../src/widgets/pencil-toolbar.cpp:181
+#: ../src/widgets/pencil-toolbar.cpp:182
 msgid "Last applied"
 msgstr "Ultima applicata"
 
-#: ../src/widgets/pencil-toolbar.cpp:206 ../src/widgets/pencil-toolbar.cpp:207
+#: ../src/widgets/pencil-toolbar.cpp:207 ../src/widgets/pencil-toolbar.cpp:208
 msgid "Shape:"
 msgstr "Forma:"
 
-#: ../src/widgets/pencil-toolbar.cpp:206
+#: ../src/widgets/pencil-toolbar.cpp:207
 msgid "Shape of new paths drawn by this tool"
 msgstr "Forma dei nuovi tracciati disegnati con questo strumento"
 
-#: ../src/widgets/pencil-toolbar.cpp:378
+#: ../src/widgets/pencil-toolbar.cpp:372
 msgid "(many nodes, rough)"
 msgstr "(molti nodi, grezzo)"
 
-#: ../src/widgets/pencil-toolbar.cpp:378
+#: ../src/widgets/pencil-toolbar.cpp:372
 msgid "(few nodes, smooth)"
 msgstr "(pochi nodi, smussato)"
 
-#: ../src/widgets/pencil-toolbar.cpp:381
+#: ../src/widgets/pencil-toolbar.cpp:375
 msgid "Smoothing: "
 msgstr "Smussamento:"
 
-#: ../src/widgets/pencil-toolbar.cpp:382
+#: ../src/widgets/pencil-toolbar.cpp:376
 msgid "How much smoothing (simplifying) is applied to the line"
 msgstr "Il grado di smussamento (semplificazione) applicato alla linea"
 
-#: ../src/widgets/pencil-toolbar.cpp:403
+#: ../src/widgets/pencil-toolbar.cpp:397
 msgid ""
 "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
@@ -30369,11 +30365,11 @@ msgstr ""
 "Reimposta i parametri del pastello ai valori predefiniti (usa Preferenze di "
 "Inkscape > Strumenti per cambiare i valori predefiniti)"
 
-#: ../src/widgets/pencil-toolbar.cpp:413 ../src/widgets/pencil-toolbar.cpp:414
+#: ../src/widgets/pencil-toolbar.cpp:407 ../src/widgets/pencil-toolbar.cpp:408
 msgid "LPE based interactive simplify"
 msgstr "Semplificazione interattiva LPE"
 
-#: ../src/widgets/pencil-toolbar.cpp:424 ../src/widgets/pencil-toolbar.cpp:425
+#: ../src/widgets/pencil-toolbar.cpp:418 ../src/widgets/pencil-toolbar.cpp:419
 msgid "LPE simplify flatten"
 msgstr "Semplifica tracciato LPE"
 
@@ -31282,273 +31278,273 @@ msgstr "Testo: Cambia apice o pedice"
 msgid "Text: Change alignment"
 msgstr "Testo: Cambia allineamento"
 
-#: ../src/widgets/text-toolbar.cpp:583
+#: ../src/widgets/text-toolbar.cpp:573
 msgid "Text: Change line-height"
 msgstr "Testo: Cambia spaziatura linee"
 
-#: ../src/widgets/text-toolbar.cpp:739
+#: ../src/widgets/text-toolbar.cpp:728
 msgid "Text: Change line-height unit"
 msgstr "Testo: Cambia unità spaziatura linee"
 
-#: ../src/widgets/text-toolbar.cpp:788
+#: ../src/widgets/text-toolbar.cpp:777
 msgid "Text: Change word-spacing"
 msgstr "Testo: Cambia spaziatura parole"
 
-#: ../src/widgets/text-toolbar.cpp:828
+#: ../src/widgets/text-toolbar.cpp:817
 msgid "Text: Change letter-spacing"
 msgstr "Testo: Cambia spaziatura lettere"
 
-#: ../src/widgets/text-toolbar.cpp:866
+#: ../src/widgets/text-toolbar.cpp:855
 msgid "Text: Change dx (kern)"
 msgstr "Testo: Cambia crenatura orizzontale"
 
-#: ../src/widgets/text-toolbar.cpp:900
+#: ../src/widgets/text-toolbar.cpp:889
 msgid "Text: Change dy"
 msgstr "Testo: Cambia spostamento verticale"
 
-#: ../src/widgets/text-toolbar.cpp:935
+#: ../src/widgets/text-toolbar.cpp:924
 msgid "Text: Change rotate"
 msgstr "Testo: Cambia rotazione"
 
-#: ../src/widgets/text-toolbar.cpp:988
+#: ../src/widgets/text-toolbar.cpp:977
 msgid "Text: Change writing mode"
 msgstr "Testo: Cambia modalità scrittura"
 
-#: ../src/widgets/text-toolbar.cpp:1042
+#: ../src/widgets/text-toolbar.cpp:1031
 msgid "Text: Change orientation"
 msgstr "Testo: Cambia orientamento"
 
-#: ../src/widgets/text-toolbar.cpp:1550
+#: ../src/widgets/text-toolbar.cpp:1539
 msgid "Font Family"
 msgstr "Carattere"
 
-#: ../src/widgets/text-toolbar.cpp:1551
+#: ../src/widgets/text-toolbar.cpp:1540
 msgid "Select Font Family (Alt-X to access)"
 msgstr "Seleziona famiglia carattere (Alt+X per accedervi)"
 
 #. Focus widget
 #. Enable entry completion
-#: ../src/widgets/text-toolbar.cpp:1561
+#: ../src/widgets/text-toolbar.cpp:1550
 msgid "Select all text with this font-family"
 msgstr "Seleziona tutti i testi con questa famiglia carattere"
 
-#: ../src/widgets/text-toolbar.cpp:1565
+#: ../src/widgets/text-toolbar.cpp:1554
 msgid "Font not found on system"
 msgstr "Carattere non trovato nel sistema"
 
-#: ../src/widgets/text-toolbar.cpp:1642
+#: ../src/widgets/text-toolbar.cpp:1631
 msgid "Font Style"
 msgstr "Stile carattere"
 
-#: ../src/widgets/text-toolbar.cpp:1643
+#: ../src/widgets/text-toolbar.cpp:1632
 msgid "Font style"
 msgstr "Stile carattere"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1660
+#: ../src/widgets/text-toolbar.cpp:1649
 msgid "Toggle Superscript"
 msgstr "Abilita apice"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1661
+#: ../src/widgets/text-toolbar.cpp:1650
 msgid "Toggle superscript"
 msgstr "Abilita apice"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1673
+#: ../src/widgets/text-toolbar.cpp:1662
 msgid "Toggle Subscript"
 msgstr "Abilita pedice"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1674
+#: ../src/widgets/text-toolbar.cpp:1663
 msgid "Toggle subscript"
 msgstr "Abilita pedice"
 
-#: ../src/widgets/text-toolbar.cpp:1715
+#: ../src/widgets/text-toolbar.cpp:1704
 msgid "Justify"
 msgstr "Giustifica"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1722
+#: ../src/widgets/text-toolbar.cpp:1711
 msgid "Alignment"
 msgstr "Allineamento"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1723
+#: ../src/widgets/text-toolbar.cpp:1712
 msgid "Text alignment"
 msgstr "Allineamento testo"
 
-#: ../src/widgets/text-toolbar.cpp:1750
+#: ../src/widgets/text-toolbar.cpp:1739
 msgid "Horizontal"
 msgstr "Orizzontale"
 
-#: ../src/widgets/text-toolbar.cpp:1757
+#: ../src/widgets/text-toolbar.cpp:1746
 msgid "Vertical — RL"
 msgstr "Verticale - DS"
 
-#: ../src/widgets/text-toolbar.cpp:1758
+#: ../src/widgets/text-toolbar.cpp:1747
 msgid "Vertical text — lines: right to left"
 msgstr "Testo verticale - righe da destra a sinistra"
 
-#: ../src/widgets/text-toolbar.cpp:1764
+#: ../src/widgets/text-toolbar.cpp:1753
 msgid "Vertical — LR"
 msgstr "Verticale - SD"
 
-#: ../src/widgets/text-toolbar.cpp:1765
+#: ../src/widgets/text-toolbar.cpp:1754
 msgid "Vertical text — lines: left to right"
 msgstr "Testo verticale - righe da sinistra a destra"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1770
+#: ../src/widgets/text-toolbar.cpp:1759
 msgid "Writing mode"
 msgstr "Modalità scrittura"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1771
+#: ../src/widgets/text-toolbar.cpp:1760
 msgid "Block progression"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1800
+#: ../src/widgets/text-toolbar.cpp:1789
 msgid "Auto glyph orientation"
 msgstr "Orientazione glifi automatica"
 
-#: ../src/widgets/text-toolbar.cpp:1807
+#: ../src/widgets/text-toolbar.cpp:1796
 msgid "Upright"
 msgstr "Verticale"
 
-#: ../src/widgets/text-toolbar.cpp:1808
+#: ../src/widgets/text-toolbar.cpp:1797
 msgid "Upright glyph orientation"
 msgstr "Orientazione glifi verticale"
 
-#: ../src/widgets/text-toolbar.cpp:1815
+#: ../src/widgets/text-toolbar.cpp:1804
 msgid "Sideways"
 msgstr "Orizzontale"
 
-#: ../src/widgets/text-toolbar.cpp:1816
+#: ../src/widgets/text-toolbar.cpp:1805
 msgid "Sideways glyph orientation"
 msgstr "Orientazione glifi orizzontale"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1822
+#: ../src/widgets/text-toolbar.cpp:1811
 msgid "Text orientation"
 msgstr "Orientamento testo"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1823
+#: ../src/widgets/text-toolbar.cpp:1812
 msgid "Text (glyph) orientation in vertical text."
 msgstr "Orientazione testo (glifi) nel testo verticale."
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1856
+#: ../src/widgets/text-toolbar.cpp:1845
 msgid "Smaller spacing"
 msgstr "Spaziatura minore"
 
-#: ../src/widgets/text-toolbar.cpp:1856 ../src/widgets/text-toolbar.cpp:1895
-#: ../src/widgets/text-toolbar.cpp:1926
+#: ../src/widgets/text-toolbar.cpp:1845 ../src/widgets/text-toolbar.cpp:1884
+#: ../src/widgets/text-toolbar.cpp:1915
 msgctxt "Text tool"
 msgid "Normal"
 msgstr "Normale"
 
-#: ../src/widgets/text-toolbar.cpp:1856
+#: ../src/widgets/text-toolbar.cpp:1845
 msgid "Larger spacing"
 msgstr "Spaziatura maggiore"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1861
+#: ../src/widgets/text-toolbar.cpp:1850
 msgid "Line Height"
 msgstr "Spaziatura linee"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1862
+#: ../src/widgets/text-toolbar.cpp:1851
 msgid "Line:"
 msgstr "Linea:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1863
+#: ../src/widgets/text-toolbar.cpp:1852
 msgid "Spacing between baselines (times font size)"
 msgstr "Spaziatura tra le linee tipografiche (volte dimensione carattere)"
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1895 ../src/widgets/text-toolbar.cpp:1926
+#: ../src/widgets/text-toolbar.cpp:1884 ../src/widgets/text-toolbar.cpp:1915
 msgid "Negative spacing"
 msgstr "Spaziatura negativa"
 
-#: ../src/widgets/text-toolbar.cpp:1895 ../src/widgets/text-toolbar.cpp:1926
+#: ../src/widgets/text-toolbar.cpp:1884 ../src/widgets/text-toolbar.cpp:1915
 msgid "Positive spacing"
 msgstr "Spaziatura positiva"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1900
+#: ../src/widgets/text-toolbar.cpp:1889
 msgid "Word spacing"
 msgstr "Spaziatura parole"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1901
+#: ../src/widgets/text-toolbar.cpp:1890
 msgid "Word:"
 msgstr "Parola:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1902
+#: ../src/widgets/text-toolbar.cpp:1891
 msgid "Spacing between words (px)"
 msgstr "Spaziatura tra le parole (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1931
+#: ../src/widgets/text-toolbar.cpp:1920
 msgid "Letter spacing"
 msgstr "Spaziatura lettere"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1932
+#: ../src/widgets/text-toolbar.cpp:1921
 msgid "Letter:"
 msgstr "Lettere:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1933
+#: ../src/widgets/text-toolbar.cpp:1922
 msgid "Spacing between letters (px)"
 msgstr "Spaziatura tra le lettere (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1962
+#: ../src/widgets/text-toolbar.cpp:1951
 msgid "Kerning"
 msgstr "Crenatura"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1963
+#: ../src/widgets/text-toolbar.cpp:1952
 msgid "Kern:"
 msgstr "Crenatura:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1964
+#: ../src/widgets/text-toolbar.cpp:1953
 msgid "Horizontal kerning (px)"
 msgstr "Crenatura orizzontale (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1993
+#: ../src/widgets/text-toolbar.cpp:1982
 msgid "Vertical Shift"
 msgstr "Spostamento verticale"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1994
+#: ../src/widgets/text-toolbar.cpp:1983
 msgid "Vert:"
 msgstr "Verticale:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1995
+#: ../src/widgets/text-toolbar.cpp:1984
 msgid "Vertical shift (px)"
 msgstr "Spostamento verticale (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:2024
+#: ../src/widgets/text-toolbar.cpp:2013
 msgid "Letter rotation"
 msgstr "Rotazione lettere"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:2025
+#: ../src/widgets/text-toolbar.cpp:2014
 msgid "Rot:"
 msgstr "Rotazione:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:2026
+#: ../src/widgets/text-toolbar.cpp:2015
 msgid "Character rotation (degrees)"
 msgstr "Rotazione carattere (gradi)"
 
@@ -31951,17 +31947,21 @@ msgstr "Seleziona un oggetto."
 msgid "Unable to process this object.  Try changing it into a path first."
 msgstr "Impossibile elaborare questo oggetto. Convertirlo prima in tracciato."
 
+#. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:179
-msgid "Side Length 'a' ("
-msgstr "Lunghezza lato 'a' ("
+#, fuzzy
+msgid "Side Length 'a' (px): "
+msgstr "Lunghezza lato a (px):"
 
 #: ../share/extensions/draw_from_triangle.py:180
-msgid "Side Length 'b' ("
-msgstr "Lunghezza lato 'b' ("
+#, fuzzy
+msgid "Side Length 'b' (px): "
+msgstr "Lunghezza lato b (px):"
 
 #: ../share/extensions/draw_from_triangle.py:181
-msgid "Side Length 'c' ("
-msgstr "Lunghezza lato 'c' ("
+#, fuzzy
+msgid "Side Length 'c' (px): "
+msgstr "Lunghezza lato c (px):"
 
 #: ../share/extensions/draw_from_triangle.py:182
 msgid "Angle 'A' (radians): "
@@ -31980,8 +31980,8 @@ msgid "Semiperimeter (px): "
 msgstr "Semiperimetro (px): "
 
 #: ../share/extensions/draw_from_triangle.py:186
-msgid "Area ("
-msgstr "Area ("
+msgid "Area (px^2): "
+msgstr "Area (px^2): "
 
 #: ../share/extensions/dxf_input.py:530
 #, python-format
@@ -35781,11 +35781,6 @@ msgstr "Segui Collegamento"
 msgid "Ask Us a Question"
 msgstr "Domande e risposte"
 
-#: ../share/extensions/inkscape_help_askaquestion.inx.h:2
-#, fuzzy
-msgid "https://inkscape.org/en/ask/"
-msgstr "http://inkscape.org/doc/keys092.html"
-
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
 msgid "Command Line Options"
 msgstr "Opzioni da linea di comando"
@@ -39459,12 +39454,25 @@ msgstr "Un formato grafico molto diffuso per clipart"
 msgid "XAML Input"
 msgstr "Input XAML"
 
-#~ msgid "Spacing between baselines (percent of font size)"
-#~ msgstr ""
-#~ "Spaziatura tra le linee tipografiche (percentuale dimensione carattere)"
+#, fuzzy
+#~ msgid "Min Radius:"
+#~ msgstr "Raggio:"
 
-#~ msgid "Area (px^2): "
-#~ msgstr "Area (px^2): "
+#~ msgid "Side Length 'a' ("
+#~ msgstr "Lunghezza lato 'a' ("
+
+#~ msgid "Side Length 'b' ("
+#~ msgstr "Lunghezza lato 'b' ("
+
+#~ msgid "Side Length 'c' ("
+#~ msgstr "Lunghezza lato 'c' ("
+
+#~ msgid "Area ("
+#~ msgstr "Area ("
+
+#, fuzzy
+#~ msgid "https://inkscape.org/en/ask/"
+#~ msgstr "http://inkscape.org/doc/keys092.html"
 
 #~ msgid ""
 #~ "The selected object is not a path.\n"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-06-02 12:12+0200\n"
+"POT-Creation-Date: 2016-06-08 09:06+0200\n"
 "PO-Revision-Date: 2009-10-15 14:57-0500\n"
 "Last-Translator: Jon South <striker@lunar-linux.org>\n"
 "Language-Team: \n"
@@ -4773,16 +4773,16 @@ msgstr ""
 msgid "3D Box"
 msgstr "3D Oxbay"
 
-#: ../src/color-profile.cpp:842
+#: ../src/color-profile.cpp:856
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr "Olorcay ofilespray irectoryday (%s) isway unavailableway."
 
-#: ../src/color-profile.cpp:901 ../src/color-profile.cpp:918
+#: ../src/color-profile.cpp:928 ../src/color-profile.cpp:945
 msgid "(invalid UTF-8 string)"
 msgstr "(invalidway UTF-8 ingstray)"
 
-#: ../src/color-profile.cpp:903
+#: ../src/color-profile.cpp:930
 #, fuzzy
 msgctxt "Profile name"
 msgid "None"
@@ -5380,7 +5380,7 @@ msgstr ""
 "onway ethay ailingmay istslay ifway ouyay avehay estionsquay egardingray "
 "isthay extensionway."
 
-#: ../src/extension/implementation/script.cpp:1108
+#: ../src/extension/implementation/script.cpp:1111
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -14185,23 +14185,23 @@ msgid_plural "(%d characters%s)"
 msgstr[0] "Insertway Unicodeway aracterchay"
 msgstr[1] "Insertway Unicodeway aracterchay"
 
-#: ../src/sp-guide.cpp:261
+#: ../src/sp-guide.cpp:262
 #, fuzzy
 msgid "Create Guides Around the Page"
 msgstr "Uidesgay Aroundway Agepay"
 
-#: ../src/sp-guide.cpp:274 ../src/verbs.cpp:2544
+#: ../src/sp-guide.cpp:275 ../src/verbs.cpp:2544
 #, fuzzy
 msgid "Delete All Guides"
 msgstr "Eleteday uidegay"
 
 #. Guide has probably been deleted and no longer has an attached namedview.
-#: ../src/sp-guide.cpp:485
+#: ../src/sp-guide.cpp:486
 #, fuzzy
 msgid "Deleted"
 msgstr "Eleteday"
 
-#: ../src/sp-guide.cpp:494
+#: ../src/sp-guide.cpp:495
 msgid ""
 "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to "
 "delete"
@@ -14209,17 +14209,17 @@ msgstr ""
 "<b>Iftshay+agdray</b> otay otateray, <b>Ctrl+agdray</b> otay ovemay "
 "originway, <b>Elday</b> otay eleteday"
 
-#: ../src/sp-guide.cpp:498
+#: ../src/sp-guide.cpp:499
 #, c-format
 msgid "vertical, at %s"
 msgstr "erticalvay, atway %s"
 
-#: ../src/sp-guide.cpp:501
+#: ../src/sp-guide.cpp:502
 #, c-format
 msgid "horizontal, at %s"
 msgstr "orizontalhay, atway %s"
 
-#: ../src/sp-guide.cpp:506
+#: ../src/sp-guide.cpp:507
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "atway %d egreesday, oughthray (%s,%s)"
@@ -15923,12 +15923,12 @@ msgid "License"
 msgstr "Icenselay"
 
 #: ../src/ui/dialog/document-metadata.cpp:126
-#: ../src/ui/dialog/document-properties.cpp:994
+#: ../src/ui/dialog/document-properties.cpp:1037
 msgid "<b>Dublin Core Entities</b>"
 msgstr "<b>Ublinday Orecay Entitiesway</b>"
 
 #: ../src/ui/dialog/document-metadata.cpp:168
-#: ../src/ui/dialog/document-properties.cpp:1056
+#: ../src/ui/dialog/document-properties.cpp:1099
 msgid "<b>License</b>"
 msgstr "<b>Icenselay</b>"
 
@@ -16248,149 +16248,149 @@ msgstr "Iscellaneousmay:"
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:526 ../src/verbs.cpp:3020
+#: ../src/ui/dialog/document-properties.cpp:542 ../src/verbs.cpp:3020
 msgid "Link Color Profile"
 msgstr "Inklay Olorcay Ofilepray"
 
-#: ../src/ui/dialog/document-properties.cpp:623
+#: ../src/ui/dialog/document-properties.cpp:654
 msgid "Remove linked color profile"
 msgstr "Emoveray inkedlay olorcay ofilepray"
 
-#: ../src/ui/dialog/document-properties.cpp:636
+#: ../src/ui/dialog/document-properties.cpp:673
 msgid "<b>Linked Color Profiles:</b>"
 msgstr "<b>Inkedlay Olorcay Ofilespray:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:638
+#: ../src/ui/dialog/document-properties.cpp:675
 msgid "<b>Available Color Profiles:</b>"
 msgstr "<b>Availableway Olorcay Ofilespray:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:640
+#: ../src/ui/dialog/document-properties.cpp:677
 msgid "Link Profile"
 msgstr "Inklay Ofilepray"
 
-#: ../src/ui/dialog/document-properties.cpp:643
+#: ../src/ui/dialog/document-properties.cpp:680
 #, fuzzy
 msgid "Unlink Profile"
 msgstr "Inklay Ofilepray"
 
-#: ../src/ui/dialog/document-properties.cpp:721
+#: ../src/ui/dialog/document-properties.cpp:764
 msgid "Profile Name"
 msgstr "Ofilepray Amenay"
 
-#: ../src/ui/dialog/document-properties.cpp:757
+#: ../src/ui/dialog/document-properties.cpp:800
 #, fuzzy
 msgid "External scripts"
 msgstr "Addway externalway script..."
 
-#: ../src/ui/dialog/document-properties.cpp:758
+#: ../src/ui/dialog/document-properties.cpp:801
 #, fuzzy
 msgid "Embedded scripts"
 msgstr "Emoveray idgray"
 
-#: ../src/ui/dialog/document-properties.cpp:763
+#: ../src/ui/dialog/document-properties.cpp:806
 msgid "<b>External script files:</b>"
 msgstr "<b>Externalway script ilesfay:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:765
+#: ../src/ui/dialog/document-properties.cpp:808
 msgid "Add the current file name or browse for a file"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:768
-#: ../src/ui/dialog/document-properties.cpp:845
+#: ../src/ui/dialog/document-properties.cpp:811
+#: ../src/ui/dialog/document-properties.cpp:888
 #: ../src/ui/widget/selected-style.cpp:357
 msgid "Remove"
 msgstr "Emoveray"
 
-#: ../src/ui/dialog/document-properties.cpp:832
+#: ../src/ui/dialog/document-properties.cpp:875
 msgid "Filename"
 msgstr "Ilenamefay"
 
-#: ../src/ui/dialog/document-properties.cpp:840
+#: ../src/ui/dialog/document-properties.cpp:883
 #, fuzzy
 msgid "<b>Embedded script files:</b>"
 msgstr "<b>Externalway script ilesfay:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:842
+#: ../src/ui/dialog/document-properties.cpp:885
 #: ../src/ui/dialog/objects.cpp:1894
 #, fuzzy
 msgid "New"
 msgstr "Ewnay"
 
-#: ../src/ui/dialog/document-properties.cpp:909
+#: ../src/ui/dialog/document-properties.cpp:952
 #, fuzzy
 msgid "Script id"
 msgstr "Iptscray"
 
-#: ../src/ui/dialog/document-properties.cpp:915
+#: ../src/ui/dialog/document-properties.cpp:958
 #, fuzzy
 msgid "<b>Content:</b>"
 msgstr "<b>Exponentway:</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1032
+#: ../src/ui/dialog/document-properties.cpp:1075
 #, fuzzy
 msgid "_Save as default"
 msgstr "Etsay asway efaultday"
 
-#: ../src/ui/dialog/document-properties.cpp:1033
+#: ../src/ui/dialog/document-properties.cpp:1076
 msgid "Save this metadata as the default metadata"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:1034
+#: ../src/ui/dialog/document-properties.cpp:1077
 #, fuzzy
 msgid "Use _default"
 msgstr "Ystemsay efaultday"
 
-#: ../src/ui/dialog/document-properties.cpp:1035
+#: ../src/ui/dialog/document-properties.cpp:1078
 msgid "Use the previously saved default metadata here"
 msgstr ""
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1108
+#: ../src/ui/dialog/document-properties.cpp:1151
 msgid "Add external script..."
 msgstr "Addway externalway script..."
 
-#: ../src/ui/dialog/document-properties.cpp:1147
+#: ../src/ui/dialog/document-properties.cpp:1190
 #, fuzzy
 msgid "Select a script to load"
 msgstr "Itemway isway otnay away athpay orway apeshay"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1175
+#: ../src/ui/dialog/document-properties.cpp:1218
 #, fuzzy
 msgid "Add embedded script..."
 msgstr "Addway externalway script..."
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1206
+#: ../src/ui/dialog/document-properties.cpp:1249
 msgid "Remove external script"
 msgstr "Emoveray externalway script"
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1235
+#: ../src/ui/dialog/document-properties.cpp:1278
 #, fuzzy
 msgid "Remove embedded script"
 msgstr "Emoveray idgray"
 
 #. TODO repr->set_content(_EmbeddedContent.get_buffer()->get_text());
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:1331
+#: ../src/ui/dialog/document-properties.cpp:1374
 #, fuzzy
 msgid "Edit embedded script"
 msgstr "Emoveray idgray"
 
-#: ../src/ui/dialog/document-properties.cpp:1415
+#: ../src/ui/dialog/document-properties.cpp:1458
 msgid "<b>Creation</b>"
 msgstr "<b>Eationcray</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1416
+#: ../src/ui/dialog/document-properties.cpp:1459
 msgid "<b>Defined grids</b>"
 msgstr "<b>Efinedday idsgray</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:1660
+#: ../src/ui/dialog/document-properties.cpp:1703
 msgid "Remove grid"
 msgstr "Emoveray idgray"
 
-#: ../src/ui/dialog/document-properties.cpp:1752
+#: ../src/ui/dialog/document-properties.cpp:1795
 #, fuzzy
 msgid "Changed default display unit"
 msgstr "Unnamedway ocumentday %d"
@@ -20913,7 +20913,7 @@ msgstr "Eservepray K annelchay in CMYK -> CMYK ansformstray"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 #: ../src/ui/widget/color-icc-selector.cpp:394
-#: ../src/ui/widget/color-icc-selector.cpp:685
+#: ../src/ui/widget/color-icc-selector.cpp:699
 msgid "<none>"
 msgstr "<none>"
 
@@ -25767,7 +25767,7 @@ msgid "Add guides from measure tool"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:781
-msgid "Add Stored to measure tool"
+msgid "Keep last measure on the canvas, for reference"
 msgstr ""
 
 #: ../src/ui/tools/measure-tool.cpp:801

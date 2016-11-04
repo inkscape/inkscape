@@ -1,8 +1,8 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-#: ../src/ui/dialog/clonetiler.cpp:1010
 # Dongjun Wu <ziyawu@gmail.com>, 2011, 2012, 2013, 2014, 2016.
+#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
@@ -8286,7 +8286,8 @@ msgstr "在 &lt;defs&gt; 沒有未使用的定義。"
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
-msgstr "找不到 Inkscape 擴充功能來儲存檔案 (%s) 。這可能是因不明的副檔名所導致。"
+msgstr ""
+"找不到 Inkscape 擴充功能來儲存檔案 (%s) 。這可能是因不明的副檔名所導致。"
 
 #: ../src/file.cpp:680 ../src/file.cpp:688 ../src/file.cpp:696
 #: ../src/file.cpp:702 ../src/file.cpp:707
@@ -8747,7 +8748,8 @@ msgstr "管理器"
 
 #: ../src/libgdl/gdl-dock-bar.c:106
 msgid "GdlDockMaster object which the dockbar widget is attached to"
-msgstr "工具欄列介面元件被放到圖形裝置介面 (GDI) 工具欄管理器 (GdlDockMaster) 物件"
+msgstr ""
+"工具欄列介面元件被放到圖形裝置介面 (GDI) 工具欄管理器 (GdlDockMaster) 物件"
 
 #: ../src/libgdl/gdl-dock-bar.c:113
 msgid "Dockbar style"
@@ -8898,7 +8900,8 @@ msgstr "切換按鈕樣式"
 msgid ""
 "master %p: unable to add object %p[%s] to the hash.  There already is an "
 "item with that name (%p)."
-msgstr "管理器 %p：無法加入物件 %p[%s] 到此信息。已有一個相同名稱 (%p) 的項目。"
+msgstr ""
+"管理器 %p：無法加入物件 %p[%s] 到此信息。已有一個相同名稱 (%p) 的項目。"
 
 #: ../src/libgdl/gdl-dock-master.c:955
 #, c-format
@@ -10274,7 +10277,8 @@ msgstr "控制柄 32x33x34x35："
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
-msgstr "控制柄 32x33x34x35  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
+msgstr ""
+"控制柄 32x33x34x35  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
 #: ../src/live_effects/lpe-lattice2.cpp:239
 msgid "Reset grid"
@@ -13086,7 +13090,8 @@ msgstr "請至少選擇 <b>1 條路徑</b>來執行布林聯集。"
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
-msgstr "無法決定選取物件的<b>排列順序</b>來進行差集﹑互斥 (XOR)﹑分割或剪切路徑。"
+msgstr ""
+"無法決定選取物件的<b>排列順序</b>來進行差集﹑互斥 (XOR)﹑分割或剪切路徑。"
 
 #: ../src/splivarot.cpp:408
 msgid ""
@@ -14256,7 +14261,8 @@ msgstr "使用已儲存的鋪排大小和位置"
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
-msgstr "假定鋪排的大小和位置跟上一次使用鋪排時相同 (如果有的話)，而不是使用目前的大小"
+msgstr ""
+"假定鋪排的大小和位置跟上一次使用鋪排時相同 (如果有的話)，而不是使用目前的大小"
 
 #: ../src/ui/dialog/clonetiler.cpp:1254
 msgid " <b>_Create</b> "
@@ -15892,7 +15898,8 @@ msgstr ""
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
-msgstr "此<b>圖片 (feImage) </b>濾鏡基元會用外部的影像或文件的其他部份來填充該區域。"
+msgstr ""
+"此<b>圖片 (feImage) </b>濾鏡基元會用外部的影像或文件的其他部份來填充該區域。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:3026
 msgid ""
@@ -17416,7 +17423,8 @@ msgstr "拖曳節點時更新輪廓"
 msgid ""
 "Update the outline when dragging or transforming nodes; if this is off, the "
 "outline will only update when completing a drag"
-msgstr "拖曳或變形節點時更新輪廓；若停用這選項，只有在完成拖曳動作時才會更新輪廓"
+msgstr ""
+"拖曳或變形節點時更新輪廓；若停用這選項，只有在完成拖曳動作時才會更新輪廓"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:371
 msgid "Update paths when dragging nodes"
@@ -17426,7 +17434,8 @@ msgstr "拖曳節點時更新路徑"
 msgid ""
 "Update paths when dragging or transforming nodes; if this is off, paths will "
 "only be updated when completing a drag"
-msgstr "拖曳或變形節點時更新路徑；若停用這選項，只有在完成拖曳動作時才會更新路徑"
+msgstr ""
+"拖曳或變形節點時更新路徑；若停用這選項，只有在完成拖曳動作時才會更新路徑"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:373
 msgid "Show path direction on outlines"
@@ -17536,7 +17545,8 @@ msgstr "草圖模式"
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch"
-msgstr "若開啟，該草圖結果是全部草圖製作的普通平均值，而不是用新草圖平均之前的結果"
+msgstr ""
+"若開啟，該草圖結果是全部草圖製作的普通平均值，而不是用新草圖平均之前的結果"
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
@@ -18607,7 +18617,8 @@ msgstr "使用命名顏色"
 msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
 "'magenta') instead of the numeric value"
-msgstr "若設定，可用 (例如：'red' 或 'magenta') 時寫入顏色的 CSS 名稱而不是數值"
+msgstr ""
+"若設定，可用 (例如：'red' 或 'magenta') 時寫入顏色的 CSS 名稱而不是數值"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:928
 msgid "XML formatting"
@@ -18786,7 +18797,8 @@ msgstr "編輯階段"
 msgid ""
 "Check attributes and style properties while editing SVG files (may slow down "
 "Inkscape, mostly useful for debugging)"
-msgstr "編輯 SVG 檔案時檢查屬性值和樣式屬性 (可能會讓 Inkscape 變慢，大多用來除錯)"
+msgstr ""
+"編輯 SVG 檔案時檢查屬性值和樣式屬性 (可能會讓 Inkscape 變慢，大多用來除錯)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:988
 msgid "Writing"
@@ -19323,7 +19335,8 @@ msgid ""
 "When dragging a knot along a constraint line, then snap the position of the "
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
-msgstr "沿著限定直線拖曳節點時，貼齊滑鼠游標的位置而不是向限定線來貼齊環結的突起部位"
+msgstr ""
+"沿著限定直線拖曳節點時，貼齊滑鼠游標的位置而不是向限定線來貼齊環結的突起部位"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1301
 msgid "Delayed snap"
@@ -19630,7 +19643,8 @@ msgstr "MiB"
 msgid ""
 "Set the amount of memory per document which can be used to store rendered "
 "parts of the drawing for later reuse; set to zero to disable caching"
-msgstr "設定每份文件存取稍候可重複使用的圖畫繪算部分記憶體容量；設定為零可停用快取"
+msgstr ""
+"設定每份文件存取稍候可重複使用的圖畫繪算部分記憶體容量；設定為零可停用快取"
 
 #. blur quality
 #. filter quality
@@ -19668,7 +19682,8 @@ msgstr "高斯模糊顯示品質"
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
-msgstr "最佳品質，於高倍畫面縮放時顯示也許會非常慢 (點陣圖匯出時會自動使用最佳品質)"
+msgstr ""
+"最佳品質，於高倍畫面縮放時顯示也許會非常慢 (點陣圖匯出時會自動使用最佳品質)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1451
 #: ../src/ui/dialog/inkscape-preferences.cpp:1475
@@ -19798,7 +19813,8 @@ msgstr "點陣圖"
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added separately to "
-msgstr "選擇要使用的預先定義快捷鍵檔案。任何你建立的自訂快捷鍵都會個別加入到該檔案"
+msgstr ""
+"選擇要使用的預先定義快捷鍵檔案。任何你建立的自訂快捷鍵都會個別加入到該檔案"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1552
 msgid "Shortcut file:"
@@ -19916,7 +19932,8 @@ msgstr "預先繪算命名圖示"
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
-msgstr "開啟時，顯示使用介面前會繪算命名圖示。這是為了避開在 GTK+ 命名圖示通知的錯誤"
+msgstr ""
+"開啟時，顯示使用介面前會繪算命名圖示。這是為了避開在 GTK+ 命名圖示通知的錯誤"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1977
 msgid "System info"
@@ -20677,13 +20694,15 @@ msgstr "物件有套用裁剪或遮罩嗎？"
 msgid ""
 "Highlight color of outline in Node tool. Click to set. If alpha is zero, use "
 "inherited color."
-msgstr "節點工具中外框的高亮度顯示顏色。點擊可設定。如果透明值為零，使用繼承的顏色。"
+msgstr ""
+"節點工具中外框的高亮度顯示顏色。點擊可設定。如果透明值為零，使用繼承的顏色。"
 
 #: ../src/ui/dialog/objects.cpp:1734
 msgid ""
 "Layer/Group/Object label (inkscape:label). Double-click to set. Default "
 "value is object 'id'."
-msgstr "圖層/群組/物件標籤 (inkscape:label)。點擊兩下可設定。預設值是物件「識別碼」。"
+msgstr ""
+"圖層/群組/物件標籤 (inkscape:label)。點擊兩下可設定。預設值是物件「識別碼」。"
 
 #: ../src/ui/dialog/objects.cpp:1831
 msgid "Add layer..."
@@ -22220,7 +22239,8 @@ msgstr "調整<b>垂直圓角</b>半徑；按著 <b>Ctrl</b> 可讓水平半徑�
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
-msgstr "調整矩形的<b>寬度和高度</b>；按著 <b>Ctrl</b> 可鎖定比例或只伸展單一尺寸"
+msgstr ""
+"調整矩形的<b>寬度和高度</b>；按著 <b>Ctrl</b> 可鎖定比例或只伸展單一尺寸"
 
 #: ../src/ui/object-edit.cpp:712 ../src/ui/object-edit.cpp:716
 #: ../src/ui/object-edit.cpp:720 ../src/ui/object-edit.cpp:724
@@ -22802,7 +22822,8 @@ msgstr "<b>拖曳</b>、<b>點擊</b>或<b>滾動滑鼠滾輪</b>來噴灑選取
 msgid ""
 "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and "
 "resize. <b>Click</b> to select."
-msgstr "<b>拖曳</b>可建立矩形。<b>拖曳控制點</b>可調整圓角及大小。<b>點擊</b>可選取。"
+msgstr ""
+"<b>拖曳</b>可建立矩形。<b>拖曳控制點</b>可調整圓角及大小。<b>點擊</b>可選取。"
 
 #: ../src/ui/tools-switch.cpp:106
 msgid ""
@@ -22824,7 +22845,8 @@ msgstr ""
 msgid ""
 "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. "
 "<b>Click</b> to select."
-msgstr "<b>拖曳</b>可建立星形。<b>拖曳控制點</b>可編輯星形的形狀。<b>點擊</b>可選取。"
+msgstr ""
+"<b>拖曳</b>可建立星形。<b>拖曳控制點</b>可編輯星形的形狀。<b>點擊</b>可選取。"
 
 #: ../src/ui/tools-switch.cpp:109
 msgid ""
@@ -23477,7 +23499,8 @@ msgstr ""
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 可貼齊角度"
+msgstr ""
+"<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 可貼齊角度"
 
 #: ../src/ui/tools/pen-tool.cpp:1843
 #, c-format
@@ -23842,8 +23865,10 @@ msgid ""
 msgid_plural ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
-msgstr[0] "輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
-msgstr[1] "輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
+msgstr[0] ""
+"輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
+msgstr[1] ""
+"輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
 
 #: ../src/ui/tools/text-tool.cpp:1575
 #, c-format
@@ -25141,7 +25166,8 @@ msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected "
 "box(es)"
 msgstr[0] "有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 拖曳可分開選取的立方體"
-msgstr[1] "有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 並拖曳可分開選取的立方體"
+msgstr[1] ""
+"有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 並拖曳可分開選取的立方體"
 
 #: ../src/verbs.cpp:137
 msgid "File"
@@ -28764,7 +28790,8 @@ msgstr "橢圓化"
 msgid ""
 "Make selected sides elliptical by changing length of handles. Works best if "
 "handles already approximate ellipse."
-msgstr "變更控制柄長度以將選擇的邊橢圓化。若控制柄已經接近橢圓形的時候效果最好。"
+msgstr ""
+"變更控制柄長度以將選擇的邊橢圓化。若控制柄已經接近橢圓形的時候效果最好。"
 
 #: ../src/widgets/mesh-toolbar.cpp:552
 msgid "Make elliptical:"
@@ -30953,7 +30980,8 @@ msgstr ""
 msgid ""
 "Warning! Tool's and default tool's parameter's (%s) types are not the same "
 "( type('%s') != type('%s') )."
-msgstr "警告！刀具和預設刀具的參數 (%s) 類型不相同 ( 類型('%s') != 類型('%s'))。"
+msgstr ""
+"警告！刀具和預設刀具的參數 (%s) 類型不相同 ( 類型('%s') != 類型('%s'))。"
 
 #: ../share/extensions/gcodetools.py:4372
 #, python-format
@@ -31503,8 +31531,7 @@ msgid ""
 "   into the following Inkscape folder: C:\\[Program files]\\inkscape\\python"
 "\\Lib\\"
 msgstr ""
-"   到下列 Inkscape 資料夾：C:\\[Program files]\\inkscape\\python"
-"\\Lib\\"
+"   到下列 Inkscape 資料夾：C:\\[Program files]\\inkscape\\python\\Lib\\"
 
 #: ../share/extensions/plotter.py:151
 msgid "3. Close and restart Inkscape."
@@ -32090,7 +32117,8 @@ msgstr ""
 msgid ""
 "In order to import Dia files, Dia itself must be installed.  You can get Dia "
 "at http://live.gnome.org/Dia"
-msgstr "想要匯入 Dia 檔案，必須安裝 Dia。你可在 http://live.gnome.org/Dia 取得該程式"
+msgstr ""
+"想要匯入 Dia 檔案，必須安裝 Dia。你可在 http://live.gnome.org/Dia 取得該程式"
 
 #: ../share/extensions/dia.inx.h:4
 msgid "Dia Diagram (*.dia)"
@@ -34405,7 +34433,8 @@ msgstr "刀具偏移校正 (公釐)："
 msgid ""
 "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit "
 "command (Default: 0.25)"
-msgstr "刀具尖端到刀具軸的偏移，單位為公釐，設定為 0 表示省略指令 (預設:「0.25」)"
+msgstr ""
+"刀具尖端到刀具軸的偏移，單位為公釐，設定為 0 表示省略指令 (預設:「0.25」)"
 
 #: ../share/extensions/hpgl_output.inx.h:28
 #: ../share/extensions/plotter.inx.h:56
@@ -37816,7 +37845,8 @@ msgstr "在所有其他裡將第一次選擇設定為屬性"
 msgid ""
 "This effect adds a feature visible (or usable) only on a SVG enabled web "
 "browser (like Firefox)."
-msgstr "這個特效增加的功能只可見 (或可用) 於支援 SVG 的網頁瀏覽器 (如 firefox)。"
+msgstr ""
+"這個特效增加的功能只可見 (或可用) 於支援 SVG 的網頁瀏覽器 (如 firefox)。"
 
 #: ../share/extensions/web-set-att.inx.h:27
 msgid ""
@@ -37868,7 +37898,8 @@ msgstr "第一個選擇傳輸到全部其他"
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when an event occurs."
-msgstr "當一個事件發生時，這個特效傳輸一個或多個屬性從第一個選擇的元件到第二個。"
+msgstr ""
+"當一個事件發生時，這個特效傳輸一個或多個屬性從第一個選擇的元件到第二個。"
 
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid ""

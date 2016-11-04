@@ -12,11 +12,12 @@
 # Xavier Beà, <xavier.bea@gmail.com>, 2015
 # Carles Ferrando, <carles.ferrando@gmail.com>, 2015
 #
+#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-24 07:17+0200\n"
+"POT-Creation-Date: 2016-06-08 09:06+0200\n"
 "PO-Revision-Date: 2016-10-24 07:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: Catalan <gnome@llistes.softcatala.org>\n"
@@ -3397,1033 +3398,1033 @@ msgstr "Tela (mapa de bits)"
 msgid "Old paint (bitmap)"
 msgstr "Pintura vella (mapa de bits)"
 
-#. Symbols: ./MapSymbolsNPS.svg
+#. Symbols: ./AigaSymbols.svg
 #: ../share/symbols/symbols.h:2
-msgctxt "Symbol"
-msgid "United States National Park Service Map Symbols"
-msgstr "Símbols de mapes del servei de parcs nacionals dels Estats Units"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:3 ../share/symbols/symbols.h:4
-msgctxt "Symbol"
-msgid "Airport"
-msgstr "Aeroport"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:5 ../share/symbols/symbols.h:6
-msgctxt "Symbol"
-msgid "Amphitheatre"
-msgstr "Amfiteatre"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:7 ../share/symbols/symbols.h:8
-msgctxt "Symbol"
-msgid "Bicycle Trail"
-msgstr "Camí de bicicletes"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
-msgctxt "Symbol"
-msgid "Boat Launch"
-msgstr "Moll"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
-msgctxt "Symbol"
-msgid "Boat Tour"
-msgstr "Turisme fluvial"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
-msgctxt "Symbol"
-msgid "Bus Stop"
-msgstr "Parada d'autobús"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:15 ../share/symbols/symbols.h:16
-msgctxt "Symbol"
-msgid "Campfire"
-msgstr "Foc de camp"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
-msgctxt "Symbol"
-msgid "Campground"
-msgstr "Càmping"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
-msgctxt "Symbol"
-msgid "CanoeAccess"
-msgstr "Accés amb canoa"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
-msgctxt "Symbol"
-msgid "Crosscountry Ski Trail"
-msgstr "Pista d'esquí camp a través"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:23 ../share/symbols/symbols.h:24
-msgctxt "Symbol"
-msgid "Downhill Skiing"
-msgstr "Esquí alpí"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:25 ../share/symbols/symbols.h:26
-msgctxt "Symbol"
-msgid "Drinking Water"
-msgstr "Aigua per beure"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:27 ../share/symbols/symbols.h:28
-#: ../share/symbols/symbols.h:172 ../share/symbols/symbols.h:173
-msgctxt "Symbol"
-msgid "First Aid"
-msgstr "Primers auxilis"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:29 ../share/symbols/symbols.h:30
-msgctxt "Symbol"
-msgid "Fishing"
-msgstr "Pesca"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:31 ../share/symbols/symbols.h:32
-msgctxt "Symbol"
-msgid "Food Service"
-msgstr "Servei de restauració"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:33 ../share/symbols/symbols.h:34
-msgctxt "Symbol"
-msgid "Four Wheel Drive Road"
-msgstr "Carretera per cotxes 4x4"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
-msgctxt "Symbol"
-msgid "Gas Station"
-msgstr "Benzinera"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:37 ../share/symbols/symbols.h:38
-msgctxt "Symbol"
-msgid "Golfing"
-msgstr "Golf"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:39 ../share/symbols/symbols.h:40
-msgctxt "Symbol"
-msgid "Horseback Riding"
-msgstr "Cavalcada"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:41 ../share/symbols/symbols.h:42
-msgctxt "Symbol"
-msgid "Hospital"
-msgstr "Hospital"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
-msgctxt "Symbol"
-msgid "Ice Skating"
-msgstr "Esqui sobre gel"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
-#: ../share/symbols/symbols.h:206 ../share/symbols/symbols.h:207
-msgctxt "Symbol"
-msgid "Information"
-msgstr "Informació"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
-msgctxt "Symbol"
-msgid "Litter Receptacle"
-msgstr "Recipient d'escombraries"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:49 ../share/symbols/symbols.h:50
-msgctxt "Symbol"
-msgid "Lodging"
-msgstr "Allotjament"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:51 ../share/symbols/symbols.h:52
-msgctxt "Symbol"
-msgid "Marina"
-msgstr "Marina"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:53 ../share/symbols/symbols.h:54
-msgctxt "Symbol"
-msgid "Motorbike Trail"
-msgstr "Camí de motos"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:55 ../share/symbols/symbols.h:56
-msgctxt "Symbol"
-msgid "Radiator Water"
-msgstr "Radiador refrigerat per aigua"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:57 ../share/symbols/symbols.h:58
-msgctxt "Symbol"
-msgid "Recycling"
-msgstr "Reciclatge"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:59 ../share/symbols/symbols.h:60
-#: ../share/symbols/symbols.h:258 ../share/symbols/symbols.h:259
-msgctxt "Symbol"
-msgid "Parking"
-msgstr "Aparcament"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
-msgctxt "Symbol"
-msgid "Pets On Leash"
-msgstr "Símbols de mascotes"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:63 ../share/symbols/symbols.h:64
-msgctxt "Symbol"
-msgid "Picnic Area"
-msgstr "Àrea de pícnic"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:65 ../share/symbols/symbols.h:66
-msgctxt "Symbol"
-msgid "Post Office"
-msgstr "Oficina de correus"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:67 ../share/symbols/symbols.h:68
-msgctxt "Symbol"
-msgid "Ranger Station"
-msgstr "Estació de rangers"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
-msgctxt "Symbol"
-msgid "RV Campground"
-msgstr "Càmping de caravanes"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
-msgctxt "Symbol"
-msgid "Restrooms"
-msgstr "Banys"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:73 ../share/symbols/symbols.h:74
-msgctxt "Symbol"
-msgid "Sailing"
-msgstr "Navegació a vela"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
-msgctxt "Symbol"
-msgid "Sanitary Disposal Station"
-msgstr "Estació sanitària"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
-msgctxt "Symbol"
-msgid "Scuba Diving"
-msgstr "Submarinisme"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
-msgctxt "Symbol"
-msgid "Self Guided Trail"
-msgstr "Ruta sense guia"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
-msgctxt "Symbol"
-msgid "Shelter"
-msgstr "Abric"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:83 ../share/symbols/symbols.h:84
-msgctxt "Symbol"
-msgid "Showers"
-msgstr "Dutxes"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:85 ../share/symbols/symbols.h:86
-msgctxt "Symbol"
-msgid "Sledding"
-msgstr "Trineu"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:87 ../share/symbols/symbols.h:88
-msgctxt "Symbol"
-msgid "SnowmobileTrail"
-msgstr "Pista de motos de neu"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:89 ../share/symbols/symbols.h:90
-msgctxt "Symbol"
-msgid "Stable"
-msgstr "Estable"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:91 ../share/symbols/symbols.h:92
-msgctxt "Symbol"
-msgid "Store"
-msgstr "Botiga"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:93 ../share/symbols/symbols.h:94
-msgctxt "Symbol"
-msgid "Swimming"
-msgstr "Natació"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:95 ../share/symbols/symbols.h:96
-#: ../share/symbols/symbols.h:162 ../share/symbols/symbols.h:163
-msgctxt "Symbol"
-msgid "Telephone"
-msgstr "Telèfon"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:97 ../share/symbols/symbols.h:98
-msgctxt "Symbol"
-msgid "Emergency Telephone"
-msgstr "Telèfon d'emergències"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:99 ../share/symbols/symbols.h:100
-msgctxt "Symbol"
-msgid "Trailhead"
-msgstr "Començament del camí"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
-msgctxt "Symbol"
-msgid "Wheelchair Accessible"
-msgstr "Accessible amb cadira de rodes"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
-msgctxt "Symbol"
-msgid "Wind Surfing"
-msgstr "Surf de vela"
-
-#. Symbols: ./MapSymbolsNPS.svg
-#: ../share/symbols/symbols.h:105
-msgctxt "Symbol"
-msgid "Blank"
-msgstr "Negre"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:106
-msgctxt "Symbol"
-msgid "Flow Chart Shapes"
-msgstr "Diagrames de flux"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:107
-msgctxt "Symbol"
-msgid "Process"
-msgstr "Procés"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:108
-msgctxt "Symbol"
-msgid "Input/Output"
-msgstr "Entrada/Sortida"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:109
-msgctxt "Symbol"
-msgid "Document"
-msgstr "Document"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:110
-msgctxt "Symbol"
-msgid "Manual Operation"
-msgstr "Operació manual"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:111
-msgctxt "Symbol"
-msgid "Preparation"
-msgstr "Preparació"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:112
-msgctxt "Symbol"
-msgid "Merge"
-msgstr "Combina"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:113
-msgctxt "Symbol"
-msgid "Decision"
-msgstr "Decisió"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:114
-msgctxt "Symbol"
-msgid "Magnetic Tape"
-msgstr "Cinta magnètica"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:115
-msgctxt "Symbol"
-msgid "Display"
-msgstr "Visualització"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:116
-msgctxt "Symbol"
-msgid "Auxiliary Operation"
-msgstr "Operació auxiliar"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:117
-msgctxt "Symbol"
-msgid "Manual Input"
-msgstr "Entrada manual"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:118
-msgctxt "Symbol"
-msgid "Extract"
-msgstr "Extreu"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:119
-msgctxt "Symbol"
-msgid "Terminal/Interrupt"
-msgstr "Terminal / Interrupció"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:120
-msgctxt "Symbol"
-msgid "Punched Card"
-msgstr "Targeta perforada"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:121
-msgctxt "Symbol"
-msgid "Punch Tape"
-msgstr "Cinta perforada"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:122
-msgctxt "Symbol"
-msgid "Online Storage"
-msgstr "Emmagatzematge en línia"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:123
-msgctxt "Symbol"
-msgid "Keying"
-msgstr "Teclejant"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:124
-msgctxt "Symbol"
-msgid "Sort"
-msgstr "Ordena"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:125
-msgctxt "Symbol"
-msgid "Connector"
-msgstr "Connector"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:126
-msgctxt "Symbol"
-msgid "Off-Page Connector"
-msgstr "Connector fora de pàgina"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:127
-msgctxt "Symbol"
-msgid "Transmittal Tape"
-msgstr "Cinta de transmissió"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:128
-msgctxt "Symbol"
-msgid "Communication Link"
-msgstr "Enllaç de comunicació"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:129
-msgctxt "Symbol"
-msgid "Collate"
-msgstr "Col·lecciona"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:130
-msgctxt "Symbol"
-msgid "Comment/Annotation"
-msgstr "Comenta / anota"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:131
-msgctxt "Symbol"
-msgid "Core"
-msgstr "Nucli"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:132
-msgctxt "Symbol"
-msgid "Predefined Process"
-msgstr "Procés predefinit"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:133
-msgctxt "Symbol"
-msgid "Magnetic Disk (Database)"
-msgstr "Disc magnètic (base de dades)"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:134
-msgctxt "Symbol"
-msgid "Magnetic Drum (Direct Access)"
-msgstr "Tambor magnètic (accés directe)"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:135
-msgctxt "Symbol"
-msgid "Offline Storage"
-msgstr "Emmagatzematge fora de línia"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:136
-msgctxt "Symbol"
-msgid "Logical Or"
-msgstr "O lògica"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:137
-msgctxt "Symbol"
-msgid "Logical And"
-msgstr "I lògica"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:138
-msgctxt "Symbol"
-msgid "Delay"
-msgstr "Retard"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:139
-msgctxt "Symbol"
-msgid "Loop Limit Begin"
-msgstr "Inici del límit del bucle"
-
-#. Symbols: ./FlowSymbols.svg
-#: ../share/symbols/symbols.h:140
-msgctxt "Symbol"
-msgid "Loop Limit End"
-msgstr "Final del límit del bucle"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:141
-msgctxt "Symbol"
-msgid "Word Balloons"
-msgstr "Bafarada"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:142
-msgctxt "Symbol"
-msgid "Thought Balloon"
-msgstr "Bafarada pensant"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:143
-msgctxt "Symbol"
-msgid "Dream Speaking"
-msgstr "Bafarada somiant"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:144
-msgctxt "Symbol"
-msgid "Rounded Balloon"
-msgstr "Bafarada redona"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:145
-msgctxt "Symbol"
-msgid "Squared Balloon"
-msgstr "Bafarada quadrada"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:146
-msgctxt "Symbol"
-msgid "Over the Phone"
-msgstr "Al telèfon"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:147
-msgctxt "Symbol"
-msgid "Hip Balloon"
-msgstr "Bafarada a la moda"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:148
-msgctxt "Symbol"
-msgid "Circle Balloon"
-msgstr "Bafarada cercle"
-
-#. Symbols: ./BalloonSymbols.svg
-#: ../share/symbols/symbols.h:149
-msgctxt "Symbol"
-msgid "Exclaim Balloon"
-msgstr "Bafarada exclamació"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:150
-msgctxt "Symbol"
-msgid "Logic Symbols"
-msgstr "Símbols lògics"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:151
-msgctxt "Symbol"
-msgid "Xnor Gate"
-msgstr "Porta XNOR"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:152
-msgctxt "Symbol"
-msgid "Xor Gate"
-msgstr "Porta XOR"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:153
-msgctxt "Symbol"
-msgid "Nor Gate"
-msgstr "Porta NOR"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:154
-msgctxt "Symbol"
-msgid "Or Gate"
-msgstr "Porta OR"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:155
-msgctxt "Symbol"
-msgid "Nand Gate"
-msgstr "Porta NAND"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:156
-msgctxt "Symbol"
-msgid "And Gate"
-msgstr "Porta AND"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:157
-msgctxt "Symbol"
-msgid "Buffer"
-msgstr "Memòria intermèdia"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:158
-msgctxt "Symbol"
-msgid "Not Gate"
-msgstr "Porta NOT"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:159
-msgctxt "Symbol"
-msgid "Buffer Small"
-msgstr "Memòria intermèdia petita"
-
-#. Symbols: ./LogicSymbols.svg
-#: ../share/symbols/symbols.h:160
-msgctxt "Symbol"
-msgid "Not Gate Small"
-msgstr "Sense porta petita"
-
-#. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:161
 msgctxt "Symbol"
 msgid "AIGA Symbol Signs"
 msgstr "Símbols i signes AIGA"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:164 ../share/symbols/symbols.h:165
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:3 ../share/symbols/symbols.h:4
+#: ../share/symbols/symbols.h:281 ../share/symbols/symbols.h:282
+msgctxt "Symbol"
+msgid "Telephone"
+msgstr "Telèfon"
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:5 ../share/symbols/symbols.h:6
 msgctxt "Symbol"
 msgid "Mail"
 msgstr "Correu"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:166 ../share/symbols/symbols.h:167
+#: ../share/symbols/symbols.h:7 ../share/symbols/symbols.h:8
 msgctxt "Symbol"
 msgid "Currency Exchange"
 msgstr "Canvi de moneda"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:168 ../share/symbols/symbols.h:169
+#: ../share/symbols/symbols.h:9 ../share/symbols/symbols.h:10
 msgctxt "Symbol"
 msgid "Currency Exchange - Euro"
 msgstr "Canvi de moneda - Euros"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:170 ../share/symbols/symbols.h:171
+#: ../share/symbols/symbols.h:11 ../share/symbols/symbols.h:12
 msgctxt "Symbol"
 msgid "Cashier"
 msgstr "Caixer"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:174 ../share/symbols/symbols.h:175
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:13 ../share/symbols/symbols.h:14
+#: ../share/symbols/symbols.h:213 ../share/symbols/symbols.h:214
+msgctxt "Symbol"
+msgid "First Aid"
+msgstr "Primers auxilis"
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:15 ../share/symbols/symbols.h:16
 msgctxt "Symbol"
 msgid "Lost and Found"
 msgstr "Perdut i trobat"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:176 ../share/symbols/symbols.h:177
+#: ../share/symbols/symbols.h:17 ../share/symbols/symbols.h:18
 msgctxt "Symbol"
 msgid "Coat Check"
 msgstr "Guarda-roba"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:178 ../share/symbols/symbols.h:179
+#: ../share/symbols/symbols.h:19 ../share/symbols/symbols.h:20
 msgctxt "Symbol"
 msgid "Baggage Lockers"
 msgstr "Casellers d'equipatge"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:180 ../share/symbols/symbols.h:181
+#: ../share/symbols/symbols.h:21 ../share/symbols/symbols.h:22
 msgctxt "Symbol"
 msgid "Escalator"
 msgstr "Escala mecànica"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:182 ../share/symbols/symbols.h:183
+#: ../share/symbols/symbols.h:23 ../share/symbols/symbols.h:24
 msgctxt "Symbol"
 msgid "Escalator Down"
 msgstr "Escala mecànica avall"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:184 ../share/symbols/symbols.h:185
+#: ../share/symbols/symbols.h:25 ../share/symbols/symbols.h:26
 msgctxt "Symbol"
 msgid "Escalator Up"
 msgstr "Escala mecànica amunt"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:186 ../share/symbols/symbols.h:187
+#: ../share/symbols/symbols.h:27 ../share/symbols/symbols.h:28
 msgctxt "Symbol"
 msgid "Stairs"
 msgstr "Escales"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:188 ../share/symbols/symbols.h:189
+#: ../share/symbols/symbols.h:29 ../share/symbols/symbols.h:30
 msgctxt "Symbol"
 msgid "Stairs Down"
 msgstr "Escales avall"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:190 ../share/symbols/symbols.h:191
+#: ../share/symbols/symbols.h:31 ../share/symbols/symbols.h:32
 msgctxt "Symbol"
 msgid "Stairs Up"
 msgstr "Escales amunt"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:192 ../share/symbols/symbols.h:193
+#: ../share/symbols/symbols.h:33 ../share/symbols/symbols.h:34
 msgctxt "Symbol"
 msgid "Elevator"
 msgstr "Ascensor"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:194 ../share/symbols/symbols.h:195
+#: ../share/symbols/symbols.h:35 ../share/symbols/symbols.h:36
 msgctxt "Symbol"
 msgid "Toilets - Men"
 msgstr "Lavabo - hòmens"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:196 ../share/symbols/symbols.h:197
+#: ../share/symbols/symbols.h:37 ../share/symbols/symbols.h:38
 msgctxt "Symbol"
 msgid "Toilets - Women"
 msgstr "Lavabo - dones"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:198 ../share/symbols/symbols.h:199
+#: ../share/symbols/symbols.h:39 ../share/symbols/symbols.h:40
 msgctxt "Symbol"
 msgid "Toilets"
 msgstr "Lavabo"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:200 ../share/symbols/symbols.h:201
+#: ../share/symbols/symbols.h:41 ../share/symbols/symbols.h:42
 msgctxt "Symbol"
 msgid "Nursery"
 msgstr "Guarderia"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:202 ../share/symbols/symbols.h:203
+#: ../share/symbols/symbols.h:43 ../share/symbols/symbols.h:44
 msgctxt "Symbol"
 msgid "Drinking Fountain"
 msgstr "Font per beure"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:204 ../share/symbols/symbols.h:205
+#: ../share/symbols/symbols.h:45 ../share/symbols/symbols.h:46
 msgctxt "Symbol"
 msgid "Waiting Room"
 msgstr "Sala d'espera"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:208 ../share/symbols/symbols.h:209
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:47 ../share/symbols/symbols.h:48
+#: ../share/symbols/symbols.h:231 ../share/symbols/symbols.h:232
+msgctxt "Symbol"
+msgid "Information"
+msgstr "Informació"
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:49 ../share/symbols/symbols.h:50
 msgctxt "Symbol"
 msgid "Hotel Information"
 msgstr "Informació de l'hotel"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:210 ../share/symbols/symbols.h:211
+#: ../share/symbols/symbols.h:51 ../share/symbols/symbols.h:52
 msgctxt "Symbol"
 msgid "Air Transportation"
 msgstr "Transport per aire"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:212 ../share/symbols/symbols.h:213
+#: ../share/symbols/symbols.h:53 ../share/symbols/symbols.h:54
 msgctxt "Symbol"
 msgid "Heliport"
 msgstr "Heliport"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:214 ../share/symbols/symbols.h:215
+#: ../share/symbols/symbols.h:55 ../share/symbols/symbols.h:56
 msgctxt "Symbol"
 msgid "Taxi"
 msgstr "Taxi"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:216 ../share/symbols/symbols.h:217
+#: ../share/symbols/symbols.h:57 ../share/symbols/symbols.h:58
 msgctxt "Symbol"
 msgid "Bus"
 msgstr "Autobús"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:218 ../share/symbols/symbols.h:219
+#: ../share/symbols/symbols.h:59 ../share/symbols/symbols.h:60
 msgctxt "Symbol"
 msgid "Ground Transportation"
 msgstr "Transport terrestre"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:220 ../share/symbols/symbols.h:221
+#: ../share/symbols/symbols.h:61 ../share/symbols/symbols.h:62
 msgctxt "Symbol"
 msgid "Rail Transportation"
 msgstr "Transport per tren"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:222 ../share/symbols/symbols.h:223
+#: ../share/symbols/symbols.h:63 ../share/symbols/symbols.h:64
 msgctxt "Symbol"
 msgid "Water Transportation"
 msgstr "Transport d'aigua"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:224 ../share/symbols/symbols.h:225
+#: ../share/symbols/symbols.h:65 ../share/symbols/symbols.h:66
 msgctxt "Symbol"
 msgid "Car Rental"
 msgstr "Lloguer de cotxes"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:226 ../share/symbols/symbols.h:227
+#: ../share/symbols/symbols.h:67 ../share/symbols/symbols.h:68
 msgctxt "Symbol"
 msgid "Restaurant"
 msgstr "Restaurant"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:228 ../share/symbols/symbols.h:229
+#: ../share/symbols/symbols.h:69 ../share/symbols/symbols.h:70
 msgctxt "Symbol"
 msgid "Coffeeshop"
 msgstr "Cafeteria"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:230 ../share/symbols/symbols.h:231
+#: ../share/symbols/symbols.h:71 ../share/symbols/symbols.h:72
 msgctxt "Symbol"
 msgid "Bar"
 msgstr "Bar"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:232 ../share/symbols/symbols.h:233
+#: ../share/symbols/symbols.h:73 ../share/symbols/symbols.h:74
 msgctxt "Symbol"
 msgid "Shops"
 msgstr "Tendes"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:234 ../share/symbols/symbols.h:235
+#: ../share/symbols/symbols.h:75 ../share/symbols/symbols.h:76
 msgctxt "Symbol"
 msgid "Barber Shop - Beauty Salon"
 msgstr "Perruqueria - saló de bellesa"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:236 ../share/symbols/symbols.h:237
+#: ../share/symbols/symbols.h:77 ../share/symbols/symbols.h:78
 msgctxt "Symbol"
 msgid "Barber Shop"
 msgstr "Perruqueria"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:238 ../share/symbols/symbols.h:239
+#: ../share/symbols/symbols.h:79 ../share/symbols/symbols.h:80
 msgctxt "Symbol"
 msgid "Beauty Salon"
 msgstr "Saló de bellesa"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:240 ../share/symbols/symbols.h:241
+#: ../share/symbols/symbols.h:81 ../share/symbols/symbols.h:82
 msgctxt "Symbol"
 msgid "Ticket Purchase"
 msgstr "Compra d'entrades"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:242 ../share/symbols/symbols.h:243
+#: ../share/symbols/symbols.h:83 ../share/symbols/symbols.h:84
 msgctxt "Symbol"
 msgid "Baggage Check In"
 msgstr "Entrada d'equipatge"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:244 ../share/symbols/symbols.h:245
+#: ../share/symbols/symbols.h:85 ../share/symbols/symbols.h:86
 msgctxt "Symbol"
 msgid "Baggage Claim"
 msgstr "Reclamació d'equipatges"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:246 ../share/symbols/symbols.h:247
+#: ../share/symbols/symbols.h:87 ../share/symbols/symbols.h:88
 msgctxt "Symbol"
 msgid "Customs"
 msgstr "Duana"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:248 ../share/symbols/symbols.h:249
+#: ../share/symbols/symbols.h:89 ../share/symbols/symbols.h:90
 msgctxt "Symbol"
 msgid "Immigration"
 msgstr "Immigració"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:250 ../share/symbols/symbols.h:251
+#: ../share/symbols/symbols.h:91 ../share/symbols/symbols.h:92
 msgctxt "Symbol"
 msgid "Departing Flights"
 msgstr "Sortida de vols"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:252 ../share/symbols/symbols.h:253
+#: ../share/symbols/symbols.h:93 ../share/symbols/symbols.h:94
 msgctxt "Symbol"
 msgid "Arriving Flights"
 msgstr "Arribada de vols"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:254 ../share/symbols/symbols.h:255
+#: ../share/symbols/symbols.h:95 ../share/symbols/symbols.h:96
 msgctxt "Symbol"
 msgid "Smoking"
 msgstr "Fumadors"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:256 ../share/symbols/symbols.h:257
+#: ../share/symbols/symbols.h:97 ../share/symbols/symbols.h:98
 msgctxt "Symbol"
 msgid "No Smoking"
 msgstr "No fumadors"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:260 ../share/symbols/symbols.h:261
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:99 ../share/symbols/symbols.h:100
+#: ../share/symbols/symbols.h:245 ../share/symbols/symbols.h:246
+msgctxt "Symbol"
+msgid "Parking"
+msgstr "Aparcament"
+
+#. Symbols: ./AigaSymbols.svg
+#: ../share/symbols/symbols.h:101 ../share/symbols/symbols.h:102
 msgctxt "Symbol"
 msgid "No Parking"
 msgstr "Prohibit aparcar"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:262 ../share/symbols/symbols.h:263
+#: ../share/symbols/symbols.h:103 ../share/symbols/symbols.h:104
 msgctxt "Symbol"
 msgid "No Dogs"
 msgstr "Prohibits gossos"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:264 ../share/symbols/symbols.h:265
+#: ../share/symbols/symbols.h:105 ../share/symbols/symbols.h:106
 msgctxt "Symbol"
 msgid "No Entry"
 msgstr "Sense entrada"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:266 ../share/symbols/symbols.h:267
+#: ../share/symbols/symbols.h:107 ../share/symbols/symbols.h:108
 msgctxt "Symbol"
 msgid "Exit"
 msgstr "Sortida"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:268 ../share/symbols/symbols.h:269
+#: ../share/symbols/symbols.h:109 ../share/symbols/symbols.h:110
 msgctxt "Symbol"
 msgid "Fire Extinguisher"
 msgstr "Extintor d'incendis"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:270 ../share/symbols/symbols.h:271
+#: ../share/symbols/symbols.h:111 ../share/symbols/symbols.h:112
 msgctxt "Symbol"
 msgid "Right Arrow"
 msgstr "Fletxa dreta"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:272 ../share/symbols/symbols.h:273
+#: ../share/symbols/symbols.h:113 ../share/symbols/symbols.h:114
 msgctxt "Symbol"
 msgid "Forward and Right Arrow"
 msgstr "Endavant i fletxa a la dreta"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:274 ../share/symbols/symbols.h:275
+#: ../share/symbols/symbols.h:115 ../share/symbols/symbols.h:116
 msgctxt "Symbol"
 msgid "Up Arrow"
 msgstr "Fletxa ascendent"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:276 ../share/symbols/symbols.h:277
+#: ../share/symbols/symbols.h:117 ../share/symbols/symbols.h:118
 msgctxt "Symbol"
 msgid "Forward and Left Arrow"
 msgstr "Endavant i fletxa a l'esquerra"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:278 ../share/symbols/symbols.h:279
+#: ../share/symbols/symbols.h:119 ../share/symbols/symbols.h:120
 msgctxt "Symbol"
 msgid "Left Arrow"
 msgstr "Fletxa esquerra"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:280 ../share/symbols/symbols.h:281
+#: ../share/symbols/symbols.h:121 ../share/symbols/symbols.h:122
 msgctxt "Symbol"
 msgid "Left and Down Arrow"
 msgstr "Esquerra i fletxa cap avall"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:282 ../share/symbols/symbols.h:283
+#: ../share/symbols/symbols.h:123 ../share/symbols/symbols.h:124
 msgctxt "Symbol"
 msgid "Down Arrow"
 msgstr "Fletxa cap avall"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:284 ../share/symbols/symbols.h:285
+#: ../share/symbols/symbols.h:125 ../share/symbols/symbols.h:126
 msgctxt "Symbol"
 msgid "Right and Down Arrow"
 msgstr "Dreta i fletxa cap avall"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:286 ../share/symbols/symbols.h:287
+#: ../share/symbols/symbols.h:127 ../share/symbols/symbols.h:128
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible - 1996"
 msgstr "Accessible amb cadira de rodes NPS - 1996"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:288 ../share/symbols/symbols.h:289
+#: ../share/symbols/symbols.h:129 ../share/symbols/symbols.h:130
 msgctxt "Symbol"
 msgid "NPS Wheelchair Accessible"
 msgstr "Accessible amb cadira de rodes NPS"
 
 #. Symbols: ./AigaSymbols.svg
-#: ../share/symbols/symbols.h:290 ../share/symbols/symbols.h:291
+#: ../share/symbols/symbols.h:131 ../share/symbols/symbols.h:132
 msgctxt "Symbol"
 msgid "New Wheelchair Accessible"
 msgstr "Accessible amb cadira de rodes nova"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:133
+msgctxt "Symbol"
+msgid "Word Balloons"
+msgstr "Bafarada"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:134
+msgctxt "Symbol"
+msgid "Thought Balloon"
+msgstr "Bafarada pensant"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:135
+msgctxt "Symbol"
+msgid "Dream Speaking"
+msgstr "Bafarada somiant"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:136
+msgctxt "Symbol"
+msgid "Rounded Balloon"
+msgstr "Bafarada redona"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:137
+msgctxt "Symbol"
+msgid "Squared Balloon"
+msgstr "Bafarada quadrada"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:138
+msgctxt "Symbol"
+msgid "Over the Phone"
+msgstr "Al telèfon"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:139
+msgctxt "Symbol"
+msgid "Hip Balloon"
+msgstr "Bafarada a la moda"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:140
+msgctxt "Symbol"
+msgid "Circle Balloon"
+msgstr "Bafarada cercle"
+
+#. Symbols: ./BalloonSymbols.svg
+#: ../share/symbols/symbols.h:141
+msgctxt "Symbol"
+msgid "Exclaim Balloon"
+msgstr "Bafarada exclamació"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:142
+msgctxt "Symbol"
+msgid "Flow Chart Shapes"
+msgstr "Diagrames de flux"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:143
+msgctxt "Symbol"
+msgid "Process"
+msgstr "Procés"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:144
+msgctxt "Symbol"
+msgid "Input/Output"
+msgstr "Entrada/Sortida"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:145
+msgctxt "Symbol"
+msgid "Document"
+msgstr "Document"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:146
+msgctxt "Symbol"
+msgid "Manual Operation"
+msgstr "Operació manual"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:147
+msgctxt "Symbol"
+msgid "Preparation"
+msgstr "Preparació"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:148
+msgctxt "Symbol"
+msgid "Merge"
+msgstr "Combina"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:149
+msgctxt "Symbol"
+msgid "Decision"
+msgstr "Decisió"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:150
+msgctxt "Symbol"
+msgid "Magnetic Tape"
+msgstr "Cinta magnètica"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:151
+msgctxt "Symbol"
+msgid "Display"
+msgstr "Visualització"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:152
+msgctxt "Symbol"
+msgid "Auxiliary Operation"
+msgstr "Operació auxiliar"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:153
+msgctxt "Symbol"
+msgid "Manual Input"
+msgstr "Entrada manual"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:154
+msgctxt "Symbol"
+msgid "Extract"
+msgstr "Extreu"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:155
+msgctxt "Symbol"
+msgid "Terminal/Interrupt"
+msgstr "Terminal / Interrupció"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:156
+msgctxt "Symbol"
+msgid "Punched Card"
+msgstr "Targeta perforada"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:157
+msgctxt "Symbol"
+msgid "Punch Tape"
+msgstr "Cinta perforada"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:158
+msgctxt "Symbol"
+msgid "Online Storage"
+msgstr "Emmagatzematge en línia"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:159
+msgctxt "Symbol"
+msgid "Keying"
+msgstr "Teclejant"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:160
+msgctxt "Symbol"
+msgid "Sort"
+msgstr "Ordena"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:161
+msgctxt "Symbol"
+msgid "Connector"
+msgstr "Connector"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:162
+msgctxt "Symbol"
+msgid "Off-Page Connector"
+msgstr "Connector fora de pàgina"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:163
+msgctxt "Symbol"
+msgid "Transmittal Tape"
+msgstr "Cinta de transmissió"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:164
+msgctxt "Symbol"
+msgid "Communication Link"
+msgstr "Enllaç de comunicació"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:165
+msgctxt "Symbol"
+msgid "Collate"
+msgstr "Col·lecciona"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:166
+msgctxt "Symbol"
+msgid "Comment/Annotation"
+msgstr "Comenta / anota"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:167
+msgctxt "Symbol"
+msgid "Core"
+msgstr "Nucli"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:168
+msgctxt "Symbol"
+msgid "Predefined Process"
+msgstr "Procés predefinit"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:169
+msgctxt "Symbol"
+msgid "Magnetic Disk (Database)"
+msgstr "Disc magnètic (base de dades)"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:170
+msgctxt "Symbol"
+msgid "Magnetic Drum (Direct Access)"
+msgstr "Tambor magnètic (accés directe)"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:171
+msgctxt "Symbol"
+msgid "Offline Storage"
+msgstr "Emmagatzematge fora de línia"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:172
+msgctxt "Symbol"
+msgid "Logical Or"
+msgstr "O lògica"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:173
+msgctxt "Symbol"
+msgid "Logical And"
+msgstr "I lògica"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:174
+msgctxt "Symbol"
+msgid "Delay"
+msgstr "Retard"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:175
+msgctxt "Symbol"
+msgid "Loop Limit Begin"
+msgstr "Inici del límit del bucle"
+
+#. Symbols: ./FlowSymbols.svg
+#: ../share/symbols/symbols.h:176
+msgctxt "Symbol"
+msgid "Loop Limit End"
+msgstr "Final del límit del bucle"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:177
+msgctxt "Symbol"
+msgid "Logic Symbols"
+msgstr "Símbols lògics"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:178
+msgctxt "Symbol"
+msgid "Xnor Gate"
+msgstr "Porta XNOR"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:179
+msgctxt "Symbol"
+msgid "Xor Gate"
+msgstr "Porta XOR"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:180
+msgctxt "Symbol"
+msgid "Nor Gate"
+msgstr "Porta NOR"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:181
+msgctxt "Symbol"
+msgid "Or Gate"
+msgstr "Porta OR"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:182
+msgctxt "Symbol"
+msgid "Nand Gate"
+msgstr "Porta NAND"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:183
+msgctxt "Symbol"
+msgid "And Gate"
+msgstr "Porta AND"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:184
+msgctxt "Symbol"
+msgid "Buffer"
+msgstr "Memòria intermèdia"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:185
+msgctxt "Symbol"
+msgid "Not Gate"
+msgstr "Porta NOT"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:186
+msgctxt "Symbol"
+msgid "Buffer Small"
+msgstr "Memòria intermèdia petita"
+
+#. Symbols: ./LogicSymbols.svg
+#: ../share/symbols/symbols.h:187
+msgctxt "Symbol"
+msgid "Not Gate Small"
+msgstr "Sense porta petita"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:188
+msgctxt "Symbol"
+msgid "United States National Park Service Map Symbols"
+msgstr "Símbols de mapes del servei de parcs nacionals dels Estats Units"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:189 ../share/symbols/symbols.h:190
+msgctxt "Symbol"
+msgid "Airport"
+msgstr "Aeroport"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:191 ../share/symbols/symbols.h:192
+msgctxt "Symbol"
+msgid "Amphitheatre"
+msgstr "Amfiteatre"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:193 ../share/symbols/symbols.h:194
+msgctxt "Symbol"
+msgid "Bicycle Trail"
+msgstr "Camí de bicicletes"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:195 ../share/symbols/symbols.h:196
+msgctxt "Symbol"
+msgid "Boat Launch"
+msgstr "Moll"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:197 ../share/symbols/symbols.h:198
+msgctxt "Symbol"
+msgid "Boat Tour"
+msgstr "Turisme fluvial"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:199 ../share/symbols/symbols.h:200
+msgctxt "Symbol"
+msgid "Bus Stop"
+msgstr "Parada d'autobús"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:201 ../share/symbols/symbols.h:202
+msgctxt "Symbol"
+msgid "Campfire"
+msgstr "Foc de camp"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:203 ../share/symbols/symbols.h:204
+msgctxt "Symbol"
+msgid "Campground"
+msgstr "Càmping"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:205 ../share/symbols/symbols.h:206
+msgctxt "Symbol"
+msgid "CanoeAccess"
+msgstr "Accés amb canoa"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:207 ../share/symbols/symbols.h:208
+msgctxt "Symbol"
+msgid "Crosscountry Ski Trail"
+msgstr "Pista d'esquí camp a través"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:209 ../share/symbols/symbols.h:210
+msgctxt "Symbol"
+msgid "Downhill Skiing"
+msgstr "Esquí alpí"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:211 ../share/symbols/symbols.h:212
+msgctxt "Symbol"
+msgid "Drinking Water"
+msgstr "Aigua per beure"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:215 ../share/symbols/symbols.h:216
+msgctxt "Symbol"
+msgid "Fishing"
+msgstr "Pesca"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:217 ../share/symbols/symbols.h:218
+msgctxt "Symbol"
+msgid "Food Service"
+msgstr "Servei de restauració"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:219 ../share/symbols/symbols.h:220
+msgctxt "Symbol"
+msgid "Four Wheel Drive Road"
+msgstr "Carretera per cotxes 4x4"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:221 ../share/symbols/symbols.h:222
+msgctxt "Symbol"
+msgid "Gas Station"
+msgstr "Benzinera"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:223 ../share/symbols/symbols.h:224
+msgctxt "Symbol"
+msgid "Golfing"
+msgstr "Golf"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:225 ../share/symbols/symbols.h:226
+msgctxt "Symbol"
+msgid "Horseback Riding"
+msgstr "Cavalcada"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:227 ../share/symbols/symbols.h:228
+msgctxt "Symbol"
+msgid "Hospital"
+msgstr "Hospital"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:229 ../share/symbols/symbols.h:230
+msgctxt "Symbol"
+msgid "Ice Skating"
+msgstr "Esqui sobre gel"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:233 ../share/symbols/symbols.h:234
+msgctxt "Symbol"
+msgid "Litter Receptacle"
+msgstr "Recipient d'escombraries"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:235 ../share/symbols/symbols.h:236
+msgctxt "Symbol"
+msgid "Lodging"
+msgstr "Allotjament"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:237 ../share/symbols/symbols.h:238
+msgctxt "Symbol"
+msgid "Marina"
+msgstr "Marina"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:239 ../share/symbols/symbols.h:240
+msgctxt "Symbol"
+msgid "Motorbike Trail"
+msgstr "Camí de motos"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:241 ../share/symbols/symbols.h:242
+msgctxt "Symbol"
+msgid "Radiator Water"
+msgstr "Radiador refrigerat per aigua"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:243 ../share/symbols/symbols.h:244
+msgctxt "Symbol"
+msgid "Recycling"
+msgstr "Reciclatge"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:247 ../share/symbols/symbols.h:248
+msgctxt "Symbol"
+msgid "Pets On Leash"
+msgstr "Símbols de mascotes"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:249 ../share/symbols/symbols.h:250
+msgctxt "Symbol"
+msgid "Picnic Area"
+msgstr "Àrea de pícnic"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:251 ../share/symbols/symbols.h:252
+msgctxt "Symbol"
+msgid "Post Office"
+msgstr "Oficina de correus"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:253 ../share/symbols/symbols.h:254
+msgctxt "Symbol"
+msgid "Ranger Station"
+msgstr "Estació de rangers"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:255 ../share/symbols/symbols.h:256
+msgctxt "Symbol"
+msgid "RV Campground"
+msgstr "Càmping de caravanes"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:257 ../share/symbols/symbols.h:258
+msgctxt "Symbol"
+msgid "Restrooms"
+msgstr "Banys"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:259 ../share/symbols/symbols.h:260
+msgctxt "Symbol"
+msgid "Sailing"
+msgstr "Navegació a vela"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:261 ../share/symbols/symbols.h:262
+msgctxt "Symbol"
+msgid "Sanitary Disposal Station"
+msgstr "Estació sanitària"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:263 ../share/symbols/symbols.h:264
+msgctxt "Symbol"
+msgid "Scuba Diving"
+msgstr "Submarinisme"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:265 ../share/symbols/symbols.h:266
+msgctxt "Symbol"
+msgid "Self Guided Trail"
+msgstr "Ruta sense guia"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:267 ../share/symbols/symbols.h:268
+msgctxt "Symbol"
+msgid "Shelter"
+msgstr "Abric"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:269 ../share/symbols/symbols.h:270
+msgctxt "Symbol"
+msgid "Showers"
+msgstr "Dutxes"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:271 ../share/symbols/symbols.h:272
+msgctxt "Symbol"
+msgid "Sledding"
+msgstr "Trineu"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:273 ../share/symbols/symbols.h:274
+msgctxt "Symbol"
+msgid "SnowmobileTrail"
+msgstr "Pista de motos de neu"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:275 ../share/symbols/symbols.h:276
+msgctxt "Symbol"
+msgid "Stable"
+msgstr "Estable"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:277 ../share/symbols/symbols.h:278
+msgctxt "Symbol"
+msgid "Store"
+msgstr "Botiga"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:279 ../share/symbols/symbols.h:280
+msgctxt "Symbol"
+msgid "Swimming"
+msgstr "Natació"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:283 ../share/symbols/symbols.h:284
+msgctxt "Symbol"
+msgid "Emergency Telephone"
+msgstr "Telèfon d'emergències"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:285 ../share/symbols/symbols.h:286
+msgctxt "Symbol"
+msgid "Trailhead"
+msgstr "Començament del camí"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:287 ../share/symbols/symbols.h:288
+msgctxt "Symbol"
+msgid "Wheelchair Accessible"
+msgstr "Accessible amb cadira de rodes"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:289 ../share/symbols/symbols.h:290
+msgctxt "Symbol"
+msgid "Wind Surfing"
+msgstr "Surf de vela"
+
+#. Symbols: ./MapSymbolsNPS.svg
+#: ../share/symbols/symbols.h:291
+msgctxt "Symbol"
+msgid "Blank"
+msgstr "Negre"
 
 #: ../share/templates/templates.h:1
 msgid "CD Label 120mmx120mm "
@@ -4479,16 +4480,16 @@ msgstr "Llenç de la tipografia de les directrius"
 msgid "3D Box"
 msgstr "Capsa 3D"
 
-#: ../src/color-profile.cpp:860
+#: ../src/color-profile.cpp:856
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr "El directori dels perfils de color (%s) no es troba disponible."
 
-#: ../src/color-profile.cpp:932 ../src/color-profile.cpp:949
+#: ../src/color-profile.cpp:928 ../src/color-profile.cpp:945
 msgid "(invalid UTF-8 string)"
 msgstr "(cadena UTF-8 no vàlida)"
 
-#: ../src/color-profile.cpp:934
+#: ../src/color-profile.cpp:930
 msgctxt "Profile name"
 msgid "None"
 msgstr "Cap"
@@ -4519,11 +4520,11 @@ msgstr "Suprimeix la guia"
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Directrius</b>: %s"
 
-#: ../src/desktop.cpp:875
+#: ../src/desktop.cpp:870
 msgid "No previous zoom."
 msgstr "Cap ampliació anterior."
 
-#: ../src/desktop.cpp:896
+#: ../src/desktop.cpp:891
 msgid "No next zoom."
 msgstr "Cap ampliació següent."
 
@@ -4892,21 +4893,21 @@ msgstr "Múltiple de la mida de la graella"
 msgid " to "
 msgstr " a "
 
-#: ../src/document.cpp:526
+#: ../src/document.cpp:531
 #, c-format
 msgid "New document %d"
 msgstr "Document nou %d"
 
-#: ../src/document.cpp:531
+#: ../src/document.cpp:536
 #, c-format
 msgid "Memory document %d"
 msgstr "Document de memòria %d"
 
-#: ../src/document.cpp:560
+#: ../src/document.cpp:565
 msgid "Memory document %1"
 msgstr "Document de memòria %1"
 
-#: ../src/document.cpp:859
+#: ../src/document.cpp:864
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Document sense nom %d"
@@ -5683,7 +5684,7 @@ msgstr "Llindar"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:40
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:46
-#: ../src/widgets/paintbucket-toolbar.cpp:148
+#: ../src/widgets/paintbucket-toolbar.cpp:147
 msgid "Threshold:"
 msgstr "Llindar:"
 
@@ -6738,7 +6739,7 @@ msgstr "Discret"
 
 #: ../src/extension/internal/filter/color.h:505 ../src/filter-enums.cpp:113
 #: ../src/live_effects/lpe-interpolate_points.cpp:25
-#: ../src/live_effects/lpe-powerstroke.cpp:134
+#: ../src/live_effects/lpe-powerstroke.cpp:133
 msgid "Linear"
 msgstr "Lineal"
 
@@ -6921,7 +6922,7 @@ msgstr "Ombres"
 
 #: ../src/extension/internal/filter/color.h:1119
 #: ../src/extension/internal/filter/paint.h:356 ../src/filter-enums.cpp:33
-#: ../src/live_effects/effect.cpp:108
+#: ../src/live_effects/effect.cpp:107
 #: ../src/live_effects/lpe-transform_2pts.cpp:40
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1048
 #: ../src/widgets/gradient-toolbar.cpp:1159
@@ -7176,7 +7177,7 @@ msgid "Blur and displace edges of shapes and pictures"
 msgstr "Difumina i substitueix les vores dels objectes i les imatges"
 
 #: ../src/extension/internal/filter/distort.h:190
-#: ../src/live_effects/effect.cpp:143
+#: ../src/live_effects/effect.cpp:142
 msgid "Roughen"
 msgstr "Rugós"
 
@@ -7499,7 +7500,7 @@ msgstr "Dibuix"
 #: ../src/extension/internal/filter/paint.h:496
 #: ../src/extension/internal/filter/paint.h:590
 #: ../src/extension/internal/filter/paint.h:976
-#: ../src/live_effects/effect.cpp:137 ../src/splivarot.cpp:2209
+#: ../src/live_effects/effect.cpp:136 ../src/splivarot.cpp:2209
 msgid "Simplify"
 msgstr "Simplifica"
 
@@ -7783,7 +7784,7 @@ msgstr "Fons"
 #: ../src/extension/internal/filter/transparency.h:59
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2879
 #: ../src/ui/dialog/input.cpp:1088 ../src/widgets/eraser-toolbar.cpp:133
-#: ../src/widgets/pencil-toolbar.cpp:140 ../src/widgets/spray-toolbar.cpp:389
+#: ../src/widgets/pencil-toolbar.cpp:141 ../src/widgets/spray-toolbar.cpp:389
 #: ../src/widgets/tweak-toolbar.cpp:254 ../share/extensions/extrude.inx.h:2
 #: ../share/extensions/triangle.inx.h:8
 msgid "Mode:"
@@ -8036,15 +8037,15 @@ msgstr "Fitxer LaTex PSTricks"
 msgid "LaTeX Print"
 msgstr "Impressió LaTeX"
 
-#: ../src/extension/internal/odf.cpp:2138
+#: ../src/extension/internal/odf.cpp:2141
 msgid "OpenDocument Drawing Output"
 msgstr "Sortida del dibuix de l'OpenDocument"
 
-#: ../src/extension/internal/odf.cpp:2143
+#: ../src/extension/internal/odf.cpp:2146
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Dibuix d'OpenDocument (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:2144
+#: ../src/extension/internal/odf.cpp:2147
 msgid "OpenDocument drawing file"
 msgstr "Fitxer de dibuix d'OpenDocument"
 
@@ -8364,44 +8365,44 @@ msgstr "Ha fallat l'autodetecció de format. El fitxer s'obrirà com a SVG."
 msgid "default.svg"
 msgstr "default.ca.svg"
 
-#: ../src/file.cpp:338
+#: ../src/file.cpp:332
 msgid "Broken links have been changed to point to existing files."
 msgstr ""
 "Els enllaços trencats han estat modificats per què apuntin a un fitxer "
 "existent."
 
-#: ../src/file.cpp:349 ../src/file.cpp:1292
+#: ../src/file.cpp:343 ../src/file.cpp:1278
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "No s'ha pogut carregar el fitxer demanat %s"
 
-#: ../src/file.cpp:375
+#: ../src/file.cpp:369
 msgid "Document not saved yet.  Cannot revert."
 msgstr "No s'ha desat el document. És irreversible."
 
-#: ../src/file.cpp:381
+#: ../src/file.cpp:375
 msgid "Changes will be lost! Are you sure you want to reload document %1?"
 msgstr ""
 "Es perdran els canvis. Esteu segur que voleu tornar a carregar el document "
 "%s?"
 
-#: ../src/file.cpp:407
+#: ../src/file.cpp:401
 msgid "Document reverted."
 msgstr "S'ha recuperat el document anterior."
 
-#: ../src/file.cpp:409
+#: ../src/file.cpp:403
 msgid "Document not reverted."
 msgstr "No s'ha recuperat el document anterior."
 
-#: ../src/file.cpp:559
+#: ../src/file.cpp:553
 msgid "Select file to open"
 msgstr "Seleccioneu el fitxer per obrir"
 
-#: ../src/file.cpp:641
+#: ../src/file.cpp:635
 msgid "Clean up document"
 msgstr "Neteja el document"
 
-#: ../src/file.cpp:648
+#: ../src/file.cpp:642
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -8409,11 +8410,11 @@ msgstr[0] "S'ha esborrat <b>%i</b>definició sense fer servir a &lt;defs&gt;."
 msgstr[1] ""
 "S'han esborrat <b>%i</b>definicions sense fer servir a &lt;defs&gt;."
 
-#: ../src/file.cpp:653
+#: ../src/file.cpp:647
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "No hi ha definicions sense fer servir a &lt;defs&gt;."
 
-#: ../src/file.cpp:687
+#: ../src/file.cpp:679
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -8422,12 +8423,12 @@ msgstr ""
 "No s'ha trobat cap extensió de l'Inkscape per desar el document (%s). És "
 "possible que es desconegui l'extensió del fitxer."
 
-#: ../src/file.cpp:688 ../src/file.cpp:698 ../src/file.cpp:707
-#: ../src/file.cpp:714 ../src/file.cpp:720
+#: ../src/file.cpp:680 ../src/file.cpp:688 ../src/file.cpp:696
+#: ../src/file.cpp:702 ../src/file.cpp:707
 msgid "Document not saved."
 msgstr "No s'ha desat el document."
 
-#: ../src/file.cpp:697
+#: ../src/file.cpp:687
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
@@ -8435,54 +8436,54 @@ msgstr ""
 "El fitxer %s està protegit contra escriptura. Traieu la protecció i torneu-"
 "ho a provar."
 
-#: ../src/file.cpp:706
+#: ../src/file.cpp:695
 #, c-format
 msgid "File %s could not be saved."
 msgstr "No s'ha pogut desar el fitxer %s."
 
-#: ../src/file.cpp:739 ../src/file.cpp:741
+#: ../src/file.cpp:725 ../src/file.cpp:727
 msgid "Document saved."
 msgstr "S'ha desat el document."
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:884 ../src/file.cpp:1451
+#: ../src/file.cpp:870 ../src/file.cpp:1437
 msgid "drawing"
 msgstr "Dibuix"
 
-#: ../src/file.cpp:889
+#: ../src/file.cpp:875
 msgid "drawing-%1"
 msgstr "dibuix-%1"
 
-#: ../src/file.cpp:906
+#: ../src/file.cpp:892
 msgid "Select file to save a copy to"
 msgstr "Seleccioneu el fitxer per desar-ne una còpia"
 
-#: ../src/file.cpp:908
+#: ../src/file.cpp:894
 msgid "Select file to save to"
 msgstr "Seleccioneu el fitxer per desar"
 
-#: ../src/file.cpp:1013 ../src/file.cpp:1015
+#: ../src/file.cpp:999 ../src/file.cpp:1001
 msgid "No changes need to be saved."
 msgstr "No hi ha cap canvi per desar."
 
-#: ../src/file.cpp:1034
+#: ../src/file.cpp:1020
 msgid "Saving document..."
 msgstr "S'està desant el document..."
 
-#: ../src/file.cpp:1289 ../src/ui/dialog/inkscape-preferences.cpp:1505
+#: ../src/file.cpp:1275 ../src/ui/dialog/inkscape-preferences.cpp:1505
 #: ../src/ui/dialog/ocaldialogs.cpp:1244
 msgid "Import"
 msgstr "Importa"
 
-#: ../src/file.cpp:1339
+#: ../src/file.cpp:1325
 msgid "Select file to import"
 msgstr "Seleccioneu el fitxer per importar"
 
-#: ../src/file.cpp:1472
+#: ../src/file.cpp:1458
 msgid "Select file to export to"
 msgstr "Seleccioneu el fitxer per exportar"
 
-#: ../src/file.cpp:1725
+#: ../src/file.cpp:1711
 msgid "Import Clip Art"
 msgstr "Importa Clip Art"
 
@@ -8684,80 +8685,80 @@ msgstr "Punt de llum"
 msgid "Spot Light"
 msgstr "Punt de llum"
 
-#: ../src/gradient-chemistry.cpp:1586
+#: ../src/gradient-chemistry.cpp:1580
 msgid "Invert gradient colors"
 msgstr "Inverteix el degradat de colors"
 
-#: ../src/gradient-chemistry.cpp:1613
+#: ../src/gradient-chemistry.cpp:1607
 msgid "Reverse gradient"
 msgstr "Degradat invertit"
 
-#: ../src/gradient-chemistry.cpp:1627 ../src/widgets/gradient-selector.cpp:222
+#: ../src/gradient-chemistry.cpp:1621 ../src/widgets/gradient-selector.cpp:222
 msgid "Delete swatch"
 msgstr "Eliminar la mostra"
 
-#: ../src/gradient-drag.cpp:95 ../src/ui/tools/gradient-tool.cpp:90
+#: ../src/gradient-drag.cpp:97 ../src/ui/tools/gradient-tool.cpp:90
 msgid "Linear gradient <b>start</b>"
 msgstr "<b>Inici</b> del degradat lineal"
 
 #. POINT_LG_BEGIN
-#: ../src/gradient-drag.cpp:96 ../src/ui/tools/gradient-tool.cpp:91
+#: ../src/gradient-drag.cpp:98 ../src/ui/tools/gradient-tool.cpp:91
 msgid "Linear gradient <b>end</b>"
 msgstr "<b>Final</b> del degradat lineal"
 
-#: ../src/gradient-drag.cpp:97 ../src/ui/tools/gradient-tool.cpp:92
+#: ../src/gradient-drag.cpp:99 ../src/ui/tools/gradient-tool.cpp:92
 msgid "Linear gradient <b>mid stop</b>"
 msgstr "<b>Punt mig</b> del degradat lineal"
 
-#: ../src/gradient-drag.cpp:98 ../src/ui/tools/gradient-tool.cpp:93
+#: ../src/gradient-drag.cpp:100 ../src/ui/tools/gradient-tool.cpp:93
 msgid "Radial gradient <b>center</b>"
 msgstr "<b>Centre</b> del degradat radial"
 
-#: ../src/gradient-drag.cpp:99 ../src/gradient-drag.cpp:100
+#: ../src/gradient-drag.cpp:101 ../src/gradient-drag.cpp:102
 #: ../src/ui/tools/gradient-tool.cpp:94 ../src/ui/tools/gradient-tool.cpp:95
 msgid "Radial gradient <b>radius</b>"
 msgstr "<b>Radi</b> del degradat radial"
 
-#: ../src/gradient-drag.cpp:101 ../src/ui/tools/gradient-tool.cpp:96
+#: ../src/gradient-drag.cpp:103 ../src/ui/tools/gradient-tool.cpp:96
 msgid "Radial gradient <b>focus</b>"
 msgstr "<b>Focus</b> del degradat radial"
 
 #. POINT_RG_FOCUS
-#: ../src/gradient-drag.cpp:102 ../src/gradient-drag.cpp:103
+#: ../src/gradient-drag.cpp:104 ../src/gradient-drag.cpp:105
 #: ../src/ui/tools/gradient-tool.cpp:97 ../src/ui/tools/gradient-tool.cpp:98
 msgid "Radial gradient <b>mid stop</b>"
 msgstr "<b>Punt mig</b> del degradat radial"
 
-#: ../src/gradient-drag.cpp:104 ../src/ui/tools/mesh-tool.cpp:93
+#: ../src/gradient-drag.cpp:106 ../src/ui/tools/mesh-tool.cpp:93
 msgid "Mesh gradient <b>corner</b>"
 msgstr "<b>Angle</b> del degradat de la malla"
 
-#: ../src/gradient-drag.cpp:105 ../src/ui/tools/mesh-tool.cpp:94
+#: ../src/gradient-drag.cpp:107 ../src/ui/tools/mesh-tool.cpp:94
 msgid "Mesh gradient <b>handle</b>"
 msgstr "<b>Nansa</b> del degradat de la malla"
 
-#: ../src/gradient-drag.cpp:106 ../src/ui/tools/mesh-tool.cpp:95
+#: ../src/gradient-drag.cpp:108 ../src/ui/tools/mesh-tool.cpp:95
 msgid "Mesh gradient <b>tensor</b>"
 msgstr "<b>Tensor</b> del degradat de la malla"
 
-#: ../src/gradient-drag.cpp:563
+#: ../src/gradient-drag.cpp:565
 msgid "Added patch row or column"
 msgstr "Tros de fila o columna afegida"
 
-#: ../src/gradient-drag.cpp:796
+#: ../src/gradient-drag.cpp:798
 msgid "Merge gradient handles"
 msgstr "Mescla els punts de control del degradat"
 
 #. we did an undoable action
-#: ../src/gradient-drag.cpp:1099
+#: ../src/gradient-drag.cpp:1101
 msgid "Move gradient handle"
 msgstr "Mou els punts de control del degradat"
 
-#: ../src/gradient-drag.cpp:1158 ../src/widgets/gradient-vector.cpp:834
+#: ../src/gradient-drag.cpp:1160 ../src/widgets/gradient-vector.cpp:834
 msgid "Delete gradient stop"
 msgstr "Suprimeix una fase del degradat"
 
-#: ../src/gradient-drag.cpp:1420
+#: ../src/gradient-drag.cpp:1423
 #, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
@@ -8766,11 +8767,11 @@ msgstr ""
 "%s %d per a:%s%s; arrossegueu amb <b>Ctrl</b> per ajustar el desplaçament; "
 "feu clic amb <b>Ctrl+Alt</b> per suprimir la fase"
 
-#: ../src/gradient-drag.cpp:1424 ../src/gradient-drag.cpp:1431
+#: ../src/gradient-drag.cpp:1427 ../src/gradient-drag.cpp:1434
 msgid " (stroke)"
 msgstr " (traç)"
 
-#: ../src/gradient-drag.cpp:1428
+#: ../src/gradient-drag.cpp:1431
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
@@ -8780,7 +8781,7 @@ msgstr ""
 "+Alt</b> per conservar l'angle, amb <b>Ctrl+Maj</b> per escalar al voltant "
 "del centre"
 
-#: ../src/gradient-drag.cpp:1436
+#: ../src/gradient-drag.cpp:1439
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
@@ -8788,7 +8789,7 @@ msgstr ""
 "<b>Centre</b> i <b>focus</b> del degradat radial; arrossegueu amb <b>Maj</b> "
 "per separar el focus"
 
-#: ../src/gradient-drag.cpp:1439
+#: ../src/gradient-drag.cpp:1442
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -8803,15 +8804,15 @@ msgstr[1] ""
 "Punt de degradat compartit per <b>%d</b> degradats; arrossegueu amb <b>Maj</"
 "b> per separar"
 
-#: ../src/gradient-drag.cpp:2362
+#: ../src/gradient-drag.cpp:2364
 msgid "Move gradient handle(s)"
 msgstr "Mou les nanses del degradat"
 
-#: ../src/gradient-drag.cpp:2396
+#: ../src/gradient-drag.cpp:2398
 msgid "Move gradient mid stop(s)"
 msgstr "Mou les fases mitges del degradat"
 
-#: ../src/gradient-drag.cpp:2685
+#: ../src/gradient-drag.cpp:2687
 msgid "Delete gradient stop(s)"
 msgstr "Suprimeix les fases del degradat"
 
@@ -9293,206 +9294,206 @@ msgstr "Coordenada Y de l'acoblador flotant"
 msgid "Dock #%d"
 msgstr "Acoblador #%d"
 
-#: ../src/libnrtype/FontFactory.cpp:642
+#: ../src/libnrtype/FontFactory.cpp:636
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 "S'ha ignorat una tipografia sense família que causaria un error en el Pango"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 msgid "doEffect stack test"
 msgstr "Test de la pila doEffect"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 msgid "Angle bisector"
 msgstr "Angle bisectriu"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 msgid "Circle (by center and radius)"
 msgstr "Cercle (donat un centre i un radi)"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
 msgid "Circle by 3 points"
 msgstr "Cercle fet amb 3 punts"
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 msgid "Dynamic stroke"
 msgstr "Traç dinàmic"
 
-#: ../src/live_effects/effect.cpp:105 ../share/extensions/extrude.inx.h:1
+#: ../src/live_effects/effect.cpp:104 ../share/extensions/extrude.inx.h:1
 msgid "Extrude"
 msgstr "Extrudir"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 msgid "Lattice Deformation"
 msgstr "Deformació reticular"
 
-#: ../src/live_effects/effect.cpp:107
+#: ../src/live_effects/effect.cpp:106
 msgid "Line Segment"
 msgstr "Segment de línia"
 
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 msgid "Parallel"
 msgstr "Paral·lel"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Path length"
 msgstr "Longitud del camí"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Perpendicular bisector"
 msgstr "Bisectriu perpendicular"
 
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Perspective path"
 msgstr "Camí de perspectiva"
 
-#: ../src/live_effects/effect.cpp:113
+#: ../src/live_effects/effect.cpp:112
 msgid "Recursive skeleton"
 msgstr "Esquelet recursiu"
 
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "Tangent to curve"
 msgstr "Tangent a la corba"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Text label"
 msgstr "Etiqueta de text"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 msgid "Fillet/Chamfer"
 msgstr "Arrodonit/xamfrà"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:119
+#: ../src/live_effects/effect.cpp:118
 msgid "Bend"
 msgstr "Corba"
 
-#: ../src/live_effects/effect.cpp:120
+#: ../src/live_effects/effect.cpp:119
 msgid "Gears"
 msgstr "Engranatge"
 
-#: ../src/live_effects/effect.cpp:121
+#: ../src/live_effects/effect.cpp:120
 msgid "Pattern Along Path"
 msgstr "Patró seguint un camí"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:122
+#: ../src/live_effects/effect.cpp:121
 msgid "Stitch Sub-Paths"
 msgstr "Cus els subcamins"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:124
+#: ../src/live_effects/effect.cpp:123
 msgid "VonKoch"
 msgstr "VonKoch"
 
-#: ../src/live_effects/effect.cpp:125
+#: ../src/live_effects/effect.cpp:124
 msgid "Knot"
 msgstr "Nus"
 
-#: ../src/live_effects/effect.cpp:126
+#: ../src/live_effects/effect.cpp:125
 msgid "Construct grid"
 msgstr "Graella de construcció"
 
-#: ../src/live_effects/effect.cpp:127
+#: ../src/live_effects/effect.cpp:126
 msgid "Spiro spline"
 msgstr "Corba espiral"
 
-#: ../src/live_effects/effect.cpp:128
+#: ../src/live_effects/effect.cpp:127
 msgid "Envelope Deformation"
 msgstr "Deformació per embolcall"
 
-#: ../src/live_effects/effect.cpp:129
+#: ../src/live_effects/effect.cpp:128
 msgid "Interpolate Sub-Paths"
 msgstr "Interpola els subcamins"
 
-#: ../src/live_effects/effect.cpp:130
+#: ../src/live_effects/effect.cpp:129
 msgid "Hatches (rough)"
 msgstr "Tramat (rugós)"
 
-#: ../src/live_effects/effect.cpp:131
+#: ../src/live_effects/effect.cpp:130
 msgid "Sketch"
 msgstr "Esbós"
 
-#: ../src/live_effects/effect.cpp:132
+#: ../src/live_effects/effect.cpp:131
 msgid "Ruler"
 msgstr "Regle"
 
 #. 0.91
-#: ../src/live_effects/effect.cpp:134
+#: ../src/live_effects/effect.cpp:133
 msgid "Power stroke"
 msgstr "Potència del traç"
 
-#: ../src/live_effects/effect.cpp:135
+#: ../src/live_effects/effect.cpp:134
 msgid "Clone original path"
 msgstr "Clona el camí original"
 
-#: ../src/live_effects/effect.cpp:138
+#: ../src/live_effects/effect.cpp:137
 msgid "Lattice Deformation 2"
 msgstr "Deformació reticular 2"
 
-#: ../src/live_effects/effect.cpp:139
+#: ../src/live_effects/effect.cpp:138
 msgid "Perspective/Envelope"
 msgstr "Perspectiva/embolcall"
 
-#: ../src/live_effects/effect.cpp:140
+#: ../src/live_effects/effect.cpp:139
 msgid "Interpolate points"
 msgstr "Punts interpolats"
 
-#: ../src/live_effects/effect.cpp:141
+#: ../src/live_effects/effect.cpp:140
 msgid "Transform by 2 points"
 msgstr "Transforma per 2 punts"
 
-#: ../src/live_effects/effect.cpp:142
+#: ../src/live_effects/effect.cpp:141
 #: ../src/live_effects/lpe-show_handles.cpp:26
 msgid "Show handles"
 msgstr "Mostra les nanses"
 
-#: ../src/live_effects/effect.cpp:144 ../src/widgets/pencil-toolbar.cpp:117
+#: ../src/live_effects/effect.cpp:143 ../src/widgets/pencil-toolbar.cpp:118
 msgid "BSpline"
 msgstr "BSpline"
 
-#: ../src/live_effects/effect.cpp:145
+#: ../src/live_effects/effect.cpp:144
 msgid "Join type"
 msgstr "Tipus de junta"
 
-#: ../src/live_effects/effect.cpp:146
+#: ../src/live_effects/effect.cpp:145
 msgid "Taper stroke"
 msgstr "Traç afilat"
 
-#: ../src/live_effects/effect.cpp:147
+#: ../src/live_effects/effect.cpp:146
 msgid "Mirror symmetry"
 msgstr "Simetria especular"
 
-#: ../src/live_effects/effect.cpp:148
+#: ../src/live_effects/effect.cpp:147
 msgid "Rotate copies"
 msgstr "Gira les còpies"
 
 #. Ponyscape -> Inkscape 0.92
-#: ../src/live_effects/effect.cpp:150
+#: ../src/live_effects/effect.cpp:149
 msgid "Attach path"
 msgstr "Camí de connexió"
 
-#: ../src/live_effects/effect.cpp:151
+#: ../src/live_effects/effect.cpp:150
 msgid "Fill between strokes"
 msgstr "Farciment entre els traços"
 
-#: ../src/live_effects/effect.cpp:152 ../src/selection-chemistry.cpp:2906
+#: ../src/live_effects/effect.cpp:151 ../src/selection-chemistry.cpp:2906
 msgid "Fill between many"
 msgstr "Farciment entremig"
 
-#: ../src/live_effects/effect.cpp:153
+#: ../src/live_effects/effect.cpp:152
 msgid "Ellipse by 5 points"
 msgstr "El·lipse per 5 punts"
 
-#: ../src/live_effects/effect.cpp:154
+#: ../src/live_effects/effect.cpp:153
 msgid "Bounding Box"
 msgstr "Capsa delimitadora"
 
-#: ../src/live_effects/effect.cpp:362
+#: ../src/live_effects/effect.cpp:361
 msgid "Is visible?"
 msgstr "És visible?"
 
-#: ../src/live_effects/effect.cpp:362
+#: ../src/live_effects/effect.cpp:361
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
@@ -9500,22 +9501,22 @@ msgstr ""
 "Si no està marcat, l'efecte romandrà en l'objecte però en el llenç es "
 "desactivarà al cap d'un temps"
 
-#: ../src/live_effects/effect.cpp:387
+#: ../src/live_effects/effect.cpp:386
 msgid "No effect"
 msgstr "Cap efecte"
 
-#: ../src/live_effects/effect.cpp:500
+#: ../src/live_effects/effect.cpp:498
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 "Especifiqueu un paràmetre del camí per al «%s» LPE amb %d clics del ratolí"
 
-#: ../src/live_effects/effect.cpp:783
+#: ../src/live_effects/effect.cpp:765
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "S'està editant el paràmetre <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:788
+#: ../src/live_effects/effect.cpp:770
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Cap dels paràmetres de l'efecte del camí es pot editar en el llenç."
 
@@ -9589,7 +9590,7 @@ msgid "Path along which to bend the original path"
 msgstr "Camí al llarg del qual es corba el camí original"
 
 #: ../src/live_effects/lpe-bendpath.cpp:71
-#: ../src/live_effects/lpe-patternalongpath.cpp:64
+#: ../src/live_effects/lpe-patternalongpath.cpp:74
 #: ../src/ui/dialog/export.cpp:285 ../src/ui/dialog/transformation.cpp:73
 #: ../src/ui/widget/page-sizer.cpp:237
 msgid "_Width:"
@@ -9616,7 +9617,7 @@ msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr "Gira l'original 90 graus, abans d'encorbar-ho al llarg del camí"
 
 #: ../src/live_effects/lpe-bendpath.cpp:178
-#: ../src/live_effects/lpe-patternalongpath.cpp:277
+#: ../src/live_effects/lpe-patternalongpath.cpp:285
 msgid "Change the width"
 msgstr "Canvia l'amplada"
 
@@ -9650,13 +9651,13 @@ msgid "Change number of steps with CTRL pressed"
 msgstr "Canvia el número de passos quan premeu Ctrl"
 
 #: ../src/live_effects/lpe-bspline.cpp:31
-#: ../src/live_effects/lpe-simplify.cpp:32
+#: ../src/live_effects/lpe-simplify.cpp:33
 #: ../src/live_effects/lpe-transform_2pts.cpp:43
 msgid "Helper size:"
 msgstr "Mida d'ajuda:"
 
 #: ../src/live_effects/lpe-bspline.cpp:31
-#: ../src/live_effects/lpe-simplify.cpp:32
+#: ../src/live_effects/lpe-simplify.cpp:33
 msgid "Helper size"
 msgstr "Mida d'ajuda"
 
@@ -9719,63 +9720,6 @@ msgstr "Mida _Y:"
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "The size of the grid in Y direction."
 msgstr "La mida de la graella en la direcció Y."
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:65
-msgid "Origin"
-msgstr "Origen"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:65
-msgid "Origin of the rotation"
-msgstr "Origen de la rotació"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:66
-msgid "Starting:"
-msgstr "Inici:"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:66
-msgid "Angle of the first copy"
-msgstr "Angle de la primera còpia"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:67
-msgid "Rotation angle:"
-msgstr "Angle de rotació:"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:67
-msgid "Angle between two successive copies"
-msgstr "Angle entre dues còpies successives"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:68
-msgid "Number of copies:"
-msgstr "Nombre de còpies:"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:68
-msgid "Number of copies of the original path"
-msgstr "Nombre de còpies del camí original"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:69
-msgid "360º Copies"
-msgstr "Còpies 360º"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:69
-msgid "No rotation angle, fixed to 360º"
-msgstr "Sense angle de rotació, fixat a 360º"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:70
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:73
-msgid "Fuse paths"
-msgstr "Fusiona camins"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:70
-msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
-msgstr "Fusiona camins per la línia d'ajuda, use la regla «evenodd» per a un millor resultat"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:431
-msgid "Adjust the starting angle"
-msgstr "Ajusta l'angle d'inici"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:437
-msgid "Adjust the rotation angle"
-msgstr "Ajusta l'angle de rotació"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Stitch path:"
@@ -9942,7 +9886,7 @@ msgid "Reverses the second path order"
 msgstr "Inverteix l'ordre del segon camí"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:41
-#: ../src/widgets/text-toolbar.cpp:1799
+#: ../src/widgets/text-toolbar.cpp:1788
 #: ../share/extensions/render_barcode_qrcode.inx.h:5
 msgid "Auto"
 msgstr "Automàtic"
@@ -10072,14 +10016,6 @@ msgstr ""
 "Angle de pressió de les dents (típicament 20-25 graus). Relació de les dents "
 "que no estan en contacte."
 
-#: ../src/live_effects/lpe-gears.cpp:216
-msgid "Min Radius:"
-msgstr "Radi mínim:"
-
-#: ../src/live_effects/lpe-gears.cpp:216
-msgid "Minimun radius, low values can be slow"
-msgstr "Radi mínim, els valors baixos poden ser lents"
-
 #: ../src/live_effects/lpe-interpolate.cpp:30
 msgid "Trajectory:"
 msgstr "Trajectòria:"
@@ -10111,32 +10047,32 @@ msgstr ""
 "nodes de la trajectòria del camí."
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:26
-#: ../src/live_effects/lpe-powerstroke.cpp:135
+#: ../src/live_effects/lpe-powerstroke.cpp:134
 msgid "CubicBezierFit"
 msgstr "CubicBezierFit"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:27
-#: ../src/live_effects/lpe-powerstroke.cpp:136
+#: ../src/live_effects/lpe-powerstroke.cpp:135
 msgid "CubicBezierJohan"
 msgstr "CubicBezierJohan"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:28
-#: ../src/live_effects/lpe-powerstroke.cpp:137
+#: ../src/live_effects/lpe-powerstroke.cpp:136
 msgid "SpiroInterpolator"
 msgstr "SpiroInterpolator"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:29
-#: ../src/live_effects/lpe-powerstroke.cpp:138
+#: ../src/live_effects/lpe-powerstroke.cpp:137
 msgid "Centripetal Catmull-Rom"
 msgstr "Centrípeta Catmull-Rom"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:37
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 msgid "Interpolator type:"
 msgstr "Tipus d'interpolació:"
 
 #: ../src/live_effects/lpe-interpolate_points.cpp:38
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 msgid ""
 "Determines which kind of interpolator will be used to interpolate between "
 "stroke width along the path"
@@ -10145,21 +10081,21 @@ msgstr ""
 "del traç del camí"
 
 #: ../src/live_effects/lpe-jointype.cpp:31
-#: ../src/live_effects/lpe-powerstroke.cpp:167
+#: ../src/live_effects/lpe-powerstroke.cpp:166
 #: ../src/live_effects/lpe-taperstroke.cpp:63
 msgid "Beveled"
 msgstr "Bisellat"
 
 #: ../src/live_effects/lpe-jointype.cpp:32
 #: ../src/live_effects/lpe-jointype.cpp:43
-#: ../src/live_effects/lpe-powerstroke.cpp:168
+#: ../src/live_effects/lpe-powerstroke.cpp:167
 #: ../src/live_effects/lpe-taperstroke.cpp:64
 #: ../src/widgets/star-toolbar.cpp:534
 msgid "Rounded"
 msgstr "Arrodonit"
 
 #: ../src/live_effects/lpe-jointype.cpp:33
-#: ../src/live_effects/lpe-powerstroke.cpp:171
+#: ../src/live_effects/lpe-powerstroke.cpp:170
 #: ../src/live_effects/lpe-taperstroke.cpp:65
 msgid "Miter"
 msgstr "Junta"
@@ -10170,7 +10106,7 @@ msgstr "Junta retall"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
 #: ../src/live_effects/lpe-jointype.cpp:35
-#: ../src/live_effects/lpe-powerstroke.cpp:170
+#: ../src/live_effects/lpe-powerstroke.cpp:169
 msgid "Extrapolated arc"
 msgstr "Arc extrapolat"
 
@@ -10187,17 +10123,17 @@ msgid "Extrapolated arc Alt3"
 msgstr "Arc extrapolat Alt3"
 
 #: ../src/live_effects/lpe-jointype.cpp:42
-#: ../src/live_effects/lpe-powerstroke.cpp:150
+#: ../src/live_effects/lpe-powerstroke.cpp:149
 msgid "Butt"
 msgstr "Punta"
 
 #: ../src/live_effects/lpe-jointype.cpp:44
-#: ../src/live_effects/lpe-powerstroke.cpp:151
+#: ../src/live_effects/lpe-powerstroke.cpp:150
 msgid "Square"
 msgstr "Quadrat"
 
 #: ../src/live_effects/lpe-jointype.cpp:45
-#: ../src/live_effects/lpe-powerstroke.cpp:153
+#: ../src/live_effects/lpe-powerstroke.cpp:152
 msgid "Peak"
 msgstr "Pic"
 
@@ -10217,20 +10153,20 @@ msgstr "Forma final del traç"
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/live_effects/lpe-jointype.cpp:56
-#: ../src/live_effects/lpe-powerstroke.cpp:183
+#: ../src/live_effects/lpe-powerstroke.cpp:182
 #: ../src/widgets/stroke-style.cpp:288
 msgid "Join:"
 msgstr "Junta:"
 
 #: ../src/live_effects/lpe-jointype.cpp:56
-#: ../src/live_effects/lpe-powerstroke.cpp:183
+#: ../src/live_effects/lpe-powerstroke.cpp:182
 msgid "Determines the shape of the path's corners"
 msgstr "Determina la forma de les cantonades del camí"
 
 #. start_lean(_("Start path lean"), _("Start path lean"), "start_lean", &wr, this, 0.),
 #. end_lean(_("End path lean"), _("End path lean"), "end_lean", &wr, this, 0.),
 #: ../src/live_effects/lpe-jointype.cpp:59
-#: ../src/live_effects/lpe-powerstroke.cpp:184
+#: ../src/live_effects/lpe-powerstroke.cpp:183
 #: ../src/live_effects/lpe-taperstroke.cpp:78
 msgid "Miter limit:"
 msgstr "Límit de la junta:"
@@ -10305,360 +10241,347 @@ msgstr "Arrossegueu per seleccionar l'encreuament, feu clic per invertir-lo"
 msgid "Change knot crossing"
 msgstr "Canvia l'encreuament de nusos"
 
-#: ../src/live_effects/lpe-lattice2.cpp:46
+#: ../src/live_effects/lpe-lattice2.cpp:47
 #: ../src/live_effects/lpe-perspective-envelope.cpp:43
 msgid "Mirror movements in horizontal"
 msgstr "Reflecteix els moviments horitzontalment"
 
-#: ../src/live_effects/lpe-lattice2.cpp:47
+#: ../src/live_effects/lpe-lattice2.cpp:48
 #: ../src/live_effects/lpe-perspective-envelope.cpp:44
 msgid "Mirror movements in vertical"
 msgstr "Reflecteix els moviments verticalment"
 
-#: ../src/live_effects/lpe-lattice2.cpp:48
+#: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Update while moving knots (maybe slow)"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:49
+#: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 0:"
 msgstr "Control 0:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:49
-msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 0 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:50
+msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 0 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les "
+"nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 1:"
 msgstr "Control 1:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:50
-msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 1 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:51
+msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 1 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les "
+"nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 2:"
 msgstr "Control 2:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:51
-msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 2 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:52
+msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 2 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les "
+"nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 3:"
 msgstr "Control 3:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:52
-msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 3 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:53
+msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 3 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les "
+"nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 4:"
 msgstr "Control 4:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:53
-msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 4 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:54
+msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 4 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les "
+"nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 5:"
 msgstr "Control 5:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:54
-msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 5 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:55
+msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 5 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les "
+"nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 6:"
 msgstr "Control 6:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:55
-msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 6 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:56
+msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 6 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les "
+"nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:57
 msgid "Control 7:"
 msgstr "Control 7:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:56
-msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 7 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:57
+msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 7 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les "
+"nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:58
 msgid "Control 8x9:"
 msgstr "Control 8x9:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:57
+#: ../src/live_effects/lpe-lattice2.cpp:58
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Control 8x9 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+"Control 8x9 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:58
+#: ../src/live_effects/lpe-lattice2.cpp:59
 msgid "Control 10x11:"
 msgstr "Control 10x11:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:58
+#: ../src/live_effects/lpe-lattice2.cpp:59
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
-"Control 10x11 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+"Control 10x11 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:59
+#: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 12:"
 msgstr "Control 12:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:59
-msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 12 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:60
+msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 12 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 13:"
 msgstr "Control 13:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:60
-msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 13 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:61
+msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 13 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 14:"
 msgstr "Control 14:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:61
-msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 14 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:62
+msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 14 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 15:"
 msgstr "Control 15:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:62
-msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 15 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:63
+msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 15 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:64
 msgid "Control 16:"
 msgstr "Control 16:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:63
-msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 16 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:64
+msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 16 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:65
 msgid "Control 17:"
 msgstr "Control 17:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:64
-msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 17 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:65
+msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 17 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:66
 msgid "Control 18:"
 msgstr "Control 18:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:65
-msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 18 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:66
+msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 18 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:67
 msgid "Control 19:"
 msgstr "Control 19:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:66
-msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 19 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
-
 #: ../src/live_effects/lpe-lattice2.cpp:67
+msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+"Control 19 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
+
+#: ../src/live_effects/lpe-lattice2.cpp:68
 msgid "Control 20x21:"
 msgstr "Control 20x21:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:67
+#: ../src/live_effects/lpe-lattice2.cpp:68
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 20x21 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Control 20x21 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:68
+#: ../src/live_effects/lpe-lattice2.cpp:69
 msgid "Control 22x23:"
 msgstr "Control 22x23:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:68
+#: ../src/live_effects/lpe-lattice2.cpp:69
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 22x23 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Control 22x23 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:69
+#: ../src/live_effects/lpe-lattice2.cpp:70
 msgid "Control 24x26:"
 msgstr "Control 24x26:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:69
+#: ../src/live_effects/lpe-lattice2.cpp:70
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 24x26 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Control 24x26 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:70
+#: ../src/live_effects/lpe-lattice2.cpp:71
 msgid "Control 25x27:"
 msgstr "Control 25x27:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:70
+#: ../src/live_effects/lpe-lattice2.cpp:71
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 25x27 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Control 25x27 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:71
+#: ../src/live_effects/lpe-lattice2.cpp:72
 msgid "Control 28x30:"
 msgstr "Control 28x30:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:71
+#: ../src/live_effects/lpe-lattice2.cpp:72
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 28x30 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Control 28x30 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:72
+#: ../src/live_effects/lpe-lattice2.cpp:73
 msgid "Control 29x31:"
 msgstr "Control 29x31:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:72
+#: ../src/live_effects/lpe-lattice2.cpp:73
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Control 29x31 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Control 29x31 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:73
+#: ../src/live_effects/lpe-lattice2.cpp:74
 msgid "Control 32x33x34x35:"
 msgstr "Control 32x33x34x35:"
 
-#: ../src/live_effects/lpe-lattice2.cpp:73
+#: ../src/live_effects/lpe-lattice2.cpp:74
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
-msgstr "Control 32x33x34x35 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Control 32x33x34x35 - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al "
+"llarg de les nanses"
 
-#: ../src/live_effects/lpe-lattice2.cpp:238
+#: ../src/live_effects/lpe-lattice2.cpp:239
 msgid "Reset grid"
 msgstr "Reinicia la graella"
 
-#: ../src/live_effects/lpe-lattice2.cpp:270
-#: ../src/live_effects/lpe-lattice2.cpp:285
+#: ../src/live_effects/lpe-lattice2.cpp:271
+#: ../src/live_effects/lpe-lattice2.cpp:286
 msgid "Show Points"
 msgstr "Mostra els punts"
 
-#: ../src/live_effects/lpe-lattice2.cpp:283
+#: ../src/live_effects/lpe-lattice2.cpp:284
 msgid "Hide Points"
 msgstr "Amaga els punts"
 
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:35
-msgid "Vertical Page Center"
-msgstr "Centre vertical de la pàgina"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:36
-msgid "Horizontal Page Center"
-msgstr "Centre horitzontal de la pàgina"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:37
-msgid "Free from reflection line"
-msgstr "Lliure des de la línia de reflexió"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:38
-msgid "X from middle knot"
-msgstr "X des del nus mig"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:39
-msgid "Y from middle knot"
-msgstr "Y des del nus mig"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:71
-#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
-msgid "Mode"
-msgstr "Mode"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:71
-msgid "Symmetry move mode"
-msgstr "Mode de moviment amb simetria"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:72
-msgid "Discard original path?"
-msgstr "Voleu descartar el camí original?"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:72
-msgid "Check this to only keep the mirrored part of the path"
-msgstr "Marqueu per mantenir emmirallada només la part del camí"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:73
-msgid "Fuse original and the reflection into a single path"
-msgstr "Fusiona l'original i el reflectit amb un únic camí"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:74
-msgid "Opposite fuse"
-msgstr "Fusió oposada"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:74
-msgid "Picks the other side of the mirror as the original"
-msgstr "Escull l'altra cara del mirall com l'original"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:75
-msgid "Start mirror line"
-msgstr "Inici de la línia del mirall"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:76
-msgid "End mirror line"
-msgstr "Fi de la línia del mirall"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:353
-msgid "Adjust the center"
-msgstr "Ajusta el centre"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:53
+#: ../src/live_effects/lpe-patternalongpath.cpp:63
 #: ../share/extensions/pathalongpath.inx.h:10
 msgid "Single"
 msgstr "Únic"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:54
+#: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../share/extensions/pathalongpath.inx.h:11
 msgid "Single, stretched"
 msgstr "Únic, estirat"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:55
+#: ../src/live_effects/lpe-patternalongpath.cpp:65
 #: ../share/extensions/pathalongpath.inx.h:12
 msgid "Repeated"
 msgstr "Repetit"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:56
+#: ../src/live_effects/lpe-patternalongpath.cpp:66
 #: ../share/extensions/pathalongpath.inx.h:13
 msgid "Repeated, stretched"
 msgstr "Repetit, estirat"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:62
+#: ../src/live_effects/lpe-patternalongpath.cpp:72
 msgid "Pattern source:"
 msgstr "Font del patró:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:62
+#: ../src/live_effects/lpe-patternalongpath.cpp:72
 msgid "Path to put along the skeleton path"
 msgstr "Camí a disposar sobre l'esquelet del camí"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:64
+#: ../src/live_effects/lpe-patternalongpath.cpp:74
 msgid "Width of the pattern"
 msgstr "Amplada del patró"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:65
+#: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid "Pattern copies:"
 msgstr "Còpies del patró:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:65
+#: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid "How many pattern copies to place along the skeleton path"
 msgstr ""
 "Quantitat de còpies del patró que es disposen sobre l'esquelet del camí"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:67
+#: ../src/live_effects/lpe-patternalongpath.cpp:77
 msgid "Wid_th in units of length"
 msgstr "_Amplada en unitats de longitud"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:68
+#: ../src/live_effects/lpe-patternalongpath.cpp:78
 msgid "Scale the width of the pattern in units of its length"
 msgstr "Escala l'amplada del patró en unitats de la seva longitud"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:70
+#: ../src/live_effects/lpe-patternalongpath.cpp:80
 msgid "Spa_cing:"
 msgstr "_Espaiat:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:72
+#: ../src/live_effects/lpe-patternalongpath.cpp:82
 #, no-c-format
 msgid ""
 "Space between copies of the pattern. Negative values allowed, but are "
@@ -10667,19 +10590,19 @@ msgstr ""
 "Espai entre les còpies del patró. Es permeten valors negatius, però limitats "
 "al -90% de l'amplada del patró."
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:74
+#: ../src/live_effects/lpe-patternalongpath.cpp:84
 msgid "No_rmal offset:"
 msgstr "_Desplaçament normal:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:75
+#: ../src/live_effects/lpe-patternalongpath.cpp:85
 msgid "Tan_gential offset:"
 msgstr "Desplaçament tan_gencial:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:76
+#: ../src/live_effects/lpe-patternalongpath.cpp:86
 msgid "Offsets in _unit of pattern size"
 msgstr "Desplaçament en _unitats de la mida del patró"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:77
+#: ../src/live_effects/lpe-patternalongpath.cpp:87
 msgid ""
 "Spacing, tangential and normal offset are expressed as a ratio of width/"
 "height"
@@ -10687,19 +10610,19 @@ msgstr ""
 "L'espai amb desplaçament tangencial i normal s'expressa com a relació de "
 "l'amplada i l'alçada"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:79
+#: ../src/live_effects/lpe-patternalongpath.cpp:89
 msgid "Pattern is _vertical"
 msgstr "El patró és _vertical"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:79
+#: ../src/live_effects/lpe-patternalongpath.cpp:89
 msgid "Rotate pattern 90 deg before applying"
 msgstr "Gira el patró 90 graus abans d'aplicar"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:81
+#: ../src/live_effects/lpe-patternalongpath.cpp:91
 msgid "_Fuse nearby ends:"
 msgstr "_Fusiona els extrems propers:"
 
-#: ../src/live_effects/lpe-patternalongpath.cpp:81
+#: ../src/live_effects/lpe-patternalongpath.cpp:91
 msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr ""
 "Fusiona els extrems que estiguin més a prop d'aquest número. 0 significa que "
@@ -10733,7 +10656,9 @@ msgstr "Superior esquerre"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
 msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Superior esquerre - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Superior esquerre - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al "
+"llarg de les nanses"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Top Right"
@@ -10741,7 +10666,9 @@ msgstr "Superior dreta"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "Superior dreta - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"Superior dreta - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg "
+"de les nanses"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
 msgid "Down Left"
@@ -10749,7 +10676,9 @@ msgstr "A baix esquerra"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:49
 msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "A baix esquerra - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"A baix esquerra - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg "
+"de les nanses"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
 msgid "Down Right"
@@ -10757,48 +10686,50 @@ msgstr "A baix dreta"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:50
 msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "A baix dreta - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de les nanses"
+msgstr ""
+"A baix dreta - <b>Ctrl+Alt+Clic</b>: reinicia, <b>Ctrl</b>: mou al llarg de "
+"les nanses"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:367
 msgid "Handles:"
 msgstr "Nanses:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:133
+#: ../src/live_effects/lpe-powerstroke.cpp:132
 msgid "CubicBezierSmooth"
 msgstr "CubicBezierSmooth"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:152
+#: ../src/live_effects/lpe-powerstroke.cpp:151
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
 msgid "Round"
 msgstr "Arrodonit"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:154
+#: ../src/live_effects/lpe-powerstroke.cpp:153
 msgid "Zero width"
 msgstr "Amplada zero"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:172
-#: ../src/widgets/pencil-toolbar.cpp:111
+#: ../src/live_effects/lpe-powerstroke.cpp:171
+#: ../src/widgets/pencil-toolbar.cpp:112
 msgid "Spiro"
 msgstr "Espiral"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:178
+#: ../src/live_effects/lpe-powerstroke.cpp:177
 msgid "Offset points"
 msgstr "Punts de desplaçament"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:178
 msgid "Sort points"
 msgstr "Ordena els punts"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:178
 msgid "Sort offset points according to their time value along the curve"
 msgstr "Ordena els punts desplaçats segons el seu valor al llarg de la corba"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:181
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
 msgstr "Suavitat:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:181
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 msgid ""
 "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
 "interpolation, 1 = smooth"
@@ -10806,24 +10737,24 @@ msgstr ""
 "Estableix la suavitat del CubicBezierJohan interpolador; 0 = interpolació "
 "lineal, 1 = suau"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:182
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 msgid "Start cap:"
 msgstr "Extremitat inicial:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:182
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 msgid "Determines the shape of the path's start"
 msgstr "Determina la forma de l'inici del camí"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:184
+#: ../src/live_effects/lpe-powerstroke.cpp:183
 #: ../src/widgets/stroke-style.cpp:335
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Longitud màxima de la punxa (en unitats de l'amplada del traç)"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:185
+#: ../src/live_effects/lpe-powerstroke.cpp:184
 msgid "End cap:"
 msgstr "Extremitat final:"
 
-#: ../src/live_effects/lpe-powerstroke.cpp:185
+#: ../src/live_effects/lpe-powerstroke.cpp:184
 msgid "Determines the shape of the path's end"
 msgstr "Determina la forma del final del camí"
 
@@ -11140,13 +11071,13 @@ msgstr "Cap"
 
 #: ../src/live_effects/lpe-ruler.cpp:33
 #: ../src/live_effects/lpe-transform_2pts.cpp:37
-#: ../src/ui/tools/measure-tool.cpp:755 ../src/widgets/arc-toolbar.cpp:319
+#: ../src/ui/tools/measure-tool.cpp:756 ../src/widgets/arc-toolbar.cpp:319
 msgid "Start"
 msgstr "Inici"
 
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/live_effects/lpe-transform_2pts.cpp:38
-#: ../src/ui/tools/measure-tool.cpp:756 ../src/widgets/arc-toolbar.cpp:332
+#: ../src/ui/tools/measure-tool.cpp:757 ../src/widgets/arc-toolbar.cpp:332
 msgid "End"
 msgstr "Fi"
 
@@ -11254,39 +11185,39 @@ msgstr ""
 "personalitzat que estiguis aplicant a l'objecte. Si això no és el que vols, "
 "fes clic a cancel·la."
 
-#: ../src/live_effects/lpe-simplify.cpp:29
+#: ../src/live_effects/lpe-simplify.cpp:30
 msgid "Steps:"
 msgstr "Passos:"
 
-#: ../src/live_effects/lpe-simplify.cpp:29
+#: ../src/live_effects/lpe-simplify.cpp:30
 msgid "Change number of simplify steps "
 msgstr "Canvia el nombre de passos simplificats"
 
-#: ../src/live_effects/lpe-simplify.cpp:30
+#: ../src/live_effects/lpe-simplify.cpp:31
 msgid "Roughly threshold:"
 msgstr "Llindar poc definit:"
 
-#: ../src/live_effects/lpe-simplify.cpp:31
+#: ../src/live_effects/lpe-simplify.cpp:32
 msgid "Smooth angles:"
 msgstr "Suavitza els angles:"
 
-#: ../src/live_effects/lpe-simplify.cpp:31
+#: ../src/live_effects/lpe-simplify.cpp:32
 msgid "Max degree difference on handles to perform a smooth"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:33
+#: ../src/live_effects/lpe-simplify.cpp:34
 msgid "Paths separately"
 msgstr "Camins per separat"
 
-#: ../src/live_effects/lpe-simplify.cpp:33
+#: ../src/live_effects/lpe-simplify.cpp:34
 msgid "Simplifying paths (separately)"
 msgstr "Simplificació dels camins (per separat)"
 
-#: ../src/live_effects/lpe-simplify.cpp:35
+#: ../src/live_effects/lpe-simplify.cpp:36
 msgid "Just coalesce"
 msgstr "Només la fusió"
 
-#: ../src/live_effects/lpe-simplify.cpp:35
+#: ../src/live_effects/lpe-simplify.cpp:36
 msgid "Simplify just coalesce"
 msgstr "Simplifica només la fusió"
 
@@ -11562,7 +11493,7 @@ msgstr "Canvia l'índex del nus"
 #: ../src/live_effects/lpe-transform_2pts.cpp:349
 #: ../src/ui/dialog/inkscape-preferences.cpp:1623
 #: ../src/ui/dialog/pixelartdialog.cpp:296
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:697
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:699
 #: ../src/ui/dialog/tracedialog.cpp:813
 #: ../src/ui/widget/preferences-widget.cpp:742
 msgid "Reset"
@@ -11686,7 +11617,7 @@ msgstr "Invertir"
 
 #: ../src/live_effects/parameter/originalpatharray.cpp:130
 #: ../src/live_effects/parameter/originalpatharray.cpp:315
-#: ../src/live_effects/parameter/path.cpp:508
+#: ../src/live_effects/parameter/path.cpp:486
 msgid "Link path parameter to path"
 msgstr "Associa el paràmetre del camí en el camí"
 
@@ -11716,23 +11647,23 @@ msgstr "Mou el camí cap avall"
 msgid "Remove path"
 msgstr "Treu el camí"
 
-#: ../src/live_effects/parameter/path.cpp:184
+#: ../src/live_effects/parameter/path.cpp:170
 msgid "Edit on-canvas"
 msgstr "Edita al llenç"
 
-#: ../src/live_effects/parameter/path.cpp:194
+#: ../src/live_effects/parameter/path.cpp:180
 msgid "Copy path"
 msgstr "Copia el camí"
 
-#: ../src/live_effects/parameter/path.cpp:204
+#: ../src/live_effects/parameter/path.cpp:190
 msgid "Paste path"
 msgstr "Enganxa al camí"
 
-#: ../src/live_effects/parameter/path.cpp:214
+#: ../src/live_effects/parameter/path.cpp:200
 msgid "Link to path on clipboard"
 msgstr "Enllaceu el camí al porta-retalls"
 
-#: ../src/live_effects/parameter/path.cpp:476
+#: ../src/live_effects/parameter/path.cpp:454
 msgid "Paste path parameter"
 msgstr "Enganxa el paràmetre del camí"
 
@@ -11759,7 +11690,7 @@ msgstr "Canvia el paràmetre aleatori"
 msgid "Change text parameter"
 msgstr "Canvia el paràmetre del text"
 
-#: ../src/live_effects/parameter/togglebutton.cpp:114
+#: ../src/live_effects/parameter/togglebutton.cpp:112
 msgid "Change togglebutton parameter"
 msgstr "Canvia els paràmetres del commutador"
 
@@ -12587,7 +12518,7 @@ msgstr "Seleccioneu un <b>grup</b> per desagrupar-lo."
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>No hi ha cap grup</b> a la selecció per desagrupar."
 
-#: ../src/selection-chemistry.cpp:901 ../src/sp-item-group.cpp:659
+#: ../src/selection-chemistry.cpp:901 ../src/sp-item-group.cpp:550
 #: ../src/ui/dialog/objects.cpp:1916
 msgid "Ungroup"
 msgstr "Desagrupa"
@@ -13172,22 +13103,22 @@ msgstr "a %s"
 msgid "without URI"
 msgstr "sense URI"
 
-#: ../src/sp-ellipse.cpp:356
+#: ../src/sp-ellipse.cpp:362
 msgid "Segment"
 msgstr "Segment"
 
-#: ../src/sp-ellipse.cpp:358
+#: ../src/sp-ellipse.cpp:364
 msgid "Arc"
 msgstr "Arc"
 
 #. Ellipse
-#: ../src/sp-ellipse.cpp:361 ../src/sp-ellipse.cpp:368
+#: ../src/sp-ellipse.cpp:367 ../src/sp-ellipse.cpp:374
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
-#: ../src/widgets/pencil-toolbar.cpp:178
+#: ../src/widgets/pencil-toolbar.cpp:179
 msgid "Ellipse"
 msgstr "El·lipse"
 
-#: ../src/sp-ellipse.cpp:365
+#: ../src/sp-ellipse.cpp:371
 msgid "Circle"
 msgstr "Cercle"
 
@@ -13212,7 +13143,7 @@ msgstr "Text flotant"
 msgid "Linked Flowed Text"
 msgstr "Text flotant enllaçat"
 
-#: ../src/sp-flowtext.cpp:292 ../src/sp-text.cpp:373
+#: ../src/sp-flowtext.cpp:292 ../src/sp-text.cpp:380
 #: ../src/ui/tools/text-tool.cpp:1556
 msgid " [truncated]"
 msgstr "[truncat]"
@@ -13274,40 +13205,40 @@ msgstr "[mala referència]: %s"
 msgid "%d &#215; %d: %s"
 msgstr "%d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:318 ../src/ui/dialog/objects.cpp:1915
+#: ../src/sp-item-group.cpp:307 ../src/ui/dialog/objects.cpp:1915
 msgid "Group"
 msgstr "Agrupa"
 
-#: ../src/sp-item-group.cpp:324 ../src/sp-switch.cpp:69
+#: ../src/sp-item-group.cpp:313 ../src/sp-switch.cpp:69
 #, c-format
 msgid "of <b>%d</b> object"
 msgstr "d'<b>%d</b> objecte"
 
-#: ../src/sp-item-group.cpp:324 ../src/sp-switch.cpp:69
+#: ../src/sp-item-group.cpp:313 ../src/sp-switch.cpp:69
 #, c-format
 msgid "of <b>%d</b> objects"
 msgstr "d'<b>%d</b> objectes"
 
-#: ../src/sp-item.cpp:1035 ../src/verbs.cpp:213
+#: ../src/sp-item.cpp:1031 ../src/verbs.cpp:213
 msgid "Object"
 msgstr "Objecte"
 
-#: ../src/sp-item.cpp:1047
+#: ../src/sp-item.cpp:1043
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>retallat</i>"
 
-#: ../src/sp-item.cpp:1053
+#: ../src/sp-item.cpp:1049
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>emmascarat</i>"
 
-#: ../src/sp-item.cpp:1063
+#: ../src/sp-item.cpp:1059
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>filtrat (%s)</i>"
 
-#: ../src/sp-item.cpp:1065
+#: ../src/sp-item.cpp:1061
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>filtrat</i>"
@@ -13316,7 +13247,7 @@ msgstr "%s; <i>filtrat</i>"
 msgid "Line"
 msgstr "Línia"
 
-#: ../src/sp-lpe-item.cpp:255 ../src/sp-lpe-item.cpp:702
+#: ../src/sp-lpe-item.cpp:258 ../src/sp-lpe-item.cpp:705
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "S'ha produït una excepció en l'execució de l'efecte del camí."
 
@@ -13370,7 +13301,7 @@ msgid "<b>Polyline</b>"
 msgstr "<b>Polilínia</b>"
 
 #. Rectangle
-#: ../src/sp-rect.cpp:197 ../src/ui/dialog/inkscape-preferences.cpp:411
+#: ../src/sp-rect.cpp:161 ../src/ui/dialog/inkscape-preferences.cpp:411
 msgid "Rectangle"
 msgstr "Rectangle"
 
@@ -13414,7 +13345,7 @@ msgstr "amb %d vèrtexs"
 msgid "Conditional Group"
 msgstr "Grup condicional"
 
-#: ../src/sp-text.cpp:354 ../src/verbs.cpp:347
+#: ../src/sp-text.cpp:361 ../src/verbs.cpp:347
 #: ../share/extensions/lorem_ipsum.inx.h:8
 #: ../share/extensions/replace_font.inx.h:11 ../share/extensions/split.inx.h:10
 #: ../share/extensions/text_braille.inx.h:2
@@ -13429,12 +13360,12 @@ msgstr "Grup condicional"
 msgid "Text"
 msgstr "Text"
 
-#: ../src/sp-text.cpp:377
+#: ../src/sp-text.cpp:384
 #, c-format
 msgid "on path%s (%s, %s)"
 msgstr "Sobre el camí %s (%s, %s)"
 
-#: ../src/sp-text.cpp:378
+#: ../src/sp-text.cpp:385
 #, c-format
 msgid "%s (%s, %s)"
 msgstr "%s (%s, %s)"
@@ -13810,7 +13741,7 @@ msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
-#: ../src/ui/dialog/aboutbox.cpp:442
+#: ../src/ui/dialog/aboutbox.cpp:438
 msgid "translator-credits"
 msgstr ""
 "Quico Llach (quico@softcatala.org), 2000\n"
@@ -19585,7 +19516,7 @@ msgstr "Preserva el canal K en les transformacions de CMYK en CMYK"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 #: ../src/ui/widget/color-icc-selector.cpp:394
-#: ../src/ui/widget/color-icc-selector.cpp:700
+#: ../src/ui/widget/color-icc-selector.cpp:699
 msgid "<none>"
 msgstr "<cap>"
 
@@ -19950,7 +19881,8 @@ msgstr "El botó esquerre del ratolí desplaça quan es prem espai"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid "When on, pressing and holding Space and dragging pans canvas"
-msgstr "Quan està actiu, prement i mentnint l'espai i arrossegant desplaça el llenç"
+msgstr ""
+"Quan està actiu, prement i mentnint l'espai i arrossegant desplaça el llenç"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1269
 msgid "Mouse wheel zooms by default"
@@ -19991,7 +19923,8 @@ msgid ""
 "Controls how long the snap indicator message will be shown, before it "
 "disappears"
 msgstr ""
-"Controla durant quan de temps es mostrarà l'indicador d'ajustament, abans de que desaparegui"
+"Controla durant quan de temps es mostrarà l'indicador d'ajustament, abans de "
+"que desaparegui"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid "What should snap"
@@ -21882,162 +21815,162 @@ msgstr "Corregeix l'ortografia"
 msgid "Set SVG Font attribute"
 msgstr "Defineix l'atribut del tipus de lletra SVG"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:195
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:197
 msgid "Adjust kerning value"
 msgstr "Ajusta el valor de l'interlletratge"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:385
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:387
 msgid "Family Name:"
 msgstr "Nom de la família:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:395
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:397
 msgid "Set width:"
 msgstr "Estableix l'amplada:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:454
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:456
 msgid "glyph"
 msgstr "glif"
 
 #. SPGlyph* glyph =
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:486
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:488
 msgid "Add glyph"
 msgstr "Afegeix un glif"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:520
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:562
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:522
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:564
 msgid "Select a <b>path</b> to define the curves of a glyph"
 msgstr "Seleccioneu un <b>camí</b> per definir les corbes del glif"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:528
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:530
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:572
 msgid "The selected object does not have a <b>path</b> description."
 msgstr "L'objecte seleccionat no té una descripció de <b>camí</b>."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:535
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:537
 msgid "No glyph selected in the SVGFonts dialog."
 msgstr "No s'ha seleccionat cap glif al diàleg de tipus de lletres SVG."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:546
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:585
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:548
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:587
 msgid "Set glyph curves"
 msgstr "Defineix les corbes del glif"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:605
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:607
 msgid "Reset missing-glyph"
 msgstr "Restaura el glif que falta"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:621
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 msgid "Edit glyph name"
 msgstr "Edita el nom del glif"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:635
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:637
 msgid "Set glyph unicode"
 msgstr "Defineix l'unicode del glif"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:647
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:649
 msgid "Remove font"
 msgstr "Suprimeix el tipus de lletra"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:664
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:666
 msgid "Remove glyph"
 msgstr "Suprimeix el glif"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:681
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:683
 msgid "Remove kerning pair"
 msgstr "Suprimeix la parella d'interlletratge"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:691
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:693
 msgid "Missing Glyph:"
 msgstr "Glif que falta:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:695
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:697
 msgid "From selection..."
 msgstr "Agafa de la selecció..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:708
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:710
 msgid "Glyph name"
 msgstr "Nom del glif"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:709
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:711
 msgid "Matching string"
 msgstr "Text que coincideix"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:712
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:714
 msgid "Add Glyph"
 msgstr "Afegeix un glif"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:719
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:721
 msgid "Get curves from selection..."
 msgstr "Agafa les corbes de la selecció..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:768
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:770
 msgid "Add kerning pair"
 msgstr "Afegeix una parella d'interlletratge"
 
 #. Kerning Setup:
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:776
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:778
 msgid "Kerning Setup"
 msgstr "Configuració de l'interlletratge"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:778
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:780
 msgid "1st Glyph:"
 msgstr "1r glif:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:780
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:782
 msgid "2nd Glyph:"
 msgstr "2n glif:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:783
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:785
 msgid "Add pair"
 msgstr "Afegeix la parella"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:795
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:797
 msgid "First Unicode range"
 msgstr "Primer interval Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:796
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:798
 msgid "Second Unicode range"
 msgstr "Segon interval Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:803
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:805
 msgid "Kerning value:"
 msgstr "Valor d'interlletratge:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:861
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:863
 msgid "Set font family"
 msgstr "Defineix la família del tipus de lletra"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:870
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 msgid "font"
 msgstr "tipus de lletra"
 
 #. select_font(font);
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:885
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:887
 msgid "Add font"
 msgstr "Afegeix un tipus de lletra"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:911 ../src/ui/dialog/text-edit.cpp:69
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:913 ../src/ui/dialog/text-edit.cpp:69
 msgid "_Font"
 msgstr "_Tipus de lletra"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:919
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:921
 msgid "_Global Settings"
 msgstr "Configuració _general"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:920
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:922
 msgid "_Glyphs"
 msgstr "_Glifs"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:921
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:923
 msgid "_Kerning"
 msgstr "_Interlletratge"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:928
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:929
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:930
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:931
 msgid "Sample Text"
 msgstr "Text d'exemple"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:933
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:935
 msgid "Preview Text:"
 msgstr "Previsualitza el text:"
 
@@ -22173,27 +22106,27 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqcÇ12369$€¢?.;/()"
 
 #. Align buttons
-#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1691
-#: ../src/widgets/text-toolbar.cpp:1692
+#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1680
+#: ../src/widgets/text-toolbar.cpp:1681
 msgid "Align left"
 msgstr "Alinea a l'esquerra"
 
-#: ../src/ui/dialog/text-edit.cpp:98 ../src/widgets/text-toolbar.cpp:1699
-#: ../src/widgets/text-toolbar.cpp:1700
+#: ../src/ui/dialog/text-edit.cpp:98 ../src/widgets/text-toolbar.cpp:1688
+#: ../src/widgets/text-toolbar.cpp:1689
 msgid "Align center"
 msgstr "Alinea al centre"
 
-#: ../src/ui/dialog/text-edit.cpp:99 ../src/widgets/text-toolbar.cpp:1707
-#: ../src/widgets/text-toolbar.cpp:1708
+#: ../src/ui/dialog/text-edit.cpp:99 ../src/widgets/text-toolbar.cpp:1696
+#: ../src/widgets/text-toolbar.cpp:1697
 msgid "Align right"
 msgstr "Alinea a la dreta"
 
-#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1716
+#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1705
 msgid "Justify (only flowed text)"
 msgstr "Justifica (només el text flotant)"
 
 #. Direction buttons
-#: ../src/ui/dialog/text-edit.cpp:109 ../src/widgets/text-toolbar.cpp:1751
+#: ../src/ui/dialog/text-edit.cpp:109 ../src/widgets/text-toolbar.cpp:1740
 msgid "Horizontal text"
 msgstr "Text horitzontal"
 
@@ -22201,7 +22134,12 @@ msgstr "Text horitzontal"
 msgid "Vertical text"
 msgstr "Text vertical"
 
-#: ../src/ui/dialog/text-edit.cpp:154
+#: ../src/ui/dialog/text-edit.cpp:130 ../src/ui/dialog/text-edit.cpp:131
+#, fuzzy
+msgid "Spacing between baselines (percent of font size)"
+msgstr "Espai entre les línies (percentatge de la mida del tipus de lletra)"
+
+#: ../src/ui/dialog/text-edit.cpp:147
 msgid "Text path offset"
 msgstr "Desplaçament del camí del text"
 
@@ -23045,37 +22983,37 @@ msgstr ""
 msgid "Move the box in perspective"
 msgstr "Mou la capsa en perspectiva"
 
-#: ../src/ui/object-edit.cpp:996
+#: ../src/ui/object-edit.cpp:983
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
 msgstr "Ajusta <b>l'amplada</b> de l'el·lipse, amb <b>Ctrl</b> es fa un cercle"
 
-#: ../src/ui/object-edit.cpp:1000
+#: ../src/ui/object-edit.cpp:987
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "Ajusteu <b>l'alçada</b> de l'el·lipse, amb <b>Ctrl</b> es fa un cercle"
 
-#: ../src/ui/object-edit.cpp:1004
+#: ../src/ui/object-edit.cpp:991
 #, fuzzy
 msgid ""
-"Position the <b>start point</b> of the arc or segment; with <b>Shift</b> to "
-"move with <b>end point</b>; with <b>Ctrl</b> to snap angle; drag <b>inside</"
-"b> the ellipse for arc, <b>outside</b> for segment"
+"Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
+"snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
+"segment"
 msgstr ""
 "Posicioneu el <b>punt inicial</b> de l'arc o segment; amb <b>Maj</b> "
 "s'ajusta l'angle; arrossegueu <b>a dins</b> l'el·lipse per fer un arc, o "
 "<b>a fora</b> per fer un segment"
 
-#: ../src/ui/object-edit.cpp:1010
+#: ../src/ui/object-edit.cpp:996
 #, fuzzy
 msgid ""
-"Position the <b>end point</b> of the arc or segment; with <b>Shift</b> to "
-"move with <b>start point</b>; with <b>Ctrl</b> to snap angle; drag "
-"<b>inside</b> the ellipse for arc, <b>outside</b> for segment"
+"Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to "
+"snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
+"segment"
 msgstr ""
 "Posicioneu el <b>punt final</b> de l'arc o segment; amb <b>Ctrl</b> s'ajusta "
 "l'angle; arrossegueu <b>a dins</b> l'el·lipse per a l'arc, <b>a fora</b> per "
 "al segment"
 
-#: ../src/ui/object-edit.cpp:1157
+#: ../src/ui/object-edit.cpp:1142
 msgid ""
 "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to "
 "round; with <b>Alt</b> to randomize"
@@ -23083,7 +23021,7 @@ msgstr ""
 "Ajusteu la <b>distància al centre</b> de l'estel del polígon; amb <b>Maj</b> "
 "per arrodonir; amb <b>Alt</b> per aleatoritzar"
 
-#: ../src/ui/object-edit.cpp:1165
+#: ../src/ui/object-edit.cpp:1150
 msgid ""
 "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star "
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
@@ -23093,7 +23031,7 @@ msgstr ""
 "raigs de l'estel radial (sense tòrcer); amb <b>Maj</b> per arrodonir; amb "
 "<b>Alt</b> per aleatoritzar"
 
-#: ../src/ui/object-edit.cpp:1360
+#: ../src/ui/object-edit.cpp:1345
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
@@ -23101,7 +23039,7 @@ msgstr ""
 "Enrotlleu/desenrotlleu l'espiral des de <b>dins</b>; amb <b>Ctrl</b> per "
 "ajustar l'angle; amb <b>Alt</b> per convergir/divergir"
 
-#: ../src/ui/object-edit.cpp:1364
+#: ../src/ui/object-edit.cpp:1349
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate; with <b>Alt</b> to lock radius"
@@ -23109,11 +23047,11 @@ msgstr ""
 "Enrotlleu/desenrotlleu l'espiral des de <b>fora</b>; amb <b>Ctrl</b> per "
 "ajustar l'angle; amb <b>Maj</b> per escalar/girar"
 
-#: ../src/ui/object-edit.cpp:1413
+#: ../src/ui/object-edit.cpp:1398
 msgid "Adjust the <b>offset distance</b>"
 msgstr "Ajusteu la <b>distància de desplaçament</b>"
 
-#: ../src/ui/object-edit.cpp:1450
+#: ../src/ui/object-edit.cpp:1435
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Arrossegueu per canviar la mida del <b>marc de text flotant</b>"
 
@@ -24003,24 +23941,24 @@ msgstr ""
 "emplenar en prémer"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/ui/tools/freehand-base.cpp:661
+#: ../src/ui/tools/freehand-base.cpp:677
 msgid "Path is closed."
 msgstr "El camí està tancat."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/ui/tools/freehand-base.cpp:676
+#: ../src/ui/tools/freehand-base.cpp:692
 msgid "Closing path."
 msgstr "S'està tancant el camí."
 
-#: ../src/ui/tools/freehand-base.cpp:825
+#: ../src/ui/tools/freehand-base.cpp:831
 msgid "Draw path"
 msgstr "Dibuixa el camí"
 
-#: ../src/ui/tools/freehand-base.cpp:978
+#: ../src/ui/tools/freehand-base.cpp:984
 msgid "Creating single dot"
 msgstr "S'està creant un punt"
 
-#: ../src/ui/tools/freehand-base.cpp:979
+#: ../src/ui/tools/freehand-base.cpp:985
 msgid "Create single dot"
 msgstr "Crea un punt"
 
@@ -24091,7 +24029,7 @@ msgstr "Simplifica el degradat"
 msgid "Create default gradient"
 msgstr "Crea un degradat predeterminat"
 
-#: ../src/ui/tools/gradient-tool.cpp:569 ../src/ui/tools/mesh-tool.cpp:564
+#: ../src/ui/tools/gradient-tool.cpp:569 ../src/ui/tools/mesh-tool.cpp:561
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>Dibuixeu al voltant</b> dels punts de control per seleccionar-los"
 
@@ -24103,7 +24041,7 @@ msgstr "<b>Control</b>: ajusta l'angle del degradat"
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Majúscules</b>: dibuixa el degradat al voltant del punt d'inici"
 
-#: ../src/ui/tools/gradient-tool.cpp:946 ../src/ui/tools/mesh-tool.cpp:980
+#: ../src/ui/tools/gradient-tool.cpp:945 ../src/ui/tools/mesh-tool.cpp:977
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
@@ -24112,7 +24050,7 @@ msgstr[0] ""
 msgstr[1] ""
 "<b>Degradat</b>: per a %d objectes; amb <b>Ctrl</b> per ajustar l'angle"
 
-#: ../src/ui/tools/gradient-tool.cpp:950 ../src/ui/tools/mesh-tool.cpp:984
+#: ../src/ui/tools/gradient-tool.cpp:949 ../src/ui/tools/mesh-tool.cpp:981
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Seleccioneu <b>alguns objectes</b> per crear-hi degradats."
 
@@ -24129,32 +24067,32 @@ msgstr ""
 msgid "Measure end, <b>Shift+Click</b> for position dialog"
 msgstr ""
 
-#: ../src/ui/tools/measure-tool.cpp:746 ../share/extensions/measure.inx.h:2
+#: ../src/ui/tools/measure-tool.cpp:747 ../share/extensions/measure.inx.h:2
 msgid "Measure"
 msgstr "Mesura"
 
-#: ../src/ui/tools/measure-tool.cpp:751
+#: ../src/ui/tools/measure-tool.cpp:752
 msgid "Base"
 msgstr "Base"
 
-#: ../src/ui/tools/measure-tool.cpp:760
+#: ../src/ui/tools/measure-tool.cpp:761
 msgid "Add guides from measure tool"
 msgstr ""
 
-#: ../src/ui/tools/measure-tool.cpp:780
+#: ../src/ui/tools/measure-tool.cpp:781
 msgid "Keep last measure on the canvas, for reference"
 msgstr ""
 
-#: ../src/ui/tools/measure-tool.cpp:800
+#: ../src/ui/tools/measure-tool.cpp:801
 #, fuzzy
 msgid "Convert measure to items"
 msgstr "No existeix aquest compàs"
 
-#: ../src/ui/tools/measure-tool.cpp:838
+#: ../src/ui/tools/measure-tool.cpp:839
 msgid "Add global measure line"
 msgstr "Afegeix una línia global de mesura"
 
-#: ../src/ui/tools/measure-tool.cpp:1289 ../src/ui/tools/measure-tool.cpp:1291
+#: ../src/ui/tools/measure-tool.cpp:1290 ../src/ui/tools/measure-tool.cpp:1292
 #, c-format
 msgid "Crossing %lu"
 msgstr "Encreuament  %lu"
@@ -24186,48 +24124,48 @@ msgstr[1] ""
 "<b>No</b> s'ha seleccionat cap dels punts de control de la malla dels %d "
 "dels %d objectes seleccionats"
 
-#: ../src/ui/tools/mesh-tool.cpp:315
+#: ../src/ui/tools/mesh-tool.cpp:311
 msgid "Split mesh row/column"
 msgstr "Divideix la fila/columna de la malla"
 
-#: ../src/ui/tools/mesh-tool.cpp:401
+#: ../src/ui/tools/mesh-tool.cpp:397
 msgid "Toggled mesh path type."
 msgstr "Commuta el tipus de camí de la malla."
 
-#: ../src/ui/tools/mesh-tool.cpp:405
+#: ../src/ui/tools/mesh-tool.cpp:401
 msgid "Approximated arc for mesh side."
 msgstr "Arc aproximat pel costat de la malla."
 
-#: ../src/ui/tools/mesh-tool.cpp:409
+#: ../src/ui/tools/mesh-tool.cpp:405
 msgid "Toggled mesh tensors."
 msgstr "Commuta els sensors de la malla."
 
-#: ../src/ui/tools/mesh-tool.cpp:413
+#: ../src/ui/tools/mesh-tool.cpp:409
 msgid "Smoothed mesh corner color."
 msgstr "Color suavitzat de la cantonada de la malla."
 
-#: ../src/ui/tools/mesh-tool.cpp:417
+#: ../src/ui/tools/mesh-tool.cpp:413
 msgid "Picked mesh corner color."
 msgstr "Color de la cantonada de la malla seleccionat."
 
-#: ../src/ui/tools/mesh-tool.cpp:492
+#: ../src/ui/tools/mesh-tool.cpp:489
 msgid "Create default mesh"
 msgstr "Crea una malla predeterminada"
 
-#: ../src/ui/tools/mesh-tool.cpp:715
+#: ../src/ui/tools/mesh-tool.cpp:713
 msgid "FIXME<b>Ctrl</b>: snap mesh angle"
 msgstr "<b>Control</b>: ajusta l'angle de la malla"
 
-#: ../src/ui/tools/mesh-tool.cpp:716
+#: ../src/ui/tools/mesh-tool.cpp:714
 msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
 msgstr "<b>Majúscules</b>: dibuixeu la malla al voltant del punt d'inici"
 
-#: ../src/ui/tools/mesh-tool.cpp:974
+#: ../src/ui/tools/mesh-tool.cpp:971
 #, fuzzy
 msgid "Create mesh"
 msgstr "Crea un degradat en forma de malla"
 
-#: ../src/ui/tools/node-tool.cpp:644
+#: ../src/ui/tools/node-tool.cpp:648
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
@@ -24236,19 +24174,19 @@ msgstr ""
 "<b>Majúscules</b>: arrossegueu per afegir nodes a la selecció, cliqueu per "
 "commutar la selecció de l'objecte"
 
-#: ../src/ui/tools/node-tool.cpp:648
+#: ../src/ui/tools/node-tool.cpp:652
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr "<b>Majúscules</b>: arrossegueu per afegir nodes a la selecció"
 
-#: ../src/ui/tools/node-tool.cpp:677
+#: ../src/ui/tools/node-tool.cpp:681
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
 msgstr[0] "<b>%u de %u</b> nodes seleccionats."
 msgstr[1] "<b>%u de %u</b> nodes seleccionats."
 
-#: ../src/ui/tools/node-tool.cpp:684
+#: ../src/ui/tools/node-tool.cpp:688
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
@@ -24256,31 +24194,31 @@ msgstr ""
 "%s Arrossegueu per seleccionar nodes, feu clic per editar només aquest "
 "objecte (més: Majúscules)"
 
-#: ../src/ui/tools/node-tool.cpp:690
+#: ../src/ui/tools/node-tool.cpp:694
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
 msgstr ""
 "%s Arrossegueu per seleccionar nodes, feu cliqueu per cancel·lar la selecció"
 
-#: ../src/ui/tools/node-tool.cpp:699
+#: ../src/ui/tools/node-tool.cpp:703
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr "Arrossegueu per seleccionar nodes, cliqueu per editar-lo"
 
-#: ../src/ui/tools/node-tool.cpp:702
+#: ../src/ui/tools/node-tool.cpp:706
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr "Arrossegueu per seleccionar nodes, cliqueu per cancel·lar la selecció"
 
-#: ../src/ui/tools/node-tool.cpp:707
+#: ../src/ui/tools/node-tool.cpp:711
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 "Arrossegueu per seleccionar els objectes per editar, cliqueu per editar "
 "l'objecte (més: Majúscules)"
 
-#: ../src/ui/tools/node-tool.cpp:710
+#: ../src/ui/tools/node-tool.cpp:714
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr "Arrossegueu per seleccionar els objectes per editar"
@@ -24474,12 +24412,12 @@ msgstr ""
 msgid "Create rectangle"
 msgstr "Crea un rectangle"
 
-#: ../src/ui/tools/select-tool.cpp:155
+#: ../src/ui/tools/select-tool.cpp:156
 msgid "Click selection to toggle scale/rotation handles"
 msgstr ""
 "Cliqueu la selecció per commutar entre punts de control per rotar/escalar"
 
-#: ../src/ui/tools/select-tool.cpp:156
+#: ../src/ui/tools/select-tool.cpp:157
 msgid ""
 "No objects selected. Click, Shift+click, Alt+scroll mouse on top of objects, "
 "or drag around objects to select."
@@ -24487,15 +24425,15 @@ msgstr ""
 "No s'ha seleccionat cap objecte. Cliqueu, Maj+clic, o arrossegueu al voltant "
 "dels objectes per seleccionar."
 
-#: ../src/ui/tools/select-tool.cpp:209
+#: ../src/ui/tools/select-tool.cpp:210
 msgid "Move canceled."
 msgstr "No s'ha mogut."
 
-#: ../src/ui/tools/select-tool.cpp:217
+#: ../src/ui/tools/select-tool.cpp:218
 msgid "Selection canceled."
 msgstr "No s'ha seleccionat."
 
-#: ../src/ui/tools/select-tool.cpp:645
+#: ../src/ui/tools/select-tool.cpp:638
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
@@ -24503,7 +24441,7 @@ msgstr ""
 "<b>Passeu per sobre</b> dels objectes que voleu seleccionar; deixeu anar la "
 "tecla <b>Alt</b> per seleccionar els objectes encerclant-los"
 
-#: ../src/ui/tools/select-tool.cpp:647
+#: ../src/ui/tools/select-tool.cpp:640
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
@@ -24511,19 +24449,19 @@ msgstr ""
 "<b>Encercleu</b> els objectes per seleccionar-los; premeu <b>Alt</b> per "
 "seleccionar-los per contacte"
 
-#: ../src/ui/tools/select-tool.cpp:888
+#: ../src/ui/tools/select-tool.cpp:921
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 "<b>Ctrl</b>: cliqueu per seleccionar en grups; arrossegueu per moure en hor/"
 "ver"
 
-#: ../src/ui/tools/select-tool.cpp:889
+#: ../src/ui/tools/select-tool.cpp:922
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 "<b>Majúscules</b>: cliqueu per commutar la selecció; moveu el punter per "
 "seleccionar els objectes encerclant-los"
 
-#: ../src/ui/tools/select-tool.cpp:890
+#: ../src/ui/tools/select-tool.cpp:923
 msgid ""
 "<b>Alt</b>: click to select under; scroll mouse-wheel to cycle-select; drag "
 "to move selected or select by touch"
@@ -24532,7 +24470,7 @@ msgstr ""
 "ratolí per seleccionar cíclicament; arrossegueu per moure allò seleccionat o "
 "per seleccionar en prémer"
 
-#: ../src/ui/tools/select-tool.cpp:1098
+#: ../src/ui/tools/select-tool.cpp:1131
 msgid "Selected object is not a group. Cannot enter."
 msgstr "L'objecte seleccionat no és un grup. No es pot entrar."
 
@@ -24792,7 +24730,7 @@ msgstr[1] ""
 msgid "Type text"
 msgstr "Escriviu un text"
 
-#: ../src/ui/tools/tool-base.cpp:705
+#: ../src/ui/tools/tool-base.cpp:700
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr "<b>Barra espaiadora+arrossegament</b> per desplaçar el llenç"
 
@@ -28642,7 +28580,7 @@ msgstr "(cabell)"
 #. Scale
 #: ../src/widgets/calligraphy-toolbar.cpp:427
 #: ../src/widgets/calligraphy-toolbar.cpp:460
-#: ../src/widgets/eraser-toolbar.cpp:151 ../src/widgets/pencil-toolbar.cpp:378
+#: ../src/widgets/eraser-toolbar.cpp:151 ../src/widgets/pencil-toolbar.cpp:372
 #: ../src/widgets/spray-toolbar.cpp:294 ../src/widgets/spray-toolbar.cpp:323
 #: ../src/widgets/spray-toolbar.cpp:339 ../src/widgets/spray-toolbar.cpp:408
 #: ../src/widgets/spray-toolbar.cpp:438 ../src/widgets/spray-toolbar.cpp:456
@@ -29217,7 +29155,7 @@ msgid "Increase to make the eraser drag behind, as if slowed by inertia"
 msgstr ""
 "Incrementeu per arrossegar la ploma, com si la inèrcia la fes anar lenta"
 
-#: ../src/widgets/eraser-toolbar.cpp:186 ../src/widgets/eraser-toolbar.cpp:18
+#: ../src/widgets/eraser-toolbar.cpp:186 ../src/widgets/eraser-toolbar.cpp:187
 msgid "Break apart cut items"
 msgstr "Separa els elements tallats"
 
@@ -29249,8 +29187,8 @@ msgstr "Estableix el patró en emplenar"
 msgid "Set pattern on stroke"
 msgstr "Estableix el patró del traç"
 
-#: ../src/widgets/font-selector.cpp:120 ../src/widgets/text-toolbar.cpp:1218
-#: ../src/widgets/text-toolbar.cpp:1617
+#: ../src/widgets/font-selector.cpp:120 ../src/widgets/text-toolbar.cpp:1207
+#: ../src/widgets/text-toolbar.cpp:1606
 msgid "Font size"
 msgstr "Mida de la lletra"
 
@@ -29513,7 +29451,9 @@ msgstr "Utilitza l'estoc"
 
 #: ../src/widgets/image-menu-item.c:168
 msgid "Whether to use the label text to create a stock menu item"
-msgstr "Si s'ha d'utilitzar el text de l'etiqueta per crear un element de menú d'estoc"
+msgstr ""
+"Si s'ha d'utilitzar el text de l'etiqueta per crear un element de menú "
+"d'estoc"
 
 #: ../src/widgets/image-menu-item.c:183
 msgid "Accel Group"
@@ -29521,7 +29461,8 @@ msgstr "Grup d'acceleració"
 
 #: ../src/widgets/image-menu-item.c:184
 msgid "The Accel Group to use for stock accelerator keys"
-msgstr "El grup de dreceres a utilitzar per a les dreceres de teclat de l'estoc"
+msgstr ""
+"El grup de dreceres a utilitzar per a les dreceres de teclat de l'estoc"
 
 #: ../src/widgets/lpe-toolbar.cpp:233
 msgid "Closed"
@@ -29581,9 +29522,9 @@ msgstr "Mostra la informació de les mesures de l'element seleccionat"
 
 #. Add the units menu.
 #: ../src/widgets/lpe-toolbar.cpp:387 ../src/widgets/node-toolbar.cpp:613
-#: ../src/widgets/paintbucket-toolbar.cpp:168
+#: ../src/widgets/paintbucket-toolbar.cpp:167
 #: ../src/widgets/rect-toolbar.cpp:378 ../src/widgets/select-toolbar.cpp:530
-#: ../src/widgets/text-toolbar.cpp:1887
+#: ../src/widgets/text-toolbar.cpp:1876
 msgid "Units"
 msgstr "Unitats"
 
@@ -29627,7 +29568,7 @@ msgstr "Calcula tots els elements."
 msgid "Compute max length."
 msgstr "Calcula la llargada màxima:"
 
-#: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1620
+#: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1609
 msgid "Font Size"
 msgstr "Mida de la tipografia"
 
@@ -29806,7 +29747,7 @@ msgstr ""
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:527 ../src/widgets/pencil-toolbar.cpp:381
+#: ../src/widgets/mesh-toolbar.cpp:527 ../src/widgets/pencil-toolbar.cpp:375
 msgid "Smoothing:"
 msgstr "Suavitzat:"
 
@@ -30136,19 +30077,19 @@ msgstr "<b>Emplenat amb patró</b>"
 msgid "<b>Swatch fill</b>"
 msgstr "<b>Mostra emplenat</b>"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:135
+#: ../src/widgets/paintbucket-toolbar.cpp:134
 msgid "Fill by"
 msgstr "Omple segons"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:136
+#: ../src/widgets/paintbucket-toolbar.cpp:135
 msgid "Fill by:"
 msgstr "Omple segons:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:148
+#: ../src/widgets/paintbucket-toolbar.cpp:147
 msgid "Fill Threshold"
 msgstr "Llindar d'emplenat"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:149
+#: ../src/widgets/paintbucket-toolbar.cpp:148
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
@@ -30156,36 +30097,36 @@ msgstr ""
 "La màxima diferència permesa entre el píxel clicat i els píxels dels "
 "voltants que es contaran en l'emplenat"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:176
+#: ../src/widgets/paintbucket-toolbar.cpp:175
 msgid "Grow/shrink by"
 msgstr "Augmenta/encongeix"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:176
+#: ../src/widgets/paintbucket-toolbar.cpp:175
 msgid "Grow/shrink by:"
 msgstr "Augmenta/encongeix:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:177
+#: ../src/widgets/paintbucket-toolbar.cpp:176
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "La quantitat a augmentar (positiu) o encongir (negatiu) el camí d'emplenat "
 "creat"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:200
+#: ../src/widgets/paintbucket-toolbar.cpp:199
 msgid "Close gaps"
 msgstr "Tapa els forats"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:201
+#: ../src/widgets/paintbucket-toolbar.cpp:200
 msgid "Close gaps:"
 msgstr "Tapa els forats:"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:212
-#: ../src/widgets/pencil-toolbar.cpp:402 ../src/widgets/spiral-toolbar.cpp:285
+#: ../src/widgets/paintbucket-toolbar.cpp:211
+#: ../src/widgets/pencil-toolbar.cpp:396 ../src/widgets/spiral-toolbar.cpp:285
 #: ../src/widgets/star-toolbar.cpp:564
 msgid "Defaults"
 msgstr "Per defecte"
 
-#: ../src/widgets/paintbucket-toolbar.cpp:213
+#: ../src/widgets/paintbucket-toolbar.cpp:212
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -30193,93 +30134,93 @@ msgstr ""
 "Reinicialitza les opcions predeterminades del cubell (useu Preferències > "
 "Eines per canviar els valors predeterminats)"
 
-#: ../src/widgets/pencil-toolbar.cpp:104
+#: ../src/widgets/pencil-toolbar.cpp:105
 msgid "Bezier"
 msgstr "Bézier"
 
-#: ../src/widgets/pencil-toolbar.cpp:105
+#: ../src/widgets/pencil-toolbar.cpp:106
 msgid "Create regular Bezier path"
 msgstr "Crea un camí Bézier normal"
 
-#: ../src/widgets/pencil-toolbar.cpp:112
+#: ../src/widgets/pencil-toolbar.cpp:113
 msgid "Create Spiro path"
 msgstr "Crea un camí espiral"
 
-#: ../src/widgets/pencil-toolbar.cpp:118
+#: ../src/widgets/pencil-toolbar.cpp:119
 msgid "Create BSpline path"
 msgstr "Crea un camí BSpline"
 
-#: ../src/widgets/pencil-toolbar.cpp:124
+#: ../src/widgets/pencil-toolbar.cpp:125
 msgid "Zigzag"
 msgstr "Zigzag"
 
-#: ../src/widgets/pencil-toolbar.cpp:125
+#: ../src/widgets/pencil-toolbar.cpp:126
 msgid "Create a sequence of straight line segments"
 msgstr "Crea una seqüència de segments rectes"
 
-#: ../src/widgets/pencil-toolbar.cpp:131
+#: ../src/widgets/pencil-toolbar.cpp:132
 msgid "Paraxial"
 msgstr "Paraxial"
 
-#: ../src/widgets/pencil-toolbar.cpp:132
+#: ../src/widgets/pencil-toolbar.cpp:133
 msgid "Create a sequence of paraxial line segments"
 msgstr "Crea una seqüència de segments paraxials"
 
-#: ../src/widgets/pencil-toolbar.cpp:140
+#: ../src/widgets/pencil-toolbar.cpp:141
 msgid "Mode of new lines drawn by this tool"
 msgstr "Mode de línies noves dibuixades amb aquesta eina"
 
-#: ../src/widgets/pencil-toolbar.cpp:175
+#: ../src/widgets/pencil-toolbar.cpp:176
 msgctxt "Freehand shape"
 msgid "None"
 msgstr "Cap"
 
-#: ../src/widgets/pencil-toolbar.cpp:176
+#: ../src/widgets/pencil-toolbar.cpp:177
 msgid "Triangle in"
 msgstr "Triangle cap endins"
 
-#: ../src/widgets/pencil-toolbar.cpp:177
+#: ../src/widgets/pencil-toolbar.cpp:178
 msgid "Triangle out"
 msgstr "Triangle cap enfora"
 
-#: ../src/widgets/pencil-toolbar.cpp:179
+#: ../src/widgets/pencil-toolbar.cpp:180
 msgid "From clipboard"
 msgstr "Des del porta-retalls"
 
-#: ../src/widgets/pencil-toolbar.cpp:180
+#: ../src/widgets/pencil-toolbar.cpp:181
 #, fuzzy
 msgid "Bend from clipboard"
 msgstr "Del _porta-retalls"
 
-#: ../src/widgets/pencil-toolbar.cpp:181
+#: ../src/widgets/pencil-toolbar.cpp:182
 msgid "Last applied"
 msgstr "Última utilitzada"
 
-#: ../src/widgets/pencil-toolbar.cpp:206 ../src/widgets/pencil-toolbar.cpp:207
+#: ../src/widgets/pencil-toolbar.cpp:207 ../src/widgets/pencil-toolbar.cpp:208
 msgid "Shape:"
 msgstr "Figura:"
 
-#: ../src/widgets/pencil-toolbar.cpp:206
+#: ../src/widgets/pencil-toolbar.cpp:207
 msgid "Shape of new paths drawn by this tool"
 msgstr "Figura de camins nous dibuixats per aquesta eina"
 
-#: ../src/widgets/pencil-toolbar.cpp:378
+#: ../src/widgets/pencil-toolbar.cpp:372
 msgid "(many nodes, rough)"
 msgstr "(molts nodes, brut)"
 
-#: ../src/widgets/pencil-toolbar.cpp:378
+#: ../src/widgets/pencil-toolbar.cpp:372
 msgid "(few nodes, smooth)"
 msgstr "(pocs nodes, suau)"
 
-#: ../src/widgets/pencil-toolbar.cpp:381
+#: ../src/widgets/pencil-toolbar.cpp:375
 msgid "Smoothing: "
 msgstr "Suavitzat: "
 
-#: ../src/widgets/pencil-toolbar.cpp:382
+#: ../src/widgets/pencil-toolbar.cpp:376
 msgid "How much smoothing (simplifying) is applied to the line"
 msgstr "Quantitat de suavitzat (simplificat) s'aplicarà a la línia"
 
-#: ../src/widgets/pencil-toolbar.cpp:403
+#: ../src/widgets/pencil-toolbar.cpp:397
 msgid ""
 "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
@@ -30287,11 +30228,11 @@ msgstr ""
 "Recupera les opcions predeterminades del llapis (utilitzeu Preferències > "
 "Eines per canviar els valors predeterminats)"
 
-#: ../src/widgets/pencil-toolbar.cpp:413 ../src/widgets/pencil-toolbar.cpp:414
+#: ../src/widgets/pencil-toolbar.cpp:407 ../src/widgets/pencil-toolbar.cpp:408
 msgid "LPE based interactive simplify"
 msgstr ""
 
-#: ../src/widgets/pencil-toolbar.cpp:424 ../src/widgets/pencil-toolbar.cpp:425
+#: ../src/widgets/pencil-toolbar.cpp:418 ../src/widgets/pencil-toolbar.cpp:419
 #, fuzzy
 msgid "LPE simplify flatten"
 msgstr "Simplifica"
@@ -30669,7 +30610,8 @@ msgstr ""
 #: ../src/widgets/spray-toolbar.cpp:312
 msgid "Use the pressure of the input device to alter the width of spray area"
 msgstr ""
-"Usa la pressió del dispositiu d'entrada per modificar l'amplada de l'àrea de l'esprai"
+"Usa la pressió del dispositiu d'entrada per modificar l'amplada de l'àrea de "
+"l'esprai"
 
 #: ../src/widgets/spray-toolbar.cpp:323
 msgid "(maximum mean)"
@@ -30735,6 +30677,10 @@ msgstr "Suprimeix els elements"
 #, fuzzy
 msgid "Delete sprayed items from selection"
 msgstr "Suprimeix la selecció de l'arxiu"
+
+#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
+msgid "Mode"
+msgstr "Mode"
 
 #. Population
 #: ../src/widgets/spray-toolbar.cpp:408
@@ -31188,281 +31134,280 @@ msgstr "Text: canvia el superíndex o el subíndex"
 msgid "Text: Change alignment"
 msgstr "Text: canvia l'alineació"
 
-#: ../src/widgets/text-toolbar.cpp:583
+#: ../src/widgets/text-toolbar.cpp:573
 msgid "Text: Change line-height"
 msgstr "Text: canvia l'alçada de la línia"
 
-#: ../src/widgets/text-toolbar.cpp:739
+#: ../src/widgets/text-toolbar.cpp:728
 msgid "Text: Change line-height unit"
 msgstr "Text: canvia la unitat d'alçada de la línia"
 
-#: ../src/widgets/text-toolbar.cpp:788
+#: ../src/widgets/text-toolbar.cpp:777
 msgid "Text: Change word-spacing"
 msgstr "Text: canvia l'espai entre paraules"
 
-#: ../src/widgets/text-toolbar.cpp:828
+#: ../src/widgets/text-toolbar.cpp:817
 msgid "Text: Change letter-spacing"
 msgstr "Text: canvia l'espai entre lletres"
 
-#: ../src/widgets/text-toolbar.cpp:866
+#: ../src/widgets/text-toolbar.cpp:855
 msgid "Text: Change dx (kern)"
 msgstr "Text: canvia el dx (interlletratge)"
 
-#: ../src/widgets/text-toolbar.cpp:900
+#: ../src/widgets/text-toolbar.cpp:889
 msgid "Text: Change dy"
 msgstr "Text: canvia el dy"
 
-#: ../src/widgets/text-toolbar.cpp:935
+#: ../src/widgets/text-toolbar.cpp:924
 msgid "Text: Change rotate"
 msgstr "Text: canvia la rotació"
 
-#: ../src/widgets/text-toolbar.cpp:988
+#: ../src/widgets/text-toolbar.cpp:977
 msgid "Text: Change writing mode"
 msgstr "Txet: canvia el mode d'escriptura"
 
-#: ../src/widgets/text-toolbar.cpp:1042
+#: ../src/widgets/text-toolbar.cpp:1031
 msgid "Text: Change orientation"
 msgstr "Text: canvia l'orientació"
 
-#: ../src/widgets/text-toolbar.cpp:1550
+#: ../src/widgets/text-toolbar.cpp:1539
 msgid "Font Family"
 msgstr "Tipografia"
 
-#: ../src/widgets/text-toolbar.cpp:1551
+#: ../src/widgets/text-toolbar.cpp:1540
 msgid "Select Font Family (Alt-X to access)"
 msgstr "Selecciona la tipografia (Alt+X per accedir-hi)"
 
 #. Focus widget
 #. Enable entry completion
-#: ../src/widgets/text-toolbar.cpp:1561
+#: ../src/widgets/text-toolbar.cpp:1550
 msgid "Select all text with this font-family"
 msgstr "Selecciona tot el text amb aquesta tipografia"
 
-#: ../src/widgets/text-toolbar.cpp:1565
+#: ../src/widgets/text-toolbar.cpp:1554
 msgid "Font not found on system"
 msgstr "No s'ha trobat la tipografia al sistema"
 
-#: ../src/widgets/text-toolbar.cpp:1642
+#: ../src/widgets/text-toolbar.cpp:1631
 msgid "Font Style"
 msgstr "Estil de la tipografia"
 
-#: ../src/widgets/text-toolbar.cpp:1643
+#: ../src/widgets/text-toolbar.cpp:1632
 msgid "Font style"
 msgstr "Estil de tipografia"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1660
+#: ../src/widgets/text-toolbar.cpp:1649
 msgid "Toggle Superscript"
 msgstr "Commuta superíndex"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1661
+#: ../src/widgets/text-toolbar.cpp:1650
 msgid "Toggle superscript"
 msgstr "Commuta l'estil superíndex"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1673
+#: ../src/widgets/text-toolbar.cpp:1662
 msgid "Toggle Subscript"
 msgstr "Commuta subíndex"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1674
+#: ../src/widgets/text-toolbar.cpp:1663
 msgid "Toggle subscript"
 msgstr "Commuta l'estil subíndex"
 
-#: ../src/widgets/text-toolbar.cpp:1715
+#: ../src/widgets/text-toolbar.cpp:1704
 msgid "Justify"
 msgstr "Justifica"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1722
+#: ../src/widgets/text-toolbar.cpp:1711
 msgid "Alignment"
 msgstr "Alineament"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1723
+#: ../src/widgets/text-toolbar.cpp:1712
 msgid "Text alignment"
 msgstr "Alineament del text"
 
-#: ../src/widgets/text-toolbar.cpp:1750
+#: ../src/widgets/text-toolbar.cpp:1739
 msgid "Horizontal"
 msgstr "Horitzontal"
 
-#: ../src/widgets/text-toolbar.cpp:1757
+#: ../src/widgets/text-toolbar.cpp:1746
 #, fuzzy
 msgid "Vertical — RL"
 msgstr "U~RL"
 
-#: ../src/widgets/text-toolbar.cpp:1758
+#: ../src/widgets/text-toolbar.cpp:1747
 #, fuzzy
 msgid "Vertical text — lines: right to left"
 msgstr "Pleca doble esquerra i dreta"
 
-#: ../src/widgets/text-toolbar.cpp:1764
+#: ../src/widgets/text-toolbar.cpp:1753
 #, fuzzy
 msgid "Vertical — LR"
 msgstr "d'esquerra a dreta, de dalt a baix"
 
-#: ../src/widgets/text-toolbar.cpp:1765
+#: ../src/widgets/text-toolbar.cpp:1754
 #, fuzzy
 msgid "Vertical text — lines: left to right"
 msgstr "Pleca doble esquerra i dreta"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1770
+#: ../src/widgets/text-toolbar.cpp:1759
 msgid "Writing mode"
 msgstr "Mode d'escriptura"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1771
+#: ../src/widgets/text-toolbar.cpp:1760
 msgid "Block progression"
 msgstr "Progrés del bloc"
 
-#: ../src/widgets/text-toolbar.cpp:1800
+#: ../src/widgets/text-toolbar.cpp:1789
 msgid "Auto glyph orientation"
 msgstr "Orientació automàtica del glif"
 
-#: ../src/widgets/text-toolbar.cpp:1807
+#: ../src/widgets/text-toolbar.cpp:1796
 msgid "Upright"
 msgstr "Vertical"
 
-#: ../src/widgets/text-toolbar.cpp:1808
+#: ../src/widgets/text-toolbar.cpp:1797
 msgid "Upright glyph orientation"
 msgstr "Orientació vertical del glif"
 
-#: ../src/widgets/text-toolbar.cpp:1815
-#, fuzzy
+#: ../src/widgets/text-toolbar.cpp:1804
 msgid "Sideways"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1816
+#: ../src/widgets/text-toolbar.cpp:1805
 #, fuzzy
 msgid "Sideways glyph orientation"
 msgstr "Orientació"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1822
+#: ../src/widgets/text-toolbar.cpp:1811
 msgid "Text orientation"
 msgstr "Orientació del text"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1823
+#: ../src/widgets/text-toolbar.cpp:1812
 #, fuzzy
 msgid "Text (glyph) orientation in vertical text."
 msgstr "Títol vertical i text vertical"
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1856
+#: ../src/widgets/text-toolbar.cpp:1845
 msgid "Smaller spacing"
 msgstr "Menys espai"
 
-#: ../src/widgets/text-toolbar.cpp:1856 ../src/widgets/text-toolbar.cpp:1895
-#: ../src/widgets/text-toolbar.cpp:1926
+#: ../src/widgets/text-toolbar.cpp:1845 ../src/widgets/text-toolbar.cpp:1884
+#: ../src/widgets/text-toolbar.cpp:1915
 msgctxt "Text tool"
 msgid "Normal"
 msgstr "Normal"
 
-#: ../src/widgets/text-toolbar.cpp:1856
+#: ../src/widgets/text-toolbar.cpp:1845
 msgid "Larger spacing"
 msgstr "Més espai"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1861
+#: ../src/widgets/text-toolbar.cpp:1850
 msgid "Line Height"
 msgstr "Alçada de la línia"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1862
+#: ../src/widgets/text-toolbar.cpp:1851
 msgid "Line:"
 msgstr "Línia:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1863
+#: ../src/widgets/text-toolbar.cpp:1852
 #, fuzzy
 msgid "Spacing between baselines (times font size)"
 msgstr "Espai entre les línies (mida de la lletra Times)"
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1895 ../src/widgets/text-toolbar.cpp:1926
+#: ../src/widgets/text-toolbar.cpp:1884 ../src/widgets/text-toolbar.cpp:1915
 msgid "Negative spacing"
 msgstr "Espaiat negatiu"
 
-#: ../src/widgets/text-toolbar.cpp:1895 ../src/widgets/text-toolbar.cpp:1926
+#: ../src/widgets/text-toolbar.cpp:1884 ../src/widgets/text-toolbar.cpp:1915
 msgid "Positive spacing"
 msgstr "Espaiat positiu"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1900
+#: ../src/widgets/text-toolbar.cpp:1889
 msgid "Word spacing"
 msgstr "Espai entre paraules"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1901
+#: ../src/widgets/text-toolbar.cpp:1890
 msgid "Word:"
 msgstr "Paraula:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1902
+#: ../src/widgets/text-toolbar.cpp:1891
 msgid "Spacing between words (px)"
 msgstr "Espai entre paraules (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1931
+#: ../src/widgets/text-toolbar.cpp:1920
 msgid "Letter spacing"
 msgstr "Espai entre lletres"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1932
+#: ../src/widgets/text-toolbar.cpp:1921
 msgid "Letter:"
 msgstr "Lletra:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1933
+#: ../src/widgets/text-toolbar.cpp:1922
 msgid "Spacing between letters (px)"
 msgstr "Espai entre lletres (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1962
+#: ../src/widgets/text-toolbar.cpp:1951
 msgid "Kerning"
 msgstr "Interlletratge"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1963
+#: ../src/widgets/text-toolbar.cpp:1952
 msgid "Kern:"
 msgstr "Interlletratge:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1964
+#: ../src/widgets/text-toolbar.cpp:1953
 msgid "Horizontal kerning (px)"
 msgstr "Interlletratge horitzontal (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1993
+#: ../src/widgets/text-toolbar.cpp:1982
 msgid "Vertical Shift"
 msgstr "Desplaçament vertical"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1994
+#: ../src/widgets/text-toolbar.cpp:1983
 msgid "Vert:"
 msgstr "Vert:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1995
+#: ../src/widgets/text-toolbar.cpp:1984
 msgid "Vertical shift (px)"
 msgstr "Desplaçament vertical (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:2024
+#: ../src/widgets/text-toolbar.cpp:2013
 msgid "Letter rotation"
 msgstr "Rotació de la lletra"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:2025
+#: ../src/widgets/text-toolbar.cpp:2014
 msgid "Rot:"
 msgstr "Rota:"
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:2026
+#: ../src/widgets/text-toolbar.cpp:2015
 msgid "Character rotation (degrees)"
 msgstr "Rotació dels caràcters (graus)"
 
@@ -31880,19 +31825,20 @@ msgstr ""
 "No s'ha pogut processar aquest objecte. Proveu-ho transformant-lo abans en "
 "un camí."
 
+#. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:179
 #, fuzzy
-msgid "Side Length 'a' ("
+msgid "Side Length 'a' (px): "
 msgstr "Longitud del costat a (px):"
 
 #: ../share/extensions/draw_from_triangle.py:180
 #, fuzzy
-msgid "Side Length 'b' ("
+msgid "Side Length 'b' (px): "
 msgstr "Longitud del costat b (px):"
 
 #: ../share/extensions/draw_from_triangle.py:181
 #, fuzzy
-msgid "Side Length 'c' ("
+msgid "Side Length 'c' (px): "
 msgstr "Longitud del costat c (px):"
 
 #: ../share/extensions/draw_from_triangle.py:182
@@ -31912,9 +31858,8 @@ msgid "Semiperimeter (px): "
 msgstr "Semiperímetre (px): "
 
 #: ../share/extensions/draw_from_triangle.py:186
-#, fuzzy
-msgid "Area ("
-msgstr "Àrea:"
+msgid "Area (px^2): "
+msgstr "Àrea (px^2): "
 
 #: ../share/extensions/dxf_input.py:530
 #, python-format
@@ -31993,13 +31938,16 @@ msgstr "Calen almenys seleccionar 2 camins"
 #: ../share/extensions/funcplot.py:46
 msgid ""
 "x-interval cannot be zero. Please modify 'Start X value' or 'End X value'"
-msgstr "L'interval X no pot ser zero. Modifiqueu el valor «Inici X» o «Final X»"
+msgstr ""
+"L'interval X no pot ser zero. Modifiqueu el valor «Inici X» o «Final X»"
 
 #: ../share/extensions/funcplot.py:58
 msgid ""
 "y-interval cannot be zero. Please modify 'Y value of rectangle's top' or 'Y "
 "value of rectangle's bottom'"
-msgstr "L'interval Y no pot ser zero. Modifiqueu «el valor Y del rectangle superior» o «el valor Y del rectangle inferior»"
+msgstr ""
+"L'interval Y no pot ser zero. Modifiqueu «el valor Y del rectangle superior» "
+"o «el valor Y del rectangle inferior»"
 
 #: ../share/extensions/funcplot.py:313
 msgid "Please select a rectangle"
@@ -35831,10 +35779,6 @@ msgstr "Segueix l'enllaç"
 msgid "Ask Us a Question"
 msgstr "Feu-nos una pregunta"
 
-#: ../share/extensions/inkscape_help_askaquestion.inx.h:2
-msgid "https://inkscape.org/en/ask/"
-msgstr "https://inkscape.org/en/ask/"
-
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
 msgid "Command Line Options"
 msgstr "Opcions de la línia d'ordres"
@@ -39563,16 +39507,120 @@ msgstr "Un format popular d'imatges per a il·lustracions"
 msgid "XAML Input"
 msgstr "Entrada XAML"
 
+#~ msgid "Origin"
+#~ msgstr "Origen"
+
+#~ msgid "Origin of the rotation"
+#~ msgstr "Origen de la rotació"
+
+#~ msgid "Starting:"
+#~ msgstr "Inici:"
+
+#~ msgid "Angle of the first copy"
+#~ msgstr "Angle de la primera còpia"
+
+#~ msgid "Rotation angle:"
+#~ msgstr "Angle de rotació:"
+
+#~ msgid "Angle between two successive copies"
+#~ msgstr "Angle entre dues còpies successives"
+
+#~ msgid "Number of copies:"
+#~ msgstr "Nombre de còpies:"
+
+#~ msgid "Number of copies of the original path"
+#~ msgstr "Nombre de còpies del camí original"
+
+#~ msgid "360º Copies"
+#~ msgstr "Còpies 360º"
+
+#~ msgid "No rotation angle, fixed to 360º"
+#~ msgstr "Sense angle de rotació, fixat a 360º"
+
+#~ msgid "Fuse paths"
+#~ msgstr "Fusiona camins"
+
+#~ msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
+#~ msgstr ""
+#~ "Fusiona camins per la línia d'ajuda, use la regla «evenodd» per a un "
+#~ "millor resultat"
+
+#~ msgid "Adjust the starting angle"
+#~ msgstr "Ajusta l'angle d'inici"
+
+#~ msgid "Adjust the rotation angle"
+#~ msgstr "Ajusta l'angle de rotació"
+
+#~ msgid "Min Radius:"
+#~ msgstr "Radi mínim:"
+
+#~ msgid "Minimun radius, low values can be slow"
+#~ msgstr "Radi mínim, els valors baixos poden ser lents"
+
+#~ msgid "Vertical Page Center"
+#~ msgstr "Centre vertical de la pàgina"
+
+#~ msgid "Horizontal Page Center"
+#~ msgstr "Centre horitzontal de la pàgina"
+
+#~ msgid "Free from reflection line"
+#~ msgstr "Lliure des de la línia de reflexió"
+
+#~ msgid "X from middle knot"
+#~ msgstr "X des del nus mig"
+
+#~ msgid "Y from middle knot"
+#~ msgstr "Y des del nus mig"
+
+#~ msgid "Symmetry move mode"
+#~ msgstr "Mode de moviment amb simetria"
+
+#~ msgid "Discard original path?"
+#~ msgstr "Voleu descartar el camí original?"
+
+#~ msgid "Check this to only keep the mirrored part of the path"
+#~ msgstr "Marqueu per mantenir emmirallada només la part del camí"
+
+#~ msgid "Fuse original and the reflection into a single path"
+#~ msgstr "Fusiona l'original i el reflectit amb un únic camí"
+
+#~ msgid "Opposite fuse"
+#~ msgstr "Fusió oposada"
+
+#~ msgid "Picks the other side of the mirror as the original"
+#~ msgstr "Escull l'altra cara del mirall com l'original"
+
+#~ msgid "Start mirror line"
+#~ msgstr "Inici de la línia del mirall"
+
+#~ msgid "End mirror line"
+#~ msgstr "Fi de la línia del mirall"
+
+#~ msgid "Adjust the center"
+#~ msgstr "Ajusta el centre"
+
 #, fuzzy
-#~ msgid "Spacing between baselines (percent of font size)"
-#~ msgstr "Espai entre les línies (percentatge de la mida del tipus de lletra)"
+#~ msgid "Side Length 'a' ("
+#~ msgstr "Longitud del costat a (px):"
+
+#, fuzzy
+#~ msgid "Side Length 'b' ("
+#~ msgstr "Longitud del costat b (px):"
+
+#, fuzzy
+#~ msgid "Side Length 'c' ("
+#~ msgstr "Longitud del costat c (px):"
+
+#, fuzzy
+#~ msgid "Area ("
+#~ msgstr "Àrea:"
+
+#~ msgid "https://inkscape.org/en/ask/"
+#~ msgstr "https://inkscape.org/en/ask/"
 
 #, fuzzy
 #~ msgid "Add Stored to measure tool"
 #~ msgstr "Eina Compàs: mesura distàncies i angles"
-
-#~ msgid "Area (px^2): "
-#~ msgstr "Àrea (px^2): "
 
 #~ msgid ""
 #~ "Select <b>exactly 2 paths</b> to perform difference, division, or path "

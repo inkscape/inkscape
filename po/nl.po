@@ -55,6 +55,7 @@
 # to tweak / tweak context  -  retoucheren
 # Tool Controls bar  -  Gereedschapsdetailsbalk
 # (toevoegingen welkom)
+#: ../src/ui/dialog/clonetiler.cpp:1010
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.92\n"
@@ -748,8 +749,7 @@ msgstr "Zwart gat"
 #: ../share/filters/filters.svg.h:279 ../share/filters/filters.svg.h:835
 #: ../share/filters/filters.svg.h:839 ../share/filters/filters.svg.h:843
 #: ../src/extension/internal/filter/morphology.h:76
-#: ../src/extension/internal/filter/morphology.h:203
-#: ../src/filter-enums.cpp:32
+#: ../src/extension/internal/filter/morphology.h:203 ../src/filter-enums.cpp:32
 msgid "Morphology"
 msgstr "Morfologie"
 
@@ -5140,8 +5140,7 @@ msgstr "Aanpassende drempelwaarde"
 #: ../src/ui/widget/page-sizer.cpp:249
 #: ../src/widgets/calligraphy-toolbar.cpp:430
 #: ../src/widgets/eraser-toolbar.cpp:154 ../src/widgets/spray-toolbar.cpp:297
-#: ../src/widgets/tweak-toolbar.cpp:128
-#: ../share/extensions/foldablebox.inx.h:2
+#: ../src/widgets/tweak-toolbar.cpp:128 ../share/extensions/foldablebox.inx.h:2
 msgid "Width:"
 msgstr "Breedte:"
 
@@ -6608,15 +6607,13 @@ msgid "Transparency type:"
 msgstr "Type transparantie:"
 
 #: ../src/extension/internal/filter/bumps.h:353
-#: ../src/extension/internal/filter/morphology.h:176
-#: ../src/filter-enums.cpp:91
+#: ../src/extension/internal/filter/morphology.h:176 ../src/filter-enums.cpp:91
 msgid "Atop"
 msgstr "Bovenop"
 
 #: ../src/extension/internal/filter/bumps.h:354
 #: ../src/extension/internal/filter/distort.h:70
-#: ../src/extension/internal/filter/morphology.h:174
-#: ../src/filter-enums.cpp:89
+#: ../src/extension/internal/filter/morphology.h:174 ../src/filter-enums.cpp:89
 msgid "In"
 msgstr "In"
 
@@ -7133,8 +7130,7 @@ msgid "Felt Feather"
 msgstr "Veren vilt"
 
 #: ../src/extension/internal/filter/distort.h:71
-#: ../src/extension/internal/filter/morphology.h:175
-#: ../src/filter-enums.cpp:90
+#: ../src/extension/internal/filter/morphology.h:175 ../src/filter-enums.cpp:90
 msgid "Out"
 msgstr "Uit"
 
@@ -7329,13 +7325,11 @@ msgstr "Afbeelding verbergen"
 msgid "Composite type:"
 msgstr "Composiettype:"
 
-#: ../src/extension/internal/filter/morphology.h:173
-#: ../src/filter-enums.cpp:88
+#: ../src/extension/internal/filter/morphology.h:173 ../src/filter-enums.cpp:88
 msgid "Over"
 msgstr "Erover"
 
-#: ../src/extension/internal/filter/morphology.h:177
-#: ../src/filter-enums.cpp:92
+#: ../src/extension/internal/filter/morphology.h:177 ../src/filter-enums.cpp:92
 msgid "XOR"
 msgstr "XOR"
 
@@ -7409,8 +7403,8 @@ msgstr "Ruis opvulling"
 #: ../src/ui/dialog/tracedialog.cpp:747
 #: ../share/extensions/color_HSL_adjust.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
-#: ../share/extensions/color_randomize.inx.h:2
-#: ../share/extensions/dots.inx.h:2 ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/color_randomize.inx.h:2 ../share/extensions/dots.inx.h:2
+#: ../share/extensions/dxf_input.inx.h:2
 #: ../share/extensions/dxf_outlines.inx.h:2
 #: ../share/extensions/gcodetools_area.inx.h:29
 #: ../share/extensions/gcodetools_engraving.inx.h:7
@@ -8009,15 +8003,13 @@ msgstr "Verticale inspringing:"
 #: ../src/extension/internal/grid.cpp:209
 #: ../src/ui/dialog/inkscape-preferences.cpp:1532
 #: ../share/extensions/draw_from_triangle.inx.h:58
-#: ../share/extensions/eqtexsvg.inx.h:4
-#: ../share/extensions/foldablebox.inx.h:9
+#: ../share/extensions/eqtexsvg.inx.h:4 ../share/extensions/foldablebox.inx.h:9
 #: ../share/extensions/funcplot.inx.h:38
 #: ../share/extensions/grid_cartesian.inx.h:23
 #: ../share/extensions/grid_isometric.inx.h:11
 #: ../share/extensions/grid_polar.inx.h:22
 #: ../share/extensions/guides_creator.inx.h:25
-#: ../share/extensions/hershey.inx.h:52
-#: ../share/extensions/layout_nup.inx.h:35
+#: ../share/extensions/hershey.inx.h:52 ../share/extensions/layout_nup.inx.h:35
 #: ../share/extensions/lindenmayer.inx.h:34
 #: ../share/extensions/nicechart.inx.h:45
 #: ../share/extensions/param_curves.inx.h:30
@@ -8377,8 +8369,7 @@ msgid "Map all fill patterns to standard WMF hatches"
 msgstr "Alle vulpatronen naar standaard WMF-hatches mappen"
 
 #: ../src/extension/internal/wmf-inout.cpp:3208
-#: ../share/extensions/wmf_input.inx.h:2
-#: ../share/extensions/wmf_output.inx.h:2
+#: ../share/extensions/wmf_input.inx.h:2 ../share/extensions/wmf_output.inx.h:2
 msgid "Windows Metafile (*.wmf)"
 msgstr "Windows Metafile (*.wmf)"
 
@@ -8651,8 +8642,7 @@ msgstr "Tintrotatie"
 msgid "Luminance to Alpha"
 msgstr "Luminantie naar alfa"
 
-#: ../src/filter-enums.cpp:87
-#: ../share/extensions/jessyInk_mouseHandler.inx.h:3
+#: ../src/filter-enums.cpp:87 ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_transitions.inx.h:7
 #: ../share/extensions/measure.inx.h:20 ../share/extensions/nicechart.inx.h:33
 msgid "Default"
@@ -8966,8 +8956,7 @@ msgstr "Dit paneel inklappen"
 msgid "Close this dock"
 msgstr "Dit paneel sluiten"
 
-#: ../src/libgdl/gdl-dock-item-grip.c:723
-#: ../src/libgdl/gdl-dock-tablabel.c:125
+#: ../src/libgdl/gdl-dock-item-grip.c:723 ../src/libgdl/gdl-dock-tablabel.c:125
 msgid "Controlling dock item"
 msgstr "Aansturend paneelitem"
 
@@ -9135,8 +9124,7 @@ msgstr "De index van de huidige pagina"
 #: ../src/libgdl/gdl-dock-object.c:125
 #: ../src/live_effects/parameter/originalpatharray.cpp:82
 #: ../src/ui/dialog/inkscape-preferences.cpp:1566
-#: ../src/ui/widget/page-sizer.cpp:285
-#: ../src/widgets/gradient-selector.cpp:150
+#: ../src/ui/widget/page-sizer.cpp:285 ../src/widgets/gradient-selector.cpp:150
 #: ../src/widgets/sp-xmlview-attr-list.cpp:49
 msgid "Name"
 msgstr "Naam"
@@ -11145,8 +11133,7 @@ msgstr "Inter_val markeringen:"
 msgid "Distance between successive ruler marks"
 msgstr "Afstand tussen opeenvolgende markeringen"
 
-#: ../src/live_effects/lpe-ruler.cpp:42
-#: ../share/extensions/foldablebox.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:42 ../share/extensions/foldablebox.inx.h:7
 #: ../share/extensions/interp_att_g.inx.h:9
 #: ../share/extensions/layout_nup.inx.h:3
 #: ../share/extensions/printing_marks.inx.h:11
@@ -12525,8 +12512,7 @@ msgstr "Er is <b>niets</b> verwijderd."
 #: ../src/widgets/eraser-toolbar.cpp:120
 #: ../src/widgets/gradient-toolbar.cpp:1181
 #: ../src/widgets/gradient-toolbar.cpp:1195
-#: ../src/widgets/gradient-toolbar.cpp:1209
-#: ../src/widgets/node-toolbar.cpp:401
+#: ../src/widgets/gradient-toolbar.cpp:1209 ../src/widgets/node-toolbar.cpp:401
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -13407,8 +13393,8 @@ msgstr "Voorwaardelijke groep"
 
 #: ../src/sp-text.cpp:361 ../src/verbs.cpp:347
 #: ../share/extensions/lorem_ipsum.inx.h:8
-#: ../share/extensions/replace_font.inx.h:11
-#: ../share/extensions/split.inx.h:10 ../share/extensions/text_braille.inx.h:2
+#: ../share/extensions/replace_font.inx.h:11 ../share/extensions/split.inx.h:10
+#: ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_extract.inx.h:14
 #: ../share/extensions/text_flipcase.inx.h:2
 #: ../share/extensions/text_lowercase.inx.h:2
@@ -15152,8 +15138,7 @@ msgstr "Ve_rwijderen"
 msgid "Remove selected grid."
 msgstr "Geselecteerd raster verwijderen."
 
-#: ../src/ui/dialog/document-properties.cpp:162
-#: ../src/widgets/toolbox.cpp:1903
+#: ../src/ui/dialog/document-properties.cpp:162 ../src/widgets/toolbox.cpp:1903
 msgid "Guides"
 msgstr "Hulplijnen"
 
@@ -15596,8 +15581,7 @@ msgstr "Informatie"
 #: ../share/extensions/jitternodes.inx.h:12
 #: ../share/extensions/layout_nup.inx.h:24
 #: ../share/extensions/lindenmayer.inx.h:13
-#: ../share/extensions/lorem_ipsum.inx.h:6
-#: ../share/extensions/measure.inx.h:33
+#: ../share/extensions/lorem_ipsum.inx.h:6 ../share/extensions/measure.inx.h:33
 #: ../share/extensions/pathalongpath.inx.h:16
 #: ../share/extensions/pathscatter.inx.h:18
 #: ../share/extensions/restack.inx.h:25 ../share/extensions/split.inx.h:8
@@ -20822,8 +20806,7 @@ msgstr "X-helling"
 msgid "Y tilt"
 msgstr "Y-helling"
 
-#: ../src/ui/dialog/input.cpp:1616
-#: ../src/ui/widget/color-wheel-selector.cpp:29
+#: ../src/ui/dialog/input.cpp:1616 ../src/ui/widget/color-wheel-selector.cpp:29
 msgid "Wheel"
 msgstr "Wiel"
 
@@ -21635,18 +21618,15 @@ msgstr "Kopf-Lischinski"
 msgid "Output"
 msgstr "Uitvoer"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:297
-#: ../src/ui/dialog/tracedialog.cpp:814
+#: ../src/ui/dialog/pixelartdialog.cpp:297 ../src/ui/dialog/tracedialog.cpp:814
 msgid "Reset all settings to defaults"
 msgstr "Alle instellingen naar de standaarwaarden terugzetten"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:302
-#: ../src/ui/dialog/tracedialog.cpp:819
+#: ../src/ui/dialog/pixelartdialog.cpp:302 ../src/ui/dialog/tracedialog.cpp:819
 msgid "Abort a trace in progress"
 msgstr "Het overtrekken afbreken"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:306
-#: ../src/ui/dialog/tracedialog.cpp:823
+#: ../src/ui/dialog/pixelartdialog.cpp:306 ../src/ui/dialog/tracedialog.cpp:823
 msgid "Execute the trace"
 msgstr "Het overtrekken starten"
 
@@ -22019,8 +21999,7 @@ msgid "Preview Text:"
 msgstr "Voorbeeldtekst:"
 
 #: ../src/ui/dialog/swatches.cpp:202 ../src/ui/tools/gradient-tool.cpp:360
-#: ../src/ui/tools/gradient-tool.cpp:458
-#: ../src/widgets/gradient-vector.cpp:801
+#: ../src/ui/tools/gradient-tool.cpp:458 ../src/widgets/gradient-vector.cpp:801
 msgid "Add gradient stop"
 msgstr "Kleurverloopovergang toevoegen"
 
@@ -23455,8 +23434,7 @@ msgid "Rotate handle"
 msgstr "Roteerhandvat"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1555
-#: ../src/widgets/node-toolbar.cpp:397
+#: ../src/ui/tool/path-manipulator.cpp:1555 ../src/widgets/node-toolbar.cpp:397
 msgid "Delete node"
 msgstr "Item verwijderen"
 
@@ -29310,33 +29288,27 @@ msgstr "radiaal"
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "Radiaal kleurverloop (eliptisch of cirkelvormig) maken"
 
-#: ../src/widgets/gradient-toolbar.cpp:1044
-#: ../src/widgets/mesh-toolbar.cpp:387
+#: ../src/widgets/gradient-toolbar.cpp:1044 ../src/widgets/mesh-toolbar.cpp:387
 msgid "New:"
 msgstr "Nieuw:"
 
-#: ../src/widgets/gradient-toolbar.cpp:1067
-#: ../src/widgets/mesh-toolbar.cpp:410
+#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:410
 msgid "fill"
 msgstr "vulling"
 
-#: ../src/widgets/gradient-toolbar.cpp:1067
-#: ../src/widgets/mesh-toolbar.cpp:410
+#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:410
 msgid "Create gradient in the fill"
 msgstr "Kleurverloop maken voor vulling"
 
-#: ../src/widgets/gradient-toolbar.cpp:1071
-#: ../src/widgets/mesh-toolbar.cpp:414
+#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:414
 msgid "stroke"
 msgstr "lijn"
 
-#: ../src/widgets/gradient-toolbar.cpp:1071
-#: ../src/widgets/mesh-toolbar.cpp:414
+#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:414
 msgid "Create gradient in the stroke"
 msgstr "Kleurverloop maken voor lijn"
 
-#: ../src/widgets/gradient-toolbar.cpp:1074
-#: ../src/widgets/mesh-toolbar.cpp:417
+#: ../src/widgets/gradient-toolbar.cpp:1074 ../src/widgets/mesh-toolbar.cpp:417
 msgid "on:"
 msgstr "Op:"
 
@@ -29436,8 +29408,7 @@ msgstr "Kleurverlopen linken"
 msgid "Link gradients to change all related gradients"
 msgstr "Kleurverlopen linken om alle gerelateerde kleurverlopen te veranderen"
 
-#: ../src/widgets/gradient-vector.cpp:317
-#: ../src/widgets/paint-selector.cpp:965
+#: ../src/widgets/gradient-vector.cpp:317 ../src/widgets/paint-selector.cpp:965
 #: ../src/widgets/stroke-marker-selector.cpp:154
 msgid "No document selected"
 msgstr "Geen document geselecteerd"
@@ -32569,8 +32540,7 @@ msgid "Area is zero, cannot calculate Center of Mass"
 msgstr "Oppervlak is gelijk aan nul, kan massacentrum niet berekenen"
 
 #: ../share/extensions/pathalongpath.py:207
-#: ../share/extensions/pathscatter.py:226
-#: ../share/extensions/perspective.py:50
+#: ../share/extensions/pathscatter.py:226 ../share/extensions/perspective.py:50
 msgid "This extension requires two selected paths."
 msgstr "Deze uitbreiding vereist twee geselecteerde paden."
 
@@ -32607,8 +32577,7 @@ msgstr ""
 "Debian-gebaseerd systeem kan dit gedaan worden met het commando, sudo apt-"
 "get install python-numpy."
 
-#: ../share/extensions/perspective.py:58
-#: ../share/extensions/summersnight.py:49
+#: ../share/extensions/perspective.py:58 ../share/extensions/summersnight.py:49
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -32617,16 +32586,14 @@ msgstr ""
 "Het eerste geselecteerde object is van het type '%s'.\n"
 "Probeer de procedure Paden->Object naar Pad."
 
-#: ../share/extensions/perspective.py:65
-#: ../share/extensions/summersnight.py:57
+#: ../share/extensions/perspective.py:65 ../share/extensions/summersnight.py:57
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
 "Deze uitbreiding vereist dat het tweede geselecteerde pad vier knooppunten "
 "lang is."
 
-#: ../share/extensions/perspective.py:91
-#: ../share/extensions/summersnight.py:90
+#: ../share/extensions/perspective.py:91 ../share/extensions/summersnight.py:90
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -32634,8 +32601,7 @@ msgstr ""
 "Het tweede geselecteerde object is een groep en geen pad.\n"
 "Probeer de procedure Object->Groep opheffen."
 
-#: ../share/extensions/perspective.py:93
-#: ../share/extensions/summersnight.py:92
+#: ../share/extensions/perspective.py:93 ../share/extensions/summersnight.py:92
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -32643,8 +32609,7 @@ msgstr ""
 "Het tweede geselecteerde object is geen pad.\n"
 "Probeer de procedure Paden->Object naar Pad."
 
-#: ../share/extensions/perspective.py:96
-#: ../share/extensions/summersnight.py:95
+#: ../share/extensions/perspective.py:96 ../share/extensions/summersnight.py:95
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -35462,14 +35427,12 @@ msgstr ""
 "UniConverter geïnstalleerd hebben en opnieuw openen."
 
 #: ../share/extensions/hpgl_input.inx.h:3
-#: ../share/extensions/hpgl_output.inx.h:4
-#: ../share/extensions/plotter.inx.h:32
+#: ../share/extensions/hpgl_output.inx.h:4 ../share/extensions/plotter.inx.h:32
 msgid "Resolution X (dpi):"
 msgstr "X-resolutie (ppi):"
 
 #: ../share/extensions/hpgl_input.inx.h:4
-#: ../share/extensions/hpgl_output.inx.h:5
-#: ../share/extensions/plotter.inx.h:33
+#: ../share/extensions/hpgl_output.inx.h:5 ../share/extensions/plotter.inx.h:33
 msgid ""
 "The amount of steps the plotter moves if it moves for 1 inch on the X axis "
 "(Default: 1016.0)"
@@ -35478,14 +35441,12 @@ msgstr ""
 "(standaard 1016.0)"
 
 #: ../share/extensions/hpgl_input.inx.h:5
-#: ../share/extensions/hpgl_output.inx.h:6
-#: ../share/extensions/plotter.inx.h:34
+#: ../share/extensions/hpgl_output.inx.h:6 ../share/extensions/plotter.inx.h:34
 msgid "Resolution Y (dpi):"
 msgstr "Y-resolutie (ppi):"
 
 #: ../share/extensions/hpgl_input.inx.h:6
-#: ../share/extensions/hpgl_output.inx.h:7
-#: ../share/extensions/plotter.inx.h:35
+#: ../share/extensions/hpgl_output.inx.h:7 ../share/extensions/plotter.inx.h:35
 msgid ""
 "The amount of steps the plotter moves if it moves for 1 inch on the Y axis "
 "(Default: 1016.0)"
@@ -35525,18 +35486,15 @@ msgstr ""
 "de plotteruitbreiding (menu Uitbreidingen) om onmiddellijk over een seriële "
 "verbinding te plotten."
 
-#: ../share/extensions/hpgl_output.inx.h:3
-#: ../share/extensions/plotter.inx.h:31
+#: ../share/extensions/hpgl_output.inx.h:3 ../share/extensions/plotter.inx.h:31
 msgid "Plotter Settings "
 msgstr "Plotterinstellingen"
 
-#: ../share/extensions/hpgl_output.inx.h:8
-#: ../share/extensions/plotter.inx.h:36
+#: ../share/extensions/hpgl_output.inx.h:8 ../share/extensions/plotter.inx.h:36
 msgid "Pen number:"
 msgstr "Nummer pen:"
 
-#: ../share/extensions/hpgl_output.inx.h:9
-#: ../share/extensions/plotter.inx.h:37
+#: ../share/extensions/hpgl_output.inx.h:9 ../share/extensions/plotter.inx.h:37
 msgid "The number of the pen (tool) to use (Standard: '1')"
 msgstr "Te gebruiken pennummer (gereedschap) (Standaard: '1')"
 
@@ -35884,13 +35842,11 @@ msgstr "Eindpaden dupliceren"
 msgid "Interpolate style"
 msgstr "Stijl interpoleren"
 
-#: ../share/extensions/interp.inx.h:7
-#: ../share/extensions/interp_att_g.inx.h:10
+#: ../share/extensions/interp.inx.h:7 ../share/extensions/interp_att_g.inx.h:10
 msgid "Use Z-order"
 msgstr "Z-volgorde gebruiken"
 
-#: ../share/extensions/interp.inx.h:8
-#: ../share/extensions/interp_att_g.inx.h:11
+#: ../share/extensions/interp.inx.h:8 ../share/extensions/interp_att_g.inx.h:11
 msgid "Workaround for reversed selection order in Live Preview cycles"
 msgstr "Workaround voor omgekeerde selectievolgorde in Live voorvertoning"
 
@@ -37537,8 +37493,7 @@ msgstr ""
 msgid "AutoCAD Plot Input"
 msgstr "AutoCAD Plot invoer"
 
-#: ../share/extensions/plt_input.inx.h:2
-#: ../share/extensions/plt_output.inx.h:2
+#: ../share/extensions/plt_input.inx.h:2 ../share/extensions/plt_output.inx.h:2
 msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
 msgstr "HP Graphics Language Plot bestand [AutoCAD] (*.plt)"
 
@@ -38489,8 +38444,7 @@ msgstr "Staarthoogte:"
 msgid "sK1 vector graphics files input"
 msgstr "sK1 vector graphics invoer"
 
-#: ../share/extensions/sk1_input.inx.h:2
-#: ../share/extensions/sk1_output.inx.h:2
+#: ../share/extensions/sk1_input.inx.h:2 ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (*.sk1)"
 msgstr "sK1 vector graphics bestanden (*.sk1)"
 
@@ -39458,13 +39412,11 @@ msgstr "Helling (graden):"
 msgid "Hide lines behind the sphere"
 msgstr "Lijnen achter de sfeer verbergen"
 
-#: ../share/extensions/wmf_input.inx.h:1
-#: ../share/extensions/wmf_output.inx.h:1
+#: ../share/extensions/wmf_input.inx.h:1 ../share/extensions/wmf_output.inx.h:1
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile-invoer"
 
-#: ../share/extensions/wmf_input.inx.h:3
-#: ../share/extensions/wmf_output.inx.h:3
+#: ../share/extensions/wmf_input.inx.h:3 ../share/extensions/wmf_output.inx.h:3
 msgid "A popular graphics file format for clipart"
 msgstr "Een populair bestandsformaat voor clipart"
 
