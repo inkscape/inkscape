@@ -183,8 +183,14 @@ SPObject *SPFactory::createObject(std::string const& id)
     }
     else if (id == "svg:meshgradient") // SVG 2
         ret = new SPMeshGradient;
+    else if (id == "svg:meshPatch") {
+        ret = new SPMeshpatch;
+        std::cerr << "Warning: <meshPatch> and <meshRow> have been renamed <meshpatch> and <meshrow>" << std::endl;
+    }
     else if (id == "svg:meshpatch")
         ret = new SPMeshpatch;
+    else if (id == "svg:meshRow")
+        ret = new SPMeshrow;
     else if (id == "svg:meshrow")
         ret = new SPMeshrow;
     else if (id == "svg:metadata")
