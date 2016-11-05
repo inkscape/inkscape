@@ -546,18 +546,8 @@ void LivePathEffectEditor::on_effect_selection_changed()
     LivePathEffect::LPEObjectReference * lperef = (*it)[columns.lperef];
 
     if (lperef && current_lpeitem && current_lperef != lperef) {
-    //The last condition ignore Gtk::TreeModel may occasionally be changed emitted when nothing has happened
-        Glib::RefPtr<Gtk::TreeModel> model = effectlist_view.get_model();
-        Gtk::TreeNodeChildren childs = model->children();
-        Gtk::TreeNodeChildren::iterator row;
-        bool removed = true;
-        for( row = childs.begin() ; row!=childs.end(); ++row)
-        {
-            if ( (*row)[columns.lperef] == current_lperef ) {
-                removed = false;
-            }
-        }
-        if (!removed && lperef->lpeobject->get_lpe()) {
+        //The last condition ignore Gtk::TreeModel may occasionally be changed emitted when nothing has happened
+        if (lperef->getObject()) {
             lpe_list_locked = true; // prevent reload of the list which would lose selection
             current_lpeitem->setCurrentPathEffect(lperef);
             current_lperef = lperef;
