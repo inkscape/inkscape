@@ -43,6 +43,7 @@ public:
     size_t nodes_in_path() const;
 
     bool is_empty() const;
+    bool is_unset() const;
     bool is_closed() const;
     Geom::Curve const * last_segment() const;
     Geom::Path const * last_path() const;

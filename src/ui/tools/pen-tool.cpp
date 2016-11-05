@@ -367,7 +367,7 @@ bool PenTool::_handleButtonPress(GdkEventButton const &bevent) {
 
     //with this we avoid creating a new point over the existing one
     if(bevent.button != 3 && (this->spiro || this->bspline) && this->npoints > 0 && this->p[0] == this->p[3]){
-        if( anchor && anchor == this->sa && this->green_curve->is_empty()){
+        if( anchor && anchor == this->sa && this->green_curve->is_unset()){
             //remove the following line to avoid having one node on top of another
             _finishSegment(event_dt, bevent.state);
             _finish(true);
@@ -919,7 +919,7 @@ void PenTool::_lastpointMove(gdouble x, gdouble y) {
         return;
 
     // green
-    if (!this->green_curve->is_empty()) {
+    if (!this->green_curve->is_unset()) {
         this->green_curve->last_point_additive_move( Geom::Point(x,y) );
     } else {
         // start anchor too
@@ -947,7 +947,7 @@ void PenTool::_lastpointToCurve() {
     this->p[1] = this->red_curve->last_segment()->initialPoint() + (1./3.)*(this->red_curve->last_segment()->finalPoint() - this->red_curve->last_segment()->initialPoint());
     //modificate the last segment of the green curve so it creates the type of node we need
     if (this->spiro||this->bspline) {
-        if (!this->green_curve->is_empty()) {
+        if (!this->green_curve->is_unset()) {
             Geom::Point A(0,0);
             Geom::Point B(0,0);
             Geom::Point C(0,0);
@@ -986,7 +986,7 @@ void PenTool::_lastpointToCurve() {
             }
         }
         //if the last node is an union with another curve
-        if (this->green_curve->is_empty() && this->sa && !this->sa->curve->is_empty()) {
+        if (this->green_curve->is_unset() && this->sa && !this->sa->curve->is_unset()) {
             this->_bsplineSpiroStartAnchor(false);
         }
     }
@@ -1002,7 +1002,7 @@ void PenTool::_lastpointToLine() {
 
     // modify the last segment of the green curve so the type of node we want is created.
     if(this->spiro || this->bspline){
-        if(!this->green_curve->is_empty()){
+        if(!this->green_curve->is_unset()){
             Geom::Point A(0,0);
             Geom::Point B(0,0);
             Geom::Point C(0,0);
@@ -1033,7 +1033,7 @@ void PenTool::_lastpointToLine() {
             }
         }
         // if the last node is an union with another curve
-        if(this->green_curve->is_empty() && this->sa && !this->sa->curve->is_empty()){
+        if(this->green_curve->is_unset() && this->sa && !this->sa->curve->is_unset()){
             this->_bsplineSpiroStartAnchor(true);
         }
     }
@@ -1212,7 +1212,7 @@ bool PenTool::_handleKeyPress(GdkEvent *event) {
                     // All this is needed to stop the last control
                     // point dispeating and stop making an n-1 shape.
                     Geom::Point const p(0, 0);
-                    if(this->red_curve->is_empty()) {
+                    if(this->red_curve->is_unset()) {
                         this->red_curve->moveto(p);
                     }
                     this->_finishSegment(p, 0);
@@ -1364,7 +1364,7 @@ void PenTool::_bsplineSpiro(bool shift)
 
 void PenTool::_bsplineSpiroOn()
 {
-    if(!this->red_curve->is_empty()){
+    if(!this->red_curve->is_unset()){
         using Geom::X;
         using Geom::Y;
         this->npoints = 5;
@@ -1377,7 +1377,7 @@ void PenTool::_bsplineSpiroOn()
 
 void PenTool::_bsplineSpiroOff()
 {
-    if(!this->red_curve->is_empty()){
+    if(!this->red_curve->is_unset()){
         this->npoints = 5;
         this->p[0] = this->red_curve->first_segment()->initialPoint();
         this->p[3] = this->red_curve->first_segment()->finalPoint();
@@ -1387,7 +1387,7 @@ void PenTool::_bsplineSpiroOff()
 
 void PenTool::_bsplineSpiroStartAnchor(bool shift)
 {
-    if(this->sa->curve->is_empty()){
+    if(this->sa->curve->is_unset()){
         return;
     }
 
@@ -1497,18 +1497,18 @@ void PenTool::_bsplineSpiroMotion(bool shift){
     }
     using Geom::X;
     using Geom::Y;
-    if(this->red_curve->is_empty()) return;
+    if(this->red_curve->is_unset()) return;
     this->npoints = 5;
     SPCurve *tmp_curve  = new SPCurve();
     this->p[2] = this->p[3] + (1./3)*(this->p[0] - this->p[3]);
     this->p[2] = Geom::Point(this->p[2][X] + HANDLE_CUBIC_GAP,this->p[2][Y] + HANDLE_CUBIC_GAP);
-    if(this->green_curve->is_empty() && !this->sa){
+    if(this->green_curve->is_unset() && !this->sa){
         this->p[1] = this->p[0] + (1./3)*(this->p[3] - this->p[0]);
         this->p[1] = Geom::Point(this->p[1][X] + HANDLE_CUBIC_GAP,this->p[1][Y] + HANDLE_CUBIC_GAP);
         if(shift){
             this->p[2] = this->p[3];
         }
-    }else if(!this->green_curve->is_empty()){
+    }else if(!this->green_curve->is_unset()){
         tmp_curve  = this->green_curve->copy();
     }else{
         tmp_curve  = this->overwrite_curve->copy();
@@ -1516,7 +1516,7 @@ void PenTool::_bsplineSpiroMotion(bool shift){
             tmp_curve  = tmp_curve ->create_reverse();
     }
 
-    if(!tmp_curve ->is_empty()){
+    if(!tmp_curve ->is_unset()){
         Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const*>(&*tmp_curve ->last_segment());
         if(cubic){
             if(this->bspline){
@@ -1548,7 +1548,7 @@ void PenTool::_bsplineSpiroMotion(bool shift){
         }
     }
 
-    if(this->anchor_statusbar && !this->red_curve->is_empty()){
+    if(this->anchor_statusbar && !this->red_curve->is_unset()){
         if(shift){
             this->_bsplineSpiroEndAnchorOff();
         }else{
@@ -1681,19 +1681,19 @@ void PenTool::_bsplineSpiroBuild()
     //We create the base curve
     SPCurve *curve = new SPCurve();
     //If we continuate the existing curve we add it at the start
-    if(this->sa && !this->sa->curve->is_empty()){
+    if(this->sa && !this->sa->curve->is_unset()){
         curve = this->overwrite_curve->copy();
         if (this->sa->start) {
             curve = curve->create_reverse();
         }
     }
 
-    if (!this->green_curve->is_empty()){
+    if (!this->green_curve->is_unset()){
         curve->append_continuous(this->green_curve, 0.0625);
     }
 
     //and the red one
-    if (!this->red_curve->is_empty()){
+    if (!this->red_curve->is_unset()){
         this->red_curve->reset();
         this->red_curve->moveto(this->p[0]);
         if(this->anchor_statusbar && !this->sa && !(this->green_anchor && this->green_anchor->active)){
@@ -1705,7 +1705,7 @@ void PenTool::_bsplineSpiroBuild()
         curve->append_continuous(this->red_curve, 0.0625);
     }
 
-    if(!curve->is_empty()){
+    if(!curve->is_unset()){
         // close the curve if the final points of the curve are close enough
         if(Geom::are_near(curve->first_path()->initialPoint(), curve->last_path()->finalPoint())){
             curve->closepath_current();
@@ -1844,7 +1844,7 @@ void PenTool::_finishSegment(Geom::Point const p, guint const state) {
     ++num_clicks;
 
 
-    if (!this->red_curve->is_empty()) {
+    if (!this->red_curve->is_unset()) {
         this->_bsplineSpiro(state & GDK_SHIFT_MASK);
         this->green_curve->append_continuous(this->red_curve, 0.0625);
         SPCurve *curve = this->red_curve->copy();
@@ -1869,8 +1869,8 @@ void PenTool::_finishSegment(Geom::Point const p, guint const state) {
 bool PenTool::_undoLastPoint() {
     bool ret = false;
 
-    if ( this->green_curve->is_empty() || (this->green_curve->last_segment() == NULL) ) {
-        if (!this->red_curve->is_empty()) {
+    if ( this->green_curve->is_unset() || (this->green_curve->last_segment() == NULL) ) {
+        if (!this->red_curve->is_unset()) {
             this->_cancel ();
             ret = true;
         } else {
@@ -1887,7 +1887,7 @@ bool PenTool::_undoLastPoint() {
             this->green_bpaths = g_slist_remove(this->green_bpaths, this->green_bpaths->data);
         }
         // Get last segment
-        if ( this->green_curve->is_empty() ) {
+        if ( this->green_curve->is_unset() ) {
             g_warning("pen_handle_key_press, case GDK_KP_Delete: Green curve is empty");
             return false;
         }
@@ -2019,7 +2019,7 @@ int PenTool::nextParaxialDirection(Geom::Point const &pt, Geom::Point const &ori
     // (on first mouse release), in which case num_clicks immediately becomes 1.
     // if (this->num_clicks == 0) {
 
-    if (this->green_curve->is_empty()) {
+    if (this->green_curve->is_unset()) {
         // first mouse click
         double dist_h = fabs(pt[Geom::X] - origin[Geom::X]);
         double dist_v = fabs(pt[Geom::Y] - origin[Geom::Y]);

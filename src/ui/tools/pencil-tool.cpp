@@ -588,8 +588,8 @@ void PencilTool::_setEndpoint(Geom::Point const &p) {
  * Still not sure, how it will make most sense.
  */
 void PencilTool::_finishEndpoint() {
-    if ( ( this->red_curve->is_empty() )
-         || ( *(this->red_curve->first_point()) == *(this->red_curve->second_point())   ) )
+    if (this->red_curve->is_unset() || 
+        this->red_curve->first_point() == this->red_curve->second_point())
     {
         this->red_curve->reset();
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(this->red_bpath), NULL);
