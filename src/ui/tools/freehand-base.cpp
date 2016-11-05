@@ -642,7 +642,10 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
     }
 
     // Step A - test, whether we ended on green anchor
-    if ( forceclosed || ( dc->green_anchor && dc->green_anchor->active ) ) {
+    if ( (forceclosed && 
+         (!dc->sa || (dc->sa && dc->sa->curve->is_empty()))) || 
+         ( dc->green_anchor && dc->green_anchor->active)) 
+    {
         // We hit green anchor, closing Green-Blue-Red
         dc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Path is closed."));
         c->closepath_current();
@@ -724,7 +727,11 @@ void spdc_concat_colors_and_flush(FreehandBase *dc, gboolean forceclosed)
         e->unref();
     }
 
-
+    if (forceclosed) 
+    {
+        dc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Path is closed."));
+        c->closepath_current();
+    }
     spdc_flush_white(dc, c);
 
     c->unref();
