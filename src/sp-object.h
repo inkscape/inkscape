@@ -1,7 +1,6 @@
 #ifndef SP_OBJECT_H_SEEN
 #define SP_OBJECT_H_SEEN
 
-#include <glibmm/ustring.h>
 
 /*
  * Authors:
@@ -15,6 +14,8 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#include <glibmm/ustring.h>
 
 /* SPObject flags */
 
