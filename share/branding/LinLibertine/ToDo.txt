@@ -1,4 +1,0 @@
-Tasks that need to be done. You are welcome to contribute:
-
-Liberine Bold and BoldItalic: Inferiors und Superiors are not yet all emboldened. Use uni2099 as reference.
-Greek and Cyrillic glyph maps aren't completely emboldenend, yet

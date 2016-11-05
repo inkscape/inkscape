@@ -1,9 +1,0 @@
-1.) COMPILING
-If you miss the directory "Fonts" here, you still have to compile the source-files which lay in the directory "SRC". You do this by calling "./make". Please note, that you'll need a recent version of fontforge to do so. You will also need a unix shell to interprete the scripts. If you have not a certain reason to compile the fonts yourself, we recommend you to download the respective "LinLibertineFont" archive from our website:
-linuxlibertine.sf.net
-
-2.) INSTALL
-Windows: Copy fonts into folder C:\windows\fonts.
-Linux: Use system programs such as KDE-Kontrol to install the fonts. These also update Linux specific system files.
-
-Philipp Poll -- philthelion at users.sourceforge.net
