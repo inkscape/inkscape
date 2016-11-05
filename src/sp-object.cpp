@@ -112,9 +112,6 @@ public:
     }
 };
 
-static gchar *sp_object_get_unique_id(SPObject    *object,
-                                      gchar const *defid);
-
 /**
  * Constructor, sets all attributes to default values.
  */
@@ -1382,7 +1379,7 @@ bool SPObject::storeAsDouble( gchar const *key, double *val ) const
 }
 
 /** Helper */
-static gchar*
+gchar *
 sp_object_get_unique_id(SPObject    *object,
                         gchar const *id)
 {

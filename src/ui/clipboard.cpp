@@ -60,6 +60,7 @@
 #include "sp-mask.h"
 #include "sp-textpath.h"
 #include "sp-rect.h"
+#include "sp-object.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
@@ -698,8 +699,10 @@ void ClipboardManagerImpl::_copySelection(ObjectSet *selection)
                         LivePathEffectObject *lpeobj = (*it)->lpeobject;
                         if (lpeobj) {
                             Inkscape::XML::Node * lpeobjcopy = _copyNode(lpeobj->getRepr(), _doc, _defs);
-                            lpeobjcopy->setAttribute("id",lpeobj->getRepr()->attribute("id"));
-                            os << "#" << lpeobj->getRepr()->attribute("id") << ";";
+                            gchar *new_conflict_id = sp_object_get_unique_id(lpeobj, lpeobj->getAttribute("id"));
+                            lpeobjcopy->setAttribute("id", new_conflict_id);
+                            g_free(new_conflict_id);
+                            os << "#" << lpeobjcopy->attribute("id") << ";";
                         }
                     }
                 }
