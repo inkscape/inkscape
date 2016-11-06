@@ -794,7 +794,7 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
             SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
             //Bend needs the transforms applied after, Other effects best before
             if((previous_shape_type == BEND_CLIPBOARD && shape_selected == LAST_APPLIED) ||
-                shape_selected == BEND_CLIPBOARD)
+                shape_selected == BEND_CLIPBOARD && previous_shape_type != NONE)
             {
                 spdc_check_for_and_apply_waiting_LPE(dc, item, c);
                 previous_shape_type = BEND_CLIPBOARD;
