@@ -1009,6 +1009,9 @@ void EditVerb::perform(SPAction *action, void *data)
         case SP_VERB_EDIT_UNLINK_CLONE:
             dt->selection->unlink();
             break;
+        case SP_VERB_EDIT_UNLINK_CLONE_RECURSIVE:
+            dt->selection->unlinkRecursive();
+            break;
         case SP_VERB_EDIT_RELINK_CLONE:
             dt->selection->relink();
             break;
@@ -2530,6 +2533,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Create a clone (a copy linked to the original) of selected object"), INKSCAPE_ICON("edit-clone")),
     new EditVerb(SP_VERB_EDIT_UNLINK_CLONE, "EditUnlinkClone", N_("Unlin_k Clone"),
                  N_("Cut the selected clones' links to the originals, turning them into standalone objects"), INKSCAPE_ICON("edit-clone-unlink")),
+    new EditVerb(SP_VERB_EDIT_UNLINK_CLONE_RECURSIVE, "EditUnlinkCloneRecursive", N_("Unlink Clones _recursively"),
+                 N_("Unlink all clones in the selection, even if they are in groups."), INKSCAPE_ICON("edit-clone-unlink")),
     new EditVerb(SP_VERB_EDIT_RELINK_CLONE, "EditRelinkClone", N_("Relink to Copied"),
                  N_("Relink the selected clones to the object currently on the clipboard"), NULL),
     new EditVerb(SP_VERB_EDIT_CLONE_SELECT_ORIGINAL, "EditCloneSelectOriginal", N_("Select _Original"),

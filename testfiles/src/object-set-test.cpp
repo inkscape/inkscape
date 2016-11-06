@@ -105,6 +105,25 @@ public:
     ObjectSet* set2;
 };
 
+#define SP_IS_CLONE(obj) (dynamic_cast<const SPUse*>(obj) != NULL)
+
+bool containsClone(ObjectSet* set) {
+    for (auto it : set->items()) {
+        if (SP_IS_CLONE(it)) {
+            return true;
+        }
+        if (SP_IS_GROUP(it)) {
+            ObjectSet tmp_set(set->document());
+            std::vector<SPObject*> c = it->childList(false);
+            tmp_set.setList(c);
+            if (containsClone(&tmp_set)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 TEST_F(ObjectSetTest, Basics) {
     EXPECT_EQ(0, set->size());
     set->add(A);
@@ -425,6 +444,125 @@ TEST_F(ObjectSetTest, Ops) {
     EXPECT_NE(nullptr,dynamic_cast<SPRect*>(*(set->items().begin())));
     //let's stop here.
     // TODO: write a hundred more tests to check clone (non-)displacement when grouping, ungrouping and unlinking...
+    TearDownTestCase();
+    SetUpTestCase();
+}
+
+TEST_F(ObjectSetTest, unlinkRecursiveBasic) {
+    // This is the same as the test (ObjectSetTest, Ops), but with unlinkRecursive instead of unlink.
+    set->set(r1.get());
+    set->add(r2.get());
+    set->add(r3.get());
+    EXPECT_FALSE(containsClone(set));
+    set->duplicate();
+    EXPECT_FALSE(containsClone(set));
+        EXPECT_EQ(9, _doc->getRoot()->children.size());//metadata, defs, namedview, and those 3x2 rects.
+    EXPECT_EQ(3, set->size());
+    EXPECT_FALSE(set->includes(r1.get()));
+    set->deleteItems();
+    EXPECT_FALSE(containsClone(set));
+    EXPECT_TRUE(set->isEmpty());
+    set->add(r1.get());
+    set->add(r2.get());
+    set->add(r3.get());
+    EXPECT_FALSE(containsClone(set));
+    set->group();//r1-3 are now invalid (grouping makes copies)
+    r1.release();
+    r2.release();
+    r3.release();
+    EXPECT_FALSE(containsClone(set));
+    EXPECT_EQ(4, _doc->getRoot()->children.size());
+    EXPECT_EQ(1, set->size());
+    set->ungroup();
+    EXPECT_FALSE(containsClone(set));
+    EXPECT_EQ(6, _doc->getRoot()->children.size());
+    EXPECT_EQ(3, set->size());
+    /* Uncomment this when toNextLayer is made desktop-independent
+    set->group();
+    set2->add(set->singleItem()->childList(false)[0]);
+    EXPECT_EQ(3, set->singleItem()->children.size());
+    EXPECT_EQ(4, _doc->getRoot()->children.size());
+    set2->popFromGroup();
+    EXPECT_EQ(2, set->singleItem()->children.size());
+    EXPECT_EQ(5, _doc->getRoot()->children.size());
+    set->ungroup();
+    set->add(set2->singleItem());
+    */
+    set->clone();
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(9, _doc->getRoot()->children.size());
+    EXPECT_EQ(3, set->size());
+    EXPECT_NE(nullptr, dynamic_cast<SPUse*>(*(set->items().begin())));
+    EXPECT_EQ(nullptr, dynamic_cast<SPRect*>(*(set->items().begin())));
+    set->unlinkRecursive();
+    EXPECT_FALSE(containsClone(set));
+    EXPECT_EQ(9, _doc->getRoot()->children.size());
+    EXPECT_EQ(3, set->size());
+    EXPECT_EQ(nullptr, dynamic_cast<SPUse*>(*(set->items().begin())));
+    EXPECT_NE(nullptr, dynamic_cast<SPRect*>(*(set->items().begin())));
+    set->clone(); //creates 3 clones
+    EXPECT_TRUE(containsClone(set));
+    set->clone(); //creates 3 clones of clones
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(15, _doc->getRoot()->children.size());
+    EXPECT_EQ(3, set->size());
+    EXPECT_NE(nullptr, dynamic_cast<SPUse*>( ((SPUse*)(*(set->items().begin())))->get_original()));//"original is a Use"
+    set->unlinkRecursive(); //clone of clone of rect -> rect
+    EXPECT_FALSE(containsClone(set));
+    EXPECT_EQ(nullptr, dynamic_cast<SPUse*>(*(set->items().begin())));
+    EXPECT_NE(nullptr, dynamic_cast<SPRect*>(*(set->items().begin())));
+    set->clone();
+    EXPECT_TRUE(containsClone(set));
+    set->set(*(set->items().begin()));
+    set->cloneOriginal();//get clone original
+    EXPECT_EQ(18, _doc->getRoot()->children.size());
+    EXPECT_EQ(1, set->size());
+    EXPECT_NE(nullptr, dynamic_cast<SPRect*>(*(set->items().begin())));
+    TearDownTestCase();
+    SetUpTestCase();
+}
+
+TEST_F(ObjectSetTest, unlinkRecursiveAdvanced) {
+    set->set(r1.get());
+    set->add(r2.get());
+    set->add(r3.get());
+    set->group();//r1-3 are now invalid (grouping makes copies)
+    r1.release();
+    r2.release();
+    r3.release();
+    EXPECT_FALSE(containsClone(set));
+    EXPECT_EQ(1, set->size());
+    SPItem* original = set->singleItem();
+    set->clone();
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(1, set->size());
+    set->add(original);
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(2, set->size());
+    set->group();
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(1, set->size());
+    original = set->singleItem();
+    set->clone();
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(1, set->size());
+    set->add(original);
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(2, set->size());
+    set->group();
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(1, set->size());
+    original = set->singleItem();
+    set->clone();
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(1, set->size());
+    set->add(original);
+    EXPECT_TRUE(containsClone(set));
+    EXPECT_EQ(2, set->size());
+    set->unlinkRecursive();
+    EXPECT_FALSE(containsClone(set));
+    EXPECT_EQ(2, set->size());
+
     TearDownTestCase();
     SetUpTestCase();
 }

@@ -2653,12 +2653,12 @@ void ObjectSet::relink()
 }
 
 
-void ObjectSet::unlink()
+bool ObjectSet::unlink(const bool skip_undo)
 {
     if (isEmpty()) {
         if(desktop())
             desktop()->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>clones</b> to unlink."));
-        return;
+        return false;
     }
 
     // Get a copy of current selection.
@@ -2669,41 +2669,59 @@ void ObjectSet::unlink()
     for (auto i=items_.rbegin();i!=items_.rend();++i){
         SPItem *item = *i;
 
-        if (dynamic_cast<SPText *>(item)) {
-            SPObject *tspan = sp_tref_convert_to_tspan(item);
+        ObjectSet tmp_set(document());
+        tmp_set.set(item);
+        Inkscape::URIReference *clip = item->clip_ref;
+        Inkscape::URIReference *mask = item->mask_ref;
+        if ((NULL != clip) && (NULL != clip->getObject())) {
+            tmp_set.unsetMask(true,true);
+            unlinked = tmp_set.unlink(true) || unlinked;
+            tmp_set.setMask(true,false,true);
+            new_select.push_back(tmp_set.singleItem());
+        }
+        else if ((NULL != mask) && (NULL != mask->getObject())) {
+            tmp_set.unsetMask(false,true);
+            unlinked = tmp_set.unlink(true) || unlinked;
+            tmp_set.setMask(false,false,true);
+            new_select.push_back(tmp_set.singleItem());
+        }
+        else {
+            if (dynamic_cast<SPText *>(item)) {
+                SPObject *tspan = sp_tref_convert_to_tspan(item);
 
-            if (tspan) {
-                item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+                if (tspan) {
+                    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+                }
+
+                // Set unlink to true, and fall into the next if which
+                // will include this text item in the new selection
+                unlinked = true;
             }
 
-            // Set unlink to true, and fall into the next if which
-            // will include this text item in the new selection
-            unlinked = true;
-        }
-
-        if (!(dynamic_cast<SPUse *>(item) || dynamic_cast<SPTRef *>(item))) {
-            // keep the non-use item in the new selection
-            new_select.push_back(item);
-            continue;
-        }
-
-        SPItem *unlink = NULL;
-        SPUse *use = dynamic_cast<SPUse *>(item);
-        if (use) {
-            unlink = use->unlink();
-            // Unable to unlink use (external or invalid href?)
-            if (!unlink) {
+            if (!(dynamic_cast<SPUse *>(item) || dynamic_cast<SPTRef *>(item))) {
+                // keep the non-use item in the new selection
                 new_select.push_back(item);
                 continue;
             }
-        } else /*if (SP_IS_TREF(use))*/ {
-            unlink = dynamic_cast<SPItem *>(sp_tref_convert_to_tspan(item));
-            g_assert(unlink != NULL);
-        }
 
-        unlinked = true;
-        // Add ungrouped items to the new selection.
-        new_select.push_back(unlink);
+            SPItem *unlink = NULL;
+            SPUse *use = dynamic_cast<SPUse *>(item);
+            if (use) {
+                unlink = use->unlink();
+                // Unable to unlink use (external or invalid href?)
+                if (!unlink) {
+                    new_select.push_back(item);
+                    continue;
+                }
+            } else /*if (SP_IS_TREF(use))*/ {
+                unlink = dynamic_cast<SPItem *>(sp_tref_convert_to_tspan(item));
+                g_assert(unlink != NULL);
+            }
+
+            unlinked = true;
+            // Add ungrouped items to the new selection.
+            new_select.push_back(unlink);
+        }
     }
 
     if (!new_select.empty()) { // set new selection
@@ -2715,8 +2733,42 @@ void ObjectSet::unlink()
             desktop()->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No clones to unlink</b> in the selection."));
     }
 
-    DocumentUndo::done(document(), SP_VERB_EDIT_UNLINK_CLONE,
-                       _("Unlink clone"));
+    if (!skip_undo) {
+        DocumentUndo::done(document(), SP_VERB_EDIT_UNLINK_CLONE,
+                           _("Unlink clone"));
+    }
+    return unlinked;
+}
+
+bool ObjectSet::unlinkRecursive(const bool skip_undo) {
+    if (isEmpty()){
+        if (desktop())
+            desktop()->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>clones</b> to unlink."));
+        return false;
+    }
+    bool unlinked = false;
+    ObjectSet tmp_set(document());
+    std::vector<SPItem*> items_(items().begin(), items().end());
+    for (auto& it:items_) {
+        tmp_set.set(it);
+        unlinked = tmp_set.unlink(true) || unlinked;
+        it = tmp_set.singleItem();
+        if (SP_IS_GROUP(it)) {
+            std::vector<SPObject*> c = it->childList(false);
+            tmp_set.setList(c);
+            unlinked = tmp_set.unlinkRecursive(true) || unlinked;
+        }
+    }
+    if (!unlinked) {
+        if(desktop())
+            desktop()->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No clones to unlink</b> in the selection."));
+    }
+    if (!skip_undo) {
+        DocumentUndo::done(document(), SP_VERB_EDIT_UNLINK_CLONE_RECURSIVE,
+                                           _("Unlink clone recursively"));
+    }
+    setList(items_);
+    return unlinked;
 }
 
 void ObjectSet::cloneOriginal()
@@ -3960,7 +4012,7 @@ void ObjectSet::setClipGroup()
     }
 }
 
-void ObjectSet::unsetMask(bool apply_clip_path) {
+void ObjectSet::unsetMask(const bool apply_clip_path, const bool skip_undo) {
     SPDocument *doc = document();
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
@@ -4082,10 +4134,12 @@ void ObjectSet::unsetMask(bool apply_clip_path) {
     // rebuild selection
     addList(items_to_select);
 
-    if (apply_clip_path) {
-        DocumentUndo::done(doc, SP_VERB_OBJECT_UNSET_CLIPPATH, _("Release clipping path"));
-    } else {
-        DocumentUndo::done(doc, SP_VERB_OBJECT_UNSET_MASK, _("Release mask"));
+    if (!skip_undo) {
+        if (apply_clip_path) {
+            DocumentUndo::done(doc, SP_VERB_OBJECT_UNSET_CLIPPATH, _("Release clipping path"));
+        } else {
+            DocumentUndo::done(doc, SP_VERB_OBJECT_UNSET_MASK, _("Release mask"));
+        }
     }
 }
 

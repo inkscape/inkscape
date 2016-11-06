@@ -330,7 +330,19 @@ public:
     void deleteItems();
     void duplicate(bool suppressDone = false, bool duplicateLayer = false);
     void clone();
-    void unlink();
+
+    /**
+     * @brief Unlink all directly selected clones.
+     * @param skip_undo If this is set to true the call to DocumentUndo::done is omitted.
+     * @return True if anything was unlinked, otherwise false.
+     */
+    bool unlink(const bool skip_undo = false);
+    /**
+     * @brief Recursively unlink any clones present in the current selection,
+     * including clones which are used to clip other objects, groups of clones etc.
+     * @return true if anything was unlinked, otherwise false.
+     */
+    bool unlinkRecursive(const bool skip_undo = false);
     void relink();
     void cloneOriginal();
     void cloneOriginalPathLPE();
@@ -376,7 +388,7 @@ public:
     void createBitmapCopy();
     void setMask(bool apply_clip_path, bool apply_to_layer = false, bool skip_undo = false);
     void editMask(bool clip);
-    void unsetMask(bool apply_clip_path);
+    void unsetMask(const bool apply_clip_path, const bool skip_undo = false);
     void setClipGroup();
     
     // moves
