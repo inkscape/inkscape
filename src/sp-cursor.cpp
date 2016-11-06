@@ -108,6 +108,13 @@ GdkPixbuf *sp_cursor_pixbuf_from_xpm(char const *const *xpm, GdkColor const& bla
         }
     }
 
+#if G_BYTE_ORDER == G_BIG_ENDIAN
+    for (int i = 0, n = width * height; i < n; i++) {
+        guint32 v = pixmap_buffer[i];
+        pixmap_buffer[i] = ((v & 0xFF) << 24) | (((v >> 8) & 0xFF) << 16) | (((v >> 16) & 0xFF) << 8) | ((v >> 24) & 0xFF);
+    }
+#endif
+
     return gdk_pixbuf_new_from_data(reinterpret_cast<guchar*>(pixmap_buffer), GDK_COLORSPACE_RGB, TRUE, 8, width, height, width * sizeof(guint32), free_cursor_data, NULL);
 }
 
