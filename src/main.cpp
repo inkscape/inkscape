@@ -119,6 +119,7 @@
 #include "verbs.h"
 
 #include "path-chemistry.h"
+#include "object-set.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "text-editing.h"
@@ -1161,16 +1162,13 @@ static int sp_process_file_list(GSList *fl)
 
                     // "crop" the document to the specified object, cleaning as we go.
                     SPObject *obj = doc->getObjectById(sp_export_id);
-                    Geom::OptRect const bbox(SP_ITEM(obj)->visualBounds());
-
-                    if (bbox) {
-                        doc->fitToRect(*bbox, false);
-                    }
-
                     if (sp_export_id_only) {
                         // If -j then remove all other objects to complete the "crop"
                         doc->getRoot()->cropToObject(obj);
                     }
+                    Inkscape::ObjectSet s(doc);
+                    s.set(obj);
+                    s.fitCanvas(false);
                 }
 
                 Inkscape::Extension::save(Inkscape::Extension::db.get("org.inkscape.output.svg.plain"), doc, sp_export_svg, false,

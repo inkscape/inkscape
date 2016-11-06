@@ -2359,7 +2359,7 @@ void FitCanvasVerb::perform(SPAction *action, void *data)
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_FIT_CANVAS_TO_SELECTION:
-            verb_fit_canvas_to_selection(dt);
+            dt->selection->fitCanvas(true);
             break;
         case SP_VERB_FIT_CANVAS_TO_DRAWING:
             verb_fit_canvas_to_drawing(dt);

@@ -4094,39 +4094,27 @@ void ObjectSet::unsetMask(bool apply_clip_path) {
  *                     "fit-margin-..." attributes.  See SPDocument::fitToRect.
  * \return true if an undoable change should be recorded.
  */
-bool
-fit_canvas_to_selection(SPDesktop *desktop, bool with_margins)
+bool ObjectSet::fitCanvas(bool with_margins, bool skip_undo)
 {
-    g_return_val_if_fail(desktop != NULL, false);
-    SPDocument *doc = desktop->getDocument();
+    g_return_val_if_fail(document() != NULL, false);
 
-    g_return_val_if_fail(doc != NULL, false);
-    g_return_val_if_fail(desktop->selection != NULL, false);
-
-    if (desktop->selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
+    if (isEmpty()) {
+        if(desktop())
+            desktop()->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
         return false;
     }
-    Geom::OptRect const bbox(desktop->selection->visualBounds());
+    Geom::OptRect const bbox(visualBounds());
     if (bbox) {
-        doc->fitToRect(*bbox, with_margins);
+        document()->fitToRect(*bbox, with_margins);
+        if(!skip_undo)
+            DocumentUndo::done(document(), SP_VERB_FIT_CANVAS_TO_SELECTION,
+                            _("Fit Page to Selection"));
         return true;
     } else {
         return false;
     }
 }
 
-/**
- * Fit canvas to the bounding box of the selection, as an undoable action.
- */
-void
-verb_fit_canvas_to_selection(SPDesktop *const desktop)
-{
-    if (fit_canvas_to_selection(desktop)) {
-        DocumentUndo::done(desktop->getDocument(), SP_VERB_FIT_CANVAS_TO_SELECTION,
-                           _("Fit Page to Selection"));
-    }
-}
 
 /**
  * \param with_margins margins defined in the xml under <sodipodi:namedview>
@@ -4171,7 +4159,7 @@ void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
 
     bool const changed = ( desktop->selection->isEmpty()
                            ? fit_canvas_to_drawing(doc, true)
-                           : fit_canvas_to_selection(desktop, true) );
+                           : desktop->selection->fitCanvas(true,true));
     if (changed) {
         DocumentUndo::done(desktop->getDocument(), SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING,
                            _("Fit Page to Selection or Drawing"));

@@ -96,8 +96,6 @@ void sp_redo (SPDesktop *desktop, SPDocument *doc);
 
 void sp_document_get_export_hints (SPDocument * doc, Glib::ustring &filename, float *xdpi, float *ydpi);
 
-bool fit_canvas_to_selection(SPDesktop *, bool with_margins = false);
-void verb_fit_canvas_to_selection(SPDesktop *);
 bool fit_canvas_to_drawing(SPDocument *, bool with_margins = false);
 void verb_fit_canvas_to_drawing(SPDesktop *);
 void fit_canvas_to_selection_or_drawing(SPDesktop *);
