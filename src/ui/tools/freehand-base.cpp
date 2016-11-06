@@ -273,12 +273,42 @@ static void spdc_apply_simplify(std::string threshold, FreehandBase *dc, SPItem 
 enum shapeType { NONE, TRIANGLE_IN, TRIANGLE_OUT, ELLIPSE, CLIPBOARD, BEND_CLIPBOARD, LAST_APPLIED };
 static shapeType previous_shape_type = NONE;
 
-static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item, SPCurve *curve)
+static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item, SPCurve *curve, bool is_bend)
 {
     using namespace Inkscape::LivePathEffect;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (item && SP_IS_LPE_ITEM(item)) {
+        //Store the clipboard path to apply in the future without the use of clipboard
+        static Geom::PathVector previous_shape_pathv;
+        static SPItem *bend_item;
+        shapeType shape = (shapeType)prefs->getInt(tool_name(dc) + "/shape", 0);
+        if (previous_shape_type == NONE) {
+            previous_shape_type = shape;
+        }
+        if(shape == LAST_APPLIED){
+
+            shape = previous_shape_type;
+            if(shape == CLIPBOARD || shape == BEND_CLIPBOARD){
+                shape = LAST_APPLIED;
+            }
+        }
+        Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+        if (is_bend && 
+           (shape == BEND_CLIPBOARD || (shape == LAST_APPLIED && previous_shape_type != CLIPBOARD)) && 
+            cm->paste(SP_ACTIVE_DESKTOP,true))
+        {
+            bend_item = dc->selection->singleItem();
+            if(!bend_item || (!SP_IS_SHAPE(bend_item) && !SP_IS_GROUP(bend_item))){
+                previous_shape_type = NONE;
+                return;
+            }
+        } else if(is_bend) {
+            return;
+        }
+        if (!is_bend && previous_shape_type == BEND_CLIPBOARD && shape == BEND_CLIPBOARD) {
+            return;
+        }
         bool simplify = prefs->getInt(tool_name(dc) + "/simplify", 0);
         if(simplify){
             double tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
@@ -300,28 +330,15 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             curve = sp_shape->getCurve();
         }
 
-        //Store the clipboard path to apply in the future without the use of clipboard
-        static Geom::PathVector previous_shape_pathv;
-
-        shapeType shape = (shapeType)prefs->getInt(tool_name(dc) + "/shape", 0);
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
         const char *stroke_width = sp_repr_css_property(css_item, "stroke-width", "0");
         double swidth;
         sp_svg_number_read_d(stroke_width, &swidth);
-        static SPItem *bend_item;
 
 #define SHAPE_LENGTH 10
 #define SHAPE_HEIGHT 10
-
-        if(shape == LAST_APPLIED){
-
-            shape = previous_shape_type;
-            if(shape == CLIPBOARD || shape == BEND_CLIPBOARD){
-                shape = LAST_APPLIED;
-            }
-        }
 
         switch (shape) {
             case NONE:
@@ -400,21 +417,14 @@ static void spdc_check_for_and_apply_waiting_LPE(FreehandBase *dc, SPItem *item,
             }
             case BEND_CLIPBOARD:
             {
-                Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
-                if(cm->paste(SP_ACTIVE_DESKTOP,true)){
-                    gchar const *svgd = item->getRepr()->attribute("d");
-                    bend_item = dc->selection->singleItem();
-                    if(bend_item && (SP_IS_SHAPE(bend_item) || SP_IS_GROUP(bend_item))){
-                        bend_item->moveTo(item,false);
-                        bend_item->transform.setTranslation(Geom::Point());
-                        spdc_apply_bend_shape(svgd, dc, bend_item);
-                        dc->selection->add(SP_OBJECT(bend_item));
+                gchar const *svgd = item->getRepr()->attribute("d");
+                if(bend_item && (SP_IS_SHAPE(bend_item) || SP_IS_GROUP(bend_item))){
+                    bend_item->moveTo(item,false);
+                    bend_item->transform.setTranslation(Geom::Point());
+                    spdc_apply_bend_shape(svgd, dc, bend_item);
+                    dc->selection->add(SP_OBJECT(bend_item));
 
-                        shape = BEND_CLIPBOARD;
-                    } else {
-                        bend_item = NULL;
-                        shape = NONE;
-                    }
+                    shape = BEND_CLIPBOARD;
                 } else {
                     bend_item = NULL;
                     shape = NONE;
@@ -790,25 +800,15 @@ static void spdc_flush_white(FreehandBase *dc, SPCurve *gc)
         if (!dc->white_item) {
             // Attach repr
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-            shapeType shape_selected = (shapeType)prefs->getInt(tool_name(dc) + "/shape", 0);
             SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
             //Bend needs the transforms applied after, Other effects best before
-            if((previous_shape_type == BEND_CLIPBOARD && shape_selected == LAST_APPLIED) ||
-               (shape_selected == BEND_CLIPBOARD && previous_shape_type != NONE))
-            {
-                spdc_check_for_and_apply_waiting_LPE(dc, item, c);
-                previous_shape_type = BEND_CLIPBOARD;
-            }
+            spdc_check_for_and_apply_waiting_LPE(dc, item, c, true);
             Inkscape::GC::release(repr);
             item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
             item->updateRepr();
             item->doWriteTransform(item->getRepr(), item->transform, NULL, true);
-            if((previous_shape_type != BEND_CLIPBOARD || shape_selected != LAST_APPLIED) &&
-                shape_selected != BEND_CLIPBOARD)
-            {
-                spdc_check_for_and_apply_waiting_LPE(dc, item, c);
-                dc->selection->set(repr);
-            }
+            spdc_check_for_and_apply_waiting_LPE(dc, item, c, false);
+            dc->selection->set(repr);
             if(previous_shape_type == BEND_CLIPBOARD){
                 repr->parent()->removeChild(repr);
             }
