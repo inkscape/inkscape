@@ -1512,10 +1512,17 @@ void ObjectsPanel::_blendChangedIter(const Gtk::TreeIter& iter, Glib::ustring bl
                     if (SP_IS_GAUSSIANBLUR(&primitive)) {
                         Geom::OptRect bbox = item->bounds(SPItem::GEOMETRIC_BBOX);
                         if (bbox) {
-                            radius = SP_GAUSSIANBLUR(&primitive)->stdDeviation.getNumber();
+                            double perimeter = bbox->dimensions()[Geom::X] + bbox->dimensions()[Geom::Y];   // fixme: this is only half the perimeter, is that correct?
+                            radius =  _fe_blur.get_blur_value() * perimeter / 400;
                         }
                     }
                 }
+            }
+            if (radius != 0) {
+                // The modify function expects radius to be in display pixels.
+                Geom::Affine i2d (item->i2dt_affine());
+                double expansion = i2d.descrim();
+                radius *= expansion;
             }
             SPFilter *filter = new_filter_simple_from_item(_document, item, blendmode.c_str(), radius);
             sp_style_set_property_url(item, "filter", filter, false);
