@@ -205,7 +205,7 @@ unsigned int PrintEmf::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     } else {
         p = ansi_uri;
     }
-    snprintf(buff, sizeof(buff) - 1, "Inkscape %s (%s)\1%s\1", Inkscape::version_string, __DATE__, p);
+    snprintf(buff, sizeof(buff) - 1, "Inkscape %s \1%s\1", Inkscape::version_string, p);
     uint16_t *Description = U_Utf8ToUtf16le(buff, 0, NULL);
     int cbDesc = 2 + wchar16len(Description);      // also count the final terminator
     (void) U_Utf16leEdit(Description, '\1', '\0'); // swap the temporary \1 characters for nulls

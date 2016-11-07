@@ -2159,7 +2159,7 @@ sp_process_args(poptContext ctx)
             }
 #endif // WITH_YAML
             case SP_ARG_VERSION: {
-                printf("Inkscape %s (%s)\n", Inkscape::version_string, __DATE__);
+                printf("Inkscape %s\n", Inkscape::version_string);
                 exit(0);
                 break;
             }
