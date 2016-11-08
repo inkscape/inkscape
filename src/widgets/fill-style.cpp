@@ -40,6 +40,7 @@
 #include "sp-mesh-gradient.h"
 #include "sp-pattern.h"
 #include "sp-radial-gradient.h"
+#include "sp-text.h"
 #include "style.h"
 #include "widgets/paint-selector.h"
 
@@ -279,34 +280,35 @@ void FillNStroke::performUpdate()
 
                 SPPaintServer *server = (kind == FILL) ? query.getFillPaintServer() : query.getStrokePaintServer();
 
-                if (server && SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
-                    SPGradient *vector = SP_GRADIENT(server)->getVector();
-                    psel->setSwatch( vector );
-                } else if (SP_IS_LINEARGRADIENT(server)) {
-                    SPGradient *vector = SP_GRADIENT(server)->getVector();
-                    psel->setGradientLinear( vector );
+                if (server) {
+                    if (SP_IS_GRADIENT(server) && SP_GRADIENT(server)->getVector()->isSwatch()) {
+                        SPGradient *vector = SP_GRADIENT(server)->getVector();
+                        psel->setSwatch( vector );
+                    } else if (SP_IS_LINEARGRADIENT(server)) {
+                        SPGradient *vector = SP_GRADIENT(server)->getVector();
+                        psel->setGradientLinear( vector );
 
-                    SPLinearGradient *lg = SP_LINEARGRADIENT(server);
-                    psel->setGradientProperties( lg->getUnits(),
-                                                 lg->getSpread() );
-                } else if (SP_IS_RADIALGRADIENT(server)) {
-                    SPGradient *vector = SP_GRADIENT(server)->getVector();
-                    psel->setGradientRadial( vector );
+                        SPLinearGradient *lg = SP_LINEARGRADIENT(server);
+                        psel->setGradientProperties( lg->getUnits(),
+                                                     lg->getSpread() );
+                    } else if (SP_IS_RADIALGRADIENT(server)) {
+                        SPGradient *vector = SP_GRADIENT(server)->getVector();
+                        psel->setGradientRadial( vector );
 
-                    SPRadialGradient *rg = SP_RADIALGRADIENT(server);
-                    psel->setGradientProperties( rg->getUnits(),
-                                                 rg->getSpread() );
+                        SPRadialGradient *rg = SP_RADIALGRADIENT(server);
+                        psel->setGradientProperties( rg->getUnits(),
+                                                     rg->getSpread() );
 #ifdef WITH_MESH
-                } else if (SP_IS_MESHGRADIENT(server)) {
-                    SPGradient *array = SP_MESHGRADIENT(server)->getArray();
-                    psel->setGradientMesh( array );
-
-                    SPMeshGradient *mg = SP_MESHGRADIENT(server);
-                    psel->setMeshProperties( mg->getUnits() );
+                    } else if (SP_IS_MESHGRADIENT(server)) {
+                        SPGradient *array = SP_GRADIENT(server)->getArray();
+                        psel->setGradientMesh( SP_MESHGRADIENT(array) );
+                        SPMeshGradient *mg = SP_MESHGRADIENT(server);
+                        psel->updateMeshList( SP_MESHGRADIENT( array ));
 #endif
-                } else if (SP_IS_PATTERN(server)) {
-                    SPPattern *pat = SP_PATTERN(server)->rootPattern();
-                    psel->updatePatternList( pat );
+                    } else if (SP_IS_PATTERN(server)) {
+                        SPPattern *pat = SP_PATTERN(server)->rootPattern();
+                        psel->updatePatternList( pat );
+                    }
                 }
             }
             break;
@@ -621,6 +623,107 @@ void FillNStroke::updateFromPaint()
                                    (kind == FILL) ? _("Set gradient on fill") : _("Set gradient on stroke"));
             }
             break;
+
+#ifdef WITH_MESH
+        case SPPaintSelector::MODE_GRADIENT_MESH:
+
+            if (!items.empty()) {
+                SPGradientType const gradient_type = SP_GRADIENT_TYPE_MESH;
+
+                SPCSSAttr *css = 0;
+                if (kind == FILL) {
+                    // HACK: reset fill-opacity - that 0.75 is annoying; BUT remove this when we have an opacity slider for all tabs
+                    css = sp_repr_css_attr_new();
+                    sp_repr_css_set_property(css, "fill-opacity", "1.0");
+                }
+                
+                Inkscape::XML::Document *xml_doc = document->getReprDoc();
+                SPDefs *defs = document->getDefs();
+
+                SPMeshGradient * mesh = psel->getMeshGradient();
+
+                for(std::vector<SPItem*>::const_iterator i=items.begin();i!=items.end(); ++i){
+
+                    //FIXME: see above
+                    if (kind == FILL) {
+                        sp_repr_css_change_recursive((*i)->getRepr(), css, "style");
+                    }
+
+                    // Check if object already has mesh.
+                    bool has_mesh = false;
+                    SPStyle *style = (*i)->style;
+                    if (style) {
+                        SPPaintServer *server =
+                            (kind==FILL) ? style->getFillPaintServer():style->getStrokePaintServer();
+                        if (server && SP_IS_MESHGRADIENT(server)) 
+                            has_mesh = true;
+                    }
+
+                    if (!mesh || !has_mesh) {
+                        // No mesh in document or object does not already have mesh ->
+                        // Create new mesh.
+
+                        // Create mesh element
+                        Inkscape::XML::Node *repr = xml_doc->createElement("svg:meshgradient");
+
+                        // privates are garbage-collectable
+                        repr->setAttribute("inkscape:collect", "always");
+
+                        // Attach to document
+                        defs->getRepr()->appendChild(repr);
+                        Inkscape::GC::release(repr);
+
+                        // Get corresponding object
+                        SPMeshGradient *mg = static_cast<SPMeshGradient *>(document->getObjectByRepr(repr));
+                        mg->array.create(mg, *i, (kind==FILL) ?
+                                         (*i)->geometricBounds() : (*i)->visualBounds());
+
+                        bool isText = SP_IS_TEXT(*i);
+                        sp_style_set_property_url (*i, ((kind == FILL) ? "fill":"stroke"),
+                                                   mg, isText);
+
+                        // (*i)->requestModified(SP_OBJECT_MODIFIED_FLAG|SP_OBJECT_STYLE_MODIFIED_FLAG);
+
+                    } else {
+                        // Using found mesh
+
+                        // Duplicate
+                        Inkscape::XML::Node *mesh_repr = mesh->getRepr();
+                        Inkscape::XML::Node *copy_repr = mesh_repr->duplicate(xml_doc);
+
+                        // privates are garbage-collectable
+                        copy_repr->setAttribute("inkscape:collect", "always");
+
+                        // Attach to document
+                        defs->getRepr()->appendChild(copy_repr);
+                        Inkscape::GC::release(copy_repr);
+
+                        // Get corresponding object
+                        SPMeshGradient *mg =
+                            static_cast<SPMeshGradient *>(document->getObjectByRepr(copy_repr));
+                        // std::cout << "  " << (mg->getId()?mg->getId():"null") << std::endl;
+                        mg->array.read(mg);
+
+                        Geom::OptRect item_bbox = (kind==FILL) ?
+                            (*i)->geometricBounds() : (*i)->visualBounds();
+                        mg->array.fill_box( item_bbox );
+
+                        bool isText = SP_IS_TEXT(*i);
+                        sp_style_set_property_url (*i, ((kind == FILL) ? "fill":"stroke"),
+                                                   mg, isText);
+                    }
+                }
+
+                if (css) {
+                    sp_repr_css_attr_unref(css);
+                    css = 0;
+                }
+
+                DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
+                                   (kind == FILL) ? _("Set mesh on fill") : _("Set mesh on stroke"));
+            }
+            break;
+#endif
 
         case SPPaintSelector::MODE_PATTERN:
 

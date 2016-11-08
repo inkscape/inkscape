@@ -36,6 +36,7 @@
 #include "document-undo.h"
 #include "desktop.h"
 
+#include <gtkmm.h>
 #include <glibmm/i18n.h>
 
 #include "ui/tools/gradient-tool.h"
@@ -356,6 +357,20 @@ static void ms_fit_mesh(void)
     }
 }
 
+static void ms_warning_popup(void)
+{
+    char *msg = _("Mesh gradients are part of SVG 2:\n"
+                  "* Syntax may change.\n"
+                  "* Web browser implementation is not guaranteed.\n"
+                  "\n"
+                  "For web: convert to bitmap (Edit->Make bitmap copy).\n"
+                  "For print: export to PDF.");
+    Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_WARNING,
+                              Gtk::BUTTONS_OK, true);
+    dialog.run();
+
+}
+
 static void mesh_toolbox_watch_ec(SPDesktop* dt, Inkscape::UI::Tools::ToolBase* ec, GObject* holder);
 
 /**
@@ -504,9 +519,14 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
 
     /* Warning */
     {
-        GtkAction* act = gtk_action_new( "MeshWarningAction",
-          _("WARNING: Mesh SVG Syntax Subject to Change"), NULL, NULL );
+        InkAction* act = ink_action_new( "MeshWarningAction",
+                                         _("WARNING: Mesh SVG Syntax Subject to Change"),
+                                         _("WARNING: Mesh SVG Syntax Subject to Change"),
+                                         INKSCAPE_ICON("dialog-warning"),
+                                         secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(ms_warning_popup), holder );
+        gtk_action_set_sensitive( GTK_ACTION(act), TRUE );
     }
 
     /* Type */

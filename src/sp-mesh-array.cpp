@@ -1057,10 +1057,10 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
                         break;
                     case 'z':
                     case 'Z':
-                        std::cout << "SPMeshNodeArray::write(): bad path type" << path_type << std::endl;
+                        std::cerr << "SPMeshNodeArray::write(): bad path type" << path_type << std::endl;
                         break;
                     default:
-                        std::cout << "SPMeshNodeArray::write(): unhandled path type" << path_type << std::endl;
+                        std::cerr << "SPMeshNodeArray::write(): unhandled path type" << path_type << std::endl;
                 }
                 stop->setAttribute("path", is.str().c_str());
                 // std::cout << "SPMeshNodeArray::write: path:  " << is.str().c_str() << std::endl;
@@ -1120,11 +1120,11 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
     if( !bbox ) {
         // Set default size to bounding box if size not given.
-        std::cout << "SPMeshNodeArray::create(): bbox empty" << std::endl;
+        std::cerr << "SPMeshNodeArray::create(): bbox empty" << std::endl;
         bbox = item->geometricBounds();
 
         if( !bbox ) {
-            std::cout << "SPMeshNodeArray::create: ERROR: No bounding box!" << std::endl;
+            std::cerr << "SPMeshNodeArray::create: ERROR: No bounding box!" << std::endl;
             return;
         }
     }
@@ -1151,7 +1151,14 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
     // Get default color
     SPColor color = default_color( item );
- 
+
+    // Set some corners to white so we can see the mesh.
+    SPColor white( 1.0, 1.0, 1.0 );
+    if (color == white) {
+        // If default color is white, set other color to black.
+        white = SPColor( 0.0, 0.0, 0.0 );
+    }
+
     // Get preferences
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint prows = prefs->getInt("/tools/mesh/mesh_rows", 1);
@@ -1190,6 +1197,9 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             ry = arc->ry.computed;
             start = arc->start;
             end   = arc->end;
+            if( end == start ) {
+                end += 2.0 * M_PI;
+            }
         }
 
         // std::cout << " start: " << start << "  end: " << end << std::endl;
@@ -1236,7 +1246,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
             for( guint k = 0; k < 4; ++k ) {
                 patch.setPathType( k, 'l' );
-                patch.setColor( k, color );
+                patch.setColor( k, (i+k)%2 ? color : white );
                 patch.setOpacity( k, 1.0 );
             }
             patch.setPathType( 0, 'c' );
@@ -1293,7 +1303,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
                 patch.setPathType( i, 'c' );
 
-                patch.setColor( i, color );
+                patch.setColor( i, i%2 ? color : white );
                 patch.setOpacity( i, 1.0 );
             }
 
@@ -1334,7 +1344,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
                     for( guint s = 0; s < 4; ++s ) {
                         patch.setPathType( s, 'l' );
-                        patch.setColor( s, color );
+                        patch.setColor( s, (i+s)%2 ? color : white );
                         patch.setOpacity( s, 1.0 );
                     }
 
@@ -1362,10 +1372,10 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
                     for( guint s = 0; s < 4; ++s ) {
                         patch0.setPathType( s, 'l' );
-                        patch0.setColor( s, color );
+                        patch0.setColor( s, s%2 ? color : white );
                         patch0.setOpacity( s, 1.0 );
                         patch1.setPathType( s, 'l' );
-                        patch1.setColor( s, color );
+                        patch1.setColor( s, s%2 ? white : color );
                         patch1.setOpacity( s, 1.0 );
                     }
 
@@ -1415,7 +1425,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
                             // Corner
                             node->node_type = MG_NODE_TYPE_CORNER;
                             node->set = true;
-                            node->color = color;
+                            node->color = (i+j)%2 ? color : white;
                             node->opacity = 1.0;
 
                         } else {
@@ -2704,6 +2714,11 @@ SPCurve * SPMeshNodeArray::outline_path() {
 
     SPCurve *outline = new SPCurve();
 
+    if (nodes.empty() ) {
+        std::cerr << "SPMeshNodeArray::outline_path: empty array!" << std::endl;
+        return outline;
+    }
+
     outline->moveto( nodes[0][0]->p );
 
     int ncol = nodes[0].size();
@@ -2741,6 +2756,34 @@ void SPMeshNodeArray::transform(Geom::Affine const &m) {
             nodes[j][i]->p *= m;
         }
     }
+}
+
+// Transform mesh to fill box. Return true if mesh transformed.
+bool SPMeshNodeArray::fill_box(Geom::OptRect &box) {
+
+    SPCurve *outline = outline_path();
+    Geom::OptRect mesh_bbox = outline->get_pathvector().boundsExact();
+    outline->unref();
+
+    if ((*mesh_bbox).width() == 0 || (*mesh_bbox).height() == 0) {
+        return false;
+    }            
+
+    double scale_x = (*box).width() /(*mesh_bbox).width() ;
+    double scale_y = (*box).height()/(*mesh_bbox).height();
+
+    Geom::Translate t1(-(*mesh_bbox).min());
+    Geom::Scale scale(scale_x,scale_y);
+    Geom::Translate t2((*box).min());
+    Geom::Affine trans = t1 * scale * t2;
+    if (!trans.isIdentity() ) {
+        transform(trans);
+        write( mg );
+        mg->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        return true;
+    }
+
+    return false;
 }
 
 // Defined in gradient-chemistry.cpp

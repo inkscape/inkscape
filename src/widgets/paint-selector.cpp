@@ -285,6 +285,11 @@ static void sp_paint_selector_dispose(GObject *object)
     // clean up our long-living pattern menu
     g_object_set_data(G_OBJECT(psel),"patternmenu",NULL);
 
+#ifdef WITH_MESH
+    // clean up our long-living mesh menu
+    g_object_set_data(G_OBJECT(psel),"meshmenu",NULL);
+#endif
+
     if (psel->selected_color) {
         delete psel->selected_color;
         psel->selected_color = NULL;
@@ -492,7 +497,7 @@ void SPPaintSelector::setGradientRadial(SPGradient *vector)
 }
 
 #ifdef WITH_MESH
-void SPPaintSelector::setGradientMesh(SPGradient *array)
+void SPPaintSelector::setGradientMesh(SPMeshGradient *array)
 {
 #ifdef SP_PS_VERBOSE
     g_print("PaintSelector set GRADIENT MESH\n");
@@ -523,24 +528,6 @@ void SPPaintSelector::getGradientProperties( SPGradientUnits &units, SPGradientS
     units = gsel->getUnits();
     spread = gsel->getSpread();
 }
-
-#ifdef WITH_MESH
-void SPPaintSelector::setMeshProperties( SPGradientUnits units )
-{
-    g_return_if_fail(mode == MODE_GRADIENT_MESH);
-
-    // SPGradientSelector *gsel = getGradientFromData(this);
-    // gsel->setUnits(units);
-}
-
-void SPPaintSelector::getMeshProperties( SPGradientUnits &units) const
-{
-    g_return_if_fail(mode == MODE_GRADIENT_MESH);
-
-    // SPGradientSelector *gsel = getGradientFromData(this);
-    // units = gsel->getUnits();
-}
-#endif
 
 
 /**
@@ -788,7 +775,214 @@ static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSe
 #endif
 }
 
+// ************************* MESH ************************
 #ifdef WITH_MESH
+static void sp_psel_mesh_destroy(GtkWidget *widget, SPPaintSelector * /*psel*/)
+{
+    // drop our reference to the mesh menu widget
+    g_object_unref( G_OBJECT(widget) );
+}
+
+static void sp_psel_mesh_change(GtkWidget * /*widget*/, SPPaintSelector *psel)
+{
+    g_signal_emit(G_OBJECT(psel), psel_signals[CHANGED], 0);
+}
+
+
+/**
+ *  Returns a list of meshes in the defs of the given source document as a GSList object
+ *  Returns NULL if there are no meshes in the document.
+ */
+static GSList *
+ink_mesh_list_get (SPDocument *source)
+{
+    if (source == NULL)
+        return NULL;
+
+    GSList *pl = NULL;
+    std::vector<SPObject *> meshes = source->getResourceList("gradient");
+    for (std::vector<SPObject *>::const_iterator it = meshes.begin(); it != meshes.end(); ++it) {
+        if (SP_IS_MESHGRADIENT(*it) &&
+            SP_GRADIENT(*it) == SP_GRADIENT(*it)->getArray()) {  // only if this is a root mesh
+            pl = g_slist_prepend(pl, *it);
+        }
+    }
+
+    pl = g_slist_reverse(pl);
+    return pl;
+}
+
+/**
+ * Adds menu items for mesh list.
+ */
+static void
+sp_mesh_menu_build (GtkWidget *combo, GSList *mesh_list, SPDocument */*source*/)
+{
+    GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
+    GtkTreeIter iter;
+
+    for (; mesh_list != NULL; mesh_list = mesh_list->next) {
+
+        Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(mesh_list->data)->getRepr();
+
+        gchar const *meshid = repr->attribute("id");
+        gchar const *label  = meshid;
+
+        // Only relevant if we supply a set of canned meshes.
+        gboolean stockid = false;
+        if (repr->attribute("inkscape:stockid")) {
+            label = _(repr->attribute("inkscape:stockid"));
+            stockid = true;
+        }
+
+        gtk_list_store_append(store, &iter);
+        gtk_list_store_set(store, &iter,
+                COMBO_COL_LABEL, label, COMBO_COL_STOCK, stockid, COMBO_COL_MESH, meshid, COMBO_COL_SEP, FALSE, -1);
+
+    }
+}
+
+/**
+ * Pick up all meshes from source, except those that are in
+ * current_doc (if non-NULL), and add items to the mesh menu.
+ */
+static void sp_mesh_list_from_doc(GtkWidget *combo, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*mesh_doc*/)
+{
+    GSList *pl = ink_mesh_list_get(source);
+    GSList *clean_pl = NULL;
+
+    for (; pl != NULL; pl = pl->next) {
+        if (!SP_IS_MESHGRADIENT(pl->data)) {
+            continue;
+        }
+        // Add to the list of meshes we really do wish to show
+        clean_pl = g_slist_prepend (clean_pl, pl->data);
+    }
+
+    sp_mesh_menu_build (combo, clean_pl, source);
+
+    g_slist_free (pl);
+    g_slist_free (clean_pl);
+}
+
+
+static void
+ink_mesh_menu_populate_menu(GtkWidget *combo, SPDocument *doc)
+{
+    static SPDocument *meshes_doc = NULL;
+
+    // If we ever add a list of canned mesh gradients, uncomment following:
+
+    // find and load meshes.svg
+    // if (meshes_doc == NULL) {
+    //     char *meshes_source = g_build_filename(INKSCAPE_MESHESDIR, "meshes.svg", NULL);
+    //     if (Inkscape::IO::file_test(meshes_source, G_FILE_TEST_IS_REGULAR)) {
+    //         meshes_doc = SPDocument::createNewDoc(meshes_source, FALSE);
+    //     }
+    //     g_free(meshes_source);
+    // }
+
+    // suck in from current doc
+    sp_mesh_list_from_doc ( combo, NULL, doc, meshes_doc );
+
+    // add separator
+    // {
+    //     GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
+    //     GtkTreeIter iter;
+    //     gtk_list_store_append (store, &iter);
+    //     gtk_list_store_set(store, &iter,
+    //             COMBO_COL_LABEL, "", COMBO_COL_STOCK, false, COMBO_COL_MESH, "", COMBO_COL_SEP, true, -1);
+    // }
+
+    // suck in from meshes.svg
+    // if (meshes_doc) {
+    //     doc->ensureUpToDate();
+    //     sp_mesh_list_from_doc ( combo, doc, meshes_doc, NULL );
+    // }
+
+}
+
+
+static GtkWidget*
+ink_mesh_menu(GtkWidget *combo)
+{
+    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+
+    GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
+    GtkTreeIter iter;
+
+    if (!doc) {
+
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter,
+                COMBO_COL_LABEL, _("No document selected"), COMBO_COL_STOCK, false, COMBO_COL_MESH, "", COMBO_COL_SEP, false, -1);
+        gtk_widget_set_sensitive(combo, FALSE);
+
+    } else {
+
+        ink_mesh_menu_populate_menu(combo, doc);
+        gtk_widget_set_sensitive(combo, TRUE);
+
+    }
+
+    // Select the first item that is not a separator
+    if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(store), &iter)) {
+        gboolean sep = false;
+        gtk_tree_model_get(GTK_TREE_MODEL(store), &iter, COMBO_COL_SEP, &sep, -1);
+        if (sep) {
+            gtk_tree_model_iter_next(GTK_TREE_MODEL(store), &iter);
+        }
+        gtk_combo_box_set_active_iter(GTK_COMBO_BOX(combo), &iter);
+    }
+
+    return combo;
+}
+
+
+/*update mesh list*/
+void SPPaintSelector::updateMeshList( SPMeshGradient *mesh )
+{
+    if (update) {
+        return;
+    }
+
+    GtkWidget *combo = GTK_WIDGET(g_object_get_data(G_OBJECT(this), "meshmenu"));
+    g_assert( combo != NULL );
+
+    /* Clear existing menu if any */
+    GtkTreeModel *store = gtk_combo_box_get_model(GTK_COMBO_BOX(combo));
+    gtk_list_store_clear(GTK_LIST_STORE(store));
+
+    ink_mesh_menu(combo);
+
+    /* Set history */
+
+    if (mesh && !g_object_get_data(G_OBJECT(combo), "update")) {
+
+        g_object_set_data(G_OBJECT(combo), "update", GINT_TO_POINTER(TRUE));
+        gchar const *meshname = mesh->getRepr()->attribute("id");
+
+        // Find this mesh and set it active in the combo_box
+        GtkTreeIter iter ;
+        gchar *meshid = NULL;
+        bool valid = gtk_tree_model_get_iter_first (store, &iter);
+        if (!valid) {
+            return;
+        }
+        gtk_tree_model_get (store, &iter, COMBO_COL_MESH, &meshid, -1);
+        while (valid && strcmp(meshid, meshname)  != 0) {
+            valid = gtk_tree_model_iter_next (store, &iter);
+            gtk_tree_model_get (store, &iter, COMBO_COL_MESH, &meshid, -1);
+        }
+
+        if (valid) {
+            gtk_combo_box_set_active_iter(GTK_COMBO_BOX(combo), &iter);
+        }
+
+        g_object_set_data(G_OBJECT(combo), "update", GINT_TO_POINTER(FALSE));
+    }
+}
+
 static void sp_paint_selector_set_mode_mesh(SPPaintSelector *psel, SPPaintSelector::Mode mode)
 {
     if (mode == SPPaintSelector::MODE_GRADIENT_MESH) {
@@ -799,23 +993,50 @@ static void sp_paint_selector_set_mode_mesh(SPPaintSelector *psel, SPPaintSelect
     GtkWidget *tbl = NULL;
 
     if (psel->mode == SPPaintSelector::MODE_GRADIENT_MESH) {
-        /* Already have mesh selector */
+        /* Already have mesh menu */
         tbl = GTK_WIDGET(g_object_get_data(G_OBJECT(psel->selector), "mesh-selector"));
     } else {
         sp_paint_selector_clear_frame(psel);
 
-        /* We could create a new gradient selector once adapted for meshes.
-           But for the moment we just create an empty widget. */
         /* Create vbox */
         tbl = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
         gtk_box_set_homogeneous(GTK_BOX(tbl), FALSE);
         gtk_widget_show(tbl);
 
         {
+            auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+            gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+
+            /**
+             * Create a combo_box and store with 4 columns,
+             * The label, a pointer to the mesh, is stockid or not, is a separator or not.
+             */
+            GtkListStore *store = gtk_list_store_new (COMBO_N_COLS, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_BOOLEAN);
+            GtkWidget *combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
+            gtk_combo_box_set_row_separator_func(GTK_COMBO_BOX(combo), SPPaintSelector::isSeparator, NULL, NULL);
+
+            GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
+            gtk_cell_renderer_set_padding (renderer, 2, 0);
+            gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), renderer, TRUE);
+            gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), renderer, "text", COMBO_COL_LABEL, NULL);
+
+            ink_mesh_menu(combo);
+            g_signal_connect(G_OBJECT(combo), "changed", G_CALLBACK(sp_psel_mesh_change), psel);
+            g_signal_connect(G_OBJECT(combo), "destroy", G_CALLBACK(sp_psel_mesh_destroy), psel);
+            g_object_set_data(G_OBJECT(psel), "meshmenu", combo);
+            g_object_ref( G_OBJECT(combo));
+
+            gtk_container_add(GTK_CONTAINER(hb), combo);
+            gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+
+            g_object_unref( G_OBJECT(store));
+        }
+
+        {
             auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
             gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
             auto l = gtk_label_new(NULL);
-            gtk_label_set_markup(GTK_LABEL(l), _("Use the <b>Mesh tool</b> to create new and edit existing meshes. Mesh selection and copying not yet implemented."));
+            gtk_label_set_markup(GTK_LABEL(l), _("Use the <b>Mesh tool</b> to modify the mesh."));
             gtk_label_set_line_wrap(GTK_LABEL(l), true);
             gtk_widget_set_size_request(l, 180, -1);
             gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);
@@ -828,11 +1049,66 @@ static void sp_paint_selector_set_mode_mesh(SPPaintSelector *psel, SPPaintSelect
         psel->selector = tbl;
         g_object_set_data(G_OBJECT(psel->selector), "mesh-selector", tbl);
 
-        gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Mesh gradient</b>"));
+        gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Mesh fill</b>"));
+    }
+#ifdef SP_PS_VERBOSE
+    g_print("Mesh req\n");
+#endif
+}
+
+SPMeshGradient *SPPaintSelector::getMeshGradient()
+{
+    g_return_val_if_fail((mode == MODE_GRADIENT_MESH) , NULL);
+
+    GtkWidget *combo = GTK_WIDGET(g_object_get_data(G_OBJECT(this), "meshmenu"));
+
+    /* no mesh menu if we were just selected */
+    if ( combo == NULL ) {
+        return NULL;
+    }
+    GtkTreeModel *store = gtk_combo_box_get_model(GTK_COMBO_BOX(combo));
+
+    /* Get the selected mesh */
+    GtkTreeIter  iter;
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo), &iter) ||
+            !gtk_list_store_iter_is_valid(GTK_LIST_STORE(store), &iter)) {
+        return NULL;
     }
 
+    gchar *meshid = NULL;
+    gboolean stockid = FALSE;
+    gchar *label = NULL;
+    gtk_tree_model_get (store, &iter, COMBO_COL_LABEL, &label, COMBO_COL_STOCK, &stockid, COMBO_COL_MESH, &meshid,  -1);
+    // std::cout << "  .. meshid: " << (meshid?meshid:"null") << "   label: " << (label?label:"null") << std::endl;
+    if (meshid == NULL) {
+        return NULL;
+    }
+
+    SPMeshGradient *mesh = 0;
+    if (strcmp(meshid, "none")){
+
+        gchar *mesh_name;
+        if (stockid) {
+            mesh_name = g_strconcat("urn:inkscape:mesh:", meshid, NULL);
+        } else {
+            mesh_name = g_strdup(meshid);
+        }
+
+        SPObject *mesh_obj = get_stock_item(mesh_name);
+        if (mesh_obj && SP_IS_MESHGRADIENT(mesh_obj)) {
+            mesh = SP_MESHGRADIENT(mesh_obj);
+        }
+        g_free(mesh_name);
+
+    } else {
+        std::cerr << "SPPaintSelector::getMeshGradient: Unexpected meshid value." << std::endl;
+    }
+
+    return mesh;
 }
+
 #endif
+// ************************ End Mesh ************************
 
 static void
 sp_paint_selector_set_style_buttons(SPPaintSelector *psel, GtkWidget *active)

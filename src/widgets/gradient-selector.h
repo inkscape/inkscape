@@ -50,9 +50,6 @@ struct SPGradientSelector {
     enum SelectorMode {
         MODE_LINEAR,
         MODE_RADIAL,
-#ifdef WITH_MESH
-        MODE_MESH,
-#endif
         MODE_SWATCH
     };
 

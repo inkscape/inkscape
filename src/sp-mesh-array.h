@@ -202,6 +202,9 @@ public:
   // Transform array
   void transform(Geom::Affine const &m);
 
+  // Transform mesh to fill box. Return true if not identity transform.
+  bool fill_box(Geom::OptRect &box);
+
   // Find bounding box
   // Geom::OptRect findBoundingBox();
 
