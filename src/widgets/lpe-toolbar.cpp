@@ -302,7 +302,7 @@ void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GO
             gtk_list_store_append( model, &iter );
             gtk_list_store_set( model, &iter,
                                 0, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
-                                1, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
+                                1, _(Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str()),
                                 2, lpesubtools[i].icon_name,
                                 -1 );
         }
