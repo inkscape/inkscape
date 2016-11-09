@@ -800,6 +800,9 @@ void SelectedStyle::on_fillstroke_swap() {
         break;
     case SS_LGRADIENT:
     case SS_RGRADIENT:
+#ifdef WITH_MESH
+    case SS_MGRADIENT:
+#endif
     case SS_PATTERN:
         sp_repr_css_set_property (css, "stroke", _paintserver_id[SS_FILL].c_str());
         break;
@@ -822,6 +825,9 @@ void SelectedStyle::on_fillstroke_swap() {
         break;
     case SS_LGRADIENT:
     case SS_RGRADIENT:
+#ifdef WITH_MESH
+    case SS_MGRADIENT:
+#endif
     case SS_PATTERN:
         sp_repr_css_set_property (css, "fill", _paintserver_id[SS_STROKE].c_str());
         break;
