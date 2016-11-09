@@ -1115,22 +1115,22 @@ void SelectionVerb::perform(SPAction *action, void *data)
     bool handled = true;
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_SELECTION_UNION:
-            sp_selected_path_union(selection, dt);
+            selection->pathUnion();
             break;
         case SP_VERB_SELECTION_INTERSECT:
-            sp_selected_path_intersect(selection, dt);
+            selection->pathIntersect();
             break;
         case SP_VERB_SELECTION_DIFF:
-            sp_selected_path_diff(selection, dt);
+            selection->pathDiff();
             break;
         case SP_VERB_SELECTION_SYMDIFF:
-            sp_selected_path_symdiff(selection, dt);
+            selection->pathSymDiff();
             break;
         case SP_VERB_SELECTION_CUT:
-            sp_selected_path_cut(selection, dt);
+            selection->pathCut();
             break;
         case SP_VERB_SELECTION_SLICE:
-            sp_selected_path_slice(selection, dt);
+            selection->pathSlice();
             break;
         case SP_VERB_SELECTION_GROW:
         {

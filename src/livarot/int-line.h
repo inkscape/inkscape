@@ -2,6 +2,7 @@
 #define INKSCAPE_LIVAROT_INT_LINE_H
 
 #include "livarot/LivarotDefs.h"
+#include "object-set.h"
 
 /** \file
  * Coverage with integer boundaries.

@@ -714,7 +714,7 @@ void EraserTool::set_to_accumulated() {
                                 Inkscape::GC::release(dup); // parent takes over
                                 selection->set(dup);
                                 if (!this->nowidth) {
-                                    sp_selected_path_union_skip_undo(selection);
+                                    selection->pathUnion(true);
                                 }
                                 selection->add(item);
                                 if(item->style->fill_rule.value == SP_WIND_RULE_EVENODD){
@@ -725,9 +725,9 @@ void EraserTool::set_to_accumulated() {
                                     css = 0;
                                 }
                                 if (this->nowidth) {
-                                    sp_selected_path_cut_skip_undo(selection);
+                                    selection->pathCut(true);
                                 } else {
-                                    sp_selected_path_diff_skip_undo(selection);
+                                    selection->pathDiff(true);
                                 }
                                 workDone = true; // TODO set this only if something was cut.
                                 bool break_apart = prefs->getBool("/tools/eraser/break_apart", false);
@@ -762,7 +762,7 @@ void EraserTool::set_to_accumulated() {
                             this->repr->parent()->appendChild(dup);
                             Inkscape::GC::release(dup); // parent takes over
                             selection->set(dup);
-                            sp_selected_path_union_skip_undo(selection);
+                            selection->pathUnion(true);
                             if (bbox && bbox->intersects(*eraserBbox)) {
                                 SPClipPath *clip_path = item->clip_ref->getObject();
                                 if (clip_path) {
@@ -786,7 +786,7 @@ void EraserTool::set_to_accumulated() {
                                                 sp_object_unref(clip_path);
                                                 selection->raiseToTop(true);
                                                 selection->add(dup_clip);
-                                                sp_selected_path_diff_skip_undo(selection);
+                                                selection->pathDiff(true);
                                                 SPItem * clip = SP_ITEM(*(selection->items().begin()));
                                             }
                                         }
@@ -802,7 +802,7 @@ void EraserTool::set_to_accumulated() {
                                     rect->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
                                     selection->raiseToTop(true);
                                     selection->add(rect);
-                                    sp_selected_path_diff_skip_undo(selection);
+                                    selection->pathDiff(true);
                                 }
                                 selection->raiseToTop(true);
                                 selection->add(item);

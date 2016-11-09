@@ -1026,7 +1026,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                     if (unionResult) { // No need to add the very first item (initialized with NULL).
                         set->add(unionResult);
                     }
-                    sp_selected_path_union_skip_undo(set);
+                    set->pathUnion(true);
                     set->add(parent_item);
                     Inkscape::GC::release(copy);
                     did = true;
@@ -1364,7 +1364,7 @@ bool SprayTool::root_handler(GdkEvent* event) {
                                            SP_VERB_CONTEXT_SPRAY, _("Spray with clones"));
                         break;
                     case SPRAY_MODE_SINGLE_PATH:
-                        sp_selected_path_union_skip_undo(objectSet());
+                        objectSet()->pathUnion(true);
                         desktop->getSelection()->add(object_set.objects().begin(), object_set.objects().end());
                         DocumentUndo::done(this->desktop->getDocument(),
                                            SP_VERB_CONTEXT_SPRAY, _("Spray in single path"));

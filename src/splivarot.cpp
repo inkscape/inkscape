@@ -47,96 +47,51 @@
 #include "verbs.h"
 #include "2geom/svg-path-parser.h" // to get from SVG on boolean to Geom::Path
 
-enum BoolOpErrors {
-    DONE,
-    DONE_NO_PATH,
-    DONE_NO_ACTION,
-    ERR_TOO_LESS_PATHS_1,
-    ERR_TOO_LESS_PATHS_2,
-    ERR_NO_PATHS,
-    ERR_Z_ORDER
-};
-
 using Inkscape::DocumentUndo;
 
 bool   Ancetre(Inkscape::XML::Node *a, Inkscape::XML::Node *who);
 
-void sp_selected_path_boolop_ui(Inkscape::Selection *selection, SPDesktop *desktop, bool_op bop,
-                                const unsigned int verb = SP_VERB_NONE, const Glib::ustring description = "");
-BoolOpErrors sp_selected_path_boolop(Inkscape::ObjectSet *set, bool_op bop);
 void sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset);
 void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updating);
 
-void
-sp_selected_path_union(Inkscape::Selection *selection, SPDesktop *desktop)
-{
-    sp_selected_path_boolop_ui(selection, desktop, bool_op_union, SP_VERB_SELECTION_UNION, _("Union"));
+bool Inkscape::ObjectSet::pathUnion(const bool skip_undo) {
+    BoolOpErrors result = pathBoolOp(bool_op_union, skip_undo, SP_VERB_SELECTION_UNION, _("Union"));
+    return DONE == result;
 }
 
-void
-sp_selected_path_union_skip_undo(Inkscape::ObjectSet *set)
+bool
+Inkscape::ObjectSet::pathIntersect(const bool skip_undo)
 {
-    sp_selected_path_boolop(set, bool_op_union);
+    BoolOpErrors result = pathBoolOp(bool_op_inters, skip_undo, SP_VERB_SELECTION_INTERSECT, _("Intersection"));
+    return DONE == result;
 }
 
-void
-sp_selected_path_intersect(Inkscape::Selection *selection, SPDesktop *desktop)
+bool
+Inkscape::ObjectSet::pathDiff(const bool skip_undo)
 {
-    sp_selected_path_boolop_ui(selection, desktop, bool_op_inters, SP_VERB_SELECTION_INTERSECT, _("Intersection"));
+    BoolOpErrors result = pathBoolOp(bool_op_diff, skip_undo, SP_VERB_SELECTION_DIFF, _("Difference"));
+    return DONE == result;
 }
 
-void
-sp_selected_path_intersect_skip_undo(Inkscape::ObjectSet *set)
+bool
+Inkscape::ObjectSet::pathSymDiff(const bool skip_undo)
 {
-    sp_selected_path_boolop(set, bool_op_inters);
+    BoolOpErrors result = pathBoolOp(bool_op_symdiff, skip_undo, SP_VERB_SELECTION_SYMDIFF, _("Exclusion"));
+    return DONE == result;
 }
 
-void
-sp_selected_path_diff(Inkscape::Selection *selection, SPDesktop *desktop)
+bool
+Inkscape::ObjectSet::pathCut(const bool skip_undo)
 {
-    sp_selected_path_boolop_ui(selection, desktop, bool_op_diff, SP_VERB_SELECTION_DIFF, _("Difference"));
+    BoolOpErrors result = pathBoolOp(bool_op_cut, skip_undo, SP_VERB_SELECTION_CUT, _("Division"));
+    return DONE == result;
 }
 
-void
-sp_selected_path_diff_skip_undo(Inkscape::ObjectSet *set)
+bool
+Inkscape::ObjectSet::pathSlice(const bool skip_undo)
 {
-    sp_selected_path_boolop(set, bool_op_diff);
-}
-
-void
-sp_selected_path_symdiff(Inkscape::Selection *selection, SPDesktop *desktop)
-{
-    sp_selected_path_boolop_ui(selection, desktop, bool_op_symdiff, SP_VERB_SELECTION_SYMDIFF, _("Exclusion"));
-}
-
-void
-sp_selected_path_symdiff_skip_undo(Inkscape::ObjectSet *set)
-{
-    sp_selected_path_boolop(set, bool_op_symdiff);
-}
-
-void
-sp_selected_path_cut(Inkscape::Selection *selection, SPDesktop *desktop)
-{
-    sp_selected_path_boolop_ui(selection, desktop, bool_op_cut, SP_VERB_SELECTION_CUT, _("Division"));
-}
-
-void
-sp_selected_path_cut_skip_undo(Inkscape::ObjectSet *set)
-{
-    sp_selected_path_boolop(set, bool_op_cut);
-}
-
-void
-sp_selected_path_slice(Inkscape::Selection *selection, SPDesktop *desktop)
-{
-    sp_selected_path_boolop_ui(selection, desktop, bool_op_slice, SP_VERB_SELECTION_SLICE, _("Cut path"));
-}
-
-void
-sp_selected_path_slice_skip_undo(Inkscape::ObjectSet *set)
-{
-    sp_selected_path_boolop(set, bool_op_slice);
+    BoolOpErrors result = pathBoolOp(bool_op_slice, skip_undo, SP_VERB_SELECTION_SLICE, _("Cut path"));
+    return DONE == result;
 }
 
 // helper for printing error messages, regardless of whether we have a GUI or not
@@ -352,10 +307,36 @@ Geom::PathVector pathliv_to_pathvector(Path *pathliv){
 
 // boolean operations on the desktop
 // take the source paths from the file, do the operation, delete the originals and add the results
-BoolOpErrors sp_selected_path_boolop(Inkscape::ObjectSet * set, bool_op bop)
+BoolOpErrors Inkscape::ObjectSet::pathBoolOp(bool_op bop, const bool skip_undo, const unsigned int verb, const Glib::ustring description)
 {
-    SPDocument *doc = set->desktop()->getDocument();
-    std::vector<SPItem*> il(set->items().begin(), set->items().end());
+    if (nullptr != desktop() && !skip_undo) {
+        SPDocument *doc = desktop()->getDocument();
+        BoolOpErrors returnCode = ObjectSet::pathBoolOp(bop, true);
+        switch(returnCode) {
+        case ERR_TOO_LESS_PATHS_1:
+            boolop_display_error_message(desktop(), _("Select <b>at least 1 path</b> to perform a boolean union."));
+            break;
+        case ERR_TOO_LESS_PATHS_2:
+            boolop_display_error_message(desktop(), _("Select <b>at least 2 paths</b> to perform a boolean operation."));
+            break;
+        case ERR_NO_PATHS:
+            boolop_display_error_message(desktop(), _("One of the objects is <b>not a path</b>, cannot perform boolean operation."));
+            break;
+        case ERR_Z_ORDER:
+            boolop_display_error_message(desktop(), _("Unable to determine the <b>z-order</b> of the objects selected for difference, XOR, division, or path cut."));
+            break;
+        case DONE_NO_PATH:
+            DocumentUndo::done(doc, SP_VERB_NONE, description);
+            break;
+        case DONE:
+            DocumentUndo::done(doc, verb, description);
+            break;
+        }
+        return returnCode;
+    }
+
+    SPDocument *doc = document();
+    std::vector<SPItem*> il(items().begin(), items().end());
 
     // allow union on a single object for the purpose of removing self overlapse (svn log, revision 13334)
     if (il.size() < 2 && bop != bool_op_union) {
@@ -687,7 +668,7 @@ BoolOpErrors sp_selected_path_boolop(Inkscape::ObjectSet * set, bool_op bop)
         for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
             (*l)->deleteObject();
         }
-        set->clear();
+        clear();
 
         delete res;
         return DONE_NO_PATH;
@@ -703,7 +684,7 @@ BoolOpErrors sp_selected_path_boolop(Inkscape::ObjectSet * set, bool_op bop)
         }
     } else {
         // find out the bottom object
-        std::vector<Inkscape::XML::Node*> sorted(set->xmlNodes().begin(), set->xmlNodes().end());
+        std::vector<Inkscape::XML::Node*> sorted(xmlNodes().begin(), xmlNodes().end());
 
         sort(sorted.begin(),sorted.end(),sp_repr_compare_position_bool);
 
@@ -731,7 +712,7 @@ BoolOpErrors sp_selected_path_boolop(Inkscape::ObjectSet * set, bool_op bop)
     gchar *title = source->title();
     gchar *desc = source->desc();
     // remove source paths
-    set->clear();
+    clear();
     for (std::vector<SPItem*>::const_iterator l = il.begin(); l != il.end(); l++){
         // if this is the bottommost object,
         if (!strcmp(reinterpret_cast<SPObject *>(*l)->getRepr()->attribute("id"), id)) {
@@ -810,7 +791,7 @@ BoolOpErrors sp_selected_path_boolop(Inkscape::ObjectSet * set, bool_op bop)
             // move to the saved position
             repr->setPosition(pos > 0 ? pos : 0);
 
-            set->add(doc->getObjectByRepr(repr));
+            add(doc->getObjectByRepr(repr));
             Inkscape::GC::release(repr);
 
             delete resPath[i];
@@ -845,7 +826,7 @@ BoolOpErrors sp_selected_path_boolop(Inkscape::ObjectSet * set, bool_op bop)
         }
         repr->setPosition(pos > 0 ? pos : 0);
 
-        set->add(doc->getObjectByRepr(repr));
+        add(doc->getObjectByRepr(repr));
         Inkscape::GC::release(repr);
     }
 
@@ -856,36 +837,6 @@ BoolOpErrors sp_selected_path_boolop(Inkscape::ObjectSet * set, bool_op bop)
     delete res;
 
     return DONE;
-}
-
-void sp_selected_path_boolop_ui(Inkscape::Selection *selection, SPDesktop *desktop, bool_op bop, const unsigned int verb,
-                           const Glib::ustring description)
-{
-    SPDocument *doc = selection->desktop()->getDocument();
-    BoolOpErrors returnCode = sp_selected_path_boolop(selection, bop);
-    switch(returnCode) {
-        case ERR_TOO_LESS_PATHS_1:
-            boolop_display_error_message(desktop, _("Select <b>at least 1 path</b> to perform a boolean union."));
-            return;
-        case ERR_TOO_LESS_PATHS_2:
-            boolop_display_error_message(desktop, _("Select <b>at least 2 paths</b> to perform a boolean operation."));
-            return;
-        case ERR_NO_PATHS:
-            boolop_display_error_message(desktop, _("One of the objects is <b>not a path</b>, cannot perform boolean operation."));
-            return;
-        case ERR_Z_ORDER:
-            boolop_display_error_message(desktop, _("Unable to determine the <b>z-order</b> of the objects selected for difference, XOR, division, or path cut."));
-            return;
-        case DONE_NO_PATH:
-            DocumentUndo::done(doc, SP_VERB_NONE, description);
-            return;
-        case DONE:
-            DocumentUndo::done(doc, verb, description);
-            return;
-        case DONE_NO_ACTION:
-        default:
-            return;
-    }
 }
 
 static

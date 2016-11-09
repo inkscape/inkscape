@@ -33,6 +33,29 @@
 #include "sp-item-group.h"
 #include "desktop.h"
 #include "document.h"
+#include "verbs.h"
+
+enum BoolOpErrors {
+    DONE,
+    DONE_NO_PATH,
+    DONE_NO_ACTION,
+    ERR_TOO_LESS_PATHS_1,
+    ERR_TOO_LESS_PATHS_2,
+    ERR_NO_PATHS,
+    ERR_Z_ORDER
+};
+
+// boolean operation
+enum bool_op
+{
+  bool_op_union,		// A OR B
+  bool_op_inters,		// A AND B
+  bool_op_diff,			// A \ B
+  bool_op_symdiff,  // A XOR B
+  bool_op_cut,      // coupure (pleines)
+  bool_op_slice     // coupure (contour)
+};
+typedef enum bool_op BooleanOp;
 
 class SPBox3D;
 class Persp3D;
@@ -376,7 +399,16 @@ public:
     void toCurves(bool skip_undo = false);
     void toLPEItems();
     void pathReverse();
-    
+
+    // Boolean operations
+    // in splivarot.cpp
+    bool pathUnion(const bool skip_undo = false);
+    bool pathIntersect(const bool skip_undo = false);
+    bool pathDiff(const bool skip_undo = false);
+    bool pathSymDiff(const bool skip_undo = false);
+    bool pathCut(const bool skip_undo = false);
+    bool pathSlice(const bool skip_undo = false);
+
     //Other path operations
     //in selection-chemistry.cpp
     void toMarker(bool apply = true);
@@ -437,6 +469,9 @@ protected:
     GC::soft_ptr<SPDocument> _document;
     std::list<SPBox3D *> _3dboxes;
     std::unordered_map<SPObject*, sigc::connection> _releaseConnections;
+
+private:
+    BoolOpErrors pathBoolOp(bool_op bop, const bool skip_undo, const unsigned int verb = SP_VERB_NONE, const Glib::ustring description = "");
 
 };
 
