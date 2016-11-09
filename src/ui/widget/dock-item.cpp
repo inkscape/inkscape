@@ -423,6 +423,8 @@ void
 DockItem::_onStateChanged(State /*prev_state*/, State new_state)
 {
     _window = getWindow();
+    if(_window)
+        _window->set_type_hint(Gdk::WINDOW_TYPE_HINT_NORMAL);
 
     if (new_state == FLOATING_STATE && _window) {
         _window->signal_hide().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onHideWindow));
