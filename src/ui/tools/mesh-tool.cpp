@@ -561,8 +561,25 @@ bool MeshTool::root_handler(GdkEvent* event) {
 
             dragging = true;
 
+            // Check if object already has mesh... if it does, don't create new mesh with click-drag.
+            bool has_mesh = false;
+            if (!selection->isEmpty()) {
+                SPStyle *style = selection->items().front()->style;
+                if (style) {
+                    Inkscape::PaintTarget fill_or_stroke =
+                        (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ?
+                        Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
+                    SPPaintServer *server =
+                        (fill_or_stroke == Inkscape::FOR_FILL) ?
+                        style->getFillPaintServer():
+                        style->getStrokePaintServer();
+                    if (server && SP_IS_MESHGRADIENT(server)) 
+                        has_mesh = true;
+                }
+            }
+
             Geom::Point button_dt = desktop->w2d(button_w);
-            if (event->button.state & GDK_SHIFT_MASK) {
+            if (event->button.state & GDK_SHIFT_MASK || has_mesh) {
                 Inkscape::Rubberband::get(desktop)->start(desktop, button_dt);
             } else {
                 // remember clicked item, disregarding groups, honoring Alt; do nothing with Crtl to
