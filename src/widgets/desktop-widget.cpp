@@ -313,13 +313,6 @@ static void canvas_tbl_size_allocate(GtkWidget    * widget,
 {
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data); 
     sp_desktop_widget_update_rulers(dtw);
-    
-    GtkWidget* parent = gtk_widget_get_parent(widget);
-    if(GTK_IS_PANED(parent)) {
-        GtkPaned *paned = GTK_PANED(parent);
-        // Could use gtk paned property 'max-position' here
-        gtk_paned_set_position(paned, 10000);
-    }
 }
 
 /**

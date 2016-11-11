@@ -256,7 +256,7 @@ void Dock::_onLayoutChanged()
             _paned->get_child1()->set_size_request(-1, -1);
             _scrolled_window->set_size_request(_default_empty_width);
         }
-        getParentPaned()->set_position(INT_MAX);
+        getParentPaned()->set_position(10000);
 
     } else {
         // unset any forced size requests
