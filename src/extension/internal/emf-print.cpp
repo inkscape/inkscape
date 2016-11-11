@@ -1064,7 +1064,7 @@ void  PrintEmf::do_clip_if_present(SPStyle const *style){
                         g_error("Fatal programming error in PrintEmf::image at U_EMRSAVEDC_set");
                     }
                     (void) draw_pathv_to_EMF(combined_pathvector, tf);
-                    rec = U_EMRSELECTCLIPPATH_set(U_RGN_OR);
+                    rec = U_EMRSELECTCLIPPATH_set(U_RGN_COPY);
                     if (!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)) {
                         g_error("Fatal programming error in PrintEmf::do_clip_if_present at U_EMRSELECTCLIPPATH_set");
                     }
