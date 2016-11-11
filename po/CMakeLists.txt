@@ -27,4 +27,20 @@ endif()
 
 add_dependencies(inkscape inkscape_desktop)
 
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/inkscape.pot 
+    COMMAND intltool-update --pot && mv untitled.pot ${CMAKE_CURRENT_SOURCE_DIR}/inkscape.pot
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/inkscape.pot PROPERTIES GENERATED TRUE)
+add_custom_target(inkscape_pot ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/inkscape.pot)
+add_dependencies(inkscape_pot filters_svg_h)
+add_dependencies(inkscape_pot palettes_h)
+add_dependencies(inkscape_pot patterns_svg_h)
+add_dependencies(inkscape_pot symbols_h)
+add_dependencies(inkscape_pot templates_h)
+
+
+
+
 endif()

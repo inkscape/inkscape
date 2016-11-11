@@ -936,7 +936,7 @@ CloneTiler::CloneTiler () :
             auto hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, VB_MARGIN);
             gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
             gtk_box_pack_start (GTK_BOX (mainbox), hb, FALSE, FALSE, 0);
-            GtkWidget *l = gtk_label_new(_(""));
+            GtkWidget *l = gtk_label_new("");
             gtk_label_set_markup (GTK_LABEL(l), _("Apply to tiled clones:"));
             gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
         }

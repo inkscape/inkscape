@@ -186,10 +186,10 @@ endif()
 # -----------------------------------------------------------------------------
 # Installation
 # -----------------------------------------------------------------------------
-if(NOT WIN32)
+#if(NOT WIN32)
   # this should probably be done no matter what the platform is, just set SHARE_INSTALL first
   add_subdirectory(share)
-endif()
+#endif()
 	
 include(CMakeScripts/Install.cmake)
 
