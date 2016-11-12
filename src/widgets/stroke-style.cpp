@@ -940,7 +940,7 @@ StrokeStyle::updateLine()
     SPStyle * const style = object->style;
 
     /* Markers */
-    updateAllMarkers(objects); // FIXME: make this desktop query too
+    updateAllMarkers(objects, true); // FIXME: make this desktop query too
 
     /* Dash */
     setDashSelectorFromStyle(dashSelector, style); // FIXME: make this desktop query too
@@ -1192,7 +1192,7 @@ StrokeStyle::setPaintOrderButtons(Gtk::ToggleButton *active)
  * that marker.
  */
 void
-StrokeStyle::updateAllMarkers(std::vector<SPItem*> const &objects)
+StrokeStyle::updateAllMarkers(std::vector<SPItem*> const &objects, bool skip_undo)
 {
     struct { MarkerComboBox *key; int loc; } const keyloc[] = {
             { startMarkerCombo, SP_MARKER_LOC_START },
@@ -1246,9 +1246,11 @@ StrokeStyle::updateAllMarkers(std::vector<SPItem*> const &objects)
             if (update) {
                 setMarkerColor(marker, combo->get_loc(), SP_ITEM(object));
 
-                SPDocument *document = desktop->getDocument();
-                DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
+                if (!skip_undo) {
+                    SPDocument *document = desktop->getDocument();
+                    DocumentUndo::maybeDone(document, "UaM", SP_VERB_DIALOG_FILL_STROKE,
                                    _("Set marker color"));
+                }
             }
 
         } else {
