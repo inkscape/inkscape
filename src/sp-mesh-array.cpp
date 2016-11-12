@@ -2761,6 +2761,15 @@ void SPMeshNodeArray::transform(Geom::Affine const &m) {
 // Transform mesh to fill box. Return true if mesh transformed.
 bool SPMeshNodeArray::fill_box(Geom::OptRect &box) {
 
+    // If gradientTransfor is set (as happens when an object is transformed
+    // with the "optimized" preferences set true), we need to remove it.
+    if (mg->gradientTransform_set) {
+        Geom::Affine gt = mg->gradientTransform;
+        transform( gt );
+        mg->gradientTransform_set = false;
+        mg->gradientTransform.setIdentity();
+    }
+
     SPCurve *outline = outline_path();
     Geom::OptRect mesh_bbox = outline->get_pathvector().boundsExact();
     outline->unref();
