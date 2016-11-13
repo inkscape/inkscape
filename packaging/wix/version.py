@@ -1,7 +1,11 @@
 #!/usr/bin/python
 
+from __future__ import print_function
+
 import os
 import struct
+
+from helpers import get_inkscape_dist_dir
 
 version = ''
 versionstr = ''
@@ -27,7 +31,10 @@ def is64bitArchitecture(filename):
 			return True
 	return False
 
-if is64bitArchitecture('..\..\inkscape\inkscape.exe'):
+#get directory containing the inkscape distribution files
+inkscape_dist_dir = get_inkscape_dist_dir()
+
+if is64bitArchitecture(inkscape_dist_dir + '\\inkscape.exe'):
 	architecture = '-x64'
 else:
 	architecture = ''
@@ -44,7 +51,7 @@ with open('..\..\src\inkscape.rc', 'r') as rc:
 			versionstr = versionstr.replace('"', '')
 			versionstr = versionstr.replace("'", "")
 			# version = version.replace("+", "_")
-			print versionstr + architecture
+			print(versionstr + architecture)
 		if 'versioninfo' in line.lower():
 			isversioninfo = True
 		if 'begin' in line.lower():

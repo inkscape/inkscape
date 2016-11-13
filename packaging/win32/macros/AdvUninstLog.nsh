@@ -425,7 +425,7 @@
         ${uninstall.log_install} "${UNLOG_PART}${ID}" "${EXCLU_LIST}" "$OUTDIR"
         ${uninstall.log_mergeID} "${UNLOG_PART}${ID}"
 
-   !undef ID ${__LINE__}
+   !undef ID
 
   !verbose pop
 !macroend

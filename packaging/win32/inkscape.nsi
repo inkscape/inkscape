@@ -2,13 +2,13 @@
 ; ==========================
 ; This file generates the Inkscape installer, which is currently the
 ; preferred deployment method on Windows.
-; 1. Install NSIS 2.46 or later on Windows (2.45 has a !searchparse bug
-;    which breaks it and earlier doesn't support Windows 7 properly, and
-;    cross-compilation probably won't work due to some !system magic)
+; 1. Install NSIS 3.0 or later (http://nsis.sourceforge.net/)
 ; 2. Compile Inkscape (http://wiki.inkscape.org/wiki/index.php/Win32Port)
-; 3. Compile this file with NSIS. There should be no need to set version
-;    numbers in this file as it gets them from the Bazaar branch info and
-;    ..\..\src\inkscape-version.cpp. However, if the version number comes
+; 3. Compile this file with NSIS.
+;
+;    There should be no need to set version  numbers in this file as it
+;    gets them from the Bazaar branch info and inkscape.rc or
+;    inkscape-version.cpp respectively. However, if the version number comes
 ;    out wrong or this script didn't compile properly then you can define
 ;    INKSCAPE_VERSION by uncommenting the next line and setting the correct
 ;    value:
@@ -18,47 +18,48 @@
        !define RELEASE_REVISION 1
 
 ; There should never be any need for packagers to touch anything below
-; this line.  That's my job - Chris Morgan
+; this line. Otherwise file a bug or write to the mailing list.
+
+
+; Define this to make it build quickly, not including any of the files or code in the sections,
+; for quick testing of features of the installer and development thereof.
+;!define DUMMYINSTALL
+
 
 ; Installer code {{{1
-; Compression and admin requirement {{{2
+; Unicode, compression and admin requirement {{{2
+Unicode true
 SetCompressor /SOLID lzma
 SetCompressorDictSize 32
 RequestExecutionLevel admin
 
 ; Include required files {{{2
-!include RequireLatestNSIS.nsh
-!include ifexist.nsh
-!include VersionCompleteXXXX.nsh
 !include LogicLib.nsh
 !include Sections.nsh
-
-!macro !redef VAR VAL
-  !define _!redef_${VAR} `${VAL}`
-  !ifdef ${VAR}
-    !undef ${VAR}
-  !endif
-  !define ${VAR} `${VAL}`
-  !undef _!redef_${VAR}
-!macroend
-!define !redef `!insertmacro !redef`
+!include macros\ifexist.nsh
+!include macros\RequireLatestNSIS.nsh
+!include macros\SHMessageBoxCheck.nsh
+!include macros\VersionCompleteXXXX.nsh
+!include languages\_language_lists.nsh
 
 ; Advanced Uninstall Log {{{3
 ; We're abusing this script terribly and it's time to fix the broken uninstaller.
 ; However, for the moment, this is what we're using.
 !define INSTDIR_REG_ROOT HKLM
 !define INSTDIR_REG_KEY "${UNINST_KEY}"
-!include AdvUninstLog.nsh
-!insertmacro INTERACTIVE_UNINSTALL
+!include macros\AdvUninstLog.nsh
+;!insertmacro INTERACTIVE_UNINSTALL ; not needed anymore since we have our own uninstall logic; conflicts with other macros
 
 ; Initialise NSIS plug-ins {{{3
-; The plugins used are md5dll and messagebox
-!addplugindir .
+; The plugin used is md5dll
+!addplugindir plugins
 
 ; FileFunc bits and pieces {{{3
 !include FileFunc.nsh
 !insertmacro GetParameters
+!insertmacro GetSize
 !insertmacro GetOptions
+!insertmacro Locate
 !insertmacro un.GetParent
 
 ; User interface {{{3
@@ -70,6 +71,7 @@ RequestExecutionLevel admin
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP header.bmp
 !define MUI_WELCOMEFINISHPAGE_BITMAP welcomefinish.bmp
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP welcomefinish.bmp
 !define MUI_COMPONENTSPAGE_SMALLDESC
 
 ; Pages {{{4
@@ -84,10 +86,10 @@ LicenseForceSelection off
 !insertmacro MUI_PAGE_LICENSE ..\..\Copying
 ; Components page {{{6
 !insertmacro MUI_PAGE_COMPONENTS
-; InstType "$(Full)"
-; InstType "$(Optimal)"
-; InstType "$(Minimal)"
-; Directory page {{{6
+InstType "$(Full)"
+InstType "$(Optimal)"
+InstType "$(Minimal)"
+;Directory page {{{6
 !insertmacro MUI_PAGE_DIRECTORY
 ; Instfiles page {{{6
 !insertmacro MUI_PAGE_INSTFILES
@@ -103,6 +105,7 @@ ShowUninstDetails hide
 !insertmacro MUI_UNPAGE_FINISH
 
 ; Localization {{{3
+!define LANGFILE_LANGDLL_FMT "%ENGNAME% / %NATIVENAME%" ; include English name in language selection dialog
 ; See also the "Languages sections" SectionGroup lower down.
 !insertmacro MUI_RESERVEFILE_LANGDLL
 ;TODO: check if `!insertmacro LANGFILE "English" "English"`-style lines are needed (don't think it should be due to MUI_LANGUAGE)
@@ -111,46 +114,47 @@ ShowUninstDetails hide
 !verbose 3
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro LANGFILE_INCLUDE "languages\English.nsh"
-!macro INKLANGFILE _LANG
-  !insertmacro MUI_LANGUAGE "${_LANG}"
-  !insertmacro LANGFILE_INCLUDE_WITHDEFAULT "languages\${_LANG}.nsh" "languages\English.nsh"
+!macro INKLANGFILE  LocaleName LocaleID
+  !insertmacro MUI_LANGUAGE "${LocaleName}"
+  !insertmacro LANGFILE_INCLUDE_WITHDEFAULT "languages\${LocaleName}.nsh" "languages\English.nsh"
 !macroend
-!insertmacro INKLANGFILE Breton
-!insertmacro INKLANGFILE Catalan
-!insertmacro INKLANGFILE Czech
-!insertmacro INKLANGFILE Danish
-!insertmacro INKLANGFILE Dutch
-!insertmacro INKLANGFILE Finnish
-!insertmacro INKLANGFILE French
-!insertmacro INKLANGFILE Galician
-!insertmacro INKLANGFILE German
-!insertmacro INKLANGFILE Greek
-!insertmacro INKLANGFILE Indonesian
-!insertmacro INKLANGFILE Icelandic
-!insertmacro INKLANGFILE Italian
-!insertmacro INKLANGFILE Japanese
-!insertmacro INKLANGFILE Polish
-!insertmacro INKLANGFILE Portuguese
-!insertmacro INKLANGFILE PortugueseBR
-!insertmacro INKLANGFILE Romanian
-!insertmacro INKLANGFILE Russian
-!insertmacro INKLANGFILE Slovak
-!insertmacro INKLANGFILE Slovenian
-!insertmacro INKLANGFILE Spanish
-!insertmacro INKLANGFILE SimpChinese
-!insertmacro INKLANGFILE TradChinese
-!insertmacro INKLANGFILE Ukrainian
+; include list of available installer translations from /languages/_language_lists.nsh
+!insertmacro INSTALLER_TRANSLATIONS INKLANGFILE
 !verbose pop
 
 ReserveFile inkscape.nsi.uninstall
-ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
+ReserveFile /plugin UserInfo.dll
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
 ; #######################################
 ; SETTINGS
 ; #######################################
 
+; Find inkscape distribution directory (uncomment line below to manually define)
+;!define INKSCAPE_DIST_DIR ..\..\inkscape
+!ifdef INKSCAPE_DIST_DIR
+  ${!ifnexist} ${INKSCAPE_DIST_DIR}\inkscape.exe
+    !error "inkscape.exe not found in INKSCAPE_DIST_DIR ('${INKSCAPE_DIST_DIR}')"
+!endif
+!ifndef INKSCAPE_DIST_DIR
+  ${!defineifexist} ${INKSCAPE_DIST_DIR}\inkscape.exe INKSCAPE_DIST_DIR ..\..\inkscape ; btool default
+!endif
+!ifndef INKSCAPE_DIST_DIR
+  ${!defineifexist} ..\..\build\inkscape\inkscape.exe INKSCAPE_DIST_DIR ..\..\build\inkscape ; cmake default
+!endif
+!ifndef INKSCAPE_DIST_DIR
+  !error "Couldn't find inkscape distribution directory in neither ..\..\inkscape nor ..\..\build\inkscape"
+!endif
+!echo `Bundling compiled Inkscape files from ${INKSCAPE_DIST_DIR}`
+
 ; Product details (version, name, registry keys etc.) {{{2
+; Try to find version number in inkscape.rc first (e.g. 0.92pre1) {{{3
+!ifndef INKSCAPE_VERSION
+  !searchparse /noerrors /file ..\..\src\inkscape.rc `VALUE "ProductVersion", "` INKSCAPE_VERSION `"`
+  !ifdef INKSCAPE_VERSION
+    !echo `Got version number from ..\..\src\inkscape.rc: ${INKSCAPE_VERSION}`
+  !endif
+!endif
 ; Find the version number in inkscape-version.cpp (e.g. 0.47+devel) {{{3
 !ifndef INKSCAPE_VERSION
   ; Official release format (no newlines)
@@ -159,14 +163,28 @@ ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"
     ; Other format; sorry, it has to be done in two steps.
     !searchparse /noerrors /file ..\..\src\inkscape-version.cpp `char const *version_string = "` INKSCAPE_VERSION `";`
     !searchparse /noerrors `${INKSCAPE_VERSION}` `` INKSCAPE_VERSION ` r` BZR_REVISION
-    !ifndef INKSCAPE_VERSION
-      !error "INKSCAPE_VERSION not defined and unable to get version number from ..\..\src\inkscape-version.cpp!"
-    !endif
+  !endif
+  !ifdef INKSCAPE_VERSION
+    !echo `Got version number from ..\..\src\inkscape-version.cpp: ${INKSCAPE_VERSION}`
   !endif
 !endif
-!echo `Got version number from ..\..\src\inkscape-version.cpp: ${INKSCAPE_VERSION}`
+!ifndef INKSCAPE_VERSION
+  !error "INKSCAPE_VERSION not defined and unable to get version number from either ..\..\src\inkscape.rc or ..\..\src\inkscape-version.cpp!"
+!endif
 !define FILENAME Inkscape-${INKSCAPE_VERSION}
 !define BrandingText `Inkscape ${INKSCAPE_VERSION}`
+
+; Detect architecture of the build
+${!ifexist} ${INKSCAPE_DIST_DIR}\gspawn-win32-helper.exe
+  !define BITNESS 32
+!endif
+${!ifexist} ${INKSCAPE_DIST_DIR}\gspawn-win64-helper.exe
+  !define BITNESS 64
+  !define /redef FILENAME `${FILENAME}-x64` ; add architecture to filename for 64-bit builds
+!endif
+!ifndef BITNESS
+  !error "Could not detect architecture (BITNESS) of the Inkscape build"
+!endif
 
 ; Check for the Bazaar revision number for lp:inkscape {{{3
 ${!ifexist} ..\..\.bzr\branch\last-revision
@@ -196,31 +214,30 @@ ${!ifexist} ..\..\.bzr\branch\last-revision
 
 ; Handle display version number and complete X.X version numbers into X.X.X.X {{{3
 !ifdef DEVEL & BZR_REVISION
-  ${!redef} FILENAME `${FILENAME}-r${BZR_REVISION}`
-  ${!redef} BrandingText `${BrandingText} r${BZR_REVISION}`
+  !define /redef FILENAME `${FILENAME}-r${BZR_REVISION}`
+  !define /redef BrandingText `${BrandingText} r${BZR_REVISION}`
   !define VERSION_X.X.X.X_REVISION ${BZR_REVISION}
 ; Handle the installer revision number {{{4
 !else ifdef RELEASE_REVISION
-  ${!redef} FILENAME `${FILENAME}-${RELEASE_REVISION}`
+  !define /redef FILENAME `${FILENAME}-${RELEASE_REVISION}`
   ; If we wanted the branding text to be like "Inkscape 0.48pre1 r9505" this'd do it.
   ;!ifdef BZR_REVISION
-  ;  ${!redef} BrandingText `${BrandingText} r${BZR_REVISION}`
+  ;  !define /redef BrandingText `${BrandingText} r${BZR_REVISION}`
   ;!endif
   !if `${RELEASE_REVISION}` != `1`
-    ${!redef} BrandingText `${BrandingText}, revision ${RELEASE_REVISION}`
+    !define /redef BrandingText `${BrandingText}, revision ${RELEASE_REVISION}`
   !endif
   !define VERSION_X.X.X.X_REVISION ${RELEASE_REVISION}
 !else
   !define VERSION_X.X.X.X_REVISION 0
 !endif
 
-${VersionCompleteXXXN} ${INKSCAPE_VERSION_NUMBER} VERSION_X.X.X.X ${VERSION_X.X.X.X_REVISION}
+${VersionCompleteXXXRevision} ${INKSCAPE_VERSION_NUMBER} VERSION_X.X.X.X ${VERSION_X.X.X.X_REVISION}
 
 ; Product definitions {{{3
 !define PRODUCT_NAME "Inkscape" ; TODO: fix up the language files to not use this and kill this line
 !define INSTDIR_KEY "Software\Microsoft\Windows\CurrentVersion\App Paths\inkscape.exe"
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Inkscape"
-;!define DUMMYINSTALL ; Define this to make it build quickly, not including any of the files or code in the sections, for quick testing of features of the installer and development thereof.
 !define _FILENAME ${FILENAME}.exe
 !undef FILENAME
 !define FILENAME ${_FILENAME}
@@ -231,19 +248,22 @@ Name              `Inkscape`
 Caption           `Inkscape - $(CaptionDescription)`
 BrandingText      `${BrandingText}`
 OutFile           `${FILENAME}`
-InstallDir        "$PROGRAMFILES\Inkscape"
+!if ${BITNESS} = 32
+  InstallDir        "$PROGRAMFILES32\Inkscape"
+!else
+  InstallDir        "$PROGRAMFILES64\Inkscape"
+!endif
 InstallDirRegKey  HKLM "${INSTDIR_KEY}" ""
 
 ; Version information {{{3
 VIProductVersion ${VERSION_X.X.X.X}
-VIAddVersionKey ProductName Inkscape
-VIAddVersionKey Comments "Licensed under the GNU GPL"
-VIAddVersionKey CompanyName inkscape.org
-VIAddVersionKey LegalCopyright "© 2016 Inkscape"
-VIAddVersionKey FileDescription Inkscape
-VIAddVersionKey FileVersion ${VERSION_X.X.X.X}
-VIAddVersionKey ProductVersion ${VERSION_X.X.X.X}
-VIAddVersionKey InternalName Inkscape
+VIAddVersionKey /LANG=0 ProductName "Inkscape"
+VIAddVersionKey /LANG=0 Comments "Licensed under the GNU GPL"
+VIAddVersionKey /LANG=0 CompanyName "Inkscape Project"
+VIAddVersionKey /LANG=0 LegalCopyright "© 2016 Inkscape Project"
+VIAddVersionKey /LANG=0 FileDescription "Inkscape Vector Graphics Editor"
+VIAddVersionKey /LANG=0 FileVersion ${VERSION_X.X.X.X}
+VIAddVersionKey /LANG=0 ProductVersion ${VERSION_X.X.X.X}
 
 ; Variables {{{2
 Var askMultiUser
@@ -266,8 +286,15 @@ Var CMDARGS
     ReadRegStr $2 HKU "$1\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" AppData
     ${IfThen} $2 == "" ${|} ${Continue} ${|}
     DetailPrint "Removing $2\Inkscape"
+
     Delete $2\Inkscape\preferences.xml
     Delete $2\Inkscape\extension-errors.log
+
+    RMDir  $2\Inkscape\extensions
+    RMDir  $2\Inkscape\icons
+    RMDir  $2\Inkscape\keys
+    RMDir  $2\Inkscape\palettes
+    RMDir  $2\Inkscape\templates
     RMDir  $2\Inkscape
   ${Loop}
 !macroend
@@ -291,72 +318,77 @@ Section -removeInkscape ; Hidden, mandatory section to clean a previous installa
 !endif
 SectionEnd ; -removeInkscape }}}
 
-Section $(Core) SecCore ; Mandatory Inkscape core files section {{{
+Section "$(Core)" SecCore ; Mandatory Inkscape core files section {{{
   SectionIn 1 2 3 RO
 !ifndef DUMMYINSTALL
   DetailPrint "Installing Inkscape core files..."
+
   SetOutPath $INSTDIR
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  SetOverwrite on
-  SetAutoClose false
+  File           /a    ${INKSCAPE_DIST_DIR}\ink*.exe
+  File /nonfatal /a    ${INKSCAPE_DIST_DIR}\inkscape.com ; not created as of Inkscape 0.92pre1
+  File           /a    ${INKSCAPE_DIST_DIR}\AUTHORS
+  File           /a    ${INKSCAPE_DIST_DIR}\COPYING
+  File           /a    ${INKSCAPE_DIST_DIR}\GPL2.txt
+  File           /a    ${INKSCAPE_DIST_DIR}\GPL3.txt
+  File           /a    ${INKSCAPE_DIST_DIR}\LGPL2.1.txt
+  File           /a    ${INKSCAPE_DIST_DIR}\NEWS
+  File           /a    ${INKSCAPE_DIST_DIR}\gspawn-win${BITNESS}-helper.exe
+  File           /a    ${INKSCAPE_DIST_DIR}\gspawn-win${BITNESS}-helper-console.exe
+  File           /a    ${INKSCAPE_DIST_DIR}\README
+  File           /a    ${INKSCAPE_DIST_DIR}\TRANSLATORS
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
-  File           /a    ..\..\inkscape\ink*.exe
-  File           /a    ..\..\inkscape\inkscape.com
-  File           /a    ..\..\inkscape\AUTHORS
-  File           /a    ..\..\inkscape\COPYING
-  File           /a    ..\..\inkscape\COPYING.LIB
-  File           /a    ..\..\inkscape\NEWS
-  File           /a    ..\..\inkscape\gspawn-win32-helper.exe
-  File           /a    ..\..\inkscape\gspawn-win32-helper-console.exe
-  File /nonfatal /a    ..\..\inkscape\HACKING.txt
-  File           /a    ..\..\inkscape\README
-  File /nonfatal /a    ..\..\inkscape\README.txt
-  File           /a    ..\..\inkscape\TRANSLATORS
-  File /nonfatal /a /r ..\..\inkscape\data
-  File /nonfatal /a /r ..\..\inkscape\doc
-  File /nonfatal /a /r ..\..\inkscape\plugins
-  File /nonfatal /a /r /x *.??*.???* /x examples /x tutorials ..\..\inkscape\share
-  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-  ; this files are added because it slips through the filter
-  SetOutPath $INSTDIR\share\branding
+  SetOutPath $INSTDIR\data
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /a ..\..\inkscape\share\branding\draw-freely.ru.svg
+  File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\data\*.*
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-  SetOutPath $INSTDIR\share\icons
+  SetOutPath $INSTDIR\doc
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /a ..\..\inkscape\share\icons\inkscape.file.png
-  File /a ..\..\inkscape\share\icons\inkscape.file.svg
+  File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\doc\*.*
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-  SetOutPath $INSTDIR\share\extensions
+  SetOutPath $INSTDIR\plugins
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /a ..\..\inkscape\share\extensions\inkscape.extension.rng
-  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-  SetOutPath $INSTDIR\share\extensions\test
-  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /a ..\..\inkscape\share\extensions\test\inkwebjs-move.test.svg
-  File /a ..\..\inkscape\share\extensions\test\test_template.py.txt
+  File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\plugins\*.*
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\modules
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /nonfatal /a /r ..\..\inkscape\modules\*.*
+  File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\modules\*.*
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-  SetOutPath $INSTDIR\python
+
+  ;exclude everything from /share for which we have separate sections below
+  SetOutPath $INSTDIR\share
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /nonfatal /a /r ..\..\inkscape\python\*.*
+  File /nonfatal /a /r /x *.??*.???* /x examples /x extensions /x locale /x tutorials ${INKSCAPE_DIST_DIR}\share\*.*
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+  ; this files are added because it slips through the filter
+  SetOutPath $INSTDIR\share\icons
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /a ${INKSCAPE_DIST_DIR}\share\icons\inkscape.file.png
+  File /a ${INKSCAPE_DIST_DIR}\share\icons\inkscape.file.svg
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+  SetOutPath $INSTDIR\share\templates
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /a ${INKSCAPE_DIST_DIR}\share\templates\default.en_US.svg
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 !endif
 SectionEnd ; SecCore }}}
 
-Section $(GTKFiles) SecGTK ; Mandatory GTK files section {{{
+Section "$(GTKFiles)" SecGTK ; Mandatory GTK files section {{{
   SectionIn 1 2 3 RO
 !ifndef DUMMYINSTALL
   DetailPrint "Installing GTK files..."
   SetOutPath $INSTDIR
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  SetOverwrite on
-  File /a /r ..\..\inkscape\*.dll
-  File /a /r /x locale ..\..\inkscape\lib
-  File /a /r ..\..\inkscape\etc
+  File /a /r /x python ${INKSCAPE_DIST_DIR}\*.dll
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+  SetOutPath $INSTDIR\lib
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /a /r /x locale /x aspell-0.60 ${INKSCAPE_DIST_DIR}\lib\*.*
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+  SetOutPath $INSTDIR\etc
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /a /r ${INKSCAPE_DIST_DIR}\etc\*.*
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 !endif
 SectionEnd ; SecGTK }}}
@@ -368,7 +400,7 @@ Section -SetCurrentUserOnly ; Set the installation to "current user" only by def
 !endif
 SectionEnd ; -SetCurrentUserOnly }}}
 
-Section $(Alluser) SecAlluser ; Then offer the user the option to make it global (default) {{{
+Section "$(Alluser)" SecAlluser ; Then offer the user the option to make it global (default) {{{
   SectionIn 1 2 3
 !ifndef DUMMYINSTALL
   ; disable this option in Win95/Win98/WinME
@@ -378,21 +410,36 @@ Section $(Alluser) SecAlluser ; Then offer the user the option to make it global
 !endif
 SectionEnd ; SecAllUser }}}
 
+Section /o "$(DeletePrefs)" SecPrefs ; Delete user preferences before installation {{{
+!ifndef DUMMYINSTALL
+  !insertmacro delprefs
+!endif
+SectionEnd ; SecPrefs }}}
+
 SectionGroup "$(Shortcuts)" SecShortcuts ; Create shortcuts for the user {{{
 
-Section $(Desktop) SecDesktop ; Desktop shortcut {{{
+Section "$(Startmenu)" SecStartMenu ; Start menu shortcut {{{
+  SectionIn 1 2 3
+!ifndef DUMMYINSTALL
+  CreateShortcut $SMPROGRAMS\Inkscape.lnk $INSTDIR\inkscape.exe
+!endif
+SectionEnd ; SecStartMenu }}}
+
+Section "$(Desktop)" SecDesktop ; Desktop shortcut {{{
+  SectionIn 1 2 3
 !ifndef DUMMYINSTALL
   CreateShortCut $DESKTOP\Inkscape.lnk $INSTDIR\inkscape.exe
 !endif
 SectionEnd ; SecDesktop }}}
 
-Section $(Quicklaunch) SecQuickLaunch ; Quick Launch shortcut {{{
+Section "$(Quicklaunch)" SecQuickLaunch ; Quick Launch shortcut {{{
+  SectionIn 1 2 3
 !ifndef DUMMYINSTALL
   ${IfThen} $QUICKLAUNCH != $TEMP ${|} CreateShortCut $QUICKLAUNCH\Inkscape.lnk $INSTDIR\inkscape.exe ${|}
 !endif
 SectionEnd ; SecQuickLaunch }}}
 
-Section $(SVGWriter) SecSVGWriter ; Register Inkscape as the default application for .svg[z] {{{
+Section "$(SVGWriter)" SecSVGWriter ; Register Inkscape as the default application for .svg[z] {{{
   SectionIn 1 2 3
 !ifndef DUMMYINSTALL
   DetailPrint "Associating SVG files with Inkscape"
@@ -410,7 +457,7 @@ Section $(SVGWriter) SecSVGWriter ; Register Inkscape as the default application
 !endif
 SectionEnd ; SecSVGWriter }}}
 
-Section $(ContextMenu) SecContextMenu ; Put Inkscape in the .svg[z] context menus (but not as default) {{{
+Section "$(ContextMenu)" SecContextMenu ; Put Inkscape in the .svg[z] context menus (but not as default) {{{
   SectionIn 1 2 3
 !ifndef DUMMYINSTALL
   DetailPrint "Adding Inkscape to SVG file context menu"
@@ -434,152 +481,122 @@ SectionEnd ; SecContextMenu }}}
 
 SectionGroupEnd ; SecShortcuts }}}
 
-Section /o "$(DeletePrefs)" SecPrefs ; Delete user preferences before installation {{{
+Section "$(Python)" SecPython ; Python distribution {{{
+  SectionIn 1 2
 !ifndef DUMMYINSTALL
-  !insertmacro delprefs
+  DetailPrint "Installing Python..."
+  SetOutPath $INSTDIR\python
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\python\*.*
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 !endif
-SectionEnd ; SecPrefs }}}
+SectionEnd ; SecPython }}}
 
 SectionGroup "$(Addfiles)" SecAddfiles ; Additional files {{{
 
-Section $(Examples) SecExamples ; Install example SVG files {{{
+Section "$(Extensions)" SecExtensions ; Extensions {{{
   SectionIn 1 2
 !ifndef DUMMYINSTALL
-  SetOutPath $INSTDIR\share
+  DetailPrint "Installing extensions..."
+  SetOutPath $INSTDIR\share\extensions
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /nonfatal /a /r /x *.??*.???* ..\..\inkscape\share\examples
+  File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\share\extensions\*.*
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+!endif
+SectionEnd ; SecExtensions }}}
+
+Section "$(Examples)" SecExamples ; Install example SVG files {{{
+  SectionIn 1 2
+!ifndef DUMMYINSTALL
+  DetailPrint "Installing examples..."
+  SetOutPath $INSTDIR\share\examples
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /nonfatal /a /r /x *.??*.???* ${INKSCAPE_DIST_DIR}\share\examples\*.*
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 !endif
 SectionEnd ; SecExamples }}}
 
-Section $(Tutorials) SecTutorials ; Install tutorials {{{
+Section "$(Tutorials)" SecTutorials ; Install tutorials {{{
   SectionIn 1 2
 !ifndef DUMMYINSTALL
-  SetOutPath $INSTDIR\share
+  DetailPrint "Installing tutorials..."
+  SetOutPath $INSTDIR\share\tutorials
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /nonfatal /a /r /x *.??*.???* ..\..\inkscape\share\tutorials
+  File /nonfatal /a /r /x *.??*.???* ${INKSCAPE_DIST_DIR}\share\tutorials\*.*
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 !endif
 SectionEnd ; SecTutorials }}}
+
+Section "$(Dictionaries)" SecDictionaries ; Aspell dictionaries {{{
+  SectionIn 1 2
+!ifndef DUMMYINSTALL
+  DetailPrint "Installing dictionaries..."
+  SetOutPath $INSTDIR\lib\aspell-0.60
+  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+  File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\lib\aspell-0.60\*.*
+  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+!endif
+SectionEnd ; SecDictionaries }}}
 
 SectionGroupEnd ; SecAddfiles }}}
 
 SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !macro Language SecName lng ; A macro to create each section {{{
     Section /o "$(lng_${lng}) (${lng})" Sec${SecName}
-      ;SectionIn 1 2 3
+      SectionIn 1 ; flags will be adjusted below, see LanguageAutoSelect in .onInit
     !ifndef DUMMYINSTALL
-      SetOutPath $INSTDIR
+      DetailPrint "Installing translations and translated content for ${SecName} (${lng}) locale..."
+      ; locale folders (/locale, /share/locale /lib/locale)
+      ${!defineifexist} ${INKSCAPE_DIST_DIR}\locale EXISTS 1
+      !ifdef EXISTS
+        !undef EXISTS
+        SetOutPath $INSTDIR\locale\${lng}
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\locale\${lng}\*.*
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+      !endif
+      ${!defineifexist} ${INKSCAPE_DIST_DIR}\share\locale EXISTS 1
+      !ifdef EXISTS
+        !undef EXISTS
+        SetOutPath $INSTDIR\share\locale\${lng}
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\share\locale\${lng}\*.*
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+      !endif
+      ${!defineifexist} ${INKSCAPE_DIST_DIR}\lib\locale EXISTS 1
+      !ifdef EXISTS
+        !undef EXISTS
+        SetOutPath $INSTDIR\lib\locale\${lng}
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\lib\locale\${lng}\*.*
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+      !endif
+
+      ; localized documentation, templates and tutorials
+      SetOutPath $INSTDIR\doc
       !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-      File /nonfatal /a ..\..\inkscape\*.${lng}.txt ; FIXME: remove this?  No such files.
-      !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-      SetOutPath $INSTDIR\locale
-      !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-      File /nonfatal /a /r ..\..\inkscape\locale\${lng}
-      !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-      SetOutPath $INSTDIR\lib\locale
-      !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-      File /nonfatal /a /r ..\..\inkscape\lib\locale\${lng}
-      !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-      SetOutPath $INSTDIR\share\clipart
-      !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-      File /nonfatal /a /r ..\..\inkscape\share\clipart\*.${lng}.svg
-      !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-      ; the keyboard tables
-      SetOutPath $INSTDIR\share\screens
-      !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-      File /nonfatal /a /r ..\..\inkscape\share\screens\*.${lng}.svg
+      File /nonfatal /a ${INKSCAPE_DIST_DIR}\doc\*.${lng}.html ; keys.${lng}.html
+      File /nonfatal /a ${INKSCAPE_DIST_DIR}\doc\*.${lng}.txt ; HACKING.${lng}.html
       !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
       SetOutPath $INSTDIR\share\templates
       !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-      File /nonfatal /a /r ..\..\inkscape\share\templates\*.${lng}.svg
-      !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-      SetOutPath $INSTDIR\doc
-      !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-      File /nonfatal /a /r ..\..\inkscape\doc\keys.${lng}.xml
-      File /nonfatal /a /r ..\..\inkscape\doc\keys.${lng}.html
+      File /nonfatal /a /r ${INKSCAPE_DIST_DIR}\share\templates\*.${lng}.svg
       !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
       SectionGetFlags ${SecTutorials} $R1
       IntOp $R1 $R1 & ${SF_SELECTED}
       ${If} $R1 >= ${SF_SELECTED}
         SetOutPath $INSTDIR\share\tutorials
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /nonfatal /a ..\..\inkscape\share\tutorials\*.${lng}.*
+        File /nonfatal /a ${INKSCAPE_DIST_DIR}\share\tutorials\*.${lng}.*
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
       ${EndIf}
     !endif
     SectionEnd
   !macroend ; Language }}}
 
-  ; Now create each section with the Language macro {{{
-  !insertmacro Language Amharic           am
-  !insertmacro Language Arabic            ar
-  !insertmacro Language Azerbaijani       az
-  !insertmacro Language Byelorussian      be
-  !insertmacro Language Bulgarian         bg
-  !insertmacro Language Bengali           bn
-  !insertmacro Language BengaliBangladesh bn_BD
-  !insertmacro Language Breton            br
-  !insertmacro Language Catalan           ca
-  !insertmacro Language CatalanValencia   ca@valencia
-  !insertmacro Language Czech             cs
-  !insertmacro Language Danish            da
-  !insertmacro Language German            de
-  !insertmacro Language Dzongkha          dz
-  !insertmacro Language Greek             el
-  !insertmacro Language EnglishAustralian en_AU
-  !insertmacro Language EnglishCanadian   en_CA
-  !insertmacro Language EnglishBritain    en_GB
-  !insertmacro Language EnglishPiglatin   en_US@piglatin
-  !insertmacro Language Esperanto         eo
-  !insertmacro Language Spanish           es
-  !insertmacro Language SpanishMexico     es_MX
-  !insertmacro Language Estonian          et
-  !insertmacro Language Basque            eu
-  !insertmacro Language Farsi             fa
-  !insertmacro Language French            fr
-  !insertmacro Language Finnish           fi
-  !insertmacro Language Irish             ga
-  !insertmacro Language Galician          gl
-  !insertmacro Language Hebrew            he
-  !insertmacro Language Croatian          hr
-  !insertmacro Language Hungarian         hu
-  !insertmacro Language Armenian          hy
-  !insertmacro Language Indonesian        id
-  !insertmacro Language Icelandic         is
-  !insertmacro Language Italian           it
-  !insertmacro Language Japanese          ja
-  !insertmacro Language Khmer             km
-  !insertmacro Language Korean            ko
-  !insertmacro Language Lithuanian        lt
-  !insertmacro Language Latvian           lv
-  !insertmacro Language Mongolian         mn
-  !insertmacro Language Macedonian        mk
-  !insertmacro Language NorwegianBokmal   nb
-  !insertmacro Language Nepali            ne
-  !insertmacro Language Dutch             nl
-  !insertmacro Language NorwegianNynorsk  nn
-  !insertmacro Language Panjabi           pa
-  !insertmacro Language Polish            pl
-  !insertmacro Language Portuguese        pt
-  !insertmacro Language PortugueseBrazil  pt_BR
-  !insertmacro Language Romanian          ro
-  !insertmacro Language Russian           ru
-  !insertmacro Language Kinyarwanda       rw
-  !insertmacro Language Slovak            sk
-  !insertmacro Language Slovenian         sl
-  !insertmacro Language Albanian          sq
-  !insertmacro Language Serbian           sr
-  !insertmacro Language SerbianLatin      sr@latin
-  !insertmacro Language Swedish           sv
-  !insertmacro Language Telugu            te
-  !insertmacro Language Thai              th
-  !insertmacro Language Turkish           tr
-  !insertmacro Language Ukrainian         uk
-  !insertmacro Language Vietnamese        vi
-  !insertmacro Language SimpChinese       zh_CN
-  !insertmacro Language TradChinese       zh_TW
-  ; }}}
+  ; Now create each section with the Language macro.
+  ; include list of available inkscape translations from /languages/_language_lists.nsh
+  !insertmacro INKSCAPE_TRANSLATIONS Language
 SectionGroupEnd ; SecLanguages }}}
 
 Section -FinalizeInstallation ; Hidden, mandatory section to finalize installation {{{
@@ -593,9 +610,6 @@ Section -FinalizeInstallation ; Hidden, mandatory section to finalize installati
   WriteRegStr SHCTX "${INSTDIR_KEY}" askMultiUser $askMultiUser
   WriteRegStr SHCTX "${INSTDIR_KEY}" User         $User
 
-  ; start menu entries
-  CreateShortcut $SMPROGRAMS\Inkscape.lnk $INSTDIR\inkscape.exe
-
   ; uninstall settings
   ; WriteUninstaller $INSTDIR\uninst.exe
   WriteRegExpandStr SHCTX "${UNINST_KEY}" UninstallString ${UNINST_EXE}
@@ -604,8 +618,15 @@ Section -FinalizeInstallation ; Hidden, mandatory section to finalize installati
   WriteRegStr       SHCTX "${UNINST_KEY}" DisplayName     "Inkscape ${INKSCAPE_VERSION}"
   WriteRegStr       SHCTX "${UNINST_KEY}" DisplayIcon     $INSTDIR\Inkscape.exe,0
   WriteRegStr       SHCTX "${UNINST_KEY}" DisplayVersion  ${INKSCAPE_VERSION}
+  WriteRegStr       SHCTX "${UNINST_KEY}" Publisher       "Inkscape Project"
+  WriteRegStr       SHCTX "${UNINST_KEY}" URLInfoAbout    "https://inkscape.org"
+
   WriteRegDWORD     SHCTX "${UNINST_KEY}" NoModify        1
   WriteRegDWORD     SHCTX "${UNINST_KEY}" NoRepair        1
+
+  ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
+  IntFmt $0 "0x%08X" $0
+  WriteRegDWORD     SHCTX "${UNINST_KEY}" EstimatedSize   "$0"
 
   ;create/update log always within .onInstSuccess function
   !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
@@ -614,12 +635,16 @@ Section -FinalizeInstallation ; Hidden, mandatory section to finalize installati
   ClearErrors
   FileOpen $0 $INSTDIR\Uninstall.dat r
   FileOpen $9 $INSTDIR\Uninstall.log w
+  FileRead $0 $1 ; read first line (which is the header)
   ${IfNot} ${Errors}
     ${Do}
       ClearErrors
       FileRead $0 $1
       ${IfThen} ${Errors} ${|} ${ExitDo} ${|}
-      StrCpy $1 $1 -2
+      StrCpy $1 $1 -2 ; strip \r\n from path
+      ${If} ${FileExists} $1\*.* ; ignore directories
+        ${Continue}
+      ${EndIf}
       md5dll::GetMD5File /NOUNLOAD $1
       Pop $2
       ${IfThen} $2 != "" ${|} FileWrite $9 "$2  $1$\r$\n" ${|}
@@ -628,7 +653,7 @@ Section -FinalizeInstallation ; Hidden, mandatory section to finalize installati
   FileClose $0
   FileClose $9
   ; Not needed any more
-  Delete $INSTDIR\Uninstall.dat
+  ; Delete $INSTDIR\Uninstall.dat ; actually this is checked for in UNINSTALL.LOG_PREPARE_INSTALL, so keep it for now...
 !endif
 SectionEnd ; -FinalizeInstallation }}}
 
@@ -637,14 +662,18 @@ SectionEnd ; -FinalizeInstallation }}}
   !insertmacro MUI_DESCRIPTION_TEXT ${SecGTK} "$(GTKFilesDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecShortcuts} "$(ShortcutsDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAlluser} "$(AlluserDesc)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecStartMenu} "$(StartmenuDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecDesktop} "$(DesktopDesc)"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecQuicklaunch} "$(QuicklaunchDesc)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecQuickLaunch} "$(QuicklaunchDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecSVGWriter} "$(SVGWriterDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecContextMenu} "$(ContextMenuDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecPrefs} "$(DeletePrefsDesc)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecPython} "$(PythonDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAddfiles} "$(AddfilesDesc)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecExtensions} "$(ExtensionsDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecExamples} "$(ExamplesDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecTutorials} "$(TutorialsDesc)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecDictionaries} "$(DictionariesDesc)"
   !insertmacro MUI_DESCRIPTION_TEXT ${SecLanguages} "$(LanguagesDesc)"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END ; Section descriptions }}}
 
@@ -656,41 +685,20 @@ Function .onInit ; initialise the installer {{{2
   ; Language detection {{{
   !insertmacro MUI_LANGDLL_DISPLAY
 
-  !macro LanguageAutoSelect SecName LocaleID
+  !macro LanguageAutoSelect LocaleName LocaleID
     ${If} $LANGUAGE = ${LocaleID}
-      SectionGetFlags ${Sec${SecName}} $0
-      IntOp $0 $0 | ${SF_SELECTED}
-      SectionSetFlags ${Sec${SecName}} $0
+      SectionSetInstTypes ${Sec${LocaleName}} 3 ; this equals binary "011" (which flags the default for sections 1 and 2 but not 3)
+                                                ; and is equivalent to "SectionIn 1 2"
     ${EndIf}
   !macroend
 
+  ; include list for installer autoselection from /languages/_language_lists.nsh
   ; No need for English to be detected as it's the default
-  !insertmacro LanguageAutoSelect Breton        1150
-  !insertmacro LanguageAutoSelect Catalan       1027
-  !insertmacro LanguageAutoSelect Czech         1029
-  !insertmacro LanguageAutoSelect Danish        1030
-  !insertmacro LanguageAutoSelect Dutch         1043
-  !insertmacro LanguageAutoSelect Finnish       1035
-  !insertmacro LanguageAutoSelect French        1036
-  !insertmacro LanguageAutoSelect Galician      1110
-  !insertmacro LanguageAutoSelect German        1031
-  !insertmacro LanguageAutoSelect Greek         1032
-  !insertmacro LanguageAutoSelect Indonesian    1057
-  !insertmacro LanguageAutoSelect Icelandic     861
-  !insertmacro LanguageAutoSelect Italian       1040
-  !insertmacro LanguageAutoSelect Japanese      1041
-  !insertmacro LanguageAutoSelect Polish        1045
-  !insertmacro LanguageAutoSelect Portuguese    2070
-  !insertmacro LanguageAutoSelect PortugueseBrazil  1046
-  !insertmacro LanguageAutoSelect Romanian      1048
-  !insertmacro LanguageAutoSelect Russian       1049
-  !insertmacro LanguageAutoSelect Slovak        1051
-  !insertmacro LanguageAutoSelect Slovenian     1060
-  !insertmacro LanguageAutoSelect Spanish       1034
-  !insertmacro LanguageAutoSelect SimpChinese   2052
-  !insertmacro LanguageAutoSelect TradChinese   1028
-  !insertmacro LanguageAutoSelect Ukrainian     1058
+  !insertmacro INSTALLER_TRANSLATIONS LanguageAutoSelect
   ; End of language detection }}}
+
+  ; ser the second InstType ("Optimal") as default
+  SetCurInstType 1
 
   !insertmacro UNINSTALL.LOG_PREPARE_INSTALL ; prepare advanced uninstallation log script
 
@@ -740,7 +748,11 @@ Function .onInit ; initialise the installer {{{2
 
   ; Request uninstallation of an old Inkscape installation {{{
   ReadRegStr $R0 HKLM "${UNINST_KEY}" UninstallString
-  ${IfThen} $R0 == "" ${|} ReadRegStr $R0 HKCU "${UNINST_KEY}" UninstallString ${|}
+  ReadRegStr $R1 HKLM "${UNINST_KEY}" DisplayName
+  ${If} $R0 == ""
+    ReadRegStr $R0 HKCU "${UNINST_KEY}" UninstallString
+    ReadRegStr $R1 HKCU "${UNINST_KEY}" DisplayName
+  ${EndIf}
   ${If} $R0 != ""
   ${AndIf} ${Cmd} ${|} MessageBox MB_YESNO|MB_ICONEXCLAMATION "$(WANT_UNINSTALL_BEFORE)" /SD IDNO IDYES ${|}
     ExecWait $R0
@@ -752,100 +764,39 @@ Function .onInit ; initialise the installer {{{2
   !verbose 3
   ${GetParameters} $CMDARGS
 
-  !macro Parameter key Section
+  !macro Parameter Section key
     ${GetOptions} $CMDARGS /${key}= $1
     ${If} $1 == OFF
-      SectionGetFlags ${Section} $0
+      SectionGetFlags ${Sec${Section}} $0
       IntOp $2 ${SF_SELECTED} ~
       IntOp $0 $0 & $2
-      SectionSetFlags ${Section} $0
+      SectionSetFlags ${Sec${Section}} $0
     ${EndIf}
     ${If} $1 == ON
-      SectionGetFlags ${Section} $0
+      SectionGetFlags ${Sec${Section}} $0
       IntOp $0 $0 | ${SF_SELECTED}
-      SectionSetFlags ${Section} $0
+      SectionSetFlags ${Sec${Section}} $0
     ${EndIf}
   !macroend
 
-  !insertmacro Parameter GTK            ${SecGTK}
-  !insertmacro Parameter SHORTCUTS      ${secShortcuts}
-  !insertmacro Parameter ALLUSER        ${SecAlluser}
-  !insertmacro Parameter DESKTOP        ${SecDesktop}
-  !insertmacro Parameter QUICKLAUNCH    ${SecQUICKlaunch}
-  !insertmacro Parameter SVGEDITOR      ${SecSVGWriter}
-  !insertmacro Parameter CONTEXTMENUE   ${SecContextMenu}
-  !insertmacro Parameter PREFERENCES    ${SecPrefs}
-  !insertmacro Parameter ADDFILES       ${SecAddfiles}
-  !insertmacro Parameter EXAMPLES       ${SecExamples}
-  !insertmacro Parameter TUTORIALS      ${SecTutorials}
-  !insertmacro Parameter LANGUAGES      ${SecLanguages}
-  !insertmacro Parameter am             ${SecAmharic}
-  !insertmacro Parameter ar             ${SecArabic}
-  !insertmacro Parameter az             ${SecAzerbaijani}
-  !insertmacro Parameter be             ${SecByelorussian}
-  !insertmacro Parameter bg             ${SecBulgarian}
-  !insertmacro Parameter bn             ${SecBengali}
-  !insertmacro Parameter bn_BD          ${SecBengaliBangladesh}
-  !insertmacro Parameter br             ${SecBreton}
-  !insertmacro Parameter ca             ${SecCatalan}
-  !insertmacro Parameter ca@valencia    ${SecCatalanValencia}
-  !insertmacro Parameter cs             ${SecCzech}
-  !insertmacro Parameter da             ${SecDanish}
-  !insertmacro Parameter de             ${SecGerman}
-  !insertmacro Parameter dz             ${SecDzongkha}
-  !insertmacro Parameter el             ${SecGreek}
-  !insertmacro Parameter en_AU          ${SecEnglishAustralian}
-  !insertmacro Parameter en_CA          ${SecEnglishCanadian}
-  !insertmacro Parameter en_GB          ${SecEnglishBritain}
-  !insertmacro Parameter en_US@piglatin ${SecEnglishPiglatin}
-  !insertmacro Parameter eo             ${SecEsperanto}
-  !insertmacro Parameter es             ${SecSpanish}
-  !insertmacro Parameter es_MX          ${SecSpanishMexico}
-  !insertmacro Parameter et             ${SecEstonian}
-  !insertmacro Parameter eu             ${SecBasque}
-  !insertmacro Parameter fa             ${SecFarsi}
-  !insertmacro Parameter fi             ${SecFinnish}
-  !insertmacro Parameter fr             ${SecFrench}
-  !insertmacro Parameter ga             ${SecIrish}
-  !insertmacro Parameter gl             ${SecGalician}
-  !insertmacro Parameter he             ${SecHebrew}
-  !insertmacro Parameter hr             ${SecCroatian}
-  !insertmacro Parameter hu             ${SecHungarian}
-  !insertmacro Parameter hy             ${SecArmenian}
-  !insertmacro Parameter id             ${SecIndonesian}
-  !insertmacro Parameter is             ${SecIcelandic}
-  !insertmacro Parameter it             ${SecItalian}
-  !insertmacro Parameter ja             ${SecJapanese}
-  !insertmacro Parameter km             ${SecKhmer}
-  !insertmacro Parameter ko             ${SecKorean}
-  !insertmacro Parameter lt             ${SecLithuanian}
-  !insertmacro Parameter lv             ${SecLatvian}
-  !insertmacro Parameter mk             ${SecMacedonian}
-  !insertmacro Parameter mn             ${SecMongolian}
-  !insertmacro Parameter nb             ${SecNorwegianBokmal}
-  !insertmacro Parameter ne             ${SecNepali}
-  !insertmacro Parameter nl             ${SecDutch}
-  !insertmacro Parameter nn             ${SecNorwegianNynorsk}
-  !insertmacro Parameter pa             ${SecPanjabi}
-  !insertmacro Parameter pl             ${SecPolish}
-  !insertmacro Parameter pt             ${SecPortuguese}
-  !insertmacro Parameter pt_BR          ${SecPortugueseBrazil}
-  !insertmacro Parameter ro             ${SecRomanian}
-  !insertmacro Parameter ru             ${SecRussian}
-  !insertmacro Parameter rw             ${SecKinyarwanda}
-  !insertmacro Parameter sk             ${SecSlovak}
-  !insertmacro Parameter sl             ${SecSlovenian}
-  !insertmacro Parameter sq             ${SecAlbanian}
-  !insertmacro Parameter sr             ${SecSerbian}
-  !insertmacro Parameter sr@latin       ${SecSerbianLatin}
-  !insertmacro Parameter sv             ${SecSwedish}
-  !insertmacro Parameter te             ${SecTelugu}
-  !insertmacro Parameter th             ${SecThai}
-  !insertmacro Parameter tr             ${SecTurkish}
-  !insertmacro Parameter uk             ${SecUkrainian}
-  !insertmacro Parameter vi             ${SecVietnamese}
-  !insertmacro Parameter zh_CN          ${SecSimpChinese}
-  !insertmacro Parameter zh_TW          ${SecTradChinese}
+  !insertmacro Parameter GTK          GTK
+  !insertmacro Parameter Shortcuts    SHORTCUTS
+  !insertmacro Parameter Alluser      ALLUSER
+  !insertmacro Parameter Desktop      DESKTOP
+  !insertmacro Parameter QuickLaunch  QUICKLAUNCH
+  !insertmacro Parameter SVGWriter    SVGEDITOR
+  !insertmacro Parameter ContextMenu  CONTEXTMENUE
+  !insertmacro Parameter Prefs        PREFERENCES
+  !insertmacro Parameter Python       PYTHON
+  !insertmacro Parameter Addfiles     ADDFILES
+  !insertmacro Parameter Extensions   EXTENSIONS
+  !insertmacro Parameter Examples     EXAMPLES
+  !insertmacro Parameter Tutorials    TUTORIALS
+  !insertmacro Parameter Dictionaries DICTIONARIES
+  !insertmacro Parameter Languages    LANGUAGES
+
+  ; include list of available inkscape translations for parameter generation from /languages/_language_lists.nsh
+  !insertmacro INKSCAPE_TRANSLATIONS Parameter
 
   ClearErrors
   ${GetOptions} $CMDARGS /? $1
@@ -862,15 +813,21 @@ Function .onInit ; initialise the installer {{{2
       /SVGEDITOR=(OFF/ON): default SVG editor$\r$\n \
       /CONTEXTMENUE=(OFF/ON): context menue integration$\r$\n \
       /PREFERENCES=(OFF/ON): delete users preference files$\r$\n \
+      /PYTHON=(OFF/ON): python distribution$\r$\n \
       /ADDFILES=(OFF/ON): additional files$\r$\n \
+      /EXTENSIONS=(OFF/ON): extensions$\r$\n \
       /EXAMPLES=(OFF/ON): examples$\r$\n \
       /TUTORIALS=(OFF/ON): tutorials$\r$\n \
+      /DICTIONARIES=(OFF/ON): dictionaries$\r$\n \
       /LANGUAGES=(OFF/ON): translated menues, examples, etc.$\r$\n \
       /[locale code]=(OFF/ON): e.g am, es, es_MX as in Inkscape supported"
     Abort
-    !verbose pop
-  ${EndIf} ; }}}
+  ${EndIf}
+  !verbose pop ; }}}
 FunctionEnd ; .onInit }}}
+
+
+
 ; Uninstaller code {{{1
 Function un.onInit ; initialise uninstaller {{{
   ;begin uninstall, could be added on top of uninstall section instead
@@ -914,6 +871,7 @@ Function un.onInit ; initialise uninstaller {{{
 FunctionEnd ; un.onInit }}}
 
 Function un.CustomPageUninstall ; {{{
+  SetShellVarContext current
   !insertmacro MUI_HEADER_TEXT "$(UInstOpt)" "$(UInstOpt1)"
   !insertmacro MUI_INSTALLOPTIONS_WRITE inkscape.nsi.uninstall "Field 1" Text "$APPDATA\Inkscape\"
   !insertmacro MUI_INSTALLOPTIONS_WRITE inkscape.nsi.uninstall "Field 2" Text "$(PurgePrefs)"
@@ -924,6 +882,7 @@ FunctionEnd ; un.CustomPageUninstall }}}
 Section Uninstall ; do the uninstalling {{{
 !ifndef DUMMYINSTALL
   ; remove personal settings
+  SetShellVarContext current
   Delete $APPDATA\Inkscape\extension-errors.log
   ${If} $MultiUser = 0
     DetailPrint "Purging personal settings in $APPDATA\Inkscape"
@@ -982,16 +941,16 @@ Section Uninstall ; do the uninstalling {{{
   RMDir  $SMPROGRAMS\Inkscape
 
   InitPluginsDir
-  SetPluginUnload manual
 
   ClearErrors
-  FileOpen $0 $INSTDIR\uninstall.log r
+  FileOpen $9 $INSTDIR\uninstall.log r
   ${If} ${Errors} ;else uninstallnotfound
     MessageBox MB_OK|MB_ICONEXCLAMATION "$(UninstallLogNotFound)" /SD IDOK
   ${Else}
+    ${SHMessageBoxCheckInit} "inkscape_uninstall_other_files"
     ${Do}
       ClearErrors
-      FileRead $0 $1
+      FileRead $9 $1
       ${IfThen} ${Errors} ${|} ${ExitDo} ${|}
       ; cat the line into md5 and filename
       StrLen $2 $1
@@ -999,31 +958,23 @@ Section Uninstall ; do the uninstalling {{{
       StrCpy $3 $1 32
       StrCpy $filename $1 $2-36 34 ;remove trailing CR/LF
       StrCpy $filename $filename -2
-      ; $3 = MD5 when installed, then deletion choice
       ; $filename = file
-      ; $5 = MD5 now
-      ; $6 = always/never remove files touched by user
+      ; $0 = shall file be deleted?
+      ; $3 = MD5 when installed
+      ; $4 = MD5 now
 
       ${If} ${FileExists} $filename
-        ${If} $6 == always
-          StrCpy $3 2
+        md5dll::GetMD5File /NOUNLOAD $filename
+        Pop $4 ;md5 of file
+        ${If} $3 == $4
+          StrCpy $0 ${IDYES}
         ${Else}
-          md5dll::GetMD5File /NOUNLOAD $filename
-          Pop $5 ;md5 of file
-          ${If} $3 == $5
-            StrCpy $3 1 ; yes
-          ${ElseIf} $6 != never
-            ; the md5 sums does not match so we ask
-            messagebox::show MB_DEFBUTTON3|MB_TOPMOST "" 0,103 \
-              "$(FileChanged)" "$(Yes)" "$(AlwaysYes)" "$(No)" "$(AlwaysNo)"
-            Pop $3
-            ${IfThen} $3 = 2 ${|} StrCpy $6 always ${|}
-            ${IfThen} $3 = 4 ${|} StrCpy $6 never ${|}
-          ${EndIf}
+          ; the md5 sums does not match so we ask
+          ${SHMessageBoxCheck} "$(MUI_UNTEXT_CONFIRM_TITLE)" "$(FileChanged)" ${MB_YESNO}|${MB_ICONQUESTION}
+          Pop $0
         ${EndIf}
 
-        ${If}   $3 = 1 ; yes
-        ${OrIf} $3 = 2 ; always
+        ${If} $0 = ${IDYES}
           ; Remove File
           ClearErrors
           Delete $filename
@@ -1038,22 +989,39 @@ Section Uninstall ; do the uninstalling {{{
         ${EndIf}
       ${EndIf}
     ${Loop}
+    ${SHMessageBoxCheckCleanup}
   ${EndIf}
-  FileClose $0
+  FileClose $9
+  ; remove Python cache files that may have been created
+  loopFiles:
+      StrCpy $R1 0
+      ${Locate} "$INSTDIR" "/L=F /M=*.pyc" "un.DeleteFile"
+      StrCmp $R1 0 0 loopFiles
+  ; remove empty directories
+  loopDirs:
+    StrCpy $R1 0
+    ${Locate} "$INSTDIR" "/L=DE" "un.DeleteDir"
+    StrCmp $R1 0 0 loopDirs
+  ; remove the uninstaller and installation directory itself
+  Delete $INSTDIR\uninstall.dat
   Delete $INSTDIR\uninstall.log
   Delete $INSTDIR\uninstall.exe
-  ; remove empty directories
-  RMDir $INSTDIR\lib\locale
-  RMDir $INSTDIR\lib
-  RMDir $INSTDIR\data
-  RMDir $INSTDIR\doc
-  RMDir $INSTDIR\modules
-  RMDir $INSTDIR\plugins
   RMDir $INSTDIR
-  SetAutoClose false
 !endif
 SectionEnd ; Uninstall }}}
 ; }}}
+
+Function un.DeleteFile
+  Delete $R9
+  IntOp $R1 $R1 + 1
+  Push 0 # required by ${Locate}!
+FunctionEnd
+
+Function un.DeleteDir
+  RMDir $R9
+  IntOp $R1 $R1 + 1
+  Push 0 # required by ${Locate}!
+FunctionEnd
 
 ; This file has been optimised for use in Vim with folding.
 ; (If you can't cope, :set nofoldenable) vim:fen:fdm=marker

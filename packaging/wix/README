@@ -1,25 +1,32 @@
 howto create windows msi installer
 
 you need:
-1. windows installer XML installed and callable from your path
+1. WiX Toolset (aka Windows Installer XML)
    get it from http://wixtoolset.org/
-   Because of a bug in the current version of wix the installer works using version 3.7 only.
+   (3.10 works fine at the time of this writing)
 
 build the installer
 1. build inkscape
 2. open command shell "cmd"
 3. change current directory to inkscape\packaging\wix
-4. set environment variables
-   wixenv.bat
-5. create installer using batch
-   install.bat
+4. set environment variables using
+     wixenv.bat    (adjust paths in the file if necessary!)
+5. create installer using
+     install.bat
 
 when completed there should be inkscape.msi in your path
+
+helpful tips
+- set  CompressionLevel="none"  in inkscape.wxs
+  while experimenting with installer creation
+  (results in huge installer but much faster compilation times)
 
 things still todo
 - detailed explanation what to do for new revisions
 - better filenames (nightly builds versus releases)
 - howto remove python .pyc files after deinstallation
 - localisation into the installer
-   
-theAdib
+- make "Typical" and "Complete" installations actually install different files
+  (at least don't lie to the user by suggesting there would be two different choices)
+- conditionally install localized content according to the users previous feature choices
+  (e.g. only install translated versions of tutorials if the "Tutorials" feature is selected)

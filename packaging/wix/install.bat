@@ -1,9 +1,11 @@
 
 @echo build files.wxs
 python files.py
+@if NOT %ERRORLEVEL% == 0 goto theend
 
 @echo create version information
 for /f "tokens=*" %%a in ('python version.py') do (set INKSCAPE_VER=%%a)
+@if NOT %ERRORLEVEL% == 0 goto theend
 
 @echo call wix compiler ...
 candle inkscape.wxs -ext WiXUtilExtension
@@ -27,6 +29,6 @@ pause the program is now installed. press any key to run uninstaller ...
 @echo deinstall ...
 msiexec /x inkscape-%INKSCAPE_VER%.msi
 
-@echo ... finished
 
 :theend
+@echo ... finished
