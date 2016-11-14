@@ -56,6 +56,8 @@
 #include "sp-gradient-reference.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
+#include "sp-mesh-gradient.h"
+#include "sp-mesh-array.h"
 #include "gradient-chemistry.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
@@ -761,112 +763,132 @@ static void tweak_colors_in_gradient(SPItem *item, Inkscape::PaintTarget fill_or
     p *= (gradient->gradientTransform).inverse();
     // now p is in gradient's original coordinates
 
-    double pos = 0;
-    double r = 0;
-
     SPLinearGradient *lg = dynamic_cast<SPLinearGradient *>(gradient);
-    if (lg) {
-        Geom::Point p1(lg->x1.computed, lg->y1.computed);
-        Geom::Point p2(lg->x2.computed, lg->y2.computed);
-        Geom::Point pdiff(p2 - p1);
-        double vl = Geom::L2(pdiff);
+    SPRadialGradient *rg = dynamic_cast<SPRadialGradient *>(gradient);
+    if (lg || rg) {
 
-        // This is the matrix which moves and rotates the gradient line
-        // so it's oriented along the X axis:
-        Geom::Affine norm = Geom::Affine(Geom::Translate(-p1)) * Geom::Affine(Geom::Rotate(-atan2(pdiff[Geom::Y], pdiff[Geom::X])));
+        double pos = 0;
+        double r = 0;
 
-        // Transform the mouse point by it to find out its projection onto the gradient line:
-        Geom::Point pnorm = p * norm;
+        if (lg) {
+            Geom::Point p1(lg->x1.computed, lg->y1.computed);
+            Geom::Point p2(lg->x2.computed, lg->y2.computed);
+            Geom::Point pdiff(p2 - p1);
+            double vl = Geom::L2(pdiff);
 
-        // Scale its X coordinate to match the length of the gradient line:
-        pos = pnorm[Geom::X] / vl;
-        // Calculate radius in lenfth-of-gradient-line units
-        r = radius / vl;
+            // This is the matrix which moves and rotates the gradient line
+            // so it's oriented along the X axis:
+            Geom::Affine norm = Geom::Affine(Geom::Translate(-p1)) *
+                Geom::Affine(Geom::Rotate(-atan2(pdiff[Geom::Y], pdiff[Geom::X])));
 
-    } else {
-        SPRadialGradient *rg = dynamic_cast<SPRadialGradient *>(gradient);
+            // Transform the mouse point by it to find out its projection onto the gradient line:
+            Geom::Point pnorm = p * norm;
+
+            // Scale its X coordinate to match the length of the gradient line:
+            pos = pnorm[Geom::X] / vl;
+            // Calculate radius in lenfth-of-gradient-line units
+            r = radius / vl;
+
+        }
         if (rg) {
             Geom::Point c (rg->cx.computed, rg->cy.computed);
             pos = Geom::L2(p - c) / rg->r.computed;
             r = radius / rg->r.computed;
         }
-    }
 
-    // Normalize pos to 0..1, taking into accound gradient spread:
-    double pos_e = pos;
-    if (gradient->getSpread() == SP_GRADIENT_SPREAD_PAD) {
-        if (pos > 1) {
-            pos_e = 1;
-        }
-        if (pos < 0) {
-            pos_e = 0;
-        }
-    } else if (gradient->getSpread() == SP_GRADIENT_SPREAD_REPEAT) {
-        if (pos > 1 || pos < 0) {
-            pos_e = pos - floor(pos);
-        }
-    } else if (gradient->getSpread() == SP_GRADIENT_SPREAD_REFLECT) {
-        if (pos > 1 || pos < 0) {
-            bool odd = ((int)(floor(pos)) % 2 == 1);
-            pos_e = pos - floor(pos);
-            if (odd) {
-                pos_e = 1 - pos_e;
+        // Normalize pos to 0..1, taking into accound gradient spread:
+        double pos_e = pos;
+        if (gradient->getSpread() == SP_GRADIENT_SPREAD_PAD) {
+            if (pos > 1) {
+                pos_e = 1;
+            }
+            if (pos < 0) {
+                pos_e = 0;
+            }
+        } else if (gradient->getSpread() == SP_GRADIENT_SPREAD_REPEAT) {
+            if (pos > 1 || pos < 0) {
+                pos_e = pos - floor(pos);
+            }
+        } else if (gradient->getSpread() == SP_GRADIENT_SPREAD_REFLECT) {
+            if (pos > 1 || pos < 0) {
+                bool odd = ((int)(floor(pos)) % 2 == 1);
+                pos_e = pos - floor(pos);
+                if (odd) {
+                    pos_e = 1 - pos_e;
+                }
             }
         }
-    }
 
-    SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(gradient, false);
+        SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(gradient, false);
 
-    double offset_l = 0;
-    double offset_h = 0;
-    SPObject *child_prev = NULL;
-    for (auto& child: vector->children) {
-        SPStop *stop = dynamic_cast<SPStop *>(&child);
-        if (!stop) {
-            continue;
-        }
+        double offset_l = 0;
+        double offset_h = 0;
+        SPObject *child_prev = NULL;
+        for (auto& child: vector->children) {
+            SPStop *stop = dynamic_cast<SPStop *>(&child);
+            if (!stop) {
+                continue;
+            }
 
-        offset_h = stop->offset;
+            offset_h = stop->offset;
 
-        if (child_prev) {
-            SPStop *prevStop = dynamic_cast<SPStop *>(child_prev);
-            g_assert(prevStop != NULL);
+            if (child_prev) {
+                SPStop *prevStop = dynamic_cast<SPStop *>(child_prev);
+                g_assert(prevStop != NULL);
 
-            if (offset_h - offset_l > r && pos_e >= offset_l && pos_e <= offset_h) {
-                // the summit falls in this interstop, and the radius is small,
-                // so it only affects the ends of this interstop;
-                // distribute the force between the two endstops so that they
-                // get all the painting even if they are not touched by the brush
-                tweak_color (mode, stop->specified_color.v.c, rgb_goal,
-                                  force * (pos_e - offset_l) / (offset_h - offset_l),
-                                  do_h, do_s, do_l);
-                tweak_color(mode, prevStop->specified_color.v.c, rgb_goal,
-                            force * (offset_h - pos_e) / (offset_h - offset_l),
-                            do_h, do_s, do_l);
-                stop->updateRepr();
-                child_prev->updateRepr();
-                break;
-            } else {
-                // wide brush, may affect more than 2 stops,
-                // paint each stop by the force from the profile curve
-                if (offset_l <= pos_e && offset_l > pos_e - r) {
-                    tweak_color(mode, prevStop->specified_color.v.c, rgb_goal,
-                                force * tweak_profile (fabs (pos_e - offset_l), r),
-                                do_h, do_s, do_l);
-                    child_prev->updateRepr();
-                }
-
-                if (offset_h >= pos_e && offset_h < pos_e + r) {
+                if (offset_h - offset_l > r && pos_e >= offset_l && pos_e <= offset_h) {
+                    // the summit falls in this interstop, and the radius is small,
+                    // so it only affects the ends of this interstop;
+                    // distribute the force between the two endstops so that they
+                    // get all the painting even if they are not touched by the brush
                     tweak_color (mode, stop->specified_color.v.c, rgb_goal,
-                                 force * tweak_profile (fabs (pos_e - offset_h), r),
+                                 force * (pos_e - offset_l) / (offset_h - offset_l),
                                  do_h, do_s, do_l);
+                    tweak_color(mode, prevStop->specified_color.v.c, rgb_goal,
+                                force * (offset_h - pos_e) / (offset_h - offset_l),
+                                do_h, do_s, do_l);
+                    stop->updateRepr();
+                    child_prev->updateRepr();
+                    break;
+                } else {
+                    // wide brush, may affect more than 2 stops,
+                    // paint each stop by the force from the profile curve
+                    if (offset_l <= pos_e && offset_l > pos_e - r) {
+                        tweak_color(mode, prevStop->specified_color.v.c, rgb_goal,
+                                    force * tweak_profile (fabs (pos_e - offset_l), r),
+                                    do_h, do_s, do_l);
+                        child_prev->updateRepr();
+                    }
+
+                    if (offset_h >= pos_e && offset_h < pos_e + r) {
+                        tweak_color (mode, stop->specified_color.v.c, rgb_goal,
+                                     force * tweak_profile (fabs (pos_e - offset_h), r),
+                                     do_h, do_s, do_l);
+                        stop->updateRepr();
+                    }
+                }
+            }
+
+            offset_l = offset_h;
+            child_prev = &child;
+        }
+    } else {
+        // Mesh
+        SPMeshGradient *mg = dynamic_cast<SPMeshGradient *>(gradient);
+        if (mg) {
+            SPMeshGradient *mg_array = dynamic_cast<SPMeshGradient *>(mg->getArray());
+            SPMeshNodeArray *array = &(mg_array->array);
+            // Every third node is a corner node
+            for( unsigned i=0; i < array->nodes.size(); i+=3 ) {
+                for( unsigned j=0; j < array->nodes[i].size(); j+=3 ) {
+                    SPStop *stop = array->nodes[i][j]->stop;
+                    double distance = Geom::L2(Geom::Point(p - array->nodes[i][j]->p)); 
+                    tweak_color (mode, stop->specified_color.v.c, rgb_goal,
+                                 force * tweak_profile (distance, radius), do_h, do_s, do_l);
                     stop->updateRepr();
                 }
             }
         }
-
-        offset_l = offset_h;
-        child_prev = &child;
     }
 }
 
