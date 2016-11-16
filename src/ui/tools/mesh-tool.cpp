@@ -389,6 +389,11 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
                     noperation += mg->array.color_pick( iter->second, items[iter->first] );
                     break;
 
+                case MG_CORNER_INSERT:
+                    // std::cout << "INSERT" << std::endl;
+                    noperation += mg->array.insert( iter->second );
+                    break;
+
                 default:
                     std::cout << "sp_mesh_corner_operation: unknown operation" << std::endl;
             }                    
@@ -418,6 +423,10 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
 
                     case MG_CORNER_COLOR_PICK:
                         DocumentUndo::done(doc, SP_VERB_CONTEXT_MESH, _("Picked mesh corner color."));
+                        break;
+
+                    case MG_CORNER_INSERT:
+                        DocumentUndo::done(doc, SP_VERB_CONTEXT_MESH, _("Inserted new row or column."));
                         break;
 
                     default:
@@ -896,11 +905,12 @@ bool MeshTool::root_handler(GdkEvent* event) {
             }
             break;
 
+        // Mesh Operations --------------------------------------------
+
         case GDK_KEY_Insert:
         case GDK_KEY_KP_Insert:
             // with any modifiers:
-            //sp_gradient_context_add_stops_between_selected_stops (rc);
-            std::cout << "Inserting stops between selected stops not implemented yet" << std::endl;
+            sp_mesh_context_corner_operation ( this, MG_CORNER_INSERT );
             ret = TRUE;
             break;
 
@@ -912,8 +922,6 @@ bool MeshTool::root_handler(GdkEvent* event) {
                 ret = TRUE;
             }
             break;
-
-        // Mesh Operations --------------------------------------------
 
         case GDK_KEY_b:  // Toggle mesh side between lineto and curveto.
         case GDK_KEY_B: 

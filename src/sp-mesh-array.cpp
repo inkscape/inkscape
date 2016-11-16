@@ -38,6 +38,7 @@
  */
 
 #include <glibmm.h>
+#include <set>
 
 // For color picking
 #include "display/drawing.h"
@@ -2422,6 +2423,68 @@ guint SPMeshNodeArray::color_pick( std::vector<guint> icorners, SPItem* item ) {
     picked = 1; // Picking always happens
     if( picked > 0 ) built = false;
     return picked;
+}
+
+/**
+   Splits selected rows and/or columns in half (according to the path 't' parameter).
+   Input is a list of selected corner draggable indices.
+*/
+guint SPMeshNodeArray::insert( std::vector<guint> corners ) {
+
+    guint inserted = 0;
+
+    if( corners.size() < 2 ) return 0;
+
+    std::set<guint> columns;
+    std::set<guint> rows;
+
+    for( guint i = 0; i < corners.size()-1; ++i ) {
+        for( guint j = i+1; j < corners.size(); ++j ) {
+
+            // This works as all corners have indices and they
+            // are numbered in order by row and column (and
+            // the node array is rectangular).
+
+            guint c1 = corners[i];
+            guint c2 = corners[j];
+            if (c2 < c1) {
+                c1 = corners[j];
+                c2 = corners[i];
+            }
+
+            // Number of corners in a row of patches.
+            guint ncorners = patch_columns() + 1;
+
+            guint crow1 = c1 / ncorners;
+            guint crow2 = c2 / ncorners;
+            guint ccol1 = c1 % ncorners;
+            guint ccol2 = c2 % ncorners;
+
+            // Check for horizontal neighbors
+            if ( crow1 == crow2 && (ccol2 - ccol1) == 1 ) {
+                columns.insert( ccol1 );
+            }
+        
+            // Check for vertical neighbors
+            if ( ccol1 == ccol2 && (crow2 - crow1) == 1 ) {
+                rows.insert( crow1 );
+            }
+        }
+    }
+
+    // Iterate backwards so column/row numbers are not invalidated.
+    std::set<guint>::reverse_iterator rit;
+    for (rit=columns.rbegin(); rit != columns.rend(); ++rit) {
+        split_column( *rit, 0.5);
+        ++inserted;
+    }
+    for (rit=rows.rbegin(); rit != rows.rend(); ++rit) {
+        split_row( *rit, 0.5);
+        ++inserted;
+    }
+
+    if( inserted > 0 ) built = false;
+    return inserted;
 }
 
 /**
