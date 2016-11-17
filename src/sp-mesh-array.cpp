@@ -2798,7 +2798,7 @@ SPCurve * SPMeshNodeArray::outline_path() {
     }
 
     // Bottom (right to left)
-    for (int i = 1; i < nrow; i += 3 ) {
+    for (int i = 1; i < ncol; i += 3 ) {
         outline->curveto( nodes[nrow-1][ncol-i-1]->p, nodes[nrow-1][ncol-i-2]->p, nodes[nrow-1][ncol-i-3]->p);
     }
 
