@@ -820,6 +820,9 @@ has_units_set(SPGradient const *gr)
 SPGradient *SPGradient::getVector(bool force_vector)
 {
     SPGradient * src = chase_hrefs(this, has_stopsFN);
+    if (src == NULL) {
+        src = this;
+    }
 
     if (force_vector) {
         src = sp_gradient_ensure_vector_normalized(src);
@@ -830,10 +833,9 @@ SPGradient *SPGradient::getVector(bool force_vector)
 SPGradient *SPGradient::getArray(bool force_vector)
 {
     SPGradient * src = chase_hrefs(this, has_patchesFN);
-
-    // if (force_vector) {
-    //     src = sp_gradient_ensure_vector_normalized(src);
-    // }
+    if (src == NULL) {
+        src = this;
+    }
     return src;
 }
 
