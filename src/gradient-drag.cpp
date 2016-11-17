@@ -1380,7 +1380,7 @@ GrDragger::moveMeshHandles ( Geom::Point pc_old,  MeshNodeOperation op )
 
         // Move on-screen knots
         for( guint i = 0; i < mg->array.handles.size(); ++i ) {
-             GrDragger *handle = drag->getDraggerFor( item, POINT_MG_HANDLE, i, fill_or_stroke ); 
+            GrDragger *handle = drag->getDraggerFor( item, POINT_MG_HANDLE, i, fill_or_stroke ); 
             SPKnot *knot = handle->knot;
             Geom::Point pk = getGradientCoords( item, POINT_MG_HANDLE, i, fill_or_stroke );
             knot->moveto(pk);
@@ -1420,6 +1420,15 @@ void GrDragger::updateTip()
                 this->knot->tip = g_strdup_printf (_("%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl+Alt</b> to delete stop"),
                                                    _(gr_knot_descr[draggable->point_type]),
                                                    draggable->point_i,
+                                                   item_desc,
+                                                   (draggable->fill_or_stroke == Inkscape::FOR_STROKE) ? _(" (stroke)") : "");
+                break;
+
+            case POINT_MG_CORNER:
+            case POINT_MG_HANDLE:
+            case POINT_MG_TENSOR:
+                this->knot->tip = g_strdup_printf (_("%s for: %s%s"),
+                                                   _(gr_knot_descr[draggable->point_type]),
                                                    item_desc,
                                                    (draggable->fill_or_stroke == Inkscape::FOR_STROKE) ? _(" (stroke)") : "");
                 break;
