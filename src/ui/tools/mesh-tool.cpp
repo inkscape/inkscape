@@ -92,7 +92,19 @@ MeshTool::~MeshTool() {
     delete this->subselcon;
 }
 
+// This must match GrPointType enum sp-gradient.h
+// We should move this to a shared header (can't simply move to gradient.h since that would require
+// including <glibmm/i18n.h> which messes up "N_" in extensions... argh!).
 const gchar *ms_handle_descr [] = {
+    N_("Linear gradient <b>start</b>"), //POINT_LG_BEGIN
+    N_("Linear gradient <b>end</b>"),
+    N_("Linear gradient <b>mid stop</b>"),
+    N_("Radial gradient <b>center</b>"),
+    N_("Radial gradient <b>radius</b>"),
+    N_("Radial gradient <b>radius</b>"),
+    N_("Radial gradient <b>focus</b>"), // POINT_RG_FOCUS
+    N_("Radial gradient <b>mid stop</b>"),
+    N_("Radial gradient <b>mid stop</b>"),
     N_("Mesh gradient <b>corner</b>"),
     N_("Mesh gradient <b>handle</b>"),
     N_("Mesh gradient <b>tensor</b>")
@@ -124,6 +136,7 @@ void MeshTool::selection_changed(Inkscape::Selection* /*sel*/) {
                 //TRANSLATORS: Mind the space in front. This is part of a compound message
                 ngettext(" out of %d mesh handle"," out of %d mesh handles",n_tot),
                 ngettext(" on %d selected object"," on %d selected objects",n_obj),NULL);
+            std::cout << " type: " << drag->singleSelectedDraggerSingleDraggableType() << std::endl;
             this->message_context->setF(Inkscape::NORMAL_MESSAGE,
                                        message,_(ms_handle_descr[drag->singleSelectedDraggerSingleDraggableType()]), n_tot, n_obj);
         } else {
@@ -784,10 +797,11 @@ bool MeshTool::root_handler(GdkEvent* event) {
         case GDK_KEY_Shift_R:
         case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
         case GDK_KEY_Meta_R:
-            sp_event_show_modifier_tip (this->defaultMessageContext(), event,
-                                        _("FIXME<b>Ctrl</b>: snap mesh angle"),
-                                        _("FIXME<b>Shift</b>: draw mesh around the starting point"),
-                                        NULL);
+
+            // sp_event_show_modifier_tip (this->defaultMessageContext(), event,
+            //                             _("FIXME<b>Ctrl</b>: snap mesh angle"),
+            //                             _("FIXME<b>Shift</b>: draw mesh around the starting point"),
+            //                             NULL);
             break;
 
         case GDK_KEY_A:

@@ -79,6 +79,9 @@ GradientTool::~GradientTool() {
     delete this->subselcon;
 }
 
+// This must match GrPointType enum sp-gradient.h
+// We should move this to a shared header (can't simply move to gradient.h since that would require
+// including <glibmm/i18n.h> which messes up "N_" in extensions... argh!).
 const gchar *gr_handle_descr [] = {
     N_("Linear gradient <b>start</b>"), //POINT_LG_BEGIN
     N_("Linear gradient <b>end</b>"),
@@ -88,7 +91,10 @@ const gchar *gr_handle_descr [] = {
     N_("Radial gradient <b>radius</b>"),
     N_("Radial gradient <b>focus</b>"), // POINT_RG_FOCUS
     N_("Radial gradient <b>mid stop</b>"),
-    N_("Radial gradient <b>mid stop</b>")
+    N_("Radial gradient <b>mid stop</b>"),
+    N_("Mesh gradient <b>corner</b>"),
+    N_("Mesh gradient <b>handle</b>"),
+    N_("Mesh gradient <b>tensor</b>")
 };
 
 void GradientTool::selection_changed(Inkscape::Selection*) {
