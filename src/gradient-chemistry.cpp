@@ -1583,7 +1583,7 @@ SPGradient *sp_gradient_vector_for_object( SPDocument *const doc, SPDesktop *con
         SPIPaint const &paint = ( (fill_or_stroke == Inkscape::FOR_FILL) ? style.fill : style.stroke );
         if (paint.isPaintserver()) {
             SPObject *server = (fill_or_stroke == Inkscape::FOR_FILL) ? o->style->getFillPaintServer() : o->style->getStrokePaintServer();
-            if ( SP_IS_GRADIENT(server) ) {
+            if ( SP_IS_LINEARGRADIENT(server) || SP_IS_RADIALGRADIENT(server) ) {
                 return SP_GRADIENT(server)->getVector(true);
             } else {
                 color = sp_desktop_get_color(desktop, (fill_or_stroke == Inkscape::FOR_FILL));
