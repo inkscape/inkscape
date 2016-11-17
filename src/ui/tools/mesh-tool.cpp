@@ -136,7 +136,6 @@ void MeshTool::selection_changed(Inkscape::Selection* /*sel*/) {
                 //TRANSLATORS: Mind the space in front. This is part of a compound message
                 ngettext(" out of %d mesh handle"," out of %d mesh handles",n_tot),
                 ngettext(" on %d selected object"," on %d selected objects",n_obj),NULL);
-            std::cout << " type: " << drag->singleSelectedDraggerSingleDraggableType() << std::endl;
             this->message_context->setF(Inkscape::NORMAL_MESSAGE,
                                        message,_(ms_handle_descr[drag->singleSelectedDraggerSingleDraggableType()]), n_tot, n_obj);
         } else {
