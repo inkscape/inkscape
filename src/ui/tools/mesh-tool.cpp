@@ -278,32 +278,39 @@ sp_mesh_context_select_prev (ToolBase *event_context)
 }
 
 /**
-Returns true if mouse cursor over mesh edge.
+Returns vector of control lines mouse is over. Returns only first if 'first' is true.
 */
-static bool
-sp_mesh_context_is_over_line (MeshTool *rc, SPCtrlLine *line, Geom::Point event_p)
+static std::vector<SPCtrlLine *>
+sp_mesh_context_over_line (MeshTool *rc, Geom::Point event_p, bool first = true)
 {
-    if (!SP_IS_CTRLCURVE(line) ) {
-        return false;
-    }
-
     SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
 
     //Translate mouse point into proper coord system
     rc->mousepoint_doc = desktop->w2d(event_p);
 
-    SPCtrlCurve *curve = SP_CTRLCURVE(line);
-    Geom::BezierCurveN<3> b( curve->p0, curve->p1, curve->p2, curve->p3 );
-    Geom::Coord coord = b.nearestTime( rc->mousepoint_doc ); // Coord == double
-    Geom::Point nearest = b( coord );
-
-    double dist_screen = Geom::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
-
     double tolerance = (double) SP_EVENT_CONTEXT(rc)->tolerance;
 
-    bool close = (dist_screen < tolerance);
+    GrDrag *drag = rc->_grdrag;
 
-    return close;
+    std::vector<SPCtrlLine *> selected;
+
+    for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end(); ++l) {
+        if (!SP_IS_CTRLCURVE(*l)) continue;
+
+        SPCtrlCurve *curve = SP_CTRLCURVE(*l);
+        Geom::BezierCurveN<3> b( curve->p0, curve->p1, curve->p2, curve->p3 );
+        Geom::Coord coord = b.nearestTime( rc->mousepoint_doc ); // Coord == double
+        Geom::Point nearest = b( coord );
+
+        double dist_screen = Geom::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
+        if (dist_screen < tolerance) {
+            selected.push_back(*l);
+            if (first) {
+                break;
+            }
+        }
+    }
+    return selected;
 }
 
 
@@ -539,25 +546,42 @@ bool MeshTool::root_handler(GdkEvent* event) {
 
         // Double click:
         //  If over a mesh line, divide mesh row/column
-        //  If not over a line, create new gradients for selected objects.
+        //  If not over a line and no mesh, create new mesh for top selected object.
 
         if ( event->button.button == 1 ) {
+
             // Are we over a mesh line?
-            bool over_line = false;
+            std::vector<SPCtrlLine *> over_line =
+                sp_mesh_context_over_line(this, Geom::Point(event->motion.x, event->motion.y));
 
-            if (! drag->lines.empty()) {
-                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
-                    over_line |= sp_mesh_context_is_over_line (this, *l, Geom::Point(event->motion.x, event->motion.y));
-                }
-            }
-
-            if (over_line) {
+            if (!over_line.empty()) {
                 // We take the first item in selection, because with doubleclick, the first click
                 // always resets selection to the single object under cursor
                 sp_mesh_context_split_near_point(this, selection->items().front(), this->mousepoint_doc, event->button.time);
             } else {
                 // Create a new gradient with default coordinates.
-                sp_mesh_new_default(*this);
+
+                // Check if object already has mesh... if it does,
+                // don't create new mesh with click-drag.
+                bool has_mesh = false;
+                if (!selection->isEmpty()) {
+                    SPStyle *style = selection->items().front()->style;
+                    if (style) {
+                        Inkscape::PaintTarget fill_or_stroke =
+                            (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ?
+                            Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
+                        SPPaintServer *server =
+                            (fill_or_stroke == Inkscape::FOR_FILL) ?
+                            style->getFillPaintServer():
+                            style->getStrokePaintServer();
+                        if (server && SP_IS_MESHGRADIENT(server)) 
+                            has_mesh = true;
+                    }
+                }
+
+                if (!has_mesh) {
+                    sp_mesh_new_default(*this);
+                }
             }
 
             ret = TRUE;
@@ -569,9 +593,10 @@ bool MeshTool::root_handler(GdkEvent* event) {
 #ifdef DEBUG_MESH
         std::cout << "sp_mesh_context_root_handler: GDK_BUTTON_PRESS" << std::endl;
 #endif
+
         // Button down
-        //  If Shift key down: do rubber band selection
-        //  Else set origin for drag. A drag creates a new gradient if one does not exist
+        //  If mesh already exists, do rubber band selection.
+        //  Else set origin for drag which will create a new gradient.
          if ( event->button.button == 1 && !this->space_panning ) {
             Geom::Point button_w(event->button.x, event->button.y);
 
@@ -582,7 +607,9 @@ bool MeshTool::root_handler(GdkEvent* event) {
 
             dragging = true;
 
-            // Check if object already has mesh... if it does, don't create new mesh with click-drag.
+            Geom::Point button_dt = desktop->w2d(button_w);
+            // Check if object already has mesh... if it does,
+            // don't create new mesh with click-drag.
             bool has_mesh = false;
             if (!selection->isEmpty()) {
                 SPStyle *style = selection->items().front()->style;
@@ -599,25 +626,24 @@ bool MeshTool::root_handler(GdkEvent* event) {
                 }
             }
 
-            Geom::Point button_dt = desktop->w2d(button_w);
-            if (event->button.state & GDK_SHIFT_MASK || has_mesh) {
+            if (has_mesh) {
                 Inkscape::Rubberband::get(desktop)->start(desktop, button_dt);
-            } else {
-                // remember clicked item, disregarding groups, honoring Alt; do nothing with Crtl to
-                // enable Ctrl+doubleclick of exactly the selected item(s)
-                if (!(event->button.state & GDK_CONTROL_MASK)) {
-                    this->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
-                }
-
-                if (!selection->isEmpty()) {
-                    SnapManager &m = desktop->namedview->snap_manager;
-                    m.setup(desktop);
-                    m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
-                    m.unSetup();
-                }
-
-                this->origin = button_dt;
             }
+
+            // remember clicked item, disregarding groups, honoring Alt; do nothing with Crtl to
+            // enable Ctrl+doubleclick of exactly the selected item(s)
+            if (!(event->button.state & GDK_CONTROL_MASK)) {
+                this->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
+            }
+
+            if (!selection->isEmpty()) {
+                SnapManager &m = desktop->namedview->snap_manager;
+                m.setup(desktop);
+                m.freeSnapReturnByRef(button_dt, Inkscape::SNAPSOURCE_NODE_HANDLE);
+                m.unSetup();
+            }
+
+            this->origin = button_dt;
 
             ret = TRUE;
         }
@@ -679,19 +705,14 @@ bool MeshTool::root_handler(GdkEvent* event) {
             }
 
             // Change cursor shape if over line
-            bool over_line = false;
+            std::vector<SPCtrlLine *> over_line =
+                sp_mesh_context_over_line(this, Geom::Point(event->motion.x, event->motion.y));
 
-            if (!drag->lines.empty()) {
-                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() ; ++l) {
-                    over_line |= sp_mesh_context_is_over_line (this, *l, Geom::Point(event->motion.x, event->motion.y));
-                }
-            }
-
-            if (this->cursor_addnode && !over_line) {
+            if (this->cursor_addnode && over_line.empty()) {
                 this->cursor_shape = cursor_gradient_xpm;
                 this->sp_event_context_update_cursor();
                 this->cursor_addnode = false;
-            } else if (!this->cursor_addnode && over_line) {
+            } else if (!this->cursor_addnode && !over_line.empty()) {
                 this->cursor_shape = cursor_gradient_add_xpm;
                 this->sp_event_context_update_cursor();
                 this->cursor_addnode = true;
@@ -708,23 +729,15 @@ bool MeshTool::root_handler(GdkEvent* event) {
         this->xp = this->yp = 0;
 
         if ( event->button.button == 1 && !this->space_panning ) {
+
             // Check if over line
-            bool over_line = false;
-            SPCtrlLine *line = NULL;
-
-            if (!drag->lines.empty()) {
-                for (std::vector<SPCtrlLine *>::const_iterator l = drag->lines.begin(); l != drag->lines.end() && (!over_line); ++l) {
-                    over_line = sp_mesh_context_is_over_line (this, *l, Geom::Point(event->motion.x, event->motion.y));
-
-                    if (over_line) {
-                        break;
-                    }
-                }
-            }
+            std::vector<SPCtrlLine *> over_line =
+                sp_mesh_context_over_line(this, Geom::Point(event->motion.x, event->motion.y));
 
             if ( (event->button.state & GDK_CONTROL_MASK) && (event->button.state & GDK_MOD1_MASK ) ) {
-                if (over_line && line) {
-                    sp_mesh_context_split_near_point(this, line->item, this->mousepoint_doc, 0);
+                if (!over_line.empty()) {
+                    sp_mesh_context_split_near_point(this, over_line[0]->item,
+                                                     this->mousepoint_doc, 0);
                     ret = TRUE;
                 }
             } else {
@@ -737,22 +750,47 @@ bool MeshTool::root_handler(GdkEvent* event) {
                 }
 
                 if (!this->within_tolerance) {
-                    // we've been dragging, either create a new gradient
-                    // or rubberband-select if we have rubberband
-                    Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
 
-                    if (r->is_started() && !this->within_tolerance) {
-                        // this was a rubberband drag
-                        if (r->getMode() == RUBBERBAND_MODE_RECT) {
-                            Geom::OptRect const b = r->getRectangle();
-                            drag->selectRect(*b);
+                    // Check if object already has mesh... if it does,
+                    // don't create new mesh with click-drag.
+                    bool has_mesh = false;
+                    if (!selection->isEmpty()) {
+                        SPStyle *style = selection->items().front()->style;
+                        if (style) {
+                            Inkscape::PaintTarget fill_or_stroke =
+                                (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ?
+                                Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
+                            SPPaintServer *server =
+                                (fill_or_stroke == Inkscape::FOR_FILL) ?
+                                style->getFillPaintServer():
+                                style->getStrokePaintServer();
+                            if (server && SP_IS_MESHGRADIENT(server)) 
+                                has_mesh = true;
                         }
-                    } else {
-                        // Create a new mesh gradient
-                        sp_mesh_new_default(*this);
                     }
+
+                    if (!has_mesh) {
+                        sp_mesh_new_default(*this);
+                    } else {
+
+                        // we've been dragging, either create a new gradient
+                        // or rubberband-select if we have rubberband
+                        Inkscape::Rubberband *r = Inkscape::Rubberband::get(desktop);
+
+                        if (r->is_started() && !this->within_tolerance) {
+                            // this was a rubberband drag
+                            if (r->getMode() == RUBBERBAND_MODE_RECT) {
+                                Geom::OptRect const b = r->getRectangle();
+                                if (!(event->button.state & GDK_SHIFT_MASK)) {
+                                    drag->deselectAll();
+                                }
+                                drag->selectRect(*b);
+                            }
+                        }
+                    }
+
                 } else if (this->item_to_select) {
-                    if (over_line && line) {
+                    if (!over_line.empty()) {
                         // Clicked on an existing mesh line, don't change selection. This stops
                         // possible change in selection during a double click with overlapping objects
                     } else {
@@ -760,6 +798,7 @@ bool MeshTool::root_handler(GdkEvent* event) {
                         if (event->button.state & GDK_SHIFT_MASK) {
                             selection->toggle(this->item_to_select);
                         } else {
+                            drag->deselectAll();
                             selection->set(this->item_to_select);
                         }
                     }
@@ -1081,7 +1120,6 @@ static void sp_mesh_new_default(MeshTool &rc) {
     }
 
 }
-
 }
 }
 }
