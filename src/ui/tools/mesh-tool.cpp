@@ -966,6 +966,16 @@ bool MeshTool::root_handler(GdkEvent* event) {
             ret = TRUE;
             break;
 
+        case GDK_KEY_i:
+        case GDK_KEY_I:
+            if (MOD__SHIFT_ONLY(event)) {
+                // Shift+I - insert corners (alternate keybinding for keyboards
+                //           that don't have the Insert key)
+                sp_mesh_context_corner_operation ( this, MG_CORNER_INSERT );
+                ret = TRUE;
+            }
+            break;
+
         case GDK_KEY_Delete:
         case GDK_KEY_KP_Delete:
         case GDK_KEY_BackSpace:
