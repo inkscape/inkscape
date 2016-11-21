@@ -355,12 +355,13 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
 
     std::map<SPMeshGradient*, std::vector<guint> > points;
     std::map<SPMeshGradient*, SPItem*> items;
- 
+    std::map<SPMeshGradient*, Inkscape::PaintTarget> fill_or_stroke;
+
     // Get list of selected draggers for each mesh.
-    // For all selected draggers
+    // For all selected draggers (a dragger may include draggerables from different meshes).
     for (std::set<GrDragger *>::const_iterator i = drag->selected.begin(); i != drag->selected.end(); ++i) {
         GrDragger *dragger = *i;
-        // For all draggables of dragger
+        // For all draggables of dragger (a draggable corresponds to a unique mesh).
         for (std::vector<GrDraggable *>::const_iterator j = dragger->draggables.begin(); j != dragger->draggables.end() ; ++j) { 
             GrDraggable *d = *j;
 
@@ -373,6 +374,7 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
             // Collect points together for same gradient
             points[gradient].push_back( d->point_i );
             items[gradient] = d->item;
+            fill_or_stroke[gradient] = d->fill_or_stroke ? Inkscape::FOR_FILL: Inkscape::FOR_STROKE;
         }
     }
 
@@ -426,6 +428,7 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
 
                     case MG_CORNER_SIDE_TOGGLE:
                         DocumentUndo::done(doc, SP_VERB_CONTEXT_MESH, _("Toggled mesh path type."));
+                        drag->local_change = true; // Don't create new draggers.
                         break;
 
                     case MG_CORNER_SIDE_ARC:
@@ -435,16 +438,17 @@ sp_mesh_context_corner_operation (MeshTool *rc, MeshCornerOperation operation )
 
                     case MG_CORNER_TENSOR_TOGGLE:
                         DocumentUndo::done(doc, SP_VERB_CONTEXT_MESH, _("Toggled mesh tensors."));
+                        drag->local_change = true; // Don't create new draggers.
                         break;
 
                     case MG_CORNER_COLOR_SMOOTH:
                         DocumentUndo::done(doc, SP_VERB_CONTEXT_MESH, _("Smoothed mesh corner color."));
-                        drag->local_change = true;
+                        drag->local_change = true; // Don't create new draggers.
                         break;
 
                     case MG_CORNER_COLOR_PICK:
                         DocumentUndo::done(doc, SP_VERB_CONTEXT_MESH, _("Picked mesh corner color."));
-                        drag->local_change = true;
+                        drag->local_change = true; // Don't create new draggers.
                         break;
 
                     case MG_CORNER_INSERT:

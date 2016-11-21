@@ -168,6 +168,7 @@ public: // FIXME: make more of this private!
 
     bool keep_selection;
 
+    GrDragger *getDraggerFor(GrDraggable *d);
     GrDragger *getDraggerFor(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke);
 
     void grabKnot(GrDragger *dragger, gint x, gint y, guint32 etime);
@@ -185,6 +186,7 @@ public: // FIXME: make more of this private!
     std::vector<SPCtrlLine *> lines;
 
     void updateDraggers();
+    void refreshDraggers();
     void updateLines();
     void updateLevels();
 
@@ -205,11 +207,12 @@ private:
     void addLine( SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke);
     void addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, Inkscape::PaintTarget fill_or_stroke);
 
-    void addDragger(GrDraggable *draggable);
+    GrDragger *addDragger(GrDraggable *draggable);
 
     void addDraggersRadial(SPRadialGradient *rg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
     void addDraggersLinear(SPLinearGradient *lg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
     void addDraggersMesh(  SPMeshGradient   *mg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+    void refreshDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
     bool styleSet( const SPCSSAttr *css );
 

@@ -116,6 +116,7 @@ static void gr_drag_sel_modified(Inkscape::Selection */*selection*/, guint /*fla
 {
     GrDrag *drag = (GrDrag *) data;
     if (drag->local_change) {
+        drag->refreshDraggers ();  // Needed to move mesh handles and toggle visibility
         drag->local_change = false;
     } else {
         drag->updateDraggers ();
@@ -1660,6 +1661,21 @@ GrDragger::~GrDragger()
 /**
  * Select the dragger which has the given draggable.
  */
+GrDragger *GrDrag::getDraggerFor(GrDraggable *d) {
+    for (std::vector<GrDragger *>::const_iterator i = this->draggers.begin(); i != this->draggers.end(); ++i ) {
+        GrDragger *dragger = *i;
+        for (std::vector<GrDraggable *>::const_iterator j = dragger->draggables.begin(); j != dragger->draggables.end(); ++j ) {
+            if (d == *j) {
+                return dragger;
+            }
+        }
+    }
+    return NULL;
+}
+
+/**
+ * Select the dragger which has the given draggable.
+ */
 GrDragger *GrDrag::getDraggerFor(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke)
 {
     for (std::vector<GrDragger *>::const_iterator i = this->draggers.begin(); i != this->draggers.end(); ++i ) {
@@ -1894,7 +1910,7 @@ void GrDrag::addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point 
  * If there already exists a dragger within MERGE_DIST of p, add the draggable to it; otherwise create
  * new dragger and add it to draggers list.
  */
-void GrDrag::addDragger(GrDraggable *draggable)
+GrDragger* GrDrag::addDragger(GrDraggable *draggable)
 {
     Geom::Point p = getGradientCoords(draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
 
@@ -1904,13 +1920,14 @@ void GrDrag::addDragger(GrDraggable *draggable)
             // distance is small, merge this draggable into dragger, no need to create new dragger
             dragger->addDraggable (draggable);
             dragger->updateKnotShape();
-            return;
+            return dragger;
         }
     }
 
     GrDragger *new_dragger = new GrDragger(this, p, draggable);
     // fixme: draggers should be added AFTER the last one: this way tabbing through them will be from begin to end.
     this->draggers.push_back(new_dragger);
+    return new_dragger;
 }
 
 /**
@@ -1991,53 +2008,129 @@ void GrDrag::addDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTa
         for( guint j = 0; j < nodes[i].size(); ++j ) {
 
             // std::cout << " Draggers: " << i << " " << j << " " << nodes[i][j]->node_type << std::endl;
+            switch ( nodes[i][j]->node_type ) {
 
-            if( nodes[i][j]->set ) {
-                switch ( nodes[i][j]->node_type ) {
-
-                    case MG_NODE_TYPE_CORNER:
-                    {
-                        mg->array.corners.push_back( nodes[i][j] );
-                        GrDraggable *corner = new GrDraggable (item, POINT_MG_CORNER, icorner, fill_or_stroke);
-                        addDragger ( corner );
-                        nodes[i][j]->draggable = icorner;
-                        ++icorner;
-                        break;
-                    }
-
-                    case MG_NODE_TYPE_HANDLE:
-                    {
-                        if( show_handles ) {
-                            mg->array.handles.push_back( nodes[i][j] );
-                            GrDraggable *handle = new GrDraggable (item, POINT_MG_HANDLE, ihandle, fill_or_stroke);
-                            addDragger ( handle );
-                            nodes[i][j]->draggable = ihandle;
-                            ++ihandle;
-                            break;
-                        }
-                    }
-
-                    case MG_NODE_TYPE_TENSOR:
-                    {
-                        if( show_handles ) {
-                            mg->array.tensors.push_back( nodes[i][j] );
-                            GrDraggable *tensor = new GrDraggable (item, POINT_MG_TENSOR, itensor, fill_or_stroke);
-                            addDragger ( tensor );
-                            nodes[i][j]->draggable = itensor;
-                            ++itensor;
-                            break;
-                        }
-                    }
-
-                    default:
-                        std::cerr << "Bad Mesh draggable type" << std::endl;
-                        break;
+                case MG_NODE_TYPE_CORNER:
+                {
+                    mg->array.corners.push_back( nodes[i][j] );
+                    GrDraggable *corner = new GrDraggable (item, POINT_MG_CORNER, icorner, fill_or_stroke);
+                    addDragger ( corner );
+                    nodes[i][j]->draggable = icorner;
+                    ++icorner;
+                    break;
                 }
+
+                case MG_NODE_TYPE_HANDLE:
+                {
+                    mg->array.handles.push_back( nodes[i][j] );
+                    GrDraggable *handle = new GrDraggable (item, POINT_MG_HANDLE, ihandle, fill_or_stroke);
+                    GrDragger* dragger = addDragger ( handle );
+
+                    if( !show_handles || !nodes[i][j]->set ) {
+                        dragger->knot->hide();
+                    }
+                    nodes[i][j]->draggable = ihandle;
+                    ++ihandle;
+                    break;
+                }
+
+                case MG_NODE_TYPE_TENSOR:
+                {
+                    mg->array.tensors.push_back( nodes[i][j] );
+                    GrDraggable *tensor = new GrDraggable (item, POINT_MG_TENSOR, itensor, fill_or_stroke);
+                    GrDragger* dragger = addDragger ( tensor );
+                    if( show_handles || !nodes[i][j]->set ) {
+                        dragger->knot->hide();
+                    }
+                    nodes[i][j]->draggable = itensor;
+                    ++itensor;
+                    break;
+                }
+
+                default:
+                    std::cerr << "Bad Mesh draggable type" << std::endl;
+                    break;
             }
         }
     }
 
     mg->array.draggers_valid = true;
+}
+
+/**
+ * Refresh draggers, moving and toggling visibility as necessary.
+ * Does not regenerate draggers (as does updateDraggersMesh()).
+ */
+void GrDrag::refreshDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTarget fill_or_stroke)
+{
+    mg->ensureArray();
+    std::vector< std::vector< SPMeshNode* > > nodes = mg->array.nodes;
+
+    bool show_handles = true; //abs(prefs->getBool("/tools/mesh/show_handles", true));
+
+    // Make sure we have at least one patch defined.
+    if( mg->array.patch_rows() == 0 || mg->array.patch_columns() == 0 ) {
+
+        std::cerr << "GrDrag::refreshDraggersMesh: Empty Mesh, No Draggers to refresh!" << std::endl;
+        return;
+    }
+
+    guint ihandle = 0;
+    guint itensor = 0;
+
+    for( guint i = 0; i < nodes.size(); ++i ) {
+        for( guint j = 0; j < nodes[i].size(); ++j ) {
+
+            // std::cout << " Draggers: " << i << " " << j << " " << nodes[i][j]->node_type << std::endl;
+
+            switch ( nodes[i][j]->node_type ) {
+
+                case MG_NODE_TYPE_CORNER:
+                    // Do nothing, corners are always shown.
+                    break;
+
+                case MG_NODE_TYPE_HANDLE:
+                {
+                    GrDragger* dragger = getDraggerFor(item, POINT_MG_HANDLE, ihandle, fill_or_stroke);
+                    if (dragger) {
+                        Geom::Point pk = getGradientCoords( item, POINT_MG_HANDLE, ihandle, fill_or_stroke);
+                        dragger->knot->moveto(pk);
+                        if( !show_handles || !nodes[i][j]->set ) {
+                            dragger->knot->hide();
+                        } else {
+                            dragger->knot->show();
+                        }
+                    } else {
+                        std::cerr << "GrDrag::refreshDraggersMesh: No dragger!" << std::endl;
+                    }
+                    ++ihandle;
+                    break;
+                }
+
+                case MG_NODE_TYPE_TENSOR:
+                {
+                    GrDragger* dragger = getDraggerFor(item, POINT_MG_TENSOR, itensor, fill_or_stroke);
+                    if (dragger) {
+                        Geom::Point pk = getGradientCoords( item, POINT_MG_TENSOR, itensor, fill_or_stroke);
+                        dragger->knot->moveto(pk);
+                        if( !show_handles || !nodes[i][j]->set ) {
+                            dragger->knot->hide();
+                        } else {
+                            dragger->knot->show();
+                        }
+                    } else {
+                        std::cerr << "GrDrag::refreshDraggersMesh: No dragger!" << std::endl;
+                    }
+                    ++itensor;
+                    break;
+                }
+
+                default:
+                    std::cerr << "Bad Mesh draggable type" << std::endl;
+                    break;
+            }
+        }
+    }
 }
 
 /**
@@ -2110,6 +2203,41 @@ void GrDrag::updateDraggers()
                     addDraggersRadial( SP_RADIALGRADIENT(server), item, Inkscape::FOR_STROKE );
                 } else if ( SP_IS_MESHGRADIENT(server) ) {
                     addDraggersMesh(   SP_MESHGRADIENT(server),   item, Inkscape::FOR_STROKE );
+                }
+            }
+        }
+    }
+}
+
+
+/**
+ * Refresh draggers, moving and toggling visibility as necessary.
+ * Does not regenerate draggers (as does updateDraggers()).
+ * Only applies to mesh gradients.
+ */
+void GrDrag::refreshDraggers()
+{
+
+    g_return_if_fail(this->selection != NULL);
+    auto list = this->selection->items();
+    for (auto i = list.begin(); i != list.end(); ++i) {
+        SPItem *item = *i;
+        SPStyle *style = item->style;
+
+        if (style && (style->fill.isPaintserver())) {
+            SPPaintServer *server = style->getFillPaintServer();
+            if ( server && SP_IS_GRADIENT( server ) ) {
+                if ( SP_IS_MESHGRADIENT(server) ) {
+                    refreshDraggersMesh(   SP_MESHGRADIENT(server),   item, Inkscape::FOR_FILL );
+                }
+            }
+        }
+
+        if (style && (style->stroke.isPaintserver())) {
+            SPPaintServer *server = style->getStrokePaintServer();
+            if ( server && SP_IS_GRADIENT( server ) ) {
+                if ( SP_IS_MESHGRADIENT(server) ) {
+                    refreshDraggersMesh(   SP_MESHGRADIENT(server),   item, Inkscape::FOR_STROKE );
                 }
             }
         }
