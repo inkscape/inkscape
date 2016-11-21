@@ -142,7 +142,7 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
         double xspace  = spacing;
         double noffset = normal_offset;
         double toffset = tang_offset;
-        if (prop_units.get_value() && pattBndsY){
+        if (prop_units.get_value()){
             xspace  *= pattBndsX->extent();
             noffset *= pattBndsY->extent();
             toffset *= pattBndsX->extent();
@@ -171,7 +171,7 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
             Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(path_i,2,.1);
             uskeleton = remove_short_cuts(uskeleton,.01);
             Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
-            n = force_continuity(remove_short_cuts(n,.1));
+            n = force_continuity(remove_short_cuts(n,.1),.01);
             
             int nbCopies = 0;
             double scaling = 1;
@@ -210,16 +210,14 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
             
             double pattWidth = pattBndsX->extent() * scaling;
             
-            if (scaling != 1.0) {
-                x*=scaling;
-            }
+            x*=scaling;
             if ( scale_y_rel.get_value() ) {
-                y*=(scaling*prop_scale);
+                y*=(scaling * prop_scale);
             } else {
-                if (prop_scale != 1.0) y *= prop_scale;
+                y *= prop_scale;
             }
             x += toffset;
-            
+
             double offs = 0;
             for (int i=0; i<nbCopies; i++){
                 if (fuse_tolerance > 0){        
