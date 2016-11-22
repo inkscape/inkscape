@@ -534,7 +534,7 @@ void InkscapePreferences::initPageUI()
         _("Hebrew (he)"), _("Hindi (hi)"), _("Hungarian (hu)"),
         _("Icelandic (is)"), _("Indonesian (id)"), _("Irish (ga)"), _("Italian (it)"),
         _("Japanese (ja)"),
-        _("Kannada (kn)"), _("Kashmiri in Peso-Arabic script (ks@aran)"), _("Kashmiri in Devanagari script (ks@deva)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Konkani (kok)"), _("Konkani in Latin script (kok@latin)"), _("Korean (ko)"),
+        _("Kannada (kn)"), _("Kashmiri in Perso-Arabic script (ks@aran)"), _("Kashmiri in Devanagari script (ks@deva)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Konkani (kok)"), _("Konkani in Latin script (kok@latin)"), _("Korean (ko)"),
         _("Latvian (lv)"), _("Lithuanian (lt)"),
         _("Macedonian (mk)"), _("Maithili (mai)"), _("Malayalam (ml)"), _("Manipuri (mni)"), _("Manipuri in Bengali script (mni@beng)"), _("Marathi (mr)"), _("Mongolian (mn)"),
         _("Nepali (ne)"), _("Norwegian Bokmål (nb)"), _("Norwegian Nynorsk (nn)"),
