@@ -33,6 +33,8 @@ struct SPCtrlLine : public SPCanvasItem {
 
 
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
+    bool is_fill;  // fill or stroke... used with meshes.
+
     guint32 rgba;
     Geom::Point s;
     Geom::Point e;

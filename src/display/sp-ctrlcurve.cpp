@@ -47,6 +47,8 @@ sp_ctrlcurve_init(SPCtrlCurve *ctrlcurve)
     // Points are initialized to 0,0
     ctrlcurve->rgba = 0x0000ff7f;
     ctrlcurve->item=NULL;
+    ctrlcurve->corner0 = -1;
+    ctrlcurve->corner1 = -1;
 }
 
 namespace {

@@ -205,7 +205,7 @@ private:
     void deselect_all();
 
     void addLine( SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke);
-    void addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, Inkscape::PaintTarget fill_or_stroke);
+    void addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, int corner0, int corner1, Inkscape::PaintTarget fill_or_stroke);
 
     GrDragger *addDragger(GrDraggable *draggable);
 

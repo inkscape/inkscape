@@ -1885,6 +1885,7 @@ void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::Pai
 
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;
+    line->is_fill = (fill_or_stroke == Inkscape::FOR_FILL);
     sp_canvas_item_show(line);
     this->lines.push_back(line);
 }
@@ -1894,13 +1895,18 @@ void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::Pai
 /**
  * Create a curve from p0 to p3 and add it to the lines list. Used for mesh sides.
  */
-void GrDrag::addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, Inkscape::PaintTarget fill_or_stroke)
+void GrDrag::addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3,
+                      int corner0, int corner1, Inkscape::PaintTarget fill_or_stroke)
 {
+    // CtrlLineType only sets color
     CtrlLineType type = (fill_or_stroke == Inkscape::FOR_FILL) ? CTLINE_PRIMARY : CTLINE_SECONDARY;
     SPCtrlCurve *line = ControlManager::getManager().createControlCurve(this->desktop->getControls(), p0, p1, p2, p3, type); 
+    line->corner0 = corner0;
+    line->corner1 = corner1;
 
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;
+    line->is_fill = (fill_or_stroke == Inkscape::FOR_FILL);
     sp_canvas_item_show (line);
     this->lines.push_back(line);
 }
@@ -2304,12 +2310,18 @@ void GrDrag::updateLines()
 
                             SPMeshPatchI patch( &(mg->array.nodes), i, j );
 
+                            // clockwise around patch, used to find corner dragger
+                            int corner0 = i * (columns + 1) + j;
+                            int corner1 = corner0 + 1;
+                            int corner2 = corner1 + columns + 1;
+                            int corner3 = corner2 - 1;
+
                             // Top line
                             h = patch.getPointsForSide( 0 );
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
-                            addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
+                            addCurve (item, h[0], h[1], h[2], h[3], corner0, corner1, Inkscape::FOR_FILL );
 
                             // Right line
                             if( j == columns - 1 ) {
@@ -2317,7 +2329,7 @@ void GrDrag::updateLines()
                                 for( guint p = 0; p < 4; ++p ) {
                                     h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                                 }
-                                addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
+                                addCurve (item, h[0], h[1], h[2], h[3], corner1, corner2, Inkscape::FOR_FILL );
                             }
 
                             // Bottom line
@@ -2326,7 +2338,7 @@ void GrDrag::updateLines()
                                 for( guint p = 0; p < 4; ++p ) {
                                     h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                                 }
-                                addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
+                                addCurve (item, h[0], h[1], h[2], h[3], corner2, corner3, Inkscape::FOR_FILL );
                             }
 
                             // Left line
@@ -2334,7 +2346,7 @@ void GrDrag::updateLines()
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
-                            addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
+                            addCurve (item, h[0], h[1], h[2], h[3], corner3, corner0, Inkscape::FOR_FILL );
                         }
                     }
                 }                        
@@ -2367,12 +2379,18 @@ void GrDrag::updateLines()
 
                             SPMeshPatchI patch( &(mg->array.nodes), i, j );
 
+                            // clockwise around patch, used to find corner dragger
+                            int corner0 = i * (columns + 1) + j;
+                            int corner1 = corner0 + 1;
+                            int corner2 = corner1 + columns + 1;
+                            int corner3 = corner2 - 1;
+
                             // Top line
                             h = patch.getPointsForSide( 0 );
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
-                            addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
+                            addCurve (item, h[0], h[1], h[2], h[3], corner0, corner1, Inkscape::FOR_STROKE );
 
                             // Right line
                             if( j == columns - 1 ) {
@@ -2380,7 +2398,7 @@ void GrDrag::updateLines()
                                 for( guint p = 0; p < 4; ++p ) {
                                     h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                                 }
-                                addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
+                                addCurve (item, h[0], h[1], h[2], h[3], corner1, corner2, Inkscape::FOR_STROKE );
                             }
 
                             // Bottom line
@@ -2389,7 +2407,7 @@ void GrDrag::updateLines()
                                 for( guint p = 0; p < 4; ++p ) {
                                     h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                                 }
-                                addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
+                                addCurve (item, h[0], h[1], h[2], h[3], corner2, corner3, Inkscape::FOR_STROKE );
                             }
 
                             // Left line
@@ -2397,7 +2415,7 @@ void GrDrag::updateLines()
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
-                            addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
+                            addCurve (item, h[0], h[1], h[2], h[3], corner3, corner0, Inkscape::FOR_STROKE );
                         }
                     }                        
                 }

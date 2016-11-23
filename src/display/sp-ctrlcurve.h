@@ -31,6 +31,9 @@ struct SPCtrlCurve : public SPCtrlLine {
                     Geom::Point const &q2, Geom::Point const &q3);
 
     Geom::Point p0, p1, p2, p3;
+
+    int corner0;  // Used to store index of corner for finding dragger.
+    int corner1;
 };
 
 GType sp_ctrlcurve_get_type();
