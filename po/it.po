@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.92\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-21 22:04+0200\n"
+"POT-Creation-Date: 2016-11-13 16:11+0100\n"
 "PO-Revision-Date: 2016-06-10 15:31+0100\n"
 "Last-Translator: Firas Hanife <FirasHanife@gmail.com>\n"
 "Language-Team: \n"
@@ -5562,7 +5562,7 @@ msgstr "Opacità"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:40
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2924
-#: ../src/ui/dialog/objects.cpp:1629 ../src/widgets/dropper-toolbar.cpp:83
+#: ../src/ui/dialog/objects.cpp:1636 ../src/widgets/dropper-toolbar.cpp:83
 msgid "Opacity:"
 msgstr "Opacità:"
 
@@ -6078,7 +6078,7 @@ msgstr "Colore illuminazione"
 #: ../src/extension/internal/filter/distort.h:95
 #: ../src/extension/internal/filter/distort.h:204
 #: ../src/extension/internal/filter/filter-file.cpp:151
-#: ../src/extension/internal/filter/filter.cpp:211
+#: ../src/extension/internal/filter/filter.cpp:212
 #: ../src/extension/internal/filter/image.h:61
 #: ../src/extension/internal/filter/morphology.h:75
 #: ../src/extension/internal/filter/morphology.h:202
@@ -7992,7 +7992,7 @@ msgstr "Rendering"
 #: ../src/extension/internal/grid.cpp:210
 #: ../src/ui/dialog/document-properties.cpp:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:832
-#: ../src/widgets/toolbox.cpp:1894
+#: ../src/widgets/toolbox.cpp:1896
 msgid "Grids"
 msgstr "Griglie"
 
@@ -8650,7 +8650,7 @@ msgid "Arithmetic"
 msgstr "Aritmetico"
 
 #: ../src/filter-enums.cpp:120 ../src/selection-chemistry.cpp:545
-#: ../src/ui/dialog/objects.cpp:1893
+#: ../src/ui/dialog/objects.cpp:1900
 msgid "Duplicate"
 msgstr "Duplica"
 
@@ -8688,15 +8688,15 @@ msgstr "Luce puntiforme"
 msgid "Spot Light"
 msgstr "Punto luce"
 
-#: ../src/gradient-chemistry.cpp:1586
+#: ../src/gradient-chemistry.cpp:1617
 msgid "Invert gradient colors"
 msgstr "Inverti colori gradiente"
 
-#: ../src/gradient-chemistry.cpp:1613
+#: ../src/gradient-chemistry.cpp:1644
 msgid "Reverse gradient"
 msgstr "Inverti gradiente"
 
-#: ../src/gradient-chemistry.cpp:1627 ../src/widgets/gradient-selector.cpp:222
+#: ../src/gradient-chemistry.cpp:1658 ../src/widgets/gradient-selector.cpp:222
 msgid "Delete swatch"
 msgstr "Cancella campione"
 
@@ -8732,15 +8732,15 @@ msgstr "<b>Fuoco</b> del gradiente radiale"
 msgid "Radial gradient <b>mid stop</b>"
 msgstr "<b>Passaggio intermedio</b> del gradiente lineare"
 
-#: ../src/gradient-drag.cpp:104 ../src/ui/tools/mesh-tool.cpp:93
+#: ../src/gradient-drag.cpp:104 ../src/ui/tools/mesh-tool.cpp:97
 msgid "Mesh gradient <b>corner</b>"
 msgstr "<b>Angolo</b> del gradiente a maglia"
 
-#: ../src/gradient-drag.cpp:105 ../src/ui/tools/mesh-tool.cpp:94
+#: ../src/gradient-drag.cpp:105 ../src/ui/tools/mesh-tool.cpp:98
 msgid "Mesh gradient <b>handle</b>"
 msgstr "<b>Maniglia</b> del gradiente a maglia"
 
-#: ../src/gradient-drag.cpp:106 ../src/ui/tools/mesh-tool.cpp:95
+#: ../src/gradient-drag.cpp:106 ../src/ui/tools/mesh-tool.cpp:99
 #, fuzzy
 msgid "Mesh gradient <b>tensor</b>"
 msgstr "<b>Fine</b> del gradiente a maglia"
@@ -9733,6 +9733,64 @@ msgstr "Dimensione _Y:"
 msgid "The size of the grid in Y direction."
 msgstr "Dimensione della griglia sulla direzione Y."
 
+#: ../src/live_effects/lpe-copy_rotate.cpp:65
+msgid "Origin"
+msgstr "Origine"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:65
+msgid "Origin of the rotation"
+msgstr "Origine della rotazione"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:66
+msgid "Starting:"
+msgstr "Inizio:"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:66
+msgid "Angle of the first copy"
+msgstr "Angolo della prima copia"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:67
+msgid "Rotation angle:"
+msgstr "Angolo di rotazione:"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:67
+msgid "Angle between two successive copies"
+msgstr "Angolo tra due copie successive"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:68
+msgid "Number of copies:"
+msgstr "Numero di copie:"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:68
+msgid "Number of copies of the original path"
+msgstr "Numero di copie del tracciato originale"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:69
+msgid "360º Copies"
+msgstr "Copie a 360°"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:69
+msgid "No rotation angle, fixed to 360º"
+msgstr "Nessun angolo di rotazione, fissato a 360°"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:70
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:73
+msgid "Fuse paths"
+msgstr "Fondi tracciati"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:70
+#, fuzzy
+msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
+msgstr "Fonde i tracciati "
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:431
+msgid "Adjust the starting angle"
+msgstr "Modifica l'angolo di partenza"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:437
+msgid "Adjust the rotation angle"
+msgstr "Modifica l'angolo di rotazione"
+
 #: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Stitch path:"
 msgstr "Tracciato di cucitura:"
@@ -10058,7 +10116,7 @@ msgid "Min Radius:"
 msgstr "Raggio minimo:"
 
 #: ../src/live_effects/lpe-gears.cpp:216
-msgid "Minimun radius, low values can be slow"
+msgid "Minimum radius, low values can be slow"
 msgstr "Raggio minimo, valori piccoli possono rallentarne l'esecuzione"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
@@ -10576,6 +10634,69 @@ msgstr "Mostra punti di controllo"
 #: ../src/live_effects/lpe-lattice2.cpp:283
 msgid "Hide Points"
 msgstr "Nascondi punti"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:35
+msgid "Vertical Page Center"
+msgstr "Centro verticale pagina"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:36
+msgid "Horizontal Page Center"
+msgstr "Centro orizzontale pagina"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:37
+msgid "Free from reflection line"
+msgstr "Libera dalla linea di riflessione"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:38
+msgid "X from middle knot"
+msgstr "Lungo asse X"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:39
+msgid "Y from middle knot"
+msgstr "Lungo asse Y"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:71
+#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
+msgid "Mode"
+msgstr "Modalità"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:71
+msgid "Symmetry move mode"
+msgstr "Modalità di spostamento simmetrico"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:72
+msgid "Discard original path?"
+msgstr "Scarta il tracciato originale"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:72
+msgid "Check this to only keep the mirrored part of the path"
+msgstr ""
+"Selezionare questa opzione per tenere solo la parte speculare del tracciato"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:73
+msgid "Fuse original and the reflection into a single path"
+msgstr "Fonde il tracciato originale e quello riflesso in un unico tracciato"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:74
+msgid "Opposite fuse"
+msgstr "Fusione opposta"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:74
+msgid "Picks the other side of the mirror as the original"
+msgstr "Fonde considerando il tracciato riflesso come originale"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:75
+msgid "Start mirror line"
+msgstr "Inizio linea riflessione"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:76
+msgid "End mirror line"
+msgstr "Fine linea riflessione"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:353
+#, fuzzy
+msgid "Adjust the center"
+msgstr "Modifica l'origine"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:53
 #: ../share/extensions/pathalongpath.inx.h:10
@@ -11546,7 +11667,7 @@ msgstr "Ultimo nodo"
 #: ../src/live_effects/lpe-transform_2pts.cpp:43
 #, fuzzy
 msgid "Rotation helper size"
-msgstr "Centro di rotazione"
+msgstr "Dimensione ausilio di rotazione"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:196
 #, fuzzy
@@ -11683,12 +11804,12 @@ msgid "Remove Path"
 msgstr "Rimuovi tracciato"
 
 #: ../src/live_effects/parameter/originalpatharray.cpp:179
-#: ../src/ui/dialog/objects.cpp:1854
+#: ../src/ui/dialog/objects.cpp:1861
 msgid "Move Down"
 msgstr "Sposta in basso"
 
 #: ../src/live_effects/parameter/originalpatharray.cpp:191
-#: ../src/ui/dialog/objects.cpp:1862
+#: ../src/ui/dialog/objects.cpp:1869
 msgid "Move Up"
 msgstr "Sposta in alto"
 
@@ -11745,18 +11866,16 @@ msgstr "Modifica parametri casuali"
 
 #: ../src/live_effects/parameter/text.cpp:101
 msgid "Change text parameter"
-msgstr "Cambia parametri testo"
+msgstr "Cambia parametro testo"
 
 #: ../src/live_effects/parameter/togglebutton.cpp:114
-#, fuzzy
 msgid "Change togglebutton parameter"
-msgstr "Cambia parametri testo"
+msgstr "Cambia bottone parametro"
 
 #: ../src/live_effects/parameter/transformedpoint.cpp:98
 #: ../src/live_effects/parameter/vector.cpp:99
-#, fuzzy
 msgid "Change vector parameter"
-msgstr "Cambia parametri testo"
+msgstr "Cambia parametro vettoriale"
 
 #: ../src/live_effects/parameter/unit.cpp:80
 msgid "Change unit parameter"
@@ -12579,7 +12698,7 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Nessun gruppo</b> nella selezione da dividere."
 
 #: ../src/selection-chemistry.cpp:901 ../src/sp-item-group.cpp:659
-#: ../src/ui/dialog/objects.cpp:1916
+#: ../src/ui/dialog/objects.cpp:1923
 msgid "Ungroup"
 msgstr "Dividi"
 
@@ -12909,7 +13028,7 @@ msgstr "Crea bitmap"
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Seleziona l'<b>oggetto</b> da cui creare la maschera o il fissaggio."
 
-#: ../src/selection-chemistry.cpp:3850 ../src/ui/dialog/objects.cpp:1922
+#: ../src/selection-chemistry.cpp:3850 ../src/ui/dialog/objects.cpp:1929
 msgid "Create Clip Group"
 msgstr "Crea gruppo di ritaglio"
 
@@ -13167,22 +13286,22 @@ msgstr "a %s"
 msgid "without URI"
 msgstr "senza URI"
 
-#: ../src/sp-ellipse.cpp:356
+#: ../src/sp-ellipse.cpp:357
 msgid "Segment"
 msgstr "Segmento"
 
-#: ../src/sp-ellipse.cpp:358
+#: ../src/sp-ellipse.cpp:359
 msgid "Arc"
 msgstr "Arco"
 
 #. Ellipse
-#: ../src/sp-ellipse.cpp:361 ../src/sp-ellipse.cpp:368
+#: ../src/sp-ellipse.cpp:362 ../src/sp-ellipse.cpp:369
 #: ../src/ui/dialog/inkscape-preferences.cpp:421
 #: ../src/widgets/pencil-toolbar.cpp:178
 msgid "Ellipse"
 msgstr "Ellisse"
 
-#: ../src/sp-ellipse.cpp:365
+#: ../src/sp-ellipse.cpp:366
 msgid "Circle"
 msgstr "Cerchio"
 
@@ -13269,7 +13388,7 @@ msgstr "[riferimento errato]: %s"
 msgid "%d &#215; %d: %s"
 msgstr "%d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:318 ../src/ui/dialog/objects.cpp:1915
+#: ../src/sp-item-group.cpp:318 ../src/ui/dialog/objects.cpp:1922
 msgid "Group"
 msgstr "Gruppo"
 
@@ -13734,41 +13853,41 @@ msgid "Trace: Done. %ld nodes created"
 msgstr "Vettorizza: Eseguito. %ld nodi creati"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:261
+#: ../src/ui/clipboard.cpp:262
 msgid "Nothing was copied."
 msgstr "Niente da copiare."
 
-#: ../src/ui/clipboard.cpp:392 ../src/ui/clipboard.cpp:606
-#: ../src/ui/clipboard.cpp:635
+#: ../src/ui/clipboard.cpp:393 ../src/ui/clipboard.cpp:607
+#: ../src/ui/clipboard.cpp:636
 msgid "Nothing on the clipboard."
 msgstr "Niente negli appunti."
 
-#: ../src/ui/clipboard.cpp:450
+#: ../src/ui/clipboard.cpp:451
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Seleziona l'<b>oggetto</b> a cui incollare lo stile."
 
-#: ../src/ui/clipboard.cpp:461 ../src/ui/clipboard.cpp:478
+#: ../src/ui/clipboard.cpp:462 ../src/ui/clipboard.cpp:479
 msgid "No style on the clipboard."
 msgstr "Nessun stile negli appunti."
 
-#: ../src/ui/clipboard.cpp:503
+#: ../src/ui/clipboard.cpp:504
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Seleziona l'<b>oggetto</b> a cui incollare la dimensione."
 
-#: ../src/ui/clipboard.cpp:510
+#: ../src/ui/clipboard.cpp:511
 msgid "No size on the clipboard."
 msgstr "Nessuna dimensione negli appunti."
 
-#: ../src/ui/clipboard.cpp:567
+#: ../src/ui/clipboard.cpp:568
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr "Seleziona l'<b>oggetto</b> a cui incollare l'effetto su tracciato."
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:593
+#: ../src/ui/clipboard.cpp:594
 msgid "No effect on the clipboard."
 msgstr "Nessun effetto negli appunti."
 
-#: ../src/ui/clipboard.cpp:612 ../src/ui/clipboard.cpp:649
+#: ../src/ui/clipboard.cpp:613 ../src/ui/clipboard.cpp:650
 msgid "Clipboard does not contain a path."
 msgstr "Nessun tracciato negli appunti."
 
@@ -13886,7 +14005,7 @@ msgid "Rearrange"
 msgstr "Ordinamento"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:941
-#: ../src/widgets/toolbox.cpp:1796
+#: ../src/widgets/toolbox.cpp:1798
 msgid "Nodes"
 msgstr "Nodi"
 
@@ -15159,7 +15278,7 @@ msgstr "_Rimuovi"
 msgid "Remove selected grid."
 msgstr "Rimuove la griglia selezionata."
 
-#: ../src/ui/dialog/document-properties.cpp:162 ../src/widgets/toolbox.cpp:1903
+#: ../src/ui/dialog/document-properties.cpp:162 ../src/widgets/toolbox.cpp:1905
 msgid "Guides"
 msgstr "Guide"
 
@@ -15274,7 +15393,7 @@ msgid "<b>Embedded script files:</b>"
 msgstr "<b>File di script incorporati:</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:885
-#: ../src/ui/dialog/objects.cpp:1894
+#: ../src/ui/dialog/objects.cpp:1901
 msgid "New"
 msgstr "Nuovo"
 
@@ -16689,7 +16808,7 @@ msgstr "Spirali"
 msgid "Search spirals"
 msgstr "Cerca spirali"
 
-#: ../src/ui/dialog/find.cpp:103 ../src/widgets/toolbox.cpp:1804
+#: ../src/ui/dialog/find.cpp:103 ../src/widgets/toolbox.cpp:1806
 msgid "Paths"
 msgstr "Tracciati"
 
@@ -20163,7 +20282,7 @@ msgid "_Zoom in/out by:"
 msgstr "In_grandimento/Riduzione:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1335
-#: ../src/ui/dialog/objects.cpp:1630
+#: ../src/ui/dialog/objects.cpp:1637
 #: ../src/ui/widget/filter-effect-chooser.cpp:27
 msgid "%"
 msgstr "%"
@@ -21417,49 +21536,49 @@ msgstr "Imposta opacità oggetto"
 msgid "Set object blend mode"
 msgstr "Imposta modalità miscela oggetto"
 
-#: ../src/ui/dialog/objects.cpp:1558
+#: ../src/ui/dialog/objects.cpp:1565
 msgid "Set object blur"
 msgstr "Imposta sfocatura oggetto"
 
-#: ../src/ui/dialog/objects.cpp:1621
+#: ../src/ui/dialog/objects.cpp:1628
 msgctxt "Visibility"
 msgid "V"
 msgstr "V"
 
-#: ../src/ui/dialog/objects.cpp:1622
+#: ../src/ui/dialog/objects.cpp:1629
 msgctxt "Lock"
 msgid "L"
 msgstr "B"
 
-#: ../src/ui/dialog/objects.cpp:1623
+#: ../src/ui/dialog/objects.cpp:1630
 msgctxt "Type"
 msgid "T"
 msgstr "T"
 
-#: ../src/ui/dialog/objects.cpp:1624
+#: ../src/ui/dialog/objects.cpp:1631
 msgctxt "Clip and mask"
 msgid "CM"
 msgstr "FM"
 
-#: ../src/ui/dialog/objects.cpp:1625
+#: ../src/ui/dialog/objects.cpp:1632
 msgctxt "Highlight"
 msgid "HL"
 msgstr "CS"
 
-#: ../src/ui/dialog/objects.cpp:1626
+#: ../src/ui/dialog/objects.cpp:1633
 msgid "Label"
 msgstr "Etichetta"
 
 #. In order to get tooltips on header, we must create our own label.
-#: ../src/ui/dialog/objects.cpp:1668
+#: ../src/ui/dialog/objects.cpp:1675
 msgid "Toggle visibility of Layer, Group, or Object."
 msgstr "Imposta la visibilità del livello, gruppo o oggetto."
 
-#: ../src/ui/dialog/objects.cpp:1681
+#: ../src/ui/dialog/objects.cpp:1688
 msgid "Toggle lock of Layer, Group, or Object."
 msgstr "Imposta il blocco del livello, gruppo o oggetto."
 
-#: ../src/ui/dialog/objects.cpp:1693
+#: ../src/ui/dialog/objects.cpp:1700
 msgid ""
 "Type: Layer, Group, or Object. Clicking on Layer or Group icon, toggles "
 "between the two types."
@@ -21467,11 +21586,11 @@ msgstr ""
 "Tipo: Livello, Gruppo o Oggetto. Cliccando sull'icona di Livello o Gruppo si "
 "commuta tra i due tipi."
 
-#: ../src/ui/dialog/objects.cpp:1712
+#: ../src/ui/dialog/objects.cpp:1719
 msgid "Is object clipped and/or masked?"
 msgstr "Oggetto con fissaggio e/o maschera"
 
-#: ../src/ui/dialog/objects.cpp:1723
+#: ../src/ui/dialog/objects.cpp:1730
 msgid ""
 "Highlight color of outline in Node tool. Click to set. If alpha is zero, use "
 "inherited color."
@@ -21480,7 +21599,7 @@ msgstr ""
 "modifica nodi. Clicca per impostare. Se alpha è zero, utilizza il colore "
 "predefinito."
 
-#: ../src/ui/dialog/objects.cpp:1734
+#: ../src/ui/dialog/objects.cpp:1741
 msgid ""
 "Layer/Group/Object label (inkscape:label). Double-click to set. Default "
 "value is object 'id'."
@@ -21488,83 +21607,83 @@ msgstr ""
 "Etichetta del Livello/Gruppo/Oggetto (inkscape:label). Fai doppio clic per "
 "impostarla. Il valore predefinito è l''id' dell'oggetto."
 
-#: ../src/ui/dialog/objects.cpp:1831
+#: ../src/ui/dialog/objects.cpp:1838
 msgid "Add layer..."
 msgstr "Aggiungi livello..."
 
-#: ../src/ui/dialog/objects.cpp:1838
+#: ../src/ui/dialog/objects.cpp:1845
 msgid "Remove object"
 msgstr "Rimuovi oggetto"
 
-#: ../src/ui/dialog/objects.cpp:1846
+#: ../src/ui/dialog/objects.cpp:1853
 msgid "Move To Bottom"
 msgstr "Sposta in fondo"
 
-#: ../src/ui/dialog/objects.cpp:1870
+#: ../src/ui/dialog/objects.cpp:1877
 msgid "Move To Top"
 msgstr "Sposta in cima"
 
-#: ../src/ui/dialog/objects.cpp:1878
+#: ../src/ui/dialog/objects.cpp:1885
 msgid "Collapse All"
 msgstr "Comprimi tutto"
 
-#: ../src/ui/dialog/objects.cpp:1892
+#: ../src/ui/dialog/objects.cpp:1899
 msgid "Rename"
 msgstr "Rinomina"
 
-#: ../src/ui/dialog/objects.cpp:1898
+#: ../src/ui/dialog/objects.cpp:1905
 msgid "Solo"
 msgstr "Solo"
 
-#: ../src/ui/dialog/objects.cpp:1899
+#: ../src/ui/dialog/objects.cpp:1906
 msgid "Show All"
 msgstr "Mostra tutti"
 
-#: ../src/ui/dialog/objects.cpp:1900
+#: ../src/ui/dialog/objects.cpp:1907
 msgid "Hide All"
 msgstr "Nascondi tutti"
 
-#: ../src/ui/dialog/objects.cpp:1904
+#: ../src/ui/dialog/objects.cpp:1911
 msgid "Lock Others"
 msgstr "Blocca altri"
 
-#: ../src/ui/dialog/objects.cpp:1905
+#: ../src/ui/dialog/objects.cpp:1912
 msgid "Lock All"
 msgstr "Blocca tutti"
 
 #. LockAndHide
-#: ../src/ui/dialog/objects.cpp:1906 ../src/verbs.cpp:3011
+#: ../src/ui/dialog/objects.cpp:1913 ../src/verbs.cpp:3011
 msgid "Unlock All"
 msgstr "Sblocca tutti"
 
-#: ../src/ui/dialog/objects.cpp:1910
+#: ../src/ui/dialog/objects.cpp:1917
 msgid "Up"
 msgstr "Alza"
 
-#: ../src/ui/dialog/objects.cpp:1911
+#: ../src/ui/dialog/objects.cpp:1918
 msgid "Down"
 msgstr "Abbassa"
 
-#: ../src/ui/dialog/objects.cpp:1920
+#: ../src/ui/dialog/objects.cpp:1927
 msgid "Set Clip"
 msgstr "Imposta fissaggio"
 
 #. will never be implemented
 #. _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_OBJECT_SET_INVERSE_CLIPPATH, 0, "Set Inverse Clip", (int)BUTTON_SETINVCLIP ) );
-#: ../src/ui/dialog/objects.cpp:1926
+#: ../src/ui/dialog/objects.cpp:1933
 msgid "Unset Clip"
 msgstr "Rimuovi fissaggio"
 
 #. Set mask
-#: ../src/ui/dialog/objects.cpp:1930 ../src/ui/interface.cpp:1754
+#: ../src/ui/dialog/objects.cpp:1937 ../src/ui/interface.cpp:1754
 msgid "Set Mask"
 msgstr "Imposta maschera"
 
-#: ../src/ui/dialog/objects.cpp:1931
+#: ../src/ui/dialog/objects.cpp:1938
 msgid "Unset Mask"
 msgstr "Rimuovi maschera"
 
-#: ../src/ui/dialog/objects.cpp:1953
+#: ../src/ui/dialog/objects.cpp:1960
 msgid "Select Highlight Color"
 msgstr "Seleziona colore di evidenziazione"
 
@@ -24045,29 +24164,29 @@ msgstr ""
 "b> per riempire al tocco"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/ui/tools/freehand-base.cpp:661
+#: ../src/ui/tools/freehand-base.cpp:674 ../src/ui/tools/freehand-base.cpp:756
 msgid "Path is closed."
 msgstr "Il tracciato è chiuso."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/ui/tools/freehand-base.cpp:676
+#: ../src/ui/tools/freehand-base.cpp:689
 msgid "Closing path."
 msgstr "Chiusura tracciato."
 
-#: ../src/ui/tools/freehand-base.cpp:825
+#: ../src/ui/tools/freehand-base.cpp:833
 msgid "Draw path"
 msgstr "Disegna tracciato"
 
-#: ../src/ui/tools/freehand-base.cpp:978
+#: ../src/ui/tools/freehand-base.cpp:986
 msgid "Creating single dot"
 msgstr "Creazione singolo punto"
 
-#: ../src/ui/tools/freehand-base.cpp:979
+#: ../src/ui/tools/freehand-base.cpp:987
 msgid "Create single dot"
 msgstr "Crea singolo punto"
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
-#: ../src/ui/tools/gradient-tool.cpp:121 ../src/ui/tools/mesh-tool.cpp:120
+#: ../src/ui/tools/gradient-tool.cpp:121 ../src/ui/tools/mesh-tool.cpp:124
 #, c-format
 msgid "%s selected"
 msgstr "%s selezionato"
@@ -24082,8 +24201,8 @@ msgstr[1] " con %d maniglie di gradiente"
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
 #: ../src/ui/tools/gradient-tool.cpp:124 ../src/ui/tools/gradient-tool.cpp:133
-#: ../src/ui/tools/gradient-tool.cpp:140 ../src/ui/tools/mesh-tool.cpp:123
-#: ../src/ui/tools/mesh-tool.cpp:134 ../src/ui/tools/mesh-tool.cpp:142
+#: ../src/ui/tools/gradient-tool.cpp:140 ../src/ui/tools/mesh-tool.cpp:127
+#: ../src/ui/tools/mesh-tool.cpp:138 ../src/ui/tools/mesh-tool.cpp:146
 #, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
@@ -24091,7 +24210,7 @@ msgstr[0] " su %d oggetto selezionati"
 msgstr[1] " su %d oggetti selezionati"
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
-#: ../src/ui/tools/gradient-tool.cpp:130 ../src/ui/tools/mesh-tool.cpp:130
+#: ../src/ui/tools/gradient-tool.cpp:130 ../src/ui/tools/mesh-tool.cpp:134
 #, c-format
 msgid ""
 "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
@@ -24133,7 +24252,7 @@ msgstr "Semplifica radiente"
 msgid "Create default gradient"
 msgstr "Crea gradiente predefinito"
 
-#: ../src/ui/tools/gradient-tool.cpp:569 ../src/ui/tools/mesh-tool.cpp:564
+#: ../src/ui/tools/gradient-tool.cpp:569 ../src/ui/tools/mesh-tool.cpp:628
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>Trascina</b> attorno alle maniglie per selezionarle"
 
@@ -24145,7 +24264,7 @@ msgstr "<b>Ctrl</b>: fa scattare l'angolo del gradiente"
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Maiusc</b>: disegna il gradiente attorno al punto iniziale"
 
-#: ../src/ui/tools/gradient-tool.cpp:946 ../src/ui/tools/mesh-tool.cpp:980
+#: ../src/ui/tools/gradient-tool.cpp:946 ../src/ui/tools/mesh-tool.cpp:1055
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
@@ -24154,7 +24273,7 @@ msgstr[0] ""
 msgstr[1] ""
 "<b>Gradiente</b> per %d oggetti; con <b>Ctrl</b> per far scattare l'angolo"
 
-#: ../src/ui/tools/gradient-tool.cpp:950 ../src/ui/tools/mesh-tool.cpp:984
+#: ../src/ui/tools/gradient-tool.cpp:950 ../src/ui/tools/mesh-tool.cpp:1059
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Seleziona l'<b>oggetto</b> su cui creare il gradiente."
 
@@ -24204,14 +24323,14 @@ msgid "Crossing %lu"
 msgstr "Intersezione %lu"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/ui/tools/mesh-tool.cpp:122 ../src/ui/tools/mesh-tool.cpp:133
+#: ../src/ui/tools/mesh-tool.cpp:126 ../src/ui/tools/mesh-tool.cpp:137
 #, c-format
 msgid " out of %d mesh handle"
 msgid_plural " out of %d mesh handles"
 msgstr[0] " su %d maniglia del gradiente a maglia"
 msgstr[1] " su %d maniglie del gradiente a maglia"
 
-#: ../src/ui/tools/mesh-tool.cpp:140
+#: ../src/ui/tools/mesh-tool.cpp:144
 #, c-format
 msgid "<b>%d</b> mesh handle selected out of %d"
 msgid_plural "<b>%d</b> mesh handles selected out of %d"
@@ -24219,7 +24338,7 @@ msgstr[0] "<b>%d</b> maniglia del gradiente a maglia selezionata su %d"
 msgstr[1] "<b>%d</b> maniglie del gradiente a maglia selezionate su %d"
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/ui/tools/mesh-tool.cpp:147
+#: ../src/ui/tools/mesh-tool.cpp:151
 #, fuzzy, c-format
 msgid "<b>No</b> mesh handles selected out of %d on %d selected object"
 msgid_plural "<b>No</b> mesh handles selected out of %d on %d selected objects"
@@ -24230,46 +24349,47 @@ msgstr[1] ""
 "<b>Nessuna</b> maniglia di gradiente selezionata su %d per %d oggetti nella "
 "selezione"
 
-#: ../src/ui/tools/mesh-tool.cpp:315
+#: ../src/ui/tools/mesh-tool.cpp:319
 msgid "Split mesh row/column"
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:401
+#: ../src/ui/tools/mesh-tool.cpp:405
 msgid "Toggled mesh path type."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:405
+#: ../src/ui/tools/mesh-tool.cpp:409
 msgid "Approximated arc for mesh side."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:409
+#: ../src/ui/tools/mesh-tool.cpp:413
 msgid "Toggled mesh tensors."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:413
+#: ../src/ui/tools/mesh-tool.cpp:417
 #, fuzzy
 msgid "Smoothed mesh corner color."
 msgstr "Shader liscio contornato"
 
-#: ../src/ui/tools/mesh-tool.cpp:417
+#: ../src/ui/tools/mesh-tool.cpp:421
 #, fuzzy
 msgid "Picked mesh corner color."
 msgstr "Preleva l'opacità del colore"
 
-#: ../src/ui/tools/mesh-tool.cpp:492
-msgid "Create default mesh"
-msgstr "Crea maglia predefinita"
+#: ../src/ui/tools/mesh-tool.cpp:489
+#, fuzzy
+msgid "Fit mesh inside bounding box."
+msgstr "Usa il riquadro visivo"
 
-#: ../src/ui/tools/mesh-tool.cpp:715
+#: ../src/ui/tools/mesh-tool.cpp:779
 msgid "FIXME<b>Ctrl</b>: snap mesh angle"
 msgstr "<b>Ctrl</b>: fa scattare l'angolo del gradiente a maglia"
 
-#: ../src/ui/tools/mesh-tool.cpp:716
+#: ../src/ui/tools/mesh-tool.cpp:780
 #, fuzzy
 msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
 msgstr "<b>Maiusc</b>: disegna attorno al punto iniziale"
 
-#: ../src/ui/tools/mesh-tool.cpp:974
+#: ../src/ui/tools/mesh-tool.cpp:1049
 #, fuzzy
 msgid "Create mesh"
 msgstr "Crea maglia predefinita"
@@ -25431,8 +25551,8 @@ msgid "Document license updated"
 msgstr "Licenza documento aggiornata"
 
 #: ../src/ui/widget/object-composite-settings.cpp:47
-#: ../src/ui/widget/selected-style.cpp:1118
-#: ../src/ui/widget/selected-style.cpp:1119
+#: ../src/ui/widget/selected-style.cpp:1124
+#: ../src/ui/widget/selected-style.cpp:1125
 msgid "Opacity (%)"
 msgstr "Opacità (%)"
 
@@ -25441,8 +25561,8 @@ msgid "Change blur"
 msgstr "Modifica sfocatura"
 
 #: ../src/ui/widget/object-composite-settings.cpp:200
-#: ../src/ui/widget/selected-style.cpp:942
-#: ../src/ui/widget/selected-style.cpp:1244
+#: ../src/ui/widget/selected-style.cpp:948
+#: ../src/ui/widget/selected-style.cpp:1250
 msgid "Change opacity"
 msgstr "Modifica opacità"
 
@@ -25729,8 +25849,8 @@ msgid "N/A"
 msgstr "N/D"
 
 #: ../src/ui/widget/selected-style.cpp:182
-#: ../src/ui/widget/selected-style.cpp:1111
-#: ../src/ui/widget/selected-style.cpp:1112
+#: ../src/ui/widget/selected-style.cpp:1117
+#: ../src/ui/widget/selected-style.cpp:1118
 #: ../src/widgets/gradient-toolbar.cpp:162
 msgid "Nothing selected"
 msgstr "Nessuna selezione"
@@ -25758,7 +25878,7 @@ msgid "No stroke"
 msgstr "Nessun contorno"
 
 #: ../src/ui/widget/selected-style.cpp:193
-#: ../src/ui/widget/style-swatch.cpp:302 ../src/widgets/paint-selector.cpp:231
+#: ../src/ui/widget/style-swatch.cpp:302 ../src/widgets/paint-selector.cpp:233
 msgid "Pattern"
 msgstr "Motivo"
 
@@ -25836,14 +25956,14 @@ msgstr "<b>Non impostato</b>"
 #: ../src/ui/widget/selected-style.cpp:238
 #: ../src/ui/widget/selected-style.cpp:296
 #: ../src/ui/widget/selected-style.cpp:574
-#: ../src/ui/widget/style-swatch.cpp:328 ../src/widgets/fill-style.cpp:703
+#: ../src/ui/widget/style-swatch.cpp:328 ../src/widgets/fill-style.cpp:815
 msgid "Unset fill"
 msgstr "Disattiva riempimento"
 
 #: ../src/ui/widget/selected-style.cpp:238
 #: ../src/ui/widget/selected-style.cpp:296
 #: ../src/ui/widget/selected-style.cpp:590
-#: ../src/ui/widget/style-swatch.cpp:328 ../src/widgets/fill-style.cpp:703
+#: ../src/ui/widget/style-swatch.cpp:328 ../src/widgets/fill-style.cpp:815
 msgid "Unset stroke"
 msgstr "Disattiva contorno"
 
@@ -25906,7 +26026,7 @@ msgid "Paste color"
 msgstr "Incolla colore"
 
 #: ../src/ui/widget/selected-style.cpp:287
-#: ../src/ui/widget/selected-style.cpp:867
+#: ../src/ui/widget/selected-style.cpp:873
 msgid "Swap fill and stroke"
 msgstr "Inverti riempimento e contorno"
 
@@ -25921,12 +26041,12 @@ msgid "Make stroke opaque"
 msgstr "Rendi il contorno opaco"
 
 #: ../src/ui/widget/selected-style.cpp:300
-#: ../src/ui/widget/selected-style.cpp:556 ../src/widgets/fill-style.cpp:503
+#: ../src/ui/widget/selected-style.cpp:556 ../src/widgets/fill-style.cpp:514
 msgid "Remove fill"
 msgstr "Rimuovi riempimento"
 
 #: ../src/ui/widget/selected-style.cpp:300
-#: ../src/ui/widget/selected-style.cpp:565 ../src/widgets/fill-style.cpp:503
+#: ../src/ui/widget/selected-style.cpp:565 ../src/widgets/fill-style.cpp:514
 msgid "Remove stroke"
 msgstr "Rimuovi contorno"
 
@@ -25978,36 +26098,36 @@ msgstr "Incolla riempimento"
 msgid "Paste stroke"
 msgstr "Incolla contorno"
 
-#: ../src/ui/widget/selected-style.cpp:969
+#: ../src/ui/widget/selected-style.cpp:975
 msgid "Change stroke width"
 msgstr "Modifica larghezza contorno"
 
-#: ../src/ui/widget/selected-style.cpp:1072
+#: ../src/ui/widget/selected-style.cpp:1078
 msgid ", drag to adjust"
 msgstr ", trascina per modificare"
 
-#: ../src/ui/widget/selected-style.cpp:1157
+#: ../src/ui/widget/selected-style.cpp:1163
 #, c-format
 msgid "Stroke width: %.5g%s%s"
 msgstr "Larghezza contorno: %.5g%s%s"
 
-#: ../src/ui/widget/selected-style.cpp:1161
+#: ../src/ui/widget/selected-style.cpp:1167
 msgid " (averaged)"
 msgstr " (media)"
 
-#: ../src/ui/widget/selected-style.cpp:1187
+#: ../src/ui/widget/selected-style.cpp:1193
 msgid "0 (transparent)"
 msgstr "0 (trasparente)"
 
-#: ../src/ui/widget/selected-style.cpp:1211
+#: ../src/ui/widget/selected-style.cpp:1217
 msgid "100% (opaque)"
 msgstr "100% (opaco)"
 
-#: ../src/ui/widget/selected-style.cpp:1385
+#: ../src/ui/widget/selected-style.cpp:1391
 msgid "Adjust alpha"
 msgstr "Modifica alpha"
 
-#: ../src/ui/widget/selected-style.cpp:1387
+#: ../src/ui/widget/selected-style.cpp:1393
 #, c-format
 msgid ""
 "Adjusting <b>alpha</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Ctrl</"
@@ -26018,11 +26138,11 @@ msgstr ""
 "<b>Ctrl</b> per modificare luminosità, con <b>Maiusc</b> per saturazione, "
 "senza modificatori per colore"
 
-#: ../src/ui/widget/selected-style.cpp:1391
+#: ../src/ui/widget/selected-style.cpp:1397
 msgid "Adjust saturation"
 msgstr "Modifica saturazione"
 
-#: ../src/ui/widget/selected-style.cpp:1393
+#: ../src/ui/widget/selected-style.cpp:1399
 #, c-format
 msgid ""
 "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
@@ -26033,11 +26153,11 @@ msgstr ""
 "con <b>Ctrl</b> per modificare luminosità, con <b>Alt</b> per alpha, senza "
 "modificatori per colore"
 
-#: ../src/ui/widget/selected-style.cpp:1397
+#: ../src/ui/widget/selected-style.cpp:1403
 msgid "Adjust lightness"
 msgstr "Modifica luminosità"
 
-#: ../src/ui/widget/selected-style.cpp:1399
+#: ../src/ui/widget/selected-style.cpp:1405
 #, c-format
 msgid ""
 "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
@@ -26048,11 +26168,11 @@ msgstr ""
 "<b>Shift</b> per modificare saturazione, con <b>Alt</b> per alpha, senza "
 "modificatori per colore"
 
-#: ../src/ui/widget/selected-style.cpp:1403
+#: ../src/ui/widget/selected-style.cpp:1409
 msgid "Adjust hue"
 msgstr "Modifica colore"
 
-#: ../src/ui/widget/selected-style.cpp:1405
+#: ../src/ui/widget/selected-style.cpp:1411
 #, c-format
 msgid ""
 "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</"
@@ -26063,12 +26183,12 @@ msgstr ""
 "<b>Maiusc</b> per modificare saturazione, con <b>Alt</b> per alpha, con "
 "<b>Ctrl</b> per luminosità"
 
-#: ../src/ui/widget/selected-style.cpp:1523
-#: ../src/ui/widget/selected-style.cpp:1537
+#: ../src/ui/widget/selected-style.cpp:1529
+#: ../src/ui/widget/selected-style.cpp:1543
 msgid "Adjust stroke width"
 msgstr "Modifica larghezza contorno"
 
-#: ../src/ui/widget/selected-style.cpp:1524
+#: ../src/ui/widget/selected-style.cpp:1530
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
 msgstr ""
@@ -29281,31 +29401,41 @@ msgstr ""
 msgid "Break apart cut items"
 msgstr "Separa gli oggetti tagliati"
 
-#: ../src/widgets/fill-style.cpp:356
+#: ../src/widgets/fill-style.cpp:367
 msgid "Change fill rule"
 msgstr "Modifica regola di riempimento"
 
-#: ../src/widgets/fill-style.cpp:440 ../src/widgets/fill-style.cpp:518
+#: ../src/widgets/fill-style.cpp:451 ../src/widgets/fill-style.cpp:529
 msgid "Set fill color"
 msgstr "Imposta colore di riempimento"
 
-#: ../src/widgets/fill-style.cpp:440 ../src/widgets/fill-style.cpp:518
+#: ../src/widgets/fill-style.cpp:451 ../src/widgets/fill-style.cpp:529
 msgid "Set stroke color"
 msgstr "Imposta colore contorno"
 
-#: ../src/widgets/fill-style.cpp:616
+#: ../src/widgets/fill-style.cpp:627
 msgid "Set gradient on fill"
 msgstr "Imposta gradiente per il riempimento"
 
-#: ../src/widgets/fill-style.cpp:616
+#: ../src/widgets/fill-style.cpp:627
 msgid "Set gradient on stroke"
 msgstr "Imposta gradiente per il contorno"
 
-#: ../src/widgets/fill-style.cpp:676
+#: ../src/widgets/fill-style.cpp:727
+#, fuzzy
+msgid "Set mesh on fill"
+msgstr "Imposta motivo per il riempimento"
+
+#: ../src/widgets/fill-style.cpp:727
+#, fuzzy
+msgid "Set mesh on stroke"
+msgstr "Imposta motivo per il contorno"
+
+#: ../src/widgets/fill-style.cpp:788
 msgid "Set pattern on fill"
 msgstr "Imposta motivo per il riempimento"
 
-#: ../src/widgets/fill-style.cpp:677
+#: ../src/widgets/fill-style.cpp:789
 msgid "Set pattern on stroke"
 msgstr "Imposta motivo per il contorno"
 
@@ -29343,7 +29473,7 @@ msgid "Edit gradient"
 msgstr "Modifica gradiente"
 
 #: ../src/widgets/gradient-selector.cpp:281
-#: ../src/widgets/paint-selector.cpp:233
+#: ../src/widgets/paint-selector.cpp:235
 msgid "Swatch"
 msgstr "Campione"
 
@@ -29400,27 +29530,27 @@ msgstr "radiale"
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "Crea un gradiente radiale (ellittico o circolare)"
 
-#: ../src/widgets/gradient-toolbar.cpp:1044 ../src/widgets/mesh-toolbar.cpp:387
+#: ../src/widgets/gradient-toolbar.cpp:1044 ../src/widgets/mesh-toolbar.cpp:411
 msgid "New:"
 msgstr "Nuovo:"
 
-#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:410
+#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:434
 msgid "fill"
 msgstr "riempimento"
 
-#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:410
+#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:434
 msgid "Create gradient in the fill"
 msgstr "Crea gradiente per il riempimento"
 
-#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:414
+#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:438
 msgid "stroke"
 msgstr "contorno"
 
-#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:414
+#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:438
 msgid "Create gradient in the stroke"
 msgstr "Crea gradiente per il contorno"
 
-#: ../src/widgets/gradient-toolbar.cpp:1074 ../src/widgets/mesh-toolbar.cpp:417
+#: ../src/widgets/gradient-toolbar.cpp:1074 ../src/widgets/mesh-toolbar.cpp:441
 msgid "on:"
 msgstr "su:"
 
@@ -29520,7 +29650,8 @@ msgstr "Collega gradienti"
 msgid "Link gradients to change all related gradients"
 msgstr "Collega i gradienti per modificare tutti i gradienti correlati"
 
-#: ../src/widgets/gradient-vector.cpp:317 ../src/widgets/paint-selector.cpp:965
+#: ../src/widgets/gradient-vector.cpp:317 ../src/widgets/paint-selector.cpp:947
+#: ../src/widgets/paint-selector.cpp:1311
 #: ../src/widgets/stroke-marker-selector.cpp:154
 msgid "No document selected"
 msgstr "Nessun documento selezionato"
@@ -29728,9 +29859,8 @@ msgid "Scale the results"
 msgstr "Scala i risultati della misurazione"
 
 #: ../src/widgets/measure-toolbar.cpp:329
-#, fuzzy
 msgid "The offset size"
-msgstr "Spostamento rosso"
+msgstr "Dimensione dello spostamento della misurazione"
 
 #: ../src/widgets/measure-toolbar.cpp:341
 #: ../src/widgets/measure-toolbar.cpp:342
@@ -29777,149 +29907,174 @@ msgstr "Traccia dimensione"
 msgid "Convert to item"
 msgstr "Converti in oggetto"
 
-#: ../src/widgets/mesh-toolbar.cpp:318
+#: ../src/widgets/mesh-toolbar.cpp:320
 #, fuzzy
 msgid "Set mesh type"
 msgstr "Imposta stile testo"
 
-#: ../src/widgets/mesh-toolbar.cpp:380
+#: ../src/widgets/mesh-toolbar.cpp:372
+msgid ""
+"Mesh gradients are part of SVG 2:\n"
+"* Syntax may change.\n"
+"* Web browser implementation is not guaranteed.\n"
+"\n"
+"For web: convert to bitmap (Edit->Make bitmap copy).\n"
+"For print: export to PDF."
+msgstr ""
+
+#: ../src/widgets/mesh-toolbar.cpp:404
 msgid "normal"
 msgstr "normale"
 
-#: ../src/widgets/mesh-toolbar.cpp:380
+#: ../src/widgets/mesh-toolbar.cpp:404
 msgid "Create mesh gradient"
 msgstr "Crea gradiente a maglia"
 
-#: ../src/widgets/mesh-toolbar.cpp:384
+#: ../src/widgets/mesh-toolbar.cpp:408
 msgid "conical"
 msgstr "conico"
 
-#: ../src/widgets/mesh-toolbar.cpp:384
+#: ../src/widgets/mesh-toolbar.cpp:408
 msgid "Create conical gradient"
 msgstr "Crea gradiente conico"
 
-#: ../src/widgets/mesh-toolbar.cpp:439
+#: ../src/widgets/mesh-toolbar.cpp:463
 msgid "Rows"
 msgstr "Righe"
 
-#: ../src/widgets/mesh-toolbar.cpp:439
+#: ../src/widgets/mesh-toolbar.cpp:463
 #: ../share/extensions/guides_creator.inx.h:5
 #: ../share/extensions/layout_nup.inx.h:12
 msgid "Rows:"
 msgstr "Righe:"
 
-#: ../src/widgets/mesh-toolbar.cpp:439
+#: ../src/widgets/mesh-toolbar.cpp:463
 msgid "Number of rows in new mesh"
 msgstr "Numero di righe nella nuova maglia"
 
-#: ../src/widgets/mesh-toolbar.cpp:455
+#: ../src/widgets/mesh-toolbar.cpp:479
 msgid "Columns"
 msgstr "Colonne"
 
-#: ../src/widgets/mesh-toolbar.cpp:455
+#: ../src/widgets/mesh-toolbar.cpp:479
 #: ../share/extensions/guides_creator.inx.h:4
 msgid "Columns:"
 msgstr "Colonne:"
 
-#: ../src/widgets/mesh-toolbar.cpp:455
+#: ../src/widgets/mesh-toolbar.cpp:479
 msgid "Number of columns in new mesh"
 msgstr "Numero di colonne nella nuova maglia"
 
-#: ../src/widgets/mesh-toolbar.cpp:469
+#: ../src/widgets/mesh-toolbar.cpp:493
 msgid "Edit Fill"
 msgstr "Modifica riempimento"
 
-#: ../src/widgets/mesh-toolbar.cpp:470
+#: ../src/widgets/mesh-toolbar.cpp:494
 #, fuzzy
 msgid "Edit fill mesh"
 msgstr "Modifica riempimento..."
 
-#: ../src/widgets/mesh-toolbar.cpp:481
+#: ../src/widgets/mesh-toolbar.cpp:505
 msgid "Edit Stroke"
 msgstr "Modifica contorno"
 
-#: ../src/widgets/mesh-toolbar.cpp:482
+#: ../src/widgets/mesh-toolbar.cpp:506
 #, fuzzy
 msgid "Edit stroke mesh"
 msgstr "Modifica contorno..."
 
-#: ../src/widgets/mesh-toolbar.cpp:493 ../src/widgets/node-toolbar.cpp:521
+#: ../src/widgets/mesh-toolbar.cpp:517 ../src/widgets/node-toolbar.cpp:521
 msgid "Show Handles"
 msgstr "Mostra maniglie"
 
-#: ../src/widgets/mesh-toolbar.cpp:494
+#: ../src/widgets/mesh-toolbar.cpp:518
 #, fuzzy
 msgid "Show side and tensor handles"
 msgstr "Salvataggio trasformazioni:"
 
-#: ../src/widgets/mesh-toolbar.cpp:509
+#: ../src/widgets/mesh-toolbar.cpp:533 ../src/widgets/mesh-toolbar.cpp:534
 msgid "WARNING: Mesh SVG Syntax Subject to Change"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:519
+#: ../src/widgets/mesh-toolbar.cpp:548
 msgctxt "Type"
 msgid "Coons"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:522
+#: ../src/widgets/mesh-toolbar.cpp:551
 msgid "Bicubic"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:524
+#: ../src/widgets/mesh-toolbar.cpp:553
 msgid "Coons"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:525
+#: ../src/widgets/mesh-toolbar.cpp:554
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:527 ../src/widgets/pencil-toolbar.cpp:381
+#: ../src/widgets/mesh-toolbar.cpp:556 ../src/widgets/pencil-toolbar.cpp:381
 msgid "Smoothing:"
 msgstr "Smussamento:"
 
-#: ../src/widgets/mesh-toolbar.cpp:537
+#: ../src/widgets/mesh-toolbar.cpp:566
 #, fuzzy
 msgid "Toggle Sides"
 msgstr "Al_terna"
 
-#: ../src/widgets/mesh-toolbar.cpp:538
+#: ../src/widgets/mesh-toolbar.cpp:567
 msgid "Toggle selected sides between Beziers and lines."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:541
+#: ../src/widgets/mesh-toolbar.cpp:570
 #, fuzzy
 msgid "Toggle side:"
 msgstr "Al_terna"
 
-#: ../src/widgets/mesh-toolbar.cpp:548
+#: ../src/widgets/mesh-toolbar.cpp:577
 #, fuzzy
 msgid "Make elliptical"
 msgstr "Imposta corsivo"
 
-#: ../src/widgets/mesh-toolbar.cpp:549
+#: ../src/widgets/mesh-toolbar.cpp:578
 msgid ""
 "Make selected sides elliptical by changing length of handles. Works best if "
 "handles already approximate ellipse."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:552
+#: ../src/widgets/mesh-toolbar.cpp:581
 #, fuzzy
 msgid "Make elliptical:"
 msgstr "Imposta corsivo"
 
-#: ../src/widgets/mesh-toolbar.cpp:559
+#: ../src/widgets/mesh-toolbar.cpp:588
 #, fuzzy
 msgid "Pick colors:"
 msgstr "Colore punti"
 
-#: ../src/widgets/mesh-toolbar.cpp:560
+#: ../src/widgets/mesh-toolbar.cpp:589
 msgid "Pick colors for selected corner nodes from underneath mesh."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:563
+#: ../src/widgets/mesh-toolbar.cpp:592
 #, fuzzy
 msgid "Pick Color"
 msgstr "Colore riempimento"
+
+#: ../src/widgets/mesh-toolbar.cpp:600
+#, fuzzy
+msgid "Scale mesh to bounding box:"
+msgstr "Mostra il riquadro"
+
+#: ../src/widgets/mesh-toolbar.cpp:601
+#, fuzzy
+msgid "Scale mesh to fit inside bounding box."
+msgstr "Mostra riquadro limite"
+
+#: ../src/widgets/mesh-toolbar.cpp:604
+#, fuzzy
+msgid "Fit mesh"
+msgstr "Modifica riempimento..."
 
 #: ../src/widgets/node-toolbar.cpp:341
 msgid "Insert node"
@@ -30113,32 +30268,32 @@ msgstr "Coordinata Y:"
 msgid "Y coordinate of selected node(s)"
 msgstr "Coordinata Y dei nodi selezionati"
 
-#: ../src/widgets/paint-selector.cpp:219
+#: ../src/widgets/paint-selector.cpp:221
 msgid "No paint"
 msgstr "Nessun colore"
 
-#: ../src/widgets/paint-selector.cpp:221
+#: ../src/widgets/paint-selector.cpp:223
 msgid "Flat color"
 msgstr "Colore uniforme"
 
-#: ../src/widgets/paint-selector.cpp:223
+#: ../src/widgets/paint-selector.cpp:225
 msgid "Linear gradient"
 msgstr "Gradiente lineare"
 
-#: ../src/widgets/paint-selector.cpp:225
+#: ../src/widgets/paint-selector.cpp:227
 msgid "Radial gradient"
 msgstr "Gradiente radiale"
 
-#: ../src/widgets/paint-selector.cpp:228
+#: ../src/widgets/paint-selector.cpp:230
 msgid "Mesh gradient"
 msgstr "Gradiente a maglia"
 
-#: ../src/widgets/paint-selector.cpp:235
+#: ../src/widgets/paint-selector.cpp:237
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr "Disattiva riempimento (affinché possa essere ereditato)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:252
+#: ../src/widgets/paint-selector.cpp:254
 msgid ""
 "Any path self-intersections or subpaths create holes in the fill (fill-rule: "
 "evenodd)"
@@ -30147,47 +30302,52 @@ msgstr ""
 "riempimento (fill-rule:evenodd)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:263
+#: ../src/widgets/paint-selector.cpp:265
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 "Il riempimento è intero a meno che un sottotracciato sia in direzione "
 "opposta (fill-rule: nonzero)"
 
-#: ../src/widgets/paint-selector.cpp:605
+#: ../src/widgets/paint-selector.cpp:615
 msgid "<b>No objects</b>"
 msgstr "<b>Nessun oggetto</b>"
 
-#: ../src/widgets/paint-selector.cpp:616
+#: ../src/widgets/paint-selector.cpp:626
 msgid "<b>Multiple styles</b>"
 msgstr "<b>Stili multipli</b>"
 
-#: ../src/widgets/paint-selector.cpp:627
+#: ../src/widgets/paint-selector.cpp:637
 msgid "<b>Paint is undefined</b>"
 msgstr "<b>Il riempimento non è definito</b>"
 
-#: ../src/widgets/paint-selector.cpp:638
+#: ../src/widgets/paint-selector.cpp:648
 msgid "<b>No paint</b>"
 msgstr "<b>Nessun colore</b>"
 
-#: ../src/widgets/paint-selector.cpp:722
+#: ../src/widgets/paint-selector.cpp:732
 msgid "<b>Flat color</b>"
 msgstr "<b>Colore uniforme</b>"
 
 #. sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
-#: ../src/widgets/paint-selector.cpp:791
+#: ../src/widgets/paint-selector.cpp:796
 msgid "<b>Linear gradient</b>"
 msgstr "<b>Gradiente lineare</b>"
 
-#: ../src/widgets/paint-selector.cpp:794
+#: ../src/widgets/paint-selector.cpp:799
 msgid "<b>Radial gradient</b>"
 msgstr "<b>Gradiente radiale</b>"
 
-#: ../src/widgets/paint-selector.cpp:799
-msgid "<b>Mesh gradient</b>"
-msgstr "<b>Gradiente a maglia</b>"
+#: ../src/widgets/paint-selector.cpp:1080
+msgid "Use the <b>Mesh tool</b> to modify the mesh."
+msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1098
+#: ../src/widgets/paint-selector.cpp:1093
+#, fuzzy
+msgid "<b>Mesh fill</b>"
+msgstr "<b>Campione</b>"
+
+#: ../src/widgets/paint-selector.cpp:1444
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
@@ -30197,11 +30357,11 @@ msgstr ""
 "rotazione del motivo sul disegno. Usa <b>Oggetto &gt; Motivo &gt; Da oggetto "
 "a motivo</b> per creare un nuovo motivo dalla selezione."
 
-#: ../src/widgets/paint-selector.cpp:1111
+#: ../src/widgets/paint-selector.cpp:1457
 msgid "<b>Pattern fill</b>"
 msgstr "<b>Motivo</b>"
 
-#: ../src/widgets/paint-selector.cpp:1205
+#: ../src/widgets/paint-selector.cpp:1551
 msgid "<b>Swatch fill</b>"
 msgstr "<b>Campione</b>"
 
@@ -30806,10 +30966,6 @@ msgstr "Cancella oggetti spruzzati"
 #: ../src/widgets/spray-toolbar.cpp:384
 msgid "Delete sprayed items from selection"
 msgstr "Cancella oggetti spruzzati dalla selezione"
-
-#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
-msgid "Mode"
-msgstr "Modalità"
 
 #. Population
 #: ../src/widgets/spray-toolbar.cpp:408
@@ -31582,131 +31738,131 @@ msgstr "Da definire"
 msgid "Style of Paint Bucket fill objects"
 msgstr "Stile dei nuovi oggetti creati con il «Secchiello»"
 
-#: ../src/widgets/toolbox.cpp:1750
+#: ../src/widgets/toolbox.cpp:1752
 msgid "Bounding box"
 msgstr "Riquadri"
 
-#: ../src/widgets/toolbox.cpp:1750
+#: ../src/widgets/toolbox.cpp:1752
 msgid "Snap bounding boxes"
 msgstr "Aggancia angoli riquadri"
 
-#: ../src/widgets/toolbox.cpp:1759
+#: ../src/widgets/toolbox.cpp:1761
 msgid "Bounding box edges"
 msgstr "Margini riquadri"
 
-#: ../src/widgets/toolbox.cpp:1759
+#: ../src/widgets/toolbox.cpp:1761
 msgid "Snap to edges of a bounding box"
 msgstr "Aggancia ai bordi dei riquadri"
 
-#: ../src/widgets/toolbox.cpp:1768
+#: ../src/widgets/toolbox.cpp:1770
 msgid "Bounding box corners"
 msgstr "Angoli riquadri"
 
-#: ../src/widgets/toolbox.cpp:1768
+#: ../src/widgets/toolbox.cpp:1770
 msgid "Snap bounding box corners"
 msgstr "Aggancia angoli riquadri"
 
-#: ../src/widgets/toolbox.cpp:1777
+#: ../src/widgets/toolbox.cpp:1779
 msgid "BBox Edge Midpoints"
 msgstr "Metà margine riquadro"
 
-#: ../src/widgets/toolbox.cpp:1777
+#: ../src/widgets/toolbox.cpp:1779
 msgid "Snap midpoints of bounding box edges"
 msgstr "Aggancia a e con le metà dei bordi dei riquadri"
 
-#: ../src/widgets/toolbox.cpp:1787
+#: ../src/widgets/toolbox.cpp:1789
 msgid "BBox Centers"
 msgstr "Centri riquadri"
 
-#: ../src/widgets/toolbox.cpp:1787
+#: ../src/widgets/toolbox.cpp:1789
 msgid "Snapping centers of bounding boxes"
 msgstr "Aggancia a e con i centri dei riquadri"
 
-#: ../src/widgets/toolbox.cpp:1796
+#: ../src/widgets/toolbox.cpp:1798
 msgid "Snap nodes, paths, and handles"
 msgstr "Aggancia nodi, tracciati e maniglie"
 
-#: ../src/widgets/toolbox.cpp:1804
+#: ../src/widgets/toolbox.cpp:1806
 msgid "Snap to paths"
 msgstr "Aggancia ai tracciati"
 
-#: ../src/widgets/toolbox.cpp:1813
+#: ../src/widgets/toolbox.cpp:1815
 msgid "Path intersections"
 msgstr "Intersezione tracciati"
 
-#: ../src/widgets/toolbox.cpp:1813
+#: ../src/widgets/toolbox.cpp:1815
 msgid "Snap to path intersections"
 msgstr "Aggancia alle intersezioni dei tracciati"
 
-#: ../src/widgets/toolbox.cpp:1822
+#: ../src/widgets/toolbox.cpp:1824
 msgid "To nodes"
 msgstr "Ai nodi"
 
-#: ../src/widgets/toolbox.cpp:1822
+#: ../src/widgets/toolbox.cpp:1824
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr "Aggancia ai nodi angolari, incl. angoli dei rettangoli"
 
-#: ../src/widgets/toolbox.cpp:1831
+#: ../src/widgets/toolbox.cpp:1833
 msgid "Smooth nodes"
 msgstr "Nodi curvi"
 
-#: ../src/widgets/toolbox.cpp:1831
+#: ../src/widgets/toolbox.cpp:1833
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr "Aggancia ai nodi curvi, incl. punti cardinali delle ellissi"
 
-#: ../src/widgets/toolbox.cpp:1840
+#: ../src/widgets/toolbox.cpp:1842
 msgid "Line Midpoints"
 msgstr "Metà linea"
 
-#: ../src/widgets/toolbox.cpp:1840
+#: ../src/widgets/toolbox.cpp:1842
 msgid "Snap midpoints of line segments"
 msgstr "Aggancia a e con le metà dei segmenti"
 
-#: ../src/widgets/toolbox.cpp:1849
+#: ../src/widgets/toolbox.cpp:1851
 msgid "Others"
 msgstr "Altri"
 
-#: ../src/widgets/toolbox.cpp:1849
+#: ../src/widgets/toolbox.cpp:1851
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr "Aggancia ad altri punti (centri, guide, maniglie gradiente, ecc.)"
 
-#: ../src/widgets/toolbox.cpp:1857
+#: ../src/widgets/toolbox.cpp:1859
 msgid "Object Centers"
 msgstr "Centro oggetti"
 
-#: ../src/widgets/toolbox.cpp:1857
+#: ../src/widgets/toolbox.cpp:1859
 msgid "Snap centers of objects"
 msgstr "Aggancia a e con i centri degli oggetti"
 
-#: ../src/widgets/toolbox.cpp:1866
+#: ../src/widgets/toolbox.cpp:1868
 msgid "Rotation Centers"
 msgstr "Centro di rotazione"
 
-#: ../src/widgets/toolbox.cpp:1866
+#: ../src/widgets/toolbox.cpp:1868
 msgid "Snap an item's rotation center"
 msgstr "Aggancia a e con il centro di rotazione dell'elemento"
 
-#: ../src/widgets/toolbox.cpp:1875
+#: ../src/widgets/toolbox.cpp:1877
 msgid "Text baseline"
 msgstr "Linea base del testo"
 
-#: ../src/widgets/toolbox.cpp:1875
+#: ../src/widgets/toolbox.cpp:1877
 msgid "Snap text anchors and baselines"
 msgstr "Allinea linee del testo"
 
-#: ../src/widgets/toolbox.cpp:1885
+#: ../src/widgets/toolbox.cpp:1887
 msgid "Page border"
 msgstr "Bordo pagina"
 
-#: ../src/widgets/toolbox.cpp:1885
+#: ../src/widgets/toolbox.cpp:1887
 msgid "Snap to the page border"
 msgstr "Aggancia ai bordi della pagina"
 
-#: ../src/widgets/toolbox.cpp:1894
+#: ../src/widgets/toolbox.cpp:1896
 msgid "Snap to grids"
 msgstr "Aggancia alle griglie"
 
-#: ../src/widgets/toolbox.cpp:1903
+#: ../src/widgets/toolbox.cpp:1905
 msgid "Snap guides"
 msgstr "Aggancia alle guide"
 
@@ -39445,6 +39601,12 @@ msgstr "Un formato grafico molto diffuso per clipart"
 msgid "XAML Input"
 msgstr "Input XAML"
 
+#~ msgid "Create default mesh"
+#~ msgstr "Crea maglia predefinita"
+
+#~ msgid "<b>Mesh gradient</b>"
+#~ msgstr "<b>Gradiente a maglia</b>"
+
 #~ msgid "Spacing between baselines (percent of font size)"
 #~ msgstr ""
 #~ "Spaziatura tra le linee tipografiche (percentuale dimensione carattere)"
@@ -40042,14 +40204,8 @@ msgstr "Input XAML"
 #~ msgid "Drop shadow under the cut-out of the shape"
 #~ msgstr "Proietta ombra sotto il ritaglio della forma"
 
-#~ msgid "Horizontal edge detect"
-#~ msgstr "Rilevamento bordi orizzontali"
-
 #~ msgid "Detect horizontal color edges in object"
 #~ msgstr "Rileva bordi orizzontali colorati in un oggetto"
-
-#~ msgid "Vertical edge detect"
-#~ msgstr "Rilevamento bordi verticali"
 
 #~ msgid "Detect vertical color edges in object"
 #~ msgstr "Rileva bordi colorati verticali nell'oggetto"
@@ -40762,25 +40918,6 @@ msgstr "Input XAML"
 #~ msgid "Determines which kind of boolop will be performed."
 #~ msgstr "Determina il tipo di operazione booleana da effettuare."
 
-#~ msgid "Angle between two successive copies"
-#~ msgstr "Angolo tra due copie successive"
-
-#~ msgid "Number of copies"
-#~ msgstr "Numero di copia"
-
-#~ msgid "Number of copies of the original path"
-#~ msgstr "Numero di copie del tracciato originale"
-
-#~ msgid "Origin"
-#~ msgstr "Origine"
-
-#, fuzzy
-#~ msgid "Adjust the starting angle"
-#~ msgstr "Modifica saturazione"
-
-#~ msgid "Adjust the rotation angle"
-#~ msgstr "Modifica l'angolo di rotazione"
-
 #~ msgid "Maximal stroke width"
 #~ msgstr "Larghezza massima del contorno"
 
@@ -40802,11 +40939,6 @@ msgstr "Input XAML"
 #~ msgid "Control handle 11"
 #~ msgstr "Maniglia di controllo 11"
 
-#~ msgid "Check this to only keep the mirrored part of the path"
-#~ msgstr ""
-#~ "Selezionare questa opzione per tenere solo la parte speculare del "
-#~ "tracciato"
-
 #~ msgid "Line which serves as 'mirror' for the reflection"
 #~ msgstr "Linea da usare come \"specchio\" per la riflessione"
 
@@ -40824,9 +40956,6 @@ msgstr "Input XAML"
 
 #~ msgid "Uses XY plane?"
 #~ msgstr "Usare piano XY?"
-
-#~ msgid "Adjust the origin"
-#~ msgstr "Modifica l'origine"
 
 #~ msgid "Iterations"
 #~ msgstr "Iterazioni"
