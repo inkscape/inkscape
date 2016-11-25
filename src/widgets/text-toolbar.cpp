@@ -1575,7 +1575,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                         "  -GtkComboBox-appears-as-list: true;\n"
                                         "}\n"
                                         "combobox window.popup scrolledwindow treeview separator {\n"
-                                        "  -GtkWidget-wide-separators:  true;\n"
                                         "  -GtkWidget-separator-height: 6;\n"
                                         "}\n",
                                         -1, NULL);

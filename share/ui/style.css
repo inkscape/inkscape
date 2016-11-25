@@ -79,12 +79,10 @@ SPCanvas {
 }
 
 combobox window.popup scrolledwindow treeview separator {
-    -GtkWidget-wide-separators:  true;
     -GtkWidget-separator-height: 6;
 }
 
 #font_selector_family {
-    -GtkWidget-wide-separators:  true;
     -GtkWidget-separator-height: 6;
 }
 

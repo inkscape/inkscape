@@ -147,7 +147,6 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         auto css_provider = gtk_css_provider_new();
         gtk_css_provider_load_from_data(css_provider,
                                         "#font_selector_family {\n"
-                                        "  -GtkWidget-wide-separators:  true;\n"
                                         "  -GtkWidget-separator-height: 6;\n"
                                         "}\n",
                                         -1, NULL);
