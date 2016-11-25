@@ -145,12 +145,6 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_widget_set_name( GTK_WIDGET(fsel->family_treeview), "font_selector_family" );
 
         auto css_provider = gtk_css_provider_new();
-        gtk_css_provider_load_from_data(css_provider,
-                                        "#font_selector_family {\n"
-                                        "  -GtkWidget-separator-height: 6;\n"
-                                        "}\n",
-                                        -1, NULL);
-
         auto screen = gdk_screen_get_default();
         gtk_style_context_add_provider_for_screen(screen,
                                                   GTK_STYLE_PROVIDER(css_provider),

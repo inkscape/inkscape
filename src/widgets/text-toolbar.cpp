@@ -1573,9 +1573,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_css_provider_load_from_data(css_provider,
                                         "#TextFontFamilyAction_combobox {\n"
                                         "  -GtkComboBox-appears-as-list: true;\n"
-                                        "}\n"
-                                        "combobox window.popup scrolledwindow treeview separator {\n"
-                                        "  -GtkWidget-separator-height: 6;\n"
                                         "}\n",
                                         -1, NULL);
 
