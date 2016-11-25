@@ -11,9 +11,10 @@
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
  *   David Xiong
+ *   Tavmjong Bah
  *
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 1999-2012 Authors
+ * Copyright (C) 1999-2016 Authors
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
@@ -61,7 +62,12 @@
 #include "event-log.h"
 #include "ui/dialog/font-substitution.h"
 
-#include <gtkmm/main.h>
+// For updating old Inkscape SVG files
+#include "display/canvas-grid.h"
+#include "sp-guide.h"
+
+#include <gtkmm.h>
+//#include <gtkmm/main.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/convert.h>
 
@@ -127,15 +133,6 @@ SPDesktop *sp_file_new(const std::string &templ)
         DocumentUndo::setUndoSensitive(doc, false);
         sp_repr_unparent(nodeToRemove);
         delete nodeToRemove;
-        DocumentUndo::setUndoSensitive(doc, true);
-    }
-    
-    // Set viewBox if it doesn't exist
-    if (!doc->getRoot()->viewBox_set
-    && (doc->getRoot()->width.unit != SVGLength::PERCENT)
-    && (doc->getRoot()->height.unit != SVGLength::PERCENT)) {
-        DocumentUndo::setUndoSensitive(doc, false);
-        doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
         DocumentUndo::setUndoSensitive(doc, true);
     }
     
@@ -279,14 +276,6 @@ bool sp_file_open(const Glib::ustring &uri,
     }
 
     if (doc) {
-        // Set viewBox if it doesn't exist
-        if (!doc->getRoot()->viewBox_set
-        && (doc->getRoot()->width.unit != SVGLength::PERCENT)
-        && (doc->getRoot()->height.unit != SVGLength::PERCENT)) {
-            DocumentUndo::setUndoSensitive(doc, false);
-            doc->setViewBox(Geom::Rect::from_xywh(0, 0, doc->getWidth().value(doc->getDisplayUnit()), doc->getHeight().value(doc->getDisplayUnit())));
-            DocumentUndo::setUndoSensitive(doc, true);
-        }
 
         SPDocument *existing = desktop ? desktop->getDocument() : NULL;
 
@@ -312,6 +301,184 @@ bool sp_file_open(const Glib::ustring &uri,
         // This is the only place original values should be set.
         root->original.inkscape = root->version.inkscape;
         root->original.svg      = root->version.svg;
+
+        if (INKSCAPE.use_gui()) {
+
+            // See if we need to offer the user a fix for the 90->96 px per inch change.
+            // std::cout << "SPFileOpen:" << std::endl;
+            // std::cout << "  Version: " << sp_version_to_string(root->version.inkscape) << std::endl;
+
+            if ( sp_version_inside_range( root->version.inkscape, 0, 1, 0, 92 ) ) {
+
+                // std::cout << "  SVG file from old Inkscape version detected: "
+                //           << sp_version_to_string(root->version.inkscape) << std::endl;
+
+
+                static const double ratio = 90.0/96.0;
+
+                bool need_fix_viewbox = false;
+                bool need_fix_units   = false;
+                bool need_fix_guides  = false;
+                bool need_fix_grid_mm = false;
+
+                // Check if potentially need viewbox or unit fix
+                switch (root->width.unit) {
+                    case SP_CSS_UNIT_PC:
+                    case SP_CSS_UNIT_MM:
+                    case SP_CSS_UNIT_CM:
+                    case SP_CSS_UNIT_IN:
+                        need_fix_viewbox = true;
+                        break;
+                    case SP_CSS_UNIT_NONE:
+                    case SP_CSS_UNIT_PX:
+                        need_fix_units = true;
+                    default:
+                        break;
+                        // OK
+                }
+
+                switch (root->height.unit) {
+                    case SP_CSS_UNIT_PC:
+                    case SP_CSS_UNIT_MM:
+                    case SP_CSS_UNIT_CM:
+                    case SP_CSS_UNIT_IN:
+                        need_fix_viewbox = true;
+                        break;
+                    case SP_CSS_UNIT_NONE:
+                    case SP_CSS_UNIT_PX:
+                        need_fix_units = true;
+                    default:
+                        break;
+                        // OK
+                }
+
+                // std::cout << "Absolute SVG units in root? " << (need_fix_viewbox?"true":"false") << std::endl;
+                // std::cout << "User units in root? "         << (need_fix_units  ?"true":"false") << std::endl;
+
+                if (!root->viewBox_set && need_fix_viewbox) {
+
+                    std::string msg = _(
+                        "Old Inkscape files used 1in == 90px. CSS requires 1in == 96px.\n"
+                        "Drawing elements may be too small. This can be corrected by\n"
+                        "setting the SVG 'viewBox' to compensate." );
+                    //  "either setting the SVG 'viewBox' to compensate or by scaling\n"
+                    //  "all the elements in the drawing."
+                    Gtk::Dialog scaleDialog( _("Old Inkscape file detected (90 DPI)"), false);
+                    Gtk::Label info;
+                    info.set_markup(msg.c_str());
+                    info.show();
+                    scaleDialog.get_content_area()->pack_start(info, false, false, 20);
+                    scaleDialog.add_button("Set 'viewBox'", 1);
+                    // scaleDialog.add_button("Scale elements", 2);
+                    scaleDialog.add_button("Ignore",        3);
+
+                    gint response = scaleDialog.run();
+                    if (response == 1) {
+                        doc->setViewBox(Geom::Rect::from_xywh(
+                                            0, 0,
+                                            doc->getWidth().value("px") * ratio,
+                                            doc->getHeight().value("px") * ratio));
+                    } else if (response == 2 ) {
+                        // Insert DPISwitcher code
+                    }
+                    need_fix_guides = true; // Always fix guides
+                }
+
+                if (need_fix_units) {
+                    std::string msg = (
+                        "Old Inkscape files used 1in == 90px. CSS requires 1in == 96px.\n"
+                        "Drawings meant to match a physical size (e.g. Letter or A4)\n"
+                        "will be too small. Scaling the drawing can correct for this.\n" );
+                    //  "Internal scaling can be handled either by setting the SVG 'viewBox'\n"
+                    //  "attribute to compensate or by scaling all objects in the drawing."
+                    Gtk::Dialog scaleDialog( _("Old Inkscape file detected (90 DPI)"), false);
+                    Gtk::Label info;
+                    info.set_markup(msg.c_str());
+                    info.show();
+                    scaleDialog.get_content_area()->pack_start(info, false, false, 20);
+                    scaleDialog.add_button("Scale drawing", 1);
+                    // scaleDialog.add_button("Set 'viewBox'", 1);
+                    // scaleDialog.add_button("Scale elements", 2);
+                    scaleDialog.add_button("Ignore",        3);
+
+                    gint response = scaleDialog.run();
+                    if (response == 1) {
+
+                        if (!root->viewBox_set) {
+                            doc->setViewBox(Geom::Rect::from_xywh(
+                                                0, 0,
+                                                doc->getWidth().value("px"),
+                                                doc->getHeight().value("px")));
+                            }
+                        Inkscape::Util::Quantity width  =
+                            Inkscape::Util::Quantity(doc->getWidth().value("px")/ratio, "px" );
+                        Inkscape::Util::Quantity height =
+                            Inkscape::Util::Quantity(doc->getHeight().value("px")/ratio,"px" );
+                        doc->setWidthAndHeight( width, height, false );
+
+                        need_fix_guides = true; // Only fix guides if drawing scaled
+                    } else if (response == 2) {
+                        // Insert DPISwitcher code
+                    } else {
+                        // Ignore
+                        need_fix_grid_mm = true;
+                    }
+                }
+
+                // Fix guides and grids
+                for (SPObject *child = root->firstChild() ; child; child = child->getNext() ) {
+                    SPNamedView *nv = dynamic_cast<SPNamedView *>(child);
+                    if (nv) {
+                        if (need_fix_guides) {
+                            // std::cout << "Fixing guides" << std::endl;
+                            for (SPObject *child2 = nv->firstChild() ; child2; child2 = child2->getNext() ) {
+                                SPGuide *gd = dynamic_cast<SPGuide *>(child2);
+                                if (gd) {
+                                    gd->moveto( gd->getPoint() / ratio, true );
+                                }
+                            }
+                        }
+                    
+                        for(std::vector<Inkscape::CanvasGrid *>::const_iterator it=nv->grids.begin();it!=nv->grids.end();++it ) {
+                            Inkscape::CanvasXYGrid *xy = dynamic_cast<Inkscape::CanvasXYGrid *>(*it);
+                            if (xy) { 
+                                // std::cout << "A grid: " << xy->getSVGName() << std::endl;
+                                // std::cout << "  Origin: " << xy->origin
+                                //           << "  Spacing: " << xy->spacing << std::endl;
+                                // std::cout << (xy->isLegacy()?"  Legacy":"  Not Legacy") << std::endl;
+                                Geom::Scale scale = doc->getDocumentScale();
+                                if (xy->isLegacy()) {
+                                    if (xy->isPixel()) {
+                                        if (need_fix_grid_mm) {
+                                            xy->Scale( Geom::Scale(1,1) ); // See note below
+                                        } else {
+                                            scale *= Geom::Scale(ratio,ratio);
+                                            xy->Scale( scale.inverse() ); /* *** */
+                                        }
+                                    } else {
+                                        if (need_fix_grid_mm) {
+                                            xy->Scale( Geom::Scale(ratio,ratio) );
+                                        } else {
+                                            xy->Scale( scale.inverse() ); /* *** */
+                                        }
+                                    }
+                                } else {
+                                    if (need_fix_guides) {
+                                        // HACK: Scaling the document does not seem to cause
+                                        // grids defined in document units to be updated.
+                                        // This forces an update.
+                                        xy->Scale( Geom::Scale(1,1) );
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }  // Look for SPNamedView loop
+
+                DocumentUndo::done(desktop->getDocument(), SP_VERB_NONE, _("Update Document"));
+
+            }  // If old Inkscape version
+        }  // If use_gui
 
         // resize the window to match the document properties
         sp_namedview_window_from_document(desktop);

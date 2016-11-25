@@ -101,6 +101,9 @@ public:
 
     static void on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
+    bool isLegacy() const { return legacy; }
+    bool isPixel() const { return pixel; }
+
     bool isVisible() const { return (isEnabled() &&visible); };
     bool isEnabled() const;
 
@@ -118,7 +121,11 @@ protected:
 
     GridType gridtype;
 
-private:
+    // For dealing with old Inkscape SVG files (pre 0.92)
+    bool legacy;
+    bool pixel;
+    
+ private:
     CanvasGrid(const CanvasGrid&);
     CanvasGrid& operator=(const CanvasGrid&);
 };
@@ -129,6 +136,7 @@ public:
     CanvasXYGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc);
     virtual ~CanvasXYGrid();
 
+    virtual void Scale  (Geom::Scale const &scale);
     virtual void Update (Geom::Affine const &affine, unsigned int flags);
     virtual void Render (SPCanvasBuf *buf);
 
