@@ -1,1 +1,1 @@
-install(FILES "README" DESTINATION ${SHARE_INSTALL}/inkscape/gradients)
+install(FILES "README" DESTINATION ${INKSCAPE_SHARE_INSTALL}/gradients)

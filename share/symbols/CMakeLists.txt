@@ -9,4 +9,4 @@ add_custom_command(
 set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/symbols.h PROPERTIES GENERATED TRUE)
 add_custom_target(symbols_h ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/symbols.h)
 
-install(FILES ${_FILES} "README" ${CMAKE_CURRENT_SOURCE_DIR}/symbols.h DESTINATION ${SHARE_INSTALL}/inkscape/symbols)
+install(FILES ${_FILES} "README" ${CMAKE_CURRENT_SOURCE_DIR}/symbols.h DESTINATION ${INKSCAPE_SHARE_INSTALL}/symbols)

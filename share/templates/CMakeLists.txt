@@ -9,4 +9,4 @@ add_custom_command(
 set_source_files_properties(${CMAKE_SOURCE_DIR}/templates.h PROPERTIES GENERATED TRUE)
 add_custom_target(templates_h ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/templates.h)
 
-install(FILES ${_FILES} "README" ${CMAKE_CURRENT_SOURCE_DIR}/templates.h DESTINATION ${SHARE_INSTALL}/inkscape/templates)
+install(FILES ${_FILES} "README" ${CMAKE_CURRENT_SOURCE_DIR}/templates.h DESTINATION ${INKSCAPE_SHARE_INSTALL}/templates)

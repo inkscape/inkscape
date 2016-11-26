@@ -190,7 +190,6 @@ if(WIN32)
     doc
     modules
     plugins
-    share
     DESTINATION ${CMAKE_INSTALL_PREFIX}
     PATTERN hicolor/index.theme EXCLUDE   # NOTE: Empty index.theme in hicolor icon theme causes SIGSEGV.
     PATTERN CMakeLists.txt EXCLUDE

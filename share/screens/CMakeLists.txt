@@ -1,2 +1,2 @@
 file(GLOB _FILES "README" "*.svg")
-install(FILES ${_FILES} DESTINATION ${SHARE_INSTALL}/inkscape/screens)
+install(FILES ${_FILES} DESTINATION ${INKSCAPE_SHARE_INSTALL}/screens)

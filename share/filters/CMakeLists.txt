@@ -8,5 +8,5 @@ set_source_files_properties(${CMAKE_SOURCE_DIR}/filters.svg.h PROPERTIES GENERAT
 
 add_custom_target(filters_svg_h ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg.h)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg.h DESTINATION ${SHARE_INSTALL}/inkscape/filters)
-install(FILES "filters.svg" "README" DESTINATION ${SHARE_INSTALL}/inkscape/filters)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/filters.svg.h DESTINATION ${INKSCAPE_SHARE_INSTALL}/filters)
+install(FILES "filters.svg" "README" DESTINATION ${INKSCAPE_SHARE_INSTALL}/filters)
