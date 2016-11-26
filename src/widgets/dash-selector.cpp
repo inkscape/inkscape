@@ -174,11 +174,13 @@ void SPDashSelector::set_dash (int ndash, double *dash, double o)
     else  if(ndash==0) {
        pos = 0;
     }
-
     if(pos>=0){
        this->set_data("pattern", dashes[pos]);
        this->dash_combo.set_active(pos);
        this->offset->set_value(o);
+       if(pos == 10) {
+           this->offset->set_value(10.0);
+       }
     }
     else { // Hit a custom pattern in the SVG, write it into the combobox.
        count--;  // the one slot for custom patterns

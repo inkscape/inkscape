@@ -140,6 +140,7 @@ static char const preferences_skeleton[] =
 "      <dash id=\"dash-1-12\" style=\"stroke-dasharray:1,12\"/>\n"
 "      <dash id=\"dash-1-24\" style=\"stroke-dasharray:1,24\"/>\n"
 "      <dash id=\"dash-1-48\" style=\"stroke-dasharray:1,48\"/>\n"
+"      <dash id=\"dash-empty\" style=\"stroke-dasharray:0 11\"/>\n"
 "      <dash id=\"dash-2-1\" style=\"stroke-dasharray:2,1\"/>\n"
 "      <dash id=\"dash-3-1\" style=\"stroke-dasharray:3,1\"/>\n"
 "      <dash id=\"dash-4-1\" style=\"stroke-dasharray:4,1\"/>\n"
