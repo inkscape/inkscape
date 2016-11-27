@@ -13,7 +13,6 @@
 #endif
 
 #include "display/cairo-utils.h"
-#include <arpa/inet.h>
 
 #include <stdexcept>
 #include <glib/gstdio.h>
