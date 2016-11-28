@@ -950,6 +950,7 @@ SPDocument::emitReconstructionFinish(void)
     priv->_reconstruction_finish_signal.emit();
     // indicates that gradients are reloaded (to rebuild the Auto palette)
     priv->resources_changed_signals[g_quark_from_string("gradient")].emit();
+    priv->resources_changed_signals[g_quark_from_string("filter")].emit();
 
 
 /**    

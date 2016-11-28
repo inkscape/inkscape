@@ -1324,6 +1324,7 @@ void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
 
         selection->moveRelative(offset);
     }
+    target_document->emitReconstructionFinish();
 }
 
 
@@ -1423,6 +1424,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
                 }
             }
         }
+        in_doc->emitReconstructionFinish();
         if (newgroup) new_obj = place_to_insert->appendChildRepr(newgroup);
 
         // release some stuff
