@@ -40,10 +40,10 @@ public:
     virtual void doOnApply(SPLPEItem const* lpeitem);
     virtual void doOnRemove (SPLPEItem const* lpeitem);
     virtual void doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/);
-    void transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/);
     virtual Geom::PathVector doEffect_path(Geom::PathVector const &path_in);
     void createLine(Geom::Point start,Geom::Point end,Glib::ustring id, bool main, bool overflow, bool remove, bool arrows = false);
     void createTextLabel(Geom::Point pos, double length, Geom::Coord angle, bool remove, bool valid);
+    void createMeasureStructure();
     void onExpanderChanged();
     void toObjects();
     void createArrowMarker(Glib::ustring mode);
@@ -81,6 +81,7 @@ private:
     double anotation_width;
     double arrow_gap;
     bool erase;
+    SPObject * meassure_data;
 /*    Geom::Affine affine_over;*/
     LPEMeasureLine(const LPEMeasureLine &);
     LPEMeasureLine &operator=(const LPEMeasureLine &);

@@ -181,59 +181,12 @@ LPEMeasureLine::doOnApply(SPLPEItem const* lpeitem)
 void
 LPEMeasureLine::doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/)
 {
-    if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
-        Inkscape::URI SVGElem_uri(((Glib::ustring)"#" +  (Glib::ustring)"text-on-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
-        SVGElemRef->attach(SVGElem_uri);
-        SPObject *elemref = NULL;
-        Inkscape::XML::Node *node = NULL;
-        if (elemref = SVGElemRef->getObject()) {
-            node = elemref->getRepr();
-            if (!this->isVisible()) {
-                node->setAttribute("style", "display:none");
-            } else {
-                node->setAttribute("style", NULL);
-            }
-        }
-        Inkscape::URI SVGElem_uri2(((Glib::ustring)"#" +  (Glib::ustring)"infoline-on-start-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri2);
-        if (elemref = SVGElemRef->getObject()) {
-            node = elemref->getRepr();
-            if (!this->isVisible()) {
-                node->setAttribute("style", "display:none");
-            } else {
-                node->setAttribute("style", NULL);
-            }
-        }
-        Inkscape::URI SVGElem_uri3(((Glib::ustring)"#" +  (Glib::ustring)"infoline-on-end-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri3);
-        if (elemref = SVGElemRef->getObject()) {
-            node = elemref->getRepr();
-            if (!this->isVisible()) {
-                node->setAttribute("style", "display:none");
-            } else {
-                node->setAttribute("style", NULL);
-            }
-        }
-        Inkscape::URI SVGElem_uri4(((Glib::ustring)"#" +  (Glib::ustring)"infoline-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri4);
-        if (elemref = SVGElemRef->getObject()) {
-            node = elemref->getRepr();
-            if (!this->isVisible()) {
-                node->setAttribute("style", "display:none");
-            } else {
-                node->setAttribute("style", NULL);
-            }
-        }
-        Inkscape::URI SVGElem_uri5(((Glib::ustring)"#" +  (Glib::ustring)"downline-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri5);
-        if (elemref = SVGElemRef->getObject()) {
-            node = elemref->getRepr();
-            if (!this->isVisible()) {
-                node->setAttribute("style", "display:none");
-            } else {
-                node->setAttribute("style", NULL);
-            }
+    if (meassure_data) {
+        Inkscape::XML::Node *node = meassure_data->getRepr();
+        if (!this->isVisible()) {
+            node->setAttribute("style", "display:none");
+        } else {
+            node->setAttribute("style", NULL);
         }
     }
 }
@@ -308,7 +261,6 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
     if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *rtext = NULL;
-        SPRoot * root = desktop->getDocument()->getRoot();
         double doc_w = desktop->getDocument()->getRoot()->width.value;
         Geom::Scale scale = desktop->getDocument()->getDocumentScale();
         SPNamedView *nv = desktop->getNamedView();
@@ -431,7 +383,7 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
             rstring->setContent(label_value.c_str());
         }
         if (!elemref) {
-            elemref = root->appendChildRepr(rtext);
+            elemref = meassure_data->appendChildRepr(rtext);
             Inkscape::GC::release(rtext);
         }
         Geom::OptRect bounds = SP_ITEM(elemref)->bounds(SPItem::GEOMETRIC_BBOX);
@@ -442,13 +394,47 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
 }
 
 void
+LPEMeasureLine::createMeasureStructure()
+{
+    if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
+        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
+        Inkscape::URI SVGElem_uri(((Glib::ustring)"#LPE_helper_layer").c_str());
+        Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
+        SVGElemRef->attach(SVGElem_uri);
+        SPObject *elemref = NULL;
+        if (!(elemref = SVGElemRef->getObject())) {
+            SPRoot * root = desktop->doc()->getRoot();
+            Inkscape::XML::Node *container_layer = NULL;
+            container_layer = xml_doc->createElement("svg:g");
+            container_layer->setAttribute("inkscape:groupmode", "layer");
+            container_layer->setAttribute("inkscape:label", _("LPE Helper Layer"));
+            container_layer->setAttribute("id", _("LPE_helper_layer"));
+            elemref = root->appendChildRepr(container_layer);
+            Inkscape::GC::release(container_layer);
+        }
+        elemref->setAttribute("transform", NULL);
+        Inkscape::URI SVGElem_uri2(((Glib::ustring)"#" + (Glib::ustring)"meassure-line-data-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
+        SVGElemRef->attach(SVGElem_uri2);
+        meassure_data = NULL;
+        if (!(meassure_data = SVGElemRef->getObject())) {
+            Inkscape::XML::Node *meassure_data_node = NULL;
+            meassure_data_node = xml_doc->createElement("svg:g");
+            meassure_data_node->setAttribute("id", ((Glib::ustring)"meassure-line-data-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
+            meassure_data = elemref->appendChildRepr(meassure_data_node);
+            Inkscape::GC::release(meassure_data_node);
+        }
+        meassure_data->setAttribute("sodipodi:insensitive", "true");
+        meassure_data->setAttribute("transform", NULL);
+    }
+}
+
+void
 LPEMeasureLine::createLine(Geom::Point start,Geom::Point end, Glib::ustring id, bool main, bool overflow, bool remove, bool arrows)
 {
     if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::URI SVGElem_uri(((Glib::ustring)"#" + id).c_str());
         Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
-        SPRoot * root = desktop->getDocument()->getRoot();
         SVGElemRef->attach(SVGElem_uri);
         SPObject *elemref = NULL;
         Inkscape::XML::Node *line = NULL;
@@ -543,16 +529,10 @@ LPEMeasureLine::createLine(Geom::Point start,Geom::Point end, Glib::ustring id, 
         sp_repr_css_write_string(css,css_str);
         line->setAttribute("style", css_str.c_str());
         if (!elemref) {
-            elemref = root->appendChildRepr(line);
+            elemref = meassure_data->appendChildRepr(line);
             Inkscape::GC::release(line);
         }
     }
-}
-
-void
-LPEMeasureLine::transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/)
-{
-    sp_lpe_item_update_patheffect (sp_lpe_item, false, true);
 }
 
 void
@@ -568,6 +548,7 @@ LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
         sp_svg_transform_read(splpeitem->getAttribute("transform"), &writed_transform );
         pathvector *= writed_transform.inverse();
         pathvector *= affinetransform;
+        createMeasureStructure();
         if (arrows_outside) {
             createArrowMarker((Glib::ustring)"ArrowDINout-start");
             createArrowMarker((Glib::ustring)"ArrowDINout-end");
@@ -717,42 +698,15 @@ LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
 void LPEMeasureLine::doOnRemove (SPLPEItem const* lpeitem)
 {
     if (!erase) return;
-    
-    if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
-        Inkscape::URI SVGElem_uri(((Glib::ustring)"#" + (Glib::ustring)"text-on-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
-        SVGElemRef->attach(SVGElem_uri);
-        SPObject *elemref = NULL;
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->deleteObject();
-        }
-        Inkscape::URI SVGElem_uri2(((Glib::ustring)"#" + (Glib::ustring)"infoline-on-end-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri2);
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->deleteObject();
-        }
-        Inkscape::URI SVGElem_uri3(((Glib::ustring)"#" + (Glib::ustring)"infoline-on-start-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri3);
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->deleteObject();
-        }
-        Inkscape::URI SVGElem_uri4(((Glib::ustring)"#" + (Glib::ustring)"infoline-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri4);
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->deleteObject();
-        }
-        Inkscape::URI SVGElem_uri5(((Glib::ustring)"#" + (Glib::ustring)"downline-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri5);
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->deleteObject();
-        }
+    if (meassure_data) {
+        meassure_data->deleteObject();
     }
 }
 
 void LPEMeasureLine::toObjects()
 {
     if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
-        
+        meassure_data->setAttribute("sodipodi:insensitive", NULL);
         Inkscape::URI SVGElem_uri(((Glib::ustring)"#" + (Glib::ustring)"text-on-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
         Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
         SVGElemRef->attach(SVGElem_uri);
