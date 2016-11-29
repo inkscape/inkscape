@@ -63,7 +63,7 @@ LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     format(_("Format*"), _("Format the number ex:{measure} {unit}, return to save"), "format", &wr, this,"measure unit"),
     arrows_outside(_("Arrows outside"), _("Arrows outside"), "arrows_outside", &wr, this, false),
     flip_side(_("Flip side*"), _("Flip side"), "flip_side", &wr, this, false),
-    scale_insensitive(_("Scale insensitive*"), _("Scale insensitive to transforms in element, parents..."), "scale_insensitive", &wr, this, true),
+    scale_insensitive(_("Scale insensitive*"), _("Costrained scale insensitive to transforms in element, parents..."), "scale_insensitive", &wr, this, true),
     local_locale(_("Local Number Format*"), _("Local number format"), "local_locale", &wr, this, true),
     line_group_05(_("Line Group 0.5*"), _("Line Group 0.5, from 0.7"), "line_group_05", &wr, this, true),
     rotate_anotation(_("Rotate Anotation*"), _("Rotate Anotation"), "rotate_anotation", &wr, this, true),
@@ -285,11 +285,13 @@ LPEMeasureLine::createArrowMarker(Glib::ustring mode)
             Inkscape::XML::Node *arrow= elemref->getRepr();
             if (arrow) {
                 arrow->setAttribute("sodipodi:insensitive", "true");
+                arrow->setAttribute("transform", NULL);
                 Inkscape::XML::Node *arrow_data = arrow->firstChild();
                 if (arrow_data) {
                     SPCSSAttr *css = sp_repr_css_attr_new();
                     sp_repr_css_set_property (css, "fill","#000000");
                     sp_repr_css_set_property (css, "stroke","none" );
+                    arrow_data->setAttribute("transform", NULL);
                     sp_repr_css_attr_add_from_string(css, arrows_format.param_getSVGValue());
                     Glib::ustring css_str;
                     sp_repr_css_write_string(css,css_str);
@@ -301,11 +303,12 @@ LPEMeasureLine::createArrowMarker(Glib::ustring mode)
 }
 
 void
-LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angle, bool remove)
+LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angle, bool remove, bool valid)
 {
     if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *rtext = NULL;
+        SPRoot * root = desktop->getDocument()->getRoot();
         double doc_w = desktop->getDocument()->getRoot()->width.value;
         Geom::Scale scale = desktop->getDocument()->getDocumentScale();
         SPNamedView *nv = desktop->getNamedView();
@@ -325,7 +328,6 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
         SVGElemRef->attach(SVGElem_uri);
         SPObject *elemref = NULL;
         Inkscape::XML::Node *rtspan = NULL;
-        
         if (elemref = SVGElemRef->getObject()) {
             if (remove) {
                 elemref->deleteObject();
@@ -336,6 +338,7 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
             sp_repr_set_svg_double(rtext, "x", pos[Geom::X]);
             sp_repr_set_svg_double(rtext, "y", pos[Geom::Y]);
             rtext->setAttribute("sodipodi:insensitive", "true");
+            rtext->setAttribute("transform", NULL);
         } else {
             if (remove) {
                 return;
@@ -373,7 +376,6 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
         std::stringstream font_size;
         font_size.imbue(std::locale::classic());
         font_size <<  fontsize << "pt";
-
         sp_repr_css_set_property (css, "font-size",font_size.str().c_str());
         sp_repr_css_set_property (css, "line-height","125%");
         sp_repr_css_set_property (css, "letter-spacing","0");
@@ -391,6 +393,7 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
         }
         rtext->setAttribute("style", css_str.c_str());
         rtspan->setAttribute("style", NULL);
+        rtspan->setAttribute("transform", NULL);
         sp_repr_css_attr_unref (css);
         if (!elemref) {
             rtext->addChild(rtspan, NULL);
@@ -415,6 +418,9 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
         if(s < label_value.length()) {
             label_value.replace(s,s+6,unit.get_abbreviation());
         }
+        if ( !valid ) {
+            label_value = Glib::ustring(_("Non Uniform Scale"));
+        }
         Inkscape::XML::Node *rstring = NULL;
         if (!elemref) {
             rstring = xml_doc->createTextNode(label_value.c_str());
@@ -425,20 +431,13 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
             rstring->setContent(label_value.c_str());
         }
         if (!elemref) {
-            elemref = SP_OBJECT(desktop->currentLayer()->appendChildRepr(rtext));
+            elemref = root->appendChildRepr(rtext);
             Inkscape::GC::release(rtext);
         }
-        Inkscape::XML::Node *tmp_node = rtext->duplicate(xml_doc);
-        affine = Geom::Affine(Geom::Scale(1.4));
-        tmp_node->setAttribute("transform", sp_svg_transform_write(affine));
-        SPObject * tmp_obj = SP_OBJECT(desktop->currentLayer()->appendChildRepr(tmp_node));
-        Inkscape::GC::release(tmp_node);
-        tmp_obj->updateRepr();
-        Geom::OptRect bounds = SP_ITEM(tmp_obj)->bounds(SPItem::GEOMETRIC_BBOX);
+        Geom::OptRect bounds = SP_ITEM(elemref)->bounds(SPItem::GEOMETRIC_BBOX);
         if (bounds) {
-            anotation_width = bounds->width();
+            anotation_width = bounds->width() * 1.4;
         }
-        tmp_obj->deleteObject();
     }
 }
 
@@ -449,6 +448,7 @@ LPEMeasureLine::createLine(Geom::Point start,Geom::Point end, Glib::ustring id, 
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::URI SVGElem_uri(((Glib::ustring)"#" + id).c_str());
         Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
+        SPRoot * root = desktop->getDocument()->getRoot();
         SVGElemRef->attach(SVGElem_uri);
         SPObject *elemref = NULL;
         Inkscape::XML::Node *line = NULL;
@@ -495,6 +495,7 @@ LPEMeasureLine::createLine(Geom::Point start,Geom::Point end, Glib::ustring id, 
            
             gchar * line_str = sp_svg_write_path( line_pathv );
             line->setAttribute("d" , line_str);
+            line->setAttribute("transform", NULL);
         } else {
             if (remove) {
                 return;
@@ -542,10 +543,16 @@ LPEMeasureLine::createLine(Geom::Point start,Geom::Point end, Glib::ustring id, 
         sp_repr_css_write_string(css,css_str);
         line->setAttribute("style", css_str.c_str());
         if (!elemref) {
-            elemref = SP_OBJECT(desktop->currentLayer()->appendChildRepr(line));
+            elemref = root->appendChildRepr(line);
             Inkscape::GC::release(line);
         }
     }
+}
+
+void
+LPEMeasureLine::transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/)
+{
+    sp_lpe_item_update_patheffect (sp_lpe_item, false, true);
 }
 
 void
@@ -555,10 +562,11 @@ LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
     SPPath *sp_path = dynamic_cast<SPPath *>(splpeitem);
     if (sp_path) {
         SPDocument * doc = SP_ACTIVE_DOCUMENT;
-        Geom::Affine affinetransform = i2anc_affine(SP_OBJECT(lpeitem)->parent, SP_OBJECT(doc->getRoot()));
-        double parents_scale = (affinetransform.inverse().expansionX() + affinetransform.inverse().expansionY()) / 2.0;
-        
+        Geom::Affine affinetransform = i2anc_affine(SP_OBJECT(lpeitem), SP_OBJECT(doc->getRoot()));
         Geom::PathVector pathvector = sp_path->get_original_curve()->get_pathvector();
+        Geom::Affine writed_transform = Geom::identity();
+        sp_svg_transform_read(splpeitem->getAttribute("transform"), &writed_transform );
+        pathvector *= writed_transform.inverse();
         pathvector *= affinetransform;
         if (arrows_outside) {
             createArrowMarker((Glib::ustring)"ArrowDINout-start");
@@ -637,10 +645,15 @@ LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
             } else {
                 pos = pos - Point::polar(angle_cross, (position + text_top_bottom) - fontsize/2.5);
             }
+            double parents_scale = (affinetransform.inverse().expansionX() + affinetransform.inverse().expansionY()) / 2.0;
             if (scale_insensitive) {
                 length *= parents_scale;
             }
-            createTextLabel(pos, length, angle, remove);
+            if (scale_insensitive && !affinetransform.preservesAngles()) {
+                createTextLabel(pos, length, angle, remove, false);
+            } else {
+                createTextLabel(pos, length, angle, remove, true);
+            }
             bool overflow = false;
             if ((anotation_width/2) + std::abs(text_right_left) > Geom::distance(start,end)/2.0) {
                 Geom::Point sstart = end - Point::polar(angle_cross, position);
