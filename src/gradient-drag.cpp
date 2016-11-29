@@ -59,12 +59,13 @@ using Inkscape::allPaintTargets;
 using Inkscape::CTLINE_PRIMARY;
 using Inkscape::CTLINE_SECONDARY;
 
-#define GR_KNOT_COLOR_NORMAL 0xffffff00
-#define GR_KNOT_COLOR_MOUSEOVER 0xff000000
-#define GR_KNOT_COLOR_SELECTED 0x0000ff00
+guint32 const GR_KNOT_COLOR_NORMAL     = 0xffffff00;
+guint32 const GR_KNOT_COLOR_MOUSEOVER  = 0xff000000;
+guint32 const GR_KNOT_COLOR_SELECTED   = 0x0000ff00;
+guint32 const GR_KNOT_COLOR_MESHCORNER = 0xbfbfbf00;
 
-#define GR_LINE_COLOR_FILL 0x0000ff7f
-#define GR_LINE_COLOR_STROKE 0x9999007f
+guint32 const GR_LINE_COLOR_FILL       = 0x0000ff7f;
+guint32 const GR_LINE_COLOR_STROKE     = 0x9999007f;
 
 // screen pixels between knots when they snap:
 #define SNAP_DIST 5
@@ -1600,7 +1601,11 @@ GrDragger::GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable)
     // create the knot
     this->knot = new SPKnot(parent->desktop, NULL);
     this->knot->setMode(SP_KNOT_MODE_XOR);
-    this->knot->setFill(GR_KNOT_COLOR_NORMAL, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
+    guint32 fill_color = GR_KNOT_COLOR_NORMAL;
+    if (draggable && draggable->point_type == POINT_MG_CORNER) {
+        fill_color = GR_KNOT_COLOR_MESHCORNER;
+    }
+    this->knot->setFill(fill_color, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
     this->knot->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
     this->knot->updateCtrl();
 
@@ -1724,9 +1729,10 @@ void GrDragger::select()
  */
 void GrDragger::deselect()
 {
-    this->knot->fill [SP_KNOT_STATE_NORMAL] = GR_KNOT_COLOR_NORMAL;
-    g_object_set (G_OBJECT (this->knot->item), "fill_color", GR_KNOT_COLOR_NORMAL, NULL);
-            // MESH FIXME: TURN OFF CORRESPONDING SIDE/TENSOR NODE VISIBILITY
+    guint32 fill_color = isA(POINT_MG_CORNER) ? GR_KNOT_COLOR_MESHCORNER : GR_KNOT_COLOR_NORMAL;
+    this->knot->fill [SP_KNOT_STATE_NORMAL] = fill_color;
+    g_object_set (G_OBJECT (this->knot->item), "fill_color", fill_color, NULL);
+    // MESH FIXME: TURN OFF CORRESPONDING SIDE/TENSOR NODE VISIBILITY
 }
 
 bool
