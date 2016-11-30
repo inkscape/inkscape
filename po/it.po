@@ -700,7 +700,8 @@ msgstr "Buco nero"
 #: ../share/filters/filters.svg.h:279 ../share/filters/filters.svg.h:835
 #: ../share/filters/filters.svg.h:839 ../share/filters/filters.svg.h:843
 #: ../src/extension/internal/filter/morphology.h:76
-#: ../src/extension/internal/filter/morphology.h:203 ../src/filter-enums.cpp:32
+#: ../src/extension/internal/filter/morphology.h:203
+#: ../src/filter-enums.cpp:32
 msgid "Morphology"
 msgstr "Morfologia"
 
@@ -5104,7 +5105,8 @@ msgstr "Soglia adattiva"
 #: ../src/ui/widget/page-sizer.cpp:249
 #: ../src/widgets/calligraphy-toolbar.cpp:430
 #: ../src/widgets/eraser-toolbar.cpp:154 ../src/widgets/spray-toolbar.cpp:297
-#: ../src/widgets/tweak-toolbar.cpp:128 ../share/extensions/foldablebox.inx.h:2
+#: ../src/widgets/tweak-toolbar.cpp:128
+#: ../share/extensions/foldablebox.inx.h:2
 msgid "Width:"
 msgstr "Larghezza:"
 
@@ -6565,13 +6567,15 @@ msgid "Transparency type:"
 msgstr "Tipo trasparenza:"
 
 #: ../src/extension/internal/filter/bumps.h:353
-#: ../src/extension/internal/filter/morphology.h:176 ../src/filter-enums.cpp:91
+#: ../src/extension/internal/filter/morphology.h:176
+#: ../src/filter-enums.cpp:91
 msgid "Atop"
 msgstr "In cima"
 
 #: ../src/extension/internal/filter/bumps.h:354
 #: ../src/extension/internal/filter/distort.h:70
-#: ../src/extension/internal/filter/morphology.h:174 ../src/filter-enums.cpp:89
+#: ../src/extension/internal/filter/morphology.h:174
+#: ../src/filter-enums.cpp:89
 msgid "In"
 msgstr "In"
 
@@ -7087,7 +7091,8 @@ msgid "Felt Feather"
 msgstr "Piuma"
 
 #: ../src/extension/internal/filter/distort.h:71
-#: ../src/extension/internal/filter/morphology.h:175 ../src/filter-enums.cpp:90
+#: ../src/extension/internal/filter/morphology.h:175
+#: ../src/filter-enums.cpp:90
 msgid "Out"
 msgstr "Out"
 
@@ -7283,11 +7288,13 @@ msgstr "Nascondi immagine"
 msgid "Composite type:"
 msgstr "Tipo composizione:"
 
-#: ../src/extension/internal/filter/morphology.h:173 ../src/filter-enums.cpp:88
+#: ../src/extension/internal/filter/morphology.h:173
+#: ../src/filter-enums.cpp:88
 msgid "Over"
 msgstr "Sovrapposizione"
 
-#: ../src/extension/internal/filter/morphology.h:177 ../src/filter-enums.cpp:92
+#: ../src/extension/internal/filter/morphology.h:177
+#: ../src/filter-enums.cpp:92
 msgid "XOR"
 msgstr "XOR"
 
@@ -7361,8 +7368,8 @@ msgstr "Riempimento rumoroso"
 #: ../src/ui/dialog/tracedialog.cpp:747
 #: ../share/extensions/color_HSL_adjust.inx.h:2
 #: ../share/extensions/color_custom.inx.h:2
-#: ../share/extensions/color_randomize.inx.h:2 ../share/extensions/dots.inx.h:2
-#: ../share/extensions/dxf_input.inx.h:2
+#: ../share/extensions/color_randomize.inx.h:2
+#: ../share/extensions/dots.inx.h:2 ../share/extensions/dxf_input.inx.h:2
 #: ../share/extensions/dxf_outlines.inx.h:2
 #: ../share/extensions/gcodetools_area.inx.h:29
 #: ../share/extensions/gcodetools_engraving.inx.h:7
@@ -7962,13 +7969,15 @@ msgstr "Spostamento verticale:"
 #: ../src/extension/internal/grid.cpp:209
 #: ../src/ui/dialog/inkscape-preferences.cpp:1532
 #: ../share/extensions/draw_from_triangle.inx.h:58
-#: ../share/extensions/eqtexsvg.inx.h:4 ../share/extensions/foldablebox.inx.h:9
+#: ../share/extensions/eqtexsvg.inx.h:4
+#: ../share/extensions/foldablebox.inx.h:9
 #: ../share/extensions/funcplot.inx.h:38
 #: ../share/extensions/grid_cartesian.inx.h:23
 #: ../share/extensions/grid_isometric.inx.h:11
 #: ../share/extensions/grid_polar.inx.h:22
 #: ../share/extensions/guides_creator.inx.h:25
-#: ../share/extensions/hershey.inx.h:52 ../share/extensions/layout_nup.inx.h:35
+#: ../share/extensions/hershey.inx.h:52
+#: ../share/extensions/layout_nup.inx.h:35
 #: ../share/extensions/lindenmayer.inx.h:34
 #: ../share/extensions/nicechart.inx.h:45
 #: ../share/extensions/param_curves.inx.h:30
@@ -8325,7 +8334,8 @@ msgid "Map all fill patterns to standard WMF hatches"
 msgstr ""
 
 #: ../src/extension/internal/wmf-inout.cpp:3208
-#: ../share/extensions/wmf_input.inx.h:2 ../share/extensions/wmf_output.inx.h:2
+#: ../share/extensions/wmf_input.inx.h:2
+#: ../share/extensions/wmf_output.inx.h:2
 msgid "Windows Metafile (*.wmf)"
 msgstr "Windows Metafile (*.wmf)"
 
@@ -8599,7 +8609,8 @@ msgstr "Ruota luminosità"
 msgid "Luminance to Alpha"
 msgstr "Da luminanza a trasparenza"
 
-#: ../src/filter-enums.cpp:87 ../share/extensions/jessyInk_mouseHandler.inx.h:3
+#: ../src/filter-enums.cpp:87
+#: ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_transitions.inx.h:7
 #: ../share/extensions/measure.inx.h:20 ../share/extensions/nicechart.inx.h:33
 msgid "Default"
@@ -8923,7 +8934,8 @@ msgstr "Riduce a icona questo pannello"
 msgid "Close this dock"
 msgstr "Chiude questo pannello"
 
-#: ../src/libgdl/gdl-dock-item-grip.c:723 ../src/libgdl/gdl-dock-tablabel.c:125
+#: ../src/libgdl/gdl-dock-item-grip.c:723
+#: ../src/libgdl/gdl-dock-tablabel.c:125
 msgid "Controlling dock item"
 msgstr "Pannello atto al controllo"
 
@@ -9091,7 +9103,8 @@ msgstr "L'indice della pagina attuale"
 #: ../src/libgdl/gdl-dock-object.c:125
 #: ../src/live_effects/parameter/originalpatharray.cpp:82
 #: ../src/ui/dialog/inkscape-preferences.cpp:1566
-#: ../src/ui/widget/page-sizer.cpp:285 ../src/widgets/gradient-selector.cpp:150
+#: ../src/ui/widget/page-sizer.cpp:285
+#: ../src/widgets/gradient-selector.cpp:150
 #: ../src/widgets/sp-xmlview-attr-list.cpp:49
 msgid "Name"
 msgstr "Nome"
@@ -9368,7 +9381,7 @@ msgstr "Etichetta testuale"
 
 #: ../src/live_effects/effect.cpp:116
 msgid "Fillet/Chamfer"
-msgstr ""
+msgstr "Bordatura"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:119
@@ -9464,9 +9477,8 @@ msgid "Join type"
 msgstr "Collegamento nodi"
 
 #: ../src/live_effects/effect.cpp:146
-#, fuzzy
 msgid "Taper stroke"
-msgstr "Motivo del contorno"
+msgstr "Contorno rastremato"
 
 #: ../src/live_effects/effect.cpp:147
 msgid "Mirror symmetry"
@@ -9779,9 +9791,10 @@ msgid "Fuse paths"
 msgstr "Fondi tracciati"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:70
-#, fuzzy
 msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
-msgstr "Fonde i tracciati "
+msgstr ""
+"Fonde i tracciati secondo la linea di ausilio, utilizza la regola di "
+"riempimento evenodd per il miglior risultato"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:431
 msgid "Adjust the starting angle"
@@ -9933,13 +9946,12 @@ msgid "Enable the top and bottom deformation paths"
 msgstr "Attiva i tracciati di deformazione superiore e inferiore"
 
 #: ../src/live_effects/lpe-extrude.cpp:30
-#, fuzzy
 msgid "Direction"
 msgstr "Direzione"
 
 #: ../src/live_effects/lpe-extrude.cpp:30
 msgid "Defines the direction and magnitude of the extrusion"
-msgstr ""
+msgstr "Definisce la direzione e la grandezza dell'estrusione"
 
 #: ../src/live_effects/lpe-fill-between-many.cpp:25
 msgid "Paths from which to take the original path data"
@@ -9968,13 +9980,12 @@ msgid "Auto"
 msgstr "Automatico"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:42
-#, fuzzy
 msgid "Force arc"
-msgstr "Forza"
+msgstr "Forza arco"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:43
 msgid "Force bezier"
-msgstr ""
+msgstr "Forza bezier"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:53
 #, fuzzy
@@ -9982,114 +9993,97 @@ msgid "Fillet point"
 msgstr "Riempimento uniforme"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:54
-#, fuzzy
 msgid "Hide knots"
-msgstr "Nascondi oggetto"
+msgstr "Nascondi punti di controllo"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:55
-#, fuzzy
 msgid "Ignore 0 radius knots"
-msgstr "Ignora primo e ultimo punto"
+msgstr "Ignora punti con raggio 0"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:57
 msgid "Flexible radius size (%)"
-msgstr ""
+msgstr "Dimensione raggio flessibile (%)"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:58
 msgid "Use knots distance instead radius"
-msgstr ""
+msgstr "Usa distanza tra punti invece del raggio"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
-#, fuzzy
 msgid "Method:"
-msgstr "Metodo"
+msgstr "Metodo:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:59
-#, fuzzy
 msgid "Fillets methods"
-msgstr "Metodo di divisione"
+msgstr "Metodo di bordatura"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:60
-#, fuzzy
 msgid "Radius (unit or %):"
 msgstr "Raggio (unità o %):"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:60
-#, fuzzy
 msgid "Radius, in unit or %"
 msgstr "Raggio, in unità o %"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
-#, fuzzy
 msgid "Chamfer steps:"
-msgstr "Numero di passi:"
+msgstr "Passi smussatura:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:61
-#, fuzzy
 msgid "Chamfer steps"
-msgstr "Numero di passi:"
+msgstr "Passi per la smussatura"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:63
-#, fuzzy
 msgid "Helper size with direction:"
-msgstr "Angolo sulla direzione X"
+msgstr "Dimensione ausilio:"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:63
-#, fuzzy
 msgid "Helper size with direction"
-msgstr "Angolo sulla direzione X"
+msgstr "Dimensione ausilio lungo il tracciato"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:103
 msgid "IMPORTANT! New version soon..."
-msgstr ""
+msgstr "ATTENZIONE! Nuova versione in arrivo..."
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:107
 msgid "Not compatible. Convert to path after."
-msgstr ""
+msgstr "Non compatibile. Converti in tracciato dopo."
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:165
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:72
-#, fuzzy
 msgid "Fillet"
-msgstr "Riempimento"
+msgstr "Bordo curvo"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:169
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:74
-#, fuzzy
 msgid "Inverse fillet"
-msgstr "Inverti riempimento"
+msgstr "Bordo curvo inverso"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:174
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:76
-#, fuzzy
 msgid "Chamfer"
-msgstr "Cham"
+msgstr "Smussatura"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:178
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:78
-#, fuzzy
 msgid "Inverse chamfer"
-msgstr "Inverti canali:"
+msgstr "Smussatura inversa"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:247
-#, fuzzy
 msgid "Convert to fillet"
-msgstr "Converti in Braille"
+msgstr "Converti in bordo curvo"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:254
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:278
-#, fuzzy
 msgid "Convert to inverse fillet"
-msgstr "Converti in Braille"
+msgstr "Converti in bordo curvo inverso"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:270
-#, fuzzy
 msgid "Convert to chamfer"
-msgstr "Converti in tratti"
+msgstr "Converti in smussatura"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:290
 msgid "Knots and helper paths refreshed"
-msgstr ""
+msgstr "Punti e ausilio aggiornati"
 
 #: ../src/live_effects/lpe-gears.cpp:214
 msgid "_Teeth:"
@@ -11168,12 +11162,10 @@ msgid "Global randomize"
 msgstr "Casualità generale"
 
 #: ../src/live_effects/lpe-roughen.cpp:61
-#, fuzzy
 msgid "Handles"
 msgstr "Maniglie"
 
 #: ../src/live_effects/lpe-roughen.cpp:61
-#, fuzzy
 msgid "Handles options"
 msgstr "Opzioni maniglie"
 
@@ -11257,7 +11249,8 @@ msgstr "Distanza _tacche:"
 msgid "Distance between successive ruler marks"
 msgstr "Distanza tra le tacche del righello"
 
-#: ../src/live_effects/lpe-ruler.cpp:42 ../share/extensions/foldablebox.inx.h:7
+#: ../src/live_effects/lpe-ruler.cpp:42
+#: ../share/extensions/foldablebox.inx.h:7
 #: ../share/extensions/interp_att_g.inx.h:9
 #: ../share/extensions/layout_nup.inx.h:3
 #: ../share/extensions/printing_marks.inx.h:11
@@ -11539,9 +11532,8 @@ msgid "max curvature"
 msgstr "curvatura massima"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:66
-#, fuzzy
 msgid "Extrapolated"
-msgstr "Interpola"
+msgstr "Estrapolati"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:73
 #: ../share/extensions/edge3d.inx.h:5 ../share/extensions/nicechart.inx.h:25
@@ -11549,60 +11541,52 @@ msgid "Stroke width:"
 msgstr "Larghezza contorno:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:73
-#, fuzzy
 msgid "The (non-tapered) width of the path"
-msgstr "Ridimensiona la larghezza del tracciato di cucitura"
+msgstr "Larghezza (non rastremata) del tracciato"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:74
-#, fuzzy
 msgid "Start offset:"
-msgstr "Spostamento testo su tracciato"
+msgstr "Spostamento inizio:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:74
 msgid "Taper distance from path start"
-msgstr ""
+msgstr "Distanza della rastrematura dall'inizio del tracciato"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:75
-#, fuzzy
 msgid "End offset:"
-msgstr "Spostamento rosso"
+msgstr "Spostamento fine:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:75
-#, fuzzy
 msgid "The ending position of the taper"
-msgstr "Usa la dimensione e la posizione salvata per la serie"
+msgstr "Posizione finale della rastrematura"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:76
-#, fuzzy
 msgid "Taper smoothing:"
-msgstr "Smussamento:"
+msgstr "Smussamento rastrematura:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:76
 msgid "Amount of smoothing to apply to the tapers"
-msgstr ""
+msgstr "Quantità di smussatura da applicare alla rastrematura"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:77
-#, fuzzy
 msgid "Join type:"
-msgstr "Tipo linea:"
+msgstr "Collegamento nodi:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:77
-#, fuzzy
 msgid "Join type for non-smooth nodes"
-msgstr "Aggancia ai nodi curvi"
+msgstr "Collegamento dei nodi non curvi"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:78
 msgid "Limit for miter joins"
-msgstr ""
+msgstr "Limite per gli spigoli vivi"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:447
 msgid "Start point of the taper"
-msgstr ""
+msgstr "Punto iniziale della rastrematura"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:451
-#, fuzzy
 msgid "End point of the taper"
-msgstr "Variazione punto finale"
+msgstr "Punto finale della rastrematura"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:31
 msgid "Elastic"
@@ -11665,7 +11649,6 @@ msgid "Last Knot"
 msgstr "Ultimo nodo"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:43
-#, fuzzy
 msgid "Rotation helper size"
 msgstr "Dimensione ausilio di rotazione"
 
@@ -11757,6 +11740,8 @@ msgid ""
 "<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
+"<b>Smussatura</b>: <b>Ctrl+Clic</b> cambia tipo, <b>Maiusc+Clic</b> apre "
+"finestra modifica, <b>Ctrl+Alt+Clic</b> resetta"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:782
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
@@ -11764,6 +11749,8 @@ msgid ""
 "<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
+"<b>Smussatura inversa</b>: <b>Ctrl+Clic</b> cambia tipo, <b>Maiusc+Clic</b> "
+"apre finestra modifica, <b>Ctrl+Alt+Clic</b> resetta"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:786
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
@@ -11771,6 +11758,8 @@ msgid ""
 "<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
+"<b>Bordo curvo inverso</b>: <b>Ctrl+Clic</b> cambia tipo, <b>Maiusc+Clic</b> "
+"apre finestra modifica, <b>Ctrl+Alt+Clic</b> resetta"
 
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:790
 #: ../src/live_effects/parameter/filletchamferpointarray.cpp:851
@@ -11778,6 +11767,8 @@ msgid ""
 "<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
+"<b>Bordo curvo</b>: <b>Ctrl+Clic</b> cambia tipo, <b>Maiusc+Clic</b> apre "
+"finestra modifica, <b>Ctrl+Alt+Clic</b> resetta"
 
 #: ../src/live_effects/parameter/originalpath.cpp:67
 #: ../src/live_effects/parameter/originalpatharray.cpp:155
@@ -12651,7 +12642,8 @@ msgstr "<b>Niente</b> da eliminare."
 #: ../src/widgets/eraser-toolbar.cpp:120
 #: ../src/widgets/gradient-toolbar.cpp:1181
 #: ../src/widgets/gradient-toolbar.cpp:1195
-#: ../src/widgets/gradient-toolbar.cpp:1209 ../src/widgets/node-toolbar.cpp:401
+#: ../src/widgets/gradient-toolbar.cpp:1209
+#: ../src/widgets/node-toolbar.cpp:401
 msgid "Delete"
 msgstr "Elimina"
 
@@ -13531,8 +13523,8 @@ msgstr ""
 
 #: ../src/sp-text.cpp:354 ../src/verbs.cpp:347
 #: ../share/extensions/lorem_ipsum.inx.h:8
-#: ../share/extensions/replace_font.inx.h:11 ../share/extensions/split.inx.h:10
-#: ../share/extensions/text_braille.inx.h:2
+#: ../share/extensions/replace_font.inx.h:11
+#: ../share/extensions/split.inx.h:10 ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_extract.inx.h:14
 #: ../share/extensions/text_flipcase.inx.h:2
 #: ../share/extensions/text_lowercase.inx.h:2
@@ -15278,7 +15270,8 @@ msgstr "_Rimuovi"
 msgid "Remove selected grid."
 msgstr "Rimuove la griglia selezionata."
 
-#: ../src/ui/dialog/document-properties.cpp:162 ../src/widgets/toolbox.cpp:1905
+#: ../src/ui/dialog/document-properties.cpp:162
+#: ../src/widgets/toolbox.cpp:1905
 msgid "Guides"
 msgstr "Guide"
 
@@ -15718,7 +15711,8 @@ msgstr "Informazioni"
 #: ../share/extensions/jitternodes.inx.h:12
 #: ../share/extensions/layout_nup.inx.h:24
 #: ../share/extensions/lindenmayer.inx.h:13
-#: ../share/extensions/lorem_ipsum.inx.h:6 ../share/extensions/measure.inx.h:33
+#: ../share/extensions/lorem_ipsum.inx.h:6
+#: ../share/extensions/measure.inx.h:33
 #: ../share/extensions/pathalongpath.inx.h:16
 #: ../share/extensions/pathscatter.inx.h:18
 #: ../share/extensions/restack.inx.h:25 ../share/extensions/split.inx.h:8
@@ -21001,7 +20995,8 @@ msgstr ""
 msgid "Y tilt"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:1616 ../src/ui/widget/color-wheel-selector.cpp:29
+#: ../src/ui/dialog/input.cpp:1616
+#: ../src/ui/widget/color-wheel-selector.cpp:29
 msgid "Wheel"
 msgstr "Ruota"
 
@@ -21234,16 +21229,14 @@ msgid "Radius (pixels):"
 msgstr "Raggio (pixel):"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:65
-#, fuzzy
 msgid "Chamfer subdivisions:"
-msgstr "Suddivisioni:"
+msgstr "Passi suddivisioni:"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:136
 msgid "Modify Fillet-Chamfer"
-msgstr ""
+msgstr "Modifica bordatura"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:137
-#, fuzzy
 msgid "_Modify"
 msgstr "_Modifica"
 
@@ -21262,7 +21255,6 @@ msgid "Knot distance"
 msgstr "Distanza di aggancio"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:213
-#, fuzzy
 msgid "Position (%):"
 msgstr "Posizione (%):"
 
@@ -21818,15 +21810,18 @@ msgstr "Algoritmo Kopf-Lischinski"
 msgid "Output"
 msgstr "Output"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:297 ../src/ui/dialog/tracedialog.cpp:814
+#: ../src/ui/dialog/pixelartdialog.cpp:297
+#: ../src/ui/dialog/tracedialog.cpp:814
 msgid "Reset all settings to defaults"
 msgstr "Reimposta tutti i valori ai predefiniti"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:302 ../src/ui/dialog/tracedialog.cpp:819
+#: ../src/ui/dialog/pixelartdialog.cpp:302
+#: ../src/ui/dialog/tracedialog.cpp:819
 msgid "Abort a trace in progress"
 msgstr "Annulla una vettorizzazione in corso"
 
-#: ../src/ui/dialog/pixelartdialog.cpp:306 ../src/ui/dialog/tracedialog.cpp:823
+#: ../src/ui/dialog/pixelartdialog.cpp:306
+#: ../src/ui/dialog/tracedialog.cpp:823
 msgid "Execute the trace"
 msgstr "Esegue la vettorizzazione"
 
@@ -22203,7 +22198,8 @@ msgid "Preview Text:"
 msgstr "Anteprima testo:"
 
 #: ../src/ui/dialog/swatches.cpp:202 ../src/ui/tools/gradient-tool.cpp:360
-#: ../src/ui/tools/gradient-tool.cpp:458 ../src/widgets/gradient-vector.cpp:801
+#: ../src/ui/tools/gradient-tool.cpp:458
+#: ../src/widgets/gradient-vector.cpp:801
 msgid "Add gradient stop"
 msgstr "Aggiungi passaggio del gradiente"
 
@@ -23633,7 +23629,8 @@ msgid "Rotate handle"
 msgstr "Ruota maniglia"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1555 ../src/widgets/node-toolbar.cpp:397
+#: ../src/ui/tool/path-manipulator.cpp:1555
+#: ../src/widgets/node-toolbar.cpp:397
 msgid "Delete node"
 msgstr "Cancella nodo"
 
@@ -24390,9 +24387,8 @@ msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
 msgstr "<b>Maiusc</b>: disegna attorno al punto iniziale"
 
 #: ../src/ui/tools/mesh-tool.cpp:1049
-#, fuzzy
 msgid "Create mesh"
-msgstr "Crea maglia predefinita"
+msgstr "Crea gradiente a maglia"
 
 #: ../src/ui/tools/node-tool.cpp:644
 msgctxt "Node tool tip"
@@ -29422,14 +29418,12 @@ msgid "Set gradient on stroke"
 msgstr "Imposta gradiente per il contorno"
 
 #: ../src/widgets/fill-style.cpp:727
-#, fuzzy
 msgid "Set mesh on fill"
-msgstr "Imposta motivo per il riempimento"
+msgstr "Imposta gradiente a maglia per il riempimento"
 
 #: ../src/widgets/fill-style.cpp:727
-#, fuzzy
 msgid "Set mesh on stroke"
-msgstr "Imposta motivo per il contorno"
+msgstr "Imposta gradiente a maglia per il contorno"
 
 #: ../src/widgets/fill-style.cpp:788
 msgid "Set pattern on fill"
@@ -29530,27 +29524,33 @@ msgstr "radiale"
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "Crea un gradiente radiale (ellittico o circolare)"
 
-#: ../src/widgets/gradient-toolbar.cpp:1044 ../src/widgets/mesh-toolbar.cpp:411
+#: ../src/widgets/gradient-toolbar.cpp:1044
+#: ../src/widgets/mesh-toolbar.cpp:411
 msgid "New:"
 msgstr "Nuovo:"
 
-#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:434
+#: ../src/widgets/gradient-toolbar.cpp:1067
+#: ../src/widgets/mesh-toolbar.cpp:434
 msgid "fill"
 msgstr "riempimento"
 
-#: ../src/widgets/gradient-toolbar.cpp:1067 ../src/widgets/mesh-toolbar.cpp:434
+#: ../src/widgets/gradient-toolbar.cpp:1067
+#: ../src/widgets/mesh-toolbar.cpp:434
 msgid "Create gradient in the fill"
 msgstr "Crea gradiente per il riempimento"
 
-#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:438
+#: ../src/widgets/gradient-toolbar.cpp:1071
+#: ../src/widgets/mesh-toolbar.cpp:438
 msgid "stroke"
 msgstr "contorno"
 
-#: ../src/widgets/gradient-toolbar.cpp:1071 ../src/widgets/mesh-toolbar.cpp:438
+#: ../src/widgets/gradient-toolbar.cpp:1071
+#: ../src/widgets/mesh-toolbar.cpp:438
 msgid "Create gradient in the stroke"
 msgstr "Crea gradiente per il contorno"
 
-#: ../src/widgets/gradient-toolbar.cpp:1074 ../src/widgets/mesh-toolbar.cpp:441
+#: ../src/widgets/gradient-toolbar.cpp:1074
+#: ../src/widgets/mesh-toolbar.cpp:441
 msgid "on:"
 msgstr "su:"
 
@@ -29650,7 +29650,8 @@ msgstr "Collega gradienti"
 msgid "Link gradients to change all related gradients"
 msgstr "Collega i gradienti per modificare tutti i gradienti correlati"
 
-#: ../src/widgets/gradient-vector.cpp:317 ../src/widgets/paint-selector.cpp:947
+#: ../src/widgets/gradient-vector.cpp:317
+#: ../src/widgets/paint-selector.cpp:947
 #: ../src/widgets/paint-selector.cpp:1311
 #: ../src/widgets/stroke-marker-selector.cpp:154
 msgid "No document selected"
@@ -29908,9 +29909,8 @@ msgid "Convert to item"
 msgstr "Converti in oggetto"
 
 #: ../src/widgets/mesh-toolbar.cpp:320
-#, fuzzy
 msgid "Set mesh type"
-msgstr "Imposta stile testo"
+msgstr "Imposta tipo gradiente"
 
 #: ../src/widgets/mesh-toolbar.cpp:372
 msgid ""
@@ -30341,11 +30341,11 @@ msgstr "<b>Gradiente radiale</b>"
 #: ../src/widgets/paint-selector.cpp:1080
 msgid "Use the <b>Mesh tool</b> to modify the mesh."
 msgstr ""
+"Usa lo strumento <b>Gradiente a maglia</b> per modificare il gradiente."
 
 #: ../src/widgets/paint-selector.cpp:1093
-#, fuzzy
 msgid "<b>Mesh fill</b>"
-msgstr "<b>Campione</b>"
+msgstr "<b>Gradiente a maglia</b>"
 
 #: ../src/widgets/paint-selector.cpp:1444
 msgid ""
@@ -32749,7 +32749,8 @@ msgid "Area is zero, cannot calculate Center of Mass"
 msgstr ""
 
 #: ../share/extensions/pathalongpath.py:207
-#: ../share/extensions/pathscatter.py:226 ../share/extensions/perspective.py:50
+#: ../share/extensions/pathscatter.py:226
+#: ../share/extensions/perspective.py:50
 msgid "This extension requires two selected paths."
 msgstr "Questa estensione richiede che vengan selezionati due tracciati."
 
@@ -32782,7 +32783,8 @@ msgstr ""
 "derivati Debian questo può essere fatto col comando `sudo apt-get install "
 "python-numpy`."
 
-#: ../share/extensions/perspective.py:58 ../share/extensions/summersnight.py:49
+#: ../share/extensions/perspective.py:58
+#: ../share/extensions/summersnight.py:49
 #, python-format
 msgid ""
 "The first selected object is of type '%s'.\n"
@@ -32791,14 +32793,16 @@ msgstr ""
 "Il primo elemento selezionato è del tipo '%s'.\n"
 "Provare prima il procedimento Tracciato->Da oggetto a tracciato."
 
-#: ../share/extensions/perspective.py:65 ../share/extensions/summersnight.py:57
+#: ../share/extensions/perspective.py:65
+#: ../share/extensions/summersnight.py:57
 msgid ""
 "This extension requires that the second selected path be four nodes long."
 msgstr ""
 "Questa estensione richiede che il secondo tracciato selezionato sia lungo "
 "esattamente quattro nodi."
 
-#: ../share/extensions/perspective.py:91 ../share/extensions/summersnight.py:90
+#: ../share/extensions/perspective.py:91
+#: ../share/extensions/summersnight.py:90
 msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
@@ -32806,7 +32810,8 @@ msgstr ""
 "Il secondo elemento selezionato è un gruppo, non un tracciato.\n"
 "Provare prima il procedimento Oggetto->Dividi."
 
-#: ../share/extensions/perspective.py:93 ../share/extensions/summersnight.py:92
+#: ../share/extensions/perspective.py:93
+#: ../share/extensions/summersnight.py:92
 msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -32814,7 +32819,8 @@ msgstr ""
 "Il secondo elemento selezionato non è un tracciato.\n"
 "Provare prima il procedimento Tracciato->Da oggetto a tracciato."
 
-#: ../share/extensions/perspective.py:96 ../share/extensions/summersnight.py:95
+#: ../share/extensions/perspective.py:96
+#: ../share/extensions/summersnight.py:95
 msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
@@ -33013,9 +33019,8 @@ msgstr ""
 "e installalo nella locazione Python di Inkscape\n"
 
 #: ../share/extensions/voronoi2svg.py:205
-#, fuzzy
 msgid "Please select objects!"
-msgstr "Duplica gli oggetti selezionati"
+msgstr "Seleziona degli oggetti."
 
 #: ../share/extensions/web-set-att.py:56
 #: ../share/extensions/web-transmit-att.py:53
@@ -33348,34 +33353,34 @@ msgid "Randomize"
 msgstr "Casualità"
 
 #: ../share/extensions/color_randomize.inx.h:4
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Hue range (%)"
-msgstr "Rotazione tonalità (°)"
+msgstr "Tonalità (%)"
 
 #: ../share/extensions/color_randomize.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Saturation range (%)"
 msgstr "Saturazione (%)"
 
 #: ../share/extensions/color_randomize.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Lightness range (%)"
 msgstr "Luminosità (%)"
 
 #: ../share/extensions/color_randomize.inx.h:10
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Opacity range (%)"
 msgstr "Opacità (%)"
 
 #: ../share/extensions/color_randomize.inx.h:12
-#, fuzzy
 msgid ""
 "Randomizes hue, saturation, lightness and/or opacity (opacity randomization "
 "only for objects and groups). Change the range values to limit the distance "
 "between the original color and the randomized one."
 msgstr ""
-"Converte in HSL, randomizza la tonalità e/o la saturazione e/o la luminosità "
-"e converte nuovamente in RGB."
+"Randomizza tonalità, saturazione, luminosità e/o opacità (opacità solo per "
+"oggetti e gruppi). Modifica i valori per limitare la differenza tra il "
+"colore originale e quello randomizzato."
 
 #: ../share/extensions/color_removeblue.inx.h:1
 msgid "Remove Blue"
@@ -35586,24 +35591,28 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:3
-#: ../share/extensions/hpgl_output.inx.h:4 ../share/extensions/plotter.inx.h:32
+#: ../share/extensions/hpgl_output.inx.h:4
+#: ../share/extensions/plotter.inx.h:32
 msgid "Resolution X (dpi):"
 msgstr "Risoluzione X (dpi):"
 
 #: ../share/extensions/hpgl_input.inx.h:4
-#: ../share/extensions/hpgl_output.inx.h:5 ../share/extensions/plotter.inx.h:33
+#: ../share/extensions/hpgl_output.inx.h:5
+#: ../share/extensions/plotter.inx.h:33
 msgid ""
 "The amount of steps the plotter moves if it moves for 1 inch on the X axis "
 "(Default: 1016.0)"
 msgstr ""
 
 #: ../share/extensions/hpgl_input.inx.h:5
-#: ../share/extensions/hpgl_output.inx.h:6 ../share/extensions/plotter.inx.h:34
+#: ../share/extensions/hpgl_output.inx.h:6
+#: ../share/extensions/plotter.inx.h:34
 msgid "Resolution Y (dpi):"
 msgstr "Risoluzione Y (dpi):"
 
 #: ../share/extensions/hpgl_input.inx.h:6
-#: ../share/extensions/hpgl_output.inx.h:7 ../share/extensions/plotter.inx.h:35
+#: ../share/extensions/hpgl_output.inx.h:7
+#: ../share/extensions/plotter.inx.h:35
 msgid ""
 "The amount of steps the plotter moves if it moves for 1 inch on the Y axis "
 "(Default: 1016.0)"
@@ -35638,17 +35647,20 @@ msgid ""
 "serial connection."
 msgstr ""
 
-#: ../share/extensions/hpgl_output.inx.h:3 ../share/extensions/plotter.inx.h:31
+#: ../share/extensions/hpgl_output.inx.h:3
+#: ../share/extensions/plotter.inx.h:31
 #, fuzzy
 msgid "Plotter Settings "
 msgstr "Impostazioni importazione PDF"
 
-#: ../share/extensions/hpgl_output.inx.h:8 ../share/extensions/plotter.inx.h:36
+#: ../share/extensions/hpgl_output.inx.h:8
+#: ../share/extensions/plotter.inx.h:36
 #, fuzzy
 msgid "Pen number:"
 msgstr "Angolo de"
 
-#: ../share/extensions/hpgl_output.inx.h:9 ../share/extensions/plotter.inx.h:37
+#: ../share/extensions/hpgl_output.inx.h:9
+#: ../share/extensions/plotter.inx.h:37
 msgid "The number of the pen (tool) to use (Standard: '1')"
 msgstr ""
 
@@ -35996,12 +36008,13 @@ msgstr "Duplica nodi finale"
 msgid "Interpolate style"
 msgstr "Stile d'interpolazione"
 
-#: ../share/extensions/interp.inx.h:7 ../share/extensions/interp_att_g.inx.h:10
-#, fuzzy
+#: ../share/extensions/interp.inx.h:7
+#: ../share/extensions/interp_att_g.inx.h:10
 msgid "Use Z-order"
-msgstr "Bordo rialzato"
+msgstr "Usa ordine Z"
 
-#: ../share/extensions/interp.inx.h:8 ../share/extensions/interp_att_g.inx.h:11
+#: ../share/extensions/interp.inx.h:8
+#: ../share/extensions/interp_att_g.inx.h:11
 msgid "Workaround for reversed selection order in Live Preview cycles"
 msgstr ""
 
@@ -36602,26 +36615,23 @@ msgstr "Sposta maniglie dei nodi"
 
 #: ../share/extensions/jitternodes.inx.h:7
 msgid "Distribution of the displacements:"
-msgstr ""
+msgstr "Distribuzione dello spostamento:"
 
 #: ../share/extensions/jitternodes.inx.h:8
-#, fuzzy
 msgid "Uniform"
-msgstr "Cuneiforme"
+msgstr "Uniforme"
 
 #: ../share/extensions/jitternodes.inx.h:9
 msgid "Pareto"
-msgstr ""
+msgstr "Paretiana"
 
 #: ../share/extensions/jitternodes.inx.h:10
-#, fuzzy
 msgid "Gaussian"
-msgstr "Sfocatura gaussiana"
+msgstr "Gaussiano"
 
 #: ../share/extensions/jitternodes.inx.h:11
-#, fuzzy
 msgid "Log-normal"
-msgstr "normale"
+msgstr "Log-normale"
 
 #: ../share/extensions/jitternodes.inx.h:13
 msgid ""
@@ -37669,7 +37679,8 @@ msgstr ""
 msgid "AutoCAD Plot Input"
 msgstr "Input AutoCAD Plot"
 
-#: ../share/extensions/plt_input.inx.h:2 ../share/extensions/plt_output.inx.h:2
+#: ../share/extensions/plt_input.inx.h:2
+#: ../share/extensions/plt_output.inx.h:2
 msgid "HP Graphics Language Plot file [AutoCAD] (*.plt)"
 msgstr "File HP Graphics Language Plot [AutoCAD] (*.plt)"
 
@@ -38118,29 +38129,24 @@ msgid "Restack"
 msgstr "Reimpila"
 
 #: ../share/extensions/restack.inx.h:2
-#, fuzzy
 msgid "Based on Position"
-msgstr "Posizione"
+msgstr "Secondo posizione"
 
 #: ../share/extensions/restack.inx.h:3
-#, fuzzy
 msgid "Presets"
-msgstr "Preimpostato"
+msgstr "Preimpostati"
 
 #: ../share/extensions/restack.inx.h:6
-#, fuzzy
 msgid "Horizontal:"
-msgstr "Ori_zzontale:"
+msgstr "Orizzontale:"
 
 #: ../share/extensions/restack.inx.h:7
-#, fuzzy
 msgid "Vertical:"
-msgstr "_Verticale:"
+msgstr "Verticale:"
 
 #: ../share/extensions/restack.inx.h:8
-#, fuzzy
 msgid "Restack Direction"
-msgstr "Direzione della pila:"
+msgstr "Direzione di reimpilazione"
 
 #: ../share/extensions/restack.inx.h:9
 msgid "Left to Right (0)"
@@ -38167,9 +38173,8 @@ msgid "Radial Inward"
 msgstr "Raggio interno"
 
 #: ../share/extensions/restack.inx.h:15
-#, fuzzy
 msgid "Object Reference Point"
-msgstr "Preferenze gradiente"
+msgstr "Punto di riferimento oggetto"
 
 #: ../share/extensions/restack.inx.h:17
 #: ../share/extensions/text_extract.inx.h:9
@@ -38190,23 +38195,20 @@ msgid "Bottom"
 msgstr "Fondo"
 
 #: ../share/extensions/restack.inx.h:21
-#, fuzzy
 msgid "Based on Z-Order"
-msgstr "Bordo rialzato"
+msgstr "Secondo ordine Z"
 
 #: ../share/extensions/restack.inx.h:22
-#, fuzzy
 msgid "Restack Mode"
-msgstr "Reimpila"
+msgstr "Modalità di reimpilazione"
 
 #: ../share/extensions/restack.inx.h:23
-#, fuzzy
 msgid "Reverse Z-Order"
-msgstr "Inverti gradiente"
+msgstr "Inverti ordine Z"
 
 #: ../share/extensions/restack.inx.h:24
 msgid "Shuffle Z-Order"
-msgstr ""
+msgstr "Mescola ordine Z"
 
 #: ../share/extensions/restack.inx.h:26
 msgid ""
@@ -38215,6 +38217,9 @@ msgid ""
 "objects inside a single selected group, or a selection of multiple objects "
 "on the current drawing level (layer or group)."
 msgstr ""
+"Questa estensione cambia l'ordine z degli oggetti in base alla posizione e "
+"all'ordine z. Selezione: l'estensione reimpila oggetti in un singolo gruppo "
+"selezionato o più oggetti selezionati sullo stesso livello."
 
 #: ../share/extensions/restack.inx.h:27
 #: ../share/extensions/ungroup_deep.inx.h:6
@@ -38234,9 +38239,8 @@ msgid "Minimum size:"
 msgstr "Dimensione minima:"
 
 #: ../share/extensions/rtree.inx.h:4
-#, fuzzy
 msgid "Omit redundant segments"
-msgstr "Appiattisci segmenti"
+msgstr "Ometti segmenti superflui"
 
 #: ../share/extensions/rtree.inx.h:5
 msgid "Lift pen for backward steps"
@@ -38601,7 +38605,8 @@ msgstr "Discendente:"
 msgid "sK1 vector graphics files input"
 msgstr "Input file grafico vettoriale sK1"
 
-#: ../share/extensions/sk1_input.inx.h:2 ../share/extensions/sk1_output.inx.h:2
+#: ../share/extensions/sk1_input.inx.h:2
+#: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (*.sk1)"
 msgstr "File grafico vettoriale sK1 (*.sk1)"
 
@@ -39134,9 +39139,8 @@ msgid "Automatic from selected objects"
 msgstr "Automatico dagli oggetti selezionati"
 
 #: ../share/extensions/voronoi2svg.inx.h:12
-#, fuzzy
 msgid "Options for Delaunay Triangulation"
-msgstr "Triangolazione di Delaunay"
+msgstr "Opzioni per la triangolazione di Delaunay"
 
 #: ../share/extensions/voronoi2svg.inx.h:13
 msgid "Default (Stroke black and no fill)"
@@ -39589,11 +39593,13 @@ msgstr "Inclinazione (gradi):"
 msgid "Hide lines behind the sphere"
 msgstr "Nascondi linee dietro alla sfera"
 
-#: ../share/extensions/wmf_input.inx.h:1 ../share/extensions/wmf_output.inx.h:1
+#: ../share/extensions/wmf_input.inx.h:1
+#: ../share/extensions/wmf_output.inx.h:1
 msgid "Windows Metafile Input"
 msgstr "Input Windows Metafile"
 
-#: ../share/extensions/wmf_input.inx.h:3 ../share/extensions/wmf_output.inx.h:3
+#: ../share/extensions/wmf_input.inx.h:3
+#: ../share/extensions/wmf_output.inx.h:3
 msgid "A popular graphics file format for clipart"
 msgstr "Un formato grafico molto diffuso per clipart"
 
