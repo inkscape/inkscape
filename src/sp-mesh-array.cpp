@@ -2493,6 +2493,7 @@ guint SPMeshNodeArray::insert( std::vector<guint> corners ) {
    corner: the corner node moved (draggable index, i.e. point_i).
    selected: list of all corners selected (draggable indices).
    op: how other corners should be moved.
+   Corner node must already have been moved!
 */
 void SPMeshNodeArray::update_handles( guint corner, std::vector< guint > /*selected*/, Geom::Point p_old, MeshNodeOperation /*op*/ )
 {

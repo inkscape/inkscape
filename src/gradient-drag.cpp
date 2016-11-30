@@ -1379,6 +1379,7 @@ GrDragger::moveMeshHandles ( Geom::Point pc_old,  MeshNodeOperation op )
         pcg_old *= (gradient->gradientTransform).inverse();
 
         mg->array.update_handles( point_i, selected_corners[ gradient ], pcg_old, op );
+        mg->array.write( mg );
 
         // Move on-screen knots
         for( guint i = 0; i < mg->array.handles.size(); ++i ) {
