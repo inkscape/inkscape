@@ -357,6 +357,26 @@ static void ms_fit_mesh(void)
     }
 }
 
+static void ms_toggle_handles(void)
+{
+    MeshTool *mt = get_mesh_tool();
+    if (mt) {
+        GrDrag *drag = mt->_grdrag;
+        drag->refreshDraggers();
+    }
+}
+
+static void ms_toggle_fill_stroke(void)
+{
+    MeshTool *mt = get_mesh_tool();
+    if (mt) {
+        GrDrag *drag = mt->_grdrag;
+        drag->updateDraggers();
+        drag->updateLines();
+        drag->updateLevels();
+    }
+}
+
 static void ms_warning_popup(void)
 {
     char *msg = _("Mesh gradients are part of SVG 2:\n"
@@ -487,6 +507,7 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/mesh/edit_fill");
         g_signal_connect( holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(ms_toggle_fill_stroke), 0);
     }
 
     /* Edit stroke mesh */
@@ -499,18 +520,20 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/mesh/edit_stroke");
         g_signal_connect( holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(ms_toggle_fill_stroke), 0);
     }
 
     /* Show/hide side and tensor handles */
     {
         InkToggleAction* act = ink_toggle_action_new( "MeshShowHandlesAction",
                                                       _("Show Handles"),
-                                                      _("Show side and tensor handles"),
+                                                      _("Show handles"),
                                                       INKSCAPE_ICON("show-node-handles"),
                                                       secondarySize );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/mesh/show_handles");
         g_signal_connect( holder, "destroy", G_CALLBACK(delete_prefspusher), pusher);
+        g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(ms_toggle_handles), 0);
     }
 
     g_object_set_data(holder, "desktop", desktop);

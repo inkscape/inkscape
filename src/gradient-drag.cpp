@@ -1992,15 +1992,10 @@ void GrDrag::addDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTa
 
     // Show/hide mesh on fill/stroke. This doesn't work at the moment... and prevents node color updating.
     
-    //Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool edit_fill    = true; //abs(prefs->getBool("/tools/mesh/edit_fill",    true));
-    bool edit_stroke  = true; //abs(prefs->getBool("/tools/mesh/edit_stroke",  true));
-    bool show_handles = true; //abs(prefs->getBool("/tools/mesh/show_handles", true));
-
-    if( (fill_or_stroke == Inkscape::FOR_FILL   && !edit_fill) ||
-        (fill_or_stroke == Inkscape::FOR_STROKE && !edit_stroke) ) {
-        return;
-    }
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool show_handles = abs(prefs->getBool("/tools/mesh/show_handles", true));
+    bool edit_fill    = abs(prefs->getBool("/tools/mesh/edit_fill",    true));
+    bool edit_stroke  = abs(prefs->getBool("/tools/mesh/edit_stroke",  true));
 
     // Make sure we have at least one patch defined.
     if( mg->array.patch_rows() == 0 || mg->array.patch_columns() == 0 ) {
@@ -2016,6 +2011,10 @@ void GrDrag::addDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTa
     mg->array.handles.clear();
     mg->array.tensors.clear();
 
+    if( (fill_or_stroke == Inkscape::FOR_FILL   && !edit_fill) ||
+        (fill_or_stroke == Inkscape::FOR_STROKE && !edit_stroke) ) {
+        return;
+    }
 
     for( guint i = 0; i < nodes.size(); ++i ) {
         for( guint j = 0; j < nodes[i].size(); ++j ) {
@@ -2052,7 +2051,7 @@ void GrDrag::addDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTa
                     mg->array.tensors.push_back( nodes[i][j] );
                     GrDraggable *tensor = new GrDraggable (item, POINT_MG_TENSOR, itensor, fill_or_stroke);
                     GrDragger* dragger = addDragger ( tensor );
-                    if( show_handles || !nodes[i][j]->set ) {
+                    if( !show_handles || !nodes[i][j]->set ) {
                         dragger->knot->hide();
                     }
                     nodes[i][j]->draggable = itensor;
@@ -2079,7 +2078,8 @@ void GrDrag::refreshDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::Pai
     mg->ensureArray();
     std::vector< std::vector< SPMeshNode* > > nodes = mg->array.nodes;
 
-    bool show_handles = true; //abs(prefs->getBool("/tools/mesh/show_handles", true));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool show_handles = abs(prefs->getBool("/tools/mesh/show_handles", true));
 
     // Make sure we have at least one patch defined.
     if( mg->array.patch_rows() == 0 || mg->array.patch_columns() == 0 ) {
@@ -2114,7 +2114,8 @@ void GrDrag::refreshDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::Pai
                             dragger->knot->show();
                         }
                     } else {
-                        std::cerr << "GrDrag::refreshDraggersMesh: No dragger!" << std::endl;
+                        // This can happen if a draggable is not visible.
+                        // std::cerr << "GrDrag::refreshDraggersMesh: No dragger!" << std::endl;
                     }
                     ++ihandle;
                     break;
@@ -2132,7 +2133,8 @@ void GrDrag::refreshDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::Pai
                             dragger->knot->show();
                         }
                     } else {
-                        std::cerr << "GrDrag::refreshDraggersMesh: No dragger!" << std::endl;
+                        // This can happen if a draggable is not visible.
+                        // std::cerr << "GrDrag::refreshDraggersMesh: No dragger!" << std::endl;
                     }
                     ++itensor;
                     break;
@@ -2306,8 +2308,12 @@ void GrDrag::updateLines()
                     addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
                 } else if ( SP_IS_MESHGRADIENT(server) ) {
 
+                    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                    bool edit_fill    = abs(prefs->getBool("/tools/mesh/edit_fill",    true));
+
                     SPMeshGradient *mg = SP_MESHGRADIENT(server);
 
+                    if (edit_fill) {
                     guint rows    = mg->array.patch_rows();
                     guint columns = mg->array.patch_columns();
                     for ( guint i = 0; i < rows; ++i ) {
@@ -2356,6 +2362,7 @@ void GrDrag::updateLines()
                             addCurve (item, h[0], h[1], h[2], h[3], corner3, corner0, Inkscape::FOR_FILL );
                         }
                     }
+                    }
                 }                        
             }
         }
@@ -2373,6 +2380,11 @@ void GrDrag::updateLines()
                     addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
                     addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
                 } else if ( SP_IS_MESHGRADIENT(server) ) {
+
+                    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                    bool edit_stroke   = abs(prefs->getBool("/tools/mesh/edit_stroke",   true));
+
+                    if (edit_stroke) {
 
                     // MESH FIXME: TURN ROUTINE INTO FUNCTION AND CALL FOR BOTH FILL AND STROKE.
                     SPMeshGradient *mg = SP_MESHGRADIENT(server);
@@ -2424,7 +2436,8 @@ void GrDrag::updateLines()
                             }
                             addCurve (item, h[0], h[1], h[2], h[3], corner3, corner0, Inkscape::FOR_STROKE );
                         }
-                    }                        
+                    }
+                    }
                 }
             }
         }

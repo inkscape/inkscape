@@ -75,6 +75,9 @@ MeshTool::MeshTool()
     : ToolBase(cursor_gradient_xpm, 4, 4)
     , cursor_addnode(false)
     , node_added(false)
+    , show_handles(true)
+    , edit_fill(true)
+    , edit_stroke(true)
 // TODO: Why are these connections stored as pointers?
     , selcon(NULL)
     , subselcon(NULL)
@@ -253,7 +256,25 @@ void MeshTool::setup() {
     	)
     ));
 
+    sp_event_context_read(this, "show_handles");
+    sp_event_context_read(this, "edit_fill");
+    sp_event_context_read(this, "edit_stroke");
+
     this->selection_changed(selection);
+
+}
+
+void MeshTool::set(const Inkscape::Preferences::Entry& value) {
+    Glib::ustring entry_name = value.getEntryName();
+    if (entry_name == "show_handles") {
+        this->show_handles = value.getBool(true);
+    } else if (entry_name == "edit_fill") {
+        this->edit_fill = value.getBool(true);
+    } else if (entry_name == "edit_stroke") {
+        this->edit_stroke = value.getBool(true);
+    } else {
+        ToolBase::set(value);
+    }
 }
 
 void
