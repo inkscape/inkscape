@@ -42,12 +42,19 @@ enum LineCapType {
  * @param[in] miter Miter limit. Only used when @a join is one of JOIN_MITER, JOIN_MITER_CLIP, and JOIN_EXTRAPOLATE.
  * @param[in] join  Line join type used during offset. Member of LineJoinType enum.
  * @param[in] cap   Line cap type used during stroking. Member of LineCapType enum.
+ * @param[in] tolerance Tolerance, values smaller than 0 lead to automatic tolerance depending on width.
  *
  * @return Stroked path.
  *         If the input path is closed, the resultant vector will contain two paths.
  *         Otherwise, there should be only one in the output.
  */
-Geom::PathVector outline(Geom::Path const& input, double width, double miter, LineJoinType join = JOIN_BEVEL, LineCapType cap = BUTT_FLAT);
+Geom::PathVector outline(
+        Geom::Path const& input,
+        double width,
+        double miter,
+        LineJoinType join = JOIN_BEVEL,
+        LineCapType cap = BUTT_FLAT,
+        double tolerance = -1);
 
 /**
  * Offset the input path by @a width.
@@ -57,10 +64,16 @@ Geom::PathVector outline(Geom::Path const& input, double width, double miter, Li
  * @param[in] width Amount to offset.
  * @param[in] miter Miter limit. Only used when @a join is one of JOIN_MITER, JOIN_MITER_CLIP, and JOIN_EXTRAPOLATE.
  * @param[in] join  Line join type used during offset. Member of LineJoinType enum.
+ * @param[in] tolerance Tolerance, values smaller than 0 lead to automatic tolerance depending on width.
  *
  * @return Offsetted output.
  */
-Geom::Path half_outline(Geom::Path const& input, double width, double miter, LineJoinType join = JOIN_BEVEL);
+Geom::Path half_outline(
+        Geom::Path const& input,
+        double width,
+        double miter,
+        LineJoinType join = JOIN_BEVEL,
+        double tolerance = -1);
 
 /**
  * Builds a join on the provided path.
