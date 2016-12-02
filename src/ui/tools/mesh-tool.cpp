@@ -1136,6 +1136,16 @@ static void sp_mesh_new_default(MeshTool &rc) {
             (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ?
             Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
+        // Ensure mesh is immediately editable.
+        // Editting both fill and stroke at same time doesn't work well so avoid.
+        if (fill_or_stroke == Inkscape::FOR_FILL) {
+            prefs->setBool("/tools/mesh/edit_fill",   true );
+            prefs->setBool("/tools/mesh/edit_stroke", false);
+        } else {
+            prefs->setBool("/tools/mesh/edit_fill",   false);
+            prefs->setBool("/tools/mesh/edit_stroke", true );
+        }
+
 // HACK: reset fill-opacity - that 0.75 is annoying; BUT remove this when we have an opacity slider for all tabs
         SPCSSAttr *css = sp_repr_css_attr_new();
         sp_repr_css_set_property(css, "fill-opacity", "1.0");
