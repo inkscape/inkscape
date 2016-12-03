@@ -539,9 +539,11 @@ void LivePathEffectEditor::onDown()
 void LivePathEffectEditor::on_effect_selection_changed()
 {
     Glib::RefPtr<Gtk::TreeSelection> sel = effectlist_view.get_selection();
-    if (sel->count_selected_rows () == 0)
+    if (sel->count_selected_rows () == 0) {
+        button_remove.set_sensitive(false);
         return;
-
+    }
+    button_remove.set_sensitive(true);
     Gtk::TreeModel::iterator it = sel->get_selected();
     LivePathEffect::LPEObjectReference * lperef = (*it)[columns.lperef];
 

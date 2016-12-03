@@ -47,6 +47,9 @@ static const Util::EnumData<OrientationMethod> OrientationMethodData[] = {
 };
 static const Util::EnumDataConverter<OrientationMethod> OMConverter(OrientationMethodData, OM_END);
 
+std::vector<Glib::ustring> ml_elements;
+SPObject * container;
+        
 LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     unit(_("Unit*"), _("Unit"), "unit", &wr, this, "px"),
@@ -63,7 +66,7 @@ LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     format(_("Format*"), _("Format the number ex:{measure} {unit}, return to save"), "format", &wr, this,"measure unit"),
     arrows_outside(_("Arrows outside"), _("Arrows outside"), "arrows_outside", &wr, this, false),
     flip_side(_("Flip side*"), _("Flip side"), "flip_side", &wr, this, false),
-    scale_insensitive(_("Scale insensitive*"), _("Costrained scale insensitive to transforms in element, parents..."), "scale_insensitive", &wr, this, true),
+    scale_sensitive(_("Scale sensitive*"), _("Costrained scale sensitive to transformed containers"), "scale_sensitive", &wr, this, true),
     local_locale(_("Local Number Format*"), _("Local number format"), "local_locale", &wr, this, true),
     line_group_05(_("Line Group 0.5*"), _("Line Group 0.5, from 0.7"), "line_group_05", &wr, this, true),
     rotate_anotation(_("Rotate Anotation*"), _("Rotate Anotation"), "rotate_anotation", &wr, this, true),
@@ -88,7 +91,7 @@ LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     registerParameter(&format);
     registerParameter(&arrows_outside);
     registerParameter(&flip_side);
-    registerParameter(&scale_insensitive);
+    registerParameter(&scale_sensitive);
     registerParameter(&local_locale);
     registerParameter(&line_group_05);
     registerParameter(&rotate_anotation);
@@ -124,7 +127,7 @@ LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     anotation_format.param_update_default(prefs->getString("/live_effects/measure-line/anotation_format"));
     arrows_format.param_update_default(prefs->getString("/live_effects/measure-line/arrows_format"));
     flip_side.param_update_default(prefs->getBool("/live_effects/measure-line/flip_side"));
-    scale_insensitive.param_update_default(prefs->getBool("/live_effects/measure-line/scale_insensitive"));
+    scale_sensitive.param_update_default(prefs->getBool("/live_effects/measure-line/scale_sensitive"));
     local_locale.param_update_default(prefs->getBool("/live_effects/measure-line/local_locale"));
     line_group_05.param_update_default(prefs->getBool("/live_effects/measure-line/line_group_05"));
     rotate_anotation.param_update_default(prefs->getBool("/live_effects/measure-line/rotate_anotation"));
@@ -158,7 +161,6 @@ LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     helpline_overlap.param_set_range(-999999.0, 999999.0);
     helpline_overlap.param_set_increments(1, 1);
     helpline_overlap.param_set_digits(2);
-    erase = true;
 }
 
 LPEMeasureLine::~LPEMeasureLine() {}
@@ -167,28 +169,6 @@ void swap(Geom::Point &A, Geom::Point &B){
     Geom::Point tmp = A;
     A = B;
     B = tmp;
-}
-void
-LPEMeasureLine::doOnApply(SPLPEItem const* lpeitem)
-{
-    if (!SP_IS_SHAPE(lpeitem)) {
-        g_warning("LPE measure line can only be applied to shapes (not groups).");
-        SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-        item->removeCurrentPathEffect(false);
-    }
-}
-
-void
-LPEMeasureLine::doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/)
-{
-    if (meassure_data) {
-        Inkscape::XML::Node *node = meassure_data->getRepr();
-        if (!this->isVisible()) {
-            node->setAttribute("style", "display:none");
-        } else {
-            node->setAttribute("style", NULL);
-        }
-    }
 }
 
 void
@@ -252,6 +232,7 @@ LPEMeasureLine::createArrowMarker(Glib::ustring mode)
                 }
             }
         }
+        ml_elements.push_back(mode);
     }
 }
 
@@ -275,7 +256,8 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
         } else {
             doc_scale = 1.0;
         }
-        Inkscape::URI SVGElem_uri(((Glib::ustring)"#" +  (Glib::ustring)"text-on-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
+        Glib::ustring id = (Glib::ustring)"text-on-" + (Glib::ustring)this->getRepr()->attribute("id");
+        Inkscape::URI SVGElem_uri(((Glib::ustring)"#" +  id).c_str());
         Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
         SVGElemRef->attach(SVGElem_uri);
         SPObject *elemref = NULL;
@@ -383,48 +365,22 @@ LPEMeasureLine::createTextLabel(Geom::Point pos, double length, Geom::Coord angl
             rstring->setContent(label_value.c_str());
         }
         if (!elemref) {
-            elemref = meassure_data->appendChildRepr(rtext);
+            elemref = container->appendChildRepr(rtext);
             Inkscape::GC::release(rtext);
+        } else if (elemref->parent != container) {
+            Inkscape::XML::Node *old_repr = elemref->getRepr();
+            Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
+            SPObject * elemref_copy = container->appendChildRepr(copy);
+            Inkscape::GC::release(copy);
+            elemref->deleteObject();
+            copy->setAttribute("id", id.c_str());
+            elemref = elemref_copy;
         }
+        ml_elements.push_back(id);
         Geom::OptRect bounds = SP_ITEM(elemref)->bounds(SPItem::GEOMETRIC_BBOX);
         if (bounds) {
             anotation_width = bounds->width() * 1.4;
         }
-    }
-}
-
-void
-LPEMeasureLine::createMeasureStructure()
-{
-    if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
-        Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
-        Inkscape::URI SVGElem_uri(((Glib::ustring)"#LPE_helper_layer").c_str());
-        Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
-        SVGElemRef->attach(SVGElem_uri);
-        SPObject *elemref = NULL;
-        if (!(elemref = SVGElemRef->getObject())) {
-            SPRoot * root = desktop->doc()->getRoot();
-            Inkscape::XML::Node *container_layer = NULL;
-            container_layer = xml_doc->createElement("svg:g");
-            container_layer->setAttribute("inkscape:groupmode", "layer");
-            container_layer->setAttribute("inkscape:label", _("LPE Helper Layer"));
-            container_layer->setAttribute("id", _("LPE_helper_layer"));
-            elemref = root->appendChildRepr(container_layer);
-            Inkscape::GC::release(container_layer);
-        }
-        elemref->setAttribute("transform", NULL);
-        Inkscape::URI SVGElem_uri2(((Glib::ustring)"#" + (Glib::ustring)"meassure-line-data-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri2);
-        meassure_data = NULL;
-        if (!(meassure_data = SVGElemRef->getObject())) {
-            Inkscape::XML::Node *meassure_data_node = NULL;
-            meassure_data_node = xml_doc->createElement("svg:g");
-            meassure_data_node->setAttribute("id", ((Glib::ustring)"meassure-line-data-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-            meassure_data = elemref->appendChildRepr(meassure_data_node);
-            Inkscape::GC::release(meassure_data_node);
-        }
-        meassure_data->setAttribute("sodipodi:insensitive", "true");
-        meassure_data->setAttribute("transform", NULL);
     }
 }
 
@@ -529,9 +485,27 @@ LPEMeasureLine::createLine(Geom::Point start,Geom::Point end, Glib::ustring id, 
         sp_repr_css_write_string(css,css_str);
         line->setAttribute("style", css_str.c_str());
         if (!elemref) {
-            elemref = meassure_data->appendChildRepr(line);
+            elemref = container->appendChildRepr(line);
             Inkscape::GC::release(line);
+        } else if (elemref->parent != container) {
+            Inkscape::XML::Node *old_repr = elemref->getRepr();
+            Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
+            SPObject * elemref_copy = container->appendChildRepr(copy);
+            Inkscape::GC::release(copy);
+            elemref->deleteObject();
+            copy->setAttribute("id", id.c_str());
         }
+        ml_elements.push_back(id);
+    }
+}
+
+void
+LPEMeasureLine::doOnApply(SPLPEItem const* lpeitem)
+{
+    if (!SP_IS_SHAPE(lpeitem)) {
+        g_warning("LPE measure line can only be applied to shapes (not groups).");
+        SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
+        item->removeCurrentPathEffect(false);
     }
 }
 
@@ -539,16 +513,20 @@ void
 LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     SPLPEItem * splpeitem = const_cast<SPLPEItem *>(lpeitem);
+    container = dynamic_cast<SPObject *>(splpeitem->parent);
+    SPDocument * doc = SP_ACTIVE_DOCUMENT;
+    Inkscape::XML::Node *root = splpeitem->document->getReprRoot();
+    Inkscape::XML::Node *root_origin = doc->getReprRoot();
+    if (root_origin != root) {
+        return;
+    }
     SPPath *sp_path = dynamic_cast<SPPath *>(splpeitem);
     if (sp_path) {
-        SPDocument * doc = SP_ACTIVE_DOCUMENT;
         Geom::Affine affinetransform = i2anc_affine(SP_OBJECT(lpeitem), SP_OBJECT(doc->getRoot()));
         Geom::PathVector pathvector = sp_path->get_original_curve()->get_pathvector();
         Geom::Affine writed_transform = Geom::identity();
         sp_svg_transform_read(splpeitem->getAttribute("transform"), &writed_transform );
-        pathvector *= writed_transform.inverse();
-        pathvector *= affinetransform;
-        createMeasureStructure();
+        pathvector *= writed_transform;
         if (arrows_outside) {
             createArrowMarker((Glib::ustring)"ArrowDINout-start");
             createArrowMarker((Glib::ustring)"ArrowDINout-end");
@@ -626,11 +604,11 @@ LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
             } else {
                 pos = pos - Point::polar(angle_cross, (position + text_top_bottom) - fontsize/2.5);
             }
-            double parents_scale = (affinetransform.inverse().expansionX() + affinetransform.inverse().expansionY()) / 2.0;
-            if (scale_insensitive) {
+            double parents_scale = (affinetransform.expansionX() + affinetransform.expansionY()) / 2.0;
+            if (scale_sensitive) {
                 length *= parents_scale;
             }
-            if (scale_insensitive && !affinetransform.preservesAngles()) {
+            if (scale_sensitive && !affinetransform.preservesAngles()) {
                 createTextLabel(pos, length, angle, remove, false);
             } else {
                 createTextLabel(pos, length, angle, remove, true);
@@ -695,52 +673,56 @@ LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
     }
 }
 
-void LPEMeasureLine::doOnRemove (SPLPEItem const* lpeitem)
+
+void
+LPEMeasureLine::doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/)
 {
-    if (!erase) return;
-    if (meassure_data) {
-        meassure_data->deleteObject();
-    }
+    processObjects(MA_VISIBILITY);
 }
 
-void LPEMeasureLine::toObjects()
+void 
+LPEMeasureLine::doOnRemove (SPLPEItem const* /*lpeitem*/)
 {
+    if (!erase_extra_objects) {
+        processObjects(MA_TO_OBJECTS);
+        ml_elements.clear();
+        return;
+    }
+    processObjects(MA_ERASE);
+}
+
+void 
+LPEMeasureLine::processObjects(MeasureAction measure_action)
+{
+
     if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
-        meassure_data->setAttribute("sodipodi:insensitive", NULL);
-        Inkscape::URI SVGElem_uri(((Glib::ustring)"#" + (Glib::ustring)"text-on-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
-        SVGElemRef->attach(SVGElem_uri);
-        SPObject *elemref = NULL;
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->getRepr()->setAttribute("sodipodi:insensitive", NULL);
+        for (std::vector<Glib::ustring>::iterator el_it = ml_elements.begin(); 
+             el_it != ml_elements.end();++el_it) {
+            Glib::ustring id = *el_it;
+            Inkscape::URI SVGElem_uri(((Glib::ustring)"#" +  id).c_str());
+            Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
+            SVGElemRef->attach(SVGElem_uri);
+            SPObject *elemref = NULL;
+            if (elemref = SVGElemRef->getObject()) {
+                switch (measure_action){
+                case MA_TO_OBJECTS:
+                    elemref->getRepr()->setAttribute("sodipodi:insensitive", NULL);
+                break;
+                case MA_ERASE:
+                    elemref->deleteObject();
+                break;
+                default: //MA_VISIBILITY
+                    if (!this->isVisible()) {
+                        elemref->getRepr()->setAttribute("style", "display:none");
+                    } else {
+                        elemref->getRepr()->setAttribute("style", NULL);
+                    }
+                break;
+                }
+            }
         }
-        Inkscape::URI SVGElem_uri2(((Glib::ustring)"#" + (Glib::ustring)"infoline-on-end-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri2);
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->getRepr()->setAttribute("sodipodi:insensitive", NULL);
-        }
-        Inkscape::URI SVGElem_uri3(((Glib::ustring)"#" + (Glib::ustring)"infoline-on-start-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri3);
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->getRepr()->setAttribute("sodipodi:insensitive", NULL);
-        }
-        Inkscape::URI SVGElem_uri4(((Glib::ustring)"#" + (Glib::ustring)"infoline-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri4);
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->getRepr()->setAttribute("sodipodi:insensitive", NULL);
-        }
-        Inkscape::URI SVGElem_uri5(((Glib::ustring)"#" + (Glib::ustring)"downline-" + (Glib::ustring)this->getRepr()->attribute("id")).c_str());
-        SVGElemRef->attach(SVGElem_uri5);
-        if (elemref = SVGElemRef->getObject()) {
-            elemref->getRepr()->setAttribute("sodipodi:insensitive", NULL);
-        }
-        erase = false;
-        sp_lpe_item->removeCurrentPathEffect(true);
-        //TODO: find better way to refresh effect list
-        if (SP_IS_OBJECT(sp_lpe_item)){
-            Inkscape::Selection *selection = SP_ACTIVE_DESKTOP->getSelection();
-            selection->remove(SP_OBJECT(sp_lpe_item));
-            selection->add(SP_OBJECT(sp_lpe_item));
+        if (measure_action == MA_ERASE) {
+            ml_elements.clear();
         }
     }
 }
@@ -757,7 +739,6 @@ Gtk::Widget *LPEMeasureLine::newWidget()
 
     std::vector<Parameter *>::iterator it = param_vector.begin();
     Gtk::HBox * button1 = Gtk::manage(new Gtk::HBox(true,0));
-    Gtk::HBox * button2 = Gtk::manage(new Gtk::HBox(true,0));
     Gtk::VBox * vbox_expander = Gtk::manage( new Gtk::VBox(Effect::newWidget()) );
     vbox_expander->set_border_width(0);
     vbox_expander->set_spacing(2);
@@ -789,16 +770,12 @@ Gtk::Widget *LPEMeasureLine::newWidget()
     Gtk::Button *save_default = Gtk::manage(new Gtk::Button(Glib::ustring(_("Save '*' as default"))));
     save_default->signal_clicked().connect(sigc::mem_fun(*this, &LPEMeasureLine::saveDefault));
     button1->pack_start(*save_default, true, true, 2);
-    Gtk::Button *remove = Gtk::manage(new Gtk::Button(Glib::ustring(_("Convert to objects"))));
-    remove->signal_clicked().connect(sigc::mem_fun(*this, &LPEMeasureLine::toObjects));
-    button2->pack_start(*remove, true, true, 2);
     expander = Gtk::manage(new Gtk::Expander(Glib::ustring(_("Show DIM CSS style override"))));
     expander->add(*vbox_expander);
     expander->set_expanded(expanded);
     expander->property_expanded().signal_changed().connect(sigc::mem_fun(*this, &LPEMeasureLine::onExpanderChanged) );
     vbox->pack_start(*expander, true, true, 2);
     vbox->pack_start(*button1, true, true, 2);
-    vbox->pack_start(*button2, true, true, 2);
     return dynamic_cast<Gtk::Widget *>(vbox);
 }
 
@@ -837,7 +814,7 @@ LPEMeasureLine::saveDefault()
     prefs->setString("/live_effects/measure-line/anotation_format", (Glib::ustring)anotation_format.param_getSVGValue());
     prefs->setString("/live_effects/measure-line/arrows_format", (Glib::ustring)arrows_format.param_getSVGValue());
     prefs->setBool("/live_effects/measure-line/flip_side", flip_side);
-    prefs->setBool("/live_effects/measure-line/scale_insensitive", scale_insensitive);
+    prefs->setBool("/live_effects/measure-line/scale_sensitive", scale_sensitive);
     prefs->setBool("/live_effects/measure-line/local_locale", local_locale);
     prefs->setBool("/live_effects/measure-line/line_group_05", line_group_05);
     prefs->setBool("/live_effects/measure-line/rotate_anotation", rotate_anotation);

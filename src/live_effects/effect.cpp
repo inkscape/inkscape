@@ -350,6 +350,7 @@ Effect::Effect(LivePathEffectObject *lpeobject)
       oncanvasedit_it(0),
       is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
       show_orig_path(false),
+      erase_extra_objects(true),
       lpeobj(lpeobject),
       concatenate_before_pwd2(false),
       sp_lpe_item(NULL),

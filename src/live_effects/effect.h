@@ -123,6 +123,7 @@ public:
 
     void editNextParamOncanvas(SPItem * item, SPDesktop * desktop);
     bool apply_to_clippath_and_mask;
+    bool erase_extra_objects; // set this to false allow retain extra generated objects, see measure line LPE
     bool upd_params;
 
 protected:

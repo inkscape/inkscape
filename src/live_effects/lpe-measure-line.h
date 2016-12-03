@@ -32,20 +32,25 @@ enum OrientationMethod {
     OM_END
 };
 
+enum MeasureAction {
+    MA_ERASE = 0,
+    MA_TO_OBJECTS.
+    MA_VISIBILITY
+};
+
 class LPEMeasureLine : public Effect {
 public:
     LPEMeasureLine(LivePathEffectObject *lpeobject);
     virtual ~LPEMeasureLine();
     virtual void doBeforeEffect (SPLPEItem const* lpeitem);
     virtual void doOnApply(SPLPEItem const* lpeitem);
-    virtual void doOnRemove (SPLPEItem const* lpeitem);
+    virtual void doOnRemove (SPLPEItem const* /*lpeitem*/);
     virtual void doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/);
     virtual Geom::PathVector doEffect_path(Geom::PathVector const &path_in);
+    void processObjects(MeasureAction measure_action);
     void createLine(Geom::Point start,Geom::Point end,Glib::ustring id, bool main, bool overflow, bool remove, bool arrows = false);
     void createTextLabel(Geom::Point pos, double length, Geom::Coord angle, bool remove, bool valid);
-    void createMeasureStructure();
     void onExpanderChanged();
-    void toObjects();
     void createArrowMarker(Glib::ustring mode);
     void saveDefault();
     virtual Gtk::Widget *newWidget();
@@ -64,7 +69,7 @@ private:
     TextParam format;
     BoolParam arrows_outside;
     BoolParam flip_side;
-    BoolParam scale_insensitive;
+    BoolParam scale_sensitive;
     BoolParam local_locale;
     BoolParam line_group_05;
     BoolParam rotate_anotation;
@@ -80,8 +85,7 @@ private:
     double fontsize;
     double anotation_width;
     double arrow_gap;
-    bool erase;
-    SPObject * meassure_data;
+
 /*    Geom::Affine affine_over;*/
     LPEMeasureLine(const LPEMeasureLine &);
     LPEMeasureLine &operator=(const LPEMeasureLine &);

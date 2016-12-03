@@ -514,6 +514,21 @@ void SPLPEItem::removeCurrentPathEffect(bool keep_paths)
  */
 void SPLPEItem::removeAllPathEffects(bool keep_paths)
 {
+    if (keep_paths) {
+        if (path_effect_list->empty()) {
+            return;
+        }
+
+        for (PathEffectList::const_iterator it = path_effect_list->begin(); it != path_effect_list->end(); ++it)
+        {
+            LivePathEffectObject *lpeobj = (*it)->lpeobject;
+            if (lpeobj) {
+                Inkscape::LivePathEffect::Effect * lpe = lpeobj->get_lpe();
+                lpe->erase_extra_objects = false;
+            }
+        }
+    }
+
     this->getRepr()->setAttribute("inkscape:path-effect", NULL);
 
     if (!keep_paths) {
