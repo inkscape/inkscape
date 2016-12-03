@@ -18,6 +18,7 @@ enum {
     ARG_MODE,
     ARG_ANCHOR,
     ARG_SIZE,
+    ARG_ANGLE,
     ARG_FILLED,
     ARG_FILL_COLOR,
     ARG_STROKED,
@@ -53,7 +54,7 @@ sp_ctrl_class_init (SPCtrlClass *klass)
     g_object_class_install_property (g_object_class,
             ARG_SIZE, g_param_spec_double ("size", "size", "Size", 0.0, G_MAXDOUBLE, 8.0, (GParamFlags) G_PARAM_READWRITE));
     g_object_class_install_property (g_object_class,
-            ARG_PIXBUF, g_param_spec_pointer ("pixbuf", "pixbuf", "Pixbuf", (GParamFlags) G_PARAM_READWRITE));
+            ARG_ANGLE, g_param_spec_double ("angle", "angle", "Angle", -G_MAXDOUBLE, G_MAXDOUBLE, 0.0, (GParamFlags) G_PARAM_READWRITE));
     g_object_class_install_property (g_object_class,
             ARG_FILLED, g_param_spec_boolean ("filled", "filled", "Filled", TRUE, (GParamFlags) G_PARAM_READWRITE));
     g_object_class_install_property (g_object_class,
@@ -62,6 +63,8 @@ sp_ctrl_class_init (SPCtrlClass *klass)
             ARG_STROKED, g_param_spec_boolean ("stroked", "stroked", "Stroked", FALSE, (GParamFlags) G_PARAM_READWRITE));
     g_object_class_install_property (g_object_class,
             ARG_STROKE_COLOR, g_param_spec_int ("stroke_color", "stroke_color", "Stroke Color", G_MININT, G_MAXINT, 0x000000ff, (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_PIXBUF, g_param_spec_pointer ("pixbuf", "pixbuf", "Pixbuf", (GParamFlags) G_PARAM_READWRITE));
 
     item_class->destroy = sp_ctrl_destroy;
     item_class->update = sp_ctrl_update;
@@ -94,6 +97,9 @@ sp_ctrl_set_property(GObject *object, guint prop_id, const GValue *value, GParam
         ctrl->width = (gint)(g_value_get_double(value) / 2.0);
         ctrl->height = ctrl->width;
         ctrl->defined = (ctrl->width > 0);
+        break;
+    case ARG_ANGLE:
+        ctrl->angle = (double)g_value_get_double(value);
         break;
     case ARG_FILLED:
         ctrl->filled = g_value_get_boolean(value);
@@ -151,6 +157,10 @@ sp_ctrl_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec 
             g_value_set_double(value, ctrl->width);
             break;
 
+        case ARG_ANGLE:
+            g_value_set_double(value, ctrl->angle);
+            break;
+
         case ARG_FILLED:
             g_value_set_boolean(value, ctrl->filled);
             break;
@@ -192,6 +202,7 @@ sp_ctrl_init (SPCtrl *ctrl)
     ctrl->stroked = 0;
     ctrl->fill_color = 0x000000ff;
     ctrl->stroke_color = 0x000000ff;
+    ctrl->angle = 0.0;
 
     new (&ctrl->box) Geom::IntRect(0,0,0,0);
     ctrl->cache = NULL;
@@ -291,6 +302,23 @@ sp_ctrl_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
     return 1e18;
 }
 
+bool 
+sp_point_inside_line(Geom::Point a, Geom::Point b, Geom::Point c, double tolerance = 0.1){
+    //http://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
+    return Geom::are_near(Geom::distance(a,c) + Geom::distance(c,b) , Geom::distance(a,b), tolerance);
+}
+
+bool 
+sp_point_inside_triangle(Geom::Point p1,Geom::Point p2,Geom::Point p3, Geom::Point point){
+    using Geom::X;
+    using Geom::Y;
+    double denominator = (p1[X]*(p2[Y] - p3[Y]) + p1[Y]*(p3[X] - p2[X]) + p2[X]*p3[Y] - p2[Y]*p3[X]);
+    double t1 = (point[X]*(p3[Y] - p1[Y]) + point[Y]*(p1[X] - p3[X]) - p1[X]*p3[Y] + p1[Y]*p3[X]) / denominator;
+    double t2 = (point[X]*(p2[Y] - p1[Y]) + point[Y]*(p1[X] - p2[X]) - p1[X]*p2[Y] + p1[Y]*p2[X]) / -denominator;
+    double see = t1 + t2;
+    return 0 <= t1 && t1 <= 1 && 0 <= t2 && t2 <= 1 && see <= 1;
+}
+
 static void
 sp_ctrl_build_cache (SPCtrl *ctrl)
 {
@@ -316,7 +344,7 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
     } else {
         stroke_color = fill_color;
     }
-
+    gint32 stroke_color_smooth =  SP_RGBA32_F_COMPOSE(SP_RGBA32_R_F(stroke_color), SP_RGBA32_G_F(stroke_color), SP_RGBA32_B_F(stroke_color), 0.15);
     width = (ctrl->width * 2 +1);
     height = (ctrl->height * 2 +1);
     c = ctrl->width; // Only used for pre-set square drawing
@@ -325,7 +353,24 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
 
     if (ctrl->cache) delete[] ctrl->cache;
     ctrl->cache = new guint32[size];
-
+    Geom::Point point;
+    Geom::Point p1;
+    Geom::Point p2;
+    Geom::Point p3;
+    if(ctrl->shape == SP_CTRL_SHAPE_TRIANGLE){
+        Geom::Affine m = Geom::Translate(Geom::Point(-width/2.0,-height/2.0));
+        m *= Geom::Rotate(-ctrl->angle);
+        m *= Geom::Translate(Geom::Point(width/2.0, height/2.0));
+        p1 = Geom::Point(0,height/2);
+        p2 = Geom::Point(width - (width/M_PI), height/M_PI);
+        p3 = Geom::Point(width - (width/M_PI), height-(height/M_PI));
+        p1 *= m;
+        p2 *= m;
+        p3 *= m;
+        p1 = p1.floor();
+        p2 = p2.floor();
+        p3 = p3.floor();
+    }
     switch (ctrl->shape) {
         case SP_CTRL_SHAPE_SQUARE:
             p = ctrl->cache;
@@ -403,6 +448,29 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
                     x++;
                 }
                 s = z;
+            }
+            ctrl->build = TRUE;
+            break;
+
+        case SP_CTRL_SHAPE_TRIANGLE:
+            p = ctrl->cache;
+            for(y = 0; y < height; y++) {
+                for(x = 0; x < width; x++) {
+                    point = Geom::Point(x,y);
+                    if (sp_point_inside_triangle(p1, p2, p3, point)) {
+                        p[(y*width)+x] = fill_color;
+                    } else if (point == p1 || point == p2 || point == p3 || sp_point_inside_line(p1, p2, point, 0.2) ||
+                               sp_point_inside_line(p3, p1, point, 0.2))
+                    {
+                        p[(y*width)+x] = stroke_color;
+                    } else if (sp_point_inside_line(p1, p2, point, 0.5) ||
+                               sp_point_inside_line(p3, p1, point, 0.5))
+                    {
+                        p[(y*width)+x] = stroke_color_smooth;
+                    } else {
+                        p[(y*width)+x] = 0;
+                    }
+                }
             }
             ctrl->build = TRUE;
             break;

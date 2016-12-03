@@ -22,6 +22,7 @@ typedef enum {
     SP_CTRL_SHAPE_SQUARE,
     SP_CTRL_SHAPE_DIAMOND,
     SP_CTRL_SHAPE_CIRCLE,
+    SP_CTRL_SHAPE_TRIANGLE,
     SP_CTRL_SHAPE_CROSS,
     SP_CTRL_SHAPE_BITMAP,
     SP_CTRL_SHAPE_IMAGE
@@ -46,6 +47,7 @@ struct SPCtrl : public SPCanvasItem {
     guint stroked : 1;
     guint32 fill_color;
     guint32 stroke_color;
+    gdouble angle;
 
     Geom::IntRect box;   /* NB! x1 & y1 are included */
     guint32 *cache;
