@@ -677,22 +677,22 @@ LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
 void
 LPEMeasureLine::doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/)
 {
-    processObjects(MA_VISIBILITY);
+    processObjects(LPE_VISIBILITY);
 }
 
 void 
 LPEMeasureLine::doOnRemove (SPLPEItem const* /*lpeitem*/)
 {
     if (!erase_extra_objects) {
-        processObjects(MA_TO_OBJECTS);
+        processObjects(LPE_TO_OBJECTS);
         ml_elements.clear();
         return;
     }
-    processObjects(MA_ERASE);
+    processObjects(LPE_ERASE);
 }
 
 void 
-LPEMeasureLine::processObjects(MeasureAction measure_action)
+LPEMeasureLine::processObjects(LpeAction lpe_action)
 {
 
     if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
@@ -704,14 +704,14 @@ LPEMeasureLine::processObjects(MeasureAction measure_action)
             SVGElemRef->attach(SVGElem_uri);
             SPObject *elemref = NULL;
             if (elemref = SVGElemRef->getObject()) {
-                switch (measure_action){
-                case MA_TO_OBJECTS:
+                switch (lpe_action){
+                case LPE_TO_OBJECTS:
                     elemref->getRepr()->setAttribute("sodipodi:insensitive", NULL);
                 break;
-                case MA_ERASE:
+                case LPE_ERASE:
                     elemref->deleteObject();
                 break;
-                default: //MA_VISIBILITY
+                default: //LPE_VISIBILITY
                     if (!this->isVisible()) {
                         elemref->getRepr()->setAttribute("style", "display:none");
                     } else {
@@ -721,7 +721,7 @@ LPEMeasureLine::processObjects(MeasureAction measure_action)
                 }
             }
         }
-        if (measure_action == MA_ERASE) {
+        if (lpe_action == LPE_ERASE) {
             ml_elements.clear();
         }
     }

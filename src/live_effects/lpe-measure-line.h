@@ -32,10 +32,10 @@ enum OrientationMethod {
     OM_END
 };
 
-enum MeasureAction {
-    MA_ERASE = 0,
-    MA_TO_OBJECTS,
-    MA_VISIBILITY
+enum LpeAction {
+    LPE_ERASE = 0,
+    LPE_TO_OBJECTS,
+    LPE_VISIBILITY
 };
 
 class LPEMeasureLine : public Effect {
@@ -47,7 +47,7 @@ public:
     virtual void doOnRemove (SPLPEItem const* /*lpeitem*/);
     virtual void doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/);
     virtual Geom::PathVector doEffect_path(Geom::PathVector const &path_in);
-    void processObjects(MeasureAction measure_action);
+    void processObjects(LpeAction lpe_action);
     void createLine(Geom::Point start,Geom::Point end,Glib::ustring id, bool main, bool overflow, bool remove, bool arrows = false);
     void createTextLabel(Geom::Point pos, double length, Geom::Coord angle, bool remove, bool valid);
     void onExpanderChanged();
