@@ -34,7 +34,7 @@ enum OrientationMethod {
 
 enum MeasureAction {
     MA_ERASE = 0,
-    MA_TO_OBJECTS.
+    MA_TO_OBJECTS,
     MA_VISIBILITY
 };
 
