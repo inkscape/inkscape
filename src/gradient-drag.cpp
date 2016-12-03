@@ -1209,6 +1209,30 @@ void GrDragger::fireDraggables(bool write_repr, bool scale_radial, bool merging_
     }
 }
 
+void GrDragger::updateControlSizesOverload(SPKnot * knot)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int sizes[] = {4, 6, 8, 10, 12, 14, 16};
+    std::vector<int> sizeTable = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
+    int size = prefs->getIntLimited("/options/grabsize/value", 3, 1, 7);
+    int knot_size = sizeTable[size - 1];
+    if(knot->shape == SP_KNOT_SHAPE_TRIANGLE){
+        knot_size *= 2.2;
+        knot_size = floor(knot_size);
+        if ( knot_size % 2 == 0 ){
+            knot_size += 1;
+        }
+    }
+    knot->setSize(knot_size);
+}
+
+void GrDragger::updateControlSizes()
+{
+    updateControlSizesOverload(this->knot);
+    this->knot->updateCtrl();
+    this->updateKnotShape();
+}
+
 /**
  * Checks if the dragger has a draggable with this point_type.
  */
@@ -1608,6 +1632,7 @@ GrDragger::GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable)
     }
     this->knot->setFill(fill_color, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
     this->knot->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
+    this->updateControlSizesOverload(this->knot);
     this->knot->updateCtrl();
 
     // move knot to the given point
@@ -1626,6 +1651,7 @@ GrDragger::GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable)
         this->_moved_connection = this->knot->moved_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_moved_handler), this));
     }
 
+    this->sizeUpdatedConn = ControlManager::getManager().connectCtrlSizeChanged(sigc::mem_fun(*this, &GrDragger::updateControlSizes));
     this->_clicked_connection = this->knot->click_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_clicked_handler), this));
     this->_doubleclicked_connection = this->knot->doubleclicked_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_doubleclicked_handler), this));
     this->_grabbed_connection = this->knot->grabbed_signal.connect(sigc::bind(sigc::ptr_fun(gr_knot_grabbed_handler), this));
@@ -1648,6 +1674,7 @@ GrDragger::~GrDragger()
     //this->parent->setDeselected(this);
 
     // disconnect signals
+    this->sizeUpdatedConn.disconnect();
     this->_moved_connection.disconnect();
     this->_clicked_connection.disconnect();
     this->_doubleclicked_connection.disconnect();

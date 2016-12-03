@@ -116,6 +116,11 @@ struct GrDragger {
 
     void fireDraggables(bool write_repr, bool scale_radial = false, bool merging_focus = false);
 
+protected:
+    void updateControlSizesOverload(SPKnot * knot);
+    void updateControlSizes();
+    sigc::connection sizeUpdatedConn;
+
 private:
     sigc::connection _moved_connection;
     sigc::connection _clicked_connection;
