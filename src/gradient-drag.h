@@ -107,6 +107,11 @@ struct GrDragger {
     /* Update handles/tensors when mesh corner moved */
     void moveMeshHandles( Geom::Point pc_old,  MeshNodeOperation op );
 
+    /* Following are for highlighting mesh handles when corner node is selected. */
+    GrDragger *getMgCorner();
+    void highlightNode(SPMeshNode* node, bool highlight, Geom::Point corner_pos);
+    void highlightCorner(bool highlight);
+
     bool mayMerge(GrDragger *other);
     bool mayMerge(GrDraggable *da2);
 
@@ -210,7 +215,8 @@ private:
     void deselect_all();
 
     void addLine( SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke);
-    void addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, int corner0, int corner1, Inkscape::PaintTarget fill_or_stroke);
+    void addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3,
+                  int corner0, int corner1, int handle0, int handle1, Inkscape::PaintTarget fill_or_stroke);
 
     GrDragger *addDragger(GrDraggable *draggable);
 

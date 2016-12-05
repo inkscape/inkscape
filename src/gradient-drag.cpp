@@ -62,6 +62,7 @@ using Inkscape::CTLINE_SECONDARY;
 guint32 const GR_KNOT_COLOR_NORMAL     = 0xffffff00;
 guint32 const GR_KNOT_COLOR_MOUSEOVER  = 0xff000000;
 guint32 const GR_KNOT_COLOR_SELECTED   = 0x0000ff00;
+guint32 const GR_KNOT_COLOR_HIGHLIGHT  = 0xffffff00;
 guint32 const GR_KNOT_COLOR_MESHCORNER = 0xbfbfbf00;
 
 guint32 const GR_LINE_COLOR_FILL       = 0x0000ff7f;
@@ -733,13 +734,23 @@ SPObject *GrDraggable::getServer()
 static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gpointer data)
 {
     GrDragger *dragger = (GrDragger *) data;
-    GrDrag *drag = dragger->parent;
 
-    Geom::Point p = ppointer;
+    // Dragger must have at least one draggable
+    GrDraggable *draggable = (GrDraggable *) dragger->draggables[0];
+    if (!draggable) return;
 
+    // Find mesh corner that corresponds to dragger (only checks first draggable) and highlight it.
+    GrDragger *dragger_corner = dragger->getMgCorner();
+    if (dragger_corner) {
+        dragger_corner->highlightCorner(true);
+    }
+
+    // Set-up snapping
     SPDesktop *desktop = dragger->parent->desktop;
     SnapManager &m = desktop->namedview->snap_manager;
     double snap_dist = m.snapprefs.getObjectTolerance() / dragger->parent->desktop->current_zoom();
+
+    Geom::Point p = ppointer;
 
     if (state & GDK_SHIFT_MASK) {
         // with Shift; unsnap if we carry more than one draggable
@@ -892,6 +903,7 @@ static void gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, gui
         knot->moveto(p);
     }
 
+    GrDrag *drag = dragger->parent;  // There is just one GrDrag.
     drag->keep_selection = (drag->selected.find(dragger)!=drag->selected.end());
     bool scale_radial = (state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK);
 
@@ -1058,6 +1070,19 @@ static void gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &
 static void gr_knot_grabbed_handler(SPKnot */*knot*/, unsigned int /*state*/, gpointer data)
 {
     GrDragger *dragger = (GrDragger *) data;
+    GrDrag *drag = dragger->parent;
+
+    // Turn off all mesh handle highlighting
+    for(std::vector<GrDragger *>::const_iterator it = drag->draggers.begin(); it != drag->draggers.end(); ++it) { //for all selected draggers
+        GrDragger *d = *it;
+        d->highlightCorner(false);
+    }
+
+    // Highlight only mesh corner corresponding to grabbed corner or handle
+    GrDragger *dragger_corner = dragger->getMgCorner();
+    if (dragger_corner) {
+        dragger_corner->highlightCorner(true);
+    }
 
     dragger->parent->desktop->canvas->forceFullRedrawAfterInterruptions(5);
 }
@@ -1487,7 +1512,16 @@ void GrDragger::updateKnotShape()
     if (draggables.empty())
         return;
     GrDraggable *last = draggables.back();
+
     g_object_set (G_OBJECT (this->knot->item), "shape", gr_knot_shapes[last->point_type], NULL);
+
+    // For highlighting mesh handles corresponding to selected corner
+    if (this->knot->shape == SP_KNOT_SHAPE_TRIANGLE) {
+        this->knot->setFill(GR_KNOT_COLOR_HIGHLIGHT, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
+        if (gr_knot_shapes[last->point_type] == SP_KNOT_SHAPE_CIRCLE) {
+            g_object_set (G_OBJECT (this->knot->item), "shape", SP_KNOT_SHAPE_TRIANGLE, NULL);
+        }
+    }
 }
 
 /**
@@ -1735,6 +1769,152 @@ void GrDragger::moveOtherToDraggable(SPItem *item, GrPointType point_type, gint 
     }
 }
 
+/**
+ * Find mesh corner corresponding to given dragger.
+ */
+GrDragger* GrDragger::getMgCorner(){
+    GrDraggable *draggable = (GrDraggable *) this->draggables[0];
+    if (draggable) {
+
+        // If corner, we already found it!
+        if (draggable->point_type == POINT_MG_CORNER) {
+            return this;
+        }
+
+        // The mapping between handles and corners is complex... so find corner by bruit force.
+        SPGradient *gradient = getGradient(draggable->item, draggable->fill_or_stroke);
+        SPMeshGradient *mg = dynamic_cast<SPMeshGradient *>(gradient);
+        if (mg) {
+            std::vector< std::vector< SPMeshNode* > > nodes = mg->array.nodes;
+            for (guint i = 0; i < nodes.size(); ++i) {
+                for (guint j = 0; j < nodes[i].size(); ++j) {
+                    if (nodes[i][j]->set && nodes[i][j]->node_type == MG_NODE_TYPE_HANDLE) {
+                        if (draggable->point_i == (gint)nodes[i][j]->draggable) {
+
+                            if (nodes.size() > i+1 && nodes[i+1].size() > j && nodes[i+1][j]->node_type == MG_NODE_TYPE_CORNER) {
+                                return this->parent->getDraggerFor(draggable->item, POINT_MG_CORNER,  nodes[i+1][j]->draggable, draggable->fill_or_stroke);
+                            }
+
+                            if (j != 0 && nodes.size() > i && nodes[i].size() > j-1 && nodes[i][j-1]->node_type == MG_NODE_TYPE_CORNER) {
+                                return this->parent->getDraggerFor(draggable->item, POINT_MG_CORNER,  nodes[i][j-1]->draggable, draggable->fill_or_stroke);
+                            }
+
+                            if (i != 0 && nodes.size() > i-1 && nodes[i-1].size() > j && nodes[i-1][j]->node_type == MG_NODE_TYPE_CORNER) {
+                                return this->parent->getDraggerFor(draggable->item, POINT_MG_CORNER,  nodes[i-1][j]->draggable, draggable->fill_or_stroke);
+                            }
+
+                            if (nodes.size() > i && nodes[i].size() > j+1 && nodes[i][j+1]->node_type == MG_NODE_TYPE_CORNER) {
+                                return this->parent->getDraggerFor(draggable->item, POINT_MG_CORNER,  nodes[i][j+1]->draggable, draggable->fill_or_stroke);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return NULL;
+}
+
+/**
+ * Highlight mesh node
+ */
+void GrDragger::highlightNode(SPMeshNode* node, bool highlight, Geom::Point corner_pos)
+{
+    GrPointType type = POINT_MG_TENSOR;
+    if (node->node_type == MG_NODE_TYPE_HANDLE) {
+        type = POINT_MG_HANDLE;
+    }
+
+    GrDraggable *draggable = (GrDraggable *) this->draggables[0];
+    GrDragger *d = this->parent->getDraggerFor(draggable->item, type, node->draggable, draggable->fill_or_stroke);
+    if (d && node->draggable < G_MAXUINT) {
+        Geom::Point end = d->knot->pos;
+        double angl = Geom::Ray(corner_pos, end).angle();
+
+        if (highlight && knot->fill[SP_KNOT_VISIBLE] == GR_KNOT_COLOR_HIGHLIGHT && abs(angl - knot->angle) > Geom::rad_from_deg(10.0)){
+            return;
+        }
+
+        SPKnot *knot = d->knot;
+        if (highlight) {
+            knot->setFill(GR_KNOT_COLOR_HIGHLIGHT, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
+        } else {
+            knot->setFill(GR_KNOT_COLOR_NORMAL, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
+        }
+
+        if (type == POINT_MG_HANDLE) {
+            if (highlight) {
+                knot->setShape(SP_KNOT_SHAPE_TRIANGLE);
+            } else {
+                knot->setShape(SP_KNOT_SHAPE_CIRCLE);
+            }
+        } else {
+            //Code for tensors
+            return;
+        }
+
+        this->updateControlSizesOverload(knot);
+        knot->setAngle(angl);
+        knot->updateCtrl();
+        d->updateKnotShape();
+    }
+}
+
+/**
+ * Highlight handles for mesh corner corresponding to this dragger.
+ */
+void  GrDragger::highlightCorner(bool highlight)
+{
+    // Must be a mesh gradient
+    GrDraggable *draggable = (GrDraggable *) this->draggables[0];
+    if (draggable &&  draggable->point_type == POINT_MG_CORNER) {
+        SPGradient *gradient = getGradient(draggable->item, draggable->fill_or_stroke);
+        if (SP_IS_MESHGRADIENT( gradient )) {
+            Geom::Point corner_point = this->point;
+            gint corner = draggable->point_i;
+            SPMeshGradient *mg = SP_MESHGRADIENT( gradient );
+            SPMeshNodeArray mg_arr = mg->array;
+            std::vector< std::vector< SPMeshNode* > > nodes = mg_arr.nodes;
+            // Find number of patch rows and columns
+            guint mrow = mg_arr.patch_rows();
+            guint mcol = mg_arr.patch_columns();
+            // Number of corners in a row of patches.
+            guint ncorners = mcol + 1;
+            // Find corner row/column
+            guint crow = corner / ncorners;
+            guint ccol = corner % ncorners;
+            // Find node row/column
+            guint nrow  = crow * 3;
+            guint ncol  = ccol * 3;
+
+            bool patch[4];
+            patch[0] = patch[1] = patch[2] = patch[3] = false;
+            if (ccol > 0    && crow > 0    ) patch[0] = true;
+            if (ccol < mcol && crow > 0    ) patch[1] = true;
+            if (ccol < mcol && crow < mrow ) patch[2] = true;
+            if (ccol > 0    && crow < mrow ) patch[3] = true;
+            if (patch[0] || patch[1]) {
+                highlightNode(nodes[nrow-1][ncol  ], highlight, corner_point);
+            }
+            if (patch[1] || patch[2])  {
+                highlightNode(nodes[nrow  ][ncol+1], highlight, corner_point);
+            }
+            if (patch[2] || patch[3]) {
+                highlightNode(nodes[nrow+1][ncol  ], highlight, corner_point);
+            }
+            if (patch[3] || patch[0]) {
+                highlightNode(nodes[nrow  ][ncol-1], highlight, corner_point);
+            }
+            // Highlight tensors
+            /*
+            if( patch[0] ) highlightNode(nodes[nrow-1][ncol-1], highlight, corner_point, point_i);
+            if( patch[1] ) highlightNode(nodes[nrow-1][ncol+1], highlight, corner_point, point_i);
+            if( patch[2] ) highlightNode(nodes[nrow+1][ncol+1], highlight, corner_point, point_i);
+            if( patch[3] ) highlightNode(nodes[nrow+1][ncol-1], highlight, corner_point, point_i);
+            */
+        }
+    }
+}
 
 /**
  * Draw this dragger as selected.
@@ -1743,13 +1923,7 @@ void GrDragger::select()
 {
     this->knot->fill [SP_KNOT_STATE_NORMAL] = GR_KNOT_COLOR_SELECTED;
     g_object_set (G_OBJECT (this->knot->item), "fill_color", GR_KNOT_COLOR_SELECTED, NULL);
-    //if( isA(POINT_MG_CORNER) ) {
-    //    for (GSList * drgble = this->draggables; drgble != NULL; drgble = drgble->next) {
-    //        GrDraggable *draggable = (GrDraggable*) drgble->data;
-    //        //if( draggable != NULL ) std::cout << "   draggable" << std::endl;
-    //        // MESH FIXME: TURN ON CORRESPONDING SIDE/TENSOR NODE VISIBILITY
-    //    }
-    //}
+    highlightCorner(true);
 }
 
 /**
@@ -1760,7 +1934,7 @@ void GrDragger::deselect()
     guint32 fill_color = isA(POINT_MG_CORNER) ? GR_KNOT_COLOR_MESHCORNER : GR_KNOT_COLOR_NORMAL;
     this->knot->fill [SP_KNOT_STATE_NORMAL] = fill_color;
     g_object_set (G_OBJECT (this->knot->item), "fill_color", fill_color, NULL);
-    // MESH FIXME: TURN OFF CORRESPONDING SIDE/TENSOR NODE VISIBILITY
+    highlightCorner(false);
 }
 
 bool
@@ -1930,10 +2104,27 @@ void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::Pai
  * Create a curve from p0 to p3 and add it to the lines list. Used for mesh sides.
  */
 void GrDrag::addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3,
-                      int corner0, int corner1, Inkscape::PaintTarget fill_or_stroke)
+                      int corner0, int corner1, int handle0, int handle1, Inkscape::PaintTarget fill_or_stroke)
+
 {
+    // Highlight curve if one of its draggers has a mouse over it.
+    bool highlight = false;
+    GrDragger* dragger0 = getDraggerFor(item, POINT_MG_CORNER, corner0, fill_or_stroke);
+    GrDragger* dragger1 = getDraggerFor(item, POINT_MG_CORNER, corner1, fill_or_stroke);
+    GrDragger* dragger2 = getDraggerFor(item, POINT_MG_HANDLE, handle0, fill_or_stroke);
+    GrDragger* dragger3 = getDraggerFor(item, POINT_MG_HANDLE, handle1, fill_or_stroke);
+    if (dragger0->knot && (dragger0->knot->flags & SP_KNOT_MOUSEOVER) ||
+        dragger1->knot && (dragger1->knot->flags & SP_KNOT_MOUSEOVER) ||
+        dragger2->knot && (dragger2->knot->flags & SP_KNOT_MOUSEOVER) ||
+        dragger3->knot && (dragger3->knot->flags & SP_KNOT_MOUSEOVER) ) {
+        highlight = true;
+    }
+
     // CtrlLineType only sets color
     CtrlLineType type = (fill_or_stroke == Inkscape::FOR_FILL) ? CTLINE_PRIMARY : CTLINE_SECONDARY;
+    if (highlight) {
+        type = (fill_or_stroke == Inkscape::FOR_FILL) ?  CTLINE_SECONDARY : CTLINE_PRIMARY;
+    }
     SPCtrlCurve *line = ControlManager::getManager().createControlCurve(this->desktop->getControls(), p0, p1, p2, p3, type); 
     line->corner0 = corner0;
     line->corner1 = corner1;
@@ -2292,11 +2483,19 @@ void GrDrag::refreshDraggers()
  */
 bool GrDrag::mouseOver()
 {
+    static bool mouse_out = false;
+    // added knot mouse out for future use
     for (std::vector<GrDragger *>::const_iterator l = this->draggers.begin(); l != this->draggers.end(); ++l) {
         GrDragger *d = *l; 
         if (d->knot && (d->knot->flags & SP_KNOT_MOUSEOVER)) {
+            mouse_out = true;
+            updateLines();
             return true;
         }
+    }
+    if(mouse_out == true){
+        updateLines();
+        mouse_out = false;
     }
     return false;
 }
@@ -2355,13 +2554,22 @@ void GrDrag::updateLines()
                             int corner1 = corner0 + 1;
                             int corner2 = corner1 + columns + 1;
                             int corner3 = corner2 - 1;
+                            // clockwise around patch, used to find handle dragger
+                            int handle0 = 2*j + i*(2+4*columns);
+                            int handle1 = handle0 + 1;
+                            int handle2 = j + i*(2+4*columns) + 2*columns + 1;
+                            int handle3 = j + i*(2+4*columns) + 3*columns + 2;
+                            int handle4 = handle1 + (2+4*columns);
+                            int handle5 = handle0 + (2+4*columns);
+                            int handle6 = handle3 - 1;
+                            int handle7 = handle2 - 1;
 
                             // Top line
                             h = patch.getPointsForSide( 0 );
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
-                            addCurve (item, h[0], h[1], h[2], h[3], corner0, corner1, Inkscape::FOR_FILL );
+                            addCurve (item, h[0], h[1], h[2], h[3], corner0, corner1, handle0, handle1, Inkscape::FOR_FILL );
 
                             // Right line
                             if( j == columns - 1 ) {
@@ -2369,7 +2577,7 @@ void GrDrag::updateLines()
                                 for( guint p = 0; p < 4; ++p ) {
                                     h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                                 }
-                                addCurve (item, h[0], h[1], h[2], h[3], corner1, corner2, Inkscape::FOR_FILL );
+                                addCurve (item, h[0], h[1], h[2], h[3], corner1, corner2, handle2, handle3, Inkscape::FOR_FILL );
                             }
 
                             // Bottom line
@@ -2378,7 +2586,7 @@ void GrDrag::updateLines()
                                 for( guint p = 0; p < 4; ++p ) {
                                     h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                                 }
-                                addCurve (item, h[0], h[1], h[2], h[3], corner2, corner3, Inkscape::FOR_FILL );
+                                addCurve (item, h[0], h[1], h[2], h[3], corner2, corner3, handle4, handle5, Inkscape::FOR_FILL );
                             }
 
                             // Left line
@@ -2386,7 +2594,7 @@ void GrDrag::updateLines()
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
-                            addCurve (item, h[0], h[1], h[2], h[3], corner3, corner0, Inkscape::FOR_FILL );
+                            addCurve (item, h[0], h[1], h[2], h[3], corner3, corner0, handle6, handle7, Inkscape::FOR_FILL );
                         }
                     }
                     }
@@ -2430,13 +2638,22 @@ void GrDrag::updateLines()
                             int corner1 = corner0 + 1;
                             int corner2 = corner1 + columns + 1;
                             int corner3 = corner2 - 1;
+                            // clockwise around patch, used to find handle dragger
+                            int handle0 = 2*j + i*(2+4*columns);
+                            int handle1 = handle0 + 1;
+                            int handle2 = j + i*(2+4*columns) + 2*columns + 1;
+                            int handle3 = j + i*(2+4*columns) + 3*columns + 2;
+                            int handle4 = handle1 + (2+4*columns);
+                            int handle5 = handle0 + (2+4*columns);
+                            int handle6 = handle3 - 1;
+                            int handle7 = handle2 - 1;
 
                             // Top line
                             h = patch.getPointsForSide( 0 );
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
-                            addCurve (item, h[0], h[1], h[2], h[3], corner0, corner1, Inkscape::FOR_STROKE );
+                            addCurve (item, h[0], h[1], h[2], h[3], corner0, corner1, handle0, handle1, Inkscape::FOR_STROKE);
 
                             // Right line
                             if( j == columns - 1 ) {
@@ -2444,7 +2661,7 @@ void GrDrag::updateLines()
                                 for( guint p = 0; p < 4; ++p ) {
                                     h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                                 }
-                                addCurve (item, h[0], h[1], h[2], h[3], corner1, corner2, Inkscape::FOR_STROKE );
+                                addCurve (item, h[0], h[1], h[2], h[3], corner1, corner2, handle2, handle3, Inkscape::FOR_STROKE);
                             }
 
                             // Bottom line
@@ -2453,7 +2670,7 @@ void GrDrag::updateLines()
                                 for( guint p = 0; p < 4; ++p ) {
                                     h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                                 }
-                                addCurve (item, h[0], h[1], h[2], h[3], corner2, corner3, Inkscape::FOR_STROKE );
+                                addCurve (item, h[0], h[1], h[2], h[3], corner2, corner3, handle4, handle5, Inkscape::FOR_STROKE);
                             }
 
                             // Left line
@@ -2461,7 +2678,7 @@ void GrDrag::updateLines()
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
-                            addCurve (item, h[0], h[1], h[2], h[3], corner3, corner0, Inkscape::FOR_STROKE );
+                            addCurve (item, h[0], h[1], h[2], h[3], corner3, corner0, handle6, handle7,Inkscape::FOR_STROKE);
                         }
                     }
                     }
