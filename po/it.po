@@ -25291,39 +25291,34 @@ msgid "Capitals"
 msgstr "Maiuscole"
 
 #: ../src/ui/widget/font-variants.cpp:51
-#, fuzzy
 msgctxt "Font variant"
 msgid "Small"
-msgstr "Maiuscoletto"
+msgstr "Small"
 
 #: ../src/ui/widget/font-variants.cpp:52
-#, fuzzy
 msgctxt "Font variant"
 msgid "All small"
-msgstr "Tutto maiuscoletto"
+msgstr "All small"
 
 #: ../src/ui/widget/font-variants.cpp:53
 msgctxt "Font variant"
 msgid "Petite"
-msgstr ""
+msgstr "Petite"
 
 #: ../src/ui/widget/font-variants.cpp:54
-#, fuzzy
 msgctxt "Font variant"
 msgid "All petite"
-msgstr "Tutti inattivi"
+msgstr "All petite"
 
 #: ../src/ui/widget/font-variants.cpp:55
-#, fuzzy
 msgctxt "Font variant"
 msgid "Unicase"
-msgstr "Non caricato"
+msgstr "Unicase"
 
 #: ../src/ui/widget/font-variants.cpp:56
-#, fuzzy
 msgctxt "Font variant"
 msgid "Titling"
-msgstr "Vela"
+msgstr "Titling"
 
 #: ../src/ui/widget/font-variants.cpp:58
 msgctxt "Font variant"
@@ -25386,15 +25381,14 @@ msgid "Slashed Zero"
 msgstr "Zero barrato"
 
 #: ../src/ui/widget/font-variants.cpp:71
-#, fuzzy
 msgctxt "Font variant"
 msgid "Feature Settings"
-msgstr "Impostazioni pagina"
+msgstr "Font Feature Settings"
 
 #: ../src/ui/widget/font-variants.cpp:72
 msgctxt "Font variant"
 msgid "Selection has different Feature Settings!"
-msgstr ""
+msgstr "La selezione ha Feature Settings differenti!"
 
 #: ../src/ui/widget/font-variants.cpp:85
 msgid "Common ligatures. On by default. OpenType tables: 'liga', 'clig'"
@@ -25433,38 +25427,44 @@ msgid "Normal capitalization."
 msgstr "Maiuscole normali."
 
 #: ../src/ui/widget/font-variants.cpp:139
-#, fuzzy
 msgid "Small-caps (lowercase). OpenType table: 'smcp'"
-msgstr "Maiuscole piccole (minuscole). OpenType table: 'smcp'"
+msgstr ""
+"Le minuscole sono sostituite da lettere maiuscole piccole. OpenType table: "
+"'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:140
-#, fuzzy
 msgid ""
 "All small-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'smcp'"
 msgstr ""
-"Tutte maiuscole piccole (maiuscole e minuscole). OpenType table: 'c2sc' e "
-"'smcp'"
+"Tutte le lettere sono sostituite da lettere maiuscole piccole. OpenType "
+"table: 'c2sc' e 'smcp'"
 
 #: ../src/ui/widget/font-variants.cpp:141
 msgid "Petite-caps (lowercase). OpenType table: 'pcap'"
 msgstr ""
+"Le minuscole sono sostituite da lettere maiuscole più piccole di small caps. "
+"OpenType table: 'pcap'"
 
 #: ../src/ui/widget/font-variants.cpp:142
 msgid ""
 "All petite-caps (uppercase and lowercase). OpenType tables: 'c2sc' and 'pcap'"
 msgstr ""
+"Tutte le lettere sono sostituite da lettere maiuscole più piccole di small "
+"caps. OpenType table: 'pcap'"
 
 #: ../src/ui/widget/font-variants.cpp:143
 msgid ""
 "Unicase (small caps for uppercase, normal for lowercase). OpenType table: "
 "'unic'"
 msgstr ""
+"Le lettere sono in formato unicase. OpenType Table: 'unic'"
 
 #: ../src/ui/widget/font-variants.cpp:144
 msgid ""
 "Titling caps (lighter-weight uppercase for use in titles). OpenType table: "
 "'titl'"
 msgstr ""
+"Le lettere sono in un formato apposito per i titoli. OpenType table: 'titl' "
 
 #. Numeric ------------------------------
 #. Add tooltips
@@ -25517,6 +25517,7 @@ msgstr "Zeri barrati. OpenType table: 'zero'"
 #: ../src/ui/widget/font-variants.cpp:240
 msgid "Feature settings in CSS form. No sanity checking is performed."
 msgstr ""
+"Font Feature Settings in formato CSS. Non viene effettuato alcun controllo."
 
 #: ../src/ui/widget/layer-selector.cpp:118
 msgid "Toggle current layer visibility"
@@ -33476,9 +33477,8 @@ msgid "Y Offset:"
 msgstr "Proiezione lungo Y:"
 
 #: ../share/extensions/dimension.inx.h:4
-#, fuzzy
 msgid "Bounding box type:"
-msgstr "Riquadro da usare:"
+msgstr "Tipo riquadro:"
 
 #: ../share/extensions/dimension.inx.h:5
 msgid "Geometric"
@@ -34230,7 +34230,6 @@ msgid "Use"
 msgstr "Uso"
 
 #: ../share/extensions/funcplot.inx.h:13
-#, fuzzy
 msgid ""
 "Select a rectangle before calling the extension,\n"
 "it will determine X and Y scales. If you wish to fill the area, then add x-"
@@ -34243,7 +34242,9 @@ msgid ""
 "   First derivative is always determined numerically."
 msgstr ""
 "Seleziona un rettangolo prima di applicare l'effetto,\n"
-"servirà a determinare le scale per la x e per la y.\n"
+"servirà a determinare le scale per la x e per la y. Per riempire l'area \n"
+"seleziona Aggiungi estremi asse x.\n"
+"\n"
 "In caso di coordinate polari:\n"
 "  i valori iniziali e finali della x definiscono l'intervallo dell'angolo "
 "(in radianti).\n"
@@ -34291,9 +34292,8 @@ msgid "First derivative:"
 msgstr "Derivata prima:"
 
 #: ../share/extensions/funcplot.inx.h:34
-#, fuzzy
 msgid "Clip with rectangle"
-msgstr "Larghezza del rettangolo"
+msgstr "Taglia al rettangolo"
 
 #: ../share/extensions/funcplot.inx.h:35
 #: ../share/extensions/param_curves.inx.h:28
@@ -34307,7 +34307,7 @@ msgstr "Disegna assi"
 
 #: ../share/extensions/funcplot.inx.h:37
 msgid "Add x-axis endpoints"
-msgstr ""
+msgstr "Aggiungi estremi asse x"
 
 #: ../share/extensions/gcodetools_about.inx.h:1
 msgid "About"
@@ -36929,29 +36929,25 @@ msgid "Measurement Type: "
 msgstr "Tipo di misurazione: "
 
 #: ../share/extensions/measure.inx.h:4
-#, fuzzy
 msgid "Text Presets"
-msgstr "Preferenze testo"
+msgstr "Testo preimpostato"
 
 #: ../share/extensions/measure.inx.h:6
-#, fuzzy
 msgid "Text on Path"
 msgstr "Testo su tracciato"
 
 #: ../share/extensions/measure.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Offset (%)"
-msgstr "Scostamento (px):"
+msgstr "Spostamento (%)"
 
 #: ../share/extensions/measure.inx.h:9
-#, fuzzy
 msgid "Text anchor:"
-msgstr "Ancoraggio testo"
+msgstr "Ancoraggio testo:"
 
 #: ../share/extensions/measure.inx.h:10
-#, fuzzy
 msgid "Fixed Text"
-msgstr "Testo dinamico"
+msgstr "Testo fissato"
 
 #: ../share/extensions/measure.inx.h:11
 msgid "Angle (°):"
@@ -36984,50 +36980,42 @@ msgid "Center of Mass"
 msgstr "Centro di massa"
 
 #: ../share/extensions/measure.inx.h:21
-#, fuzzy
 msgid "Text on Path, Start"
-msgstr "Testo su tracciato"
+msgstr "Testo a inizio tracciato"
 
 #: ../share/extensions/measure.inx.h:22
-#, fuzzy
 msgid "Text on Path, Middle"
-msgstr "Testo su tracciato"
+msgstr "Testo a metà tracciato"
 
 #: ../share/extensions/measure.inx.h:23
-#, fuzzy
 msgid "Text on Path, End"
-msgstr "Testo su tracciato"
+msgstr "Testo a fine tracciato"
 
 #: ../share/extensions/measure.inx.h:24
 msgid "Fixed Text, Start of Path"
-msgstr ""
+msgstr "Testo fissato a inizio tracciato"
 
 #: ../share/extensions/measure.inx.h:25
 msgid "Fixed Text, Center of BBox"
-msgstr ""
+msgstr "Testo fissato al centro del riquadro"
 
 #: ../share/extensions/measure.inx.h:26
-#, fuzzy
 msgid "Fixed Text, Center of Mass"
-msgstr "Centro di massa"
+msgstr "Testo fissato al centro di massa"
 
 #: ../share/extensions/measure.inx.h:28
-#, fuzzy
 msgid "Center"
-msgstr "centro"
+msgstr "Centro"
 
 #: ../share/extensions/measure.inx.h:30
-#, fuzzy
 msgid "Start of Path"
-msgstr "Da _contorno a tracciato"
+msgstr "Inizio tracciato"
 
 #: ../share/extensions/measure.inx.h:31
-#, fuzzy
 msgid "Center of BBox"
-msgstr "Centro di massa"
+msgstr "Centro del riquadro"
 
 #: ../share/extensions/measure.inx.h:32
-#, fuzzy
 msgid "Center of Mass"
 msgstr "Centro di massa"
 
@@ -38552,26 +38540,22 @@ msgid "Scalable Vector Graphics"
 msgstr "Scalable Vector Graphics"
 
 #: ../share/extensions/seamless_pattern.inx.h:1
-#, fuzzy
 msgid "Seamless Pattern"
-msgstr "Motivi Braille"
+msgstr "Motivo continuo"
 
 #: ../share/extensions/seamless_pattern.inx.h:2
 #: ../share/extensions/seamless_pattern_procedural.inx.h:2
-#, fuzzy
 msgid "Custom Width (px):"
-msgstr "Larghezza contorno (px):"
+msgstr "Larghezza personalizzata (px):"
 
 #: ../share/extensions/seamless_pattern.inx.h:3
 #: ../share/extensions/seamless_pattern_procedural.inx.h:3
-#, fuzzy
 msgid "Custom Height (px):"
-msgstr "Destra (px):"
+msgstr "Altezza personalizzata (px):"
 
 #: ../share/extensions/seamless_pattern.inx.h:4
-#, fuzzy
 msgid "This extension overwrites the current document"
-msgstr "Rimuove simbolo dal documento attuale."
+msgstr "L'estensione sovrascrive il documento attuale."
 
 #: ../share/extensions/seamless_pattern_procedural.inx.h:1
 msgid "Seamless Pattern Procedural"
