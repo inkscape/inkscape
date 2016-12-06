@@ -29,8 +29,6 @@ public:
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
-    void hideCanvasText();
-
 private:
     LPEPathLength(const LPEPathLength&);
     LPEPathLength& operator=(const LPEPathLength&);

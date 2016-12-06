@@ -1493,10 +1493,14 @@ void PathManipulator::_setGeometry()
     } else {
         if (empty()) return;
         //XML Tree being used here directly while it shouldn't be.
-        if (_path->getRepr()->attribute("inkscape:original-d"))
-            _path->set_original_curve(_spcurve, false, false);
-        else
+        if (SPCurve * original = _path->get_original_curve()){
+            if(!_spcurve->is_equal(original)) {
+                _path->set_original_curve(_spcurve, false, false);
+                delete original;
+            }
+        } else if(!_spcurve->is_equal(_path->get_curve())) {
             _path->setCurve(_spcurve, false);
+        }
     }
 }
 

@@ -45,6 +45,7 @@ public:
     bool is_empty() const;
     bool is_unset() const;
     bool is_closed() const;
+    bool is_equal(SPCurve * other) const;
     Geom::Curve const * last_segment() const;
     Geom::Path const * last_path() const;
     Geom::Curve const * first_segment() const;

@@ -110,7 +110,10 @@ TextParam::param_readSVGValue(const gchar * strvalue)
 gchar *
 TextParam::param_getSVGValue() const
 {
-    return g_strdup(value.c_str());
+    Inkscape::SVGOStringStream os;
+    os << value;
+    gchar * str = g_strdup(os.str().c_str());
+    return str;
 }
 
 Gtk::Widget *

@@ -118,6 +118,8 @@ public:
     void param_set_digits(unsigned digits);
     void param_set_increments(double step, double page);
     void addSlider(bool add_slider_widget) { add_slider = add_slider_widget; };
+    double param_get_max() { return max; };
+    double param_get_min() { return min; };
 
     void param_overwrite_widget(bool overwrite_widget);
     virtual Gtk::Widget * param_newWidget();

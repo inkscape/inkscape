@@ -45,13 +45,14 @@ public:
     virtual void doBeforeEffect (SPLPEItem const* lpeitem);
     virtual void doOnApply(SPLPEItem const* lpeitem);
     virtual void doOnRemove (SPLPEItem const* /*lpeitem*/);
+    virtual void doEffect (SPCurve * curve){}; //stop the chain
     virtual void doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/);
     virtual Geom::PathVector doEffect_path(Geom::PathVector const &path_in);
     void processObjects(LpeAction lpe_action);
-    void createLine(Geom::Point start,Geom::Point end,Glib::ustring id, bool main, bool overflow, bool remove, bool arrows = false);
+    void createLine(Geom::Point start,Geom::Point end, const char * id, bool main, bool overflow, bool remove, bool arrows = false);
     void createTextLabel(Geom::Point pos, double length, Geom::Coord angle, bool remove, bool valid);
     void onExpanderChanged();
-    void createArrowMarker(Glib::ustring mode);
+    void createArrowMarker(const char * mode);
     void saveDefault();
     virtual Gtk::Widget *newWidget();
 private:
@@ -85,7 +86,9 @@ private:
     double fontsize;
     double anotation_width;
     double arrow_gap;
-
+    Geom::Point start_stored;
+    Geom::Point end_stored; 
+    std::vector<const char *> elements;
 /*    Geom::Affine affine_over;*/
     LPEMeasureLine(const LPEMeasureLine &);
     LPEMeasureLine &operator=(const LPEMeasureLine &);

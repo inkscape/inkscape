@@ -37,12 +37,6 @@ LPEPathLength::~LPEPathLength()
 
 }
 
-void
-LPEPathLength::hideCanvasText() {
-    // this is only used in sp-lpe-item.cpp to hide the canvas text when the effect is invisible
-    info_text.param_setValue("");
-}
-
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEPathLength::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
@@ -69,7 +63,9 @@ LPEPathLength::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
         //g_print ("Area is zero\n");
     }
     //g_print ("Area: %f\n", area);
-
+    if (!this->isVisible()) {
+        info_text.param_setValue("");
+    }
     return pwd2_in;
 }
 

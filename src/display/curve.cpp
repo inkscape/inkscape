@@ -335,6 +335,20 @@ SPCurve::is_closed() const
 }
 
 /**
+ * True if both curves are equal
+ */
+bool
+SPCurve::is_equal(SPCurve * other) const
+{
+    if(other == NULL) {
+        return false;
+    } else if(_pathv == other->get_pathvector()){
+        return true;
+    }
+    return false;
+}
+
+/**
  * Return last pathsegment (possibly the closing path segment) of the last path in PathVector or NULL.
  * If the last path is empty (contains only a moveto), the function returns NULL
  */

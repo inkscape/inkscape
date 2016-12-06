@@ -187,35 +187,35 @@ void SPPath::release() {
 void SPPath::set(unsigned int key, const gchar* value) {
     switch (key) {
         case SP_ATTR_INKSCAPE_ORIGINAL_D:
-			if (value) {
-				Geom::PathVector pv = sp_svg_read_pathv(value);
-				SPCurve *curve = new SPCurve(pv);
+            if (value) {
+                Geom::PathVector pv = sp_svg_read_pathv(value);
+                SPCurve *curve = new SPCurve(pv);
 
-				if (curve) {
-					this->set_original_curve(curve, TRUE, true);
-					curve->unref();
-				}
-			} else {
-				this->set_original_curve(NULL, TRUE, true);
-			}
+                if (curve) {
+                    this->set_original_curve(curve, TRUE, true);
+                    curve->unref();
+                }
+            } else {
+                this->set_original_curve(NULL, TRUE, true);
+            }
 
-			this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
        case SP_ATTR_D:
-			if (value) {
-				Geom::PathVector pv = sp_svg_read_pathv(value);
-				SPCurve *curve = new SPCurve(pv);
+            if (value) {
+                Geom::PathVector pv = sp_svg_read_pathv(value);
+                SPCurve *curve = new SPCurve(pv);
 
-				if (curve) {
-					this->setCurve(curve, TRUE);
-					curve->unref();
-				}
-			} else {
-				this->setCurve(NULL, TRUE);
-			}
+                if (curve) {
+                    this->setCurve(curve, TRUE);
+                    curve->unref();
+                }
+            } else {
+                this->setCurve(NULL, TRUE);
+            }
 
-			this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_PROP_MARKER:
@@ -276,13 +276,13 @@ g_message("sp_path_write writes 'd' attribute");
 }
 
 void SPPath::update(SPCtx *ctx, guint flags) {
-	if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-		flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // since we change the description, it's not a "just translation" anymore
-	}
+    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
+        flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // since we change the description, it's not a "just translation" anymore
+    }
 
-	SPShape::update(ctx, flags);
+    SPShape::update(ctx, flags);
 
-	this->connEndPair.update();
+    this->connEndPair.update();
 }
 
 Geom::Affine SPPath::set_transform(Geom::Affine const &transform) {
