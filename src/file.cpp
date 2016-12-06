@@ -34,6 +34,7 @@
 #include "ui/dialog/ocaldialogs.h"
 #include "desktop.h"
 
+#include "extension/effect.h"
 #include "document-private.h"
 #include "document-undo.h"
 #include "ui/tools/tool-base.h"
@@ -312,14 +313,13 @@ bool sp_file_open(const Glib::ustring &uri,
 
                 // std::cout << "  SVG file from old Inkscape version detected: "
                 //           << sp_version_to_string(root->version.inkscape) << std::endl;
-
-
                 static const double ratio = 90.0/96.0;
 
                 bool need_fix_viewbox = false;
                 bool need_fix_units   = false;
                 bool need_fix_guides  = false;
                 bool need_fix_grid_mm = false;
+                bool is_extension = false;
 
                 // Check if potentially need viewbox or unit fix
                 switch (root->width.unit) {
@@ -358,20 +358,18 @@ bool sp_file_open(const Glib::ustring &uri,
                 if (!root->viewBox_set && need_fix_viewbox) {
 
                     std::string msg = _(
-                        "Old Inkscape files used 1in == 90px. CSS requires 1in == 96px.\n"
+                        "Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
                         "Drawing elements may be too small. This can be corrected by\n"
-                        "setting the SVG 'viewBox' to compensate." );
-                    //  "either setting the SVG 'viewBox' to compensate or by scaling\n"
-                    //  "all the elements in the drawing."
+                        "either setting the SVG 'viewBox' to compensate or by scaling\n"
+                        "all the elements in the drawing.");
                     Gtk::Dialog scaleDialog( _("Old Inkscape file detected (90 DPI)"), false);
                     Gtk::Label info;
                     info.set_markup(msg.c_str());
                     info.show();
                     scaleDialog.get_content_area()->pack_start(info, false, false, 20);
                     scaleDialog.add_button("Set 'viewBox'", 1);
-                    // scaleDialog.add_button("Scale elements", 2);
+                    scaleDialog.add_button("Scale elements", 2);
                     scaleDialog.add_button("Ignore",        3);
-
                     gint response = scaleDialog.run();
                     if (response == 1) {
                         doc->setViewBox(Geom::Rect::from_xywh(
@@ -379,27 +377,42 @@ bool sp_file_open(const Glib::ustring &uri,
                                             doc->getWidth().value("px") * ratio,
                                             doc->getHeight().value("px") * ratio));
                     } else if (response == 2 ) {
-                        // Insert DPISwitcher code
+                        std::list<Inkscape::Extension::Effect *> effects;
+                        Inkscape::Extension::db.get_effect_list(effects);
+                        std::list<Inkscape::Extension::Effect *>::iterator it = effects.begin();
+                        bool did = false;
+                        while (it != effects.end()) {
+                            if (strcmp((*it)->get_id(), "org.inkscape.dpi90to96") == 0) {
+                                Inkscape::UI::View::View *view = desktop;
+                                (*it)->effect(view);
+                                did = true;
+                                break;
+                            }
+                            ++it;
+                        }
+                        if (!did) {
+                            std::cerr << "sp_file_open: Failed to find dpi90to96 extension." << std::endl;
+                        }
+                        is_extension = true;
                     }
                     need_fix_guides = true; // Always fix guides
                 }
 
                 if (need_fix_units) {
                     std::string msg = (
-                        "Old Inkscape files used 1in == 90px. CSS requires 1in == 96px.\n"
+                        "Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
                         "Drawings meant to match a physical size (e.g. Letter or A4)\n"
-                        "will be too small. Scaling the drawing can correct for this.\n" );
-                    //  "Internal scaling can be handled either by setting the SVG 'viewBox'\n"
-                    //  "attribute to compensate or by scaling all objects in the drawing."
+                        "will be too small. Scaling the drawing can correct for this.\n"
+                        "Internal scaling can be handled either by setting the SVG 'viewBox'\n"
+                        "attribute to compensate or by scaling all objects in the drawing.");
                     Gtk::Dialog scaleDialog( _("Old Inkscape file detected (90 DPI)"), false);
                     Gtk::Label info;
                     info.set_markup(msg.c_str());
                     info.show();
                     scaleDialog.get_content_area()->pack_start(info, false, false, 20);
-                    scaleDialog.add_button("Scale drawing", 1);
-                    // scaleDialog.add_button("Set 'viewBox'", 1);
-                    // scaleDialog.add_button("Scale elements", 2);
-                    scaleDialog.add_button("Ignore",        3);
+                    scaleDialog.add_button("Set 'viewBox'",  1);
+                    scaleDialog.add_button("Scale elements", 2);
+                    scaleDialog.add_button("Ignore",         3);
 
                     gint response = scaleDialog.run();
                     if (response == 1) {
@@ -418,7 +431,24 @@ bool sp_file_open(const Glib::ustring &uri,
 
                         need_fix_guides = true; // Only fix guides if drawing scaled
                     } else if (response == 2) {
-                        // Insert DPISwitcher code
+                        std::list<Inkscape::Extension::Effect *> effects;
+                        Inkscape::Extension::db.get_effect_list(effects);
+                        std::list<Inkscape::Extension::Effect *>::iterator it = effects.begin();
+                        bool did = false;
+                        while (it != effects.end()){
+                            if (strcmp((*it)->get_id(), "org.inkscape.dpi90to96") == 0) {
+                                Inkscape::UI::View::View *view = desktop;
+                               (*it)->effect(view);
+                               did = true;
+                               break;
+                            }
+                            ++it;
+                        }
+                        if (!did) {
+                            std::cerr << "sp_file_open: Failed to find dpi90to96 extension." << std::endl;
+                        }
+                        need_fix_guides = true; // Only fix guides if drawing scaled
+                        is_extension = true;
                     } else {
                         // Ignore
                         need_fix_grid_mm = true;
@@ -467,7 +497,11 @@ bool sp_file_open(const Glib::ustring &uri,
                                         // HACK: Scaling the document does not seem to cause
                                         // grids defined in document units to be updated.
                                         // This forces an update.
-                                        xy->Scale( Geom::Scale(1,1) );
+                                        if(is_extension){
+                                            xy->Scale( Geom::Scale(ratio,ratio).inverse() );
+                                        } else {
+                                            xy->Scale( Geom::Scale(1,1) );
+                                        }
                                     }
                                 }
                             }
