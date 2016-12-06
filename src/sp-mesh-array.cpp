@@ -1478,11 +1478,8 @@ void SPMeshNodeArray::clear() {
                 delete nodes[i][j];
             }
         }
-        for( guint i = 0; i < nodes.size(); ++i ) {
-            nodes[i].clear();
-        }
-        nodes.clear();
     }
+    nodes.clear();
 };
 
 
