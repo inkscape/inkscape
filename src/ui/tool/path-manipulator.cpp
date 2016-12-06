@@ -1492,7 +1492,6 @@ void PathManipulator::_setGeometry()
         }
     } else {
         if (empty()) return;
-        //XML Tree being used here directly while it shouldn't be.
         if (SPCurve * original = _path->get_original_curve()){
             if(!_spcurve->is_equal(original)) {
                 _path->set_original_curve(_spcurve, false, false);
