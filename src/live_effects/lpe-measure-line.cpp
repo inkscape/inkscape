@@ -686,7 +686,6 @@ LPEMeasureLine::doBeforeEffect (SPLPEItem const* lpeitem)
     }
 }
 
-
 void
 LPEMeasureLine::doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/)
 {
@@ -696,6 +695,7 @@ LPEMeasureLine::doOnVisibilityToggled(SPLPEItem const* /*lpeitem*/)
 void 
 LPEMeasureLine::doOnRemove (SPLPEItem const* /*lpeitem*/)
 {
+    //unset "erase_extra_objects" hook on sp-lpe-item.cpp
     if (!erase_extra_objects) {
         processObjects(LPE_TO_OBJECTS);
         elements.clear();
@@ -711,6 +711,9 @@ LPEMeasureLine::processObjects(LpeAction lpe_action)
         for (std::vector<const char *>::iterator el_it = elements.begin(); 
              el_it != elements.end(); ++el_it) {
             const char * id = *el_it;
+            if (!id || strlen(id) == 0) {
+                return;
+            }
             Inkscape::URI SVGElem_uri(Glib::ustring("#").append(id).c_str());
             Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
             SVGElemRef->attach(SVGElem_uri);
