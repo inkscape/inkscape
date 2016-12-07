@@ -9,6 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #include <gtkmm.h>
+#include "helper/geom-nodetype.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpegroupbbox.h"
 #include "live_effects/parameter/bool.h"
@@ -28,7 +29,7 @@ public:
 
     virtual void generateHelperPath(Geom::PathVector result);
 
-    virtual void drawNode(Geom::Point p);
+    virtual void drawNode(Geom::Point p, Geom::NodeType nodetype);
 
     virtual void drawHandle(Geom::Point p);
 
@@ -43,8 +44,8 @@ private:
     BoolParam nodes;
     BoolParam handles;
     BoolParam original_path;
+    BoolParam show_center_node;
     ScalarParam scale_nodes_and_handles;
-    ScalarParam rotate_nodes;
     double stroke_width;
     static bool alerts_off;
 

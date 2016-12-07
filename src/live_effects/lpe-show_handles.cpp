@@ -24,20 +24,17 @@ LPEShowHandles::LPEShowHandles(LivePathEffectObject *lpeobject)
       nodes(_("Show nodes"), _("Show nodes"), "nodes", &wr, this, true),
       handles(_("Show handles"), _("Show handles"), "handles", &wr, this, true),
       original_path(_("Show path"), _("Show path"), "original_path", &wr, this, true),
-      scale_nodes_and_handles(_("Scale nodes and handles"), _("Scale nodes and handles"), "scale_nodes_and_handles", &wr, this, 10),
-      rotate_nodes(_("Rotate nodes"), _("Rotate nodes"), "rotate_nodes", &wr, this, 0)
+      show_center_node(_("Show center of node"), _("Show center of node"), "show_center_node", &wr, this, false),
+      scale_nodes_and_handles(_("Scale nodes and handles"), _("Scale nodes and handles"), "scale_nodes_and_handles", &wr, this, 10)
 {
     registerParameter(&nodes);
     registerParameter(&handles);
     registerParameter(&original_path);
+    registerParameter(&show_center_node);
     registerParameter(&scale_nodes_and_handles);
-    registerParameter(&rotate_nodes);
     scale_nodes_and_handles.param_set_range(0, 500.);
     scale_nodes_and_handles.param_set_increments(1, 1);
     scale_nodes_and_handles.param_set_digits(2);
-    rotate_nodes.param_set_range(0, 365);
-    rotate_nodes.param_set_increments(1, 1);
-    rotate_nodes.param_set_digits(0);
     stroke_width = 1.0;
 }
 
@@ -129,7 +126,11 @@ LPEShowHandles::generateHelperPath(Geom::PathVector result)
             }
         }
         if(nodes) {
-            drawNode(curve_it1->initialPoint());
+            Geom::NodeType nodetype = Geom::NODE_CUSP;
+            if(path_it->closed()) {
+                nodetype = Geom::get_nodetype(*curve_it1, path_it->back());
+            } 
+            drawNode(curve_it1->initialPoint(), nodetype);
         }
         while (curve_it1 != curve_endit) {
             cubic = dynamic_cast<Geom::CubicBezier const *>(&*curve_it1);
@@ -145,8 +146,9 @@ LPEShowHandles::generateHelperPath(Geom::PathVector result)
                     }
                 }
             }
-            if(nodes) {
-                drawNode(curve_it1->finalPoint());
+            if(nodes && (curve_it2 != curve_endit || !path_it->closed())) {
+                Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
+                drawNode(curve_it1->finalPoint(), nodetype);
             }
             ++curve_it1;
             if(curve_it2 != curve_endit) {
@@ -157,16 +159,26 @@ LPEShowHandles::generateHelperPath(Geom::PathVector result)
 }
 
 void
-LPEShowHandles::drawNode(Geom::Point p)
+LPEShowHandles::drawNode(Geom::Point p, Geom::NodeType nodetype)
 {
     if(stroke_width * scale_nodes_and_handles > 0.0) {
+        Geom::Rotate rotate = Geom::Rotate(0);
+        if ( nodetype == Geom::NODE_CUSP) {
+            rotate = Geom::Rotate::from_degrees(45);
+        }
         double diameter = stroke_width * scale_nodes_and_handles;
         char const * svgd;
-        svgd = "M 0.05,0 A 0.05,0.05 0 0 1 0,0.05 0.05,0.05 0 0 1 -0.05,0 0.05,0.05 0 0 1 0,-0.05 0.05,0.05 0 0 1 0.05,0 Z M -0.5,-0.5 0.5,-0.5 0.5,0.5 -0.5,0.5 Z";
+        if (show_center_node) {
+            svgd = "M 0.05,0 A 0.05,0.05 0 0 1 0,0.05 0.05,0.05 0 0 1 -0.05,0 0.05,0.05 0 0 1 0,-0.05 0.05,0.05 0 0 1 0.05,0 Z M -0.5,-0.5 0.5,-0.5 0.5,0.5 -0.5,0.5 Z";
+        } else {
+            svgd = "M -0.5,-0.5 0.5,-0.5 0.5,0.5 -0.5,0.5 Z";
+        }
         Geom::PathVector pathv = sp_svg_read_pathv(svgd);
-        pathv *= Geom::Rotate::from_degrees(rotate_nodes) * Geom::Scale(diameter) * Geom::Translate(p);
+        pathv *= rotate * Geom::Scale(diameter) * Geom::Translate(p);
         outline_path.push_back(pathv[0]);
-        outline_path.push_back(pathv[1]);
+        if (show_center_node) {
+            outline_path.push_back(pathv[1]);
+        }
     }
 }
 
