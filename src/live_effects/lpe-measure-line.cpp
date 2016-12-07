@@ -14,6 +14,7 @@
 #include <libnrtype/font-lister.h>
 #include "inkscape.h"
 #include "xml/node.h"
+#include "xml/sp-css-attr.h"
 #include "uri.h"
 #include "uri-references.h"
 #include "preferences.h"
@@ -61,6 +62,7 @@ LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     helpline_overlap(_("Helpline overlap*"), _("Helpline overlap"), "helpline_overlap", &wr, this, 2.0),
     scale(_("Scale*"), _("Scaling factor"), "scale", &wr, this, 1.0),
     format(_("Format*"), _("Format the number ex:{measure} {unit}, return to save"), "format", &wr, this,"{measure}{unit}"),
+    id_origin("id_origin", "id_origin", "id_origin", &wr, this,""),
     arrows_outside(_("Arrows outside"), _("Arrows outside"), "arrows_outside", &wr, this, false),
     flip_side(_("Flip side*"), _("Flip side"), "flip_side", &wr, this, false),
     scale_sensitive(_("Scale sensitive*"), _("Costrained scale sensitive to transformed containers"), "scale_sensitive", &wr, this, true),
@@ -97,6 +99,8 @@ LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     registerParameter(&helperlines_format);
     registerParameter(&anotation_format);
     registerParameter(&arrows_format);
+    registerParameter(&id_origin);
+    id_origin.param_hide_canvas_text();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Glib::ustring fontbutton_value = prefs->getString("/live_effects/measure-line/fontbutton");
     if(fontbutton_value.empty()){
@@ -505,6 +509,8 @@ LPEMeasureLine::doOnApply(SPLPEItem const* lpeitem)
         SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
         item->removeCurrentPathEffect(false);
     }
+    id_origin.param_setValue(Glib::ustring(lpeitem->getId()));
+    id_origin.write_to_SVG();
 }
 
 void
@@ -701,31 +707,43 @@ LPEMeasureLine::doOnRemove (SPLPEItem const* /*lpeitem*/)
 void 
 LPEMeasureLine::processObjects(LpeAction lpe_action)
 {
-
     if (SPDesktop *desktop = SP_ACTIVE_DESKTOP) {
-        for (std::vector<const char *>::const_iterator el_it = elements.begin(); 
-             el_it != elements.end();++el_it) {
-            const char * id = (const char *)(*el_it);
-            std::cout << id << "asdfffgasdfasdsdgf\n";
+        for (std::vector<const char *>::iterator el_it = elements.begin(); 
+             el_it != elements.end(); ++el_it) {
+            const char * id = *el_it;
             Inkscape::URI SVGElem_uri(Glib::ustring("#").append(id).c_str());
             Inkscape::URIReference* SVGElemRef = new Inkscape::URIReference(desktop->doc());
             SVGElemRef->attach(SVGElem_uri);
             SPObject *elemref = NULL;
             if (elemref = SVGElemRef->getObject()) {
+                SPCSSAttr *css;
+                Glib::ustring css_str;
                 switch (lpe_action){
                 case LPE_TO_OBJECTS:
+                    elemref->getRepr()->setAttribute("inkscape:path-effect", NULL);
                     elemref->getRepr()->setAttribute("sodipodi:insensitive", NULL);
-                break;
+                    break;
+
                 case LPE_ERASE:
-                    elemref->deleteObject();
-                break;
-                default: //LPE_VISIBILITY
-                    if (!this->isVisible()) {
-                        elemref->getRepr()->setAttribute("style", "display:none");
-                    } else {
-                        elemref->getRepr()->setAttribute("style", NULL);
+                    if (std::strcmp(elemref->getId(),id_origin.param_getSVGValue()) != 0) {
+                        elemref->deleteObject();
                     }
-                break;
+                    break;
+
+                case LPE_VISIBILITY:
+                    css = sp_repr_css_attr_new();
+                    sp_repr_css_attr_add_from_string(css, elemref->getRepr()->attribute("style"));
+                    if (!this->isVisible() && std::strcmp(elemref->getId(),id_origin.param_getSVGValue()) != 0) {
+                        css->setAttribute("display", "none");
+                    } else {
+                        css->setAttribute("display", NULL);
+                    }
+                    sp_repr_css_write_string(css,css_str);
+                    elemref->getRepr()->setAttribute("style", css_str.c_str());
+                    break;
+
+                default:
+                    break;
                 }
             }
         }
