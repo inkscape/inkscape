@@ -128,7 +128,7 @@ LPEShowHandles::generateHelperPath(Geom::PathVector result)
         if(nodes) {
             Geom::NodeType nodetype = Geom::NODE_CUSP;
             if(path_it->closed()) {
-                nodetype = Geom::get_nodetype(*curve_it1, path_it->back());
+                nodetype = Geom::get_nodetype(path_it->finalCurve(), *curve_it1);
             } 
             drawNode(curve_it1->initialPoint(), nodetype);
         }
