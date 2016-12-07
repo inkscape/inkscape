@@ -68,9 +68,6 @@
 #include "sp-guide.h"
 
 #include <gtkmm.h>
-//#include <gtkmm/main.h>
-#include <glibmm/miscutils.h>
-#include <glibmm/convert.h>
 
 using Inkscape::DocumentUndo;
 
@@ -239,6 +236,43 @@ sp_file_exit()
 }
 
 
+// Quick and dirty internal backup function
+bool sp_file_save_backup( Glib::ustring uri ) {
+
+    Glib::ustring out = uri;
+    out.insert(out.find(".svg"),"_backup");
+
+    FILE *filein  = Inkscape::IO::fopen_utf8name(uri.c_str(), "rb");
+    if (!filein) {
+        std::cerr << "sp_file_save_backup: failed to open: " << uri << std::endl;
+        return false;
+    }
+
+    FILE *fileout = Inkscape::IO::fopen_utf8name(out.c_str(), "wb");
+    if (!fileout) {
+        std::cerr << "sp_file_save_backup: failed to open: " << out << std::endl;
+        fclose( filein );
+        return false;
+    }
+
+    int ch;
+    while ((ch = fgetc(filein)) != EOF) {
+        fputc(ch, fileout);
+    }
+    fflush(fileout);
+
+    bool return_value = true;
+    if (ferror(fileout)) {
+        std::cerr << "sp_file_save_backup: error when writing to: " << out << std::endl;
+        return_value = false;
+    }
+
+    fclose(filein);
+    fclose(fileout);
+
+    return return_value;
+}
+
 /*######################
 ## O P E N
 ######################*/
@@ -357,26 +391,41 @@ bool sp_file_open(const Glib::ustring &uri,
 
                 if (!root->viewBox_set && need_fix_viewbox) {
 
-                    std::string msg = _(
+                    Glib::ustring msg = _(
                         "Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
                         "Drawing elements may be too small. This can be corrected by\n"
                         "either setting the SVG 'viewBox' to compensate or by scaling\n"
                         "all the elements in the drawing.");
                     Gtk::Dialog scaleDialog( _("Old Inkscape file detected (90 DPI)"), false);
+
                     Gtk::Label info;
                     info.set_markup(msg.c_str());
                     info.show();
+
                     scaleDialog.get_content_area()->pack_start(info, false, false, 20);
+                    Gtk::CheckButton backupButton( _("Create backup file (in same directory).") );
+                    backupButton.set_active();
+                    backupButton.show();
+
+                    scaleDialog.get_content_area()->pack_start(backupButton, false, false, 20);
                     scaleDialog.add_button("Set 'viewBox'", 1);
                     scaleDialog.add_button("Scale elements", 2);
                     scaleDialog.add_button("Ignore",        3);
+
                     gint response = scaleDialog.run();
+                    bool backup = backupButton.get_active();
                     if (response == 1) {
+                        if (backup) {
+                            sp_file_save_backup( uri );
+                        }
                         doc->setViewBox(Geom::Rect::from_xywh(
                                             0, 0,
                                             doc->getWidth().value("px") * ratio,
                                             doc->getHeight().value("px") * ratio));
                     } else if (response == 2 ) {
+                        if (backup) {
+                            sp_file_save_backup( uri );
+                        }
                         std::list<Inkscape::Extension::Effect *> effects;
                         Inkscape::Extension::db.get_effect_list(effects);
                         std::list<Inkscape::Extension::Effect *>::iterator it = effects.begin();
@@ -399,24 +448,33 @@ bool sp_file_open(const Glib::ustring &uri,
                 }
 
                 if (need_fix_units) {
-                    std::string msg = (
+                    Glib::ustring msg = (
                         "Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
                         "Drawings meant to match a physical size (e.g. Letter or A4)\n"
                         "will be too small. Scaling the drawing can correct for this.\n"
                         "Internal scaling can be handled either by setting the SVG 'viewBox'\n"
                         "attribute to compensate or by scaling all objects in the drawing.");
                     Gtk::Dialog scaleDialog( _("Old Inkscape file detected (90 DPI)"), false);
+
                     Gtk::Label info;
                     info.set_markup(msg.c_str());
                     info.show();
                     scaleDialog.get_content_area()->pack_start(info, false, false, 20);
+
+                    Gtk::CheckButton backupButton( _("Create backup file (in same directory).") );
+                    scaleDialog.get_content_area()->pack_start(backupButton, false, false, 20);
+                    backupButton.show();
+
                     scaleDialog.add_button("Set 'viewBox'",  1);
                     scaleDialog.add_button("Scale elements", 2);
                     scaleDialog.add_button("Ignore",         3);
 
                     gint response = scaleDialog.run();
+                    bool backup = backupButton.get_active();
                     if (response == 1) {
-
+                        if (backup) {
+                            sp_file_save_backup( uri );
+                        }
                         if (!root->viewBox_set) {
                             doc->setViewBox(Geom::Rect::from_xywh(
                                                 0, 0,
@@ -431,6 +489,9 @@ bool sp_file_open(const Glib::ustring &uri,
 
                         need_fix_guides = true; // Only fix guides if drawing scaled
                     } else if (response == 2) {
+                        if (backup) {
+                            sp_file_save_backup( uri );
+                        }
                         std::list<Inkscape::Extension::Effect *> effects;
                         Inkscape::Extension::db.get_effect_list(effects);
                         std::list<Inkscape::Extension::Effect *>::iterator it = effects.begin();
