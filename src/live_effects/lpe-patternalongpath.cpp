@@ -171,8 +171,11 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
             Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(path_i,2,.1);
             uskeleton = remove_short_cuts(uskeleton,.01);
             Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
-            n = force_continuity(remove_short_cuts(n,.1),.01);
-            
+            if (Geom::are_near(pwd2_in[0].at0(),pwd2_in[pwd2_in.size()-1].at1(),0.01)) {
+                n = force_continuity(remove_short_cuts(n,0.1),0.01);
+            } else {
+                n = force_continuity(remove_short_cuts(n,0.1));
+            }            
             int nbCopies = 0;
             double scaling = 1;
             switch(type) {
