@@ -18,8 +18,8 @@
 #include <svg/path-string.h>
 #include "helper/geom.h"
 #include <2geom/path-intersection.h>
-#include "knotholder.h"
 // TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -34,39 +34,16 @@ static const Util::EnumData<ModeType> ModeTypeData[MT_END] = {
 static const Util::EnumDataConverter<ModeType>
 MTConverter(ModeTypeData, MT_END);
 
-namespace MS {
-
-class KnotHolderEntityCenterMirrorSymmetry : public LPEKnotHolderEntity {
-public:
-    KnotHolderEntityCenterMirrorSymmetry(LPEMirrorSymmetry *effect) : LPEKnotHolderEntity(effect){};
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get() const;
-};
-
-class KnotHolderEntityStartMirrorSymmetry : public LPEKnotHolderEntity {
-public:
-    KnotHolderEntityStartMirrorSymmetry(LPEMirrorSymmetry *effect) : LPEKnotHolderEntity(effect){};
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get() const;
-};
-
-class KnotHolderEntityEndMirrorSymmetry : public LPEKnotHolderEntity {
-public:
-    KnotHolderEntityEndMirrorSymmetry(LPEMirrorSymmetry *effect) : LPEKnotHolderEntity(effect){};
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get() const;
-};
-
-} // namespace MS
-
 LPEMirrorSymmetry::LPEMirrorSymmetry(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     mode(_("Mode"), _("Symmetry move mode"), "mode", MTConverter, &wr, this, MT_FREE),
     discard_orig_path(_("Discard original path?"), _("Check this to only keep the mirrored part of the path"), "discard_orig_path", &wr, this, false),
     fuse_paths(_("Fuse paths"), _("Fuse original and the reflection into a single path"), "fuse_paths", &wr, this, false),
     oposite_fuse(_("Opposite fuse"), _("Picks the other side of the mirror as the original"), "oposite_fuse", &wr, this, false),
+    //TODO: Fix htip for multilang
     start_point(_("Start mirror line"), _("Start mirror line"), "start_point", &wr, this, "Adjust the start of mirroring"),
-    end_point(_("End mirror line"), _("End mirror line"), "end_point", &wr, this, "Adjust end of mirroring")
+    end_point(_("End mirror line"), _("End mirror line"), "end_point", &wr, this, "Adjust end of mirroring"),
+    center_point("hidden","hidden", "center_point", &wr, this, "hidden")
 {
     show_orig_path = true;
     registerParameter(&mode);
@@ -75,15 +52,51 @@ LPEMirrorSymmetry::LPEMirrorSymmetry(LivePathEffectObject *lpeobject) :
     registerParameter( &oposite_fuse);
     registerParameter( &start_point);
     registerParameter( &end_point);
+    registerParameter( &center_point);
     apply_to_clippath_and_mask = true;
+    previous_center = Geom::Point(0,0);
 }
 
 LPEMirrorSymmetry::~LPEMirrorSymmetry()
 {
 }
 
-void
+Gtk::Widget * LPEMirrorSymmetry::newWidget()
+{
+    // use manage here, because after deletion of Effect object, others might
+    // still be pointing to this widget.
+    Gtk::VBox *vbox = Gtk::manage(new Gtk::VBox(Effect::newWidget()));
 
+    vbox->set_border_width(5);
+    vbox->set_homogeneous(false);
+    vbox->set_spacing(2);
+
+    std::vector<Parameter *>::iterator it = param_vector.begin();
+    while (it != param_vector.end()) {
+        if ((*it)->widget_is_visible) {
+            Parameter *param = *it;
+            Gtk::Widget *widg = dynamic_cast<Gtk::Widget *>(param->param_newWidget());
+            Glib::ustring *tip = param->param_getTooltip();
+            if (widg) {
+                if (param->param_key != "center_point") {
+                    vbox->pack_start(*widg, true, true, 2);
+                    if (tip) {
+                        widg->set_tooltip_text(*tip);
+                    } else {
+                        widg->set_tooltip_text("");
+                        widg->set_has_tooltip(false);
+                    }
+                }
+            }
+        }
+
+        ++it;
+    }
+    return dynamic_cast<Gtk::Widget *>(vbox);
+}
+
+
+void
 LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     using namespace Geom;
@@ -99,19 +112,21 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
         point_a = Geom::Point(center_point[X],boundingbox_Y.min());
         point_b = Geom::Point(center_point[X],boundingbox_Y.max());
     }
-    line_separation.setPoints(point_a, point_b);
-    if ( mode == MT_X || mode == MT_Y ) {
+    if (Geom::are_near((Geom::Point)start_point, (Geom::Point)end_point, 0.01)) {
         start_point.param_setValue(point_a);
         end_point.param_setValue(point_b);
-        center_point = Geom::middle_point(point_a, point_b);
+    }
+    line_separation.setPoints(point_a, point_b);
+    if ( mode == MT_X || mode == MT_Y ) {
+        start_point.param_setValue(point_a, true);
+        end_point.param_setValue(point_b, true);
     } else if ( mode == MT_FREE) {
         if(!are_near(previous_center,center_point, 0.01)) {
             Geom::Point trans = center_point - previous_center;
-            start_point.param_setValue(start_point * trans);
-            end_point.param_setValue(end_point * trans);
+            start_point.param_setValue(start_point * trans, true);
+            end_point.param_setValue(end_point * trans, true);
             line_separation.setPoints(start_point, end_point);
         } else {
-            center_point = Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
             line_separation.setPoints(start_point, end_point);
         }
     } else if ( mode == MT_V){
@@ -120,11 +135,10 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
             Geom::Rect view_box_rect = doc->getViewBox();
             Geom::Point sp = Geom::Point(view_box_rect.width()/2.0, 0);
             sp *= i2anc_affine(SP_OBJECT(lpeitem), SP_OBJECT(SP_ACTIVE_DESKTOP->currentLayer()->parent)) .inverse();
-            start_point.param_setValue(sp);
+            start_point.param_setValue(sp, true);
             Geom::Point ep = Geom::Point(view_box_rect.width()/2.0, view_box_rect.height());
             ep *= i2anc_affine(SP_OBJECT(lpeitem), SP_OBJECT(SP_ACTIVE_DESKTOP->currentLayer()->parent)) .inverse();
-            end_point.param_setValue(ep);
-            center_point = Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
+            end_point.param_setValue(ep, true);
             line_separation.setPoints(start_point, end_point);
         }
     } else { //horizontal page
@@ -133,22 +147,22 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
             Geom::Rect view_box_rect = doc->getViewBox();
             Geom::Point sp = Geom::Point(0, view_box_rect.height()/2.0);
             sp *= i2anc_affine(SP_OBJECT(lpeitem), SP_OBJECT(SP_ACTIVE_DESKTOP->currentLayer()->parent)) .inverse();
-            start_point.param_setValue(sp);
+            start_point.param_setValue(sp, true);
             Geom::Point ep = Geom::Point(view_box_rect.width(), view_box_rect.height()/2.0);
             ep *= i2anc_affine(SP_OBJECT(lpeitem), SP_OBJECT(SP_ACTIVE_DESKTOP->currentLayer()->parent)) .inverse();
-            end_point.param_setValue(ep);
-            center_point = Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
+            end_point.param_setValue(ep, true);
             line_separation.setPoints(start_point, end_point);
         }
     }
-    previous_center = center_point;
+    previous_center = Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
+    if (!are_near(previous_center, center_point,0.01)) {
+        center_point.param_setValue(previous_center);
+    }
 }
 
 void
 LPEMirrorSymmetry::transform_multiply(Geom::Affine const& postmul, bool set)
 {
-    center_point *= postmul;
-    previous_center = center_point;
     // cycle through all parameters. Most parameters will not need transformation, but path and point params do.
     for (std::vector<Parameter *>::iterator it = param_vector.begin(); it != param_vector.end(); ++it) {
         Parameter * param = *it;
@@ -166,11 +180,11 @@ LPEMirrorSymmetry::doOnApply (SPLPEItem const* lpeitem)
     Point point_a(boundingbox_X.max(), boundingbox_Y.min());
     Point point_b(boundingbox_X.max(), boundingbox_Y.max());
     Point point_c(boundingbox_X.max(), boundingbox_Y.middle());
-    start_point.param_setValue(point_a);
+    start_point.param_setValue(point_a, true);
     start_point.param_update_default(point_a);
-    end_point.param_setValue(point_b);
+    end_point.param_setValue(point_b, true);
     end_point.param_update_default(point_b);
-    center_point = point_c;
+    center_point.param_setValue(point_c);
     previous_center = center_point;
 }
 
@@ -329,44 +343,6 @@ LPEMirrorSymmetry::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector
     helper.push_back(path);
     hp_vec.push_back(helper);
 }
-
-void
-LPEMirrorSymmetry::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
-{
-    SPKnotShapeType knot_shape =  SP_KNOT_SHAPE_CIRCLE;
-    SPKnotModeType knot_mode = SP_KNOT_MODE_XOR;
-    guint32 knot_color = 0x0000ff00;
-    {
-        KnotHolderEntity *c = new MS::KnotHolderEntityCenterMirrorSymmetry(this);
-        c->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
-                   _("Adjust the center"), knot_shape, knot_mode, knot_color );
-        knotholder->add(c);
-    }
-};
-
-namespace MS {
-
-using namespace Geom;
-
-void
-KnotHolderEntityCenterMirrorSymmetry::knot_set(Geom::Point const &p, Geom::Point const &origin, guint state)
-{
-    LPEMirrorSymmetry* lpe = dynamic_cast<LPEMirrorSymmetry *>(_effect);
-    Geom::Point const s = snap_knot_position(p, state);
-    lpe->center_point = s;
-
-    // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
-    sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
-}
-
-Geom::Point
-KnotHolderEntityCenterMirrorSymmetry::knot_get() const
-{
-    LPEMirrorSymmetry const *lpe = dynamic_cast<LPEMirrorSymmetry const*>(_effect);
-    return lpe->center_point;
-}
-
-} // namespace CR
 
 } //namespace LivePathEffect
 } /* namespace Inkscape */

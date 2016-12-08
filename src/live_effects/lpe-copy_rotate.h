@@ -13,19 +13,13 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
+#include <gtkmm.h>
 #include "live_effects/effect.h"
 #include "live_effects/parameter/point.h"
 #include "live_effects/lpegroupbbox.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
-
-namespace CR {
-// we need a separate namespace to avoid clashes with LPEPerpBisector
-class KnotHolderEntityStartingAngle;
-class KnotHolderEntityRotationAngle;
-}
 
 class LPECopyRotate : public Effect, GroupBBoxEffect {
 public:
@@ -38,16 +32,13 @@ public:
     virtual void split(Geom::PathVector &path_in, Geom::Path const &divider);
     virtual void resetDefaults(SPItem const* item);
     virtual void transform_multiply(Geom::Affine const& postmul, bool set);
-    /* the knotholder entity classes must be declared friends */
-    friend class CR::KnotHolderEntityStartingAngle;
-    friend class CR::KnotHolderEntityRotationAngle;
-    void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
-
+    virtual Gtk::Widget * newWidget();
 protected:
     virtual void addCanvasIndicators(SPLPEItem const *lpeitem, std::vector<Geom::PathVector> &hp_vec);
 
 private:
     PointParam origin;
+    PointParam starting_point;
     ScalarParam starting_angle;
     ScalarParam rotation_angle;
     ScalarParam num_copies;
@@ -58,6 +49,7 @@ private:
     Geom::Point dir;
     Geom::Point start_pos;
     Geom::Point rot_pos;
+    Geom::Point previous_start_point;
     double dist_angle_handle;
     LPECopyRotate(const LPECopyRotate&);
     LPECopyRotate& operator=(const LPECopyRotate&);
