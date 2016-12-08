@@ -2026,7 +2026,7 @@ guint SPMeshNodeArray::side_arc( std::vector<guint> corners ) {
                 {
                     case 'L':
                     case 'l':
-                        std::cout << "SPMeshNodeArray::arc_sides: Can't convert straight lines to arcs.";
+                        std::cerr << "SPMeshNodeArray::side_arc: Can't convert straight lines to arcs." << std::endl;
                         break;
 
                     case 'C':
@@ -2052,15 +2052,15 @@ guint SPMeshNodeArray::side_arc( std::vector<guint> corners ) {
                                 ++arced;
 
                             } else {
-                                std::cout << "SPMeshNodeArray::arc_sides: No crossing, can't turn into arc." << std::endl;
+                                std::cerr << "SPMeshNodeArray::side_arc: No crossing, can't turn into arc." << std::endl;
                             }
                         } else {
-                            std::cout << "SPMeshNodeArray::arc_sides: Handles parallel, can't turn into arc." << std::endl;
+                            std::cerr << "SPMeshNodeArray::side_arc: Handles parallel, can't turn into arc." << std::endl;
                         }
                         break;
                     }
                     default:
-                        std::cout << "SPMeshNodeArray::arc_sides: Invalid path type: " << n[1]->path_type << std::endl;
+                        std::cerr << "SPMeshNodeArray::side_arc: Invalid path type: " << n[1]->path_type << std::endl;
                 }
             }
         }
