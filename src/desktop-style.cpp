@@ -209,7 +209,7 @@ sp_desktop_set_style(Inkscape::ObjectSet *set, SPDesktop *desktop, SPCSSAttr *cs
     if (!change)
         return;
 
-// 2. Emit signal
+// 2. Emit signal... See desktop->connectStyleSet in text-tool, tweak-tool, and gradient-drag.
     bool intercepted = desktop->_set_style_signal.emit(css);
 
 /** \todo

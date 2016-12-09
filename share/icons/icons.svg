@@ -3812,6 +3812,20 @@ http://www.inkscape.org/</dc:description>
 </g>
 <rect y="51.96389" x="1353.87" height="28" width="28" id="rect6752" style="fill:none" />
 </g>
+<g id="text_outer_style" transform="translate(690,322)">
+<rect id="text_outer_style_rect" x="0" y="0" width="28" height="28" style="fill:none" />
+<g aria-label="T" style="font-weight:bold;font-size:20px;font-family:sans-serif;text-anchor:middle;fill:#4d4d4d;stroke:#000000;stroke-width:0.75">
+<path id="BigT" d="m 2.28125,2.4199219 h 13.4375 V 5.2617187 H 10.884766 V 17 H 7.125 V 5.2617187 H 2.28125 Z" />
+</g>
+<g aria-label="T" style="font-weight:bold;font-size:12px;font-family:sans-serif;text-anchor:middle;fill:#4d4d4d;stroke:#000000;stroke-width:0.75">
+<path id="LittleT" d="m 13.96875,13.251953 h 8.0625 v 1.705078 H 19.130859 V 22 H 16.875 v -7.042969 h -2.90625 z" />
+</g>
+<path id="text_outer_style_path1" d="m 20,2 h 6 V 26 H 2 V 10" style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round" />
+<path id="text_outer_style_path2" d="M 3,3 H 15"               style="fill:none;stroke:#999999;stroke-width:0.75;stroke-linecap:round" />
+<path id="text_outer_style_path3" d="M 7.8,5.5 V 16.25"        style="fill:none;stroke:#999999;stroke-width:0.75;stroke-linecap:round" />
+<path id="text_outer_style_path4" d="m 14.6,13.75 h 6.8"       style="fill:#4d4d4d;stroke:#999999;stroke-width:0.5;stroke-linecap:round" />
+<path id="text_outer_style_path5" d="m 17.5,14.85 v 6.5"       style="fill:#4d4d4d;stroke:#999999;stroke-width:0.5;stroke-linecap:round" />
+</g>
 <g id="text_line_spacing" transform="translate(-0.0508118,0.0123038)">
 <rect y="321.9877" x="480.0508" height="28" width="28" id="rect6696" style="fill:none" />
 <g transform="translate(-787.9306,270.3015)" id="g7600">

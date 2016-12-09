@@ -117,6 +117,8 @@ static void       sp_print_fontstyle( SPStyle *query ) {
 }
 #endif
 
+static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/, GObject *tbl, bool subselection = false);
+
 // Font family
 static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GObject *tbl )
 {
@@ -225,8 +227,24 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
     sp_repr_css_set_property (css, "font-size", osfs.str().c_str());
 
     // Apply font size to selected objects.
+    // Calling sp_desktop_set_style will result in a call to TextTool::_styleSet() which
+    // will set the style on selected text inside the <text> element. If we want to set
+    // the style on the outer <text> objects we need to bypass this call.
+    bool outer = prefs->getInt("/tools/text/outer_style", false);
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    sp_desktop_set_style (desktop, css, true, true);
+    if (outer) {
+        Inkscape::Selection *selection = desktop->getSelection();
+        auto itemlist= selection->items();
+        for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
+            if (dynamic_cast<SPText *>(*i) ||
+                dynamic_cast<SPFlowtext *>(*i)) {
+                SPItem *item = *i;
+                item->changeCSS(css,"style");
+            }
+        }
+    } else {
+        sp_desktop_set_style (desktop, css, true, true);
+    }
 
     // If no selected objects, set default.
     SPStyle query(SP_ACTIVE_DOCUMENT);
@@ -279,6 +297,17 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
     }
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+// Changes selection to only text outer elements.
+static void sp_text_outer_style_changed( InkToggleAction*act, GObject *tbl )
+{
+    bool outer = gtk_toggle_action_get_active( GTK_TOGGLE_ACTION(act) );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt("/tools/text/outer_style", outer);
+
+    // Update widgets to reflect new state of Text Outer Style button.
+    sp_text_toolbox_selection_changed( NULL, tbl );
 }
 
 // Handles both Superscripts and Subscripts
@@ -549,9 +578,23 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     sp_repr_css_set_property (css, "line-height", osfs.str().c_str());
 
 
-    // Apply line-height to selected objects.
+    // Apply line-height to selected objects. See comment in font size function.
+    bool outer = prefs->getInt("/tools/text/outer_style", false);
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    sp_desktop_set_style (desktop, css, true, false);
+    if (outer) {
+        Inkscape::Selection *selection = desktop->getSelection();
+        auto itemlist= selection->items();
+        for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
+            if (dynamic_cast<SPText *>(*i) ||
+                dynamic_cast<SPFlowtext *>(*i)) {
+                SPItem *item = *i;
+                item->changeCSS(css,"style");
+            }
+        }
+    } else {
+        sp_desktop_set_style (desktop, css, true, true);
+    }
+
 
 
     // Only need to save for undo if a text item has been changed.
@@ -1073,7 +1116,7 @@ static void sp_text_set_sizes(GtkListStore* model_size, int unit)
  * It is called whenever a text selection is changed, including stepping cursor
  * through text, or setting focus to text.
  */
-static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/, GObject *tbl, bool subselection = false) // don't bother to update font list if subsel changed
+static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/, GObject *tbl, bool subselection) // don't bother to update font list if subsel changed
 {
 #ifdef DEBUG_TEXT
     static int count = 0;
@@ -1082,12 +1125,11 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
     std::cout << "sp_text_toolbox_selection_changed: start " << count << std::endl;
 
-    std::cout << "  Selected items:" << std::endl;
-    for (GSList const *items = SP_ACTIVE_DESKTOP->getSelection()->itemList();
-         items != NULL;
-         items = items->next)
-    {
-        const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    Inkscape::Selection *selection = desktop->getSelection();
+    auto itemlist0= selection->items();
+    for(auto i=itemlist0.begin();i!=itemlist0.end(); ++i) {
+        const gchar* id = (*i)->getId();
         std::cout << "    " << id << std::endl;
     }
     Glib::ustring selected_text = sp_text_get_selected_text((SP_ACTIVE_DESKTOP)->event_context);
@@ -1129,8 +1171,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     gboolean isFlow = false;
     auto itemlist= SP_ACTIVE_DESKTOP->getSelection()->items();
     for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
-        // const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
-        // std::cout << "    " << id << std::endl;
+        // std::cout << "    " << ((*i)->getId()?(*i)->getId():"null") << std::endl;
         if( SP_IS_FLOWTEXT(*i)) {
             isFlow = true;
             // std::cout << "   Found flowed text" << std::endl;
@@ -1148,9 +1189,25 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     SPStyle query(SP_ACTIVE_DOCUMENT);
     int result_family   = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTFAMILY);
     int result_style    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTSTYLE);
-    int result_numbers  = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
     int result_baseline = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_BASELINES);
     int result_wmode    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_WRITINGMODES);
+
+    // Calling sp_desktop_query_style will result in a call to TextTool::_styleQueried().
+    // This returns the style of the selected text inside the <text> element... which
+    // is often the style of one or more <tspan>s. If we want the style of the outer
+    // <text> objects then we need to bypass the call to TextTool::_styleQueried().
+    // The desktop selection never includes the elements inside the <text> element.
+    int result_numbers = 0;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
+    bool outer = prefs->getInt("/tools/text/outer_style", false);
+    if (outer) {
+        Inkscape::Selection *selection = desktop->getSelection();
+        std::vector<SPItem *> vec(selection->items().begin(), selection->items().end());
+        result_numbers = sp_desktop_query_style_from_list (vec, &query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    } else {
+        result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, &query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    }
 
     /*
      * If no text in selection (querying returned nothing), read the style from
@@ -2019,6 +2076,19 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextRotationAction", eact );
         g_object_set( G_OBJECT(eact), "iconId", "text_rotation", NULL );
+    }
+
+    /* Text outer style */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TextOuterStyleAction",            // Name
+                                                      _("Show outer style"),             // Label
+                                                      _("Show style of outermost text element. The 'font-size' and 'line-height' values of the outermost text element determine the minimum line spacing in the block."),
+                                                      INKSCAPE_ICON("text_outer_style"),
+                                                      secondarySize );                   // Icon size
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_outer_style_changed), holder );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/outer_style", false) );
+        g_object_set_data( holder, "TextOuterStyleAction", act );
     }
 
     // Is this necessary to call? Shouldn't hurt.
