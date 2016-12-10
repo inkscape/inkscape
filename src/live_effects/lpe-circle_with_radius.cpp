@@ -17,6 +17,8 @@
 // You might need to include other 2geom files. You can add them here:
 #include <2geom/circle.h>
 #include <2geom/path-sink.h>
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 using namespace Geom;
 

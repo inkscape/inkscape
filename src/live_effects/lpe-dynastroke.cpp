@@ -16,6 +16,8 @@
 
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/sbasis-math.h>
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace LivePathEffect {

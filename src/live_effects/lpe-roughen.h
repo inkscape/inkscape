@@ -12,7 +12,6 @@
 #ifndef INKSCAPE_LPE_ROUGHEN_H
 #define INKSCAPE_LPE_ROUGHEN_H
 
-#include <gtkmm.h>
 #include "live_effects/effect.h"
 #include "live_effects/parameter/enum.h"
 #include "live_effects/parameter/parameter.h"

@@ -7,9 +7,10 @@
 
 #include "live_effects/lpe-bendpath.h"
 #include "sp-item-group.h"
-
 #include "knot-holder-entity.h"
 #include "knotholder.h"
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 using std::vector;
 

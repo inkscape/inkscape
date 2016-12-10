@@ -2,6 +2,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gtkmm.h>
 #include "live_effects/lpe-simplify.h"
 #include "display/curve.h"
 #include "helper/geom.h"
@@ -9,6 +10,7 @@
 #include "svg/svg.h"
 #include "ui/tools/node-tool.h"
 #include "ui/icon-names.h"
+
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
 

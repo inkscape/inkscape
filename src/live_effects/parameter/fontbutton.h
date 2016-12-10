@@ -8,7 +8,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #include <glib.h>
-#include <gtkmm.h>
 #include "live_effects/parameter/parameter.h"
 
 namespace Inkscape {

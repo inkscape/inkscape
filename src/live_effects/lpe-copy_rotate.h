@@ -13,7 +13,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#include <gtkmm.h>
+
 #include "live_effects/effect.h"
 #include "live_effects/parameter/point.h"
 #include "live_effects/lpegroupbbox.h"

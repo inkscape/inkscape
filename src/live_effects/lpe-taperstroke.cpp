@@ -26,6 +26,8 @@
 #include "svg/svg.h"
 
 #include "knotholder.h"
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 template<typename T>
 inline bool withinRange(T value, T low, T high) {

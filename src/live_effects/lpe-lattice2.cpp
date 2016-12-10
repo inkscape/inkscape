@@ -16,12 +16,15 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gtkmm.h>
 #include "live_effects/lpe-lattice2.h"
 #include "display/curve.h"
 #include "helper/geom.h"
 #include <2geom/sbasis-2d.h>
 #include <2geom/bezier-to-sbasis.h>
+
 // TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 using namespace Geom;
 

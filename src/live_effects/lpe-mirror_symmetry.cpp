@@ -13,11 +13,14 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#include <gtkmm.h>
 #include "live_effects/lpe-mirror_symmetry.h"
 #include <display/curve.h>
 #include <svg/path-string.h>
 #include "helper/geom.h"
 #include <2geom/path-intersection.h>
+
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
 

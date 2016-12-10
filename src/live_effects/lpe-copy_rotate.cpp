@@ -11,6 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gtkmm.h>
 #include <gdk/gdk.h>
 #include <2geom/path-intersection.h>
 #include <2geom/sbasis-to-bezier.h>

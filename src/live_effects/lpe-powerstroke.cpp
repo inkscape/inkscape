@@ -25,6 +25,9 @@
 #include <2geom/circle.h>
 #include "helper/geom.h"
 
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
+
 namespace Geom {
 // should all be moved to 2geom at some point
 

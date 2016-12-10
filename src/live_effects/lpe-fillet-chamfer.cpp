@@ -25,8 +25,8 @@
 
 // for programmatically updating knots
 #include "ui/tools-switch.h"
-
 // TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 using namespace Geom;
 namespace Inkscape {

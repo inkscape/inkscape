@@ -4,7 +4,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-
+#include <gtkmm.h>
 #include "ui/widget/registered-widget.h"
 #include "live_effects/parameter/fontbutton.h"
 #include "live_effects/effect.h"

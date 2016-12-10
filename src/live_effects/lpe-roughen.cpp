@@ -13,11 +13,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gtkmm.h>
 #include "live_effects/lpe-roughen.h"
 #include "display/curve.h"
 #include <boost/functional/hash.hpp>
 #include "helper/geom.h"
+
 // TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace LivePathEffect {

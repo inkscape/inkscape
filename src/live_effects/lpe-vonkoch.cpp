@@ -5,7 +5,7 @@
  */
 
 #include "live_effects/lpe-vonkoch.h"
-
+// TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
 
 //using std::vector;

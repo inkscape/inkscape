@@ -8,15 +8,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glibmm/i18n.h>
-
 #include "live_effects/lpe-angle_bisector.h"
-
-#include <2geom/sbasis-to-bezier.h>
-
+#include "2geom/sbasis-to-bezier.h"
 #include "sp-lpe-item.h"
 #include "knot-holder-entity.h"
 #include "knotholder.h"
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace LivePathEffect {

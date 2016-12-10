@@ -19,6 +19,8 @@
 #include <2geom/elliptical-arc.h>
 
 #include "lpe-jointype.h"
+// TODO due to internal breakage in glibmm headers, this must be last:
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
