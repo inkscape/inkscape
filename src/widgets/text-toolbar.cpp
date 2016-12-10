@@ -717,7 +717,7 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         double font_size = 0;
         int count = 0;
         for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
-            if (SP_IS_TEXT (*i)) {
+            if (SP_IS_TEXT (*i) || SP_IS_FLOWTEXT(*i)) {
                 double doc_scale = Geom::Affine((*i)->i2dt_affine()).descrim();
                 font_size += (*i)->style->font_size.computed * doc_scale;
                 ++count;
@@ -746,7 +746,7 @@ static void sp_text_lineheight_unit_changed( gpointer /* */, GObject *tbl )
         double font_size = 0;
         int count = 0;
         for(auto i=itemlist.begin();i!=itemlist.end(); ++i){
-            if (SP_IS_TEXT (*i)) {
+            if (SP_IS_TEXT (*i) || SP_IS_FLOWTEXT (*i)) {
                 double doc_scale = Geom::Affine((*i)->i2dt_affine()).descrim();
                 font_size += (*i)->style->font_size.computed * doc_scale;
                 ++count;
