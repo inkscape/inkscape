@@ -20,9 +20,59 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-
-import inkex, sys, re, string
+# standard libraries
+import sys
+import re
+import string
 from lxml import etree
+# local libraries
+import inkex
+
+
+# globals
+REFERENCED_CONTAINERS = [
+    # These container elements - which may be referenced by other
+    # elements - do not need to be scaled directly. The referencing
+    # elements will be either insided scaled containers or scaled
+    # directly as graphics elements in SVG root.
+    'defs',
+    'glyph',
+    'marker',
+    'mask',
+    'missing-glyph',
+    'pattern',
+    'symbol',
+]
+CONTAINER_ELEMENTS = [
+    # These element types have graphics elements and other container
+    # elements as child elements. They need to be scaled if in SVG root.
+    'a',
+    'g',
+    'switch',
+]
+GRAPHICS_ELEMENTS = [
+    # These element types cause graphics to be drawn. They need to be
+    # scaled if in SVG root.
+    'circle',
+    'ellipse',
+    'image',
+    'line',
+    'path',
+    'polygon',
+    'polyline',
+    'rect',
+    'text',
+    'use',
+]
+# FIXME: instances and referenced elements
+# If for example a referenced element in SVG root is directly scaled,
+# and its instance (referencing element e.g. <use>) is inside a scaled
+# top-level container, the instance in the end will be rendered at an
+# incorrect scale relative to the viewport (page area) and the other
+# drawing content. Another unsupported case is both the referenced
+# element and the instance in SVG root: the clone will in the end be
+# rendered with the scale factor applied twice.
+
 
 class DPISwitcher(inkex.Effect):
 
@@ -56,14 +106,14 @@ class DPISwitcher(inkex.Effect):
         if self.options.switcher == "1":
             self.scaleGuides(svg)
             self.scaleGrid(svg)
-        for element in svg:
+        for element in svg:  # iterate all top-level elements of SVGRoot
             box3DSide = element.get(inkex.addNS('box3dsidetype', 'inkscape'))
             if box3DSide:
                 continue
             uri, tag = element.tag.split("}")
             width_scale = self.factor_a
             height_scale = self.factor_a
-            if tag == "rect" or tag == "image" or tag == "path" or tag == "circle" or tag == "ellipse" or tag == "text":
+            if tag in GRAPHICS_ELEMENTS or tag in CONTAINER_ELEMENTS:
                 if element.get('width') is not None and \
                 (re.sub("[0-9]*\.?[0-9]", "", element.get('width')) == "%" or \
                 re.sub("[0-9]*\.?[0-9]", "", element.get('width')) == "px"):
@@ -102,7 +152,7 @@ class DPISwitcher(inkex.Effect):
     __uuconv = {'in':96.0, 'pt':1.33333333333, 'px':1.0, 'mm':3.77952755913, 'cm':37.7952755913,
                 'm':3779.52755913, 'km':3779527.55913, 'pc':16.0, 'yd':3456.0 , 'ft':1152.0}
     
-    __uuconvLegazy = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'm':3543.3070866,
+    __uuconvLegacy = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'm':3543.3070866,
                       'km':3543307.0866, 'pc':15.0, 'yd':3240 , 'ft':1080}
 
     def scaleElement(self, m):
@@ -166,11 +216,10 @@ class DPISwitcher(inkex.Effect):
                 grid.set("originy", str(originy))
 
     def effect(self):
-        action = self.options.action.strip("\"") # TODO Is this a bug? (Extra " characters)
         saveout = sys.stdout
         sys.stdout = sys.stderr
         svg = self.document.getroot()
-        if action == "page_info":
+        if self.options.action == '"page_info"':
             print ":::SVG document related info:::"
             print "version: " + str(svg.get(inkex.addNS('version',u'inkscape')))
             width = svg.get('width')
@@ -211,7 +260,7 @@ class DPISwitcher(inkex.Effect):
                 if self.options.switcher == "0":
                     self.unitExponent = 1.0/(self.factor_a/self.__uuconv[self.units])
                 else:
-                    self.unitExponent = 1.0/(self.factor_a/self.__uuconvLegazy[self.units])
+                    self.unitExponent = 1.0/(self.factor_a/self.__uuconvLegacy[self.units])
             self.scaleRoot(svg);
         sys.stdout = saveout
 
