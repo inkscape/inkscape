@@ -209,7 +209,7 @@ sp_desktop_set_style(Inkscape::ObjectSet *set, SPDesktop *desktop, SPCSSAttr *cs
     if (!change)
         return;
 
-// 2. Emit signal... See desktop->connectStyleSet in text-tool, tweak-tool, and gradient-drag.
+// 2. Emit signal... See desktop->connectSetStyle in text-tool, tweak-tool, and gradient-drag.
     bool intercepted = desktop->_set_style_signal.emit(css);
 
 /** \todo
@@ -1045,6 +1045,7 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
     bool lineheight_normal = false;
     bool lineheight_unit_proportional = false;
     bool lineheight_unit_absolute = false;
+    bool lineheight_set = false; // Set true if any object has lineheight set.
 
     double size_prev = 0;
     double letterspacing_prev = 0;
@@ -1130,6 +1131,9 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
             lineheight_normal = false;
             lineheight += lineheight_current * doc_scale;
         }
+        if (style->line_height.set) {
+            lineheight_set = true;
+        }
 
         if ((size_prev != 0 && style->font_size.computed != size_prev) ||
             (letterspacing_prev != 0 && style->letter_spacing.computed != letterspacing_prev) ||
@@ -1204,6 +1208,9 @@ objects_query_fontnumbers (const std::vector<SPItem*> &objects, SPStyle *style_r
             style_res->line_height.value    = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
         }
     }
+
+    // Used by text toolbar unset 'line-height' 
+    style_res->line_height.set = lineheight_set;
 
     if (texts > 1) {
         if (different || different_lineheight) {
@@ -1907,7 +1914,7 @@ sp_desktop_query_style_from_list (const std::vector<SPItem*> &list, SPStyle *sty
 int
 sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property)
 {
-    // Used by text tool and in gradient dragging
+    // Used by text tool and in gradient dragging. See connectQueryStyle.
     int ret = desktop->_query_style_signal.emit(style, property);
 
     if (ret != QUERY_STYLE_NOTHING)

@@ -239,7 +239,7 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
             if (dynamic_cast<SPText *>(*i) || dynamic_cast<SPFlowtext *>(*i)) {
                 SPItem *item = *i;
 
-                // Scale by inverse of accumulated paraent transform
+                // Scale by inverse of accumulated parent transform
                 SPCSSAttr *css_set = sp_repr_css_attr_new();
                 sp_repr_css_merge(css_set, css);
                 Geom::Affine const local(item->i2doc_affine());
@@ -319,6 +319,29 @@ static void sp_text_outer_style_changed( InkToggleAction*act, GObject *tbl )
 
     // Update widgets to reflect new state of Text Outer Style button.
     sp_text_toolbox_selection_changed( NULL, tbl );
+}
+
+// Unset line height on selection's inner text objects (tspan, etc.).
+static void sp_text_lineheight_unset_changed( InkToggleAction*act, GObject *tbl )
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    sp_repr_css_unset_property(css, "line-height");
+
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    sp_desktop_set_style (desktop, css);
+
+    sp_repr_css_attr_unref(css);
+    
+    DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
+                       _("Text: Unset line height."));
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
 // Handles both Superscripts and Subscripts
@@ -599,7 +622,7 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
             if (dynamic_cast<SPText *>(*i) || dynamic_cast<SPFlowtext *>(*i)) {
                 SPItem *item = *i;
 
-                // Scale by inverse of accumulated paraent transform
+                // Scale by inverse of accumulated parent transform
                 SPCSSAttr *css_set = sp_repr_css_attr_new();
                 sp_repr_css_merge(css_set, css);
                 Geom::Affine const local(item->i2doc_affine());
@@ -1405,7 +1428,13 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         }
         // Save unit so we can do convertions between new/old units.
         g_object_set_data( tbl, "lineheight_unit", GINT_TO_POINTER(line_height_unit));
-        
+
+        // Enable and turn on only if selection includes an object with line height set.
+        InkToggleAction* lineHeightUnset =
+            INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextLineHeightUnsetAction"));
+        gtk_action_set_sensitive(GTK_ACTION(lineHeightUnset), query.line_height.set );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(lineHeightUnset), query.line_height.set );
+
         // Word spacing
         double wordSpacing;
         if (query.word_spacing.normal) wordSpacing = 0.0;
@@ -2098,6 +2127,19 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
         g_object_set_data( holder, "TextRotationAction", eact );
         g_object_set( G_OBJECT(eact), "iconId", "text_rotation", NULL );
+    }
+
+    /* Text line height unset */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "TextLineHeightUnsetAction",       // Name
+                                                      _("Unset line height"),            // Label
+                                                      _("If enabled, line height is set on part of selection. Click to unset."),
+                                                      INKSCAPE_ICON("paint-unknown"),
+                                                      secondarySize );                   // Icon size
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_lineheight_unset_changed), holder );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/line_height_unset", false) );
+        g_object_set_data( holder, "TextLineHeightUnsetAction", act );
     }
 
     /* Text outer style */

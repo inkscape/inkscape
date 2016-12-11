@@ -514,6 +514,7 @@ static gchar const * ui_descr =
         "    <toolitem action='TextFontSizeAction' />"
         "    <toolitem action='TextLineHeightAction' />"
         "    <toolitem action='TextLineHeightUnitsAction' />"
+        "    <toolitem action='TextLineHeightUnsetAction' />"
         "    <separator />"
         "    <toolitem action='TextAlignAction' />"
         "    <separator />"
