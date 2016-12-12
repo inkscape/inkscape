@@ -358,6 +358,7 @@ bool sp_file_open(const Glib::ustring &uri,
                 // Check if potentially need viewbox or unit fix
                 switch (root->width.unit) {
                     case SP_CSS_UNIT_PC:
+                    case SP_CSS_UNIT_PT:
                     case SP_CSS_UNIT_MM:
                     case SP_CSS_UNIT_CM:
                     case SP_CSS_UNIT_IN:
@@ -366,13 +367,19 @@ bool sp_file_open(const Glib::ustring &uri,
                     case SP_CSS_UNIT_NONE:
                     case SP_CSS_UNIT_PX:
                         need_fix_units = true;
-                    default:
                         break;
+                    case SP_CSS_UNIT_EM:
+                    case SP_CSS_UNIT_EX:
+                    case SP_CSS_UNIT_PERCENT:
                         // OK
+                        break;
+                    default:
+                        std::cerr << "sp_file_open: Unhandled width unit!" << std::endl;
                 }
 
                 switch (root->height.unit) {
                     case SP_CSS_UNIT_PC:
+                    case SP_CSS_UNIT_PT:
                     case SP_CSS_UNIT_MM:
                     case SP_CSS_UNIT_CM:
                     case SP_CSS_UNIT_IN:
@@ -381,9 +388,14 @@ bool sp_file_open(const Glib::ustring &uri,
                     case SP_CSS_UNIT_NONE:
                     case SP_CSS_UNIT_PX:
                         need_fix_units = true;
-                    default:
                         break;
+                    case SP_CSS_UNIT_EM:
+                    case SP_CSS_UNIT_EX:
+                    case SP_CSS_UNIT_PERCENT:
                         // OK
+                        break;
+                    default:
+                        std::cerr << "sp_file_open: Unhandled height unit!" << std::endl;
                 }
 
                 // std::cout << "Absolute SVG units in root? " << (need_fix_viewbox?"true":"false") << std::endl;
