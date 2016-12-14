@@ -66,6 +66,9 @@
 // For updating old Inkscape SVG files
 #include "display/canvas-grid.h"
 #include "sp-guide.h"
+#include "selection-chemistry.h"
+#include "persp3d.h"
+#include "proj_pt.h"
 
 #include <gtkmm.h>
 
@@ -353,6 +356,7 @@ bool sp_file_open(const Glib::ustring &uri,
                 bool need_fix_units   = false;
                 bool need_fix_guides  = false;
                 bool need_fix_grid_mm = false;
+                bool need_fix_box3d   = false;
                 bool is_extension = false;
 
                 // Check if potentially need viewbox or unit fix
@@ -420,9 +424,10 @@ bool sp_file_open(const Glib::ustring &uri,
                     backupButton.show();
 
                     scaleDialog.get_content_area()->pack_start(backupButton, false, false, 20);
-                    scaleDialog.add_button("Set 'viewBox'", 1);
+                    scaleDialog.add_button("Set 'viewBox'",  1);
                     scaleDialog.add_button("Scale elements", 2);
-                    scaleDialog.add_button("Ignore",        3);
+                    scaleDialog.add_button("Ignore",         3);
+                    scaleDialog.add_button("Test",           4);
 
                     gint response = scaleDialog.run();
                     bool backup = backupButton.get_active();
@@ -455,7 +460,27 @@ bool sp_file_open(const Glib::ustring &uri,
                             std::cerr << "sp_file_open: Failed to find dpi90to96 extension." << std::endl;
                         }
                         is_extension = true;
+                    } else if (response == 4) {
+
+                        if (backup) {
+                            sp_file_save_backup( uri );
+                        }
+
+                        Inkscape::Selection *selection = desktop->getSelection();
+                        Inkscape::SelectionHelper::selectAllInAll( desktop );
+                        selection->group();
+                        SPItem * group = selection->singleItem();
+                        if (group) {
+                            group->setAttribute("transform","scale(1.06666667,1.06666667)");
+                        } else {
+                            std::cerr << "sp_file_open: Failed to get group!" << std::endl;
+                        }
+                        selection->ungroup();
+                        selection->clear();
+                        is_extension = true;
                     }
+
+                    need_fix_box3d = true;
                     need_fix_guides = true; // Always fix guides
                 }
 
@@ -480,6 +505,7 @@ bool sp_file_open(const Glib::ustring &uri,
                     scaleDialog.add_button("Set 'viewBox'",  1);
                     scaleDialog.add_button("Scale elements", 2);
                     scaleDialog.add_button("Ignore",         3);
+                    scaleDialog.add_button("Test",           4);
 
                     gint response = scaleDialog.run();
                     bool backup = backupButton.get_active();
@@ -500,6 +526,7 @@ bool sp_file_open(const Glib::ustring &uri,
                         doc->setWidthAndHeight( width, height, false );
 
                         need_fix_guides = true; // Only fix guides if drawing scaled
+                        need_fix_box3d = true;
                     } else if (response == 2) {
                         if (backup) {
                             sp_file_save_backup( uri );
@@ -522,13 +549,42 @@ bool sp_file_open(const Glib::ustring &uri,
                         }
                         need_fix_guides = true; // Only fix guides if drawing scaled
                         is_extension = true;
+                    } else if (response == 4) {
+                        if (backup) {
+                            sp_file_save_backup( uri );
+                        }
+
+                        Inkscape::Util::Quantity width  =
+                            Inkscape::Util::Quantity(doc->getWidth().value("px")/ratio, "px" );
+                        Inkscape::Util::Quantity height =
+                            Inkscape::Util::Quantity(doc->getHeight().value("px")/ratio,"px" );
+                        doc->setWidthAndHeight( width, height, false );
+
+                        if (!root->viewBox_set) {
+                            Inkscape::Selection *selection = desktop->getSelection();
+                            Inkscape::SelectionHelper::selectAllInAll( desktop );
+                            selection->group();
+                            SPItem * group = selection->singleItem();
+                            if (group) {
+                                group->setAttribute("transform","scale(1.06666667,1.06666667)");
+                            } else {
+                                std::cerr << "sp_file_open: Failed to get group!" << std::endl;
+                            }
+                            selection->ungroup();
+                            selection->clear();
+                            is_extension = true;
+                        }
+
+                        need_fix_box3d = true;
+                        need_fix_guides = true; // Only fix guides if drawing scaled
+
                     } else {
                         // Ignore
                         need_fix_grid_mm = true;
                     }
                 }
 
-                // Fix guides and grids
+                // Fix guides and grids and perspective
                 for (SPObject *child = root->firstChild() ; child; child = child->getNext() ) {
                     SPNamedView *nv = dynamic_cast<SPNamedView *>(child);
                     if (nv) {
@@ -567,21 +623,53 @@ bool sp_file_open(const Glib::ustring &uri,
                                     }
                                 } else {
                                     if (need_fix_guides) {
-                                        // HACK: Scaling the document does not seem to cause
-                                        // grids defined in document units to be updated.
-                                        // This forces an update.
                                         if(is_extension){
                                             xy->Scale( Geom::Scale(ratio,ratio).inverse() );
                                         } else {
+                                            // HACK: Scaling the document does not seem to cause
+                                            // grids defined in document units to be updated.
+                                            // This forces an update.
                                             xy->Scale( Geom::Scale(1,1) );
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                }  // Look for SPNamedView loop
+                    }  // If SPNamedView
 
+                    SPDefs *defs = dynamic_cast<SPDefs *>(child);
+                    if (defs && need_fix_box3d) {
+                        for (SPObject *child = defs->firstChild() ; child; child = child->getNext() ) {
+                            Persp3D* persp3d = dynamic_cast<Persp3D *>(child);
+                            if (persp3d) {
+                                std::vector<Glib::ustring> tokens;
+
+                                const gchar* vp_x = persp3d->getAttribute("inkscape:vp_x");
+                                const gchar* vp_y = persp3d->getAttribute("inkscape:vp_y");
+                                const gchar* vp_z = persp3d->getAttribute("inkscape:vp_z");
+                                const gchar* vp_o = persp3d->getAttribute("inkscape:persp3d-origin");
+                                // std::cout << "Found Persp3d: "
+                                //           << " vp_x: " << vp_x
+                                //           << " vp_y: " << vp_y
+                                //           << " vp_z: " << vp_z << std::endl;
+                                Proj::Pt2 pt_x (vp_x);
+                                Proj::Pt2 pt_y (vp_y);
+                                Proj::Pt2 pt_z (vp_z);
+                                Proj::Pt2 pt_o (vp_o);
+                                pt_x = pt_x * (1.0/ratio);
+                                pt_y = pt_y * (1.0/ratio);
+                                pt_z = pt_z * (1.0/ratio);
+                                pt_o = pt_o * (1.0/ratio);
+                                persp3d->setAttribute("inkscape:vp_x",pt_x.coord_string());
+                                persp3d->setAttribute("inkscape:vp_y",pt_y.coord_string());
+                                persp3d->setAttribute("inkscape:vp_z",pt_z.coord_string());
+                                persp3d->setAttribute("inkscape:persp3d-origin",pt_o.coord_string());
+                            }
+                        }
+                    }
+                }  // Look for SPNamedView and SPDefs loop
+
+                // desktop->getDocument()->ensureUpToDate();  // Does not update box3d!
                 DocumentUndo::done(desktop->getDocument(), SP_VERB_NONE, _("Update Document"));
 
             }  // If old Inkscape version
