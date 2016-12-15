@@ -1198,7 +1198,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             ry = arc->ry.computed;
             start = arc->start;
             end   = arc->end;
-            if( end == start ) {
+            if( end <= start ) {
                 end += 2.0 * M_PI;
             }
         }
