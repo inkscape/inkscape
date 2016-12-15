@@ -471,8 +471,8 @@ bool sp_file_open(const Glib::ustring &uri,
                         bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive",true);
                         bool onlyvisible   = prefs->getBool("/options/kbselection/onlyvisible",  true);
 
-                        prefs->setBool("options/kbselection/onlysensitive", false);
-                        prefs->setBool("options/kbselection/onlyvisible",   false);
+                        prefs->setBool("/options/kbselection/onlysensitive", false);
+                        prefs->setBool("/options/kbselection/onlyvisible",   false);
 
                         Inkscape::Selection *selection = desktop->getSelection();
                         Inkscape::SelectionHelper::selectAllInAll( desktop );
@@ -488,8 +488,8 @@ bool sp_file_open(const Glib::ustring &uri,
                         selection->ungroup();
                         selection->clear();
 
-                        prefs->setBool("options/kbselection/onlysensitive", onlysensitive);
-                        prefs->setBool("options/kbselection/onlyvisible",   onlyvisible  );
+                        prefs->setBool("/options/kbselection/onlysensitive", onlysensitive);
+                        prefs->setBool("/options/kbselection/onlyvisible",   onlyvisible  );
 
                         did_scaling = true;
 
@@ -605,8 +605,8 @@ bool sp_file_open(const Glib::ustring &uri,
                             bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive",true);
                             bool onlyvisible   = prefs->getBool("/options/kbselection/onlyvisible",  true);
 
-                            prefs->setBool("options/kbselection/onlysensitive", false);
-                            prefs->setBool("options/kbselection/onlyvisible",   false);
+                            prefs->setBool("/options/kbselection/onlysensitive", false);
+                            prefs->setBool("/options/kbselection/onlyvisible",   false);
 
                             Inkscape::Selection *selection = desktop->getSelection();
                             Inkscape::SelectionHelper::selectAllInAll( desktop );
@@ -622,8 +622,8 @@ bool sp_file_open(const Glib::ustring &uri,
                             selection->ungroup();
                             selection->clear();
 
-                            prefs->setBool("options/kbselection/onlysensitive", onlysensitive);
-                            prefs->setBool("options/kbselection/onlyvisible",   onlyvisible  );
+                            prefs->setBool("/options/kbselection/onlysensitive", onlysensitive);
+                            prefs->setBool("/options/kbselection/onlyvisible",   onlyvisible  );
 
                             did_scaling = true;
                         }
