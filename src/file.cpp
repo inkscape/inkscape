@@ -69,6 +69,7 @@
 #include "selection-chemistry.h"
 #include "persp3d.h"
 #include "proj_pt.h"
+#include "ui/shape-editor.h"
 
 #include <gtkmm.h>
 
@@ -357,7 +358,7 @@ bool sp_file_open(const Glib::ustring &uri,
                 bool need_fix_guides  = false;
                 bool need_fix_grid_mm = false;
                 bool need_fix_box3d   = false;
-                bool is_extension = false;
+                bool did_scaling = false;
 
                 // Check if potentially need viewbox or unit fix
                 switch (root->width.unit) {
@@ -424,25 +425,27 @@ bool sp_file_open(const Glib::ustring &uri,
                     backupButton.show();
 
                     scaleDialog.get_content_area()->pack_start(backupButton, false, false, 20);
-                    scaleDialog.add_button("Set 'viewBox'",  1);
-                    scaleDialog.add_button("Scale elements", 2);
-                    scaleDialog.add_button("Ignore",         3);
-                    scaleDialog.add_button("Test",           4);
+                    scaleDialog.add_button(_("Set 'viewBox'"),   1);
+                    scaleDialog.add_button(_("Scale elements"),  2);
+                    scaleDialog.add_button(_("Ignore"),          3);
+                    scaleDialog.add_button("Scale test - group",    4);
+                    scaleDialog.add_button("Scale test - children", 5);
 
                     gint response = scaleDialog.run();
                     bool backup = backupButton.get_active();
+                    if ( backup && response != 3) {
+                        sp_file_save_backup( uri );
+                    }
+
                     if (response == 1) {
-                        if (backup) {
-                            sp_file_save_backup( uri );
-                        }
+
                         doc->setViewBox(Geom::Rect::from_xywh(
                                             0, 0,
                                             doc->getWidth().value("px") * ratio,
                                             doc->getHeight().value("px") * ratio));
+
                     } else if (response == 2 ) {
-                        if (backup) {
-                            sp_file_save_backup( uri );
-                        }
+
                         std::list<Inkscape::Extension::Effect *> effects;
                         Inkscape::Extension::db.get_effect_list(effects);
                         std::list<Inkscape::Extension::Effect *>::iterator it = effects.begin();
@@ -459,12 +462,17 @@ bool sp_file_open(const Glib::ustring &uri,
                         if (!did) {
                             std::cerr << "sp_file_open: Failed to find dpi90to96 extension." << std::endl;
                         }
-                        is_extension = true;
+                        did_scaling = true;
+
                     } else if (response == 4) {
 
-                        if (backup) {
-                            sp_file_save_backup( uri );
-                        }
+                        // Save preferences
+                        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                        bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive",true);
+                        bool onlyvisible   = prefs->getBool("/options/kbselection/onlyvisible",  true);
+
+                        prefs->setBool("options/kbselection/onlysensitive", false);
+                        prefs->setBool("options/kbselection/onlyvisible",   false);
 
                         Inkscape::Selection *selection = desktop->getSelection();
                         Inkscape::SelectionHelper::selectAllInAll( desktop );
@@ -475,16 +483,46 @@ bool sp_file_open(const Glib::ustring &uri,
                         } else {
                             std::cerr << "sp_file_open: Failed to get group!" << std::endl;
                         }
+                        selection->clear();
+                        selection->add( group );
                         selection->ungroup();
                         selection->clear();
-                        is_extension = true;
+
+                        prefs->setBool("options/kbselection/onlysensitive", onlysensitive);
+                        prefs->setBool("options/kbselection/onlyvisible",   onlyvisible  );
+
+                        did_scaling = true;
+
+                    } else if (response == 5) {
+
+                        // Save preferences
+                        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                        bool transform_stroke      = prefs->getBool("/options/transform/stroke", true);
+                        bool transform_rectcorners = prefs->getBool("/options/transform/rectcorners", true);
+                        bool transform_pattern     = prefs->getBool("/options/transform/pattern", true);
+                        bool transform_gradient    = prefs->getBool("/options/transform/gradient", true);
+
+                        prefs->setBool("/options/transform/stroke",      true);
+                        prefs->setBool("/options/transform/rectcorners", true);
+                        prefs->setBool("/options/transform/pattern",     true);
+                        prefs->setBool("/options/transform/gradient",    true);
+
+                        Inkscape::UI::ShapeEditor::blockSetItem(true);
+                        doc->getRoot()->scaleChildItemsRec(Geom::Scale(1/ratio),Geom::Point(0, 0), false);
+                        Inkscape::UI::ShapeEditor::blockSetItem(false);
+
+                        // Restore preferences
+                        prefs->setBool("/options/transform/stroke",      transform_stroke);
+                        prefs->setBool("/options/transform/rectcorners", transform_rectcorners);
+                        prefs->setBool("/options/transform/pattern",     transform_pattern);
+                        prefs->setBool("/options/transform/gradient",    transform_gradient);
                     }
 
                     need_fix_box3d = true;
                     need_fix_guides = true; // Always fix guides
                 }
 
-                if (need_fix_units) {
+                else if (need_fix_units) {
                     Glib::ustring msg = (
                         "Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
                         "Drawings meant to match a physical size (e.g. Letter or A4)\n"
@@ -502,17 +540,20 @@ bool sp_file_open(const Glib::ustring &uri,
                     scaleDialog.get_content_area()->pack_start(backupButton, false, false, 20);
                     backupButton.show();
 
-                    scaleDialog.add_button("Set 'viewBox'",  1);
-                    scaleDialog.add_button("Scale elements", 2);
-                    scaleDialog.add_button("Ignore",         3);
-                    scaleDialog.add_button("Test",           4);
+                    scaleDialog.add_button(_("Set 'viewBox'"),  1);
+                    scaleDialog.add_button(_("Scale elements"), 2);
+                    scaleDialog.add_button(_("Ignore"),         3);
+                    scaleDialog.add_button("Scale test - group",    4);
+                    scaleDialog.add_button("Scale test - children", 5);
 
                     gint response = scaleDialog.run();
                     bool backup = backupButton.get_active();
+                    if ( backup && response != 3) {
+                        sp_file_save_backup( uri );
+                    }
+
                     if (response == 1) {
-                        if (backup) {
-                            sp_file_save_backup( uri );
-                        }
+
                         if (!root->viewBox_set) {
                             doc->setViewBox(Geom::Rect::from_xywh(
                                                 0, 0,
@@ -527,10 +568,9 @@ bool sp_file_open(const Glib::ustring &uri,
 
                         need_fix_guides = true; // Only fix guides if drawing scaled
                         need_fix_box3d = true;
+
                     } else if (response == 2) {
-                        if (backup) {
-                            sp_file_save_backup( uri );
-                        }
+
                         std::list<Inkscape::Extension::Effect *> effects;
                         Inkscape::Extension::db.get_effect_list(effects);
                         std::list<Inkscape::Extension::Effect *>::iterator it = effects.begin();
@@ -548,11 +588,9 @@ bool sp_file_open(const Glib::ustring &uri,
                             std::cerr << "sp_file_open: Failed to find dpi90to96 extension." << std::endl;
                         }
                         need_fix_guides = true; // Only fix guides if drawing scaled
-                        is_extension = true;
+                        did_scaling = true;
+
                     } else if (response == 4) {
-                        if (backup) {
-                            sp_file_save_backup( uri );
-                        }
 
                         Inkscape::Util::Quantity width  =
                             Inkscape::Util::Quantity(doc->getWidth().value("px")/ratio, "px" );
@@ -561,6 +599,15 @@ bool sp_file_open(const Glib::ustring &uri,
                         doc->setWidthAndHeight( width, height, false );
 
                         if (!root->viewBox_set) {
+
+                            // Save preferences
+                            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                            bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive",true);
+                            bool onlyvisible   = prefs->getBool("/options/kbselection/onlyvisible",  true);
+
+                            prefs->setBool("options/kbselection/onlysensitive", false);
+                            prefs->setBool("options/kbselection/onlyvisible",   false);
+
                             Inkscape::Selection *selection = desktop->getSelection();
                             Inkscape::SelectionHelper::selectAllInAll( desktop );
                             selection->group();
@@ -570,9 +617,53 @@ bool sp_file_open(const Glib::ustring &uri,
                             } else {
                                 std::cerr << "sp_file_open: Failed to get group!" << std::endl;
                             }
+                            selection->clear();
+                            selection->add( group );
                             selection->ungroup();
                             selection->clear();
-                            is_extension = true;
+
+                            prefs->setBool("options/kbselection/onlysensitive", onlysensitive);
+                            prefs->setBool("options/kbselection/onlyvisible",   onlyvisible  );
+
+                            did_scaling = true;
+                        }
+
+                        need_fix_box3d = true;
+                        need_fix_guides = true; // Only fix guides if drawing scaled
+
+                    } else if (response == 5) {
+
+                        Inkscape::Util::Quantity width  =
+                            Inkscape::Util::Quantity(doc->getWidth().value("px")/ratio, "px" );
+                        Inkscape::Util::Quantity height =
+                            Inkscape::Util::Quantity(doc->getHeight().value("px")/ratio,"px" );
+                        doc->setWidthAndHeight( width, height, false );
+
+                        if (!root->viewBox_set) {
+
+                            // Save preferences
+                            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                            bool transform_stroke      = prefs->getBool("/options/transform/stroke", true);
+                            bool transform_rectcorners = prefs->getBool("/options/transform/rectcorners", true);
+                            bool transform_pattern     = prefs->getBool("/options/transform/pattern", true);
+                            bool transform_gradient    = prefs->getBool("/options/transform/gradient", true);
+
+                            prefs->setBool("/options/transform/stroke",      true);
+                            prefs->setBool("/options/transform/rectcorners", true);
+                            prefs->setBool("/options/transform/pattern",     true);
+                            prefs->setBool("/options/transform/gradient",    true);
+
+                            Inkscape::UI::ShapeEditor::blockSetItem(true);
+                            doc->getRoot()->scaleChildItemsRec(Geom::Scale(1/ratio),Geom::Point(0, 0), false);
+                            Inkscape::UI::ShapeEditor::blockSetItem(false);
+
+                            // Restore preferences
+                            prefs->setBool("/options/transform/stroke",      transform_stroke);
+                            prefs->setBool("/options/transform/rectcorners", transform_rectcorners);
+                            prefs->setBool("/options/transform/pattern",     transform_pattern);
+                            prefs->setBool("/options/transform/gradient",    transform_gradient);
+
+                            did_scaling = true;
                         }
 
                         need_fix_box3d = true;
@@ -623,7 +714,7 @@ bool sp_file_open(const Glib::ustring &uri,
                                     }
                                 } else {
                                     if (need_fix_guides) {
-                                        if(is_extension){
+                                        if(did_scaling){
                                             xy->Scale( Geom::Scale(ratio,ratio).inverse() );
                                         } else {
                                             // HACK: Scaling the document does not seem to cause

@@ -584,12 +584,13 @@ sp_item_group_ungroup (SPGroup *group, std::vector<SPItem*> &children, bool do_d
             SPText * text = dynamic_cast<SPText *>(citem);
             if (text) {
                 //this causes a change in text-on-path appearance when there is a non-conformal transform, see bug #1594565
-                double scale = (ctrans.expansionX() + ctrans.expansionY()) / 2.0;
                 SPTextPath * text_path = dynamic_cast<SPTextPath *>(text->firstChild());
                 if (!text_path) {
                     nrepr->setAttribute("transform", affinestr);
                 } else {
-                    sp_recursive_scale_text_size(nrepr, scale);
+                    // The following breaks roundtripping  group -> ungroup
+                    // double scale = (ctrans.expansionX() + ctrans.expansionY()) / 2.0;
+                    // sp_recursive_scale_text_size(nrepr, scale);
                     Geom::Affine ttrans = ctrans.inverse() * SP_ITEM(text)->transform * ctrans;
                     gchar *affinestr = sp_svg_transform_write(ttrans);
                     nrepr->setAttribute("transform", affinestr);
