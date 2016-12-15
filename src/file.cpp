@@ -406,6 +406,8 @@ bool sp_file_open(const Glib::ustring &uri,
                 // std::cout << "Absolute SVG units in root? " << (need_fix_viewbox?"true":"false") << std::endl;
                 // std::cout << "User units in root? "         << (need_fix_units  ?"true":"false") << std::endl;
 
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
                 if (!root->viewBox_set && need_fix_viewbox) {
 
                     Glib::ustring msg = _(
@@ -418,13 +420,14 @@ bool sp_file_open(const Glib::ustring &uri,
                     Gtk::Label info;
                     info.set_markup(msg.c_str());
                     info.show();
-
                     scaleDialog.get_content_area()->pack_start(info, false, false, 20);
-                    Gtk::CheckButton backupButton( _("Create backup file (in same directory).") );
-                    backupButton.set_active();
-                    backupButton.show();
 
+                    Gtk::CheckButton backupButton( _("Create backup file (in same directory).") );
+                    bool backup = prefs->getBool("/options/dpifixbackup", true);
+                    backupButton.set_active( backup );
+                    backupButton.show();
                     scaleDialog.get_content_area()->pack_start(backupButton, false, false, 20);
+
                     scaleDialog.add_button(_("Set 'viewBox'"),   1);
                     scaleDialog.add_button(_("Scale elements"),  2);
                     scaleDialog.add_button(_("Ignore"),          3);
@@ -432,7 +435,9 @@ bool sp_file_open(const Glib::ustring &uri,
                     scaleDialog.add_button("Scale test - children", 5);
 
                     gint response = scaleDialog.run();
-                    bool backup = backupButton.get_active();
+                    backup = backupButton.get_active();
+                    prefs->setBool("/options/dpifixbackup", backup);
+
                     if ( backup && response != 3) {
                         sp_file_save_backup( uri );
                     }
@@ -467,7 +472,6 @@ bool sp_file_open(const Glib::ustring &uri,
                     } else if (response == 4) {
 
                         // Save preferences
-                        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                         bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive",true);
                         bool onlyvisible   = prefs->getBool("/options/kbselection/onlyvisible",  true);
 
@@ -496,7 +500,6 @@ bool sp_file_open(const Glib::ustring &uri,
                     } else if (response == 5) {
 
                         // Save preferences
-                        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                         bool transform_stroke      = prefs->getBool("/options/transform/stroke", true);
                         bool transform_rectcorners = prefs->getBool("/options/transform/rectcorners", true);
                         bool transform_pattern     = prefs->getBool("/options/transform/pattern", true);
@@ -537,8 +540,10 @@ bool sp_file_open(const Glib::ustring &uri,
                     scaleDialog.get_content_area()->pack_start(info, false, false, 20);
 
                     Gtk::CheckButton backupButton( _("Create backup file (in same directory).") );
-                    scaleDialog.get_content_area()->pack_start(backupButton, false, false, 20);
+                    bool backup = prefs->getBool("/options/dpifixbackup", true);
+                    backupButton.set_active( backup );
                     backupButton.show();
+                    scaleDialog.get_content_area()->pack_start(backupButton, false, false, 20);
 
                     scaleDialog.add_button(_("Set 'viewBox'"),  1);
                     scaleDialog.add_button(_("Scale elements"), 2);
@@ -547,7 +552,9 @@ bool sp_file_open(const Glib::ustring &uri,
                     scaleDialog.add_button("Scale test - children", 5);
 
                     gint response = scaleDialog.run();
-                    bool backup = backupButton.get_active();
+                    backup = backupButton.get_active();
+                    prefs->setBool("/options/dpifixbackup", backup);
+
                     if ( backup && response != 3) {
                         sp_file_save_backup( uri );
                     }
