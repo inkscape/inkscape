@@ -171,6 +171,7 @@ LPEMirrorSymmetry::transform_multiply(Geom::Affine const& postmul, bool set)
         Parameter * param = *it;
         param->param_transform_multiply(postmul, set);
     }
+    previous_center = Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
 }
 
 void
