@@ -197,8 +197,8 @@ LPEMirrorSymmetry::doEffect_path (Geom::PathVector const & path_in)
         path_out = pathv_to_linear_and_cubic_beziers(path_in);
     }
 
-    Geom::Line ls((Geom::Point)start_point,(Geom::Point)end_point);
-    Geom::Affine m = Geom::reflection (ls.vector(), (Geom::Point)start_point);
+    Geom::Line line_separation((Geom::Point)start_point, (Geom::Point)end_point);
+    Geom::Affine m = Geom::reflection (line_separation.vector(), (Geom::Point)start_point);
 
     if (fuse_paths && !discard_orig_path) {
         for (Geom::PathVector::const_iterator path_it = original_pathv.begin();
@@ -225,7 +225,7 @@ LPEMirrorSymmetry::doEffect_path (Geom::PathVector const & path_in)
             }
             Geom::Point s = start_point;
             Geom::Point e = end_point;
-            double dir = ls.angle();
+            double dir = line_separation.angle();
             double diagonal = Geom::distance(Geom::Point(boundingbox_X.min(),boundingbox_Y.min()),Geom::Point(boundingbox_X.max(),boundingbox_Y.max()));
             Geom::Rect bbox(Geom::Point(boundingbox_X.min(),boundingbox_Y.min()),Geom::Point(boundingbox_X.max(),boundingbox_Y.max()));
             double size_divider = Geom::distance(center_point, bbox) + diagonal;
