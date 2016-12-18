@@ -56,7 +56,6 @@ private:
     PointParam start_point;
     PointParam end_point;
     PointParam center_point;
-    Geom::Line line_separation;
     Geom::Point previous_center;
 
     LPEMirrorSymmetry(const LPEMirrorSymmetry&);

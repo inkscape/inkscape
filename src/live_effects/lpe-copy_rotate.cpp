@@ -262,19 +262,8 @@ LPECopyRotate::setFusion(Geom::PathVector &path_on, Geom::Path divider, double s
             if (i%2 != 0) {
                 Geom::Point A = (Geom::Point)origin;
                 Geom::Point B = origin + dir * Geom::Rotate(-Geom::rad_from_deg((rotation_angle*i)+starting_angle)) * size_divider;
-                Geom::Translate m1(A[0], A[1]);
-                double hyp = Geom::distance(A, B);
-                double c = (B[0] - A[0]) / hyp; // cos(alpha)
-                double s = (B[1] - A[1]) / hyp; // sin(alpha)
-
-                Geom::Affine m2(c, -s, s, c, 0.0, 0.0);
-                Geom::Scale sca(1.0, -1.0);
-
-                Geom::Affine tmp_m = m1.inverse() * m2;
-                m = tmp_m;
-                m = m * sca;
-                m = m * m2.inverse();
-                m = m * m1;
+                Geom::Line ls(A,B);
+                Geom::Affine m = Geom::reflection (ls.vector(), A);
             } else {
                 append_path = original;
             }
