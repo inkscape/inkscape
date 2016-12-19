@@ -32,6 +32,8 @@
 #include "sp-text.h"
 #include "ui/control-manager.h"
 #include "ui/tools/node-tool.h"
+#include "ui/tools-switch.h"
+#include "ui/tools/tool-base.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/multi-path-manipulator.h"
@@ -155,9 +157,7 @@ NodeTool::~NodeTool() {
     if (this->flash_tempitem) {
         this->desktop->remove_temporary_canvasitem(this->flash_tempitem);
     }
-    if (this->helperpath_tmpitem) {
-        this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
-    }
+    sp_update_helperpath(true);
     this->_selection_changed_connection.disconnect();
     //this->_selection_modified_connection.disconnect();
     this->_mouseover_changed_connection.disconnect();
@@ -237,7 +237,6 @@ void NodeTool::setup() {
         )))
     );
 
-    this->helperpath_tmpitem = NULL;
     this->cursor_drag = false;
     this->show_transform_handles = true;
     this->single_node_transform_handles = false;
@@ -270,29 +269,36 @@ void NodeTool::setup() {
     }
 
     this->desktop->emitToolSubselectionChanged(NULL); // sets the coord entry fields to inactive
-    this->update_helperpath();
+    sp_update_helperpath();
 }
 
 // show helper paths of the applied LPE, if any
-void  NodeTool::update_helperpath () {
-    Inkscape::Selection *selection = this->desktop->getSelection();
-
-    if (this->helperpath_tmpitem) {
-        this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
-        this->helperpath_tmpitem = NULL;
+void sp_update_helperpath(bool remove) {
+    SPDesktop * desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop || !tools_isactive(desktop, TOOLS_NODES)) {
+        return;
     }
-
+    Inkscape::Selection *selection = desktop->getSelection();
+    static Inkscape::Display::TemporaryItem * helperpath_tmpitem;
+    if (helperpath_tmpitem) {
+        desktop->remove_temporary_canvasitem(helperpath_tmpitem);
+        helperpath_tmpitem = NULL;
+    }
+    if (remove) {
+        return;
+    }
     if (SP_IS_LPE_ITEM(selection->singleItem())) {
         Inkscape::LivePathEffect::Effect *lpe = SP_LPE_ITEM(selection->singleItem())->getCurrentLPE();
         if (lpe && lpe->isVisible()/* && lpe->showOrigPath()*/) {
-            Inkscape::UI::ControlPointSelection *selectionNodes = _selected_nodes;
+            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(desktop->event_context);
+            Inkscape::UI::ControlPointSelection *selectionNodes = nt->_selected_nodes;
             std::vector<Geom::Point> selectedNodesPositions;
             for (Inkscape::UI::ControlPointSelection::iterator i = selectionNodes->begin(); i != selectionNodes->end(); ++i) {
                 Inkscape::UI::Node *n = dynamic_cast<Inkscape::UI::Node *>(*i);
                 selectedNodesPositions.push_back(n->position());
             }
             lpe->setSelectedNodePoints(selectedNodesPositions);
-            lpe->setCurrentZoom(this->desktop->current_zoom());
+            lpe->setCurrentZoom(desktop->current_zoom());
             SPCurve *c = new SPCurve();
             SPCurve *cc = new SPCurve();
             std::vector<Geom::PathVector> cs = lpe->getCanvasIndicators(SP_LPE_ITEM(selection->singleItem()));
@@ -302,11 +308,11 @@ void  NodeTool::update_helperpath () {
                 cc->reset();
             }
             if (!c->is_empty()) {
-                SPCanvasItem *helperpath = sp_canvas_bpath_new(this->desktop->getTempGroup(), c, true);
+                SPCanvasItem *helperpath = sp_canvas_bpath_new(desktop->getTempGroup(), c, true);
                 sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helperpath), 0x0000ff9A, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                 sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helperpath), 0, SP_WIND_RULE_NONZERO);
                 sp_canvas_item_affine_absolute(helperpath, selection->singleItem()->i2dt_affine());
-                this->helperpath_tmpitem = this->desktop->add_temporary_canvasitem(helperpath, 0);
+                helperpath_tmpitem = desktop->add_temporary_canvasitem(helperpath, 0);
             }
             c->unref();
             cc->unref();
@@ -468,7 +474,7 @@ bool NodeTool::root_handler(GdkEvent* event) {
     switch (event->type)
     {
     case GDK_MOTION_NOTIFY: {
-        update_helperpath(); 
+        sp_update_helperpath(); 
         combine_motion_events(desktop->canvas, event->motion, 0);
         SPItem *over_item = sp_event_context_find_item (desktop, event_point(event->button),
                 FALSE, TRUE);

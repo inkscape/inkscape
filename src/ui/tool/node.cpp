@@ -326,10 +326,7 @@ bool Handle::grabbed(GdkEventMotion *)
 
 void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
-    if (tools_isactive(_desktop, TOOLS_NODES)) {
-        Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(_desktop->event_context);
-        nt->update_helperpath();
-    }
+    Inkscape::UI::Tools::sp_update_helperpath();
     Geom::Point parent_pos = _parent->position();
     Geom::Point origin = _last_drag_origin();
     SnapManager &sm = _desktop->namedview->snap_manager;
@@ -1199,10 +1196,7 @@ bool Node::grabbed(GdkEventMotion *event)
 
 void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
-    if (tools_isactive(_desktop, TOOLS_NODES)) {
-        Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(_desktop->event_context);
-        nt->update_helperpath();
-    }
+    Inkscape::UI::Tools::sp_update_helperpath();
     // For a note on how snapping is implemented in Inkscape, see snap.h.
     SnapManager &sm = _desktop->namedview->snap_manager;
     // even if we won't really snap, we might still call the one of the

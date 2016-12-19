@@ -25,8 +25,6 @@
 #include "document-undo.h"
 #include "message-stack.h"
 #include "message-context.h"
-#include "ui/tools-switch.h"
-#include "ui/tools/tool-base.h"
 #include "ui/tools/node-tool.h"
 #include <gtk/gtk.h>
 
@@ -254,10 +252,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                 consumed = TRUE;
             }
         }
-        if (tools_isactive(knot->desktop, TOOLS_NODES)) {
-            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(knot->desktop->event_context);
-            nt->update_helperpath();
-        }
+        Inkscape::UI::Tools::sp_update_helperpath();
         break;
     case GDK_MOTION_NOTIFY:
         if (grabbed && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
@@ -290,10 +285,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             sp_knot_handler_request_position(event, knot);
             moved = TRUE;
         }
-        if (tools_isactive(knot->desktop, TOOLS_NODES)) {
-            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(knot->desktop->event_context);
-            nt->update_helperpath();
-        }
+        Inkscape::UI::Tools::sp_update_helperpath();
         break;
     case GDK_ENTER_NOTIFY:
         knot->setFlag(SP_KNOT_MOUSEOVER, TRUE);
