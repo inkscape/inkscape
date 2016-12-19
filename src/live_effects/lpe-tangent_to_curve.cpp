@@ -92,22 +92,22 @@ LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const
 }
 
 void
-LPETangentToCurve::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+LPETangentToCurve::addKnotHolderEntities(KnotHolder *knotholder, SPItem *item) {
     {
         KnotHolderEntity *e = new TtC::KnotHolderEntityAttachPt(this);
-        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+        e->create( NULL, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
                    _("Adjust the point of attachment of the tangent") );
         knotholder->add(e);
     }
     {
         KnotHolderEntity *e = new TtC::KnotHolderEntityLeftEnd(this);
-        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+        e->create( NULL, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
                     _("Adjust the <b>left</b> end of the tangent") );
         knotholder->add(e);
     }
     {
         KnotHolderEntity *e = new TtC::KnotHolderEntityRightEnd(this);
-        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+        e->create( NULL, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
                    _("Adjust the <b>right</b> end of the tangent") );
         knotholder->add(e);
     }

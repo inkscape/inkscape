@@ -38,7 +38,7 @@ public:
     float median_width();
 
     virtual bool providesKnotHolderEntities() const { return true; }
-    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPItem *item);
 
     void set_pwd2(Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in, Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_normal_in);
     Geom::Piecewise<Geom::D2<Geom::SBasis> > const & get_pwd2() const { return last_pwd2; }

@@ -61,7 +61,7 @@ public:
   
   /* the knotholder entity classes must be declared friends */
   friend class KnotHolderEntityCrossingSwitcher;
-  void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+  void addKnotHolderEntities(KnotHolder *knotholder, SPItem *item);
 
 protected:
   virtual void addCanvasIndicators(SPLPEItem const *lpeitem, std::vector<Geom::PathVector> &hp_vec);

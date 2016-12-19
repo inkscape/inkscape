@@ -24,6 +24,7 @@
 #include "sp-pattern.h"
 #include "snap.h"
 #include "desktop.h"
+#include "inkscape.h"
 #include "sp-namedview.h"
 
 int KnotHolderEntity::counter = 0;
@@ -32,6 +33,9 @@ void KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *pare
                               const gchar *tip,
                               SPKnotShapeType shape, SPKnotModeType mode, guint32 color)
 {
+    if (!desktop) {
+        desktop = SP_ACTIVE_DESKTOP;
+    }
     knot = new SPKnot(desktop, tip);
 
     this->parent_holder = parent;

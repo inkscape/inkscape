@@ -24,7 +24,6 @@
 #include "selection.h"
 
 // needed for on-canvas editting:
-#include "desktop.h"
 #include "live_effects/lpeobject.h"
 #include "helper/geom-nodetype.h"
 #include "helper/geom-curves.h"
@@ -825,10 +824,7 @@ void FilletChamferPointArrayParamKnotHolderEntity::knot_set_offset(
     this->parent_holder->knot_ungrabbed_handler(this->knot, 0);
 }
 
-void FilletChamferPointArrayParam::addKnotHolderEntities(KnotHolder *knotholder,
-        SPDesktop *desktop,
-        SPItem *item)
-{
+void FilletChamferPointArrayParam::addKnotHolderEntities(KnotHolder *knotholder, SPItem *item) {
     recalculate_knots(get_pwd2());
     for (unsigned int i = 0; i < _vector.size(); ++i) {
         if (_vector[i][Y] <= 0) {
@@ -854,7 +850,7 @@ void FilletChamferPointArrayParam::addKnotHolderEntities(KnotHolder *knotholder,
         }
         FilletChamferPointArrayParamKnotHolderEntity *e =
             new FilletChamferPointArrayParamKnotHolderEntity(this, i);
-        e->create(desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, _(tip),
+        e->create(NULL, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, _(tip),
                   knot_shape, knot_mode, knot_color);
         knotholder->add(e);
     }

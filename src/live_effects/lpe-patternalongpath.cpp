@@ -275,10 +275,10 @@ LPEPatternAlongPath::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vect
 
 
 void 
-LPEPatternAlongPath::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
+LPEPatternAlongPath::addKnotHolderEntities(KnotHolder *knotholder, SPItem *item)
 {
     KnotHolderEntity *e = new WPAP::KnotHolderEntityWidthPatternAlongPath(this);
-    e->create(desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, _("Change the width"), SP_KNOT_SHAPE_CIRCLE);
+    e->create(NULL, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, _("Change the width"), SP_KNOT_SHAPE_CIRCLE);
     knotholder->add(e);
 }
 

@@ -18,7 +18,6 @@
 #include "live_effects/lpeobject.h"
 #include "knot-holder-entity.h"
 #include "knotholder.h"
-#include "desktop.h"
 #include <util/units.h>
 
 // TODO due to internal breakage in glibmm headers, this must be last:
@@ -243,9 +242,9 @@ LPEPerspectivePath::newWidget()
     return dynamic_cast<Gtk::Widget *>(vbox);
 }
 
-void LPEPerspectivePath::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+void LPEPerspectivePath::addKnotHolderEntities(KnotHolder *knotholder, SPItem *item) {
     KnotHolderEntity *e = new PP::KnotHolderEntityOffset(this);
-    e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+    e->create( NULL, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
                _("Adjust the origin") );
     knotholder->add(e);
 };

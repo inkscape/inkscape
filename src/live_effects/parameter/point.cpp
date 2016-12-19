@@ -15,9 +15,6 @@
 #include "knotholder.h"
 #include <glibmm/i18n.h>
 
-// needed for on-canvas editting:
-#include "desktop.h"
-
 namespace Inkscape {
 
 namespace LivePathEffect {
@@ -126,9 +123,8 @@ PointParam::param_newWidget()
                                                               *param_wr,
                                                               param_effect->getRepr(),
                                                               param_effect->getSPDoc() ) );
-    // TODO: fix to get correct desktop (don't use SP_ACTIVE_DESKTOP)
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Geom::Affine transf = desktop->doc2dt();
+    Geom::Affine transf = Geom::Scale(1, -1);
+    transf[5] = SP_ACTIVE_DOCUMENT->getHeight().value("px");
     _pointwdg->setTransform(transf);
     _pointwdg->setValue( *this );
     _pointwdg->clearProgrammatically();
@@ -205,12 +201,12 @@ PointParamKnotHolderEntity::knot_click(guint state)
 }
 
 void
-PointParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
+PointParam::addKnotHolderEntities(KnotHolder *knotholder, SPItem *item)
 {
     knoth = knotholder;
     PointParamKnotHolderEntity *e = new PointParamKnotHolderEntity(this);
     // TODO: can we ditch handleTip() etc. because we have access to handle_tip etc. itself???
-    e->create(desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, handleTip(), knot_shape, knot_mode, knot_color);
+    e->create(NULL, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, handleTip(), knot_shape, knot_mode, knot_color);
     knotholder->add(e);
 }
 

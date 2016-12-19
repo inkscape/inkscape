@@ -41,7 +41,7 @@ public:
     friend class TtC::KnotHolderEntityLeftEnd;
     friend class TtC::KnotHolderEntityRightEnd;
     friend class TtC::KnotHolderEntityAttachPt;
-    virtual void addKnotHolderEntities(KnotHolder * knotholder, SPDesktop * desktop, SPItem * item);
+    virtual void addKnotHolderEntities(KnotHolder * knotholder, SPItem * item);
 
 private:
     ScalarParam angle;

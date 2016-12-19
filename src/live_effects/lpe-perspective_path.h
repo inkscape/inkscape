@@ -41,7 +41,7 @@ public:
     virtual Gtk::Widget * newWidget();
     /* the knotholder entity classes must be declared friends */
     friend class PP::KnotHolderEntityOffset;
-    void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    void addKnotHolderEntities(KnotHolder *knotholder, SPItem *item);
 
 private:
     // add the parameters for your effect here:

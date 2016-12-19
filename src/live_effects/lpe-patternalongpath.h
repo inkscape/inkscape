@@ -43,7 +43,7 @@ public:
 
     void addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec);
     
-    virtual void addKnotHolderEntities(KnotHolder * knotholder, SPDesktop * desktop, SPItem * item);
+    virtual void addKnotHolderEntities(KnotHolder * knotholder, SPItem * item);
 
     PathParam  pattern;
 

@@ -53,7 +53,7 @@ public:
     void set_oncanvas_color(guint32 color);
 
     virtual bool providesKnotHolderEntities() const { return true; }
-    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPItem *item);
 
 private:
     VectorParam(const VectorParam&);

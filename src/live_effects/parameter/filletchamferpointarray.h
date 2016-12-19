@@ -59,8 +59,7 @@ public:
         return true;
     }
     virtual void updateCanvasIndicators();
-    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop,
-                                       SPItem *item);
+    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPItem *item);
 
     void set_pwd2(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &pwd2_in,
                   Geom::Piecewise<Geom::D2<Geom::SBasis> > const &pwd2_normal_in);

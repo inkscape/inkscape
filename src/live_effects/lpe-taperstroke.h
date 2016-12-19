@@ -36,7 +36,7 @@ public:
     virtual Geom::PathVector doEffect_path (Geom::PathVector const& path_in);
     Geom::PathVector doEffect_simplePath(Geom::PathVector const& path_in);
 
-    virtual void addKnotHolderEntities(KnotHolder * knotholder, SPDesktop * desktop, SPItem * item);
+    virtual void addKnotHolderEntities(KnotHolder * knotholder, SPItem * item);
 
     friend class TpS::KnotHolderEntityAttachBegin;
     friend class TpS::KnotHolderEntityAttachEnd;

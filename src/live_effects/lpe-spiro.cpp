@@ -16,8 +16,6 @@
 // For handling un-continuous paths:
 #include "message-stack.h"
 #include "inkscape.h"
-#include "desktop.h"
-
 
 namespace Inkscape {
 namespace LivePathEffect {

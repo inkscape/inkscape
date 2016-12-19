@@ -41,7 +41,7 @@ public:
 
     /* the knotholder entity classes (if any) can be declared friends */
     //friend class Skeleton::KnotHolderEntityMyHandle;
-    //virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    //virtual void addKnotHolderEntities(KnotHolder *knotholder, SPItem *item);
 
 private:
     // add the parameters for your effect here:
