@@ -44,8 +44,8 @@ LPEMirrorSymmetry::LPEMirrorSymmetry(LivePathEffectObject *lpeobject) :
     fuse_paths(_("Fuse paths"), _("Fuse original and the reflection into a single path"), "fuse_paths", &wr, this, false),
     oposite_fuse(_("Opposite fuse"), _("Picks the other side of the mirror as the original"), "oposite_fuse", &wr, this, false),
     //TODO: Fix htip for multilang
-    start_point(_("Start mirror line"), _("Start mirror line"), "start_point", &wr, this, "Adjust the start of mirroring"),
-    end_point(_("End mirror line"), _("End mirror line"), "end_point", &wr, this, "Adjust end of mirroring"),
+    start_point(_("Start mirror line"), _("Start mirror line"), "start_point", &wr, this, _("Adjust the start of mirroring")),
+    end_point(_("End mirror line"), _("End mirror line"), "end_point", &wr, this, _("Adjust end of mirroring")),
     center_point("hidden","hidden", "center_point", &wr, this, "hidden")
 {
     show_orig_path = true;
