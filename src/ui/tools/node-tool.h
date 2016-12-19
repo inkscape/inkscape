@@ -49,7 +49,8 @@ public:
 
     Inkscape::UI::ControlPointSelection* _selected_nodes;
     Inkscape::UI::MultiPathManipulator* _multipath;
-
+    Inkscape::Display::TemporaryItem *helperpath_tmpitem;
+    
     bool edit_clipping_paths;
     bool edit_masks;
 
@@ -67,6 +68,7 @@ private:
     sigc::connection _sizeUpdatedConn;
 
     SPItem *flashed_item;
+
     Inkscape::Display::TemporaryItem *flash_tempitem;
     Inkscape::UI::Selector* _selector;
     Inkscape::UI::PathSharedData* _path_data;
@@ -94,8 +96,7 @@ private:
     void update_tip(GdkEvent *event);
     void handleControlUiStyleChange();
 };
-
-void sp_update_helperpath(bool remove = false);
+    void sp_update_helperpath();
 }
 
 }

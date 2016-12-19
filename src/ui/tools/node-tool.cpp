@@ -157,7 +157,9 @@ NodeTool::~NodeTool() {
     if (this->flash_tempitem) {
         this->desktop->remove_temporary_canvasitem(this->flash_tempitem);
     }
-    sp_update_helperpath(true);
+    if (this->helperpath_tmpitem) {
+        this->desktop->remove_temporary_canvasitem(this->helperpath_tmpitem);
+    }
     this->_selection_changed_connection.disconnect();
     //this->_selection_modified_connection.disconnect();
     this->_mouseover_changed_connection.disconnect();
@@ -209,7 +211,7 @@ void NodeTool::setup() {
     this->_sizeUpdatedConn = ControlManager::getManager().connectCtrlSizeChanged(
             sigc::mem_fun(this, &NodeTool::handleControlUiStyleChange)
     );
-    
+    this->helperpath_tmpitem = NULL;
     this->_selected_nodes = new Inkscape::UI::ControlPointSelection(this->desktop, this->_transform_handle_group);
 
     data.node_data.selection = this->_selected_nodes;
@@ -273,24 +275,22 @@ void NodeTool::setup() {
 }
 
 // show helper paths of the applied LPE, if any
-void sp_update_helperpath(bool remove) {
+void sp_update_helperpath() {
     SPDesktop * desktop = SP_ACTIVE_DESKTOP;
     if (!desktop || !tools_isactive(desktop, TOOLS_NODES)) {
         return;
     }
+    Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(desktop->event_context);
     Inkscape::Selection *selection = desktop->getSelection();
-    static Inkscape::Display::TemporaryItem * helperpath_tmpitem;
-    if (helperpath_tmpitem) {
-        desktop->remove_temporary_canvasitem(helperpath_tmpitem);
-        helperpath_tmpitem = NULL;
+    if (nt->helperpath_tmpitem) {
+        desktop->remove_temporary_canvasitem(nt->helperpath_tmpitem);
+        nt->helperpath_tmpitem = NULL;
     }
-    if (remove) {
-        return;
-    }
+
     if (SP_IS_LPE_ITEM(selection->singleItem())) {
         Inkscape::LivePathEffect::Effect *lpe = SP_LPE_ITEM(selection->singleItem())->getCurrentLPE();
         if (lpe && lpe->isVisible()/* && lpe->showOrigPath()*/) {
-            Inkscape::UI::Tools::NodeTool *nt = static_cast<Inkscape::UI::Tools::NodeTool*>(desktop->event_context);
+            
             Inkscape::UI::ControlPointSelection *selectionNodes = nt->_selected_nodes;
             std::vector<Geom::Point> selectedNodesPositions;
             for (Inkscape::UI::ControlPointSelection::iterator i = selectionNodes->begin(); i != selectionNodes->end(); ++i) {
@@ -312,7 +312,7 @@ void sp_update_helperpath(bool remove) {
                 sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helperpath), 0x0000ff9A, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                 sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helperpath), 0, SP_WIND_RULE_NONZERO);
                 sp_canvas_item_affine_absolute(helperpath, selection->singleItem()->i2dt_affine());
-                helperpath_tmpitem = desktop->add_temporary_canvasitem(helperpath, 0);
+                nt->helperpath_tmpitem = desktop->add_temporary_canvasitem(helperpath, 0);
             }
             c->unref();
             cc->unref();
