@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-12 10:50+0100\n"
+"POT-Creation-Date: 2016-12-20 18:04+0100\n"
 "PO-Revision-Date: 2016-11-23 18:10+0800\n"
 "Last-Translator: Dongjun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@linux.org.tw>\n"
@@ -4468,31 +4468,31 @@ msgstr "無上一個畫面縮放。"
 msgid "No next zoom."
 msgstr "無下一個畫面縮放。"
 
-#: ../src/display/canvas-axonomgrid.cpp:321 ../src/display/canvas-grid.cpp:661
+#: ../src/display/canvas-axonomgrid.cpp:321 ../src/display/canvas-grid.cpp:677
 msgid "Grid _units:"
 msgstr "格線單位(_U)："
 
-#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:663
+#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:679
 msgid "_Origin X:"
 msgstr "X 原點(_O)："
 
-#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:663
+#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:679
 #: ../src/ui/dialog/inkscape-preferences.cpp:779
 #: ../src/ui/dialog/inkscape-preferences.cpp:804
 msgid "X coordinate of grid origin"
 msgstr "格線 X 坐標的原點"
 
-#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:666
+#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:682
 msgid "O_rigin Y:"
 msgstr "Y 原點(_R)："
 
-#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:666
+#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:682
 #: ../src/ui/dialog/inkscape-preferences.cpp:780
 #: ../src/ui/dialog/inkscape-preferences.cpp:805
 msgid "Y coordinate of grid origin"
 msgstr "格線 Y 坐標的原點"
 
-#: ../src/display/canvas-axonomgrid.cpp:329 ../src/display/canvas-grid.cpp:672
+#: ../src/display/canvas-axonomgrid.cpp:329 ../src/display/canvas-grid.cpp:688
 msgid "Spacing _Y:"
 msgstr "_Y 間距："
 
@@ -4523,37 +4523,37 @@ msgstr "Z 角度："
 msgid "Angle of z-axis"
 msgstr "Z 軸的角度"
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:677
+#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
 msgid "Minor grid line _color:"
 msgstr "次要格線顏色(_C)："
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:677
+#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
 #: ../src/ui/dialog/inkscape-preferences.cpp:763
 msgid "Minor grid line color"
 msgstr "次要格線顏色"
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:677
+#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
 msgid "Color of the minor grid lines"
 msgstr "次要格線的顏色"
 
-#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:682
+#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
 msgid "Ma_jor grid line color:"
 msgstr "主要格線顏色(_J)："
 
-#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:682
+#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
 #: ../src/ui/dialog/inkscape-preferences.cpp:765
 msgid "Major grid line color"
 msgstr "主要格線顏色"
 
-#: ../src/display/canvas-axonomgrid.cpp:344 ../src/display/canvas-grid.cpp:683
+#: ../src/display/canvas-axonomgrid.cpp:344 ../src/display/canvas-grid.cpp:699
 msgid "Color of the major (highlighted) grid lines"
 msgstr "主要格線 (高亮度顯示) 的顏色"
 
-#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:687
+#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:703
 msgid "_Major grid line every:"
 msgstr "主要格線的間隔數(_M)："
 
-#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:687
+#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:703
 msgid "lines"
 msgstr "線"
 
@@ -4599,25 +4599,25 @@ msgid ""
 "to invisible grids."
 msgstr "決定是否要顯示格線。物件仍然會被貼齊到隱形的格線。"
 
-#: ../src/display/canvas-grid.cpp:669
+#: ../src/display/canvas-grid.cpp:685
 msgid "Spacing _X:"
 msgstr "_X 間距："
 
-#: ../src/display/canvas-grid.cpp:669
+#: ../src/display/canvas-grid.cpp:685
 #: ../src/ui/dialog/inkscape-preferences.cpp:785
 msgid "Distance between vertical grid lines"
 msgstr "垂直格線之間的距離"
 
-#: ../src/display/canvas-grid.cpp:672
+#: ../src/display/canvas-grid.cpp:688
 #: ../src/ui/dialog/inkscape-preferences.cpp:786
 msgid "Distance between horizontal grid lines"
 msgstr "水平格線之間的距離"
 
-#: ../src/display/canvas-grid.cpp:704
+#: ../src/display/canvas-grid.cpp:720
 msgid "_Show dots instead of lines"
 msgstr "顯示格點而非格線(_S)"
 
-#: ../src/display/canvas-grid.cpp:705
+#: ../src/display/canvas-grid.cpp:721
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr "如果勾選，將會在格線交點上顯示點而不是直線"
 
@@ -4767,11 +4767,11 @@ msgstr "邊界框中心點"
 msgid "Bounding box side midpoint"
 msgstr "邊界框邊緣中點"
 
-#: ../src/display/snap-indicator.cpp:196 ../src/ui/tool/node.cpp:1479
+#: ../src/display/snap-indicator.cpp:196 ../src/ui/tool/node.cpp:1473
 msgid "Smooth node"
 msgstr "平滑節點"
 
-#: ../src/display/snap-indicator.cpp:199 ../src/ui/tool/node.cpp:1478
+#: ../src/display/snap-indicator.cpp:199 ../src/ui/tool/node.cpp:1472
 msgid "Cusp node"
 msgstr "尖端節點"
 
@@ -6314,7 +6314,7 @@ msgstr "亮度"
 
 #: ../src/extension/internal/filter/bumps.h:100
 #: ../src/extension/internal/filter/bumps.h:331
-#: ../src/live_effects/lpe-measure-line.cpp:56
+#: ../src/live_effects/lpe-measure-line.cpp:54
 #: ../src/widgets/measure-toolbar.cpp:302
 msgid "Precision"
 msgstr "精確度"
@@ -6625,8 +6625,8 @@ msgid "Discrete"
 msgstr "分散"
 
 #: ../src/extension/internal/filter/color.h:505 ../src/filter-enums.cpp:113
-#: ../src/live_effects/lpe-interpolate_points.cpp:23
-#: ../src/live_effects/lpe-powerstroke.cpp:119
+#: ../src/live_effects/lpe-interpolate_points.cpp:24
+#: ../src/live_effects/lpe-powerstroke.cpp:122
 msgid "Linear"
 msgstr "線性"
 
@@ -6809,7 +6809,7 @@ msgstr "陰影"
 #: ../src/extension/internal/filter/color.h:1119
 #: ../src/extension/internal/filter/paint.h:356 ../src/filter-enums.cpp:33
 #: ../src/live_effects/effect.cpp:92
-#: ../src/live_effects/lpe-transform_2pts.cpp:37
+#: ../src/live_effects/lpe-transform_2pts.cpp:38
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1026
 #: ../src/widgets/gradient-toolbar.cpp:1160
 #: ../src/widgets/measure-toolbar.cpp:328
@@ -7227,7 +7227,7 @@ msgid "Erosion 2"
 msgstr "縮減 2"
 
 #: ../src/extension/internal/filter/morphology.h:191
-#: ../src/live_effects/lpe-roughen.cpp:36
+#: ../src/live_effects/lpe-roughen.cpp:39
 msgid "Smooth"
 msgstr "平滑"
 
@@ -7455,7 +7455,7 @@ msgid "Contrasted"
 msgstr "對比"
 
 #: ../src/extension/internal/filter/paint.h:591
-#: ../src/live_effects/lpe-jointype.cpp:50
+#: ../src/live_effects/lpe-jointype.cpp:52
 msgid "Line width"
 msgstr "線寬"
 
@@ -7877,7 +7877,7 @@ msgstr "圖形繪算"
 #: ../src/extension/internal/grid.cpp:210
 #: ../src/ui/dialog/document-properties.cpp:151
 #: ../src/ui/dialog/inkscape-preferences.cpp:820
-#: ../src/widgets/toolbox.cpp:1860
+#: ../src/widgets/toolbox.cpp:1865
 msgid "Grids"
 msgstr "格線"
 
@@ -8237,120 +8237,159 @@ msgstr "是否在畫布上即時預覽此特效？"
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "自動偵測格式失敗。該檔案將視為 SVG 開啟。"
 
-#: ../src/file.cpp:174
+#: ../src/file.cpp:173
 msgid "default.svg"
 msgstr "default.zh_TW.svg"
 
-#: ../src/file.cpp:327
+#: ../src/file.cpp:414
+msgid ""
+"Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
+"Drawing elements may be too small. This can be corrected by\n"
+"either setting the SVG 'viewBox' to compensate or by scaling\n"
+"all the elements in the drawing."
+msgstr ""
+
+#: ../src/file.cpp:418 ../src/file.cpp:535
+msgid "Old Inkscape file detected (90 DPI)"
+msgstr ""
+
+#: ../src/file.cpp:425 ../src/file.cpp:542
+#, fuzzy
+msgid "Create backup file (in same directory)."
+msgstr "無法建立描述檔目錄 %s。"
+
+#: ../src/file.cpp:431 ../src/file.cpp:548 ../src/ui/widget/page-sizer.cpp:898
+msgid "Set 'viewBox'"
+msgstr "設定「顯示框」"
+
+#: ../src/file.cpp:432 ../src/file.cpp:549
+#, fuzzy
+msgid "Scale elements"
+msgstr "縮放模式"
+
+#: ../src/file.cpp:433 ../src/file.cpp:550
+#: ../src/widgets/connector-toolbar.cpp:316
+msgid "Ignore"
+msgstr "忽略"
+
+#. Look for SPNamedView and SPDefs loop
+#. desktop->getDocument()->ensureUpToDate();  // Does not update box3d!
+#: ../src/file.cpp:771
+#, fuzzy
+msgid "Update Document"
+msgstr "儲存文件"
+
+#: ../src/file.cpp:787 ../src/main-cmdlinexact.cpp:177
 msgid "Broken links have been changed to point to existing files."
 msgstr "無效的連結已變成指向現有檔案。"
 
-#: ../src/file.cpp:338 ../src/file.cpp:1292
+#: ../src/file.cpp:798 ../src/file.cpp:1754
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "載入所要求的檔案 %s 失敗"
 
-#: ../src/file.cpp:364
+#: ../src/file.cpp:824
 msgid "Document not saved yet.  Cannot revert."
 msgstr "檔案尚未儲存，無法回復。"
 
-#: ../src/file.cpp:370
+#: ../src/file.cpp:830
 msgid "Changes will be lost! Are you sure you want to reload document %1?"
 msgstr "變更將會遺失！你確定要重新載入檔案 %1？"
 
-#: ../src/file.cpp:396
+#: ../src/file.cpp:856
 msgid "Document reverted."
 msgstr "檔案已回復。"
 
-#: ../src/file.cpp:398
+#: ../src/file.cpp:858
 msgid "Document not reverted."
 msgstr "檔案尚未回復。"
 
-#: ../src/file.cpp:548
+#: ../src/file.cpp:1008
 msgid "Select file to open"
 msgstr "選擇要開啟的檔案"
 
-#: ../src/file.cpp:630
+#: ../src/file.cpp:1090
 msgid "Clean up document"
 msgstr "清理文件"
 
-#: ../src/file.cpp:637
+#: ../src/file.cpp:1097
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "已從 &lt;defs&gt; 移除 <b>%i</b> 項未使用的定義。"
 msgstr[1] "已從 &lt;defs&gt; 移除 <b>%i</b> 項未使用的定義。"
 
-#: ../src/file.cpp:642
+#: ../src/file.cpp:1102
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "在 &lt;defs&gt; 沒有未使用的定義。"
 
-#: ../src/file.cpp:676
+#: ../src/file.cpp:1136
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
-msgstr "找不到 Inkscape 擴充功能來儲存檔案 (%s) 。這可能是因不明的副檔名所導致。"
+msgstr ""
+"找不到 Inkscape 擴充功能來儲存檔案 (%s) 。這可能是因不明的副檔名所導致。"
 
-#: ../src/file.cpp:677 ../src/file.cpp:687 ../src/file.cpp:696
-#: ../src/file.cpp:703 ../src/file.cpp:709
+#: ../src/file.cpp:1137 ../src/file.cpp:1147 ../src/file.cpp:1156
+#: ../src/file.cpp:1163 ../src/file.cpp:1169
 msgid "Document not saved."
 msgstr "檔案未儲存。"
 
-#: ../src/file.cpp:686
+#: ../src/file.cpp:1146
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr "檔案 %s 具有寫入保護。請移除寫入保護後再試一次。"
 
-#: ../src/file.cpp:695
+#: ../src/file.cpp:1155
 #, c-format
 msgid "File %s could not be saved."
 msgstr "無法儲存檔案 %s。"
 
-#: ../src/file.cpp:728 ../src/file.cpp:730
+#: ../src/file.cpp:1188 ../src/file.cpp:1190
 msgid "Document saved."
 msgstr "檔案已儲存"
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:873 ../src/file.cpp:1451
+#: ../src/file.cpp:1333 ../src/file.cpp:1913
 msgid "drawing"
 msgstr "圖畫"
 
-#: ../src/file.cpp:878
+#: ../src/file.cpp:1338
 msgid "drawing-%1"
 msgstr "圖畫-%1"
 
-#: ../src/file.cpp:895
+#: ../src/file.cpp:1355
 msgid "Select file to save a copy to"
 msgstr "選擇要儲存副本的檔案"
 
-#: ../src/file.cpp:897
+#: ../src/file.cpp:1357
 msgid "Select file to save to"
 msgstr "選擇要儲存的檔案"
 
-#: ../src/file.cpp:1002 ../src/file.cpp:1004
+#: ../src/file.cpp:1462 ../src/file.cpp:1464
 msgid "No changes need to be saved."
 msgstr "沒有任何改變需要儲存。"
 
-#: ../src/file.cpp:1023
+#: ../src/file.cpp:1483
 msgid "Saving document..."
 msgstr "儲存檔案中..."
 
-#: ../src/file.cpp:1289 ../src/ui/dialog/inkscape-preferences.cpp:1481
+#: ../src/file.cpp:1751 ../src/ui/dialog/inkscape-preferences.cpp:1481
 #: ../src/ui/dialog/ocaldialogs.cpp:1091
 msgid "Import"
 msgstr "匯入"
 
-#: ../src/file.cpp:1339
+#: ../src/file.cpp:1801
 msgid "Select file to import"
 msgstr "選擇要匯入的檔案"
 
-#: ../src/file.cpp:1472
+#: ../src/file.cpp:1934
 msgid "Select file to export to"
 msgstr "選擇要匯出的檔案"
 
-#: ../src/file.cpp:1725
+#: ../src/file.cpp:2187
 msgid "Import Clip Art"
 msgstr "匯入美工圖"
 
@@ -8564,68 +8603,78 @@ msgstr "反轉漸層"
 msgid "Delete swatch"
 msgstr "刪除色票"
 
-#: ../src/gradient-drag.cpp:92 ../src/ui/tools/gradient-tool.cpp:83
+#: ../src/gradient-drag.cpp:94 ../src/ui/tools/gradient-tool.cpp:86
+#: ../src/ui/tools/mesh-tool.cpp:103
 msgid "Linear gradient <b>start</b>"
 msgstr "線性漸層<b>開始</b>"
 
 #. POINT_LG_BEGIN
-#: ../src/gradient-drag.cpp:93 ../src/ui/tools/gradient-tool.cpp:84
+#: ../src/gradient-drag.cpp:95 ../src/ui/tools/gradient-tool.cpp:87
+#: ../src/ui/tools/mesh-tool.cpp:104
 msgid "Linear gradient <b>end</b>"
 msgstr "線性漸層<b>結束</b>"
 
-#: ../src/gradient-drag.cpp:94 ../src/ui/tools/gradient-tool.cpp:85
+#: ../src/gradient-drag.cpp:96 ../src/ui/tools/gradient-tool.cpp:88
+#: ../src/ui/tools/mesh-tool.cpp:105
 msgid "Linear gradient <b>mid stop</b>"
 msgstr "線性漸層<b>中間停止點</b>"
 
-#: ../src/gradient-drag.cpp:95 ../src/ui/tools/gradient-tool.cpp:86
+#: ../src/gradient-drag.cpp:97 ../src/ui/tools/gradient-tool.cpp:89
+#: ../src/ui/tools/mesh-tool.cpp:106
 msgid "Radial gradient <b>center</b>"
 msgstr "放射狀漸層<b>中心</b>"
 
-#: ../src/gradient-drag.cpp:96 ../src/gradient-drag.cpp:97
-#: ../src/ui/tools/gradient-tool.cpp:87 ../src/ui/tools/gradient-tool.cpp:88
+#: ../src/gradient-drag.cpp:98 ../src/gradient-drag.cpp:99
+#: ../src/ui/tools/gradient-tool.cpp:90 ../src/ui/tools/gradient-tool.cpp:91
+#: ../src/ui/tools/mesh-tool.cpp:107 ../src/ui/tools/mesh-tool.cpp:108
 msgid "Radial gradient <b>radius</b>"
 msgstr "放射狀漸層<b>半徑</b>"
 
-#: ../src/gradient-drag.cpp:98 ../src/ui/tools/gradient-tool.cpp:89
+#: ../src/gradient-drag.cpp:100 ../src/ui/tools/gradient-tool.cpp:92
+#: ../src/ui/tools/mesh-tool.cpp:109
 msgid "Radial gradient <b>focus</b>"
 msgstr "放射狀漸層<b>焦點</b>"
 
 #. POINT_RG_FOCUS
-#: ../src/gradient-drag.cpp:99 ../src/gradient-drag.cpp:100
-#: ../src/ui/tools/gradient-tool.cpp:90 ../src/ui/tools/gradient-tool.cpp:91
+#: ../src/gradient-drag.cpp:101 ../src/gradient-drag.cpp:102
+#: ../src/ui/tools/gradient-tool.cpp:93 ../src/ui/tools/gradient-tool.cpp:94
+#: ../src/ui/tools/mesh-tool.cpp:110 ../src/ui/tools/mesh-tool.cpp:111
 msgid "Radial gradient <b>mid stop</b>"
 msgstr "放射狀漸層<b>中間停止點</b>"
 
-#: ../src/gradient-drag.cpp:101 ../src/ui/tools/mesh-tool.cpp:96
+#: ../src/gradient-drag.cpp:103 ../src/ui/tools/gradient-tool.cpp:95
+#: ../src/ui/tools/mesh-tool.cpp:112
 msgid "Mesh gradient <b>corner</b>"
 msgstr "網面漸層<b>邊角</b>"
 
-#: ../src/gradient-drag.cpp:102 ../src/ui/tools/mesh-tool.cpp:97
+#: ../src/gradient-drag.cpp:104 ../src/ui/tools/gradient-tool.cpp:96
+#: ../src/ui/tools/mesh-tool.cpp:113
 msgid "Mesh gradient <b>handle</b>"
 msgstr "網面漸層<b>控制點</b>"
 
-#: ../src/gradient-drag.cpp:103 ../src/ui/tools/mesh-tool.cpp:98
+#: ../src/gradient-drag.cpp:105 ../src/ui/tools/gradient-tool.cpp:97
+#: ../src/ui/tools/mesh-tool.cpp:114
 msgid "Mesh gradient <b>tensor</b>"
 msgstr "網面漸層<b>張量</b>"
 
-#: ../src/gradient-drag.cpp:560
+#: ../src/gradient-drag.cpp:563
 msgid "Added patch row or column"
 msgstr "加入的網面區塊列或欄"
 
-#: ../src/gradient-drag.cpp:793
+#: ../src/gradient-drag.cpp:806
 msgid "Merge gradient handles"
 msgstr "合併漸層控制點"
 
 #. we did an undoable action
-#: ../src/gradient-drag.cpp:1096
+#: ../src/gradient-drag.cpp:1123
 msgid "Move gradient handle"
 msgstr "移動漸層控制點"
 
-#: ../src/gradient-drag.cpp:1155 ../src/widgets/gradient-vector.cpp:798
+#: ../src/gradient-drag.cpp:1182 ../src/widgets/gradient-vector.cpp:798
 msgid "Delete gradient stop"
 msgstr "刪除漸層停止點"
 
-#: ../src/gradient-drag.cpp:1420
+#: ../src/gradient-drag.cpp:1472
 #, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
@@ -8634,11 +8683,17 @@ msgstr ""
 "%s %d：%s%s; 按著 <b>Ctrl</b> 拖曳可貼齊偏移量；按著 <b>Ctrl+Alt</b> 點擊可刪"
 "除停止點"
 
-#: ../src/gradient-drag.cpp:1424 ../src/gradient-drag.cpp:1431
+#: ../src/gradient-drag.cpp:1476 ../src/gradient-drag.cpp:1485
+#: ../src/gradient-drag.cpp:1492
 msgid " (stroke)"
 msgstr " (邊框)"
 
-#: ../src/gradient-drag.cpp:1428
+#: ../src/gradient-drag.cpp:1482
+#, c-format
+msgid "%s for: %s%s"
+msgstr ""
+
+#: ../src/gradient-drag.cpp:1489
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
@@ -8647,13 +8702,13 @@ msgstr ""
 "%s：%s%s; 按著 <b>Ctrl</b> 拖曳可貼齊角度，按著 <b>Ctrl+Alt</b> 可保留角度，"
 "按著 <b>Ctrl+Shift</b> 可從中心點周圍縮放"
 
-#: ../src/gradient-drag.cpp:1436
+#: ../src/gradient-drag.cpp:1497
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
 msgstr "放射狀漸層<b>中心點</b>和<b>焦點</b>；按著 <b>Shift</b> 拖曳可分離焦點"
 
-#: ../src/gradient-drag.cpp:1439
+#: ../src/gradient-drag.cpp:1500
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -8664,15 +8719,15 @@ msgid_plural ""
 msgstr[0] "漸層點被<b>%d</b>個漸層共用；按著 <b>Shift</b> 拖曳可分離"
 msgstr[1] "漸層點被<b>%d</b>個漸層共用；按著 <b>Shift</b> 拖曳可分離"
 
-#: ../src/gradient-drag.cpp:2362
+#: ../src/gradient-drag.cpp:2781
 msgid "Move gradient handle(s)"
 msgstr "移動漸層控制點"
 
-#: ../src/gradient-drag.cpp:2396
+#: ../src/gradient-drag.cpp:2815
 msgid "Move gradient mid stop(s)"
 msgstr "移動漸層中間停止點"
 
-#: ../src/gradient-drag.cpp:2685
+#: ../src/gradient-drag.cpp:3104
 msgid "Delete gradient stop(s)"
 msgstr "刪除漸層停止點"
 
@@ -8720,7 +8775,30 @@ msgstr "已自動備份未儲存的檔案於下列的位置：\n"
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "自動備份下列檔案時失敗：\n"
 
-#: ../src/knot.cpp:335
+#: ../src/inkview.cpp:225
+#, fuzzy
+msgid "Inkscape Options"
+msgstr "Inkscape 擴充功能："
+
+#: ../src/inkview.cpp:226
+#, fuzzy
+msgid "Default program options"
+msgstr "預設分率"
+
+#: ../src/inkview.cpp:233
+msgid "NUM"
+msgstr ""
+
+#: ../src/inkview.cpp:239
+msgid "FILES..."
+msgstr ""
+
+#: ../src/inkview.cpp:251
+#, fuzzy
+msgid "Open SVG files"
+msgstr "開啟階段檔案"
+
+#: ../src/knot.cpp:329
 msgid "Node or handle drag canceled."
 msgstr "已取消拖曳節點或控制點。"
 
@@ -8782,7 +8860,7 @@ msgid "Line Segment"
 msgstr "直線線段"
 
 #: ../src/live_effects/effect.cpp:93
-#: ../src/live_effects/lpe-measure-line.cpp:46
+#: ../src/live_effects/lpe-measure-line.cpp:44
 msgid "Parallel"
 msgstr "平行"
 
@@ -8895,7 +8973,8 @@ msgid "Transform by 2 points"
 msgstr "依 2 點變形"
 
 #: ../src/live_effects/effect.cpp:126
-#: ../src/live_effects/lpe-show_handles.cpp:25
+#: ../src/live_effects/lpe-show_handles.cpp:27
+#: ../src/widgets/mesh-toolbar.cpp:505
 msgid "Show handles"
 msgstr "顯示控制柄"
 
@@ -8955,135 +9034,135 @@ msgid ""
 "disabled on canvas"
 msgstr "如果取消勾選，此特效仍會套用到物件但畫布上暫時停用"
 
-#: ../src/live_effects/effect.cpp:377
+#: ../src/live_effects/effect.cpp:378
 msgid "No effect"
 msgstr "無特效"
 
-#: ../src/live_effects/effect.cpp:492
+#: ../src/live_effects/effect.cpp:493
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "請指定此即時路徑特效「%s」的參數路徑 (用  %d 滑鼠點擊)"
 
-#: ../src/live_effects/effect.cpp:774
+#: ../src/live_effects/effect.cpp:768
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "正在編輯參數 <b>%s</b>。"
 
-#: ../src/live_effects/effect.cpp:779
+#: ../src/live_effects/effect.cpp:773
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "沒有已套用路徑特效的參數可在畫布上編輯。"
 
-#: ../src/live_effects/lpe-attach-path.cpp:22
+#: ../src/live_effects/lpe-attach-path.cpp:21
 msgid "Start path:"
 msgstr "起始路徑："
 
-#: ../src/live_effects/lpe-attach-path.cpp:22
+#: ../src/live_effects/lpe-attach-path.cpp:21
 msgid "Path to attach to the start of this path"
 msgstr "將路徑放置到該路徑的起點"
 
-#: ../src/live_effects/lpe-attach-path.cpp:23
+#: ../src/live_effects/lpe-attach-path.cpp:22
 msgid "Start path position:"
 msgstr "起始路徑位置："
 
-#: ../src/live_effects/lpe-attach-path.cpp:23
+#: ../src/live_effects/lpe-attach-path.cpp:22
 msgid "Position to attach path start to"
 msgstr "貼附路徑的起始位置"
 
-#: ../src/live_effects/lpe-attach-path.cpp:24
+#: ../src/live_effects/lpe-attach-path.cpp:23
 msgid "Start path curve start:"
 msgstr "起始路徑曲線起點："
 
-#: ../src/live_effects/lpe-attach-path.cpp:24
-#: ../src/live_effects/lpe-attach-path.cpp:28
+#: ../src/live_effects/lpe-attach-path.cpp:23
+#: ../src/live_effects/lpe-attach-path.cpp:27
 msgid "Starting curve"
 msgstr "曲線起始"
 
 #. , true
-#: ../src/live_effects/lpe-attach-path.cpp:25
+#: ../src/live_effects/lpe-attach-path.cpp:24
 msgid "Start path curve end:"
 msgstr "起始路徑曲線末端："
 
-#: ../src/live_effects/lpe-attach-path.cpp:25
-#: ../src/live_effects/lpe-attach-path.cpp:29
+#: ../src/live_effects/lpe-attach-path.cpp:24
+#: ../src/live_effects/lpe-attach-path.cpp:28
 msgid "Ending curve"
 msgstr "曲線結束"
 
 #. , true
-#: ../src/live_effects/lpe-attach-path.cpp:26
+#: ../src/live_effects/lpe-attach-path.cpp:25
 msgid "End path:"
 msgstr "結束路徑："
 
-#: ../src/live_effects/lpe-attach-path.cpp:26
+#: ../src/live_effects/lpe-attach-path.cpp:25
 msgid "Path to attach to the end of this path"
 msgstr "將路徑放置到該路徑的末端"
 
-#: ../src/live_effects/lpe-attach-path.cpp:27
+#: ../src/live_effects/lpe-attach-path.cpp:26
 msgid "End path position:"
 msgstr "結束路徑位置："
 
-#: ../src/live_effects/lpe-attach-path.cpp:27
+#: ../src/live_effects/lpe-attach-path.cpp:26
 msgid "Position to attach path end to"
 msgstr "貼附路徑的末端位置"
 
-#: ../src/live_effects/lpe-attach-path.cpp:28
+#: ../src/live_effects/lpe-attach-path.cpp:27
 msgid "End path curve start:"
 msgstr "結束路徑曲線起點："
 
 #. , true
-#: ../src/live_effects/lpe-attach-path.cpp:29
+#: ../src/live_effects/lpe-attach-path.cpp:28
 msgid "End path curve end:"
 msgstr "結束路徑曲線末端："
 
-#: ../src/live_effects/lpe-bendpath.cpp:53
+#: ../src/live_effects/lpe-bendpath.cpp:54
 msgid "Bend path:"
 msgstr "彎曲路徑："
 
-#: ../src/live_effects/lpe-bendpath.cpp:53
+#: ../src/live_effects/lpe-bendpath.cpp:54
 msgid "Path along which to bend the original path"
 msgstr "路徑沿著原路徑彎曲"
 
-#: ../src/live_effects/lpe-bendpath.cpp:55
-#: ../src/live_effects/lpe-patternalongpath.cpp:65
+#: ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-patternalongpath.cpp:67
 #: ../src/ui/dialog/export.cpp:257 ../src/ui/dialog/transformation.cpp:69
 #: ../src/ui/widget/page-sizer.cpp:220
 msgid "_Width:"
 msgstr "寬度(_W)："
 
-#: ../src/live_effects/lpe-bendpath.cpp:55
+#: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
 msgstr "路徑寬度"
 
-#: ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "W_idth in units of length"
 msgstr "寬度以長度為單位(_I)"
 
-#: ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Scale the width of the path in units of its length"
 msgstr "以路徑的長度為單位來縮放寬度"
 
-#: ../src/live_effects/lpe-bendpath.cpp:57
+#: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "_Original path is vertical"
 msgstr "原始路徑為垂直方向(_O)"
 
-#: ../src/live_effects/lpe-bendpath.cpp:57
+#: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr "在沿著彎曲路徑彎曲之前，將原本的旋轉 90 度"
 
-#: ../src/live_effects/lpe-bendpath.cpp:162
-#: ../src/live_effects/lpe-patternalongpath.cpp:278
+#: ../src/live_effects/lpe-bendpath.cpp:163
+#: ../src/live_effects/lpe-patternalongpath.cpp:281
 msgid "Change the width"
 msgstr "變更寬度"
 
 #: ../src/live_effects/lpe-bounding-box.cpp:20
-#: ../src/live_effects/lpe-clone-original.cpp:18
+#: ../src/live_effects/lpe-clone-original.cpp:17
 #: ../src/live_effects/lpe-fill-between-many.cpp:22
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:20
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:19
 msgid "Linked path:"
 msgstr "連結的路徑："
 
 #: ../src/live_effects/lpe-bounding-box.cpp:20
-#: ../src/live_effects/lpe-clone-original.cpp:18
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:20
+#: ../src/live_effects/lpe-clone-original.cpp:17
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:19
 msgid "Path from which to take the original path data"
 msgstr "取得原本路徑資料的路徑"
 
@@ -9104,13 +9183,13 @@ msgid "Change number of steps with CTRL pressed"
 msgstr "按著 CTRL 可變更階數"
 
 #: ../src/live_effects/lpe-bspline.cpp:31
-#: ../src/live_effects/lpe-simplify.cpp:23
-#: ../src/live_effects/lpe-transform_2pts.cpp:40
+#: ../src/live_effects/lpe-simplify.cpp:25
+#: ../src/live_effects/lpe-transform_2pts.cpp:41
 msgid "Helper size:"
 msgstr "輔助標示尺寸："
 
 #: ../src/live_effects/lpe-bspline.cpp:31
-#: ../src/live_effects/lpe-simplify.cpp:23
+#: ../src/live_effects/lpe-simplify.cpp:25
 msgid "Helper size"
 msgstr "輔助標示尺寸"
 
@@ -9158,63 +9237,6 @@ msgstr "變更為 0 權重"
 msgid "Change scalar parameter"
 msgstr "變更參數純量"
 
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-msgid "Origin"
-msgstr "原點"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-msgid "Origin of the rotation"
-msgstr "旋轉原點"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-msgid "Starting:"
-msgstr "起點："
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-msgid "Angle of the first copy"
-msgstr "第一個複製路徑的角度"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:63
-msgid "Rotation angle:"
-msgstr "旋轉角度："
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:63
-msgid "Angle between two successive copies"
-msgstr "兩個連續複本之間的角度"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:64
-msgid "Number of copies:"
-msgstr "複製數量:"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:64
-msgid "Number of copies of the original path"
-msgstr "原始路徑的複製數量"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:65
-msgid "360º Copies"
-msgstr "360º 複製"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:65
-msgid "No rotation angle, fixed to 360º"
-msgstr "無旋轉角度，固定 360º"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:66
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:66
-msgid "Fuse paths"
-msgstr "融合路徑"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:66
-msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
-msgstr "依照輔助線融合路徑，使用填充規則：奇偶可得到最佳結果"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:427
-msgid "Adjust the starting angle"
-msgstr "調整開始角度"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:433
-msgid "Adjust the rotation angle"
-msgstr "調整旋轉角度"
-
 #: ../src/live_effects/lpe-constructgrid.cpp:24
 msgid "Size _X:"
 msgstr "尺寸 _X："
@@ -9231,131 +9253,199 @@ msgstr "尺寸 _Y："
 msgid "The size of the grid in Y direction."
 msgstr "Y 方向格線的大小。"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:33
+#: ../src/live_effects/lpe-copy_rotate.cpp:42
+msgid "Origin"
+msgstr "原點"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:42
+#, fuzzy
+msgid "Adjust origin of the rotation"
+msgstr "旋轉原點"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:43
+#: ../src/live_effects/lpe-transform_2pts.cpp:35
+msgid "Start point"
+msgstr "起始點"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:43
+#, fuzzy
+msgid "Starting point to define start angle"
+msgstr "錐化的起點"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:43
+#, fuzzy
+msgid "Adjust starting point to define start angle"
+msgstr "調整開始角度"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:44
+#, fuzzy
+msgid "Starting angle"
+msgstr "起始角度"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:44
+msgid "Angle of the first copy"
+msgstr "第一個複製路徑的角度"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:45
+#, fuzzy
+msgid "Rotation angle"
+msgstr "旋轉角度："
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:45
+msgid "Angle between two successive copies"
+msgstr "兩個連續複本之間的角度"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:46
+#, fuzzy
+msgid "Number of copies"
+msgstr "複製數量:"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:46
+msgid "Number of copies of the original path"
+msgstr "原始路徑的複製數量"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:47
+msgid "360º Copies"
+msgstr "360º 複製"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:47
+msgid "No rotation angle, fixed to 360º"
+msgstr "無旋轉角度，固定 360º"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:48
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:44
+msgid "Fuse paths"
+msgstr "融合路徑"
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:48
+msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
+msgstr "依照輔助線融合路徑，使用填充規則：奇偶可得到最佳結果"
+
+#: ../src/live_effects/lpe-curvestitch.cpp:34
 msgid "Stitch path:"
 msgstr "縫合路徑："
 
-#: ../src/live_effects/lpe-curvestitch.cpp:33
+#: ../src/live_effects/lpe-curvestitch.cpp:34
 msgid "The path that will be used as stitch."
 msgstr "此路徑會用作縫合。"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:34
+#: ../src/live_effects/lpe-curvestitch.cpp:35
 msgid "N_umber of paths:"
 msgstr "路徑數量："
 
-#: ../src/live_effects/lpe-curvestitch.cpp:34
+#: ../src/live_effects/lpe-curvestitch.cpp:35
 msgid "The number of paths that will be generated."
 msgstr "將會生成的路徑數量。"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:35
+#: ../src/live_effects/lpe-curvestitch.cpp:36
 msgid "Sta_rt edge variance:"
 msgstr "起始邊緣變化量(_R)："
 
-#: ../src/live_effects/lpe-curvestitch.cpp:35
+#: ../src/live_effects/lpe-curvestitch.cpp:36
 msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
 msgstr "參考線路徑外部和內部縫合起點隨機抖動的程度"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:36
+#: ../src/live_effects/lpe-curvestitch.cpp:37
 msgid "Sta_rt spacing variance:"
 msgstr "起始間距變化量(_R)："
 
-#: ../src/live_effects/lpe-curvestitch.cpp:36
+#: ../src/live_effects/lpe-curvestitch.cpp:37
 msgid ""
 "The amount of random shifting to move the start points of the stitches back "
 "& forth along the guide path"
 msgstr "沿著參考線路徑縫合起點前後隨機移動的量"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:37
+#: ../src/live_effects/lpe-curvestitch.cpp:38
 msgid "End ed_ge variance:"
 msgstr "結束邊緣變化量(_G)："
 
-#: ../src/live_effects/lpe-curvestitch.cpp:37
+#: ../src/live_effects/lpe-curvestitch.cpp:38
 msgid ""
 "The amount of randomness that moves the end points of the stitches inside & "
 "outside the guide path"
 msgstr "參考線路徑外部和內部縫合終點隨機性抖動的程度"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:38
+#: ../src/live_effects/lpe-curvestitch.cpp:39
 msgid "End spa_cing variance:"
 msgstr "結束間距變化量(_C)："
 
-#: ../src/live_effects/lpe-curvestitch.cpp:38
+#: ../src/live_effects/lpe-curvestitch.cpp:39
 msgid ""
 "The amount of random shifting to move the end points of the stitches back & "
 "forth along the guide path"
 msgstr "沿著參考線路徑縫合終點前後隨機移動的量"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:39
+#: ../src/live_effects/lpe-curvestitch.cpp:40
 msgid "Scale _width:"
 msgstr "縮放寬度(_W)："
 
-#: ../src/live_effects/lpe-curvestitch.cpp:39
+#: ../src/live_effects/lpe-curvestitch.cpp:40
 msgid "Scale the width of the stitch path"
 msgstr "縮放縫合路徑的寬度"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:40
+#: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Scale _width relative to length"
 msgstr "相對於長度縮放寬度"
 
-#: ../src/live_effects/lpe-curvestitch.cpp:40
+#: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Scale the width of the stitch path relative to its length"
 msgstr "縮放相對於縫合路徑長度的寬度"
 
-#: ../src/live_effects/lpe-ellipse_5pts.cpp:76
+#: ../src/live_effects/lpe-ellipse_5pts.cpp:75
 msgid "Five points required for constructing an ellipse"
 msgstr "需要 5 個點來建構一個橢圓形"
 
-#: ../src/live_effects/lpe-ellipse_5pts.cpp:161
+#: ../src/live_effects/lpe-ellipse_5pts.cpp:160
 msgid "No ellipse found for specified points"
 msgstr "指定的點找不到橢圓形"
 
-#: ../src/live_effects/lpe-envelope.cpp:17
+#: ../src/live_effects/lpe-envelope.cpp:19
 msgid "Top bend path:"
 msgstr "頂端彎曲路徑："
 
-#: ../src/live_effects/lpe-envelope.cpp:17
+#: ../src/live_effects/lpe-envelope.cpp:19
 msgid "Top path along which to bend the original path"
 msgstr "沿著頂端路徑彎曲原路徑"
 
-#: ../src/live_effects/lpe-envelope.cpp:18
+#: ../src/live_effects/lpe-envelope.cpp:20
 msgid "Right bend path:"
 msgstr "右側彎曲路徑："
 
-#: ../src/live_effects/lpe-envelope.cpp:18
+#: ../src/live_effects/lpe-envelope.cpp:20
 msgid "Right path along which to bend the original path"
 msgstr "沿著右邊路徑彎曲原路徑"
 
-#: ../src/live_effects/lpe-envelope.cpp:19
+#: ../src/live_effects/lpe-envelope.cpp:21
 msgid "Bottom bend path:"
 msgstr "底端彎曲路徑："
 
-#: ../src/live_effects/lpe-envelope.cpp:19
+#: ../src/live_effects/lpe-envelope.cpp:21
 msgid "Bottom path along which to bend the original path"
 msgstr "沿著底端路徑彎曲原路徑"
 
-#: ../src/live_effects/lpe-envelope.cpp:20
+#: ../src/live_effects/lpe-envelope.cpp:22
 msgid "Left bend path:"
 msgstr "左側彎曲路徑："
 
-#: ../src/live_effects/lpe-envelope.cpp:20
+#: ../src/live_effects/lpe-envelope.cpp:22
 msgid "Left path along which to bend the original path"
 msgstr "沿著左邊路徑彎曲原路徑"
 
-#: ../src/live_effects/lpe-envelope.cpp:21
+#: ../src/live_effects/lpe-envelope.cpp:23
 msgid "_Enable left & right paths"
 msgstr "啟用左邊和右邊路徑(_E)"
 
-#: ../src/live_effects/lpe-envelope.cpp:21
+#: ../src/live_effects/lpe-envelope.cpp:23
 msgid "Enable the left and right deformation paths"
 msgstr "啟用左邊和右邊路徑變形"
 
-#: ../src/live_effects/lpe-envelope.cpp:22
+#: ../src/live_effects/lpe-envelope.cpp:24
 msgid "_Enable top & bottom paths"
 msgstr "啟用頂端和底端路徑(_E)"
 
-#: ../src/live_effects/lpe-envelope.cpp:22
+#: ../src/live_effects/lpe-envelope.cpp:24
 msgid "Enable the top and bottom deformation paths"
 msgstr "啟用頂端和底端路徑變形"
 
@@ -9371,24 +9461,24 @@ msgstr "定義擠壓的方向和幅度"
 msgid "Paths from which to take the original path data"
 msgstr "取得原本路徑資料的路徑"
 
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:21
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:20
 msgid "Second path:"
 msgstr "第二條路徑："
 
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:21
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:20
 msgid "Second path from which to take the original path data"
 msgstr "取得原本路徑資料的第二條路徑"
 
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:22
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:21
 msgid "Reverse Second"
 msgstr "反轉第二條路徑"
 
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:22
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:21
 msgid "Reverses the second path order"
 msgstr "反轉第二條路徑順序"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:36
-#: ../src/widgets/text-toolbar.cpp:1780
+#: ../src/widgets/text-toolbar.cpp:1884
 #: ../share/extensions/render_barcode_qrcode.inx.h:5
 msgid "Auto"
 msgstr "自動"
@@ -9498,29 +9588,29 @@ msgstr "轉換成倒角"
 msgid "Knots and helper paths refreshed"
 msgstr "環結和輔助標示路徑已重新整理"
 
-#: ../src/live_effects/lpe-gears.cpp:209
+#: ../src/live_effects/lpe-gears.cpp:208
 msgid "_Teeth:"
 msgstr "輪齒(_T)："
 
-#: ../src/live_effects/lpe-gears.cpp:209
+#: ../src/live_effects/lpe-gears.cpp:208
 msgid "The number of teeth"
 msgstr "齒數"
 
-#: ../src/live_effects/lpe-gears.cpp:210
+#: ../src/live_effects/lpe-gears.cpp:209
 msgid "_Phi:"
 msgstr "壓力角(_P)："
 
-#: ../src/live_effects/lpe-gears.cpp:210
+#: ../src/live_effects/lpe-gears.cpp:209
 msgid ""
 "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in "
 "contact."
 msgstr "輪齒壓力角 (典型為 20-25 度)。輪齒比率不在連接處。"
 
-#: ../src/live_effects/lpe-gears.cpp:211
+#: ../src/live_effects/lpe-gears.cpp:210
 msgid "Min Radius:"
 msgstr "最小半徑："
 
-#: ../src/live_effects/lpe-gears.cpp:211
+#: ../src/live_effects/lpe-gears.cpp:210
 msgid "Minimun radius, low balues can slow"
 msgstr "最小半徑，低數值可減慢"
 
@@ -9553,1307 +9643,1326 @@ msgstr ""
 "如果是，沿著路徑長度中間彼此的間距為固定值。如果否，間距由軌道路徑的節點位置"
 "而定。"
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:24
-#: ../src/live_effects/lpe-powerstroke.cpp:120
+#: ../src/live_effects/lpe-interpolate_points.cpp:25
+#: ../src/live_effects/lpe-powerstroke.cpp:123
 msgid "CubicBezierFit"
 msgstr "立方貝茲填充"
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:25
-#: ../src/live_effects/lpe-powerstroke.cpp:121
+#: ../src/live_effects/lpe-interpolate_points.cpp:26
+#: ../src/live_effects/lpe-powerstroke.cpp:124
 msgid "CubicBezierJohan"
 msgstr "立方貝茲約翰"
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:26
-#: ../src/live_effects/lpe-powerstroke.cpp:122
+#: ../src/live_effects/lpe-interpolate_points.cpp:27
+#: ../src/live_effects/lpe-powerstroke.cpp:125
 msgid "SpiroInterpolator"
 msgstr "螺旋內插法"
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:27
-#: ../src/live_effects/lpe-powerstroke.cpp:123
+#: ../src/live_effects/lpe-interpolate_points.cpp:28
+#: ../src/live_effects/lpe-powerstroke.cpp:126
 msgid "Centripetal Catmull-Rom"
 msgstr "向心 Catmull-Rom"
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:35
-#: ../src/live_effects/lpe-powerstroke.cpp:165
+#: ../src/live_effects/lpe-interpolate_points.cpp:36
+#: ../src/live_effects/lpe-powerstroke.cpp:168
 msgid "Interpolator type:"
 msgstr "內插法類型："
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:36
-#: ../src/live_effects/lpe-powerstroke.cpp:165
+#: ../src/live_effects/lpe-interpolate_points.cpp:37
+#: ../src/live_effects/lpe-powerstroke.cpp:168
 msgid ""
 "Determines which kind of interpolator will be used to interpolate between "
 "stroke width along the path"
 msgstr "決定邊框寬度之間沿著路徑內插要使用哪一種內插法"
 
-#: ../src/live_effects/lpe-jointype.cpp:27
-#: ../src/live_effects/lpe-powerstroke.cpp:152
-#: ../src/live_effects/lpe-taperstroke.cpp:55
+#: ../src/live_effects/lpe-jointype.cpp:29
+#: ../src/live_effects/lpe-powerstroke.cpp:155
+#: ../src/live_effects/lpe-taperstroke.cpp:57
 msgid "Beveled"
 msgstr "斜角"
 
-#: ../src/live_effects/lpe-jointype.cpp:28
-#: ../src/live_effects/lpe-jointype.cpp:39
-#: ../src/live_effects/lpe-powerstroke.cpp:153
-#: ../src/live_effects/lpe-taperstroke.cpp:56
+#: ../src/live_effects/lpe-jointype.cpp:30
+#: ../src/live_effects/lpe-jointype.cpp:41
+#: ../src/live_effects/lpe-powerstroke.cpp:156
+#: ../src/live_effects/lpe-taperstroke.cpp:58
 #: ../src/widgets/star-toolbar.cpp:532
 msgid "Rounded"
 msgstr "圓角"
 
-#: ../src/live_effects/lpe-jointype.cpp:29
-#: ../src/live_effects/lpe-powerstroke.cpp:156
-#: ../src/live_effects/lpe-taperstroke.cpp:57
+#: ../src/live_effects/lpe-jointype.cpp:31
+#: ../src/live_effects/lpe-powerstroke.cpp:159
+#: ../src/live_effects/lpe-taperstroke.cpp:59
 msgid "Miter"
 msgstr "斜切"
 
-#: ../src/live_effects/lpe-jointype.cpp:30
+#: ../src/live_effects/lpe-jointype.cpp:32
 msgid "Miter Clip"
 msgstr "斜切剪裁"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
-#: ../src/live_effects/lpe-jointype.cpp:31
-#: ../src/live_effects/lpe-powerstroke.cpp:155
+#: ../src/live_effects/lpe-jointype.cpp:33
+#: ../src/live_effects/lpe-powerstroke.cpp:158
 msgid "Extrapolated arc"
 msgstr "外推弧"
 
-#: ../src/live_effects/lpe-jointype.cpp:32
+#: ../src/live_effects/lpe-jointype.cpp:34
 msgid "Extrapolated arc Alt1"
 msgstr "外推弧 Alt1"
 
-#: ../src/live_effects/lpe-jointype.cpp:33
+#: ../src/live_effects/lpe-jointype.cpp:35
 msgid "Extrapolated arc Alt2"
 msgstr "外推弧 Alt2"
 
-#: ../src/live_effects/lpe-jointype.cpp:34
+#: ../src/live_effects/lpe-jointype.cpp:36
 msgid "Extrapolated arc Alt3"
 msgstr "外推弧 Alt3"
 
-#: ../src/live_effects/lpe-jointype.cpp:38
-#: ../src/live_effects/lpe-powerstroke.cpp:135
+#: ../src/live_effects/lpe-jointype.cpp:40
+#: ../src/live_effects/lpe-powerstroke.cpp:138
 msgid "Butt"
 msgstr "平端"
 
-#: ../src/live_effects/lpe-jointype.cpp:40
-#: ../src/live_effects/lpe-powerstroke.cpp:136
+#: ../src/live_effects/lpe-jointype.cpp:42
+#: ../src/live_effects/lpe-powerstroke.cpp:139
 msgid "Square"
 msgstr "方端"
 
-#: ../src/live_effects/lpe-jointype.cpp:41
-#: ../src/live_effects/lpe-powerstroke.cpp:138
+#: ../src/live_effects/lpe-jointype.cpp:43
+#: ../src/live_effects/lpe-powerstroke.cpp:141
 msgid "Peak"
 msgstr "尖端"
 
-#: ../src/live_effects/lpe-jointype.cpp:50
+#: ../src/live_effects/lpe-jointype.cpp:52
 msgid "Thickness of the stroke"
 msgstr "邊框粗細"
 
-#: ../src/live_effects/lpe-jointype.cpp:51
+#: ../src/live_effects/lpe-jointype.cpp:53
 msgid "Line cap"
 msgstr "線端"
 
-#: ../src/live_effects/lpe-jointype.cpp:51
+#: ../src/live_effects/lpe-jointype.cpp:53
 msgid "The end shape of the stroke"
 msgstr "邊框端點形狀"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/live_effects/lpe-jointype.cpp:52
-#: ../src/live_effects/lpe-powerstroke.cpp:168
+#: ../src/live_effects/lpe-jointype.cpp:54
+#: ../src/live_effects/lpe-powerstroke.cpp:171
 #: ../src/widgets/stroke-style.cpp:261
 msgid "Join:"
 msgstr "接合："
 
-#: ../src/live_effects/lpe-jointype.cpp:52
-#: ../src/live_effects/lpe-powerstroke.cpp:168
+#: ../src/live_effects/lpe-jointype.cpp:54
+#: ../src/live_effects/lpe-powerstroke.cpp:171
 msgid "Determines the shape of the path's corners"
 msgstr "決定路徑轉角的形狀"
 
 #. start_lean(_("Start path lean"), _("Start path lean"), "start_lean", &wr, this, 0.),
 #. end_lean(_("End path lean"), _("End path lean"), "end_lean", &wr, this, 0.),
-#: ../src/live_effects/lpe-jointype.cpp:55
-#: ../src/live_effects/lpe-powerstroke.cpp:169
-#: ../src/live_effects/lpe-taperstroke.cpp:70
+#: ../src/live_effects/lpe-jointype.cpp:57
+#: ../src/live_effects/lpe-powerstroke.cpp:172
+#: ../src/live_effects/lpe-taperstroke.cpp:72
 msgid "Miter limit:"
 msgstr "斜切限制："
 
-#: ../src/live_effects/lpe-jointype.cpp:55
+#: ../src/live_effects/lpe-jointype.cpp:57
 msgid "Maximum length of the miter join (in units of stroke width)"
 msgstr "斜切接合的最大長度 (單位為邊框寬度單位)"
 
-#: ../src/live_effects/lpe-jointype.cpp:56
+#: ../src/live_effects/lpe-jointype.cpp:58
 msgid "Force miter"
 msgstr "強制斜切"
 
-#: ../src/live_effects/lpe-jointype.cpp:56
+#: ../src/live_effects/lpe-jointype.cpp:58
 msgid "Overrides the miter limit and forces a join."
 msgstr "覆蓋斜切限制並強制接合。"
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:343
+#: ../src/live_effects/lpe-knot.cpp:346
 msgid "Fi_xed width:"
 msgstr "固定寬度(_X)："
 
-#: ../src/live_effects/lpe-knot.cpp:343
+#: ../src/live_effects/lpe-knot.cpp:346
 msgid "Size of hidden region of lower string"
 msgstr "小寫字串的隱藏區域大小"
 
-#: ../src/live_effects/lpe-knot.cpp:344
+#: ../src/live_effects/lpe-knot.cpp:347
 msgid "_In units of stroke width"
 msgstr "使用邊框寬度的單位(_I)"
 
-#: ../src/live_effects/lpe-knot.cpp:344
+#: ../src/live_effects/lpe-knot.cpp:347
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr "將「中斷寬度」視為邊框寬度的比例"
 
-#: ../src/live_effects/lpe-knot.cpp:345
+#: ../src/live_effects/lpe-knot.cpp:348
 msgid "St_roke width"
 msgstr "邊框寬度(_R)"
 
-#: ../src/live_effects/lpe-knot.cpp:345
+#: ../src/live_effects/lpe-knot.cpp:348
 msgid "Add the stroke width to the interruption size"
 msgstr "將此邊框寬度加入到中斷大小"
 
-#: ../src/live_effects/lpe-knot.cpp:346
+#: ../src/live_effects/lpe-knot.cpp:349
 msgid "_Crossing path stroke width"
 msgstr "交叉路徑的邊框寬度(_C)"
 
-#: ../src/live_effects/lpe-knot.cpp:346
+#: ../src/live_effects/lpe-knot.cpp:349
 msgid "Add crossed stroke width to the interruption size"
 msgstr "將交叉的邊框寬度加入到中斷大小"
 
-#: ../src/live_effects/lpe-knot.cpp:347
+#: ../src/live_effects/lpe-knot.cpp:350
 msgid "S_witcher size:"
 msgstr "切換開關尺寸(_W)："
 
-#: ../src/live_effects/lpe-knot.cpp:347
+#: ../src/live_effects/lpe-knot.cpp:350
 msgid "Orientation indicator/switcher size"
 msgstr "方向標示/切換開關尺寸"
 
-#: ../src/live_effects/lpe-knot.cpp:348
+#: ../src/live_effects/lpe-knot.cpp:351
 msgid "Crossing Signs"
 msgstr "交叉點符號"
 
-#: ../src/live_effects/lpe-knot.cpp:348
+#: ../src/live_effects/lpe-knot.cpp:351
 msgid "Crossings signs"
 msgstr "交叉點符號"
 
-#: ../src/live_effects/lpe-knot.cpp:619
+#: ../src/live_effects/lpe-knot.cpp:622
 msgid "Drag to select a crossing, click to flip it"
 msgstr "拖曳可選取交叉點，點擊可翻轉交叉點"
 
 #. / @todo Is this the right verb?
-#: ../src/live_effects/lpe-knot.cpp:657
+#: ../src/live_effects/lpe-knot.cpp:660
 msgid "Change knot crossing"
 msgstr "變更環結交叉點"
 
-#: ../src/live_effects/lpe-lattice2.cpp:33
-#: ../src/live_effects/lpe-perspective-envelope.cpp:42
+#: ../src/live_effects/lpe-lattice2.cpp:36
+#: ../src/live_effects/lpe-perspective-envelope.cpp:45
 msgid "Mirror movements in horizontal"
 msgstr "水平鏡像移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:34
-#: ../src/live_effects/lpe-perspective-envelope.cpp:43
+#: ../src/live_effects/lpe-lattice2.cpp:37
+#: ../src/live_effects/lpe-perspective-envelope.cpp:46
 msgid "Mirror movements in vertical"
 msgstr "垂直鏡像移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:35
+#: ../src/live_effects/lpe-lattice2.cpp:38
 msgid "Update while moving knots (maybe slow)"
 msgstr "移動環結時更新 (可能會讓程式變很慢)"
 
-#: ../src/live_effects/lpe-lattice2.cpp:36
+#: ../src/live_effects/lpe-lattice2.cpp:39
 msgid "Control 0:"
 msgstr "控制柄 0："
 
-#: ../src/live_effects/lpe-lattice2.cpp:36
+#: ../src/live_effects/lpe-lattice2.cpp:39
 msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 0 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:37
+#: ../src/live_effects/lpe-lattice2.cpp:40
 msgid "Control 1:"
 msgstr "控制柄 1："
 
-#: ../src/live_effects/lpe-lattice2.cpp:37
+#: ../src/live_effects/lpe-lattice2.cpp:40
 msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 1 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:38
+#: ../src/live_effects/lpe-lattice2.cpp:41
 msgid "Control 2:"
 msgstr "控制柄 2："
 
-#: ../src/live_effects/lpe-lattice2.cpp:38
+#: ../src/live_effects/lpe-lattice2.cpp:41
 msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 2 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:39
+#: ../src/live_effects/lpe-lattice2.cpp:42
 msgid "Control 3:"
 msgstr "控制柄 3："
 
-#: ../src/live_effects/lpe-lattice2.cpp:39
+#: ../src/live_effects/lpe-lattice2.cpp:42
 msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 3 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:40
+#: ../src/live_effects/lpe-lattice2.cpp:43
 msgid "Control 4:"
 msgstr "控制柄 4："
 
-#: ../src/live_effects/lpe-lattice2.cpp:40
+#: ../src/live_effects/lpe-lattice2.cpp:43
 msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 4 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:41
+#: ../src/live_effects/lpe-lattice2.cpp:44
 msgid "Control 5:"
 msgstr "控制柄 5："
 
-#: ../src/live_effects/lpe-lattice2.cpp:41
+#: ../src/live_effects/lpe-lattice2.cpp:44
 msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 5 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:42
+#: ../src/live_effects/lpe-lattice2.cpp:45
 msgid "Control 6:"
 msgstr "控制柄 6："
 
-#: ../src/live_effects/lpe-lattice2.cpp:42
+#: ../src/live_effects/lpe-lattice2.cpp:45
 msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 6 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:43
+#: ../src/live_effects/lpe-lattice2.cpp:46
 msgid "Control 7:"
 msgstr "控制柄 7："
 
-#: ../src/live_effects/lpe-lattice2.cpp:43
+#: ../src/live_effects/lpe-lattice2.cpp:46
 msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 7 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:44
+#: ../src/live_effects/lpe-lattice2.cpp:47
 msgid "Control 8x9:"
 msgstr "控制柄 8x9："
 
-#: ../src/live_effects/lpe-lattice2.cpp:44
+#: ../src/live_effects/lpe-lattice2.cpp:47
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 8x9  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:45
+#: ../src/live_effects/lpe-lattice2.cpp:48
 msgid "Control 10x11:"
 msgstr "控制柄 10x11："
 
-#: ../src/live_effects/lpe-lattice2.cpp:45
+#: ../src/live_effects/lpe-lattice2.cpp:48
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 10x11  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:46
+#: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control 12:"
 msgstr "控制柄 12："
 
-#: ../src/live_effects/lpe-lattice2.cpp:46
+#: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 12 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:47
+#: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 13:"
 msgstr "控制柄 13："
 
-#: ../src/live_effects/lpe-lattice2.cpp:47
+#: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 13 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:48
+#: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 14:"
 msgstr "控制柄 14："
 
-#: ../src/live_effects/lpe-lattice2.cpp:48
+#: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 14 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:49
+#: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 15:"
 msgstr "控制柄 15："
 
-#: ../src/live_effects/lpe-lattice2.cpp:49
+#: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 15 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:50
+#: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 16:"
 msgstr "控制柄 15 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:50
+#: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 16 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:51
+#: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 17:"
 msgstr "控制柄 17："
 
-#: ../src/live_effects/lpe-lattice2.cpp:51
+#: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 17 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:52
+#: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 18:"
 msgstr "控制柄 15 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:52
+#: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 18 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:53
+#: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 19:"
 msgstr "控制柄 19："
 
-#: ../src/live_effects/lpe-lattice2.cpp:53
+#: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 19 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:54
+#: ../src/live_effects/lpe-lattice2.cpp:57
 msgid "Control 20x21:"
 msgstr "控制柄 20x21："
 
-#: ../src/live_effects/lpe-lattice2.cpp:54
+#: ../src/live_effects/lpe-lattice2.cpp:57
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 20x21  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:55
+#: ../src/live_effects/lpe-lattice2.cpp:58
 msgid "Control 22x23:"
 msgstr "控制柄 22x23："
 
-#: ../src/live_effects/lpe-lattice2.cpp:55
+#: ../src/live_effects/lpe-lattice2.cpp:58
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 22x23  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:56
+#: ../src/live_effects/lpe-lattice2.cpp:59
 msgid "Control 24x26:"
 msgstr "控制柄 24x26："
 
-#: ../src/live_effects/lpe-lattice2.cpp:56
+#: ../src/live_effects/lpe-lattice2.cpp:59
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 24x26  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:57
+#: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 25x27:"
 msgstr "控制柄 25x27："
 
-#: ../src/live_effects/lpe-lattice2.cpp:57
+#: ../src/live_effects/lpe-lattice2.cpp:60
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 25x27  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:58
+#: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 28x30:"
 msgstr "控制柄 28x30："
 
-#: ../src/live_effects/lpe-lattice2.cpp:58
+#: ../src/live_effects/lpe-lattice2.cpp:61
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 28x30  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:59
+#: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 29x31:"
 msgstr "控制柄 29x31："
 
-#: ../src/live_effects/lpe-lattice2.cpp:59
+#: ../src/live_effects/lpe-lattice2.cpp:62
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr "控制柄 29x31  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:60
+#: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 32x33x34x35:"
 msgstr "控制柄 32x33x34x35："
 
-#: ../src/live_effects/lpe-lattice2.cpp:60
+#: ../src/live_effects/lpe-lattice2.cpp:63
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
-msgstr "控制柄 32x33x34x35  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
+msgstr ""
+"控制柄 32x33x34x35  - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
 
-#: ../src/live_effects/lpe-lattice2.cpp:225
+#: ../src/live_effects/lpe-lattice2.cpp:228
 msgid "Reset grid"
 msgstr "重設格線"
 
-#: ../src/live_effects/lpe-lattice2.cpp:257
-#: ../src/live_effects/lpe-lattice2.cpp:272
+#: ../src/live_effects/lpe-lattice2.cpp:260
+#: ../src/live_effects/lpe-lattice2.cpp:275
 msgid "Show Points"
 msgstr "顯示點"
 
-#: ../src/live_effects/lpe-lattice2.cpp:270
+#: ../src/live_effects/lpe-lattice2.cpp:273
 msgid "Hide Points"
 msgstr "隱藏點"
 
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:28
-msgid "Vertical Page Center"
-msgstr "垂直頁面中心"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:29
-msgid "Horizontal Page Center"
-msgstr "水平頁面中心"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Free from reflection line"
-msgstr "從反射線起始的任意位置"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "X from middle knot"
-msgstr "從中間環結起始的 X"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:32
-msgid "Y from middle knot"
-msgstr "從中間環結起始的 Y"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:64
-#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
-msgid "Mode"
-msgstr "模式"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:64
-msgid "Symmetry move mode"
-msgstr "對稱移動模式"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:65
-msgid "Discard original path?"
-msgstr "丟棄原本路徑？"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:65
-msgid "Check this to only keep the mirrored part of the path"
-msgstr "勾選這個以只保留路徑的鏡像部份"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:66
-msgid "Fuse original and the reflection into a single path"
-msgstr "將原始和反射融合成單一路徑"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:67
-msgid "Opposite fuse"
-msgstr "相反融合"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:67
-msgid "Picks the other side of the mirror as the original"
-msgstr "選擇鏡像另一側作為原始路徑"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:68
-msgid "Start mirror line"
-msgstr "起始鏡像線"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:69
-msgid "End mirror line"
-msgstr "結束鏡像線"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:342
-msgid "Adjust the center"
-msgstr "調整中心"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:54
-#: ../share/extensions/pathalongpath.inx.h:10
-msgid "Single"
-msgstr "單一"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:55
-#: ../share/extensions/pathalongpath.inx.h:11
-msgid "Single, stretched"
-msgstr "單一，伸展的"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:56
-#: ../share/extensions/pathalongpath.inx.h:12
-msgid "Repeated"
-msgstr "重複"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:57
-#: ../share/extensions/pathalongpath.inx.h:13
-msgid "Repeated, stretched"
-msgstr "重複，伸展的"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:63
-msgid "Pattern source:"
-msgstr "圖樣來源："
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:63
-msgid "Path to put along the skeleton path"
-msgstr "路徑沿著骨架路徑放置"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:65
-msgid "Width of the pattern"
-msgstr "圖樣寬度"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:66
-msgid "Pattern copies:"
-msgstr "圖樣複製數量："
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:66
-msgid "How many pattern copies to place along the skeleton path"
-msgstr "多少複製圖樣沿著骨架路徑放置"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:68
-msgid "Wid_th in units of length"
-msgstr "寬度以長度為單位(_T)"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:69
-msgid "Scale the width of the pattern in units of its length"
-msgstr "縮放圖樣寬度，單位為圖樣的長度"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:71
-msgid "Spa_cing:"
-msgstr "間距(_C)："
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:73
-#, no-c-format
-msgid ""
-"Space between copies of the pattern. Negative values allowed, but are "
-"limited to -90% of pattern width."
-msgstr "圖樣複製物件之間的間隔距離。可以是負值，但僅限於圖樣寬度的 -90 ％。"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:75
-msgid "No_rmal offset:"
-msgstr "法線偏移(_R)："
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:76
-msgid "Tan_gential offset:"
-msgstr "切線方向偏移(_G)："
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:77
-msgid "Offsets in _unit of pattern size"
-msgstr "偏移以圖樣大小為單位(_U)"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:78
-msgid ""
-"Spacing, tangential and normal offset are expressed as a ratio of width/"
-"height"
-msgstr "間距、正切偏移和普通偏移是用寬/高的比值表示"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:80
-msgid "Pattern is _vertical"
-msgstr "圖樣為垂直(_V)"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:80
-msgid "Rotate pattern 90 deg before applying"
-msgstr "套用前將圖樣旋轉 90 度"
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:82
-msgid "_Fuse nearby ends:"
-msgstr "結合端點附近(_F)："
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:82
-msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr "結合靠近該數字的終點。0 表示不結合。"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:34
-#: ../share/extensions/perspective.inx.h:1
-msgid "Perspective"
-msgstr "透視"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:35
-msgid "Envelope deformation"
-msgstr "封套變形"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:44
-msgid "Overflow perspective"
-msgstr "溢流透視"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:45
-msgid "Type"
-msgstr "類型"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:45
-msgid "Select the type of deformation"
-msgstr "選擇變形類型"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:46
-msgid "Top Left"
-msgstr "左上"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:46
-msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "左上 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:47
-msgid "Top Right"
-msgstr "右上"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:47
-msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "右上 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:48
-msgid "Down Left"
-msgstr "左下"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:48
-msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "左下 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:49
-msgid "Down Right"
-msgstr "右下"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:49
-msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr "右下 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:366
-msgid "Handles:"
-msgstr "控制點："
-
-#: ../src/live_effects/lpe-powerstroke.cpp:118
-msgid "CubicBezierSmooth"
-msgstr "立方貝茲平滑"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:137
-#: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
-msgid "Round"
-msgstr "圓端"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:139
-msgid "Zero width"
-msgstr "凹端"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:157
-#: ../src/widgets/pencil-toolbar.cpp:109
-msgid "Spiro"
-msgstr "螺旋"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:163
-msgid "Offset points"
-msgstr "偏移點"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:164
-msgid "Sort points"
-msgstr "排序偏移點"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:164
-msgid "Sort offset points according to their time value along the curve"
-msgstr "根據時間數值沿著曲線排序偏移點"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:166
-#: ../share/extensions/fractalize.inx.h:3
-msgid "Smoothness:"
-msgstr "平滑度："
-
-#: ../src/live_effects/lpe-powerstroke.cpp:166
-msgid ""
-"Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
-"interpolation, 1 = smooth"
-msgstr "設定立方貝茲約翰內插法的平滑度；0 = 線性內插，1 = 平滑"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:167
-msgid "Start cap:"
-msgstr "開端："
-
-#: ../src/live_effects/lpe-powerstroke.cpp:167
-msgid "Determines the shape of the path's start"
-msgstr "決定路徑起始的形狀"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:169
-#: ../src/widgets/stroke-style.cpp:301
-msgid "Maximum length of the miter (in units of stroke width)"
-msgstr "斜切的最大長度 (單位為邊框寬度的單位)"
-
-#: ../src/live_effects/lpe-powerstroke.cpp:170
-msgid "End cap:"
-msgstr "末端："
-
-#: ../src/live_effects/lpe-powerstroke.cpp:170
-msgid "Determines the shape of the path's end"
-msgstr "決定路徑末端的形狀"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:217
-msgid "Frequency randomness:"
-msgstr "頻率隨機性："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:217
-msgid "Variation of distance between hatches, in %."
-msgstr "手繪影線之間的距離變化量，單位為 %。"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:218
-msgid "Growth:"
-msgstr "擴張："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:218
-msgid "Growth of distance between hatches."
-msgstr "手繪影線之間的擴張距離。"
-
-#. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
-#: ../src/live_effects/lpe-rough-hatches.cpp:220
-msgid "Half-turns smoothness: 1st side, in:"
-msgstr "半轉平滑：第一個邊，內部："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:220
-msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
-"0=sharp, 1=default"
-msgstr "設定到達「底端」半轉時路徑的平滑度 / 銳利度。0=銳利，1=預設"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:221
-msgid "1st side, out:"
-msgstr "第一側邊，外部："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:221
-msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
-"1=default"
-msgstr "設定離開「底端」半轉時路徑的平滑度 / 銳利度。0=銳利，1=預設"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:222
-msgid "2nd side, in:"
-msgstr "第二側邊，內部："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:222
-msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
-"1=default"
-msgstr "設定到達「頂端」半轉時路徑的平滑度 / 銳利度。0=銳利，1=預設"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:223
-msgid "2nd side, out:"
-msgstr "第二側邊，外部："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:223
-msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
-"1=default"
-msgstr "設定離開「頂端」半轉時路徑的平滑度 / 銳利度。0=銳利，1=預設"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:224
-msgid "Magnitude jitter: 1st side:"
-msgstr "大幅抖動：第一側邊："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:224
-msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
-msgstr "隨機移動「底端」半轉產生大幅變化。"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:225
-#: ../src/live_effects/lpe-rough-hatches.cpp:227
-#: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "2nd side:"
-msgstr "第二側邊："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:225
-msgid "Randomly moves 'top' half-turns to produce magnitude variations."
-msgstr "隨機移動「頂端」半轉產生大幅變化。"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:226
-msgid "Parallelism jitter: 1st side:"
-msgstr "平行抖動：第一側邊："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:226
-msgid ""
-"Add direction randomness by moving 'bottom' half-turns tangentially to the "
-"boundary."
-msgstr "用「底端」半轉正切移動到邊界來加入方向隨機性"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:227
-msgid ""
-"Add direction randomness by randomly moving 'top' half-turns tangentially to "
-"the boundary."
-msgstr "用「頂端」半轉正切移動到邊界來加入方向隨機性"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:228
-msgid "Variance: 1st side:"
-msgstr "變化量：第一側邊："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:228
-msgid "Randomness of 'bottom' half-turns smoothness"
-msgstr "「底端」半轉平滑度的隨機性"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Randomness of 'top' half-turns smoothness"
-msgstr "「頂端」半轉平滑度的隨機性"
-
-#.
-#: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "Generate thick/thin path"
-msgstr "生成粗 / 細路徑"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "Simulate a stroke of varying width"
-msgstr "模擬寬度變化的邊框"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:232
-msgid "Bend hatches"
-msgstr "彎曲手繪影線"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:232
-msgid "Add a global bend to the hatches (slower)"
-msgstr "加入總體彎曲到手繪影線 (較慢)"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Thickness: at 1st side:"
-msgstr "粗細：於第一側邊上："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Width at 'bottom' half-turns"
-msgstr "於「底端」半轉的寬度"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "At 2nd side:"
-msgstr "於第二個邊上："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Width at 'top' half-turns"
-msgstr "於「頂端」半轉的寬度"
-
-#.
-#: ../src/live_effects/lpe-rough-hatches.cpp:236
-msgid "From 2nd to 1st side:"
-msgstr "從第二個邊到第一個邊："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:236
-msgid "Width from 'top' to 'bottom'"
-msgstr "從「頂端」到「底端」的寬度"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "From 1st to 2nd side:"
-msgstr "從第一個邊到第二個邊："
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Width from 'bottom' to 'top'"
-msgstr "從「底端」到「頂端」的寬度"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:239
-msgid "Hatches width and dir"
-msgstr "手繪影線的寬度和方向"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:239
-msgid "Defines hatches frequency and direction"
-msgstr "定義手繪影線的頻率和方向"
-
-#.
-#: ../src/live_effects/lpe-rough-hatches.cpp:241
-msgid "Global bending"
-msgstr "總體彎曲"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:241
-msgid ""
-"Relative position to a reference point defines global bending direction and "
-"amount"
-msgstr "由參考點的相對位置定義總體彎曲程度和方向"
-
-#: ../src/live_effects/lpe-roughen.cpp:26 ../share/extensions/addnodes.inx.h:4
-msgid "By number of segments"
-msgstr "依照線段數量"
-
-#: ../src/live_effects/lpe-roughen.cpp:27
-msgid "By max. segment size"
-msgstr "依照最大線段長度"
-
-#: ../src/live_effects/lpe-roughen.cpp:33
-msgid "Along nodes"
-msgstr "沿著節點"
-
-#: ../src/live_effects/lpe-roughen.cpp:34
-msgid "Rand"
-msgstr "隨機數"
-
-#: ../src/live_effects/lpe-roughen.cpp:35
-msgid "Retract"
-msgstr "撤銷"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-roughen.cpp:44
-msgid "Method"
-msgstr "方式"
-
-#: ../src/live_effects/lpe-roughen.cpp:44
-msgid "Division method"
-msgstr "分割方式"
-
-#: ../src/live_effects/lpe-roughen.cpp:46
-msgid "Max. segment size"
-msgstr "最大線段長度"
-
-#: ../src/live_effects/lpe-roughen.cpp:48
-msgid "Number of segments"
-msgstr "線段數量"
-
-#: ../src/live_effects/lpe-roughen.cpp:50
-msgid "Max. displacement in X"
-msgstr "X 方向最大位移"
-
-#: ../src/live_effects/lpe-roughen.cpp:52
-msgid "Max. displacement in Y"
-msgstr "Y 方向最大位移"
-
-#: ../src/live_effects/lpe-roughen.cpp:54
-msgid "Global randomize"
-msgstr "總體隨機化"
-
-#: ../src/live_effects/lpe-roughen.cpp:56
-msgid "Handles"
-msgstr "控制點"
-
-#: ../src/live_effects/lpe-roughen.cpp:56
-msgid "Handles options"
-msgstr "控制點選項"
-
-#: ../src/live_effects/lpe-roughen.cpp:58
-#: ../share/extensions/jitternodes.inx.h:5
-msgid "Shift nodes"
-msgstr "移動節點"
-
-#: ../src/live_effects/lpe-roughen.cpp:60
-msgid "Fixed displacement"
-msgstr "固定移位"
-
-#: ../src/live_effects/lpe-roughen.cpp:60
-msgid "Fixed displacement, 1/3 of segment length"
-msgstr "固定移位，1/3 線段長度"
-
-#: ../src/live_effects/lpe-roughen.cpp:62
-msgid "Spray Tool friendly"
-msgstr "簡單好用噴灑工具"
-
-#: ../src/live_effects/lpe-roughen.cpp:62
-msgid "For use with spray tool in copy mode"
-msgstr "複製模式中使用噴灑工具"
-
-#: ../src/live_effects/lpe-roughen.cpp:116
-msgid "<b>Add nodes</b> Subdivide each segment"
-msgstr "<b>加入節點</b>會細分每個線段"
-
-#: ../src/live_effects/lpe-roughen.cpp:125
-msgid "<b>Jitter nodes</b> Move nodes/handles"
-msgstr "<b>抖動節點</b>會移動節點/控制柄"
-
-#: ../src/live_effects/lpe-roughen.cpp:134
-msgid "<b>Extra roughen</b> Add a extra layer of rough"
-msgstr "<b>加強型粗糙化</b>會加入額外的粗糙圖層"
-
-#: ../src/live_effects/lpe-roughen.cpp:143
-msgid "<b>Options</b> Modify options to rough"
-msgstr "<b>選項</b>修改粗糙的選項"
-
-#: ../src/live_effects/lpe-ruler.cpp:21 ../share/extensions/measure.inx.h:27
-#: ../share/extensions/restack.inx.h:16
-#: ../share/extensions/text_extract.inx.h:8
-#: ../share/extensions/text_merge.inx.h:8
-msgid "Left"
-msgstr "左邊"
-
-#: ../src/live_effects/lpe-ruler.cpp:22 ../share/extensions/measure.inx.h:29
-#: ../share/extensions/restack.inx.h:18
-#: ../share/extensions/text_extract.inx.h:10
-#: ../share/extensions/text_merge.inx.h:10
-msgid "Right"
-msgstr "右邊"
-
-#: ../src/live_effects/lpe-ruler.cpp:23 ../src/live_effects/lpe-ruler.cpp:31
-msgid "Both"
-msgstr "左右兩邊"
-
-#: ../src/live_effects/lpe-ruler.cpp:28
-msgctxt "Border mark"
-msgid "None"
-msgstr "無"
-
-#: ../src/live_effects/lpe-ruler.cpp:29
-#: ../src/live_effects/lpe-transform_2pts.cpp:34
-#: ../src/ui/tools/measure-tool.cpp:749 ../src/widgets/arc-toolbar.cpp:318
-msgid "Start"
-msgstr "開始"
-
-#: ../src/live_effects/lpe-ruler.cpp:30
-#: ../src/live_effects/lpe-transform_2pts.cpp:35
-#: ../src/ui/tools/measure-tool.cpp:750 ../src/widgets/arc-toolbar.cpp:331
-msgid "End"
-msgstr "結束"
-
-#: ../src/live_effects/lpe-ruler.cpp:37
-msgid "_Mark distance:"
-msgstr "刻度距離(_M)："
-
-#: ../src/live_effects/lpe-ruler.cpp:37
-msgid "Distance between successive ruler marks"
-msgstr "尺標連續刻度之間的距離"
-
-#: ../src/live_effects/lpe-ruler.cpp:38 ../share/extensions/foldablebox.inx.h:7
-#: ../share/extensions/interp_att_g.inx.h:9
-#: ../share/extensions/layout_nup.inx.h:3
-#: ../share/extensions/printing_marks.inx.h:11
-msgid "Unit:"
-msgstr "單位："
-
-#: ../src/live_effects/lpe-ruler.cpp:38
-#: ../src/live_effects/lpe-measure-line.cpp:52
-#: ../src/widgets/gimp/ruler.cpp:193
-msgid "Unit"
-msgstr "單位"
-
-#: ../src/live_effects/lpe-ruler.cpp:39
-msgid "Ma_jor length:"
-msgstr "主要長度(_J)："
-
-#: ../src/live_effects/lpe-ruler.cpp:39
-msgid "Length of major ruler marks"
-msgstr "尺標主要刻度的長度"
-
-#: ../src/live_effects/lpe-ruler.cpp:40
-msgid "Mino_r length:"
-msgstr "次要長度(_R)："
-
-#: ../src/live_effects/lpe-ruler.cpp:40
-msgid "Length of minor ruler marks"
-msgstr "尺標次要刻度的長度"
-
-#: ../src/live_effects/lpe-ruler.cpp:41
-msgid "Major steps_:"
-msgstr "主要階數_："
-
-#: ../src/live_effects/lpe-ruler.cpp:41
-msgid "Draw a major mark every ... steps"
-msgstr "每隔多長繪製一個主要刻度"
-
-#: ../src/live_effects/lpe-ruler.cpp:42
-msgid "Shift marks _by:"
-msgstr "刻度位移(_B)："
-
-#: ../src/live_effects/lpe-ruler.cpp:42
-msgid "Shift marks by this many steps"
-msgstr "依照該距離位移刻度"
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark direction:"
-msgstr "刻度方向："
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr "刻度方向 (沿著路徑檢視起點到終點時)"
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "_Offset:"
-msgstr "偏移(_O)："
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "Offset of first mark"
-msgstr "第一個刻度的偏移量"
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Border marks:"
-msgstr "邊界刻度："
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr "選擇是否在路徑的起點和終點上繪製刻度"
-
-#: ../src/live_effects/lpe-measure-line.cpp:44
-#: ../src/widgets/text-toolbar.cpp:1731
+#: ../src/live_effects/lpe-measure-line.cpp:42
+#: ../src/widgets/text-toolbar.cpp:1835
 msgid "Horizontal"
 msgstr "水平"
 
-#: ../src/live_effects/lpe-measure-line.cpp:45
+#: ../src/live_effects/lpe-measure-line.cpp:43
 msgid "Vertical"
 msgstr "垂直"
 
-#: ../src/live_effects/lpe-measure-line.cpp:52
+#: ../src/live_effects/lpe-measure-line.cpp:50
 msgid "Unit*"
 msgstr "單位*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:53
+#: ../src/live_effects/lpe-measure-line.cpp:50
+#: ../src/live_effects/lpe-ruler.cpp:39 ../src/widgets/gimp/ruler.cpp:193
+msgid "Unit"
+msgstr "單位"
+
+#: ../src/live_effects/lpe-measure-line.cpp:51
 msgid "Font*"
 msgstr "字型*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:53
+#: ../src/live_effects/lpe-measure-line.cpp:51
 msgid "Font Selector"
 msgstr "字型選取器"
 
-#: ../src/live_effects/lpe-measure-line.cpp:54
+#: ../src/live_effects/lpe-measure-line.cpp:52
 #: ../src/widgets/gimp/ruler.cpp:183
 #: ../share/extensions/gcodetools_graffiti.inx.h:9
 #: ../share/extensions/gcodetools_orientation_points.inx.h:2
 msgid "Orientation"
 msgstr "方向"
 
-#: ../src/live_effects/lpe-measure-line.cpp:54
+#: ../src/live_effects/lpe-measure-line.cpp:52
 msgid "Orientation method"
 msgstr "方向順序"
 
-#: ../src/live_effects/lpe-measure-line.cpp:55
+#: ../src/live_effects/lpe-measure-line.cpp:53
 msgid "Curve on origin"
 msgstr "原點上的曲線"
 
-#: ../src/live_effects/lpe-measure-line.cpp:55
+#: ../src/live_effects/lpe-measure-line.cpp:53
 msgid "Curve on origin, set 0 to start/end"
 msgstr "原點上的曲線，設定 0 為起點/末端"
 
-#: ../src/live_effects/lpe-measure-line.cpp:56
+#: ../src/live_effects/lpe-measure-line.cpp:54
 msgid "Precision*"
 msgstr "精確度*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:57
+#: ../src/live_effects/lpe-measure-line.cpp:55
 msgid "Positon*"
 msgstr "位置*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:57
+#: ../src/live_effects/lpe-measure-line.cpp:55
 msgid "Positon"
 msgstr "位置"
 
-#: ../src/live_effects/lpe-measure-line.cpp:58
+#: ../src/live_effects/lpe-measure-line.cpp:56
 msgid "Text top/bottom*"
 msgstr "文字頂端/底端*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:58
+#: ../src/live_effects/lpe-measure-line.cpp:56
 msgid "Text top/bottom"
 msgstr "文字頂端/底端"
 
-#: ../src/live_effects/lpe-measure-line.cpp:59
+#: ../src/live_effects/lpe-measure-line.cpp:57
 msgid "Text right/left*"
 msgstr "文字右/左*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:59
+#: ../src/live_effects/lpe-measure-line.cpp:57
 msgid "Text right/left"
 msgstr "文字右/左"
 
-#: ../src/live_effects/lpe-measure-line.cpp:60
+#: ../src/live_effects/lpe-measure-line.cpp:58
 msgid "Helpline distance*"
 msgstr "輔助線距離*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:60
+#: ../src/live_effects/lpe-measure-line.cpp:58
 msgid "Helpline distance"
 msgstr "輔助線距離"
 
-#: ../src/live_effects/lpe-measure-line.cpp:61
+#: ../src/live_effects/lpe-measure-line.cpp:59
 msgid "Helpline overlap*"
 msgstr "輔助線重疊*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:61
+#: ../src/live_effects/lpe-measure-line.cpp:59
 msgid "Helpline overlap"
 msgstr "輔助線重疊"
 
-#: ../src/live_effects/lpe-measure-line.cpp:62
+#: ../src/live_effects/lpe-measure-line.cpp:60
 msgid "Scale*"
 msgstr "縮放"
 
-#: ../src/live_effects/lpe-measure-line.cpp:62
+#: ../src/live_effects/lpe-measure-line.cpp:60
 msgid "Scaling factor"
 msgstr "縮放比例"
 
-#: ../src/live_effects/lpe-measure-line.cpp:63
+#: ../src/live_effects/lpe-measure-line.cpp:61
 msgid "Format*"
 msgstr "格式*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:63
+#: ../src/live_effects/lpe-measure-line.cpp:61
 msgid "Format the number ex:{measure} {unit}, return to save"
 msgstr "格式化數字 例如:{measure} {unit}，返回儲存"
 
-#: ../src/live_effects/lpe-measure-line.cpp:64
+#: ../src/live_effects/lpe-measure-line.cpp:63
 msgid "Arrows outside"
 msgstr "外部箭頭"
 
-#: ../src/live_effects/lpe-measure-line.cpp:65
+#: ../src/live_effects/lpe-measure-line.cpp:64
 msgid "Flip side*"
 msgstr "翻轉側邊*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:65
+#: ../src/live_effects/lpe-measure-line.cpp:64
 msgid "Flip side"
 msgstr "翻轉側邊"
 
-#: ../src/live_effects/lpe-measure-line.cpp:66
-msgid "Scale insensitive*"
+#: ../src/live_effects/lpe-measure-line.cpp:65
+#, fuzzy
+msgid "Scale sensitive*"
 msgstr "縮放鈍感*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:66
-msgid "Scale insensitive to transforms in element, parents..."
+#: ../src/live_effects/lpe-measure-line.cpp:65
+#, fuzzy
+msgid "Costrained scale sensitive to transformed containers"
 msgstr "元件、母群組對變形縮放鈍感..."
 
-#: ../src/live_effects/lpe-measure-line.cpp:67
+#: ../src/live_effects/lpe-measure-line.cpp:66
 msgid "Local Number Format*"
 msgstr "局部數字格式*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:67
+#: ../src/live_effects/lpe-measure-line.cpp:66
 msgid "Local number format"
 msgstr "局部數字格式"
 
-#: ../src/live_effects/lpe-measure-line.cpp:68
+#: ../src/live_effects/lpe-measure-line.cpp:67
 msgid "Line Group 0.5*"
 msgstr "線群 0.5*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:68
+#: ../src/live_effects/lpe-measure-line.cpp:67
 msgid "Line Group 0.5, from 0.7"
 msgstr "線群 0.5，根據 0.7"
 
-#: ../src/live_effects/lpe-measure-line.cpp:69
+#: ../src/live_effects/lpe-measure-line.cpp:68
 msgid "Rotate Anotation*"
 msgstr "旋轉註解*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:69
+#: ../src/live_effects/lpe-measure-line.cpp:68
 msgid "Rotate Anotation"
 msgstr "旋轉註解"
 
-#: ../src/live_effects/lpe-measure-line.cpp:70
+#: ../src/live_effects/lpe-measure-line.cpp:69
 msgid "Hide if label over*"
 msgstr "若與標籤重疊則隱藏*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:70
+#: ../src/live_effects/lpe-measure-line.cpp:69
 msgid "Hide DIN line if label over"
 msgstr "若與標籤重疊則隱藏 DIN 線"
 
-#: ../src/live_effects/lpe-measure-line.cpp:71
+#: ../src/live_effects/lpe-measure-line.cpp:70
 msgid "CSS DIN line*"
 msgstr "CSS DIN 線*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:71
+#: ../src/live_effects/lpe-measure-line.cpp:70
 msgid "Override CSS to DIN line, return to save, empty to reset to DIM"
 msgstr "將 CSS 覆載為 DIN 線，返回儲存，留空白會重設為 DIM"
 
-#: ../src/live_effects/lpe-measure-line.cpp:72
+#: ../src/live_effects/lpe-measure-line.cpp:71
 msgid "CSS helpers*"
 msgstr "CSS 輔助線*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:72
+#: ../src/live_effects/lpe-measure-line.cpp:71
 msgid "Override CSS to helper lines, return to save, empty to reset to DIM"
 msgstr "將 CSS 覆載為輔助線，返回儲存，留空白會重設為 DIM"
 
-#: ../src/live_effects/lpe-measure-line.cpp:73
+#: ../src/live_effects/lpe-measure-line.cpp:72
 msgid "CSS anotation*"
 msgstr "CSS 註解*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:73
+#: ../src/live_effects/lpe-measure-line.cpp:72
 msgid "Override CSS to anotation text, return to save, empty to reset to DIM"
 msgstr "將 CSS 覆載為註解文字，返回儲存，留空白會重設為 DIM"
 
-#: ../src/live_effects/lpe-measure-line.cpp:74
+#: ../src/live_effects/lpe-measure-line.cpp:73
 msgid "CSS arrows*"
 msgstr "CSS 箭頭*"
 
-#: ../src/live_effects/lpe-measure-line.cpp:74
+#: ../src/live_effects/lpe-measure-line.cpp:73
 msgid "Override CSS to arrows, return to save, empty to reset DIM"
 msgstr "將 CSS 覆載為箭頭，返回儲存，留空白會重設為 DIM"
 
-#: ../src/live_effects/lpe-measure-line.cpp:822
+#: ../src/live_effects/lpe-measure-line.cpp:349
+#, fuzzy
+msgid "Non Uniform Scale"
+msgstr "均勻雜訊"
+
+#: ../src/live_effects/lpe-measure-line.cpp:777
 msgid "Save '*' as default"
 msgstr "儲存 '*' 作為預設值"
 
-#: ../src/live_effects/lpe-measure-line.cpp:825
-msgid "Convert to objects"
-msgstr "轉成物件"
-
-#: ../src/live_effects/lpe-measure-line.cpp:828
-#: ../src/live_effects/lpe-measure-line.cpp:845
+#: ../src/live_effects/lpe-measure-line.cpp:780
+#: ../src/live_effects/lpe-measure-line.cpp:796
 msgid "Show DIM CSS style override"
 msgstr "顯示 DIM CSS 樣式覆載"
 
-#: ../src/live_effects/lpe-measure-line.cpp:843
+#: ../src/live_effects/lpe-measure-line.cpp:794
 msgid "Hide DIM CSS style override"
 msgstr "隱藏 DIM CSS 樣式覆載"
 
-#: ../src/live_effects/lpe-show_handles.cpp:24
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
+msgid "Vertical Page Center"
+msgstr "垂直頁面中心"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:32
+msgid "Horizontal Page Center"
+msgstr "水平頁面中心"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:33
+msgid "Free from reflection line"
+msgstr "從反射線起始的任意位置"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:34
+msgid "X from middle knot"
+msgstr "從中間環結起始的 X"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:35
+msgid "Y from middle knot"
+msgstr "從中間環結起始的 Y"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:42
+#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
+msgid "Mode"
+msgstr "模式"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:42
+msgid "Symmetry move mode"
+msgstr "對稱移動模式"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:43
+#, fuzzy
+msgid "Discard original path"
+msgstr "丟棄原本路徑？"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:43
+msgid "Check this to only keep the mirrored part of the path"
+msgstr "勾選這個以只保留路徑的鏡像部份"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:44
+msgid "Fuse original and the reflection into a single path"
+msgstr "將原始和反射融合成單一路徑"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:45
+msgid "Opposite fuse"
+msgstr "相反融合"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:45
+msgid "Picks the other side of the mirror as the original"
+msgstr "選擇鏡像另一側作為原始路徑"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:46
+msgid "Start mirror line"
+msgstr "起始鏡像線"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:46
+#, fuzzy
+msgid "Adjust start of mirroring"
+msgstr "調整飽和度"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:47
+msgid "End mirror line"
+msgstr "結束鏡像線"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:47
+#, fuzzy
+msgid "Adjust end of mirroring"
+msgstr "調整原點"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:48
+#, fuzzy
+msgid "Center mirror line"
+msgstr "起始鏡像線"
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:48
+#, fuzzy
+msgid "Adjust center of mirroring"
+msgstr "調整原點"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:56
+#: ../share/extensions/pathalongpath.inx.h:10
+msgid "Single"
+msgstr "單一"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:57
+#: ../share/extensions/pathalongpath.inx.h:11
+msgid "Single, stretched"
+msgstr "單一，伸展的"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:58
+#: ../share/extensions/pathalongpath.inx.h:12
+msgid "Repeated"
+msgstr "重複"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:59
+#: ../share/extensions/pathalongpath.inx.h:13
+msgid "Repeated, stretched"
+msgstr "重複，伸展的"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:65
+msgid "Pattern source:"
+msgstr "圖樣來源："
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:65
+msgid "Path to put along the skeleton path"
+msgstr "路徑沿著骨架路徑放置"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:67
+msgid "Width of the pattern"
+msgstr "圖樣寬度"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:68
+msgid "Pattern copies:"
+msgstr "圖樣複製數量："
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:68
+msgid "How many pattern copies to place along the skeleton path"
+msgstr "多少複製圖樣沿著骨架路徑放置"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:70
+msgid "Wid_th in units of length"
+msgstr "寬度以長度為單位(_T)"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:71
+msgid "Scale the width of the pattern in units of its length"
+msgstr "縮放圖樣寬度，單位為圖樣的長度"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:73
+msgid "Spa_cing:"
+msgstr "間距(_C)："
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:75
+#, no-c-format
+msgid ""
+"Space between copies of the pattern. Negative values allowed, but are "
+"limited to -90% of pattern width."
+msgstr "圖樣複製物件之間的間隔距離。可以是負值，但僅限於圖樣寬度的 -90 ％。"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:77
+msgid "No_rmal offset:"
+msgstr "法線偏移(_R)："
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:78
+msgid "Tan_gential offset:"
+msgstr "切線方向偏移(_G)："
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:79
+msgid "Offsets in _unit of pattern size"
+msgstr "偏移以圖樣大小為單位(_U)"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:80
+msgid ""
+"Spacing, tangential and normal offset are expressed as a ratio of width/"
+"height"
+msgstr "間距、正切偏移和普通偏移是用寬/高的比值表示"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:82
+msgid "Pattern is _vertical"
+msgstr "圖樣為垂直(_V)"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:82
+msgid "Rotate pattern 90 deg before applying"
+msgstr "套用前將圖樣旋轉 90 度"
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:84
+msgid "_Fuse nearby ends:"
+msgstr "結合端點附近(_F)："
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:84
+msgid "Fuse ends closer than this number. 0 means don't fuse."
+msgstr "結合靠近該數字的終點。0 表示不結合。"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:37
+#: ../share/extensions/perspective.inx.h:1
+msgid "Perspective"
+msgstr "透視"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:38
+msgid "Envelope deformation"
+msgstr "封套變形"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:47
+msgid "Overflow perspective"
+msgstr "溢流透視"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:48
+msgid "Type"
+msgstr "類型"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:48
+msgid "Select the type of deformation"
+msgstr "選擇變形類型"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:49
+msgid "Top Left"
+msgstr "左上"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:49
+msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr "左上 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:50
+msgid "Top Right"
+msgstr "右上"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:50
+msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr "右上 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:51
+msgid "Down Left"
+msgstr "左下"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:51
+msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr "左下 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:52
+msgid "Down Right"
+msgstr "右下"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:52
+msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr "右下 - <b>Ctrl+Alt+點擊</b>：重設；<b>Ctrl</b>：沿著軸移動"
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:369
+msgid "Handles:"
+msgstr "控制點："
+
+#: ../src/live_effects/lpe-powerstroke.cpp:121
+msgid "CubicBezierSmooth"
+msgstr "立方貝茲平滑"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:140
+#: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
+msgid "Round"
+msgstr "圓端"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:142
+msgid "Zero width"
+msgstr "凹端"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:160
+#: ../src/widgets/pencil-toolbar.cpp:109
+msgid "Spiro"
+msgstr "螺旋"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:166
+msgid "Offset points"
+msgstr "偏移點"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:167
+msgid "Sort points"
+msgstr "排序偏移點"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:167
+msgid "Sort offset points according to their time value along the curve"
+msgstr "根據時間數值沿著曲線排序偏移點"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:169
+#: ../share/extensions/fractalize.inx.h:3
+msgid "Smoothness:"
+msgstr "平滑度："
+
+#: ../src/live_effects/lpe-powerstroke.cpp:169
+msgid ""
+"Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
+"interpolation, 1 = smooth"
+msgstr "設定立方貝茲約翰內插法的平滑度；0 = 線性內插，1 = 平滑"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:170
+msgid "Start cap:"
+msgstr "開端："
+
+#: ../src/live_effects/lpe-powerstroke.cpp:170
+msgid "Determines the shape of the path's start"
+msgstr "決定路徑起始的形狀"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:172
+#: ../src/widgets/stroke-style.cpp:301
+msgid "Maximum length of the miter (in units of stroke width)"
+msgstr "斜切的最大長度 (單位為邊框寬度的單位)"
+
+#: ../src/live_effects/lpe-powerstroke.cpp:173
+msgid "End cap:"
+msgstr "末端："
+
+#: ../src/live_effects/lpe-powerstroke.cpp:173
+msgid "Determines the shape of the path's end"
+msgstr "決定路徑末端的形狀"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:218
+msgid "Frequency randomness:"
+msgstr "頻率隨機性："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:218
+msgid "Variation of distance between hatches, in %."
+msgstr "手繪影線之間的距離變化量，單位為 %。"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:219
+msgid "Growth:"
+msgstr "擴張："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:219
+msgid "Growth of distance between hatches."
+msgstr "手繪影線之間的擴張距離。"
+
+#. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
+#: ../src/live_effects/lpe-rough-hatches.cpp:221
+msgid "Half-turns smoothness: 1st side, in:"
+msgstr "半轉平滑：第一個邊，內部："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:221
+msgid ""
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
+msgstr "設定到達「底端」半轉時路徑的平滑度 / 銳利度。0=銳利，1=預設"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:222
+msgid "1st side, out:"
+msgstr "第一側邊，外部："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:222
+msgid ""
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
+"1=default"
+msgstr "設定離開「底端」半轉時路徑的平滑度 / 銳利度。0=銳利，1=預設"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:223
+msgid "2nd side, in:"
+msgstr "第二側邊，內部："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:223
+msgid ""
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
+"1=default"
+msgstr "設定到達「頂端」半轉時路徑的平滑度 / 銳利度。0=銳利，1=預設"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:224
+msgid "2nd side, out:"
+msgstr "第二側邊，外部："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:224
+msgid ""
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
+"1=default"
+msgstr "設定離開「頂端」半轉時路徑的平滑度 / 銳利度。0=銳利，1=預設"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:225
+msgid "Magnitude jitter: 1st side:"
+msgstr "大幅抖動：第一側邊："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:225
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
+msgstr "隨機移動「底端」半轉產生大幅變化。"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:226
+#: ../src/live_effects/lpe-rough-hatches.cpp:228
+#: ../src/live_effects/lpe-rough-hatches.cpp:230
+msgid "2nd side:"
+msgstr "第二側邊："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:226
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
+msgstr "隨機移動「頂端」半轉產生大幅變化。"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:227
+msgid "Parallelism jitter: 1st side:"
+msgstr "平行抖動：第一側邊："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:227
+msgid ""
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
+"boundary."
+msgstr "用「底端」半轉正切移動到邊界來加入方向隨機性"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:228
+msgid ""
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
+"the boundary."
+msgstr "用「頂端」半轉正切移動到邊界來加入方向隨機性"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:229
+msgid "Variance: 1st side:"
+msgstr "變化量：第一側邊："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:229
+msgid "Randomness of 'bottom' half-turns smoothness"
+msgstr "「底端」半轉平滑度的隨機性"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:230
+msgid "Randomness of 'top' half-turns smoothness"
+msgstr "「頂端」半轉平滑度的隨機性"
+
+#.
+#: ../src/live_effects/lpe-rough-hatches.cpp:232
+msgid "Generate thick/thin path"
+msgstr "生成粗 / 細路徑"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:232
+msgid "Simulate a stroke of varying width"
+msgstr "模擬寬度變化的邊框"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:233
+msgid "Bend hatches"
+msgstr "彎曲手繪影線"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:233
+msgid "Add a global bend to the hatches (slower)"
+msgstr "加入總體彎曲到手繪影線 (較慢)"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:234
+msgid "Thickness: at 1st side:"
+msgstr "粗細：於第一側邊上："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:234
+msgid "Width at 'bottom' half-turns"
+msgstr "於「底端」半轉的寬度"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:235
+msgid "At 2nd side:"
+msgstr "於第二個邊上："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:235
+msgid "Width at 'top' half-turns"
+msgstr "於「頂端」半轉的寬度"
+
+#.
+#: ../src/live_effects/lpe-rough-hatches.cpp:237
+msgid "From 2nd to 1st side:"
+msgstr "從第二個邊到第一個邊："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:237
+msgid "Width from 'top' to 'bottom'"
+msgstr "從「頂端」到「底端」的寬度"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:238
+msgid "From 1st to 2nd side:"
+msgstr "從第一個邊到第二個邊："
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:238
+msgid "Width from 'bottom' to 'top'"
+msgstr "從「底端」到「頂端」的寬度"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:240
+msgid "Hatches width and dir"
+msgstr "手繪影線的寬度和方向"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:240
+msgid "Defines hatches frequency and direction"
+msgstr "定義手繪影線的頻率和方向"
+
+#.
+#: ../src/live_effects/lpe-rough-hatches.cpp:242
+msgid "Global bending"
+msgstr "總體彎曲"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:242
+msgid ""
+"Relative position to a reference point defines global bending direction and "
+"amount"
+msgstr "由參考點的相對位置定義總體彎曲程度和方向"
+
+#: ../src/live_effects/lpe-roughen.cpp:29 ../share/extensions/addnodes.inx.h:4
+msgid "By number of segments"
+msgstr "依照線段數量"
+
+#: ../src/live_effects/lpe-roughen.cpp:30
+msgid "By max. segment size"
+msgstr "依照最大線段長度"
+
+#: ../src/live_effects/lpe-roughen.cpp:36
+msgid "Along nodes"
+msgstr "沿著節點"
+
+#: ../src/live_effects/lpe-roughen.cpp:37
+msgid "Rand"
+msgstr "隨機數"
+
+#: ../src/live_effects/lpe-roughen.cpp:38
+msgid "Retract"
+msgstr "撤銷"
+
+#. initialise your parameters here:
+#: ../src/live_effects/lpe-roughen.cpp:47
+msgid "Method"
+msgstr "方式"
+
+#: ../src/live_effects/lpe-roughen.cpp:47
+msgid "Division method"
+msgstr "分割方式"
+
+#: ../src/live_effects/lpe-roughen.cpp:49
+msgid "Max. segment size"
+msgstr "最大線段長度"
+
+#: ../src/live_effects/lpe-roughen.cpp:51
+msgid "Number of segments"
+msgstr "線段數量"
+
+#: ../src/live_effects/lpe-roughen.cpp:53
+msgid "Max. displacement in X"
+msgstr "X 方向最大位移"
+
+#: ../src/live_effects/lpe-roughen.cpp:55
+msgid "Max. displacement in Y"
+msgstr "Y 方向最大位移"
+
+#: ../src/live_effects/lpe-roughen.cpp:57
+msgid "Global randomize"
+msgstr "總體隨機化"
+
+#: ../src/live_effects/lpe-roughen.cpp:59
+msgid "Handles"
+msgstr "控制點"
+
+#: ../src/live_effects/lpe-roughen.cpp:59
+msgid "Handles options"
+msgstr "控制點選項"
+
+#: ../src/live_effects/lpe-roughen.cpp:61
+#: ../share/extensions/jitternodes.inx.h:5
+msgid "Shift nodes"
+msgstr "移動節點"
+
+#: ../src/live_effects/lpe-roughen.cpp:63
+msgid "Fixed displacement"
+msgstr "固定移位"
+
+#: ../src/live_effects/lpe-roughen.cpp:63
+msgid "Fixed displacement, 1/3 of segment length"
+msgstr "固定移位，1/3 線段長度"
+
+#: ../src/live_effects/lpe-roughen.cpp:65
+msgid "Spray Tool friendly"
+msgstr "簡單好用噴灑工具"
+
+#: ../src/live_effects/lpe-roughen.cpp:65
+msgid "For use with spray tool in copy mode"
+msgstr "複製模式中使用噴灑工具"
+
+#: ../src/live_effects/lpe-roughen.cpp:119
+msgid "<b>Add nodes</b> Subdivide each segment"
+msgstr "<b>加入節點</b>會細分每個線段"
+
+#: ../src/live_effects/lpe-roughen.cpp:128
+msgid "<b>Jitter nodes</b> Move nodes/handles"
+msgstr "<b>抖動節點</b>會移動節點/控制柄"
+
+#: ../src/live_effects/lpe-roughen.cpp:137
+msgid "<b>Extra roughen</b> Add a extra layer of rough"
+msgstr "<b>加強型粗糙化</b>會加入額外的粗糙圖層"
+
+#: ../src/live_effects/lpe-roughen.cpp:146
+msgid "<b>Options</b> Modify options to rough"
+msgstr "<b>選項</b>修改粗糙的選項"
+
+#: ../src/live_effects/lpe-ruler.cpp:22 ../share/extensions/measure.inx.h:27
+#: ../share/extensions/restack.inx.h:16
+#: ../share/extensions/text_extract.inx.h:8
+#: ../share/extensions/text_merge.inx.h:8
+msgid "Left"
+msgstr "左邊"
+
+#: ../src/live_effects/lpe-ruler.cpp:23 ../share/extensions/measure.inx.h:29
+#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/text_extract.inx.h:10
+#: ../share/extensions/text_merge.inx.h:10
+msgid "Right"
+msgstr "右邊"
+
+#: ../src/live_effects/lpe-ruler.cpp:24 ../src/live_effects/lpe-ruler.cpp:32
+msgid "Both"
+msgstr "左右兩邊"
+
+#: ../src/live_effects/lpe-ruler.cpp:29
+msgctxt "Border mark"
+msgid "None"
+msgstr "無"
+
+#: ../src/live_effects/lpe-ruler.cpp:30
+#: ../src/live_effects/lpe-transform_2pts.cpp:35
+#: ../src/ui/tools/measure-tool.cpp:749 ../src/widgets/arc-toolbar.cpp:318
+msgid "Start"
+msgstr "開始"
+
+#: ../src/live_effects/lpe-ruler.cpp:31
+#: ../src/live_effects/lpe-transform_2pts.cpp:36
+#: ../src/ui/tools/measure-tool.cpp:750 ../src/widgets/arc-toolbar.cpp:331
+msgid "End"
+msgstr "結束"
+
+#: ../src/live_effects/lpe-ruler.cpp:38
+msgid "_Mark distance:"
+msgstr "刻度距離(_M)："
+
+#: ../src/live_effects/lpe-ruler.cpp:38
+msgid "Distance between successive ruler marks"
+msgstr "尺標連續刻度之間的距離"
+
+#: ../src/live_effects/lpe-ruler.cpp:39 ../share/extensions/foldablebox.inx.h:7
+#: ../share/extensions/interp_att_g.inx.h:9
+#: ../share/extensions/layout_nup.inx.h:3
+#: ../share/extensions/printing_marks.inx.h:11
+msgid "Unit:"
+msgstr "單位："
+
+#: ../src/live_effects/lpe-ruler.cpp:40
+msgid "Ma_jor length:"
+msgstr "主要長度(_J)："
+
+#: ../src/live_effects/lpe-ruler.cpp:40
+msgid "Length of major ruler marks"
+msgstr "尺標主要刻度的長度"
+
+#: ../src/live_effects/lpe-ruler.cpp:41
+msgid "Mino_r length:"
+msgstr "次要長度(_R)："
+
+#: ../src/live_effects/lpe-ruler.cpp:41
+msgid "Length of minor ruler marks"
+msgstr "尺標次要刻度的長度"
+
+#: ../src/live_effects/lpe-ruler.cpp:42
+msgid "Major steps_:"
+msgstr "主要階數_："
+
+#: ../src/live_effects/lpe-ruler.cpp:42
+msgid "Draw a major mark every ... steps"
+msgstr "每隔多長繪製一個主要刻度"
+
+#: ../src/live_effects/lpe-ruler.cpp:43
+msgid "Shift marks _by:"
+msgstr "刻度位移(_B)："
+
+#: ../src/live_effects/lpe-ruler.cpp:43
+msgid "Shift marks by this many steps"
+msgstr "依照該距離位移刻度"
+
+#: ../src/live_effects/lpe-ruler.cpp:44
+msgid "Mark direction:"
+msgstr "刻度方向："
+
+#: ../src/live_effects/lpe-ruler.cpp:44
+msgid "Direction of marks (when viewing along the path from start to end)"
+msgstr "刻度方向 (沿著路徑檢視起點到終點時)"
+
+#: ../src/live_effects/lpe-ruler.cpp:45
+msgid "_Offset:"
+msgstr "偏移(_O)："
+
+#: ../src/live_effects/lpe-ruler.cpp:45
+msgid "Offset of first mark"
+msgstr "第一個刻度的偏移量"
+
+#: ../src/live_effects/lpe-ruler.cpp:46
+msgid "Border marks:"
+msgstr "邊界刻度："
+
+#: ../src/live_effects/lpe-ruler.cpp:46
+msgid "Choose whether to draw marks at the beginning and end of the path"
+msgstr "選擇是否在路徑的起點和終點上繪製刻度"
+
+#: ../src/live_effects/lpe-show_handles.cpp:26
 msgid "Show nodes"
 msgstr "顯示節點"
 
-#: ../src/live_effects/lpe-show_handles.cpp:26
+#: ../src/live_effects/lpe-show_handles.cpp:28
 msgid "Show path"
 msgstr "顯示路徑"
 
-#: ../src/live_effects/lpe-show_handles.cpp:27
+#: ../src/live_effects/lpe-show_handles.cpp:29
+#, fuzzy
+msgid "Show center of node"
+msgstr "顯示輔助標示節點"
+
+#: ../src/live_effects/lpe-show_handles.cpp:30
 msgid "Scale nodes and handles"
 msgstr "縮放節點及控制柄"
 
-#: ../src/live_effects/lpe-show_handles.cpp:28
-#: ../src/ui/tool/multi-path-manipulator.cpp:786
-#: ../src/ui/tool/multi-path-manipulator.cpp:789
-msgid "Rotate nodes"
-msgstr "旋轉節點"
-
-#: ../src/live_effects/lpe-show_handles.cpp:54
+#: ../src/live_effects/lpe-show_handles.cpp:53
 msgid ""
 "The \"show handles\" path effect will remove any custom style on the object "
 "you are applying it to. If this is not what you want, click Cancel."
@@ -10861,304 +10970,300 @@ msgstr ""
 "「顯示控制柄」路徑特效會移除你套用在物件上所有自訂樣式。若這個效果不是你想要"
 "的，請點擊取消。"
 
-#: ../src/live_effects/lpe-simplify.cpp:20
+#: ../src/live_effects/lpe-simplify.cpp:22
 msgid "Steps:"
 msgstr "階層數："
 
-#: ../src/live_effects/lpe-simplify.cpp:20
+#: ../src/live_effects/lpe-simplify.cpp:22
 msgid "Change number of simplify steps "
 msgstr "變更簡化的階層數"
 
-#: ../src/live_effects/lpe-simplify.cpp:21
+#: ../src/live_effects/lpe-simplify.cpp:23
 msgid "Roughly threshold:"
 msgstr "粗略臨界值："
 
-#: ../src/live_effects/lpe-simplify.cpp:22
+#: ../src/live_effects/lpe-simplify.cpp:24
 msgid "Smooth angles:"
 msgstr "平滑角度："
 
-#: ../src/live_effects/lpe-simplify.cpp:22
+#: ../src/live_effects/lpe-simplify.cpp:24
 msgid "Max degree difference on handles to perform a smooth"
 msgstr "執行平滑的控制柄最大角度差值"
 
-#: ../src/live_effects/lpe-simplify.cpp:24
+#: ../src/live_effects/lpe-simplify.cpp:26
 msgid "Paths separately"
 msgstr "個別路徑"
 
-#: ../src/live_effects/lpe-simplify.cpp:24
+#: ../src/live_effects/lpe-simplify.cpp:26
 msgid "Simplifying paths (separately)"
 msgstr "簡化路徑 (個別)"
 
-#: ../src/live_effects/lpe-simplify.cpp:26
+#: ../src/live_effects/lpe-simplify.cpp:28
 msgid "Just coalesce"
 msgstr "僅合併"
 
-#: ../src/live_effects/lpe-simplify.cpp:26
+#: ../src/live_effects/lpe-simplify.cpp:28
 msgid "Simplify just coalesce"
 msgstr "簡化僅合併"
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
-#: ../src/live_effects/lpe-sketch.cpp:30
+#: ../src/live_effects/lpe-sketch.cpp:31
 msgid "Strokes:"
 msgstr "邊框："
 
-#: ../src/live_effects/lpe-sketch.cpp:30
+#: ../src/live_effects/lpe-sketch.cpp:31
 msgid "Draw that many approximating strokes"
 msgstr "繪製多少近似邊框"
 
-#: ../src/live_effects/lpe-sketch.cpp:31
+#: ../src/live_effects/lpe-sketch.cpp:32
 msgid "Max stroke length:"
 msgstr "邊框最大長度："
 
-#: ../src/live_effects/lpe-sketch.cpp:32
+#: ../src/live_effects/lpe-sketch.cpp:33
 msgid "Maximum length of approximating strokes"
 msgstr "近似邊框的最大長度"
 
-#: ../src/live_effects/lpe-sketch.cpp:33
+#: ../src/live_effects/lpe-sketch.cpp:34
 msgid "Stroke length variation:"
 msgstr "邊框長度變化量："
 
-#: ../src/live_effects/lpe-sketch.cpp:34
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Random variation of stroke length (relative to maximum length)"
 msgstr "邊框長度的隨機變化量 (相對於最大長度)"
 
-#: ../src/live_effects/lpe-sketch.cpp:35
+#: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max. overlap:"
 msgstr "重疊最大值："
 
-#: ../src/live_effects/lpe-sketch.cpp:36
+#: ../src/live_effects/lpe-sketch.cpp:37
 msgid "How much successive strokes should overlap (relative to maximum length)"
 msgstr "多少連續的邊框需要重疊 (相對於長度最大值)"
 
-#: ../src/live_effects/lpe-sketch.cpp:37
+#: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Overlap variation:"
 msgstr "重疊變化量："
 
-#: ../src/live_effects/lpe-sketch.cpp:38
+#: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of overlap (relative to maximum overlap)"
 msgstr "重疊的隨機變化量 (相對於重疊最大值)"
 
-#: ../src/live_effects/lpe-sketch.cpp:39
+#: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. end tolerance:"
 msgstr "最大末端容許值："
 
-#: ../src/live_effects/lpe-sketch.cpp:40
+#: ../src/live_effects/lpe-sketch.cpp:41
 msgid ""
 "Maximum distance between ends of original and approximating paths (relative "
 "to maximum length)"
 msgstr "原路徑末端和鄰近路徑末端之間的最大距離 (相對於最大長度)"
 
-#: ../src/live_effects/lpe-sketch.cpp:41
+#: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Average offset:"
 msgstr "平均偏移量："
 
-#: ../src/live_effects/lpe-sketch.cpp:42
+#: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Average distance each stroke is away from the original path"
 msgstr "每個邊框遠離原路徑的平均距離"
 
-#: ../src/live_effects/lpe-sketch.cpp:43
+#: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. tremble:"
 msgstr "顫抖最大值："
 
-#: ../src/live_effects/lpe-sketch.cpp:44
+#: ../src/live_effects/lpe-sketch.cpp:45
 msgid "Maximum tremble magnitude"
 msgstr "最大顫抖幅度"
 
-#: ../src/live_effects/lpe-sketch.cpp:45
+#: ../src/live_effects/lpe-sketch.cpp:46
 msgid "Tremble frequency:"
 msgstr "顫抖頻率："
 
-#: ../src/live_effects/lpe-sketch.cpp:46
+#: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Average number of tremble periods in a stroke"
 msgstr "在邊框中顫抖週期的平均數"
 
-#: ../src/live_effects/lpe-sketch.cpp:48
+#: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Construction lines:"
 msgstr "結構線："
 
-#: ../src/live_effects/lpe-sketch.cpp:49
+#: ../src/live_effects/lpe-sketch.cpp:50
 msgid "How many construction lines (tangents) to draw"
 msgstr "繪製多少條結構線 (切線)"
 
-#: ../src/live_effects/lpe-sketch.cpp:50
+#: ../src/live_effects/lpe-sketch.cpp:51
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2779
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 msgid "Scale:"
 msgstr "級別："
 
-#: ../src/live_effects/lpe-sketch.cpp:51
+#: ../src/live_effects/lpe-sketch.cpp:52
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
 "5*offset)"
 msgstr "比例係數與曲率和結構線長度相關 (嘗試 5*偏移量)"
 
-#: ../src/live_effects/lpe-sketch.cpp:52
+#: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Max. length:"
 msgstr "最大長度："
 
-#: ../src/live_effects/lpe-sketch.cpp:52
+#: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Maximum length of construction lines"
 msgstr "結構線的最大長度"
 
-#: ../src/live_effects/lpe-sketch.cpp:53
+#: ../src/live_effects/lpe-sketch.cpp:54
 msgid "Length variation:"
 msgstr "長度變化量："
 
-#: ../src/live_effects/lpe-sketch.cpp:53
+#: ../src/live_effects/lpe-sketch.cpp:54
 msgid "Random variation of the length of construction lines"
 msgstr "結構線長度的隨機變化量"
 
-#: ../src/live_effects/lpe-sketch.cpp:54
+#: ../src/live_effects/lpe-sketch.cpp:55
 msgid "Placement randomness:"
 msgstr "分佈隨機性："
 
-#: ../src/live_effects/lpe-sketch.cpp:54
+#: ../src/live_effects/lpe-sketch.cpp:55
 msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr "0：均勻分佈的結構線，1：完全隨機分佈"
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "k_min:"
 msgstr "k 最小值(_M)："
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "min curvature"
 msgstr "最小曲率"
 
-#: ../src/live_effects/lpe-sketch.cpp:57
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "k_max:"
 msgstr "k 最大值(_M)："
 
-#: ../src/live_effects/lpe-sketch.cpp:57
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "max curvature"
 msgstr "最大曲率"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:58
+#: ../src/live_effects/lpe-taperstroke.cpp:60
 msgid "Extrapolated"
 msgstr "外推"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:65
+#: ../src/live_effects/lpe-taperstroke.cpp:67
 #: ../share/extensions/edge3d.inx.h:5 ../share/extensions/nicechart.inx.h:25
 msgid "Stroke width:"
 msgstr "邊框寬度："
 
-#: ../src/live_effects/lpe-taperstroke.cpp:65
+#: ../src/live_effects/lpe-taperstroke.cpp:67
 msgid "The (non-tapered) width of the path"
 msgstr "該路徑的寬度 (非錐化的寬度)"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:66
+#: ../src/live_effects/lpe-taperstroke.cpp:68
 msgid "Start offset:"
 msgstr "起始偏移："
 
-#: ../src/live_effects/lpe-taperstroke.cpp:66
+#: ../src/live_effects/lpe-taperstroke.cpp:68
 msgid "Taper distance from path start"
 msgstr "路徑起點的錐化距離"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:67
+#: ../src/live_effects/lpe-taperstroke.cpp:69
 msgid "End offset:"
 msgstr "結束偏移："
 
-#: ../src/live_effects/lpe-taperstroke.cpp:67
+#: ../src/live_effects/lpe-taperstroke.cpp:69
 msgid "The ending position of the taper"
 msgstr "錐化的結束位置"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:68
+#: ../src/live_effects/lpe-taperstroke.cpp:70
 msgid "Taper smoothing:"
 msgstr "錐化平滑："
 
-#: ../src/live_effects/lpe-taperstroke.cpp:68
+#: ../src/live_effects/lpe-taperstroke.cpp:70
 msgid "Amount of smoothing to apply to the tapers"
 msgstr "套用到錐化的平滑程度"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:69
+#: ../src/live_effects/lpe-taperstroke.cpp:71
 msgid "Join type:"
 msgstr "接合類型："
 
-#: ../src/live_effects/lpe-taperstroke.cpp:69
+#: ../src/live_effects/lpe-taperstroke.cpp:71
 msgid "Join type for non-smooth nodes"
 msgstr "非平滑節點的接合類型"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:70
+#: ../src/live_effects/lpe-taperstroke.cpp:72
 msgid "Limit for miter joins"
 msgstr "斜切接合的限制"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:439
+#: ../src/live_effects/lpe-taperstroke.cpp:441
 msgid "Start point of the taper"
 msgstr "錐化的起點"
 
-#: ../src/live_effects/lpe-taperstroke.cpp:443
+#: ../src/live_effects/lpe-taperstroke.cpp:445
 msgid "End point of the taper"
 msgstr "錐化的末端"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:28
+#: ../src/live_effects/lpe-transform_2pts.cpp:29
 msgid "Elastic"
 msgstr "彈性伸縮"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:28
+#: ../src/live_effects/lpe-transform_2pts.cpp:29
 msgid "Elastic transform mode"
 msgstr "彈性伸縮變形模式"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:29
+#: ../src/live_effects/lpe-transform_2pts.cpp:30
 msgid "From original width"
 msgstr "原本路徑寬度"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:30
+#: ../src/live_effects/lpe-transform_2pts.cpp:31
 msgid "Lock length"
 msgstr "鎖定長度"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:30
+#: ../src/live_effects/lpe-transform_2pts.cpp:31
 msgid "Lock length to current distance"
 msgstr "鎖定長度到目前距離"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:31
+#: ../src/live_effects/lpe-transform_2pts.cpp:32
 msgid "Lock angle"
 msgstr "鎖定角度"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:32
+#: ../src/live_effects/lpe-transform_2pts.cpp:33
 msgid "Flip horizontal"
 msgstr "水平翻轉"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:33
+#: ../src/live_effects/lpe-transform_2pts.cpp:34
 msgid "Flip vertical"
 msgstr "垂直翻轉"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:34
-msgid "Start point"
-msgstr "起始點"
-
-#: ../src/live_effects/lpe-transform_2pts.cpp:35
+#: ../src/live_effects/lpe-transform_2pts.cpp:36
 msgid "End point"
 msgstr "結束點"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:36
+#: ../src/live_effects/lpe-transform_2pts.cpp:37
 msgid "Stretch"
 msgstr "拉伸"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:36
+#: ../src/live_effects/lpe-transform_2pts.cpp:37
 msgid "Stretch the result"
 msgstr "拉伸結果"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:37
+#: ../src/live_effects/lpe-transform_2pts.cpp:38
 msgid "Offset from knots"
 msgstr "環結偏移"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:38
+#: ../src/live_effects/lpe-transform_2pts.cpp:39
 msgid "First Knot"
 msgstr "第一個環結"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:39
+#: ../src/live_effects/lpe-transform_2pts.cpp:40
 msgid "Last Knot"
 msgstr "最後環結"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:40
+#: ../src/live_effects/lpe-transform_2pts.cpp:41
 msgid "Rotation helper size"
 msgstr "旋轉輔助標示尺寸"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:192
+#: ../src/live_effects/lpe-transform_2pts.cpp:193
 msgid "Change index of knot"
 msgstr "變更環結索引"
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:345
+#: ../src/live_effects/lpe-transform_2pts.cpp:346
 #: ../src/ui/dialog/inkscape-preferences.cpp:1587
 #: ../src/ui/dialog/pixelartdialog.cpp:290
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:796
@@ -11229,8 +11334,8 @@ msgstr "變更邏輯參數"
 msgid "Change enumeration parameter"
 msgstr "變更計算參數"
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:778
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:839
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:777
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:835
 msgid ""
 "<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
@@ -11238,8 +11343,8 @@ msgstr ""
 "<b>倒角</b>：<b>Ctrl+滑鼠點擊</b>可開啟/關閉類型，<b>Shift+滑鼠點擊</b>可開啟"
 "對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可重設"
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:782
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:781
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:839
 msgid ""
 "<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
@@ -11247,8 +11352,8 @@ msgstr ""
 "<b>反轉倒角</b>：<b>Ctrl+滑鼠點擊</b>可開啟/關閉類型，<b>Shift+滑鼠點擊</b>可"
 "開啟對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可重設"
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:786
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:785
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
 msgid ""
 "<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
@@ -11256,14 +11361,18 @@ msgstr ""
 "<b>反轉圓角</b>：<b>Ctrl+滑鼠點擊</b>可開啟/關閉類型，<b>Shift+滑鼠點擊</b>可"
 "開啟對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可重設"
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:790
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:851
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:789
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
 msgid ""
 "<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 "<b>圓角</b>：<b>Ctrl+滑鼠點擊</b>可開啟/關閉類型，<b>Shift+滑鼠點擊</b>可開啟"
 "對話窗，<b>Ctrl+Alt+滑鼠點擊</b>可重設"
+
+#: ../src/live_effects/parameter/fontbutton.cpp:68
+msgid "Change font button parameter"
+msgstr "變更字型按鈕參數"
 
 #: ../src/live_effects/parameter/originalpath.cpp:67
 #: ../src/live_effects/parameter/originalpatharray.cpp:155
@@ -11338,7 +11447,7 @@ msgstr "連結到剪貼簿的路徑"
 msgid "Paste path parameter"
 msgstr "貼上路徑參數"
 
-#: ../src/live_effects/parameter/point.cpp:135
+#: ../src/live_effects/parameter/point.cpp:131
 msgid "Change point parameter"
 msgstr "變更點的參數"
 
@@ -11356,20 +11465,16 @@ msgstr ""
 msgid "Change random parameter"
 msgstr "變更隨機參數"
 
-#: ../src/live_effects/parameter/text.cpp:124
+#: ../src/live_effects/parameter/text.cpp:127
 msgid "Change text parameter"
 msgstr "變更文字參數"
-
-#: ../src/live_effects/parameter/fontbutton.cpp:68
-msgid "Change font button parameter"
-msgstr "變更字型按鈕參數"
 
 #: ../src/live_effects/parameter/togglebutton.cpp:112
 msgid "Change togglebutton parameter"
 msgstr "變更開關按鈕參數"
 
 #: ../src/live_effects/parameter/transformedpoint.cpp:98
-#: ../src/live_effects/parameter/vector.cpp:99
+#: ../src/live_effects/parameter/vector.cpp:98
 msgid "Change vector parameter"
 msgstr "變更向量參數"
 
@@ -11382,7 +11487,7 @@ msgstr "變更單位參數"
 msgid "Unable to find verb ID '%s' specified on the command line.\n"
 msgstr "無法在命令列上找到指定的動詞 ID「%s」。\n"
 
-#: ../src/main-cmdlineact.cpp:77
+#: ../src/main-cmdlineact.cpp:77 ../src/main-cmdlinexact.cpp:255
 #, c-format
 msgid "Unable to find node ID: '%s'\n"
 msgstr "無法找到節點 ID：「%s」\n"
@@ -11818,19 +11923,19 @@ msgstr "物件轉成路徑"
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "選取區中<b>沒有物件</b>可以轉成路徑。"
 
-#: ../src/path-chemistry.cpp:612
+#: ../src/path-chemistry.cpp:613
 msgid "Select <b>path(s)</b> to reverse."
 msgstr "選擇要反轉的<b>路徑</b>。"
 
-#: ../src/path-chemistry.cpp:620
+#: ../src/path-chemistry.cpp:621
 msgid "Reversing paths..."
 msgstr "正在反轉路徑..."
 
-#: ../src/path-chemistry.cpp:658
+#: ../src/path-chemistry.cpp:659
 msgid "Reverse path"
 msgstr "反轉路徑"
 
-#: ../src/path-chemistry.cpp:661
+#: ../src/path-chemistry.cpp:662
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以反轉。"
 
@@ -11842,27 +11947,27 @@ msgstr "切換消逝點"
 msgid "Toggle multiple vanishing points"
 msgstr "切換多個消逝點"
 
-#: ../src/preferences-skeleton.h:102
+#: ../src/preferences-skeleton.h:101
 msgid "Dip pen"
 msgstr "沾水筆"
 
-#: ../src/preferences-skeleton.h:103
+#: ../src/preferences-skeleton.h:102
 msgid "Marker"
 msgstr "麥克筆"
 
-#: ../src/preferences-skeleton.h:104
+#: ../src/preferences-skeleton.h:103
 msgid "Brush"
 msgstr "筆刷"
 
-#: ../src/preferences-skeleton.h:105
+#: ../src/preferences-skeleton.h:104
 msgid "Wiggly"
 msgstr "波浪"
 
-#: ../src/preferences-skeleton.h:106
+#: ../src/preferences-skeleton.h:105
 msgid "Splotchy"
 msgstr "弄髒"
 
-#: ../src/preferences-skeleton.h:107
+#: ../src/preferences-skeleton.h:106
 msgid "Tracing"
 msgstr "描繪"
 
@@ -12156,7 +12261,7 @@ msgstr "選擇要解散的<b>群組</b>。"
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "選取區中<b>沒有群組</b>可以解散。"
 
-#: ../src/selection-chemistry.cpp:886 ../src/sp-item-group.cpp:654
+#: ../src/selection-chemistry.cpp:886 ../src/sp-item-group.cpp:655
 #: ../src/ui/dialog/objects.cpp:1903
 msgid "Ungroup"
 msgstr "解散群組"
@@ -12866,7 +12971,7 @@ msgstr "%s; <i>已套用濾鏡</i>"
 msgid "Line"
 msgstr "線"
 
-#: ../src/sp-lpe-item.cpp:254 ../src/sp-lpe-item.cpp:707
+#: ../src/sp-lpe-item.cpp:255 ../src/sp-lpe-item.cpp:707
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "執行路徑特效期間發生異常。"
 
@@ -13066,7 +13171,8 @@ msgstr "其中一個物件<b>不是路徑</b>，無法執行布林運算。"
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
-msgstr "無法決定選取物件的<b>排列順序</b>來進行差集﹑互斥 (XOR)﹑分割或剪切路徑。"
+msgstr ""
+"無法決定選取物件的<b>排列順序</b>來進行差集﹑互斥 (XOR)﹑分割或剪切路徑。"
 
 #: ../src/splivarot.cpp:1644
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
@@ -13423,7 +13529,7 @@ msgid "Rearrange"
 msgstr "重新排列"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
-#: ../src/widgets/toolbox.cpp:1762
+#: ../src/widgets/toolbox.cpp:1767
 msgid "Nodes"
 msgstr "節點"
 
@@ -14240,7 +14346,8 @@ msgstr "使用已儲存的鋪排大小和位置"
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
-msgstr "假定鋪排的大小和位置跟上一次使用鋪排時相同 (如果有的話)，而不是使用目前的大小"
+msgstr ""
+"假定鋪排的大小和位置跟上一次使用鋪排時相同 (如果有的話)，而不是使用目前的大小"
 
 #: ../src/ui/dialog/clonetiler.cpp:1104
 msgid " <b>_Create</b> "
@@ -14645,7 +14752,7 @@ msgstr "移除(_R)"
 msgid "Remove selected grid."
 msgstr "移除選擇的格線。"
 
-#: ../src/ui/dialog/document-properties.cpp:150 ../src/widgets/toolbox.cpp:1869
+#: ../src/ui/dialog/document-properties.cpp:150 ../src/widgets/toolbox.cpp:1874
 msgid "Guides"
 msgstr "參考線"
 
@@ -14881,8 +14988,8 @@ msgid ""
 "Enables ADAM7 interlacing for PNG output. This results in slightly heavier "
 "images, but big images will look better sooner when loading the file"
 msgstr ""
-"PNG 輸出啟用 ADAM7 交錯顯示。"
-"這會些微增加圖片體積，但是載入大圖片時會有更好的視覺體驗"
+"PNG 輸出啟用 ADAM7 交錯顯示。這會些微增加圖片體積，但是載入大圖片時會有更好的"
+"視覺體驗"
 
 #: ../src/ui/dialog/export.cpp:149
 msgid "Bit depth"
@@ -14985,7 +15092,9 @@ msgstr "進階"
 msgid ""
 "Will force-set the physical dpi for the png file. Set this to 72 if you're "
 "planning to work on your png with Photoshop"
-msgstr "強制設定 png 檔案的物理 dpi。若你之後要用 Photoshop 處理此圖片請將此項設定為 72"
+msgstr ""
+"強制設定 png 檔案的物理 dpi。若你之後要用 Photoshop 處理此圖片請將此項設定為 "
+"72"
 
 #: ../src/ui/dialog/export.cpp:480
 msgid "bitmap"
@@ -15233,6 +15342,8 @@ msgstr "解析度 (每英寸多少點)"
 #. #########################################
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1483
+#: ../share/extensions/docinfo.inx.h:4 ../share/extensions/dpi90to96.inx.h:2
+#: ../share/extensions/dpi96to90.inx.h:2
 msgid "Document"
 msgstr "文件"
 
@@ -15908,7 +16019,8 @@ msgstr ""
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
-msgstr "此<b>圖片 (feImage) </b>濾鏡基元會用外部的影像或文件的其他部份來填充該區域。"
+msgstr ""
+"此<b>圖片 (feImage) </b>濾鏡基元會用外部的影像或文件的其他部份來填充該區域。"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2893
 msgid ""
@@ -16155,7 +16267,7 @@ msgstr "螺旋形"
 msgid "Search spirals"
 msgstr "搜尋螺旋形"
 
-#: ../src/ui/dialog/find.cpp:96 ../src/widgets/toolbox.cpp:1770
+#: ../src/ui/dialog/find.cpp:96 ../src/widgets/toolbox.cpp:1775
 msgid "Paths"
 msgstr "路徑"
 
@@ -17432,7 +17544,8 @@ msgstr "拖曳節點時更新輪廓"
 msgid ""
 "Update the outline when dragging or transforming nodes; if this is off, the "
 "outline will only update when completing a drag"
-msgstr "拖曳或變形節點時更新輪廓；若停用這選項，只有在完成拖曳動作時才會更新輪廓"
+msgstr ""
+"拖曳或變形節點時更新輪廓；若停用這選項，只有在完成拖曳動作時才會更新輪廓"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:359
 msgid "Update paths when dragging nodes"
@@ -17442,7 +17555,8 @@ msgstr "拖曳節點時更新路徑"
 msgid ""
 "Update paths when dragging or transforming nodes; if this is off, paths will "
 "only be updated when completing a drag"
-msgstr "拖曳或變形節點時更新路徑；若停用這選項，只有在完成拖曳動作時才會更新路徑"
+msgstr ""
+"拖曳或變形節點時更新路徑；若停用這選項，只有在完成拖曳動作時才會更新路徑"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:361
 msgid "Show path direction on outlines"
@@ -17552,7 +17666,8 @@ msgstr "草圖模式"
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch"
-msgstr "若開啟，該草圖結果是全部草圖製作的普通平均值，而不是用新草圖平均之前的結果"
+msgstr ""
+"若開啟，該草圖結果是全部草圖製作的普通平均值，而不是用新草圖平均之前的結果"
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:431
@@ -17915,7 +18030,8 @@ msgid "Kannada (kn)"
 msgstr "坎那達語 (kn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
-msgid "Kashmiri in Peso-Arabic script (ks@aran)"
+#, fuzzy
+msgid "Kashmiri in Perso-Arabic script (ks@aran)"
 msgstr "披索阿拉伯書寫體喀什米爾語 (ks@aran)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
@@ -18628,7 +18744,8 @@ msgstr "使用命名顏色"
 msgid ""
 "If set, write the CSS name of the color when available (e.g. 'red' or "
 "'magenta') instead of the numeric value"
-msgstr "若設定，可用 (例如：'red' 或 'magenta') 時寫入顏色的 CSS 名稱而不是數值"
+msgstr ""
+"若設定，可用 (例如：'red' 或 'magenta') 時寫入顏色的 CSS 名稱而不是數值"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:909
 msgid "XML formatting"
@@ -18807,7 +18924,8 @@ msgstr "編輯階段"
 msgid ""
 "Check attributes and style properties while editing SVG files (may slow down "
 "Inkscape, mostly useful for debugging)"
-msgstr "編輯 SVG 檔案時檢查屬性值和樣式屬性 (可能會讓 Inkscape 變慢，大多用來除錯)"
+msgstr ""
+"編輯 SVG 檔案時檢查屬性值和樣式屬性 (可能會讓 Inkscape 變慢，大多用來除錯)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:969
 msgid "Writing"
@@ -19344,7 +19462,8 @@ msgid ""
 "When dragging a knot along a constraint line, then snap the position of the "
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
-msgstr "沿著限定直線拖曳節點時，貼齊滑鼠游標的位置而不是向限定線來貼齊環結的突起部位"
+msgstr ""
+"沿著限定直線拖曳節點時，貼齊滑鼠游標的位置而不是向限定線來貼齊環結的突起部位"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Delayed snap"
@@ -19651,7 +19770,8 @@ msgstr "MiB"
 msgid ""
 "Set the amount of memory per document which can be used to store rendered "
 "parts of the drawing for later reuse; set to zero to disable caching"
-msgstr "設定每份文件存取稍候可重複使用的圖畫繪算部分記憶體容量；設定為零可停用快取"
+msgstr ""
+"設定每份文件存取稍候可重複使用的圖畫繪算部分記憶體容量；設定為零可停用快取"
 
 #. blur quality
 #. filter quality
@@ -19689,7 +19809,8 @@ msgstr "高斯模糊顯示品質"
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
-msgstr "最佳品質，於高倍畫面縮放時顯示也許會非常慢 (點陣圖匯出時會自動使用最佳品質)"
+msgstr ""
+"最佳品質，於高倍畫面縮放時顯示也許會非常慢 (點陣圖匯出時會自動使用最佳品質)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1427
 #: ../src/ui/dialog/inkscape-preferences.cpp:1451
@@ -19819,7 +19940,8 @@ msgstr "點陣圖"
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added separately to "
-msgstr "選擇要使用的預先定義快捷鍵檔案。任何你建立的自訂快捷鍵都會個別加入到該檔案"
+msgstr ""
+"選擇要使用的預先定義快捷鍵檔案。任何你建立的自訂快捷鍵都會個別加入到該檔案"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1528
 msgid "Shortcut file:"
@@ -19937,7 +20059,8 @@ msgstr "預先繪算命名圖示"
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
-msgstr "開啟時，顯示使用介面前會繪算命名圖示。這是為了避開在 GTK+ 命名圖示通知的錯誤"
+msgstr ""
+"開啟時，顯示使用介面前會繪算命名圖示。這是為了避開在 GTK+ 命名圖示通知的錯誤"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1941
 msgid "System info"
@@ -20332,11 +20455,11 @@ msgstr "路徑特效向上移"
 msgid "Move path effect down"
 msgstr "路徑特效向下移"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:585
+#: ../src/ui/dialog/livepatheffect-editor.cpp:587
 msgid "Activate path effect"
 msgstr "使用中的路徑特效"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:585
+#: ../src/ui/dialog/livepatheffect-editor.cpp:587
 msgid "Deactivate path effect"
 msgstr "非使用中的路徑特效"
 
@@ -20698,13 +20821,15 @@ msgstr "物件有套用裁剪或遮罩嗎？"
 msgid ""
 "Highlight color of outline in Node tool. Click to set. If alpha is zero, use "
 "inherited color."
-msgstr "節點工具中外框的高亮度顯示顏色。點擊可設定。如果透明值為零，使用繼承的顏色。"
+msgstr ""
+"節點工具中外框的高亮度顯示顏色。點擊可設定。如果透明值為零，使用繼承的顏色。"
 
 #: ../src/ui/dialog/objects.cpp:1730
 msgid ""
 "Layer/Group/Object label (inkscape:label). Double-click to set. Default "
 "value is object 'id'."
-msgstr "圖層/群組/物件標籤 (inkscape:label)。點擊兩下可設定。預設值是物件「識別碼」。"
+msgstr ""
+"圖層/群組/物件標籤 (inkscape:label)。點擊兩下可設定。預設值是物件「識別碼」。"
 
 #: ../src/ui/dialog/objects.cpp:1818
 msgid "Add layer..."
@@ -21334,8 +21459,8 @@ msgstr "樣本文字"
 msgid "Preview Text:"
 msgstr "預覽文字："
 
-#: ../src/ui/dialog/swatches.cpp:193 ../src/ui/tools/gradient-tool.cpp:353
-#: ../src/ui/tools/gradient-tool.cpp:451 ../src/widgets/gradient-vector.cpp:765
+#: ../src/ui/dialog/swatches.cpp:193 ../src/ui/tools/gradient-tool.cpp:359
+#: ../src/ui/tools/gradient-tool.cpp:457 ../src/widgets/gradient-vector.cpp:765
 msgid "Add gradient stop"
 msgstr "加入漸層停止點"
 
@@ -21466,27 +21591,27 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
 #. Align buttons
-#: ../src/ui/dialog/text-edit.cpp:90 ../src/widgets/text-toolbar.cpp:1672
-#: ../src/widgets/text-toolbar.cpp:1673
+#: ../src/ui/dialog/text-edit.cpp:90 ../src/widgets/text-toolbar.cpp:1776
+#: ../src/widgets/text-toolbar.cpp:1777
 msgid "Align left"
 msgstr "靠左對齊"
 
-#: ../src/ui/dialog/text-edit.cpp:91 ../src/widgets/text-toolbar.cpp:1680
-#: ../src/widgets/text-toolbar.cpp:1681
+#: ../src/ui/dialog/text-edit.cpp:91 ../src/widgets/text-toolbar.cpp:1784
+#: ../src/widgets/text-toolbar.cpp:1785
 msgid "Align center"
 msgstr "置中"
 
-#: ../src/ui/dialog/text-edit.cpp:92 ../src/widgets/text-toolbar.cpp:1688
-#: ../src/widgets/text-toolbar.cpp:1689
+#: ../src/ui/dialog/text-edit.cpp:92 ../src/widgets/text-toolbar.cpp:1792
+#: ../src/widgets/text-toolbar.cpp:1793
 msgid "Align right"
 msgstr "靠右對齊"
 
-#: ../src/ui/dialog/text-edit.cpp:93 ../src/widgets/text-toolbar.cpp:1697
+#: ../src/ui/dialog/text-edit.cpp:93 ../src/widgets/text-toolbar.cpp:1801
 msgid "Justify (only flowed text)"
 msgstr "左右對齊 (僅流動文字)"
 
 #. Direction buttons
-#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1732
+#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1836
 msgid "Horizontal text"
 msgstr "橫書"
 
@@ -22282,7 +22407,8 @@ msgstr "調整<b>垂直圓角</b>半徑；按著 <b>Ctrl</b> 可讓水平半徑�
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
-msgstr "調整矩形的<b>寬度和高度</b>；按著 <b>Ctrl</b> 可鎖定比例或只伸展單一尺寸"
+msgstr ""
+"調整矩形的<b>寬度和高度</b>；按著 <b>Ctrl</b> 可鎖定比例或只伸展單一尺寸"
 
 #: ../src/ui/object-edit.cpp:707 ../src/ui/object-edit.cpp:711
 #: ../src/ui/object-edit.cpp:715 ../src/ui/object-edit.cpp:719
@@ -22320,9 +22446,9 @@ msgid ""
 "move with <b>end point</b>; with <b>Ctrl</b> to snap angle; drag <b>inside</"
 "b> the ellipse for arc, <b>outside</b> for segment"
 msgstr ""
-"設定弧形或線段的<b>起點</b>位置；按著 <b>Shift</b> 可移動<b>終點</b>；按著 <b>Ctrl</b> 可貼齊角度；拖曳橢圓形<b"
-">內"
-"部</b>可成為弧形，而<b>外部</b>可成為扇形"
+"設定弧形或線段的<b>起點</b>位置；按著 <b>Shift</b> 可移動<b>終點</b>；按著 "
+"<b>Ctrl</b> 可貼齊角度；拖曳橢圓形<b>內部</b>可成為弧形，而<b>外部</b>可成為"
+"扇形"
 
 #: ../src/ui/object-edit.cpp:1005
 msgid ""
@@ -22330,9 +22456,9 @@ msgid ""
 "move with <b>start point</b>; with <b>Ctrl</b> to snap angle; drag "
 "<b>inside</b> the ellipse for arc, <b>outside</b> for segment"
 msgstr ""
-"設定弧形或線段的<b>終點</b>位置；按著 <b>Shift</b> 可移動<b>起點</b>；按著 <b>Ctrl</b> 可貼齊角度；拖曳橢圓形<b"
-">內"
-"部</b>可成為弧形，而<b>外部</b>可成為扇形。"
+"設定弧形或線段的<b>終點</b>位置；按著 <b>Shift</b> 可移動<b>起點</b>；按著 "
+"<b>Ctrl</b> 可貼齊角度；拖曳橢圓形<b>內部</b>可成為弧形，而<b>外部</b>可成為"
+"扇形。"
 
 #: ../src/ui/object-edit.cpp:1152
 msgid ""
@@ -22476,6 +22602,11 @@ msgstr "水平移動節點"
 msgid "Move nodes vertically"
 msgstr "垂直移動節點"
 
+#: ../src/ui/tool/multi-path-manipulator.cpp:786
+#: ../src/ui/tool/multi-path-manipulator.cpp:789
+msgid "Rotate nodes"
+msgstr "旋轉節點"
+
 #: ../src/ui/tool/multi-path-manipulator.cpp:793
 #: ../src/ui/tool/multi-path-manipulator.cpp:799
 msgid "Scale nodes uniformly"
@@ -22525,22 +22656,22 @@ msgstr "對稱節點控制柄"
 msgid "Auto-smooth node handle"
 msgstr "自動平滑節點控制柄"
 
-#: ../src/ui/tool/node.cpp:489
+#: ../src/ui/tool/node.cpp:486
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
 msgstr "更進一步：Shift, Ctrl, Alt"
 
-#: ../src/ui/tool/node.cpp:491
+#: ../src/ui/tool/node.cpp:488
 msgctxt "Path handle tip"
 msgid "more: Ctrl"
 msgstr "更進一步：Ctrl"
 
-#: ../src/ui/tool/node.cpp:493
+#: ../src/ui/tool/node.cpp:490
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
 msgstr "更進一步：Ctrl, Alt"
 
-#: ../src/ui/tool/node.cpp:499
+#: ../src/ui/tool/node.cpp:496
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -22548,24 +22679,24 @@ msgid ""
 "increments while rotating both handles"
 msgstr "<b>Shift+Ctrl+Alt</b>：固定長度且同時旋轉控制柄時貼齊角度為 %g° 遞增"
 
-#: ../src/ui/tool/node.cpp:504
+#: ../src/ui/tool/node.cpp:501
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 msgstr "<b>Ctrl+Alt</b>：固定長度且貼齊角度為 %g° 遞增"
 
-#: ../src/ui/tool/node.cpp:510
+#: ../src/ui/tool/node.cpp:507
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
 msgstr "<b>Shift+Alt</b>：固定控制柄長度並同時旋轉控制柄"
 
-#: ../src/ui/tool/node.cpp:513
+#: ../src/ui/tool/node.cpp:510
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
 msgstr "<b>Alt</b>：拖曳時固定控制柄長度"
 
-#: ../src/ui/tool/node.cpp:520
+#: ../src/ui/tool/node.cpp:517
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -22573,34 +22704,34 @@ msgid ""
 "handles"
 msgstr "<b>Shift+Ctrl</b>：貼齊旋轉角度為 %g° 遞增並同時旋轉控制柄"
 
-#: ../src/ui/tool/node.cpp:524
+#: ../src/ui/tool/node.cpp:521
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: Snap handle to steps defined in BSpline Live Path Effect"
 msgstr "<b>Ctrl</b>: 以貝氏雲形線即時特效中定義的階數貼齊控制柄"
 
-#: ../src/ui/tool/node.cpp:527
+#: ../src/ui/tool/node.cpp:524
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr "<b>Ctrl</b>：貼齊旋轉角度為 %g° 遞增，點擊可收縮"
 
-#: ../src/ui/tool/node.cpp:532
+#: ../src/ui/tool/node.cpp:529
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
 msgstr "<b>Shift</b>：以相同角度同時旋轉控制柄"
 
-#: ../src/ui/tool/node.cpp:535
+#: ../src/ui/tool/node.cpp:532
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: move handle"
 msgstr "<b>Shift</b>：移動節點控柄"
 
-#: ../src/ui/tool/node.cpp:542 ../src/ui/tool/node.cpp:546
+#: ../src/ui/tool/node.cpp:539 ../src/ui/tool/node.cpp:543
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr "<b>自動節點控制柄</b>：拖曳可轉換成平滑節點 (%s)"
 
-#: ../src/ui/tool/node.cpp:549
+#: ../src/ui/tool/node.cpp:546
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -22610,44 +22741,44 @@ msgstr ""
 "<b>貝氏雲形線節點控制柄</b>：Shift 鍵可以拖曳，滑鼠點擊兩下可以重設 (%s)。%g"
 "力量"
 
-#: ../src/ui/tool/node.cpp:569
+#: ../src/ui/tool/node.cpp:566
 #, c-format
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr "移動控制柄到 %s, %s；角度 %.2f°、長度 %s"
 
-#: ../src/ui/tool/node.cpp:1420
+#: ../src/ui/tool/node.cpp:1414
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr "<b>Shift</b>：按住控制點，點擊可切換選取"
 
-#: ../src/ui/tool/node.cpp:1422
+#: ../src/ui/tool/node.cpp:1416
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr "<b>Shift</b>：點擊可切換選取"
 
-#: ../src/ui/tool/node.cpp:1427
+#: ../src/ui/tool/node.cpp:1421
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr "<b>Ctrl+Alt</b>：沿著控制線移動，點擊可刪除節點"
 
-#: ../src/ui/tool/node.cpp:1430
+#: ../src/ui/tool/node.cpp:1424
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr "<b>Ctrl</b>：沿著坐標軸移動，點擊可改變節點類型"
 
-#: ../src/ui/tool/node.cpp:1434
+#: ../src/ui/tool/node.cpp:1428
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr "<b>Alt</b>：雕塑節點"
 
-#: ../src/ui/tool/node.cpp:1443
+#: ../src/ui/tool/node.cpp:1437
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr "<b>%s</b>：拖曳可改變路徑的形狀 (更進一步：Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1446
+#: ../src/ui/tool/node.cpp:1440
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22657,7 +22788,7 @@ msgstr ""
 "<b>貝氏雲形線節點</b>：拖曳可改變路徑的形狀 (更進一步：Shift, Ctrl, Alt)。%g "
 "力量"
 
-#: ../src/ui/tool/node.cpp:1449
+#: ../src/ui/tool/node.cpp:1443
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22667,7 +22798,7 @@ msgstr ""
 "<b>%s</b>：拖曳可改變路徑的形狀，點擊可切換縮放 / 旋轉控制點 (更進一步："
 "Shift, Ctrl, Alt)"
 
-#: ../src/ui/tool/node.cpp:1453
+#: ../src/ui/tool/node.cpp:1447
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22677,7 +22808,7 @@ msgstr ""
 "<b>%s</b>：拖曳可改變路徑的形狀，點擊可只選取此節點 (更進一步：Shift, Ctrl, "
 "Alt)"
 
-#: ../src/ui/tool/node.cpp:1456
+#: ../src/ui/tool/node.cpp:1450
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22687,17 +22818,17 @@ msgstr ""
 "<b>貝氏雲形線節點</b>：拖曳可改變路徑的形狀，點擊可以只選取該節點 (更進一步："
 "Shift, Ctrl, Alt)。%g 力量"
 
-#: ../src/ui/tool/node.cpp:1469
+#: ../src/ui/tool/node.cpp:1463
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr "移動節點到 %s, %s "
 
-#: ../src/ui/tool/node.cpp:1480
+#: ../src/ui/tool/node.cpp:1474
 msgid "Symmetric node"
 msgstr "對稱節點"
 
-#: ../src/ui/tool/node.cpp:1481
+#: ../src/ui/tool/node.cpp:1475
 msgid "Auto-smooth node"
 msgstr "自動平滑節點"
 
@@ -22714,19 +22845,19 @@ msgid "Rotate handle"
 msgstr "旋轉控制"
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1542 ../src/widgets/node-toolbar.cpp:395
+#: ../src/ui/tool/path-manipulator.cpp:1545 ../src/widgets/node-toolbar.cpp:395
 msgid "Delete node"
 msgstr "刪除節點"
 
-#: ../src/ui/tool/path-manipulator.cpp:1550
+#: ../src/ui/tool/path-manipulator.cpp:1553
 msgid "Cycle node type"
 msgstr "循環節點類型"
 
-#: ../src/ui/tool/path-manipulator.cpp:1565
+#: ../src/ui/tool/path-manipulator.cpp:1568
 msgid "Drag handle"
 msgstr "拖曳控制點"
 
-#: ../src/ui/tool/path-manipulator.cpp:1574
+#: ../src/ui/tool/path-manipulator.cpp:1577
 msgid "Retract handle"
 msgstr "收縮控制點"
 
@@ -22866,7 +22997,8 @@ msgstr "<b>拖曳</b>、<b>點擊</b>或<b>滾動滑鼠滾輪</b>來噴灑選取
 msgid ""
 "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and "
 "resize. <b>Click</b> to select."
-msgstr "<b>拖曳</b>可建立矩形。<b>拖曳控制點</b>可調整圓角及大小。<b>點擊</b>可選取。"
+msgstr ""
+"<b>拖曳</b>可建立矩形。<b>拖曳控制點</b>可調整圓角及大小。<b>點擊</b>可選取。"
 
 #: ../src/ui/tools-switch.cpp:100
 msgid ""
@@ -22888,7 +23020,8 @@ msgstr ""
 msgid ""
 "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. "
 "<b>Click</b> to select."
-msgstr "<b>拖曳</b>可建立星形。<b>拖曳控制點</b>可編輯星形的形狀。<b>點擊</b>可選取。"
+msgstr ""
+"<b>拖曳</b>可建立星形。<b>拖曳控制點</b>可編輯星形的形狀。<b>點擊</b>可選取。"
 
 #: ../src/ui/tools-switch.cpp:103
 msgid ""
@@ -23222,13 +23355,13 @@ msgid "Create single dot"
 msgstr "建立單一點"
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
-#: ../src/ui/tools/gradient-tool.cpp:114 ../src/ui/tools/mesh-tool.cpp:123
+#: ../src/ui/tools/gradient-tool.cpp:120 ../src/ui/tools/mesh-tool.cpp:139
 #, c-format
 msgid "%s selected"
 msgstr "已選取 %s"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/ui/tools/gradient-tool.cpp:116 ../src/ui/tools/gradient-tool.cpp:125
+#: ../src/ui/tools/gradient-tool.cpp:122 ../src/ui/tools/gradient-tool.cpp:131
 #, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
@@ -23236,9 +23369,9 @@ msgstr[0] " 超過 %d 個漸層控制點"
 msgstr[1] " 超過 %d 個漸層控制點"
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
-#: ../src/ui/tools/gradient-tool.cpp:117 ../src/ui/tools/gradient-tool.cpp:126
-#: ../src/ui/tools/gradient-tool.cpp:133 ../src/ui/tools/mesh-tool.cpp:126
-#: ../src/ui/tools/mesh-tool.cpp:137 ../src/ui/tools/mesh-tool.cpp:145
+#: ../src/ui/tools/gradient-tool.cpp:123 ../src/ui/tools/gradient-tool.cpp:132
+#: ../src/ui/tools/gradient-tool.cpp:139 ../src/ui/tools/mesh-tool.cpp:142
+#: ../src/ui/tools/mesh-tool.cpp:153 ../src/ui/tools/mesh-tool.cpp:161
 #, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
@@ -23246,7 +23379,7 @@ msgstr[0] " 在 %d 個選取物件上"
 msgstr[1] " 在 %d 個選取物件上"
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
-#: ../src/ui/tools/gradient-tool.cpp:123 ../src/ui/tools/mesh-tool.cpp:133
+#: ../src/ui/tools/gradient-tool.cpp:129 ../src/ui/tools/mesh-tool.cpp:149
 #, c-format
 msgid ""
 "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
@@ -23256,7 +23389,7 @@ msgstr[0] "一個控制點合併 %d 個選取的停止點 (按著 <b>Shift</b> �
 msgstr[1] "一個控制點合併 %d 個選取的停止點 (按著 <b>Shift</b> 拖曳可分離)"
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
-#: ../src/ui/tools/gradient-tool.cpp:131
+#: ../src/ui/tools/gradient-tool.cpp:137
 #, c-format
 msgid "<b>%d</b> gradient handle selected out of %d"
 msgid_plural "<b>%d</b> gradient handles selected out of %d"
@@ -23264,7 +23397,7 @@ msgstr[0] "已從 %d 個裡選擇了 <b>%d</b> 個漸層控制點"
 msgstr[1] "已從 %d 個裡選擇了 <b>%d</b> 個漸層控制點"
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/ui/tools/gradient-tool.cpp:138
+#: ../src/ui/tools/gradient-tool.cpp:144
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
 msgid_plural ""
@@ -23272,34 +23405,34 @@ msgid_plural ""
 msgstr[0] "<b>沒有</b> 從 %d 個選取物件的 %d 個裡選擇漸層控制點"
 msgstr[1] "<b>沒有</b> 從 %d 個選取物件的 %d 個裡選擇漸層控制點"
 
-#: ../src/ui/tools/gradient-tool.cpp:426
+#: ../src/ui/tools/gradient-tool.cpp:432
 msgid "Simplify gradient"
 msgstr "簡單漸層"
 
-#: ../src/ui/tools/gradient-tool.cpp:503
+#: ../src/ui/tools/gradient-tool.cpp:509
 msgid "Create default gradient"
 msgstr "建立預設漸層"
 
-#: ../src/ui/tools/gradient-tool.cpp:562 ../src/ui/tools/mesh-tool.cpp:628
+#: ../src/ui/tools/gradient-tool.cpp:568 ../src/ui/tools/mesh-tool.cpp:731
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>拖曳控制點的周圍</b>來選取控制點"
 
-#: ../src/ui/tools/gradient-tool.cpp:683
+#: ../src/ui/tools/gradient-tool.cpp:689
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr "<b>Ctrl</b>：貼齊漸層角度"
 
-#: ../src/ui/tools/gradient-tool.cpp:684
+#: ../src/ui/tools/gradient-tool.cpp:690
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>：從起始點周圍繪製漸層"
 
-#: ../src/ui/tools/gradient-tool.cpp:939 ../src/ui/tools/mesh-tool.cpp:1055
+#: ../src/ui/tools/gradient-tool.cpp:955 ../src/ui/tools/mesh-tool.cpp:1195
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] "%d個物件的<b>漸層</b>；按著 <b>Ctrl</b> 可貼齊角度"
 msgstr[1] "%d個物件<b>漸層</b>；按著 <b>Ctrl</b> 以捉取角度"
 
-#: ../src/ui/tools/gradient-tool.cpp:943 ../src/ui/tools/mesh-tool.cpp:1059
+#: ../src/ui/tools/gradient-tool.cpp:959 ../src/ui/tools/mesh-tool.cpp:1199
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "選擇<b>物件</b>以建立漸層。"
 
@@ -23350,14 +23483,14 @@ msgid "Crossing %lu"
 msgstr "交叉點 %lu"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/ui/tools/mesh-tool.cpp:125 ../src/ui/tools/mesh-tool.cpp:136
+#: ../src/ui/tools/mesh-tool.cpp:141 ../src/ui/tools/mesh-tool.cpp:152
 #, c-format
 msgid " out of %d mesh handle"
 msgid_plural " out of %d mesh handles"
 msgstr[0] " %d 個網面控制點"
 msgstr[1] " %d 個網面控制點"
 
-#: ../src/ui/tools/mesh-tool.cpp:143
+#: ../src/ui/tools/mesh-tool.cpp:159
 #, c-format
 msgid "<b>%d</b> mesh handle selected out of %d"
 msgid_plural "<b>%d</b> mesh handles selected out of %d"
@@ -23365,100 +23498,97 @@ msgstr[0] "從 %d 個裡選取了 <b>%d</b> 個網面控制點"
 msgstr[1] "從 %d 個裡選取了 <b>%d</b> 個網面控制點"
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/ui/tools/mesh-tool.cpp:150
+#: ../src/ui/tools/mesh-tool.cpp:166
 #, c-format
 msgid "<b>No</b> mesh handles selected out of %d on %d selected object"
 msgid_plural "<b>No</b> mesh handles selected out of %d on %d selected objects"
 msgstr[0] "<b>沒有</b> 從 %d 個選取物件的 %d 個裡選擇網面控制點"
 msgstr[1] "<b>沒有</b> 從 %d 個選取物件的 %d 個裡選擇網面控制點"
 
-#: ../src/ui/tools/mesh-tool.cpp:318
+#: ../src/ui/tools/mesh-tool.cpp:359
 msgid "Split mesh row/column"
 msgstr "分割網面的列/欄"
 
-#: ../src/ui/tools/mesh-tool.cpp:404
+#: ../src/ui/tools/mesh-tool.cpp:452
 msgid "Toggled mesh path type."
 msgstr "切換網面路徑類型。"
 
-#: ../src/ui/tools/mesh-tool.cpp:408
+#: ../src/ui/tools/mesh-tool.cpp:457
 msgid "Approximated arc for mesh side."
 msgstr "網面邊的近似弧形。"
 
-#: ../src/ui/tools/mesh-tool.cpp:412
+#: ../src/ui/tools/mesh-tool.cpp:462
 msgid "Toggled mesh tensors."
 msgstr "切換網面張量。"
 
-#: ../src/ui/tools/mesh-tool.cpp:416
+#: ../src/ui/tools/mesh-tool.cpp:467
 msgid "Smoothed mesh corner color."
 msgstr "平滑網面邊角顏色。"
 
-#: ../src/ui/tools/mesh-tool.cpp:420
+#: ../src/ui/tools/mesh-tool.cpp:472
 msgid "Picked mesh corner color."
 msgstr "拾取網面邊角顏色。"
 
-#: ../src/ui/tools/mesh-tool.cpp:489
+#: ../src/ui/tools/mesh-tool.cpp:477
+#, fuzzy
+msgid "Inserted new row or column."
+msgstr "加入的網面區塊列或欄"
+
+#: ../src/ui/tools/mesh-tool.cpp:548
 msgid "Fit mesh inside bounding box."
 msgstr "符合邊界框內的網面"
 
-#: ../src/ui/tools/mesh-tool.cpp:779
-msgid "FIXME<b>Ctrl</b>: snap mesh angle"
-msgstr "按住<b>Ctrl</b>：貼齊角度"
-
-#: ../src/ui/tools/mesh-tool.cpp:780
-msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
-msgstr "按住<b>Shift</b>：於起始點周圍繪製"
-
-#: ../src/ui/tools/mesh-tool.cpp:1049
+#: ../src/ui/tools/mesh-tool.cpp:1189
 msgid "Create mesh"
 msgstr "建立網面"
 
-#: ../src/ui/tools/node-tool.cpp:637
+#: ../src/ui/tools/node-tool.cpp:643
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr "<b>Shift</b>：拖曳可加入節點到選取區，點擊可切換物件選取"
 
-#: ../src/ui/tools/node-tool.cpp:641
+#: ../src/ui/tools/node-tool.cpp:647
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr "<b>Shift</b>：拖曳可加入節點到選取區"
 
-#: ../src/ui/tools/node-tool.cpp:670
+#: ../src/ui/tools/node-tool.cpp:676
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
 msgstr[0] "總共有 <b>%u</b> 個節點，選取了 <b>%u</b> 個節點。"
 msgstr[1] "總共有 <b>%u</b> 個節點，選取了 <b>%u</b> 個節點。"
 
-#: ../src/ui/tools/node-tool.cpp:677
+#: ../src/ui/tools/node-tool.cpp:683
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
 msgstr "%s 拖曳可選取節點，點擊可只編輯這個物件 (更進一步：Shift)"
 
-#: ../src/ui/tools/node-tool.cpp:683
+#: ../src/ui/tools/node-tool.cpp:689
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
 msgstr "%s 拖曳可選取節點，點擊可清除選取狀態"
 
-#: ../src/ui/tools/node-tool.cpp:692
+#: ../src/ui/tools/node-tool.cpp:698
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr "拖曳可選取節點，點擊可只編輯這個物件"
 
-#: ../src/ui/tools/node-tool.cpp:695
+#: ../src/ui/tools/node-tool.cpp:701
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr "拖曳可選取節點，點擊可清除選取區"
 
-#: ../src/ui/tools/node-tool.cpp:700
+#: ../src/ui/tools/node-tool.cpp:706
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr "拖曳可選取要編輯的物件，點擊可編輯這個物件 (更進一步：Shift)"
 
-#: ../src/ui/tools/node-tool.cpp:703
+#: ../src/ui/tools/node-tool.cpp:709
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr "拖曳可選取要編輯的物件"
@@ -23545,7 +23675,8 @@ msgstr ""
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr "<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 可貼齊角度"
+msgstr ""
+"<b>曲線控制點</b>：角度 %3.2f&#176;、長度 %s; 按著 <b>Ctrl</b> 可貼齊角度"
 
 #: ../src/ui/tools/pen-tool.cpp:1831
 #, c-format
@@ -23714,14 +23845,14 @@ msgstr "<b>螺旋</b>：半徑 %s，角度 %5g&#176;；按著 <b>Ctrl</b> 可貼
 msgid "Create spiral"
 msgstr "建立螺旋形"
 
-#: ../src/ui/tools/spray-tool.cpp:202 ../src/ui/tools/tweak-tool.cpp:145
+#: ../src/ui/tools/spray-tool.cpp:202 ../src/ui/tools/tweak-tool.cpp:147
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
 msgstr[0] "已選擇 <b>%i</b> 個物件"
 msgstr[1] "已選擇 <b>%i</b> 個物件"
 
-#: ../src/ui/tools/spray-tool.cpp:204 ../src/ui/tools/tweak-tool.cpp:147
+#: ../src/ui/tools/spray-tool.cpp:204 ../src/ui/tools/tweak-tool.cpp:149
 msgid "<b>Nothing</b> selected"
 msgstr "<b>沒有</b>選擇任何物件"
 
@@ -23910,8 +24041,10 @@ msgid ""
 msgid_plural ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
-msgstr[0] "輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
-msgstr[1] "輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
+msgstr[0] ""
+"輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
+msgstr[1] ""
+"輸入或編輯流動文字 (%d 個字元%s)；按 <b>Enter</b> 鍵可開始新的段落。"
 
 #: ../src/ui/tools/text-tool.cpp:1571
 #, c-format
@@ -23929,127 +24062,127 @@ msgstr "輸入文字"
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr "<b>空白鍵+滑鼠移動</b> 可平移畫布"
 
-#: ../src/ui/tools/tweak-tool.cpp:152
+#: ../src/ui/tools/tweak-tool.cpp:154
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr "%s。 拖曳可<b>移動</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:156
+#: ../src/ui/tools/tweak-tool.cpp:158
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr "%s。 拖曳或點擊來<b>向內移動</b>；按著 Shift <b>向外移動</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:164
+#: ../src/ui/tools/tweak-tool.cpp:166
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr "%s。 拖曳或點擊可<b>隨機移動</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:168
+#: ../src/ui/tools/tweak-tool.cpp:170
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr "%s。 拖曳或點擊可<b>縮小</b>；按著 Shift 可<b>放大</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:176
+#: ../src/ui/tools/tweak-tool.cpp:178
 #, c-format
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
 msgstr "%s。 拖曳或點擊可<b>順時針旋轉</b>；按著 Shift，<b>逆時針旋轉</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:184
+#: ../src/ui/tools/tweak-tool.cpp:186
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr "%s。 拖曳或點擊可<b>再製</b>；按著 Shift，<b>刪除</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:192
+#: ../src/ui/tools/tweak-tool.cpp:194
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr "%s。 拖曳可<b>推擠路徑</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:196
+#: ../src/ui/tools/tweak-tool.cpp:198
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr "%s。 拖曳或點擊可<b>內縮路徑</b>；按著 Shift <b>外擴</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:204
+#: ../src/ui/tools/tweak-tool.cpp:206
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr "%s。 拖曳或點擊可<b>吸引路徑</b>；按著 Shift <b>排斥</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:212
+#: ../src/ui/tools/tweak-tool.cpp:214
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr "%s。 拖曳或點擊可<b>使路徑變粗糙</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:216
+#: ../src/ui/tools/tweak-tool.cpp:218
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr "%s。 拖曳或點擊可用顏色<b>塗繪物件</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:220
+#: ../src/ui/tools/tweak-tool.cpp:222
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr "%s。 拖曳或點擊可讓<b>顏色隨機變化</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:224
+#: ../src/ui/tools/tweak-tool.cpp:226
 #, c-format
 msgid ""
 "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr "%s。 拖曳或點擊可<b>增加模糊</b>；按著 Shift 可<b>減少模糊</b>。"
 
-#: ../src/ui/tools/tweak-tool.cpp:1177
+#: ../src/ui/tools/tweak-tool.cpp:1200
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>沒有選取任何物件！</b> 請選取要微調的物件。"
 
-#: ../src/ui/tools/tweak-tool.cpp:1211
+#: ../src/ui/tools/tweak-tool.cpp:1234
 msgid "Move tweak"
 msgstr "移動微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1215
+#: ../src/ui/tools/tweak-tool.cpp:1238
 msgid "Move in/out tweak"
 msgstr "內移 / 外移微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1219
+#: ../src/ui/tools/tweak-tool.cpp:1242
 msgid "Move jitter tweak"
 msgstr "抖動微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1223
+#: ../src/ui/tools/tweak-tool.cpp:1246
 msgid "Scale tweak"
 msgstr "縮放微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1227
+#: ../src/ui/tools/tweak-tool.cpp:1250
 msgid "Rotate tweak"
 msgstr "旋轉微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1231
+#: ../src/ui/tools/tweak-tool.cpp:1254
 msgid "Duplicate/delete tweak"
 msgstr "再製 / 刪除微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1235
+#: ../src/ui/tools/tweak-tool.cpp:1258
 msgid "Push path tweak"
 msgstr "推擠路徑微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1239
+#: ../src/ui/tools/tweak-tool.cpp:1262
 msgid "Shrink/grow path tweak"
 msgstr "收縮 / 膨脹路徑微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1243
+#: ../src/ui/tools/tweak-tool.cpp:1266
 msgid "Attract/repel path tweak"
 msgstr "吸引 / 排斥路徑微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1247
+#: ../src/ui/tools/tweak-tool.cpp:1270
 msgid "Roughen path tweak"
 msgstr "粗糙路徑微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1251
+#: ../src/ui/tools/tweak-tool.cpp:1274
 msgid "Color paint tweak"
 msgstr "顏色塗繪微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1255
+#: ../src/ui/tools/tweak-tool.cpp:1278
 msgid "Color jitter tweak"
 msgstr "顏色抖動微調"
 
-#: ../src/ui/tools/tweak-tool.cpp:1259
+#: ../src/ui/tools/tweak-tool.cpp:1282
 msgid "Blur tweak"
 msgstr "模糊微調"
 
@@ -24623,10 +24756,6 @@ msgstr "使用者單位每"
 #: ../src/ui/widget/page-sizer.cpp:872
 msgid "Set page scale"
 msgstr "設定頁面比例"
-
-#: ../src/ui/widget/page-sizer.cpp:898
-msgid "Set 'viewBox'"
-msgstr "設定「顯示框」"
 
 #: ../src/ui/widget/panel.cpp:112
 msgid "List"
@@ -25209,7 +25338,8 @@ msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected "
 "box(es)"
 msgstr[0] "有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 拖曳可分開選取的立方體"
-msgstr[1] "有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 並拖曳可分開選取的立方體"
+msgstr[1] ""
+"有 <b>%d</b> 個立方體共用；按著 <b>Shift</b> 並拖曳可分開選取的立方體"
 
 #: ../src/verbs.cpp:131
 msgid "File"
@@ -28044,10 +28174,6 @@ msgstr "變更連接線間距"
 msgid "Avoid"
 msgstr "避開"
 
-#: ../src/widgets/connector-toolbar.cpp:316
-msgid "Ignore"
-msgstr "忽略"
-
 #: ../src/widgets/connector-toolbar.cpp:327
 msgid "Orthogonal"
 msgstr "直角線"
@@ -28372,8 +28498,8 @@ msgstr "設定填充圖樣"
 msgid "Set pattern on stroke"
 msgstr "設定邊框圖樣"
 
-#: ../src/widgets/font-selector.cpp:103 ../src/widgets/text-toolbar.cpp:1214
-#: ../src/widgets/text-toolbar.cpp:1598
+#: ../src/widgets/font-selector.cpp:103 ../src/widgets/text-toolbar.cpp:1316
+#: ../src/widgets/text-toolbar.cpp:1702
 msgid "Font size"
 msgstr "字型大小"
 
@@ -28385,19 +28511,59 @@ msgid "Font family"
 msgstr "字族"
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:173
+#: ../src/widgets/font-selector.cpp:166
 msgctxt "Font selector"
 msgid "Style"
 msgstr "樣式"
 
-#: ../src/widgets/font-selector.cpp:201
+#: ../src/widgets/font-selector.cpp:194
 msgid "Face"
 msgstr "面"
 
-#: ../src/widgets/font-selector.cpp:226 ../share/extensions/dots.inx.h:3
+#: ../src/widgets/font-selector.cpp:219 ../share/extensions/dots.inx.h:3
 #: ../share/extensions/nicechart.inx.h:17
 msgid "Font size:"
 msgstr "字型大小："
+
+#: ../src/widgets/gimp/ruler.cpp:184
+msgid "The orientation of the ruler"
+msgstr "尺標方向"
+
+#: ../src/widgets/gimp/ruler.cpp:194
+msgid "Unit of the ruler"
+msgstr "尺標單位"
+
+#: ../src/widgets/gimp/ruler.cpp:201
+msgid "Lower"
+msgstr "降低"
+
+#: ../src/widgets/gimp/ruler.cpp:202
+msgid "Lower limit of ruler"
+msgstr "尺標下限"
+
+#: ../src/widgets/gimp/ruler.cpp:211
+msgid "Upper"
+msgstr "上限"
+
+#: ../src/widgets/gimp/ruler.cpp:212
+msgid "Upper limit of ruler"
+msgstr "尺標上限"
+
+#: ../src/widgets/gimp/ruler.cpp:221
+msgid "Position"
+msgstr "位置"
+
+#: ../src/widgets/gimp/ruler.cpp:222
+msgid "Position of mark on the ruler"
+msgstr "尺標上的記號位置"
+
+#: ../src/widgets/gimp/ruler.cpp:231
+msgid "Max Size"
+msgstr "最大尺寸"
+
+#: ../src/widgets/gimp/ruler.cpp:232
+msgid "Maximum size of the ruler"
+msgstr "尺標最大尺寸"
 
 #: ../src/widgets/gradient-selector.cpp:187
 msgid "Create a duplicate gradient"
@@ -28465,27 +28631,27 @@ msgstr "放射狀"
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "建立放射狀 (橢圓或圓形) 漸層"
 
-#: ../src/widgets/gradient-toolbar.cpp:1045 ../src/widgets/mesh-toolbar.cpp:401
+#: ../src/widgets/gradient-toolbar.cpp:1045 ../src/widgets/mesh-toolbar.cpp:396
 msgid "New:"
 msgstr "新增："
 
-#: ../src/widgets/gradient-toolbar.cpp:1068 ../src/widgets/mesh-toolbar.cpp:424
+#: ../src/widgets/gradient-toolbar.cpp:1068 ../src/widgets/mesh-toolbar.cpp:419
 msgid "fill"
 msgstr "填充"
 
-#: ../src/widgets/gradient-toolbar.cpp:1068 ../src/widgets/mesh-toolbar.cpp:424
+#: ../src/widgets/gradient-toolbar.cpp:1068 ../src/widgets/mesh-toolbar.cpp:419
 msgid "Create gradient in the fill"
 msgstr "在填充中建立漸層"
 
-#: ../src/widgets/gradient-toolbar.cpp:1072 ../src/widgets/mesh-toolbar.cpp:428
+#: ../src/widgets/gradient-toolbar.cpp:1072 ../src/widgets/mesh-toolbar.cpp:423
 msgid "stroke"
 msgstr "邊框"
 
-#: ../src/widgets/gradient-toolbar.cpp:1072 ../src/widgets/mesh-toolbar.cpp:428
+#: ../src/widgets/gradient-toolbar.cpp:1072 ../src/widgets/mesh-toolbar.cpp:423
 msgid "Create gradient in the stroke"
 msgstr "在邊框中建立漸層"
 
-#: ../src/widgets/gradient-toolbar.cpp:1075 ../src/widgets/mesh-toolbar.cpp:431
+#: ../src/widgets/gradient-toolbar.cpp:1075 ../src/widgets/mesh-toolbar.cpp:426
 msgid "on:"
 msgstr "目標："
 
@@ -28705,7 +28871,7 @@ msgstr "顯示選取項目的測量資訊"
 #: ../src/widgets/lpe-toolbar.cpp:380 ../src/widgets/node-toolbar.cpp:611
 #: ../src/widgets/paintbucket-toolbar.cpp:166
 #: ../src/widgets/rect-toolbar.cpp:374 ../src/widgets/select-toolbar.cpp:523
-#: ../src/widgets/text-toolbar.cpp:1868
+#: ../src/widgets/text-toolbar.cpp:1972
 msgid "Units"
 msgstr "單位"
 
@@ -28749,7 +28915,7 @@ msgstr "計算全部元件。"
 msgid "Compute max length."
 msgstr "計算最大長度"
 
-#: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1601
+#: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1705
 msgid "Font Size"
 msgstr "字型大小"
 
@@ -28835,11 +29001,11 @@ msgstr "標記尺寸標註"
 msgid "Convert to item"
 msgstr "轉換成項目"
 
-#: ../src/widgets/mesh-toolbar.cpp:310
+#: ../src/widgets/mesh-toolbar.cpp:284
 msgid "Set mesh type"
 msgstr "設定網面類型"
 
-#: ../src/widgets/mesh-toolbar.cpp:362
+#: ../src/widgets/mesh-toolbar.cpp:357
 msgid ""
 "Mesh gradients are part of SVG 2:\n"
 "* Syntax may change.\n"
@@ -28855,145 +29021,142 @@ msgstr ""
 "網頁用途：轉換成點陣圖 (編輯->建立點陣圖複製物件)。\n"
 "列印用途：匯出成 PDF。"
 
-#: ../src/widgets/mesh-toolbar.cpp:394
+#: ../src/widgets/mesh-toolbar.cpp:389
 msgid "normal"
 msgstr "標準"
 
-#: ../src/widgets/mesh-toolbar.cpp:394
+#: ../src/widgets/mesh-toolbar.cpp:389
 msgid "Create mesh gradient"
 msgstr "建立網面漸層"
 
-#: ../src/widgets/mesh-toolbar.cpp:398
+#: ../src/widgets/mesh-toolbar.cpp:393
 msgid "conical"
 msgstr "圓錐"
 
-#: ../src/widgets/mesh-toolbar.cpp:398
+#: ../src/widgets/mesh-toolbar.cpp:393
 msgid "Create conical gradient"
 msgstr "建立圓錐形漸層"
 
-#: ../src/widgets/mesh-toolbar.cpp:453
+#: ../src/widgets/mesh-toolbar.cpp:448
 msgid "Rows"
 msgstr "列"
 
-#: ../src/widgets/mesh-toolbar.cpp:453
+#: ../src/widgets/mesh-toolbar.cpp:448
 #: ../share/extensions/guides_creator.inx.h:5
 #: ../share/extensions/layout_nup.inx.h:12
 msgid "Rows:"
 msgstr "列數："
 
-#: ../src/widgets/mesh-toolbar.cpp:453
+#: ../src/widgets/mesh-toolbar.cpp:448
 msgid "Number of rows in new mesh"
 msgstr "新網面的列數"
 
-#: ../src/widgets/mesh-toolbar.cpp:469
+#: ../src/widgets/mesh-toolbar.cpp:464
 msgid "Columns"
 msgstr "欄"
 
-#: ../src/widgets/mesh-toolbar.cpp:469
+#: ../src/widgets/mesh-toolbar.cpp:464
 #: ../share/extensions/guides_creator.inx.h:4
 msgid "Columns:"
 msgstr "欄數："
 
-#: ../src/widgets/mesh-toolbar.cpp:469
+#: ../src/widgets/mesh-toolbar.cpp:464
 msgid "Number of columns in new mesh"
 msgstr "新網面的欄數"
 
-#: ../src/widgets/mesh-toolbar.cpp:483
+#: ../src/widgets/mesh-toolbar.cpp:478
 msgid "Edit Fill"
 msgstr "編輯填色"
 
-#: ../src/widgets/mesh-toolbar.cpp:484
+#: ../src/widgets/mesh-toolbar.cpp:479
 msgid "Edit fill mesh"
 msgstr "編輯填色網面"
 
-#: ../src/widgets/mesh-toolbar.cpp:495
+#: ../src/widgets/mesh-toolbar.cpp:491
 msgid "Edit Stroke"
 msgstr "編輯邊框"
 
-#: ../src/widgets/mesh-toolbar.cpp:496
+#: ../src/widgets/mesh-toolbar.cpp:492
 msgid "Edit stroke mesh"
 msgstr "編輯邊框網面"
 
-#: ../src/widgets/mesh-toolbar.cpp:507 ../src/widgets/node-toolbar.cpp:519
+#: ../src/widgets/mesh-toolbar.cpp:504 ../src/widgets/node-toolbar.cpp:519
 msgid "Show Handles"
 msgstr "顯示控制柄"
 
-#: ../src/widgets/mesh-toolbar.cpp:508
-msgid "Show side and tensor handles"
-msgstr "顯示邊和張量控制柄"
-
-#: ../src/widgets/mesh-toolbar.cpp:523 ../src/widgets/mesh-toolbar.cpp:524
+#: ../src/widgets/mesh-toolbar.cpp:521 ../src/widgets/mesh-toolbar.cpp:522
 msgid "WARNING: Mesh SVG Syntax Subject to Change"
 msgstr "警告：變更網面 SVG 語法主題"
 
-#: ../src/widgets/mesh-toolbar.cpp:538
+#: ../src/widgets/mesh-toolbar.cpp:536
 msgctxt "Type"
 msgid "Coons"
 msgstr "孔斯"
 
-#: ../src/widgets/mesh-toolbar.cpp:541
+#: ../src/widgets/mesh-toolbar.cpp:539
 msgid "Bicubic"
 msgstr "雙立方"
 
-#: ../src/widgets/mesh-toolbar.cpp:543
+#: ../src/widgets/mesh-toolbar.cpp:541
 msgid "Coons"
 msgstr "孔斯"
 
-#: ../src/widgets/mesh-toolbar.cpp:544
+#: ../src/widgets/mesh-toolbar.cpp:542
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr "孔斯：無平滑化。雙立方：平滑路徑邊界相交部分。"
 
-#: ../src/widgets/mesh-toolbar.cpp:546 ../src/widgets/pencil-toolbar.cpp:377
+#: ../src/widgets/mesh-toolbar.cpp:544 ../src/widgets/pencil-toolbar.cpp:377
 msgid "Smoothing:"
 msgstr "平滑："
 
-#: ../src/widgets/mesh-toolbar.cpp:556
+#: ../src/widgets/mesh-toolbar.cpp:554
 msgid "Toggle Sides"
 msgstr "切換邊"
 
-#: ../src/widgets/mesh-toolbar.cpp:557
+#: ../src/widgets/mesh-toolbar.cpp:555
 msgid "Toggle selected sides between Beziers and lines."
 msgstr "邊在貝茲和線條之間切換"
 
-#: ../src/widgets/mesh-toolbar.cpp:560
+#: ../src/widgets/mesh-toolbar.cpp:558
 msgid "Toggle side:"
 msgstr "切換邊："
 
-#: ../src/widgets/mesh-toolbar.cpp:567
+#: ../src/widgets/mesh-toolbar.cpp:565
 msgid "Make elliptical"
 msgstr "橢圓化"
 
-#: ../src/widgets/mesh-toolbar.cpp:568
+#: ../src/widgets/mesh-toolbar.cpp:566
 msgid ""
 "Make selected sides elliptical by changing length of handles. Works best if "
 "handles already approximate ellipse."
-msgstr "變更控制柄長度以將選擇的邊橢圓化。若控制柄已經接近橢圓形的時候效果最好。"
+msgstr ""
+"變更控制柄長度以將選擇的邊橢圓化。若控制柄已經接近橢圓形的時候效果最好。"
 
-#: ../src/widgets/mesh-toolbar.cpp:571
+#: ../src/widgets/mesh-toolbar.cpp:569
 msgid "Make elliptical:"
 msgstr "橢圓化："
 
-#: ../src/widgets/mesh-toolbar.cpp:578
+#: ../src/widgets/mesh-toolbar.cpp:576
 msgid "Pick colors:"
 msgstr "拾取顏色："
 
-#: ../src/widgets/mesh-toolbar.cpp:579
+#: ../src/widgets/mesh-toolbar.cpp:577
 msgid "Pick colors for selected corner nodes from underneath mesh."
 msgstr "讓選擇的邊角頂點拾取網面下面的顏色。"
 
-#: ../src/widgets/mesh-toolbar.cpp:582
+#: ../src/widgets/mesh-toolbar.cpp:580
 msgid "Pick Color"
 msgstr "拾取顏色"
 
-#: ../src/widgets/mesh-toolbar.cpp:590
+#: ../src/widgets/mesh-toolbar.cpp:588
 msgid "Scale mesh to bounding box:"
 msgstr "將網面縮放成邊界框大小："
 
-#: ../src/widgets/mesh-toolbar.cpp:591
+#: ../src/widgets/mesh-toolbar.cpp:589
 msgid "Scale mesh to fit inside bounding box."
 msgstr "縮放網面以符合邊界框大小。"
 
-#: ../src/widgets/mesh-toolbar.cpp:594
+#: ../src/widgets/mesh-toolbar.cpp:592
 msgid "Fit mesh"
 msgstr "填充網面"
 
@@ -29485,46 +29648,6 @@ msgstr "無圓角"
 #: ../src/widgets/rect-toolbar.cpp:382
 msgid "Make corners sharp"
 msgstr "使頂角變尖銳"
-
-#: ../src/widgets/gimp/ruler.cpp:184
-msgid "The orientation of the ruler"
-msgstr "尺標方向"
-
-#: ../src/widgets/gimp/ruler.cpp:194
-msgid "Unit of the ruler"
-msgstr "尺標單位"
-
-#: ../src/widgets/gimp/ruler.cpp:201
-msgid "Lower"
-msgstr "降低"
-
-#: ../src/widgets/gimp/ruler.cpp:202
-msgid "Lower limit of ruler"
-msgstr "尺標下限"
-
-#: ../src/widgets/gimp/ruler.cpp:211
-msgid "Upper"
-msgstr "上限"
-
-#: ../src/widgets/gimp/ruler.cpp:212
-msgid "Upper limit of ruler"
-msgstr "尺標上限"
-
-#: ../src/widgets/gimp/ruler.cpp:221
-msgid "Position"
-msgstr "位置"
-
-#: ../src/widgets/gimp/ruler.cpp:222
-msgid "Position of mark on the ruler"
-msgstr "尺標上的記號位置"
-
-#: ../src/widgets/gimp/ruler.cpp:231
-msgid "Max Size"
-msgstr "最大尺寸"
-
-#: ../src/widgets/gimp/ruler.cpp:232
-msgid "Maximum size of the ruler"
-msgstr "尺標最大尺寸"
 
 #: ../src/widgets/select-toolbar.cpp:259
 msgid "Transform by toolbar"
@@ -30274,291 +30397,321 @@ msgstr "設定標記顏色"
 msgid "Change swatch color"
 msgstr "變更色票顏色"
 
-#: ../src/widgets/text-toolbar.cpp:176
+#: ../src/widgets/text-toolbar.cpp:178
 msgid "Text: Change font family"
 msgstr "文字：變更字族"
 
-#: ../src/widgets/text-toolbar.cpp:242
+#: ../src/widgets/text-toolbar.cpp:271
 msgid "Text: Change font size"
 msgstr "文字：變更字型尺寸"
 
-#: ../src/widgets/text-toolbar.cpp:278
+#: ../src/widgets/text-toolbar.cpp:307
 msgid "Text: Change font style"
 msgstr "文字：變更字體"
 
-#: ../src/widgets/text-toolbar.cpp:356
+#: ../src/widgets/text-toolbar.cpp:342
+#, fuzzy
+msgid "Text: Unset line height."
+msgstr "文字：變更列高"
+
+#: ../src/widgets/text-toolbar.cpp:419
 msgid "Text: Change superscript or subscript"
 msgstr "文字：變更上標或下標"
 
-#: ../src/widgets/text-toolbar.cpp:499
+#: ../src/widgets/text-toolbar.cpp:562
 msgid "Text: Change alignment"
 msgstr "文字：變更對齊"
 
-#: ../src/widgets/text-toolbar.cpp:580
+#: ../src/widgets/text-toolbar.cpp:668
 msgid "Text: Change line-height"
 msgstr "文字：變更列高"
 
-#: ../src/widgets/text-toolbar.cpp:735
+#: ../src/widgets/text-toolbar.cpp:823
 msgid "Text: Change line-height unit"
 msgstr "文字：變更列高單位"
 
-#: ../src/widgets/text-toolbar.cpp:784
+#: ../src/widgets/text-toolbar.cpp:872
 msgid "Text: Change word-spacing"
 msgstr "文字：變更單字間距"
 
-#: ../src/widgets/text-toolbar.cpp:824
+#: ../src/widgets/text-toolbar.cpp:912
 msgid "Text: Change letter-spacing"
 msgstr "文字：變更字母間距"
 
-#: ../src/widgets/text-toolbar.cpp:862
+#: ../src/widgets/text-toolbar.cpp:950
 msgid "Text: Change dx (kern)"
 msgstr "文字：變更 X 方向距離 (字母緊排)"
 
-#: ../src/widgets/text-toolbar.cpp:896
+#: ../src/widgets/text-toolbar.cpp:984
 msgid "Text: Change dy"
 msgstr "文字：變更 Y 方向距離"
 
-#: ../src/widgets/text-toolbar.cpp:931
+#: ../src/widgets/text-toolbar.cpp:1019
 msgid "Text: Change rotate"
 msgstr "文字：變更旋轉"
 
-#: ../src/widgets/text-toolbar.cpp:984
+#: ../src/widgets/text-toolbar.cpp:1072
 msgid "Text: Change writing mode"
 msgstr "文字：變更書寫模式"
 
-#: ../src/widgets/text-toolbar.cpp:1038
+#: ../src/widgets/text-toolbar.cpp:1126
 msgid "Text: Change orientation"
 msgstr "文字：變更方向"
 
-#: ../src/widgets/text-toolbar.cpp:1546
+#: ../src/widgets/text-toolbar.cpp:1654
 msgid "Font Family"
 msgstr "字族"
 
-#: ../src/widgets/text-toolbar.cpp:1547
+#: ../src/widgets/text-toolbar.cpp:1655
 msgid "Select Font Family (Alt-X to access)"
 msgstr "選擇字族 (按 Alt+X 存取)"
 
 #. Focus widget
 #. Enable entry completion
-#: ../src/widgets/text-toolbar.cpp:1557
+#: ../src/widgets/text-toolbar.cpp:1665
 msgid "Select all text with this font-family"
 msgstr "選擇所有屬於該字族的文字"
 
-#: ../src/widgets/text-toolbar.cpp:1561
+#: ../src/widgets/text-toolbar.cpp:1669
 msgid "Font not found on system"
 msgstr "系統上找不到字型"
 
-#: ../src/widgets/text-toolbar.cpp:1623
+#: ../src/widgets/text-toolbar.cpp:1727
 msgid "Font Style"
 msgstr "字型樣式"
 
-#: ../src/widgets/text-toolbar.cpp:1624
+#: ../src/widgets/text-toolbar.cpp:1728
 msgid "Font style"
 msgstr "字型樣式"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1641
+#: ../src/widgets/text-toolbar.cpp:1745
 msgid "Toggle Superscript"
 msgstr "切換上標"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1642
+#: ../src/widgets/text-toolbar.cpp:1746
 msgid "Toggle superscript"
 msgstr "切換上標"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1654
+#: ../src/widgets/text-toolbar.cpp:1758
 msgid "Toggle Subscript"
 msgstr "切換下標"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1655
+#: ../src/widgets/text-toolbar.cpp:1759
 msgid "Toggle subscript"
 msgstr "切換下標"
 
-#: ../src/widgets/text-toolbar.cpp:1696
+#: ../src/widgets/text-toolbar.cpp:1800
 msgid "Justify"
 msgstr "左右對齊"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1703
+#: ../src/widgets/text-toolbar.cpp:1807
 msgid "Alignment"
 msgstr "對齊"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1704
+#: ../src/widgets/text-toolbar.cpp:1808
 msgid "Text alignment"
 msgstr "文字對齊"
 
-#: ../src/widgets/text-toolbar.cpp:1738
+#: ../src/widgets/text-toolbar.cpp:1842
 msgid "Vertical — RL"
 msgstr "直向 — 右到左"
 
-#: ../src/widgets/text-toolbar.cpp:1739
+#: ../src/widgets/text-toolbar.cpp:1843
 msgid "Vertical text — lines: right to left"
 msgstr "直向文字 — 文字列：從右到左"
 
-#: ../src/widgets/text-toolbar.cpp:1745
+#: ../src/widgets/text-toolbar.cpp:1849
 msgid "Vertical — LR"
 msgstr "直向 — 左到右"
 
-#: ../src/widgets/text-toolbar.cpp:1746
+#: ../src/widgets/text-toolbar.cpp:1850
 msgid "Vertical text — lines: left to right"
 msgstr "直向文字 — 文字列：從左到右"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1751
+#: ../src/widgets/text-toolbar.cpp:1855
 msgid "Writing mode"
 msgstr "書寫模式"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1752
+#: ../src/widgets/text-toolbar.cpp:1856
 msgid "Block progression"
 msgstr "文字區塊"
 
-#: ../src/widgets/text-toolbar.cpp:1781
+#: ../src/widgets/text-toolbar.cpp:1885
 msgid "Auto glyph orientation"
 msgstr "自動文字方向"
 
-#: ../src/widgets/text-toolbar.cpp:1788
+#: ../src/widgets/text-toolbar.cpp:1892
 msgid "Upright"
 msgstr "右上"
 
-#: ../src/widgets/text-toolbar.cpp:1789
+#: ../src/widgets/text-toolbar.cpp:1893
 msgid "Upright glyph orientation"
 msgstr "右上文字方向"
 
-#: ../src/widgets/text-toolbar.cpp:1796
+#: ../src/widgets/text-toolbar.cpp:1900
 msgid "Sideways"
 msgstr "側面"
 
-#: ../src/widgets/text-toolbar.cpp:1797
+#: ../src/widgets/text-toolbar.cpp:1901
 msgid "Sideways glyph orientation"
 msgstr "側面文字方向"
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1803
+#: ../src/widgets/text-toolbar.cpp:1907
 msgid "Text orientation"
 msgstr "文字方向"
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1804
+#: ../src/widgets/text-toolbar.cpp:1908
 msgid "Text (glyph) orientation in vertical text."
 msgstr "直向文字的文字 (字) 方向。"
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1837
+#: ../src/widgets/text-toolbar.cpp:1941
 msgid "Smaller spacing"
 msgstr "縮小間距"
 
-#: ../src/widgets/text-toolbar.cpp:1837 ../src/widgets/text-toolbar.cpp:1876
-#: ../src/widgets/text-toolbar.cpp:1907
+#: ../src/widgets/text-toolbar.cpp:1941 ../src/widgets/text-toolbar.cpp:1980
+#: ../src/widgets/text-toolbar.cpp:2011
 msgctxt "Text tool"
 msgid "Normal"
 msgstr "標準"
 
-#: ../src/widgets/text-toolbar.cpp:1837
+#: ../src/widgets/text-toolbar.cpp:1941
 msgid "Larger spacing"
 msgstr "加大間距"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1842
+#: ../src/widgets/text-toolbar.cpp:1946
 msgid "Line Height"
 msgstr "行高"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1843
+#: ../src/widgets/text-toolbar.cpp:1947
 msgid "Line:"
 msgstr "行："
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1844
+#: ../src/widgets/text-toolbar.cpp:1948
 msgid "Spacing between baselines"
 msgstr "基本線的間隔距離"
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1876 ../src/widgets/text-toolbar.cpp:1907
+#: ../src/widgets/text-toolbar.cpp:1980 ../src/widgets/text-toolbar.cpp:2011
 msgid "Negative spacing"
 msgstr "負間距"
 
-#: ../src/widgets/text-toolbar.cpp:1876 ../src/widgets/text-toolbar.cpp:1907
+#: ../src/widgets/text-toolbar.cpp:1980 ../src/widgets/text-toolbar.cpp:2011
 msgid "Positive spacing"
 msgstr "正間距"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1881
+#: ../src/widgets/text-toolbar.cpp:1985
 msgid "Word spacing"
 msgstr "單字間距"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1882
+#: ../src/widgets/text-toolbar.cpp:1986
 msgid "Word:"
 msgstr "單字："
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1883
+#: ../src/widgets/text-toolbar.cpp:1987
 msgid "Spacing between words (px)"
 msgstr "單字之間的距離 (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1912
+#: ../src/widgets/text-toolbar.cpp:2016
 msgid "Letter spacing"
 msgstr "字距："
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1913
+#: ../src/widgets/text-toolbar.cpp:2017
 msgid "Letter:"
 msgstr "字母："
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1914
+#: ../src/widgets/text-toolbar.cpp:2018
 msgid "Spacing between letters (px)"
 msgstr "字母之間的距離 (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1943
+#: ../src/widgets/text-toolbar.cpp:2047
 msgid "Kerning"
 msgstr "字母緊排"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1944
+#: ../src/widgets/text-toolbar.cpp:2048
 msgid "Kern:"
 msgstr "字母緊排："
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1945
+#: ../src/widgets/text-toolbar.cpp:2049
 msgid "Horizontal kerning (px)"
 msgstr "水平字母緊排 (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1974
+#: ../src/widgets/text-toolbar.cpp:2078
 msgid "Vertical Shift"
 msgstr "垂直位移"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1975
+#: ../src/widgets/text-toolbar.cpp:2079
 msgid "Vert:"
 msgstr "垂直："
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1976
+#: ../src/widgets/text-toolbar.cpp:2080
 msgid "Vertical shift (px)"
 msgstr "垂直位移 (px)"
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:2005
+#: ../src/widgets/text-toolbar.cpp:2109
 msgid "Letter rotation"
 msgstr "字母旋轉"
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:2006
+#: ../src/widgets/text-toolbar.cpp:2110
 msgid "Rot:"
 msgstr "旋轉："
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:2007
+#: ../src/widgets/text-toolbar.cpp:2111
 msgid "Character rotation (degrees)"
 msgstr "字元旋轉 (度)"
+
+#. Name
+#: ../src/widgets/text-toolbar.cpp:2135
+#, fuzzy
+msgid "Unset line height"
+msgstr "對齊右邊"
+
+#. Label
+#: ../src/widgets/text-toolbar.cpp:2136
+msgid "If enabled, line height is set on part of selection. Click to unset."
+msgstr ""
+
+#. Name
+#: ../src/widgets/text-toolbar.cpp:2148
+#, fuzzy
+msgid "Show outer style"
+msgstr "朦朧的外斜角"
+
+#. Label
+#: ../src/widgets/text-toolbar.cpp:2149
+msgid ""
+"Show style of outermost text element. The 'font-size' and 'line-height' "
+"values of the outermost text element determine the minimum line spacing in "
+"the block."
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:180
 msgid "Color/opacity used for color tweaking"
@@ -30604,131 +30757,131 @@ msgstr "待定"
 msgid "Style of Paint Bucket fill objects"
 msgstr "油漆桶填充物件的樣式"
 
-#: ../src/widgets/toolbox.cpp:1716
+#: ../src/widgets/toolbox.cpp:1721
 msgid "Bounding box"
 msgstr "邊界框"
 
-#: ../src/widgets/toolbox.cpp:1716
+#: ../src/widgets/toolbox.cpp:1721
 msgid "Snap bounding boxes"
 msgstr "貼齊邊界框"
 
-#: ../src/widgets/toolbox.cpp:1725
+#: ../src/widgets/toolbox.cpp:1730
 msgid "Bounding box edges"
 msgstr "邊界框邊緣"
 
-#: ../src/widgets/toolbox.cpp:1725
+#: ../src/widgets/toolbox.cpp:1730
 msgid "Snap to edges of a bounding box"
 msgstr "貼齊到邊界框邊緣"
 
-#: ../src/widgets/toolbox.cpp:1734
+#: ../src/widgets/toolbox.cpp:1739
 msgid "Bounding box corners"
 msgstr "邊界框頂點"
 
-#: ../src/widgets/toolbox.cpp:1734
+#: ../src/widgets/toolbox.cpp:1739
 msgid "Snap bounding box corners"
 msgstr "貼齊邊界框頂點"
 
-#: ../src/widgets/toolbox.cpp:1743
+#: ../src/widgets/toolbox.cpp:1748
 msgid "BBox Edge Midpoints"
 msgstr "邊界框邊緣中點"
 
-#: ../src/widgets/toolbox.cpp:1743
+#: ../src/widgets/toolbox.cpp:1748
 msgid "Snap midpoints of bounding box edges"
 msgstr "貼齊邊界框邊緣中點"
 
-#: ../src/widgets/toolbox.cpp:1753
+#: ../src/widgets/toolbox.cpp:1758
 msgid "BBox Centers"
 msgstr "邊界框中心"
 
-#: ../src/widgets/toolbox.cpp:1753
+#: ../src/widgets/toolbox.cpp:1758
 msgid "Snapping centers of bounding boxes"
 msgstr "貼齊邊界框中心"
 
-#: ../src/widgets/toolbox.cpp:1762
+#: ../src/widgets/toolbox.cpp:1767
 msgid "Snap nodes, paths, and handles"
 msgstr "貼齊節點、路徑及控制點"
 
-#: ../src/widgets/toolbox.cpp:1770
+#: ../src/widgets/toolbox.cpp:1775
 msgid "Snap to paths"
 msgstr "貼齊路徑"
 
-#: ../src/widgets/toolbox.cpp:1779
+#: ../src/widgets/toolbox.cpp:1784
 msgid "Path intersections"
 msgstr "路徑交點"
 
-#: ../src/widgets/toolbox.cpp:1779
+#: ../src/widgets/toolbox.cpp:1784
 msgid "Snap to path intersections"
 msgstr "貼齊路徑交點"
 
-#: ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1793
 msgid "To nodes"
 msgstr "節點"
 
-#: ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1793
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr "貼齊尖角節點，包括矩形頂點"
 
-#: ../src/widgets/toolbox.cpp:1797
+#: ../src/widgets/toolbox.cpp:1802
 msgid "Smooth nodes"
 msgstr "平滑節點"
 
-#: ../src/widgets/toolbox.cpp:1797
+#: ../src/widgets/toolbox.cpp:1802
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr "貼齊平滑節點，包括橢圓形的象限點"
 
-#: ../src/widgets/toolbox.cpp:1806
+#: ../src/widgets/toolbox.cpp:1811
 msgid "Line Midpoints"
 msgstr "直線中點"
 
-#: ../src/widgets/toolbox.cpp:1806
+#: ../src/widgets/toolbox.cpp:1811
 msgid "Snap midpoints of line segments"
 msgstr "貼齊直線線段的中點"
 
-#: ../src/widgets/toolbox.cpp:1815
+#: ../src/widgets/toolbox.cpp:1820
 msgid "Others"
 msgstr "其他"
 
-#: ../src/widgets/toolbox.cpp:1815
+#: ../src/widgets/toolbox.cpp:1820
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr "貼齊其他點 (中心點、參考線原點、漸層控制點等)"
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1828
 msgid "Object Centers"
 msgstr "物件中心"
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1828
 msgid "Snap centers of objects"
 msgstr "貼齊物件中心"
 
-#: ../src/widgets/toolbox.cpp:1832
+#: ../src/widgets/toolbox.cpp:1837
 msgid "Rotation Centers"
 msgstr "旋轉中心"
 
-#: ../src/widgets/toolbox.cpp:1832
+#: ../src/widgets/toolbox.cpp:1837
 msgid "Snap an item's rotation center"
 msgstr "貼齊項目的旋轉中心"
 
-#: ../src/widgets/toolbox.cpp:1841
+#: ../src/widgets/toolbox.cpp:1846
 msgid "Text baseline"
 msgstr "文字基線"
 
-#: ../src/widgets/toolbox.cpp:1841
+#: ../src/widgets/toolbox.cpp:1846
 msgid "Snap text anchors and baselines"
 msgstr "貼齊文字錨點和基準線"
 
-#: ../src/widgets/toolbox.cpp:1851
+#: ../src/widgets/toolbox.cpp:1856
 msgid "Page border"
 msgstr "頁邊"
 
-#: ../src/widgets/toolbox.cpp:1851
+#: ../src/widgets/toolbox.cpp:1856
 msgid "Snap to the page border"
 msgstr "貼齊頁面邊緣"
 
-#: ../src/widgets/toolbox.cpp:1860
+#: ../src/widgets/toolbox.cpp:1865
 msgid "Snap to grids"
 msgstr "貼齊格線"
 
-#: ../src/widgets/toolbox.cpp:1869
+#: ../src/widgets/toolbox.cpp:1874
 msgid "Snap guides"
 msgstr "貼齊參考線"
 
@@ -31167,7 +31320,8 @@ msgstr ""
 msgid ""
 "Warning! Tool's and default tool's parameter's (%s) types are not the same "
 "( type('%s') != type('%s') )."
-msgstr "警告！刀具和預設刀具的參數 (%s) 類型不相同 ( 類型('%s') != 類型('%s'))。"
+msgstr ""
+"警告！刀具和預設刀具的參數 (%s) 類型不相同 ( 類型('%s') != 類型('%s'))。"
 
 #: ../share/extensions/gcodetools.py:4372
 #, python-format
@@ -31605,7 +31759,7 @@ msgstr "沒有找到 id 的類型屬性：%s"
 msgid "unable to locate marker: %s"
 msgstr "無法找到標記的位置：%s"
 
-#: ../share/extensions/measure.py:57
+#: ../share/extensions/measure.py:58
 msgid ""
 "Failed to import the numpy modules. These modules are required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
@@ -31614,7 +31768,7 @@ msgstr ""
 "無法匯入 numpy 模組。此擴充功能需要這些模組。請安裝這些模組後再試一次。在 "
 "Debian-like 系統上可執行 sudo apt-get install python-numpy 指令來安裝模組。"
 
-#: ../share/extensions/measure.py:119
+#: ../share/extensions/measure.py:120
 msgid "Area is zero, cannot calculate Center of Mass"
 msgstr "面積為零，無法計算質心"
 
@@ -31716,7 +31870,8 @@ msgstr "2. 複製「serial」資料夾 (能夠在解壓縮後的資料夾中找�
 msgid ""
 "   into the following Inkscape folder: C:\\[Program files]\\inkscape\\python"
 "\\Lib\\"
-msgstr "   到下列 Inkscape 資料夾：C:\\[Program files]\\inkscape\\python\\Lib\\"
+msgstr ""
+"   到下列 Inkscape 資料夾：C:\\[Program files]\\inkscape\\python\\Lib\\"
 
 #: ../share/extensions/plotter.py:151
 msgid "3. Close and restart Inkscape."
@@ -32302,7 +32457,8 @@ msgstr ""
 msgid ""
 "In order to import Dia files, Dia itself must be installed.  You can get Dia "
 "at http://live.gnome.org/Dia"
-msgstr "想要匯入 Dia 檔案，必須安裝 Dia。你可在 http://live.gnome.org/Dia 取得該程式"
+msgstr ""
+"想要匯入 Dia 檔案，必須安裝 Dia。你可在 http://live.gnome.org/Dia 取得該程式"
 
 #: ../share/extensions/dia.inx.h:4
 msgid "Dia Diagram (*.dia)"
@@ -32341,6 +32497,22 @@ msgstr "視覺"
 msgid "Visualize Path"
 msgstr "路徑視覺化"
 
+#: ../share/extensions/docinfo.inx.h:1
+msgid "DOC Info"
+msgstr ""
+
+#: ../share/extensions/docinfo.inx.h:2
+#, fuzzy
+msgid "Show page info"
+msgstr "顯示頁面邊界(_B)"
+
+#: ../share/extensions/docinfo.inx.h:3
+#, fuzzy
+msgid ""
+"Choose this tab if you would like to see page info previously to apply DPI "
+"Switcher."
+msgstr "若你想要看已使用和已找到的字型清單請選擇此分頁。"
+
 #: ../share/extensions/dots.inx.h:1
 msgid "Number Nodes"
 msgstr "數字節點"
@@ -32372,6 +32544,14 @@ msgstr ""
 "    * 點大小：於路徑節點上放置的點直徑 (10px, 2mm...)。\n"
 "    * 起始點數字：數列的起始數字，指定到此路徑的起始節點。\n"
 "    * 公差值：兩個節點之間的數字差值。"
+
+#: ../share/extensions/dpi90to96.inx.h:1
+msgid "DPI 90 to 96"
+msgstr ""
+
+#: ../share/extensions/dpi96to90.inx.h:1
+msgid "DPI 96 to 90"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
 msgid "Draw From Triangle"
@@ -32759,8 +32939,8 @@ msgstr ""
 "Inkscape 無法讀取。\n"
 "- 多折線 (LWPOLYLINE) 輸出是一種多段連接的折線，要使用舊版的線 (LINE) 輸出請"
 "停用這個選項。\n"
-"- 你可以選擇要匯出全部圖層、只匯出可見的圖層或名稱符合的圖層 (英文不區分大小寫"
-"並用逗號「,」將項目區隔開)"
+"- 你可以選擇要匯出全部圖層、只匯出可見的圖層或名稱符合的圖層 (英文不區分大小"
+"寫並用逗號「,」將項目區隔開)"
 
 #: ../share/extensions/dxf_outlines.inx.h:34
 msgid "Desktop Cutting Plotter (AutoCAD DXF R14) (*.dxf)"
@@ -34617,7 +34797,8 @@ msgstr "刀具偏移校正 (公釐)："
 msgid ""
 "The offset from the tool tip to the tool axis in mm, set to 0.0 to omit "
 "command (Default: 0.25)"
-msgstr "刀具尖端到刀具軸的偏移，單位為公釐，設定為 0 表示省略指令 (預設:「0.25」)"
+msgstr ""
+"刀具尖端到刀具軸的偏移，單位為公釐，設定為 0 表示省略指令 (預設:「0.25」)"
 
 #: ../share/extensions/hpgl_output.inx.h:28
 #: ../share/extensions/plotter.inx.h:56
@@ -38032,7 +38213,8 @@ msgstr "在所有其他裡將第一次選擇設定為屬性"
 msgid ""
 "This effect adds a feature visible (or usable) only on a SVG enabled web "
 "browser (like Firefox)."
-msgstr "這個特效增加的功能只可見 (或可用) 於支援 SVG 的網頁瀏覽器 (如 firefox)。"
+msgstr ""
+"這個特效增加的功能只可見 (或可用) 於支援 SVG 的網頁瀏覽器 (如 firefox)。"
 
 #: ../share/extensions/web-set-att.inx.h:27
 msgid ""
@@ -38084,7 +38266,8 @@ msgstr "第一個選擇傳輸到全部其他"
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when an event occurs."
-msgstr "當一個事件發生時，這個特效傳輸一個或多個屬性從第一個選擇的元件到第二個。"
+msgstr ""
+"當一個事件發生時，這個特效傳輸一個或多個屬性從第一個選擇的元件到第二個。"
 
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid ""
@@ -38339,6 +38522,27 @@ msgstr "用於美工圖形的流行圖形檔案格式"
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
 msgstr "XAML 輸入"
+
+#~ msgid "Starting:"
+#~ msgstr "起點："
+
+#~ msgid "Adjust the rotation angle"
+#~ msgstr "調整旋轉角度"
+
+#~ msgid "Adjust the center"
+#~ msgstr "調整中心"
+
+#~ msgid "Convert to objects"
+#~ msgstr "轉成物件"
+
+#~ msgid "FIXME<b>Ctrl</b>: snap mesh angle"
+#~ msgstr "按住<b>Ctrl</b>：貼齊角度"
+
+#~ msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
+#~ msgstr "按住<b>Shift</b>：於起始點周圍繪製"
+
+#~ msgid "Show side and tensor handles"
+#~ msgstr "顯示邊和張量控制柄"
 
 #~ msgid "Master"
 #~ msgstr "管理器"
@@ -38767,9 +38971,6 @@ msgstr "XAML 輸入"
 
 #~ msgid "Helper nodes"
 #~ msgstr "輔助標示節點"
-
-#~ msgid "Show helper nodes"
-#~ msgstr "顯示輔助標示節點"
 
 #~ msgid "Helper handles"
 #~ msgstr "輔助標示控制點"
@@ -39956,9 +40157,6 @@ msgstr "XAML 輸入"
 #~ "the right side"
 #~ msgstr "如果是，放置此路徑於想像框的左邊，否則在右邊"
 
-#~ msgid "Adjust the origin"
-#~ msgstr "調整原點"
-
 #~ msgid "Iterations:"
 #~ msgstr "疊代："
 
@@ -40983,9 +41181,6 @@ msgstr "XAML 輸入"
 #~ msgid "Align lines left"
 #~ msgstr "對齊左邊"
 
-#~ msgid "Align lines right"
-#~ msgstr "對齊右邊"
-
 #~ msgid "Justify lines"
 #~ msgstr "左右對齊"
 
@@ -41815,10 +42010,6 @@ msgstr "XAML 輸入"
 
 #~ msgid "Close file"
 #~ msgstr "關閉檔案"
-
-#, fuzzy
-#~ msgid "Open new file"
-#~ msgstr "開啟階段檔案"
 
 #~ msgid "Rewind"
 #~ msgstr "回轉"
