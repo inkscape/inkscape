@@ -103,6 +103,7 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     using namespace Geom;
     original_bbox(lpeitem);
+    //center_point->param_set_liveupdate(false);
     Point point_a(boundingbox_X.max(), boundingbox_Y.min());
     Point point_b(boundingbox_X.max(), boundingbox_Y.max());
     Point point_c(boundingbox_X.max(), boundingbox_Y.middle());
@@ -114,16 +115,20 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
         point_a = Geom::Point(center_point[X],boundingbox_Y.min());
         point_b = Geom::Point(center_point[X],boundingbox_Y.max());
     }
-    if (Geom::are_near((Geom::Point)start_point, (Geom::Point)end_point, 0.01)) {
-        start_point.param_setValue(point_a);
-        end_point.param_setValue(point_b);
+    if ((Geom::Point)start_point == (Geom::Point)end_point && (Geom::Point)start_point == Geom::Point(0,0)) {
+        start_point.param_setValue(point_a, true);
+        end_point.param_setValue(point_b, true);
+        previous_center = Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
+        center_point.param_setValue(previous_center, true);
     }
     if ( mode == MT_X || mode == MT_Y ) {
         start_point.param_setValue(point_a, true);
         end_point.param_setValue(point_b, true);
     } else if ( mode == MT_FREE) {
-        if(!are_near(previous_center,center_point, 0.01)) {
-            Geom::Point trans = center_point - previous_center;
+        if (are_near(previous_center, (Geom::Point)center_point, 0.01)) {
+            center_point.param_setValue(Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point), true);
+        } else {
+            Geom::Point trans = center_point - Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
             start_point.param_setValue(start_point * trans, true);
             end_point.param_setValue(end_point * trans, true);
         }
@@ -150,10 +155,10 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
             end_point.param_setValue(ep, true);
         }
     }
-    previous_center = Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
-    if (!are_near(previous_center, center_point,0.01)) {
-        center_point.param_setValue(previous_center);
+    if (!are_near(previous_center, (Geom::Point)center_point, 0.01)) {
+        center_point.param_setValue(Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point), true);
     }
+    previous_center = center_point;
 }
 
 void
@@ -181,7 +186,7 @@ LPEMirrorSymmetry::doOnApply (SPLPEItem const* lpeitem)
     start_point.param_update_default(point_a);
     end_point.param_setValue(point_b, true);
     end_point.param_update_default(point_b);
-    center_point.param_setValue(point_c);
+    center_point.param_setValue(point_c, true);
     previous_center = center_point;
 }
 
