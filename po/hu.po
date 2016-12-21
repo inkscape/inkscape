@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-12-20 18:04+0100\n"
+"POT-Creation-Date: 2016-12-21 01:07+0100\n"
 "PO-Revision-Date: 2015-02-20 10:48+0100\n"
 "Last-Translator: Peter Bojtos <ptr@ulx.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -8812,6 +8812,15 @@ msgstr "Átméretezési üzemmód"
 #: ../src/widgets/connector-toolbar.cpp:316
 msgid "Ignore"
 msgstr "Figyelmen kívül hagyás"
+
+#: ../src/file.cpp:530
+msgid ""
+"Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
+"Drawings meant to match a physical size (e.g. Letter or A4)\n"
+"will be too small. Scaling the drawing can correct for this.\n"
+"Internal scaling can be handled either by setting the SVG 'viewBox'\n"
+"attribute to compensate or by scaling all objects in the drawing."
+msgstr ""
 
 #. Look for SPNamedView and SPDefs loop
 #. desktop->getDocument()->ensureUpToDate();  // Does not update box3d!

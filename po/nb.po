@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-12-20 18:04+0100\n"
+"POT-Creation-Date: 2016-12-21 01:07+0100\n"
 "PO-Revision-Date: 2009-06-15 00:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -8956,6 +8956,15 @@ msgstr "Skaler node"
 #, fuzzy
 msgid "Ignore"
 msgstr "ingen"
+
+#: ../src/file.cpp:530
+msgid ""
+"Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
+"Drawings meant to match a physical size (e.g. Letter or A4)\n"
+"will be too small. Scaling the drawing can correct for this.\n"
+"Internal scaling can be handled either by setting the SVG 'viewBox'\n"
+"attribute to compensate or by scaling all objects in the drawing."
+msgstr ""
 
 #. Look for SPNamedView and SPDefs loop
 #. desktop->getDocument()->ensureUpToDate();  // Does not update box3d!
