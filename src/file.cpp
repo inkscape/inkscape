@@ -526,7 +526,7 @@ bool sp_file_open(const Glib::ustring &uri,
                 }
 
                 else if (need_fix_units) {
-                    Glib::ustring msg = (
+                    Glib::ustring msg = _(
                         "Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
                         "Drawings meant to match a physical size (e.g. Letter or A4)\n"
                         "will be too small. Scaling the drawing can correct for this.\n"
