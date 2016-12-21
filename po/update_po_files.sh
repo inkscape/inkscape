@@ -1,11 +1,11 @@
 #!/bin/bash
+# Run before 'make inkscape_pot' from the copiling 
+# directory with cmake to generate inkscape.pot file.
 # Updates PO files from the current POT file
 # Please run this program from the po/ directory
 # Existing po.old files will be overwritten
 
-type -p intltool-update >/dev/null 2>/dev/null
 if [ "$?" -eq "0" ]; then
-  intltool-update --pot >/dev/null 2>&1
   POT_FILENAME="`ls -1rt *.pot 2>/dev/null|tail -1 2>/dev/null`"
   if [ ! -r "$POT_FILENAME" ]; then
     echo "Could not create POT file. Exiting."
