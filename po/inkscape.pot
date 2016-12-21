@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-12 10:50+0100\n"
+"POT-Creation-Date: 2016-12-21 11:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4461,31 +4461,31 @@ msgstr ""
 msgid "No next zoom."
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:321 ../src/display/canvas-grid.cpp:661
+#: ../src/display/canvas-axonomgrid.cpp:321 ../src/display/canvas-grid.cpp:677
 msgid "Grid _units:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:663
+#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:679
 msgid "_Origin X:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:663
+#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:679
 #: ../src/ui/dialog/inkscape-preferences.cpp:779
 #: ../src/ui/dialog/inkscape-preferences.cpp:804
 msgid "X coordinate of grid origin"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:666
+#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:682
 msgid "O_rigin Y:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:666
+#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:682
 #: ../src/ui/dialog/inkscape-preferences.cpp:780
 #: ../src/ui/dialog/inkscape-preferences.cpp:805
 msgid "Y coordinate of grid origin"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:329 ../src/display/canvas-grid.cpp:672
+#: ../src/display/canvas-axonomgrid.cpp:329 ../src/display/canvas-grid.cpp:688
 msgid "Spacing _Y:"
 msgstr ""
 
@@ -4516,37 +4516,37 @@ msgstr ""
 msgid "Angle of z-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:677
+#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
 msgid "Minor grid line _color:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:677
+#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
 #: ../src/ui/dialog/inkscape-preferences.cpp:763
 msgid "Minor grid line color"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:677
+#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
 msgid "Color of the minor grid lines"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:682
+#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
 msgid "Ma_jor grid line color:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:682
+#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
 #: ../src/ui/dialog/inkscape-preferences.cpp:765
 msgid "Major grid line color"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:344 ../src/display/canvas-grid.cpp:683
+#: ../src/display/canvas-axonomgrid.cpp:344 ../src/display/canvas-grid.cpp:699
 msgid "Color of the major (highlighted) grid lines"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:687
+#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:703
 msgid "_Major grid line every:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:687
+#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:703
 msgid "lines"
 msgstr ""
 
@@ -4592,25 +4592,25 @@ msgid ""
 "to invisible grids."
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:669
+#: ../src/display/canvas-grid.cpp:685
 msgid "Spacing _X:"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:669
+#: ../src/display/canvas-grid.cpp:685
 #: ../src/ui/dialog/inkscape-preferences.cpp:785
 msgid "Distance between vertical grid lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:672
+#: ../src/display/canvas-grid.cpp:688
 #: ../src/ui/dialog/inkscape-preferences.cpp:786
 msgid "Distance between horizontal grid lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:704
+#: ../src/display/canvas-grid.cpp:720
 msgid "_Show dots instead of lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:705
+#: ../src/display/canvas-grid.cpp:721
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr ""
 
@@ -4760,11 +4760,11 @@ msgstr ""
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:196 ../src/ui/tool/node.cpp:1479
+#: ../src/display/snap-indicator.cpp:196 ../src/ui/tool/node.cpp:1473
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:199 ../src/ui/tool/node.cpp:1478
+#: ../src/display/snap-indicator.cpp:199 ../src/ui/tool/node.cpp:1472
 msgid "Cusp node"
 msgstr ""
 
@@ -6297,7 +6297,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:100
 #: ../src/extension/internal/filter/bumps.h:331
-#: ../src/live_effects/lpe-measure-line.cpp:56
+#: ../src/live_effects/lpe-measure-line.cpp:54
 #: ../src/widgets/measure-toolbar.cpp:302
 msgid "Precision"
 msgstr ""
@@ -6608,8 +6608,8 @@ msgid "Discrete"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:505 ../src/filter-enums.cpp:113
-#: ../src/live_effects/lpe-interpolate_points.cpp:23
-#: ../src/live_effects/lpe-powerstroke.cpp:119
+#: ../src/live_effects/lpe-interpolate_points.cpp:24
+#: ../src/live_effects/lpe-powerstroke.cpp:122
 msgid "Linear"
 msgstr ""
 
@@ -6792,7 +6792,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:1119
 #: ../src/extension/internal/filter/paint.h:356 ../src/filter-enums.cpp:33
 #: ../src/live_effects/effect.cpp:92
-#: ../src/live_effects/lpe-transform_2pts.cpp:37
+#: ../src/live_effects/lpe-transform_2pts.cpp:38
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1026
 #: ../src/widgets/gradient-toolbar.cpp:1160
 #: ../src/widgets/measure-toolbar.cpp:328
@@ -7210,7 +7210,7 @@ msgid "Erosion 2"
 msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:191
-#: ../src/live_effects/lpe-roughen.cpp:36
+#: ../src/live_effects/lpe-roughen.cpp:39
 msgid "Smooth"
 msgstr ""
 
@@ -7438,7 +7438,7 @@ msgid "Contrasted"
 msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:591
-#: ../src/live_effects/lpe-jointype.cpp:50
+#: ../src/live_effects/lpe-jointype.cpp:52
 msgid "Line width"
 msgstr ""
 
@@ -7858,7 +7858,7 @@ msgstr ""
 #: ../src/extension/internal/grid.cpp:210
 #: ../src/ui/dialog/document-properties.cpp:151
 #: ../src/ui/dialog/inkscape-preferences.cpp:820
-#: ../src/widgets/toolbox.cpp:1860
+#: ../src/widgets/toolbox.cpp:1865
 msgid "Grids"
 msgstr ""
 
@@ -8214,120 +8214,164 @@ msgstr ""
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr ""
 
-#: ../src/file.cpp:174
+#: ../src/file.cpp:173
 msgid "default.svg"
 msgstr ""
 
-#: ../src/file.cpp:327
+#: ../src/file.cpp:414
+msgid ""
+"Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
+"Drawing elements may be too small. This can be corrected by\n"
+"either setting the SVG 'viewBox' to compensate or by scaling\n"
+"all the elements in the drawing."
+msgstr ""
+
+#: ../src/file.cpp:418 ../src/file.cpp:535
+msgid "Old Inkscape file detected (90 DPI)"
+msgstr ""
+
+#: ../src/file.cpp:425 ../src/file.cpp:542
+msgid "Create backup file (in same directory)."
+msgstr ""
+
+#: ../src/file.cpp:431 ../src/file.cpp:548 ../src/ui/widget/page-sizer.cpp:898
+msgid "Set 'viewBox'"
+msgstr ""
+
+#: ../src/file.cpp:432 ../src/file.cpp:549
+msgid "Scale elements"
+msgstr ""
+
+#: ../src/file.cpp:433 ../src/file.cpp:550
+#: ../src/widgets/connector-toolbar.cpp:316
+msgid "Ignore"
+msgstr ""
+
+#: ../src/file.cpp:530
+msgid ""
+"Old Inkscape files use 1in == 90px. CSS requires 1in == 96px.\n"
+"Drawings meant to match a physical size (e.g. Letter or A4)\n"
+"will be too small. Scaling the drawing can correct for this.\n"
+"Internal scaling can be handled either by setting the SVG 'viewBox'\n"
+"attribute to compensate or by scaling all objects in the drawing."
+msgstr ""
+
+#. Look for SPNamedView and SPDefs loop
+#. desktop->getDocument()->ensureUpToDate();  // Does not update box3d!
+#: ../src/file.cpp:771
+msgid "Update Document"
+msgstr ""
+
+#: ../src/file.cpp:787 ../src/main-cmdlinexact.cpp:177
 msgid "Broken links have been changed to point to existing files."
 msgstr ""
 
-#: ../src/file.cpp:338 ../src/file.cpp:1292
+#: ../src/file.cpp:798 ../src/file.cpp:1754
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr ""
 
-#: ../src/file.cpp:364
+#: ../src/file.cpp:824
 msgid "Document not saved yet.  Cannot revert."
 msgstr ""
 
-#: ../src/file.cpp:370
+#: ../src/file.cpp:830
 msgid "Changes will be lost! Are you sure you want to reload document %1?"
 msgstr ""
 
-#: ../src/file.cpp:396
+#: ../src/file.cpp:856
 msgid "Document reverted."
 msgstr ""
 
-#: ../src/file.cpp:398
+#: ../src/file.cpp:858
 msgid "Document not reverted."
 msgstr ""
 
-#: ../src/file.cpp:548
+#: ../src/file.cpp:1008
 msgid "Select file to open"
 msgstr ""
 
-#: ../src/file.cpp:630
+#: ../src/file.cpp:1090
 msgid "Clean up document"
 msgstr ""
 
-#: ../src/file.cpp:637
+#: ../src/file.cpp:1097
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/file.cpp:642
+#: ../src/file.cpp:1102
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr ""
 
-#: ../src/file.cpp:676
+#: ../src/file.cpp:1136
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
 msgstr ""
 
-#: ../src/file.cpp:677 ../src/file.cpp:687 ../src/file.cpp:696
-#: ../src/file.cpp:703 ../src/file.cpp:709
+#: ../src/file.cpp:1137 ../src/file.cpp:1147 ../src/file.cpp:1156
+#: ../src/file.cpp:1163 ../src/file.cpp:1169
 msgid "Document not saved."
 msgstr ""
 
-#: ../src/file.cpp:686
+#: ../src/file.cpp:1146
 #, c-format
 msgid ""
 "File %s is write protected. Please remove write protection and try again."
 msgstr ""
 
-#: ../src/file.cpp:695
+#: ../src/file.cpp:1155
 #, c-format
 msgid "File %s could not be saved."
 msgstr ""
 
-#: ../src/file.cpp:728 ../src/file.cpp:730
+#: ../src/file.cpp:1188 ../src/file.cpp:1190
 msgid "Document saved."
 msgstr ""
 
 #. We are saving for the first time; create a unique default filename
-#: ../src/file.cpp:873 ../src/file.cpp:1451
+#: ../src/file.cpp:1333 ../src/file.cpp:1913
 msgid "drawing"
 msgstr ""
 
-#: ../src/file.cpp:878
+#: ../src/file.cpp:1338
 msgid "drawing-%1"
 msgstr ""
 
-#: ../src/file.cpp:895
+#: ../src/file.cpp:1355
 msgid "Select file to save a copy to"
 msgstr ""
 
-#: ../src/file.cpp:897
+#: ../src/file.cpp:1357
 msgid "Select file to save to"
 msgstr ""
 
-#: ../src/file.cpp:1002 ../src/file.cpp:1004
+#: ../src/file.cpp:1462 ../src/file.cpp:1464
 msgid "No changes need to be saved."
 msgstr ""
 
-#: ../src/file.cpp:1023
+#: ../src/file.cpp:1483
 msgid "Saving document..."
 msgstr ""
 
-#: ../src/file.cpp:1289 ../src/ui/dialog/inkscape-preferences.cpp:1481
+#: ../src/file.cpp:1751 ../src/ui/dialog/inkscape-preferences.cpp:1481
 #: ../src/ui/dialog/ocaldialogs.cpp:1091
 msgid "Import"
 msgstr ""
 
-#: ../src/file.cpp:1339
+#: ../src/file.cpp:1801
 msgid "Select file to import"
 msgstr ""
 
-#: ../src/file.cpp:1472
+#: ../src/file.cpp:1934
 msgid "Select file to export to"
 msgstr ""
 
-#: ../src/file.cpp:1725
+#: ../src/file.cpp:2187
 msgid "Import Clip Art"
 msgstr ""
 
@@ -8541,92 +8585,108 @@ msgstr ""
 msgid "Delete swatch"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:92 ../src/ui/tools/gradient-tool.cpp:83
+#: ../src/gradient-drag.cpp:94 ../src/ui/tools/gradient-tool.cpp:86
+#: ../src/ui/tools/mesh-tool.cpp:103
 msgid "Linear gradient <b>start</b>"
 msgstr ""
 
 #. POINT_LG_BEGIN
-#: ../src/gradient-drag.cpp:93 ../src/ui/tools/gradient-tool.cpp:84
+#: ../src/gradient-drag.cpp:95 ../src/ui/tools/gradient-tool.cpp:87
+#: ../src/ui/tools/mesh-tool.cpp:104
 msgid "Linear gradient <b>end</b>"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:94 ../src/ui/tools/gradient-tool.cpp:85
+#: ../src/gradient-drag.cpp:96 ../src/ui/tools/gradient-tool.cpp:88
+#: ../src/ui/tools/mesh-tool.cpp:105
 msgid "Linear gradient <b>mid stop</b>"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:95 ../src/ui/tools/gradient-tool.cpp:86
+#: ../src/gradient-drag.cpp:97 ../src/ui/tools/gradient-tool.cpp:89
+#: ../src/ui/tools/mesh-tool.cpp:106
 msgid "Radial gradient <b>center</b>"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:96 ../src/gradient-drag.cpp:97
-#: ../src/ui/tools/gradient-tool.cpp:87 ../src/ui/tools/gradient-tool.cpp:88
+#: ../src/gradient-drag.cpp:98 ../src/gradient-drag.cpp:99
+#: ../src/ui/tools/gradient-tool.cpp:90 ../src/ui/tools/gradient-tool.cpp:91
+#: ../src/ui/tools/mesh-tool.cpp:107 ../src/ui/tools/mesh-tool.cpp:108
 msgid "Radial gradient <b>radius</b>"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:98 ../src/ui/tools/gradient-tool.cpp:89
+#: ../src/gradient-drag.cpp:100 ../src/ui/tools/gradient-tool.cpp:92
+#: ../src/ui/tools/mesh-tool.cpp:109
 msgid "Radial gradient <b>focus</b>"
 msgstr ""
 
 #. POINT_RG_FOCUS
-#: ../src/gradient-drag.cpp:99 ../src/gradient-drag.cpp:100
-#: ../src/ui/tools/gradient-tool.cpp:90 ../src/ui/tools/gradient-tool.cpp:91
+#: ../src/gradient-drag.cpp:101 ../src/gradient-drag.cpp:102
+#: ../src/ui/tools/gradient-tool.cpp:93 ../src/ui/tools/gradient-tool.cpp:94
+#: ../src/ui/tools/mesh-tool.cpp:110 ../src/ui/tools/mesh-tool.cpp:111
 msgid "Radial gradient <b>mid stop</b>"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:101 ../src/ui/tools/mesh-tool.cpp:96
+#: ../src/gradient-drag.cpp:103 ../src/ui/tools/gradient-tool.cpp:95
+#: ../src/ui/tools/mesh-tool.cpp:112
 msgid "Mesh gradient <b>corner</b>"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:102 ../src/ui/tools/mesh-tool.cpp:97
+#: ../src/gradient-drag.cpp:104 ../src/ui/tools/gradient-tool.cpp:96
+#: ../src/ui/tools/mesh-tool.cpp:113
 msgid "Mesh gradient <b>handle</b>"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:103 ../src/ui/tools/mesh-tool.cpp:98
+#: ../src/gradient-drag.cpp:105 ../src/ui/tools/gradient-tool.cpp:97
+#: ../src/ui/tools/mesh-tool.cpp:114
 msgid "Mesh gradient <b>tensor</b>"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:560
+#: ../src/gradient-drag.cpp:563
 msgid "Added patch row or column"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:793
+#: ../src/gradient-drag.cpp:806
 msgid "Merge gradient handles"
 msgstr ""
 
 #. we did an undoable action
-#: ../src/gradient-drag.cpp:1096
+#: ../src/gradient-drag.cpp:1123
 msgid "Move gradient handle"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1155 ../src/widgets/gradient-vector.cpp:798
+#: ../src/gradient-drag.cpp:1182 ../src/widgets/gradient-vector.cpp:798
 msgid "Delete gradient stop"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1420
+#: ../src/gradient-drag.cpp:1472
 #, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
 "+Alt</b> to delete stop"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1424 ../src/gradient-drag.cpp:1431
+#: ../src/gradient-drag.cpp:1476 ../src/gradient-drag.cpp:1485
+#: ../src/gradient-drag.cpp:1492
 msgid " (stroke)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1428
+#: ../src/gradient-drag.cpp:1482
+#, c-format
+msgid "%s for: %s%s"
+msgstr ""
+
+#: ../src/gradient-drag.cpp:1489
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1436
+#: ../src/gradient-drag.cpp:1497
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1439
+#: ../src/gradient-drag.cpp:1500
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -8637,15 +8697,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-drag.cpp:2362
+#: ../src/gradient-drag.cpp:2781
 msgid "Move gradient handle(s)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:2396
+#: ../src/gradient-drag.cpp:2815
 msgid "Move gradient mid stop(s)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:2685
+#: ../src/gradient-drag.cpp:3104
 msgid "Delete gradient stop(s)"
 msgstr ""
 
@@ -8693,7 +8753,27 @@ msgstr ""
 msgid "Automatic backup of the following documents failed:\n"
 msgstr ""
 
-#: ../src/knot.cpp:335
+#: ../src/inkview.cpp:225
+msgid "Inkscape Options"
+msgstr ""
+
+#: ../src/inkview.cpp:226
+msgid "Default program options"
+msgstr ""
+
+#: ../src/inkview.cpp:233
+msgid "NUM"
+msgstr ""
+
+#: ../src/inkview.cpp:239
+msgid "FILES..."
+msgstr ""
+
+#: ../src/inkview.cpp:251
+msgid "Open SVG files"
+msgstr ""
+
+#: ../src/knot.cpp:329
 msgid "Node or handle drag canceled."
 msgstr ""
 
@@ -8755,7 +8835,7 @@ msgid "Line Segment"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:93
-#: ../src/live_effects/lpe-measure-line.cpp:46
+#: ../src/live_effects/lpe-measure-line.cpp:44
 msgid "Parallel"
 msgstr ""
 
@@ -8868,7 +8948,8 @@ msgid "Transform by 2 points"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:126
-#: ../src/live_effects/lpe-show_handles.cpp:25
+#: ../src/live_effects/lpe-show_handles.cpp:27
+#: ../src/widgets/mesh-toolbar.cpp:505
 msgid "Show handles"
 msgstr ""
 
@@ -8928,135 +9009,135 @@ msgid ""
 "disabled on canvas"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:377
+#: ../src/live_effects/effect.cpp:378
 msgid "No effect"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:492
+#: ../src/live_effects/effect.cpp:493
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:774
+#: ../src/live_effects/effect.cpp:768
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:779
+#: ../src/live_effects/effect.cpp:773
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:22
+#: ../src/live_effects/lpe-attach-path.cpp:21
 msgid "Start path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:22
+#: ../src/live_effects/lpe-attach-path.cpp:21
 msgid "Path to attach to the start of this path"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:23
+#: ../src/live_effects/lpe-attach-path.cpp:22
 msgid "Start path position:"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:23
+#: ../src/live_effects/lpe-attach-path.cpp:22
 msgid "Position to attach path start to"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:24
+#: ../src/live_effects/lpe-attach-path.cpp:23
 msgid "Start path curve start:"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:24
-#: ../src/live_effects/lpe-attach-path.cpp:28
+#: ../src/live_effects/lpe-attach-path.cpp:23
+#: ../src/live_effects/lpe-attach-path.cpp:27
 msgid "Starting curve"
 msgstr ""
 
 #. , true
-#: ../src/live_effects/lpe-attach-path.cpp:25
+#: ../src/live_effects/lpe-attach-path.cpp:24
 msgid "Start path curve end:"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:25
-#: ../src/live_effects/lpe-attach-path.cpp:29
+#: ../src/live_effects/lpe-attach-path.cpp:24
+#: ../src/live_effects/lpe-attach-path.cpp:28
 msgid "Ending curve"
 msgstr ""
 
 #. , true
-#: ../src/live_effects/lpe-attach-path.cpp:26
+#: ../src/live_effects/lpe-attach-path.cpp:25
 msgid "End path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:26
+#: ../src/live_effects/lpe-attach-path.cpp:25
 msgid "Path to attach to the end of this path"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:27
+#: ../src/live_effects/lpe-attach-path.cpp:26
 msgid "End path position:"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:27
+#: ../src/live_effects/lpe-attach-path.cpp:26
 msgid "Position to attach path end to"
 msgstr ""
 
-#: ../src/live_effects/lpe-attach-path.cpp:28
+#: ../src/live_effects/lpe-attach-path.cpp:27
 msgid "End path curve start:"
 msgstr ""
 
 #. , true
-#: ../src/live_effects/lpe-attach-path.cpp:29
+#: ../src/live_effects/lpe-attach-path.cpp:28
 msgid "End path curve end:"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:53
+#: ../src/live_effects/lpe-bendpath.cpp:54
 msgid "Bend path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:53
+#: ../src/live_effects/lpe-bendpath.cpp:54
 msgid "Path along which to bend the original path"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:55
-#: ../src/live_effects/lpe-patternalongpath.cpp:65
+#: ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-patternalongpath.cpp:67
 #: ../src/ui/dialog/export.cpp:257 ../src/ui/dialog/transformation.cpp:69
 #: ../src/ui/widget/page-sizer.cpp:220
 msgid "_Width:"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:55
+#: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "W_idth in units of length"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:56
+#: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Scale the width of the path in units of its length"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:57
+#: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "_Original path is vertical"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:57
+#: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr ""
 
-#: ../src/live_effects/lpe-bendpath.cpp:162
-#: ../src/live_effects/lpe-patternalongpath.cpp:278
+#: ../src/live_effects/lpe-bendpath.cpp:163
+#: ../src/live_effects/lpe-patternalongpath.cpp:281
 msgid "Change the width"
 msgstr ""
 
 #: ../src/live_effects/lpe-bounding-box.cpp:20
-#: ../src/live_effects/lpe-clone-original.cpp:18
+#: ../src/live_effects/lpe-clone-original.cpp:17
 #: ../src/live_effects/lpe-fill-between-many.cpp:22
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:20
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:19
 msgid "Linked path:"
 msgstr ""
 
 #: ../src/live_effects/lpe-bounding-box.cpp:20
-#: ../src/live_effects/lpe-clone-original.cpp:18
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:20
+#: ../src/live_effects/lpe-clone-original.cpp:17
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:19
 msgid "Path from which to take the original path data"
 msgstr ""
 
@@ -9077,13 +9158,13 @@ msgid "Change number of steps with CTRL pressed"
 msgstr ""
 
 #: ../src/live_effects/lpe-bspline.cpp:31
-#: ../src/live_effects/lpe-simplify.cpp:23
-#: ../src/live_effects/lpe-transform_2pts.cpp:40
+#: ../src/live_effects/lpe-simplify.cpp:25
+#: ../src/live_effects/lpe-transform_2pts.cpp:41
 msgid "Helper size:"
 msgstr ""
 
 #: ../src/live_effects/lpe-bspline.cpp:31
-#: ../src/live_effects/lpe-simplify.cpp:23
+#: ../src/live_effects/lpe-simplify.cpp:25
 msgid "Helper size"
 msgstr ""
 
@@ -9131,63 +9212,6 @@ msgstr ""
 msgid "Change scalar parameter"
 msgstr ""
 
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-msgid "Origin"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-msgid "Origin of the rotation"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-msgid "Starting:"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-msgid "Angle of the first copy"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:63
-msgid "Rotation angle:"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:63
-msgid "Angle between two successive copies"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:64
-msgid "Number of copies:"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:64
-msgid "Number of copies of the original path"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:65
-msgid "360º Copies"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:65
-msgid "No rotation angle, fixed to 360º"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:66
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:66
-msgid "Fuse paths"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:66
-msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:427
-msgid "Adjust the starting angle"
-msgstr ""
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:433
-msgid "Adjust the rotation angle"
-msgstr ""
-
 #: ../src/live_effects/lpe-constructgrid.cpp:24
 msgid "Size _X:"
 msgstr ""
@@ -9204,131 +9228,193 @@ msgstr ""
 msgid "The size of the grid in Y direction."
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:33
+#: ../src/live_effects/lpe-copy_rotate.cpp:42
+msgid "Origin"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:42
+msgid "Adjust origin of the rotation"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:43
+#: ../src/live_effects/lpe-transform_2pts.cpp:35
+msgid "Start point"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:43
+msgid "Starting point to define start angle"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:43
+msgid "Adjust starting point to define start angle"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:44
+msgid "Starting angle"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:44
+msgid "Angle of the first copy"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:45
+msgid "Rotation angle"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:45
+msgid "Angle between two successive copies"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:46
+msgid "Number of copies"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:46
+msgid "Number of copies of the original path"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:47
+msgid "360º Copies"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:47
+msgid "No rotation angle, fixed to 360º"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:48
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:44
+msgid "Fuse paths"
+msgstr ""
+
+#: ../src/live_effects/lpe-copy_rotate.cpp:48
+msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
+msgstr ""
+
+#: ../src/live_effects/lpe-curvestitch.cpp:34
 msgid "Stitch path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:33
+#: ../src/live_effects/lpe-curvestitch.cpp:34
 msgid "The path that will be used as stitch."
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:34
+#: ../src/live_effects/lpe-curvestitch.cpp:35
 msgid "N_umber of paths:"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:34
+#: ../src/live_effects/lpe-curvestitch.cpp:35
 msgid "The number of paths that will be generated."
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:35
+#: ../src/live_effects/lpe-curvestitch.cpp:36
 msgid "Sta_rt edge variance:"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:35
+#: ../src/live_effects/lpe-curvestitch.cpp:36
 msgid ""
 "The amount of random jitter to move the start points of the stitches inside "
 "& outside the guide path"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:36
+#: ../src/live_effects/lpe-curvestitch.cpp:37
 msgid "Sta_rt spacing variance:"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:36
+#: ../src/live_effects/lpe-curvestitch.cpp:37
 msgid ""
 "The amount of random shifting to move the start points of the stitches back "
 "& forth along the guide path"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:37
+#: ../src/live_effects/lpe-curvestitch.cpp:38
 msgid "End ed_ge variance:"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:37
+#: ../src/live_effects/lpe-curvestitch.cpp:38
 msgid ""
 "The amount of randomness that moves the end points of the stitches inside & "
 "outside the guide path"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:38
+#: ../src/live_effects/lpe-curvestitch.cpp:39
 msgid "End spa_cing variance:"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:38
+#: ../src/live_effects/lpe-curvestitch.cpp:39
 msgid ""
 "The amount of random shifting to move the end points of the stitches back & "
 "forth along the guide path"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:39
+#: ../src/live_effects/lpe-curvestitch.cpp:40
 msgid "Scale _width:"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:39
+#: ../src/live_effects/lpe-curvestitch.cpp:40
 msgid "Scale the width of the stitch path"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:40
+#: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Scale _width relative to length"
 msgstr ""
 
-#: ../src/live_effects/lpe-curvestitch.cpp:40
+#: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Scale the width of the stitch path relative to its length"
 msgstr ""
 
-#: ../src/live_effects/lpe-ellipse_5pts.cpp:76
+#: ../src/live_effects/lpe-ellipse_5pts.cpp:75
 msgid "Five points required for constructing an ellipse"
 msgstr ""
 
-#: ../src/live_effects/lpe-ellipse_5pts.cpp:161
+#: ../src/live_effects/lpe-ellipse_5pts.cpp:160
 msgid "No ellipse found for specified points"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:17
+#: ../src/live_effects/lpe-envelope.cpp:19
 msgid "Top bend path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:17
+#: ../src/live_effects/lpe-envelope.cpp:19
 msgid "Top path along which to bend the original path"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:18
+#: ../src/live_effects/lpe-envelope.cpp:20
 msgid "Right bend path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:18
+#: ../src/live_effects/lpe-envelope.cpp:20
 msgid "Right path along which to bend the original path"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:19
+#: ../src/live_effects/lpe-envelope.cpp:21
 msgid "Bottom bend path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:19
+#: ../src/live_effects/lpe-envelope.cpp:21
 msgid "Bottom path along which to bend the original path"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:20
+#: ../src/live_effects/lpe-envelope.cpp:22
 msgid "Left bend path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:20
+#: ../src/live_effects/lpe-envelope.cpp:22
 msgid "Left path along which to bend the original path"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:21
+#: ../src/live_effects/lpe-envelope.cpp:23
 msgid "_Enable left & right paths"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:21
+#: ../src/live_effects/lpe-envelope.cpp:23
 msgid "Enable the left and right deformation paths"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:22
+#: ../src/live_effects/lpe-envelope.cpp:24
 msgid "_Enable top & bottom paths"
 msgstr ""
 
-#: ../src/live_effects/lpe-envelope.cpp:22
+#: ../src/live_effects/lpe-envelope.cpp:24
 msgid "Enable the top and bottom deformation paths"
 msgstr ""
 
@@ -9344,24 +9430,24 @@ msgstr ""
 msgid "Paths from which to take the original path data"
 msgstr ""
 
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:21
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:20
 msgid "Second path:"
 msgstr ""
 
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:21
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:20
 msgid "Second path from which to take the original path data"
 msgstr ""
 
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:22
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:21
 msgid "Reverse Second"
 msgstr ""
 
-#: ../src/live_effects/lpe-fill-between-strokes.cpp:22
+#: ../src/live_effects/lpe-fill-between-strokes.cpp:21
 msgid "Reverses the second path order"
 msgstr ""
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:36
-#: ../src/widgets/text-toolbar.cpp:1780
+#: ../src/widgets/text-toolbar.cpp:1884
 #: ../share/extensions/render_barcode_qrcode.inx.h:5
 msgid "Auto"
 msgstr ""
@@ -9471,29 +9557,29 @@ msgstr ""
 msgid "Knots and helper paths refreshed"
 msgstr ""
 
-#: ../src/live_effects/lpe-gears.cpp:209
+#: ../src/live_effects/lpe-gears.cpp:208
 msgid "_Teeth:"
 msgstr ""
 
-#: ../src/live_effects/lpe-gears.cpp:209
+#: ../src/live_effects/lpe-gears.cpp:208
 msgid "The number of teeth"
 msgstr ""
 
-#: ../src/live_effects/lpe-gears.cpp:210
+#: ../src/live_effects/lpe-gears.cpp:209
 msgid "_Phi:"
 msgstr ""
 
-#: ../src/live_effects/lpe-gears.cpp:210
+#: ../src/live_effects/lpe-gears.cpp:209
 msgid ""
 "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in "
 "contact."
 msgstr ""
 
-#: ../src/live_effects/lpe-gears.cpp:211
+#: ../src/live_effects/lpe-gears.cpp:210
 msgid "Min Radius:"
 msgstr ""
 
-#: ../src/live_effects/lpe-gears.cpp:211
+#: ../src/live_effects/lpe-gears.cpp:210
 msgid "Minimun radius, low balues can slow"
 msgstr ""
 
@@ -9524,1610 +9610,1615 @@ msgid ""
 "trajectory path."
 msgstr ""
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:24
-#: ../src/live_effects/lpe-powerstroke.cpp:120
+#: ../src/live_effects/lpe-interpolate_points.cpp:25
+#: ../src/live_effects/lpe-powerstroke.cpp:123
 msgid "CubicBezierFit"
 msgstr ""
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:25
-#: ../src/live_effects/lpe-powerstroke.cpp:121
+#: ../src/live_effects/lpe-interpolate_points.cpp:26
+#: ../src/live_effects/lpe-powerstroke.cpp:124
 msgid "CubicBezierJohan"
 msgstr ""
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:26
-#: ../src/live_effects/lpe-powerstroke.cpp:122
+#: ../src/live_effects/lpe-interpolate_points.cpp:27
+#: ../src/live_effects/lpe-powerstroke.cpp:125
 msgid "SpiroInterpolator"
 msgstr ""
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:27
-#: ../src/live_effects/lpe-powerstroke.cpp:123
+#: ../src/live_effects/lpe-interpolate_points.cpp:28
+#: ../src/live_effects/lpe-powerstroke.cpp:126
 msgid "Centripetal Catmull-Rom"
 msgstr ""
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:35
-#: ../src/live_effects/lpe-powerstroke.cpp:165
+#: ../src/live_effects/lpe-interpolate_points.cpp:36
+#: ../src/live_effects/lpe-powerstroke.cpp:168
 msgid "Interpolator type:"
 msgstr ""
 
-#: ../src/live_effects/lpe-interpolate_points.cpp:36
-#: ../src/live_effects/lpe-powerstroke.cpp:165
+#: ../src/live_effects/lpe-interpolate_points.cpp:37
+#: ../src/live_effects/lpe-powerstroke.cpp:168
 msgid ""
 "Determines which kind of interpolator will be used to interpolate between "
 "stroke width along the path"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:27
-#: ../src/live_effects/lpe-powerstroke.cpp:152
-#: ../src/live_effects/lpe-taperstroke.cpp:55
+#: ../src/live_effects/lpe-jointype.cpp:29
+#: ../src/live_effects/lpe-powerstroke.cpp:155
+#: ../src/live_effects/lpe-taperstroke.cpp:57
 msgid "Beveled"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:28
-#: ../src/live_effects/lpe-jointype.cpp:39
-#: ../src/live_effects/lpe-powerstroke.cpp:153
-#: ../src/live_effects/lpe-taperstroke.cpp:56
+#: ../src/live_effects/lpe-jointype.cpp:30
+#: ../src/live_effects/lpe-jointype.cpp:41
+#: ../src/live_effects/lpe-powerstroke.cpp:156
+#: ../src/live_effects/lpe-taperstroke.cpp:58
 #: ../src/widgets/star-toolbar.cpp:532
 msgid "Rounded"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:29
-#: ../src/live_effects/lpe-powerstroke.cpp:156
-#: ../src/live_effects/lpe-taperstroke.cpp:57
+#: ../src/live_effects/lpe-jointype.cpp:31
+#: ../src/live_effects/lpe-powerstroke.cpp:159
+#: ../src/live_effects/lpe-taperstroke.cpp:59
 msgid "Miter"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:30
+#: ../src/live_effects/lpe-jointype.cpp:32
 msgid "Miter Clip"
 msgstr ""
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
-#: ../src/live_effects/lpe-jointype.cpp:31
-#: ../src/live_effects/lpe-powerstroke.cpp:155
+#: ../src/live_effects/lpe-jointype.cpp:33
+#: ../src/live_effects/lpe-powerstroke.cpp:158
 msgid "Extrapolated arc"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:32
+#: ../src/live_effects/lpe-jointype.cpp:34
 msgid "Extrapolated arc Alt1"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:33
+#: ../src/live_effects/lpe-jointype.cpp:35
 msgid "Extrapolated arc Alt2"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:34
+#: ../src/live_effects/lpe-jointype.cpp:36
 msgid "Extrapolated arc Alt3"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:38
-#: ../src/live_effects/lpe-powerstroke.cpp:135
+#: ../src/live_effects/lpe-jointype.cpp:40
+#: ../src/live_effects/lpe-powerstroke.cpp:138
 msgid "Butt"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:40
-#: ../src/live_effects/lpe-powerstroke.cpp:136
+#: ../src/live_effects/lpe-jointype.cpp:42
+#: ../src/live_effects/lpe-powerstroke.cpp:139
 msgid "Square"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:41
-#: ../src/live_effects/lpe-powerstroke.cpp:138
+#: ../src/live_effects/lpe-jointype.cpp:43
+#: ../src/live_effects/lpe-powerstroke.cpp:141
 msgid "Peak"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:50
+#: ../src/live_effects/lpe-jointype.cpp:52
 msgid "Thickness of the stroke"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:51
+#: ../src/live_effects/lpe-jointype.cpp:53
 msgid "Line cap"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:51
+#: ../src/live_effects/lpe-jointype.cpp:53
 msgid "The end shape of the stroke"
 msgstr ""
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/live_effects/lpe-jointype.cpp:52
-#: ../src/live_effects/lpe-powerstroke.cpp:168
+#: ../src/live_effects/lpe-jointype.cpp:54
+#: ../src/live_effects/lpe-powerstroke.cpp:171
 #: ../src/widgets/stroke-style.cpp:261
 msgid "Join:"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:52
-#: ../src/live_effects/lpe-powerstroke.cpp:168
+#: ../src/live_effects/lpe-jointype.cpp:54
+#: ../src/live_effects/lpe-powerstroke.cpp:171
 msgid "Determines the shape of the path's corners"
 msgstr ""
 
 #. start_lean(_("Start path lean"), _("Start path lean"), "start_lean", &wr, this, 0.),
 #. end_lean(_("End path lean"), _("End path lean"), "end_lean", &wr, this, 0.),
-#: ../src/live_effects/lpe-jointype.cpp:55
-#: ../src/live_effects/lpe-powerstroke.cpp:169
-#: ../src/live_effects/lpe-taperstroke.cpp:70
+#: ../src/live_effects/lpe-jointype.cpp:57
+#: ../src/live_effects/lpe-powerstroke.cpp:172
+#: ../src/live_effects/lpe-taperstroke.cpp:72
 msgid "Miter limit:"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:55
+#: ../src/live_effects/lpe-jointype.cpp:57
 msgid "Maximum length of the miter join (in units of stroke width)"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:56
+#: ../src/live_effects/lpe-jointype.cpp:58
 msgid "Force miter"
 msgstr ""
 
-#: ../src/live_effects/lpe-jointype.cpp:56
+#: ../src/live_effects/lpe-jointype.cpp:58
 msgid "Overrides the miter limit and forces a join."
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:343
+#: ../src/live_effects/lpe-knot.cpp:346
 msgid "Fi_xed width:"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:343
+#: ../src/live_effects/lpe-knot.cpp:346
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:344
+#: ../src/live_effects/lpe-knot.cpp:347
 msgid "_In units of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:344
+#: ../src/live_effects/lpe-knot.cpp:347
 msgid "Consider 'Interruption width' as a ratio of stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:345
+#: ../src/live_effects/lpe-knot.cpp:348
 msgid "St_roke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:345
+#: ../src/live_effects/lpe-knot.cpp:348
 msgid "Add the stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:346
+#: ../src/live_effects/lpe-knot.cpp:349
 msgid "_Crossing path stroke width"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:346
+#: ../src/live_effects/lpe-knot.cpp:349
 msgid "Add crossed stroke width to the interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:347
+#: ../src/live_effects/lpe-knot.cpp:350
 msgid "S_witcher size:"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:347
+#: ../src/live_effects/lpe-knot.cpp:350
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:348
+#: ../src/live_effects/lpe-knot.cpp:351
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:348
+#: ../src/live_effects/lpe-knot.cpp:351
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:619
+#: ../src/live_effects/lpe-knot.cpp:622
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
 
 #. / @todo Is this the right verb?
-#: ../src/live_effects/lpe-knot.cpp:657
+#: ../src/live_effects/lpe-knot.cpp:660
 msgid "Change knot crossing"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:33
-#: ../src/live_effects/lpe-perspective-envelope.cpp:42
+#: ../src/live_effects/lpe-lattice2.cpp:36
+#: ../src/live_effects/lpe-perspective-envelope.cpp:45
 msgid "Mirror movements in horizontal"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:34
-#: ../src/live_effects/lpe-perspective-envelope.cpp:43
+#: ../src/live_effects/lpe-lattice2.cpp:37
+#: ../src/live_effects/lpe-perspective-envelope.cpp:46
 msgid "Mirror movements in vertical"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:35
+#: ../src/live_effects/lpe-lattice2.cpp:38
 msgid "Update while moving knots (maybe slow)"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:36
+#: ../src/live_effects/lpe-lattice2.cpp:39
 msgid "Control 0:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:36
+#: ../src/live_effects/lpe-lattice2.cpp:39
 msgid "Control 0 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:37
+#: ../src/live_effects/lpe-lattice2.cpp:40
 msgid "Control 1:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:37
+#: ../src/live_effects/lpe-lattice2.cpp:40
 msgid "Control 1 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:38
+#: ../src/live_effects/lpe-lattice2.cpp:41
 msgid "Control 2:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:38
+#: ../src/live_effects/lpe-lattice2.cpp:41
 msgid "Control 2 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:39
+#: ../src/live_effects/lpe-lattice2.cpp:42
 msgid "Control 3:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:39
+#: ../src/live_effects/lpe-lattice2.cpp:42
 msgid "Control 3 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:40
+#: ../src/live_effects/lpe-lattice2.cpp:43
 msgid "Control 4:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:40
+#: ../src/live_effects/lpe-lattice2.cpp:43
 msgid "Control 4 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:41
+#: ../src/live_effects/lpe-lattice2.cpp:44
 msgid "Control 5:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:41
+#: ../src/live_effects/lpe-lattice2.cpp:44
 msgid "Control 5 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:42
+#: ../src/live_effects/lpe-lattice2.cpp:45
 msgid "Control 6:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:42
+#: ../src/live_effects/lpe-lattice2.cpp:45
 msgid "Control 6 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:43
+#: ../src/live_effects/lpe-lattice2.cpp:46
 msgid "Control 7:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:43
+#: ../src/live_effects/lpe-lattice2.cpp:46
 msgid "Control 7 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:44
+#: ../src/live_effects/lpe-lattice2.cpp:47
 msgid "Control 8x9:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:44
+#: ../src/live_effects/lpe-lattice2.cpp:47
 msgid ""
 "Control 8x9 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:45
+#: ../src/live_effects/lpe-lattice2.cpp:48
 msgid "Control 10x11:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:45
+#: ../src/live_effects/lpe-lattice2.cpp:48
 msgid ""
 "Control 10x11 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:46
+#: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control 12:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:46
+#: ../src/live_effects/lpe-lattice2.cpp:49
 msgid "Control 12 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:47
+#: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 13:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:47
+#: ../src/live_effects/lpe-lattice2.cpp:50
 msgid "Control 13 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:48
+#: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 14:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:48
+#: ../src/live_effects/lpe-lattice2.cpp:51
 msgid "Control 14 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:49
+#: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 15:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:49
+#: ../src/live_effects/lpe-lattice2.cpp:52
 msgid "Control 15 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:50
+#: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 16:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:50
+#: ../src/live_effects/lpe-lattice2.cpp:53
 msgid "Control 16 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:51
+#: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 17:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:51
+#: ../src/live_effects/lpe-lattice2.cpp:54
 msgid "Control 17 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:52
+#: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 18:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:52
+#: ../src/live_effects/lpe-lattice2.cpp:55
 msgid "Control 18 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:53
+#: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 19:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:53
+#: ../src/live_effects/lpe-lattice2.cpp:56
 msgid "Control 19 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:54
+#: ../src/live_effects/lpe-lattice2.cpp:57
 msgid "Control 20x21:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:54
+#: ../src/live_effects/lpe-lattice2.cpp:57
 msgid ""
 "Control 20x21 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:55
+#: ../src/live_effects/lpe-lattice2.cpp:58
 msgid "Control 22x23:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:55
+#: ../src/live_effects/lpe-lattice2.cpp:58
 msgid ""
 "Control 22x23 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:56
+#: ../src/live_effects/lpe-lattice2.cpp:59
 msgid "Control 24x26:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:56
+#: ../src/live_effects/lpe-lattice2.cpp:59
 msgid ""
 "Control 24x26 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:57
+#: ../src/live_effects/lpe-lattice2.cpp:60
 msgid "Control 25x27:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:57
+#: ../src/live_effects/lpe-lattice2.cpp:60
 msgid ""
 "Control 25x27 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:58
+#: ../src/live_effects/lpe-lattice2.cpp:61
 msgid "Control 28x30:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:58
+#: ../src/live_effects/lpe-lattice2.cpp:61
 msgid ""
 "Control 28x30 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:59
+#: ../src/live_effects/lpe-lattice2.cpp:62
 msgid "Control 29x31:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:59
+#: ../src/live_effects/lpe-lattice2.cpp:62
 msgid ""
 "Control 29x31 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:60
+#: ../src/live_effects/lpe-lattice2.cpp:63
 msgid "Control 32x33x34x35:"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:60
+#: ../src/live_effects/lpe-lattice2.cpp:63
 msgid ""
 "Control 32x33x34x35 - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along "
 "axes"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:225
+#: ../src/live_effects/lpe-lattice2.cpp:228
 msgid "Reset grid"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:257
-#: ../src/live_effects/lpe-lattice2.cpp:272
+#: ../src/live_effects/lpe-lattice2.cpp:260
+#: ../src/live_effects/lpe-lattice2.cpp:275
 msgid "Show Points"
 msgstr ""
 
-#: ../src/live_effects/lpe-lattice2.cpp:270
+#: ../src/live_effects/lpe-lattice2.cpp:273
 msgid "Hide Points"
 msgstr ""
 
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:28
-msgid "Vertical Page Center"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:29
-msgid "Horizontal Page Center"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Free from reflection line"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "X from middle knot"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:32
-msgid "Y from middle knot"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:64
-#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
-msgid "Mode"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:64
-msgid "Symmetry move mode"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:65
-msgid "Discard original path?"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:65
-msgid "Check this to only keep the mirrored part of the path"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:66
-msgid "Fuse original and the reflection into a single path"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:67
-msgid "Opposite fuse"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:67
-msgid "Picks the other side of the mirror as the original"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:68
-msgid "Start mirror line"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:69
-msgid "End mirror line"
-msgstr ""
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:342
-msgid "Adjust the center"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:54
-#: ../share/extensions/pathalongpath.inx.h:10
-msgid "Single"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:55
-#: ../share/extensions/pathalongpath.inx.h:11
-msgid "Single, stretched"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:56
-#: ../share/extensions/pathalongpath.inx.h:12
-msgid "Repeated"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:57
-#: ../share/extensions/pathalongpath.inx.h:13
-msgid "Repeated, stretched"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:63
-msgid "Pattern source:"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:63
-msgid "Path to put along the skeleton path"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:65
-msgid "Width of the pattern"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:66
-msgid "Pattern copies:"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:66
-msgid "How many pattern copies to place along the skeleton path"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:68
-msgid "Wid_th in units of length"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:69
-msgid "Scale the width of the pattern in units of its length"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:71
-msgid "Spa_cing:"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:73
-#, no-c-format
-msgid ""
-"Space between copies of the pattern. Negative values allowed, but are "
-"limited to -90% of pattern width."
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:75
-msgid "No_rmal offset:"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:76
-msgid "Tan_gential offset:"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:77
-msgid "Offsets in _unit of pattern size"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:78
-msgid ""
-"Spacing, tangential and normal offset are expressed as a ratio of width/"
-"height"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:80
-msgid "Pattern is _vertical"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:80
-msgid "Rotate pattern 90 deg before applying"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:82
-msgid "_Fuse nearby ends:"
-msgstr ""
-
-#: ../src/live_effects/lpe-patternalongpath.cpp:82
-msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:34
-#: ../share/extensions/perspective.inx.h:1
-msgid "Perspective"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:35
-msgid "Envelope deformation"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:44
-msgid "Overflow perspective"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:45
-msgid "Type"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:45
-msgid "Select the type of deformation"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:46
-msgid "Top Left"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:46
-msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:47
-msgid "Top Right"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:47
-msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:48
-msgid "Down Left"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:48
-msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:49
-msgid "Down Right"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:49
-msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
-msgstr ""
-
-#: ../src/live_effects/lpe-perspective-envelope.cpp:366
-msgid "Handles:"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:118
-msgid "CubicBezierSmooth"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:137
-#: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
-msgid "Round"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:139
-msgid "Zero width"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:157
-#: ../src/widgets/pencil-toolbar.cpp:109
-msgid "Spiro"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:163
-msgid "Offset points"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:164
-msgid "Sort points"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:164
-msgid "Sort offset points according to their time value along the curve"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:166
-#: ../share/extensions/fractalize.inx.h:3
-msgid "Smoothness:"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:166
-msgid ""
-"Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
-"interpolation, 1 = smooth"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:167
-msgid "Start cap:"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:167
-msgid "Determines the shape of the path's start"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:169
-#: ../src/widgets/stroke-style.cpp:301
-msgid "Maximum length of the miter (in units of stroke width)"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:170
-msgid "End cap:"
-msgstr ""
-
-#: ../src/live_effects/lpe-powerstroke.cpp:170
-msgid "Determines the shape of the path's end"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:217
-msgid "Frequency randomness:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:217
-msgid "Variation of distance between hatches, in %."
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:218
-msgid "Growth:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:218
-msgid "Growth of distance between hatches."
-msgstr ""
-
-#. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
-#: ../src/live_effects/lpe-rough-hatches.cpp:220
-msgid "Half-turns smoothness: 1st side, in:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:220
-msgid ""
-"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
-"0=sharp, 1=default"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:221
-msgid "1st side, out:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:221
-msgid ""
-"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
-"1=default"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:222
-msgid "2nd side, in:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:222
-msgid ""
-"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
-"1=default"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:223
-msgid "2nd side, out:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:223
-msgid ""
-"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
-"1=default"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:224
-msgid "Magnitude jitter: 1st side:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:224
-msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:225
-#: ../src/live_effects/lpe-rough-hatches.cpp:227
-#: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "2nd side:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:225
-msgid "Randomly moves 'top' half-turns to produce magnitude variations."
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:226
-msgid "Parallelism jitter: 1st side:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:226
-msgid ""
-"Add direction randomness by moving 'bottom' half-turns tangentially to the "
-"boundary."
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:227
-msgid ""
-"Add direction randomness by randomly moving 'top' half-turns tangentially to "
-"the boundary."
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:228
-msgid "Variance: 1st side:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:228
-msgid "Randomness of 'bottom' half-turns smoothness"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:229
-msgid "Randomness of 'top' half-turns smoothness"
-msgstr ""
-
-#.
-#: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "Generate thick/thin path"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "Simulate a stroke of varying width"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:232
-msgid "Bend hatches"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:232
-msgid "Add a global bend to the hatches (slower)"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Thickness: at 1st side:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Width at 'bottom' half-turns"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "At 2nd side:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:234
-msgid "Width at 'top' half-turns"
-msgstr ""
-
-#.
-#: ../src/live_effects/lpe-rough-hatches.cpp:236
-msgid "From 2nd to 1st side:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:236
-msgid "Width from 'top' to 'bottom'"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "From 1st to 2nd side:"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Width from 'bottom' to 'top'"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:239
-msgid "Hatches width and dir"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:239
-msgid "Defines hatches frequency and direction"
-msgstr ""
-
-#.
-#: ../src/live_effects/lpe-rough-hatches.cpp:241
-msgid "Global bending"
-msgstr ""
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:241
-msgid ""
-"Relative position to a reference point defines global bending direction and "
-"amount"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:26 ../share/extensions/addnodes.inx.h:4
-msgid "By number of segments"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:27
-msgid "By max. segment size"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:33
-msgid "Along nodes"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:34
-msgid "Rand"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:35
-msgid "Retract"
-msgstr ""
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-roughen.cpp:44
-msgid "Method"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:44
-msgid "Division method"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:46
-msgid "Max. segment size"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:48
-msgid "Number of segments"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:50
-msgid "Max. displacement in X"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:52
-msgid "Max. displacement in Y"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:54
-msgid "Global randomize"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:56
-msgid "Handles"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:56
-msgid "Handles options"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:58
-#: ../share/extensions/jitternodes.inx.h:5
-msgid "Shift nodes"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:60
-msgid "Fixed displacement"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:60
-msgid "Fixed displacement, 1/3 of segment length"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:62
-msgid "Spray Tool friendly"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:62
-msgid "For use with spray tool in copy mode"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:116
-msgid "<b>Add nodes</b> Subdivide each segment"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:125
-msgid "<b>Jitter nodes</b> Move nodes/handles"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:134
-msgid "<b>Extra roughen</b> Add a extra layer of rough"
-msgstr ""
-
-#: ../src/live_effects/lpe-roughen.cpp:143
-msgid "<b>Options</b> Modify options to rough"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:21 ../share/extensions/measure.inx.h:27
-#: ../share/extensions/restack.inx.h:16
-#: ../share/extensions/text_extract.inx.h:8
-#: ../share/extensions/text_merge.inx.h:8
-msgid "Left"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:22 ../share/extensions/measure.inx.h:29
-#: ../share/extensions/restack.inx.h:18
-#: ../share/extensions/text_extract.inx.h:10
-#: ../share/extensions/text_merge.inx.h:10
-msgid "Right"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:23 ../src/live_effects/lpe-ruler.cpp:31
-msgid "Both"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:28
-msgctxt "Border mark"
-msgid "None"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:29
-#: ../src/live_effects/lpe-transform_2pts.cpp:34
-#: ../src/ui/tools/measure-tool.cpp:749 ../src/widgets/arc-toolbar.cpp:318
-msgid "Start"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:30
-#: ../src/live_effects/lpe-transform_2pts.cpp:35
-#: ../src/ui/tools/measure-tool.cpp:750 ../src/widgets/arc-toolbar.cpp:331
-msgid "End"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:37
-msgid "_Mark distance:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:37
-msgid "Distance between successive ruler marks"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:38 ../share/extensions/foldablebox.inx.h:7
-#: ../share/extensions/interp_att_g.inx.h:9
-#: ../share/extensions/layout_nup.inx.h:3
-#: ../share/extensions/printing_marks.inx.h:11
-msgid "Unit:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:38
-#: ../src/live_effects/lpe-measure-line.cpp:52
-#: ../src/widgets/gimp/ruler.cpp:193
-msgid "Unit"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:39
-msgid "Ma_jor length:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:39
-msgid "Length of major ruler marks"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:40
-msgid "Mino_r length:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:40
-msgid "Length of minor ruler marks"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:41
-msgid "Major steps_:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:41
-msgid "Draw a major mark every ... steps"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:42
-msgid "Shift marks _by:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:42
-msgid "Shift marks by this many steps"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark direction:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "_Offset:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "Offset of first mark"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Border marks:"
-msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr ""
-
-#: ../src/live_effects/lpe-measure-line.cpp:44
-#: ../src/widgets/text-toolbar.cpp:1731
+#: ../src/live_effects/lpe-measure-line.cpp:42
+#: ../src/widgets/text-toolbar.cpp:1835
 msgid "Horizontal"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:45
+#: ../src/live_effects/lpe-measure-line.cpp:43
 msgid "Vertical"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:52
+#: ../src/live_effects/lpe-measure-line.cpp:50
 msgid "Unit*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:53
+#: ../src/live_effects/lpe-measure-line.cpp:50
+#: ../src/live_effects/lpe-ruler.cpp:39 ../src/widgets/gimp/ruler.cpp:193
+msgid "Unit"
+msgstr ""
+
+#: ../src/live_effects/lpe-measure-line.cpp:51
 msgid "Font*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:53
+#: ../src/live_effects/lpe-measure-line.cpp:51
 msgid "Font Selector"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:54
+#: ../src/live_effects/lpe-measure-line.cpp:52
 #: ../src/widgets/gimp/ruler.cpp:183
 #: ../share/extensions/gcodetools_graffiti.inx.h:9
 #: ../share/extensions/gcodetools_orientation_points.inx.h:2
 msgid "Orientation"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:54
+#: ../src/live_effects/lpe-measure-line.cpp:52
 msgid "Orientation method"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:55
+#: ../src/live_effects/lpe-measure-line.cpp:53
 msgid "Curve on origin"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:55
+#: ../src/live_effects/lpe-measure-line.cpp:53
 msgid "Curve on origin, set 0 to start/end"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:56
+#: ../src/live_effects/lpe-measure-line.cpp:54
 msgid "Precision*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:57
+#: ../src/live_effects/lpe-measure-line.cpp:55
 msgid "Positon*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:57
+#: ../src/live_effects/lpe-measure-line.cpp:55
 msgid "Positon"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:58
+#: ../src/live_effects/lpe-measure-line.cpp:56
 msgid "Text top/bottom*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:58
+#: ../src/live_effects/lpe-measure-line.cpp:56
 msgid "Text top/bottom"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:59
+#: ../src/live_effects/lpe-measure-line.cpp:57
 msgid "Text right/left*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:59
+#: ../src/live_effects/lpe-measure-line.cpp:57
 msgid "Text right/left"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:60
+#: ../src/live_effects/lpe-measure-line.cpp:58
 msgid "Helpline distance*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:60
+#: ../src/live_effects/lpe-measure-line.cpp:58
 msgid "Helpline distance"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:61
+#: ../src/live_effects/lpe-measure-line.cpp:59
 msgid "Helpline overlap*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:61
+#: ../src/live_effects/lpe-measure-line.cpp:59
 msgid "Helpline overlap"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:62
+#: ../src/live_effects/lpe-measure-line.cpp:60
 msgid "Scale*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:62
+#: ../src/live_effects/lpe-measure-line.cpp:60
 msgid "Scaling factor"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:63
+#: ../src/live_effects/lpe-measure-line.cpp:61
 msgid "Format*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:63
+#: ../src/live_effects/lpe-measure-line.cpp:61
 msgid "Format the number ex:{measure} {unit}, return to save"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:64
+#: ../src/live_effects/lpe-measure-line.cpp:63
 msgid "Arrows outside"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:65
+#: ../src/live_effects/lpe-measure-line.cpp:64
 msgid "Flip side*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:65
+#: ../src/live_effects/lpe-measure-line.cpp:64
 msgid "Flip side"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:66
-msgid "Scale insensitive*"
+#: ../src/live_effects/lpe-measure-line.cpp:65
+msgid "Scale sensitive*"
+msgstr ""
+
+#: ../src/live_effects/lpe-measure-line.cpp:65
+msgid "Costrained scale sensitive to transformed containers"
 msgstr ""
 
 #: ../src/live_effects/lpe-measure-line.cpp:66
-msgid "Scale insensitive to transforms in element, parents..."
-msgstr ""
-
-#: ../src/live_effects/lpe-measure-line.cpp:67
 msgid "Local Number Format*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:67
+#: ../src/live_effects/lpe-measure-line.cpp:66
 msgid "Local number format"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:68
+#: ../src/live_effects/lpe-measure-line.cpp:67
 msgid "Line Group 0.5*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:68
+#: ../src/live_effects/lpe-measure-line.cpp:67
 msgid "Line Group 0.5, from 0.7"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:69
+#: ../src/live_effects/lpe-measure-line.cpp:68
 msgid "Rotate Anotation*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:69
+#: ../src/live_effects/lpe-measure-line.cpp:68
 msgid "Rotate Anotation"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:70
+#: ../src/live_effects/lpe-measure-line.cpp:69
 msgid "Hide if label over*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:70
+#: ../src/live_effects/lpe-measure-line.cpp:69
 msgid "Hide DIN line if label over"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:71
+#: ../src/live_effects/lpe-measure-line.cpp:70
 msgid "CSS DIN line*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:71
+#: ../src/live_effects/lpe-measure-line.cpp:70
 msgid "Override CSS to DIN line, return to save, empty to reset to DIM"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:72
+#: ../src/live_effects/lpe-measure-line.cpp:71
 msgid "CSS helpers*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:72
+#: ../src/live_effects/lpe-measure-line.cpp:71
 msgid "Override CSS to helper lines, return to save, empty to reset to DIM"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:73
+#: ../src/live_effects/lpe-measure-line.cpp:72
 msgid "CSS anotation*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:73
+#: ../src/live_effects/lpe-measure-line.cpp:72
 msgid "Override CSS to anotation text, return to save, empty to reset to DIM"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:74
+#: ../src/live_effects/lpe-measure-line.cpp:73
 msgid "CSS arrows*"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:74
+#: ../src/live_effects/lpe-measure-line.cpp:73
 msgid "Override CSS to arrows, return to save, empty to reset DIM"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:822
+#: ../src/live_effects/lpe-measure-line.cpp:349
+msgid "Non Uniform Scale"
+msgstr ""
+
+#: ../src/live_effects/lpe-measure-line.cpp:777
 msgid "Save '*' as default"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:825
-msgid "Convert to objects"
-msgstr ""
-
-#: ../src/live_effects/lpe-measure-line.cpp:828
-#: ../src/live_effects/lpe-measure-line.cpp:845
+#: ../src/live_effects/lpe-measure-line.cpp:780
+#: ../src/live_effects/lpe-measure-line.cpp:796
 msgid "Show DIM CSS style override"
 msgstr ""
 
-#: ../src/live_effects/lpe-measure-line.cpp:843
+#: ../src/live_effects/lpe-measure-line.cpp:794
 msgid "Hide DIM CSS style override"
 msgstr ""
 
-#: ../src/live_effects/lpe-show_handles.cpp:24
-msgid "Show nodes"
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
+msgid "Vertical Page Center"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:32
+msgid "Horizontal Page Center"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:33
+msgid "Free from reflection line"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:34
+msgid "X from middle knot"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:35
+msgid "Y from middle knot"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:42
+#: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
+msgid "Mode"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:42
+msgid "Symmetry move mode"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:43
+msgid "Discard original path"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:43
+msgid "Check this to only keep the mirrored part of the path"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:44
+msgid "Fuse original and the reflection into a single path"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:45
+msgid "Opposite fuse"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:45
+msgid "Picks the other side of the mirror as the original"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:46
+msgid "Start mirror line"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:46
+msgid "Adjust start of mirroring"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:47
+msgid "End mirror line"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:47
+msgid "Adjust end of mirroring"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:48
+msgid "Center mirror line"
+msgstr ""
+
+#: ../src/live_effects/lpe-mirror_symmetry.cpp:48
+msgid "Adjust center of mirroring"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:56
+#: ../share/extensions/pathalongpath.inx.h:10
+msgid "Single"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:57
+#: ../share/extensions/pathalongpath.inx.h:11
+msgid "Single, stretched"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:58
+#: ../share/extensions/pathalongpath.inx.h:12
+msgid "Repeated"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:59
+#: ../share/extensions/pathalongpath.inx.h:13
+msgid "Repeated, stretched"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:65
+msgid "Pattern source:"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:65
+msgid "Path to put along the skeleton path"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:67
+msgid "Width of the pattern"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:68
+msgid "Pattern copies:"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:68
+msgid "How many pattern copies to place along the skeleton path"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:70
+msgid "Wid_th in units of length"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:71
+msgid "Scale the width of the pattern in units of its length"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:73
+msgid "Spa_cing:"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:75
+#, no-c-format
+msgid ""
+"Space between copies of the pattern. Negative values allowed, but are "
+"limited to -90% of pattern width."
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:77
+msgid "No_rmal offset:"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:78
+msgid "Tan_gential offset:"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:79
+msgid "Offsets in _unit of pattern size"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:80
+msgid ""
+"Spacing, tangential and normal offset are expressed as a ratio of width/"
+"height"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:82
+msgid "Pattern is _vertical"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:82
+msgid "Rotate pattern 90 deg before applying"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:84
+msgid "_Fuse nearby ends:"
+msgstr ""
+
+#: ../src/live_effects/lpe-patternalongpath.cpp:84
+msgid "Fuse ends closer than this number. 0 means don't fuse."
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:37
+#: ../share/extensions/perspective.inx.h:1
+msgid "Perspective"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:38
+msgid "Envelope deformation"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:47
+msgid "Overflow perspective"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:48
+msgid "Type"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:48
+msgid "Select the type of deformation"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:49
+msgid "Top Left"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:49
+msgid "Top Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:50
+msgid "Top Right"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:50
+msgid "Top Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:51
+msgid "Down Left"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:51
+msgid "Down Left - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:52
+msgid "Down Right"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:52
+msgid "Down Right - <b>Ctrl+Alt+Click</b>: reset, <b>Ctrl</b>: move along axes"
+msgstr ""
+
+#: ../src/live_effects/lpe-perspective-envelope.cpp:369
+msgid "Handles:"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:121
+msgid "CubicBezierSmooth"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:140
+#: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:13
+msgid "Round"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:142
+msgid "Zero width"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:160
+#: ../src/widgets/pencil-toolbar.cpp:109
+msgid "Spiro"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:166
+msgid "Offset points"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:167
+msgid "Sort points"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:167
+msgid "Sort offset points according to their time value along the curve"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:169
+#: ../share/extensions/fractalize.inx.h:3
+msgid "Smoothness:"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:169
+msgid ""
+"Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
+"interpolation, 1 = smooth"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:170
+msgid "Start cap:"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:170
+msgid "Determines the shape of the path's start"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:172
+#: ../src/widgets/stroke-style.cpp:301
+msgid "Maximum length of the miter (in units of stroke width)"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:173
+msgid "End cap:"
+msgstr ""
+
+#: ../src/live_effects/lpe-powerstroke.cpp:173
+msgid "Determines the shape of the path's end"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:218
+msgid "Frequency randomness:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:218
+msgid "Variation of distance between hatches, in %."
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:219
+msgid "Growth:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:219
+msgid "Growth of distance between hatches."
+msgstr ""
+
+#. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
+#: ../src/live_effects/lpe-rough-hatches.cpp:221
+msgid "Half-turns smoothness: 1st side, in:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:221
+msgid ""
+"Set smoothness/sharpness of path when reaching a 'bottom' half-turn. "
+"0=sharp, 1=default"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:222
+msgid "1st side, out:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:222
+msgid ""
+"Set smoothness/sharpness of path when leaving a 'bottom' half-turn. 0=sharp, "
+"1=default"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:223
+msgid "2nd side, in:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:223
+msgid ""
+"Set smoothness/sharpness of path when reaching a 'top' half-turn. 0=sharp, "
+"1=default"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:224
+msgid "2nd side, out:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:224
+msgid ""
+"Set smoothness/sharpness of path when leaving a 'top' half-turn. 0=sharp, "
+"1=default"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:225
+msgid "Magnitude jitter: 1st side:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:225
+msgid "Randomly moves 'bottom' half-turns to produce magnitude variations."
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:226
+#: ../src/live_effects/lpe-rough-hatches.cpp:228
+#: ../src/live_effects/lpe-rough-hatches.cpp:230
+msgid "2nd side:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:226
+msgid "Randomly moves 'top' half-turns to produce magnitude variations."
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:227
+msgid "Parallelism jitter: 1st side:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:227
+msgid ""
+"Add direction randomness by moving 'bottom' half-turns tangentially to the "
+"boundary."
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:228
+msgid ""
+"Add direction randomness by randomly moving 'top' half-turns tangentially to "
+"the boundary."
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:229
+msgid "Variance: 1st side:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:229
+msgid "Randomness of 'bottom' half-turns smoothness"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:230
+msgid "Randomness of 'top' half-turns smoothness"
+msgstr ""
+
+#.
+#: ../src/live_effects/lpe-rough-hatches.cpp:232
+msgid "Generate thick/thin path"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:232
+msgid "Simulate a stroke of varying width"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:233
+msgid "Bend hatches"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:233
+msgid "Add a global bend to the hatches (slower)"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:234
+msgid "Thickness: at 1st side:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:234
+msgid "Width at 'bottom' half-turns"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:235
+msgid "At 2nd side:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:235
+msgid "Width at 'top' half-turns"
+msgstr ""
+
+#.
+#: ../src/live_effects/lpe-rough-hatches.cpp:237
+msgid "From 2nd to 1st side:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:237
+msgid "Width from 'top' to 'bottom'"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:238
+msgid "From 1st to 2nd side:"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:238
+msgid "Width from 'bottom' to 'top'"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:240
+msgid "Hatches width and dir"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:240
+msgid "Defines hatches frequency and direction"
+msgstr ""
+
+#.
+#: ../src/live_effects/lpe-rough-hatches.cpp:242
+msgid "Global bending"
+msgstr ""
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:242
+msgid ""
+"Relative position to a reference point defines global bending direction and "
+"amount"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:29 ../share/extensions/addnodes.inx.h:4
+msgid "By number of segments"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:30
+msgid "By max. segment size"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:36
+msgid "Along nodes"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:37
+msgid "Rand"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:38
+msgid "Retract"
+msgstr ""
+
+#. initialise your parameters here:
+#: ../src/live_effects/lpe-roughen.cpp:47
+msgid "Method"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:47
+msgid "Division method"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:49
+msgid "Max. segment size"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:51
+msgid "Number of segments"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:53
+msgid "Max. displacement in X"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:55
+msgid "Max. displacement in Y"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:57
+msgid "Global randomize"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:59
+msgid "Handles"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:59
+msgid "Handles options"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:61
+#: ../share/extensions/jitternodes.inx.h:5
+msgid "Shift nodes"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:63
+msgid "Fixed displacement"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:63
+msgid "Fixed displacement, 1/3 of segment length"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:65
+msgid "Spray Tool friendly"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:65
+msgid "For use with spray tool in copy mode"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:119
+msgid "<b>Add nodes</b> Subdivide each segment"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:128
+msgid "<b>Jitter nodes</b> Move nodes/handles"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:137
+msgid "<b>Extra roughen</b> Add a extra layer of rough"
+msgstr ""
+
+#: ../src/live_effects/lpe-roughen.cpp:146
+msgid "<b>Options</b> Modify options to rough"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:22 ../share/extensions/measure.inx.h:27
+#: ../share/extensions/restack.inx.h:16
+#: ../share/extensions/text_extract.inx.h:8
+#: ../share/extensions/text_merge.inx.h:8
+msgid "Left"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:23 ../share/extensions/measure.inx.h:29
+#: ../share/extensions/restack.inx.h:18
+#: ../share/extensions/text_extract.inx.h:10
+#: ../share/extensions/text_merge.inx.h:10
+msgid "Right"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:24 ../src/live_effects/lpe-ruler.cpp:32
+msgid "Both"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:29
+msgctxt "Border mark"
+msgid "None"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:30
+#: ../src/live_effects/lpe-transform_2pts.cpp:35
+#: ../src/ui/tools/measure-tool.cpp:749 ../src/widgets/arc-toolbar.cpp:318
+msgid "Start"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:31
+#: ../src/live_effects/lpe-transform_2pts.cpp:36
+#: ../src/ui/tools/measure-tool.cpp:750 ../src/widgets/arc-toolbar.cpp:331
+msgid "End"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:38
+msgid "_Mark distance:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:38
+msgid "Distance between successive ruler marks"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:39 ../share/extensions/foldablebox.inx.h:7
+#: ../share/extensions/interp_att_g.inx.h:9
+#: ../share/extensions/layout_nup.inx.h:3
+#: ../share/extensions/printing_marks.inx.h:11
+msgid "Unit:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:40
+msgid "Ma_jor length:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:40
+msgid "Length of major ruler marks"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:41
+msgid "Mino_r length:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:41
+msgid "Length of minor ruler marks"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:42
+msgid "Major steps_:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:42
+msgid "Draw a major mark every ... steps"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:43
+msgid "Shift marks _by:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:43
+msgid "Shift marks by this many steps"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:44
+msgid "Mark direction:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:44
+msgid "Direction of marks (when viewing along the path from start to end)"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:45
+msgid "_Offset:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:45
+msgid "Offset of first mark"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:46
+msgid "Border marks:"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:46
+msgid "Choose whether to draw marks at the beginning and end of the path"
 msgstr ""
 
 #: ../src/live_effects/lpe-show_handles.cpp:26
-msgid "Show path"
-msgstr ""
-
-#: ../src/live_effects/lpe-show_handles.cpp:27
-msgid "Scale nodes and handles"
+msgid "Show nodes"
 msgstr ""
 
 #: ../src/live_effects/lpe-show_handles.cpp:28
-#: ../src/ui/tool/multi-path-manipulator.cpp:786
-#: ../src/ui/tool/multi-path-manipulator.cpp:789
-msgid "Rotate nodes"
+msgid "Show path"
 msgstr ""
 
-#: ../src/live_effects/lpe-show_handles.cpp:54
+#: ../src/live_effects/lpe-show_handles.cpp:29
+msgid "Show center of node"
+msgstr ""
+
+#: ../src/live_effects/lpe-show_handles.cpp:30
+msgid "Scale nodes and handles"
+msgstr ""
+
+#: ../src/live_effects/lpe-show_handles.cpp:53
 msgid ""
 "The \"show handles\" path effect will remove any custom style on the object "
 "you are applying it to. If this is not what you want, click Cancel."
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:20
+#: ../src/live_effects/lpe-simplify.cpp:22
 msgid "Steps:"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:20
+#: ../src/live_effects/lpe-simplify.cpp:22
 msgid "Change number of simplify steps "
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:21
+#: ../src/live_effects/lpe-simplify.cpp:23
 msgid "Roughly threshold:"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:22
+#: ../src/live_effects/lpe-simplify.cpp:24
 msgid "Smooth angles:"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:22
+#: ../src/live_effects/lpe-simplify.cpp:24
 msgid "Max degree difference on handles to perform a smooth"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:24
+#: ../src/live_effects/lpe-simplify.cpp:26
 msgid "Paths separately"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:24
+#: ../src/live_effects/lpe-simplify.cpp:26
 msgid "Simplifying paths (separately)"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:26
+#: ../src/live_effects/lpe-simplify.cpp:28
 msgid "Just coalesce"
 msgstr ""
 
-#: ../src/live_effects/lpe-simplify.cpp:26
+#: ../src/live_effects/lpe-simplify.cpp:28
 msgid "Simplify just coalesce"
 msgstr ""
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
-#: ../src/live_effects/lpe-sketch.cpp:30
+#: ../src/live_effects/lpe-sketch.cpp:31
 msgid "Strokes:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:30
+#: ../src/live_effects/lpe-sketch.cpp:31
 msgid "Draw that many approximating strokes"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:31
+#: ../src/live_effects/lpe-sketch.cpp:32
 msgid "Max stroke length:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:32
+#: ../src/live_effects/lpe-sketch.cpp:33
 msgid "Maximum length of approximating strokes"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:33
+#: ../src/live_effects/lpe-sketch.cpp:34
 msgid "Stroke length variation:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:34
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Random variation of stroke length (relative to maximum length)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:35
+#: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max. overlap:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:36
+#: ../src/live_effects/lpe-sketch.cpp:37
 msgid "How much successive strokes should overlap (relative to maximum length)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:37
+#: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Overlap variation:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:38
+#: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of overlap (relative to maximum overlap)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:39
+#: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. end tolerance:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:40
+#: ../src/live_effects/lpe-sketch.cpp:41
 msgid ""
 "Maximum distance between ends of original and approximating paths (relative "
 "to maximum length)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:41
+#: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Average offset:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:42
+#: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Average distance each stroke is away from the original path"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:43
+#: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. tremble:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:44
+#: ../src/live_effects/lpe-sketch.cpp:45
 msgid "Maximum tremble magnitude"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:45
+#: ../src/live_effects/lpe-sketch.cpp:46
 msgid "Tremble frequency:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:46
+#: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Average number of tremble periods in a stroke"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:48
+#: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Construction lines:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:49
+#: ../src/live_effects/lpe-sketch.cpp:50
 msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:50
+#: ../src/live_effects/lpe-sketch.cpp:51
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2779
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 msgid "Scale:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:51
+#: ../src/live_effects/lpe-sketch.cpp:52
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
 "5*offset)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:52
+#: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Max. length:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:52
+#: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Maximum length of construction lines"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:53
+#: ../src/live_effects/lpe-sketch.cpp:54
 msgid "Length variation:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:53
+#: ../src/live_effects/lpe-sketch.cpp:54
 msgid "Random variation of the length of construction lines"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:54
+#: ../src/live_effects/lpe-sketch.cpp:55
 msgid "Placement randomness:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:54
+#: ../src/live_effects/lpe-sketch.cpp:55
 msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "k_min:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "min curvature"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:57
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "k_max:"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:57
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "max curvature"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:58
+#: ../src/live_effects/lpe-taperstroke.cpp:60
 msgid "Extrapolated"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:65
+#: ../src/live_effects/lpe-taperstroke.cpp:67
 #: ../share/extensions/edge3d.inx.h:5 ../share/extensions/nicechart.inx.h:25
 msgid "Stroke width:"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:65
+#: ../src/live_effects/lpe-taperstroke.cpp:67
 msgid "The (non-tapered) width of the path"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:66
+#: ../src/live_effects/lpe-taperstroke.cpp:68
 msgid "Start offset:"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:66
+#: ../src/live_effects/lpe-taperstroke.cpp:68
 msgid "Taper distance from path start"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:67
+#: ../src/live_effects/lpe-taperstroke.cpp:69
 msgid "End offset:"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:67
+#: ../src/live_effects/lpe-taperstroke.cpp:69
 msgid "The ending position of the taper"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:68
+#: ../src/live_effects/lpe-taperstroke.cpp:70
 msgid "Taper smoothing:"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:68
+#: ../src/live_effects/lpe-taperstroke.cpp:70
 msgid "Amount of smoothing to apply to the tapers"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:69
+#: ../src/live_effects/lpe-taperstroke.cpp:71
 msgid "Join type:"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:69
+#: ../src/live_effects/lpe-taperstroke.cpp:71
 msgid "Join type for non-smooth nodes"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:70
+#: ../src/live_effects/lpe-taperstroke.cpp:72
 msgid "Limit for miter joins"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:439
+#: ../src/live_effects/lpe-taperstroke.cpp:441
 msgid "Start point of the taper"
 msgstr ""
 
-#: ../src/live_effects/lpe-taperstroke.cpp:443
+#: ../src/live_effects/lpe-taperstroke.cpp:445
 msgid "End point of the taper"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:28
+#: ../src/live_effects/lpe-transform_2pts.cpp:29
 msgid "Elastic"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:28
+#: ../src/live_effects/lpe-transform_2pts.cpp:29
 msgid "Elastic transform mode"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:29
+#: ../src/live_effects/lpe-transform_2pts.cpp:30
 msgid "From original width"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:30
+#: ../src/live_effects/lpe-transform_2pts.cpp:31
 msgid "Lock length"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:30
+#: ../src/live_effects/lpe-transform_2pts.cpp:31
 msgid "Lock length to current distance"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:31
+#: ../src/live_effects/lpe-transform_2pts.cpp:32
 msgid "Lock angle"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:32
+#: ../src/live_effects/lpe-transform_2pts.cpp:33
 msgid "Flip horizontal"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:33
+#: ../src/live_effects/lpe-transform_2pts.cpp:34
 msgid "Flip vertical"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:34
-msgid "Start point"
-msgstr ""
-
-#: ../src/live_effects/lpe-transform_2pts.cpp:35
+#: ../src/live_effects/lpe-transform_2pts.cpp:36
 msgid "End point"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:36
+#: ../src/live_effects/lpe-transform_2pts.cpp:37
 msgid "Stretch"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:36
+#: ../src/live_effects/lpe-transform_2pts.cpp:37
 msgid "Stretch the result"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:37
+#: ../src/live_effects/lpe-transform_2pts.cpp:38
 msgid "Offset from knots"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:38
+#: ../src/live_effects/lpe-transform_2pts.cpp:39
 msgid "First Knot"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:39
+#: ../src/live_effects/lpe-transform_2pts.cpp:40
 msgid "Last Knot"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:40
+#: ../src/live_effects/lpe-transform_2pts.cpp:41
 msgid "Rotation helper size"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:192
+#: ../src/live_effects/lpe-transform_2pts.cpp:193
 msgid "Change index of knot"
 msgstr ""
 
-#: ../src/live_effects/lpe-transform_2pts.cpp:345
+#: ../src/live_effects/lpe-transform_2pts.cpp:346
 #: ../src/ui/dialog/inkscape-preferences.cpp:1587
 #: ../src/ui/dialog/pixelartdialog.cpp:290
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:796
@@ -11198,32 +11289,36 @@ msgstr ""
 msgid "Change enumeration parameter"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:778
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:839
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:777
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:835
 msgid ""
 "<b>Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:782
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:781
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:839
 msgid ""
 "<b>Inverse Chamfer</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:786
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:785
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:843
 msgid ""
 "<b>Inverse Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> "
 "open dialog, <b>Ctrl+Alt+Click</b> reset"
 msgstr ""
 
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:790
-#: ../src/live_effects/parameter/filletchamferpointarray.cpp:851
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:789
+#: ../src/live_effects/parameter/filletchamferpointarray.cpp:847
 msgid ""
 "<b>Fillet</b>: <b>Ctrl+Click</b> toggle type, <b>Shift+Click</b> open "
 "dialog, <b>Ctrl+Alt+Click</b> reset"
+msgstr ""
+
+#: ../src/live_effects/parameter/fontbutton.cpp:68
+msgid "Change font button parameter"
 msgstr ""
 
 #: ../src/live_effects/parameter/originalpath.cpp:67
@@ -11299,7 +11394,7 @@ msgstr ""
 msgid "Paste path parameter"
 msgstr ""
 
-#: ../src/live_effects/parameter/point.cpp:135
+#: ../src/live_effects/parameter/point.cpp:131
 msgid "Change point parameter"
 msgstr ""
 
@@ -11315,12 +11410,8 @@ msgstr ""
 msgid "Change random parameter"
 msgstr ""
 
-#: ../src/live_effects/parameter/text.cpp:124
+#: ../src/live_effects/parameter/text.cpp:127
 msgid "Change text parameter"
-msgstr ""
-
-#: ../src/live_effects/parameter/fontbutton.cpp:68
-msgid "Change font button parameter"
 msgstr ""
 
 #: ../src/live_effects/parameter/togglebutton.cpp:112
@@ -11328,7 +11419,7 @@ msgid "Change togglebutton parameter"
 msgstr ""
 
 #: ../src/live_effects/parameter/transformedpoint.cpp:98
-#: ../src/live_effects/parameter/vector.cpp:99
+#: ../src/live_effects/parameter/vector.cpp:98
 msgid "Change vector parameter"
 msgstr ""
 
@@ -11341,7 +11432,7 @@ msgstr ""
 msgid "Unable to find verb ID '%s' specified on the command line.\n"
 msgstr ""
 
-#: ../src/main-cmdlineact.cpp:77
+#: ../src/main-cmdlineact.cpp:77 ../src/main-cmdlinexact.cpp:255
 #, c-format
 msgid "Unable to find node ID: '%s'\n"
 msgstr ""
@@ -11770,19 +11861,19 @@ msgstr ""
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:612
+#: ../src/path-chemistry.cpp:613
 msgid "Select <b>path(s)</b> to reverse."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:620
+#: ../src/path-chemistry.cpp:621
 msgid "Reversing paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:658
+#: ../src/path-chemistry.cpp:659
 msgid "Reverse path"
 msgstr ""
 
-#: ../src/path-chemistry.cpp:661
+#: ../src/path-chemistry.cpp:662
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
@@ -11794,27 +11885,27 @@ msgstr ""
 msgid "Toggle multiple vanishing points"
 msgstr ""
 
-#: ../src/preferences-skeleton.h:102
+#: ../src/preferences-skeleton.h:101
 msgid "Dip pen"
 msgstr ""
 
-#: ../src/preferences-skeleton.h:103
+#: ../src/preferences-skeleton.h:102
 msgid "Marker"
 msgstr ""
 
-#: ../src/preferences-skeleton.h:104
+#: ../src/preferences-skeleton.h:103
 msgid "Brush"
 msgstr ""
 
-#: ../src/preferences-skeleton.h:105
+#: ../src/preferences-skeleton.h:104
 msgid "Wiggly"
 msgstr ""
 
-#: ../src/preferences-skeleton.h:106
+#: ../src/preferences-skeleton.h:105
 msgid "Splotchy"
 msgstr ""
 
-#: ../src/preferences-skeleton.h:107
+#: ../src/preferences-skeleton.h:106
 msgid "Tracing"
 msgstr ""
 
@@ -12108,7 +12199,7 @@ msgstr ""
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:886 ../src/sp-item-group.cpp:654
+#: ../src/selection-chemistry.cpp:886 ../src/sp-item-group.cpp:655
 #: ../src/ui/dialog/objects.cpp:1903
 msgid "Ungroup"
 msgstr ""
@@ -12802,7 +12893,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: ../src/sp-lpe-item.cpp:254 ../src/sp-lpe-item.cpp:707
+#: ../src/sp-lpe-item.cpp:255 ../src/sp-lpe-item.cpp:707
 msgid "An exception occurred during execution of the Path Effect."
 msgstr ""
 
@@ -13353,7 +13444,7 @@ msgid "Rearrange"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
-#: ../src/widgets/toolbox.cpp:1762
+#: ../src/widgets/toolbox.cpp:1767
 msgid "Nodes"
 msgstr ""
 
@@ -14571,7 +14662,7 @@ msgstr ""
 msgid "Remove selected grid."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:150 ../src/widgets/toolbox.cpp:1869
+#: ../src/ui/dialog/document-properties.cpp:150 ../src/widgets/toolbox.cpp:1874
 msgid "Guides"
 msgstr ""
 
@@ -15155,6 +15246,8 @@ msgstr ""
 #. #########################################
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1483
+#: ../share/extensions/docinfo.inx.h:4 ../share/extensions/dpi90to96.inx.h:2
+#: ../share/extensions/dpi96to90.inx.h:2
 msgid "Document"
 msgstr ""
 
@@ -16020,7 +16113,7 @@ msgstr ""
 msgid "Search spirals"
 msgstr ""
 
-#: ../src/ui/dialog/find.cpp:96 ../src/widgets/toolbox.cpp:1770
+#: ../src/ui/dialog/find.cpp:96 ../src/widgets/toolbox.cpp:1775
 msgid "Paths"
 msgstr ""
 
@@ -17766,7 +17859,7 @@ msgid "Kannada (kn)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
-msgid "Kashmiri in Peso-Arabic script (ks@aran)"
+msgid "Kashmiri in Perso-Arabic script (ks@aran)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:537
@@ -20139,11 +20232,11 @@ msgstr ""
 msgid "Move path effect down"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:585
+#: ../src/ui/dialog/livepatheffect-editor.cpp:587
 msgid "Activate path effect"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:585
+#: ../src/ui/dialog/livepatheffect-editor.cpp:587
 msgid "Deactivate path effect"
 msgstr ""
 
@@ -21130,8 +21223,8 @@ msgstr ""
 msgid "Preview Text:"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:193 ../src/ui/tools/gradient-tool.cpp:353
-#: ../src/ui/tools/gradient-tool.cpp:451 ../src/widgets/gradient-vector.cpp:765
+#: ../src/ui/dialog/swatches.cpp:193 ../src/ui/tools/gradient-tool.cpp:359
+#: ../src/ui/tools/gradient-tool.cpp:457 ../src/widgets/gradient-vector.cpp:765
 msgid "Add gradient stop"
 msgstr ""
 
@@ -21262,27 +21355,27 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
 #. Align buttons
-#: ../src/ui/dialog/text-edit.cpp:90 ../src/widgets/text-toolbar.cpp:1672
-#: ../src/widgets/text-toolbar.cpp:1673
+#: ../src/ui/dialog/text-edit.cpp:90 ../src/widgets/text-toolbar.cpp:1776
+#: ../src/widgets/text-toolbar.cpp:1777
 msgid "Align left"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:91 ../src/widgets/text-toolbar.cpp:1680
-#: ../src/widgets/text-toolbar.cpp:1681
+#: ../src/ui/dialog/text-edit.cpp:91 ../src/widgets/text-toolbar.cpp:1784
+#: ../src/widgets/text-toolbar.cpp:1785
 msgid "Align center"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:92 ../src/widgets/text-toolbar.cpp:1688
-#: ../src/widgets/text-toolbar.cpp:1689
+#: ../src/ui/dialog/text-edit.cpp:92 ../src/widgets/text-toolbar.cpp:1792
+#: ../src/widgets/text-toolbar.cpp:1793
 msgid "Align right"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:93 ../src/widgets/text-toolbar.cpp:1697
+#: ../src/ui/dialog/text-edit.cpp:93 ../src/widgets/text-toolbar.cpp:1801
 msgid "Justify (only flowed text)"
 msgstr ""
 
 #. Direction buttons
-#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1732
+#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/text-toolbar.cpp:1836
 msgid "Horizontal text"
 msgstr ""
 
@@ -22239,6 +22332,11 @@ msgstr ""
 msgid "Move nodes vertically"
 msgstr ""
 
+#: ../src/ui/tool/multi-path-manipulator.cpp:786
+#: ../src/ui/tool/multi-path-manipulator.cpp:789
+msgid "Rotate nodes"
+msgstr ""
+
 #: ../src/ui/tool/multi-path-manipulator.cpp:793
 #: ../src/ui/tool/multi-path-manipulator.cpp:799
 msgid "Scale nodes uniformly"
@@ -22288,22 +22386,22 @@ msgstr ""
 msgid "Auto-smooth node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:489
+#: ../src/ui/tool/node.cpp:486
 msgctxt "Path handle tip"
 msgid "more: Shift, Ctrl, Alt"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:491
+#: ../src/ui/tool/node.cpp:488
 msgctxt "Path handle tip"
 msgid "more: Ctrl"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:493
+#: ../src/ui/tool/node.cpp:490
 msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:499
+#: ../src/ui/tool/node.cpp:496
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -22311,24 +22409,24 @@ msgid ""
 "increments while rotating both handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:504
+#: ../src/ui/tool/node.cpp:501
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:510
+#: ../src/ui/tool/node.cpp:507
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:513
+#: ../src/ui/tool/node.cpp:510
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:520
+#: ../src/ui/tool/node.cpp:517
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -22336,34 +22434,34 @@ msgid ""
 "handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:524
+#: ../src/ui/tool/node.cpp:521
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: Snap handle to steps defined in BSpline Live Path Effect"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:527
+#: ../src/ui/tool/node.cpp:524
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:532
+#: ../src/ui/tool/node.cpp:529
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:535
+#: ../src/ui/tool/node.cpp:532
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: move handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:542 ../src/ui/tool/node.cpp:546
+#: ../src/ui/tool/node.cpp:539 ../src/ui/tool/node.cpp:543
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:549
+#: ../src/ui/tool/node.cpp:546
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -22371,44 +22469,44 @@ msgid ""
 "power"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:569
+#: ../src/ui/tool/node.cpp:566
 #, c-format
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1420
+#: ../src/ui/tool/node.cpp:1414
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1422
+#: ../src/ui/tool/node.cpp:1416
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1427
+#: ../src/ui/tool/node.cpp:1421
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1430
+#: ../src/ui/tool/node.cpp:1424
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1434
+#: ../src/ui/tool/node.cpp:1428
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1443
+#: ../src/ui/tool/node.cpp:1437
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1446
+#: ../src/ui/tool/node.cpp:1440
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22416,7 +22514,7 @@ msgid ""
 "power"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1449
+#: ../src/ui/tool/node.cpp:1443
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22424,7 +22522,7 @@ msgid ""
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1453
+#: ../src/ui/tool/node.cpp:1447
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22432,7 +22530,7 @@ msgid ""
 "Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1456
+#: ../src/ui/tool/node.cpp:1450
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -22440,17 +22538,17 @@ msgid ""
 "(more: Shift, Ctrl, Alt). %g power"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1469
+#: ../src/ui/tool/node.cpp:1463
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1480
+#: ../src/ui/tool/node.cpp:1474
 msgid "Symmetric node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1481
+#: ../src/ui/tool/node.cpp:1475
 msgid "Auto-smooth node"
 msgstr ""
 
@@ -22467,19 +22565,19 @@ msgid "Rotate handle"
 msgstr ""
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1542 ../src/widgets/node-toolbar.cpp:395
+#: ../src/ui/tool/path-manipulator.cpp:1545 ../src/widgets/node-toolbar.cpp:395
 msgid "Delete node"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1550
+#: ../src/ui/tool/path-manipulator.cpp:1553
 msgid "Cycle node type"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1565
+#: ../src/ui/tool/path-manipulator.cpp:1568
 msgid "Drag handle"
 msgstr ""
 
-#: ../src/ui/tool/path-manipulator.cpp:1574
+#: ../src/ui/tool/path-manipulator.cpp:1577
 msgid "Retract handle"
 msgstr ""
 
@@ -22946,13 +23044,13 @@ msgid "Create single dot"
 msgstr ""
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
-#: ../src/ui/tools/gradient-tool.cpp:114 ../src/ui/tools/mesh-tool.cpp:123
+#: ../src/ui/tools/gradient-tool.cpp:120 ../src/ui/tools/mesh-tool.cpp:139
 #, c-format
 msgid "%s selected"
 msgstr ""
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/ui/tools/gradient-tool.cpp:116 ../src/ui/tools/gradient-tool.cpp:125
+#: ../src/ui/tools/gradient-tool.cpp:122 ../src/ui/tools/gradient-tool.cpp:131
 #, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
@@ -22960,9 +23058,9 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
-#: ../src/ui/tools/gradient-tool.cpp:117 ../src/ui/tools/gradient-tool.cpp:126
-#: ../src/ui/tools/gradient-tool.cpp:133 ../src/ui/tools/mesh-tool.cpp:126
-#: ../src/ui/tools/mesh-tool.cpp:137 ../src/ui/tools/mesh-tool.cpp:145
+#: ../src/ui/tools/gradient-tool.cpp:123 ../src/ui/tools/gradient-tool.cpp:132
+#: ../src/ui/tools/gradient-tool.cpp:139 ../src/ui/tools/mesh-tool.cpp:142
+#: ../src/ui/tools/mesh-tool.cpp:153 ../src/ui/tools/mesh-tool.cpp:161
 #, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
@@ -22970,7 +23068,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
-#: ../src/ui/tools/gradient-tool.cpp:123 ../src/ui/tools/mesh-tool.cpp:133
+#: ../src/ui/tools/gradient-tool.cpp:129 ../src/ui/tools/mesh-tool.cpp:149
 #, c-format
 msgid ""
 "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
@@ -22980,7 +23078,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
-#: ../src/ui/tools/gradient-tool.cpp:131
+#: ../src/ui/tools/gradient-tool.cpp:137
 #, c-format
 msgid "<b>%d</b> gradient handle selected out of %d"
 msgid_plural "<b>%d</b> gradient handles selected out of %d"
@@ -22988,7 +23086,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/ui/tools/gradient-tool.cpp:138
+#: ../src/ui/tools/gradient-tool.cpp:144
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
 msgid_plural ""
@@ -22996,34 +23094,34 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tools/gradient-tool.cpp:426
+#: ../src/ui/tools/gradient-tool.cpp:432
 msgid "Simplify gradient"
 msgstr ""
 
-#: ../src/ui/tools/gradient-tool.cpp:503
+#: ../src/ui/tools/gradient-tool.cpp:509
 msgid "Create default gradient"
 msgstr ""
 
-#: ../src/ui/tools/gradient-tool.cpp:562 ../src/ui/tools/mesh-tool.cpp:628
+#: ../src/ui/tools/gradient-tool.cpp:568 ../src/ui/tools/mesh-tool.cpp:731
 msgid "<b>Draw around</b> handles to select them"
 msgstr ""
 
-#: ../src/ui/tools/gradient-tool.cpp:683
+#: ../src/ui/tools/gradient-tool.cpp:689
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr ""
 
-#: ../src/ui/tools/gradient-tool.cpp:684
+#: ../src/ui/tools/gradient-tool.cpp:690
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr ""
 
-#: ../src/ui/tools/gradient-tool.cpp:939 ../src/ui/tools/mesh-tool.cpp:1055
+#: ../src/ui/tools/gradient-tool.cpp:955 ../src/ui/tools/mesh-tool.cpp:1195
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tools/gradient-tool.cpp:943 ../src/ui/tools/mesh-tool.cpp:1059
+#: ../src/ui/tools/gradient-tool.cpp:959 ../src/ui/tools/mesh-tool.cpp:1199
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr ""
 
@@ -23074,14 +23172,14 @@ msgid "Crossing %lu"
 msgstr ""
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/ui/tools/mesh-tool.cpp:125 ../src/ui/tools/mesh-tool.cpp:136
+#: ../src/ui/tools/mesh-tool.cpp:141 ../src/ui/tools/mesh-tool.cpp:152
 #, c-format
 msgid " out of %d mesh handle"
 msgid_plural " out of %d mesh handles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tools/mesh-tool.cpp:143
+#: ../src/ui/tools/mesh-tool.cpp:159
 #, c-format
 msgid "<b>%d</b> mesh handle selected out of %d"
 msgid_plural "<b>%d</b> mesh handles selected out of %d"
@@ -23089,100 +23187,96 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/ui/tools/mesh-tool.cpp:150
+#: ../src/ui/tools/mesh-tool.cpp:166
 #, c-format
 msgid "<b>No</b> mesh handles selected out of %d on %d selected object"
 msgid_plural "<b>No</b> mesh handles selected out of %d on %d selected objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tools/mesh-tool.cpp:318
+#: ../src/ui/tools/mesh-tool.cpp:359
 msgid "Split mesh row/column"
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:404
+#: ../src/ui/tools/mesh-tool.cpp:452
 msgid "Toggled mesh path type."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:408
+#: ../src/ui/tools/mesh-tool.cpp:457
 msgid "Approximated arc for mesh side."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:412
+#: ../src/ui/tools/mesh-tool.cpp:462
 msgid "Toggled mesh tensors."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:416
+#: ../src/ui/tools/mesh-tool.cpp:467
 msgid "Smoothed mesh corner color."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:420
+#: ../src/ui/tools/mesh-tool.cpp:472
 msgid "Picked mesh corner color."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:489
+#: ../src/ui/tools/mesh-tool.cpp:477
+msgid "Inserted new row or column."
+msgstr ""
+
+#: ../src/ui/tools/mesh-tool.cpp:548
 msgid "Fit mesh inside bounding box."
 msgstr ""
 
-#: ../src/ui/tools/mesh-tool.cpp:779
-msgid "FIXME<b>Ctrl</b>: snap mesh angle"
-msgstr ""
-
-#: ../src/ui/tools/mesh-tool.cpp:780
-msgid "FIXME<b>Shift</b>: draw mesh around the starting point"
-msgstr ""
-
-#: ../src/ui/tools/mesh-tool.cpp:1049
+#: ../src/ui/tools/mesh-tool.cpp:1189
 msgid "Create mesh"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:637
+#: ../src/ui/tools/node-tool.cpp:643
 msgctxt "Node tool tip"
 msgid ""
 "<b>Shift</b>: drag to add nodes to the selection, click to toggle object "
 "selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:641
+#: ../src/ui/tools/node-tool.cpp:647
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:670
+#: ../src/ui/tools/node-tool.cpp:676
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tools/node-tool.cpp:677
+#: ../src/ui/tools/node-tool.cpp:683
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:683
+#: ../src/ui/tools/node-tool.cpp:689
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:692
+#: ../src/ui/tools/node-tool.cpp:698
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:695
+#: ../src/ui/tools/node-tool.cpp:701
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:700
+#: ../src/ui/tools/node-tool.cpp:706
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tools/node-tool.cpp:703
+#: ../src/ui/tools/node-tool.cpp:709
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr ""
@@ -23408,14 +23502,14 @@ msgstr ""
 msgid "Create spiral"
 msgstr ""
 
-#: ../src/ui/tools/spray-tool.cpp:202 ../src/ui/tools/tweak-tool.cpp:145
+#: ../src/ui/tools/spray-tool.cpp:202 ../src/ui/tools/tweak-tool.cpp:147
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/tools/spray-tool.cpp:204 ../src/ui/tools/tweak-tool.cpp:147
+#: ../src/ui/tools/spray-tool.cpp:204 ../src/ui/tools/tweak-tool.cpp:149
 msgid "<b>Nothing</b> selected"
 msgstr ""
 
@@ -23623,127 +23717,127 @@ msgstr ""
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:152
+#: ../src/ui/tools/tweak-tool.cpp:154
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:156
+#: ../src/ui/tools/tweak-tool.cpp:158
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:164
+#: ../src/ui/tools/tweak-tool.cpp:166
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:168
+#: ../src/ui/tools/tweak-tool.cpp:170
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:176
+#: ../src/ui/tools/tweak-tool.cpp:178
 #, c-format
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:184
+#: ../src/ui/tools/tweak-tool.cpp:186
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:192
+#: ../src/ui/tools/tweak-tool.cpp:194
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:196
+#: ../src/ui/tools/tweak-tool.cpp:198
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:204
+#: ../src/ui/tools/tweak-tool.cpp:206
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:212
+#: ../src/ui/tools/tweak-tool.cpp:214
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:216
+#: ../src/ui/tools/tweak-tool.cpp:218
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:220
+#: ../src/ui/tools/tweak-tool.cpp:222
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:224
+#: ../src/ui/tools/tweak-tool.cpp:226
 #, c-format
 msgid ""
 "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1177
+#: ../src/ui/tools/tweak-tool.cpp:1200
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1211
+#: ../src/ui/tools/tweak-tool.cpp:1234
 msgid "Move tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1215
+#: ../src/ui/tools/tweak-tool.cpp:1238
 msgid "Move in/out tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1219
+#: ../src/ui/tools/tweak-tool.cpp:1242
 msgid "Move jitter tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1223
+#: ../src/ui/tools/tweak-tool.cpp:1246
 msgid "Scale tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1227
+#: ../src/ui/tools/tweak-tool.cpp:1250
 msgid "Rotate tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1231
+#: ../src/ui/tools/tweak-tool.cpp:1254
 msgid "Duplicate/delete tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1235
+#: ../src/ui/tools/tweak-tool.cpp:1258
 msgid "Push path tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1239
+#: ../src/ui/tools/tweak-tool.cpp:1262
 msgid "Shrink/grow path tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1243
+#: ../src/ui/tools/tweak-tool.cpp:1266
 msgid "Attract/repel path tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1247
+#: ../src/ui/tools/tweak-tool.cpp:1270
 msgid "Roughen path tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1251
+#: ../src/ui/tools/tweak-tool.cpp:1274
 msgid "Color paint tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1255
+#: ../src/ui/tools/tweak-tool.cpp:1278
 msgid "Color jitter tweak"
 msgstr ""
 
-#: ../src/ui/tools/tweak-tool.cpp:1259
+#: ../src/ui/tools/tweak-tool.cpp:1282
 msgid "Blur tweak"
 msgstr ""
 
@@ -24312,10 +24406,6 @@ msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:872
 msgid "Set page scale"
-msgstr ""
-
-#: ../src/ui/widget/page-sizer.cpp:898
-msgid "Set 'viewBox'"
 msgstr ""
 
 #: ../src/ui/widget/panel.cpp:112
@@ -27716,10 +27806,6 @@ msgstr ""
 msgid "Avoid"
 msgstr ""
 
-#: ../src/widgets/connector-toolbar.cpp:316
-msgid "Ignore"
-msgstr ""
-
 #: ../src/widgets/connector-toolbar.cpp:327
 msgid "Orthogonal"
 msgstr ""
@@ -28032,8 +28118,8 @@ msgstr ""
 msgid "Set pattern on stroke"
 msgstr ""
 
-#: ../src/widgets/font-selector.cpp:103 ../src/widgets/text-toolbar.cpp:1214
-#: ../src/widgets/text-toolbar.cpp:1598
+#: ../src/widgets/font-selector.cpp:103 ../src/widgets/text-toolbar.cpp:1316
+#: ../src/widgets/text-toolbar.cpp:1702
 msgid "Font size"
 msgstr ""
 
@@ -28045,18 +28131,58 @@ msgid "Font family"
 msgstr ""
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:173
+#: ../src/widgets/font-selector.cpp:166
 msgctxt "Font selector"
 msgid "Style"
 msgstr ""
 
-#: ../src/widgets/font-selector.cpp:201
+#: ../src/widgets/font-selector.cpp:194
 msgid "Face"
 msgstr ""
 
-#: ../src/widgets/font-selector.cpp:226 ../share/extensions/dots.inx.h:3
+#: ../src/widgets/font-selector.cpp:219 ../share/extensions/dots.inx.h:3
 #: ../share/extensions/nicechart.inx.h:17
 msgid "Font size:"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:184
+msgid "The orientation of the ruler"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:194
+msgid "Unit of the ruler"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:201
+msgid "Lower"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:202
+msgid "Lower limit of ruler"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:211
+msgid "Upper"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:212
+msgid "Upper limit of ruler"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:221
+msgid "Position"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:222
+msgid "Position of mark on the ruler"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:231
+msgid "Max Size"
+msgstr ""
+
+#: ../src/widgets/gimp/ruler.cpp:232
+msgid "Maximum size of the ruler"
 msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:187
@@ -28125,27 +28251,27 @@ msgstr ""
 msgid "Create radial (elliptic or circular) gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1045 ../src/widgets/mesh-toolbar.cpp:401
+#: ../src/widgets/gradient-toolbar.cpp:1045 ../src/widgets/mesh-toolbar.cpp:396
 msgid "New:"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1068 ../src/widgets/mesh-toolbar.cpp:424
+#: ../src/widgets/gradient-toolbar.cpp:1068 ../src/widgets/mesh-toolbar.cpp:419
 msgid "fill"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1068 ../src/widgets/mesh-toolbar.cpp:424
+#: ../src/widgets/gradient-toolbar.cpp:1068 ../src/widgets/mesh-toolbar.cpp:419
 msgid "Create gradient in the fill"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1072 ../src/widgets/mesh-toolbar.cpp:428
+#: ../src/widgets/gradient-toolbar.cpp:1072 ../src/widgets/mesh-toolbar.cpp:423
 msgid "stroke"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1072 ../src/widgets/mesh-toolbar.cpp:428
+#: ../src/widgets/gradient-toolbar.cpp:1072 ../src/widgets/mesh-toolbar.cpp:423
 msgid "Create gradient in the stroke"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1075 ../src/widgets/mesh-toolbar.cpp:431
+#: ../src/widgets/gradient-toolbar.cpp:1075 ../src/widgets/mesh-toolbar.cpp:426
 msgid "on:"
 msgstr ""
 
@@ -28363,7 +28489,7 @@ msgstr ""
 #: ../src/widgets/lpe-toolbar.cpp:380 ../src/widgets/node-toolbar.cpp:611
 #: ../src/widgets/paintbucket-toolbar.cpp:166
 #: ../src/widgets/rect-toolbar.cpp:374 ../src/widgets/select-toolbar.cpp:523
-#: ../src/widgets/text-toolbar.cpp:1868
+#: ../src/widgets/text-toolbar.cpp:1972
 msgid "Units"
 msgstr ""
 
@@ -28407,7 +28533,7 @@ msgstr ""
 msgid "Compute max length."
 msgstr ""
 
-#: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1601
+#: ../src/widgets/measure-toolbar.cpp:274 ../src/widgets/text-toolbar.cpp:1705
 msgid "Font Size"
 msgstr ""
 
@@ -28493,11 +28619,11 @@ msgstr ""
 msgid "Convert to item"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:310
+#: ../src/widgets/mesh-toolbar.cpp:284
 msgid "Set mesh type"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:362
+#: ../src/widgets/mesh-toolbar.cpp:357
 msgid ""
 "Mesh gradients are part of SVG 2:\n"
 "* Syntax may change.\n"
@@ -28507,145 +28633,141 @@ msgid ""
 "For print: export to PDF."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:394
+#: ../src/widgets/mesh-toolbar.cpp:389
 msgid "normal"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:394
+#: ../src/widgets/mesh-toolbar.cpp:389
 msgid "Create mesh gradient"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:398
+#: ../src/widgets/mesh-toolbar.cpp:393
 msgid "conical"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:398
+#: ../src/widgets/mesh-toolbar.cpp:393
 msgid "Create conical gradient"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:453
+#: ../src/widgets/mesh-toolbar.cpp:448
 msgid "Rows"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:453
+#: ../src/widgets/mesh-toolbar.cpp:448
 #: ../share/extensions/guides_creator.inx.h:5
 #: ../share/extensions/layout_nup.inx.h:12
 msgid "Rows:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:453
+#: ../src/widgets/mesh-toolbar.cpp:448
 msgid "Number of rows in new mesh"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:469
+#: ../src/widgets/mesh-toolbar.cpp:464
 msgid "Columns"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:469
+#: ../src/widgets/mesh-toolbar.cpp:464
 #: ../share/extensions/guides_creator.inx.h:4
 msgid "Columns:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:469
+#: ../src/widgets/mesh-toolbar.cpp:464
 msgid "Number of columns in new mesh"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:483
+#: ../src/widgets/mesh-toolbar.cpp:478
 msgid "Edit Fill"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:484
+#: ../src/widgets/mesh-toolbar.cpp:479
 msgid "Edit fill mesh"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:495
+#: ../src/widgets/mesh-toolbar.cpp:491
 msgid "Edit Stroke"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:496
+#: ../src/widgets/mesh-toolbar.cpp:492
 msgid "Edit stroke mesh"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:507 ../src/widgets/node-toolbar.cpp:519
+#: ../src/widgets/mesh-toolbar.cpp:504 ../src/widgets/node-toolbar.cpp:519
 msgid "Show Handles"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:508
-msgid "Show side and tensor handles"
-msgstr ""
-
-#: ../src/widgets/mesh-toolbar.cpp:523 ../src/widgets/mesh-toolbar.cpp:524
+#: ../src/widgets/mesh-toolbar.cpp:521 ../src/widgets/mesh-toolbar.cpp:522
 msgid "WARNING: Mesh SVG Syntax Subject to Change"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:538
+#: ../src/widgets/mesh-toolbar.cpp:536
 msgctxt "Type"
 msgid "Coons"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:541
+#: ../src/widgets/mesh-toolbar.cpp:539
 msgid "Bicubic"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:543
+#: ../src/widgets/mesh-toolbar.cpp:541
 msgid "Coons"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:544
+#: ../src/widgets/mesh-toolbar.cpp:542
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:546 ../src/widgets/pencil-toolbar.cpp:377
+#: ../src/widgets/mesh-toolbar.cpp:544 ../src/widgets/pencil-toolbar.cpp:377
 msgid "Smoothing:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:556
+#: ../src/widgets/mesh-toolbar.cpp:554
 msgid "Toggle Sides"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:557
+#: ../src/widgets/mesh-toolbar.cpp:555
 msgid "Toggle selected sides between Beziers and lines."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:560
+#: ../src/widgets/mesh-toolbar.cpp:558
 msgid "Toggle side:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:567
+#: ../src/widgets/mesh-toolbar.cpp:565
 msgid "Make elliptical"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:568
+#: ../src/widgets/mesh-toolbar.cpp:566
 msgid ""
 "Make selected sides elliptical by changing length of handles. Works best if "
 "handles already approximate ellipse."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:571
+#: ../src/widgets/mesh-toolbar.cpp:569
 msgid "Make elliptical:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:578
+#: ../src/widgets/mesh-toolbar.cpp:576
 msgid "Pick colors:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:579
+#: ../src/widgets/mesh-toolbar.cpp:577
 msgid "Pick colors for selected corner nodes from underneath mesh."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:582
+#: ../src/widgets/mesh-toolbar.cpp:580
 msgid "Pick Color"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:590
+#: ../src/widgets/mesh-toolbar.cpp:588
 msgid "Scale mesh to bounding box:"
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:591
+#: ../src/widgets/mesh-toolbar.cpp:589
 msgid "Scale mesh to fit inside bounding box."
 msgstr ""
 
-#: ../src/widgets/mesh-toolbar.cpp:594
+#: ../src/widgets/mesh-toolbar.cpp:592
 msgid "Fit mesh"
 msgstr ""
 
@@ -29134,46 +29256,6 @@ msgstr ""
 
 #: ../src/widgets/rect-toolbar.cpp:382
 msgid "Make corners sharp"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:184
-msgid "The orientation of the ruler"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:194
-msgid "Unit of the ruler"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:201
-msgid "Lower"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:202
-msgid "Lower limit of ruler"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:211
-msgid "Upper"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:212
-msgid "Upper limit of ruler"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:221
-msgid "Position"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:222
-msgid "Position of mark on the ruler"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:231
-msgid "Max Size"
-msgstr ""
-
-#: ../src/widgets/gimp/ruler.cpp:232
-msgid "Maximum size of the ruler"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:259
@@ -29922,290 +30004,317 @@ msgstr ""
 msgid "Change swatch color"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:176
+#: ../src/widgets/text-toolbar.cpp:178
 msgid "Text: Change font family"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:242
+#: ../src/widgets/text-toolbar.cpp:271
 msgid "Text: Change font size"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:278
+#: ../src/widgets/text-toolbar.cpp:307
 msgid "Text: Change font style"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:356
+#: ../src/widgets/text-toolbar.cpp:342
+msgid "Text: Unset line height."
+msgstr ""
+
+#: ../src/widgets/text-toolbar.cpp:419
 msgid "Text: Change superscript or subscript"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:499
+#: ../src/widgets/text-toolbar.cpp:562
 msgid "Text: Change alignment"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:580
+#: ../src/widgets/text-toolbar.cpp:668
 msgid "Text: Change line-height"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:735
+#: ../src/widgets/text-toolbar.cpp:823
 msgid "Text: Change line-height unit"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:784
+#: ../src/widgets/text-toolbar.cpp:872
 msgid "Text: Change word-spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:824
+#: ../src/widgets/text-toolbar.cpp:912
 msgid "Text: Change letter-spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:862
+#: ../src/widgets/text-toolbar.cpp:950
 msgid "Text: Change dx (kern)"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:896
+#: ../src/widgets/text-toolbar.cpp:984
 msgid "Text: Change dy"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:931
+#: ../src/widgets/text-toolbar.cpp:1019
 msgid "Text: Change rotate"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:984
+#: ../src/widgets/text-toolbar.cpp:1072
 msgid "Text: Change writing mode"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1038
+#: ../src/widgets/text-toolbar.cpp:1126
 msgid "Text: Change orientation"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1546
+#: ../src/widgets/text-toolbar.cpp:1654
 msgid "Font Family"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1547
+#: ../src/widgets/text-toolbar.cpp:1655
 msgid "Select Font Family (Alt-X to access)"
 msgstr ""
 
 #. Focus widget
 #. Enable entry completion
-#: ../src/widgets/text-toolbar.cpp:1557
+#: ../src/widgets/text-toolbar.cpp:1665
 msgid "Select all text with this font-family"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1561
+#: ../src/widgets/text-toolbar.cpp:1669
 msgid "Font not found on system"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1623
+#: ../src/widgets/text-toolbar.cpp:1727
 msgid "Font Style"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1624
+#: ../src/widgets/text-toolbar.cpp:1728
 msgid "Font style"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1641
+#: ../src/widgets/text-toolbar.cpp:1745
 msgid "Toggle Superscript"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1642
+#: ../src/widgets/text-toolbar.cpp:1746
 msgid "Toggle superscript"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1654
+#: ../src/widgets/text-toolbar.cpp:1758
 msgid "Toggle Subscript"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1655
+#: ../src/widgets/text-toolbar.cpp:1759
 msgid "Toggle subscript"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1696
+#: ../src/widgets/text-toolbar.cpp:1800
 msgid "Justify"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1703
+#: ../src/widgets/text-toolbar.cpp:1807
 msgid "Alignment"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1704
+#: ../src/widgets/text-toolbar.cpp:1808
 msgid "Text alignment"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1738
+#: ../src/widgets/text-toolbar.cpp:1842
 msgid "Vertical — RL"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1739
+#: ../src/widgets/text-toolbar.cpp:1843
 msgid "Vertical text — lines: right to left"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1745
+#: ../src/widgets/text-toolbar.cpp:1849
 msgid "Vertical — LR"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1746
+#: ../src/widgets/text-toolbar.cpp:1850
 msgid "Vertical text — lines: left to right"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1751
+#: ../src/widgets/text-toolbar.cpp:1855
 msgid "Writing mode"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1752
+#: ../src/widgets/text-toolbar.cpp:1856
 msgid "Block progression"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1781
+#: ../src/widgets/text-toolbar.cpp:1885
 msgid "Auto glyph orientation"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1788
+#: ../src/widgets/text-toolbar.cpp:1892
 msgid "Upright"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1789
+#: ../src/widgets/text-toolbar.cpp:1893
 msgid "Upright glyph orientation"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1796
+#: ../src/widgets/text-toolbar.cpp:1900
 msgid "Sideways"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1797
+#: ../src/widgets/text-toolbar.cpp:1901
 msgid "Sideways glyph orientation"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1803
+#: ../src/widgets/text-toolbar.cpp:1907
 msgid "Text orientation"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1804
+#: ../src/widgets/text-toolbar.cpp:1908
 msgid "Text (glyph) orientation in vertical text."
 msgstr ""
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1837
+#: ../src/widgets/text-toolbar.cpp:1941
 msgid "Smaller spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1837 ../src/widgets/text-toolbar.cpp:1876
-#: ../src/widgets/text-toolbar.cpp:1907
+#: ../src/widgets/text-toolbar.cpp:1941 ../src/widgets/text-toolbar.cpp:1980
+#: ../src/widgets/text-toolbar.cpp:2011
 msgctxt "Text tool"
 msgid "Normal"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1837
+#: ../src/widgets/text-toolbar.cpp:1941
 msgid "Larger spacing"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1842
+#: ../src/widgets/text-toolbar.cpp:1946
 msgid "Line Height"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1843
+#: ../src/widgets/text-toolbar.cpp:1947
 msgid "Line:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1844
+#: ../src/widgets/text-toolbar.cpp:1948
 msgid "Spacing between baselines"
 msgstr ""
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1876 ../src/widgets/text-toolbar.cpp:1907
+#: ../src/widgets/text-toolbar.cpp:1980 ../src/widgets/text-toolbar.cpp:2011
 msgid "Negative spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1876 ../src/widgets/text-toolbar.cpp:1907
+#: ../src/widgets/text-toolbar.cpp:1980 ../src/widgets/text-toolbar.cpp:2011
 msgid "Positive spacing"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1881
+#: ../src/widgets/text-toolbar.cpp:1985
 msgid "Word spacing"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1882
+#: ../src/widgets/text-toolbar.cpp:1986
 msgid "Word:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1883
+#: ../src/widgets/text-toolbar.cpp:1987
 msgid "Spacing between words (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1912
+#: ../src/widgets/text-toolbar.cpp:2016
 msgid "Letter spacing"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1913
+#: ../src/widgets/text-toolbar.cpp:2017
 msgid "Letter:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1914
+#: ../src/widgets/text-toolbar.cpp:2018
 msgid "Spacing between letters (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1943
+#: ../src/widgets/text-toolbar.cpp:2047
 msgid "Kerning"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1944
+#: ../src/widgets/text-toolbar.cpp:2048
 msgid "Kern:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1945
+#: ../src/widgets/text-toolbar.cpp:2049
 msgid "Horizontal kerning (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1974
+#: ../src/widgets/text-toolbar.cpp:2078
 msgid "Vertical Shift"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1975
+#: ../src/widgets/text-toolbar.cpp:2079
 msgid "Vert:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1976
+#: ../src/widgets/text-toolbar.cpp:2080
 msgid "Vertical shift (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:2005
+#: ../src/widgets/text-toolbar.cpp:2109
 msgid "Letter rotation"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:2006
+#: ../src/widgets/text-toolbar.cpp:2110
 msgid "Rot:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:2007
+#: ../src/widgets/text-toolbar.cpp:2111
 msgid "Character rotation (degrees)"
+msgstr ""
+
+#. Name
+#: ../src/widgets/text-toolbar.cpp:2135
+msgid "Unset line height"
+msgstr ""
+
+#. Label
+#: ../src/widgets/text-toolbar.cpp:2136
+msgid "If enabled, line height is set on part of selection. Click to unset."
+msgstr ""
+
+#. Name
+#: ../src/widgets/text-toolbar.cpp:2148
+msgid "Show outer style"
+msgstr ""
+
+#. Label
+#: ../src/widgets/text-toolbar.cpp:2149
+msgid ""
+"Show style of outermost text element. The 'font-size' and 'line-height' "
+"values of the outermost text element determine the minimum line spacing in "
+"the block."
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:180
@@ -30252,131 +30361,131 @@ msgstr ""
 msgid "Style of Paint Bucket fill objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1716
+#: ../src/widgets/toolbox.cpp:1721
 msgid "Bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1716
+#: ../src/widgets/toolbox.cpp:1721
 msgid "Snap bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1725
+#: ../src/widgets/toolbox.cpp:1730
 msgid "Bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1725
+#: ../src/widgets/toolbox.cpp:1730
 msgid "Snap to edges of a bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1734
+#: ../src/widgets/toolbox.cpp:1739
 msgid "Bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1734
+#: ../src/widgets/toolbox.cpp:1739
 msgid "Snap bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1743
+#: ../src/widgets/toolbox.cpp:1748
 msgid "BBox Edge Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1743
+#: ../src/widgets/toolbox.cpp:1748
 msgid "Snap midpoints of bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1753
+#: ../src/widgets/toolbox.cpp:1758
 msgid "BBox Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1753
+#: ../src/widgets/toolbox.cpp:1758
 msgid "Snapping centers of bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1762
+#: ../src/widgets/toolbox.cpp:1767
 msgid "Snap nodes, paths, and handles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1770
+#: ../src/widgets/toolbox.cpp:1775
 msgid "Snap to paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1779
+#: ../src/widgets/toolbox.cpp:1784
 msgid "Path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1779
+#: ../src/widgets/toolbox.cpp:1784
 msgid "Snap to path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1793
 msgid "To nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1793
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1797
+#: ../src/widgets/toolbox.cpp:1802
 msgid "Smooth nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1797
+#: ../src/widgets/toolbox.cpp:1802
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1806
+#: ../src/widgets/toolbox.cpp:1811
 msgid "Line Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1806
+#: ../src/widgets/toolbox.cpp:1811
 msgid "Snap midpoints of line segments"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1815
+#: ../src/widgets/toolbox.cpp:1820
 msgid "Others"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1815
+#: ../src/widgets/toolbox.cpp:1820
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1828
 msgid "Object Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1828
 msgid "Snap centers of objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1832
+#: ../src/widgets/toolbox.cpp:1837
 msgid "Rotation Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1832
+#: ../src/widgets/toolbox.cpp:1837
 msgid "Snap an item's rotation center"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1841
+#: ../src/widgets/toolbox.cpp:1846
 msgid "Text baseline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1841
+#: ../src/widgets/toolbox.cpp:1846
 msgid "Snap text anchors and baselines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1851
+#: ../src/widgets/toolbox.cpp:1856
 msgid "Page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1851
+#: ../src/widgets/toolbox.cpp:1856
 msgid "Snap to the page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1860
+#: ../src/widgets/toolbox.cpp:1865
 msgid "Snap to grids"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1869
+#: ../src/widgets/toolbox.cpp:1874
 msgid "Snap guides"
 msgstr ""
 
@@ -31197,14 +31306,14 @@ msgstr ""
 msgid "unable to locate marker: %s"
 msgstr ""
 
-#: ../share/extensions/measure.py:57
+#: ../share/extensions/measure.py:58
 msgid ""
 "Failed to import the numpy modules. These modules are required by this "
 "extension. Please install them and try again.  On a Debian-like system this "
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 
-#: ../share/extensions/measure.py:119
+#: ../share/extensions/measure.py:120
 msgid "Area is zero, cannot calculate Center of Mass"
 msgstr ""
 
@@ -31884,6 +31993,20 @@ msgstr ""
 msgid "Visualize Path"
 msgstr ""
 
+#: ../share/extensions/docinfo.inx.h:1
+msgid "DOC Info"
+msgstr ""
+
+#: ../share/extensions/docinfo.inx.h:2
+msgid "Show page info"
+msgstr ""
+
+#: ../share/extensions/docinfo.inx.h:3
+msgid ""
+"Choose this tab if you would like to see page info previously to apply DPI "
+"Switcher."
+msgstr ""
+
 #: ../share/extensions/dots.inx.h:1
 msgid "Number Nodes"
 msgstr ""
@@ -31909,6 +32032,14 @@ msgid ""
 "    * Starting dot number: first number in the sequence, assigned to the "
 "first node of the path.\n"
 "    * Step: numbering step between two nodes."
+msgstr ""
+
+#: ../share/extensions/dpi90to96.inx.h:1
+msgid "DPI 90 to 96"
+msgstr ""
+
+#: ../share/extensions/dpi96to90.inx.h:1
+msgid "DPI 96 to 90"
 msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:1
