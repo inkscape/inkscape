@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-12-21 17:10+0100\n"
-"PO-Revision-Date: 2016-11-22 10:35+0100\n"
+"POT-Creation-Date: 2016-12-21 01:07+0100\n"
+"PO-Revision-Date: 2016-12-21 09:15+0100\n"
 "Last-Translator: Lucas Vieites <lucas@codexion.com>\n"
 "Language-Team: Español; Castellano <inkscape-translator@lists.sourceforge."
 "net>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../inkscape.appdata.xml.in.h:1 ../inkscape.desktop.in.h:1
@@ -8386,24 +8386,29 @@ msgid ""
 "either setting the SVG 'viewBox' to compensate or by scaling\n"
 "all the elements in the drawing."
 msgstr ""
+"Los archivos antiguos de Inkscape usan 1inch == 90px. CSS requiere 1inch == "
+"96px.\n"
+"Los elementos dibujados podrían ser demasiado pequeños. Esto se puede "
+"corregir tanto\n"
+"ajustando el 'viewBox' de SVG para compensarlo o escalando todos los "
+"elementos en\n"
+"el dibujo."
 
 #: ../src/file.cpp:418 ../src/file.cpp:535
 msgid "Old Inkscape file detected (90 DPI)"
-msgstr ""
+msgstr "Se ha detectado un archivo de Inkscape antiguo (90 PPP)"
 
 #: ../src/file.cpp:425 ../src/file.cpp:542
-#, fuzzy
 msgid "Create backup file (in same directory)."
-msgstr "No se puede crear el directorio de perfil %s."
+msgstr "Crear archivo de copia (en el mismo directorio)."
 
 #: ../src/file.cpp:431 ../src/file.cpp:548 ../src/ui/widget/page-sizer.cpp:898
 msgid "Set 'viewBox'"
-msgstr ""
+msgstr "Fijar 'viewBox'"
 
 #: ../src/file.cpp:432 ../src/file.cpp:549
-#, fuzzy
 msgid "Scale elements"
-msgstr "Modo escala"
+msgstr "Escalar elementos"
 
 #: ../src/file.cpp:433 ../src/file.cpp:550
 #: ../src/widgets/connector-toolbar.cpp:316
@@ -8418,13 +8423,20 @@ msgid ""
 "Internal scaling can be handled either by setting the SVG 'viewBox'\n"
 "attribute to compensate or by scaling all objects in the drawing."
 msgstr ""
+"Los archivos antiguos de Inkscape usan 1inch == 90px. CSS requiere 1inch == "
+"96px.\n"
+"Los dibujos que están hechos para corresponderse con un tamaño físico (p.ej. "
+"A4, o Carta)\n"
+"serán demasiado pequeños. Se podrá corregir escalando los elementos.\n"
+"El escalado interno se puede gestionar ajustando el atributo 'viewBox' de "
+"SVG para compensarlo\n"
+"o escalando todos los objetos en el dibujo."
 
 #. Look for SPNamedView and SPDefs loop
 #. desktop->getDocument()->ensureUpToDate();  // Does not update box3d!
 #: ../src/file.cpp:771
-#, fuzzy
 msgid "Update Document"
-msgstr "Guardar documento"
+msgstr "Actualizar documento"
 
 #: ../src/file.cpp:787 ../src/main-cmdlinexact.cpp:177
 msgid "Broken links have been changed to point to existing files."
@@ -8846,7 +8858,7 @@ msgstr " (trazo)"
 #: ../src/gradient-drag.cpp:1482
 #, c-format
 msgid "%s for: %s%s"
-msgstr ""
+msgstr "%s para: %s%s"
 
 #  fixme: CTRL SNAP!!! remove "skew and scale"
 #: ../src/gradient-drag.cpp:1489
@@ -8946,27 +8958,24 @@ msgid "Automatic backup of the following documents failed:\n"
 msgstr "Ha fallado la copia de seguridad de los siguientes documentos:\n"
 
 #: ../src/inkview.cpp:225
-#, fuzzy
 msgid "Inkscape Options"
-msgstr "Extensiones de Inkscape:"
+msgstr "Opciones de Inkscape"
 
 #: ../src/inkview.cpp:226
-#, fuzzy
 msgid "Default program options"
-msgstr "Ajustes predeterminado de rejilla"
+msgstr "Opciones predeterminadas del programa"
 
 #: ../src/inkview.cpp:233
 msgid "NUM"
-msgstr ""
+msgstr "NUM"
 
 #: ../src/inkview.cpp:239
 msgid "FILES..."
-msgstr ""
+msgstr "ARCHIVOS..."
 
 #: ../src/inkview.cpp:251
-#, fuzzy
 msgid "Open SVG files"
-msgstr "Abrir archivos de plóter HPGL"
+msgstr "Abrir archivos SVG"
 
 #: ../src/knot.cpp:329
 msgid "Node or handle drag canceled."
@@ -9192,9 +9201,8 @@ msgstr "Caja de contorno"
 
 #. 9.93
 #: ../src/live_effects/effect.cpp:140
-#, fuzzy
 msgid "Measure Line"
-msgstr "Medida"
+msgstr "Medir línea"
 
 #: ../src/live_effects/effect.cpp:351
 msgid "Is visible?"
@@ -9441,9 +9449,8 @@ msgid "Origin"
 msgstr "Origen"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:42
-#, fuzzy
 msgid "Adjust origin of the rotation"
-msgstr "Origen de la rotación"
+msgstr "Ajustar origen de la rotación"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:43
 #: ../src/live_effects/lpe-transform_2pts.cpp:35
@@ -9451,37 +9458,32 @@ msgid "Start point"
 msgstr "Punto inicial"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:43
-#, fuzzy
 msgid "Starting point to define start angle"
-msgstr "Punto inicial del afilado"
+msgstr "Punto inicial para definir el ángulo de inicio"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:43
-#, fuzzy
 msgid "Adjust starting point to define start angle"
-msgstr "Ajustar el ángulo inicial"
+msgstr "Ajustar el punto inicial para definir el ángulo de inicio"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:44
-#, fuzzy
 msgid "Starting angle"
-msgstr "Ángulo de rotación:"
+msgstr "Ángulo de inicio"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:44
 msgid "Angle of the first copy"
 msgstr "Ángulo de la primera copia"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:45
-#, fuzzy
 msgid "Rotation angle"
-msgstr "Ángulo de rotación:"
+msgstr "Ángulo de rotación"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:45
 msgid "Angle between two successive copies"
 msgstr "Ángulo entre dos copias sucesivas"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:46
-#, fuzzy
 msgid "Number of copies"
-msgstr "Número de copias:"
+msgstr "Número de copias"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:46
 msgid "Number of copies of the original path"
@@ -9489,21 +9491,22 @@ msgstr "Número de copias del trayecto original"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
 msgid "360º Copies"
-msgstr ""
+msgstr "Copias 360º"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
 msgid "No rotation angle, fixed to 360º"
-msgstr ""
+msgstr "Sin ángulo de rotación, fijado a 360º"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:44
-#, fuzzy
 msgid "Fuse paths"
-msgstr "Trayecto de ampliación"
+msgstr "Fundir trayectos"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
 msgstr ""
+"Fundir los trayector por la línea de ayuda, utilice \"fill-rule: evenodd\" "
+"para obtener mejores resultados"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:34
 msgid "Stitch path:"
@@ -9801,13 +9804,12 @@ msgstr ""
 "que no están en contacto."
 
 #: ../src/live_effects/lpe-gears.cpp:210
-#, fuzzy
 msgid "Min Radius:"
-msgstr "Radio:"
+msgstr "Radio mín:"
 
 #: ../src/live_effects/lpe-gears.cpp:210
 msgid "Minimun radius, low balues can slow"
-msgstr ""
+msgstr "Radio mínimo, valores bajos pueden ralentizar"
 
 #: ../src/live_effects/lpe-interpolate.cpp:27
 msgid "Trajectory:"
@@ -10327,14 +10329,12 @@ msgid "Horizontal"
 msgstr "Horizontal"
 
 #: ../src/live_effects/lpe-measure-line.cpp:43
-#, fuzzy
 msgid "Vertical"
-msgstr "_Vertical:"
+msgstr "Vertical"
 
 #: ../src/live_effects/lpe-measure-line.cpp:50
-#, fuzzy
 msgid "Unit*"
-msgstr "Unidad"
+msgstr "Unidad*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:50
 #: ../src/live_effects/lpe-ruler.cpp:39 ../src/widgets/gimp/ruler.cpp:193
@@ -10342,14 +10342,12 @@ msgid "Unit"
 msgstr "Unidad"
 
 #: ../src/live_effects/lpe-measure-line.cpp:51
-#, fuzzy
 msgid "Font*"
-msgstr "Tipogra_fía"
+msgstr "Tipografía*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:51
-#, fuzzy
 msgid "Font Selector"
-msgstr "Selector"
+msgstr "Selector de tipografía"
 
 #: ../src/live_effects/lpe-measure-line.cpp:52
 #: ../src/widgets/gimp/ruler.cpp:183
@@ -10359,122 +10357,104 @@ msgid "Orientation"
 msgstr "Orientación"
 
 #: ../src/live_effects/lpe-measure-line.cpp:52
-#, fuzzy
 msgid "Orientation method"
-msgstr "Orientación"
+msgstr "Método de orientación"
 
 #: ../src/live_effects/lpe-measure-line.cpp:53
-#, fuzzy
 msgid "Curve on origin"
-msgstr "origen de guía"
+msgstr "Curva en origen"
 
 #: ../src/live_effects/lpe-measure-line.cpp:53
 msgid "Curve on origin, set 0 to start/end"
-msgstr ""
+msgstr "Curva en origen, use 0 para inicio/fin"
 
 #: ../src/live_effects/lpe-measure-line.cpp:54
-#, fuzzy
 msgid "Precision*"
-msgstr "Precisión"
+msgstr "Precisión*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:55
-#, fuzzy
 msgid "Positon*"
-msgstr "Posición"
+msgstr "Positón*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:55
-#, fuzzy
 msgid "Positon"
-msgstr "Posición"
+msgstr "Positón"
 
 #: ../src/live_effects/lpe-measure-line.cpp:56
-#, fuzzy
 msgid "Text top/bottom*"
-msgstr "De arriba abajo"
+msgstr "Texto arriba/abajo*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:56
-#, fuzzy
 msgid "Text top/bottom"
-msgstr "De arriba abajo"
+msgstr "Texto arriba/abajo"
 
 #: ../src/live_effects/lpe-measure-line.cpp:57
-#, fuzzy
 msgid "Text right/left*"
-msgstr "Alineación de texto"
+msgstr "Texto derecha/izquierda*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:57
-#, fuzzy
 msgid "Text right/left"
-msgstr "Alineación de texto"
+msgstr "Texto derecha/izquierda"
 
 #: ../src/live_effects/lpe-measure-line.cpp:58
-#, fuzzy
 msgid "Helpline distance*"
-msgstr "_Distancia de nudo"
+msgstr "Distancia de línea auxiliar*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:58
-#, fuzzy
 msgid "Helpline distance"
-msgstr "_Distancia de nudo"
+msgstr "Distancia de línea auxiliar"
 
 #: ../src/live_effects/lpe-measure-line.cpp:59
-#, fuzzy
 msgid "Helpline overlap*"
-msgstr "Eliminar solapamientos"
+msgstr "Solapamiento de línea auxiliar*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:59
-#, fuzzy
 msgid "Helpline overlap"
-msgstr "Eliminar solapamientos"
+msgstr "Solapamiento de línea auxiliar"
 
 #: ../src/live_effects/lpe-measure-line.cpp:60
-#, fuzzy
 msgid "Scale*"
-msgstr "Escalar"
+msgstr "Escala*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:60
 msgid "Scaling factor"
 msgstr "Factor de escala"
 
 #: ../src/live_effects/lpe-measure-line.cpp:61
-#, fuzzy
 msgid "Format*"
-msgstr "Formato"
+msgstr "Formato*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:61
 msgid "Format the number ex:{measure} {unit}, return to save"
-msgstr ""
+msgstr "Formatear el número, p.ej.{medida} {unidad}, \"Enter\" para guardar"
 
 #: ../src/live_effects/lpe-measure-line.cpp:63
-#, fuzzy
 msgid "Arrows outside"
-msgstr "Frío fuera"
+msgstr "Flechas fuera"
 
 #: ../src/live_effects/lpe-measure-line.cpp:64
 msgid "Flip side*"
-msgstr ""
+msgstr "Envés*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:64
 msgid "Flip side"
-msgstr ""
+msgstr "Envés"
 
 #: ../src/live_effects/lpe-measure-line.cpp:65
-#, fuzzy
 msgid "Scale sensitive*"
-msgstr "Distinguir mayús./minús."
+msgstr "Sensible a escala*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:65
 msgid "Costrained scale sensitive to transformed containers"
 msgstr ""
 
 #: ../src/live_effects/lpe-measure-line.cpp:66
-#, fuzzy
 msgid "Local Number Format*"
-msgstr "Formas de números"
+msgstr "Formato local de número*"
 
 #: ../src/live_effects/lpe-measure-line.cpp:66
 msgid "Local number format"
-msgstr ""
+msgstr "Formato local de número"
 
 #: ../src/live_effects/lpe-measure-line.cpp:67
 msgid "Line Group 0.5*"
