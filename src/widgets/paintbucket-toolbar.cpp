@@ -192,7 +192,7 @@ void sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
              iterator != gap_list.end(); ++iterator ) {
             GtkTreeIter iter;
             gtk_list_store_append( model, &iter );
-            gtk_list_store_set( model, &iter, 0, _((*iterator).c_str()), 1, count, -1 );
+            gtk_list_store_set( model, &iter, 0, g_dpgettext2(NULL, "Flood autogap", (*iterator).c_str()), 1, count, -1 );
             count++;
         }
         EgeSelectOneAction* act2 = ege_select_one_action_new( "AutoGapAction", _("Close gaps"), (""), NULL, GTK_TREE_MODEL(model) );

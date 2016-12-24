@@ -89,10 +89,10 @@ Glib::ustring ch_init[8] = {
 const std::vector<Glib::ustring> FloodTool::channel_list( ch_init, ch_init+8 );
 
 Glib::ustring gap_init[4] = {
-    C_("Flood autogap", "None"),
-    C_("Flood autogap", "Small"),
-    C_("Flood autogap", "Medium"),
-    C_("Flood autogap", "Large")
+    NC_("Flood autogap", "None"),
+    NC_("Flood autogap", "Small"),
+    NC_("Flood autogap", "Medium"),
+    NC_("Flood autogap", "Large")
 };
 const std::vector<Glib::ustring> FloodTool::gap_list( gap_init, gap_init+4 );
 
