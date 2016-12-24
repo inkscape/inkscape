@@ -1182,10 +1182,34 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
     for(input_index = para->first_input_index ; input_index < _flow._input_stream.size() ; input_index++) {
         if (_flow._input_stream[input_index]->Type() == CONTROL_CODE) {
             Layout::InputStreamControlCode const *control_code = static_cast<Layout::InputStreamControlCode const *>(_flow._input_stream[input_index]);
+
             if (   control_code->code == SHAPE_BREAK
-                   || control_code->code == PARAGRAPH_BREAK)
+                   || control_code->code == PARAGRAPH_BREAK) {
+
+                // Add span to be used to calculate line spacing of blank lines.
+                UnbrokenSpan new_span;
+                new_span.pango_item_index    = -1;
+                new_span.input_index         = input_index;
+
+                // No pango object, so find font and line height ourselves.
+                SPObject * object = static_cast<SPObject *>(control_code->source_cookie);
+                if (object) {
+                    SPStyle * style = object->style;
+                    if (style) {
+                        new_span.font_size = style->font_size.computed * _flow.getTextLengthMultiplierDue();
+                        font_factory * factory = font_factory::Default();
+                        font_instance * font = factory->FaceFromStyle( style );
+                        new_span.line_height_multiplier = _computeFontLineHeight( object->style );
+                        new_span.line_height.set( font );
+                        new_span.line_height *= new_span.font_size;
+                    }
+                }
+                new_span.text_bytes          = 0;
+                new_span.char_index_in_para  = char_index_in_para;
+                para->unbroken_spans.push_back(new_span);
+                TRACE(("add empty span for break %lu\n", para->unbroken_spans.size() - 1));
                 break;                                    // stop at the end of the paragraph
-            else if (control_code->code == ARBITRARY_GAP) {
+            } else if (control_code->code == ARBITRARY_GAP) {
                 UnbrokenSpan new_span;
                 new_span.pango_item_index    = -1;
                 new_span.input_index         = input_index;
@@ -1619,8 +1643,8 @@ bool Layout::Calculator::_buildChunksInScanRun(ParagraphInfo const &para,
     *line_height = *strut_height;
     for (std::vector<ChunkInfo>::const_iterator it_chunk = chunk_info->begin() ; it_chunk != chunk_info->end() ; it_chunk++) {
         for (std::vector<BrokenSpan>::const_iterator it_span = it_chunk->broken_spans.begin() ; it_span != it_chunk->broken_spans.end() ; it_span++) {
-            TRACE(("      brokenspan line_height: %f\n", it_span->start.iter_span->line_height.emSize() ));
             FontMetrics span_height = it_span->start.iter_span->line_height;
+            TRACE(("      brokenspan line_height: %f\n", span_height.emSize() ));
             span_height.computeEffective( it_span->start.iter_span->line_height_multiplier );
             line_height->max( span_height );
         }

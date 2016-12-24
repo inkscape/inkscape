@@ -629,7 +629,7 @@ public:
         
         void reset() {
             ascent      =  0.8;
-            descent     = -0.2;
+            descent     =  0.2;
             xheight     =  0.5;
             ascent_max  =  0.8;
             descent_max =  0.2;
@@ -664,7 +664,7 @@ public:
 
         // private:
         double ascent;      // Typographic ascent.
-        double descent;     // Typographic descent.
+        double descent;     // Typographic descent. (Normally positive).
         double xheight;     // Height of 'x' measured from alphabetic baseline.
         double ascent_max;  // Maximum ascent of all glyphs in font.
         double descent_max; // Maximum descent of all glyphs in font.
@@ -1188,6 +1188,10 @@ inline bool Layout::iterator::prevCharacter()
 
 }//namespace Text
 }//namespace Inkscape
+
+std::ostream &operator<<(std::ostream &out, const Inkscape::Text::Layout::FontMetrics &f);
+std::ostream &operator<<(std::ostream &out, const Inkscape::Text::Layout::FontMetrics *f);
+
 
 #endif
 

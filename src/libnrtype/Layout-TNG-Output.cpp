@@ -867,6 +867,23 @@ double Layout::getActualLength() const
 }//namespace Text
 }//namespace Inkscape
 
+std::ostream &operator<<(std::ostream &out, const Inkscape::Text::Layout::FontMetrics &f) {
+    out << " emSize: "  << f.emSize()
+        << " ascent: "  << f.ascent
+        << " descent: " << f.descent
+        << " xheight: " << f.xheight;
+    return out;
+}
+
+std::ostream &operator<<(std::ostream &out, const Inkscape::Text::Layout::FontMetrics *f) {
+    out << " emSize: "  << f->emSize()
+        << " ascent: "  << f->ascent
+        << " descent: " << f->descent
+        << " xheight: " << f->xheight;
+    return out;
+}
+
+
 
 /*
   Local Variables:
