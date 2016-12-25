@@ -21,6 +21,8 @@
 # include <config.h>
 #endif
 
+#include <gdkmm/devicemanager.h>
+#include <gdkmm/display.h>
 #include <gdkmm/rectangle.h>
 #include <cairomm/region.h>
 
@@ -60,6 +62,14 @@ static bool const HAS_BROKEN_MOTION_HINTS =
 struct SPCanvasGroupClass {
     SPCanvasItemClass parent_class;
 };
+
+static void ungrab_default_client_pointer(guint32 const time = GDK_CURRENT_TIME)
+{
+    auto const display = Gdk::Display::get_default();
+    auto const dm = display->get_device_manager();
+    auto const device = dm->get_client_pointer();
+    device->ungrab(time);
+}
 
 /**
  * A group of items.
@@ -321,10 +331,7 @@ void sp_canvas_item_dispose(GObject *object)
 
       if (item == item->canvas->_grabbed_item) {
           item->canvas->_grabbed_item = NULL;
-
-          auto dm = gdk_display_get_device_manager(gdk_display_get_default());
-          auto device = gdk_device_manager_get_client_pointer(dm);
-          gdk_device_ungrab(device, GDK_CURRENT_TIME);
+          ungrab_default_client_pointer();
       }
 
       if (item == item->canvas->_focused_item) {
@@ -647,10 +654,7 @@ void sp_canvas_item_ungrab(SPCanvasItem *item, guint32 etime)
     }
 
     item->canvas->_grabbed_item = NULL;
-
-    auto dm = gdk_display_get_device_manager(gdk_display_get_default());
-    auto device = gdk_device_manager_get_client_pointer(dm);
-    gdk_device_ungrab(device, etime);
+    ungrab_default_client_pointer(etime);
 }
 
 /**
@@ -959,9 +963,7 @@ void SPCanvas::shutdownTransients()
 
     if (_grabbed_item) {
         _grabbed_item = NULL;
-        auto dm = gdk_display_get_device_manager(gdk_display_get_default());
-        auto device = gdk_device_manager_get_client_pointer(dm);
-        gdk_device_ungrab(device, GDK_CURRENT_TIME);
+        ungrab_default_client_pointer();
     }
     removeIdle();
 }
@@ -1685,11 +1687,12 @@ bool SPCanvas::paintRect(int xx0, int yy0, int xx1, int yy1)
     // Save the mouse location
     gint x, y;
 
-    auto dm = gdk_display_get_device_manager(gdk_display_get_default());
-    auto device = gdk_device_manager_get_client_pointer(dm);
+    auto const display = Gdk::Display::get_default();
+    auto const dm = display->get_device_manager();
+    auto const device = dm->get_client_pointer();
 
     gdk_window_get_device_position(gtk_widget_get_window(GTK_WIDGET(this)),
-                                   device,
+                                   device->gobj(),
                                    &x, &y, NULL);
 
     setup.mouse_loc = sp_canvas_window_to_world(this, Geom::Point(x,y));
