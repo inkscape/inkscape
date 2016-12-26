@@ -116,8 +116,8 @@ CdrImportDialog::CdrImportDialog(const std::vector<RVNGString> &vec)
      // CONTROLS
 
      // Buttons
-     cancelbutton = Gtk::manage(new class Gtk::Button(Gtk::StockID("gtk-cancel")));
-     okbutton = Gtk::manage(new class Gtk::Button(Gtk::StockID("gtk-ok")));
+     cancelbutton = Gtk::manage(new Gtk::Button(_("_Cancel"), true));
+     okbutton     = Gtk::manage(new Gtk::Button(_("_OK"),     true));
 
      // Labels
      _labelSelect = Gtk::manage(new class Gtk::Label(_("Select page:")));
