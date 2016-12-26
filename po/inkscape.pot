@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-12-26 10:03+0000\n"
+"POT-Creation-Date: 2016-12-26 19:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4461,92 +4461,92 @@ msgstr ""
 msgid "No next zoom."
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:321 ../src/display/canvas-grid.cpp:677
+#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:682
 msgid "Grid _units:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:679
+#: ../src/display/canvas-axonomgrid.cpp:328 ../src/display/canvas-grid.cpp:684
 msgid "_Origin X:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:323 ../src/display/canvas-grid.cpp:679
+#: ../src/display/canvas-axonomgrid.cpp:328 ../src/display/canvas-grid.cpp:684
 #: ../src/ui/dialog/inkscape-preferences.cpp:779
 #: ../src/ui/dialog/inkscape-preferences.cpp:804
 msgid "X coordinate of grid origin"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:682
+#: ../src/display/canvas-axonomgrid.cpp:331 ../src/display/canvas-grid.cpp:687
 msgid "O_rigin Y:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:326 ../src/display/canvas-grid.cpp:682
+#: ../src/display/canvas-axonomgrid.cpp:331 ../src/display/canvas-grid.cpp:687
 #: ../src/ui/dialog/inkscape-preferences.cpp:780
 #: ../src/ui/dialog/inkscape-preferences.cpp:805
 msgid "Y coordinate of grid origin"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:329 ../src/display/canvas-grid.cpp:688
+#: ../src/display/canvas-axonomgrid.cpp:334 ../src/display/canvas-grid.cpp:693
 msgid "Spacing _Y:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:329
+#: ../src/display/canvas-axonomgrid.cpp:334
 #: ../src/ui/dialog/inkscape-preferences.cpp:808
 msgid "Base length of z-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:332
+#: ../src/display/canvas-axonomgrid.cpp:337
 #: ../src/ui/dialog/inkscape-preferences.cpp:811
 #: ../src/widgets/box3d-toolbar.cpp:301
 msgid "Angle X:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:332
+#: ../src/display/canvas-axonomgrid.cpp:337
 #: ../src/ui/dialog/inkscape-preferences.cpp:811
 msgid "Angle of x-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:334
+#: ../src/display/canvas-axonomgrid.cpp:339
 #: ../src/ui/dialog/inkscape-preferences.cpp:812
 #: ../src/widgets/box3d-toolbar.cpp:380
 msgid "Angle Z:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:334
+#: ../src/display/canvas-axonomgrid.cpp:339
 #: ../src/ui/dialog/inkscape-preferences.cpp:812
 msgid "Angle of z-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
+#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
 msgid "Minor grid line _color:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
+#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
 #: ../src/ui/dialog/inkscape-preferences.cpp:763
 msgid "Minor grid line color"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:338 ../src/display/canvas-grid.cpp:693
+#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
 msgid "Color of the minor grid lines"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
+#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:703
 msgid "Ma_jor grid line color:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:343 ../src/display/canvas-grid.cpp:698
+#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:703
 #: ../src/ui/dialog/inkscape-preferences.cpp:765
 msgid "Major grid line color"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:344 ../src/display/canvas-grid.cpp:699
+#: ../src/display/canvas-axonomgrid.cpp:349 ../src/display/canvas-grid.cpp:704
 msgid "Color of the major (highlighted) grid lines"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:703
+#: ../src/display/canvas-axonomgrid.cpp:353 ../src/display/canvas-grid.cpp:708
 msgid "_Major grid line every:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:348 ../src/display/canvas-grid.cpp:703
+#: ../src/display/canvas-axonomgrid.cpp:353 ../src/display/canvas-grid.cpp:708
 msgid "lines"
 msgstr ""
 
@@ -4592,25 +4592,25 @@ msgid ""
 "to invisible grids."
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:685
+#: ../src/display/canvas-grid.cpp:690
 msgid "Spacing _X:"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:685
+#: ../src/display/canvas-grid.cpp:690
 #: ../src/ui/dialog/inkscape-preferences.cpp:785
 msgid "Distance between vertical grid lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:688
+#: ../src/display/canvas-grid.cpp:693
 #: ../src/ui/dialog/inkscape-preferences.cpp:786
 msgid "Distance between horizontal grid lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:720
+#: ../src/display/canvas-grid.cpp:725
 msgid "_Show dots instead of lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:721
+#: ../src/display/canvas-grid.cpp:726
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr ""
 
@@ -5754,6 +5754,29 @@ msgstr ""
 #: ../src/extension/internal/cdr-input.cpp:103
 #: ../src/extension/internal/vsd-input.cpp:105
 msgid "Page Selector"
+msgstr ""
+
+#. CONTROLS
+#. Buttons
+#.
+#. Gtk::Button * help_button = add_button(Gtk::Stock::HELP, Gtk::RESPONSE_HELP);
+#. if (_help == NULL)
+#. help_button->set_sensitive(false);
+#.
+#: ../src/extension/internal/cdr-input.cpp:119
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:88
+#: ../src/extension/internal/vsd-input.cpp:121
+#: ../src/extension/prefdialog.cpp:74 ../src/ui/dialog/export.cpp:1292
+#: ../src/ui/interface.cpp:1361 ../src/widgets/desktop-widget.cpp:1047
+#: ../src/widgets/desktop-widget.cpp:1109
+msgid "_Cancel"
+msgstr ""
+
+#: ../src/extension/internal/cdr-input.cpp:120
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:89
+#: ../src/extension/internal/vsd-input.cpp:122
+#: ../src/extension/prefdialog.cpp:75
+msgid "_OK"
 msgstr ""
 
 #. Labels
@@ -7992,51 +8015,51 @@ msgstr ""
 msgid "Import settings"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:272
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:313
 msgid "PDF Import Settings"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:414
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:455
 msgctxt "PDF input precision"
 msgid "rough"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:415
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:456
 msgctxt "PDF input precision"
 msgid "medium"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:416
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:457
 msgctxt "PDF input precision"
 msgid "fine"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:417
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:458
 msgctxt "PDF input precision"
 msgid "very fine"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:903
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:944
 msgid "PDF Input"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:908
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:949
 msgid "Adobe PDF (*.pdf)"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:909
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:950
 msgid "Adobe Portable Document Format"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:916
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:957
 msgid "AI Input"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:921
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:962
 msgid "Adobe Illustrator 9.0 and above (*.ai)"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:922
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:963
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr ""
 
@@ -8202,11 +8225,19 @@ msgstr ""
 msgid "Vector graphics format used by Corel WordPerfect"
 msgstr ""
 
-#: ../src/extension/prefdialog.cpp:251
+#: ../src/extension/prefdialog.cpp:74 ../src/verbs.cpp:2489
+msgid "_Close"
+msgstr ""
+
+#: ../src/extension/prefdialog.cpp:75
+msgid "_Apply"
+msgstr ""
+
+#: ../src/extension/prefdialog.cpp:248
 msgid "Live preview"
 msgstr ""
 
-#: ../src/extension/prefdialog.cpp:251
+#: ../src/extension/prefdialog.cpp:248
 msgid "Is the effect previewed live on canvas?"
 msgstr ""
 
@@ -15076,12 +15107,6 @@ msgstr ""
 
 #: ../src/ui/dialog/export.cpp:1172
 msgid "Export aborted."
-msgstr ""
-
-#: ../src/ui/dialog/export.cpp:1292 ../src/ui/interface.cpp:1361
-#: ../src/widgets/desktop-widget.cpp:1047
-#: ../src/widgets/desktop-widget.cpp:1109
-msgid "_Cancel"
 msgstr ""
 
 #: ../src/ui/dialog/export.cpp:1293 ../src/ui/dialog/input.cpp:953
@@ -25275,10 +25300,6 @@ msgstr ""
 
 #: ../src/verbs.cpp:2488
 msgid "Switch to the previous document window"
-msgstr ""
-
-#: ../src/verbs.cpp:2489
-msgid "_Close"
 msgstr ""
 
 #: ../src/verbs.cpp:2490
