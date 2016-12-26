@@ -22,6 +22,7 @@
 # include <config.h>
 #endif
 
+#include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/button.h>

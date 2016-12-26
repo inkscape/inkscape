@@ -21,26 +21,20 @@ namespace UI {
 namespace Widget {
 
 Frame::Frame(Glib::ustring const &label_text /*= ""*/, gboolean label_bold /*= TRUE*/ )
-    : _label(label_text, 1.0, 0.5, TRUE),
-      _alignment()
+    : _label(label_text, 1.0, 0.5, TRUE)
 {
     set_shadow_type(Gtk::SHADOW_NONE);
 
-    //Put an indented GtkAlignment inside the frame.
-    //Further children should be children of this GtkAlignment:
-    Gtk::Frame::add(_alignment);
-    set_padding(4, 0, 8, 0);
-
     set_label_widget(_label);
     set_label(label_text, label_bold);
-
-    show_all_children();
 }
 
 void
 Frame::add(Widget& widget)
 {
-    _alignment.add(widget);
+    Gtk::Frame::add(widget);
+    set_padding(4, 0, 8, 0);
+    show_all_children();
 }
 
 void
@@ -56,7 +50,21 @@ Frame::set_label(const Glib::ustring &label_text, gboolean label_bold /*= TRUE*/
 void
 Frame::set_padding (guint padding_top, guint padding_bottom, guint padding_left, guint padding_right)
 {
-    _alignment.set_padding(padding_top, padding_bottom, padding_left, padding_right);
+    auto child = get_child();
+
+    if(child)
+    {
+        child->set_margin_top(padding_top);
+        child->set_margin_bottom(padding_bottom);
+
+#if GTK_CHECK_VERSION(3,12,0)
+        child->set_margin_start(padding_left);
+        child->set_margin_end(padding_right);
+#else
+        child->set_margin_left(padding_left);
+        child->set_margin_right(padding_right);
+#endif
+    }
 }
 
 Gtk::Label const *
