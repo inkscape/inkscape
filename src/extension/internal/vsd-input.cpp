@@ -119,7 +119,7 @@ VsdImportDialog::VsdImportDialog(const std::vector<RVNGString> &vec)
 
      // Buttons
      cancelbutton = Gtk::manage(new Gtk::Button(_("_Cancel"), true));
-     okbutton     = Gtk::manage(new Gtk::Button(_("_OK"),     true))l
+     okbutton     = Gtk::manage(new Gtk::Button(_("_OK"),     true));
 
      // Labels
      _labelSelect = Gtk::manage(new class Gtk::Label(_("Select page:")));
