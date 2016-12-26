@@ -85,8 +85,8 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _poppler_doc = NULL;
 #endif // HAVE_POPPLER_CAIRO
     _pdf_doc = doc;
-    cancelbutton = Gtk::manage(new class Gtk::Button(Gtk::StockID("gtk-cancel")));
-    okbutton = Gtk::manage(new class Gtk::Button(Gtk::StockID("gtk-ok")));
+    cancelbutton = Gtk::manage(new Gtk::Button(_("_Cancel"), true));
+    okbutton     = Gtk::manage(new Gtk::Button(_("_OK"),     true));
     _labelSelect = Gtk::manage(new class Gtk::Label(_("Select page:")));
 
     // Page number
@@ -157,9 +157,50 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     okbutton->set_can_focus();
     okbutton->set_can_default();
     okbutton->set_relief(Gtk::RELIEF_NORMAL);
-    this->get_action_area()->property_layout_style().set_value(Gtk::BUTTONBOX_END);
+
+#if GTK_CHECK_VERSION(3,16,0)
+    _labelSelect->set_xalign(0.5);
+    _labelSelect->set_yalign(0.5);
+    _labelTotalPages->set_xalign(0.5);
+    _labelTotalPages->set_yalign(0.5);
+    _labelPrecision->set_xalign(0.0);
+    _labelPrecision->set_yalign(0.5);
+    _labelPrecisionWarning->set_xalign(0.0);
+    _labelPrecisionWarning->set_yalign(0.5);
+    _labelPrecisionComment->set_xalign(0.5);
+    _labelPrecisionComment->set_yalign(0.5);
+#else
     _labelSelect->set_alignment(0.5,0.5);
-    _labelSelect->set_padding(4,0);
+    _labelTotalPages->set_alignment(0.5,0.5);
+    _labelPrecision->set_alignment(0,0.5);
+    _labelPrecisionWarning->set_alignment(0,0.5);
+    _labelPrecisionComment->set_alignment(0.5,0.5);
+#endif
+
+#if GTK_CHECK_VERSION(3,12,0)
+    _labelSelect->set_margin_start(4);
+    _labelSelect->set_margin_end(4);
+    _labelTotalPages->set_margin_start(4);
+    _labelTotalPages->set_margin_end(4);
+    _labelPrecision->set_margin_start(4);
+    _labelPrecision->set_margin_end(4);
+    _labelPrecisionWarning->set_margin_start(4);
+    _labelPrecisionWarning->set_margin_end(4);
+    _labelPrecisionComment->set_margin_start(4);
+    _labelPrecisionComment->set_margin_end(4);
+#else
+    _labelSelect->set_margin_left(4);
+    _labelSelect->set_margin_right(4);
+    _labelTotalPages->set_margin_left(4);
+    _labelTotalPages->set_margin_right(4);
+    _labelPrecision->set_margin_left(4);
+    _labelPrecision->set_margin_right(4);
+    _labelPrecisionWarning->set_margin_left(4);
+    _labelPrecisionWarning->set_margin_right(4);
+    _labelPrecisionComment->set_margin_left(4);
+    _labelPrecisionComment->set_margin_right(4);
+#endif
+
     _labelSelect->set_justify(Gtk::JUSTIFY_LEFT);
     _labelSelect->set_line_wrap(false);
     _labelSelect->set_use_markup(false);
@@ -169,8 +210,6 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _pageNumberSpin->set_numeric(true);
     _pageNumberSpin->set_digits(0);
     _pageNumberSpin->set_wrap(false);
-    _labelTotalPages->set_alignment(0.5,0.5);
-    _labelTotalPages->set_padding(4,0);
     _labelTotalPages->set_justify(Gtk::JUSTIFY_LEFT);
     _labelTotalPages->set_line_wrap(false);
     _labelTotalPages->set_use_markup(false);
@@ -189,14 +228,10 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     vbox2->pack_start(*hbox3);
     _pageSettingsFrame->add(*vbox2);
     _pageSettingsFrame->set_border_width(4);
-    _labelPrecision->set_alignment(0,0.5);
-    _labelPrecision->set_padding(4,0);
     _labelPrecision->set_justify(Gtk::JUSTIFY_LEFT);
     _labelPrecision->set_line_wrap(true);
     _labelPrecision->set_use_markup(false);
     _labelPrecision->set_selectable(false);
-    _labelPrecisionWarning->set_alignment(0,0.5);
-    _labelPrecisionWarning->set_padding(4,0);
     _labelPrecisionWarning->set_justify(Gtk::JUSTIFY_LEFT);
     _labelPrecisionWarning->set_line_wrap(true);
     _labelPrecisionWarning->set_use_markup(true);
@@ -213,6 +248,14 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _importViaInternal->set_active(true);
     _labelViaPoppler->set_line_wrap(true);
     _labelViaInternal->set_line_wrap(true);
+
+# if GTK_CHECK_VERSION(3,16,0)
+    _labelViaPoppler->set_xalign(0);
+    _labelViaInternal->set_xalign(0);
+# else
+    _labelViaPoppler->set_alignment(0, 0.5);
+    _labelViaInternal->set_alignment(0, 0.5);
+# endif
 #endif
 
     _fallbackPrecisionSlider->set_size_request(180,-1);
@@ -222,8 +265,6 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _fallbackPrecisionSlider->set_draw_value(true);
     _fallbackPrecisionSlider->set_value_pos(Gtk::POS_TOP);
     _labelPrecisionComment->set_size_request(90,-1);
-    _labelPrecisionComment->set_alignment(0.5,0.5);
-    _labelPrecisionComment->set_padding(4,0);
     _labelPrecisionComment->set_justify(Gtk::JUSTIFY_LEFT);
     _labelPrecisionComment->set_line_wrap(false);
     _labelPrecisionComment->set_use_markup(false);
@@ -260,10 +301,10 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     // vbox3->pack_start(*hbox5, Gtk::PACK_SHRINK, 4);
     _importSettingsFrame->add(*vbox3);
     _importSettingsFrame->set_border_width(4);
-    vbox1->pack_start(*_pageSettingsFrame, Gtk::PACK_EXPAND_PADDING, 0);
-    vbox1->pack_start(*_importSettingsFrame, Gtk::PACK_EXPAND_PADDING, 0);
+    vbox1->pack_start(*_pageSettingsFrame, Gtk::PACK_SHRINK, 0);
+    vbox1->pack_start(*_importSettingsFrame, Gtk::PACK_SHRINK, 0);
     hbox1->pack_start(*vbox1);
-    hbox1->pack_start(*_previewArea, Gtk::PACK_EXPAND_WIDGET, 4);
+    hbox1->pack_start(*_previewArea, Gtk::PACK_SHRINK, 4);
 
     get_content_area()->set_homogeneous(false);
     get_content_area()->set_spacing(0);

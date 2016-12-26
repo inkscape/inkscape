@@ -32,7 +32,6 @@ class Page;
 class PDFDoc;
 
 namespace Gtk {
-  class Alignment;
   class Button;
   class CheckButton;
   class ComboBoxText;
