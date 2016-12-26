@@ -50,8 +50,6 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
 {
     show_orig_path = true;
     _provides_knotholder_entities = true;
-    apply_to_clippath_and_mask = true;
-
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter(&copies_to_360);
     registerParameter(&fuse_paths);
@@ -63,6 +61,7 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
 
     num_copies.param_make_integer(true);
     num_copies.param_set_range(0, 1000);
+    apply_to_clippath_and_mask = true;
 }
 
 LPECopyRotate::~LPECopyRotate()
@@ -170,17 +169,14 @@ LPECopyRotate::doBeforeEffect (SPLPEItem const* lpeitem)
     }
     start_pos = origin + dir * Rotate(-rad_from_deg(starting_angle)) * dist_angle_handle;
     rot_pos = origin + dir * Rotate(-rad_from_deg(rotation_angle+starting_angle)) * dist_angle_handle;
-    if (near) { 
+    near = Geom::are_near(start_pos, (Geom::Point)starting_point, 0.01);
+    if (!near) { 
         starting_point.param_setValue(start_pos, true);
     }
     previous_start_point = (Geom::Point)starting_point;
     if ( fuse_paths || copies_to_360 ) {
         rot_pos = origin;
     }
-
-    SPLPEItem * item = const_cast<SPLPEItem*>(lpeitem);
-    item->apply_to_clippath(item);
-    item->apply_to_mask(item);
 }
 
 void

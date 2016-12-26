@@ -55,8 +55,8 @@ LPEMirrorSymmetry::LPEMirrorSymmetry(LivePathEffectObject *lpeobject) :
     registerParameter( &start_point);
     registerParameter( &end_point);
     registerParameter( &center_point);
-    apply_to_clippath_and_mask = true;
     previous_center = Geom::Point(0,0);
+    apply_to_clippath_and_mask = true;
 }
 
 LPEMirrorSymmetry::~LPEMirrorSymmetry()
@@ -115,16 +115,19 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
         point_a = Geom::Point(center_point[X],boundingbox_Y.min());
         point_b = Geom::Point(center_point[X],boundingbox_Y.max());
     }
-    if ((Geom::Point)start_point == (Geom::Point)end_point && (Geom::Point)start_point == Geom::Point(0,0)) {
+    if ((Geom::Point)start_point == (Geom::Point)end_point) {
         start_point.param_setValue(point_a, true);
         end_point.param_setValue(point_b, true);
         previous_center = Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point);
         center_point.param_setValue(previous_center, true);
+        return;
     }
     if ( mode == MT_X || mode == MT_Y ) {
-        start_point.param_setValue(point_a, true);
-        end_point.param_setValue(point_b, true);
-        center_point.param_setValue(Geom::middle_point(point_a, point_b), true);
+        if (!are_near(previous_center, (Geom::Point)center_point, 0.01)) {
+            start_point.param_setValue(point_a, true);
+            end_point.param_setValue(point_b, true);
+            center_point.param_setValue(Geom::middle_point(point_a, point_b), true);
+        }
     } else if ( mode == MT_FREE) {
         if (are_near(previous_center, (Geom::Point)center_point, 0.01)) {
             center_point.param_setValue(Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point), true);
@@ -141,7 +144,6 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
         Geom::Point ep = Geom::Point(document->getWidth().value("px")/2.0, document->getHeight().value("px")) * transform;
         end_point.param_setValue(ep, true);
         center_point.param_setValue(Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point), true);
-        previous_center = center_point;
     } else { //horizontal page
         SPDocument * document = SP_ACTIVE_DOCUMENT;
         Geom::Affine transform = i2anc_affine(SP_OBJECT(lpeitem), NULL).inverse();
@@ -149,10 +151,6 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
         start_point.param_setValue(sp, true);
         Geom::Point ep = Geom::Point(document->getWidth().value("px"), document->getHeight().value("px")/2.0) * transform;
         end_point.param_setValue(ep, true);
-        center_point.param_setValue(Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point), true);
-        previous_center = center_point;
-    }
-    if (!are_near(previous_center, (Geom::Point)center_point, 0.01)) {
         center_point.param_setValue(Geom::middle_point((Geom::Point)start_point, (Geom::Point)end_point), true);
     }
     previous_center = center_point;
