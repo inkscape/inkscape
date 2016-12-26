@@ -8,7 +8,6 @@
 #ifndef INKSCAPE_UI_WIDGET_FONT_BUTTON_H
 #define INKSCAPE_UI_WIDGET_FONT_BUTTON_H
 
-#include <gtkmm.h>
 #include "labelled.h"
 
 namespace Inkscape {

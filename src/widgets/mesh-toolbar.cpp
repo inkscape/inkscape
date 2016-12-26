@@ -18,6 +18,8 @@
 #include <config.h>
 #endif
 
+#include <gtkmm.h>
+
 // REVIEW THESE AT END OF REWRITE
 #include "ui/widget/color-preview.h"
 #include "toolbox.h"
@@ -36,7 +38,6 @@
 #include "document-undo.h"
 #include "desktop.h"
 
-#include <gtkmm.h>
 #include <glibmm/i18n.h>
 
 #include "ui/tools/gradient-tool.h"

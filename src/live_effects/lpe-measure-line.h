@@ -11,6 +11,9 @@
  */
 
 #include "live_effects/effect.h"
+
+#include <gtkmm/expander.h>
+
 #include "live_effects/parameter/enum.h"
 #include "live_effects/parameter/fontbutton.h"
 #include "live_effects/parameter/text.h"

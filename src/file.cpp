@@ -31,6 +31,8 @@
 # include "config.h"
 #endif
 
+#include <gtkmm.h>
+
 #include "ui/dialog/ocaldialogs.h"
 #include "desktop.h"
 
@@ -70,8 +72,6 @@
 #include "persp3d.h"
 #include "proj_pt.h"
 #include "ui/shape-editor.h"
-
-#include <gtkmm.h>
 
 using Inkscape::DocumentUndo;
 

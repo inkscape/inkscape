@@ -8,7 +8,10 @@
 #endif
 
 #include "font-button.h"
+
 #include <glibmm/i18n.h>
+
+#include <gtkmm/fontbutton.h>
 
 namespace Inkscape {
 namespace UI {
