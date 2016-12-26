@@ -66,7 +66,7 @@ Panel::Panel(Glib::ustring const &label, gchar const *prefs_path,
     _label(label),
     _apply_label(apply_label),
     _verb_num(verb_num),
-    _temp_arrow(Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT),
+    _temp_arrow(),
     _menu(0),
     _action_area(0),
     _fillable(0)
@@ -269,11 +269,9 @@ void Panel::_init()
         _top_bar.pack_end(_menu_popper, false, false);
         gint width = 0;
         gint height = 0;
-
-        if ( gtk_icon_size_lookup( Inkscape::getRegisteredIconSize(Inkscape::ICON_SIZE_DECORATION), &width, &height ) ) {
-            _temp_arrow.set_size_request(width, height);
-        }
-
+        gtk_image_set_from_icon_name(_temp_arrow.gobj(),
+                                     "pan-start-symbolic",
+                                     Inkscape::getRegisteredIconSize(Inkscape::ICON_SIZE_SMALL_TOOLBAR));
         _menu_popper.add(_temp_arrow);
         _menu_popper.signal_button_press_event().connect_notify(sigc::mem_fun(*this, &Panel::_popper));
     }

@@ -107,7 +107,12 @@ attach_all(Gtk::Grid &table, Gtk::Widget const *const arr[], unsigned size, int 
                 table.attach(const_cast<Gtk::Widget&>(*arr[i+1]), 1, r, 2, 1);
             } else if (arr[i]) {
                 Gtk::Label& label = reinterpret_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
+#if GTK_CHECK_VERSION(3,16,0)
+                label.set_xalign(0.0);
+                label.set_yalign(0.5);
+#else
                 label.set_alignment (0.0);
+#endif
                 label.set_hexpand();
                 label.set_valign(Gtk::ALIGN_CENTER);
                 table.attach(label, 0, r, 3, 1);

@@ -18,9 +18,9 @@
 #endif
 
 #include <gtkmm/box.h>
-#include <gtkmm/arrow.h>
 #include <gtkmm/button.h>
 #include <gtkmm/eventbox.h>
+#include <gtkmm/image.h>
 #include <gtkmm/label.h>
 #include "enums.h"
 #include <vector>
@@ -157,7 +157,7 @@ private:
     Gtk::VBox        _right_bar;
     Gtk::VBox        _contents;
     Gtk::Label       _tab_title;
-    Gtk::Arrow       _temp_arrow;
+    Gtk::Image       _temp_arrow;
     Gtk::EventBox    _menu_popper;
     Gtk::Button      _close_button;
     Gtk::Menu       *_menu;
