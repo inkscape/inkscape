@@ -124,9 +124,25 @@ LPEMirrorSymmetry::doBeforeEffect (SPLPEItem const* lpeitem)
     }
     if ( mode == MT_X || mode == MT_Y ) {
         if (!are_near(previous_center, (Geom::Point)center_point, 0.01)) {
-            start_point.param_setValue(point_a, true);
-            end_point.param_setValue(point_b, true);
             center_point.param_setValue(Geom::middle_point(point_a, point_b), true);
+            end_point.param_setValue(point_b, true);
+            start_point.param_setValue(point_a, true);
+        } else {
+            if ( mode == MT_X ) {
+                if (!are_near(start_point[X], point_a[X], 0.01)) {
+                    start_point.param_setValue(point_a, true);
+                }
+                if (!are_near(end_point[X], point_b[X], 0.01)) {
+                    end_point.param_setValue(point_b, true);
+                }
+            } else {  //MT_Y
+                if (!are_near(start_point[Y], point_a[Y], 0.01)) {
+                    start_point.param_setValue(point_a, true);
+                }
+                if (!are_near(end_point[Y], point_b[Y], 0.01)) {
+                    end_point.param_setValue(point_b, true);
+                }
+            }
         }
     } else if ( mode == MT_FREE) {
         if (are_near(previous_center, (Geom::Point)center_point, 0.01)) {
