@@ -15,8 +15,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/i18n.h>
 #include <gtkmm/dialog.h>
-#include <gtkmm/stock.h>
 
 #include "verbs.h"
 #include "dialog.h"
@@ -165,7 +165,7 @@ PanelDialog<B>::PanelDialog(Widget::Panel &panel, char const *prefs_path, int co
             panel.addResponseButton(apply_label, Gtk::RESPONSE_APPLY);
             panel.setDefaultResponse(Gtk::RESPONSE_APPLY);
         }
-        panel.addResponseButton(Gtk::Stock::CLOSE, Gtk::RESPONSE_CLOSE);
+        panel.addResponseButton(_("_Close"), Gtk::RESPONSE_CLOSE);
     }
 
     show_all_children();
@@ -214,7 +214,7 @@ PanelDialog<Behavior::FloatingBehavior>::PanelDialog(UI::Widget::Panel &panel, c
             panel.addResponseButton(apply_label, Gtk::RESPONSE_APPLY);
             panel.setDefaultResponse(Gtk::RESPONSE_APPLY);
         }
-        panel.addResponseButton(Gtk::Stock::CLOSE, Gtk::RESPONSE_CLOSE);
+        panel.addResponseButton(_("_Close"), Gtk::RESPONSE_CLOSE);
     }
 
     show_all_children();

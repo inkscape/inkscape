@@ -101,7 +101,6 @@ public:
     /* Methods providing a Gtk::Dialog like interface for adding buttons that emit Gtk::RESPONSE
      * signals on click. */
     Gtk::Button* addResponseButton (const Glib::ustring &button_text, int response_id, bool pack_start=false);
-    Gtk::Button* addResponseButton (const Gtk::StockID &stock_id, int response_id, bool pack_start=false);
     void setDefaultResponse(int response_id);
     void setResponseSensitive(int response_id, bool setting);
 

@@ -17,7 +17,6 @@
 
 #include <gtkmm/dialog.h> // for Gtk::RESPONSE_*
 #include <gtkmm/menu.h>
-#include <gtkmm/stock.h>
 #include <gtkmm/checkmenuitem.h>
 #include <gtkmm/radiomenuitem.h>
 #include <gtkmm/separatormenuitem.h>
@@ -576,14 +575,7 @@ void Panel::_apply()
 
 Gtk::Button *Panel::addResponseButton(const Glib::ustring &button_text, int response_id, bool pack_start)
 {
-    Gtk::Button *button = new Gtk::Button(button_text);
-    _addResponseButton(button, response_id, pack_start);
-    return button;
-}
-
-Gtk::Button *Panel::addResponseButton(const Gtk::StockID &stock_id, int response_id, bool pack_start)
-{
-    Gtk::Button *button = new Gtk::Button(stock_id);
+    Gtk::Button *button = new Gtk::Button(button_text, true);
     _addResponseButton(button, response_id, pack_start);
     return button;
 }

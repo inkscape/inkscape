@@ -408,7 +408,8 @@ LPEPerspectiveEnvelope::newWidget()
     vbox->pack_start(*hbox_middle, false, true, 2);
     vbox->pack_start(*hbox_down_handles, true, true, 2);
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false,0));
-    Gtk::Button* reset_button = Gtk::manage(new Gtk::Button(Gtk::Stock::CLEAR));
+    Gtk::Button* reset_button = Gtk::manage(new Gtk::Button(_("_Clear"), true));
+    reset_button->set_image_from_icon_name("edit-clear");
     reset_button->signal_clicked().connect(sigc::mem_fun (*this,&LPEPerspectiveEnvelope::resetGrid));
     reset_button->set_size_request(140,30);
     vbox->pack_start(*hbox, true,true,2);
@@ -540,4 +541,4 @@ LPEPerspectiveEnvelope::addCanvasIndicators(SPLPEItem const */*lpeitem*/, std::v
   fill-column:99
   End:
 */
-// vim: file_type=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

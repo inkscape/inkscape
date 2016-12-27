@@ -44,9 +44,6 @@
 #include "color-profile.h"
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-#include <gtkmm/stock.h>
-#include <gtkmm/imagemenuitem.h>
-
 #include "ui/icon-names.h"
 
 using std::pair;
@@ -558,7 +555,7 @@ void DocumentProperties::linked_profiles_list_button_release(GdkEventButton* eve
 
 void DocumentProperties::cms_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
-    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    Gtk::MenuItem* mi = Gtk::manage(new Gtk::MenuItem(_("_Remove"), true));
     _EmbProfContextMenu.append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
@@ -568,7 +565,7 @@ void DocumentProperties::cms_create_popup_menu(Gtk::Widget& parent, sigc::slot<v
 
 void DocumentProperties::external_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
-    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    Gtk::MenuItem* mi = Gtk::manage(new Gtk::MenuItem(_("_Remove"), true));
     _ExternalScriptsContextMenu.append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
@@ -577,7 +574,7 @@ void DocumentProperties::external_create_popup_menu(Gtk::Widget& parent, sigc::s
 
 void DocumentProperties::embedded_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
-    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    Gtk::MenuItem* mi = Gtk::manage(new Gtk::MenuItem(_("_Remove"), true));
     _EmbeddedScriptsContextMenu.append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();

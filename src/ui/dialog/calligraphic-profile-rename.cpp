@@ -46,17 +46,17 @@ CalligraphicProfileRename::CalligraphicProfileRename() :
 
     mainVBox->pack_start(*_layout_table, false, false, 4);
     // Buttons
-    _close_button.set_use_stock(true);
-    _close_button.set_label(Gtk::Stock::CANCEL.id);
+    _close_button.set_use_underline();
+    _close_button.set_label(_("_Cancel"));
     _close_button.set_can_default();
 
     _delete_button.set_use_underline(true);
-    _delete_button.set_label(_("Delete"));
+    _delete_button.set_label(_("_Delete"));
     _delete_button.set_can_default();
     _delete_button.set_visible(false);
 
     _apply_button.set_use_underline(true);
-    _apply_button.set_label(_("Save"));
+    _apply_button.set_label(_("_Save"));
     _apply_button.set_can_default();
 
     _close_button.signal_clicked()

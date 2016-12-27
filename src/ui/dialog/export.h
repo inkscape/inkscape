@@ -331,8 +331,6 @@ private:
     /* Export Button widgets */
     Gtk::HBox button_box;
     Gtk::Button export_button;
-    Gtk::Label export_label;
-    Gtk::Image export_image;
 
     Gtk::ProgressBar _prog;
 

@@ -26,7 +26,6 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/grid.h>
 #include <gtkmm/spinbutton.h>
-#include <gtkmm/stock.h>
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
@@ -142,7 +141,7 @@ Export::Export (void) :
     units_label(_("Units:")),
     filename_box(false, 5),
     browse_label(_("_Export As..."), 1),
-    browse_image(Gtk::StockID(Gtk::Stock::INDEX), Gtk::ICON_SIZE_BUTTON),
+    browse_image(),
     batch_box(false, 5),
     batch_export(_("B_atch export all selected objects"), _("Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)")),
     interlacing(_("Use interlacing"),_("Enables ADAM7 interlacing for PNG output. This results in slightly heavier images, but big images will look better sooner when loading the file")),
@@ -156,8 +155,6 @@ Export::Export (void) :
     hide_export(_("Hide a_ll except selected"), _("In the exported image, hide all objects except those that are selected")),
     closeWhenDone(_("Close when complete"), _("Once the export completes, close this dialog")),
     button_box(false, 3),
-    export_label(_("_Export"), 1),
-    export_image(Gtk::StockID(Gtk::Stock::APPLY), Gtk::ICON_SIZE_BUTTON),
     _prog(),
     prog_dlg(NULL),
     interrupted(false),
@@ -290,6 +287,7 @@ Export::Export (void) :
         filename_box.pack_start (filename_entry, true, true, 0);
 
         Gtk::HBox* browser_im_label = new Gtk::HBox(false, 3);
+        browse_image.set_from_icon_name("folder", Gtk::ICON_SIZE_BUTTON);
         browser_im_label->pack_start(browse_image);
         browser_im_label->pack_start(browse_label);
         browse_button.add(*browser_im_label);
@@ -318,11 +316,8 @@ Export::Export (void) :
 
     /* Export Button row */
     button_box.set_border_width(3);
-    Gtk::HBox* export_image_label = new Gtk::HBox(false, 3);
-    export_image_label->pack_start(export_image);
-    export_image_label->pack_start(export_label);
-
-    export_button.add(*export_image_label);
+    export_button.set_label(_("_Export"));
+    export_button.set_use_underline();
     export_button.set_tooltip_text (_("Export the bitmap file with these settings"));
 
     button_box.pack_start(closeWhenDone, true, true, 0 );
@@ -906,7 +901,7 @@ Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
     auto CA = dlg->get_content_area();
     CA->pack_start(*prg, FALSE, FALSE, 4);
 
-    Gtk::Button* btn = dlg->add_button (Gtk::Stock::CANCEL,Gtk::RESPONSE_CANCEL );
+    Gtk::Button* btn = dlg->add_button (_("_Cancel"),Gtk::RESPONSE_CANCEL );
 
     btn->signal_clicked().connect( sigc::mem_fun(*this, &Export::onProgressCancel) );
     dlg->signal_delete_event().connect( sigc::mem_fun(*this, &Export::onProgressDelete) );
