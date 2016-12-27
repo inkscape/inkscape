@@ -8,7 +8,6 @@
  */
 
 #include "prefdialog.h"
-#include <gtkmm/stock.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/separator.h>
 #include <glibmm/i18n.h>

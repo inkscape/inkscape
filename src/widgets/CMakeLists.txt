@@ -22,7 +22,6 @@ set(widgets_SRC
 	gradient-toolbar.cpp
 	gradient-vector.cpp
 	icon.cpp
-	image-menu-item.c
 	ink-action.cpp
 	ink-comboboxentry-action.cpp
 	ink-radio-action.cpp
@@ -80,7 +79,6 @@ set(widgets_SRC
 	gradient-toolbar.h
 	gradient-vector.h
 	icon.h
-	image-menu-item.h
 	ink-action.h
 	ink-comboboxentry-action.h
 	ink-radio-action.h

@@ -19,7 +19,6 @@
 
 #include "dialog-manager.h"
 #include <gtkmm/dialog.h>
-#include <gtkmm/stock.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "inkscape.h"

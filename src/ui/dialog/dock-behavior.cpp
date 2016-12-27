@@ -25,9 +25,6 @@
 #include "dialog.h"
 #include "ui/dialog-events.h"
 
-#include <gtkmm/invisible.h>
-#include <gtkmm/stock.h>
-
 namespace Inkscape {
 namespace UI {
 namespace Dialog {

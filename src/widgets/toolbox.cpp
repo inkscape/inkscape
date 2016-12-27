@@ -676,7 +676,7 @@ VerbAction::~VerbAction()
 Gtk::Widget* VerbAction::create_menu_item_vfunc()
 {
 // First call in to get the icon rendered if present in SVG
-    Gtk::Widget *widget = sp_icon_get_icon( property_stock_id().get_value().get_string(), Inkscape::ICON_SIZE_MENU );
+    Gtk::Widget *widget = sp_icon_get_icon( get_icon_name(), Inkscape::ICON_SIZE_MENU );
     delete widget;
     widget = 0;
 

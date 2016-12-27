@@ -73,8 +73,6 @@
 #include "message-stack.h"
 #include "ui/dialog/layer-properties.h"
 
-#include "widgets/image-menu-item.h"
-
 using Inkscape::DocumentUndo;
 
 /* Drag and Drop */
@@ -405,7 +403,7 @@ sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
 
     icon = sp_icon_new( Inkscape::ICON_SIZE_MENU, icon_name );
     gtk_widget_show(icon);
-    image_menu_item_set_image((ImageMenuItem *) item, icon);
+    gtk_image_menu_item_set_image((GtkImageMenuItem *) item, icon);
 } // end of sp_ui_menu_add_icon
 
 void
@@ -459,7 +457,7 @@ static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb
         if (radio) {
             item = gtk_radio_menu_item_new_with_mnemonic(group, action->name);
         } else {
-            item = image_menu_item_new_with_mnemonic(action->name);
+            item = gtk_image_menu_item_new_with_mnemonic(action->name);
         }
 
         gtk_label_set_markup_with_mnemonic( GTK_LABEL(gtk_bin_get_child(GTK_BIN (item))), action->name);

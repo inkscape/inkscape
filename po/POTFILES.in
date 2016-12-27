@@ -334,7 +334,6 @@ src/widgets/gimp/ruler.cpp
 src/widgets/gradient-selector.cpp
 src/widgets/gradient-toolbar.cpp
 src/widgets/gradient-vector.cpp
-src/widgets/image-menu-item.c
 src/widgets/lpe-toolbar.cpp
 src/widgets/measure-toolbar.cpp
 src/widgets/mesh-toolbar.cpp

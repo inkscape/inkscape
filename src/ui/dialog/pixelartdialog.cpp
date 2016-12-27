@@ -28,7 +28,6 @@
 
 #include "pixelartdialog.h"
 #include <gtkmm/radiobutton.h>
-#include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
 
 #include <glibmm/i18n.h>

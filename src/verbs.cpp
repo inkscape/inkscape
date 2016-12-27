@@ -37,7 +37,6 @@
 // If this is not done, then errors will be generate relating to Glib::Threads being undefined
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/messagedialog.h>
-#include <gtkmm/stock.h>
 
 #include "desktop.h"
 

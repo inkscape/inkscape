@@ -15,7 +15,6 @@
 
 #include "objects.h"
 #include <gtkmm/icontheme.h>
-#include <gtkmm/stock.h>
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/separatormenuitem.h>
 #include <glibmm/main.h>

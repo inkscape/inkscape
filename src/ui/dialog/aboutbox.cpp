@@ -27,7 +27,6 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/aspectframe.h>
 #include <gtkmm/textview.h>
-#include <gtkmm/stock.h>
 
 #include "path-prefix.h"
 #include "document.h"
@@ -37,8 +36,6 @@
 #include "util/units.h"
 
 #include "inkscape-version.h"
-
-
 
 
 namespace Inkscape {

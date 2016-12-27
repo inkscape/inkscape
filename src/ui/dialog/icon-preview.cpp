@@ -27,7 +27,6 @@
 #include <gtkmm/alignment.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/frame.h>
-#include <gtkmm/stock.h>
 #include "ui/widget/frame.h"
 
 #include "desktop.h"

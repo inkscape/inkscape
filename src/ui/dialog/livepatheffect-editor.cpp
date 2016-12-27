@@ -17,7 +17,6 @@
 #endif
 
 #include "livepatheffect-editor.h"
-#include <gtkmm/stock.h>
 
 #include "desktop.h"
 

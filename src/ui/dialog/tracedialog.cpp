@@ -21,7 +21,6 @@
 #include <gtkmm/radiobutton.h>
 #include "ui/widget/spinbutton.h"
 #include "ui/widget/frame.h"
-#include <gtkmm/stock.h>
 
 #include <glibmm/i18n.h>
 
