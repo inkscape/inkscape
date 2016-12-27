@@ -24,7 +24,7 @@
 #include "util/signal-blocker.h"
 
 #include "desktop.h"
-#include <gtkmm/invisible.h>
+#include <gtkmm/icontheme.h>
 
 namespace Inkscape {
 namespace UI {
@@ -43,8 +43,8 @@ void CellRendererSPIcon::render_vfunc(const Cairo::RefPtr<Cairo::Context>& cr,
     // if the icon isn't cached, render it to a pixbuf
     if ( !_icon_cache[_property_event_type] ) {
 
-        Glib::ustring image = Inkscape::Verb::get(_property_event_type)->get_image();
-        Gtk::Widget* icon = sp_icon_get_icon(image, Inkscape::ICON_SIZE_MENU);
+        Glib::ustring image_name = Inkscape::Verb::get(_property_event_type)->get_image();
+        Gtk::Widget* icon = sp_icon_get_icon(image_name, Inkscape::ICON_SIZE_MENU);
 
         if (icon) {
 
@@ -54,8 +54,8 @@ void CellRendererSPIcon::render_vfunc(const Cairo::RefPtr<Cairo::Context>& cr,
                 sp_icon_fetch_pixbuf(sp_icon);
                 _property_icon = Glib::wrap(sp_icon->pb, true);
             } else if ( GTK_IS_IMAGE(icon->gobj()) ) {
-                _property_icon = Gtk::Invisible().render_icon_pixbuf(Gtk::StockID(image),
-                                                                     Gtk::ICON_SIZE_MENU);
+                auto icon_theme = Gtk::IconTheme::get_default();
+                _property_icon = icon_theme->load_icon(image_name, 16);
             } else {
                 delete icon;
                 return;

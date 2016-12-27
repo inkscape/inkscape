@@ -14,7 +14,6 @@
  */
 
 #include "layer-properties.h"
-#include <gtkmm/stock.h>
 #include <glibmm/i18n.h>
 #include <glibmm/main.h>
 
@@ -36,7 +35,11 @@ namespace UI {
 namespace Dialogs {
 
 LayerPropertiesDialog::LayerPropertiesDialog()
-: _strategy(NULL), _desktop(NULL), _layer(NULL), _position_visible(false)
+    : _strategy(NULL),
+      _desktop(NULL),
+      _layer(NULL),
+      _position_visible(false),
+      _close_button(_("_Cancel"), true)
 {
     auto mainVBox = get_content_area();
     _layout_table.set_row_spacing(4);
@@ -59,8 +62,6 @@ LayerPropertiesDialog::LayerPropertiesDialog()
     mainVBox->pack_start(_layout_table, true, true, 4);
 
     // Buttons
-    _close_button.set_use_stock(true);
-    _close_button.set_label(Gtk::Stock::CANCEL.id);
     _close_button.set_can_default();
 
     _apply_button.set_use_underline(true);

@@ -27,7 +27,10 @@ namespace UI {
 namespace Dialogs {
 
 FilletChamferPropertiesDialog::FilletChamferPropertiesDialog()
-    : _desktop(NULL), _knotpoint(NULL), _position_visible(false)
+    : _desktop(NULL),
+      _knotpoint(NULL),
+      _position_visible(false),
+      _close_button(_("_Cancel"), true)
 {
     Gtk::Box *mainVBox = get_vbox();
     mainVBox->set_homogeneous(false);
@@ -76,8 +79,6 @@ FilletChamferPropertiesDialog::FilletChamferPropertiesDialog()
     mainVBox->pack_start(_fillet_chamfer_type_inverse_chamfer, true, true, 4);
 
     // Buttons
-    _close_button.set_use_stock(true);
-    _close_button.set_label(Gtk::Stock::CANCEL.id);
     _close_button.set_can_default();
 
     _apply_button.set_use_underline(true);
@@ -264,6 +265,4 @@ void FilletChamferPropertiesDialog::_set_desktop(SPDesktop *desktop)
   fill-column:99
   End:
 */
-// vim:
-// filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99
-// :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99

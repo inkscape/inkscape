@@ -29,7 +29,6 @@ extern "C" {
 }
 #endif
 
-#include <gtkmm/stock.h>
 #include <libnrtype/font-lister.h>
 
 #include "helper/window.h"
@@ -64,8 +63,8 @@ TextEdit::TextEdit()
       text_label(_("_Text"), true),
       vari_label(_("_Variants"), true),
       setasdefault_button(_("Set as _default")),
-      close_button(Gtk::Stock::CLOSE),
-      apply_button(Gtk::Stock::APPLY),
+      close_button(_("_Close"), true),
+      apply_button(_("_Apply"), true),
       desktop(NULL),
       deskTrack(),
       selectChangedConn(),

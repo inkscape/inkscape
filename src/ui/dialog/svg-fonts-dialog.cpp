@@ -20,7 +20,6 @@
 #include "document-undo.h"
 #include <gtkmm/notebook.h>
 #include <gtkmm/scale.h>
-#include <gtkmm/stock.h>
 #include <gtkmm/imagemenuitem.h>
 #include <message-stack.h>
 #include "selection.h"
@@ -299,7 +298,7 @@ void SvgFontsDialog::fonts_list_button_release(GdkEventButton* event)
 
 void SvgFontsDialog::create_glyphs_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
-    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    auto mi = Gtk::manage(new Gtk::MenuItem(_("_Remove"), true));
     _GlyphsContextMenu.append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
@@ -308,7 +307,7 @@ void SvgFontsDialog::create_glyphs_popup_menu(Gtk::Widget& parent, sigc::slot<vo
 
 void SvgFontsDialog::create_kerning_pairs_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
-    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    auto mi = Gtk::manage(new Gtk::MenuItem(_("_Remove"), true));
     _KerningPairsContextMenu.append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
@@ -317,7 +316,7 @@ void SvgFontsDialog::create_kerning_pairs_popup_menu(Gtk::Widget& parent, sigc::
 
 void SvgFontsDialog::create_fonts_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
-    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    auto mi = Gtk::manage(new Gtk::MenuItem(_("_Remove"), true));
     _FontsContextMenu.append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
@@ -986,7 +985,8 @@ void SvgFontsDialog::add_font(){
 }
 
 SvgFontsDialog::SvgFontsDialog()
- : UI::Widget::Panel("", "/dialogs/svgfonts", SP_VERB_DIALOG_SVG_FONTS), _add(Gtk::Stock::NEW)
+ : UI::Widget::Panel("", "/dialogs/svgfonts", SP_VERB_DIALOG_SVG_FONTS),
+   _add(_("_New"), true)
 {
     kerning_slider = Gtk::manage(new Gtk::Scale(Gtk::ORIENTATION_HORIZONTAL));
     _add.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::add_font));

@@ -12,11 +12,10 @@
 #ifndef INKSCAPE_DIALOG_KNOT_PROPERTIES_H
 #define INKSCAPE_DIALOG_KNOT_PROPERTIES_H
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#include <gtkmm.h>
+#include <gtkmm/dialog.h>
+#include <gtkmm/label.h>
+#include <gtkmm/spinbutton.h>
+#include <gtkmm/table.h>
 #include <2geom/point.h>
 #include "knot.h"
 #include "ui/tools/measure-tool.h"
@@ -40,7 +39,7 @@ class KnotPropertiesDialog : public Gtk::Dialog {
 protected:
 
     SPDesktop *_desktop;
-    SPKnot *_knotpoint;
+    SPKnot    *_knotpoint;
 
     Gtk::Label        _knot_x_label;
     Gtk::SpinButton   _knot_x_entry;

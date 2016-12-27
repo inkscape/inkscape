@@ -27,7 +27,6 @@
 
 #include <gtkmm/notebook.h>
 #include <gtkmm/spinner.h>
-#include <gtkmm/stock.h>
 #include <gdkmm/general.h>
 #include <libxml/tree.h>
 
@@ -463,7 +462,8 @@ bool PreviewWidget::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 
 StatusWidget::StatusWidget() : Gtk::HBox(false, 6)
 {
-    image = new Gtk::Image(Gtk::Stock::DIALOG_ERROR, Gtk::ICON_SIZE_MENU);
+    image = new Gtk::Image();
+    image->set_from_icon_name("dialog-error", Gtk::ICON_SIZE_MENU);
     spinner = new Gtk::Spinner();
     label = new Gtk::Label();
 
@@ -488,7 +488,7 @@ void StatusWidget::set_info(Glib::ustring text)
     spinner->hide();
     image->show();
     label->show();
-    image->set(Gtk::Stock::DIALOG_INFO,  Gtk::ICON_SIZE_MENU);
+    image->set_from_icon_name("dialog-information",  Gtk::ICON_SIZE_MENU);
     label->set_text(text);
 }
 
@@ -497,7 +497,7 @@ void StatusWidget::set_error(Glib::ustring text)
     spinner->hide();
     image->show();
     label->show();
-    image->set(Gtk::Stock::DIALOG_ERROR,  Gtk::ICON_SIZE_MENU);
+    image->set_from_icon_name("dialog-error",  Gtk::ICON_SIZE_MENU);
     label->set_text(text);
 }
 
@@ -1086,7 +1086,7 @@ ImportDialog::ImportDialog(Gtk::Window& parent_window, FileDialogType file_types
     Gtk::ScrolledWindow* scrolledwindow_preview = new Gtk::ScrolledWindow();
     preview_files = new PreviewWidget();
     /// Add the buttons in the bottom of the dialog
-    button_cancel = new Gtk::Button(Gtk::Stock::CANCEL);
+    button_cancel = new Gtk::Button(_("_Cancel"), true);
     button_close = new Gtk::Button(_("Close"));
     button_import = new Gtk::Button(_("Import"));
     list_results = new SearchResultList(RESULTS_COLUMN_LENGTH);

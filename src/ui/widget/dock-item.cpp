@@ -15,7 +15,6 @@
 #include "widgets/icon.h"
 
 #include <gtkmm/icontheme.h>
-#include <gtkmm/stockitem.h>
 #include <glibmm/exceptionhandler.h>
 
 namespace Inkscape {
@@ -47,18 +46,11 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
         if (!iconTheme->has_icon(icon_name)) {
             Inkscape::queueIconPrerender( INKSCAPE_ICON(icon_name.data()), Inkscape::ICON_SIZE_MENU );
         }
-        // Icon might be in the icon theme, or might be a stock item. Check the proper source:
         if ( iconTheme->has_icon(icon_name) ) {
             int width = 0;
             int height = 0;
             Gtk::IconSize::lookup(Gtk::ICON_SIZE_MENU, width, height);
             _icon_pixbuf = iconTheme->load_icon(icon_name, width);
-        } else {
-            Gtk::StockItem item;
-            Gtk::StockID stockId(icon_name);
-            if ( Gtk::StockItem::lookup(stockId, item) ) {
-                _icon_pixbuf = _dock.getWidget().render_icon_pixbuf( stockId, Gtk::ICON_SIZE_MENU );
-            }
         }
     }
 

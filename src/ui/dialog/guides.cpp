@@ -32,8 +32,6 @@
 #include "message-context.h"
 #include "verbs.h"
 
-#include <gtkmm/stock.h>
-
 namespace Inkscape {
 namespace UI {
 namespace Dialogs {
@@ -158,9 +156,9 @@ void GuidelinePropertiesDialog::_response(gint response)
 
 void GuidelinePropertiesDialog::_setup() {
     set_title(_("Guideline"));
-    add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
-    add_button(Gtk::Stock::DELETE, -12);
-    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    add_button(_("_OK"), Gtk::RESPONSE_OK);
+    add_button(_("_Delete"), -12);
+    add_button(_("_Cancel"), Gtk::RESPONSE_CANCEL);
 
     auto mainVBox = get_content_area();
     _layout_table.set_row_spacing(4);

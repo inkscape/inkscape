@@ -18,7 +18,6 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/scale.h>
-#include <gtkmm/stock.h>
 #include <gtkmm/table.h>
 
 #include "preferences.h"
@@ -708,8 +707,9 @@ void PrefEntryFileButtonHBox::init(Glib::ustring const &prefs_path,
     
     relatedButton = new Gtk::Button();
     Gtk::HBox* pixlabel = new Gtk::HBox(false, 3);
-    Gtk::Image *im = new Gtk::Image(Gtk::StockID(Gtk::Stock::INDEX),
-            Gtk::ICON_SIZE_BUTTON);
+    Gtk::Image *im = new Gtk::Image();
+    im->set_from_icon_name("applications-graphics",
+                           Gtk::ICON_SIZE_BUTTON);
     pixlabel->pack_start(*im);
     Gtk::Label *l = new Gtk::Label();
     l->set_markup_with_mnemonic(_("_Browse..."));

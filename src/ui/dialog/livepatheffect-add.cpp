@@ -14,7 +14,6 @@
 
 #include "livepatheffect-add.h"
 #include <glibmm/i18n.h>
-#include <gtkmm/stock.h>
 
 #include "desktop.h"
 
@@ -23,8 +22,8 @@ namespace UI {
 namespace Dialog {
 
 LivePathEffectAdd::LivePathEffectAdd() :
-    add_button(Gtk::Stock::ADD),
-    close_button(Gtk::Stock::CANCEL),
+    add_button(_("_Add"), true),
+    close_button(_("_Cancel"), true),
     converter(Inkscape::LivePathEffect::LPETypeConverter),
     applied(false)
 {
@@ -68,7 +67,6 @@ LivePathEffectAdd::LivePathEffectAdd() :
     /**
      * Buttons
      */
-    close_button.set_use_stock(true);
     //close_button.set_can_default();
     add_button.set_use_underline(true);
     add_button.set_can_default();

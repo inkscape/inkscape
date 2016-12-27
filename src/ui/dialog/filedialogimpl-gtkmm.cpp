@@ -35,7 +35,6 @@
 #endif
 
 #include <gtkmm/expander.h>
-#include <gtkmm/stock.h>
 
 #include <glibmm/convert.h>
 #include <glibmm/fileutils.h>
@@ -735,8 +734,8 @@ FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window &parentWindow, const Gl
     //###### Add the file types menu
     createFilterMenu();
 
-    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    set_default(*add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK));
+    add_button(_("_Cancel"), Gtk::RESPONSE_CANCEL);
+    set_default(*add_button(_("_Open"), Gtk::RESPONSE_OK));
 
     //###### Allow easy access to our examples folder
     if (Inkscape::IO::file_test(INKSCAPE_EXAMPLESDIR, G_FILE_TEST_EXISTS) &&
@@ -1050,8 +1049,8 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk(Gtk::Window &parentWindow, const Gl
     // if (extension == NULL)
     //    checkbox.set_sensitive(FALSE);
 
-    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    set_default(*add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK));
+    add_button(_("_Cancel"), Gtk::RESPONSE_CANCEL);
+    set_default(*add_button(_("_Save"), Gtk::RESPONSE_OK));
 
     show_all_children();
 }
@@ -1597,8 +1596,8 @@ FileExportDialogImpl::FileExportDialogImpl(Gtk::Window &parentWindow, const Glib
     // if (extension == NULL)
     //    checkbox.set_sensitive(FALSE);
 
-    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    set_default(*add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK));
+    add_button(_("_Cancel"), Gtk::RESPONSE_CANCEL);
+    set_default(*add_button(_("_Save"), Gtk::RESPONSE_OK));
 
     show_all_children();
 }

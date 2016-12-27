@@ -64,7 +64,6 @@
 #include "selection-chemistry.h"
 
 #include <gtkmm/colorbutton.h>
-#include <gtkmm/stock.h>
 #include <gdkmm/general.h>
 #include <gtkmm/checkbutton.h>
 
@@ -1305,7 +1304,7 @@ static Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot
     mi->show();
     menu->append(*mi);
     
-    mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    mi = Gtk::manage(new Gtk::MenuItem(_("_Remove"), true));
     menu->append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
@@ -1319,7 +1318,7 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     :    _desktop(NULL),
          _deskTrack(),
          _dialog(d),
-         _add(Gtk::Stock::NEW),
+         _add(_("_New"), true),
          _observer(new Inkscape::XML::SignalObserver)
 {
     Gtk::ScrolledWindow* sw = Gtk::manage(new Gtk::ScrolledWindow);

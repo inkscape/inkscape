@@ -33,7 +33,10 @@ namespace UI {
 namespace Dialogs {
 
 PowerstrokePropertiesDialog::PowerstrokePropertiesDialog()
-: _desktop(NULL), _knotpoint(NULL), _position_visible(false)
+    : _desktop(NULL),
+      _knotpoint(NULL),
+      _position_visible(false),
+      _close_button(_("_Cancel"), true)
 {
     Gtk::Box *mainVBox = get_vbox();
 
@@ -66,8 +69,6 @@ PowerstrokePropertiesDialog::PowerstrokePropertiesDialog()
     mainVBox->pack_start(_layout_table, true, true, 4);
 
     // Buttons
-    _close_button.set_use_stock(true);
-    _close_button.set_label(Gtk::Stock::CANCEL.id);
     _close_button.set_can_default();
 
     _apply_button.set_use_underline(true);
