@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-12-21 17:10+0100\n"
-"PO-Revision-Date: 2016-12-28 18:56+0000\n"
+"PO-Revision-Date: 2016-12-30 09:09+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -97,7 +97,7 @@ msgstr "Málmsteypa"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr ""
+msgstr "Mjúkur dropalegur flái með málmkenndri áferð"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Apparition"
@@ -189,7 +189,7 @@ msgstr "Hryggir á jöðrum"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Ridged border with inner bevel"
-msgstr ""
+msgstr "Hryggir á jöðrum með innri fláa"
 
 #: ../share/filters/filters.svg.h:38
 msgid "Ripple"
@@ -396,7 +396,7 @@ msgstr "Hnappur"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "Mjúkur flái, dálítil lægð í miðju"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Inset"
@@ -411,7 +411,7 @@ msgstr "Skuggar og glóð"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Shadowy outer bevel"
-msgstr ""
+msgstr "Skyggður ytri flái"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Dripping"
@@ -517,7 +517,7 @@ msgstr "Matt skáskorið"
 
 #: ../share/filters/filters.svg.h:152
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "Mjúkt, pastellitað, óskýr flái"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Thin Membrane"
@@ -939,7 +939,7 @@ msgstr "Blöðróttar ójöfnur, mattar"
 
 #: ../share/filters/filters.svg.h:352
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "Sama og blöðróttar ójöfnur nema með dreifðri lýsingu í stað gljáa"
 
 #: ../share/filters/filters.svg.h:354
 msgid "Blotting Paper"
@@ -1012,7 +1012,7 @@ msgstr "Bylgjaður köflóttur vefnaður"
 
 #: ../share/filters/filters.svg.h:392
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr ""
+msgstr "Hlaupabrautarmynstur með bylguðum tilfærslum og fláa í kringum jaðra"
 
 #: ../share/filters/filters.svg.h:394
 msgid "3D Marble"
@@ -1044,7 +1044,7 @@ msgstr "Tígrisfeldur"
 
 #: ../share/filters/filters.svg.h:408
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr ""
+msgstr "Tígrisfeldarmynstur með fellingum og fláa í kringum jaðra"
 
 #: ../share/filters/filters.svg.h:410
 msgid "Black Light"
@@ -1454,7 +1454,7 @@ msgstr "Bræddur búðingur"
 
 #: ../share/filters/filters.svg.h:564
 msgid "Glossy bevel with blurred edges"
-msgstr ""
+msgstr "Glansandi skáskorið með óskýrum jöðrum"
 
 #: ../share/filters/filters.svg.h:566
 msgid "Combined Lighting"
@@ -1463,7 +1463,7 @@ msgstr "Samsett lýsing"
 #: ../share/filters/filters.svg.h:568
 #: ../src/extension/internal/filter/bevels.h:231
 msgid "Basic specular bevel to use for building textures"
-msgstr ""
+msgstr "Einfaldur gljáaspeglunarflái til notgunar við gerð áferða"
 
 #: ../share/filters/filters.svg.h:570
 msgid "Tinfoil"
@@ -5350,7 +5350,7 @@ msgstr "Jafna valdar bitamyndir; jöfnun litatíðnirits"
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:38
 #: ../src/filter-enums.cpp:29
 msgid "Gaussian Blur"
-msgstr "Gauss afskerping"
+msgstr "Gaussísk mýking"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:40
 #: ../src/extension/internal/bitmap/implode.cpp:39
@@ -5398,6 +5398,8 @@ msgid ""
 "Level selected bitmap(s) by scaling values falling between the given ranges "
 "to the full color range"
 msgstr ""
+"Litatíðnijafna valdar bitamyndir með kvörðun á þeim gildum sem falla innan "
+"uppgefins sviðs þannig að passi við fullt litatíðnisvið"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:52
 msgid "Level (with Channel)"
@@ -5413,6 +5415,8 @@ msgid ""
 "Level the specified channel of selected bitmap(s) by scaling values falling "
 "between the given ranges to the full color range"
 msgstr ""
+"Litatíðnijafna tilgreinda litrás valinna bitamynda með kvörðun á þeim gildum "
+"sem falla innan uppgefins sviðs þannig að passi við fullt litatíðnisvið"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:37
 msgid "Median"
@@ -5462,6 +5466,8 @@ msgid ""
 "Normalize selected bitmap(s), expanding color range to the full possible "
 "range of color"
 msgstr ""
+"Samræma valdar bitamyndir með útvíkkun litatíðnisviðs þeirra þannig að passi "
+"við fullt litatíðnisvið"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:37
 msgid "Oil Paint"
@@ -5490,7 +5496,7 @@ msgstr "Ógegnsæi:"
 
 #: ../src/extension/internal/bitmap/opacity.cpp:46
 msgid "Modify opacity channel(s) of selected bitmap(s)"
-msgstr ""
+msgstr "Breyta ógegnsæisrásum valinna bitamynda"
 
 #: ../src/extension/internal/bitmap/raise.cpp:40
 msgid "Raise"
@@ -5627,7 +5633,7 @@ msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:132
 msgid "Inset/Outset Halo"
-msgstr "Innfella/Útsetja ljósbaug"
+msgstr "Innfella/Útfella ljósbaug"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Width in px of the halo"
@@ -5687,13 +5693,13 @@ msgstr "Ívefja letur"
 #: ../src/extension/internal/cairo-ps-out.cpp:377
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
 msgid "Convert text to paths"
-msgstr ""
+msgstr "Umbreyta texta í ferla"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:336
 #: ../src/extension/internal/cairo-ps-out.cpp:378
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
 msgid "Omit text in PDF and create LaTeX file"
-msgstr ""
+msgstr "Sleppa texta í PDF, og búa til LaTeX skrá"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:338
 #: ../src/extension/internal/cairo-ps-out.cpp:380
@@ -6012,7 +6018,7 @@ msgstr "Síur"
 
 #: ../src/extension/internal/filter/bevels.h:66
 msgid "Basic diffuse bevel to use for building textures"
-msgstr ""
+msgstr "Einfaldur ljósdreifingarflái til notgunar við gerð áferða"
 
 #: ../src/extension/internal/filter/bevels.h:133
 msgid "Matte Jelly"
@@ -6162,7 +6168,7 @@ msgstr "Fjaðra"
 
 #: ../src/extension/internal/filter/blurs.h:270
 msgid "Blurred mask on the edge without altering the contents"
-msgstr ""
+msgstr "Óskýr maski á jöðrum án þess að breyta innihaldi"
 
 #: ../src/extension/internal/filter/blurs.h:325
 msgid "Out of Focus"
@@ -6226,7 +6232,7 @@ msgstr "Blanda við bakgrunn"
 
 #: ../src/extension/internal/filter/blurs.h:354
 msgid "Blur eroded by white or transparency"
-msgstr ""
+msgstr "Móska sem veðrast af hvítu eða gegnsæi"
 
 #: ../src/extension/internal/filter/bumps.h:80
 msgid "Bump"
@@ -7091,7 +7097,7 @@ msgstr "Tegund iðu:"
 
 #: ../src/extension/internal/filter/distort.h:208
 msgid "Small-scale roughening to edges and content"
-msgstr ""
+msgstr "Smávægileg ýfing á jöðrum og innihaldi"
 
 #: ../src/extension/internal/filter/filter-file.cpp:34
 msgid "Bundled"
@@ -7490,19 +7496,19 @@ msgstr "Myndrista með punktum"
 
 #: ../src/extension/internal/filter/paint.h:700
 msgid "Noise blend:"
-msgstr ""
+msgstr "Suðblöndun:"
 
 #: ../src/extension/internal/filter/paint.h:708
 msgid "Grain lightness"
-msgstr ""
+msgstr "Ljósleiki korna"
 
 #: ../src/extension/internal/filter/paint.h:716
 msgid "Points color"
-msgstr ""
+msgstr "Litur punkta"
 
 #: ../src/extension/internal/filter/paint.h:718
 msgid "Image on points"
-msgstr ""
+msgstr "Mynd á punktum"
 
 #: ../src/extension/internal/filter/paint.h:728
 msgid "Convert image to a transparent point engraving"
@@ -7514,7 +7520,7 @@ msgstr "Litþrykksmálun"
 
 #: ../src/extension/internal/filter/paint.h:856
 msgid "Transfer type:"
-msgstr ""
+msgstr "Gerð þrykkingar:"
 
 #: ../src/extension/internal/filter/paint.h:857
 msgid "Poster"
@@ -7622,11 +7628,11 @@ msgstr "Tíðni:"
 
 #: ../src/extension/internal/filter/textures.h:71
 msgid "Horizontal inlay:"
-msgstr ""
+msgstr "Lárétt innlegg:"
 
 #: ../src/extension/internal/filter/textures.h:72
 msgid "Vertical inlay:"
-msgstr ""
+msgstr "Lóðrétt innlegg:"
 
 #: ../src/extension/internal/filter/textures.h:73
 msgid "Displacement:"
@@ -7794,6 +7800,8 @@ msgid ""
 "When an image is upscaled, apply smoothing or keep blocky (pixelated). (Will "
 "not work in all browsers.)"
 msgstr ""
+"Þegar mynd er kvörðuð upp í stærð, mýkja hana eða halda stöllóttri (stórir "
+"mynddílar). (Mun ekki virka í öllum vöfrum.)"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:211
 #: ../src/ui/dialog/inkscape-preferences.cpp:1494
@@ -8712,7 +8720,7 @@ msgstr " (útlína)"
 #: ../src/gradient-drag.cpp:1482
 #, c-format
 msgid "%s for: %s%s"
-msgstr ""
+msgstr "%s fyrir: %s%s"
 
 #: ../src/gradient-drag.cpp:1489
 #, c-format
@@ -9143,7 +9151,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-bendpath.cpp:54
 msgid "Bend path:"
-msgstr "Beygja feril:"
+msgstr "Beygjuferill:"
 
 #: ../src/live_effects/lpe-bendpath.cpp:54
 msgid "Path along which to bend the original path"
@@ -9208,7 +9216,7 @@ msgstr "Þrepun með CTRL:"
 
 #: ../src/live_effects/lpe-bspline.cpp:30
 msgid "Change number of steps with CTRL pressed"
-msgstr ""
+msgstr "Breyta fjölda þrepa með því að ýta á Ctrl-lykil"
 
 #: ../src/live_effects/lpe-bspline.cpp:31
 #: ../src/live_effects/lpe-simplify.cpp:25
@@ -9223,11 +9231,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-bspline.cpp:32
 msgid "Apply changes if weight = 0%"
-msgstr ""
+msgstr "Virkja breytingar ef vægi = 0%"
 
 #: ../src/live_effects/lpe-bspline.cpp:33
 msgid "Apply changes if weight > 0%"
-msgstr ""
+msgstr "Virkja breytingar ef vægi > 0%"
 
 #: ../src/live_effects/lpe-bspline.cpp:34
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:51
@@ -9263,7 +9271,7 @@ msgstr "Breyta í 0 breidd"
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:257
 #: ../src/live_effects/parameter/parameter.cpp:177
 msgid "Change scalar parameter"
-msgstr ""
+msgstr "Skipta um stigbreytu"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:24
 msgid "Size _X:"
@@ -9271,7 +9279,7 @@ msgstr "Stærð _X:"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:24
 msgid "The size of the grid in X direction."
-msgstr ""
+msgstr "Stærð hnitanetsins í X-áttina."
 
 #: ../src/live_effects/lpe-constructgrid.cpp:25
 msgid "Size _Y:"
@@ -9279,7 +9287,7 @@ msgstr "Stærð _Y:"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:25
 msgid "The size of the grid in Y direction."
-msgstr ""
+msgstr "Stærð hnitanetsins í Y-áttina."
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:42
 msgid "Origin"
@@ -9300,7 +9308,7 @@ msgstr "Upphafspunktur sem skilgreinir upphafshorn"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:43
 msgid "Adjust starting point to define start angle"
-msgstr ""
+msgstr "Aðlaga upphafspunkt til að skilgreina upphafshorn"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:44
 msgid "Starting angle"
@@ -9308,7 +9316,7 @@ msgstr "Upphafshorn"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:44
 msgid "Angle of the first copy"
-msgstr ""
+msgstr "Horn fyrsta afrits"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:45
 msgid "Rotation angle"
@@ -9316,7 +9324,7 @@ msgstr "Snúningshorn"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:45
 msgid "Angle between two successive copies"
-msgstr ""
+msgstr "Horn á milli tveggja eintaka"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:46
 msgid "Number of copies"
@@ -9328,16 +9336,16 @@ msgstr "Fjöldi eintaka upprunalega ferilsins"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
 msgid "360º Copies"
-msgstr ""
+msgstr "360º afrit"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
 msgid "No rotation angle, fixed to 360º"
-msgstr ""
+msgstr "Ekkert snúningshorn, fast við 360º"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:44
 msgid "Fuse paths"
-msgstr ""
+msgstr "Bræða saman ferla"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 msgid "Fuse paths by helper line, use fill-rule: evenodd for best result"
@@ -9349,7 +9357,7 @@ msgstr "Saumspor:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:34
 msgid "The path that will be used as stitch."
-msgstr ""
+msgstr "Ferillinn sem verður notaður sem saumur."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:35
 msgid "N_umber of paths:"
@@ -9357,7 +9365,7 @@ msgstr "F_jöldi ferla:"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:35
 msgid "The number of paths that will be generated."
-msgstr ""
+msgstr "Fjöldi ferla sem verða útbúnir."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:36
 msgid "Sta_rt edge variance:"
@@ -9409,7 +9417,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Scale _width relative to length"
-msgstr ""
+msgstr "Kvarða _breidd í hlutfalli við lengd"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:41
 msgid "Scale the width of the stitch path relative to its length"
@@ -9507,11 +9515,11 @@ msgstr "Sjálfvirkt"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:37
 msgid "Force arc"
-msgstr ""
+msgstr "Þvinga boga"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:38
 msgid "Force bezier"
-msgstr ""
+msgstr "Þvinga Bezier-feril"
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:48
 msgid "Fillet point"
@@ -9571,7 +9579,7 @@ msgstr "MIKILVÆGT! Ný útgáfa á leiðinni..."
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:102
 msgid "Not compatible. Convert to path after."
-msgstr ""
+msgstr "Ekki samhæft. Umbreyta í feril á eftir."
 
 #: ../src/live_effects/lpe-fillet-chamfer.cpp:160
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:62
@@ -9638,11 +9646,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-interpolate.cpp:27
 msgid "Trajectory:"
-msgstr "Ferill:"
+msgstr "Slóð:"
 
 #: ../src/live_effects/lpe-interpolate.cpp:27
 msgid "Path along which intermediate steps are created."
-msgstr ""
+msgstr "Ferillinn sem milliþrepin eru búin til eftir."
 
 #: ../src/live_effects/lpe-interpolate.cpp:28
 msgid "Steps_:"
@@ -9650,11 +9658,11 @@ msgstr "Þrep_:"
 
 #: ../src/live_effects/lpe-interpolate.cpp:28
 msgid "Determines the number of steps from start to end path."
-msgstr ""
+msgstr "Ákvarðar fjölda þrepa frá upphafs- að endaferli."
 
 #: ../src/live_effects/lpe-interpolate.cpp:29
 msgid "E_quidistant spacing"
-msgstr ""
+msgstr "_Jafnt millibil"
 
 #: ../src/live_effects/lpe-interpolate.cpp:29
 msgid ""
@@ -9717,7 +9725,7 @@ msgstr "Hornskeyting"
 
 #: ../src/live_effects/lpe-jointype.cpp:32
 msgid "Miter Clip"
-msgstr "Hornskeyting"
+msgstr "Afmörkun hornskeytingar"
 
 #. {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"}, // disabled because doesn't work well
 #: ../src/live_effects/lpe-jointype.cpp:33
@@ -9825,7 +9833,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:349
 msgid "_Crossing path stroke width"
-msgstr ""
+msgstr "Brei_dd útlínu þverferils"
 
 #: ../src/live_effects/lpe-knot.cpp:349
 msgid "Add crossed stroke width to the interruption size"
@@ -9833,23 +9841,23 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:350
 msgid "S_witcher size:"
-msgstr ""
+msgstr "Stærð _flettis:"
 
 #: ../src/live_effects/lpe-knot.cpp:350
 msgid "Orientation indicator/switcher size"
-msgstr ""
+msgstr "Stærð stefnuvísis/flettis"
 
 #: ../src/live_effects/lpe-knot.cpp:351
 msgid "Crossing Signs"
-msgstr ""
+msgstr "Merki þverana"
 
 #: ../src/live_effects/lpe-knot.cpp:351
 msgid "Crossings signs"
-msgstr ""
+msgstr "Merki þverana"
 
 #: ../src/live_effects/lpe-knot.cpp:622
 msgid "Drag to select a crossing, click to flip it"
-msgstr ""
+msgstr "Dragðu til að velja þverun, smelltu til að fletta henni"
 
 #. / @todo Is this the right verb?
 #: ../src/live_effects/lpe-knot.cpp:660
@@ -10359,15 +10367,15 @@ msgstr "Lárétt miðja síðu"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:33
 msgid "Free from reflection line"
-msgstr ""
+msgstr "Laust frá endurkastslínu"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:34
 msgid "X from middle knot"
-msgstr ""
+msgstr "X frá miðjuhnút"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:35
 msgid "Y from middle knot"
-msgstr ""
+msgstr "Y frá miðjuhnút"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:42
 #: ../src/widgets/spray-toolbar.cpp:388 ../src/widgets/tweak-toolbar.cpp:253
@@ -10392,7 +10400,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:45
 msgid "Opposite fuse"
-msgstr ""
+msgstr "Öfugt við sambræðslu"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:45
 msgid "Picks the other side of the mirror as the original"
@@ -11251,15 +11259,15 @@ msgstr "Magn mýkingar sem beita skal á mjókkanir"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:71
 msgid "Join type:"
-msgstr ""
+msgstr "Gerð samsetningar:"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:71
 msgid "Join type for non-smooth nodes"
-msgstr ""
+msgstr "Gerð samsetningar fyrir ómýkta hnúta"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:72
 msgid "Limit for miter joins"
-msgstr ""
+msgstr "Takmörk fyrir hornskeytingar"
 
 #: ../src/live_effects/lpe-taperstroke.cpp:441
 msgid "Start point of the taper"
@@ -11370,7 +11378,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Dra_w all generations"
-msgstr ""
+msgstr "Teikna allar _kynslóðir"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "If unchecked, draw only the last generation"
@@ -11390,7 +11398,7 @@ msgstr ""
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
 #: ../src/live_effects/lpe-vonkoch.cpp:53
 msgid "_Max complexity:"
-msgstr ""
+msgstr "Hámarks_flækjustig:"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:53
 msgid "Disable effect if the output is too complex"
@@ -11499,7 +11507,7 @@ msgstr "Fjarlægja feril"
 
 #: ../src/live_effects/parameter/path.cpp:184
 msgid "Edit on-canvas"
-msgstr ""
+msgstr "Breyta á myndfleti"
 
 #: ../src/live_effects/parameter/path.cpp:194
 msgid "Copy path"
@@ -11511,7 +11519,7 @@ msgstr "Líma feril"
 
 #: ../src/live_effects/parameter/path.cpp:214
 msgid "Link to path on clipboard"
-msgstr ""
+msgstr "Tengja við feril á klippispjaldi"
 
 #: ../src/live_effects/parameter/path.cpp:476
 msgid "Paste path parameter"
@@ -11596,7 +11604,7 @@ msgstr ""
 
 #: ../src/main.cpp:324
 msgid "Export document to a PNG file"
-msgstr ""
+msgstr "Flytja skjal út í PNG-skrá"
 
 #: ../src/main.cpp:329
 msgid ""
@@ -12606,7 +12614,7 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:3270
 msgid "Group from symbol"
-msgstr ""
+msgstr "Hóp úr tákni"
 
 #: ../src/selection-chemistry.cpp:3285
 msgid "Select <b>object(s)</b> to convert to pattern."
@@ -13045,7 +13053,7 @@ msgstr "%s um %f pt"
 
 #: ../src/sp-offset.cpp:335
 msgid "outset"
-msgstr "útsetja"
+msgstr "útfella"
 
 #: ../src/sp-offset.cpp:335
 msgid "inset"
@@ -13258,7 +13266,7 @@ msgstr ""
 
 #: ../src/splivarot.cpp:2114
 msgid "Outset path"
-msgstr "Útsetja feril"
+msgstr "Útfella feril"
 
 #: ../src/splivarot.cpp:2114
 msgid "Inset path"
@@ -14365,7 +14373,7 @@ msgstr ""
 
 #: ../src/ui/dialog/clonetiler.cpp:940
 msgid "Apply to tiled clones:"
-msgstr "Beita á tiglaða klóna:"
+msgstr "Beita á tíglaða klóna:"
 
 #: ../src/ui/dialog/clonetiler.cpp:961
 msgid "How many rows in the tiling"
@@ -17258,7 +17266,7 @@ msgstr "_Y:"
 
 #: ../src/ui/dialog/guides.cpp:47 ../src/ui/dialog/object-properties.cpp:51
 msgid "_Label:"
-msgstr "Mer_king:"
+msgstr "S_kýring:"
 
 #: ../src/ui/dialog/guides.cpp:47
 msgid "Optionally give this guideline a name"
@@ -19515,7 +19523,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1295
 msgid "_Inset/Outset by:"
-msgstr "_Innfella/Útsetja um:"
+msgstr "_Innfella/Útfella um:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1296
 msgid "Inset and Outset commands displace the path by this distance"
@@ -20631,7 +20639,7 @@ msgstr ""
 #. Create the entry box for the object label
 #: ../src/ui/dialog/object-properties.cpp:137
 msgid "A freeform label for the object"
-msgstr ""
+msgstr "Frjálslega löguð skýring á hlutnum"
 
 #. Create the frame for the object description
 #: ../src/ui/dialog/object-properties.cpp:170
@@ -24186,7 +24194,7 @@ msgstr "%s. Draga eða smella til að <b>ýta ferlum</b>."
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr ""
 "%s. Draga eða smella til að <b>innfella ferla</b>; með Shift til að "
-"<b>útsetja</b>."
+"<b>útfella</b>."
 
 #: ../src/ui/tools/tweak-tool.cpp:206
 #, c-format
@@ -25807,7 +25815,7 @@ msgstr "Líma _stíl"
 
 #: ../src/verbs.cpp:2507
 msgid "Apply the style of the copied object to selection"
-msgstr ""
+msgstr "Beita stíl afritaða hlutarins á valið"
 
 #: ../src/verbs.cpp:2509
 msgid "Scale selection to match the size of the copied object"
@@ -25871,7 +25879,7 @@ msgstr "Líma ferilbr_ellu"
 
 #: ../src/verbs.cpp:2523
 msgid "Apply the path effect of the copied object to selection"
-msgstr ""
+msgstr "Beita ferilbrellu afritaða hlutarins á valið"
 
 #: ../src/verbs.cpp:2524
 msgid "Remove Path _Effect"
@@ -25947,7 +25955,7 @@ msgstr "Velja _upprunalegt"
 
 #: ../src/verbs.cpp:2541
 msgid "Select the object to which the selected clone is linked"
-msgstr ""
+msgstr "Velja hlutinn sem valdi klóninn er tengdur"
 
 #: ../src/verbs.cpp:2542
 msgid "Clone original path (LPE)"
@@ -25999,7 +26007,7 @@ msgstr "Hóp í tákn"
 
 #: ../src/verbs.cpp:2553
 msgid "Convert group to a symbol"
-msgstr ""
+msgstr "Umbreyta hópi í tákn"
 
 #: ../src/verbs.cpp:2554
 msgid "Symbol to Group"
@@ -26040,7 +26048,7 @@ msgstr "F_ylling og útlína"
 #: ../src/verbs.cpp:2563
 msgid ""
 "Select all objects with the same fill and stroke as the selected objects"
-msgstr ""
+msgstr "Velja alla hluti með sömu útlínu og fyllingu og völdu hlutirnir"
 
 #: ../src/verbs.cpp:2564
 msgid "_Fill Color"
@@ -26048,7 +26056,7 @@ msgstr "_Fyllilitur"
 
 #: ../src/verbs.cpp:2565
 msgid "Select all objects with the same fill as the selected objects"
-msgstr ""
+msgstr "Velja alla hluti með sömu fyllingu og völdu hlutirnir"
 
 #: ../src/verbs.cpp:2566
 msgid "_Stroke Color"
@@ -26056,7 +26064,7 @@ msgstr "Ú_tlínulitur"
 
 #: ../src/verbs.cpp:2567
 msgid "Select all objects with the same stroke as the selected objects"
-msgstr ""
+msgstr "Velja alla hluti með sömu útlínu og völdu hlutirnir"
 
 #: ../src/verbs.cpp:2568
 msgid "Stroke St_yle"
@@ -26078,6 +26086,8 @@ msgid ""
 "Select all objects with the same object type (rect, arc, text, path, bitmap "
 "etc) as the selected objects"
 msgstr ""
+"Velja alla hluti af sömu gerð (ferningur, bogi, texti, ferill, bitamynd "
+"o.s.frv.) og völdu hlutirnir"
 
 #: ../src/verbs.cpp:2572
 msgid "In_vert Selection"
@@ -26213,6 +26223,7 @@ msgstr "Fjar_lægja handvirk stafabil"
 #: ../src/verbs.cpp:2613
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr ""
+"Fjarlægja öll handvirk stafabil (hnikun) og snúning staftákna af textahlut"
 
 #: ../src/verbs.cpp:2615
 msgid "_Union"
@@ -26319,27 +26330,27 @@ msgstr "Helminga stærð á völdum hlutum"
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2644
 msgid "Outs_et"
-msgstr "Úts_etja"
+msgstr "Útf_ella"
 
 #: ../src/verbs.cpp:2645
 msgid "Outset selected paths"
-msgstr "Útsetja valda ferla"
+msgstr "Útfella valda ferla"
 
 #: ../src/verbs.cpp:2647
 msgid "O_utset Path by 1 px"
-msgstr "Ú_tsetja feril um 1 px"
+msgstr "Ú_tfella feril um 1 px"
 
 #: ../src/verbs.cpp:2648
 msgid "Outset selected paths by 1 px"
-msgstr "Útsetja valda ferla um 1 px"
+msgstr "Útfella valda ferla um 1 px"
 
 #: ../src/verbs.cpp:2650
 msgid "O_utset Path by 10 px"
-msgstr "Ú_tsetja feril um 10 px"
+msgstr "Ú_tfella feril um 10 px"
 
 #: ../src/verbs.cpp:2651
 msgid "Outset selected paths by 10 px"
-msgstr "Innfella valda ferla um 10 px"
+msgstr "Útfella valda ferla um 10 px"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -31113,7 +31124,7 @@ msgstr "Vaxa/minnka hamur"
 
 #: ../src/widgets/tweak-toolbar.cpp:213
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr "Minnka hluta ferla (innfella); stækka með Shift (útsetja)"
+msgstr "Minnka hluta ferla (innfella); stækka með Shift (útfella)"
 
 #: ../src/widgets/tweak-toolbar.cpp:219
 msgid "Attract/repel mode"
@@ -34212,11 +34223,11 @@ msgstr "Pólhnitanet"
 
 #: ../share/extensions/grid_polar.inx.h:2
 msgid "Centre Dot Diameter (px):"
-msgstr ""
+msgstr "Þvermál miðjupunkts (px):"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Circumferential Labels:"
-msgstr ""
+msgstr "Skýringar á útjaðri:"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Degrees"
@@ -34224,11 +34235,11 @@ msgstr "Gráður"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Label Size (px):"
-msgstr ""
+msgstr "Stærð skýringar á útjaðri (px):"
 
 #: ../share/extensions/grid_polar.inx.h:7
 msgid "Circumferential Label Outset (px):"
-msgstr ""
+msgstr "Útfelling skýringar á útjaðri (px):"
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Circular Divisions"
@@ -36033,7 +36044,7 @@ msgstr "(sníða líkt þessu: epli:3,bananar:5)"
 
 #: ../share/extensions/nicechart.inx.h:15
 msgid "Labels"
-msgstr "Merkingar"
+msgstr "Skýringar"
 
 #: ../share/extensions/nicechart.inx.h:16
 msgid "Font:"
@@ -36069,7 +36080,7 @@ msgstr "Hliðrun stöpla:"
 
 #: ../share/extensions/nicechart.inx.h:26
 msgid "Offset between chart and labels:"
-msgstr ""
+msgstr "Bil á milli grafs og skýringa:"
 
 #: ../share/extensions/nicechart.inx.h:27
 msgid "Offset between chart and chart title:"
