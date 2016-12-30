@@ -50230,16 +50230,6 @@ msgstr "Vstup XAML"
 #~ msgid "Adjust the rotation angle"
 #~ msgstr "Doladiť uhol rotácie"
 
-#~ msgid "Enable dynamic relayout for incomplete sections"
-#~ msgstr "Zapnúť dynamickú zmenu rozloženia neúplných častí"
-
-#~ msgid ""
-#~ "When on, will allow dynamic layout of components that are not completely "
-#~ "finished being refactored"
-#~ msgstr ""
-#~ "Keď je voľba zapnutá, umožní zmenu dynamického vkladania komponentov, "
-#~ "ktoré nie sú celkom dokončené"
-
 #, fuzzy
 #~ msgid "FIXME<b>Ctrl</b>: snap mesh angle"
 #~ msgstr "<b>Ctrl</b>: zlomiť uhol"
@@ -54806,9 +54796,6 @@ msgstr "Vstup XAML"
 #~ msgstr ""
 #~ "Nech panel nástrojov príkazov používa „sekundárnu“ veľkosť panelu "
 #~ "nástrojov (vyžaduje reštart)"
-
-#~ msgid "_Apply"
-#~ msgstr "_Použiť"
 
 #~ msgid "Delete Segment"
 #~ msgstr "Zmazať segment"
