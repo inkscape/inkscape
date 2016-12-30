@@ -3433,7 +3433,7 @@ class Gcodetools(inkex.Effect):
 					for subpath in csp :
 						for sp1, sp2 in zip(subpath,subpath[1:]) :
 							polygon.add([csp_segment_convex_hull(sp1,sp2)])
-					#print_("Redused edges count from", sum([len(poly) for poly in polygon.polygon ]) )
+					#print_("Reduced edges count from", sum([len(poly) for poly in polygon.polygon ]) )
 					polygon.hull()
 					original_paths += [path]
 					polygons += [polygon]
@@ -3574,7 +3574,7 @@ class Gcodetools(inkex.Effect):
 		self.OptionParser.add_option("",   "--biarc-max-split-depth",		action="store", type="int", 		dest="biarc_max_split_depth", default="4",			help="Defines maximum depth of splitting while approximating using biarcs.")				
 		self.OptionParser.add_option("",   "--path-to-gcode-order",			action="store", type="string", 		dest="path_to_gcode_order", default="path by path",	help="Defines cutting order path by path or layer by layer.")				
 		self.OptionParser.add_option("",   "--path-to-gcode-depth-function",action="store", type="string", 		dest="path_to_gcode_depth_function", default="zd",	help="Path to gcode depth function.")				
-		self.OptionParser.add_option("",   "--path-to-gcode-sort-paths",	action="store", type="inkbool",		dest="path_to_gcode_sort_paths", default=True,		help="Sort paths to reduse rapid distance.")		
+		self.OptionParser.add_option("",   "--path-to-gcode-sort-paths",	action="store", type="inkbool",		dest="path_to_gcode_sort_paths", default=True,		help="Sort paths to reduce rapid distance.")		
 		self.OptionParser.add_option("",   "--comment-gcode",				action="store", type="string", 		dest="comment_gcode", default="",					help="Comment Gcode")				
 		self.OptionParser.add_option("",   "--comment-gcode-from-properties",action="store", type="inkbool", 	dest="comment_gcode_from_properties", default=False,help="Get additional comments from Object Properties")				
 

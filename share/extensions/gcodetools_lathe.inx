@@ -21,7 +21,7 @@
 
 	<page name='lathe_modify_path' _gui-text='Lathe modify path'>	
 		<_param name="help" type="description">	
-			This function modifies path so it will be able to be cut with the rectangular cutter.
+			This function modifies path so it will be possible to be cut it with a rectangular cutter.
 		</_param>
 		<param name="lathe-rectangular-cutter-width" type="float" precision="5" min="0" max="1000" _gui-text="Lathe width:">4</param>
 	</page>
@@ -37,7 +37,7 @@
 				</param>
 				
 				<param name="path-to-gcode-depth-function" type="string" _gui-text="Depth function:">d</param>			
-				<param name="path-to-gcode-sort-paths" type="boolean" _gui-text="Sort paths to reduse rapid distance">True</param>			
+				<param name="path-to-gcode-sort-paths" type="boolean" _gui-text="Sort paths to reduce rapid distance">True</param>			
 				
 				<_param name="help" type="description">
 Biarc interpolation tolerance is the maximum distance between path and its approximation.

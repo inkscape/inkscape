@@ -539,6 +539,7 @@ void sp_mesh_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, GObj
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter, 0, _("Bicubic"), 1, SP_MESH_TYPE_BICUBIC, -1 );
 
+        // TRANSLATORS: Type of Smoothing. See https://en.wikipedia.org/wiki/Coons_patch
         EgeSelectOneAction* act = ege_select_one_action_new( "MeshSmoothAction", _("Coons"),
                _("Coons: no smoothing. Bicubic: smoothing across patch boundaries."),
                 NULL, GTK_TREE_MODEL(model) );

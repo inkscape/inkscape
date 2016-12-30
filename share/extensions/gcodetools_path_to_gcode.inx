@@ -17,7 +17,7 @@
 				</param>
 				
 				<param name="path-to-gcode-depth-function" type="string" _gui-text="Depth function:">d</param>			
-				<param name="path-to-gcode-sort-paths" type="boolean" _gui-text="Sort paths to reduse rapid distance">True</param>			
+				<param name="path-to-gcode-sort-paths" type="boolean" _gui-text="Sort paths to reduce rapid distance">True</param>			
 				
 				<_param name="help" type="description">
 Biarc interpolation tolerance is the maximum distance between path and its approximation.

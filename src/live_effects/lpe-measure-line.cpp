@@ -52,7 +52,7 @@ LPEMeasureLine::LPEMeasureLine(LivePathEffectObject *lpeobject) :
     orientation(_("Orientation"), _("Orientation method"), "orientation", OMConverter, &wr, this, OM_PARALLEL, false),
     curve_linked(_("Curve on origin"), _("Curve on origin, set 0 to start/end"), "curve_linked", &wr, this, 1),
     precision(_("Precision*"), _("Precision"), "precision", &wr, this, 2),
-    position(_("Positon*"), _("Positon"), "position", &wr, this, 5),
+    position(_("Position*"), _("Position"), "position", &wr, this, 5),
     text_top_bottom(_("Text top/bottom*"), _("Text top/bottom"), "text_top_bottom", &wr, this, 0),
     text_right_left(_("Text right/left*"), _("Text right/left"), "text_right_left", &wr, this, 0),
     helpline_distance(_("Helpline distance*"), _("Helpline distance"), "helpline_distance", &wr, this, 0.0),
