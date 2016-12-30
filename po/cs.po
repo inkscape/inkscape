@@ -1,3 +1,8 @@
+# Translation of Inkscape to Czech
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2003 Free Software Foundation
+# Josef Vybiral <josef.vybiral@gmail.com>, 2005, 2006.
+# Ivan Řihošek <osmdesat@seznam.cz>, 2014.
 #
 msgid ""
 msgstr ""
