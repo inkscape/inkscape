@@ -10743,30 +10743,27 @@ msgstr "Fonde considerando il tracciato riflesso come originale"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:45
 msgid "Start mirror line"
-msgstr "Inizio linea riflessione"
+msgstr "Inizio linea di riflessione"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:45
-#, fuzzy
 msgid "Adjust start of mirroring"
-msgstr "Modifica saturazione"
+msgstr "Modifica punto iniziale della linea di riflessione"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:46
 msgid "End mirror line"
-msgstr "Fine linea riflessione"
+msgstr "Fine linea di riflessione"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:46
 msgid "Adjust end of mirroring"
-msgstr ""
+msgstr "Modifica punto finale della linea di riflessione"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:47
-#, fuzzy
 msgid "Center mirror line"
-msgstr "Inizio linea riflessione"
+msgstr "Centro linea di riflessione"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:47
-#, fuzzy
 msgid "Adjust center of mirroring"
-msgstr "Modifica l'origine"
+msgstr "Modifica punto centrale della linea di riflessione"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:53
 #: ../share/extensions/pathalongpath.inx.h:10
@@ -11433,24 +11430,20 @@ msgid "Max degree difference on handles to perform a smooth"
 msgstr "Differenza massima tra angoli maniglie per applicare smussatura"
 
 #: ../src/live_effects/lpe-simplify.cpp:34
-#, fuzzy
 msgid "Paths separately"
-msgstr "Incolla dimensione separatamente"
+msgstr "Tracciati separati"
 
 #: ../src/live_effects/lpe-simplify.cpp:34
-#, fuzzy
 msgid "Simplifying paths (separately)"
-msgstr "Semplificazione tracciati (separatamente):"
+msgstr "Semplifica tracciati (separatamente)"
 
 #: ../src/live_effects/lpe-simplify.cpp:36
-#, fuzzy
 msgid "Just coalesce"
-msgstr "Giustifica righe"
+msgstr "Mantieni unione"
 
 #: ../src/live_effects/lpe-simplify.cpp:36
-#, fuzzy
 msgid "Simplify just coalesce"
-msgstr "Semplifica"
+msgstr "Semplifica mantenendo l'unione"
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
@@ -11718,9 +11711,8 @@ msgid "Rotation helper size"
 msgstr "Dimensione ausilio di rotazione"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:196
-#, fuzzy
 msgid "Change index of knot"
-msgstr "Cambia tipo di nodo"
+msgstr "Cambia indice nodo"
 
 #: ../src/live_effects/lpe-transform_2pts.cpp:349
 #: ../src/ui/dialog/inkscape-preferences.cpp:1618
@@ -13190,9 +13182,8 @@ msgstr[0] " in <b>%i</b> livello"
 msgstr[1] " in <b>%i</b> livelli"
 
 #: ../src/selection-describer.cpp:198
-#, fuzzy
 msgid "Convert symbol to group to edit"
-msgstr "Converti simbolo a gruppo da modificare"
+msgstr "Converti simbolo in gruppo per modificarlo"
 
 #: ../src/selection-describer.cpp:202
 msgid "Remove from symbols tray to edit symbol"
@@ -13583,7 +13574,7 @@ msgstr "con %d vertici"
 
 #: ../src/sp-switch.cpp:63
 msgid "Conditional Group"
-msgstr ""
+msgstr "Gruppo condizionale"
 
 #: ../src/sp-text.cpp:354 ../src/verbs.cpp:347
 #: ../share/extensions/lorem_ipsum.inx.h:8
@@ -21274,7 +21265,6 @@ msgid "Deactivate path effect"
 msgstr "Disattiva effetto su tracciato"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:53
-#, fuzzy
 msgid "Radius (pixels):"
 msgstr "Raggio (pixel):"
 
@@ -21295,14 +21285,12 @@ msgid "Radius"
 msgstr "Raggio"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:203
-#, fuzzy
 msgid "Radius approximated"
-msgstr "(arrotondato)"
+msgstr "Raggio approssimato"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:206
-#, fuzzy
 msgid "Knot distance"
-msgstr "Distanza di aggancio"
+msgstr "Distanza nodo"
 
 #: ../src/ui/dialog/lpe-fillet-chamfer-properties.cpp:213
 msgid "Position (%):"
@@ -21314,7 +21302,7 @@ msgstr "%1:"
 
 #: ../src/ui/dialog/lpe-powerstroke-properties.cpp:122
 msgid "Modify Node Position"
-msgstr ""
+msgstr "Modifica posizione nodo"
 
 #: ../src/ui/dialog/memory.cpp:96
 msgid "Heap"
@@ -21890,40 +21878,34 @@ msgid "Trace pixel art"
 msgstr "Vettorizza pixel art"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:41
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Y coordinate of the center"
-msgstr "Coordinata Y dei nodi selezionati"
+msgstr "Coordinata Y del centro"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:42
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "X coordinate of the center"
-msgstr "Coordinata X dei nodi selezionati"
+msgstr "Coordinata X del centro"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:43
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Y coordinate of the radius"
-msgstr "Coordinata Y dei nodi selezionati"
+msgstr "Coordinata Y del raggio"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:44
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "X coordinate of the radius"
-msgstr "Coordinata X dei nodi selezionati"
+msgstr "Coordinata X del raggio"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:45
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "Starting angle"
-msgstr "Angolo di rotazione"
+msgstr "Angolo iniziale"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:46
-#, fuzzy
 msgctxt "Polar arrange tab"
 msgid "End angle"
-msgstr "Angolo del cono"
+msgstr "Angolo finale"
 
 #: ../src/ui/dialog/polar-arrange-tab.cpp:48
 msgctxt "Polar arrange tab"
@@ -24410,21 +24392,19 @@ msgstr "Approssima lato gradiente ad arco"
 
 #: ../src/ui/tools/mesh-tool.cpp:463
 msgid "Toggled mesh tensors."
-msgstr ""
+msgstr "Commuta tensori gradiente"
 
 #: ../src/ui/tools/mesh-tool.cpp:468
-#, fuzzy
 msgid "Smoothed mesh corner color."
-msgstr "Shader liscio contornato"
+msgstr "Smussa angolo colore gradiente"
 
 #: ../src/ui/tools/mesh-tool.cpp:473
 msgid "Picked mesh corner color."
 msgstr "Preleva colore angolo del gradiente a maglia"
 
 #: ../src/ui/tools/mesh-tool.cpp:478
-#, fuzzy
 msgid "Inserted new row or column."
-msgstr "Aumenta il numero di colonne:"
+msgstr "Inserisci nuova riga o colonna"
 
 #: ../src/ui/tools/mesh-tool.cpp:548
 msgid "Fit mesh inside bounding box."
@@ -25957,19 +25937,16 @@ msgid "Radial gradient stroke"
 msgstr "Gradiente radiale di contorno"
 
 #: ../src/ui/widget/selected-style.cpp:219
-#, fuzzy
 msgid "<b>M</b>"
 msgstr "<b>M</b>"
 
 #: ../src/ui/widget/selected-style.cpp:222
-#, fuzzy
 msgid "Mesh gradient fill"
-msgstr "Gradiente lineare di riempimento"
+msgstr "Gradiente a maglia di riempimento"
 
 #: ../src/ui/widget/selected-style.cpp:222
-#, fuzzy
 msgid "Mesh gradient stroke"
-msgstr "Gradiente lineare di contorno"
+msgstr "Gradiente a maglia di contorno"
 
 #: ../src/ui/widget/selected-style.cpp:230
 msgid "Different"
@@ -29419,9 +29396,8 @@ msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "La larghezza del cancellino (relativa all'area di lavoro visibile)"
 
 #: ../src/widgets/eraser-toolbar.cpp:171
-#, fuzzy
 msgid "Eraser Mass"
-msgstr "Gomma"
+msgstr "Massa gomma"
 
 #: ../src/widgets/eraser-toolbar.cpp:172
 msgid "Increase to make the eraser drag behind, as if slowed by inertia"
@@ -29950,6 +29926,12 @@ msgid ""
 "For web: convert to bitmap (Edit->Make bitmap copy).\n"
 "For print: export to PDF."
 msgstr ""
+"I gradienti a maglia (mesh) sono definiti in SVG 2:\n"
+"* La sintassi è soggetta a cambiamenti.\n"
+"* L'implementazione sui browser web non è garantita.\n"
+"\n"
+"Per web: converti in bitmap (Modifica->Crea una copia bitmap).\n"
+"Per stampa: esporta in PDF."
 
 #: ../src/widgets/mesh-toolbar.cpp:398
 msgid "normal"
@@ -30023,19 +30005,20 @@ msgstr ""
 #: ../src/widgets/mesh-toolbar.cpp:545
 msgctxt "Type"
 msgid "Coons"
-msgstr ""
+msgstr "Coons"
 
 #: ../src/widgets/mesh-toolbar.cpp:548
 msgid "Bicubic"
-msgstr ""
+msgstr "Bicubico"
 
 #: ../src/widgets/mesh-toolbar.cpp:550
 msgid "Coons"
-msgstr ""
+msgstr "Coons"
 
 #: ../src/widgets/mesh-toolbar.cpp:551
 msgid "Coons: no smoothing. Bicubic: smoothing across patch boundaries."
 msgstr ""
+"Coons: nessuno smussamento. Bicubico: smussamento lungo i lati della maglia."
 
 #: ../src/widgets/mesh-toolbar.cpp:553 ../src/widgets/pencil-toolbar.cpp:381
 msgid "Smoothing:"
@@ -30050,14 +30033,12 @@ msgid "Toggle selected sides between Beziers and lines."
 msgstr "Commuta i lati selezionati tra Bezier e linee."
 
 #: ../src/widgets/mesh-toolbar.cpp:567
-#, fuzzy
 msgid "Toggle side:"
-msgstr "Al_terna"
+msgstr "Commuta lato:"
 
 #: ../src/widgets/mesh-toolbar.cpp:574
-#, fuzzy
 msgid "Make elliptical"
-msgstr "Imposta corsivo"
+msgstr "Rendi ellittico"
 
 #: ../src/widgets/mesh-toolbar.cpp:575
 msgid ""
@@ -30068,9 +30049,8 @@ msgstr ""
 "Funziona al meglio se le maniglie già approssimano un'ellisse."
 
 #: ../src/widgets/mesh-toolbar.cpp:578
-#, fuzzy
 msgid "Make elliptical:"
-msgstr "Imposta corsivo"
+msgstr "Rendi ellittico:"
 
 #: ../src/widgets/mesh-toolbar.cpp:585
 msgid "Pick colors:"
@@ -30095,9 +30075,8 @@ msgstr ""
 "Ridimensiona il gradiente per adattarsi ai bordi del riquadro."
 
 #: ../src/widgets/mesh-toolbar.cpp:601
-#, fuzzy
 msgid "Fit mesh"
-msgstr "Modifica riempimento..."
+msgstr "Adatta gradiente a maglia"
 
 #: ../src/widgets/node-toolbar.cpp:341
 msgid "Insert node"
