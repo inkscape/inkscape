@@ -63,7 +63,7 @@ static const Util::EnumDataConverter<PAPCopyType> PAPCopyTypeConverter(PAPCopyTy
 LPEPatternAlongPath::LPEPatternAlongPath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     pattern(_("Pattern source:"), _("Path to put along the skeleton path"), "pattern", &wr, this, "M0,0 L1,0"),
-    original_height(0),
+    original_height(0.0),
     prop_scale(_("_Width:"), _("Width of the pattern"), "prop_scale", &wr, this, 1.0),
     copytype(_("Pattern copies:"), _("How many pattern copies to place along the skeleton path"),
         "copytype", PAPCopyTypeConverter, &wr, this, PAPCT_SINGLE_STRETCHED),
