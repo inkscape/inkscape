@@ -12,7 +12,9 @@
  *  - We use a default font size of PANGO_SCALE_X_SMALL for labels,
  *    GIMP uses PANGO_SCALE_SMALL (i.e., a bit larger than ours).
  *
- *  - We abbreviate large numbers in tick-labels (e.g., 10000 -> 10k) 
+ *  - We abbreviate large numbers in tick-labels (e.g., 10000 -> 10k)
+ *
+ *  - GtkStateFlags are read from GtkStyleContext objects where appropriate
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -578,7 +580,9 @@ sp_ruler_size_request (GtkWidget      *widget,
   GtkStyleContext *context = gtk_widget_get_style_context (widget);
   GtkBorder        border;
 
-  gtk_style_context_get_border (context, static_cast<GtkStateFlags>(0), &border);
+  GtkStateFlags state_flags = gtk_style_context_get_state (context);
+
+  gtk_style_context_get_border (context, state_flags, &border);
   
   requisition->width  = border.left + border.right;
   requisition->height = border.top  + border.bottom;
@@ -1088,7 +1092,9 @@ sp_ruler_draw_ticks (SPRuler *ruler)
 
     gtk_widget_get_allocation (widget, &allocation);
 
-    gtk_style_context_get_border (context, static_cast<GtkStateFlags>(0), &border);
+    GtkStateFlags state_flags = gtk_style_context_get_state (context);
+
+    gtk_style_context_get_border (context, state_flags, &border);
 
     layout = sp_ruler_get_layout (widget, "0123456789");
     pango_layout_get_extents (layout, &ink_rect, &logical_rect);
@@ -1300,7 +1306,9 @@ sp_ruler_get_pos_rect (SPRuler *ruler,
   GtkStyleContext *context = gtk_widget_get_style_context (widget);
   GtkBorder padding;
 
-  gtk_style_context_get_border(context, static_cast<GtkStateFlags>(0), &padding);
+  GtkStateFlags state_flags = gtk_style_context_get_state (context);
+
+  gtk_style_context_get_border(context, state_flags, &padding);
 
   xthickness = padding.left + padding.right;
   ythickness = padding.top + padding.bottom;
