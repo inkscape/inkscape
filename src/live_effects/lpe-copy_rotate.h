@@ -44,6 +44,7 @@ private:
     ScalarParam num_copies;
     BoolParam copies_to_360;
     BoolParam fuse_paths;
+    BoolParam join_paths;
     Geom::Point A;
     Geom::Point B;
     Geom::Point dir;

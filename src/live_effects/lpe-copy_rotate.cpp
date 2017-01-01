@@ -15,6 +15,7 @@
 #include <gdk/gdk.h>
 #include <2geom/path-intersection.h>
 #include <2geom/sbasis-to-bezier.h>
+#include <2geom/intersection-graph.h>
 #include "live_effects/lpe-copy_rotate.h"
 // TODO due to internal breakage in glibmm headers, this must be last:
 #include <glibmm/i18n.h>
@@ -45,7 +46,8 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     rotation_angle(_("Rotation angle"), _("Angle between two successive copies"), "rotation_angle", &wr, this, 60.0),
     num_copies(_("Number of copies"), _("Number of copies of the original path"), "num_copies", &wr, this, 6),
     copies_to_360(_("360º Copies"), _("No rotation angle, fixed to 360º"), "copies_to_360", &wr, this, true),
-    fuse_paths(_("Fuse paths"), _("Fuse paths by helper line, use fill-rule: evenodd for best result"), "fuse_paths", &wr, this, false),
+    fuse_paths(_("Kaleidoskope"), _("Kaleidoskope by helper line, use fill-rule: evenodd for best result"), "fuse_paths", &wr, this, false),
+    join_paths(_("Join paths"), _("Join paths, use fill-rule: evenodd for best result"), "join_paths", &wr, this, false),
     dist_angle_handle(100.0)
 {
     show_orig_path = true;
@@ -53,6 +55,7 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter(&copies_to_360);
     registerParameter(&fuse_paths);
+    registerParameter(&join_paths);
     registerParameter(&starting_angle);
     registerParameter(&starting_point);
     registerParameter(&rotation_angle);
@@ -400,10 +403,26 @@ LPECopyRotate::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
             output = paths_to_pw(path_out);
         }
     } else {
+        Geom::PathVector output_pv = path_from_piecewise(output , 0.01);
         for (int i = 0; i < num_copies; ++i) {
             Rotate rot(-rad_from_deg(rotation_angle * i));
             Affine t = pre * rot * Translate(origin);
-            output.concat(pwd2_in * t);
+            if (join_paths) {
+                Geom::PathVector join_pv = path_from_piecewise(pwd2_in * t , 0.01);
+                Geom::PathIntersectionGraph *pig = new Geom::PathIntersectionGraph(output_pv, join_pv);
+                if (pig) {
+                    if (!output_pv.empty()) {
+                        output_pv = pig->getUnion();
+                    } else {
+                        output_pv = join_pv;
+                    }
+                }
+            } else {
+                output.concat(pwd2_in * t);
+            }
+        }
+        if (join_paths) {
+            output = paths_to_pw(output_pv);
         }
     }
     return output;
