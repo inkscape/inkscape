@@ -32,9 +32,8 @@ Inkscape version 0.92 and newer can be build using cmake:
   make
   make install
 
-For platform specific instructions please read the README file that
-is associated with that platform (e.g. for Mac OS X read README.osx)
-
+Other platforms such as Windows and Mac require a lot more and are considered
+a developer and packager task. These instructions are kept on the inkscape wiki
 
 Required Dependencies
 =====================
