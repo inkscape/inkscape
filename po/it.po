@@ -5,7 +5,7 @@
 # Alessio Frusciante <algol@firenze.linux.it>, 2002-2003.
 # Luca Ferretti <elle.uca@infinito.it>, 2005.
 # Luca Bruno <lucab@debian.org>, 2005-2009.
-# Firas Hanife <FirasHanife@gmail.com>, 2014-2016.
+# Firas Hanife <FirasHanife@gmail.com>, 2014-2017.
 #
 msgid ""
 msgstr ""
@@ -10873,9 +10873,8 @@ msgid "Envelope deformation"
 msgstr "Deformazione a busta"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:47
-#, fuzzy
 msgid "Overflow perspective"
-msgstr "Prospettiva"
+msgstr "Prospettiva uscente"
 
 #: ../src/live_effects/lpe-perspective-envelope.cpp:48
 msgid "Type"
@@ -31714,9 +31713,8 @@ msgstr ""
 
 #. Name
 #: ../src/widgets/text-toolbar.cpp:2172
-#, fuzzy
 msgid "Show outer style"
-msgstr "Smussatura esterna ombreggiata"
+msgstr "Mostra stile complessivo"
 
 #. Label
 #: ../src/widgets/text-toolbar.cpp:2173
@@ -31725,6 +31723,9 @@ msgid ""
 "values of the outermost text element determine the minimum line spacing in "
 "the block."
 msgstr ""
+"Mostra lo stile impostato complessivamente per il testo. La dimensione "
+"carattere e la spaziatura dello stile complessivo determinano la spaziatura "
+"minima tra le linee."
 
 #: ../src/widgets/toolbox.cpp:186
 msgid "Color/opacity used for color tweaking"
