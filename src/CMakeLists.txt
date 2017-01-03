@@ -521,7 +521,6 @@ set(INKSCAPE_TARGET_LIBS
         depixelize_LIB
         util_LIB
         gc_LIB
-        ${INKSCAPE_LIBS}
 )
 
 # Build everything except main and inkview.c in a shared library.
@@ -534,7 +533,7 @@ if(WITH_DBUS)
 endif()
 
 # Link the inkscape_base library against all external dependencies
-target_link_libraries(inkscape_base ${INKSCAPE_TARGET_LIBS})
+target_link_libraries(inkscape_base PRIVATE ${INKSCAPE_TARGET_LIBS} PUBLIC ${INKSCAPE_LIBS})
 
 # Link inkscape and inkview against inkscape_base
 target_link_libraries(inkscape inkscape_base)
