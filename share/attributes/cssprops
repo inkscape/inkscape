@@ -86,7 +86,7 @@
 
 "lighting-color" - "feDiffuseLighting","feSpecularLighting"
 
-"line-height" - "text","flowRoot","flowPara"
+"line-height" - "text","tspan","flowRoot","flowPara"
 
 "marker" - "path","line","polyline","polygon","a","defs","glyph","g","marker","mask","missing-glyph","pattern","svg","switch","symbol","use"
 

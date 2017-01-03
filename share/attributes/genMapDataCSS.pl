@@ -173,7 +173,7 @@ $properties{ "marker-mid" }->{inherit} = $properties{ "marker-start" }->{inherit
 
 
 # Inkscape uses CSS property 'line-height' even though this is not part of SVG spec.
-push @{$properties{ "line-height" }->{elements}}, "text", "flowRoot", "flowPara";
+push @{$properties{ "line-height" }->{elements}}, "text", "tspan", "flowRoot", "flowPara";
 $properties{ "line-height" }->{default} = "NO DEFAULT";
 $properties{ "line-height" }->{inherit} = "no";
 
