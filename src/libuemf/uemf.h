@@ -168,12 +168,24 @@ extern "C" {
 #define U_ROUND(A)  ( (A) > 0 ? floor((A)+0.5) : ( (A) < 0 ? -floor(-(A)+0.5) : (A) ) )
 
 #define MAKE_MIN_PTR(A,B) ( A < B ? A : B)
-/* This is tricky.  The next one can be called with a size which is either an int or an unsigned int.
-   The former can be negative, which is obviously wrong, but testing for that means that the size cannot
-   be more than INT_MAX/2.  Accept that limitation since no reasonable EMF record or file should ever be that large.
-   B must be an INT or size_t.  
-   If a uint16_t is used gcc complains about the first test.  Force B to be at least as big as int (at run time)  */
-#define IS_MEM_UNSAFE(A,B,C) ( (sizeof(B) < sizeof(int) || (int)(B)) < 0 ? 1 : ((int8_t *)(A) > (int8_t *)(C) ? 1 : ((int8_t *)(C) - (int8_t *)(A) >= (int)(B) ? 0 : 1 ))) //!< Return 1 when a region of memory starting at A of B bytes extends beyond pointer C
+
+/* IS_MEM_UNSAFE takes 3 parameters:
+      A  start address of a block of allocated memory
+      B  offset into this block starting at A
+      C  address of final byte of a block of allocated memory.
+   Returns
+      1 if B cannot be an int or size_t
+      1 if C > A 
+      1 if A+B is not in the range A to C, inclusive
+      0 otherwise.
+   B may be an int, an unsigned int, or a size_t. An int can be negative, 
+      which is obviously wrong, but testing for that means that the size
+      of B cannot be more than INT_MAX/2.  Accept that limitation since 
+      no reasonable EMF record or file should ever be that large.
+   If B is a uint16_t gcc complains about the first test.  
+   This Macro must not be used where B needs more than 32 bits!
+*/
+#define IS_MEM_UNSAFE(A,B,C) ( (sizeof(B) < sizeof(int) || (int)(B) < 0) ? 1 : ((int8_t *)(A) > (int8_t *)(C) ? 1 : ((int8_t *)(C) - (int8_t *)(A) >= (int)(B) ? 0 : 1 )))
 
 /** @} */
 
