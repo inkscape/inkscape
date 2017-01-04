@@ -337,7 +337,7 @@ static void sp_text_lineheight_unset_changed( InkToggleAction*act, GObject *tbl 
     sp_desktop_set_style (desktop, css);
 
     sp_repr_css_attr_unref(css);
-    
+
     DocumentUndo::done(desktop->getDocument(), SP_VERB_CONTEXT_TEXT,
                        _("Text: Unset line height."));
 
@@ -571,7 +571,7 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 static bool is_relative( Unit const *unit ) {
     return (unit->abbr == "" || unit->abbr == "em" || unit->abbr == "ex" || unit->abbr == "%");
 }
-   
+
 static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
     // quit if run by the _changed callbacks
@@ -1706,7 +1706,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                                                       _(tooltip.c_str()),
                                                                       NULL,
                                                                       GTK_TREE_MODEL(model_size),
-                                                                      4,      // Width in characters
+                                                                      8,      // Width in characters
                                                                       0,      // Extra list width
                                                                       NULL,   // Cell layout
                                                                       NULL,   // Separator
