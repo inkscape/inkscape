@@ -132,7 +132,7 @@ DrawingItem::DrawingItem(Drawing &drawing)
     , _propagate(0)
 //    , _renders_opacity(0)
     , _pick_children(0)
-    , _antialias(1)
+    , _antialias(2)
     , _isolation(SP_CSS_ISOLATION_AUTO)
     , _mix_blend_mode(SP_CSS_BLEND_NORMAL)
 {}
@@ -291,7 +291,7 @@ DrawingItem::setOpacity(float opacity)
 }
 
 void
-DrawingItem::setAntialiasing(bool a)
+DrawingItem::setAntialiasing(unsigned a)
 {
     if (_antialias != a) {
         _antialias = a;
@@ -699,10 +699,21 @@ DrawingItem::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flag
     Geom::OptIntRect carea = Geom::intersect(area, _drawbox);
     if (!carea) return RENDER_OK;
 
-    if (_antialias) {
-        cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_DEFAULT);
-    } else {
-        cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_NONE);
+    switch(_antialias){
+        case 0:
+            cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_NONE);
+            break;
+        case 1:
+            cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_FAST);
+            break;
+        case 2:
+            cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_GOOD);
+            break;
+        case 3:
+            cairo_set_antialias(dc.raw(), CAIRO_ANTIALIAS_BEST);
+            break;
+        default: // should not happen
+            g_assert_not_reached();
     }
 
     // render from cache if possible

@@ -667,7 +667,7 @@ void SPItem::update(SPCtx* ctx, guint flags) {
         if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
             for (SPItemView *v = display; v != NULL; v = v->next) {
                 v->arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(style->opacity.value));
-                v->arenaitem->setAntialiasing(style->shape_rendering.computed != SP_CSS_SHAPE_RENDERING_CRISPEDGES);
+                v->arenaitem->setAntialiasing(style->shape_rendering.computed == SP_CSS_SHAPE_RENDERING_CRISPEDGES ? 0 : 2);
                 v->arenaitem->setIsolation( style->isolation.value );
                 v->arenaitem->setBlendMode( style->mix_blend_mode.value );
                 v->arenaitem->setVisible(!isHidden());

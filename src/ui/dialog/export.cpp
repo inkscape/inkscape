@@ -151,8 +151,10 @@ Export::Export (void) :
     zlib_compression(),
     pHYs_label(_("pHYs dpi")),
     pHYs_sb(pHYs_adj, 1.0, 2),
+    antialiasing_label(_("Antialiasing")),
+    antialiasing_cb(),
     hide_box(false, 5),
-    hide_export(_("Hide a_ll except selected"), _("In the exported image, hide all objects except those that are selected")),
+    hide_export(_("Hide all except selected"), _("In the exported image, hide all objects except those that are selected")),
     closeWhenDone(_("Close when complete"), _("Once the export completes, close this dialog")),
     button_box(false, 3),
     _prog(),
@@ -340,6 +342,10 @@ Export::Export (void) :
     pHYs_sb.set_width_chars(7);
     pHYs_sb.set_tooltip_text( _("Will force-set the physical dpi for the png file. Set this to 72 if you're planning to work on your png with Photoshop") );
     zlib_compression.set_hexpand();
+    const char* const antialising_list[] = {"CAIRO_ANTIALIAS_NONE","CAIRO_ANTIALIAS_FAST","CAIRO_ANTIALIAS_GOOD (default)","CAIRO_ANTIALIAS_BEST"};
+    for(int i=0; i<4; ++i)
+        antialiasing_cb.append(antialising_list[i]);
+    antialiasing_cb.set_active_text(antialising_list[2]);
     auto table = new Gtk::Grid();
     gtk_container_add(GTK_CONTAINER(expander.gobj()), (GtkWidget*)(table->gobj()));
     table->attach(interlacing,0,0,1,1);
@@ -349,6 +355,8 @@ Export::Export (void) :
     table->attach(zlib_compression,1,2,1,1);
     table->attach(pHYs_label,0,3,1,1);
     table->attach(pHYs_sb,1,3,1,1);
+    table->attach(antialiasing_label,0,4,1,1);
+    table->attach(antialiasing_cb,1,4,1,1);
     table->show();
 
     /* Main dialog */
@@ -984,6 +992,7 @@ void Export::onExport ()
     int bitdepths[] = {1,2,4,8,16,8,16,8,16,8,16};
     int color_type = colortypes[bitdepth_cb.get_active_row_number()] ;
     int bit_depth = bitdepths[bitdepth_cb.get_active_row_number()] ;
+    int antialiasing = antialiasing_cb.get_active_row_number();
 
 
     if (batch_export.get_active ()) {
@@ -1052,7 +1061,7 @@ void Export::onExport ()
                                              onProgressCallback, (void*)prog_dlg,
                                              TRUE,  // overwrite without asking
                                              hide ? selected : x, 
-                                             do_interlace, color_type, bit_depth, zlib
+                                             do_interlace, color_type, bit_depth, zlib, antialiasing
                                             )) {
                         gchar * error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
 
@@ -1145,7 +1154,7 @@ void Export::onExport ()
                               onProgressCallback, (void*)prog_dlg,
                               FALSE,
                               hide ? selected : x, 
-                              do_interlace, color_type, bit_depth, zlib
+                              do_interlace, color_type, bit_depth, zlib, antialiasing
                               );
         if (status == EXPORT_ERROR) {
             gchar * safeFile = Inkscape::IO::sanitizeString(path.c_str());

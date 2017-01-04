@@ -95,6 +95,7 @@ DrawingGroup::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
     if (stop_at == NULL) {
         // normal rendering
         for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
+            i->setAntialiasing(_antialias);
             i->render(dc, area, flags, stop_at);
         }
     } else {
@@ -103,10 +104,12 @@ DrawingGroup::_renderItem(DrawingContext &dc, Geom::IntRect const &area, unsigne
             if (&*i == stop_at) return RENDER_OK; // do not render the stop_at item at all
             if (i->isAncestorOf(stop_at)) {
                 // render its ancestors without masks, opacity or filters
+                i->setAntialiasing(_antialias);
                 i->render(dc, area, flags | RENDER_FILTER_BACKGROUND, stop_at);
                 // stop further rendering
                 return RENDER_OK;
             } else {
+                i->setAntialiasing(_antialias);
                 i->render(dc, area, flags, stop_at);
             }
         }

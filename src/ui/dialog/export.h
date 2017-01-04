@@ -327,6 +327,8 @@ private:
     Gtk::Label                        pHYs_label;
     Glib::RefPtr<Gtk::Adjustment>     pHYs_adj;
     Gtk::SpinButton                   pHYs_sb;
+    Gtk::Label                        antialiasing_label;
+    Gtk::ComboBoxText                 antialiasing_cb;
 
     /* Export Button widgets */
     Gtk::HBox button_box;

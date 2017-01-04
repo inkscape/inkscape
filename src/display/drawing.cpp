@@ -167,10 +167,14 @@ Drawing::update(Geom::IntRect const &area, UpdateContext const &ctx, unsigned fl
 }
 
 void
-Drawing::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flags)
+Drawing::render(DrawingContext &dc, Geom::IntRect const &area, unsigned flags, int antialiasing)
 {
     if (_root) {
+        int prev_a = _root->_antialias;
+        if(antialiasing >= 0)
+            _root->setAntialiasing(antialiasing);
         _root->render(dc, area, flags);
+        _root->setAntialiasing(prev_a);
     }
 
     if (colorMode() == COLORMODE_GRAYSCALE) {
