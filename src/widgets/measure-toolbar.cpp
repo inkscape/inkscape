@@ -326,7 +326,7 @@ void sp_measure_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, G
     {
         eact = create_adjustment_action( "MeasureOffsetAction",
                                          _("Offset"), _("Offset:"),
-                                         _("The offset size"),
+                                         _("Mark dimension offset"),
                                          "/tools/measure/offset", 5.0,
                                          GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0.0, 90000.0, 1.0, 4.0,
