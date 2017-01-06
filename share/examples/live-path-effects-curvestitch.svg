@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -8,13 +9,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="793.70081"
+   height="1122.5197"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.46dev+devel"
+   inkscape:version="0.92.0 r15304"
    sodipodi:docname="live-path-effects-curvestitch.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
   <defs
      id="defs4">
     <inkscape:path-effect
@@ -23,29 +25,68 @@
        count="5"
        endpoint_variation="0;0"
        scale_stroke_y="true"
-       startpoint_variation="0;0" />
+       startpoint_variation="0;0"
+       is_visible="true"
+       startpoint_edge_variation="0;1"
+       startpoint_spacing_variation="0;1"
+       endpoint_edge_variation="0;1"
+       endpoint_spacing_variation="0;1"
+       strokepath="M 0,0 H 1"
+       prop_scale="1"
+       scale_y_rel="false" />
     <inkscape:path-effect
        effect="curvestitching"
        id="path-effect3449"
        count="5"
        endpoint_variation="0;1"
        startpoint_variation="0;1"
-       strokepath="M -232.30746,542.9951 C -162.07426,522.03554 -112.54164,526.2654 -69.672899,544.00525"
-       scale_stroke_y="true" />
+       strokepath="m -232.30746,542.9951 c 70.2332,-20.95956 119.76582,-16.7297 162.634561,1.01015"
+       scale_stroke_y="true"
+       is_visible="true"
+       startpoint_edge_variation="0;1"
+       startpoint_spacing_variation="0;1"
+       endpoint_edge_variation="0;1"
+       endpoint_spacing_variation="0;1"
+       prop_scale="1"
+       scale_y_rel="false" />
     <inkscape:path-effect
        effect="curvestitching"
        id="path-effect2955"
        count="49"
        endpoint_variation="0;0"
-       startpoint_variation="0;0" />
+       startpoint_variation="0;0"
+       is_visible="true"
+       startpoint_edge_variation="0;1"
+       startpoint_spacing_variation="0;1"
+       endpoint_edge_variation="0;1"
+       endpoint_spacing_variation="0;1"
+       strokepath="M 0,0 H 1"
+       prop_scale="1"
+       scale_y_rel="false" />
     <inkscape:path-effect
        effect="curvestitching"
        id="path-effect2936"
-       count="20" />
+       count="20"
+       is_visible="true"
+       startpoint_edge_variation="0;1"
+       startpoint_spacing_variation="0;1"
+       endpoint_edge_variation="0;1"
+       endpoint_spacing_variation="0;1"
+       strokepath="M 0,0 H 1"
+       prop_scale="1"
+       scale_y_rel="false" />
     <inkscape:path-effect
        effect="curvestitching"
        id="path-effect2332"
-       count="25" />
+       count="25"
+       is_visible="true"
+       startpoint_edge_variation="0;1"
+       startpoint_spacing_variation="0;1"
+       endpoint_edge_variation="0;1"
+       endpoint_spacing_variation="0;1"
+       strokepath="M 0,0 H 1"
+       prop_scale="1"
+       scale_y_rel="false" />
     <inkscape:path-effect
        effect="curvestitching"
        id="path-effect2300"
@@ -53,7 +94,14 @@
        endpoint_variation="0;1"
        scale_stroke_y="true"
        startpoint_variation="0;1"
-       strokepath="M 22.223356,138.17413 C 92.456564,117.21457 141.98918,121.44443 184.85792,139.18428" />
+       strokepath="m 22.223356,138.17413 c 70.233208,-20.95956 119.765824,-16.7297 162.634564,1.01015"
+       is_visible="true"
+       startpoint_edge_variation="0;1"
+       startpoint_spacing_variation="0;1"
+       endpoint_edge_variation="0;1"
+       endpoint_spacing_variation="0;1"
+       prop_scale="1"
+       scale_y_rel="false" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -65,15 +113,17 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9899495"
-     inkscape:cx="521.39204"
-     inkscape:cy="316.77113"
+     inkscape:zoom="0.52471242"
+     inkscape:cx="396.8504"
+     inkscape:cy="561.25983"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="1152"
      inkscape:window-height="808"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4" />
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     showgrid="false"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -91,209 +141,205 @@
      id="layer1">
     <path
        id="path2293"
-       style="fill:#ffaaaa;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 112.989,590.846 C 106.693,783.444 83.4304,916.591 49.3598,1029.84 M 110.602,601.252 C 109.899,787.783 90.52,917.128 59.7642,1027.44 M 108.218,611.671 C 113.113,792.151 97.6286,917.742 70.2045,1025.18 M 105.838,622.103 C 116.331,796.547 104.754,918.433 80.6804,1023.07 M 103.463,632.548 C 119.55,800.973 111.892,919.205 91.1916,1021.12 M 101.094,643.009 C 122.768,805.428 119.042,920.059 101.738,1019.33 M 98.7336,653.484 C 125.98,809.914 126.199,920.999 112.321,1017.7 M 96.3824,663.974 C 129.181,814.432 133.359,922.028 122.939,1016.25 M 94.0425,674.48 C 132.368,818.986 140.52,923.149 133.594,1014.96 M 91.7157,685 C 135.536,823.576 147.676,924.367 144.287,1013.86 M 89.4041,695.534 C 138.678,828.209 154.823,925.685 155.018,1012.94 M 87.1097,706.08 C 141.792,832.888 161.959,927.111 165.788,1012.21 M 84.834,716.636 C 144.871,837.62 169.078,928.651 176.598,1011.66 M 82.5787,727.201 C 147.912,842.415 176.175,930.314 187.444,1011.31 M 80.3446,737.769 C 150.91,847.278 183.247,932.103 198.326,1011.14 M 78.1322,748.339 C 153.863,852.215 190.29,934.02 209.24,1011.15 M 75.9412,758.906 C 156.771,857.234 197.304,936.07 220.183,1011.33 M 73.7706,769.466 C 159.636,862.34 204.287,938.256 231.153,1011.67 M 71.6186,780.015 C 162.459,867.541 211.242,940.579 242.144,1012.16 M 69.4829,790.551 C 165.244,872.843 218.168,943.043 253.151,1012.8 M 67.3605,801.069 C 167.998,878.25 225.071,945.649 264.168,1013.58 M 65.2482,811.569 C 170.727,883.765 231.951,948.397 275.189,1014.49 M 63.1426,822.048 C 173.436,889.389 238.813,951.286 286.207,1015.52 M 61.0406,832.506 C 176.132,895.116 245.662,954.305 297.217,1016.66 M 58.9392,842.943 C 178.823,900.94 252.502,957.44 308.219,1017.89 M 56.8359,853.359 C 181.513,906.851 259.338,960.681 319.209,1019.19 M 54.7287,863.755 C 184.21,912.841 266.175,964.012 330.187,1020.56 M 52.6157,874.133 C 186.916,918.9 273.015,967.42 341.151,1021.96 M 50.4957,884.494 C 189.635,925.018 279.863,970.891 352.103,1023.4 M 48.3679,894.84 C 192.37,931.185 286.721,974.41 363.041,1024.85 M 46.2315,905.171 C 195.122,937.389 293.589,977.963 373.967,1026.3 M 44.0865,915.49 C 197.894,943.62 300.472,981.533 384.883,1027.73 M 41.9327,925.797 C 200.687,949.864 307.371,985.102 395.792,1029.12 M 39.7703,936.095 C 203.501,956.114 314.286,988.658 406.697,1030.47 M 37.5994,946.384 C 206.336,962.36 321.22,992.188 417.598,1031.75 M 35.4203,956.664 C 209.192,968.595 328.171,995.682 428.495,1032.95 M 33.2334,966.938 C 212.069,974.81 335.14,999.126 439.392,1034.07 M 31.039,977.206 C 214.965,980.997 342.126,1002.51 450.288,1035.08 M 28.8377,987.469 C 217.882,987.148 349.131,1005.82 461.185,1035.98 M 26.6297,997.727 C 220.817,993.257 356.153,1009.05 472.085,1036.74"
+       style="fill:#ffaaaa;fill-rule:evenodd;stroke:#000000;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 120.95298,630.29736 C 112.85316,835.5376 88.319358,977.60086 53.148201,1098.5638 M 118.40809,641.38632 C 116.27026,840.19038 95.879343,978.19133 64.247889,1095.9916 M 115.86626,652.48774 c 3.82923,192.38744 -12.40631,326.37612 -40.480629,441.08386 M 113.32845,663.60237 c 9.79765,185.9901 -2.26987,316.01855 -26.767477,427.70733 M 110.79574,674.7309 c 15.76326,179.61197 7.87665,305.73423 -13.022087,414.4808 M 108.26942,685.87395 c 21.72128,173.25326 18.02881,295.52528 0.75419,401.40925 M 105.75096,697.03196 C 133.41729,863.94668 133.9327,982.42621 120.311,1085.5299 M 103.242,708.20514 c 33.59249,160.59782 38.33009,275.34428 28.39418,375.75186 M 100.74432,719.39343 c 39.49335,154.30492 48.46815,265.37924 42.25536,363.17587 M 98.259855,730.59638 C 143.62193,878.63601 156.84972,986.10032 154.40218,1081.3715 M 95.790558,741.81309 c 51.191722,141.807 68.689082,245.7244 70.053842,338.55431 M 93.338353,753.04213 C 150.31379,888.65593 172.0981,989.09009 177.32704,1079.5605 M 90.904998,764.28147 C 153.61187,893.75025 179.70111,990.76516 188.85042,1078.9536 M 88.491919,775.52847 C 156.8714,898.91195 187.28311,992.57201 200.41168,1078.5507 M 86.100102,786.77996 C 160.08865,904.1472 194.83991,994.51419 212.00835,1078.3463 M 83.72996,798.03241 c 79.53155,111.42956 118.63886,198.56168 139.90816,280.29969 M 81.381224,809.28201 C 166.38939,914.86285 209.86823,998.81452 235.29794,1078.4994 M 79.052882,820.52484 C 169.47333,920.35661 217.33768,1001.1784 246.98388,1078.8393 M 76.743196,831.75715 C 172.51597,925.94973 224.77785,1003.6886 258.69115,1079.3434 M 74.449765,842.97551 C 175.52142,931.64793 232.19047,1006.3471 270.41423,1080.0033 M 72.16967,854.17702 c 106.32527,83.27875 167.40838,154.97848 209.97732,226.63438 M 69.899652,865.35946 C 181.44254,943.37632 246.94364,1012.114 293.88289,1081.761 M 67.636336,876.52134 C 184.37047,949.41006 254.29049,1015.2201 305.61527,1082.8437 M 65.37656,887.66203 c 121.9088,67.88895 196.24633,130.80037 251.9631,196.37987 M 63.117443,898.78156 C 190.19412,961.79141 268.94629,1021.8276 329.05395,1085.3377 M 60.856449,909.88047 C 193.1029,968.12257 276.26559,1025.3021 340.75654,1086.7145 M 58.591453,920.95972 C 196.01696,974.53484 283.58508,1028.8715 352.44629,1088.1557 M 56.320753,932.02053 C 198.94064,981.01794 290.90839,1032.521 364.12253,1089.6453 M 54.043061,943.06431 C 201.87735,987.56123 298.23848,1036.2356 375.7851,1091.1675 M 51.757469,954.09254 C 204.82965,994.15388 305.57775,1040.0001 387.43424,1092.7066 M 49.463395,965.10671 C 207.7994,1000.7851 312.92806,1043.7993 399.07061,1094.2467 M 47.160619,976.10829 C 210.78855,1007.442 320.29227,1047.6147 410.69736,1095.7676 M 44.849132,987.09867 C 213.79874,1014.1124 327.67314,1051.4283 422.3182,1097.2493 M 42.528985,998.07908 C 216.83027,1020.7869 335.0713,1055.227 433.93415,1098.6782 M 40.200364,1009.0506 c 179.682776,18.406 302.286806,49.9472 405.346046,90.9897 M 37.863553,1020.0144 c 185.093607,14.0982 312.057467,42.7137 419.292707,81.3073 M 35.518905,1030.9712 c 190.533045,9.7752 321.854115,35.4342 433.246195,71.5373 M 33.166819,1041.9219 c 196.000241,5.4278 331.676441,28.0952 447.207511,61.6644 m -449.56661,-50.719 c 201.49424,1.0472 341.52407,20.6838 461.17772,51.6735 m -463.543394,-40.733 c 207.014054,-3.3751 351.396584,13.1875 475.157844,41.5499"
        inkscape:path-effect="#path-effect2300"
-       inkscape:original-d="M 119.45542,591.76834 L 27.184914,991.21866 M 56.825964,1030.9018 C 241.13794,983.96177 338.7716,1020.7021 472.72589,1029.2281"
-       sodipodi:nodetypes="cccc" />
+       inkscape:original-d="M 127.41911,631.21956 28.997242,1057.2999 m 31.61712,42.3287 c 196.599438,-50.0694 300.742008,-10.8797 443.626588,-1.7853"
+       sodipodi:nodetypes="cccc"
+       inkscape:connector-curvature="0" />
     <g
        id="g3401"
-       transform="translate(78.987743,-119.34158)">
+       transform="translate(84.253593,-127.29769)">
       <g
-         transform="translate(33.476821,34.399767)"
+         transform="translate(35.708609,36.693085)"
          id="g3179">
-        <path
-           sodipodi:type="arc"
-           style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.53125;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+        <ellipse
+           style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.56666666;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            id="path3177"
-           sodipodi:cx="-44.990662"
-           sodipodi:cy="199.31558"
-           sodipodi:rx="37.886871"
-           sodipodi:ry="34.92696"
-           d="M -7.1037903,199.31558 A 37.886871,34.92696 0 1 1 -82.877533,199.31558 A 37.886871,34.92696 0 1 1 -7.1037903,199.31558 z"
-           transform="translate(58.014272,-17.759472)" />
+           cx="13.891851"
+           cy="193.65985"
+           rx="40.412663"
+           ry="37.255424" />
         <text
            xml:space="preserve"
-           style="font-size:22px;font-style:normal;font-weight:normal;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-           x="-1.3160369"
-           y="196.35568"
+           style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="-1.4037727"
+           y="209.44606"
            id="text3173"><tspan
              sodipodi:role="line"
              id="tspan3175"
-             x="-1.3160369"
-             y="196.35568"
-             style="font-size:40px;font-weight:bold;writing-mode:lr-tb;fill:#0000ff">1</tspan></text>
+             x="-1.4037727"
+             y="209.44606"
+             style="font-weight:bold;font-size:42.66666794px;writing-mode:lr-tb;fill:#0000ff;stroke-width:1.06666672px">1</tspan></text>
       </g>
       <flowRoot
          xml:space="preserve"
          id="flowRoot3311"
-         style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-         transform="translate(-60.609152,88.893432)"><flowRegion
-           id="flowRegion3313"><rect
+         style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+           id="flowRegion3313"
+           style="stroke-width:1.06666672px"><rect
              id="rect3315"
-             width="320.21835"
-             height="69.700531"
-             x="149.50258"
-             y="102.81879" /></flowRegion><flowPara
-           id="flowPara3317">Draw the two paths that will</flowPara><flowPara
-           id="flowPara3319">be connected with curves</flowPara></flowRoot>    </g>
+             width="341.56625"
+             height="74.347237"
+             x="94.819656"
+             y="204.49303"
+             style="stroke-width:1.13777781px" /></flowRegion><flowPara
+           id="flowPara3317"
+           style="stroke-width:1.06666672px">Draw the two paths that will</flowPara><flowPara
+           id="flowPara3319"
+           style="stroke-width:1.06666672px">be connected with curves</flowPara></flowRoot>    </g>
     <g
        id="g3412"
-       transform="translate(49.509796,-145.4866)">
+       transform="translate(52.810449,-155.18571)">
       <flowRoot
-         transform="translate(-12.641774,211.71362)"
-         style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          id="flowRoot3321"
          xml:space="preserve"><flowRegion
-           id="flowRegion3323"><rect
-             y="102.81879"
-             x="149.50258"
-             height="106.06602"
-             width="341.43155"
-             id="rect3325" /></flowRegion><flowPara
-           id="flowPara3329">Combine them into</flowPara><flowPara
-           id="flowPara3333">one path (Ctrl+K)</flowPara></flowRoot>      <g
-         transform="translate(3.0304576,87.883272)"
+           id="flowRegion3323"
+           style="stroke-width:1.06666672px"><rect
+             y="335.50122"
+             x="145.98486"
+             height="113.13708"
+             width="364.19366"
+             id="rect3325"
+             style="stroke-width:1.13777781px" /></flowRegion><flowPara
+           id="flowPara3329"
+           style="stroke-width:1.06666672px">Combine them into</flowPara><flowPara
+           id="flowPara3333"
+           style="stroke-width:1.06666672px">one path (Ctrl+K)</flowPara></flowRoot>      <g
+         transform="translate(3.2324881,93.742157)"
          id="g2615">
         <g
-           transform="translate(78.933685,72.78556)"
+           transform="translate(84.195931,77.637931)"
            id="g2619">
-          <path
-             sodipodi:type="arc"
-             style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.53125;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          <ellipse
+             style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.56666666;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
              id="path2621"
-             sodipodi:cx="-44.990662"
-             sodipodi:cy="199.31558"
-             sodipodi:rx="37.886871"
-             sodipodi:ry="34.92696"
-             d="M -7.1037903,199.31558 A 37.886871,34.92696 0 1 1 -82.877533,199.31558 A 37.886871,34.92696 0 1 1 -7.1037903,199.31558 z"
-             transform="translate(57.004119,-19.779777)" />
+             cx="12.814355"
+             cy="191.50485"
+             rx="40.412663"
+             ry="37.255424" />
           <text
              xml:space="preserve"
-             style="font-size:22px;font-style:normal;font-weight:normal;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-             x="-1.0201701"
-             y="193.32523"
+             style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             x="-1.0881814"
+             y="206.21358"
              id="text2623"><tspan
                sodipodi:role="line"
                id="tspan2625"
-               x="-1.0201701"
-               y="193.32523"
-               style="font-size:40px;font-weight:bold;writing-mode:lr-tb;fill:#0000ff">2</tspan></text>
+               x="-1.0881814"
+               y="206.21358"
+               style="font-weight:bold;font-size:42.66666794px;writing-mode:lr-tb;fill:#0000ff;stroke-width:1.06666672px">2</tspan></text>
         </g>
       </g>
     </g>
-    <path
-       transform="translate(97.846372,333.01089)"
-       d="M -7.1037903,199.31558 A 37.886871,34.92696 0 1 1 -82.877533,199.31558 A 37.886871,34.92696 0 1 1 -7.1037903,199.31558 z"
-       sodipodi:ry="34.92696"
-       sodipodi:rx="37.886871"
-       sodipodi:cy="199.31558"
-       sodipodi:cx="-44.990662"
+    <ellipse
        id="path2645"
-       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.53125;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       sodipodi:type="arc" />
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.56666666;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       cx="56.379425"
+       cy="567.81488"
+       rx="40.412663"
+       ry="37.255424" />
     <text
        id="text2647"
-       y="546.53436"
-       x="37.801777"
-       style="font-size:22px;font-style:normal;font-weight:normal;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       y="582.96997"
+       x="40.321896"
+       style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-size:40px;font-weight:bold;writing-mode:lr-tb;fill:#0000ff"
-         y="546.53436"
-         x="37.801777"
+         style="font-weight:bold;font-size:42.66666794px;writing-mode:lr-tb;fill:#0000ff;stroke-width:1.06666672px"
+         y="582.96997"
+         x="40.321896"
          id="tspan2649"
          sodipodi:role="line">4</tspan></text>
     <g
        id="g2618"
-       transform="translate(102.02541,-16.162441)">
+       transform="translate(108.8271,-17.239937)">
       <g
-         transform="translate(623.40048,72.41409)"
+         transform="translate(664.96051,77.241696)"
          id="g2692">
         <path
-           style="fill:none;fill-rule:evenodd;stroke:#008000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           d="M -232.30746,542.9951 C -162.07426,522.03554 -112.54164,526.2654 -69.672899,544.00525"
+           style="fill:none;fill-rule:evenodd;stroke:#008000;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m -247.79462,579.19477 c 74.91541,-22.35686 127.7502,-17.84501 173.476861,1.0775"
            id="path2325"
-           sodipodi:nodetypes="cc" />
+           sodipodi:nodetypes="cc"
+           inkscape:connector-curvature="0" />
         <text
            id="text2657"
-           y="512.94073"
-           x="-246.47723"
-           style="font-size:22px;font-style:normal;font-weight:normal;fill:#008000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+           y="547.13678"
+           x="-262.90906"
+           style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#008000;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            xml:space="preserve"><tspan
-             y="512.94073"
-             x="-246.47723"
+             y="547.13678"
+             x="-262.90906"
              id="tspan2659"
-             sodipodi:role="line">replacement</tspan></text>
+             sodipodi:role="line"
+             style="stroke-width:1.06666672px">replacement</tspan></text>
       </g>
       <g
-         transform="translate(506.08642,3.0304583)"
+         transform="translate(539.82551,3.2324889)"
          id="g2697">
         <path
            id="path2651"
-           d="M -116.03118,604.54771 L 47.736084,604.54771"
-           style="fill:#ff0000;fill-rule:evenodd;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           sodipodi:nodetypes="cc" />
+           d="M -123.76659,644.85089 H 50.91849"
+           style="fill:#ff0000;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           sodipodi:nodetypes="cc"
+           inkscape:connector-curvature="0" />
         <text
            xml:space="preserve"
-           style="font-size:22px;font-style:normal;font-weight:normal;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-           x="-45.488102"
-           y="639.0575"
+           style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="-48.520641"
+           y="681.66132"
            id="text2685"><tspan
              sodipodi:role="line"
              id="tspan2687"
-             x="-45.488102"
-             y="639.0575">default path</tspan></text>
+             x="-48.520641"
+             y="681.66132"
+             style="stroke-width:1.06666672px">default path</tspan></text>
       </g>
     </g>
-    <path
-       sodipodi:type="arc"
-       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.53125;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+    <ellipse
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.56666666;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path2708"
-       sodipodi:cx="-44.990662"
-       sodipodi:cy="199.31558"
-       sodipodi:rx="37.886871"
-       sodipodi:ry="34.92696"
-       d="M -7.1037903,199.31558 A 37.886871,34.92696 0 1 1 -82.877533,199.31558 A 37.886871,34.92696 0 1 1 -7.1037903,199.31558 z"
-       transform="translate(334.68254,532.67477)" />
+       cx="309.00467"
+       cy="780.78973"
+       rx="40.412663"
+       ry="37.255424" />
     <text
        xml:space="preserve"
-       style="font-size:22px;font-style:normal;font-weight:normal;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="277.30112"
-       y="745.77979"
+       style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="295.78787"
+       y="795.49841"
        id="text2710"><tspan
          sodipodi:role="line"
          id="tspan2712"
-         x="277.30112"
-         y="745.77979"
-         style="font-size:40px;font-weight:bold;writing-mode:lr-tb;fill:#0000ff">5</tspan></text>
+         x="295.78787"
+         y="795.49841"
+         style="font-weight:bold;font-size:42.66666794px;writing-mode:lr-tb;fill:#0000ff;stroke-width:1.06666672px">5</tspan></text>
     <g
        id="g3424"
-       transform="translate(132.6541,-44.530819)">
+       transform="translate(141.49771,-47.49954)">
       <g
          id="g2627"
-         transform="translate(4.459029,170.74042)">
+         transform="translate(4.7562976,182.12311)">
         <g
            id="g2631"
-           transform="translate(78.933685,72.78556)">
-          <path
-             transform="translate(57.004119,-19.779777)"
-             d="M -7.1037903,199.31558 A 37.886871,34.92696 0 1 1 -82.877533,199.31558 A 37.886871,34.92696 0 1 1 -7.1037903,199.31558 z"
-             sodipodi:ry="34.92696"
-             sodipodi:rx="37.886871"
-             sodipodi:cy="199.31558"
-             sodipodi:cx="-44.990662"
+           transform="translate(84.195931,77.637931)">
+          <ellipse
              id="path2633"
-             style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.53125;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             sodipodi:type="arc" />
+             style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:0.56666666;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             cx="12.814355"
+             cy="191.50485"
+             rx="40.412663"
+             ry="37.255424" />
           <text
              id="text2635"
-             y="193.32523"
-             x="-1.0201701"
-             style="font-size:22px;font-style:normal;font-weight:normal;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+             y="206.21358"
+             x="-1.0881814"
+             style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              xml:space="preserve"><tspan
-               style="font-size:40px;font-weight:bold;writing-mode:lr-tb;fill:#0000ff"
-               y="193.32523"
-               x="-1.0201701"
+               style="font-weight:bold;font-size:42.66666794px;writing-mode:lr-tb;fill:#0000ff;stroke-width:1.06666672px"
+               y="206.21358"
+               x="-1.0881814"
                id="tspan2637"
                sodipodi:role="line">3</tspan></text>
         </g>
@@ -301,56 +347,67 @@
       <flowRoot
          xml:space="preserve"
          id="flowRoot3349"
-         style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-         transform="translate(-10.866575,296.2198)"><flowRegion
-           id="flowRegion3351"><rect
+         style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+           id="flowRegion3351"
+           style="stroke-width:1.06666672px"><rect
              id="rect3353"
-             width="282.84271"
-             height="78.791901"
-             x="149.50258"
-             y="102.81879" /></flowRegion><flowPara
-           id="flowPara3357">Apply &quot;Curve Stitching&quot;</flowPara><flowPara
-           id="flowPara3361">effect (Ctrl+Shift+7)</flowPara></flowRoot>    </g>
+             width="301.69888"
+             height="84.044693"
+             x="147.8784"
+             y="425.64117"
+             style="stroke-width:1.13777781px" /></flowRegion><flowPara
+           id="flowPara3357"
+           style="stroke-width:1.06666672px">Apply &quot;Curve Stitching&quot;</flowPara><flowPara
+           id="flowPara3361"
+           style="stroke-width:1.06666672px">effect (Ctrl+Shift+7)</flowPara></flowRoot>    </g>
     <flowRoot
        xml:space="preserve"
        id="flowRoot3363"
-       style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       transform="translate(179.80715,582.85803)"><flowRegion
-         id="flowRegion3365"><rect
+       style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+         id="flowRegion3365"
+         style="stroke-width:1.06666672px"><rect
            id="rect3367"
-           width="437.39606"
-           height="111.11678"
-           x="149.50258"
-           y="102.81879" /></flowRegion><flowPara
-         id="flowPara3371">Copy the replacement (Ctrl+C)</flowPara><flowPara
-         id="flowPara2638">and paste it onto the &quot;Stroke path&quot; </flowPara><flowPara
-         id="flowPara2642">(press F2 to edit the original paths!)</flowPara></flowRoot>    <path
+           width="466.55579"
+           height="118.52457"
+           x="351.2637"
+           y="731.38861"
+           style="stroke-width:1.13777781px" /></flowRegion><flowPara
+         id="flowPara3371"
+         style="stroke-width:1.06666672px">Copy the replacement (Ctrl+C)</flowPara><flowPara
+         id="flowPara2638"
+         style="stroke-width:1.06666672px">and paste it onto the &quot;Stroke path&quot; </flowPara><flowPara
+         id="flowPara2642"
+         style="stroke-width:1.06666672px">(press F2 to edit the original paths!)</flowPara></flowRoot>    <path
        id="path3436"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 511.48082,60.87749 L 509.46052,208.35975 M 529.66357,232.60341 L 665.02401,232.60341" />
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 545.57954,64.935989 543.42455,222.2504 m 21.54992,25.8599 h 144.38447"
+       inkscape:connector-curvature="0" />
     <path
-       d="M 104.492,299.447 L 122.674,471.173 M 103.987,336.317 L 156.515,471.173 M 103.482,373.188 L 190.355,471.173 M 102.977,410.059 L 224.195,471.173 M 102.471,446.929 L 258.035,471.173"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 111.45787,319.40993 19.39493,183.17433 m -19.93368,-143.84573 56.0298,143.84573 m -56.56854,-104.51712 92.66465,104.51712 m -93.2034,-65.18852 129.29952,65.18852 m -129.83827,-25.85991 165.93439,25.85991"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="path3447"
        inkscape:path-effect="#path-effect3456"
-       inkscape:original-d="M 104.49175,299.44681 L 102.47145,446.92908 M 122.6745,471.17274 L 258.03494,471.17274" />
+       inkscape:original-d="m 111.45787,319.40993 -2.15499,157.31442 m 21.54992,25.85991 h 144.38447"
+       inkscape:connector-curvature="0" />
     <path
-       inkscape:original-d="M 504.88043,778.89713 L 502.86013,926.3794 M 523.06318,950.62306 L 658.42362,950.62306"
+       inkscape:original-d="m 538.53913,830.82361 -2.15499,157.31442 m 21.54992,25.85987 h 144.38447"
        inkscape:path-effect="#path-effect3449"
        id="path3454"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 498.385,779.585 C 527.08,851.537 528.412,904.284 515.563,951.417 M 498.289,818.138 C 540.503,868.768 552.56,911.375 549.876,953.36 M 498.983,856.971 C 552.182,885.381 575.475,918.03 585.1,955.626 M 500.425,895.341 C 562.208,903.018 597.223,925.408 621.188,957.357 M 501.854,932.833 C 572.261,922.593 618.989,934.156 657.262,958.075" />
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 532.04388,831.51134 c 29.21868,76.89631 30.91933,133.12996 18.39039,183.28066 M 531.91422,872.52286 c 43.72657,54.51198 56.84981,99.85742 55.08853,144.21234 M 532.57433,913.8139 c 55.70012,31.23066 80.7574,65.86891 91.90881,105.1872 m -90.50068,-64.35942 c 65.2733,9.43592 102.74905,33.06697 128.84477,66.09052 M 535.37838,994.59169 c 74.88568,-9.54208 124.77197,2.51332 165.77884,26.85801"
+       inkscape:connector-curvature="0" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2591"
-       style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       transform="translate(-505.07627,-66.670068)"><flowRegion
-         id="flowRegion2593"><rect
+       style="font-style:normal;font-weight:normal;font-size:23.46666718px;font-family:'Bitstream Vera Sans';fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06666672px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+         id="flowRegion2593"
+         style="stroke-width:1.06666672px"><rect
            id="rect2595"
-           width="454.56863"
-           height="93.944183"
-           x="601.04077"
-           y="580.62097"
-           style="font-size:22px" /></flowRegion><flowPara
-         id="flowPara2597">Draw a path that will replace the default horizontal connecting path</flowPara></flowRoot>  </g>
+           width="484.8732"
+           height="100.20713"
+           x="102.36214"
+           y="548.21429"
+           style="font-size:23.46666718px;stroke-width:1.13777781px" /></flowRegion><flowPara
+         id="flowPara2597"
+         style="stroke-width:1.06666672px">Draw a path that will replace the default horizontal connecting path</flowPara></flowRoot>  </g>
 </svg>
