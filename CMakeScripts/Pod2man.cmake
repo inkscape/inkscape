@@ -28,10 +28,12 @@ macro(pod2man PODFILE_FULL RELEASE SECTION CENTER)
             set(MANPAGE_TARGET "man-${NAME}-${LANG}")
             set(MANFILE_TEMP "${CMAKE_CURRENT_BINARY_DIR}/man/${NAME}.${LANG}.tmp")
             set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/man/${NAME}.${LANG}.${SECTION}")
+            set(MANFILE_DEST "${CMAKE_INSTALL_PREFIX}/${SHARE_INSTALL}/man/${LANG}/man${SECTION}")
         else()
             set(MANPAGE_TARGET "man-${NAME}")
             set(MANFILE_TEMP "${CMAKE_CURRENT_BINARY_DIR}/man/${NAME}.tmp")
             set(MANFILE_FULL "${CMAKE_CURRENT_BINARY_DIR}/man/${NAME}.${SECTION}")
+            set(MANFILE_DEST "${CMAKE_INSTALL_PREFIX}/${SHARE_INSTALL}/man/man${SECTION}")
         endif()
         add_custom_command(
             OUTPUT ${MANFILE_TEMP}
@@ -48,7 +50,8 @@ macro(pod2man PODFILE_FULL RELEASE SECTION CENTER)
         )
         install(
             FILES ${MANFILE_FULL}
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/${SHARE_INSTALL}/man/man${SECTION}
+            RENAME ${NAME}.${SECTION}
+            DESTINATION ${MANFILE_DEST}
         )
     endif()
 endmacro(pod2man PODFILE NAME SECTION CENTER)
