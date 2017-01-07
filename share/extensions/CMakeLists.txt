@@ -26,8 +26,18 @@ file(GLOB _SCRIPTS
       "*.sh"
       "*.rb"
     )
-
+# These files don't need the +x bit
+set(_SCRIPTS_NOEXEC
+    "hersheydata.py"
+    "hpgl_decoder.py"
+    "hpgl_encoder.py"
+    "simplepath.py"
+    "simplestyle.py"
+    "simpletransform.py"
+)
+list(REMOVE_ITEM _SCRIPTS ${_SCRIPTS_NOEXEC})
 install(PROGRAMS ${_SCRIPTS} DESTINATION ${INKSCAPE_SHARE_INSTALL}/extensions)
+install(FILES ${_SCRIPTS_NOEXEC} DESTINATION ${INKSCAPE_SHARE_INSTALL}/extensions)
 
 file(GLOB _FILES "alphabet_soup/*.svg")
 install(FILES ${_FILES} DESTINATION ${INKSCAPE_SHARE_INSTALL}/extensions/alphabet_soup)
