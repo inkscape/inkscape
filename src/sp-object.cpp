@@ -660,7 +660,9 @@ void SPObject::build(SPDocument *document, Inkscape::XML::Node *repr) {
     object->readAttr("xml:space");
     object->readAttr("inkscape:label");
     object->readAttr("inkscape:collect");
-    if(object->cloned)
+    if(object->cloned && (repr->attribute("id")) ) // The cases where this happens are when the "original" has no id. This happens
+                                                   // if it is a SPString (a TextNode, e.g. in a <title>), or when importing
+                                                   // stuff externally modified to have no id. 
         object->clone_original = document->getObjectById(repr->attribute("id"));
 
     for (Inkscape::XML::Node *rchild = repr->firstChild() ; rchild != NULL; rchild = rchild->next()) {
