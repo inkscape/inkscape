@@ -33,6 +33,8 @@
 #include "eraser-toolbar.h"
 #include "calligraphy-toolbar.h" // TODO: needed for update_presets_list
 
+#include <array>
+
 #include "desktop.h"
 #include "document-undo.h"
 #include "widgets/ege-adjustment-action.h"
