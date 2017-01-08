@@ -135,7 +135,7 @@ private:
         repr = NULL;
         doc = NULL;
         write_undo = false;
-        event_type = -1;
+        event_type = 0; //SP_VERB_INVALID
     }
 };
 
