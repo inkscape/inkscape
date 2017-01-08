@@ -110,8 +110,8 @@ class Interp(inkex.Effect):
 
     def tweenstyleunit(self, property, start, end, time): # moved here so we can call 'unittouu'
         scale = self.unittouu('1px')
-        sp = self.unittouu(start[property]) / scale
-        ep = self.unittouu(end[property]) / scale
+        sp = self.unittouu(start.get(property, '1px')) / scale
+        ep = self.unittouu(end.get(property, '1px')) / scale
         return str(sp + (time * (ep - sp)))
 
     def effect(self):
