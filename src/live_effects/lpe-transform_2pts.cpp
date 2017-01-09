@@ -34,7 +34,7 @@ LPETransform2Pts::LPETransform2Pts(LivePathEffectObject *lpeobject) :
     flip_vertical(_("Flip vertical"), _("Flip vertical"), "flip_vertical", &wr, this, false,"", INKSCAPE_ICON("on"), INKSCAPE_ICON("off")),
     start(_("Start"), _("Start point"), "start", &wr, this, "Start point"),
     end(_("End"), _("End point"), "end", &wr, this, "End point"),
-    strech(_("Stretch"), _("Stretch the result"), "strech", &wr, this, 1),
+    stretch(_("Stretch"), _("Stretch the result"), "stretch", &wr, this, 1),
     offset(_("Offset"), _("Offset from knots"), "offset", &wr, this, 0),
     first_knot(_("First Knot"), _("First Knot"), "first_knot", &wr, this, 1),
     last_knot(_("Last Knot"), _("Last Knot"), "last_knot", &wr, this, 1),
@@ -52,7 +52,7 @@ LPETransform2Pts::LPETransform2Pts(LivePathEffectObject *lpeobject) :
     registerParameter(&first_knot);
     registerParameter(&last_knot);
     registerParameter(&helper_size);
-    registerParameter(&strech);
+    registerParameter(&stretch);
     registerParameter(&offset);
     registerParameter(&start);
     registerParameter(&end);
@@ -73,9 +73,9 @@ LPETransform2Pts::LPETransform2Pts(LivePathEffectObject *lpeobject) :
     offset.param_set_range(-999999.0, 999999.0);
     offset.param_set_increments(1, 1);
     offset.param_set_digits(2);
-    strech.param_set_range(0, 999.0);
-    strech.param_set_increments(0.01, 0.01);
-    strech.param_set_digits(4);
+    stretch.param_set_range(0, 999.0);
+    stretch.param_set_increments(0.01, 0.01);
+    stretch.param_set_digits(4);
     apply_to_clippath_and_mask = true;
 }
 
@@ -379,9 +379,9 @@ LPETransform2Pts::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const 
         m *= Geom::Scale(-1,1);
         m *= Geom::Rotate(original_angle);
     }
-    if(strech != 1){
+    if(stretch != 1){
         m *= Geom::Rotate(-original_angle);
-        m *= Geom::Scale(1,strech);
+        m *= Geom::Scale(1,stretch);
         m *= Geom::Rotate(original_angle);
     }
     if(elastic) {

@@ -57,7 +57,7 @@ private:
     ToggleButtonParam flip_vertical;
     PointParam start;
     PointParam end;
-    ScalarParam strech;
+    ScalarParam stretch;
     ScalarParam offset;
     ScalarParam first_knot;
     ScalarParam last_knot;
