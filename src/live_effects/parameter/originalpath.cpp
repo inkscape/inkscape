@@ -56,7 +56,7 @@ OriginalPathParam::param_newWidget()
     }
 
     { // Paste path to link button
-        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon( INKSCAPE_ICON("edit-paste"), Inkscape::ICON_SIZE_BUTTON) );
+        Gtk::Widget *pIcon = Gtk::manage( sp_icon_get_icon( INKSCAPE_ICON("edit-clone"), Inkscape::ICON_SIZE_BUTTON) );
         Gtk::Button *pButton = Gtk::manage(new Gtk::Button());
         pButton->set_relief(Gtk::RELIEF_NONE);
         pIcon->show();
