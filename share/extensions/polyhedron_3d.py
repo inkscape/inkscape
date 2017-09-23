@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#! /usr/bin/python
 '''
 Copyright (C) 2007 John Beard john.j.beard@gmail.com
 
@@ -33,6 +33,11 @@ Copyright (C) 2007 John Beard john.j.beard@gmail.com
 #back-face culling, if selected. The parameter to sort the faces by
 #is user-selectable between max, min and average z-value of the vertices
 
+#Faces are colored according to the Phong reflection model.
+
+#Faces are clipped (only in Perspective projection) when vertices of 
+#the face are crossing view plane.
+
 ######LICENCE#######
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -46,16 +51,18 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 # standard library
 import sys
 import re
+import os.path
 from math import *
 # local library
 import inkex
 import simplestyle
-from simpletransform import computePointInNode
+
+inkex.localize()
 
 # third party
 try:
@@ -83,56 +90,93 @@ def objfile(name):
     path = os.path.join(path, 'Poly3DObjects', name)
     return path
     
-def get_obj_data(obj, name):
+def get_obj_data(obj, name, fill):
     infile = open(objfile(name))
+    fill_col = tuple(x/255 for x in fill)
     
     #regular expressions
     getname = '(.[nN]ame:\\s*)(.*)'
-    floating = '([\-\+\\d*\.e]*)'   #a possibly non-integer number, with +/- and exponent.
-    getvertex = '(v\\s+)'+floating+'\\s+'+floating+'\\s+'+floating
-    getedgeline = '(l\\s+)(.*)'
-    getfaceline = '(f\\s+)(.*)'
-    getnextint = '(\\d+)([/\\d]*)(.*)'#we need to deal with 123\343\123 or 123\\456 as equivalent to 123 (we are ignoring the other options in the obj file)
-    
+    material = Material(fill_col)
     for line in infile:
         if line[0]=='#':                    #we have a comment line
             m = re.search(getname, line)        #check to see if this line contains a name
             if m:
                 obj.name = m.group(2)           #if it does, set the property
-        elif line[0] == 'v':                #we have a vertex (maybe)
-            m = re.search(getvertex, line)      #check to see if this line contains a valid vertex
-            if m:                               #we have a valid vertex
-                obj.vtx.append( [float(m.group(2)), float(m.group(3)), float(m.group(4)) ] )
-        elif line[0] == 'l':                #we have a line (maybe)
-            m = re.search(getedgeline, line)    #check to see if this line begins 'l '
-            if m:                               #we have a line beginning 'l '
-                vtxlist = []    #buffer
-                while line:
-                    m2 = re.search(getnextint, line)
-                    if m2:
-                        vtxlist.append( int(m2.group(1)) )
-                        line = m2.group(3)#remainder
-                    else:
-                        line = None
-                if len(vtxlist) > 1:#we need at least 2 vertices to make an edge
-                    for i in range (len(vtxlist)-1):#we can have more than one vertex per line - get adjacent pairs
-                        obj.edg.append( ( vtxlist[i], vtxlist[i+1] ) )#get the vertex pair between that vertex and the next
-        elif line[0] == 'f':                #we have a face (maybe)
-            m = re.search(getfaceline, line)
-            if m:                               #we have a line beginning 'f '
-                vtxlist = []#buffer
-                while line:
-                    m2 = re.search(getnextint, line)
-                    if m2:
-                        vtxlist.append( int(m2.group(1)) )
-                        line = m2.group(3)#remainder
-                    else:
-                        line = None
-                if len(vtxlist) > 2:            #we need at least 3 vertices to make an edge
-                    obj.fce.append(vtxlist)
+
+        else:
+            tokens = line.split()				#splitting line on spaces
+            if tokens:
+                if tokens[0] == 'v':            #we have a vertex (maybe)
+                    obj.vtx.append([float(tokens[1]),float(tokens[2]),float(tokens[3])])
+
+                elif tokens[0] == 'l':          #we have a line (maybe)
+                    vtxlist = []
+                    for i in range(1,len(tokens)):
+                        vtxlist.append(int(tokens[i]))
+
+                    if len(vtxlist) > 1:        #we need at least 2 vertices to make an edge
+                        obj.edg.append(vtxlist)
+
+                elif tokens[0] == 'f':          #we have a face (maybe)
+                    vtxlist = []
+                    for i in range(1, len(tokens)):
+                        face_vertex = tokens[i].split('/')
+                        vtxlist.append(int(face_vertex[0]))
+
+                    if len(vtxlist) > 2:        #we need at least 3 vertices to make an edge
+                        obj.fce.append(vtxlist)
+                        obj.material_of_faces[str(vtxlist)] = material.name
+
+                elif tokens[0] == 'mtllib':		#we have a mtl file
+                    mtl_name = os.path.join(os.path.dirname(name),tokens[1])
+                    get_mtl_data(obj, mtl_name)
+
+                elif tokens[0] == 'usemtl':		#we have to use material info
+                    material = obj.materials[tokens[1]]
+
     
     if obj.name == '':#no name was found, use filename, without extension (.obj)
         obj.name = name[0:-4]
+
+def get_mtl_data(obj, name):
+    infile = open(name)
+
+    count_newmtl = 0
+    material = Material()					
+    for line in infile:
+        if line[0] == '#':					#a comment
+            continue
+        else:
+            tokens = line.split()
+            if tokens:
+                if tokens[0] == 'newmtl':	#new mtl data declaration
+                    if count_newmtl > 0:	#add previous one to obj
+                        obj.materials[material.name] = material
+                    material = Material()	#new Material object
+                    material.name = tokens[1]
+                    count_newmtl +=1
+
+                elif tokens[0] == 'Ka':		#ambient reflection co-efficient
+                    material.ambient = (float(tokens[1]),float(tokens[2]),float(tokens[3]))
+
+                elif tokens[0] == 'Kd':		#diffuse reflection co-efficient
+                    material.diffuse = (float(tokens[1]),float(tokens[2]),float(tokens[3]))
+
+                elif tokens[0] == 'Ks':		#specular reflection co-efficient
+                    material.specular = (float(tokens[1]),float(tokens[2]),float(tokens[3]))
+
+                elif tokens[0] == 'Ns':		#shining co-efficient
+                    material.shininess = float(tokens[1])
+
+                elif tokens[0] == 'd':		#opacity
+                    material.opacity = float(tokens[1])
+
+                elif tokens[0] == 'illum':	#illumination model
+                    material.illum_no = int(tokens[1])
+
+    if count_newmtl > 0:					#add last one to obj
+        obj.materials[material.name] = material
+
 
 #RENDERING AND SVG OUTPUT FUNCTIONS
 
@@ -172,16 +216,59 @@ def draw_edges( edge_list, pts, st, parent ):
         pt_2 = pts[ edge[1]-1 ][0:2] #the point at the end
         name = 'Edge'+str(edge[0])+'-'+str(edge[1])
         draw_SVG_line(pt_1,pt_2,st, name, parent)#plot edges
+
+def check_color(color):		#checks if color does not cross its boundaries
+    for i in range(3):
+        if color[i]<0:
+            color[i] = 0
+        if color[i]>255:
+            color[i] = 255
+    return color
+
+def get_half_vector(vector1, vector2):  #
+    half_vector = add(vector1,vector2)
+    return normalise(half_vector)
+
+def get_face_color(light, material, normal):	#color of face using Phong model
+    illum_no = material.illum_no
+    color = (255,255,255)
+    if illum_no == 1:
+        ambient = multiply(light.ambient, material.ambient)
+        ambient_color = check_color(multiply(color,ambient))
+        diffuse = multiply(light.diffuse,material.diffuse)*dot(light.position,normal)
+        diffuse_color = check_color(multiply(color,diffuse))
+        color = check_color(add(ambient_color,diffuse_color))
+
+    elif illum_no == 2:
+        ambient = multiply(light.ambient, material.ambient)
+        ambient_color = check_color(multiply(color,ambient))
+        diffuse = multiply(light.diffuse,material.diffuse)*dot(light.position,normal)
+        diffuse_color = check_color(multiply(color,diffuse))
+        half = get_half_vector(light.position, normal)
+        specular = multiply(light.specular,material.specular)*power(dot(normal,half),material.shininess)
+        specular_color = check_color(multiply(color,specular))
+        color = check_color(add(ambient_color,add(diffuse_color,specular_color)))
+
+    else:
+        diffuse = multiply(light.diffuse,material.diffuse)*dot(light.position,normal)
+        color = check_color(multiply(color,diffuse))
+
+    return get_darkened_colour(color,1)
                               
-def draw_faces( faces_data, pts, obj, shading, fill_col,st, parent):          
-    for face in faces_data:#for every polygon that has been sorted
+def draw_faces( faces_data, pts, faces, obj, material_name_of_faces, 
+    shading,st, parent):          
+    for z_list in faces_data:#for every polygon that has been sorted
+        face_no = z_list[3]#the number of the face to draw
+        face = faces[face_no]
+        face_material = obj.materials[material_name_of_faces[str(face)]]
         if shading:
-            st.fill = get_darkened_colour(fill_col, face[1]/pi)#darken proportionally to angle to lighting vector
+            st.fill = get_face_color(obj.light, face_material, z_list[2])
+            #color faces based on angle and shininess of object
         else:
-            st.fill = get_darkened_colour(fill_col, 1)#do not darken colour
+            st.fill = get_darkened_colour(multiply(face_material.diffuse, 255), 1)#do not darken colour
+        st.f_opac = face_material.opacity
                           
-        face_no = face[3]#the number of the face to draw
-        draw_SVG_poly(pts, obj.fce[ face_no ], st, 'Face:'+str(face_no), parent)
+        draw_SVG_poly(pts, face, st, 'Face:'+str(face_no), parent)
 
 def get_darkened_colour( (r,g,b), factor):
 #return a hex triplet of colour, reduced in lightness proportionally to a value between 0 and 1
@@ -206,12 +293,15 @@ def length(vector):#return the pythagorean length of a vector
     return sqrt(dot(vector,vector))
 
 def normalise(vector):#return the unit vector pointing in the same direction as the argument
-    return vector / length(vector)
+    if length(vector)>0:
+        return vector / length(vector)
+    return vector
 
 def get_normal( pts, face): #returns the normal vector for the plane passing though the first three elements of face of pts
     #n = pt[0]->pt[1] x pt[0]->pt[3]
-    a = (array(pts[ face[0]-1 ]) - array(pts[ face[1]-1 ]))
-    b = (array(pts[ face[0]-1 ]) - array(pts[ face[2]-1 ]))
+    v1, v2, v3 = three_diff_vertices(pts, face) #we always get a normal vector
+    a = (array(v1) - array(v2))
+    b = (array(v1) - array(v3))
     return cross(a,b).flatten()
 
 def get_unit_normal(pts, face, cw_wound): #returns the unit normal for the plane passing through the first three points of face, taking account of winding
@@ -307,6 +397,97 @@ def make_edge_list(face_list):#make an edge vertex list from an existing face ve
             edge_list.append( new_edge )#get the vertex pair between that vertex and the next
     
     return remove_duplicates(edge_list)
+
+def transform_perspective(vtx_list, observer):#convert vertices for perspective projection 
+    transformed_vertices = []
+    for vtx in vtx_list:
+        vertex = vtx
+        z = vertex[2]
+        if z == observer:
+            z += 0.1
+
+        factor = 500/abs(observer-z)
+        vertex[0] = vertex[0]*factor
+        vertex[1] = vertex[1]*factor
+        vertex[2] = vertex[2]*factor
+        transformed_vertices.append(vertex)
+    return transformed_vertices
+
+def clip_faces(faces, pts, obs, 
+    transformed_material_of_faces, material_of_faces):
+	#clips polyhedron when vertices are too close to observer
+	#based on Sutherland-Hodgman algorithm for polygon clipping
+    screen = obs - 400 #plane for clipping polyhedron
+    transformed_faces = []
+    for face in faces:
+        material_name = material_of_faces[str(face)] #material info of current face
+        clipped_face = []
+        for i in range(len(face)):
+            v1 = pts[face[i]-1]
+            v2 = pts[face[(i+1)%len(face)]-1]
+            if (v1[2]>screen) and (v2[2]<= screen): #first vertex is out of screen
+                factor = (screen-v1[2])/(v2[2]-v1[2])
+                x = v1[0]+(factor*(v2[0]-v1[0]))
+                y = v1[1]+(factor*(v2[1]-v1[1]))
+                z = screen
+                v3 = ([x,y,z])
+                pts.append(v3) #add vertex to list
+                clipped_face.append(len(pts)) #add clipped vertex to new face
+            elif (v1[2]<=screen) and (v2[2]>screen): #second vertex is out of screen
+                factor = (screen-v1[2])/(v2[2]-v1[2])
+                x = v1[0]+(factor*(v2[0]-v1[0]))
+                y = v1[1]+(factor*(v2[1]-v1[1]))
+                z = screen
+                v3 = ([x,y,z])
+                pts.append(v3) 
+                pts.append(v3) 
+                clipped_face.append(face[i]) #add first vertex and clipped vertex to new face
+                clipped_face.append(len(pts))
+            elif (v1[2]<=screen) and (v2[2]<=screen): #no vertex is outside screen
+                clipped_face.append(face[i])
+        if len(clipped_face)>2:				#if a valid clipped face
+            transformed_material_of_faces[str(clipped_face)] = material_name
+            transformed_faces.append(clipped_face)
+    return transformed_faces
+
+def three_diff_vertices(pts, face): 	#returns 3 different vertices of a face for normal calculation
+    v1 = pts[face[0]-1]
+    index = 0
+    while (index<len(face)):
+        v2 = pts[face[index]-1]
+        if v1 == v2:
+            index = index+1
+        else:
+            break
+    if v1 == v2:
+        return False
+    index = index+1
+    while (index<len(face)):
+        v3 = pts[face[index]-1]
+        if (v1 == v3) or (v2 == v3):
+            index = index+1
+        else:
+            break
+    if (v1 == v3) or (v2 == v3):
+        return False
+    return v1, v2, v3
+
+class Material:		#a material defined by properties of 3d object
+    def __init__(self, diffuse = (0.8,0.8,0.8)):
+        self.name = ''
+        self.ambient = (0.2,0.2,0.2)
+        self.diffuse = diffuse
+        self.specular = (0.3,0.3,0.3)
+        self.shininess = 0
+        self.opacity = 1.0
+        self.illum_no = 0
+
+class Light:		#a light with some properties
+    def __init__(self, position):
+        self.position = position
+        self.ambient = (0.2,0.2,0.2)
+        self.diffuse = (0.8,0.8,0.8)
+        self.specular = (0.5,0.5,0.5)
     
 class Style(object): #container for style information
     def __init__(self,options):
@@ -326,6 +507,9 @@ class Obj(object): #a 3d object defined by the vertices and the faces (eg a poly
         self.edg = []
         self.fce = []
         self.name=''
+        self.material_of_faces = {}
+        self.materials = {}
+        self.light = None
         
     def set_type(self, options):
         if options.type == 'face':
@@ -400,6 +584,12 @@ class Poly_3D(inkex.Effect):
         self.OptionParser.add_option("--r6_ang",
             action="store", type="float", 
             dest="r6_ang", default=0)
+        self.OptionParser.add_option("--projection",
+            action="store", type="string", 
+            dest="projection", default="Parallel")
+        self.OptionParser.add_option("--observer",
+            action="store", type="int", 
+            dest="observer", default=100)
         self.OptionParser.add_option("--scl",
             action="store", type="float", 
             dest="scl", default=100.0)
@@ -454,20 +644,22 @@ class Poly_3D(inkex.Effect):
         #INITIALISE AND LOAD DATA
         
         obj = Obj() #create the object
+        fill_col = (so.f_r, so.f_g, so.f_b) #colour tuple for the face fill
         file = get_filename(so)#get the file to load data from
-        get_obj_data(obj, file)#load data from the obj file
+        get_obj_data(obj, file, fill_col)#load data from the obj file
         obj.set_type(so)#set the type (face or edge) as per the settings
         
         scale = self.unittouu('1px')    # convert to document units
         st = Style(so) #initialise style
-        fill_col = (so.f_r, so.f_g, so.f_b) #colour tuple for the face fill
         lighting = normalise( (so.lv_x,-so.lv_y,so.lv_z) ) #unit light vector
+        obj.light = Light(lighting)
+        fill = tuple(x/255 for x in fill_col)
+        obj.materials.setdefault('',Material(fill))
         
         #INKSCAPE GROUP TO CONTAIN THE POLYHEDRON
         
         #Put in in the centre of the current view
-        view_center = computePointInNode(list(self.view_center), self.current_layer)
-        poly_transform = 'translate(' + str( view_center[0]) + ',' + str( view_center[1]) + ')'
+        poly_transform = 'translate(' + str( self.view_center[0]) + ',' + str( self.view_center[1]) + ')'
         if scale != 1:
             poly_transform += ' scale(' + str(scale) + ')'
         #we will put all the rotations in the object name, so it can be repeated in 
@@ -486,7 +678,18 @@ class Poly_3D(inkex.Effect):
         trans_mat = trans_mat*so.scl #scale by linear factor (do this only after the transforms to reduce round-off)
         
         transformed_pts = get_transformed_pts(obj.vtx, trans_mat) #the points as projected in the z-axis onto the viewplane
-        
+
+        transformed_faces = obj.fce
+        transformed_material_of_faces = {}
+
+        if so.projection == 'prsp':
+            transformed_pts = transform_perspective(transformed_pts, so.observer)
+            transformed_faces = clip_faces(transformed_faces, 
+                transformed_pts, so.observer, transformed_material_of_faces,
+                obj.material_of_faces)
+        else:
+            transformed_material_of_faces = obj.material_of_faces
+
         #RENDERING OF THE OBJECT
         
         if so.show == 'vtx':
@@ -495,7 +698,7 @@ class Poly_3D(inkex.Effect):
         
         elif so.show == 'edg':
             if obj.type == 'face':#we must generate the edge list from the faces
-                edge_list = make_edge_list(obj.fce)
+                edge_list = make_edge_list(transformed_faces)
             else:#we already have an edge list
                 edge_list = obj.edg
                         
@@ -506,17 +709,21 @@ class Poly_3D(inkex.Effect):
                
                 z_list = []
                 
-                for i in range(len(obj.fce)):
-                    face = obj.fce[i] #the face we are dealing with
-                    norm = get_unit_normal(transformed_pts, face, so.cw_wound) #get the normal vector to the face
-                    angle = get_angle( norm, lighting )#get the angle between the normal and the lighting vector
-                    z_sort_param = get_z_sort_param(transformed_pts, face, so.z_sort)
-                    
-                    if so.back or norm[2] > 0: # include all polygons or just the front-facing ones as needed
-                        z_list.append((z_sort_param, angle, norm, i))#record the maximum z-value of the face and angle to light, along with the face ID and normal
+                for i in range(len(transformed_faces)):
+                    face = transformed_faces[i] #the face we are dealing with
+                    if face:
+                        if not three_diff_vertices(transformed_pts, face):
+                            continue
+                        norm = get_unit_normal(transformed_pts, face, so.cw_wound) #get the normal vector to the face
+                        angle = get_angle( norm, lighting )#get the angle between the normal and the lighting vector
+                        z_sort_param = get_z_sort_param(transformed_pts, face, so.z_sort)
+                        
+                        if so.back or norm[2] > 0: # include all polygons or just the front-facing ones as needed
+                            z_list.append((z_sort_param, angle, norm, i))#record the maximum z-value of the face and angle to light, along with the face ID and normal
                 
                 z_list.sort(lambda x, y: cmp(x[0],y[0])) #sort by ascending sort parameter of the face
-                draw_faces( z_list, transformed_pts, obj, so.shade, fill_col, st, poly)
+                draw_faces( z_list, transformed_pts, transformed_faces, 
+                    obj, transformed_material_of_faces, so.shade, st, poly)
 
             else:#we cannot generate a list of faces from the edges without a lot of computation
                 inkex.errormsg(_('Face Data Not Found. Ensure file contains face data, and check the file is imported as "Face-Specified" under the "Model File" tab.\n'))

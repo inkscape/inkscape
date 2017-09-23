@@ -62,6 +62,10 @@
                 <_option value="y">Y-Axis</_option>
                 <_option value="z">Z-Axis</_option></param>
             <param name="r6_ang" type="float" min="-360" max="360" _gui-text="Rotation (deg):">0</param>
+            <param name="projection" type="enum" _gui-text="Projection:">
+                <_item value="prll">Parallel</_item>
+                <_item value="prsp">Perspective</_item></param>
+            <param name="obs" type="int" min="-10000" max="10000" _gui-text="Observer Position:">100</param>
         </page>
         <page name="style" _gui-text="Style">
             <param name="scl" type="float" min="0" max="10000" _gui-text="Scaling factor:">100</param>
