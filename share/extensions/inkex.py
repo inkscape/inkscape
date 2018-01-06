@@ -48,6 +48,10 @@ u'xlink'    :u'http://www.w3.org/1999/xlink',
 u'xml'      :u'http://www.w3.org/XML/1998/namespace'
 }
 
+try:
+  unicode        # Python 2
+except NameError:
+  unicode = str  # Python 3
 
 def localize():
     domain = 'inkscape'
