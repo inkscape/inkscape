@@ -6,7 +6,7 @@ Inkscape is professional quality vector graphics software which runs on Windows,
 
 ## Contributing
 
-Inkscape is being developed on **[GitLab](https://gitlab.com)**, a development platform that is itself part of the open source community and that can be self-hosted, if the need arises.
+Inkscape is being developed on **[GitLab](https://gitlab.com/inkscape/inkscape)**, a development platform that is itself part of the open source community and that can be self-hosted, if the need arises.
 
 For more information about the project, please refer to:
 
