@@ -12,6 +12,5 @@ For more information about the project, please refer to:
 
 -    the **[Inkscape Project Website](https://inkscape.org)**
 -    the **[Inkscape Repository on GitLab](https://gitlab.com/inkscape/inkscape)**
--    the **[Inkscape Bug Tracker on Launchpad](https://bugs.launchpad.net/inkscape)**
 
 Image: <em>Freedom Machine</em> CC-BY-SA [Rizky Djati Munggaran](https://inkscape.org/~ridjam)
